@@ -6,6 +6,7 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -172,17 +173,6 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-//      befores = b;
-//      afters = a;
-//    } catch (final IOException x) {
-//      x.printStackTrace();
-//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-//    }
-//    setUpPrintWriters();
-//    setUpReports();
-    // coverageStats = new CSVStatistics(coverageFileName, "property");
     apply();
     closePrintWriters();
         
@@ -213,7 +203,6 @@ public abstract class AbstractSpartanizer {
    */
   
   @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode ... $){ 
-    
     int length;
     int tokens;
     int nodes;
@@ -221,7 +210,6 @@ public abstract class AbstractSpartanizer {
     int statements;
     int tide;
     int essence;
-    
     // input metrics
     for(ASTNode ¢: $){
       length = ¢.getLength();
@@ -231,7 +219,6 @@ public abstract class AbstractSpartanizer {
       statements = extract.statements(az.methodDeclaration(¢).getBody()).size();
       tide = clean($ + "").length();
       essence = Essence.of(¢ + "").length();
-           
       report.summaryFileName();
       report//
           .put("Category", extract.category(¢))//
@@ -246,6 +233,10 @@ public abstract class AbstractSpartanizer {
           .put("Statements1", statements);//
     }
     report.nl();
+  }
+  
+  public void runReport(Consumer<CSVStatistics> report){
+    
   }
 
   /**
