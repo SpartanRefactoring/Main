@@ -263,6 +263,14 @@ public interface idiomatic {
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
+
+    @Test public void useReducer() {
+      List<String> before = new ArrayList<>();
+      before.add("1");
+      before.add("2");
+      before.add("3");
+      assertEquals("123", reduce(before).with((x, y) -> x + y));
+    }
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -289,6 +297,10 @@ public interface idiomatic {
     return new MapperCollectionHolder<>(¢);
   }
 
+  static <T> ReducerCollectionHolder<T> reduce(Collection<T> ¢) {
+    return new ReducerCollectionHolder<>(¢);
+  }
+
   class MapperCollectionHolder<T> {
     final Collection<T> collection;
 
@@ -301,24 +313,15 @@ public interface idiomatic {
     }
   }
 
-  class WithReducer<T> {
+  class ReducerCollectionHolder<T> {
     final Collection<T> collection;
 
-    public WithReducer(final Collection<T> collection) {
+    public ReducerCollectionHolder(final Collection<T> collection) {
       this.collection = collection;
     }
 
-    @SuppressWarnings("unchecked") public <R> Collection<R> with(final Function<? super T, ? extends R> mapper) {
-      Collection<R> $ = null;
-      try {
-        $ = collection.getClass().getConstructor().newInstance();
-        for (T ¢ : collection)
-          $.add(mapper.apply(¢));
-      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-          | SecurityException x) {
-        x.printStackTrace();
-      }
-      return $;
+    public T with(final BinaryOperator<T> reducer) {
+      return collection.stream().reduce(reducer).get();
     }
   }
 
