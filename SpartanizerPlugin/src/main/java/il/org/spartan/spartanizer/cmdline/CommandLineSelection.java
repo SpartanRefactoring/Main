@@ -32,7 +32,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public static class Util {
-    private static String inputPath;
+    private static String inputPath = "."; // default input path
 
     /** 
      * @return CommandLineSelection 
@@ -56,6 +56,12 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
 //      return new CommandLineSelection(cuList, "default");
       return getFromPath(inputPath);
     }
+    
+    /** @return */
+    public static AbstractSelection<CommandLineSelection> get(final String from) {
+      return getFromPath(from);
+    }
+
 
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
