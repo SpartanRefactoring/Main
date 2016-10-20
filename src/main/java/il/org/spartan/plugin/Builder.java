@@ -94,8 +94,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
-    if (m != null)
-      m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
+    execute((x) -> m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN)).when(m != null);
     Toolbox.refresh();
     build(kind);
     if (m != null)
