@@ -79,7 +79,7 @@ public final class LaconizeProject extends BaseHandler {
 
   void manyPasses() {
     for (passNumber = 1;; ++passNumber)
-      if (passNumber >= MAX_PASSES || singlePass())
+      if (passNumber > MAX_PASSES || singlePass())
         return;
   }
 

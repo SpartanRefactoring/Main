@@ -104,6 +104,7 @@ public class Analyzer {
             new IfNullThrow(), //
             new IfNullReturn(), //
             new IfNullReturnNull(), //
+            new WhenApply(), //
             null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //
