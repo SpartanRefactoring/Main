@@ -13,7 +13,7 @@ import org.eclipse.jface.preference.*;
 public final class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     final IPreferenceStore s = store();
-    s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
+    // s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
     s.setDefault(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
     for (final TipperGroup ¢ : TipperGroup.values())
       s.setDefault(¢.id, true);

@@ -76,7 +76,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     if (w == null)
       return;
     w.addResourceChangeListener(e -> {
-      if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is)
+      if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.get())
         return;
       try {
         final MProject mp = new MProject();
