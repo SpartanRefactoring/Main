@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * analyses.
  * @author Ori Marcovitch
  * @since 2016 */
-public enum find {
+public enum analyze {
   ;
   public static Set<Name> dependencies(final ASTNode n) {
     final Set<Name> $ = new HashSet<>();
