@@ -21,9 +21,9 @@ public interface fault {
    return trace(stackCapture()); 
   }
 
-  static String trace(final Throwable t) {
+  static String trace(final Throwable ¢) {
     final ByteArrayOutputStream $ = new ByteArrayOutputStream();
-    t.printStackTrace(new PrintStream($));
+    ¢.printStackTrace(new PrintStream($));
     return new String($.toByteArray(), StandardCharsets.UTF_8);
   }
 
