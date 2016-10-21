@@ -24,11 +24,11 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> ¢) throws Exception {
-    throw new Exception("no remainder among doubles" + ¢);
+  @Override double evaluateDouble(final List<Expression> ¢) throws IllegalArgumentException {
+    throw new IllegalArgumentException("no remainder among doubles" + ¢);
   }
 
-  @Override int evaluateInt(final List<Expression> xs) throws Exception {
+  @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
     int $ = 0;
     try {
       if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
@@ -39,7 +39,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         final int int¢ = az.throwing.int¢(¢);
         if (int¢ == 0)
-          throw new Exception("remainder in division by zero is undefined");
+          throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
     } catch (final NumberFormatException e) {
@@ -48,7 +48,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs) throws Exception {
+  @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     long $ = 0;
     try {
       if (type.of(first(xs)) == Certain.DOUBLE)
@@ -59,7 +59,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
-          throw new Exception("remainder in division by zero is undefined");
+          throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= long¢;
       }
     } catch (final NumberFormatException e) {
