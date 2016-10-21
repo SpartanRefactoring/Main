@@ -35,7 +35,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
 
   /** @param then
    * @return */
-  private static boolean throwing(@SuppressWarnings("unused") Statement __) {
+  private static boolean throwing(@SuppressWarnings("unused") final Statement __) {
     // TODO: check if method throws
     return false;
   }

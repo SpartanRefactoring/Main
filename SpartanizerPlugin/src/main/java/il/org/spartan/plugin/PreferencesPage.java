@@ -17,6 +17,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -115,7 +116,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       getUpButton().setVisible(false);
       getRemoveButton().addSelectionListener(new SelectionAdapter() {
         /** [[SuppressWarningsSpartan]] */
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(SelectionEvent x) {
+        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(final SelectionEvent x) {
           if (x == null)
             return;
           if (getRemoveButton().equals(x.widget)) {
@@ -138,7 +139,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
         }
       });
       getList().addSelectionListener(new SelectionAdapter() {
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(SelectionEvent x) {
+        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(final SelectionEvent x) {
           if (x == null)
             return;
           selection.index = getList().getSelectionIndex();
@@ -148,7 +149,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       });
     }
 
-    @Override protected String[] parseString(String stringList) {
+    @Override protected String[] parseString(final String stringList) {
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
@@ -156,17 +157,13 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       if (dead.isEmpty() || composite == null)
         return null;
       final ListDialog d = new ListDialog(composite.getShell());
-      d.setContentProvider(new IStructuredContentProvider() {
-        @Override public Object[] getElements(Object inputElement) {
-          return dead.toArray(new String[dead.size()]);
-        }
-      });
+      d.setContentProvider(inputElement -> dead.toArray(new String[dead.size()]));
       d.setLabelProvider(new ILabelProvider() {
-        @Override public void removeListener(ILabelProviderListener __) {
+        @Override public void removeListener(final ILabelProviderListener __) {
           //
         }
 
-        @Override public boolean isLabelProperty(Object element, String property) {
+        @Override public boolean isLabelProperty(final Object element, final String property) {
           return false;
         }
 
@@ -174,15 +171,15 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
           //
         }
 
-        @Override public void addListener(ILabelProviderListener __) {
+        @Override public void addListener(final ILabelProviderListener __) {
           //
         }
 
-        @Override public String getText(Object element) {
+        @Override public String getText(final Object element) {
           return element + "";
         }
 
-        @Override public Image getImage(Object element) {
+        @Override public Image getImage(final Object element) {
           return null;
         }
       });
@@ -191,7 +188,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       d.setMessage("Select a tipper to activate:");
       d.setInput(dead);
       d.open();
-      Object[] os = d.getResult();
+      final Object[] os = d.getResult();
       if (os == null || os.length == 0)
         return null;
       final String $ = os[0] + "";
@@ -202,7 +199,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       return $;
     }
 
-    @Override protected String createList(String[] items) {
+    @Override protected String createList(final String[] items) {
       return separate.these(items).by(DELIMETER);
     }
 
