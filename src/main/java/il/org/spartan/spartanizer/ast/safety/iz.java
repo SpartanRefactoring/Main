@@ -516,7 +516,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return LiteralParser.of(token) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo(token, d);
+    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo(token, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
@@ -524,7 +524,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return LiteralParser.of(token) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo(token, i);
+    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo(token, i);
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
@@ -532,7 +532,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return LiteralParser.of(token) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo(token, l);
+    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo(token, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
