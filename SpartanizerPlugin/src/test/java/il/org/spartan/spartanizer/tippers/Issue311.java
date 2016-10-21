@@ -36,16 +36,14 @@ import org.junit.runners.*;
   }
 
   @Test public void challenge_while_ca() {
-    trimmingOf("for (int i = 0; i < 20; ++i) {File newFolder = folder.newFolder();3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}").stays();
+    trimmingOf("for (int i = 0; i < 20; ++i) {F f = q.f();a3xZ(s.l(c), not(hasItem(f)));" + //
+        "c[i] = f;new F(f, \"a.txt\").g();a(f.e());}").stays();
   }
 
   @Test public void challenge_while_cb() {
-    trimmingOf("for (int i = 0; i < 20; ++i) {3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-            .gives("for (int ¢ = 0; ¢ < 20; ++¢) {3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-                "createdFiles[¢] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-            .stays();
+    trimmingOf("for (int i = 0; i < 20; ++i) {a3xZ(s.l(c), not(hasItem(f)));" + //
+        "c[i] = f;new F(f, \"a.txt\").g();a(f.e());}").gives("for (int ¢ = 0; ¢ < 20; ++¢) {a3xZ(s.l(c), not(hasItem(f)));" + //
+            "c[¢] = f;new F(f, \"a.txt\").g();a(f.e());}").stays();
   }
 
   @Test public void challenge_while_d() {

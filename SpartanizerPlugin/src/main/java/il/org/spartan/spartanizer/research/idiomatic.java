@@ -117,7 +117,7 @@ public interface idiomatic {
     return new Executor() {
       final Consumer<S> consumer = s;
 
-      @Override public void when(boolean condition) {
+      @Override public void when(final boolean condition) {
         if (condition)
           consumer.accept(null);
       }
@@ -273,28 +273,28 @@ public interface idiomatic {
     }
 
     @Test public void useApplier() {
-      List<String> before = new ArrayList<>();
+      final List<String> before = new ArrayList<>();
       before.add("1");
       before.add("2");
       before.add("3");
-      List<String> after = (List<String>) apply(before).to(x -> mapper(x)); // TODO:
-                                                                            // Yossi
-                                                                            // here
-                                                                            // I
-                                                                            // have
-                                                                            // to
-                                                                            // cast,
-                                                                            // otherwise
-                                                                            // considered
-                                                                            // as
-                                                                            // List<Object>
+      final List<String> after = (List<String>) apply(before).to(x -> mapper(x)); // TODO:
+      // Yossi
+      // here
+      // I
+      // have
+      // to
+      // cast,
+      // otherwise
+      // considered
+      // as
+      // List<Object>
       assertEquals("11", after.get(0));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
 
     @Test public void useReducer() {
-      List<String> before = new ArrayList<>();
+      final List<String> before = new ArrayList<>();
       before.add("1");
       before.add("2");
       before.add("3");
@@ -321,23 +321,23 @@ public interface idiomatic {
   //////////////////////////////////////////////////////
   /////////////////// Collections //////////////////////
   //////////////////////////////////////////////////////
-  static <T> MapperCollectionHolder<T> apply(Collection<T> ¢) {
+  static <T> MapperCollectionHolder<T> apply(final Collection<T> ¢) {
     return map(¢);
   }
 
-  static <T> MapperCollectionHolder<T> map(Collection<T> ¢) {
+  static <T> MapperCollectionHolder<T> map(final Collection<T> ¢) {
     return new MapperCollectionHolder<>(¢);
   }
 
-  static <T> ReducerCollectionHolder<T> reduce(Collection<T> ¢) {
+  static <T> ReducerCollectionHolder<T> reduce(final Collection<T> ¢) {
     return new ReducerCollectionHolder<>(¢);
   }
 
-  static <T> MaxCollectionHolder<T> max(Collection<T> ¢) {
+  static <T> MaxCollectionHolder<T> max(final Collection<T> ¢) {
     return new MaxCollectionHolder<>(¢);
   }
 
-  static <T> MinCollectionHolder<T> min(Collection<T> ¢) {
+  static <T> MinCollectionHolder<T> min(final Collection<T> ¢) {
     return new MinCollectionHolder<>(¢);
   }
 
@@ -355,7 +355,7 @@ public interface idiomatic {
       this.mapper = mapper;
     }
 
-    public Collection<R> to(Collection<T> ¢) {
+    public Collection<R> to(final Collection<T> ¢) {
       return ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
     }
   }
@@ -409,9 +409,9 @@ public interface idiomatic {
   }
 
   @SuppressWarnings("rawtypes") class GenericCollector<R> implements Collector<R, Collection<R>, Collection<R>> {
-    private Class<? extends Collection> cls;
+    private final Class<? extends Collection> cls;
 
-    public GenericCollector(Class<? extends Collection> cls) {
+    public GenericCollector(final Class<? extends Collection> cls) {
       this.cls = cls;
     }
 
@@ -423,7 +423,7 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (Exception x) {
+        } catch (final Exception x) {
           x.printStackTrace();
         }
         return null;
