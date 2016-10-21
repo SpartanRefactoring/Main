@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 
 /** A configurable version of the Spartanizer that relies on
@@ -12,7 +14,6 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
   private CommandLineSelection selection;
   // private final boolean shouldRun = false;
   private final boolean applyToEntireProject = false;
-  private final boolean runInProject = true;
   private final boolean specificTipper = false;
   private final boolean defaulting = true;
   private String from = "";
@@ -37,7 +38,15 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
       afters = new PrintWriter(afterFileName);
     } catch (FileNotFoundException x) {
       x.printStackTrace();
-    }  
+    }
+    
+    try {
+      report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      System.err.println("problem in setting up reports");
+    }
   }
 
   @Override public void apply() {
