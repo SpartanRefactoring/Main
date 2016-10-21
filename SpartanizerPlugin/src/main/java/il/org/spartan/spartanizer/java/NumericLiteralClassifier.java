@@ -6,20 +6,20 @@ import il.org.spartan.spartanizer.engine.type.*;
  * literal.
  * @author Yossi Gil
  * @since 2015-08-30 */
-public final class LiteralParser {
+public final class NumericLiteralClassifier {
   public static Primitive.Certain of(final String literal) {
-    return literal == null ? null : new LiteralParser(literal).type();
+    return literal == null ? null : new NumericLiteralClassifier(literal).type();
   }
 
   /** An <code><b>enum</b></code> to give symbolic names to the literal types.
    * @author Yossi Gil
    * @since 2015-08-30
-   * @see LiteralParser#persuation */
+   * @see NumericLiteralClassifier#persuation */
   final String literal;
 
   /** Instantiates this class.
    * @param literal JD */
-  public LiteralParser(final String literal) {
+  public NumericLiteralClassifier(final String literal) {
     this.literal = literal;
   }
 

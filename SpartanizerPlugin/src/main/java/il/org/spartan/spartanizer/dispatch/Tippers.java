@@ -124,7 +124,7 @@ public enum Tippers {
     int previousKind = -1;
     for (final Expression x : xs)
       if (x instanceof NumberLiteral || x instanceof CharacterLiteral) {
-        final int currentKind = new LiteralParser(x + "").type().ordinal();
+        final int currentKind = new NumericLiteralClassifier(x + "").type().ordinal();
         assert currentKind >= 0;
         if (previousKind == -1)
           previousKind = currentKind;
