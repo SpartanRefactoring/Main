@@ -118,28 +118,20 @@ public class Spartanizer extends Applicator {
 
   // TODO Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of {@link Spartanizer}. Spartanize the
-   * {@link ICompilationUnit} using a {@link Trimmer}.
-   * @return this applicator */
-  public Spartanizer defaultRunAction() {
-    final Trimmer t = new Trimmer();
-    runAction(u -> Integer.valueOf(t.apply(u, selection())));
-    return this;
-  }
-
-  /** Default run action configuration of {@link Spartanizer}. Spartanize the
    * {@link ICompilationUnit} using received {@link GUI$Applicator}.
    * @param a JD
    * @return this applicator */
   public Spartanizer defaultRunAction(final GUI$Applicator a) {
     assert a != null;
     runAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+    name(a.getName());
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public Spartanizer defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction((new Trimmer()));
   }
 
   /** Factory method.
