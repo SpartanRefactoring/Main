@@ -37,7 +37,7 @@ public abstract class GUI$Applicator extends Refactoring {
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
-  private final String name;
+  protected String name;
   private ITextSelection selection;
   final List<Tip> tips = new ArrayList<>();
   private int totalChanges;

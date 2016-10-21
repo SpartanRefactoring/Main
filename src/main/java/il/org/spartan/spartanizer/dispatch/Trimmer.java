@@ -34,7 +34,7 @@ public class Trimmer extends GUI$Applicator {
   }
 
   public Trimmer(final Toolbox toolbox) {
-    super("Apply");
+    super("Trimming");
     this.toolbox = toolbox;
   }
 
