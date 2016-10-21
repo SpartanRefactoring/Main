@@ -60,12 +60,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
           return x.getAST().newNumberLiteral($);
       }
       if (indexForLeftEvaluation(x) > 1) {
-        String str = null;
         final int index = indexForLeftEvaluation(x);
         final InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(0, index)).to(operator());
         final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
         if (iz.validForEvaluation(cuttedExpression)) {
-          str = opportunisticReplacement(cuttedExpression);
+          String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
@@ -74,21 +73,22 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         }
       }
       if (indexForRightEvaluation(x) > 1 && operator() != DIVIDE && operator() != REMAINDER) {
-        String str = null;
         final int index = indexForRightEvaluation(x);
         final InfixExpression cuttedExpression = subject
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());
         final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
-          str = opportunisticReplacement(cuttedExpression);
+          String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject.pair(
                 beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
                 az.expression(x.getAST().newNumberLiteral(str))).to(operator());
         }
       }
-    } catch (final Exception e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final IllegalArgumentException e) {
+      // This is not a bug: uncomment to debug
+      // monitor.logEvaluationError(this,
+      return null;
     }
     return null;
   }
@@ -97,17 +97,17 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return super.tipperGroup();
   }
 
-  abstract double evaluateDouble(List<Expression> xs) throws Exception;
+  abstract double evaluateDouble(List<Expression> xs) throws IllegalArgumentException;
 
-  abstract int evaluateInt(List<Expression> xs) throws Exception;
+  abstract int evaluateInt(List<Expression> xs) throws IllegalArgumentException;
 
-  abstract long evaluateLong(List<Expression> xs) throws Exception;
+  abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;
 
   abstract String operation();
 
   abstract Operator operator();
 
-  private String opportunisticReplacement(final InfixExpression ¢) throws Exception {
+  private String opportunisticReplacement(final InfixExpression ¢) throws IllegalArgumentException {
     return type.of(¢) == INT ? Integer.toString(evaluateInt(extract.allOperands(¢)))
         : type.of(¢) == DOUBLE ? Double.toString(evaluateDouble(extract.allOperands(¢)))
             : type.of(¢) == LONG ? Long.toString(evaluateLong(extract.allOperands(¢))) + "L" : null;

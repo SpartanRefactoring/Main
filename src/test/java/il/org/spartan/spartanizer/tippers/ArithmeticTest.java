@@ -10,8 +10,25 @@ import il.org.spartan.spartanizer.java.*;
 /** * Unit tests for Arithmetic Operations Calculations
  * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
  * @since 2016-08-26 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class ArithmeticTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) //
+public final class ArithmeticTest {
   public static class Working {
+    @Test public void sanity() {
+      trimmingOf("10/2/1L")//
+          .gives("5L");
+    }
+
+    @Test public void sanity2() {
+      trimmingOf("10/2/1.")//
+          .gives("5.0");
+    }
+
+    @Test public void sanity3() {
+      trimmingOf("10/2/0L")//
+          .gives("5.0");
+    }
+
     @Test public void additionIsLong() {
       assert atomic.isLong(2L);
     }
