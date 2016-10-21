@@ -8,13 +8,23 @@ import java.nio.charset.*;
  * @since 2016 */
 public interface fault {
   static String done() {
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    final PrintStream ps = new PrintStream(baos);
-    new AssertionError().printStackTrace(ps);
-    return "\n   Stack DUMP................." + //
-        new String(baos.toByteArray(), StandardCharsets.UTF_8) + //
-        "\n   Stack DUMP................." + //
+    return "\n   Stack trace: BEGIN................." + //
+        trace() + //
+        "\n   Stack trace: ENDS................." + //
         "\n-----this is all I know.";
+  }
+
+  static Throwable stackCapture() {
+    return new AssertionError();
+  }
+  static String trace() {
+   return trace(stackCapture()); 
+  }
+
+  static String trace(final Throwable t) {
+    final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+    t.printStackTrace(new PrintStream($));
+    return new String($.toByteArray(), StandardCharsets.UTF_8);
   }
 
   static String dump() {
