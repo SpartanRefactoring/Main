@@ -8,8 +8,8 @@ import java.nio.charset.*;
  * @since 2016 */
 public interface fault {
   static String done() {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    PrintStream ps = new PrintStream(baos);
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    final PrintStream ps = new PrintStream(baos);
     new AssertionError().printStackTrace(ps);
     return new String(baos.toByteArray(), StandardCharsets.UTF_8) + "\n-----this is all I know.";
   }

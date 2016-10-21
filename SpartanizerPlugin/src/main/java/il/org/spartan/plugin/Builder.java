@@ -63,16 +63,16 @@ public final class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
-    m.setAttribute(IMarker.MESSAGE, prefix() +  r.description);
+    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
     m.setAttribute(IMarker.TRANSIENT, false);
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
-  try {
-    r.tipperClass.newInstance().tipperGroup();
-  } catch (InstantiationException | IllegalAccessException x) {
-    monitor.logProbableBug(r, x);
-  }
+    try {
+      r.tipperClass.newInstance().tipperGroup();
+    } catch (InstantiationException | IllegalAccessException x) {
+      monitor.logProbableBug(r, x);
+    }
   }
 
   private static void addMarkers(final IFile ¢) throws CoreException {
