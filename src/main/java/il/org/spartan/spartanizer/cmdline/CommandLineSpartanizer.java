@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+
 import il.org.spartan.plugin.*;
 
 /** A configurable version of the Spartanizer that relies on
@@ -33,9 +34,9 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
     try {
       befores = new PrintWriter(beforeFileName);
       afters = new PrintWriter(afterFileName);
-    } catch (FileNotFoundException x) {
+    } catch (final FileNotFoundException x) {
       x.printStackTrace();
-    }  
+    }
   }
 
   @Override public void apply() {

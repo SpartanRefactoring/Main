@@ -1,7 +1,7 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.spartanizer.utils.fault.*;
 import static il.org.spartan.plugin.old.eclipse.*;
+import static il.org.spartan.spartanizer.utils.fault.*;
 
 import java.util.*;
 import java.util.List;
@@ -23,7 +23,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** the base class for all GUI applicators contains common functionality
@@ -455,15 +454,14 @@ public abstract class GUI$Applicator extends Refactoring {
     }
   }
 
-  private int apply(final WrappedCompilationUnit u)  throws JavaModelException, CoreException {
+  private int apply(final WrappedCompilationUnit u) throws JavaModelException, CoreException {
     final TextFileChange textChange = init(u);
     assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
     try {
       textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
-    } catch (AssertionError x) {      // assert unreachable(): 
-      System.out.println(
-      dump() + //
+    } catch (final AssertionError x) { // assert unreachable():
+      System.out.println(dump() + //
           "\n x=" + x + //
           "\n counter=" + $ + //
           "\n u=" + u + //
@@ -471,8 +469,7 @@ public abstract class GUI$Applicator extends Refactoring {
           "\n textchange=" + textChange + //
           "\n textchange.getEdit.length=" + textChange.getEdit() + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
-          done()
-      );
+          done());
       return 0;
     }
     if (textChange.getEdit().getLength() != 0)
