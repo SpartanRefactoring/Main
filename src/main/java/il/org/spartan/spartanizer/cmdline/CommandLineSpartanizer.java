@@ -12,9 +12,11 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
   private CommandLineSelection selection;
   // private final boolean shouldRun = false;
   private final boolean applyToEntireProject = false;
-  private final boolean entireProject = true;
+  private final boolean runInProject = true;
   private final boolean specificTipper = false;
-
+  private final boolean defaulting = true;
+  private String from = "";
+  
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new CommandLineSpartanizer(¢).fire();
@@ -43,8 +45,16 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
       selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
       selection.createSelectionFromProjectDir(inputPath);
     }
-    if (entireProject)
-      CommandLineApplicator.defaultApplicator().defaultRunAction();
+    if (defaulting)
+      CommandLineApplicator.defaultApplicator()
+                           .defaultSelection(CommandLineSelection.Util.get())
+                           .defaultRunAction()
+                           .go();
+    if (applyToEntireProject)
+      CommandLineApplicator.defaultApplicator()
+                           .defaultSelection(CommandLineSelection.Util.get(from))
+                           .defaultRunAction()
+                           .go();
     if (specificTipper)
       CommandLineApplicator.defaultApplicator();
   }
