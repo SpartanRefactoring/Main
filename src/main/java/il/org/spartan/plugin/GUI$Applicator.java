@@ -460,8 +460,7 @@ public abstract class GUI$Applicator extends Refactoring {
     assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
     try {
-      final ASTRewrite r = createRewrite(u.build().compilationUnit, $);
-      textChange.setEdit(r.rewriteAST());
+      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
     } catch (AssertionError x) {
       assert unreachable() : dump() + //
           "\n x=" + x + //
@@ -479,12 +478,12 @@ public abstract class GUI$Applicator extends Refactoring {
     return $.get();
   }
 
-  private TextFileChange init(final WrappedCompilationUnit u) {
-    setICompilationUnit(u.descriptor);
+  private TextFileChange init(final WrappedCompilationUnit ¢) {
+    setICompilationUnit(¢.descriptor);
     progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-    textChange.setTextType("java");
-    return textChange;
+    final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
+    $.setTextType("java");
+    return $;
   }
 
   public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
