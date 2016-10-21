@@ -11,7 +11,10 @@ public interface fault {
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final PrintStream ps = new PrintStream(baos);
     new AssertionError().printStackTrace(ps);
-    return new String(baos.toByteArray(), StandardCharsets.UTF_8) + "\n-----this is all I know.";
+    return "\n   Stack DUMP................." + //
+        new String(baos.toByteArray(), StandardCharsets.UTF_8) + //
+        "\n   Stack DUMP................." + //
+        "\n-----this is all I know.";
   }
 
   static String dump() {
