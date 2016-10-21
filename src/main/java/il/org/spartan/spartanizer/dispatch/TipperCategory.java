@@ -86,7 +86,7 @@ public interface TipperCategory {
   }
 
   interface Inlining extends Structural {
-    final String label = "Eliminates a variable by inlining";
+    final String label = "Structural";
 
     @Override default String description() {
       return label;
@@ -94,7 +94,7 @@ public interface TipperCategory {
   }
 
   interface InVain extends Structural {
-    final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
+    final String label = "NOP";
 
     @Override default String description() {
       return label;
@@ -102,7 +102,7 @@ public interface TipperCategory {
   }
 
   interface Nanos extends Modular {
-    final String label = "Tippers such as defualts.to(X) that rely on the standard nano libraries";
+    final String label = "Nanos";
 
     @Override default String description() {
       return label;
