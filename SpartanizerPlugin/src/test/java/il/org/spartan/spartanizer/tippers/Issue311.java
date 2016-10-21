@@ -42,10 +42,8 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_cb() {
     trimmingOf("for (int i = 0; i < 20; ++i) {a3xZ(s.l(c), not(hasItem(f)));" + //
-        "c[i] = f;new F(f, \"a.txt\").g();a(f.e());}")
-            .gives("for (int ¢ = 0; ¢ < 20; ++¢) {a3xZ(s.l(c), not(hasItem(f)));" + //
-                "c[¢] = f;new F(f, \"a.txt\").g();a(f.e());}")
-            .stays();
+        "c[i] = f;new F(f, \"a.txt\").g();a(f.e());}").gives("for (int ¢ = 0; ¢ < 20; ++¢) {a3xZ(s.l(c), not(hasItem(f)));" + //
+            "c[¢] = f;new F(f, \"a.txt\").g();a(f.e());}").stays();
   }
 
   @Test public void challenge_while_d() {

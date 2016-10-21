@@ -131,7 +131,7 @@ public class Spartanizer extends Applicator {
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public Spartanizer defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction((new Trimmer()));
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer());
   }
 
   /** Factory method.
