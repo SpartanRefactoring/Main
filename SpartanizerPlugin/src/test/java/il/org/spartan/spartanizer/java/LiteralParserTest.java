@@ -14,12 +14,16 @@ public final class LiteralParserTest {
     azzert.that(new LiteralParser("0x1.0p-1022").type(), is(Primitive.Certain.DOUBLE));
     azzert.that(new LiteralParser("0x0.0000000000001P-1022").type(), is(Primitive.Certain.DOUBLE));
   }
+
   @Test public void issue490a() {
+    assert Long.parseLong("0L") == 0L;
     azzert.that(new LiteralParser("0L").type(), is(Primitive.Certain.LONG));
   }
+
   @Test public void issue490b() {
     azzert.that(new LiteralParser("0x38495ab5").type(), is(Primitive.Certain.INT));
   }
+
   @Test public void doubleLiteralsFromSpecification() {
     azzert.that(new LiteralParser("1e1").type(), is(Primitive.Certain.DOUBLE));
     azzert.that(new LiteralParser("2.").type(), is(Primitive.Certain.DOUBLE));

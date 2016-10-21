@@ -937,7 +937,7 @@ public interface iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(this, x);
+      monitor.logEvaluationError(l, x);
       return false;
     }
   }
