@@ -35,7 +35,7 @@ public class Spartanizer extends Applicator {
     listener().push(message.run_start.get(selection().name));
     if (!shouldRun())
       return;
-    AtomicInteger totalTipsInvoked = new AtomicInteger(0);
+    final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
@@ -131,7 +131,7 @@ public class Spartanizer extends Applicator {
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public Spartanizer defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction((new Trimmer()));
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer());
   }
 
   /** Factory method.

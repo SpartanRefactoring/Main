@@ -19,7 +19,7 @@ public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all tips */
   public static final String SPARTANIZATION_LONG_PREFIX = "Laconic tip: ";
   /** Short prefix to be used in front of all tips */
-  public static final String SPARTANIZATION_SHORT_PREFIX = "tip: ";
+  public static final String SPARTANIZATION_SHORT_PREFIX = "Tip: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
   /** the ID under which this builder is registered */
@@ -60,17 +60,10 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarker(final GUI$Applicator a, final Tip r, final IMarker m) throws CoreException {
-    String group;
-    try {
-      group = r.tipperClass.newInstance().tipperGroup().label;
-    } catch (final InstantiationException | IllegalAccessException x) {
-      monitor.log(x);
-      group = "???";
-    }
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
-    m.setAttribute(IMarker.MESSAGE, group + " " + prefix() + r.description);
+    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
     m.setAttribute(IMarker.TRANSIENT, false);

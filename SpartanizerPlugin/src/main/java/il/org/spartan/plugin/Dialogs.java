@@ -73,7 +73,7 @@ public class Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
-      
+
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, SWT.DEFAULT, "Cancel", false);
         super.createButtonsForButtonBar(¢);

@@ -378,9 +378,9 @@ public class Toolbox {
       return $;
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
-    for (int i = 0; i < t.implementation.length; ++i)
-      if (t.implementation[i] != null)
-        for (final Tipper<?> p : t.implementation[i])
+    for (final List<Tipper<? extends ASTNode>> element : t.implementation)
+      if (element != null)
+        for (final Tipper<?> p : element)
           if (¢.equals(p.tipperGroup()))
             $.add(p.myName());
     return $;
