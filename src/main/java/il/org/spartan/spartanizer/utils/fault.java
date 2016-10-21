@@ -8,9 +8,13 @@ import java.nio.charset.*;
  * @since 2016 */
 public interface fault {
   static String done() {
-    return "\n   Stack trace: BEGIN................." + //
-        trace() + //
-        "\n   Stack trace: ENDS................." + //
+    return done(stackCapture());
+  }
+
+  static String done(final Throwable t) {
+    return "\n   Stack trace: [[[................." + //
+        trace(t) + //
+        "\n   Stack trace: .................]]]" + //
         "\n-----this is all I know.";
   }
 
