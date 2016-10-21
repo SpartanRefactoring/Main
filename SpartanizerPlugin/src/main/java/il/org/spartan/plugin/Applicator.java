@@ -25,6 +25,8 @@ public abstract class Applicator {
   /** Whether or not the applicator should run. May be checked/change multiple
    * times during main application run. */
   private boolean shouldRun = true;
+  /** Applicator's name. */
+  private String name;
 
   /** Tell this applicator it should not run. */
   public void stop() {
@@ -99,6 +101,19 @@ public abstract class Applicator {
    * @return this applicator */
   public Applicator selection(final Selection ¢) {
     selection = ¢;
+    return this;
+  }
+
+  /** @return applicator's name */
+  public String name() {
+    return name;
+  }
+
+  /** Name this applicator.
+   * @param ¢ JD
+   * @return this applicator */
+  public Applicator name(final String ¢) {
+    name = ¢;
     return this;
   }
 

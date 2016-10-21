@@ -14,6 +14,7 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
@@ -21,7 +22,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
-  private static final String NAME = "Laconic";
   private static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
@@ -44,6 +44,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   public static Spartanizer applicator() {
     final Spartanizer $ = new Spartanizer();
+    final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
@@ -53,7 +54,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         e.printStackTrace();
       }
     });
-    $.defaultRunAction();
+    $.defaultRunAction(t);
     $.listener(new Listener() {
       static final int DIALOG_CREATION = 1;
       static final int DIALOG_PROCESSING = 2;
@@ -89,7 +90,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               runAsynchronouslyInUIThread(() -> {
-                d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
+                d.getProgressMonitor().beginTask(Linguistic.trim($.name()) + " : " + Linguistic.merge(¢), $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
@@ -130,6 +131,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
   @SuppressWarnings("deprecation") @Deprecated public static Spartanizer applicatorMapper() {
     final Spartanizer $ = new Spartanizer();
+    final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final AtomicBoolean openDialog = new AtomicBoolean(false);
     $.listener(EventMapper.empty(event.class) //
@@ -148,7 +150,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(() -> {
-              d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
+              d.getProgressMonitor().beginTask(Linguistic.trim($.name()), $.selection().size());
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
             });
@@ -182,7 +184,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         e.printStackTrace();
       }
     });
-    $.defaultRunAction();
+    $.defaultRunAction(t);
     return $;
   }
 
