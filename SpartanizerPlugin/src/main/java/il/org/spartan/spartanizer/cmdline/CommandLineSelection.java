@@ -13,11 +13,19 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
+  
   private List<WrappedCompilationUnit> compilationUnits;
 
-  public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
+  public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, 
+      final String name) {
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
+  }
+  
+  /** Factory method.
+   * @return empty selection */
+  public static CommandLineSelection empty() {
+    return new CommandLineSelection(null, null);
   }
 
   public List<CompilationUnit> getCompilationUnits() {
@@ -62,7 +70,6 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return getFromPath(from);
     }
 
-
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path))
@@ -95,4 +102,6 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   // compilationUnit = makeAST.COMPILATION_UNIT.from("");
   // return this;
   // }
+  
+  
 }
