@@ -34,8 +34,6 @@ public class Dialogs {
   private static Image logo;
   /** Id for run in background button. */
   public static final int RIB_ID = 2;
-  /** Id for cancel button. */
-  public static final int CNC_ID = SWT.DEFAULT;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */
@@ -77,7 +75,7 @@ public class Dialogs {
       }
       
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
-        createButton(¢, CNC_ID, "Cancel", false);
+        createButton(¢, SWT.DEFAULT, "Cancel", false);
         super.createButtonsForButtonBar(¢);
       }
 

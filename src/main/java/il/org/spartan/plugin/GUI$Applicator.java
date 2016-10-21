@@ -23,7 +23,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** the base class for all GUI applicators contains common functionality
@@ -38,7 +37,7 @@ public abstract class GUI$Applicator extends Refactoring {
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
-  private final String name;
+  protected String name;
   private ITextSelection selection;
   final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
