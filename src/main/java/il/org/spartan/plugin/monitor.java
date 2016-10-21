@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static il.org.spartan.spartanizer.utils.fault.*;
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil
@@ -109,12 +109,14 @@ public enum monitor {
 
   public static monitor logEvaluationError(final Object o, final Throwable x) {
     System.err.println(//
+        dump() +  //
         "An instance of " + className(o) + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
-            "\n      exeption, probably due to unusual " + //
-            "\n      Java constructs in the input " + //
+            "\n      exeption, probably due to unusual Java constructs in the input:" + //
             "\n   x = '" + x + "'" + //
-            "\n   o = " + o + "'");
+            "\n   o = " + o + "'" + //
+            done() //
+        );
     return now;
   }
 

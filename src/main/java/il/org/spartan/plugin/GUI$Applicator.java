@@ -461,8 +461,9 @@ public abstract class GUI$Applicator extends Refactoring {
     final AtomicInteger $ = new AtomicInteger();
     try {
       textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
-    } catch (AssertionError x) {
-      assert unreachable() : dump() + //
+    } catch (AssertionError x) {      // assert unreachable(): 
+      System.out.println(
+      dump() + //
           "\n x=" + x + //
           "\n counter=" + $ + //
           "\n u=" + u + //
@@ -470,7 +471,9 @@ public abstract class GUI$Applicator extends Refactoring {
           "\n textchange=" + textChange + //
           "\n textchange.getEdit.length=" + textChange.getEdit() + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
-          done();
+          done()
+      );
+      return 0;
     }
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
