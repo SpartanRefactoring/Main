@@ -16,7 +16,7 @@ public final class LiteralParserTest {
   }
 
   @Test public void issue490a() {
-    assert Long.parseLong("0L") == 0L;
+    assert Long.parseLong("0") == 0L;
     azzert.that(new LiteralParser("0L").type(), is(Primitive.Certain.LONG));
   }
 

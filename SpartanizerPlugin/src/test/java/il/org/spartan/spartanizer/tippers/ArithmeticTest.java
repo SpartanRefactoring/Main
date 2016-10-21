@@ -26,7 +26,7 @@ public final class ArithmeticTest {
 
     @Test public void sanity3() {
       trimmingOf("10/2/0L")//
-          .gives("5.0");
+          .stays();
     }
 
     @Test public void additionIsLong() {
