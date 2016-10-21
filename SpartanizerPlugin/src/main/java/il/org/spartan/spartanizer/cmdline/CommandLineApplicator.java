@@ -49,11 +49,10 @@ public class CommandLineApplicator extends Applicator {
           final List<CompilationUnit> alive = new LinkedList<>();
           alive.addAll(getSelection().getCompilationUnits());
           final List<CompilationUnit> dead = new LinkedList<>();
-          for (final CompilationUnit ¢ : alive) {
+          for (final CompilationUnit ¢ : alive) 
             System.out.println(¢);
 //            if(!runAction().apply(¢.build()).booleanValue())
 //              dead.add(¢);
-          }
        }
      });
     System.err.println("go go go!");
@@ -72,6 +71,10 @@ public class CommandLineApplicator extends Applicator {
   CommandLineApplicator defaultSelection() {
     setSelection(CommandLineSelection.Util.get());
     return this;
+  }
+
+  private void setSelection(AbstractSelection<CommandLineSelection> __) {
+    // TODO Matteo: Auto-generated method stub
   }
 
   /** Initialize the selection of this applicator.
@@ -133,12 +136,12 @@ public class CommandLineApplicator extends Applicator {
   
   /**
    * 
-   * @param s JD
+   * @param ¢ JD
    * @return
    */
 
-  public CommandLineApplicator defaultSelection(CommandLineSelection s) {
-    selection(s);
+  public CommandLineApplicator defaultSelection(CommandLineSelection ¢) {
+    selection(¢);
     return this;
   }
   

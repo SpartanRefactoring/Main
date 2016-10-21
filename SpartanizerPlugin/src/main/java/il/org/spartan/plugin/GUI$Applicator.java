@@ -468,7 +468,7 @@ public abstract class GUI$Applicator extends Refactoring {
           "\n u=" + u.name() + //
           "\n textchange=" + textChange + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
-          "\n textchange.getEdit.length=" + (textChange.getEdit() != null? textChange.getEdit().getLength() + "": "??") + //
+          "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
           done());
       return 0;
     }
