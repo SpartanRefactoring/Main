@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Tests of {@link ThisClass#thatFunction}
  * @author Yossi Gil
  * @since 2.6 */
-@Ignore
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue490 {
   @Test public void a() {

@@ -17,8 +17,9 @@ public interface fault {
   static Throwable stackCapture() {
     return new AssertionError();
   }
+
   static String trace() {
-   return trace(stackCapture()); 
+    return trace(stackCapture());
   }
 
   static String trace(final Throwable ¢) {

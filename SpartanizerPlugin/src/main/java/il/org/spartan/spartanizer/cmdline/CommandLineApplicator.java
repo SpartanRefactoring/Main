@@ -12,10 +12,9 @@ import il.org.spartan.plugin.*;
  * @since 2016 */
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
-  
   @SuppressWarnings("hiding") private CommandLineSelection selection;
   private Spartanizer spartanizer;
-  
+
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -23,9 +22,8 @@ public class CommandLineApplicator extends Applicator {
     selection = ¢;
     return this;
   }
-  
+
   // TODO Matteo: change selection() in Applicator to return AbstractSelection?
-  
   public CommandLineSelection getSelection() {
     return selection;
   }
@@ -34,27 +32,25 @@ public class CommandLineApplicator extends Applicator {
    *
    * @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
-     if(selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
-       return;
-//     List<CompilationUnit> list = getSelection().getCompilationUnits();
-//     for(CompilationUnit cu: list){
-//       System.err.println(cu);
-//       spartanizer.go(cu);
-//     }
-     
-     
-     runContext().accept(() -> {
-       final int l = passes();
-       for (int pass = 0; pass < l; ++pass){
-          final List<CompilationUnit> alive = new LinkedList<>();
-          alive.addAll(getSelection().getCompilationUnits());
-          final List<CompilationUnit> dead = new LinkedList<>();
-          for (final CompilationUnit ¢ : alive) 
-            System.out.println(¢);
-//            if(!runAction().apply(¢.build()).booleanValue())
-//              dead.add(¢);
-       }
-     });
+    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
+      return;
+    // List<CompilationUnit> list = getSelection().getCompilationUnits();
+    // for(CompilationUnit cu: list){
+    // System.err.println(cu);
+    // spartanizer.go(cu);
+    // }
+    runContext().accept(() -> {
+      final int l = passes();
+      for (int pass = 0; pass < l; ++pass) {
+        final List<CompilationUnit> alive = new LinkedList<>();
+        alive.addAll(getSelection().getCompilationUnits());
+        final List<CompilationUnit> dead = new LinkedList<>();
+        for (final CompilationUnit ¢ : alive)
+          System.out.println(¢);
+        // if(!runAction().apply(¢.build()).booleanValue())
+        // dead.add(¢);
+      }
+    });
     System.err.println("go go go!");
   }
 
@@ -73,7 +69,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  private void setSelection(AbstractSelection<CommandLineSelection> __) {
+  private void setSelection(final AbstractSelection<CommandLineSelection> __) {
     // TODO Matteo: Auto-generated method stub
   }
 
@@ -133,20 +129,15 @@ public class CommandLineApplicator extends Applicator {
     runAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     return this;
   }
-  
-  /**
-   * 
-   * @param ¢ JD
-   * @return
-   */
 
-  public CommandLineApplicator defaultSelection(CommandLineSelection ¢) {
+  /** @param ¢ JD
+   * @return */
+  public CommandLineApplicator defaultSelection(final CommandLineSelection ¢) {
     selection(¢);
     return this;
   }
-  
-//  /** @return selection of the applicator, ready to be configured. */
-//  public CommandLineSelection selection() {
-//    return this.selection;
-//  }
+  // /** @return selection of the applicator, ready to be configured. */
+  // public CommandLineSelection selection() {
+  // return this.selection;
+  // }
 }
