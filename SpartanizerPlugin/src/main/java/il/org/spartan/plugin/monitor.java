@@ -109,15 +109,15 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  public static monitor logEvaluationError(final Object o, final Throwable x) {
+  public static monitor logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
-            "An instance of " + className(o) + //
-            "\n was hit by a " + x.getClass().getSimpleName() + //
+            "\n An instance of " + className(o) + //
+            "\n was hit by a " + t.getClass().getSimpleName() + //
             "\n      exeption, probably due to unusual Java constructs in the input:" + //
-            "\n   x = '" + x + "'" + //
+            "\n   x = '" + t + "'" + //
             "\n   o = " + o + "'" + //
-            done() //
+            done(t) //
     );
     return now;
   }
