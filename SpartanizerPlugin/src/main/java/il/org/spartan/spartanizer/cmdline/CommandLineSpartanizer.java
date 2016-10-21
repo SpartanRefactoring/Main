@@ -11,8 +11,7 @@ import il.org.spartan.plugin.*;
 public class CommandLineSpartanizer extends AbstractSpartanizer {
   private CommandLineSelection selection;
   // private final boolean shouldRun = false;
-  private final boolean applyToEntireProject = true;
-  private final boolean runApplicator = true;
+  private final boolean applyToEntireProject = false;
   private final boolean entireProject = true;
   private final boolean specificTipper = false;
 
@@ -44,8 +43,6 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
       selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
       selection.createSelectionFromProjectDir(inputPath);
     }
-    if (!runApplicator)
-      return;
     if (entireProject)
       CommandLineApplicator.defaultApplicator().defaultRunAction();
     if (specificTipper)

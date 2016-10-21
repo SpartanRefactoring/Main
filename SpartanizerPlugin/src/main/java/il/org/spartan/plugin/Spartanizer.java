@@ -131,7 +131,8 @@ public class Spartanizer extends Applicator {
    * @param a JD
    * @return this applicator */
   public Spartanizer defaultRunAction(final GUI$Applicator a) {
-    runAction(u -> Integer.valueOf(a.apply(u, selection())));
+    assert a != null;
+    runAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
     return this;
   }
 
