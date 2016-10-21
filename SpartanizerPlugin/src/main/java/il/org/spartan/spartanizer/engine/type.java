@@ -279,7 +279,7 @@ public interface type {
     }
 
     private static implementation lookDown(final NumberLiteral ¢) {
-      return new LiteralParser(step.token(¢)).type();
+      return new NumericLiteralClassifier(step.token(¢)).type();
     }
 
     private static implementation lookDown(final ParenthesizedExpression ¢) {
