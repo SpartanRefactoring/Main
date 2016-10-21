@@ -24,10 +24,10 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 public abstract class AbstractSpartanizer {
-
   static String presentFileName;
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     ASTNode parentNode = ¢.getParent();
     assert parentNode != null;
@@ -38,9 +38,11 @@ public abstract class AbstractSpartanizer {
     }
     return ((MethodDeclaration) parentNode).getName() + "";
   }
+
   static GUI$Applicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
+
   protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
@@ -92,11 +94,11 @@ public abstract class AbstractSpartanizer {
         }
         return true;
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
-  
+
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -104,7 +106,7 @@ public abstract class AbstractSpartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-  
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -112,7 +114,7 @@ public abstract class AbstractSpartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
@@ -175,7 +177,6 @@ public abstract class AbstractSpartanizer {
         reportFileName);
     apply();
     closePrintWriters();
-        
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
   }
@@ -192,17 +193,13 @@ public abstract class AbstractSpartanizer {
     befores.print(input);
     afters.print(output);
     computeMetrics(input, outputASTNode);
-    
     return false;
   }
-  
-  /**
-   * Compute metrics for a generic number of ASTNode
+
+  /** Compute metrics for a generic number of ASTNode
    * @param $
-   * @author Matteo Orru'
-   */
-  
-  @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode ... $){ 
+   * @author Matteo Orru' */
+  @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode... $) {
     int length;
     int tokens;
     int nodes;
@@ -211,7 +208,7 @@ public abstract class AbstractSpartanizer {
     int tide;
     int essence;
     // input metrics
-    for(ASTNode ¢: $){
+    for (final ASTNode ¢ : $) {
       length = ¢.getLength();
       tokens = metrics.tokens(¢ + "");
       nodes = count.nodes(¢);
@@ -224,25 +221,19 @@ public abstract class AbstractSpartanizer {
           .put("Category", extract.category(¢))//
           .put("Name", extract.name(¢))//
           .put("Nodes1", ¢)//
-          .put("Body", body)
-          .put("Length1", length)//
-          .put("Tokens1", tokens)
-          .put("Length1", length)
-          .put("Tide1", tide)//
+          .put("Body", body).put("Length1", length)//
+          .put("Tokens1", tokens).put("Length1", length).put("Tide1", tide)//
           .put("Essence1", essence)//
           .put("Statements1", statements);//
     }
     report.nl();
   }
-  
-  public void runReport(Consumer<CSVStatistics> report){
-    
+
+  public void runReport(final Consumer<CSVStatistics> report) {
   }
 
-  /**
-   * @param input
-   * @param output
-   */
+  /** @param input
+   * @param output */
   private void computeMetrics(final ASTNode input, final ASTNode output) {
     // input metrics
     final int length = input.getLength();
@@ -253,7 +244,7 @@ public abstract class AbstractSpartanizer {
     final int tide = clean(input + "").length();
     final int essence = Essence.of(input + "").length();
     // output metrics
-    String outputString = output + "";
+    final String outputString = output + "";
     final int length2 = outputString.length();
     final int tokens2 = metrics.tokens(outputString);
     final int nodes2 = count.nodes(output);
@@ -263,13 +254,12 @@ public abstract class AbstractSpartanizer {
     final int tide2 = clean(outputString).length();
     final int essence2 = Essence.of(outputString).length();
     final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(outputString));
-//    final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(output);
+    // final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(output);
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     System.out.println(befores.checkError());
-    
     report.summaryFileName();
     report//
-//        .put("File", currentFile)//
+        // .put("File", currentFile)//
         .put("Category", extract.category(input))//
         .put("Name", extract.name(input))//
         .put("# Tippers", tippersAppliedOnCurrentObject) //
@@ -368,10 +358,8 @@ public abstract class AbstractSpartanizer {
     selectedNodeTypes = as.list(¢);
   }
 
-  /**
-   * Setup PrintWriters
-   * @author matteo
-   */
+  /** Setup PrintWriters
+   * @author matteo */
   protected void setUpPrintWriters() {
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
@@ -383,15 +371,13 @@ public abstract class AbstractSpartanizer {
     }
   }
 
-  /**
-   * Setup reports
-   * @author matteo
-   */
+  /** Setup reports
+   * @author matteo */
   protected void setUpReports() {
     try {
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
-    } catch (IOException x) {
+    } catch (final IOException x) {
       x.printStackTrace();
       System.err.println("problem in setting up reports");
     }
