@@ -84,11 +84,11 @@ public interface Listener {
     }
 
     /** for fluent API use, i.e., <code>
-     *
+     * 
      * <pre>
-         <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
+             <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
      * </pre>
-     *
+     * 
      * <code>
      * @return an empty new instance */
     public static Listener.S empty() {
