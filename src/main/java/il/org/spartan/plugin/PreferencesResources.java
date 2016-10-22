@@ -12,13 +12,11 @@ public final class PreferencesResources {
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
-  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = {
-      { "Remember individual project settings", //
-          "remember" },
-      { "Enable for all projects", //
-          "always_on" }, //
-      { "Disable for all projects", //
-          "always_off" } };
+  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { //
+      { "Remember individual project settings", "remember" }, //
+      { "Enable for all projects", "always_on" }, //
+      { "Disable for all projects", "always_off" } //
+  };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "Preference_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
@@ -38,11 +36,11 @@ public final class PreferencesResources {
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
     InVain(TipperCategory.InVain.class), //
+    Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //
     Sorting(TipperCategory.Sorting.class), //
     SyntacticBaggage(TipperCategory.SyntacticBaggage.class), //
     Ternarization(TipperCategory.Ternarization.class), //
-    Nanopatterns(TipperCategory.Nanos.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
