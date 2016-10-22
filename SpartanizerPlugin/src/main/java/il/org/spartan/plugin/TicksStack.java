@@ -18,8 +18,8 @@ public class TicksStack {
     return inner.pop();
   }
 
-  public void push(final Object... os) {
-    inner.push(os);
+  public void push(final Object... ¢) {
+    inner.push(¢);
   }
 
   public Object[] top() {
