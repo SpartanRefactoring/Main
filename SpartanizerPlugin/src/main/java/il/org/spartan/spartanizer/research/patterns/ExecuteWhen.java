@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -17,8 +19,8 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "execute((x) -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "execute((x) -> $X2.$N($A)).when($X1);", "turn into when(X).execute(Y)"));
+      add(TipperFactory.tipper("if($X) $N($A);", "execute((__) -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "execute((__) -> $X2.$N($A)).when($X1);", "turn into when(X).execute(Y)"));
     }
   };
 
@@ -28,8 +30,15 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
 
   @Override public boolean canTip(final IfStatement x) {
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)))
+      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)) && !containsReferencesToNonFinal())
         return true;
+    return false;
+  }
+
+  /** @return */
+  private static boolean containsReferencesToNonFinal() {
+    // TODO Marco find out if there are references to non final variable, this
+    // might cause a lambda to not compile...
     return false;
   }
 
@@ -43,12 +52,21 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     return m != null && !m.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip tip(final IfStatement x) throws TipperFailure {
-    Logger.logNP(x, "ApplyWhen");
-    for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
-    assert false;
-    return null;
+  @Override public Tip tip(final IfStatement x) {
+    return new Tip(description(x), x, this.getClass()) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        for (final UserDefinedTipper<IfStatement> ¢ : tippers)
+          if (¢.canTip(x))
+            try {
+              ¢.tip(x).go(r, g);
+              idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(x)), r);
+              Logger.logNP(x, "ApplyWhen");
+              return;
+            } catch (TipperFailure x1) {
+              x1.printStackTrace();
+            }
+        assert false;
+      }
+    };
   }
 }
