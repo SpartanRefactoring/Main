@@ -113,7 +113,7 @@ public class Logger {
   /** @param ¢
    * @param np */
   static void logNodeInfo(final ASTNode ¢) {
-    String nodeClassName = ¢.getClass().getSimpleName();
+    final String nodeClassName = ¢.getClass().getSimpleName();
     if (!nodesStatistics.containsKey(nodeClassName))
       nodesStatistics.put(nodeClassName, new Int());
     ++nodesStatistics.get(nodeClassName).inner;
@@ -121,7 +121,7 @@ public class Logger {
 
   /** @param ¢
    * @param np */
-  static void addToNodeType(Class<? extends ASTNode> n, int num) {
+  static void addToNodeType(final Class<? extends ASTNode> n, final int num) {
     if (!codeStatistics.containsKey(n))
       codeStatistics.put(n, new Int());
     codeStatistics.get(n).inner += num;
@@ -213,9 +213,9 @@ public class Logger {
 
     /** @param name
      * @param cl */
-    public NPRecord(final String name, Class<? extends ASTNode> cl) {
+    public NPRecord(final String name, final Class<? extends ASTNode> cl) {
       this.name = name;
-      this.className = cl.getSimpleName();
+      className = cl.getSimpleName();
     }
 
     /** @param ¢ matched node */
@@ -227,7 +227,7 @@ public class Logger {
   }
 
   /** @param compilationUnit */
-  public static void logSpartanizedCompilationUnit(ASTNode cu) {
+  public static void logSpartanizedCompilationUnit(final ASTNode cu) {
     addToNodeType(IfStatement.class, count.nodesOfClass(cu, IfStatement.class));
   }
 }
