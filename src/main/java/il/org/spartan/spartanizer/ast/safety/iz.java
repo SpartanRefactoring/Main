@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
+import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -937,7 +938,7 @@ public interface iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(l, x);
+      monitor.logEvaluationError(box(l), x);
       return false;
     }
   }
