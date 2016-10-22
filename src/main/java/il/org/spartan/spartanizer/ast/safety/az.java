@@ -483,7 +483,7 @@ public enum az {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
 
-  public static boolean true¢(final int __) {
+  public static boolean true¢(@SuppressWarnings("unused") final int __) {
     return true;
   }
 }
