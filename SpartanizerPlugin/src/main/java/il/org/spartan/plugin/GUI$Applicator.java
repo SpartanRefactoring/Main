@@ -445,6 +445,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public int apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
+    if (s != null && s.textSelection != null)
+      setSelection(s.textSelection);
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
