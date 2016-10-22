@@ -413,8 +413,8 @@ public enum az {
     return chop(fragments);
   }
 
-  public static int int¢(final Object o) {
-    return unbox((Integer) o);
+  public static int int¢(final Object ¢) {
+    return unbox((Integer) ¢);
   }
 
   /** A fluent API to parse numeric literals, including provisions for unary
