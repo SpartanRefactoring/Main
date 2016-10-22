@@ -84,10 +84,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
                 az.expression(x.getAST().newNumberLiteral(str))).to(operator());
         }
       }
-    } catch (final IllegalArgumentException e) {
-      // This is not a bug: uncomment next code line to debug
-      // But, comment it out in production mode.
-      // /* Logging Java code *// monitor.logEvaluationError(this,e);
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      // This is not a bug: exception must be ignored; it tells us, e.g.,
+      // that we cannot divide by zero.
+      // Uncomment next code line to debug; comment it out in production mode.
+      // /* Logging Java code */ monitor.logEvaluationError(this,e);
       return null;
     }
     return null;
