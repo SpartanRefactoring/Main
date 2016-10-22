@@ -217,7 +217,7 @@ public class Selection extends AbstractSelection<Selection> {
      * @return selection by marker */
     public static Selection by(final IMarker ¢) {
       if (¢ == null || !¢.exists())
-        return null;
+        return empty();
       final ITextSelection s = getTextSelection(¢);
       return s == null ? empty() : by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }

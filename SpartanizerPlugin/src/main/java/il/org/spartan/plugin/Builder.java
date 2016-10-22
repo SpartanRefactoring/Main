@@ -68,11 +68,6 @@ public final class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.CHAR_END, r.to);
     m.setAttribute(IMarker.TRANSIENT, false);
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
-    try {
-      r.tipperClass.newInstance().tipperGroup();
-    } catch (InstantiationException | IllegalAccessException x) {
-      monitor.logProbableBug(r, x);
-    }
   }
 
   private static void addMarkers(final IFile ¢) throws CoreException {
