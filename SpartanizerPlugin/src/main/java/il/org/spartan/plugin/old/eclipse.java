@@ -77,8 +77,8 @@ public enum eclipse {
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
     final int n = 0;
-    for (final IPackageFragmentRoot r : rs)
-      compilationUnits(m, $, r);
+    for (final IPackageFragmentRoot ¢ : rs)
+      compilationUnits(m, $, ¢);
     return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
   }
 
@@ -158,8 +158,8 @@ public enum eclipse {
     return new NodeFinder(createAST(u), start, end - start).getCoveredNode();
   }
 
-  public static ASTNode createAST(final ICompilationUnit u) {
-    return Make.COMPILATION_UNIT.parser(u).createAST(nullProgressMonitor);
+  public static ASTNode createAST(final ICompilationUnit ¢) {
+    return Make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
   public static int int¢(final IMarker m, final String name) throws CoreException {
