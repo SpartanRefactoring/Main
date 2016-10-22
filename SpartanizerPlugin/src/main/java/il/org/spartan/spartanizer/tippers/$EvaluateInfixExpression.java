@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -64,7 +63,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         final InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(0, index)).to(operator());
         final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
         if (iz.validForEvaluation(cuttedExpression)) {
-          String str = opportunisticReplacement(cuttedExpression);
+          final String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
@@ -78,7 +77,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());
         final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
-          String str = opportunisticReplacement(cuttedExpression);
+          final String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject.pair(
                 beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
@@ -86,8 +85,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         }
       }
     } catch (final IllegalArgumentException e) {
-      // This is not a bug: uncomment to debug
-      // monitor.logEvaluationError(this,
+      // This is not a bug: uncomment next code line to debug
+      // But, comment it out in production mode.
+      // /* Logging Java code *// monitor.logEvaluationError(this,e);
       return null;
     }
     return null;

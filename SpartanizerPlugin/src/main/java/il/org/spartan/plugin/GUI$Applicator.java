@@ -2,6 +2,7 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
+import static il.org.spartan.spartanizer.utils.fault.done;
 
 import java.util.*;
 import java.util.List;

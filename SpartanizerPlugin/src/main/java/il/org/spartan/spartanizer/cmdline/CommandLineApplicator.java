@@ -12,8 +12,8 @@ import il.org.spartan.plugin.*;
  * @since 2016 */
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
-  @SuppressWarnings("hiding") private CommandLineSelection selection;
-  private Spartanizer spartanizer;
+  private CommandLineSelection selection;
+  Spartanizer spartanizer;
 
   /** Initialize the selection of this applicator.
    * @param ¢ JD
@@ -69,7 +69,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  private void setSelection(final AbstractSelection<CommandLineSelection> __) {
+  private void setSelection(@SuppressWarnings("unused") final AbstractSelection<CommandLineSelection> __) {
     // TODO Matteo: Auto-generated method stub
   }
 

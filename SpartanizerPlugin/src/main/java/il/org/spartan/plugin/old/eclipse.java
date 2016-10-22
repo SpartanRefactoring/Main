@@ -25,6 +25,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
@@ -32,18 +33,18 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public enum eclipse {
   facade;
+  static ImageIcon icon;
+  static org.eclipse.swt.graphics.Image iconNonBusy;
   static final String NAME = "Laconic";
+  static final Shell parent = null;
+  static final boolean persistLocation = false;
+  static final boolean persistSize = false;
+  static final int shellStyle = SWT.TOOL;
+  static final boolean showDialogMenu = true;
+  static final boolean takeFocusOnOpen = false;
   private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
   private static boolean iconInitialized;
-  static ImageIcon icon;
   private static boolean iconNonBusyInitialized;
-  static org.eclipse.swt.graphics.Image iconNonBusy;
-  static final Shell parent = null;
-  static final int shellStyle = SWT.TOOL;
-  static final boolean takeFocusOnOpen = false;
-  static final boolean persistSize = false;
-  static final boolean persistLocation = false;
-  static final boolean showDialogMenu = true;
 
   /** Add nature to one project */
   public static void addNature(final IProject p) throws CoreException {
@@ -53,6 +54,64 @@ public enum eclipse {
       return; // Already got the nature
     d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
+  }
+
+  /** @param u A compilation unit for reference - you give me an arbitrary
+   *        compilation unit from the project and I'll find the root of the
+   *        project and do my magic.
+   * @param m A standard {@link IProgressMonitor} - if you don't care about
+   *        operation times use {@link wizard@nullProgressMonitor}
+   * @return List of all compilation units in the current project
+   * @throws JavaModelException don't forget to catch */
+  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor m) throws JavaModelException {
+    m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    if (u == null)
+      return done(m, $, "Cannot find current compilation unit " + u);
+    final IJavaProject javaProject = u.getJavaProject();
+    if (javaProject == null)
+      return done(m, $, "Cannot find project of " + u);
+    if (!javaProject.isOpen())
+      return done(m, $, javaProject.getElementName() + " is not open");
+    final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
+    if (rs == null)
+      return done(m, $, "Cannot find roots of " + javaProject);
+    final int n = 0;
+    for (final IPackageFragmentRoot r : rs)
+      compilationUnits(m, $, r);
+    return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
+  }
+
+  public static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
+      throws JavaModelException {
+    int $ = 0;
+    m.worked(1);
+    if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
+      m.worked(1);
+    for (final IJavaElement ¢ : r.getChildren()) {
+      m.worked(1);
+      if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT && az.true¢(++$)) {
+        ++$;
+        us.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
+      }
+    }
+    return $;
+  }
+
+  /** Retrieves the current {@link ICompilationUnit}
+   * @return current {@link ICompilationUnit} */
+  public static ICompilationUnit currentCompilationUnit() {
+    return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
+  }
+
+  public static List<ICompilationUnit> done(final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
+    pm.done();
+    announce(message);
+    return $;
+  }
+
+  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+    return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
   static Void announce(final Object message) {
@@ -68,76 +127,12 @@ public enum eclipse {
     };
   }
 
-  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
-    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
-      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
-      }
-    };
-    $.setBlockOnOpen(false);
-    $.setCancelable(true);
-    $.setOpenOnRun(openOnRun);
-    return $;
-  }
-
   static ICompilationUnit compilationUnit(final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
   static ICompilationUnit compilationUnit(final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
-  }
-
-  /** @param u A compilation unit for reference - you give me an arbitrary
-   *        compilation unit from the project and I'll find the root of the
-   *        project and do my magic.
-   * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard@nullProgressMonitor}
-   * @return List of all compilation units in the current project
-   * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
-    pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    if (u == null) {
-      pm.done();
-      announce("Cannot find current compilation unit " + u);
-      return $;
-    }
-    final IJavaProject javaProject = u.getJavaProject();
-    if (javaProject == null) {
-      pm.done();
-      announce("Cannot find project of " + u);
-      return $;
-    }
-    if (!javaProject.isOpen()) {
-      pm.done();
-      announce(javaProject.getElementName() + " is not open");
-      return $;
-    }
-    final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
-    if (packageFragmentRoots == null) {
-      pm.done();
-      announce("Cannot find roots of " + javaProject);
-      return $;
-    }
-    for (final IPackageFragmentRoot r : packageFragmentRoots) {
-      pm.worked(1);
-      if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
-        pm.worked(1);
-      for (final IJavaElement ¢ : r.getChildren()) {
-        pm.worked(1);
-        if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-          $.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
-      }
-    }
-    pm.done();
-    return $;
-  }
-
-  /** Retrieves the current {@link ICompilationUnit}
-   * @return current {@link ICompilationUnit} */
-  public static ICompilationUnit currentCompilationUnit() {
-    return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
 
   /** Retrieves the current {@link IWorkbenchWindow}
@@ -150,15 +145,25 @@ public enum eclipse {
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
-  @SuppressWarnings("boxing") static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
+  static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
     try {
-      final int s = (int) m.getAttribute(IMarker.CHAR_START);
-      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
-          .getCoveredNode();
+      return find(u, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException x) {
       monitor.logEvaluationError(x);
     }
     return null;
+  }
+
+  public static ASTNode find(final ICompilationUnit u, final int start, final int end) {
+    return new NodeFinder(createAST(u), start, end - start).getCoveredNode();
+  }
+
+  public static ASTNode createAST(final ICompilationUnit u) {
+    return Make.COMPILATION_UNIT.parser(u).createAST(nullProgressMonitor);
+  }
+
+  public static int int¢(final IMarker m, final String name) throws CoreException {
+    return az.int¢(m.getAttribute(name));
   }
 
   static ImageIcon icon() {
@@ -191,8 +196,16 @@ public enum eclipse {
     return iconNonBusy;
   }
 
-  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
-    return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
+  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
+    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
+      }
+    };
+    $.setBlockOnOpen(false);
+    $.setCancelable(true);
+    $.setOpenOnRun(openOnRun);
+    return $;
   }
 
   static Object resources(final IEditorPart ep) {
@@ -203,6 +216,16 @@ public enum eclipse {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
+  }
+
+  public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+    try {
+      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+    } catch (final CoreException x) {
+      monitor.logEvaluationError(this, x);
+      return true;
+    }
   }
 
   /** @return List of all compilation units in the current project */
@@ -221,16 +244,6 @@ public enum eclipse {
     } catch (final JavaModelException x) {
       monitor.logEvaluationError(this, x);
       return null;
-    }
-  }
-
-  public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
-    try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
-      return true;
     }
   }
 }

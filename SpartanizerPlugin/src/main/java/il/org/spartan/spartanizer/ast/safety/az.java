@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.utils.Unbox.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -412,6 +413,10 @@ public enum az {
     return chop(fragments);
   }
 
+  public static int int¢(final Object o) {
+    return unbox((Integer) o);
+  }
+
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
    * @author Yossi Gil
@@ -476,5 +481,9 @@ public enum az {
    * @return */
   public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
+  }
+
+  public static boolean true¢(final int __) {
+    return true;
   }
 }
