@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -19,6 +20,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public class Logger {
   private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
   private static final Map<String, NPRecord> npStatistics = new HashMap<>();
+  private static final Map<String, Int> nodesStatistics = new HashMap<>();
+  private static final Map<Class<? extends ASTNode>, Int> codeStatistics = new HashMap<>();
   private static int numMethods;
 
   public static void summarize(final String outputDir) {
@@ -103,8 +106,25 @@ public class Logger {
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
-      npStatistics.put(np, new NPRecord(np));
+      npStatistics.put(np, new NPRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
+  }
+
+  /** @param ¢
+   * @param np */
+  static void logNodeInfo(final ASTNode ¢) {
+    String nodeClassName = ¢.getClass().getSimpleName();
+    if (!nodesStatistics.containsKey(nodeClassName))
+      nodesStatistics.put(nodeClassName, new Int());
+    ++nodesStatistics.get(nodeClassName).inner;
+  }
+
+  /** @param ¢
+   * @param np */
+  static void addToNodeType(Class<? extends ASTNode> n, int num) {
+    if (!codeStatistics.containsKey(n))
+      codeStatistics.put(n, new Int());
+    codeStatistics.get(n).inner += num;
   }
 
   private static void logMethodInfo(final ASTNode n, final String np) {
@@ -171,6 +191,7 @@ public class Logger {
       numNPStatements += metrics.countStatements(n);
       numNPExpressions += metrics.countExpressions(n);
       nps.add(np);
+      logNodeInfo(n);
     }
   }
 
@@ -188,10 +209,13 @@ public class Logger {
     int occurences;
     int numNPStatements;
     int numNPExpressions;
+    final String className;
 
-    /** @param name */
-    public NPRecord(final String name) {
+    /** @param name
+     * @param cl */
+    public NPRecord(final String name, Class<? extends ASTNode> cl) {
       this.name = name;
+      this.className = cl.getSimpleName();
     }
 
     /** @param ¢ matched node */
@@ -200,5 +224,10 @@ public class Logger {
       numNPStatements += metrics.countStatements(¢);
       numNPExpressions += metrics.countExpressions(¢);
     }
+  }
+
+  /** @param compilationUnit */
+  public static void logSpartanizedCompilationUnit(ASTNode cu) {
+    addToNodeType(IfStatement.class, count.nodesOfClass(cu, IfStatement.class));
   }
 }
