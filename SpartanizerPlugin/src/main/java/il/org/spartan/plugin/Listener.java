@@ -47,11 +47,23 @@ public interface Listener {
     tick(¢);
   }
 
-  /** A listener that records a long string of the message it got.
+  /** A kind of {@link Listener} that records a long string of the message it
+   * got.
    * @author Yossi Gil
    * @since 2016 */
   class Tracing implements Listener {
+    private static Tab tab = new Tab();
     private final StringBuilder $ = new StringBuilder();
+
+    @Override public void push(Object... ¢) {
+      $.append(tab.begin());
+      Listener.super.push(¢);
+    }
+
+    @Override public void pop(Object... ¢) {
+      $.append(tab.end());
+      Listener.super.pop(¢);
+    }
 
     public String $() {
       return $ + "";
@@ -84,11 +96,11 @@ public interface Listener {
     }
 
     /** for fluent API use, i.e., <code>
-     * 
+     *
      * <pre>
-             <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
+             <b>public final</b> {@link Listener}  listeners = {@link Listener.S}.{@link #empty()}
      * </pre>
-     * 
+     *
      * <code>
      * @return an empty new instance */
     public static Listener.S empty() {
