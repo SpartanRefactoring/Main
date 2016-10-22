@@ -205,6 +205,10 @@ public enum az {
     return !iz.nodeTypeEquals($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
+  public static int int¢(final Object ¢) {
+    return unbox((Integer) ¢);
+  }
+
   public static LambdaExpression lambdaExpression(final ASTNode $) {
     return !iz.nodeTypeEquals($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
   }
@@ -350,6 +354,16 @@ public enum az {
     return !iz.nodeTypeEquals($, THROW_STATEMENT) ? null : (ThrowStatement) $;
   }
 
+  public static boolean true¢(@SuppressWarnings("unused") final int __) {
+    return true;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
+    return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
+  }
+
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
    * @param $ result
@@ -413,10 +427,6 @@ public enum az {
     return chop(fragments);
   }
 
-  public static int int¢(final Object ¢) {
-    return unbox((Integer) ¢);
-  }
-
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
    * @author Yossi Gil
@@ -475,15 +485,5 @@ public enum az {
     static String token(final PrefixExpression ¢) {
       return az.numberLiteral(operand(¢)).getToken();
     }
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
-    return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
-  }
-
-  public static boolean true¢(@SuppressWarnings("unused") final int __) {
-    return true;
   }
 }
