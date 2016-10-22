@@ -272,25 +272,30 @@ public interface idiomatic {
       return ¢ + ¢;
     }
 
+    String mapper(final Integer ¢) {
+      return ¢ + "";
+    }
+
     @Test public void useApplier() {
       final List<String> before = new ArrayList<>();
       before.add("1");
       before.add("2");
       before.add("3");
-      final List<String> after = (List<String>) apply(before).to(x -> mapper(x)); // TODO:
-      // Yossi
-      // here
-      // I
-      // have
-      // to
-      // cast,
-      // otherwise
-      // considered
-      // as
-      // List<Object>
+      final List<String> after = apply(before).to(x -> mapper(x));
       assertEquals("11", after.get(0));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
+    }
+
+    @SuppressWarnings("boxing") @Test public void useApplier2() {
+      final List<Integer> before = new ArrayList<>();
+      before.add(1);
+      before.add(2);
+      before.add(3);
+      final List<String> after = apply(before).to(x -> mapper(x));
+      assertEquals("1", after.get(0));
+      assertEquals("2", after.get(1));
+      assertEquals("3", after.get(2));
     }
 
     @Test public void useReducer() {
@@ -367,8 +372,8 @@ public interface idiomatic {
       this.collection = collection;
     }
 
-    public <R> Collection<R> to(final Function<? super T, ? extends R> mapper) {
-      return collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
+    @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR to(final Function<? super T, ? extends R> mapper) {
+      return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
     }
   }
 

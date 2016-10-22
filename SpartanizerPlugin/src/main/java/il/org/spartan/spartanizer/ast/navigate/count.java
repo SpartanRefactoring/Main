@@ -29,6 +29,17 @@ public interface count {
     return $.get();
   }
 
+  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
+    final AtomicInteger $ = new AtomicInteger();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if (¢.getClass().equals(cl))
+          $.getAndIncrement();
+      }
+    });
+    return $.get();
+  }
+
   static int lines(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
