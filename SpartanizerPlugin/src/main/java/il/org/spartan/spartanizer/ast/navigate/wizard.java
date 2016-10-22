@@ -113,6 +113,11 @@ public interface wizard {
   };
   final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
 
+  static void addImport(CompilationUnit u, ASTRewrite r, ImportDeclaration d) {
+    ListRewrite lr = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
+    lr.insertLast(d, null);
+  }
+
   static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression ¢ : hop.operands(flatten.of(inner)))
