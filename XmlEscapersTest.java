@@ -72,41 +72,30 @@ public class XmlEscapersTest extends TestCase {
     assertEquals(s, xmlEscaper.escape(s));
 
     // Test ASCII control characters.
-    for (char ch = 0; ch < 0x20; ch++) {
-      if (ch == '\t' || ch == '\n' || ch == '\r') {
-        // Only these whitespace chars are permitted in XML,
-        if (shouldEscapeWhitespaceChars) {
-          assertEscaping(xmlEscaper, "&#x" + Integer.toHexString(ch).toUpperCase() + ";", ch);
-        } else {
-          assertUnescaped(xmlEscaper, ch);
-        }
-      } else {
-        // and everything else is replaced with FFFD.
-        assertEscaping(xmlEscaper, "\uFFFD", ch);
-      }
-    }
+    for (char ¢ = 0; ¢ < 0x20; ++¢)
+      if (¢ != '\t' && ¢ != '\n' && ¢ != '\r')
+        assertEscaping(xmlEscaper, "\uFFFD", ¢);
+      else if (!shouldEscapeWhitespaceChars)
+        assertUnescaped(xmlEscaper, ¢);
+      else
+        assertEscaping(xmlEscaper, "&#x" + Integer.toHexString(¢).toUpperCase() + ";", ¢);
 
     // Test _all_ allowed characters (including surrogate values).
-    for (char ch = 0x20; ch <= 0xFFFD; ch++) {
-      // There are a small number of cases to consider, so just do it manually.
-      if (ch == '&') {
+    for (char ch = 0x20; ch <= 0xFFFD; ++ch)
+      if (ch == '&')
         assertEscaping(xmlEscaper, "&amp;", ch);
-      } else if (ch == '<') {
+      else if (ch == '<')
         assertEscaping(xmlEscaper, "&lt;", ch);
-      } else if (ch == '>') {
+      else if (ch == '>')
         assertEscaping(xmlEscaper, "&gt;", ch);
-      } else if (shouldEscapeQuotes && ch == '\'') {
+      else if (shouldEscapeQuotes && ch == '\'')
         assertEscaping(xmlEscaper, "&apos;", ch);
-      } else if (shouldEscapeQuotes && ch == '"') {
+      else if (shouldEscapeQuotes && ch == '"')
         assertEscaping(xmlEscaper, "&quot;", ch);
-      } else {
+      else {
         String input = String.valueOf(ch);
-        String escaped = xmlEscaper.escape(input);
-        assertEquals(
-            "char 0x" + Integer.toString(ch, 16) + " should not be escaped",
-            input, escaped);
+        assertEquals("char 0x" + Integer.toString(ch, 16) + " should not be escaped", input, xmlEscaper.escape(input));
       }
-    }
 
     // Test that 0xFFFE and 0xFFFF are replaced with 0xFFFD
     assertEscaping(xmlEscaper, "\uFFFD", '\uFFFE');
