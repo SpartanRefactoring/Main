@@ -33,11 +33,14 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     return false;
   }
 
-  /** @param then
+  /** First order approximation - does statement throw?
+   * @param s statement
    * @return */
-  private static boolean throwing(@SuppressWarnings("unused") final Statement __) {
-    // TODO: check if method throws
-    return false;
+  private static boolean throwing(final Statement s) {
+    if (searchAncestors.forClass(TryStatement.class).from(s) != null)
+      return true;
+    MethodDeclaration m = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(s));
+    return m != null && !m.thrownExceptionTypes().isEmpty();
   }
 
   @Override public Tip tip(final IfStatement x) throws TipperFailure {
