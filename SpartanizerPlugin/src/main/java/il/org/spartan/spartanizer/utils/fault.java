@@ -11,9 +11,9 @@ public interface fault {
     return done(stackCapture());
   }
 
-  static String done(final Throwable t) {
+  static String done(final Throwable ¢) {
     return "\n   Stack trace: [[[................." + //
-        trace(t) + //
+        trace(¢) + //
         "\n   Stack trace: .................]]]" + //
         "\n-----this is all I know.";
   }

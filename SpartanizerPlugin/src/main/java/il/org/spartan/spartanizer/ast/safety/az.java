@@ -205,8 +205,8 @@ public enum az {
     return !iz.nodeTypeEquals($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
-  public static int int¢(final Object o) {
-    return unbox((Integer) o);
+  public static int int¢(final Object ¢) {
+    return unbox((Integer) ¢);
   }
 
   public static LambdaExpression lambdaExpression(final ASTNode $) {
