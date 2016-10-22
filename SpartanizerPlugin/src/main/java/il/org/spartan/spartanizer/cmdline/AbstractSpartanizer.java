@@ -229,7 +229,8 @@ public abstract class AbstractSpartanizer {
     report.nl();
   }
 
-  public void runReport(final Consumer<CSVStatistics> report) {
+  public void runReport(final Consumer<CSVStatistics> c) {
+    // TODO Matteo: implement this if we need it; found in random scan
   }
 
   /** @param input
