@@ -278,7 +278,7 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param ¢ JD
      * @return java project */
     private static IJavaProject getJavaProject(final IProject ¢) {
-      return ¢ == null ? null : JavaCore.create(¢);
+      return ¢ == null || !¢.exists() ? null : JavaCore.create(¢);
     }
 
     /** Depends on local editor.
@@ -357,9 +357,9 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param p JD
      * @return selection by java project */
     private static Selection by(final IJavaProject p) {
-      if (p == null)
-        return empty();
       final Selection $ = empty();
+      if (p == null || !p.exists())
+        return $;
       final IPackageFragmentRoot[] rs;
       try {
         rs = p.getPackageFragmentRoots();
