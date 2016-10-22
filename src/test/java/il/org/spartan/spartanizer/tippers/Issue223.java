@@ -23,7 +23,9 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for {@link ClassInstanceCreation}
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue223 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) //
+public final class Issue223 {
   private static final Class<ClassInstanceCreation> SUBJECT_CLASS = ClassInstanceCreation.class;
   private static final String INPUT = "return new Integer(f());";
   Tipper<ClassInstanceCreation> tipper;
