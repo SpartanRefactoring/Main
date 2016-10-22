@@ -19,7 +19,7 @@ import il.org.spartan.plugin.old.*;
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   private static boolean listening;
-  private static final int SAFTY_DELAY = 100;
+  private static final int SAFETY_DELAY = 100;
 
   public static AbstractUIPlugin plugin() {
     return plugin;
@@ -31,7 +31,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     RefreshAll.go();
   }
 
-  /** an empty c'tor. creates an instance of the plugin. */
   public Plugin() {
     plugin = this;
   }
@@ -110,21 +109,24 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 default:
                   break;
               }
-            } catch (final Exception x1) {
-              monitor.log(x1);
+            } catch (final Exception x) {
+              monitor.log(x);
             }
-          }).schedule(SAFTY_DELAY);
-      } catch (final CoreException x2) {
-        monitor.log(x2);
+          }).schedule(SAFETY_DELAY);
+      } catch (final CoreException x) {
+        monitor.log(x);
       }
     });
     listening = true;
   }
 
+  /* TODO Roth: don't use enums, prefer strings, which require less overhead,
+   * and are easier to debug; --yg */
   static enum Type {
     new_project, opened_project
   }
 
+  /** TODO Roth: not convinced it is required. --yg */ 
   static class MProject {
     public IProject p;
     public Type type;
