@@ -194,7 +194,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static CompilationUnit compilationUnit(ASTNode ¢) {
+  public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return ¢ == null ? null : (CompilationUnit) ¢;
   }
 

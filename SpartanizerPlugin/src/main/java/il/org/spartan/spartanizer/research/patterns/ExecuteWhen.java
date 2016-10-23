@@ -48,13 +48,13 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   private static boolean throwing(final Statement s) {
     if (searchAncestors.forClass(TryStatement.class).from(s) != null)
       return true;
-    MethodDeclaration m = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(s));
+    final MethodDeclaration m = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(s));
     return m != null && !m.thrownExceptionTypes().isEmpty();
   }
 
   @Override public Tip tip(final IfStatement x) {
     return new Tip(description(x), x, this.getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final UserDefinedTipper<IfStatement> ¢ : tippers)
           if (¢.canTip(x))
             try {
@@ -62,7 +62,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
               idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(x)), r);
               Logger.logNP(x, "ApplyWhen");
               return;
-            } catch (TipperFailure x1) {
+            } catch (final TipperFailure x1) {
               x1.printStackTrace();
             }
         assert false;
