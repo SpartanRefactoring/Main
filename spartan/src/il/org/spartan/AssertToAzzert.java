@@ -1,9 +1,9 @@
 /** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.azzert.*;
+
+import org.jetbrains.annotations.*;
 
 /** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -21,7 +21,6 @@ public interface AssertToAzzert {
   // static <T> void assertEquals(final @Nullable T t1, final @Nullable T t2) {
   // azzert.that(t2, is(t1));
   // }
-
   static void assertFalse(final boolean ¢) {
     assert !¢;
   }

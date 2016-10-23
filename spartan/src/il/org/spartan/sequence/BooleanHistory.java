@@ -1,17 +1,14 @@
-/**
- *
- */
 package il.org.spartan.sequence;
+
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */
 public class BooleanHistory {
-  @NotNull
-  private final boolean bs[];
+  @NotNull private final boolean bs[];
   private int size;
   private int last;
 

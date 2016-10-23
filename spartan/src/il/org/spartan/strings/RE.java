@@ -2,25 +2,21 @@ package il.org.spartan.strings;
 
 import java.util.regex.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.Separate.*;
 
 public class RE {
-  @NotNull
-  public static String all(final String ¢) {
+  @NotNull public static String all(final String ¢) {
     return beginLine() + ¢ + endLine();
   }
 
-  @NotNull
-  public static String anyNumberOf(final String regularExpression) {
+  @NotNull public static String anyNumberOf(final String regularExpression) {
     return parenthesis(regularExpression) + "*";
   }
 
-  @NotNull
-  public static String anyNumberOfReluctant(final String regularExpression) {
+  @NotNull public static String anyNumberOfReluctant(final String regularExpression) {
     return parenthesis(regularExpression) + "*?";
   }
 
@@ -42,13 +38,11 @@ public class RE {
     return !text.equals(text.replaceAll(regularExpression, ""));
   }
 
-  @NotNull
-  public static String fulllyQualifiedIdentifier() {
+  @NotNull public static String fulllyQualifiedIdentifier() {
     return identifier() + anyNumberOf(whites() + "[.]" + whites() + identifier());
   }
 
-  @NotNull
-  public static String group(final String regularExpression) {
+  @NotNull public static String group(final String regularExpression) {
     return "(" + regularExpression + ")";
   }
 
@@ -64,28 +58,23 @@ public class RE {
     return "(?m)";
   }
 
-  @NotNull
-  public static String newLine() {
+  @NotNull public static String newLine() {
     return or("\r\n", "\n");
   }
 
-  @NotNull
-  public static String optional(final String regularExpression) {
+  @NotNull public static String optional(final String regularExpression) {
     return parenthesis(regularExpression) + "?";
   }
 
-  @NotNull
-  public static String or(@NotNull final String... alternatives) {
+  @NotNull public static String or(@NotNull final String... alternatives) {
     return parenthesis(Separate.by(s -> parenthesis(s), alternatives, "|"));
   }
 
-  @NotNull
-  public static String padded(final String regularExpression) {
+  @NotNull public static String padded(final String regularExpression) {
     return whites() + regularExpression + whites();
   }
 
-  @NotNull
-  public static String parenthesis(final String regularExpression) {
+  @NotNull public static String parenthesis(final String regularExpression) {
     return "(?:" + regularExpression + ")";
   }
 

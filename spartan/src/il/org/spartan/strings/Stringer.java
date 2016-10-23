@@ -3,18 +3,17 @@ package il.org.spartan.strings;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An immutable class, whose various constructors concatenate the string value
  * of a list of items, optionally separated by a separator.
  * @author Yossi Gil (
  * @since 22/02/2006) */
 @Antiexample public class Stringer {
-  @Nullable
-  public static String compaq(@Nullable final String s) {
+  @Nullable public static String compaq(@Nullable final String s) {
     if (s == null)
       return null;
     String $ = "";
@@ -35,8 +34,7 @@ import org.jetbrains.annotations.Nullable;
    * @param pos Position in the <code>lhs</code> string
    * @param rhs Right hand side string
    * @return Concatenated String */
-  @NotNull
-  public static String concatAt(@NotNull final String lhs, final int pos, final String rhs) {
+  @NotNull public static String concatAt(@NotNull final String lhs, final int pos, final String rhs) {
     return lhs.substring(0, pos >= 0 ? pos : lhs.length() + pos) + rhs;
   }
 
@@ -45,8 +43,7 @@ import org.jetbrains.annotations.Nullable;
    * abc2 should come before abc21).
    * @param s Input string
    * @return Fixed string derived from s */
-  @Nullable
-  public static String fixNumericalSuffix(@Nullable final String s) {
+  @Nullable public static String fixNumericalSuffix(@Nullable final String s) {
     if (s == null || s.length() == 0)
       return s;
     int numDigits = 0;
@@ -74,7 +71,7 @@ import org.jetbrains.annotations.Nullable;
     return s.substring(0, p >= 0 ? p : s.length());
   }
 
-  /** @param < T > type of items in the list
+  /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
    * @param ts the actual items in the list, method <code>toString()</code> is
    *        used to compute obtain each item string represntation.
@@ -82,8 +79,7 @@ import org.jetbrains.annotations.Nullable;
    * @param end a string terminating the string representation
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  @NotNull
-  public static <T> String sequence(@NotNull final String begin, @NotNull final Iterable<T> ts, final String sep, final String end) {
+  @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final Iterable<T> ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
     for (final T ¢ : ts)
@@ -92,7 +88,7 @@ import org.jetbrains.annotations.Nullable;
     return b + "";
   }
 
-  /** @param < T > type of items in the list
+  /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
    * @param ts the actual items in the list, method <code>toString()</code> is
    *        used to compute obtain each item string represntation.
@@ -100,8 +96,7 @@ import org.jetbrains.annotations.Nullable;
    * @param end a string terminating the string representation
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  @NotNull
-  public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end) {
+  @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
     for (final T ¢ : ts)
@@ -111,7 +106,7 @@ import org.jetbrains.annotations.Nullable;
   }
 
   /** @author Oren Rubin
-   * @param < T > type of items in the list
+   * @param <T> type of items in the list
    * @param begin the string starting the string representation.
    * @param ts the actual items in the list, method <code>toString()</code> is
    *        used to compute obtain each item string represntation.
@@ -120,8 +115,8 @@ import org.jetbrains.annotations.Nullable;
    * @param t class to customize conversions.
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  @NotNull
-  public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end, @NotNull final Converter<T> t) {
+  @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end,
+      @NotNull final Converter<T> t) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
     for (final T ¢ : ts)
@@ -135,8 +130,7 @@ import org.jetbrains.annotations.Nullable;
    * @param c First character of the suffix.
    * @return Suffix of s. If s does not contain the character c then the empty
    *         string is returned. */
-  @NotNull
-  public static String suffixFrom(@NotNull final String s, final char c) {
+  @NotNull public static String suffixFrom(@NotNull final String s, final char c) {
     final int p = s.indexOf(c);
     return p < 0 ? "" : s.substring(p);
   }
@@ -145,8 +139,7 @@ import org.jetbrains.annotations.Nullable;
    * given object.
    * @param o Object to inspect
    * @return String representation of o */
-  @NotNull
-  public static String toString(@NotNull final Object o) {
+  @NotNull public static String toString(@NotNull final Object o) {
     final List<String> list = new ArrayList<>();
     for (final Field f : o.getClass().getDeclaredFields()) {
       f.setAccessible(true);
@@ -161,8 +154,7 @@ import org.jetbrains.annotations.Nullable;
     return Separate.byCommas(list);
   }
 
-  @NotNull
-  private final String value;
+  @NotNull private final String value;
 
   public <T> Stringer(final String between, @NotNull final int... ts) {
     final StringBuilder b = new StringBuilder();
@@ -186,8 +178,7 @@ import org.jetbrains.annotations.Nullable;
     this(between, "null", ts);
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return value;
   }
 

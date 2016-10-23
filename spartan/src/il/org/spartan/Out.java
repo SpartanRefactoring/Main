@@ -1,9 +1,8 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 public class Out {
   static final int MAX_FIRST = 20;

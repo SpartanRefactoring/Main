@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -19,8 +19,7 @@ public enum Unit {
       return new DecimalFormat("###,###,###,###,###,###,###.00").format(¢);
     }
 
-    @NotNull
-    @Override public String format(final long ¢) {
+    @NotNull @Override public String format(final long ¢) {
       return new DecimalFormat("###,###,###,###,###,###,###").format(¢);
     }
   },
@@ -37,8 +36,7 @@ public enum Unit {
     public static final long Pb = 1L << 50;
     public static final long Eb = 1L << 60;
 
-    @NotNull
-    @Override public String format(final double m) {
+    @NotNull @Override public String format(final double m) {
       return Double.isNaN(m) ? "NaN"
           : m < 0 ? "-" + format(-m)
               : Double.isInfinite(m) ? "∞"
@@ -49,20 +47,17 @@ public enum Unit {
     }
   },
   NANOSECONDS {
-    @NotNull
-    @Override public String format(final double ns) {
+    @NotNull @Override public String format(final double ns) {
       return SECONDS.format(ns / 1E9);
     }
   },
   MILLISECONDS {
-    @NotNull
-    @Override public String format(final double ms) {
+    @NotNull @Override public String format(final double ms) {
       return SECONDS.format(ms / 1E3);
     }
   },
   SECONDS {
-    @NotNull
-    @Override public String format(final double ¢) {
+    @NotNull @Override public String format(final double ¢) {
       return Double.isNaN(¢) ? "NaN"
           : ¢ < 0 ? "-" + format(-¢)
               : Double.isInfinite(¢) ? "∞"
@@ -97,13 +92,11 @@ public enum Unit {
     return log < 0 ? 0 : (int) log + 1;
   }
 
-  @NotNull
-  public static String format(final double v, final double scale, final String units) {
+  @NotNull public static String format(final double v, final double scale, final String units) {
     return format(v / scale, units);
   }
 
-  @NotNull
-  public static String format(final double d, final String units) {
+  @NotNull public static String format(final double d, final String units) {
     return String.format(format3(d), box(d)) + units;
   }
 
@@ -111,8 +104,7 @@ public enum Unit {
     return formatNanoseconds(¢.time());
   }
 
-  @NotNull
-  public static String format2(final double d) {
+  @NotNull public static String format2(final double d) {
     if (d < 0)
       return "-" + format2(-d);
     final double p = 100 * d;
@@ -136,8 +128,7 @@ public enum Unit {
     }
   }
 
-  @NotNull
-  public static String formatNanoseconds(final double t) {
+  @NotNull public static String formatNanoseconds(final double t) {
     return NANOSECONDS.format(t);
   }
 
@@ -153,8 +144,7 @@ public enum Unit {
     return formatRelative(d1 / d2);
   }
 
-  @NotNull
-  public static String thousands(final long ¢) {
+  @NotNull public static String thousands(final long ¢) {
     return INTEGER.format(¢);
   }
 

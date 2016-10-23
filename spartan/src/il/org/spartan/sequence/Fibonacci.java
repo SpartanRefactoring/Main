@@ -1,6 +1,6 @@
 package il.org.spartan.sequence;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public class Fibonacci extends Sequence {
   private int previous;
@@ -13,16 +13,14 @@ public class Fibonacci extends Sequence {
     reset();
   }
 
-  @NotNull
-  @Override public Fibonacci advance() {
+  @NotNull @Override public Fibonacci advance() {
     final int temp = previous;
     previous = current;
     current += temp;
     return this;
   }
 
-  @NotNull
-  @Override public final Fibonacci reset() {
+  @NotNull @Override public final Fibonacci reset() {
     current = previous = 1;
     return this;
   }

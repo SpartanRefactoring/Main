@@ -1,10 +1,8 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.xy.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since Apr 21, 2012 */

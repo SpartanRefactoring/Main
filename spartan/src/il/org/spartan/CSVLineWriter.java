@@ -1,9 +1,8 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 /** Combines {@link CSVWriter} and {@link CSVLine}, to make it easy to write to
  * a CSV file.
@@ -40,8 +39,7 @@ public class CSVLineWriter extends CSVLine.Ordered {
     writer = new CSVWriter(fileName + extension());
   }
 
-  @Nullable
-  public String absolutePath() {
+  @Nullable public String absolutePath() {
     return writer.file() == null ? null : writer.file().getAbsolutePath();
   }
 
@@ -58,8 +56,7 @@ public class CSVLineWriter extends CSVLine.Ordered {
     return writer.file();
   }
 
-  @NotNull
-  public String fileName() {
+  @NotNull public String fileName() {
     return writer.fileName();
   }
 

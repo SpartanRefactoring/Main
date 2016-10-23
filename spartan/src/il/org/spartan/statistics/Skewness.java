@@ -1,13 +1,10 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Mean.*;
 import static il.org.spartan.statistics.StandardDeviation.*;
 import static il.org.spartan.statistics.Sum.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;

@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
@@ -8,16 +5,14 @@ import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Separate.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class SeparateTest {
-  @NotNull
-  private static <T> Collection<T> makeCollection(@NotNull final T... ts) {
+  @NotNull private static <T> Collection<T> makeCollection(@NotNull final T... ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(¢);

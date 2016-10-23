@@ -3,11 +3,11 @@ package il.org.spartan.strings;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A utility class providing library functions that take an array or a
  * collection of objects, and return a parenthesized {@link String} of the non-
@@ -19,38 +19,31 @@ import org.jetbrains.annotations.Nullable;
   ;
   private static final String COMMA = ",";
 
-  @NotNull
-  public static <T> String angular(final Collection<T> ¢) {
+  @NotNull public static <T> String angular(final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull
-  public static <T> String angular(final T[] ¢) {
+  @NotNull public static <T> String angular(final T[] ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull
-  public static <T> String circual(final Collection<T> ¢) {
+  @NotNull public static <T> String circual(final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull
-  public static <T> String circular(final T[] ¢) {
+  @NotNull public static <T> String circular(final T[] ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull
-  public static <T> String curly(final Collection<T> ¢) {
+  @NotNull public static <T> String curly(final Collection<T> ¢) {
     return make("{", prune(¢), "}");
   }
 
-  @NotNull
-  public static <T> String curly(final T[] ¢) {
+  @NotNull public static <T> String curly(final T[] ¢) {
     return make("{", prune(¢), "}");
   }
 
-  @NotNull
-  public static <T> String make(final String begin, final Collection<T> ts, final String end) {
+  @NotNull public static <T> String make(final String begin, final Collection<T> ts, final String end) {
     return make(begin, ts, COMMA, end);
   }
 
@@ -77,28 +70,23 @@ import org.jetbrains.annotations.Nullable;
    *         <code><b>null</b></code> elements in <code>ts</code> or
    *         <code>ts</code> is <code>null</code>, then the empty string is
    *         returned. */
-  @NotNull
-  public static <T> String make(final String begin, @Nullable final Collection<T> ts, final String between, final String end) {
+  @NotNull public static <T> String make(final String begin, @Nullable final Collection<T> ts, final String between, final String end) {
     return ts == null || ts.isEmpty() ? "" : begin + Separate.by(ts, between) + end;
   }
 
-  @NotNull
-  public static <T> String make(final String begin, final T[] ts, final String end) {
+  @NotNull public static <T> String make(final String begin, final T[] ts, final String end) {
     return make(begin, ts, COMMA, end);
   }
 
-  @NotNull
-  public static <T> String make(final String begin, @Nullable final T[] ts, final String between, final String end) {
+  @NotNull public static <T> String make(final String begin, @Nullable final T[] ts, final String between, final String end) {
     return ts == null || ts.length == 0 ? "" : begin + Separate.by(ts, between) + end;
   }
 
-  @NotNull
-  public static <T> String square(final Collection<T> ¢) {
+  @NotNull public static <T> String square(final Collection<T> ¢) {
     return make("[", prune(¢), "]");
   }
 
-  @NotNull
-  public static <T> String square(final T[] ¢) {
+  @NotNull public static <T> String square(final T[] ¢) {
     return make("[", prune(¢), "]");
   }
 

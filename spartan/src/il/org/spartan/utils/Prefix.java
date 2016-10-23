@@ -1,9 +1,9 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Computes the longest common prefix of the names of objects in a given set.
  * @author Yossi Gil
@@ -19,16 +19,14 @@ public class Prefix<T> {
     return ¢.substring(0, ¢.length() - 2);
   }
 
-  @Nullable
-  private static <T> String trim(@NotNull final Iterable<T> ts) {
+  @Nullable private static <T> String trim(@NotNull final Iterable<T> ts) {
     String $ = null;
     for (final T ¢ : ts)
       $ = trim($, ¢ + "");
     return $;
   }
 
-  @Nullable
-  private final String prefix;
+  @Nullable private final String prefix;
 
   public Prefix(@NotNull final Iterable<T> ts) {
     this.prefix = trim(ts);
@@ -38,8 +36,7 @@ public class Prefix<T> {
     this(Iterables.make(ts));
   }
 
-  @NotNull
-  public String trim(final T ¢) {
+  @NotNull public String trim(final T ¢) {
     return (¢ + "").substring(prefix.length());
   }
 }

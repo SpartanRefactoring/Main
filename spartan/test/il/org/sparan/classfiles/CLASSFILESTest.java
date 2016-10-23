@@ -2,7 +2,7 @@ package il.org.sparan.classfiles;
 
 import java.io.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -114,14 +114,12 @@ import il.org.spartan.utils.*;
 
   enum InnerEnumValues {
     A() {
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return "My value";
       }
     },
     B() {
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return "My value";
       }
     }

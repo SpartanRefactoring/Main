@@ -2,9 +2,9 @@ package il.org.spartan.reflection;
 
 import java.lang.reflect.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 public class ClassPredicates {
   public static boolean hasMutableFields(@NotNull final Class<?> c) {

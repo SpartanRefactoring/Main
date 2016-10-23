@@ -2,9 +2,9 @@ package il.org.spartanl.testing;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Extends {@link org.junit.Assert} with more assertion for equality
  * comparisons. If the comparison yields a "not-equal" result, a JUnit assertion

@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 26 November 2011 */
@@ -11,8 +8,7 @@ public class CodeEntity {
   public int maxStack;
   public int maxLocals;
   public final byte[] codes;
-  @NotNull
-  public final SimplifiedCode simplifiedCode;
+  @NotNull public final SimplifiedCode simplifiedCode;
 
   public CodeEntity(final int maxStack, final int maxLocals, final byte[] codes) {
     this.maxStack = maxStack;

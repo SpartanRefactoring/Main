@@ -1,6 +1,5 @@
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
@@ -22,8 +21,7 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") //
+  @NotNull @SuppressWarnings("unchecked") //
   @Override public Wrapper<T> clone() throws CloneNotSupportedException {
     return (Wrapper<T>) Utils.cantBeNull(super.clone());
   }
@@ -53,8 +51,7 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return inner == null ? "null" : Utils.cantBeNull(inner + "");
   }
 }

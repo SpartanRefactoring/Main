@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.misc;
 
 import static il.org.spartan.azzert.*;
@@ -8,7 +5,7 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -34,8 +31,7 @@ import il.org.spartan.statistics.*;
  * @since February 19, 2012 */
 public enum LinearAlgebra {
   ;
-  @NotNull
-  public static double[] abs(@NotNull final double[] x) {
+  @NotNull public static double[] abs(@NotNull final double[] x) {
     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = Math.abs(x[¢]);
@@ -46,8 +42,7 @@ public enum LinearAlgebra {
    * @param y An arbitrary scalar
    * @param x An arbitrary vector
    * @return A newly created vector computed */
-  @NotNull
-  public static double[] add(final double y, @NotNull final double[] x) {
+  @NotNull public static double[] add(final double y, @NotNull final double[] x) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -60,8 +55,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] add(@NotNull final double[] x, @NotNull final double[] y) {
+  @NotNull public static double[] add(@NotNull final double[] x, @NotNull final double[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -75,8 +69,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static int[] add(@NotNull final int[] x, @NotNull final int[] y) {
+  @NotNull public static int[] add(@NotNull final int[] x, @NotNull final int[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final int[] $ = new int[n];
@@ -85,8 +78,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[][] adjust(@NotNull final double[][] x) {
+  @NotNull public static double[][] adjust(@NotNull final double[][] x) {
     final int rows = x.length;
     final int longestColumn = longestColumn(x);
     final double[][] $ = new double[rows][];
@@ -95,16 +87,14 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static int[][] adjust(@NotNull final int[][] x) {
+  @NotNull public static int[][] adjust(@NotNull final int[][] x) {
     final int longestColumn = longestColumn(x);
     for (int ¢ = 0; ¢ < x.length; ++¢)
       x[¢] = Arrays.copyOf(x[¢], longestColumn);
     return x;
   }
 
-  @NotNull
-  public static short[][] adjust(@NotNull final short[][] x) {
+  @NotNull public static short[][] adjust(@NotNull final short[][] x) {
     final int rows = x.length;
     final int longestColumn = longestColumn(x);
     final short[][] $ = new short[rows][];
@@ -131,8 +121,7 @@ public enum LinearAlgebra {
     return (short) ¢;
   }
 
-  @NotNull
-  public static short[] demote(@NotNull final int[] xs) {
+  @NotNull public static short[] demote(@NotNull final int[] xs) {
     final int n = xs.length;
     final short[] $ = new short[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -149,8 +138,7 @@ public enum LinearAlgebra {
    * @param y an arbitrary vector
    * @return A newly created vector representing the multiplication of the
    *         arguments. */
-  @NotNull
-  public static double[] divide(final double x, @NotNull final double y[]) {
+  @NotNull public static double[] divide(final double x, @NotNull final double y[]) {
     final int n = y.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -163,8 +151,7 @@ public enum LinearAlgebra {
    * @param y an arbitrary vector
    * @return A newly created vector representing the multiplication of the
    *         arguments. */
-  @NotNull
-  public static double[] divide(@NotNull final double x[], final double y) {
+  @NotNull public static double[] divide(@NotNull final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -172,8 +159,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] divide(@NotNull final double x[], @NotNull final double y[]) {
+  @NotNull public static double[] divide(@NotNull final double x[], @NotNull final double y[]) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -182,8 +168,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] divide(@NotNull final double x[], @NotNull final int[] y) {
+  @NotNull public static double[] divide(@NotNull final double x[], @NotNull final int[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -197,8 +182,7 @@ public enum LinearAlgebra {
    * @param y an arbitrary vector
    * @return A newly created vector representing the multiplication of the
    *         arguments. */
-  @NotNull
-  public static double[] divide(final double x, @NotNull final int[] y) {
+  @NotNull public static double[] divide(final double x, @NotNull final int[] y) {
     final int n = y.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -211,8 +195,7 @@ public enum LinearAlgebra {
    * @param y an arbitrary vector
    * @return A newly created vector representing the multiplication of the
    *         arguments. */
-  @NotNull
-  public static double[] divide(@NotNull final int[] x, final double y) {
+  @NotNull public static double[] divide(@NotNull final int[] x, final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -220,8 +203,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] divide(@NotNull final int[] x, @NotNull final double y[]) {
+  @NotNull public static double[] divide(@NotNull final int[] x, @NotNull final double y[]) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -230,8 +212,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] divide(@NotNull final int[] x, @NotNull final int[] y) {
+  @NotNull public static double[] divide(@NotNull final int[] x, @NotNull final int[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -249,8 +230,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] dot(@NotNull final double a[][], @NotNull final double v[]) {
+  @NotNull public static double[] dot(@NotNull final double a[][], @NotNull final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -258,8 +238,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] dot(@NotNull final int a[][], @NotNull final double v[]) {
+  @NotNull public static double[] dot(@NotNull final int a[][], @NotNull final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -285,8 +264,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] dot(@NotNull final short a[][], @NotNull final double v[]) {
+  @NotNull public static double[] dot(@NotNull final short a[][], @NotNull final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -294,14 +272,12 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] fill(@NotNull final double[] x, final double value) {
+  @NotNull public static double[] fill(@NotNull final double[] x, final double value) {
     Arrays.fill(x, value);
     return x;
   }
 
-  @NotNull
-  public static double[] inverse(@NotNull final double x[]) {
+  @NotNull public static double[] inverse(@NotNull final double x[]) {
     return divide(1, x);
   }
 
@@ -313,8 +289,7 @@ public enum LinearAlgebra {
    * @param x An arbitrary vector
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] log(@NotNull final double[] x) {
+  @NotNull public static double[] log(@NotNull final double[] x) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -322,18 +297,15 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[][] make(final int rows, final int columns) {
+  @NotNull public static double[][] make(final int rows, final int columns) {
     return new double[rows][columns];
   }
 
-  @NotNull
-  public static int[][] makeFromIntArrays(@NotNull final List<int[]> ¢) {
+  @NotNull public static int[][] makeFromIntArrays(@NotNull final List<int[]> ¢) {
     return adjust(¢.toArray(new int[0][]));
   }
 
-  @NotNull
-  public static short[][] makeFromShortArrays(@NotNull final List<short[]> ¢) {
+  @NotNull public static short[][] makeFromShortArrays(@NotNull final List<short[]> ¢) {
     return adjust(¢.toArray(new short[0][]));
   }
 
@@ -344,8 +316,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] max(@NotNull final double x[], final double y) {
+  @NotNull public static double[] max(@NotNull final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -360,8 +331,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] min(@NotNull final double x[], final double y) {
+  @NotNull public static double[] min(@NotNull final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -369,8 +339,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static int[] min(@NotNull final int[] x, final int[] y) {
+  @NotNull public static int[] min(@NotNull final int[] x, final int[] y) {
     final int n = x.length;
     final int[] $ = new int[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -395,8 +364,7 @@ public enum LinearAlgebra {
     return Math.sqrt($);
   }
 
-  @NotNull
-  public static double[] normalize(@NotNull final double x[]) {
+  @NotNull public static double[] normalize(@NotNull final double x[]) {
     final double norm = norm(x);
     for (int ¢ = 0; ¢ < x.length; ++¢)
       x[¢] /= norm;
@@ -408,8 +376,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] product(@NotNull final double x[], @NotNull final double y[]) {
+  @NotNull public static double[] product(@NotNull final double x[], @NotNull final double y[]) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -423,8 +390,7 @@ public enum LinearAlgebra {
    * @param y an arbitrary vector
    * @return a newly created vector representing the product of the two
    *         arguments. */
-  @NotNull
-  public static double[] product(final double x, @NotNull final double y[]) {
+  @NotNull public static double[] product(final double x, @NotNull final double y[]) {
     final int n = y.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -437,8 +403,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] product(@NotNull final double x[], @NotNull final int[] y) {
+  @NotNull public static double[] product(@NotNull final double x[], @NotNull final int[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -447,24 +412,21 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] promote(@NotNull final int[] x) {
+  @NotNull public static double[] promote(@NotNull final int[] x) {
     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = x[¢];
     return $;
   }
 
-  @NotNull
-  public static double[][] promote(@NotNull final int[][] x) {
+  @NotNull public static double[][] promote(@NotNull final int[][] x) {
     final double[][] $ = new double[x.length][];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = promote(x[¢]);
     return $;
   }
 
-  @NotNull
-  public static double[] prune(@NotNull final double x[]) {
+  @NotNull public static double[] prune(@NotNull final double x[]) {
     final int n = x.length;
     final double[] $ = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
@@ -484,16 +446,14 @@ public enum LinearAlgebra {
     return x.length;
   }
 
-  @NotNull
-  public static double[] sqr(@NotNull final double x[]) {
+  @NotNull public static double[] sqr(@NotNull final double x[]) {
     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = MomentUtils.sqr(x[¢]);
     return $;
   }
 
-  @NotNull
-  public static double[] sqrt(@NotNull final double x[]) {
+  @NotNull public static double[] sqrt(@NotNull final double x[]) {
     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = Math.sqrt(x[¢]);
@@ -505,8 +465,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] sub(@NotNull final double[] x, @NotNull final double[] y) {
+  @NotNull public static double[] sub(@NotNull final double[] x, @NotNull final double[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -520,8 +479,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created vector representing the result of the
    *         subtraction */
-  @NotNull
-  public static double[] subtract(@NotNull final double[] x, @NotNull final double[] y) {
+  @NotNull public static double[] subtract(@NotNull final double[] x, @NotNull final double[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
@@ -535,8 +493,7 @@ public enum LinearAlgebra {
    * @param y Another arbitrary vector of equal length
    * @return A newly created vector representing the result of the
    *         subtraction */
-  @NotNull
-  public static int[] subtract(@NotNull final int[] x, @NotNull final int[] y) {
+  @NotNull public static int[] subtract(@NotNull final int[] x, @NotNull final int[] y) {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final int[] $ = new int[n];
@@ -556,8 +513,7 @@ public enum LinearAlgebra {
    * @param x An arbitrary matrix
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static double[] sum(@NotNull final double[][] x) {
+  @NotNull public static double[] sum(@NotNull final double[][] x) {
     double[] $ = new double[columns(x)];
     for (final double[] element : x)
       $ = add($, element);
@@ -578,16 +534,14 @@ public enum LinearAlgebra {
    * @param x An arbitrary matrix
    * @return A newly created vector representing the Hadamard product of the
    *         arguments */
-  @NotNull
-  public static int[] sum(@NotNull final int[][] x) {
+  @NotNull public static int[] sum(@NotNull final int[][] x) {
     int[] $ = new int[columns(x)];
     for (final int[] element : x)
       $ = add($, element);
     return $;
   }
 
-  @NotNull
-  public static double[][] transpose(@NotNull final double[][] x) {
+  @NotNull public static double[][] transpose(@NotNull final double[][] x) {
     final int rows = x.length;
     final int columns = x[0].length;
     final double[][] $ = make(columns, rows);
@@ -597,8 +551,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static int[][] transpose(@NotNull final int[][] x) {
+  @NotNull public static int[][] transpose(@NotNull final int[][] x) {
     final int rows = x.length;
     final int columns = x[0].length;
     final int[][] $ = new int[columns][rows];
@@ -608,8 +561,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static short[][] transpose(@NotNull final short[][] x) {
+  @NotNull public static short[][] transpose(@NotNull final short[][] x) {
     final int rows = x.length;
     final int columns = x[0].length;
     final short[][] $ = new short[columns][rows];
@@ -619,8 +571,7 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull
-  public static double[] zeroes(final int ¢) {
+  @NotNull public static double[] zeroes(final int ¢) {
     return new double[¢];
   }
 

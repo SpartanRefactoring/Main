@@ -2,8 +2,9 @@ package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.classfiles.reify.OpCode.*;
-import org.jetbrains.annotations.NotNull;
 
 public class SimplifiedCode {
   private static boolean isRelevant(@NotNull final Instruction ¢) {
@@ -37,8 +38,7 @@ public class SimplifiedCode {
     return new CFG(codes).cyclomaticComplexity();
   }
 
-  @NotNull
-  public List<Instruction> instructions() {
+  @NotNull public List<Instruction> instructions() {
     parse();
     return instructions;
   }

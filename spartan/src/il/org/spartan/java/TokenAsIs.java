@@ -1,25 +1,20 @@
-/**
- *
- */
 package il.org.spartan.java;
-
-import org.jetbrains.annotations.NotNull;
 
 import static il.org.spartan.utils.___.*;
 import static il.org.spatan.iteration.Iterables.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
-  @NotNull
-  public static String fileToString(final File ¢) throws IOException {
+  @NotNull public static String fileToString(final File ¢) throws IOException {
     return new TokenFeeder(new Tokenizer(¢), new TokenAsIs()).go().processor + "";
   }
 
-  @NotNull
-  public static String fileToString(final String fileName) throws IOException {
+  @NotNull public static String fileToString(final String fileName) throws IOException {
     return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor + "";
   }
 
@@ -27,8 +22,7 @@ public class TokenAsIs extends TokenProcessor {
     System.out.println(fileToString(first(argv)));
   }
 
-  @NotNull
-  public static String stringToString(@NotNull final String text) throws IOException {
+  @NotNull public static String stringToString(@NotNull final String text) throws IOException {
     return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor + "";
   }
 
@@ -39,8 +33,7 @@ public class TokenAsIs extends TokenProcessor {
     $.append(text);
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return $ + "";
   }
 }

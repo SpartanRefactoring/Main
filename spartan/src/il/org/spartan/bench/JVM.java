@@ -1,16 +1,13 @@
-/**
- *
- */
 package il.org.spartan.bench;
 
 import java.lang.management.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separator;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /* Records some characteristics of the JVM state.
  *
@@ -61,8 +58,7 @@ public final class JVM {
     dump.go(ManagementFactory.getRuntimeMXBean());
   }
 
-  @NotNull
-  public static String status() {
+  @NotNull public static String status() {
     return new StringBuilder() //
         .append(TotalMemory.format())//
         .append("\n") //
@@ -122,8 +118,7 @@ public final class JVM {
     return compileTime != o.compileTime;
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return new StringBuilder() //
         .append("JIT𝝉=" + Unit.MILLISECONDS.format(compileTime)) //
         .append(" #Classes=" + loadedClasses + "(current) " + removedClasses + "(removed) " + seenClasses + "(seen)")//
@@ -158,13 +153,11 @@ public final class JVM {
       return $;
     }
 
-    @NotNull
-    public static String format() {
+    @NotNull public static String format() {
       return "GCs: " + format(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    @NotNull
-    public static String format(@NotNull final Iterable<GarbageCollectorMXBean> bs) {
+    @NotNull public static String format(@NotNull final Iterable<GarbageCollectorMXBean> bs) {
       final StringBuffer $ = new StringBuffer();
       final Separator s = new Separator(", ");
       for (final GarbageCollectorMXBean ¢ : bs)
@@ -187,8 +180,7 @@ public final class JVM {
       return $;
     }
 
-    @NotNull
-    static String format(@NotNull final GarbageCollectorMXBean ¢) {
+    @NotNull static String format(@NotNull final GarbageCollectorMXBean ¢) {
       return new StringBuffer().append(¢.getName()) //
           .append((¢.isValid() ? "" : "/invalid") + " ") //
           .append(¢.getCollectionCount()) //
@@ -200,13 +192,11 @@ public final class JVM {
   }
 
   public static class MemoryManagement {
-    @NotNull
-    public static String format() {
+    @NotNull public static String format() {
       return "Memory managers: " + format(ManagementFactory.getMemoryManagerMXBeans());
     }
 
-    @NotNull
-    public static String format(@NotNull final Iterable<MemoryManagerMXBean> bs) {
+    @NotNull public static String format(@NotNull final Iterable<MemoryManagerMXBean> bs) {
       final StringBuffer $ = new StringBuffer("");
       final Separator s = new Separator(", ");
       for (final MemoryManagerMXBean ¢ : bs)
@@ -214,8 +204,7 @@ public final class JVM {
       return $ + "";
     }
 
-    @NotNull
-    public static String format(@NotNull final MemoryManagerMXBean ¢) {
+    @NotNull public static String format(@NotNull final MemoryManagerMXBean ¢) {
       return new StringBuffer().append(¢.getName()) //
           .append(¢.isValid() ? "" : "/invalid") //
           .append("(").append(Separate.by(¢.getMemoryPoolNames(), ",")).append(")") //
@@ -224,13 +213,11 @@ public final class JVM {
   }
 
   public static class TotalMemory {
-    @NotNull
-    public static String format() {
+    @NotNull public static String format() {
       return "Total memory: " + format(ManagementFactory.getMemoryMXBean());
     }
 
-    @NotNull
-    public static String format(@NotNull final MemoryMXBean ¢) {
+    @NotNull public static String format(@NotNull final MemoryMXBean ¢) {
       return new StringBuffer() //
           .append("Zombies=").append(¢.getObjectPendingFinalizationCount()).append("\t") //
           .append("Heap [").append(format(¢.getHeapMemoryUsage())).append("]\n")//
@@ -238,8 +225,7 @@ public final class JVM {
           + "";
     }
 
-    @NotNull
-    public static String format(@NotNull final MemoryUsage ¢) {
+    @NotNull public static String format(@NotNull final MemoryUsage ¢) {
       return new StringBuffer() //
           .append("Init:").append(format(¢.getInit())).append(" ")//
           .append("Max:").append(format(¢.getMax())).append(" ")//

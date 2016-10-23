@@ -1,15 +1,13 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */
@@ -37,8 +35,7 @@ import org.jetbrains.annotations.NotNull;
     return destructiveMedian(¢.clone());
   }
 
-  @NotNull
-  public static double[] prune(@NotNull final double... ds) {
+  @NotNull public static double[] prune(@NotNull final double... ds) {
     final List<Double> $ = new ArrayList<>();
     final double median = destructiveMedian(ds);
     final double mad = mad(ds);

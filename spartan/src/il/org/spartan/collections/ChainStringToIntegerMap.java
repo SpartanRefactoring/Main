@@ -1,13 +1,12 @@
 package il.org.spartan.collections;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.Map.*;
 
+import org.jetbrains.annotations.*;
+
 public class ChainStringToIntegerMap {
-  @NotNull
-  public Map<String, Integer> inner = new HashMap<>();
+  @NotNull public Map<String, Integer> inner = new HashMap<>();
 
   public boolean containsKey(final String key) {
     return inner.containsKey(key);
@@ -17,8 +16,7 @@ public class ChainStringToIntegerMap {
     return inner.containsValue(Integer.valueOf(value));
   }
 
-  @NotNull
-  public Set<Entry<String, Integer>> entrySet() {
+  @NotNull public Set<Entry<String, Integer>> entrySet() {
     return inner.entrySet();
   }
 
@@ -30,33 +28,28 @@ public class ChainStringToIntegerMap {
     return inner.isEmpty();
   }
 
-  @NotNull
-  public Set<String> keySet() {
+  @NotNull public Set<String> keySet() {
     return inner.keySet();
   }
 
-  @NotNull
-  public ChainStringToIntegerMap put(final String key, final int value) {
+  @NotNull public ChainStringToIntegerMap put(final String key, final int value) {
     assert !inner.containsKey(key);
     inner.put(key, Integer.valueOf(value));
     return this;
   }
 
-  @NotNull
-  public ChainStringToIntegerMap putAll(@NotNull final Map<? extends String, ? extends Integer> ¢) {
+  @NotNull public ChainStringToIntegerMap putAll(@NotNull final Map<? extends String, ? extends Integer> ¢) {
     inner.putAll(¢);
     return this;
   }
 
-  @NotNull
-  public ChainStringToIntegerMap putOn(final int value, @NotNull final String... keys) {
+  @NotNull public ChainStringToIntegerMap putOn(final int value, @NotNull final String... keys) {
     for (final String key : keys)
       put(key, value);
     return this;
   }
 
-  @NotNull
-  public ChainStringToIntegerMap remove(final String key) {
+  @NotNull public ChainStringToIntegerMap remove(final String key) {
     inner.remove(key);
     return this;
   }
@@ -65,8 +58,7 @@ public class ChainStringToIntegerMap {
     return inner.size();
   }
 
-  @NotNull
-  public Collection<Integer> values() {
+  @NotNull public Collection<Integer> values() {
     return inner.values();
   }
 }

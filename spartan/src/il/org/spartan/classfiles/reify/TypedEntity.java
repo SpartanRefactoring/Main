@@ -1,17 +1,13 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class TypedEntity extends ConstantPoolEntity {
-  @Nullable
-  public static TypeInfo decode(@NotNull final String descriptor) {
+  @Nullable public static TypeInfo decode(@NotNull final String descriptor) {
     return decodeSingleType(Iterables.make(descriptor.toCharArray()).iterator());
   }
 
@@ -76,15 +72,15 @@ public class TypedEntity extends ConstantPoolEntity {
     }
   }
 
-  @Nullable
-  private static TypeInfo decodeSingleType(@NotNull final CharIterator ¢) {
+  @Nullable private static TypeInfo decodeSingleType(@NotNull final CharIterator ¢) {
     return decodeSingleType(¢.next(), ¢);
   }
 
   public final TypeInfo type;
   public final String descriptor;
 
-  public TypedEntity(final ConstantPool constantPool, final int flags, final String name, @NotNull final String descriptor, final AttributeInfo[] attributes) {
+  public TypedEntity(final ConstantPool constantPool, final int flags, final String name, @NotNull final String descriptor,
+      final AttributeInfo[] attributes) {
     this(constantPool, flags, name, decode(descriptor), descriptor, attributes);
   }
 

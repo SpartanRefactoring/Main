@@ -3,8 +3,9 @@ package il.org.spartan.strings;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A <b>utility</b> class, providing services of determining whether a
  * {@link String} or a {@link File} is suffixed by a given {@link String}, or

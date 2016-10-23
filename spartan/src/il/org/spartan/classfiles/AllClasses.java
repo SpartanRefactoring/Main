@@ -4,9 +4,10 @@ import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
-import org.jetbrains.annotations.NotNull;
 
 public class AllClasses {
   public static void main(final String[] args) throws IOException, StopTraversal {

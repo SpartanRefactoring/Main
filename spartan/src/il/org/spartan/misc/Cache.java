@@ -1,11 +1,11 @@
 package il.org.spartan.misc;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 import java.util.Map.*;
+
+import org.jetbrains.annotations.*;
 
 /** A generic class realizing a cached buffer of elements of an arbitrary kind,
  * but indexed by {@link String}s. If a fetched element is not in the cache,
@@ -36,8 +36,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     this.factory = factory;
   }
 
-  @NotNull
-  public Collection<T> all() {
+  @NotNull public Collection<T> all() {
     if (!exhaustive)
       map.putAll(factory.all());
     exhaustive = true;
@@ -63,8 +62,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
 
   /** Obtain an iterator over the cached object
    * @return Iterator of Entry<String,T> */
-  @NotNull
-  @Override public Iterator<Entry<String, T>> iterator() {
+  @NotNull @Override public Iterator<Entry<String, T>> iterator() {
     return map.entrySet().iterator();
   }
 
@@ -82,28 +80,25 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     return map.size();
   }
 
-  /**
-   * A simple abstract factory, allowing its clients to generate objects not present in the  {@link Cache} .
-   * @author  Yossi Gil
-   * @since  16/06/2007
-   * @param < T >  the type of objects that this factory generates. 
-   */
+  /** A simple abstract factory, allowing its clients to generate objects not
+   * present in the {@link Cache} .
+   * @author Yossi Gil
+   * @since 16/06/2007
+   * @param <T> the type of objects that this factory generates. */
   public abstract static class Factory<T> {
-    /**
-    * retrieve the universal set, i.e., the set of all possible objects, indexed by their respective keys.
-    * @return  the base implementation returns the empty set, but it is meant to be overridden by concrete classes inheriting from {@link Cache.Factory}  
-    */
-    @NotNull
-    @SuppressWarnings("static-method") public Map<String, T> all() {
+    /** retrieve the universal set, i.e., the set of all possible objects,
+     * indexed by their respective keys.
+     * @return the base implementation returns the empty set, but it is meant to
+     *         be overridden by concrete classes inheriting from
+     *         {@link Cache.Factory} */
+    @NotNull @SuppressWarnings("static-method") public Map<String, T> all() {
       return new HashMap<>();
     }
 
-    /**
-    * create a new object from its  {@link String}  name
-    * @param key  the identifier for the newly created object.
-    * @return  the newly created object, or <code><b>null</b></code> if no such object can be created. 
-    */
-    @NotNull
-    public abstract T make(String key);
+    /** create a new object from its {@link String} name
+     * @param key the identifier for the newly created object.
+     * @return the newly created object, or <code><b>null</b></code> if no such
+     *         object can be created. */
+    @NotNull public abstract T make(String key);
   }
 }

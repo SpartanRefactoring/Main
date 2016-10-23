@@ -1,18 +1,15 @@
-/**
- *
- */
 package il.org.spartan.strings;
+
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.Iterables.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since Apr 27, 2012 */
 public enum Tandem {
   ;
-  @NotNull
-  public static String arrays(@NotNull final double[] x, @NotNull final double[] y) {
+  @NotNull public static String arrays(@NotNull final double[] x, @NotNull final double[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,6g:%,6g>", Box.it(x[i()]), Box.it(y[i()]));
@@ -20,8 +17,7 @@ public enum Tandem {
     }, ";");
   }
 
-  @NotNull
-  public static String arrays(@NotNull final double[] x, @NotNull final int[] y) {
+  @NotNull public static String arrays(@NotNull final double[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,g:%,d>", Box.it(x[i()]), Box.it(y[i()]));
@@ -29,8 +25,7 @@ public enum Tandem {
     }, ";");
   }
 
-  @NotNull
-  public static String arrays(@NotNull final int[] x, @NotNull final double[] y) {
+  @NotNull public static String arrays(@NotNull final int[] x, @NotNull final double[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,d:%,g>", Box.it(x[i()]), Box.it(y[i()]));
@@ -38,8 +33,7 @@ public enum Tandem {
     }, ";");
   }
 
-  @NotNull
-  public static String arrays(@NotNull final int[] x, @NotNull final int[] y) {
+  @NotNull public static String arrays(@NotNull final int[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
         return String.format("<%,d:%,d>", Box.it(x[i()]), Box.it(y[i()]));

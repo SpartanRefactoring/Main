@@ -5,7 +5,6 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
@@ -51,8 +50,7 @@ public enum has {
   }
 
   @SuppressWarnings("javadoc") public static class TEST {
-    @org.jetbrains.annotations.Nullable
-    private final @Nullable String nul = null;
+    @org.jetbrains.annotations.Nullable private final @Nullable String nul = null;
 
     @Test public void seriesA01() {
       azzert.aye(has.nulls(nul));

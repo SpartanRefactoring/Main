@@ -6,7 +6,6 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
@@ -27,8 +26,7 @@ public enum CSV {
    * @param cs Input array
    * @return Combined string
    * @see #splitToClasses(String) */
-  @NotNull
-  public static String combine(@NotNull final Class<?>[] cs) {
+  @NotNull public static String combine(@NotNull final Class<?>[] cs) {
     final String[] ss = new String[cs.length];
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = cs[¢] == null ? null : cs[¢].getName();
@@ -42,8 +40,7 @@ public enum CSV {
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
-  @NotNull
-  public static <T> String combine(@NotNull final T[] parts) {
+  @NotNull public static <T> String combine(@NotNull final T[] parts) {
     nonnull(parts);
     final StringBuilder $ = new StringBuilder(10 * parts.length);
     final Separator sep = new Separator(",");
@@ -59,8 +56,7 @@ public enum CSV {
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
-  @NotNull
-  public static <T extends Enum<T>> String combine(@NotNull final T[] parts) {
+  @NotNull public static <T extends Enum<T>> String combine(@NotNull final T[] parts) {
     final String[] ss = new String[parts.length];
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = parts[¢] == null ? null : parts[¢].name();
@@ -70,8 +66,7 @@ public enum CSV {
   /** Escape the given input
    * @param s Input string
    * @return Escaped form of the input */
-  @NotNull
-  public static String escape(@org.jetbrains.annotations.Nullable final @Nullable String s) {
+  @NotNull public static String escape(@org.jetbrains.annotations.Nullable final @Nullable String s) {
     if (s == null)
       return NULL;
     final int len = s.length();
@@ -110,8 +105,7 @@ public enum CSV {
    * @param clazz Class object of T
    * @param s Input string
    * @return Array of T */
-  @NotNull
-  public static <T extends Enum<T>> T[] split(@NotNull final Class<T> clazz, @NotNull final String s) {
+  @NotNull public static <T extends Enum<T>> T[] split(@NotNull final Class<T> clazz, @NotNull final String s) {
     final String[] ss = split(s);
     @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(clazz, ss.length);
     for (int ¢ = 0; ¢ < $.length; ++¢)
@@ -122,8 +116,7 @@ public enum CSV {
   /** Split a comma separated string into its sub parts
    * @param s input string
    * @return Array of sub parts, in their original order */
-  @NotNull
-  public static String[] split(@NotNull final String s) {
+  @NotNull public static String[] split(@NotNull final String s) {
     if (s.length() == 0)
       return new String[0];
     final List<String> $ = new ArrayList<>();
@@ -141,8 +134,7 @@ public enum CSV {
   /** Split a comma separated string into an array of classes.
    * @param s input string
    * @return Array of T */
-  @NotNull
-  public static Class<?>[] splitToClasses(@NotNull final String s) {
+  @NotNull public static Class<?>[] splitToClasses(@NotNull final String s) {
     final String[] names = split(s);
     final Class<?>[] $ = new Class<?>[names.length]; // (T[])
     // Array.newInstance(cls,
@@ -156,8 +148,7 @@ public enum CSV {
     return $;
   }
 
-  @NotNull
-  public static String toCsv(@NotNull final String[][] data) {
+  @NotNull public static String toCsv(@NotNull final String[][] data) {
     final StringWriter sw = new StringWriter();
     final PrintWriter pw = new PrintWriter(sw);
     for (final String[] line : data) {

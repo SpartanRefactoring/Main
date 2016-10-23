@@ -19,7 +19,7 @@ public class Primes {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
   public static boolean isPrime(final int ¢) {
     return ¢ < -1 && isPrime(-¢) // deal with negative values
-        || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+        || ¢ > 1 && isPrime¢(¢); // any integer>- 2
   }
 
   public static void main(final String[] args) throws IOException {

@@ -1,11 +1,8 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since Apr 21, 2012 */
@@ -23,8 +20,7 @@ public enum Spearman {
     return Pearson.rho(rank(x), rank(y));
   }
 
-  @NotNull
-  private static double[] rank(@NotNull final double[] x) {
+  @NotNull private static double[] rank(@NotNull final double[] x) {
     final double[] y = x.clone();
     Arrays.sort(y);
     final double[] $ = new double[x.length];

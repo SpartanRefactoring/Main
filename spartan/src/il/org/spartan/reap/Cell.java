@@ -22,7 +22,6 @@ import org.jetbrains.annotations.*;
  * @see Recipe */
 @SuppressWarnings("null") //
 public abstract class Cell<T> implements Supplier<T>, Cloneable {
-  
   public static Set<Cell<?>> trace;
   /** The last value computed for this cell */
   @Nullable T cache;
@@ -42,16 +41,14 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    * value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code>* */
-  @NotNull
-  public final Cell<T> of(final T ¢) {
+  @NotNull public final Cell<T> of(final T ¢) {
     return set(¢);
   }
 
   /** sets the current value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code> */
-  @NotNull
-  public final Cell<T> set(final T ¢) {
+  @NotNull public final Cell<T> set(final T ¢) {
     cache(¢);
     uponForcedSet();
     version = oldestDependent() + 1; // Invalidate all dependents
@@ -65,8 +62,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    *         stored in this node is updated. */
   public abstract boolean updated();
 
-  @org.jetbrains.annotations.Nullable
-  @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
+  @org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {
@@ -107,8 +103,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
      *         <code>@NonNull</code> {@link Void} is empty. (
      *         <code><b>null</b></code> is the single vale of {@link Void}, but
      *         it does not obey the {@link @NonNull} annotation. */
-    @NotNull
-    static @NonNull Void shouldNeverBeCalled() {
+    @NotNull static @NonNull Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
     }

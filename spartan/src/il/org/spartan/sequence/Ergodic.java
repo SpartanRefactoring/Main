@@ -1,14 +1,12 @@
-/**
- *
- */
 package il.org.spartan.sequence;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 24 ביול 2011 */
@@ -23,13 +21,11 @@ public class Ergodic {
     System.out.println(Separate.by(makeDouble(N, 0.01, 10), " "));
   }
 
-  @NotNull
-  public static int[] make(final int max, final int... is) {
+  @NotNull public static int[] make(final int max, final int... is) {
     return makeInt(max, Iterables.toList(is));
   }
 
-  @NotNull
-  public static double[] makeDouble(final int max, final double... ds) {
+  @NotNull public static double[] makeDouble(final int max, final double... ds) {
     return makeDouble(max, Iterables.toList(ds));
   }
 
@@ -73,8 +69,7 @@ public class Ergodic {
     return ds.get(i).doubleValue() / ds.get(i - 1).doubleValue();
   }
 
-  @NotNull
-  private static double[] makeDouble(final int i, @NotNull final List<Double> $) {
+  @NotNull private static double[] makeDouble(final int i, @NotNull final List<Double> $) {
     for (;;) {
       if ($.size() >= i)
         break;
@@ -86,8 +81,7 @@ public class Ergodic {
     return Unbox.unbox($.toArray(new Double[$.size()]));
   }
 
-  @NotNull
-  private static int[] makeInt(final int n, @NotNull final List<Integer> $) {
+  @NotNull private static int[] makeInt(final int n, @NotNull final List<Integer> $) {
     for (;;) {
       if ($.size() >= n)
         break;

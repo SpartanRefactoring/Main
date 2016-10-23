@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.java;
 
 import static il.org.spartan.azzert.*;

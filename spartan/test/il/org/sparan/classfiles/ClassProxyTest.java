@@ -45,7 +45,7 @@ public class ClassProxyTest {
   }
 
   @Test(timeout = 200000) public void testClassName() {
-    azzert.that((new ClassProxy<>(java.util.Map.Entry.class)).className(), is("java.util.Map$Entry"));
+    azzert.that(new ClassProxy<>(java.util.Map.Entry.class).className(), is("java.util.Map$Entry"));
   }
 
   @Test public void testClassNameAnonymousCLass() {
@@ -134,7 +134,7 @@ public class ClassProxyTest {
   }
 
   @Test(expected = ClassNotFoundException.class) public void testMakeSemicoloned() throws ClassNotFoundException {
-    (new ClassProxy<>("java.lang.Object;")).getFields();
+    new ClassProxy<>("java.lang.Object;").getFields();
   }
 
   @Test public void testMeReferencingClassFileProxy() throws IOException, ClassNotFoundException {

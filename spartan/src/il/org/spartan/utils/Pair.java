@@ -1,22 +1,18 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 public class Pair<First, Second> {
-  @NotNull
-  @SuppressWarnings("unchecked") //
+  @NotNull @SuppressWarnings("unchecked") //
   public static <First, Second> Pair<First, Second>[] makePairs(final int ¢) {
     return new Pair[¢];
   }
 
-  @NotNull
-  public static <First, Second> Pair<First, Second>[] makePairs(final int i, final int m) {
+  @NotNull public static <First, Second> Pair<First, Second>[] makePairs(final int i, final int m) {
     return makePairs(i * m);
   }
 
-  @NotNull
-  public static <A, B> Pair<A, B> newPair(final A a, final B b) {
+  @NotNull public static <A, B> Pair<A, B> newPair(final A a, final B b) {
     return new Pair<>(a, b);
   }
 

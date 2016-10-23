@@ -7,9 +7,10 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -30,8 +31,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final boolean[] bs, final char between) {
+  @NotNull public static String by(@NotNull final boolean[] bs, final char between) {
     return by(box(bs), between + "");
   }
 
@@ -42,8 +42,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final boolean[] bs, final String between) {
+  @NotNull public static String by(@NotNull final boolean[] bs, final String between) {
     return by(box(bs), between);
   }
 
@@ -54,8 +53,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final byte[] bs, final char between) {
+  @NotNull public static String by(@NotNull final byte[] bs, final char between) {
     return by(box(bs), between + "");
   }
 
@@ -66,8 +64,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final byte[] bs, final String between) {
+  @NotNull public static String by(@NotNull final byte[] bs, final String between) {
     return by(box(bs), between);
   }
 
@@ -78,8 +75,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final char[] cs, final char between) {
+  @NotNull public static String by(@NotNull final char[] cs, final char between) {
     return by(box(cs), between + "");
   }
 
@@ -90,8 +86,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final char[] cs, final String between) {
+  @NotNull public static String by(@NotNull final char[] cs, final String between) {
     return by(box(cs), between);
   }
 
@@ -102,8 +97,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final double[] ds, final char between) {
+  @NotNull public static String by(@NotNull final double[] ds, final char between) {
     return by(box(ds), between + "");
   }
 
@@ -114,8 +108,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final double[] ds, final String between) {
+  @NotNull public static String by(@NotNull final double[] ds, final String between) {
     return by(box(ds), between);
   }
 
@@ -130,8 +123,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts, final String between) {
+  @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -150,8 +142,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<T> ts, final char between) {
+  @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<T> ts, final char between) {
     return by(t, ts, between + "");
   }
 
@@ -166,8 +157,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final char between) {
+  @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final char between) {
     return by(t, ts, between + "");
   }
 
@@ -182,8 +172,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final String between) {
+  @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -198,8 +187,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final float[] fs, final char between) {
+  @NotNull public static String by(@NotNull final float[] fs, final char between) {
     return by(box(fs), between + "");
   }
 
@@ -210,8 +198,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final float[] fs, final String between) {
+  @NotNull public static String by(@NotNull final float[] fs, final String between) {
     return by(box(fs), between);
   }
 
@@ -222,8 +209,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final int[] is, final char between) {
+  @NotNull public static String by(@NotNull final int[] is, final char between) {
     return by(box(is), between + "");
   }
 
@@ -234,8 +220,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final int[] is, final String between) {
+  @NotNull public static String by(@NotNull final int[] is, final String between) {
     return by(box(is), between);
   }
 
@@ -247,8 +232,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final Iterable<T> ts, final char between) {
+  @NotNull public static <T> String by(@NotNull final Iterable<T> ts, final char between) {
     return by(ts, between + "");
   }
 
@@ -260,8 +244,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final Iterable<T> ts, final String between) {
+  @NotNull public static <T> String by(@NotNull final Iterable<T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -276,8 +259,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final long[] ls, final char between) {
+  @NotNull public static String by(@NotNull final long[] ls, final char between) {
     return by(box(ls), between + "");
   }
 
@@ -288,8 +270,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final long[] ls, final String between) {
+  @NotNull public static String by(@NotNull final long[] ls, final String between) {
     return by(box(ls), between);
   }
 
@@ -305,8 +286,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
-  @NotNull
-  public static <Key, Value> String by(@NotNull final Map<Key, Value> k, final String between, final String arrow) {
+  @NotNull public static <Key, Value> String by(@NotNull final Map<Key, Value> k, final String between, final String arrow) {
     nonnull(k);
     nonnull(between);
     nonnull(arrow);
@@ -324,8 +304,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final short[] ss, final char between) {
+  @NotNull public static String by(@NotNull final short[] ss, final char between) {
     return by(box(ss), between + "");
   }
 
@@ -336,8 +315,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static String by(@NotNull final short[] ss, final String between) {
+  @NotNull public static String by(@NotNull final short[] ss, final String between) {
     return by(box(ss), between);
   }
 
@@ -348,8 +326,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final T[] ts, final char between) {
+  @NotNull public static <T> String by(@NotNull final T[] ts, final char between) {
     return by(ts, between + "");
   }
 
@@ -360,8 +337,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  @NotNull
-  public static <T> String by(@NotNull final T[] ts, final String between) {
+  @NotNull public static <T> String by(@NotNull final T[] ts, final String between) {
     return by(t -> t + "", ts, between);
   }
 
@@ -375,8 +351,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  @NotNull
-  public static <T> String byCommas(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
+  @NotNull public static <T> String byCommas(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
     return by(t, ts, ",");
   }
 
@@ -384,8 +359,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the comma separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  @NotNull
-  public static String byCommas(@NotNull final Object... ¢) {
+  @NotNull public static String byCommas(@NotNull final Object... ¢) {
     return by(¢, COMMA);
   }
 
@@ -393,8 +367,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  @NotNull
-  public static String byDots(final Object... ¢) {
+  @NotNull public static String byDots(final Object... ¢) {
     return by(Prune.whites(¢), DOT);
   }
 
@@ -402,8 +375,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  @NotNull
-  public static String byNewLines(final Object... ¢) {
+  @NotNull public static String byNewLines(final Object... ¢) {
     return by(Prune.whites(¢), "\n");
   }
 
@@ -411,8 +383,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  @NotNull
-  public static String bySpaces(final Object... ¢) {
+  @NotNull public static String bySpaces(final Object... ¢) {
     return by(Prune.whites(¢), SPACE);
   }
 
@@ -424,13 +395,11 @@ import org.jetbrains.annotations.NotNull;
     System.out.println("Arguments are: " + Separate.by(s -> "\"" + esc(s) + "\"", args, ", "));
   }
 
-  @NotNull
-  public static String nl(@NotNull final Iterable<String> ¢) {
+  @NotNull public static String nl(@NotNull final Iterable<String> ¢) {
     return by(¢, NL);
   }
 
-  @NotNull
-  public static String nl(@NotNull final String... ¢) {
+  @NotNull public static String nl(@NotNull final String... ¢) {
     return by(¢, NL);
   }
 

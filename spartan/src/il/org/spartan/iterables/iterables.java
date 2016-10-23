@@ -4,7 +4,6 @@ package il.org.spartan.iterables;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
@@ -31,13 +30,11 @@ public enum iterables {
 
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
-  @NotNull
-  public static <T> PureIterable.Sized<T> empty() {
+  @NotNull public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
 
-  /** @param os JD
-   * */
+  /** @param os JD */
   public static boolean isEmpty(@NotNull final Iterable<?> os) {
     for (final Object name2 : os)
       if (name2 != null)
@@ -50,8 +47,7 @@ public enum iterables {
    * @param ¢ JD
    * @return PureIterable.Sized<T> for returned value of method
    *         <code>singleton</code> */
-  @NotNull
-  public static <T> PureIterable.Sized<T> singleton(final T ¢) {
+  @NotNull public static <T> PureIterable.Sized<T> singleton(final T ¢) {
     return as.nonNullIterable(¢);
   }
 

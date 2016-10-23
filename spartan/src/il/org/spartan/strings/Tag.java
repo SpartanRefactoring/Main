@@ -7,7 +7,7 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.regex.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -48,16 +48,14 @@ import il.org.spartan.utils.*;
   /** Make a {@link String} of an HTML opening tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-  @NotNull
-  public static String beginTag(final String name) {
+  @NotNull public static String beginTag(final String name) {
     return "<" + name + ">";
   }
 
   /** Make a {@link String} of an HTML closing tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-  @NotNull
-  public static String endTag(final String name) {
+  @NotNull public static String endTag(final String name) {
     return beginTag("/" + name);
   }
 
@@ -79,17 +77,14 @@ import il.org.spartan.utils.*;
    * @param name the name of the given tag.
    * @return the name parameter, followed by slash (/) and enclosed in angular
    *         brackets. */
-  @NotNull
-  public static String selfClosing(final String name) {
+  @NotNull public static String selfClosing(final String name) {
     return beginTag(name + " /");
   }
 
   /** The opening {@link String} of this tag. */
-  @NotNull
-  public final String begin;
+  @NotNull public final String begin;
   /** The closing {@link String} of this tag. */
-  @NotNull
-  public final String end;
+  @NotNull public final String end;
 
   /** Instantiate a plain tag, i.e., a tag without any inner tags,
    * @param name the tag name, e.g., "font"
@@ -127,8 +122,7 @@ import il.org.spartan.utils.*;
    * @param flags any number of HTML flags to be used with the newly created tag
    * @return A newly created tag with the specified name and flags, containing
    *         this tag */
-  @NotNull
-  public Tag inside(final String name, final String... flags) {
+  @NotNull public Tag inside(final String name, final String... flags) {
     return new Tag(this, name, flags);
   }
 
@@ -137,8 +131,7 @@ import il.org.spartan.utils.*;
    * @param ¢ where to look for this text?
    * @return {@link Matcher} of the parameter to capture the tag and its
    *         content. The content is in group number 1. */
-  @NotNull
-  public Matcher makeMatcher(@NotNull final String ¢) {
+  @NotNull public Matcher makeMatcher(@NotNull final String ¢) {
     return makePattern().matcher(¢);
   }
 
@@ -146,8 +139,7 @@ import il.org.spartan.utils.*;
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-  @NotNull
-  public Pattern makePattern() {
+  @NotNull public Pattern makePattern() {
     return Pattern.compile(makeRegularExpression());
   }
 
@@ -155,8 +147,7 @@ import il.org.spartan.utils.*;
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-  @NotNull
-  public String makeRegularExpression() {
+  @NotNull public String makeRegularExpression() {
     return ignoreCase() + begin + group(anyNumberOfReluctant(".|[\r\n]")) + end;
   }
 
@@ -165,8 +156,7 @@ import il.org.spartan.utils.*;
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then <code>"<b>Hello"</b>"</code> is returned. */
-  @NotNull
-  public String wrap(@NotNull final String ¢) {
+  @NotNull public String wrap(@NotNull final String ¢) {
     nonnull(¢);
     return ¢.length() == 0 ? ¢ : begin + ¢ + end;
   }
@@ -177,8 +167,7 @@ import il.org.spartan.utils.*;
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then the string <code>"<b>\nHello\n</b>"</code> is
    *         returned. */
-  @NotNull
-  public String wrapNL(final String ¢) {
+  @NotNull public String wrapNL(final String ¢) {
     nonnull(¢);
     return wrap("\n" + ¢ + "\n");
   }
@@ -191,8 +180,10 @@ import il.org.spartan.utils.*;
     }
 
     @Test public void testDummyInContext() {
-      azzert.that(("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */")
-      .replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */"));
+      azzert.that(
+          ("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */")
+              .replaceFirst(tagRegularExpression, "Content"),
+          is("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */"));
     }
 
     @Test public void testEmptyPre() {

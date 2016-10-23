@@ -1,11 +1,9 @@
-/**
- *
- */
 package il.org.spartan.bench;
+
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 public class RunRecord extends AbstractRunRecord {
   public RunRecord(final int runs, @NotNull final Stopwatch grossTime, @NotNull final Stopwatch netTime) {

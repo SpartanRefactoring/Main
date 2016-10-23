@@ -3,8 +3,9 @@ package il.org.spartan.strings;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A utility class with functions to escape special HTML characters in a
  * {@link String}, before including it in an HTML page.
@@ -23,13 +24,11 @@ import org.jetbrains.annotations.NotNull;
   /** The '&' character. */
   public static final char AMPERSAND = '&';
 
-  @NotNull
-  public static String beginTag(final String tag) {
+  @NotNull public static String beginTag(final String tag) {
     return "<" + tag + ">";
   }
 
-  @NotNull
-  public static String endTag(final String tag) {
+  @NotNull public static String endTag(final String tag) {
     return beginTag("/" + tag);
   }
 
@@ -38,8 +37,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a string representing the escaped form of the parameter (if it is a
    *         special character). Otherwise, the string containing the
    *         parameter. */
-  @NotNull
-  public static String esc(final char ¢) {
+  @NotNull public static String esc(final char ¢) {
     switch (¢) {
       case ' ':
         return "&nbsp;";
@@ -63,8 +61,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ {@link Collection} of {@link String}s to be escaped.
    * @return an array containing the escaped version of the elements of the
    *         parameter. */
-  @NotNull
-  public static String[] esc(@NotNull final Collection<String> ¢) {
+  @NotNull public static String[] esc(@NotNull final Collection<String> ¢) {
     return esc(¢.toArray(new String[¢.size()]));
   }
 
@@ -72,8 +69,7 @@ import org.jetbrains.annotations.NotNull;
    * @param s a string to escape.
    * @return a string representing the escaped form of the parameter, where all
    *         special HTML characters are escaped. */
-  @NotNull
-  public static String esc(@NotNull final String s) {
+  @NotNull public static String esc(@NotNull final String s) {
     final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       $.append(esc(s.charAt(¢)));
@@ -84,8 +80,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ss an array of strings escape.
    * @return the same array, where each entry is replaced by its escaped
    *         form. */
-  @NotNull
-  public static String[] esc(@NotNull final String[] ss) {
+  @NotNull public static String[] esc(@NotNull final String[] ss) {
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = esc(ss[¢]);
     return ss;
@@ -103,13 +98,11 @@ import org.jetbrains.annotations.NotNull;
     return ¢.substring(1, ¢.length() - 1);
   }
 
-  @NotNull
-  public static String tag(final String tag, final String text) {
+  @NotNull public static String tag(final String tag, final String text) {
     return beginTag(tag) + text + endTag(tag);
   }
 
-  @NotNull
-  public static String tagContents(final String tag, @NotNull final String s) {
+  @NotNull public static String tagContents(final String tag, @NotNull final String s) {
     return new StringBuilder(first(s)).append(tag(tag, peel(s))).append(last(s)) + "";
   }
 }

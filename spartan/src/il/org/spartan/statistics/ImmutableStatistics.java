@@ -1,15 +1,12 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.bench.Unit.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.bench.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */
@@ -28,8 +25,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
 
   protected Unit unit;
   protected int flips;
-  @NotNull
-  protected double[] values = new double[0];
+  @NotNull protected double[] values = new double[0];
 
   /** Generate a copy of the set of all recorded values
    * @return an array containing all recorded values */
@@ -115,8 +111,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
 
   /** Prune the set of values to those in the median +- mad value.
    * @return an array representing these values */
-  @NotNull
-  public double[] prune() {
+  @NotNull public double[] prune() {
     return prune(all());
   }
 
@@ -136,8 +131,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
     return unit;
   }
 
-  @NotNull
-  private StringBuilder appendError(@NotNull final StringBuilder b, final double d) {
+  @NotNull private StringBuilder appendError(@NotNull final StringBuilder b, final double d) {
     return n() <= 1 ? b : b.append('±').append(RELATIVE.format(d));
   }
 }

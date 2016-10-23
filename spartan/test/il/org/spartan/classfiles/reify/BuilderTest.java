@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 import org.junit.*;
@@ -20,7 +17,7 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
   }
 
   @Test public void constantPoolEntityStrings() {
-    System.out.println((new ConstantPoolEntity(new Builder(CLASSFILES.open(ClassFileTest.class)))).getReferencedStrings());
+    System.out.println(new ConstantPoolEntity(new Builder(CLASSFILES.open(ClassFileTest.class))).getReferencedStrings());
   }
 
   @Test public void constantPoolEntityUTF8() {
@@ -36,7 +33,7 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
   }
 
   @Test public void otherBuilderNotNull() {
-    assert (new Builder(CLASSFILES.open(ClassFileTest.class))).go() != null;
+    assert new Builder(CLASSFILES.open(ClassFileTest.class)).go() != null;
   }
 
   @Test public void otherMakeNotNull() {

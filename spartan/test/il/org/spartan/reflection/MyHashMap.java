@@ -5,7 +5,6 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
@@ -55,8 +54,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
-  @org.jetbrains.annotations.Nullable
-  private transient Set<Map.Entry<K, V>> entrySet;
+  @org.jetbrains.annotations.Nullable private transient Set<Map.Entry<K, V>> entrySet;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
 
@@ -87,7 +85,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
     if (loadFactor <= 0 || Float.isNaN(loadFactor))
       throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
-    // Find a power of 2 >= initialCapacity
+    // Find a power of 2>= initialCapacity
     int capacity = 1;
     while (capacity < Math.min(initialCapacity, MAXIMUM_CAPACITY))
       capacity <<= 1;
@@ -171,8 +169,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations.
    * @return a set view of the mappings contained in this map */
-  @NotNull
-  @Override public Set<Map.Entry<K, V>> entrySet() {
+  @NotNull @Override public Set<Map.Entry<K, V>> entrySet() {
     return entrySet0();
   }
 
@@ -218,8 +215,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
    * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations. */
-  @NotNull
-  @Override public Set<K> keySet() {
+  @NotNull @Override public Set<K> keySet() {
     return keySet != null ? keySet : (keySet = new KeySet());
   }
 
@@ -261,7 +257,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return;
     /* Expand the map if the map if the number of mappings to be added is
      * greater than or equal to threshold. This is conservative; the obvious
-     * condition is (m.size() + size) >= threshold, but this condition could
+     * condition is (m.size() + size)>= threshold, but this condition could
      * result in a map with twice the appropriate capacity, if the keys to be
      * added overlap with the keys already in this map. By using the
      * conservative calculation, we subject ourself to at most one extra
@@ -327,8 +323,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
    * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
    * <tt>addAll</tt> operations. */
-  @NotNull
-  @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
+  @NotNull @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
     return values != null ? values : (values = new Values());
   }
 
@@ -491,8 +486,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return false;
   }
 
-  @org.jetbrains.annotations.Nullable
-  private Set<Map.Entry<K, V>> entrySet0() {
+  @org.jetbrains.annotations.Nullable private Set<Map.Entry<K, V>> entrySet0() {
     return entrySet != null ? entrySet : (entrySet = new EntrySet());
   }
 
@@ -616,8 +610,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return $;
     }
 
-    @NotNull
-    @Override public final String toString() {
+    @NotNull @Override public final String toString() {
       return getKey() + "=" + getValue();
     }
 
@@ -652,8 +645,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return candidate != null && candidate.equals(e);
     }
 
-    @NotNull
-    @Override public Iterator<Map.Entry<K, V>> iterator() {
+    @NotNull @Override public Iterator<Map.Entry<K, V>> iterator() {
       return newEntryIterator();
     }
 
@@ -681,8 +673,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsKey(¢);
     }
 
-    @NotNull
-    @Override public Iterator<K> iterator() {
+    @NotNull @Override public Iterator<K> iterator() {
       return newKeyIterator();
     }
 
@@ -752,8 +743,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsValue(¢);
     }
 
-    @NotNull
-    @Override public Iterator<V> iterator() {
+    @NotNull @Override public Iterator<V> iterator() {
       return newValueIterator();
     }
 

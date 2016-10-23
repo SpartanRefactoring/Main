@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.bench;
 
 import static il.org.spartan.bench.Unit.*;
@@ -9,11 +6,10 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.bench.operations.*;
-import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Manages estimates on the runtime of {@link Operation}s. Duties include:
  * <ol>
@@ -35,8 +31,7 @@ public class TimingEstimator {
    * previously done.
    * @param ¢ arbitrary operation
    * @return the {@link TimingEstimator} associated with the parameter */
-  @NotNull
-  public static TimingEstimator estimator(final Operation ¢) {
+  @NotNull public static TimingEstimator estimator(final Operation ¢) {
     final TimingEstimator $ = estimators.get(¢);
     return $ != null ? $ : makeEstimator(¢);
   }
@@ -52,8 +47,7 @@ public class TimingEstimator {
     estimator(o).run(runs);
   }
 
-  @NotNull
-  private static TimingEstimator makeEstimator(final Operation ¢) {
+  @NotNull private static TimingEstimator makeEstimator(final Operation ¢) {
     final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
     return $;
@@ -85,8 +79,7 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable
-  public RunRecord run(final int runs) {
+  @Nullable public RunRecord run(final int runs) {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
       final JVM before = new JVM();
@@ -142,8 +135,7 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable
-  public RunRecord run(final int runs, final int trials) {
+  @Nullable public RunRecord run(final int runs, final int trials) {
     for (int ¢ = 0; ¢ < trials; ++¢) {
       final RunRecord $ = run(runs);
       if ($ != null)

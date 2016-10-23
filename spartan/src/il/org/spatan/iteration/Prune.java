@@ -5,8 +5,7 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -28,8 +27,7 @@ import il.org.spartan.streotypes.*;
  * @since 27/08/2008 */
 @Utility public enum Prune {
   ;
-  @NotNull
-  public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
+  @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
     for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
@@ -43,8 +41,7 @@ import il.org.spartan.streotypes.*;
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
-  @NotNull
-  public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
+  @NotNull public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
@@ -92,8 +89,7 @@ import il.org.spartan.streotypes.*;
    * @author Yossi Gil, the Technion.
    * @since 27/08/2008 */
   @SuppressWarnings({ "static-method", "synthetic-access" }) public static class TEST {
-    @Nullable
-    final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
+    @Nullable final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
     private ArrayList<String> sparseCollection;
 

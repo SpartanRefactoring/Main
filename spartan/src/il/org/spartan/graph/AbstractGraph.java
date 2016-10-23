@@ -5,10 +5,10 @@ import static il.org.spartan.utils.___.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.Iterables.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An abstract representation of an immutable directed graph
  * @param <E> type of elements stored in this graph
@@ -78,8 +78,7 @@ public abstract class AbstractGraph<E> {
 
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
-  @Nullable
-  public Iterable<Vertex<E>> preOrder() {
+  @Nullable public Iterable<Vertex<E>> preOrder() {
     return () -> new ReadonlyIterator<Vertex<E>>() {
       final Set<Vertex<E>> visited = new HashSet<>();
       final Set<Vertex<E>> unvisited = new HashSet<>();
@@ -96,8 +95,7 @@ public abstract class AbstractGraph<E> {
         return pending != null;
       }
 
-      @Nullable
-      @Override public Vertex<E> next() {
+      @Nullable @Override public Vertex<E> next() {
         final Vertex<E> $ = pending;
         pending = findNext();
         return $;
@@ -200,8 +198,7 @@ public abstract class AbstractGraph<E> {
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sourcesCount();
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return name() + "<" + size() + ";" + countEdges() + "> ";
   }
 

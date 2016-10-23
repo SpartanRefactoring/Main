@@ -6,8 +6,7 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -48,8 +47,7 @@ import il.org.spartan.utils.Separate.*;
  * @since 28/08/2008 */
 @Utility public enum Stringify {
   ; // No values in this namespace.
-  @NotNull
-  public static <T> ArrayList<String> apply(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
+  @NotNull public static <T> ArrayList<String> apply(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
     final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(t.__(¢));
@@ -62,8 +60,7 @@ import il.org.spartan.utils.Separate.*;
    *        the beginning of a non-empty list.
    * @return a newly created options object with the default settings, except
    *         for the specified beginning string. */
-  @NotNull
-  public static Option begin(final String begin) {
+  @NotNull public static Option begin(final String begin) {
     nonnull(begin);
     return new Option().begin(begin);
   }
@@ -74,8 +71,7 @@ import il.org.spartan.utils.Separate.*;
    *        end of a non-empty list.
    * @return a newly created options object with the default settings, except
    *         for the specified ending string. */
-  @NotNull
-  public static Option end(final String end) {
+  @NotNull public static Option end(final String end) {
     nonnull(end);
     return new Option().end(end);
   }
@@ -86,8 +82,7 @@ import il.org.spartan.utils.Separate.*;
    *        the list. If <code><b>null</b></code>, then empty elements are not .
    * @return a newly created options object with the default settings, except
    *         for the specified filler string. */
-  @NotNull
-  public static Option filler(final String filler) {
+  @NotNull public static Option filler(final String filler) {
     return new Option().filler(filler);
   }
 
@@ -100,8 +95,7 @@ import il.org.spartan.utils.Separate.*;
    * @param <T> type of arguments to be converted.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  @NotNull
-  public static <T> String it(@NotNull final Iterable<? extends T> ts, @NotNull final F<T> t, @NotNull final Option o) {
+  @NotNull public static <T> String it(@NotNull final Iterable<? extends T> ts, @NotNull final F<T> t, @NotNull final Option o) {
     return it(apply(t, ts), o);
   }
 
@@ -112,8 +106,7 @@ import il.org.spartan.utils.Separate.*;
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-  @NotNull
-  public static <T> String it(final Iterable<T> ¢) {
+  @NotNull public static <T> String it(final Iterable<T> ¢) {
     return it(¢, Option.defaultStyle);
   }
 
@@ -124,8 +117,7 @@ import il.org.spartan.utils.Separate.*;
    * @param o formatting style for this list.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  @NotNull
-  public static <T> String it(final Iterable<T> ts, @NotNull final Option o) {
+  @NotNull public static <T> String it(final Iterable<T> ts, @NotNull final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
 
@@ -136,8 +128,7 @@ import il.org.spartan.utils.Separate.*;
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-  @NotNull
-  public static <T> String it(@NotNull final T[] ¢) {
+  @NotNull public static <T> String it(@NotNull final T[] ¢) {
     return it(¢, Option.defaultStyle);
   }
 
@@ -148,8 +139,7 @@ import il.org.spartan.utils.Separate.*;
    * @param o formatting style for this list.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  @NotNull
-  public static <T> String it(@NotNull final T[] ts, @NotNull final Option o) {
+  @NotNull public static <T> String it(@NotNull final T[] ts, @NotNull final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
 
@@ -158,8 +148,7 @@ import il.org.spartan.utils.Separate.*;
    * @return a newly created options object with the default settings, except
    *         for except for the specification <code><b>null</b></code> are to be
    *         omitted. */
-  @NotNull
-  public static Option omitNulls() {
+  @NotNull public static Option omitNulls() {
     return new Option().omitNulls();
   }
 
@@ -169,8 +158,7 @@ import il.org.spartan.utils.Separate.*;
    *        separate the list items.
    * @return a newly created options object with the default settings, except
    *         for the specified filler string. */
-  @NotNull
-  public static Option separator(final String separator) {
+  @NotNull public static Option separator(final String separator) {
     nonnull(separator);
     return new Option().separator(separator);
   }
@@ -179,8 +167,7 @@ import il.org.spartan.utils.Separate.*;
     return asStringCollection(ts, nullFiller).toArray(new String[0]);
   }
 
-  @NotNull
-  private static <T> String[] asStringArray(@NotNull final T[] ts, final String nullFiller) {
+  @NotNull private static <T> String[] asStringArray(@NotNull final T[] ts, final String nullFiller) {
     final String[] $ = new String[ts.length];
     int i = 0;
     for (final T ¢ : ts)
@@ -188,8 +175,7 @@ import il.org.spartan.utils.Separate.*;
     return $;
   }
 
-  @NotNull
-  private static <T> Collection<String> asStringCollection(@NotNull final Iterable<T> ts, @Nullable final String nullFiller) {
+  @NotNull private static <T> Collection<String> asStringCollection(@NotNull final Iterable<T> ts, @Nullable final String nullFiller) {
     final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
@@ -199,8 +185,7 @@ import il.org.spartan.utils.Separate.*;
     return $;
   }
 
-  @NotNull
-  private static String makeList(@NotNull final String[] ss, @NotNull final Option o) {
+  @NotNull private static String makeList(@NotNull final String[] ss, @NotNull final Option o) {
     return ss.length == 0 ? "" : o.begin() + Separate.by(ss, o.separator()) + o.end();
   }
 
@@ -208,8 +193,7 @@ import il.org.spartan.utils.Separate.*;
     return !o.isOmittingNulls() ? ts : Prune.nulls(ts);
   }
 
-  @NotNull
-  private static <T> T[] prune(@NotNull final T[] ts, @NotNull final Option o) {
+  @NotNull private static <T> T[] prune(@NotNull final T[] ts, @NotNull final Option o) {
     return !o.isOmittingNulls() ? ts : Prune.nulls(ts);
   }
 
@@ -225,8 +209,7 @@ import il.org.spartan.utils.Separate.*;
     public static final Option defaultStyle = new Option("[", "]", NULL_TEXT, ",");
     private String __begin;
     private String __end;
-    @Nullable
-    private String __filler;
+    @Nullable private String __filler;
     private String __separator;
 
     /** Create a new instance, initialized with the default formatting style. */
@@ -252,8 +235,7 @@ import il.org.spartan.utils.Separate.*;
       return __begin;
     }
 
-    @NotNull
-    public Option begin(final String begin) {
+    @NotNull public Option begin(final String begin) {
       __begin = begin;
       return this;
     }
@@ -262,19 +244,16 @@ import il.org.spartan.utils.Separate.*;
       return __end;
     }
 
-    @NotNull
-    public Option end(final String end) {
+    @NotNull public Option end(final String end) {
       __end = end;
       return this;
     }
 
-    @Nullable
-    public String filler() {
+    @Nullable public String filler() {
       return __filler;
     }
 
-    @NotNull
-    public Option filler(final String filler) {
+    @NotNull public Option filler(final String filler) {
       __filler = filler;
       return this;
     }
@@ -283,8 +262,7 @@ import il.org.spartan.utils.Separate.*;
       return __filler == null;
     }
 
-    @NotNull
-    public Option omitNulls() {
+    @NotNull public Option omitNulls() {
       __filler = null;
       return this;
     }
@@ -293,8 +271,7 @@ import il.org.spartan.utils.Separate.*;
       return __separator;
     }
 
-    @NotNull
-    public Option separator(final String separator) {
+    @NotNull public Option separator(final String separator) {
       __separator = separator;
       return this;
     }
@@ -305,16 +282,14 @@ import il.org.spartan.utils.Separate.*;
       return ¢;
     }
 
-    @NotNull
-    private static Collection<String> makeCollection(@NotNull final String... ss) {
+    @NotNull private static Collection<String> makeCollection(@NotNull final String... ss) {
       final ArrayList<String> $ = new ArrayList<>();
       for (final String ¢ : ss)
         $.add(¢);
       return $;
     }
 
-    @NotNull
-    public Collection<String> makeCollectionABC() {
+    @NotNull public Collection<String> makeCollectionABC() {
       return makeCollection("A", "B", "C");
     }
 
@@ -371,14 +346,14 @@ import il.org.spartan.utils.Separate.*;
 
     @Test public void testPrunedEmptyCollectionBeginEnd() {
       azzert.that(it(//
-      makeCollection(), //
-      omitNulls().separator(",").begin("(").end(")")), is(""));
+          makeCollection(), //
+          omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedEmptyCollectionOmittingNullsBeginEnd() {
       azzert.that(it(//
-      makeCollection(null, null, null), //
-      omitNulls().separator(",").begin("(").end(")")), is(""));
+          makeCollection(null, null, null), //
+          omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedNulledListCommas() {
@@ -387,8 +362,8 @@ import il.org.spartan.utils.Separate.*;
 
     @Test public void testPrunedNulledListCommasCallsBeginEnd() {
       azzert.that(it(//
-      makeCollection(null, "A", null, "B", null, "C", null), //
-      omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
+          makeCollection(null, "A", null, "B", null, "C", null), //
+          omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
     }
 
     @Test public void testPrunedNulledListSemiColons() {

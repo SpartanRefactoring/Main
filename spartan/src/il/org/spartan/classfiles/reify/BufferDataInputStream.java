@@ -1,12 +1,11 @@
 package il.org.spartan.classfiles.reify;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 public final class BufferDataInputStream extends DataInputStream {
-  @NotNull
-  private final BufferInputStream inner;
+  @NotNull private final BufferInputStream inner;
 
   public BufferDataInputStream(@NotNull final BufferInputStream inner) {
     super(inner);

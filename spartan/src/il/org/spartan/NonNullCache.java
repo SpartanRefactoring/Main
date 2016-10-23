@@ -4,8 +4,8 @@ package il.org.spartan;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
-import org.eclipse.jdt.annotation.*;
-import org.jetbrains.annotations.NotNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
@@ -20,8 +20,7 @@ public abstract class NonNullCache<T> {
   /** Compute the cached value, either by looking up the memoized valued, or by
    * actual computation
    * @return cached value */
-  @NotNull
-  public T value() {
+  @NotNull public T value() {
     return value != null ? value : (value = ____());
   }
 
@@ -29,8 +28,7 @@ public abstract class NonNullCache<T> {
    * computing the cached value. This class protects this function, guaranteeing
    * that it would only be called once.
    * @return value to be cached */
-  @NotNull
-  protected abstract T ____();
+  @NotNull protected abstract T ____();
 
   @SuppressWarnings("javadoc") //
   public static class TEST extends NonNullCache<String> {
@@ -48,8 +46,7 @@ public abstract class NonNullCache<T> {
         azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
-    @NotNull
-    @Override protected String ____() {
+    @NotNull @Override protected String ____() {
       return SOME_OFFSET + "x" + sqr(evaluations++);
     }
   }

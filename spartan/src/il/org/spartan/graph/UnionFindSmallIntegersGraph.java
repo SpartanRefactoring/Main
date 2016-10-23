@@ -1,20 +1,16 @@
-/**
- *
- */
 package il.org.spartan.graph;
-
-import org.jetbrains.annotations.NotNull;
 
 import static java.util.Arrays.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 /** @author Yossi Gil
  * @since Apr 19, 2012 */
 public class UnionFindSmallIntegersGraph extends AbstractSmallIntegersGraph {
   private final BitSet nodes = new BitSet();
-  @NotNull
-  private short component[] = new short[0];
+  @NotNull private short component[] = new short[0];
 
   @Override public final short component(final int ¢) {
     return !has(¢) ? -1 : component((short) ¢);

@@ -1,10 +1,10 @@
 package il.org.spartan.reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.___.*;
 
 import java.lang.reflect.*;
+
+import org.jetbrains.annotations.*;
 
 /** A class realizing a recursive traversal of a reflection {@link Class}
  * object, applying the appropriate function supplied by a {@link Visitor} to

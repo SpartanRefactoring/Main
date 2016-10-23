@@ -1,12 +1,13 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.assertEquals;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -118,7 +119,8 @@ public class GraphTest {
     return -1;
   }
 
-  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final ImmutableArrayList<Vertex<String>> vs, final int size, @NotNull final Query q) {
+  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final ImmutableArrayList<Vertex<String>> vs, final int size,
+      @NotNull final Query q) {
     assert vs != null;
     for (final Vertex<String> ¢ : vs)
       q.test(¢);
@@ -130,7 +132,8 @@ public class GraphTest {
     }
   }
 
-  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final Iterable<Vertex<String>> ss, final int length, @NotNull final Query q) {
+  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final Iterable<Vertex<String>> ss, final int length,
+      @NotNull final Query q) {
     assert ss != null;
     for (final Vertex<String> ¢ : ss)
       q.test(¢);

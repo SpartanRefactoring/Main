@@ -1,19 +1,15 @@
-/**
- *
- */
 package il.org.spartan.java;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.java.Token.Category.*;
+
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class CodeOnlyFilter extends TokenFilter {
   private final StringBuilder $ = new StringBuilder();
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return $ + "";
   }
 

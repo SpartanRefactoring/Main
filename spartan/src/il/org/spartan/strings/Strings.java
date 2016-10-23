@@ -1,8 +1,8 @@
 package il.org.spartan.strings;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** Typedef for a list of strings.
  * @author Yossi Gil

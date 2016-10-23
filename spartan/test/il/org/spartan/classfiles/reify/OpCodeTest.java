@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 import static il.org.spartan.azzert.*;

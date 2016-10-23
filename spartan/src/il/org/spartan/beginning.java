@@ -3,7 +3,7 @@ package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -28,18 +28,15 @@ import il.org.spartan.iterables.*;
     );
   }
 
-  @NotNull
-  static with with(final char ¢) {
+  @NotNull static with with(final char ¢) {
     return with(¢ + "");
   }
 
-  @NotNull
-  static with with(final String ¢) {
+  @NotNull static with with(final String ¢) {
     return new with(¢);
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" })
-  class TEST {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" }) class TEST {
     @Test public void with() {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
@@ -64,13 +61,11 @@ import il.org.spartan.iterables.*;
       return beginWith;
     }
 
-    @NotNull
-    public C separate(final Iterable<?> os) {
+    @NotNull public C separate(final Iterable<?> os) {
       return new C(os);
     }
 
-    @NotNull
-    public C separate(final String... ¢) {
+    @NotNull public C separate(final String... ¢) {
       return new C(as.list(¢));
     }
 
@@ -81,23 +76,19 @@ import il.org.spartan.iterables.*;
         this.os = os;
       }
 
-      @NotNull
-      public D by(final String between) {
+      @NotNull public D by(final String between) {
         return new D(between);
       }
 
-      @NotNull
-      public D byCommas() {
+      @NotNull public D byCommas() {
         return by(COMMA);
       }
 
-      @NotNull
-      public D bySpaces() {
+      @NotNull public D bySpaces() {
         return by(SPACE);
       }
 
-      @NotNull
-      public C pruned() {
+      @NotNull public C pruned() {
         return new with(beginWith()).new C(as.list(prune.whites(as.strings(os))));
       }
 
@@ -118,8 +109,7 @@ import il.org.spartan.iterables.*;
           this.separator = separator;
         }
 
-        @NotNull
-        public E endingWith(final String ¢) {
+        @NotNull public E endingWith(final String ¢) {
           return new E(¢);
         }
 
@@ -127,8 +117,7 @@ import il.org.spartan.iterables.*;
           return separator;
         }
 
-        @NotNull
-        @Override public String toString() {
+        @NotNull @Override public String toString() {
           return nothing() ? ifEmpty : beginWith() + separate.these(these()).by(separator()) + endWith;
         }
 
@@ -137,13 +126,11 @@ import il.org.spartan.iterables.*;
             D.this.endWith = endWith;
           }
 
-          @NotNull
-          public I ifEmpty(final String ¢) {
+          @NotNull public I ifEmpty(final String ¢) {
             return new I(¢);
           }
 
-          @NotNull
-          @Override public String toString() {
+          @NotNull @Override public String toString() {
             return D.this + "";
           }
 
@@ -152,8 +139,7 @@ import il.org.spartan.iterables.*;
               D.this.ifEmpty = ifEmpty;
             }
 
-            @NotNull
-            @Override public String toString() {
+            @NotNull @Override public String toString() {
               return E.this + "";
             }
           }

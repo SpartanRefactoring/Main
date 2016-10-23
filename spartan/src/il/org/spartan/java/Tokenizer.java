@@ -4,23 +4,20 @@ import static il.org.spartan.strings.StringUtils.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Tokenizer {
-  @NotNull
-  public static Reader reader(@NotNull final File ¢) throws FileNotFoundException {
+  @NotNull public static Reader reader(@NotNull final File ¢) throws FileNotFoundException {
     return new FileReader(¢);
   }
 
-  @NotNull
-  public static Reader reader(@Nullable final String fileName) throws FileNotFoundException {
+  @NotNull public static Reader reader(@Nullable final String fileName) throws FileNotFoundException {
     return fileName != null ? reader(new File(fileName)) : new InputStreamReader(System.in);
   }
 
-  @NotNull
-  private final RawTokenizer inner;
+  @NotNull private final RawTokenizer inner;
   private final String streamName;
   private final Reader reader;
 
@@ -59,8 +56,7 @@ public class Tokenizer {
     return inner.column();
   }
 
-  @NotNull
-  public String description(@NotNull final Token ¢) {
+  @NotNull public String description(@NotNull final Token ¢) {
     return location() + ¢ + " / " + ¢.kind + "<" + esc(text()) + "> S=" + state();
   }
 
@@ -72,8 +68,7 @@ public class Tokenizer {
     return inner.location();
   }
 
-  @Nullable
-  public Token next() {
+  @Nullable public Token next() {
     try {
       return inner.next();
     } catch (@NotNull final IOException e) {
@@ -91,8 +86,7 @@ public class Tokenizer {
     return inner.text();
   }
 
-  @NotNull
-  protected String state() {
+  @NotNull protected String state() {
     return inner.yystate() + "";
   }
 }

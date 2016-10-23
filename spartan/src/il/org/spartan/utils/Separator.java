@@ -1,8 +1,9 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of
@@ -24,8 +25,7 @@ import org.jetbrains.annotations.NotNull;
     return !items.iterator().hasNext();
   }
 
-  @NotNull
-  public static String separateBy(@NotNull final int[] is, final String between) {
+  @NotNull public static String separateBy(@NotNull final int[] is, final String between) {
     if (is.length == 0)
       return "";
     String $ = "";
@@ -35,18 +35,15 @@ import org.jetbrains.annotations.NotNull;
     return $;
   }
 
-  @NotNull
-  public static <T> String separateBy(final String between, @NotNull final T[] items) {
+  @NotNull public static <T> String separateBy(final String between, @NotNull final T[] items) {
     return wrap("", "", items, between);
   }
 
-  @NotNull
-  public static <T> String wrap(final String wrap, @NotNull final Iterable<T> items, final String between) {
+  @NotNull public static <T> String wrap(final String wrap, @NotNull final Iterable<T> items, final String between) {
     return wrap(wrap, wrap, items, between);
   }
 
-  @NotNull
-  public static <T> String wrap(final String begin, final String end, @NotNull final Iterable<T> items, final String between) {
+  @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final Iterable<T> items, final String between) {
     if (isEmpty(items))
       return "";
     String $ = begin;
@@ -56,8 +53,7 @@ import org.jetbrains.annotations.NotNull;
     return $ + end;
   }
 
-  @NotNull
-  public static <T> String wrap(final String begin, final String end, @NotNull final T[] items, final String between) {
+  @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final T[] items, final String between) {
     if (items.length == 0)
       return "";
     String $ = begin;

@@ -5,8 +5,7 @@ import static il.org.spartan.java.Token.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,39 +13,33 @@ import il.org.spartan.*;
 @SuppressWarnings("static-method")
 //
 public class TokenizerTest {
-  @Nullable
-  static Token getToken(@NotNull final String s, final int i) throws IOException {
+  @Nullable static Token getToken(@NotNull final String s, final int i) throws IOException {
     final RawTokenizer j = new RawTokenizer(new StringReader(s));
     for (int ¢ = 0; ¢ < i - 1; ++¢)
       j.next();
     return j.next();
   }
 
-  @NotNull
-  static String getTokenText(@NotNull final String s, final int i) throws IOException {
+  @NotNull static String getTokenText(@NotNull final String s, final int i) throws IOException {
     final RawTokenizer j = new RawTokenizer(new StringReader(s));
     for (int ¢ = 0; ¢ < i; ++¢)
       j.next();
     return j.text();
   }
 
-  @Nullable
-  private static Token firstToken(@NotNull final String ¢) throws IOException {
+  @Nullable private static Token firstToken(@NotNull final String ¢) throws IOException {
     return getToken(¢, 1);
   }
 
-  @NotNull
-  private static String firstTokenText(@NotNull final String ¢) throws IOException {
+  @NotNull private static String firstTokenText(@NotNull final String ¢) throws IOException {
     return getTokenText(¢, 1);
   }
 
-  @Nullable
-  private static Token secondToken(@NotNull final String ¢) throws IOException {
+  @Nullable private static Token secondToken(@NotNull final String ¢) throws IOException {
     return getToken(¢, 2);
   }
 
-  @NotNull
-  private static String secondTokenText(@NotNull final String ¢) throws IOException {
+  @NotNull private static String secondTokenText(@NotNull final String ¢) throws IOException {
     return getTokenText(¢, 2);
   }
 
@@ -394,15 +387,13 @@ public class TokenizerTest {
   }
 
   public static class StringTokenizer {
-    @NotNull
-    private final RawTokenizer inner;
+    @NotNull private final RawTokenizer inner;
 
     public StringTokenizer(@NotNull final String text) {
       inner = new RawTokenizer(new StringReader(text));
     }
 
-    @Nullable
-    public Token next() throws IOException {
+    @Nullable public Token next() throws IOException {
       return inner.next();
     }
 
@@ -410,8 +401,7 @@ public class TokenizerTest {
       inner.yyreset(new StringReader(text));
     }
 
-    @NotNull
-    public String text() {
+    @NotNull public String text() {
       return inner.text();
     }
   }

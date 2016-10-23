@@ -4,12 +4,13 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Provides services for computing the Kendall's tau metric for similarity
  * between rankings.
@@ -19,13 +20,11 @@ import org.jetbrains.annotations.NotNull;
   ;
   static final boolean FAST = true;
 
-  @NotNull
-  public static Charectristics makeCharectristics(@NotNull final double xs[]) {
+  @NotNull public static Charectristics makeCharectristics(@NotNull final double xs[]) {
     return makeCharectristics(xs, seq(xs.length));
   }
 
-  @NotNull
-  public static Charectristics makeCharectristics(@NotNull final double xs[], @NotNull final double ys[]) {
+  @NotNull public static Charectristics makeCharectristics(@NotNull final double xs[], @NotNull final double ys[]) {
     return new Charectristics(xs, ys);
   }
 

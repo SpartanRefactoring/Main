@@ -5,13 +5,13 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Static methods for I/O related operations */
 @Antiexample public class IO {
-  @NotNull
-  public static String concatLines(@NotNull final Iterable<String> ss) {
+  @NotNull public static String concatLines(@NotNull final Iterable<String> ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
@@ -19,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
     return sb + "";
   }
 
-  @NotNull
-  public static String concatLines(@NotNull final String... ss) {
+  @NotNull public static String concatLines(@NotNull final String... ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
@@ -28,8 +27,7 @@ import org.jetbrains.annotations.NotNull;
     return sb + "";
   }
 
-  @NotNull
-  public static List<String> lines(@NotNull final String s) throws IOException {
+  @NotNull public static List<String> lines(@NotNull final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
     for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
@@ -53,8 +51,7 @@ import org.jetbrains.annotations.NotNull;
    * @param path Relative path to the file from the given class
    * @return Contents of the file
    * @throws IOException If an I/O error occur */
-  @NotNull
-  public static String toString(@NotNull final Class<?> clazz, final String path) throws IOException {
+  @NotNull public static String toString(@NotNull final Class<?> clazz, final String path) throws IOException {
     return toString(clazz.getResourceAsStream(path));
   }
 
@@ -62,8 +59,7 @@ import org.jetbrains.annotations.NotNull;
    * @param ¢ Input stream
    * @return the entire content of <code>is</code>
    * @throws IOException If an I/O error occur */
-  @NotNull
-  public static String toString(@NotNull final InputStream ¢) throws IOException {
+  @NotNull public static String toString(@NotNull final InputStream ¢) throws IOException {
     return toString(new InputStreamReader(¢));
   }
 
@@ -71,8 +67,7 @@ import org.jetbrains.annotations.NotNull;
    * @param r Reader
    * @return the entire content of <code>r</code>
    * @throws IOException If an I/O error occur */
-  @NotNull
-  public static String toString(@NotNull final Reader r) throws IOException {
+  @NotNull public static String toString(@NotNull final Reader r) throws IOException {
     final StringBuilder $ = new StringBuilder();
     for (int c = r.read(); c >= 0; c = r.read())
       $.append((char) c);

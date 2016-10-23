@@ -4,8 +4,6 @@ package il.org.spartan.reap;
 import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
 
 /** cell which does not depend on others
  * @param <T> JD

@@ -5,8 +5,9 @@ import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class realizing the {@link FileSystemVisitor} functionality, except that
  * it does not allow throws of {@link StopTraversal} exceptions.

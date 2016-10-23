@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.graph;
 
 import static il.org.spartan.azzert.*;
@@ -9,8 +6,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -36,8 +32,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     return has(n1) && has(n2) && neighbors[n1].get(n2);
   }
 
-  @Nullable
-  public BitSet neighbors(final int ¢) {
+  @Nullable public BitSet neighbors(final int ¢) {
     return ¢ < 0 || ¢ >= neighbors.length ? null : (BitSet) neighbors[¢].clone();
   }
 
@@ -46,8 +41,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
   }
 
   public static class Builder {
-    @NotNull
-    private static short[] append(@NotNull final short[] as, final short a) {
+    @NotNull private static short[] append(@NotNull final short[] as, final short a) {
       if (Arrays.binarySearch(as, a) >= 0)
         return as;
       final short[] $ = copyOf(as, as.length + 1);
@@ -62,20 +56,15 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
       return (short) ¢;
     }
 
-    @NotNull
-    private BitSet[] neighbors = new BitSet[0];
-    @NotNull
-    private short[] component = new short[0];
-    @NotNull
-    private short[] nodes = new short[0];
+    @NotNull private BitSet[] neighbors = new BitSet[0];
+    @NotNull private short[] component = new short[0];
+    @NotNull private short[] nodes = new short[0];
 
-    @NotNull
-    public Builder add(final int ¢) {
+    @NotNull public Builder add(final int ¢) {
       return add(makeShort(¢));
     }
 
-    @NotNull
-    public Builder add(final short n) {
+    @NotNull public Builder add(final short n) {
       final int m = neighbors.length;
       if (n >= m) {
         neighbors = copyOf(neighbors, n + 1);
@@ -87,21 +76,18 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
       return this;
     }
 
-    @NotNull
-    public Builder connect(final int i, final int j) {
+    @NotNull public Builder connect(final int i, final int j) {
       return connect(makeShort(i), makeShort(j));
     }
 
-    @NotNull
-    public Builder connect(final short i, final short j) {
+    @NotNull public Builder connect(final short i, final short j) {
       add(i).add(j);
       neighbors[i].set(j);
       neighbors[j].set(i);
       return union(i, j);
     }
 
-    @NotNull
-    @SuppressWarnings("synthetic-access") //
+    @NotNull @SuppressWarnings("synthetic-access") //
     public BitSetSmallIntegersGraph go() {
       return new BitSetSmallIntegersGraph(neighbors, countArcs(), component, nodes);
     }
@@ -118,8 +104,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
       return component[n] < 0 ? n : (component[n] = find(component[n]));
     }
 
-    @NotNull
-    private Builder union(final short n1, final short n2) {
+    @NotNull private Builder union(final short n1, final short n2) {
       if (find(n1) != find(n2))
         component[find(n1)] = find(n2);
       return this;

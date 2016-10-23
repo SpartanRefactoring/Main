@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.strings;
 
 import static il.org.spartan.azzert.*;

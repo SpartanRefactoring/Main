@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 /** @author Yossi Gil

@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.MomentUtils.*;
@@ -8,8 +5,9 @@ import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */
@@ -31,8 +29,7 @@ public abstract class Statistics {
     return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
 
-  @NotNull
-  public static double[] prune(@NotNull final double[] ds) {
+  @NotNull public static double[] prune(@NotNull final double[] ds) {
     final List<Double> $ = new ArrayList<>();
     final double median = median(ds);
     final double mad = mad(ds);

@@ -5,12 +5,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean
  * and the standard deviation, of a sequence of real numbers.
@@ -27,8 +25,7 @@ public class RealStatistics extends ImmutableStatistics {
   /** Make a record of the sequence of elements.
    * @param vs values to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull
-  public RealStatistics record(@NotNull final double... vs) {
+  @NotNull public RealStatistics record(@NotNull final double... vs) {
     for (final double v : vs)
       record(v);
     return this;
@@ -38,8 +35,7 @@ public class RealStatistics extends ImmutableStatistics {
    * are not recorded.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull
-  public RealStatistics record(final double v) {
+  @NotNull public RealStatistics record(final double v) {
     return Double.isNaN(v) || Double.isInfinite(v) ? recordMissing() : recordValue(v);
   }
 
@@ -48,21 +44,18 @@ public class RealStatistics extends ImmutableStatistics {
    * recorded as ''missing'' values.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull
-  public Statistics record(@Nullable final Double v) {
+  @NotNull public Statistics record(@Nullable final Double v) {
     return v == null ? recordMissing() : record(v.doubleValue());
   }
 
   /** Add a ''missing'' value to the sequence.
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull
-  public RealStatistics recordMissing() {
+  @NotNull public RealStatistics recordMissing() {
     ++missing;
     return this;
   }
 
-  @NotNull
-  protected RealStatistics recordValue(final double v) {
+  @NotNull protected RealStatistics recordValue(final double v) {
     if (n() == 0) {
       min = max = v;
       flips = 2;

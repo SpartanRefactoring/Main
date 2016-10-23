@@ -3,8 +3,9 @@ package il.org.spartan.collections;
 
 import static il.org.spartan.utils.___.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A mutable map, associating an <code><b>int</b></code> value with each value
  * of an enumerated type.
@@ -15,8 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 23/08/2008 */
 @Instantiable @Classical @Canopy public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
   /** Suite metric values are stored internally here. */
-  @NotNull
-  private final int[] implementation;
+  @NotNull private final int[] implementation;
 
   /** Initialize this class, with a map associating a zero with each of the
    * enumerated type values.
@@ -45,8 +45,7 @@ import org.jetbrains.annotations.NotNull;
     implementation[e.ordinal()] += value;
   }
 
-  @NotNull
-  public ImmutableEnumIntMap<E> asImmutable() {
+  @NotNull public ImmutableEnumIntMap<E> asImmutable() {
     return new ImmutableEnumIntMap<>(implementation);
   }
 

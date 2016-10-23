@@ -6,10 +6,11 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.___.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization
@@ -30,8 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
   /** Restore the saved snapshot
    * @return a copy of the saved object */
-  @NotNull
-  public T restore() {
+  @NotNull public T restore() {
     try {
       @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;

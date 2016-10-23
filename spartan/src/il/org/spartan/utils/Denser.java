@@ -1,13 +1,10 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -37,8 +34,7 @@ public class Denser {
   }
 
   private int n;
-  @NotNull
-  private final int[] gather;
+  @NotNull private final int[] gather;
 
   public Denser(@NotNull final int... is) {
     gather = new int[(n = is.length) - zeroes(is)];
@@ -47,8 +43,7 @@ public class Denser {
         gather[j++] = ¢;
   }
 
-  @NotNull
-  public double[] gather(@NotNull final double[] ds) {
+  @NotNull public double[] gather(@NotNull final double[] ds) {
     checkSize(ds, n());
     final double[] $ = new double[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
@@ -56,8 +51,7 @@ public class Denser {
     return $;
   }
 
-  @NotNull
-  public int[] gather(@NotNull final int... is) {
+  @NotNull public int[] gather(@NotNull final int... is) {
     checkSize(is, n());
     final int[] $ = new int[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
@@ -65,8 +59,7 @@ public class Denser {
     return $;
   }
 
-  @NotNull
-  public int[][] gather(@NotNull final int[][] iss) {
+  @NotNull public int[][] gather(@NotNull final int[][] iss) {
     final int[][] $ = new int[iss.length][];
     for (int ¢ = 0; ¢ < iss.length; ++¢)
       $[¢] = gather(iss[¢]);
@@ -81,8 +74,7 @@ public class Denser {
     return n;
   }
 
-  @NotNull
-  public double[] scatter(@NotNull final double[] ds) {
+  @NotNull public double[] scatter(@NotNull final double[] ds) {
     checkSize(ds, m());
     final double[] $ = new double[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
@@ -90,8 +82,7 @@ public class Denser {
     return $;
   }
 
-  @NotNull
-  public int[] scatter(@NotNull final int... is) {
+  @NotNull public int[] scatter(@NotNull final int... is) {
     checkSize(is, m());
     final int[] $ = new int[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
@@ -99,8 +90,7 @@ public class Denser {
     return $;
   }
 
-  @NotNull
-  public XYSeries scatter(@NotNull final XYSeries ¢) {
+  @NotNull public XYSeries scatter(@NotNull final XYSeries ¢) {
     return new XYSeries(scatter(¢.x), scatter(¢.y), scatter(¢.dy));
   }
 

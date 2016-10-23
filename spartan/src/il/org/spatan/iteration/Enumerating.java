@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** A codex recording a given <i>enumeration</i>, i;.e., fixed mapping of a set
  * of n elements of a specified type into the integers 0,..., n-1.
@@ -8,8 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * @since Dec 3, 2009
  * @param <T> Type of encoded elements. */
 public class Enumerating<T> extends Codex.Anchored<T> {
-  @NotNull
-  private static int[] invert(@NotNull final int[] is) {
+  @NotNull private static int[] invert(@NotNull final int[] is) {
     final int[] $ = new int[is.length];
     for (int ¢ = 0; ¢ < is.length; ++¢)
       $[is[¢]] = ¢;
@@ -17,10 +16,8 @@ public class Enumerating<T> extends Codex.Anchored<T> {
   }
 
   private final Codex.Anchored<T> codex;
-  @NotNull
-  private final int[] rankOf;
-  @NotNull
-  private final int[] withRank;
+  @NotNull private final int[] rankOf;
+  @NotNull private final int[] withRank;
 
   /** Instantiate this class with a given codex and ranking vector.
    * @param codex an arbitrary object encoding of some set

@@ -1,8 +1,8 @@
 package il.org.spartan.collections;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.___.*;
+
+import org.jetbrains.annotations.*;
 
 /** A collection of functions and data structures pertaining to the
  * representation of a set of small non-negative integers as a bit mask. Each
@@ -24,8 +24,7 @@ public enum BitSet {
    * <p>
    * Viewed differently, <code>{@link #$$}[p]</code> is the bit mask whose
    * <i>p</i><sup>th</sup> bit is set. */
-  @NotNull
-  public static final short $$[];
+  @NotNull public static final short $$[];
   static {
     $$ = new short[MAX + 1];
     for (int ¢ = 0; ¢ <= MAX; ++¢)

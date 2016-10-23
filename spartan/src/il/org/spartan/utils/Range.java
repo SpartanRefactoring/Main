@@ -2,9 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,
@@ -44,8 +44,7 @@ public class Range {
    * @return first {@link Range} object in the parameters that contains this
    *         instance, or <code><b>null</b></code> if not such value can be
    *         found. */
-  @Nullable
-  public Range findIncludedIn(@NotNull final Iterable<? extends Range> ¢) {
+  @Nullable public Range findIncludedIn(@NotNull final Iterable<? extends Range> ¢) {
     for (final Range $ : ¢)
       if (includedIn($))
         return $;
@@ -71,8 +70,7 @@ public class Range {
   /** Merge with another record
    * @param ¢ JD
    * @return A newly created range representing the merge. */
-  @NotNull
-  public Range merge(@NotNull final Range ¢) {
+  @NotNull public Range merge(@NotNull final Range ¢) {
     return new Range(Math.min(from, ¢.from), Math.max(to, ¢.to));
   }
 

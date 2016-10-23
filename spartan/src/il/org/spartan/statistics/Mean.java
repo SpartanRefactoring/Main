@@ -1,12 +1,9 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Skewness.*;
 import static il.org.spartan.statistics.Sum.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -27,8 +24,7 @@ import il.org.spartan.streotypes.*;
     return destructiveMoment(i, ds.clone());
   }
 
-  @NotNull
-  public static double[] shift(@NotNull final double... ds) {
+  @NotNull public static double[] shift(@NotNull final double... ds) {
     final double mean = mean(ds);
     for (int ¢ = 0; ¢ < ds.length; ++¢)
       ds[¢] -= mean;

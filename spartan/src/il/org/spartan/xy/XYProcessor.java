@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
 import static il.org.spartan.azzert.*;
@@ -10,7 +7,7 @@ import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -198,8 +195,7 @@ public interface XYProcessor {
       ___.nothing();
     }
 
-    @NotNull
-    public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[]) {
+    @NotNull public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[]) {
       assert xs.length == ys.length;
       final int n = Math.max(xs.length, ys.length);
       for (int ¢ = 0; ¢ < n; ++¢)
@@ -208,8 +204,7 @@ public interface XYProcessor {
       return this;
     }
 
-    @NotNull
-    public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[], @NotNull final double dys[]) {
+    @NotNull public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[], @NotNull final double dys[]) {
       assert xs.length == ys.length;
       assert ys.length == dys.length;
       final int n = Math.max(xs.length, ys.length);
@@ -219,16 +214,14 @@ public interface XYProcessor {
       return this;
     }
 
-    @NotNull
-    public Vacuous feed(@NotNull final XYSeries s) {
+    @NotNull public Vacuous feed(@NotNull final XYSeries s) {
       for (int ¢ = 0; ¢ < s.n(); ++¢)
         p(s.x[¢], s.y[¢], s.dy[¢]);
       done();
       return this;
     }
 
-    @NotNull
-    public Vacuous feedHistogram(@NotNull final double ds[]) {
+    @NotNull public Vacuous feedHistogram(@NotNull final double ds[]) {
       for (int ¢ = 0; ¢ < ds.length; ++¢)
         if (ds[¢] != 0)
           p(¢, ds[¢]);
@@ -236,8 +229,7 @@ public interface XYProcessor {
       return this;
     }
 
-    @NotNull
-    public Vacuous feedHistogram(@NotNull final double ys[], final double dys[]) {
+    @NotNull public Vacuous feedHistogram(@NotNull final double ys[], final double dys[]) {
       for (int ¢ = 0; ¢ < ys.length; ++¢)
         if (ys[¢] != 0)
           p(¢, ys[¢], dys[¢]);
@@ -245,8 +237,7 @@ public interface XYProcessor {
       return this;
     }
 
-    @NotNull
-    public Vacuous feedHistogram(@NotNull final int as[]) {
+    @NotNull public Vacuous feedHistogram(@NotNull final int as[]) {
       for (int ¢ = 0; ¢ < as.length; ++¢)
         if (as[¢] != 0)
           p(¢, as[¢]);

@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since Apr 20, 2012 */

@@ -1,10 +1,9 @@
 package il.org.spartan.collections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.*;
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** A collection class that allows addition, counting, iteration, but noting
  * else.
@@ -13,14 +12,12 @@ import java.util.*;
  * @since 01/05/2007 */
 public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
   private static final long serialVersionUID = 3846444108525783786L;
-  @NotNull
-  protected List<T> data = new ArrayList<>();
+  @NotNull protected List<T> data = new ArrayList<>();
 
   /** Add an element to the collection.
    * @param element The element to be added.
    * @return The added element */
-  @Nullable
-  public T add(@Nullable final T element) {
+  @Nullable public T add(@Nullable final T element) {
     if (element != null)
       data.add(element);
     return element;
@@ -63,8 +60,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.isEmpty();
   }
 
-  @NotNull
-  @Override public Iterator<T> iterator() {
+  @NotNull @Override public Iterator<T> iterator() {
     return data.iterator();
   }
 
@@ -75,16 +71,13 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
 
   /** convert this collection into an array
    * @return an array of the elements stored in this collection */
-  @NotNull
-  public abstract T[] toArrary();
+  @NotNull public abstract T[] toArrary();
 
-  @NotNull
-  public Object[] toArray() {
+  @NotNull public Object[] toArray() {
     return data.toArray();
   }
 
-  @NotNull
-  public T[] toArray(@NotNull final T[] ¢) {
+  @NotNull public T[] toArray(@NotNull final T[] ¢) {
     return data.toArray(¢);
   }
 }

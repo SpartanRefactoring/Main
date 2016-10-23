@@ -7,29 +7,26 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Iterables {
-  @NotNull
-  public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final Iterable<? extends T> ts) {
+  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final Iterable<? extends T> ts) {
     for (final T ¢ : ts)
       c.add(¢);
     return c;
   }
 
-  @NotNull
-  public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final T... ts) {
+  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final T... ts) {
     for (final T ¢ : ts)
       c.add(¢);
     return c;
   }
 
-  @NotNull
-  public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> f) {
+  @NotNull public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> f) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
       $.add(f.__(¢));
@@ -62,8 +59,7 @@ public class Iterables {
     return false;
   }
 
-  @NotNull
-  public static <T> ArrayList<T> copy(@NotNull final ArrayList<T> to, @NotNull final Iterable<? extends T> from) {
+  @NotNull public static <T> ArrayList<T> copy(@NotNull final ArrayList<T> to, @NotNull final Iterable<? extends T> from) {
     return addAll(to, from);
   }
 
@@ -107,8 +103,7 @@ public class Iterables {
     return ¢;
   }
 
-  @NotNull
-  public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> __) {
+  @NotNull public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> __) {
     return new ArrayList<>();
   }
 
@@ -130,8 +125,7 @@ public class Iterables {
     return ¢.iterator().next();
   }
 
-  @Nullable
-  public static <T> T first(@NotNull final Iterable<T> ts, @NotNull final Condition<T> t) {
+  @Nullable public static <T> T first(@NotNull final Iterable<T> ts, @NotNull final Condition<T> t) {
     return first(ts.iterator(), t);
   }
 
@@ -140,8 +134,7 @@ public class Iterables {
    * @param ts an arbitrary iterable over this type
    * @param n a non-negative integer
    * @return an array containing the first */
-  @NotNull
-  public static <T> ArrayList<T> first(@NotNull final Iterable<T> ts, final int n) {
+  @NotNull public static <T> ArrayList<T> first(@NotNull final Iterable<T> ts, final int n) {
     final ArrayList<T> $ = new ArrayList<>();
     int i = 0;
     for (final T ¢ : ts) {
@@ -237,8 +230,7 @@ public class Iterables {
     }
   }
 
-  @NotNull
-  public static int[] make(@NotNull final BitSet s) {
+  @NotNull public static int[] make(@NotNull final BitSet s) {
     final int[] $ = new int[s.cardinality()];
     for (int ¢ = 0, value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
       $[¢++] = value;
@@ -309,21 +301,18 @@ public class Iterables {
     return () -> ¢;
   }
 
-  @NotNull
-  public static <T> Iterable<T> make(final T... ¢) {
+  @NotNull public static <T> Iterable<T> make(final T... ¢) {
     return new IterableArray<>(¢);
   }
 
-  @NotNull
-  public static <F, T> Iterable<T> map(@NotNull final Iterable<? extends F> fs, @NotNull final Function<F, T> f) {
+  @NotNull public static <F, T> Iterable<T> map(@NotNull final Iterable<? extends F> fs, @NotNull final Function<F, T> f) {
     final List<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
       $.add(f.eval(¢));
     return $;
   }
 
-  @NotNull
-  public static <E> Iterable<E> reverse(@NotNull final Iterable<E> in) {
+  @NotNull public static <E> Iterable<E> reverse(@NotNull final Iterable<E> in) {
     final List<E> $ = toList(in);
     Collections.reverse($);
     return $;
@@ -339,8 +328,7 @@ public class Iterables {
     return !t2.hasNext();
   }
 
-  @NotNull
-  public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, @NotNull final Condition<T> t) {
+  @NotNull public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, @NotNull final Condition<T> t) {
     return new FilteredIterable<T>(ts) {
       @Override public boolean holds(final T ¢) {
         return t.holds(¢);
@@ -348,13 +336,11 @@ public class Iterables {
     };
   }
 
-  @NotNull
-  public static <T> Iterable<? extends T> select(final T[] ts, @NotNull final Condition<T> t) {
+  @NotNull public static <T> Iterable<? extends T> select(final T[] ts, @NotNull final Condition<T> t) {
     return select(make(ts), t);
   }
 
-  @NotNull
-  public static double[] seq(@NotNull final double ¢[]) {
+  @NotNull public static double[] seq(@NotNull final double ¢[]) {
     return seq(¢.length);
   }
 
@@ -362,31 +348,26 @@ public class Iterables {
    * @param i a non-negative integers
    * @return an array containing, in order, all non-negative integers up to the
    *         parameter. */
-  @NotNull
-  public static double[] seq(final int i) {
+  @NotNull public static double[] seq(final int i) {
     final double[] $ = new double[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = ¢;
     return $;
   }
 
-  @NotNull
-  public static <T> ArrayList<T> serialize(@NotNull final Iterable<? extends T> ¢) {
+  @NotNull public static <T> ArrayList<T> serialize(@NotNull final Iterable<? extends T> ¢) {
     return copy(new ArrayList<T>(count(¢)), ¢);
   }
 
-  @NotNull
-  public static <T> Iterable<T> sort(@NotNull final Iterable<T> os) {
+  @NotNull public static <T> Iterable<T> sort(@NotNull final Iterable<T> os) {
     return addAll(new TreeSet<T>(), os);
   }
 
-  @NotNull
-  public static <T> Iterable<T> sort(@NotNull final Iterable<T> os, final Comparator<T> t) {
+  @NotNull public static <T> Iterable<T> sort(@NotNull final Iterable<T> os, final Comparator<T> t) {
     return addAll(new TreeSet<>(t), os);
   }
 
-  @NotNull
-  public static String[] toArray(@NotNull final Collection<String> ss) {
+  @NotNull public static String[] toArray(@NotNull final Collection<String> ss) {
     final String[] $ = new String[ss.size()];
     int i = 0;
     for (final String ¢ : ss)
@@ -400,13 +381,11 @@ public class Iterables {
     return es.toArray(__);
   }
 
-  @NotNull
-  public static double[] toArray(@NotNull final Iterable<Double> ¢) {
+  @NotNull public static double[] toArray(@NotNull final Iterable<Double> ¢) {
     return toArray(toList(¢));
   }
 
-  @NotNull
-  public static double[] toArray(@NotNull final List<Double> ds) {
+  @NotNull public static double[] toArray(@NotNull final List<Double> ds) {
     final double[] $ = new double[ds.size()];
     int i = 0;
     for (final Double ¢ : ds)
@@ -414,29 +393,25 @@ public class Iterables {
     return $;
   }
 
-  @NotNull
-  public static List<Double> toList(@NotNull final double... ds) {
+  @NotNull public static List<Double> toList(@NotNull final double... ds) {
     final List<Double> $ = new ArrayList<>();
     for (final double ¢ : ds)
       $.add(Box.it(¢));
     return $;
   }
 
-  @NotNull
-  public static List<Integer> toList(@NotNull final int... is) {
+  @NotNull public static List<Integer> toList(@NotNull final int... is) {
     final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
       $.add(Box.it(¢));
     return $;
   }
 
-  @NotNull
-  public static <T> List<T> toList(@NotNull final Iterable<? extends T> ¢) {
+  @NotNull public static <T> List<T> toList(@NotNull final Iterable<? extends T> ¢) {
     return addAll(new ArrayList<T>(), ¢);
   }
 
-  @NotNull
-  public static <T> ArrayList<T> toList(final T... ¢) {
+  @NotNull public static <T> ArrayList<T> toList(final T... ¢) {
     return new ArrayList<>(Arrays.asList(¢));
   }
 
@@ -458,8 +433,7 @@ public class Iterables {
     return $;
   }
 
-  @NotNull
-  public static <T> List<T> union(@NotNull final List<T>... tss) {
+  @NotNull public static <T> List<T> union(@NotNull final List<T>... tss) {
     final List<T> $ = new ArrayList<>();
     for (final List<T> ¢ : tss)
       $.addAll(¢);
@@ -519,8 +493,7 @@ public class Iterables {
    * @since Oct 19, 2009
    * @param <T> type of objects in the array */
   public static class Singleton<T> implements Iterable<T> {
-    @Nullable
-    public static <T> Iterable<T> make(@Nullable final T ¢) {
+    @Nullable public static <T> Iterable<T> make(@Nullable final T ¢) {
       return ¢ == null ? null : new Singleton<>(¢);
     }
 
@@ -532,15 +505,13 @@ public class Iterables {
       this.t = t;
     }
 
-    @NotNull
-    @Override public Iterator<T> iterator() {
+    @NotNull @Override public Iterator<T> iterator() {
       return new Iterables.ReadonlyIterator<T>() {
         @Override public boolean hasNext() {
           return t != null;
         }
 
-        @Nullable
-        @Override public T next() {
+        @Nullable @Override public T next() {
           final T $ = t;
           t = null;
           return $;
