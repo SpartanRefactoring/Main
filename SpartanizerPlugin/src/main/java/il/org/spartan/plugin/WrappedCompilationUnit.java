@@ -52,7 +52,7 @@ public class WrappedCompilationUnit {
     return new WrappedCompilationUnit(¢);
   }
   
-  /** Factory method
+  /** Factory method that takes a list of CompilationUnit
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
