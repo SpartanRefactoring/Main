@@ -229,7 +229,7 @@ public abstract class AbstractSpartanizer {
     report.nl();
   }
 
-  public void runReport(@SuppressWarnings("unused") final Consumer<CSVStatistics> c) {
+  public void runReport(@SuppressWarnings("unused") final Consumer<CSVStatistics> __) {
     // TODO Matteo: implement this if we need it; found in random scan
   }
 

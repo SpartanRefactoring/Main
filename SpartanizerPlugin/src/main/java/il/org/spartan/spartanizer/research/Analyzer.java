@@ -45,6 +45,12 @@ public class Analyzer {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
+  /** @param ¢ String
+   * @return compilation unit out of file */
+  private static ASTNode getCompilationUnit(final String ¢) {
+    return makeAST.COMPILATION_UNIT.from(¢);
+  }
+
   /** Get all java files contained in folder recursively. <br>
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
@@ -82,6 +88,7 @@ public class Analyzer {
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
       appendFile(new File(outputDir + "/after.java"), spartanizedCode);
+      Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
     }
     Logger.summarize(outputDir);
   }

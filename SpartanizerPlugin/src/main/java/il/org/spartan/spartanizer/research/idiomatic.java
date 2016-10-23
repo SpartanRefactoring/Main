@@ -6,9 +6,12 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -31,6 +34,14 @@ public interface idiomatic {
       return null;
     }
   };
+
+  static void addImport(CompilationUnit u, ASTRewrite r) {
+    ImportDeclaration d = u.getAST().newImportDeclaration();
+    d.setStatic(true);
+    d.setOnDemand(true);
+    d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
+    wizard.addImport(u, r, d);
+  }
 
   /** @param <T> JD
    * @param $ result
