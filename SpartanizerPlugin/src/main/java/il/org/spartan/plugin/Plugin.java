@@ -126,7 +126,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     new_project, opened_project
   }
 
-  /** TODO Roth: not convinced it is required. --yg */ 
+  /** TODO Roth: not convinced it is required. --yg */
   static class MProject {
     public IProject p;
     public Type type;

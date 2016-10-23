@@ -10,7 +10,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-// Todo: move me to the test folder
 public final class makeASTTest {
   private static final String HELLO_JAVA = "Hello.java";
   public static final String ROOT = "./src/test/resources/";
