@@ -49,14 +49,13 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
+    for (final Expression ¢ : xs)
+      if (type.of(¢) == Certain.DOUBLE)
+        throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
     long $ = 0;
     try {
-      if (type.of(first(xs)) == Certain.DOUBLE)
-        throw new NumberFormatException();
       $ = az.throwing.long¢(first(xs));
       for (final Expression ¢ : rest(xs)) {
-        if (type.of(¢) == Certain.DOUBLE)
-          throw new NumberFormatException("Expected long or int, but found: " + ¢);
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
