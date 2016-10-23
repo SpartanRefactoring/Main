@@ -168,10 +168,9 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
 				return;
 	  }  
   void r5() {
-	    for (Iterator<Entry<R, V>> iterator = (new LinkedHashMap<R, V>()).entrySet().iterator(); iterator.hasNext();) {
-		if (iterator.hashCode() > 12)
-			return;
-	}
+	    for (Iterator<Entry<R, V>> ¢ = (new LinkedHashMap<R, V>()).entrySet().iterator(); ¢.hasNext();)
+        if (¢.hashCode() > 12)
+          return;
 	  }
   private int r4() {
 	    Map<R, V> $ = new LinkedHashMap<R, V>();
@@ -676,15 +675,12 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     public boolean removeAll(Collection<?> c) {
       checkNotNull(c);
       boolean $ = false;
-      Iterator<Map<C, V>> iterator = backingMap.values().iterator();
-      while (iterator.hasNext()) {
+      for (Iterator<Map<C, V>> iterator = backingMap.values().iterator(); iterator.hasNext();) {
         Map<C, V> map = iterator.next();
-        // map.keySet().removeAll(c) can throw a NPE when map is a TreeMap with
-        // natural ordering and c contains a null.
         if (Iterators.removeAll(map.keySet().iterator(), c)) {
           $ = true;
           if (map.isEmpty())
-			iterator.remove();
+            iterator.remove();
         }
       }
       return $;
