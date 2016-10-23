@@ -1,5 +1,7 @@
 package il.org.spartan.reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.utils.___.*;
 
 import java.lang.reflect.*;
@@ -40,7 +42,7 @@ public final class ReflectionTraversal {
     return go(clazz);
   }
 
-  private int go(final Class<?> from) {
+  private int go(@NotNull final Class<?> from) {
     nonnull(from);
     // Visit the class itself
     int $ = visitor.visit(from);

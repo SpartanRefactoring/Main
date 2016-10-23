@@ -3,6 +3,7 @@ package il.org.spartan.utils;
 import java.util.*;
 
 import il.org.spartan.strings.*;
+import org.jetbrains.annotations.NotNull;
 
 public enum SystemProperty {
   FILE_SEPARATOR, //
@@ -37,16 +38,18 @@ public enum SystemProperty {
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
 
-  private static TreeSet<String> objectsToStrings(final Set<Object> os) {
+  @NotNull
+  private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> os) {
     final TreeSet<String> $ = new TreeSet<>();
     for (final Object ¢ : os)
       $.add((String) ¢);
     return $;
   }
 
+  @NotNull
   public final String key;
 
-  private SystemProperty() {
+  SystemProperty() {
     key = name().toLowerCase().replace('_', '.');
   }
 
@@ -54,7 +57,7 @@ public enum SystemProperty {
     return StringUtils.visualize(value(System.getProperties()));
   }
 
-  public String value(final Properties ¢) {
+  public String value(@NotNull final Properties ¢) {
     return ¢.getProperty(key);
   }
 }

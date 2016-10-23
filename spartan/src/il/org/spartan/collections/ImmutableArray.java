@@ -4,6 +4,7 @@ package il.org.spartan.collections;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An immutable array of any reference type.
  * @param <T> Type of elements stored in the array.
@@ -25,6 +26,7 @@ import il.org.spartan.streotypes.*;
     return implementation[¢];
   }
 
+  @NotNull
   @Override public Iterator<T> iterator() {
     return new Iterator<T>() {
       int i;

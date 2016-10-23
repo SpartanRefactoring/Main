@@ -7,6 +7,7 @@ import static il.org.spartan.statistics.Mean.mean;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -15,7 +16,7 @@ import il.org.spartan.streotypes.*;
  * @since 2011-01-08 */
 @Utility public enum Sum {
   ;
-  public static double sum(final double... ds) {
+  public static double sum(@NotNull final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += ¢;
@@ -29,14 +30,14 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  public static double sum(final int i, final double... ds) {
+  public static double sum(final int i, @NotNull final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += pow(¢, i);
     return $;
   }
 
-  public static double sum2(final double... ds) {
+  public static double sum2(@NotNull final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += sqr(¢);

@@ -14,6 +14,8 @@ import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separate.*;
+import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Nullable;
 
 /** import static il.org.spartan.utils.Box.*; import
  * il.org.spartan.streotypes.*; import il.org.spartan.statistics.*; import
@@ -53,6 +55,7 @@ import il.org.spartan.utils.Separate.*;
     return aggregator.aggregations();
   }
 
+  @NotNull
   public final String asKeyValuePairs() {
     return Separate.by((F<@NonNull Entry<@NonNull String, @NonNull String>>) e -> e.getKey() + "=" + e.getValue(), entries(), ", ");
   }
@@ -79,20 +82,23 @@ import il.org.spartan.utils.Separate.*;
     return map.keySet();
   }
 
-  public CSVLine put(final Accumulator ¢) {
+  public CSVLine put(@NotNull final Accumulator ¢) {
     return put(¢.name(), ¢.value());
   }
 
-  public CSVLine put(final Accumulator... as) {
+  @NotNull
+  public CSVLine put(@NotNull final Accumulator... as) {
     for (final Accumulator ¢ : as)
       put(¢);
     return this;
   }
 
+  @NotNull
   public CSVLine put(final Enum<?> key, final int value) {
     return put(key + "", value + "");
   }
 
+  @NotNull
   public CSVLine put(final Enum<?> key, final String value) {
     return put(key + "", value);
   }
@@ -100,6 +106,7 @@ import il.org.spartan.utils.Separate.*;
   /** Add a key without a value to this instance.
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @return this */
+  @NotNull
   public final CSVLine put(final String key) {
     return put(key, "");
   }
@@ -108,6 +115,7 @@ import il.org.spartan.utils.Separate.*;
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   public final CSVLine put(final String key, final boolean value) {
     return put(key, value + "");
   }
@@ -116,6 +124,7 @@ import il.org.spartan.utils.Separate.*;
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   public final CSVLine put(final String key, final char value) {
     return put(key, value + "");
   }
@@ -152,7 +161,8 @@ import il.org.spartan.utils.Separate.*;
    * @param ss Which (if any) aggregate statistics should be produced for this
    *        column
    * @return this */
-  public CSVLine put(final String key, final double value, final String format, final FormatSpecifier... ss) {
+  @NotNull
+  public CSVLine put(final String key, final double value, @NotNull final String format, @NotNull final FormatSpecifier... ss) {
     aggregator.record(key, value, ss);
     ___.sure(ss.length == 0 || aggregating());
     return put(key, String.format(format, box(value)));
@@ -164,6 +174,7 @@ import il.org.spartan.utils.Separate.*;
                *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   public final CSVLine put(final String key, final float value) {
     return put(key, value + "");
   }
@@ -183,7 +194,8 @@ import il.org.spartan.utils.Separate.*;
    * @param ss List of aggregations to collect on this column and their
    *        respective formatting
    * @return this */
-  public CSVLine put(final String key, final int value, final String format, final FormatSpecifier... ss) {
+  @NotNull
+  public CSVLine put(final String key, final int value, @NotNull final String format, @NotNull final FormatSpecifier... ss) {
     aggregator.record(key, value, ss);
     ___.sure(ss.length == 0 || aggregating());
     return put(key, String.format(format, box(value)));
@@ -194,7 +206,8 @@ import il.org.spartan.utils.Separate.*;
    *        not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
-  public final CSVLine put(final String key, final Integer value) {
+  @NotNull
+  public final CSVLine put(final String key, @Nullable final Integer value) {
     return value == null ? put(key) : put(key, value + "");
   }
 
@@ -211,15 +224,18 @@ import il.org.spartan.utils.Separate.*;
    *        not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
-  public final CSVLine put(final String key, final Object value) {
+  @NotNull
+  public final CSVLine put(final String key, @org.jetbrains.annotations.Nullable final Object value) {
     return value == null ? put(key) : put(key, value + "");
   }
 
-  public final CSVLine put(final String key, final Object a[], final int i) {
+  @NotNull
+  public final CSVLine put(final String key, @Nullable final Object a[], final int i) {
     return put(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 
-  public final CSVLine put(final String key, final Object[] os) {
+  @NotNull
+  public final CSVLine put(final String key, @Nullable final Object[] os) {
     return put(key, os == null ? null : Separate.by(os, ARRAY_SEPARATOR));
   }
 
@@ -227,6 +243,7 @@ import il.org.spartan.utils.Separate.*;
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   public CSVLine put(final String key, final short value) {
     return put(key, value + "");
   }
@@ -235,6 +252,7 @@ import il.org.spartan.utils.Separate.*;
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   @Override public final CSVLine put(final String key, final String value) {
     map.put(key, value);
     return this;
@@ -244,6 +262,7 @@ import il.org.spartan.utils.Separate.*;
    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
+  @NotNull
   public final CSVLine putAggregatorColumn(final String key, final String value) {
     aggregator.markColumn(key);
     return put(key, value);

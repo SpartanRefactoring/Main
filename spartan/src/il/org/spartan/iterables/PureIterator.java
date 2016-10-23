@@ -7,6 +7,8 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -36,6 +38,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
   public abstract static class Staged<T> extends PureIterator<T> {
     /** Stores the next value that this iterator returns. It has non-null
      * content only after {@link #hasNext} returned true. */
+    @org.jetbrains.annotations.Nullable
     private @Nullable T next;
 
     @Override public final T next() {

@@ -7,6 +7,7 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.regex.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -47,6 +48,7 @@ import il.org.spartan.utils.*;
   /** Make a {@link String} of an HTML opening tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
+  @NotNull
   public static String beginTag(final String name) {
     return "<" + name + ">";
   }
@@ -54,11 +56,12 @@ import il.org.spartan.utils.*;
   /** Make a {@link String} of an HTML closing tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
+  @NotNull
   public static String endTag(final String name) {
     return beginTag("/" + name);
   }
 
-  public static String remove(final String text, final String tag) {
+  public static String remove(@NotNull final String text, final String tag) {
     return text//
         .replaceAll(ignoreCase() + beginTag(tag), "") //
         .replaceAll(ignoreCase() + endTag(tag), "") //
@@ -66,7 +69,7 @@ import il.org.spartan.utils.*;
     ;
   }
 
-  public static String replace(final String text, final String from, final String to) {
+  public static String replace(@NotNull final String text, final String from, final String to) {
     return text//
         .replaceAll(ignoreCase() + beginTag(from), beginTag(to)) //
         .replaceAll(ignoreCase() + endTag(from), endTag(to));
@@ -76,19 +79,22 @@ import il.org.spartan.utils.*;
    * @param name the name of the given tag.
    * @return the name parameter, followed by slash (/) and enclosed in angular
    *         brackets. */
+  @NotNull
   public static String selfClosing(final String name) {
     return beginTag(name + " /");
   }
 
   /** The opening {@link String} of this tag. */
+  @NotNull
   public final String begin;
   /** The closing {@link String} of this tag. */
+  @NotNull
   public final String end;
 
   /** Instantiate a plain tag, i.e., a tag without any inner tags,
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag(final String name, final String... flags) {
+  public Tag(final String name, @NotNull final String... flags) {
     nonnull(name);
     nonnull(flags);
     begin = beginTag(name + (flags.length == 0 ? "" : " " + Separate.by(flags, " ")));
@@ -100,7 +106,7 @@ import il.org.spartan.utils.*;
    *        around this inner tag
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag(final Tag inner, final String name, final String... flags) {
+  public Tag(@NotNull final Tag inner, final String name, final String... flags) {
     nonnull(name);
     nonnull(flags);
     final Tag unnested = new Tag(name, flags);
@@ -121,6 +127,7 @@ import il.org.spartan.utils.*;
    * @param flags any number of HTML flags to be used with the newly created tag
    * @return A newly created tag with the specified name and flags, containing
    *         this tag */
+  @NotNull
   public Tag inside(final String name, final String... flags) {
     return new Tag(this, name, flags);
   }
@@ -130,7 +137,8 @@ import il.org.spartan.utils.*;
    * @param ¢ where to look for this text?
    * @return {@link Matcher} of the parameter to capture the tag and its
    *         content. The content is in group number 1. */
-  public Matcher makeMatcher(final String ¢) {
+  @NotNull
+  public Matcher makeMatcher(@NotNull final String ¢) {
     return makePattern().matcher(¢);
   }
 
@@ -138,6 +146,7 @@ import il.org.spartan.utils.*;
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
+  @NotNull
   public Pattern makePattern() {
     return Pattern.compile(makeRegularExpression());
   }
@@ -146,6 +155,7 @@ import il.org.spartan.utils.*;
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
+  @NotNull
   public String makeRegularExpression() {
     return ignoreCase() + begin + group(anyNumberOfReluctant(".|[\r\n]")) + end;
   }
@@ -155,7 +165,8 @@ import il.org.spartan.utils.*;
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then <code>"<b>Hello"</b>"</code> is returned. */
-  public String wrap(final String ¢) {
+  @NotNull
+  public String wrap(@NotNull final String ¢) {
     nonnull(¢);
     return ¢.length() == 0 ? ¢ : begin + ¢ + end;
   }
@@ -166,6 +177,7 @@ import il.org.spartan.utils.*;
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then the string <code>"<b>\nHello\n</b>"</code> is
    *         returned. */
+  @NotNull
   public String wrapNL(final String ¢) {
     nonnull(¢);
     return wrap("\n" + ¢ + "\n");

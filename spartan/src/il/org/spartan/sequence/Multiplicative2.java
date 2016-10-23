@@ -1,5 +1,7 @@
 package il.org.spartan.sequence;
 
+import org.jetbrains.annotations.NotNull;
+
 import static java.lang.Integer.*;
 import static java.lang.Math.max;
 
@@ -21,6 +23,7 @@ public class Multiplicative2 extends Sequence {
     this.step = Math.pow(2, step);
   }
 
+  @NotNull
   @Override public Multiplicative2 advance() {
     final int previous = current;
     current *= step;
@@ -30,6 +33,7 @@ public class Multiplicative2 extends Sequence {
     return this;
   }
 
+  @NotNull
   @Override public Multiplicative2 reset() {
     current = 1;
     return this;

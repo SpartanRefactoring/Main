@@ -4,6 +4,7 @@ package il.org.spartan.collections;
 import static il.org.spartan.utils.___.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** /** An immutable map, associating an <code><b>int</b></code> value with each
  * value of an enumerated type.
@@ -24,7 +25,7 @@ import il.org.spartan.streotypes.*;
   /* (non-Javadoc)
    *
    * @see il.org.spartan.collections.EnumIntMap#get(E) */
-  @Override public int get(final E ¢) {
+  @Override public int get(@NotNull final E ¢) {
     sure(length() == ¢.getClass().getEnumConstants().length);
     return get(¢.ordinal());
   }

@@ -5,6 +5,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -86,6 +87,7 @@ public abstract class Accumulator {
       return value();
     }
 
+    @NotNull
     @Override public String toString() {
       return value + "";
     }

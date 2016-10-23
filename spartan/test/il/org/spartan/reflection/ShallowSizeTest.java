@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -161,7 +162,7 @@ import il.org.spartan.*;
   }
 
   static class ObjectObject {
-    Object self = this;
+    @NotNull Object self = this;
   }
 
   static class ObjectStaticChar {

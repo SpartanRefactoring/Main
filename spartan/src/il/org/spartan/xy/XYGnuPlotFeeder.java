@@ -3,6 +3,8 @@
  */
 package il.org.spartan.xy;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 
 /** @author Yossi Gil
@@ -17,7 +19,7 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
   @Override public void done() {
     try {
       write("e\n");
-    } catch (final Exception e) {
+    } catch (@NotNull final Exception e) {
       e.printStackTrace();
       System.exit(1);
     }
@@ -31,11 +33,11 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
     write(x + " " + y + " " + dy + "\n");
   }
 
-  private void write(final String s) {
+  private void write(@NotNull final String s) {
     try {
       inner.write(s);
       inner.flush();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       e.printStackTrace();
       System.exit(1);
     }

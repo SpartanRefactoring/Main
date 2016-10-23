@@ -1,5 +1,7 @@
 package il.org.spatan.iteration;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
 
@@ -13,12 +15,14 @@ import java.util.*;
  * @param <T> type of encoded elements */
 public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   private static final long serialVersionUID = -6058325247331073511L;
+  @NotNull
   private final Vector<T> int2objects;
+  @NotNull
   private final Map<T, Integer> objects2ints;
 
   /** Constructs a translator for the specified set.
    * @param ts the set of objects/attributes that shall be translated. */
-  public IntCodex(final Iterable<T> ts) {
+  public IntCodex(@NotNull final Iterable<T> ts) {
     nonnull(ts);
     int2objects = new Vector<>();
     objects2ints = new HashMap<>();
@@ -42,6 +46,7 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     return int2objects.get(¢);
   }
 
+  @NotNull
   @Override public Iterable<T> elements() {
     return int2objects;
   }

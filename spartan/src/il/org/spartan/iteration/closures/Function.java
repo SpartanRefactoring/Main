@@ -1,5 +1,7 @@
 package il.org.spartan.iteration.closures;
 
+import org.jetbrains.annotations.NotNull;
+
 /** An interface representing a typed function with a single argument.
  * @param <Argument> Type of argument
  * @param <Result> Type of result
@@ -9,5 +11,5 @@ public interface Function<Argument, Result> {
   /** Evaluate the function for the given input
    * @param f Input argument
    * @return Value of the function for the given argument */
-  Result eval(Argument f);
+  @NotNull Result eval(Argument f);
 }

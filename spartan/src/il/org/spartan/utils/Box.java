@@ -2,6 +2,7 @@
 package il.org.spartan.utils;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A utility class, with a collection of function to box primitive types in
  * their reference type equivalent representation. Similarly, this class offers
@@ -27,7 +28,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Boolean} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Boolean[] box(final boolean bs[]) {
+  @NotNull
+  public static Boolean[] box(@NotNull final boolean bs[]) {
     final Boolean[] $ = new Boolean[bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
@@ -47,7 +49,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Byte} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Byte[] box(final byte bs[]) {
+  @NotNull
+  public static Byte[] box(@NotNull final byte bs[]) {
     final Byte[] $ = new Byte[bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
@@ -68,7 +71,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Character} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Character[] box(final char cs[]) {
+  @NotNull
+  public static Character[] box(@NotNull final char cs[]) {
     final Character[] $ = new Character[cs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(cs[¢]);
@@ -89,7 +93,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Double} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Double[] box(final double ds[]) {
+  @NotNull
+  public static Double[] box(@NotNull final double ds[]) {
     final Double[] $ = new Double[ds.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ds[¢]);
@@ -110,7 +115,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Float} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Float[] box(final float fs[]) {
+  @NotNull
+  public static Float[] box(@NotNull final float fs[]) {
     final Float[] $ = new Float[fs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(fs[¢]);
@@ -131,7 +137,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Integer} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Integer[] box(final int is[]) {
+  @NotNull
+  public static Integer[] box(@NotNull final int is[]) {
     final Integer[] $ = new Integer[is.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(is[¢]);
@@ -151,7 +158,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Long} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Long[] box(final long ls[]) {
+  @NotNull
+  public static Long[] box(@NotNull final long ls[]) {
     final Long[] $ = new Long[ls.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ls[¢]);
@@ -172,7 +180,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Short} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Short[] box(final short ss[]) {
+  @NotNull
+  public static Short[] box(@NotNull final short ss[]) {
     final Short[] $ = new Short[ss.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ss[¢]);
@@ -198,7 +207,8 @@ import il.org.spartan.streotypes.*;
    * @return an array of {@link Integer} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Integer[] it(final int ¢[]) {
+  @NotNull
+  public static Integer[] it(@NotNull final int ¢[]) {
     return box(¢);
   }
 

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -18,14 +20,15 @@ public class RealStatistics extends ImmutableStatistics {
    * use the values of <code>1L</code> to maintain upward compatibility. */
   private static final long serialVersionUID = 1L;
 
-  public static double[] increase(final double[] ¢) {
+  public static double[] increase(@NotNull final double[] ¢) {
     return Arrays.copyOf(¢, 2 * ¢.length + 1);
   }
 
   /** Make a record of the sequence of elements.
    * @param vs values to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  public RealStatistics record(final double... vs) {
+  @NotNull
+  public RealStatistics record(@NotNull final double... vs) {
     for (final double v : vs)
       record(v);
     return this;
@@ -35,6 +38,7 @@ public class RealStatistics extends ImmutableStatistics {
    * are not recorded.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
+  @NotNull
   public RealStatistics record(final double v) {
     return Double.isNaN(v) || Double.isInfinite(v) ? recordMissing() : recordValue(v);
   }
@@ -44,17 +48,20 @@ public class RealStatistics extends ImmutableStatistics {
    * recorded as ''missing'' values.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  public Statistics record(final Double v) {
+  @NotNull
+  public Statistics record(@Nullable final Double v) {
     return v == null ? recordMissing() : record(v.doubleValue());
   }
 
   /** Add a ''missing'' value to the sequence.
    * @return the receiver, to be used, e.g., in chaining more such operations */
+  @NotNull
   public RealStatistics recordMissing() {
     ++missing;
     return this;
   }
 
+  @NotNull
   protected RealStatistics recordValue(final double v) {
     if (n() == 0) {
       min = max = v;

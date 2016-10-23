@@ -1,5 +1,8 @@
 package il.org.spartan;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /** Pun intended: <code>tide.WHITES</code>, <code>tide.clean(s)</code>, cleans
  * all <code>tide.WHITES</code> */
 public interface tide {
@@ -8,7 +11,7 @@ public interface tide {
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
    * @return parameter, with all redundant spaces removes from it */
-  static String clean(final String javaCodeFragment) {
+  static String clean(@NotNull final String javaCodeFragment) {
     String $ = javaCodeFragment//
         .replaceAll("(?m)\\s+", " ") // Squeeze whites
         .replaceAll("^\\s", "") // Opening whites
@@ -23,7 +26,7 @@ public interface tide {
     return $;
   }
 
-  static boolean eq(final String s1, final String s2) {
+  static boolean eq(@Nullable final String s1, @Nullable final String s2) {
     return s1 == s2 || (s1 == null ? s2 == null : s1.equals(s2) || s2 != null && s2.equals(s1));
   }
 }

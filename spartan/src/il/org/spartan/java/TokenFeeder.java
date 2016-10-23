@@ -3,6 +3,8 @@
  */
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.java.Token.*;
 
 import java.io.*;
@@ -14,7 +16,7 @@ public final class TokenFeeder {
   public final Tokenizer tokenizer;
   public final TokenProcessor processor;
 
-  public TokenFeeder(final File f, final TokenProcessor processor) throws FileNotFoundException {
+  public TokenFeeder(@NotNull final File f, final TokenProcessor processor) throws FileNotFoundException {
     this(new Tokenizer(f), processor);
   }
 
@@ -27,6 +29,7 @@ public final class TokenFeeder {
     this.processor = processor;
   }
 
+  @NotNull
   public TokenFeeder go() {
     processor.before();
     for (Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())

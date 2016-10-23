@@ -7,6 +7,7 @@ import static il.org.spartan.statistics.Mean.*;
 import static il.org.spartan.statistics.StandardDeviation.*;
 import static il.org.spartan.statistics.Sum.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -15,7 +16,7 @@ import il.org.spartan.streotypes.*;
  * @since 2011-08-1 */
 @Utility enum Skewness {
   ;
-  public static double skewenessCorrection(final double... vs) {
+  public static double skewenessCorrection(@NotNull final double... vs) {
     return skewenessCorrection(vs.length);
   }
 
@@ -23,11 +24,11 @@ import il.org.spartan.streotypes.*;
     return Math.sqrt(¢ * (¢ - 1)) / (¢ - 2);
   }
 
-  public static double skewness(final double... vs) {
+  public static double skewness(@NotNull final double... vs) {
     return skewnessNormalizedVector(normalize(vs.clone()));
   }
 
-  public static double skewness(final RealStatistics ¢) {
+  public static double skewness(@NotNull final RealStatistics ¢) {
     return skewness(¢.all());
   }
 

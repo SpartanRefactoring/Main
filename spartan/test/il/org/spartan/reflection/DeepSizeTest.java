@@ -2,6 +2,7 @@ package il.org.spartan.reflection;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -10,6 +11,7 @@ import il.org.spartan.sequence.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class DeepSizeTest {
+  @NotNull
   private static MyHashMap<String, String> createHashTable(final int i) {
     final MyHashMap<String, String> $ = new MyHashMap<>();
     for (int ¢ = 0; ¢ < i; ++¢)
@@ -232,7 +234,7 @@ public class DeepSizeTest {
     azzert.that(new DeepSize.Visitor().size(new ObjectBoolean()), is(16));
   }
 
-  Object[] makeRecursiveArray(final int i) {
+  @NotNull Object[] makeRecursiveArray(final int i) {
     final Object[] $ = new Object[i];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = $;

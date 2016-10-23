@@ -1,16 +1,21 @@
 package il.org.spatan.iteration;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 public class ArrayIterator<T> implements Iterator<T> {
-  public static <E> Iterator<E> make(final E[] ¢) {
+  @NotNull
+  public static <E> Iterator<E> make(@NotNull final E[] ¢) {
     return make(¢, 0);
   }
 
-  public static <E> Iterator<E> make(final E[] es, final int begin) {
+  @NotNull
+  public static <E> Iterator<E> make(@NotNull final E[] es, final int begin) {
     return make(es, begin, es.length);
   }
 
+  @NotNull
   public static <E> Iterator<E> make(final E[] es, final int begin, final int end) {
     return new ArrayIterator<>(es, begin, end);
   }
@@ -19,11 +24,11 @@ public class ArrayIterator<T> implements Iterator<T> {
   private int index;
   private int end;
 
-  public ArrayIterator(final T[] ts) {
+  public ArrayIterator(@NotNull final T[] ts) {
     this(ts, 0);
   }
 
-  public ArrayIterator(final T[] ts, final int begin) {
+  public ArrayIterator(@NotNull final T[] ts, final int begin) {
     this(ts, begin, ts.length);
   }
 

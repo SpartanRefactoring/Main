@@ -3,6 +3,7 @@ package il.org.sparan.classfiles;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -225,7 +226,7 @@ import il.org.spartan.classfiles.*;
     azzert.that( Filename.trailerPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"), is("LabelUIResource"));
   }
 
-  private String myImplementation(final Class<?> ¢) {
+  private String myImplementation(@NotNull final Class<?> ¢) {
     return ¢.getCanonicalName().replaceAll("[.]", "/");
   }
 }

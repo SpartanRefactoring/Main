@@ -5,6 +5,8 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.lazy.Environment.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -37,6 +39,7 @@ public class Hamlet implements Environment {
   }
 
   public static class Hamlet2 {
+    @org.jetbrains.annotations.Nullable
     private final Function0<@Nullable Boolean> permanent1 = null;
     private final Property<Boolean> $ = value(false).push(permanent1);
     @SuppressWarnings("unused") private final Function0<@Nullable Boolean> permanent = () -> !$.get();

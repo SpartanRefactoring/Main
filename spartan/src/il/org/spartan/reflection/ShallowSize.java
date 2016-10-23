@@ -1,5 +1,8 @@
 package il.org.spartan.reflection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.reflect.*;
 
 /** This class realizes a memory model for Java objects, as per the following
@@ -55,48 +58,48 @@ public class ShallowSize {
     return arraySize(length, referenceSize());
   }
 
-  public static int of(final boolean it[]) {
+  public static int of(@NotNull final boolean it[]) {
     return arraySize(it.length, 1);
   }
 
-  public static int of(final byte it[]) {
+  public static int of(@NotNull final byte it[]) {
     return arraySize(it.length, 1);
   }
 
-  public static int of(final char it[]) {
+  public static int of(@NotNull final char it[]) {
     return arraySize(it.length, 2);
   }
 
-  public static int of(final Class<?> c) {
+  public static int of(@NotNull final Class<?> c) {
     final Class<?> parent = c.getSuperclass();
     return align(intrinsic(c) + (parent != null ? of(parent) : headerSize()));
   }
 
-  public static int of(final double it[]) {
+  public static int of(@NotNull final double it[]) {
     return arraySize(it.length, 8);
   }
 
-  public static int of(final float it[]) {
+  public static int of(@NotNull final float it[]) {
     return arraySize(it.length, 4);
   }
 
-  public static int of(final int it[]) {
+  public static int of(@NotNull final int it[]) {
     return arraySize(it.length, 4);
   }
 
-  public static int of(final long it[]) {
+  public static int of(@NotNull final long it[]) {
     return arraySize(it.length, 8);
   }
 
-  public static int of(final Object it[]) {
+  public static int of(@NotNull final Object it[]) {
     return arraySize(it.length);
   }
 
-  public static int of(final Object ¢) {
+  public static int of(@Nullable final Object ¢) {
     return ¢ == null ? 0 : of(¢.getClass());
   }
 
-  public static int of(final short it[]) {
+  public static int of(@NotNull final short it[]) {
     return arraySize(it.length, 2);
   }
 
@@ -116,14 +119,14 @@ public class ShallowSize {
     return 8;
   }
 
-  static int intrinsic(final Class<?> c) {
+  static int intrinsic(@NotNull final Class<?> c) {
     int $ = 0;
     for (final Field ¢ : c.getDeclaredFields())
       $ += size(¢);
     return $;
   }
 
-  static int intrinsic(final Object ¢) {
+  static int intrinsic(@NotNull final Object ¢) {
     return intrinsic(¢.getClass());
   }
 
@@ -131,7 +134,7 @@ public class ShallowSize {
     return 4;
   }
 
-  static int size(final Field f) {
+  static int size(@NotNull final Field f) {
     if (Modifier.isStatic(f.getModifiers()))
       return 0;
     final Class<?> c = f.getType();

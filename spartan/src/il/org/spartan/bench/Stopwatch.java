@@ -4,6 +4,7 @@
 package il.org.spartan.bench;
 
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 01/05/2011 */
@@ -29,6 +30,7 @@ public final class Stopwatch {
   }
 
   /** @return <code><b>this</b></code> */
+  @NotNull
   public Stopwatch reset() {
     time = runs = 0;
     return this;
@@ -40,6 +42,7 @@ public final class Stopwatch {
 
   /** @param runs
    * @return <code><b>this</b></code> */
+  @NotNull
   public Stopwatch setRuns(final int runs) {
     this.runs = runs;
     return this;
@@ -47,12 +50,14 @@ public final class Stopwatch {
 
   /** @param time
    * @return <code><b>this</b></code> */
+  @NotNull
   public Stopwatch setTime(final long time) {
     this.time = time;
     return this;
   }
 
   /** @return <code><b>this</b></code> */
+  @NotNull
   public Stopwatch start() {
     ___.require(!started);
     begin = System.nanoTime();
@@ -61,6 +66,7 @@ public final class Stopwatch {
   }
 
   /** @return <code><b>this</b></code> */
+  @NotNull
   public Stopwatch stop() {
     ___.require(started);
     time += System.nanoTime() - begin;

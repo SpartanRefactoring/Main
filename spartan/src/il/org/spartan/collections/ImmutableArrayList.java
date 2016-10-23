@@ -19,6 +19,8 @@ package il.org.spartan.collections;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** Resizable-array implementation of the <tt>List</tt> interface. Implements
  * all optional list operations, and permits all elements, including
@@ -94,10 +96,12 @@ import org.eclipse.jdt.annotation.*;
 public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static <E> ImmutableArrayList<E> make(final Collection<? extends E> ¢) {
+  @NotNull
+  public static <E> ImmutableArrayList<E> make(@NotNull final Collection<? extends E> ¢) {
     return new ImmutableArrayList<>(¢);
   }
 
+  @NotNull
   public static <E> ImmutableArrayList<E> make(final E[] ¢) {
     return new ImmutableArrayList<>(¢);
   }
@@ -106,12 +110,14 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     throw new UnsupportedOperationException();
   }
 
-  private static <E> E[] asArray(final Collection<? extends E> ¢) {
+  @NotNull
+  private static <E> E[] asArray(@NotNull final Collection<? extends E> ¢) {
     @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
     return $.getClass() == Object[].class ? $ : recopy($);
   }
 
-  private static <E> E[] recopy(final E[] a) {
+  @NotNull
+  private static <E> E[] recopy(@NotNull final E[] a) {
     @SuppressWarnings("unchecked") final E[] $ = (E[]) Arrays.copyOf(a, a.length, Object[].class);
     return $;
   }
@@ -124,7 +130,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * the order they are returned by the collection's iterator.
    * @param c the collection whose elements are to be placed into this list
    * @throws NullPointerException if the specified collection is null */
-  public ImmutableArrayList(final Collection<? extends E> c) {
+  public ImmutableArrayList(@NotNull final Collection<? extends E> c) {
     data = asArray(c);
   }
 
@@ -188,6 +194,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   /** Returns a shallow copy of this <tt>ArrayList</tt> instance. (The elements
    * themselves are not copied.)
    * @return a clone of this <tt>ArrayList</tt> instance */
+  @NotNull
   @Override public ImmutableArrayList<E> clone() {
     return this;
   }
@@ -236,7 +243,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * returns the lowest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
-  @Override public int indexOf(final Object o) {
+  @Override public int indexOf(@org.jetbrains.annotations.Nullable final Object o) {
     if (o == null)
       for (int $ = 0; $ < size(); ++$) {
         if (data[$] == null)
@@ -258,6 +265,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <p>
    * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
    * @return an iterator over the elements in this list in proper sequence */
+  @NotNull
   @Override public Iterator<E> iterator() {
     return new InternalIterator();
   }
@@ -267,7 +275,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * returns the highest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
-  @Override public int lastIndexOf(final @Nullable Object o) {
+  @Override public int lastIndexOf(@org.jetbrains.annotations.Nullable final @Nullable Object o) {
     if (o == null)
       for (int $ = size() - 1; $ >= 0; --$) {
         if (data[$] == null)
@@ -284,6 +292,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <p>
    * The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
    * @see #listIterator(int) */
+  @NotNull
   @Override public ListIterator<E> listIterator() {
     return new InternalListIterator(0);
   }
@@ -297,6 +306,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <p>
    * The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
    * @throws IndexOutOfBoundsException {@inheritDoc} */
+  @NotNull
   @Override public ListIterator<E> listIterator(final int index) {
     if (index < 0 || index > size())
       throw new IndexOutOfBoundsException("Index: " + index);
@@ -308,6 +318,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @param index the index of the element to be removed
    * @return the element that was removed from the list
    * @throws IndexOutOfBoundsException {@inheritDoc} */
+  @org.jetbrains.annotations.Nullable
   @Override public E remove(final int index) {
     fail();
     return null;
@@ -362,6 +373,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @param element element to be stored at the specified position
    * @return the element previously at the specified position
    * @throws IndexOutOfBoundsException {@inheritDoc} */
+  @org.jetbrains.annotations.Nullable
   @Override public E set(final int index, final E element) {
     fail();
     return null;
@@ -373,6 +385,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return data.length;
   }
 
+  @NotNull
   @SuppressWarnings("unused") //
   @Override public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
     fail();
@@ -389,6 +402,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * This method acts as bridge between array-based and collection-based APIs.
    * @return an array containing all of the elements in this list in proper
    *         sequence */
+  @NotNull
   @Override public E[] toArray() {
     return Arrays.copyOf(data, size());
   }
@@ -411,6 +425,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @throws ArrayStoreException if the runtime type of the specified array is
    *         not a supertype of the runtime type of every element in this list
    * @throws NullPointerException if the specified array is null */
+  @NotNull
   @Override @SuppressWarnings("unchecked") public <T> T[] toArray(final T[] a) {
     if (a.length < size())
       // Make a new array of a's runtime type, but my contents:

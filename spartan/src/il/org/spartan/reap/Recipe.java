@@ -8,6 +8,8 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A cell that may depend on others.
  * @param <T> JD
@@ -15,7 +17,7 @@ import org.eclipse.jdt.annotation.*;
  * @since 2016 */
 public class Recipe<@Nullable T> extends Cell<T> {
   final List<Cell<?>> prerequisites = new ArrayList<>();
-  @Nullable Supplier<? extends @Nullable T> supplier;
+  @org.jetbrains.annotations.Nullable @Nullable Supplier<? extends @Nullable T> supplier;
 
   /** Instantiates this class.
    * @param supplier JD */
@@ -23,10 +25,12 @@ public class Recipe<@Nullable T> extends Cell<T> {
     this.supplier = supplier;
   }
 
+  @org.jetbrains.annotations.Nullable
   @Override public Cell<T> clone() {
     return super.clone();
   }
 
+  @org.jetbrains.annotations.Nullable
   @Override public T get() {
     if (updated())
       return cache();
@@ -42,7 +46,8 @@ public class Recipe<@Nullable T> extends Cell<T> {
   /** Add another cell on which this instance depends
    * @param ¢ JD
    * @return <code><b>this</b></code> */
-  public Recipe<T> ingredient(final Cell<?> ¢) {
+  @org.jetbrains.annotations.NotNull
+  public Recipe<T> ingredient(@org.jetbrains.annotations.NotNull final Cell<?> ¢) {
     run(() -> {
       ¢.dependents.add(this);
     }).unless(¢.dependents.contains(this));
@@ -55,7 +60,8 @@ public class Recipe<@Nullable T> extends Cell<T> {
   /** Add another cell on which this instance depends
    * @param cs JD
    * @return <code><b>this</b></code> */
-  public Recipe<T> ingredients(final Cell<?>... cs) {
+  @org.jetbrains.annotations.NotNull
+  public Recipe<T> ingredients(@org.jetbrains.annotations.NotNull final Cell<?>... cs) {
     for (final Cell<?> ¢ : cs)
       ingredient(¢);
     return this;
@@ -72,7 +78,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     return true;
   }
 
-  @Nullable T eval() {
+  @org.jetbrains.annotations.Nullable @Nullable T eval() {
     assert supplier != null;
     return supplier.get();
   }
@@ -111,6 +117,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       cache(cantBeNull(supplier).get());
     }
 
+    @org.jetbrains.annotations.Nullable
     @SuppressWarnings({}) @Override public Recipe.NotNull<T> clone() {
       return (Recipe.NotNull<T>) super.clone();
     }
@@ -118,6 +125,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     /** Add another cell on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
+    @org.jetbrains.annotations.NotNull
     @Override public Recipe.NotNull<T> ingredients(final Cell<?>... ¢) {
       return (Recipe.NotNull<T>) super.ingredients(¢);
     }
@@ -148,19 +156,21 @@ public class Recipe<@Nullable T> extends Cell<T> {
   public static class NullRobust<@Nullable T> extends Recipe<T> {
     /** Instantiates this class.
      * @param supplier JD */
-    public NullRobust(final Supplier<? extends T> supplier) {
+    public NullRobust(@org.jetbrains.annotations.NotNull final Supplier<? extends T> supplier) {
       super(supplier);
       assert supplier != null;
     }
 
+    @org.jetbrains.annotations.Nullable
     @SuppressWarnings({}) @Override public Cell<T> clone() {
       return super.clone();
     }
 
+    @org.jetbrains.annotations.Nullable
     @Override public T get() {
       try {
         return super.get();
-      } catch (final NullPointerException x) {
+      } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
         return null;
       }
     }
@@ -168,6 +178,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     /** Add another cell on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
+    @org.jetbrains.annotations.NotNull
     @Override public Recipe.NullRobust<T> ingredients(final Cell<?>... ¢) {
       super.ingredients(¢);
       return this;
@@ -176,15 +187,16 @@ public class Recipe<@Nullable T> extends Cell<T> {
     @Override void cache(@SuppressWarnings("hiding") @Nullable final T cache) {
       try {
         super.cache(cache);
-      } catch (final NullPointerException x) {
+      } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
         x.printStackTrace();
       }
     }
 
+    @org.jetbrains.annotations.Nullable
     @Override @Nullable T eval() {
       try {
         return super.eval();
-      } catch (final NullPointerException x) {
+      } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
         return null;
       }
     }

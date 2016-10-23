@@ -7,6 +7,7 @@ import java.util.*;
 
 import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Similar to {@link CSVWriter}, except that in addition to the production of
  * output to the main CSV file, this class generates a secondary CSV file,
@@ -19,13 +20,16 @@ public class CSVStatistics extends CSVLine.Ordered {
 
   /** @param baseName
    * @return */
-  private static String removeExtension(final String baseName) {
+  private static String removeExtension(@NotNull final String baseName) {
     return baseName.replaceFirst("\\.csv$", "");
   }
 
+  @NotNull
   private final String keysHeader;
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
+  @NotNull
   final CSVWriter inner;
+  @NotNull
   final CSVWriter summarizer;
 
   /** Instantiate this class, setting the names of the main and secondary CSV
@@ -35,7 +39,7 @@ public class CSVStatistics extends CSVLine.Ordered {
    * @param keysHeader the name of the column in which the names of the
    *        numerical columns in the principal file
    * @throws IOException */
-  public CSVStatistics(final String baseName, final String keysHeader) throws IOException {
+  public CSVStatistics(@NotNull final String baseName, @NotNull final String keysHeader) throws IOException {
     assert baseName != null;
     assert keysHeader != null;
     inner = new CSVWriter(removeExtension(baseName));
@@ -43,6 +47,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     this.keysHeader = keysHeader;
   }
 
+  @NotNull
   public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
@@ -66,6 +71,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     return summarizer.close();
   }
 
+  @NotNull
   public String mainFileName() {
     return inner.fileName();
   }
@@ -89,13 +95,13 @@ public class CSVStatistics extends CSVLine.Ordered {
     return super.put(key, value);
   }
 
+  @NotNull
   public String summaryFileName() {
     return summarizer.fileName();
   }
 
   RealStatistics getStatistics(final String key) {
-    if (stats.get(key) == null)
-      stats.put(key, new RealStatistics());
+    stats.putIfAbsent(key, new RealStatistics());
     return stats.get(key);
   }
 

@@ -3,6 +3,8 @@
  */
 package il.org.spartan.collections;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 /** A <href a=http://en.wikipedia.org/wiki/Dynamic_array>growable array</a> of
@@ -11,12 +13,14 @@ import java.util.*;
  * @since February 20, 2012 */
 public class IntsArray {
   private int length;
+  @NotNull
   private int[] inner = new int[0];
 
   /** Makes sure the specified array index exists, extending {@link #length()}
    * if necessary
    * @param i a non-negative array index
    * @return <code><b>this</b></code> */
+  @NotNull
   public IntsArray access(final int i) {
     if (i >= length) {
       final int n = inner.length;
@@ -82,6 +86,7 @@ public class IntsArray {
 
   /** A representation as a Java array.
    * @return the underlying array; likely to be invalid if the array grows */
+  @NotNull
   public int[] toArray() {
     return Arrays.copyOf(inner, length);
   }

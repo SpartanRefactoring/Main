@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -19,38 +21,43 @@ import il.org.spartan.Utils.FoundHandleForT.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface Utils {
-  final String QUOTE = "'";
-  final String WHITES = "(?m)\\s+";
+  String QUOTE = "'";
+  String WHITES = "(?m)\\s+";
 
-  static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
+  @NotNull
+  static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C add(final C $, final T... ts) {
+  @NotNull
+  @SafeVarargs static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
+  @NotNull
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ¢ : tss)
       if (¢ != null)
         $.addAll(¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
+  @NotNull
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       if (¢ != null)
         add($, ¢);
     return $;
   }
 
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
+  @NotNull
+  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         add($, ¢);
@@ -63,7 +70,8 @@ public interface Utils {
    * @param ts an arbitrary array
    * @param t an element
    * @return newly created array */
-  static <T> T[] append(final T[] ts, final T t) {
+  @NotNull
+  static <T> T[] append(@NotNull final T[] ts, final T t) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
@@ -73,6 +81,7 @@ public interface Utils {
    * @param < T > JD
    * @param ¢ JD
    * */
+  @NotNull
   static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
     return new Applicator<>(¢);
   }
@@ -134,7 +143,8 @@ public interface Utils {
    * @return its parameter, after verifying that it is not
    *         <code><b>null</b></code>
    * @see #mustBeNull(Object) */
-  static <T> @NonNull T cantBeNull(final @Nullable T $) {
+  @NotNull
+  static <T> @NonNull T cantBeNull(@NotNull final @Nullable T $) {
     assert $ != null;
     return $;
   }
@@ -155,7 +165,8 @@ public interface Utils {
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
    * @return parameter, with all redundant spaces removed from it */
-  static String compressSpaces(final String javaCodeFragment) {
+  @NotNull
+  static String compressSpaces(@NotNull final String javaCodeFragment) {
     String $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
     for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<",
         "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
@@ -168,7 +179,7 @@ public interface Utils {
    * @param patterns a list of substrings
    * @return tree iff the the first parameter contains any of the substrings
    *         found in the second parameter */
-  static boolean contains(final String text, final String... patterns) {
+  static boolean contains(@NotNull final String text, @NotNull final String... patterns) {
     for (final String pattern : patterns)
       if (pattern != null && text.contains(pattern))
         return true;
@@ -181,7 +192,8 @@ public interface Utils {
    * @param ts an arbitrary array
    * @param i position of element to be deleted
    * @return newly created array */
-  static <T> T[] delete(final T[] ts, final int i) {
+  @NotNull
+  static <T> T[] delete(@NotNull final T[] ts, final int i) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
@@ -189,6 +201,7 @@ public interface Utils {
 
   /** @param ¢ JD
    * */
+  @NotNull
   static FoundHandleForInt found(final int ¢) {
     return new FoundHandleForInt(¢);
   }
@@ -196,6 +209,7 @@ public interface Utils {
   /** @param < T > JD
    * @param ¢ JD
    * */
+  @NotNull
   static <T> FoundHandleForT<T> found(final T ¢) {
     return new FoundHandleForT<>(¢);
   }
@@ -205,7 +219,7 @@ public interface Utils {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  static boolean hasNull(final Object... os) {
+  static boolean hasNull(@NotNull final Object... os) {
     for (final Object ¢ : os)
       if (¢ == null)
         return true;
@@ -217,7 +231,7 @@ public interface Utils {
    * @param candidate what to search for
    * @param ts where to search
    * @return true if the the item is found in the list */
-  @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
+  @SafeVarargs static <T> boolean in(final T candidate, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null && ¢.equals(candidate))
         return true;
@@ -230,7 +244,7 @@ public interface Utils {
    * @param ts a list of things
    * @return <code><b>true</b></code> <i>iff</i> the index is valid index into
    *         the list. and it is the last one in it. */
-  static <T> boolean inRange(final int i, final List<T> ts) {
+  static <T> boolean inRange(final int i, @NotNull final List<T> ts) {
     return i >= 0 && i < ts.size();
   }
 
@@ -238,7 +252,7 @@ public interface Utils {
    * @param candidate what to search for
    * @param is where to search
    * @return true if the the item is found in the list */
-  @SafeVarargs static boolean intIsIn(final int candidate, final int... is) {
+  @SafeVarargs static boolean intIsIn(final int candidate, @NotNull final int... is) {
     for (final int ¢ : is)
       if (¢ == candidate)
         return true;
@@ -249,7 +263,7 @@ public interface Utils {
    * @param ¢ JD
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T last(final @Nullable List<T> ¢) {
+  @SuppressWarnings("null") static <T> @Nullable T last(@NotNull final @Nullable List<T> ¢) {
     return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
 
@@ -258,7 +272,7 @@ public interface Utils {
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
    *         the same as the last element of the {@link List} parameter */
-  static boolean lastIn(final Object o, final List<?> os) {
+  static boolean lastIn(final Object o, @NotNull final List<?> os) {
     return last(os) == o;
   }
 
@@ -266,7 +280,7 @@ public interface Utils {
    * @param a some integer
    * @param is additional integers
    * @return largest of the parameters */
-  static int max(final int a, final int... is) {
+  static int max(final int a, @NotNull final int... is) {
     int $ = a;
     for (final int ¢ : is)
       $ = Math.max($, ¢);
@@ -277,7 +291,7 @@ public interface Utils {
    * @param a some integer
    * @param is additional
    * @return smallest of the parameters */
-  static int min(final int a, final int... is) {
+  static int min(final int a, @NotNull final int... is) {
     int $ = a;
     for (final int ¢ : is)
       $ = Math.min($, ¢);
@@ -291,7 +305,7 @@ public interface Utils {
    * @param $ an instance of the type parameter which is required to be
    *        <code><b>null</b></code>.
    * @return parameter */
-  static <@Nullable T> @Nullable Void mustBeNull(final T $) {
+  static <@Nullable T> @Nullable Void mustBeNull(@org.jetbrains.annotations.Nullable final T $) {
     assert $ == null;
     return null;
   }
@@ -299,7 +313,8 @@ public interface Utils {
   /** @param ¢ JD
    * @return name of the parameter, which must not be
    *         <code><b>null</b></code> */
-  static String name(final File ¢) {
+  @NotNull
+  static String name(@NotNull final File ¢) {
     return cantBeNull(¢.getName());
   }
 
@@ -314,7 +329,7 @@ public interface Utils {
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T penultimate(final List<T> ¢) {
+  @SuppressWarnings("null") static <T> @Nullable T penultimate(@NotNull final List<T> ¢) {
     return eval(() -> ¢.get(¢.size() - 2)).unless(¢ == null || ¢.size() < 2);
   }
 
@@ -324,7 +339,7 @@ public interface Utils {
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
    *         occurs as the penultimate element of the {@link List} parameter */
-  static <@Nullable T> boolean penultimateIn(final T o, final @Nullable List<T> os) {
+  static <@Nullable T> boolean penultimateIn(final T o, @NotNull final @Nullable List<T> os) {
     assert os != null;
     return penultimate(os) == o;
   }
@@ -334,7 +349,8 @@ public interface Utils {
    * @param c what needs to be prepended
    * @return {@link StringBuilder} parameter with the <code><b>char</b></code>
    *         parameter prepended to it */
-  static StringBuilder prepend(final StringBuilder $, final char c) {
+  @NotNull
+  static StringBuilder prepend(@NotNull final StringBuilder $, final char c) {
     return cantBeNull($.insert(0, c));
   }
 
@@ -343,21 +359,23 @@ public interface Utils {
    * @param s what needs to be prepended
    * @return {@link StringBuilder} parameter with the {@link String} parameter
    *         prepended to it */
-  static StringBuilder prepend(final StringBuilder $, final String s) {
+  @NotNull
+  static StringBuilder prepend(@NotNull final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
   }
 
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  static String quote(final @Nullable String $) {
+  @NotNull
+  static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** Remove any duplicates that may be present in a given {@link List}
    * @param < T > JD
    * @param ts JD */
-  static <T> void removeDuplicates(final List<T> ts) {
+  static <T> void removeDuplicates(@NotNull final List<T> ts) {
     final Set<T> noDuplicates = new LinkedHashSet<>(ts);
     ts.clear();
     ts.addAll(noDuplicates);
@@ -367,7 +385,7 @@ public interface Utils {
    * @param s JD
    * @param prefix what should be removed
    * @return parameter after all such occurrences are removed. */
-  static String removePrefix(final String s, final String prefix) {
+  static String removePrefix(final String s, @NotNull final String prefix) {
     for (String $ = s;; $ = $.substring(prefix.length()))
       if (!$.startsWith(prefix))
         return $;
@@ -377,7 +395,7 @@ public interface Utils {
    * @param s JD
    * @param suffix what should be removed
    * @return parameter after all such occurrences are removed. */
-  static String removeSuffix(final String s, final String suffix) {
+  static String removeSuffix(final String s, @NotNull final String suffix) {
     for (String $ = s;; $ = $.substring(0, $.length() - suffix.length()))
       if (!$.endsWith(suffix))
         return $;
@@ -386,14 +404,16 @@ public interface Utils {
   /** Remove all occurrences of white space character in a given {@link String}
    * @param ¢ JD
    * @return parameter after all such occurrences are removed. */
-  static String removeWhites(final String ¢) {
+  @NotNull
+  static String removeWhites(@NotNull final String ¢) {
     return cantBeNull(¢.replaceAll("\\s+", ""));
   }
 
   /** Sorts an array
    * @param ¢ what to sort
    * @return given array with elements in sorted order */
-  static int[] sort(final int[] ¢) {
+  @NotNull
+  static int[] sort(@NotNull final int[] ¢) {
     Arrays.sort(¢);
     return ¢;
   }
@@ -418,7 +438,7 @@ public interface Utils {
    * @param suffixes a list of potential extensions.
    * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
    *         one of the supplied extensions. */
-  static boolean suffixedBy(final File f, final Iterable<String> suffixes) {
+  static boolean suffixedBy(@NotNull final File f, @NotNull final Iterable<String> suffixes) {
     return suffixedBy(name(f), suffixes);
   }
 
@@ -428,7 +448,7 @@ public interface Utils {
    * @param suffixes a list of potential extensions.
    * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
    *         one of the supplied extensions. */
-  static boolean suffixedBy(final File f, final String... suffixes) {
+  static boolean suffixedBy(@NotNull final File f, final String... suffixes) {
     return suffixedBy(name(f), suffixes);
   }
 
@@ -437,7 +457,7 @@ public interface Utils {
    * @param suffixes a list of potential suffixes
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes. */
-  static boolean suffixedBy(final String s, final Iterable<String> suffixes) {
+  static boolean suffixedBy(@NotNull final String s, @NotNull final Iterable<String> suffixes) {
     for (final String end : suffixes)
       if (s.endsWith(end))
         return true;
@@ -449,7 +469,7 @@ public interface Utils {
    * @param suffixes a list of potential suffixes
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes. */
-  static boolean suffixedBy(final String s, final String... suffixes) {
+  static boolean suffixedBy(@NotNull final String s, @NotNull final String... suffixes) {
     for (final String end : suffixes)
       if (s.endsWith(end))
         return true;
@@ -471,7 +491,7 @@ public interface Utils {
    * @author Yossi Gil
    * @param <F> the type of the function's argument
    * @param <T> the type of the function's result */
-  static class Applicator<F, T> {
+  class Applicator<F, T> {
     private final Function<F, T> function;
 
     /** Instantiates this class
@@ -480,7 +500,8 @@ public interface Utils {
       this.function = function;
     }
 
-    @SafeVarargs final Iterable<T> to(final F... fs) {
+    @NotNull
+    @SafeVarargs final Iterable<T> to(@NotNull final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F ¢ : fs)
         if (¢ != null)
@@ -491,7 +512,7 @@ public interface Utils {
     /** @param <FS> JD
      * @param s JD
      * */
-    <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
+    @NotNull <FS extends Iterable<? extends F>> Iterable<T> to(@NotNull final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F ¢ : s)
         if (¢ != null)
@@ -503,7 +524,7 @@ public interface Utils {
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @param < T > JD
    * @since 2016 */
-  static class FoundHandleForT<T> {
+  class FoundHandleForT<T> {
     final T candidate;
 
     /** Instantiates this class.
@@ -515,7 +536,7 @@ public interface Utils {
     /** Determine if an integer can be found in a list of values
      * @param ts where to search
      * @return true if the the item is found in the list */
-    @SafeVarargs public final boolean in(final T... ts) {
+    @SafeVarargs public final boolean in(@NotNull final T... ts) {
       for (final T ¢ : ts)
         if (¢ != null && ¢.equals(candidate))
           return true;
@@ -536,7 +557,7 @@ public interface Utils {
       /** Determine if an integer can be found in a list of values
        * @param is where to search
        * @return true if the the item is found in the list */
-      @SafeVarargs public final boolean in(final int... is) {
+      @SafeVarargs public final boolean in(@NotNull final int... is) {
         for (final int ¢ : is)
           if (¢ == candidate)
             return true;
@@ -551,8 +572,10 @@ public interface Utils {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) static class TEST {
-    public static Integer[] intToIntegers(final int... is) {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" })
+  class TEST {
+    @NotNull
+    public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
         $[¢] = box.it(is[¢]);
@@ -584,7 +607,7 @@ public interface Utils {
       try {
         cantBeNull(null);
         azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
+      } catch (@NotNull final AssertionError e) {
         azzert.aye("", true);
       }
     }
@@ -597,7 +620,7 @@ public interface Utils {
       try {
         isNull(mustBeNull(null));
         azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
+      } catch (@NotNull final AssertionError e) {
         azzert.aye("", true);
       }
     }
@@ -606,7 +629,7 @@ public interface Utils {
       try {
         mustBeNull(new Object());
         azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
+      } catch (@NotNull final AssertionError e) {
         azzert.aye("", true);
       }
     }

@@ -4,6 +4,8 @@ package il.org.spartan;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
@@ -14,15 +16,18 @@ public interface accumulate<T, C extends Collection<T>> {
    * @param <C> JD
    * @param c JD
    * */
-  static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
+  @org.jetbrains.annotations.Nullable
+  static <T, C extends Collection<T>> accumulate<T, C> to(@NotNull final C c) {
     return new accumulate<T, C>() {
-      @Override public accumulate<T, C> add(final @Nullable T ¢) {
+      @NotNull
+      @Override public accumulate<T, C> add(@org.jetbrains.annotations.Nullable final @Nullable T ¢) {
         if (¢ == null)
           return this;
         c.add(¢);
         return this;
       }
 
+      @NotNull
       @Override public C elements() {
         return c;
       }
@@ -31,7 +36,8 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  default accumulate<T, C> add(final Iterable<? extends @Nullable T> ts) {
+  @NotNull
+  default accumulate<T, C> add(@NotNull final Iterable<? extends @Nullable T> ts) {
     for (@Nullable final T ¢ : ts)
       if (¢ != null)
         add(¢);
@@ -40,11 +46,12 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param t JD
    * @return <code><b>this</b></code> */
-  accumulate<T, C> add(final @Nullable T t);
+  @NotNull accumulate<T, C> add(final @Nullable T t);
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  default accumulate<T, C> add(@SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
+  @NotNull
+  default accumulate<T, C> add(@org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
     if (ts != null)
       for (@Nullable final T ¢ : ts)
         if (¢ != null)
@@ -54,7 +61,8 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  default accumulate<T, C> addAll(final @Nullable Iterable<? extends T> ts) {
+  @NotNull
+  default accumulate<T, C> addAll(@org.jetbrains.annotations.Nullable final @Nullable Iterable<? extends T> ts) {
     if (ts != null)
       for (@Nullable final T ¢ : ts)
         if (¢ != null)
@@ -64,12 +72,13 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param tss JD
    * @return <code><b>this</b></code> */
-  default accumulate<T, C> addAll(final Iterable<? extends T>... tss) {
+  @NotNull
+  default accumulate<T, C> addAll(@NotNull final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       addAll(¢);
     return this;
   }
 
 
-  C elements();
+  @NotNull C elements();
 }

@@ -11,6 +11,7 @@ import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.files.visitors.FindClassFile.*;
 import il.org.spartan.strings.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A class realizing a file system traversal algorithm, including delving into
  * archives such as ZIP and JAR files.
@@ -27,13 +28,15 @@ import il.org.spatan.iteration.*;
  *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[])
  * @see Action */
 public class FileSystemVisitor {
-  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
+  @NotNull
+  private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
     final List<File> $ = new ArrayList<>();
     for (final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
 
+  @NotNull
   private static Iterable<File> asFiles(final String... fileNames) {
     return asFiles(Iterables.toList(fileNames));
   }
@@ -100,7 +103,7 @@ public class FileSystemVisitor {
    * @see #go
    * @see #FileSystemVisitor(Collection,
    *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[]) */
-  public FileSystemVisitor(final Iterable<String> from, final Action visitor, final String... extensions) {
+  public FileSystemVisitor(@NotNull final Iterable<String> from, final Action visitor, final String... extensions) {
     this(visitor, asFiles(from), extensions);
   }
 
@@ -214,7 +217,7 @@ public class FileSystemVisitor {
    * @throws IOException if the file system could not traversed for some reason
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
-  private void recurse(final File ¢) throws IOException, StopTraversal {
+  private void recurse(@NotNull final File ¢) throws IOException, StopTraversal {
     if (¢.isDirectory())
       recurseDirectory(¢);
     else if (Zip.isZipFile(¢))
@@ -227,7 +230,7 @@ public class FileSystemVisitor {
    * @param d a directory
    * @throws IOException if the file system could not be traversed for some
    *         reason */
-  private void recurseDirectory(final File d) throws IOException {
+  private void recurseDirectory(@NotNull final File d) throws IOException {
     try {
       visitor.visitDirectory(d);
       if (d.list() == null) // Weird directories such as
@@ -236,7 +239,7 @@ public class FileSystemVisitor {
       for (final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
-    } catch (final Action.StopTraversal __) {
+    } catch (@NotNull final Action.StopTraversal __) {
       // do not visit children of this directory
     }
   }
@@ -248,10 +251,10 @@ public class FileSystemVisitor {
    *         visitation of the ZIP file itself, the scanning of this ZIP file
    *         will stop, but the no exception is thrown, and the entire traversal
    *         continue. */
-  private void scanZip(final File f) throws StopTraversal {
+  private void scanZip(@NotNull final File f) throws StopTraversal {
     try {
       visitor.visitZip(f);
-    } catch (final Action.StopTraversal e) {
+    } catch (@NotNull final Action.StopTraversal e) {
       return; // do not visit any elements of this ZIP file, but continue
       // traversal.
     }
@@ -267,15 +270,15 @@ public class FileSystemVisitor {
           if (Suffixed.by(e.getName(), extensions))
             visitor.visitZipEntry(Z.getName(), e.getName(), is);
           is.close();
-        } catch (final StopTraversal x) {
+        } catch (@NotNull final StopTraversal x) {
           System.out.println("Found at ZIP!!!");
           throw x;
-        } catch (final IOException exception) {
+        } catch (@NotNull final IOException exception) {
           System.err.println("Error reading " + Z + ": " + exception.getMessage());
           continue;
         }
       }
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       System.err.println(f.getAbsolutePath() + ": " + e.getMessage());
       return;
     }

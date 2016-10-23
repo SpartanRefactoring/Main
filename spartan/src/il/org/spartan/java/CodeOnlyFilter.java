@@ -3,6 +3,8 @@
  */
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.java.Token.Category.*;
 
 /** @author Yossi Gil
@@ -10,6 +12,7 @@ import static il.org.spartan.java.Token.Category.*;
 public class CodeOnlyFilter extends TokenFilter {
   private final StringBuilder $ = new StringBuilder();
 
+  @NotNull
   @Override public String toString() {
     return $ + "";
   }
@@ -21,7 +24,7 @@ public class CodeOnlyFilter extends TokenFilter {
   /* (non-Javadoc)
    *
    * @see il.org.spartan.java.TokenFilter#ok(il.org.spartan.java. Token) */
-  @Override protected boolean ok(final Token ¢) {
+  @Override protected boolean ok(@NotNull final Token ¢) {
     return !¢.isError() && !¢.isNL() && ¢.kind.category != IGNORE;
   }
 }

@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -18,6 +19,7 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since Apr 27, 2012 */
 public class DoublesWindow {
+  @NotNull
   private final double[] window;
   private int newest;
   private int size;
@@ -34,6 +36,7 @@ public class DoublesWindow {
   /** add a value into the window, removing the oldest one if necessary
    * @param ¢ an arbitrary value
    * @return <code><strong>this</strong></code> */
+  @NotNull
   public DoublesWindow add(final double ¢) {
     if (size < window.length)
       ++size;

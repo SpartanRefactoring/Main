@@ -5,9 +5,10 @@ package il.org.spartan.bench;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 public class RunRecord extends AbstractRunRecord {
-  public RunRecord(final int runs, final Stopwatch grossTime, final Stopwatch netTime) {
+  public RunRecord(final int runs, @NotNull final Stopwatch grossTime, @NotNull final Stopwatch netTime) {
     this.runs = runs;
     this.grossTime = grossTime.time();
     this.netTime = netTime.time();

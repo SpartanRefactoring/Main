@@ -3,6 +3,7 @@ package il.org.spartan.csv;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -11,6 +12,7 @@ import il.org.spartan.streotypes.*;
 @SuppressWarnings("static-method") @TestCase public class CSVLineTest {
   @Test public void anObjectTest() {
     final CSVLine c = new CSVLine.Sorterd().put("Some Object", new Object() {
+      @NotNull
       @Override public String toString() {
         return "some object";
       }
@@ -21,6 +23,7 @@ import il.org.spartan.streotypes.*;
 
   @Test public void anObjectTestOrdered() {
     final CSVLine c = new CSVLine.Ordered().put("Some Object", new Object() {
+      @NotNull
       @Override public String toString() {
         return "some object";
       }
@@ -30,13 +33,13 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void arrayNullTest() {
-    final CSVLine c = new CSVLine.Sorterd().put("NullArray", (String[]) null, 2);
+    final CSVLine c = new CSVLine.Sorterd().put("NullArray", null, 2);
     azzert.that(c.header(), is("NullArray"));
     azzert.that(c.line(), is(""));
   }
 
   @Test public void arrayNullTestOrdered() {
-    final CSVLine c = new CSVLine.Ordered().put("NullArray", (String[]) null, 2);
+    final CSVLine c = new CSVLine.Ordered().put("NullArray", null, 2);
     azzert.that(c.header(), is("NullArray"));
     azzert.that(c.line(), is(""));
   }

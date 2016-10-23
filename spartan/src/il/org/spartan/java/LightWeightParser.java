@@ -1,9 +1,11 @@
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.java.Token.*;
 
 public class LightWeightParser {
-  private static boolean in(final Token t, final Token[] ts) {
+  private static boolean in(final Token t, @NotNull final Token[] ts) {
     for (final Token tʹ : ts)
       if (t == tʹ)
         return true;
@@ -44,7 +46,7 @@ public class LightWeightParser {
     return tokenizer.text();
   }
 
-  private Token skipUntil(final Token... ¢) {
+  private Token skipUntil(@NotNull final Token... ¢) {
     for (Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
       if (in($, ¢))
         return $;

@@ -3,6 +3,7 @@ package il.org.spartan.bench;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.___.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,15 +15,15 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil
  * @since 29/05/2011 */
 public class Cartesian {
-  public static <S> Pair<Integer, S>[] makeObliqueProduct(final int[] is, final S[] ss) {
+  public static <S> Pair<Integer, S>[] makeObliqueProduct(final int[] is, @NotNull final S[] ss) {
     return makeObliqueProduct(Box.it(is), ss);
   }
 
-  public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(final int[] is, final S[] ss, final T[] ts) {
+  public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
     return makeObliqueProduct(Box.it(is), ss, ts);
   }
 
-  public static <R, S> Pair<R, S>[] makeObliqueProduct(final R[] rs, final S[] ss) {
+  public static <R, S> Pair<R, S>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
     for (int sum = 2; sum < rs.length + ss.length; ++sum)
@@ -44,7 +45,7 @@ public class Cartesian {
     return $;
   }
 
-  public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(final R[] rs, final S[] ss, final T[] ts) {
+  public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (int sum = 3; sum <= rs.length + ss.length + ts.length; ++sum)
@@ -74,15 +75,15 @@ public class Cartesian {
     return $;
   }
 
-  public static <S> Pair<Integer, S>[] makeProduct(final int[] is, final S[] ss) {
+  public static <S> Pair<Integer, S>[] makeProduct(final int[] is, @NotNull final S[] ss) {
     return makeProduct(Box.it(is), ss);
   }
 
-  public static <S, T> Triple<Integer, S, T>[] makeProduct(final int[] is, final S[] ss, final T[] ts) {
+  public static <S, T> Triple<Integer, S, T>[] makeProduct(final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
     return makeProduct(Box.it(is), ss, ts);
   }
 
-  public static <R, S> Pair<R, S>[] makeProduct(final R[] rs, final S[] ss) {
+  public static <R, S> Pair<R, S>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
     for (final R r : rs)
@@ -91,7 +92,7 @@ public class Cartesian {
     return $;
   }
 
-  public static <R, S, T> Triple<R, S, T>[] makeProduct(final R[] rs, final S[] ss, final T[] ts) {
+  public static <R, S, T> Triple<R, S, T>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (final R r : rs)

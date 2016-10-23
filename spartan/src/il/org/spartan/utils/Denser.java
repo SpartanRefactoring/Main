@@ -7,6 +7,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,7 +16,7 @@ import il.org.spartan.xy.*;
 /** @author Yossi Gil
  * @since Apr 27, 2012 */
 public class Denser {
-  private static void checkSize(final double[] is, final int i) {
+  private static void checkSize(@NotNull final double[] is, final int i) {
     checkSize(is.length, i);
   }
 
@@ -24,11 +25,11 @@ public class Denser {
       throw new IllegalArgumentException("Array of size " + length + " instead of " + i);
   }
 
-  private static void checkSize(final int[] is, final int i) {
+  private static void checkSize(@NotNull final int[] is, final int i) {
     checkSize(is.length, i);
   }
 
-  private static int zeroes(final int[] is) {
+  private static int zeroes(@NotNull final int[] is) {
     int $ = 0;
     for (final int ¢ : is)
       $ += as.bit(¢ == 0);
@@ -36,16 +37,18 @@ public class Denser {
   }
 
   private int n;
+  @NotNull
   private final int[] gather;
 
-  public Denser(final int... is) {
+  public Denser(@NotNull final int... is) {
     gather = new int[(n = is.length) - zeroes(is)];
     for (int j = 0, ¢ = 0; ¢ < is.length; ++¢)
       if (is[¢] != 0)
         gather[j++] = ¢;
   }
 
-  public double[] gather(final double[] ds) {
+  @NotNull
+  public double[] gather(@NotNull final double[] ds) {
     checkSize(ds, n());
     final double[] $ = new double[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
@@ -53,7 +56,8 @@ public class Denser {
     return $;
   }
 
-  public int[] gather(final int... is) {
+  @NotNull
+  public int[] gather(@NotNull final int... is) {
     checkSize(is, n());
     final int[] $ = new int[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
@@ -61,7 +65,8 @@ public class Denser {
     return $;
   }
 
-  public int[][] gather(final int[][] iss) {
+  @NotNull
+  public int[][] gather(@NotNull final int[][] iss) {
     final int[][] $ = new int[iss.length][];
     for (int ¢ = 0; ¢ < iss.length; ++¢)
       $[¢] = gather(iss[¢]);
@@ -76,7 +81,8 @@ public class Denser {
     return n;
   }
 
-  public double[] scatter(final double[] ds) {
+  @NotNull
+  public double[] scatter(@NotNull final double[] ds) {
     checkSize(ds, m());
     final double[] $ = new double[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
@@ -84,7 +90,8 @@ public class Denser {
     return $;
   }
 
-  public int[] scatter(final int... is) {
+  @NotNull
+  public int[] scatter(@NotNull final int... is) {
     checkSize(is, m());
     final int[] $ = new int[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
@@ -92,7 +99,8 @@ public class Denser {
     return $;
   }
 
-  public XYSeries scatter(final XYSeries ¢) {
+  @NotNull
+  public XYSeries scatter(@NotNull final XYSeries ¢) {
     return new XYSeries(scatter(¢.x), scatter(¢.y), scatter(¢.dy));
   }
 

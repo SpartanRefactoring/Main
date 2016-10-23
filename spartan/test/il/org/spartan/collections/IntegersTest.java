@@ -71,7 +71,7 @@ public final class IntegersTest extends integers {
     assert contains(1);
     assert contains(2);
     assert contains(3);
-    add(new int[] { 4, 1, 2, 3 });
+    add(4, 1, 2, 3);
     azzert.that(size(), is(4));
     assert contains(1);
     assert contains(2);

@@ -5,6 +5,8 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -19,7 +21,7 @@ public enum iterables {
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
    * @return number of items the given iterable yields. */
-  public static <T> int count(final @Nullable Iterable<T> ts) {
+  public static <T> int count(@org.jetbrains.annotations.Nullable final @Nullable Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
       for (final @Nullable T ¢ : ts)
@@ -29,13 +31,14 @@ public enum iterables {
 
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
+  @NotNull
   public static <T> PureIterable.Sized<T> empty() {
     return as.nonNullIterable();
   }
 
   /** @param os JD
    * */
-  public static boolean isEmpty(final Iterable<?> os) {
+  public static boolean isEmpty(@NotNull final Iterable<?> os) {
     for (final Object name2 : os)
       if (name2 != null)
         return false;
@@ -47,6 +50,7 @@ public enum iterables {
    * @param ¢ JD
    * @return PureIterable.Sized<T> for returned value of method
    *         <code>singleton</code> */
+  @NotNull
   public static <T> PureIterable.Sized<T> singleton(final T ¢) {
     return as.nonNullIterable(¢);
   }

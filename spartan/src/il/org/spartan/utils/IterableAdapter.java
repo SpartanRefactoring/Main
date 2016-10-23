@@ -6,6 +6,7 @@ import static il.org.spartan.utils.___.*;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An {@link Iterable} interface to an {@link Enumeration} using the
  * <b>Adapter</b> design pattern.
@@ -18,6 +19,7 @@ import il.org.spartan.streotypes.*;
    * @param <T> type of elements in the iterated collection
    * @param ¢ an enumeration to convert into an {@link Iterable}
    * @return a new {@link Iterable} created from the parameter */
+  @NotNull
   public static <T> Iterable<T> make(final Enumeration<T> ¢) {
     return new IterableAdapter<>(¢);
   }
@@ -34,6 +36,7 @@ import il.org.spartan.streotypes.*;
   /* Return an {@link Iterator} over the encapsulated {@link Enumeration}.
    *
    * @see java.lang.Iterable#iterator() */
+  @NotNull
   @Override public Iterator<T> iterator() {
     return new Iterator<T>() {
       @Override public boolean hasNext() { // An anonymous class realizing the

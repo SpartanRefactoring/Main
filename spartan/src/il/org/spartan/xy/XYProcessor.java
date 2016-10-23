@@ -10,6 +10,7 @@ import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -28,7 +29,7 @@ public interface XYProcessor {
 
   void p(int x, int y);
 
-  abstract static class Filter extends Gatherer {
+  abstract class Filter extends Gatherer {
     @Override public final void gather(final double x, final double y, final double dy) {
       if (valid(x, y, dy))
         super.gather(x, y, dy);
@@ -37,7 +38,7 @@ public interface XYProcessor {
     public abstract boolean valid(final double x, final double y, final double dy);
   }
 
-  abstract static class Gatherer extends Vacuous {
+  abstract class Gatherer extends Vacuous {
     private final DoublesArray xs = new DoublesArray();
     private final DoublesArray ys = new DoublesArray();
     private final DoublesArray dys = new DoublesArray();
@@ -65,7 +66,7 @@ public interface XYProcessor {
     }
   }
 
-  static class LogLog extends Wrapper {
+  class LogLog extends Wrapper {
     /** Instantiate {@link LogLog} .
      * @param inner */
     public LogLog(final XYProcessor inner) {
@@ -88,7 +89,7 @@ public interface XYProcessor {
     }
   }
 
-  static class MaxErrorFilter extends Wrapper {
+  class MaxErrorFilter extends Wrapper {
     private static double DEFAULT_FACTOR = 2;
     private double maxError = Double.NaN;
     private final double factor;
@@ -112,7 +113,7 @@ public interface XYProcessor {
     }
   }
 
-  static class Minimizer extends Vacuous {
+  class Minimizer extends Vacuous {
     private boolean improved;
     private double xMin = Double.NaN;
     private double yMin = Double.POSITIVE_INFINITY;
@@ -143,7 +144,7 @@ public interface XYProcessor {
     }
   }
 
-  static class RealsOnly extends Filter {
+  class RealsOnly extends Filter {
     @Override public boolean valid(final double x, final double y, final double dy) {
       return isReal(x) && isReal(y) && isReal(dy);
     }
@@ -174,7 +175,7 @@ public interface XYProcessor {
     }
   }
 
-  static class SquareErrorWrapper extends Wrapper {
+  class SquareErrorWrapper extends Wrapper {
     /** Instantiate {@link SquareErrorWrapper} .
      * @param inner */
     public SquareErrorWrapper(final XYProcessor inner) {
@@ -192,12 +193,13 @@ public interface XYProcessor {
     }
   }
 
-  abstract static class Vacuous implements XYProcessor {
+  abstract class Vacuous implements XYProcessor {
     @Override public void done() {
       ___.nothing();
     }
 
-    public Vacuous feed(final double xs[], final double ys[]) {
+    @NotNull
+    public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[]) {
       assert xs.length == ys.length;
       final int n = Math.max(xs.length, ys.length);
       for (int ¢ = 0; ¢ < n; ++¢)
@@ -206,7 +208,8 @@ public interface XYProcessor {
       return this;
     }
 
-    public Vacuous feed(final double xs[], final double ys[], final double dys[]) {
+    @NotNull
+    public Vacuous feed(@NotNull final double xs[], @NotNull final double ys[], @NotNull final double dys[]) {
       assert xs.length == ys.length;
       assert ys.length == dys.length;
       final int n = Math.max(xs.length, ys.length);
@@ -216,14 +219,16 @@ public interface XYProcessor {
       return this;
     }
 
-    public Vacuous feed(final XYSeries s) {
+    @NotNull
+    public Vacuous feed(@NotNull final XYSeries s) {
       for (int ¢ = 0; ¢ < s.n(); ++¢)
         p(s.x[¢], s.y[¢], s.dy[¢]);
       done();
       return this;
     }
 
-    public Vacuous feedHistogram(final double ds[]) {
+    @NotNull
+    public Vacuous feedHistogram(@NotNull final double ds[]) {
       for (int ¢ = 0; ¢ < ds.length; ++¢)
         if (ds[¢] != 0)
           p(¢, ds[¢]);
@@ -231,7 +236,8 @@ public interface XYProcessor {
       return this;
     }
 
-    public Vacuous feedHistogram(final double ys[], final double dys[]) {
+    @NotNull
+    public Vacuous feedHistogram(@NotNull final double ys[], final double dys[]) {
       for (int ¢ = 0; ¢ < ys.length; ++¢)
         if (ys[¢] != 0)
           p(¢, ys[¢], dys[¢]);
@@ -239,7 +245,8 @@ public interface XYProcessor {
       return this;
     }
 
-    public Vacuous feedHistogram(final int as[]) {
+    @NotNull
+    public Vacuous feedHistogram(@NotNull final int as[]) {
       for (int ¢ = 0; ¢ < as.length; ++¢)
         if (as[¢] != 0)
           p(¢, as[¢]);
@@ -261,7 +268,7 @@ public interface XYProcessor {
     }
   }
 
-  abstract static class Wrapper extends Vacuous {
+  abstract class Wrapper extends Vacuous {
     protected final XYProcessor inner;
 
     /** Instantiate {@link Wrapper} .
@@ -287,7 +294,7 @@ public interface XYProcessor {
     }
   }
 
-  static class XShift extends Wrapper {
+  class XShift extends Wrapper {
     private final double xshift;
 
     public XShift(final double xshift, final XYProcessor inner) {

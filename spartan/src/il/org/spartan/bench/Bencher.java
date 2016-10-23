@@ -1,6 +1,7 @@
 package il.org.spartan.bench;
 
 import il.org.spartan.bench.operations.*;
+import org.jetbrains.annotations.NotNull;
 
 public class Bencher extends LogBook.Mutable {
   private static final long serialVersionUID = 1L;
@@ -14,6 +15,7 @@ public class Bencher extends LogBook.Mutable {
     after = ¢;
   }
 
+  @NotNull
   @Override public LogBook clear() {
     super.clear();
     current.clear();

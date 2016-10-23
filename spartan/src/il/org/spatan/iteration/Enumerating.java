@@ -1,12 +1,15 @@
 package il.org.spatan.iteration;
 
+import org.jetbrains.annotations.NotNull;
+
 /** A codex recording a given <i>enumeration</i>, i;.e., fixed mapping of a set
  * of n elements of a specified type into the integers 0,..., n-1.
  * @author Yossi Gil
  * @since Dec 3, 2009
  * @param <T> Type of encoded elements. */
 public class Enumerating<T> extends Codex.Anchored<T> {
-  private static int[] invert(final int[] is) {
+  @NotNull
+  private static int[] invert(@NotNull final int[] is) {
     final int[] $ = new int[is.length];
     for (int ¢ = 0; ¢ < is.length; ++¢)
       $[is[¢]] = ¢;
@@ -14,7 +17,9 @@ public class Enumerating<T> extends Codex.Anchored<T> {
   }
 
   private final Codex.Anchored<T> codex;
+  @NotNull
   private final int[] rankOf;
+  @NotNull
   private final int[] withRank;
 
   /** Instantiate this class with a given codex and ranking vector.
@@ -22,7 +27,7 @@ public class Enumerating<T> extends Codex.Anchored<T> {
    * @param rankOf a vector defining ranks of the objects in this set. All ranks
    *        (i.e., elements of this array) must be in the range 0,..., n-1 and
    *        no two positions in this array should have the same value. */
-  public Enumerating(final Codex.Anchored<T> codex, final int[] rankOf) {
+  public Enumerating(final Codex.Anchored<T> codex, @NotNull final int[] rankOf) {
     this.codex = codex;
     this.rankOf = rankOf;
     this.withRank = invert(rankOf);

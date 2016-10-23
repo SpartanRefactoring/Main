@@ -7,6 +7,8 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** This class realize the CSV specification, by comprising methods for
  * manipulating CSV files. e.g. 1, 2, 3 4, 5, 6 The class supports string arrays
@@ -25,7 +27,8 @@ public enum CSV {
    * @param cs Input array
    * @return Combined string
    * @see #splitToClasses(String) */
-  public static String combine(final Class<?>[] cs) {
+  @NotNull
+  public static String combine(@NotNull final Class<?>[] cs) {
     final String[] ss = new String[cs.length];
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = cs[¢] == null ? null : cs[¢].getName();
@@ -39,7 +42,8 @@ public enum CSV {
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
-  public static <T> String combine(final T[] parts) {
+  @NotNull
+  public static <T> String combine(@NotNull final T[] parts) {
     nonnull(parts);
     final StringBuilder $ = new StringBuilder(10 * parts.length);
     final Separator sep = new Separator(",");
@@ -55,7 +59,8 @@ public enum CSV {
    * @param parts Input array
    * @return Combined string
    * @see CSV#escape(String) */
-  public static <T extends Enum<T>> String combine(final T[] parts) {
+  @NotNull
+  public static <T extends Enum<T>> String combine(@NotNull final T[] parts) {
     final String[] ss = new String[parts.length];
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = parts[¢] == null ? null : parts[¢].name();
@@ -65,7 +70,8 @@ public enum CSV {
   /** Escape the given input
    * @param s Input string
    * @return Escaped form of the input */
-  public static String escape(final @Nullable String s) {
+  @NotNull
+  public static String escape(@org.jetbrains.annotations.Nullable final @Nullable String s) {
     if (s == null)
       return NULL;
     final int len = s.length();
@@ -79,21 +85,21 @@ public enum CSV {
    * @param ¢ Input file
    * @return A two dimensional array of strings
    * @throws IOException some problem with file 'filename' */
-  public static String[][] load(final File ¢) throws IOException {
+  public static String[][] load(@NotNull final File ¢) throws IOException {
     return load(new FileReader(¢));
   }
 
   /** Read a CSV file from the given Reader object.
    * @param r input reader
    * @return a two dimensional array of strings */
-  public static String[][] load(final Reader r) {
+  public static String[][] load(@NotNull final Reader r) {
     final ArrayList<String[]> $ = new ArrayList<>(20);
     for (final Scanner ¢ = new Scanner(r); ¢.hasNext();)
       $.add(split(¢.nextLine()));
     return $.toArray(new String[$.size()][]);
   }
 
-  public static void save(final File f, final String[][] data) throws IOException {
+  public static void save(@NotNull final File f, @NotNull final String[][] data) throws IOException {
     final PrintWriter pw = new PrintWriter(new FileWriter(f));
     pw.print(toCsv(data));
     pw.close();
@@ -104,7 +110,8 @@ public enum CSV {
    * @param clazz Class object of T
    * @param s Input string
    * @return Array of T */
-  public static <T extends Enum<T>> T[] split(final Class<T> clazz, final String s) {
+  @NotNull
+  public static <T extends Enum<T>> T[] split(@NotNull final Class<T> clazz, @NotNull final String s) {
     final String[] ss = split(s);
     @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(clazz, ss.length);
     for (int ¢ = 0; ¢ < $.length; ++¢)
@@ -115,7 +122,8 @@ public enum CSV {
   /** Split a comma separated string into its sub parts
    * @param s input string
    * @return Array of sub parts, in their original order */
-  public static String[] split(final String s) {
+  @NotNull
+  public static String[] split(@NotNull final String s) {
     if (s.length() == 0)
       return new String[0];
     final List<String> $ = new ArrayList<>();
@@ -133,7 +141,8 @@ public enum CSV {
   /** Split a comma separated string into an array of classes.
    * @param s input string
    * @return Array of T */
-  public static Class<?>[] splitToClasses(final String s) {
+  @NotNull
+  public static Class<?>[] splitToClasses(@NotNull final String s) {
     final String[] names = split(s);
     final Class<?>[] $ = new Class<?>[names.length]; // (T[])
     // Array.newInstance(cls,
@@ -141,13 +150,14 @@ public enum CSV {
     for (int i = 0; i < $.length; ++i)
       try {
         $[i] = names[i] == null ? null : Class.forName(names[i]);
-      } catch (final ClassNotFoundException e) {
+      } catch (@NotNull final ClassNotFoundException e) {
         throw new RuntimeException("s=" + s, e);
       }
     return $;
   }
 
-  public static String toCsv(final String[][] data) {
+  @NotNull
+  public static String toCsv(@NotNull final String[][] data) {
     final StringWriter sw = new StringWriter();
     final PrintWriter pw = new PrintWriter(sw);
     for (final String[] line : data) {
@@ -163,7 +173,7 @@ public enum CSV {
   /** Unescape the given input
    * @param s Input string
    * @return Unescaped string */
-  public static String unescape(final String s) {
+  public static String unescape(@NotNull final String s) {
     if (NULL.equals(s))
       return null;
     boolean esc = false;

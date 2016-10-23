@@ -1,5 +1,7 @@
 package il.org.spartan.sequence;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Multiplicative extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
 
@@ -25,6 +27,7 @@ public class Multiplicative extends Sequence {
     this.step = Math.pow(2, step);
   }
 
+  @NotNull
   @Override public Multiplicative advance() {
     final int prev = current;
     current *= step;
@@ -33,6 +36,7 @@ public class Multiplicative extends Sequence {
     return this;
   }
 
+  @NotNull
   @Override public Multiplicative reset() {
     current = 1;
     return this;

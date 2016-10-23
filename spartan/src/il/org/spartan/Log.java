@@ -10,6 +10,7 @@ import java.util.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.strings.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 04/06/2011 */
@@ -18,6 +19,7 @@ public enum Log {
   private static int level;
   private static boolean active = true;
   private static PrintStream out = System.out;
+  @NotNull
   private static Tab tabber = new Tab("  ");
   private static int maxLevel = 100;
   private static final Stack<Stopwatch> stack = new Stack<>();
@@ -31,7 +33,7 @@ public enum Log {
     increaseLevel();
   }
 
-  public static void beginStage(final Object... ¢) {
+  public static void beginStage(@NotNull final Object... ¢) {
     beginStage(Separate.by(¢, " "));
   }
 
@@ -56,12 +58,12 @@ public enum Log {
     endStage(ss);
   }
 
-  public static void endStage(final Object... ss) {
+  public static void endStage(@NotNull final Object... ss) {
     final Stopwatch s = stack.pop().stop();
     Log.ln("End:", s.name(), StringUtils.paren(s) + ";", Separate.by(ss, " "));
   }
 
-  public static void f(final String format, final Object... os) {
+  public static void f(@NotNull final String format, final Object... os) {
     ln(String.format(format, os));
   }
 
@@ -78,7 +80,7 @@ public enum Log {
     ++level;
   }
 
-  public static void ln(final Object... ¢) {
+  public static void ln(@NotNull final Object... ¢) {
     print(prefix() + Separate.by(¢, " ") + "\n");
   }
 
@@ -105,6 +107,7 @@ public enum Log {
     Log.maxLevel = maxLevel;
   }
 
+  @NotNull
   private static String prefix() {
     return now() + tabber + "";
   }

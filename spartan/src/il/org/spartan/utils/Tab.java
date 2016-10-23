@@ -6,6 +6,7 @@ import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -94,7 +95,7 @@ import il.org.spartan.streotypes.*;
 
   /** Send a formatted line, indented by this instance, to {@link System#out}.
    * @param os what to print */
-  public void println(final Object... os) {
+  public void println(@NotNull final Object... os) {
     final StringBuilder sb = new StringBuilder();
     for (final Object ¢ : os)
       sb.append(¢);
@@ -112,6 +113,7 @@ import il.org.spartan.streotypes.*;
    * @author Yossi Gil, the Technion.
    * @since 05/08/2008 */
   @SuppressWarnings("static-method") public static class TEST {
+    @NotNull
     private static String cat(final String s1, final String s2) {
       return "[[" + s1 + "]]" + "[[" + s2 + "]]";
     }

@@ -9,6 +9,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Provides services for computing the Kendall's tau metric for similarity
  * between rankings.
@@ -18,20 +19,22 @@ import il.org.spatan.iteration.*;
   ;
   static final boolean FAST = true;
 
-  public static Charectristics makeCharectristics(final double xs[]) {
+  @NotNull
+  public static Charectristics makeCharectristics(@NotNull final double xs[]) {
     return makeCharectristics(xs, seq(xs.length));
   }
 
-  public static Charectristics makeCharectristics(final double xs[], final double ys[]) {
+  @NotNull
+  public static Charectristics makeCharectristics(@NotNull final double xs[], @NotNull final double ys[]) {
     return new Charectristics(xs, ys);
   }
 
-  public static double tau(final double ys[]) {
+  public static double tau(@NotNull final double ys[]) {
     return tau(seq(ys.length), ys);
   }
 
   /** [[SuppressWarningsSpartan]] */
-  public static double tau(final double[] xs, final double[] ys) {
+  public static double tau(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     return computeS(xs, ys, xs.length) / (double) pairs(xs.length);
   }
@@ -40,15 +43,15 @@ import il.org.spatan.iteration.*;
    * @param xs arbitrary values of the first ranking
    * @param ys
    * @return the Kendall tau coefficient of these two rankings. */
-  public static double tau(final Iterable<Double> xs, final Iterable<Double> ys) {
+  public static double tau(@NotNull final Iterable<Double> xs, @NotNull final Iterable<Double> ys) {
     return tau(Iterables.toArray(xs), Iterables.toArray(ys));
   }
 
-  public static double tauB(final double ys[]) {
+  public static double tauB(@NotNull final double ys[]) {
     return tauB(seq(ys.length), ys);
   }
 
-  public static double tauB(final double[] xs, final double[] ys) {
+  public static double tauB(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     final List<Double> Xs = new ArrayList<>();
     final List<Double> Ys = new ArrayList<>();
@@ -60,7 +63,7 @@ import il.org.spatan.iteration.*;
     return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
   }
 
-  static int compueS(final double[] xs, final double[] ys) {
+  static int compueS(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
@@ -76,7 +79,7 @@ import il.org.spatan.iteration.*;
     return $;
   }
 
-  static int compueS(final int[] xs, final int[] ys) {
+  static int compueS(@NotNull final int[] xs, @NotNull final int[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
@@ -97,13 +100,13 @@ import il.org.spatan.iteration.*;
     return ¢ * (¢ - 1) / 2;
   }
 
-  static int sigma(final double[] ds) {
+  static int sigma(@NotNull final double[] ds) {
     final double[] copy = ds.clone();
     Arrays.sort(copy);
     return sigmaSortedArray(copy);
   }
 
-  static int sigmaSortedArray(final double[] ds) {
+  static int sigmaSortedArray(@NotNull final double[] ds) {
     int $ = 0;
     for (int i = 0; i < ds.length;) {
       if (Double.isNaN(ds[i])) {
@@ -131,7 +134,7 @@ import il.org.spatan.iteration.*;
     return nc - nd;
   }
 
-  private static double tauB_pruned(final double[] xs, final double[] ys) {
+  private static double tauB_pruned(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     final int n = xs.length;
     final int pairs = pairs(n);
@@ -139,7 +142,7 @@ import il.org.spatan.iteration.*;
   }
 
   public static class Charectristics {
-    private static int valid(final double[] xs, final double[] ys) {
+    private static int valid(@NotNull final double[] xs, final double[] ys) {
       int $ = 0;
       for (int ¢ = 0; ¢ < xs.length; ++¢)
         $ += as.bit(!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢]));
@@ -150,11 +153,11 @@ import il.org.spatan.iteration.*;
     @External public final int n;
     @External public final double z;
 
-    public Charectristics(final double xs[], final double ys[]) {
+    public Charectristics(@NotNull final double xs[], @NotNull final double ys[]) {
       this(valid(xs, ys), Kendall.tauB(xs, ys));
     }
 
-    public Charectristics(final double xs[], final double ys[], final double tau) {
+    public Charectristics(@NotNull final double xs[], final double ys[], final double tau) {
       this(valid(xs, ys), tau);
     }
 

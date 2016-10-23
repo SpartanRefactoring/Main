@@ -8,6 +8,8 @@ import static il.org.spartan.bench.Unit.*;
 import java.util.*;
 
 import il.org.spartan.bench.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */
@@ -16,16 +18,17 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
    * use the values of <code>1L</code> to maintain upward compatibility. */
   private static final long serialVersionUID = 1L;
 
-  private static StringBuilder appendValue(final StringBuilder b, final String name, final double v, final Unit u) {
+  private static StringBuilder appendValue(@NotNull final StringBuilder b, final String name, final double v, @NotNull final Unit u) {
     return b.append(name).append('=').append(u.format(v));
   }
 
-  private static void appendValue(final StringBuilder b, final String name, final int i) {
+  private static void appendValue(@NotNull final StringBuilder b, final String name, final int i) {
     b.append(name).append('=').append(i);
   }
 
   protected Unit unit;
   protected int flips;
+  @NotNull
   protected double[] values = new double[0];
 
   /** Generate a copy of the set of all recorded values
@@ -42,11 +45,11 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
     return format(unit != null ? unit : Unit.DOUBLE);
   }
 
-  public String format(final Unit ¢) {
+  public String format(@NotNull final Unit ¢) {
     return n() == 1 ? ¢.format(mean()) : format(¢, "A D R N");
   }
 
-  public String format(final Unit u, final String format) {
+  public String format(@NotNull final Unit u, @Nullable final String format) {
     if (format == null)
       return format(u);
     final StringBuilder sb = new StringBuilder();
@@ -112,6 +115,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
 
   /** Prune the set of values to those in the median +- mad value.
    * @return an array representing these values */
+  @NotNull
   public double[] prune() {
     return prune(all());
   }
@@ -132,7 +136,8 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
     return unit;
   }
 
-  private StringBuilder appendError(final StringBuilder b, final double d) {
+  @NotNull
+  private StringBuilder appendError(@NotNull final StringBuilder b, final double d) {
     return n() <= 1 ? b : b.append('±').append(RELATIVE.format(d));
   }
 }

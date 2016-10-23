@@ -2,6 +2,7 @@
 package il.org.spartan;
 
 import il.org.spartan.iterables.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of
@@ -20,7 +21,7 @@ import il.org.spartan.iterables.*;
  * @since 12/02/2006) */
 public final class Separator {
   /** @param args JD */
-  public static void main(final String[] args) {
+  public static void main(@NotNull final String[] args) {
     for (final String a : args)
       System.out.print(new Separator(", ") + a);
   }
@@ -30,7 +31,8 @@ public final class Separator {
    * @param between what to put between the items
    * @return String 
    *         value of method <code>separateBy</code> */
-  public static String separateBy(final int[] is, final String between) {
+  @NotNull
+  public static String separateBy(@NotNull final int[] is, final String between) {
     if (is.length == 0)
       return "";
     String $ = "";
@@ -45,7 +47,8 @@ public final class Separator {
    * @param between what to put between the items
    * @param ts JD
    * @return the parameters separated */
-  public static <T> String separateBy(final String between, final T[] ts) {
+  @NotNull
+  public static <T> String separateBy(final String between, @NotNull final T[] ts) {
     return wrap("", "", ts, between);
   }
 
@@ -55,7 +58,8 @@ public final class Separator {
    * @param ts JD
    * @param between what to put between the items
    * @return String value of method <code>wrap</code> */
-  public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
+  @NotNull
+  public static <T> String wrap(@NotNull final String wrap, @NotNull final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
 
@@ -65,7 +69,8 @@ public final class Separator {
    * @param ts JD
    * @param between what to put between the items
    * @return String <code>wrap</code> */
-  public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
+  @NotNull
+  public static <T> String wrap(@NotNull final String begin, final String end, @NotNull final Iterable<T> ts, final String between) {
     if (iterables.isEmpty(ts))
       return "";
     final StringBuilder $ = new StringBuilder(begin);
@@ -81,7 +86,8 @@ public final class Separator {
    * @param ts JD
    * @param between what to put between the items
    * */
-  public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
+  @NotNull
+  public static <T> String wrap(@NotNull final String begin, final String end, @NotNull final T[] ts, final String between) {
     if (ts.length == 0)
       return "";
     final StringBuilder $ = new StringBuilder(begin);

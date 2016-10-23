@@ -3,6 +3,8 @@
  */
 package il.org.spartan.xy;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 
 class OutputStreamRedirector extends Thread {
@@ -19,7 +21,7 @@ class OutputStreamRedirector extends Thread {
     try {
       for (final int nextChar = from.read(); nextChar != -1;)
         to.append((char) nextChar);
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       e.printStackTrace();
     }
   }

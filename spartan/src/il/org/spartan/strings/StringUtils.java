@@ -7,6 +7,8 @@ import java.util.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A bunch of string functions.
  * @author Yossi Gil */
@@ -16,37 +18,40 @@ import il.org.spartan.utils.*;
   static final int MAX_FIRST = 20;
   static final int MAX_LAST = 10;
 
-  public static double atod(final String ¢) {
+  public static double atod(@NotNull final String ¢) {
     return Double.valueOf(¢).doubleValue();
   }
 
-  public static float atof(final String ¢) {
+  public static float atof(@NotNull final String ¢) {
     return Float.valueOf(¢).floatValue();
   }
 
-  public static int atoi(final String ¢) {
+  public static int atoi(@NotNull final String ¢) {
     return Integer.valueOf(¢).intValue();
   }
 
-  public static long atol(final String ¢) {
+  public static long atol(@NotNull final String ¢) {
     return Long.valueOf(¢).longValue();
   }
 
-  public static String capitalize(final String ¢) {
+  @NotNull
+  public static String capitalize(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toUpperCase() + rest(¢).toLowerCase();
   }
 
   /** Concatenate any number of strings.
    * @param ss a variable number of strings
    * @return the concatenation of the strings in <code>ss</code> */
-  public static String cat(final String... ss) {
+  @NotNull
+  public static String cat(@NotNull final String... ss) {
     final StringBuilder $ = new StringBuilder("");
     for (final String ¢ : ss)
       $.append(¢);
     return $ + "";
   }
 
-  public static String cat(final String[]... sss) {
+  @NotNull
+  public static String cat(@NotNull final String[]... sss) {
     final StringBuilder $ = new StringBuilder("");
     for (final String[] ¢ : sss)
       $.append(cat(¢));
@@ -57,14 +62,16 @@ import il.org.spartan.utils.*;
     return a == d ? 0 : signum(a) != signum(d) ? Double.NaN : 2 * Math.abs(a - d) / Math.abs(a + d);
   }
 
+  @NotNull
   public static String dtoa(final double ¢) {
     return ¢ + "";
   }
 
-  public static <T> boolean eq(final T a, final T b) {
+  public static <T> boolean eq(@Nullable final T a, @Nullable final T b) {
     return a == null ? b == null : a.equals(b);
   }
 
+  @NotNull
   public static String esc(final char ¢) {
     switch (¢) {
       case '\n':
@@ -84,7 +91,8 @@ import il.org.spartan.utils.*;
     }
   }
 
-  public static String esc(final String s) {
+  @NotNull
+  public static String esc(@Nullable final String s) {
     if (s == null)
       return "(null)";
     final StringBuilder $ = new StringBuilder(s.length());
@@ -103,10 +111,12 @@ import il.org.spartan.utils.*;
     }
   }
 
+  @NotNull
   public static String fill(final int i, final char c) {
     return fill(i, c + "");
   }
 
+  @NotNull
   public static String fill(final int i, final String s) {
     final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < i; ++¢)
@@ -114,66 +124,70 @@ import il.org.spartan.utils.*;
     return $ + "";
   }
 
-  public static char first(final String ¢) {
+  public static char first(@NotNull final String ¢) {
     nonnull(¢);
     positive(¢.length());
     return ¢.charAt(0);
   }
 
+  @NotNull
   public static String ftoa(final float ¢) {
     return ¢ + "";
   }
 
-  public static boolean isDouble(final String s) {
+  public static boolean isDouble(@NotNull final String s) {
     try {
       Double.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@NotNull final NumberFormatException __) {
       return false;
     }
   }
 
-  public static boolean isFloat(final String s) {
+  public static boolean isFloat(@NotNull final String s) {
     try {
       Float.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@NotNull final NumberFormatException __) {
       return false;
     }
   }
 
-  public static boolean isInt(final String s) {
+  public static boolean isInt(@NotNull final String s) {
     try {
       Integer.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@NotNull final NumberFormatException __) {
       return false;
     }
   }
 
-  public static boolean isLong(final String s) {
+  public static boolean isLong(@NotNull final String s) {
     try {
       Long.valueOf(s);
       return true;
-    } catch (final NumberFormatException __) {
+    } catch (@NotNull final NumberFormatException __) {
       return false;
     }
   }
 
+  @NotNull
   public static String itoa(final int ¢) {
     return ¢ + "";
   }
 
-  public static String javaCase(final String ¢) {
+  @NotNull
+  public static String javaCase(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toLowerCase() + rest(¢);
   }
 
-  public static char last(final String ¢) {
+  public static char last(@NotNull final String ¢) {
     nonnull(¢);
     positive(¢.length());
     return ¢.charAt(¢.length() - 1);
   }
 
+  @NotNull
   public static String lowCounter(final int ¢) {
     switch (¢) {
       case -1:
@@ -185,6 +199,7 @@ import il.org.spartan.utils.*;
     }
   }
 
+  @NotNull
   public static String ltoa(final long ¢) {
     return ¢ + "";
   }
@@ -193,6 +208,7 @@ import il.org.spartan.utils.*;
    * return "1st", for 22, the "22nd", etc.
    * @param i a non-negative integer to convert
    * @return the ordinal string representation of <code>n</code> */
+  @NotNull
   public static String ordinal(final int i) {
     nonnegative(i);
     switch (i % 10) {
@@ -208,14 +224,17 @@ import il.org.spartan.utils.*;
   /** Wrap an object in parenthesis
    * @param ¢ a non-<code><b>null</b></code> object for wrapping in parenthesis
    * @return the result of <code>o.toString()</code> wrapped parenthesis */
+  @NotNull
   public static String paren(final Object ¢) {
     return "(" + ¢ + ")";
   }
 
+  @NotNull
   public static String pluralize(final int i, final String singular) {
     return pluralize(i, singular, singular + "s");
   }
 
+  @NotNull
   public static String pluralize(final int i, final String singular, final String plural) {
     switch (i) {
       case 0:
@@ -243,11 +262,13 @@ import il.org.spartan.utils.*;
     }
   }
 
+  @NotNull
   public static String pretty(final String singular, final Collection<? extends Object> a) {
     return pretty(singular, singular + "s", a);
   }
 
-  public static String pretty(final String singular, final String plural, final Collection<? extends Object> a) {
+  @NotNull
+  public static String pretty(final String singular, final String plural, @Nullable final Collection<? extends Object> a) {
     if (a == null || a.isEmpty())
       return "";
     if (a.size() == 1)
@@ -266,10 +287,12 @@ import il.org.spartan.utils.*;
    * @param ¢ a non-<code><b>null</b></code> object for quoting
    * @return the result of <code>o.toString()</code> wrapped with single
    *         quotes */
+  @NotNull
   public static String quote(final Object ¢) {
     return wrap('\'', ¢ + "");
   }
 
+  @NotNull
   public static String repeat(final int i, final char c) {
     return repeat(i, c + "");
   }
@@ -279,6 +302,7 @@ import il.org.spartan.utils.*;
    * @param s a string to repeat
    * @return a {@link String} containing <code>s</code> concatenated
    *         <code>n</code> times */
+  @NotNull
   public static String repeat(final int i, final String s) {
     final StringBuffer $ = new StringBuffer();
     for (int ¢ = 0; ¢ < i; ++¢)
@@ -289,7 +313,7 @@ import il.org.spartan.utils.*;
   /** Chop the first character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least one
    * @return <code>s</code> but without its first character. */
-  public static String rest(final String ¢) {
+  public static String rest(@NotNull final String ¢) {
     nonnull(¢);
     positive(¢.length());
     return ¢.substring(1);
@@ -299,11 +323,12 @@ import il.org.spartan.utils.*;
     return ¢ == 0 ? 0 : ¢ > 0 ? 1 : -1;
   }
 
-  public static String sprintf(final String format, final Object... args) {
+  @NotNull
+  public static String sprintf(@NotNull final String format, final Object... args) {
     return new Formatter().format(format, args) + "";
   }
 
-  public static String sprintf(final String[] args) {
+  public static String sprintf(@NotNull final String[] args) {
     switch (args.length) {
       case 0:
         return "";
@@ -321,13 +346,14 @@ import il.org.spartan.utils.*;
    * @param ¢ a non-<code><b>null</b></code> string of length at least two to
    *        strip
    * @return <code>s</code> but without its first and last character. */
-  public static String strip(final String ¢) {
+  public static String strip(@NotNull final String ¢) {
     nonnull(¢);
     require(¢.length() >= 2);
     return ¢.substring(1, ¢.length() - 1);
   }
 
-  public static List<String> toLines(final String s) throws IOException {
+  @NotNull
+  public static List<String> toLines(@NotNull final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
     for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
@@ -337,6 +363,7 @@ import il.org.spartan.utils.*;
     }
   }
 
+  @NotNull
   public static String upCounter(final int ¢) {
     switch (¢) {
       case -1:
@@ -352,18 +379,22 @@ import il.org.spartan.utils.*;
     return esc(¢).replaceAll(" ", "\\s");
   }
 
+  @NotNull
   public static String wrap(final char with, final String s) {
     return with + s + with;
   }
 
+  @NotNull
   public static String wrap(final String with, final String s) {
     return with + s + with;
   }
 
+  @NotNull
   private static String tolow(final int ¢) {
     return ¢ == 0 ? "" : tolow(¢ / 26) + (char) ('a' + ¢ % 26);
   }
 
+  @NotNull
   private static String toup(final int ¢) {
     return ¢ == 0 ? "" : toup(¢ / 26) + (char) ('A' + ¢ % 26);
   }

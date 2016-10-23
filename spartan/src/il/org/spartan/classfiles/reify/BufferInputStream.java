@@ -19,6 +19,7 @@ package il.org.spartan.classfiles.reify;
 import java.io.*;
 
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */
@@ -28,7 +29,7 @@ public class BufferInputStream extends InputStream {
   protected int mark;
   protected int length;
 
-  public BufferInputStream(final byte bytes[]) {
+  public BufferInputStream(@NotNull final byte bytes[]) {
     this.bytes = bytes;
     length = bytes.length;
   }

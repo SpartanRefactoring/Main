@@ -9,6 +9,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -29,7 +30,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static String by(final boolean[] bs, final char between) {
+  @NotNull
+  public static String by(@NotNull final boolean[] bs, final char between) {
     return by(box(bs), between + "");
   }
 
@@ -40,7 +42,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static String by(final boolean[] bs, final String between) {
+  @NotNull
+  public static String by(@NotNull final boolean[] bs, final String between) {
     return by(box(bs), between);
   }
 
@@ -51,7 +54,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static String by(final byte[] bs, final char between) {
+  @NotNull
+  public static String by(@NotNull final byte[] bs, final char between) {
     return by(box(bs), between + "");
   }
 
@@ -62,7 +66,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static String by(final byte[] bs, final String between) {
+  @NotNull
+  public static String by(@NotNull final byte[] bs, final String between) {
     return by(box(bs), between);
   }
 
@@ -73,7 +78,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
-  public static String by(final char[] cs, final char between) {
+  @NotNull
+  public static String by(@NotNull final char[] cs, final char between) {
     return by(box(cs), between + "");
   }
 
@@ -84,7 +90,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
-  public static String by(final char[] cs, final String between) {
+  @NotNull
+  public static String by(@NotNull final char[] cs, final String between) {
     return by(box(cs), between);
   }
 
@@ -95,7 +102,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
-  public static String by(final double[] ds, final char between) {
+  @NotNull
+  public static String by(@NotNull final double[] ds, final char between) {
     return by(box(ds), between + "");
   }
 
@@ -106,7 +114,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
-  public static String by(final double[] ds, final String between) {
+  @NotNull
+  public static String by(@NotNull final double[] ds, final String between) {
     return by(box(ds), between);
   }
 
@@ -121,7 +130,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> t, final Iterable<? extends T> ts, final String between) {
+  @NotNull
+  public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -140,7 +150,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> t, final Iterable<T> ts, final char between) {
+  @NotNull
+  public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<T> ts, final char between) {
     return by(t, ts, between + "");
   }
 
@@ -155,7 +166,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> t, final T[] ts, final char between) {
+  @NotNull
+  public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final char between) {
     return by(t, ts, between + "");
   }
 
@@ -170,7 +182,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> t, final T[] ts, final String between) {
+  @NotNull
+  public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -185,7 +198,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
-  public static String by(final float[] fs, final char between) {
+  @NotNull
+  public static String by(@NotNull final float[] fs, final char between) {
     return by(box(fs), between + "");
   }
 
@@ -196,7 +210,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
-  public static String by(final float[] fs, final String between) {
+  @NotNull
+  public static String by(@NotNull final float[] fs, final String between) {
     return by(box(fs), between);
   }
 
@@ -207,7 +222,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
-  public static String by(final int[] is, final char between) {
+  @NotNull
+  public static String by(@NotNull final int[] is, final char between) {
     return by(box(is), between + "");
   }
 
@@ -218,7 +234,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
-  public static String by(final int[] is, final String between) {
+  @NotNull
+  public static String by(@NotNull final int[] is, final String between) {
     return by(box(is), between);
   }
 
@@ -230,7 +247,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  public static <T> String by(final Iterable<T> ts, final char between) {
+  @NotNull
+  public static <T> String by(@NotNull final Iterable<T> ts, final char between) {
     return by(ts, between + "");
   }
 
@@ -242,7 +260,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  public static <T> String by(final Iterable<T> ts, final String between) {
+  @NotNull
+  public static <T> String by(@NotNull final Iterable<T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
@@ -257,7 +276,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
-  public static String by(final long[] ls, final char between) {
+  @NotNull
+  public static String by(@NotNull final long[] ls, final char between) {
     return by(box(ls), between + "");
   }
 
@@ -268,7 +288,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
-  public static String by(final long[] ls, final String between) {
+  @NotNull
+  public static String by(@NotNull final long[] ls, final String between) {
     return by(box(ls), between);
   }
 
@@ -284,7 +305,8 @@ import il.org.spartan.streotypes.*;
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
-  public static <Key, Value> String by(final Map<Key, Value> k, final String between, final String arrow) {
+  @NotNull
+  public static <Key, Value> String by(@NotNull final Map<Key, Value> k, final String between, final String arrow) {
     nonnull(k);
     nonnull(between);
     nonnull(arrow);
@@ -302,7 +324,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
-  public static String by(final short[] ss, final char between) {
+  @NotNull
+  public static String by(@NotNull final short[] ss, final char between) {
     return by(box(ss), between + "");
   }
 
@@ -313,7 +336,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
-  public static String by(final short[] ss, final String between) {
+  @NotNull
+  public static String by(@NotNull final short[] ss, final String between) {
     return by(box(ss), between);
   }
 
@@ -324,7 +348,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  public static <T> String by(final T[] ts, final char between) {
+  @NotNull
+  public static <T> String by(@NotNull final T[] ts, final char between) {
     return by(ts, between + "");
   }
 
@@ -335,8 +360,9 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the textual
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
-  public static <T> String by(final T[] ts, final String between) {
-    return by((F<T>) t -> t + "", ts, between);
+  @NotNull
+  public static <T> String by(@NotNull final T[] ts, final String between) {
+    return by(t -> t + "", ts, between);
   }
 
   /** Separate elements of a given {{@link Iterable}} collection of objects by
@@ -349,7 +375,8 @@ import il.org.spartan.streotypes.*;
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String byCommas(final F<T> t, final Iterable<? extends T> ts) {
+  @NotNull
+  public static <T> String byCommas(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
     return by(t, ts, ",");
   }
 
@@ -357,7 +384,8 @@ import il.org.spartan.streotypes.*;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the comma separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  public static String byCommas(final Object... ¢) {
+  @NotNull
+  public static String byCommas(@NotNull final Object... ¢) {
     return by(¢, COMMA);
   }
 
@@ -365,6 +393,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
+  @NotNull
   public static String byDots(final Object... ¢) {
     return by(Prune.whites(¢), DOT);
   }
@@ -373,6 +402,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
+  @NotNull
   public static String byNewLines(final Object... ¢) {
     return by(Prune.whites(¢), "\n");
   }
@@ -381,6 +411,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
+  @NotNull
   public static String bySpaces(final Object... ¢) {
     return by(Prune.whites(¢), SPACE);
   }
@@ -389,15 +420,17 @@ import il.org.spartan.streotypes.*;
    * a comma separated list of its arguments, where special characters in each
    * argument are escaped prior to printing.
    * @param args list of the command line arguments. */
-  public static void main(final String[] args) {
-    System.out.println("Arguments are: " + Separate.by((F<String>) s -> "\"" + esc(s) + "\"", args, ", "));
+  public static void main(@NotNull final String[] args) {
+    System.out.println("Arguments are: " + Separate.by(s -> "\"" + esc(s) + "\"", args, ", "));
   }
 
-  public static String nl(final Iterable<String> ¢) {
+  @NotNull
+  public static String nl(@NotNull final Iterable<String> ¢) {
     return by(¢, NL);
   }
 
-  public static String nl(final String... ¢) {
+  @NotNull
+  public static String nl(@NotNull final String... ¢) {
     return by(¢, NL);
   }
 
@@ -413,6 +446,6 @@ import il.org.spartan.streotypes.*;
     /** Anonymous function for translating an object into text
      * @param t an object of type <code>T</code>
      * @return a textual */
-    String __(T t);
+    @NotNull String __(T t);
   }
 }

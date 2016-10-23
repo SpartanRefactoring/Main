@@ -1,16 +1,19 @@
 package il.org.spartan.classfiles.reify;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 
 public final class BufferDataInputStream extends DataInputStream {
+  @NotNull
   private final BufferInputStream inner;
 
-  public BufferDataInputStream(final BufferInputStream inner) {
+  public BufferDataInputStream(@NotNull final BufferInputStream inner) {
     super(inner);
     this.inner = inner;
   }
 
-  public BufferDataInputStream(final byte[] bytes) {
+  public BufferDataInputStream(@NotNull final byte[] bytes) {
     this(new BufferInputStream(bytes));
   }
 

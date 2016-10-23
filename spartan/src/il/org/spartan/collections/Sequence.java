@@ -5,6 +5,7 @@ import java.util.*;
 
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An immutable collection of elements. Once construction is completed no new
  * elements can be added to the collections, nor can elements be removed from
@@ -14,16 +15,19 @@ import il.org.spatan.iteration.*;
 public class Sequence<E> implements Iterable<E>, Serializable {
   private static final long serialVersionUID = 8259437798546027307L;
 
-  public static <T> Sequence<T> make(final Sequence<T> ts, final int begin) {
+  @NotNull
+  public static <T> Sequence<T> make(@NotNull final Sequence<T> ts, final int begin) {
     return make(ts.es, begin, ts.end);
   }
 
+  @NotNull
   public static <T> Sequence<T> make(final T[] ts, final int begin, final int end) {
     return new Sequence<>(ts, begin, end);
   }
 
-  public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> __, final Sequence<? extends T> src) {
-    return make((T[]) src.es, src.begin, src.end);
+  @NotNull
+  public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> __, @NotNull final Sequence<? extends T> src) {
+    return make(src.es, src.begin, src.end);
   }
 
   private final E[] es;
@@ -34,7 +38,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     this(null, 0, 0);
   }
 
-  public Sequence(final E... es) {
+  public Sequence(@NotNull final E... es) {
     this(es, 0, es.length);
   }
 
@@ -59,6 +63,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return -1;
   }
 
+  @NotNull
   @Override public Iterator<E> iterator() {
     return ArrayIterator.make(es, begin, end);
   }
@@ -67,6 +72,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return end - begin;
   }
 
+  @NotNull
   @Override public String toString() {
     return Stringify.it(this);
   }

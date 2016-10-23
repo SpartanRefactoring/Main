@@ -4,6 +4,7 @@ package il.org.spartan.utils;
 import static il.org.spartan.azzert.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A utility class, serving as the system global manager of the policy of
  * stopping execution due to "Design By Contract" bugs.
@@ -11,6 +12,7 @@ import il.org.spartan.streotypes.*;
 @Module public enum STOP {
   ;
   /** Handler for program exit requests. Default behavior: JUnit failure. */
+  @NotNull
   private static StopHandler stopHandler = stopFail();
 
   /** Terminate the program with a specified exit code.
@@ -28,7 +30,7 @@ import il.org.spartan.streotypes.*;
   /** A never-returning method to be used for dealing with assertions that
    * should stop the program run.
    * @param ¢ the exception to be associated with this termination */
-  public static void stop(final Throwable ¢) {
+  public static void stop(@NotNull final Throwable ¢) {
     stop(¢, "Program must stop due to this error: ");
   }
 
@@ -36,7 +38,7 @@ import il.org.spartan.streotypes.*;
    * should stop the program run.
    * @param t the exception to be associated with this termination
    * @param s a more detailed description of the error */
-  public static void stop(final Throwable t, final String s) {
+  public static void stop(@NotNull final Throwable t, final String s) {
     System.err.println(s);
     t.printStackTrace();
     stop(-1);
@@ -45,6 +47,7 @@ import il.org.spartan.streotypes.*;
   /** Set the termination policy to program exit.
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
+  @NotNull
   public static StopHandler stopExit() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {
@@ -61,6 +64,7 @@ import il.org.spartan.streotypes.*;
   /** Set the termination policy to JUnit failure
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
+  @NotNull
   public static StopHandler stopFail() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {
@@ -76,6 +80,7 @@ import il.org.spartan.streotypes.*;
   /** Set the termination policy to throwing of a {@link Runnable} failure
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
+  @NotNull
   public static StopHandler stopRuntimeException() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {

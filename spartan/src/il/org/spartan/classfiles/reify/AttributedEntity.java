@@ -3,6 +3,8 @@
  */
 package il.org.spartan.classfiles.reify;
 
+import org.jetbrains.annotations.NotNull;
+
 /** @author Yossi Gil
  * @since 25 November 2011 */
 public class AttributedEntity extends NamedEntity {
@@ -13,11 +15,11 @@ public class AttributedEntity extends NamedEntity {
     this.attributes = attributes;
   }
 
-  public final boolean containsAttribute(final String attributeName) {
+  public final boolean containsAttribute(@NotNull final String attributeName) {
     return findAttribute(attributeName) != null;
   }
 
-  public final AttributeInfo findAttribute(final String attributeName) {
+  public final AttributeInfo findAttribute(@NotNull final String attributeName) {
     for (final AttributeInfo $ : attributes)
       if (attributeName.equals($.name))
         return $;

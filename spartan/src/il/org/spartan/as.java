@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -41,7 +43,7 @@ public enum as {
    *        type is isomorphic to array parameters in Java
    * @return an {@link Iterable} over the array, which can then be used to to
    *         iterate over the parameter(s) */
-  public static Iterable<Integer> asIterable(final Integer... is) {
+  public static Iterable<Integer> asIterable(@NotNull final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
     return () -> new Iterator<Integer>() {
@@ -57,7 +59,7 @@ public enum as {
     };
   }
 
-  public static Iterable<Integer> asIterableLambda(final Integer... is) {
+  public static Iterable<Integer> asIterableLambda(@NotNull final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
 
@@ -83,7 +85,7 @@ public enum as {
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
    *         <code>1</code> otherwise.
    * @see as#bit(Object) */
-  public static int bit(final @Nullable Object ¢) {
+  public static int bit(@org.jetbrains.annotations.Nullable final @Nullable Object ¢) {
     return ¢ == null ? 0 : 1;
   }
 
@@ -92,7 +94,8 @@ public enum as {
    * @param is what to covert
    * @return parameter, converted to the {@link List} of non-
    *         <code><b>int</b></code> {@link Integer}s form. */
-  public static List<Integer> ingeterList(final int... is) {
+  @NotNull
+  public static List<Integer> ingeterList(@NotNull final int... is) {
     final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
       $.add(box.it(¢));
@@ -112,7 +115,8 @@ public enum as {
    * @param is the list to be converted, none of the elements in it can be
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
-  public static int[] intArray(final List<Integer> is) {
+  @NotNull
+  public static int[] intArray(@NotNull final List<Integer> is) {
     final int @NonNull [] $ = new int @NonNull [is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
@@ -123,8 +127,10 @@ public enum as {
    * @param <T> an arbitrary type
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter */
-  @SafeVarargs public static <@Nullable T> PureIterable.Sized<T> iterable(final T... ts) {
+  @NotNull
+  @SafeVarargs public static <@Nullable T> PureIterable.Sized<T> iterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
+      @NotNull
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current;
@@ -184,8 +190,10 @@ public enum as {
    * @param <T> an arbitrary type
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter */
-  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(final T... ts) {
+  @NotNull
+  @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
+      @NotNull
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current;
@@ -219,7 +227,8 @@ public enum as {
    * references to valid instances, into a {@link NonNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  public static String string(@Nullable final Object $) {
+  @NotNull
+  public static String string(@org.jetbrains.annotations.Nullable @Nullable final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
 
@@ -227,7 +236,8 @@ public enum as {
    * or an actual String, into a {@link NonNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  public static String string(@Nullable final String $) {
+  @NotNull
+  public static String string(@org.jetbrains.annotations.Nullable @Nullable final String $) {
     return $ != null ? $ : "null";
   }
 
@@ -235,7 +245,7 @@ public enum as {
    * @param os what to covert
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
-  public static String[] strings(final Iterable<? extends @Nullable Object> os) {
+  public static String[] strings(@NotNull final Iterable<? extends @Nullable Object> os) {
     final List<@NonNull String> $ = new ArrayList<>();
     for (final @Nullable Object ¢ : os)
       if (¢ != null)
@@ -243,7 +253,7 @@ public enum as {
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
 
-  static Iterable<Integer> asIterableEssence(final Integer... is) {
+  static Iterable<Integer> asIterableEssence(@NotNull final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
 
@@ -295,6 +305,7 @@ public enum as {
 
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
+        @org.jetbrains.annotations.Nullable
         @Override public @Nullable String toString() {
           return null;
         }

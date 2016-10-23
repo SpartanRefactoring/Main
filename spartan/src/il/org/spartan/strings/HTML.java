@@ -4,6 +4,7 @@ package il.org.spartan.strings;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A utility class with functions to escape special HTML characters in a
  * {@link String}, before including it in an HTML page.
@@ -22,10 +23,12 @@ import il.org.spartan.streotypes.*;
   /** The '&' character. */
   public static final char AMPERSAND = '&';
 
+  @NotNull
   public static String beginTag(final String tag) {
     return "<" + tag + ">";
   }
 
+  @NotNull
   public static String endTag(final String tag) {
     return beginTag("/" + tag);
   }
@@ -35,6 +38,7 @@ import il.org.spartan.streotypes.*;
    * @return a string representing the escaped form of the parameter (if it is a
    *         special character). Otherwise, the string containing the
    *         parameter. */
+  @NotNull
   public static String esc(final char ¢) {
     switch (¢) {
       case ' ':
@@ -59,7 +63,8 @@ import il.org.spartan.streotypes.*;
    * @param ¢ {@link Collection} of {@link String}s to be escaped.
    * @return an array containing the escaped version of the elements of the
    *         parameter. */
-  public static String[] esc(final Collection<String> ¢) {
+  @NotNull
+  public static String[] esc(@NotNull final Collection<String> ¢) {
     return esc(¢.toArray(new String[¢.size()]));
   }
 
@@ -67,7 +72,8 @@ import il.org.spartan.streotypes.*;
    * @param s a string to escape.
    * @return a string representing the escaped form of the parameter, where all
    *         special HTML characters are escaped. */
-  public static String esc(final String s) {
+  @NotNull
+  public static String esc(@NotNull final String s) {
     final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       $.append(esc(s.charAt(¢)));
@@ -78,29 +84,32 @@ import il.org.spartan.streotypes.*;
    * @param ss an array of strings escape.
    * @return the same array, where each entry is replaced by its escaped
    *         form. */
-  public static String[] esc(final String[] ss) {
+  @NotNull
+  public static String[] esc(@NotNull final String[] ss) {
     for (int ¢ = 0; ¢ < ss.length; ++¢)
       ss[¢] = esc(ss[¢]);
     return ss;
   }
 
-  public static char first(final String ¢) {
+  public static char first(@NotNull final String ¢) {
     return ¢.charAt(0);
   }
 
-  public static char last(final String ¢) {
+  public static char last(@NotNull final String ¢) {
     return ¢.charAt(¢.length() - 1);
   }
 
-  public static String peel(final String ¢) {
+  public static String peel(@NotNull final String ¢) {
     return ¢.substring(1, ¢.length() - 1);
   }
 
+  @NotNull
   public static String tag(final String tag, final String text) {
     return beginTag(tag) + text + endTag(tag);
   }
 
-  public static String tagContents(final String tag, final String s) {
+  @NotNull
+  public static String tagContents(final String tag, @NotNull final String s) {
     return new StringBuilder(first(s)).append(tag(tag, peel(s))).append(last(s)) + "";
   }
 }

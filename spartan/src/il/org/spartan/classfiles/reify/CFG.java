@@ -6,9 +6,11 @@ import il.org.spartan.classfiles.reify.OpCode.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.graph.*;
 import il.org.spartan.graph.Graph.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CFG {
-  @SuppressWarnings("boxing") private static BasicBlock offset2block(final Set<BasicBlock> bs, final Long offset) {
+  @SuppressWarnings("boxing") private static BasicBlock offset2block(@NotNull final Set<BasicBlock> bs, final Long offset) {
     for (final BasicBlock $ : bs)
       if ($.startOffset <= offset && $.endOffset >= offset)
         return $;
@@ -54,6 +56,7 @@ public class CFG {
     g = builder.build();
   }
 
+  @NotNull
   @Override public String toString() {
     String $ = "";
     for (final Vertex<BasicBlock> ¢ : vertices())
@@ -68,7 +71,7 @@ public class CFG {
     return g.vertices();
   }
 
-  @SuppressWarnings("boxing") private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets, final Map<Long, Set<Long>> subroutine2rets) {
+  @SuppressWarnings("boxing") private void findJumpsAndTargets(@NotNull final MultiMap<Long, Long> jumps2targets, @NotNull final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
     for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
       final Instruction i = OpCode.read(r);
@@ -149,8 +152,9 @@ public class CFG {
     }
   }
 
-  @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(final MultiMap<Long, Long> jumps2targets,
-      final Graph.Builder<BasicBlock> b) {
+  @NotNull
+  @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(@NotNull final MultiMap<Long, Long> jumps2targets,
+                                                                          @NotNull final Graph.Builder<BasicBlock> b) {
     final Set<BasicBlock> $ = new HashSet<>();
     long offset = 0;
     BasicBlock currBlock = null;
@@ -190,7 +194,7 @@ public class CFG {
     long startOffset;
     long endOffset;
 
-    @Override public boolean equals(final Object ¢) {
+    @Override public boolean equals(@Nullable final Object ¢) {
       return ¢ == this || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
           && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
@@ -199,6 +203,7 @@ public class CFG {
       return (int) (31 * (endOffset + 31 * (getOuterType().hashCode() + 31)) + startOffset);
     }
 
+    @NotNull
     private CFG getOuterType() {
       return CFG.this;
     }

@@ -8,6 +8,7 @@ import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,7 +16,8 @@ import il.org.spartan.utils.Separate.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class SeparateTest {
-  private static <T> Collection<T> makeCollection(final T... ts) {
+  @NotNull
+  private static <T> Collection<T> makeCollection(@NotNull final T... ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(¢);
@@ -67,19 +69,19 @@ public class SeparateTest {
   }
 
   @Test public final void testByFOfTIterableOfTChar() {
-    azzert.that(Separate.by((F<String>) a -> "<" + a + '>', new String[] { "A", "B" }, ' '), is("<A> <B>"));
+    azzert.that(Separate.by(a -> "<" + a + '>', new String[] { "A", "B" }, ' '), is("<A> <B>"));
   }
 
   @Test public final void testByFOfTIterableOfTString() {
-    azzert.that(Separate.by((F<String>) a -> "'" + a + '\'', makeCollection("Hello", "World"), ", "), is("'Hello', 'World'"));
+    azzert.that(Separate.by(a -> "'" + a + '\'', makeCollection("Hello", "World"), ", "), is("'Hello', 'World'"));
   }
 
   @Test public final void testByFOfTTArrayChar() {
-    azzert.that(Separate.by((F<String>) a -> "'" + a + '\'', makeCollection("Hello", "World"), ' '), is("'Hello' 'World'"));
+    azzert.that(Separate.by(a -> "'" + a + '\'', makeCollection("Hello", "World"), ' '), is("'Hello' 'World'"));
   }
 
   @Test public final void testByFOfTTArrayString() {
-    azzert.that(Separate.by((F<String>) a -> "'" + a + '\'', new String[] { "Hello", "World" }, ", "), is("'Hello', 'World'"));
+    azzert.that(Separate.by(a -> "'" + a + '\'', new String[] { "Hello", "World" }, ", "), is("'Hello', 'World'"));
   }
 
   @Test public final void testByIntArrayChar() {

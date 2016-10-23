@@ -9,6 +9,7 @@ import static il.org.spartan.utils.Box.*;
 import java.util.*;
 
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */
@@ -16,7 +17,7 @@ public abstract class Statistics {
   protected static final int MOMENTS = 4;
   protected static final String EMPTY_SEQUENCE = "No elements yet in sequene.";
 
-  public static double mad(final double[] ds) {
+  public static double mad(@NotNull final double[] ds) {
     final int n = ds.length;
     final double median = median(ds);
     final double $[] = new double[n];
@@ -25,12 +26,13 @@ public abstract class Statistics {
     return median($);
   }
 
-  public static double median(final double[] ¢) {
+  public static double median(@NotNull final double[] ¢) {
     Arrays.sort(¢);
     return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
 
-  public static double[] prune(final double[] ds) {
+  @NotNull
+  public static double[] prune(@NotNull final double[] ds) {
     final List<Double> $ = new ArrayList<>();
     final double median = median(ds);
     final double mad = mad(ds);
@@ -40,7 +42,7 @@ public abstract class Statistics {
     return Iterables.toArray($);
   }
 
-  public static double sampleMean(final double[] ds) {
+  public static double sampleMean(@NotNull final double[] ds) {
     double sum = 0;
     for (final double ¢ : ds)
       sum += ¢;
@@ -52,7 +54,7 @@ public abstract class Statistics {
    * >sample variance</a>
    * @param ds the sample
    * @return the sample variance of the parameter */
-  public static double sampleVariance(final double[] ds) {
+  public static double sampleVariance(@NotNull final double[] ds) {
     double sum = 0;
     double sum2 = 0;
     for (final double ¢ : ds) {

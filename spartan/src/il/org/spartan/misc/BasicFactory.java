@@ -1,5 +1,7 @@
 package il.org.spartan.misc;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 /** This cache class allows a value to be retrieved by either by a String key or
@@ -21,5 +23,6 @@ public abstract class BasicFactory<V> implements FactoryConcept<V> {
     return from(stringToValue(¢));
   }
 
+  @NotNull
   protected abstract V stringToValue(String s);
 }

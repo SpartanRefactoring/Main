@@ -18,6 +18,6 @@ public class ClassFilesClasspathVisitor extends ClasspathVisitor {
    *        visited <code>.java</code> file
    * @see #go() */
   public ClassFilesClasspathVisitor(final FileOnlyAction action) {
-    super(action, new String[] { ".class" });
+    super(action, ".class");
   }
 }
