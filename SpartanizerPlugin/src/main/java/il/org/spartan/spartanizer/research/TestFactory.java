@@ -15,19 +15,22 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2016 */
 public class TestFactory {
   public static String testcase(final String raw, final int report, final int issue) {
-    return wrapTest(report, issue, linify(escapeCommas(shortenIdentifiers(eliminateSpaces(raw)))));
+    return wrapTest(report, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
   }
 
   /** escapes all "s
    * @param ¢
    * @return */
-  private static String escapeCommas(final String ¢) {
+  private static String escapeQuotes(final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
 
   private static String wrapTest(final int report, final int issue, final String code) {
-    return "  @Test public void report" + report + "() {" + "\n\ttrimmingOf(\"// From use case of issue" + issue + "\" //\n + " + code
-        + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" + code + "\n).stays();\n}";
+    return "  @Test public void report" + report + "() {" + //
+        "\n\ttrimmingOf(\"// From use case of issue" + issue + //
+        "\" //\n + " + code + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
+        + code + //
+        "\n).stays();\n}";
   }
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
@@ -55,20 +58,16 @@ public class TestFactory {
   private static String linify(final String ¢) {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
-      while (scanner.hasNextLine()) {
-        final String line = scanner.nextLine();
-        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
-      }
+      while (scanner.hasNextLine())
+        $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
     }
     return $;
   }
 
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
-    final Wrapper<String> id = new Wrapper<>();
-    id.set("start");
-    final Wrapper<String> Id = new Wrapper<>();
-    Id.set("START");
+    final Wrapper<String> id = new Wrapper<>("start");
+    final Wrapper<String> Id = new Wrapper<>("START");
     final Document document = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
