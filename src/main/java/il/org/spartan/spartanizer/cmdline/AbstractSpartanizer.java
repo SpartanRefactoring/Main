@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-public abstract class AbstractSpartanizer {
+public abstract class AbstractSpartanizer extends Applicator{
   static String presentFileName;
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
@@ -131,7 +131,7 @@ public abstract class AbstractSpartanizer {
   }
 
   void fire() {
-    go();
+    run();
     reportSpectrum();
     // reportCoverage();
     runEssence();
@@ -164,7 +164,7 @@ public abstract class AbstractSpartanizer {
     return toolbox.firstTipper(¢);
   }
 
-  private void go() {
+  private void run() {
     System.err.printf( //
         " Input path=%s\n" + //
             "Before path=%s\n" + //
