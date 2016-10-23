@@ -113,7 +113,7 @@ public interface wizard {
   };
   final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
 
-  static void addImport(CompilationUnit u, ASTRewrite r, ImportDeclaration d) {
+  static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
 
