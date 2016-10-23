@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.bench;
 
 import il.org.spartan.utils.*;

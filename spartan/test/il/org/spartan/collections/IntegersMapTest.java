@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.collections;
 
 import static il.org.spartan.azzert.*;
@@ -221,9 +218,7 @@ public final class IntegersMapTest {
     }
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys30inverse() {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));

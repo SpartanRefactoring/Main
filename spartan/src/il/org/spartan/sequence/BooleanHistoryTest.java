@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.sequence;
 
 import static il.org.spartan.azzert.*;
@@ -8,7 +5,6 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

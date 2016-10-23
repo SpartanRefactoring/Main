@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
 /** @author Yossi Gil

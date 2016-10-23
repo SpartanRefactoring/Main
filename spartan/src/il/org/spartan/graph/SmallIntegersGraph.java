@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.graph;
 
 import il.org.spartan.collections.*;

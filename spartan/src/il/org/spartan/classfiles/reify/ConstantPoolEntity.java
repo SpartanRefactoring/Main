@@ -1,11 +1,8 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.classfiles.reify.ClassInfo.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 25 November 2011 */
@@ -21,18 +18,15 @@ public class ConstantPoolEntity extends FlaggedEntity {
     this.constantPool = constantPool;
   }
 
-  @Nullable
-  public String getClassName(final int classIndex) {
+  @Nullable public String getClassName(final int classIndex) {
     return constantPool.getClassName(classIndex);
   }
 
-  @Nullable
-  public String getPackage(final int classIndex) {
+  @Nullable public String getPackage(final int classIndex) {
     return constantPool.getPackage(classIndex);
   }
 
-  @NotNull
-  public String[] getReferencedClasses() {
+  @NotNull public String[] getReferencedClasses() {
     return constantPool.getReferencedClasses();
   }
 
@@ -40,38 +34,31 @@ public class ConstantPoolEntity extends FlaggedEntity {
     return constantPool.getReferencedClassesIndices();
   }
 
-  @NotNull
-  public double[] getReferencedDoubles() {
+  @NotNull public double[] getReferencedDoubles() {
     return constantPool.getReferencedDoubles();
   }
 
-  @NotNull
-  public float[] getReferencedFloats() {
+  @NotNull public float[] getReferencedFloats() {
     return constantPool.getReferencedFloats();
   }
 
-  @NotNull
-  public int[] getReferencedInts() {
+  @NotNull public int[] getReferencedInts() {
     return constantPool.getReferencedInts();
   }
 
-  @NotNull
-  public long[] getReferencedLongs() {
+  @NotNull public long[] getReferencedLongs() {
     return constantPool.getReferencedLongs();
   }
 
-  @NotNull
-  public String[] getReferencedStrings() {
+  @NotNull public String[] getReferencedStrings() {
     return constantPool.getReferencedStrings();
   }
 
-  @NotNull
-  public String[] getReferencedUTF8() {
+  @NotNull public String[] getReferencedUTF8() {
     return constantPool.getReferencedUTF8();
   }
 
-  @Nullable
-  public String getShortClassName(final int classIndex) {
+  @Nullable public String getShortClassName(final int classIndex) {
     return constantPool.getShortClassName(classIndex);
   }
 

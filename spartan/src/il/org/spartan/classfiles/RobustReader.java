@@ -1,24 +1,18 @@
-/**
- *
- */
 package il.org.spartan.classfiles;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 /** @author Yossi Gil
  * @since 11 November 2011 */
 public class RobustReader {
-  @Nullable
-  protected static DataInputStream asDataInputStream(@Nullable final InputStream ¢) {
+  @Nullable protected static DataInputStream asDataInputStream(@Nullable final InputStream ¢) {
     return ¢ == null ? null : new DataInputStream(¢);
   }
 
-  @Nullable
-  protected static FileInputStream asFileInputStream(@Nullable final File f) {
+  @Nullable protected static FileInputStream asFileInputStream(@Nullable final File f) {
     if (f == null)
       return null;
     try {
@@ -143,8 +137,7 @@ public class RobustReader {
       readUnsignedByte();
   }
 
-  @NotNull
-  protected final byte[] readBytes(@NotNull final byte[] $) {
+  @NotNull protected final byte[] readBytes(@NotNull final byte[] $) {
     if (inner == null)
       return new byte[0];
     for (int left = $.length; left > 0;)

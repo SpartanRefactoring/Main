@@ -1,7 +1,8 @@
 package il.org.spartan.graph;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Provides an inverse perspective on a graph, i.e., inverts the direction of
  * all edges in it.
@@ -14,8 +15,7 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
    * @param <E> type of elements stored in this graph
    * @return the graph representing the parameter where all the direction of all
    *         edges was inverted. */
-  @NotNull
-  public static <E> InvertedGraph<E> make(final AbstractGraph<E> ¢) {
+  @NotNull public static <E> InvertedGraph<E> make(final AbstractGraph<E> ¢) {
     return new InvertedGraph<>(¢);
   }
 
@@ -31,8 +31,7 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
     return super.outgoing(¢);
   }
 
-  @NotNull
-  @Override public String name() {
+  @NotNull @Override public String name() {
     final String $ = inner.name();
     return $.length() == 0 ? $ : $ + "'";
   }

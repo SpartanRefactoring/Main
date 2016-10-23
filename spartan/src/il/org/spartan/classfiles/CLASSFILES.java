@@ -6,10 +6,10 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A utility class, serving as a façade to {@link CLASSPATH}, {@link JRE},
  * {@link EXTENSIONPATH}, {@link ZipFile} and {@link File} providing a unified
@@ -17,14 +17,12 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil */
 @Utility public enum CLASSFILES {
   ;
-  @NotNull
-  static Set<ZipFile> zipsInUse = new HashSet<>();
+  @NotNull static Set<ZipFile> zipsInUse = new HashSet<>();
 
   /** Where are all Java class files found
    * @return the list of directories and ZIP archives in the current search
    *         path. */
-  @NotNull
-  public static Iterable<File> asFiles() {
+  @NotNull public static Iterable<File> asFiles() {
     final ArrayList<File> $ = new ArrayList<>();
     $.addAll(JRE.asList());
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
@@ -68,8 +66,7 @@ import org.jetbrains.annotations.Nullable;
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  @Nullable
-  public static InputStream open(@NotNull final Class<?> ¢) {
+  @Nullable public static InputStream open(@NotNull final Class<?> ¢) {
     nonnull(¢);
     return open(¢.getName());
   }
@@ -124,13 +121,11 @@ import org.jetbrains.annotations.Nullable;
       ds.add(new File(directory));
   }
 
-  @NotNull
-  private static String canonicalFileName(@NotNull final String className) {
+  @NotNull private static String canonicalFileName(@NotNull final String className) {
     return className.replace('.', File.separatorChar) + ".class";
   }
 
-  @NotNull
-  private static String class2ZipFileName(@NotNull final String className) {
+  @NotNull private static String class2ZipFileName(@NotNull final String className) {
     return className.replace('.', '/') + ".class";
   }
 
@@ -139,8 +134,7 @@ import org.jetbrains.annotations.Nullable;
         : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
 
-  @Nullable
-  private static InputStream open(@NotNull final File where, @NotNull final String className) {
+  @Nullable private static InputStream open(@NotNull final File where, @NotNull final String className) {
     return where.isDirectory() ? searchDirectory(where, className) : searchZip(where, class2ZipFileName(className));
   }
 

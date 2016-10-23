@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 /** @author Yossi Gil
@@ -38,8 +35,7 @@ public class MomentUtils {
     return sum(ds, i) / ds.length;
   }
 
-  @NotNull
-  public static double[] normalize(@NotNull final double[] vs) {
+  @NotNull public static double[] normalize(@NotNull final double[] vs) {
     final double mean = moment(vs, 1);
     for (int ¢ = 0; ¢ < vs.length; ++¢)
       vs[¢] -= mean;

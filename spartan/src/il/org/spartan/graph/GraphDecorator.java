@@ -1,7 +1,8 @@
 package il.org.spartan.graph;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A basic graph decorator, which does nothing except for delegating all its
  * missions to an encapsulated {@link AbstractGraph}. To be used as base class

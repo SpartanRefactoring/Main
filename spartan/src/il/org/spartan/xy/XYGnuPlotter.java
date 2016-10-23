@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
 import static il.org.spartan.utils.Box.*;
@@ -9,20 +6,18 @@ import static java.lang.String.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since February 13, 2012 */
 public class XYGnuPlotter {
-  @NotNull
-  private static BufferedWriter getWriter(@NotNull final Process ¢) {
+  @NotNull private static BufferedWriter getWriter(@NotNull final Process ¢) {
     return new BufferedWriter(new OutputStreamWriter(¢.getOutputStream()));
   }
 
-  @NotNull
-  private static String gformat(final double ¢) {
+  @NotNull private static String gformat(final double ¢) {
     return ¢ == (long) ¢ ? (long) ¢ + "" : String.format("%g", Double.valueOf(¢));
   }
 
@@ -35,16 +30,11 @@ public class XYGnuPlotter {
     }
   }
 
-  @Nullable
-  private final Process process;
-  @NotNull
-  private final BufferedWriter writer;
-  @NotNull
-  private final Thread stdoutRedirector;
-  @NotNull
-  private final Thread stderrRedirector;
-  @NotNull
-  private final Settings settings;
+  @Nullable private final Process process;
+  @NotNull private final BufferedWriter writer;
+  @NotNull private final Thread stdoutRedirector;
+  @NotNull private final Thread stderrRedirector;
+  @NotNull private final Settings settings;
 
   /** Instantiate {@link XYGnuPlotter}. */
   public XYGnuPlotter() {
@@ -74,8 +64,7 @@ public class XYGnuPlotter {
     write("exit\n");
   }
 
-  @NotNull
-  public XYGnuPlotter feed(@NotNull final XYSeries s) {
+  @NotNull public XYGnuPlotter feed(@NotNull final XYSeries s) {
     for (int ¢ = 0; ¢ < s.n(); ++¢)
       write(gformat(s.x[¢]) + " " + gformat(s.y[¢]) + " " + gformat(s.dy[¢]) + "\n");
     write("e\n");
@@ -111,14 +100,12 @@ public class XYGnuPlotter {
       this.curve = format(curve, os);
     }
 
-    @NotNull
-    public Curve annotate(final String annotation) {
+    @NotNull public Curve annotate(final String annotation) {
       curve += " " + annotation;
       return this;
     }
 
-    @NotNull
-    public Curve annotate(@NotNull final String annotation, final Object... os) {
+    @NotNull public Curve annotate(@NotNull final String annotation, final Object... os) {
       return annotate(format(annotation, os));
     }
 
@@ -128,73 +115,59 @@ public class XYGnuPlotter {
   }
 
   public static class Settings {
-    @NotNull
-    private String before = "";
-    @NotNull
-    private String after = "";
+    @NotNull private String before = "";
+    @NotNull private String after = "";
     private final List<Curve> curves = new ArrayList<>();
 
-    @NotNull
-    public String after() {
+    @NotNull public String after() {
       return after;
     }
 
-    @NotNull
-    public String before() {
+    @NotNull public String before() {
       return before;
     }
 
-    @NotNull
-    public Settings characterize(final String statement) {
+    @NotNull public Settings characterize(final String statement) {
       before += statement + ";\n";
       return this;
     }
 
-    @NotNull
-    public Settings characterize(@NotNull final String statement, final double... ds) {
+    @NotNull public Settings characterize(@NotNull final String statement, final double... ds) {
       return characterize(statement, (Object[]) box(ds));
     }
 
-    @NotNull
-    public Settings characterize(@NotNull final String statement, final Object... os) {
+    @NotNull public Settings characterize(@NotNull final String statement, final Object... os) {
       return characterize(format(statement, os));
     }
 
-    @NotNull
-    public Settings finalize(final String statement) {
+    @NotNull public Settings finalize(final String statement) {
       after += statement + ";\n";
       return this;
     }
 
-    @NotNull
-    public Settings finalize(@NotNull final String statement, final double... ds) {
+    @NotNull public Settings finalize(@NotNull final String statement, final double... ds) {
       return finalize(statement, (Object[]) box(ds));
     }
 
-    @NotNull
-    public Settings finalize(@NotNull final String statement, final Object... os) {
+    @NotNull public Settings finalize(@NotNull final String statement, final Object... os) {
       return finalize(format(statement, os));
     }
 
-    @NotNull
-    public Curve newCurve(final String curve) {
+    @NotNull public Curve newCurve(final String curve) {
       final Curve $ = new Curve(curve);
       curves.add($);
       return $;
     }
 
-    @NotNull
-    public Curve newCurve(@NotNull final String curve, final Object... os) {
+    @NotNull public Curve newCurve(@NotNull final String curve, final Object... os) {
       return newCurve(format(curve, os));
     }
 
-    @NotNull
-    public Curve newCurveD(@NotNull final String curve, final double... ds) {
+    @NotNull public Curve newCurveD(@NotNull final String curve, final double... ds) {
       return newCurve(curve, (Object[]) box(ds));
     }
 
-    @NotNull
-    public String plot() {
+    @NotNull public String plot() {
       return "plot " + Separate.by(curves, ", ") + ";\n";
     }
   }

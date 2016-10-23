@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A bunch of <code><b>static</b></code> functions to manage the frequent
  * conditional of replacing a <code><b>null</b></code> value with some default.
@@ -45,8 +45,7 @@ public enum defaults {
    *        <code><b>null</b></code>
    * @return <code>v</code> if it is not <code><b>null</b></code>, otherwise
    *         <code>defaultValue</code> */
-  @Nullable
-  public static <T> T to(@Nullable final T v, final T defaultValue) {
+  @Nullable public static <T> T to(@Nullable final T v, final T defaultValue) {
     return v != null ? v : defaultValue;
   }
 }

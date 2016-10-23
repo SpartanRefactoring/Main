@@ -6,9 +6,9 @@ package il.org.spartan;
 // import static il.org.spartan.utils.___.*;
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A class to generate a CSV (comma separated values) file, by writing into it
  * a sequence of {@link CSVLine} records.
@@ -26,10 +26,8 @@ import org.jetbrains.annotations.Nullable;
   private File file;
   private String header;
   /** The name of the file into which records are written. */
-  @NotNull
-  private final String fileName;
-  @Nullable
-  private final OutputStreamWriter inner;
+  @NotNull private final String fileName;
+  @Nullable private final OutputStreamWriter inner;
 
   /** Create a new instance, writing into the standard output stream. */
   public CSVWriter() {
@@ -47,8 +45,7 @@ import org.jetbrains.annotations.Nullable;
 
   /** Close the file after completion. No further writes are allowed.
    * @return fileName */
-  @NotNull
-  public String close() {
+  @NotNull public String close() {
     try {
       inner.close();
     } catch (@NotNull final IOException e) {
@@ -61,8 +58,7 @@ import org.jetbrains.annotations.Nullable;
     return file;
   }
 
-  @NotNull
-  public String fileName() {
+  @NotNull public String fileName() {
     return fileName;
   }
 

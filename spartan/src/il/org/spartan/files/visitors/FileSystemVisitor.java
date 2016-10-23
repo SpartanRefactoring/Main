@@ -7,11 +7,12 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.files.visitors.FindClassFile.*;
 import il.org.spartan.strings.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class realizing a file system traversal algorithm, including delving into
  * archives such as ZIP and JAR files.
@@ -28,16 +29,14 @@ import org.jetbrains.annotations.NotNull;
  *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[])
  * @see Action */
 public class FileSystemVisitor {
-  @NotNull
-  private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
+  @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
     final List<File> $ = new ArrayList<>();
     for (final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
 
-  @NotNull
-  private static Iterable<File> asFiles(final String... fileNames) {
+  @NotNull private static Iterable<File> asFiles(final String... fileNames) {
     return asFiles(Iterables.toList(fileNames));
   }
 
@@ -438,11 +437,28 @@ public class FileSystemVisitor {
     }
   }
 
-  /**
-   * An <code><b>abstract</b></code> class, to be extended by those clients interested in examining plain files only, i.e., files not contained in archive, during a file system traversal as carried out by class {@link FileSystemVisitor} . Such clients must give body to one function only: <ol> <li> {@link #visitFile(File)}  - action to carry out on ordinary files </ol> Class  {@link PlainFileOnlyAction}  is in fact a Facade offering a simplified interface to the more general  {@link Action} . Simplifications are: <ol> <li>no exceptions thrown <li>partial implementation that does nothing for directories and archives, and leaves it to the extending class to implement a concrete action for files and archive entries visitation. <li>In visiting archive entries it invokes function  {@link #visitZip(File)} (instead of  {@link #visitZipDirectory(String,String,InputStream)} ), i.e., the implementor of this function does is not bothered with the archive name. </ol>
-   * @author  Yossi Gil
-   * @since  16/05/2011 
-   */
+  /** An <code><b>abstract</b></code> class, to be extended by those clients
+   * interested in examining plain files only, i.e., files not contained in
+   * archive, during a file system traversal as carried out by class
+   * {@link FileSystemVisitor} . Such clients must give body to one function
+   * only:
+   * <ol>
+   * <li>{@link #visitFile(File)} - action to carry out on ordinary files
+   * </ol>
+   * Class {@link PlainFileOnlyAction} is in fact a Facade offering a simplified
+   * interface to the more general {@link Action} . Simplifications are:
+   * <ol>
+   * <li>no exceptions thrown
+   * <li>partial implementation that does nothing for directories and archives,
+   * and leaves it to the extending class to implement a concrete action for
+   * files and archive entries visitation.
+   * <li>In visiting archive entries it invokes function {@link #visitZip(File)}
+   * (instead of {@link #visitZipDirectory(String,String,InputStream)} ), i.e.,
+   * the implementor of this function does is not bothered with the archive
+   * name.
+   * </ol>
+   * @author Yossi Gil
+   * @since 16/05/2011 */
   public abstract static class PlainFileOnlyAction extends FileOnlyAction {
     @Override public abstract void visitFile(final File f);
 

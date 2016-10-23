@@ -1,12 +1,9 @@
-/**
- *
- */
 package il.org.spartan.bench.operations;
+
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bench.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 26/04/2011 */
@@ -39,8 +36,7 @@ public abstract class Bencheon extends NamedOperation {
     return System.nanoTime() - begin - beforeEachMethodTime;
   }
 
-  @NotNull
-  @Override public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
+  @NotNull @Override public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
     netTime.start();
@@ -102,8 +98,7 @@ public abstract class Bencheon extends NamedOperation {
       super("Empty", 1);
     }
 
-    @Nullable
-    @Override public Void call() {
+    @Nullable @Override public Void call() {
       return null;
     }
   }
@@ -161,8 +156,7 @@ public abstract class Bencheon extends NamedOperation {
       super("Hash", 1);
     }
 
-    @Nullable
-    @Override public Void call() {
+    @Nullable @Override public Void call() {
       a = hash(++a);
       return null;
     }

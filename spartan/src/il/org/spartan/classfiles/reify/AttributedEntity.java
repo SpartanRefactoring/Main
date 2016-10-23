@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 25 November 2011 */

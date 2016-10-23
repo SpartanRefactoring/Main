@@ -1,9 +1,9 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.bench;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A class serving as stopwatch for measuring runtime of programs. To start a
  * stop watch, create an instance of this class. Method {@link #peep()} can be
@@ -38,8 +38,7 @@ import org.jetbrains.annotations.Nullable;
   private long begin;
   private int cases = 1;
   private long time;
-  @Nullable
-  private final String what;
+  @Nullable private final String what;
 
   /** Create a new instance */
   public Stopper() {
@@ -57,8 +56,7 @@ import org.jetbrains.annotations.Nullable;
   }
 
   /** @return the time since creation, per cases. */
-  @NotNull
-  public String average() {
+  @NotNull public String average() {
     return peep() / 1E9 / cases + " sec";
   }
 
@@ -87,8 +85,7 @@ import org.jetbrains.annotations.Nullable;
   /** Stop the timer, and print a log message with the time elapsed since
    * creation.
    * @return <code><b>this</b></code> */
-  @NotNull
-  public Stopper stop() {
+  @NotNull public Stopper stop() {
     time = System.nanoTime() - begin;
     out("Finished " + what + ": " + time + "ns");
     return this;
@@ -103,8 +100,7 @@ import org.jetbrains.annotations.Nullable;
     return time;
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return peep() / 1E9 + " sec";
   }
 }

@@ -1,10 +1,8 @@
-/**
- *
- */
 package il.org.spartan.graph;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
-import org.jetbrains.annotations.Nullable;
 
 /** A representation of an immutable vertex in an immutable graph
  * @author Yossi Gil

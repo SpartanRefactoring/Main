@@ -4,7 +4,7 @@ package il.org.spartan.iterables;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** A kind of {@link Iterable} which does not permit the rarely used
  * {@link Iterator#remove} operation and saves the user, i.e., whoever chooses
@@ -15,8 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2014-06-03
  * @param <T> some arbitrary type */
 public interface PureIterable<@NonNull T> extends Iterable<T> {
-  @NotNull
-  @Override PureIterator<@NonNull T> iterator();
+  @NotNull @Override PureIterator<@NonNull T> iterator();
 
   /** A kind of {@link PureIterable} which provides an additional
    * {@link #size()} service.
@@ -37,12 +36,11 @@ public interface PureIterable<@NonNull T> extends Iterable<T> {
    * </ol>
    * @author Yossi Gil
    * @since 2014-06-20
-   * @param < T > some arbitrary type */
+   * @param <T> some arbitrary type */
   abstract class Sized<T> implements PureIterable<T> {
     /** see @see il.org.spartan.iterables.PureIterable#iterator()
      * (auto-generated) */
-    @NotNull
-    @Override public @NonNull PureIterator<@NonNull T> iterator() {
+    @NotNull @Override public @NonNull PureIterator<@NonNull T> iterator() {
       return null;
     }
 

@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spatan.iteration;
 
 /** @author Yossi Gil

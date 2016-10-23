@@ -1,6 +1,6 @@
 package il.org.spartanl.testing;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** An unchecked exception that indicates an incorrect setup of the testing
  * system

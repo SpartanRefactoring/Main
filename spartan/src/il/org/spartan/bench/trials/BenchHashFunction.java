@@ -1,9 +1,10 @@
 package il.org.spartan.bench.trials;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.bench.operations.*;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 30/05/2011 */
@@ -28,8 +29,7 @@ public class BenchHashFunction {
 
     int a;
 
-    @Nullable
-    @Override public Void call() {
+    @Nullable @Override public Void call() {
       a = hash(++a);
       return null;
     }

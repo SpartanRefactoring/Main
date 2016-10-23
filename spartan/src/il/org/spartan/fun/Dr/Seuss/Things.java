@@ -1,8 +1,9 @@
 package il.org.spartan.fun.Dr.Seuss;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Dr. Seuss Nonsense
  * @author Yossi Gil

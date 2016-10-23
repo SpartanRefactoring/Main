@@ -5,7 +5,6 @@ import static il.org.spartan.azzert.*;
 
 import java.util.function.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
@@ -25,13 +24,12 @@ public interface idiomatic {
   };
   /** an ignoring trigger */
   @org.jetbrains.annotations.Nullable Trigger ignore = new Trigger() {
-    @org.jetbrains.annotations.Nullable
-    @Override public <@Nullable T> T eval(final Supplier<T> ____) {
+    @org.jetbrains.annotations.Nullable @Override public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
     }
   };
 
-  /**  <code>yield</code>
+  /** <code>yield</code>
    * @param <T> JD
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
@@ -44,8 +42,7 @@ public interface idiomatic {
    * @condition the condition to use prior to taking this value;
    * @param the parameter if condition holds, otherwise, null
    *        <code>incase</code> */
-  @org.jetbrains.annotations.Nullable
-  static <T> @Nullable T incase(final boolean condition, final T t) {
+  @org.jetbrains.annotations.Nullable static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
 
@@ -67,32 +64,26 @@ public interface idiomatic {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  @NotNull
-  static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
+  @NotNull static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
-  @NotNull
-  static Runner run(final Runnable ¢) {
+  @NotNull static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
 
-  /**  <code>yield</code>
+  /** <code>yield</code>
    * @param <T> JD
    * @param ¢ JD
-   * @return Yielder<T> 
-   *         value of method <code>yield</code> */
-  @NotNull
-  static <T> Storer<T> take(final T ¢) {
+   * @return Yielder<T> value of method <code>yield</code> */
+  @NotNull static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
 
-  /** @param condition JD
-   * */
-  @org.jetbrains.annotations.Nullable
-  static Trigger unless(final boolean condition) {
+  /** @param condition JD */
+  @org.jetbrains.annotations.Nullable static Trigger unless(final boolean condition) {
     return when(!condition);
   }
 
@@ -101,15 +92,12 @@ public interface idiomatic {
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */
-  @org.jetbrains.annotations.Nullable
-  static <T> @Nullable T unless(final boolean condition, final T t) {
+  @org.jetbrains.annotations.Nullable static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
 
-  /** @param condition JD
-   * */
-  @org.jetbrains.annotations.Nullable
-  static Trigger when(final boolean condition) {
+  /** @param condition JD */
+  @org.jetbrains.annotations.Nullable static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
   }
 
@@ -122,8 +110,7 @@ public interface idiomatic {
      * @param unless condition on which value is returned
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>. */
-    @org.jetbrains.annotations.Nullable
-    default @Nullable T unless(final boolean unless) {
+    @org.jetbrains.annotations.Nullable default @Nullable T unless(final boolean unless) {
       return when(!unless);
     }
 
@@ -131,8 +118,7 @@ public interface idiomatic {
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>.
      * @param when condition on which value is returned */
-    @org.jetbrains.annotations.Nullable
-    default @Nullable T when(final boolean when) {
+    @org.jetbrains.annotations.Nullable default @Nullable T when(final boolean when) {
       return when ? get() : null;
     }
   }
@@ -141,7 +127,7 @@ public interface idiomatic {
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
    * @author Yossi Gil
-   * @param < T > JD
+   * @param <T> JD
    * @since 2016` */
   @FunctionalInterface interface Producer<@Nullable T> {
     /** @return next value provided by this instance
@@ -166,8 +152,7 @@ public interface idiomatic {
       run.run();
     }
 
-    /** 
-     * <code>unless</code>
+    /** <code>unless</code>
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
@@ -199,8 +184,7 @@ public interface idiomatic {
     }
   }
 
-  @SuppressWarnings({ "javadoc", "static-method" })
-  class TEST {
+  @SuppressWarnings({ "javadoc", "static-method" }) class TEST {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }
@@ -258,15 +242,12 @@ public interface idiomatic {
    * @since 2016 */
   interface Trigger {
     /** @param <T> JD
-     * @param t JD
-     * */
+     * @param t JD */
     @org.jetbrains.annotations.Nullable <@Nullable T> T eval(final Supplier<T> t);
 
     /** @param <T> JD
-     * @param $ JD
-     * */
-    @org.jetbrains.annotations.Nullable
-    default <@Nullable T> T eval(final T $) {
+     * @param $ JD */
+    @org.jetbrains.annotations.Nullable default <@Nullable T> T eval(final T $) {
       return eval(() -> $);
     }
   }

@@ -1,10 +1,9 @@
 package il.org.spartan.reflection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.reflect.*;
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** This class computes the deep size of any object. */
 public class DeepSize {
@@ -45,8 +44,7 @@ public class DeepSize {
   }
 
   static class Visitor {
-    @NotNull
-    private static Class<?>[] nonReference = new Class<?>[] { //
+    @NotNull private static Class<?>[] nonReference = new Class<?>[] { //
         boolean.class, char.class, void.class, //
         boolean[].class, char[].class, //
         byte.class, short.class, int.class, long.class, //
@@ -55,8 +53,7 @@ public class DeepSize {
         float[].class, double[].class,//
     };
 
-    @NotNull
-    static ArrayList<Field> getAllFields(final Class<?> c) {
+    @NotNull static ArrayList<Field> getAllFields(final Class<?> c) {
       final ArrayList<Field> $ = new ArrayList<>();
       for (Class<?> p = c; p != null; p = p.getSuperclass())
         for (final Field ¢ : p.getDeclaredFields())

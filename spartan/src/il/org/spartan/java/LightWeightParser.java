@@ -1,8 +1,8 @@
 package il.org.spartan.java;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.java.Token.*;
+
+import org.jetbrains.annotations.*;
 
 public class LightWeightParser {
   private static boolean in(final Token t, @NotNull final Token[] ts) {

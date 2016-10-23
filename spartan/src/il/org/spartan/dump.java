@@ -6,11 +6,10 @@ import java.lang.management.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
-import il.org.spartan.reflection.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
+
+import il.org.spartan.reflection.*;
 
 /** A class to print all properties of an arbitrary object which can be
  * retrieved by getters methods (i.e., getXXX()) methods and boolean inspection

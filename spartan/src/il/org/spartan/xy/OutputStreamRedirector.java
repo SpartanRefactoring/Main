@@ -1,11 +1,8 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 class OutputStreamRedirector extends Thread {
   private final InputStream from;

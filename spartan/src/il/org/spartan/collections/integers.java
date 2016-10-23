@@ -1,12 +1,11 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.___.*;
-import org.jetbrains.annotations.NotNull;
 
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add(int)}, {@link #contains(int)} and {@link #remove(int)}.
@@ -26,7 +25,7 @@ public class integers {
 
   /** [[SuppressWarningsSpartan]] */
   static int hash(final int ¢) {
-    int $ = ¢ ^ ¢ >>> 20 ^ ¢ >>> 12;
+    final int $ = ¢ ^ ¢ >>> 20 ^ ¢ >>> 12;
     return $ ^ $ >>> 7 ^ $ >>> 4;
   }
 
@@ -58,8 +57,7 @@ public class integers {
   /** Add an integer to the set, if it is not already there.
    * @param n an arbitrary integer
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers add(final int n) {
+  @NotNull public integers add(final int n) {
     final int i = find(n);
     assert i >= -1 && i < capacity();
     if (i < 0)
@@ -75,8 +73,7 @@ public class integers {
    * @param is an arbitrary array of integers; ; must not be
    *        <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers add(@NotNull final int... is) {
+  @NotNull public integers add(@NotNull final int... is) {
     for (final int ¢ : is)
       add(¢);
     return this;
@@ -90,8 +87,7 @@ public class integers {
 
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers clear() {
+  @NotNull public integers clear() {
     return reset(capacity());
   }
 
@@ -127,8 +123,7 @@ public class integers {
 
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
-  @NotNull
-  public int[] entries() {
+  @NotNull public int[] entries() {
     final int[] $ = new int[size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
@@ -138,16 +133,14 @@ public class integers {
 
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers rehash() {
+  @NotNull public integers rehash() {
     return rehash(capacity());
   }
 
   /** Remove an element from this set, it is in it
    * @param n some integer to be removed from the set
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers remove(final int n) {
+  @NotNull public integers remove(final int n) {
     final int i = location(n);
     assert i >= -1 && i < capacity();
     if (i < 0)
@@ -161,8 +154,7 @@ public class integers {
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public integers remove(@NotNull final int... is) {
+  @NotNull public integers remove(@NotNull final int... is) {
     for (final int ¢ : is)
       remove(¢);
     return this;
@@ -195,15 +187,13 @@ public class integers {
    * of two.
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
-  @NotNull
-  protected integers rehash(final int newCapacity) {
+  @NotNull protected integers rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
     return reset(newCapacity).add(entries());
   }
 
-  @NotNull
-  protected final integers reset(final int capacity) {
+  @NotNull protected final integers reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];

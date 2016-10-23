@@ -8,8 +8,7 @@ import java.net.*;
 import java.util.*;
 import java.util.zip.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.sparan.classfiles.*;
@@ -38,8 +37,7 @@ public class ClassRepository implements Iterable<String> {
    * @return a list of files
    * @throws IllegalArgumentException If the class loader of the arguments is
    *         not a URLClassLoader */
-  @NotNull
-  public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
+  @NotNull public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
     final List<File> $ = new ArrayList<>();
     for (final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();
@@ -69,8 +67,7 @@ public class ClassRepository implements Iterable<String> {
    * location, but only in JVMs by Sun.
    * </ul>
    * @return A new ClassPathInfo object */
-  @NotNull
-  public static List<File> fromJre() {
+  @NotNull public static List<File> fromJre() {
     try {
       return fromClass(Object.class);
     } catch (@NotNull final Throwable t) {
@@ -110,13 +107,11 @@ public class ClassRepository implements Iterable<String> {
     }
   }
 
-  @NotNull
-  private static String concat(@Nullable final String path, final String name) {
+  @NotNull private static String concat(@Nullable final String path, final String name) {
     return (path == null || path.length() == 0 ? "" : path + ".") + name;
   }
 
-  @NotNull
-  private static List<File> filter(@NotNull final Iterable<File> fs, final File... ignore) {
+  @NotNull private static List<File> filter(@NotNull final Iterable<File> fs, final File... ignore) {
     final List<File> $ = new ArrayList<>();
     for (File ¢ : fs) {
       ¢ = ¢.getAbsoluteFile();
@@ -140,8 +135,7 @@ public class ClassRepository implements Iterable<String> {
     return false;
   }
 
-  @NotNull
-  private static File[] toFile(@NotNull final String[] paths) {
+  @NotNull private static File[] toFile(@NotNull final String[] paths) {
     final File[] $ = new File[paths.length];
     int i = 0;
     for (final String path : paths)
@@ -150,8 +144,7 @@ public class ClassRepository implements Iterable<String> {
   }
 
   /** This is where the collection of elements of the class path are stored. */
-  @NotNull
-  private final File[] files;
+  @NotNull private final File[] files;
 
   /** Initialize a new empty instance */
   public ClassRepository() {
@@ -192,8 +185,7 @@ public class ClassRepository implements Iterable<String> {
 
   /** Find all classes on the CLASSPATH represented by the receiver
    * @return List of fully qualified names of all such classes */
-  @NotNull
-  public ArrayList<String> getClasses() {
+  @NotNull public ArrayList<String> getClasses() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final File ¢ : files)
       addFromDirectory(0, ¢, ¢.getAbsolutePath(), $, "");
@@ -202,15 +194,13 @@ public class ClassRepository implements Iterable<String> {
 
   /** Obtain all starting point of the underlying class path
    * @return Array of files */
-  @NotNull
-  public File[] getRoots() {
+  @NotNull public File[] getRoots() {
     return Arrays.copyOf(files, files.length);
   }
 
   /** Obtain an iterator over all class names found in the class path
    * @return a new iterator object */
-  @NotNull
-  @Override public Iterator<String> iterator() {
+  @NotNull @Override public Iterator<String> iterator() {
     try {
       return getClasses().iterator();
     } catch (@NotNull final Exception e) {
@@ -222,8 +212,7 @@ public class ClassRepository implements Iterable<String> {
     return getClasses().size();
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return Separate.by(files, File.pathSeparator);
   }
 
@@ -233,7 +222,8 @@ public class ClassRepository implements Iterable<String> {
    * @param root the root directory
    * @param result List where results are stored
    * @param path Relative path (dot-separated) from the starting point */
-  private void addFromDirectory(final int depth, @NotNull final File dirOrFile, final String root, @NotNull final ArrayList<String> result, final String path) {
+  private void addFromDirectory(final int depth, @NotNull final File dirOrFile, final String root, @NotNull final ArrayList<String> result,
+      final String path) {
     if (dirOrFile.isDirectory()) {
       final String[] children = dirOrFile.list();
       for (final String ¢ : children)
@@ -298,10 +288,8 @@ public class ClassRepository implements Iterable<String> {
   }
 
   private static class NameDotSuffix {
-    @NotNull
-    public final String name;
-    @NotNull
-    public final String suffix;
+    @NotNull public final String name;
+    @NotNull public final String suffix;
 
     public NameDotSuffix(@NotNull final File f) {
       this(f.getName());

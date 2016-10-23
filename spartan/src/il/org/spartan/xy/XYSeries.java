@@ -3,26 +3,24 @@ package il.org.spartan.xy;
 import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.misc.*;
 import il.org.spartan.xy.XYProcessor.*;
-import org.jetbrains.annotations.NotNull;
 
 /** /**
  * @author Yossi Gil
  * @since Mar 1, 2012 */
 public class XYSeries {
-  @NotNull
-  public static XYSeries histogram(@NotNull final double[] y) {
+  @NotNull public static XYSeries histogram(@NotNull final double[] y) {
     return new XYSeries(seq(y.length), y);
   }
 
-  @NotNull
-  public static XYSeries histogram(@NotNull final double[] y, final double[] dy) {
+  @NotNull public static XYSeries histogram(@NotNull final double[] y, final double[] dy) {
     return new XYSeries(seq(y.length), y, dy);
   }
 
-  @NotNull
-  public static XYSeries histogram(final int[] y) {
+  @NotNull public static XYSeries histogram(final int[] y) {
     return histogram(LinearAlgebra.promote(y));
   }
 
@@ -44,8 +42,7 @@ public class XYSeries {
     this(g.xs(), g.ys(), g.dys());
   }
 
-  @NotNull
-  public XYSeries log() {
+  @NotNull public XYSeries log() {
     final XYProcessor.RealsOnly p = new XYProcessor.RealsOnly();
     p.feed(LinearAlgebra.log(x), LinearAlgebra.log(y), dLogY());
     return new XYSeries(p);
@@ -55,31 +52,26 @@ public class XYSeries {
     return y.length;
   }
 
-  @NotNull
-  public XYSeries scale(final double newMaxY) {
+  @NotNull public XYSeries scale(final double newMaxY) {
     return scale(max(y), newMaxY);
   }
 
-  @NotNull
-  public XYSeries xshift(final double c) {
+  @NotNull public XYSeries xshift(final double c) {
     return new XYSeries(add(c, x), y, dy);
   }
 
-  @NotNull
-  public XYSeries yshift(final double c) {
+  @NotNull public XYSeries yshift(final double c) {
     return new XYSeries(x, add(c, y), dy);
   }
 
-  @NotNull
-  private double[] dLogY() {
+  @NotNull private double[] dLogY() {
     final double $[] = new double[y.length];
     for (int ¢ = 0; ¢ < y.length; ++¢)
       $[¢] = (Math.log(y[¢] + dy[¢]) - Math.log(y[¢] - dy[¢])) / 2;
     return $;
   }
 
-  @NotNull
-  private XYSeries scale(final double oldMaxY, final double newMaxY) {
+  @NotNull private XYSeries scale(final double oldMaxY, final double newMaxY) {
     for (int ¢ = 0; ¢ < n(); ++¢) {
       y[¢] = newMaxY * y[¢] / oldMaxY;
       dy[¢] = newMaxY * dy[¢] / oldMaxY;

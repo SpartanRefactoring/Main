@@ -3,12 +3,13 @@ package il.org.spartan.files.visitors;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.strings.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A program to search for a ".class" file in the file system.
  * @author Yossi Gil Mar 29, 2007 */

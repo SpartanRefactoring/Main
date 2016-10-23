@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public class MatrixWriter extends CSVLineWriter {
   public MatrixWriter(final String fileName) {
@@ -8,8 +8,7 @@ public class MatrixWriter extends CSVLineWriter {
   }
 
   // no header to print;
-  @NotNull
-  @Override public String header() {
+  @NotNull @Override public String header() {
     return "";
   }
 }

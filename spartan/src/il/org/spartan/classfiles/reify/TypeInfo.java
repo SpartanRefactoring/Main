@@ -2,37 +2,32 @@ package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class TypeInfo {
-  @NotNull
-  public static TypeInfo makeArrayOf(final TypeInfo ¢) {
+  @NotNull public static TypeInfo makeArrayOf(final TypeInfo ¢) {
     return new ArrayType(¢);
   }
 
-  @NotNull
-  public static TypeInfo makeConstructor(@NotNull final TypeInfo ¢) {
+  @NotNull public static TypeInfo makeConstructor(@NotNull final TypeInfo ¢) {
     return new ConstructorType(((MethodType) ¢).arguments);
   }
 
-  @NotNull
-  public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo __) {
+  @NotNull public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo __) {
     return new InitializerType();
   }
 
-  @NotNull
-  public static TypeInfo makeMethodType(final TypeInfo returnValue, final TypeInfo... arguments) {
+  @NotNull public static TypeInfo makeMethodType(final TypeInfo returnValue, final TypeInfo... arguments) {
     return new MethodType(returnValue, arguments);
   }
 
-  @NotNull
-  public static TypeInfo makePrimitiveType(final String name) {
+  @NotNull public static TypeInfo makePrimitiveType(final String name) {
     return new AtomicType(true, name);
   }
 
-  @NotNull
-  public static TypeInfo makeReferenceType(final String name) {
+  @NotNull public static TypeInfo makeReferenceType(final String name) {
     return new AtomicType(false, name);
   }
 
@@ -57,8 +52,7 @@ public abstract class TypeInfo {
       return false;
     }
 
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return inner + "[]";
     }
   }
@@ -76,8 +70,7 @@ public abstract class TypeInfo {
       this(true, name);
     }
 
-    @NotNull
-    @Override public Collection<TypeInfo> components() {
+    @NotNull @Override public Collection<TypeInfo> components() {
       final ArrayList<TypeInfo> $ = new ArrayList<>(1);
       $.add(this);
       return $;
@@ -99,8 +92,7 @@ public abstract class TypeInfo {
       this.arguments = arguments;
     }
 
-    @NotNull
-    @Override public Collection<TypeInfo> components() {
+    @NotNull @Override public Collection<TypeInfo> components() {
       final List<TypeInfo> $ = new ArrayList<>();
       for (final TypeInfo a : arguments)
         $.addAll(a.components());
@@ -109,8 +101,7 @@ public abstract class TypeInfo {
   }
 
   public static class InitializerType extends TypeInfo {
-    @NotNull
-    @Override public Collection<TypeInfo> components() {
+    @NotNull @Override public Collection<TypeInfo> components() {
       return new ArrayList<>();
     }
 
@@ -118,8 +109,7 @@ public abstract class TypeInfo {
       return false;
     }
 
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return "()";
     }
   }
@@ -132,15 +122,13 @@ public abstract class TypeInfo {
       this.returnValue = returnValue;
     }
 
-    @NotNull
-    @Override public Collection<TypeInfo> components() {
+    @NotNull @Override public Collection<TypeInfo> components() {
       final List<TypeInfo> $ = new ArrayList<>(returnValue.components());
       $.addAll(super.components());
       return $;
     }
 
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return returnValue + " (" + Separate.by(arguments, ", ") + ")";
     }
   }

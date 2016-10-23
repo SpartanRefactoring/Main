@@ -1,16 +1,14 @@
-/**
- *
- */
 package il.org.spartan;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.bench.*;
 import il.org.spartan.strings.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 04/06/2011 */
@@ -19,8 +17,7 @@ public enum Log {
   private static int level;
   private static boolean active = true;
   private static PrintStream out = System.out;
-  @NotNull
-  private static Tab tabber = new Tab("  ");
+  @NotNull private static Tab tabber = new Tab("  ");
   private static int maxLevel = 100;
   private static final Stack<Stopwatch> stack = new Stack<>();
 
@@ -107,8 +104,7 @@ public enum Log {
     Log.maxLevel = maxLevel;
   }
 
-  @NotNull
-  private static String prefix() {
+  @NotNull private static String prefix() {
     return now() + tabber + "";
   }
 }

@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.java;
 
 import static il.org.spartan.azzert.*;
@@ -8,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.experimental.theories.*;
 import org.junit.runner.*;
@@ -64,7 +61,7 @@ public class TestNoOther {
         //
         "private static int circularSum(final int[] a, final int[] b, final int offset) {", //
         "  int $ = 0;", //
-        " for (int i = 0; i < a.length; i++)", //
+        " for (int i = 0; i <a.length; i++)", //
         "    $ += a[i] * b[(i + offset) % b.length];", //
         "  return $;", //
         "}", //

@@ -1,10 +1,10 @@
 package il.org.spartan.classfiles;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.___.*;
 
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 /** A collection of functions representing the translation of class names to
  * path and vice versa.
@@ -41,7 +41,7 @@ public enum Filename {
   public static String filePart(@NotNull final String fileName) {
     nonnull(fileName);
     System.out.println("Replacing " + fileName);
-    final String normalizedName = fileName.replaceAll("\\/", "\\");
+    final String normalizedName = fileName.replaceAll("/", "\\");
     System.out.println("normalizedName = " + normalizedName);
     return normalizedName.substring(normalizedName.lastIndexOf('\\') + 1);
   }
@@ -55,8 +55,7 @@ public enum Filename {
    * @return the longest prefix of name that is followed by a {@link #DOT}, or
    *         the empty {@link String} if no such prefix exists.
    * @see #tailPart(String) */
-  @NotNull
-  public static String headPart(@NotNull final String name) {
+  @NotNull public static String headPart(@NotNull final String name) {
     final int index = name.lastIndexOf(DOT);
     return index < 0 ? "" : name.substring(0, index);
   }
@@ -79,7 +78,7 @@ public enum Filename {
    * @return <code><b>true</b></code> <em>iff</em>the class is an inner class,
    *         i.e., defined within another class. */
   public static boolean isInner(@NotNull final String name) {
-    return trailerPart(name).matches("[A-Za-z__$].*");
+    return trailerPart(name).matches("[A-Za-z_¢$].*");
   }
 
   /** determine whether a class is local
@@ -87,12 +86,12 @@ public enum Filename {
    * @return <code><b>true</b></code> <em>iff</em>the class is a local one,
    *         i.e., defined within a function. */
   public static boolean isLocal(@NotNull final String name) {
-    return trailerPart(name).matches("[0-9][A-Za-z__$].*");
+    return trailerPart(name).matches("[0-9][A-Za-z_¢$].*");
   }
 
   public static String name2Canonical(final String name) {
     for (String before = name, $;; before = $) {
-      $ = before.replaceFirst("\\$([a-zA-Z__][a-zA-Z0-9__$]*)$", ".$1");
+      $ = before.replaceFirst("\\$([a-zA-Z_¢$][a-zA-Z0-9_¢$]*)$", ".$1");
       if ($.equals(before))
         return $;
     }
@@ -110,7 +109,7 @@ public enum Filename {
    * @param path a file name to be converted
    * @param root the root of the packages directory
    * @return the fully qualified name of the class residing in this file. */
-  public static String path2class(@NotNull final String path, final String root) {
+  @NotNull public static String path2class(@NotNull final String path, final String root) {
     return path2class(removeRoot(path, root));
   }
 
@@ -119,7 +118,7 @@ public enum Filename {
    *        system
    * @return the fully qualified name of the class residing in this file. */
   public static String path2package(@NotNull final String path) {
-    return path.replaceAll("[\\/]", ".");
+    return path.replaceAll("[/]", ".");
   }
 
   /** Convert an absolute directory name as found in the file system, to a class
@@ -145,14 +144,12 @@ public enum Filename {
    *         {@link #DOT}, or the entire name, if name does not contain this
    *         character.
    * @see #tailPart(String) */
-  @NotNull
-  public static String tailPart(@NotNull final String name) {
+  @NotNull public static String tailPart(@NotNull final String name) {
     final int index = name.lastIndexOf(DOT);
     return index < 0 ? name : name.substring(index + 1);
   }
 
-  @NotNull
-  public static String trailerPart(@NotNull final String name) {
+  @NotNull public static String trailerPart(@NotNull final String name) {
     final String tail = tailPart(name);
     final int index = tail.lastIndexOf('$');
     return index < 1 ? "" : tail.substring(index + 1);

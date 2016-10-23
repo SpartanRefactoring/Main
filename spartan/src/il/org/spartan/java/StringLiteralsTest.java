@@ -4,15 +4,13 @@ import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class StringLiteralsTest {
-  @Nullable
-  static Token toToken(@NotNull final String s) {
+  @Nullable static Token toToken(@NotNull final String s) {
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
       final Token $ = J.next();

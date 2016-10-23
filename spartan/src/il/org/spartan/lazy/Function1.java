@@ -1,7 +1,7 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** A {@link FunctionalInterface} encapsulating a function with one argument
  * @param <A> type of the argument

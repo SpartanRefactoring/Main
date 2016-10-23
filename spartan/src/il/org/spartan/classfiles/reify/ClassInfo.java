@@ -4,37 +4,32 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
 import il.org.spartan.collections.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An in memory representation of a class file.
  * @author Yossi Gil */
 public final class ClassInfo extends ConstantPoolEntity {
-  @Nullable
-  public static ClassInfo make(final Class<?> ¢) {
+  @Nullable public static ClassInfo make(final Class<?> ¢) {
     return make(CLASSFILES.open(¢));
   }
 
-  @Nullable
-  @SuppressWarnings("synthetic-access") public static AttributedEntity make(final DataInputStream ¢) {
+  @Nullable @SuppressWarnings("synthetic-access") public static AttributedEntity make(final DataInputStream ¢) {
     return new Builder(¢).go();
   }
 
-  @Nullable
-  public static ClassInfo make(final File ¢) {
+  @Nullable public static ClassInfo make(final File ¢) {
     return new Builder(¢).go();
   }
 
-  @Nullable
-  public static ClassInfo make(final InputStream ¢) {
+  @Nullable public static ClassInfo make(final InputStream ¢) {
     return new Builder(¢).go();
   }
 
-  @Nullable
-  public static ConstantPoolEntity make(@NotNull final String fileName) {
+  @Nullable public static ConstantPoolEntity make(@NotNull final String fileName) {
     return new Builder(fileName).go();
   }
 
@@ -44,8 +39,7 @@ public final class ClassInfo extends ConstantPoolEntity {
         target[¢] += addition[¢];
   }
 
-  @NotNull
-  private static ConstructorInfo asConstructor(final TypedEntity ¢) {
+  @NotNull private static ConstructorInfo asConstructor(final TypedEntity ¢) {
     return new ConstructorInfo(¢);
   }
 
@@ -57,13 +51,11 @@ public final class ClassInfo extends ConstantPoolEntity {
     return $.toArray(new FieldInfo[$.size()]);
   }
 
-  @NotNull
-  private static InitializerInfo asInitializer(final TypedEntity ¢) {
+  @NotNull private static InitializerInfo asInitializer(final TypedEntity ¢) {
     return new InitializerInfo(¢);
   }
 
-  @NotNull
-  private static MethodInfo asMethod(final TypedEntity ¢) {
+  @NotNull private static MethodInfo asMethod(final TypedEntity ¢) {
     return new MethodInfo(¢);
   }
 
@@ -136,16 +128,11 @@ public final class ClassInfo extends ConstantPoolEntity {
   final Map<String, Integer> refsToStatics = new HashMap<>();
   public final String superClass;
   public final ClassConstant[] interfaces;
-  @NotNull
-  public final FieldInfo[] fields;
-  @NotNull
-  public final MethodInfo[] methods;
-  @NotNull
-  public final ConstructorInfo[] constructors;
-  @NotNull
-  public final InitializerInfo[] initializers;
-  @NotNull
-  public final String source;
+  @NotNull public final FieldInfo[] fields;
+  @NotNull public final MethodInfo[] methods;
+  @NotNull public final ConstructorInfo[] constructors;
+  @NotNull public final InitializerInfo[] initializers;
+  @NotNull public final String source;
   public final String packeageName;
   public final String shortName;
 
@@ -162,8 +149,7 @@ public final class ClassInfo extends ConstantPoolEntity {
     source = findSource();
   }
 
-  @NotNull
-  public Abstraction abstraction() {
+  @NotNull public Abstraction abstraction() {
     return Abstraction.abstraction(this);
   }
 
@@ -321,8 +307,7 @@ public final class ClassInfo extends ConstantPoolEntity {
     return (flags & SYNTHETIC) != 0;
   }
 
-  @Nullable
-  public Kind kind() {
+  @Nullable public Kind kind() {
     return Kind.kind(this);
   }
 
@@ -484,8 +469,7 @@ public final class ClassInfo extends ConstantPoolEntity {
     return constantPool.getReferencedStrings().length;
   }
 
-  @NotNull
-  public int[] referencesToClass(final String className) {
+  @NotNull public int[] referencesToClass(final String className) {
     final int[] $ = new int[LinkComponents.values().length];
     for (final MethodInfo ¢ : methods)
       addLinkComponents($, ¢.referencesToClass(className));
@@ -525,8 +509,7 @@ public final class ClassInfo extends ConstantPoolEntity {
     return throwCount(methods) + throwCount(constructors) + throwCount(initializers);
   }
 
-  @NotNull
-  private String findSource() {
+  @NotNull private String findSource() {
     final AttributeInfo a = findAttribute("SourceFile");
     return a == null ? "" : a.reader(constantPool).readStringConstant();
   }
@@ -546,8 +529,7 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   public enum Abstraction {
     ABSTRACT, FINAL, PLAIN;
-    @NotNull
-    public static Abstraction abstraction(@NotNull final ClassInfo ¢) {
+    @NotNull public static Abstraction abstraction(@NotNull final ClassInfo ¢) {
       return ¢.isAbstract() ? ABSTRACT : ¢.isFinal() ? FINAL : PLAIN;
     }
   }
@@ -559,8 +541,7 @@ public final class ClassInfo extends ConstantPoolEntity {
     static final int MAGIC = 0xCAFEBABE;
     final int majorVersion;
     final int minorVersion;
-    @NotNull
-    final ConstantPool constantPool;
+    @NotNull final ConstantPool constantPool;
     final int accessFlags;
     final AttributeInfo[] attributes;
     final TypedEntity[] executables;
@@ -626,8 +607,7 @@ public final class ClassInfo extends ConstantPoolEntity {
       attributes = r.readAttributes();
     }
 
-    @NotNull
-    public String[] getReferencedClasses() {
+    @NotNull public String[] getReferencedClasses() {
       return constantPool.getReferencedClasses();
     }
 
@@ -647,13 +627,11 @@ public final class ClassInfo extends ConstantPoolEntity {
       return constantPool.getReferencedLongs();
     }
 
-    @NotNull
-    public String[] getReferencedStrings() {
+    @NotNull public String[] getReferencedStrings() {
       return constantPool.getReferencedStrings();
     }
 
-    @Nullable
-    public ClassInfo go() {
+    @Nullable public ClassInfo go() {
       try {
         close();
       } catch (@NotNull final Throwable e1) {

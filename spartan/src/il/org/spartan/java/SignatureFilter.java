@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.java;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 2011-11-19 */

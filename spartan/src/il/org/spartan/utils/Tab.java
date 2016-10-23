@@ -6,7 +6,7 @@ import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -113,8 +113,7 @@ import il.org.spartan.streotypes.*;
    * @author Yossi Gil, the Technion.
    * @since 05/08/2008 */
   @SuppressWarnings("static-method") public static class TEST {
-    @NotNull
-    private static String cat(final String s1, final String s2) {
+    @NotNull private static String cat(final String s1, final String s2) {
       return "[[" + s1 + "]]" + "[[" + s2 + "]]";
     }
 
@@ -129,7 +128,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void emtpyTrue() {
-      assert (new Tab()).isEmpty();
+      assert new Tab().isEmpty();
     }
 
     @Test public void testBeginAtLevelOne() {
@@ -145,11 +144,11 @@ import il.org.spartan.streotypes.*;
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testDecrementFailsWhenDone() {
-      (new Tab("abc")).less();
+      new Tab("abc").less();
     }
 
     @Test public void testDone() {
-      assert (new Tab()).isEmpty();
+      assert new Tab().isEmpty();
     }
 
     @Test public void testEndAtLevelOne() {

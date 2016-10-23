@@ -1,9 +1,9 @@
 package il.org.spartan.sequence;
 
-import org.jetbrains.annotations.NotNull;
-
 import static java.lang.Integer.*;
 import static java.lang.Math.max;
+
+import org.jetbrains.annotations.*;
 
 public class Multiplicative2 extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
@@ -23,8 +23,7 @@ public class Multiplicative2 extends Sequence {
     this.step = Math.pow(2, step);
   }
 
-  @NotNull
-  @Override public Multiplicative2 advance() {
+  @NotNull @Override public Multiplicative2 advance() {
     final int previous = current;
     current *= step;
     current = max(previous + 1, current);
@@ -33,8 +32,7 @@ public class Multiplicative2 extends Sequence {
     return this;
   }
 
-  @NotNull
-  @Override public Multiplicative2 reset() {
+  @NotNull @Override public Multiplicative2 reset() {
     current = 1;
     return this;
   }

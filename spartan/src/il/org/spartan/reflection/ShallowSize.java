@@ -1,9 +1,8 @@
 package il.org.spartan.reflection;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.lang.reflect.*;
+
+import org.jetbrains.annotations.*;
 
 /** This class realizes a memory model for Java objects, as per the following
  * rules.

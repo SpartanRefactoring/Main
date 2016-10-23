@@ -18,8 +18,9 @@ package il.org.spartan.classfiles.reify;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */

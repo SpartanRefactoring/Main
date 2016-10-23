@@ -6,8 +6,9 @@ import static il.org.spartan.utils.___.*;
 import java.math.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A collection of utility function to generate permutations.
  * @author Yossi Gil,
@@ -18,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
   /** @param i a non-negative integer
    * @return the decreasing permutation of length n, represented as an array. */
-  @NotNull
-  public static int[] decreasing(final int i) {
+  @NotNull public static int[] decreasing(final int i) {
     nonnegative(i);
     final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
@@ -36,8 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
   /** @param i a non-negative integer
    * @return the increasing permutation of length n, represented as an array. */
-  @NotNull
-  public static int[] identity(final int i) {
+  @NotNull public static int[] identity(final int i) {
     nonnegative(i);
     final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
@@ -45,8 +44,7 @@ import org.jetbrains.annotations.NotNull;
     return $;
   }
 
-  @NotNull
-  public static int[] invert(@NotNull final int[] a) {
+  @NotNull public static int[] invert(@NotNull final int[] a) {
     final int[] $ = new int[a.length];
     for (int ¢ = 0; ¢ < a.length; ++¢)
       $[a[¢]] = ¢;
@@ -55,33 +53,29 @@ import org.jetbrains.annotations.NotNull;
 
   /** @param ¢ a non-negative integer
    * @return a random permutation of length n, represented as an array. */
-  @NotNull
-  public static int[] random(final int ¢) {
+  @NotNull public static int[] random(final int ¢) {
     nonnegative(¢);
     return shuffle(identity(¢));
   }
 
-  @NotNull
-  public static int[] scramble(final int n) {
+  @NotNull public static int[] scramble(final int n) {
     final int[] $ = identity(n);
     for (int i = 0; i < n; ++i) {
       final double Gi = power(GOLD, i + 1, n);
       System.out.println("Gi=" + Gi);
-      swap($, i, ((int) (n * Gi)));
+      swap($, i, (int) (n * Gi));
     }
     return $;
   }
 
-  @NotNull
-  public static float[] shuffle(@NotNull final float[] fs) {
+  @NotNull public static float[] shuffle(@NotNull final float[] fs) {
     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < fs.length; ++¢)
       swap(fs, ¢, r.nextInt(fs.length));
     return fs;
   }
 
-  @NotNull
-  public static int[] shuffle(@NotNull final int[] a) {
+  @NotNull public static int[] shuffle(@NotNull final int[] a) {
     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < a.length; ++¢)
       swap(a, ¢, r.nextInt(a.length));
@@ -90,7 +84,7 @@ import org.jetbrains.annotations.NotNull;
 
   public static <T> void shuffle(@NotNull final T[] ts) {
     for (int ¢ = 0; ¢ < ts.length; ++¢)
-      swap(ts, ¢, (new Random(System.nanoTime())).nextInt(ts.length));
+      swap(ts, ¢, new Random(System.nanoTime()).nextInt(ts.length));
   }
 
   /** Swap the contents of two <code><b>float</b></code> array cells

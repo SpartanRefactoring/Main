@@ -1,12 +1,11 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.___.*;
-import org.jetbrains.annotations.NotNull;
 
 /** An unsorted map of any entry to integers.
  * <p>
@@ -30,8 +29,7 @@ public final class ToIntegers<E> {
     return $ ^ $ >>> 4 ^ $ >>> 7;
   }
 
-  @NotNull
-  private static <E> E[] allocate(final int ¢) {
+  @NotNull private static <E> E[] allocate(final int ¢) {
     @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
@@ -70,8 +68,7 @@ public final class ToIntegers<E> {
 
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public ToIntegers<E> clear() {
+  @NotNull public ToIntegers<E> clear() {
     return reset(capacity());
   }
 
@@ -105,8 +102,7 @@ public final class ToIntegers<E> {
     return true;
   }
 
-  @NotNull
-  public int[] get(@NotNull final E keys[]) {
+  @NotNull public int[] get(@NotNull final E keys[]) {
     final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
@@ -132,8 +128,7 @@ public final class ToIntegers<E> {
 
   /** @param key
    * @return <code>this</code> */
-  @NotNull
-  public ToIntegers<E> init(@NotNull final E key) {
+  @NotNull public ToIntegers<E> init(@NotNull final E key) {
     final int location = location(key);
     if (location >= 0)
       values[location] = 0;
@@ -150,8 +145,7 @@ public final class ToIntegers<E> {
 
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
-  @NotNull
-  public E[] keys() {
+  @NotNull public E[] keys() {
     final E[] $ = allocate(size);
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
@@ -159,8 +153,7 @@ public final class ToIntegers<E> {
     return $;
   }
 
-  @NotNull
-  public ToIntegers<E> put(@NotNull final E key, final int value) {
+  @NotNull public ToIntegers<E> put(@NotNull final E key, final int value) {
     final int location = location(key);
     if (location >= 0)
       values[location] = value;
@@ -177,16 +170,14 @@ public final class ToIntegers<E> {
 
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public ToIntegers<E> rehash() {
+  @NotNull public ToIntegers<E> rehash() {
     return rehash(capacity());
   }
 
   /** Remove an element from this set, it is in it
    * @param e some integer to be removed from the set
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public ToIntegers<E> remove(@NotNull final E e) {
+  @NotNull public ToIntegers<E> remove(@NotNull final E e) {
     final int i = location(e);
     assert i >= -1 && i < capacity();
     if (i < 0)
@@ -200,8 +191,7 @@ public final class ToIntegers<E> {
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  @NotNull
-  public ToIntegers<E> remove(@NotNull final int... is) {
+  @NotNull public ToIntegers<E> remove(@NotNull final int... is) {
     for (final int ¢ : is)
       remove(¢);
     return this;
@@ -250,8 +240,7 @@ public final class ToIntegers<E> {
    * of two.
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
-  @NotNull
-  private ToIntegers<E> rehash(final int newCapacity) {
+  @NotNull private ToIntegers<E> rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
     final E[] keys = keys();
@@ -262,8 +251,7 @@ public final class ToIntegers<E> {
     return this;
   }
 
-  @NotNull
-  private ToIntegers<E> reset(final int capacity) {
+  @NotNull private ToIntegers<E> reset(final int capacity) {
     data = allocate(capacity);
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];

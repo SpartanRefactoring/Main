@@ -1,8 +1,9 @@
 /** Copyright */
 package il.org.spatan.iteration;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spatan.iteration.Iterables.*;
-import org.jetbrains.annotations.NotNull;
 
 /** An array {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"}
  * adjusting it to the {@link Iterable} interface.
@@ -22,8 +23,7 @@ public class IterableArray<T> implements Iterable<T> {
     return ts.length;
   }
 
-  @NotNull
-  @Override public ArrayIterator<T> iterator() {
+  @NotNull @Override public ArrayIterator<T> iterator() {
     return new ArrayIterator<>(ts);
   }
 

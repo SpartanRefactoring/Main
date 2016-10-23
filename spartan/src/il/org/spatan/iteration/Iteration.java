@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spatan.iteration;
 
 import static il.org.spartan.utils.___.*;

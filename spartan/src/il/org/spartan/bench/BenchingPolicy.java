@@ -1,12 +1,8 @@
-/**
- *
- */
 package il.org.spartan.bench;
 
 import static il.org.spartan.bench.Unit.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -272,7 +268,7 @@ public enum BenchingPolicy {
         l.recordNanoseconds(s.time() / runs);
         l.set("Mode", "Error");
         l.recordRelative(s.time(), b.run);
-        // if (s.time() > 10 * MAX_TIME)
+        // if (s.time()> 10 * MAX_TIME)
         // break;
       }
       l.printBy(Consolidation.LIST);
@@ -303,7 +299,7 @@ public enum BenchingPolicy {
         l.set("Mode", "Average time");
         l.recordNanoseconds(s.time() / runs);
         l.set("Mode", "Error");
-        // if (s.time() > 10 * MAX_TIME)
+        // if (s.time()> 10 * MAX_TIME)
         // break;
       }
       l.printBy(Consolidation.LIST, "Mode");

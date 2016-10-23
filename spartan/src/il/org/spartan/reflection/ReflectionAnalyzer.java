@@ -1,7 +1,8 @@
 package il.org.spartan.reflection;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
 
 public enum ReflectionAnalyzer {
   ;
@@ -28,8 +29,7 @@ public enum ReflectionAnalyzer {
     }.getClass());
   }
 
-  @NotNull
-  public static String toBinary(final int value) {
+  @NotNull public static String toBinary(final int value) {
     String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;

@@ -3,7 +3,7 @@ package il.org.spartan.reflection;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.reflection.ClassPredicates.*;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -50,8 +50,7 @@ import il.org.spartan.utils.*;
   @Test public void testIsImmutableFalse() {
     class A {
       int a = 3;
-      @Nullable
-      final Object o = null;
+      @Nullable final Object o = null;
 
       int b() {
         a *= 2;
@@ -65,8 +64,7 @@ import il.org.spartan.utils.*;
   @Test public void testIsImmutableInheritingTrue() {
     class A {
       final int a = 3;
-      @Nullable
-      final Object o = null;
+      @Nullable final Object o = null;
 
       int b() {
         return a + (o == null ? 1 : 2);
@@ -83,8 +81,7 @@ import il.org.spartan.utils.*;
   @Test public void testIsImmutableTrue() {
     class A {
       final int a = 3;
-      @Nullable
-      final Object o = null;
+      @Nullable final Object o = null;
 
       int b() {
         return a + (o == null ? 1 : 2);
@@ -116,14 +113,12 @@ import il.org.spartan.utils.*;
 
   public static class ImmmutableInhertingFromMmutable extends MutableStatic {
     final int b = 3;
-    @Nullable
-    final Object object = null;
+    @Nullable final Object object = null;
   }
 
   public static class ImmutableStatic {
     final int a = 3;
-    @Nullable
-    final Object o = null;
+    @Nullable final Object o = null;
   }
 
   public static class MutableInhertingFromImmutable extends ImmutableStatic {

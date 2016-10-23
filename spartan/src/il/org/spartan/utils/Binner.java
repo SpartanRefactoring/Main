@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
@@ -8,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -18,8 +15,7 @@ import il.org.spartan.xy.*;
 /** @author Yossi Gil
  * @since Feb 26, 2012 */
 public class Binner {
-  @NotNull
-  private static int[] reverse(@NotNull final int[] $) {
+  @NotNull private static int[] reverse(@NotNull final int[] $) {
     for (int i = 0, j = $.length - 1; i < j; ++i, --j) {
       final int temp = $[i];
       $[i] = $[j];
@@ -28,14 +24,11 @@ public class Binner {
     return $;
   }
 
-  @NotNull
-  private final int[] from;
-  @NotNull
-  private final int[] to;
+  @NotNull private final int[] from;
+  @NotNull private final int[] to;
   public final int n;
   public final int m;
-  @NotNull
-  private final int[] map;
+  @NotNull private final int[] map;
 
   public Binner(final int binSize, @NotNull final int... is) {
     map = new int[n = is.length];
@@ -57,8 +50,7 @@ public class Binner {
         map[j] = i;
   }
 
-  @NotNull
-  public double[] bin(@NotNull final double[] ds) {
+  @NotNull public double[] bin(@NotNull final double[] ds) {
     ___.require(n == ds.length);
     final double[] $ = new double[m];
     for (int i = 0; i < m; ++i)
@@ -71,8 +63,7 @@ public class Binner {
     return map[j];
   }
 
-  @NotNull
-  public int[] bin(@NotNull final int[] is) {
+  @NotNull public int[] bin(@NotNull final int[] is) {
     ___.require(n == is.length);
     final int[] $ = new int[m];
     for (int i = 0; i < m; ++i)
@@ -81,8 +72,7 @@ public class Binner {
     return $;
   }
 
-  @NotNull
-  public int[][] bin(@NotNull final int[][] iss) {
+  @NotNull public int[][] bin(@NotNull final int[][] iss) {
     final int[][] $ = new int[iss.length][];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = bin(iss[¢]);
@@ -93,8 +83,7 @@ public class Binner {
     return unbin((int) (¢ + 0.5));
   }
 
-  @NotNull
-  public double[] unbin(@NotNull final double[] ds) {
+  @NotNull public double[] unbin(@NotNull final double[] ds) {
     final double[] $ = new double[ds.length];
     for (int ¢ = 0; ¢ < ds.length; ++¢)
       $[¢] = unbin(ds[¢]);
@@ -105,8 +94,7 @@ public class Binner {
     return (from[¢] + to[¢] - 1) / 2.;
   }
 
-  @NotNull
-  public XYSeries unbin(@NotNull final XYSeries ¢) {
+  @NotNull public XYSeries unbin(@NotNull final XYSeries ¢) {
     return new XYSeries(unbin(¢.x), ¢.y, ¢.dy);
   }
 
@@ -136,11 +124,11 @@ public class Binner {
     }
 
     @Test public void singleIntervalOfTwo() {
-      checkBinner((new Binner(10, 5, 5)));
+      checkBinner(new Binner(10, 5, 5));
     }
 
     @Test public void singleIntervalOfTwoFrom() {
-      azzert.that((new Binner(10, 5, 5)).from[0], is(0));
+      azzert.that(new Binner(10, 5, 5).from[0], is(0));
     }
 
     @Test public void singleIntervalOfTwoMap() {
@@ -150,39 +138,39 @@ public class Binner {
     }
 
     @Test public void singleIntervalOfTwoSize() {
-      azzert.that((new Binner(10, 5, 5)).n, is(2));
+      azzert.that(new Binner(10, 5, 5).n, is(2));
     }
 
     @Test public void singleIntervalOfTwoTo() {
-      azzert.that((new Binner(10, 5, 5)).to[0], is(2));
+      azzert.that(new Binner(10, 5, 5).to[0], is(2));
     }
 
     @Test public void singleIntervalOfTwoUnmap() {
-      Assert.assertEquals(0.5, (new Binner(10, 5, 5)).unbin(0), 1E-12);
+      Assert.assertEquals(0.5, new Binner(10, 5, 5).unbin(0), 1E-12);
     }
 
     @Test public void singleIntervalUndershootSizeTwo() {
-      checkBinner((new Binner(10, 3, 5)));
+      checkBinner(new Binner(10, 3, 5));
     }
 
     @Test public void singleIntervalUndershootSizeTwoFrom() {
-      azzert.that((new Binner(10, 3, 5)).from[0], is(0));
+      azzert.that(new Binner(10, 3, 5).from[0], is(0));
     }
 
     @Test public void singleIntervalUndershootSizeTwoLengthFromLength() {
-      azzert.that((new Binner(10, 3, 5)).from.length, is(1));
+      azzert.that(new Binner(10, 3, 5).from.length, is(1));
     }
 
     @Test public void singleIntervalUndershootSizeTwoLengthToLength() {
-      azzert.that((new Binner(10, 3, 5)).to.length, is(1));
+      azzert.that(new Binner(10, 3, 5).to.length, is(1));
     }
 
     @Test public void singleIntervalUndershootSizeTwoTo() {
-      azzert.that((new Binner(10, 3, 5)).to[0], is(2));
+      azzert.that(new Binner(10, 3, 5).to[0], is(2));
     }
 
     @Test public void trivial() {
-      checkBinner((new Binner(1, 1, 1, 1, 1, 1)));
+      checkBinner(new Binner(1, 1, 1, 1, 1, 1));
     }
 
     @Test public void twoIntervalsSizedTwo() {
@@ -235,15 +223,15 @@ public class Binner {
     }
 
     @Test public void twoSingletonIntervalsSecondFrom() {
-      azzert.that((new Binner(1, 1, 1)).from[1], is(1));
+      azzert.that(new Binner(1, 1, 1).from[1], is(1));
     }
 
     @Test public void twoSingletonIntervalsSecondTo() {
-      azzert.that((new Binner(1, 1, 1)).to[1], is(2));
+      azzert.that(new Binner(1, 1, 1).to[1], is(2));
     }
 
     @Test public void veryLongBinner() {
-      checkBinner((new Binner(3, 1, 2, 3, 3, 2, 1, 1, 1, 2, 1, 3, 1, 1, 1, 1, 1, 0)));
+      checkBinner(new Binner(3, 1, 2, 3, 3, 2, 1, 1, 1, 2, 1, 3, 1, 1, 1, 1, 1, 0));
     }
 
     @Test public void zeroLength() {

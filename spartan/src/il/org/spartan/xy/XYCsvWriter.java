@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
 import il.org.spartan.*;

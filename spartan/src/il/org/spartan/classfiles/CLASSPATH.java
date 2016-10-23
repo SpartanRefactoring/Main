@@ -3,19 +3,18 @@ package il.org.spartan.classfiles;
 import java.io.*;
 import java.net.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil
  * @see JRE */
 @Utility public class CLASSPATH {
   /** A class loader, which represents a */
-  @Nullable
-  private static ClassLoader classLoader;
+  @Nullable private static ClassLoader classLoader;
   /** Which system property contains the class path? */
   private static final String JAVA_CLASS_PATH = "java.class.path";
   private static final String original = get();
@@ -34,13 +33,11 @@ import org.jetbrains.annotations.Nullable;
 
   /** Retrieves the system's CLASSPATH in an {@link Iterable}
    * @return the content of the CLASSPATH, broken into array entries */
-  @NotNull
-  public static Iterable<String> asIterable() {
+  @NotNull public static Iterable<String> asIterable() {
     return Iterables.make(asArray());
   }
 
-  @Nullable
-  public static ClassLoader classLoader() {
+  @Nullable public static ClassLoader classLoader() {
     return classLoader != null ? classLoader : (classLoader = computeClassLoader());
   }
 
@@ -121,8 +118,7 @@ import org.jetbrains.annotations.Nullable;
     classLoader = null;
   }
 
-  @NotNull
-  private static ClassLoader computeClassLoader() {
+  @NotNull private static ClassLoader computeClassLoader() {
     final String[] path = asArray();
     final URL[] urls = new URL[path.length];
     for (int i = 0; i < path.length; ++i)

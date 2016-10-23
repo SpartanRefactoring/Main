@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.MomentUtils.*;

@@ -24,40 +24,35 @@ public interface Utils {
   String QUOTE = "'";
   String WHITES = "(?m)\\s+";
 
-  @NotNull
-  static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {
+  @NotNull static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @NotNull
-  @SafeVarargs static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final T... ts) {
+  @NotNull @SafeVarargs static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @NotNull
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Collection<? extends T>... tss) {
+  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ¢ : tss)
       if (¢ != null)
         $.addAll(¢);
     return $;
   }
 
-  @NotNull
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T>... tss) {
+  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       if (¢ != null)
         add($, ¢);
     return $;
   }
 
-  @NotNull
-  @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
+  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         add($, ¢);
@@ -66,23 +61,20 @@ public interface Utils {
 
   /** Appends an element to an array, by reallocating an array whose size is
    * greater by one and placing the element at the last position.
-   * @param < T > JD
+   * @param <T> JD
    * @param ts an arbitrary array
    * @param t an element
    * @return newly created array */
-  @NotNull
-  static <T> T[] append(@NotNull final T[] ts, final T t) {
+  @NotNull static <T> T[] append(@NotNull final T[] ts, final T t) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
 
-  /** @param < F > JD
-   * @param < T > JD
-   * @param ¢ JD
-   * */
-  @NotNull
-  static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
+  /** @param <F> JD
+   * @param <T> JD
+   * @param ¢ JD */
+  @NotNull static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
     return new Applicator<>(¢);
   }
 
@@ -138,13 +130,12 @@ public interface Utils {
    * a @Nullable annotation if the type that does not have it. Doing so a is
    * plain clutter. Since the compiler cannot assist you, you will have to be on
    * the guard.
-   * @param < T > an arbitrary type
+   * @param <T> an arbitrary type
    * @param $ an instance of the type parameter
    * @return its parameter, after verifying that it is not
    *         <code><b>null</b></code>
    * @see #mustBeNull(Object) */
-  @NotNull
-  static <T> @NonNull T cantBeNull(@NotNull final @Nullable T $) {
+  @NotNull static <T> @NonNull T cantBeNull(@NotNull final @Nullable T $) {
     assert $ != null;
     return $;
   }
@@ -165,8 +156,7 @@ public interface Utils {
   /** Remove all non-essential spaces from a string that represents Java code.
    * @param javaCodeFragment JD
    * @return parameter, with all redundant spaces removed from it */
-  @NotNull
-  static String compressSpaces(@NotNull final String javaCodeFragment) {
+  @NotNull static String compressSpaces(@NotNull final String javaCodeFragment) {
     String $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
     for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<",
         "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
@@ -188,29 +178,24 @@ public interface Utils {
 
   /** Deletes a specified element from an array, by reallocating an array whose
    * size is smaller by one and shifting the other elements down.
-   * @param < T > JD
+   * @param <T> JD
    * @param ts an arbitrary array
    * @param i position of element to be deleted
    * @return newly created array */
-  @NotNull
-  static <T> T[] delete(@NotNull final T[] ts, final int i) {
+  @NotNull static <T> T[] delete(@NotNull final T[] ts, final int i) {
     @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
 
-  /** @param ¢ JD
-   * */
-  @NotNull
-  static FoundHandleForInt found(final int ¢) {
+  /** @param ¢ JD */
+  @NotNull static FoundHandleForInt found(final int ¢) {
     return new FoundHandleForInt(¢);
   }
 
-  /** @param < T > JD
-   * @param ¢ JD
-   * */
-  @NotNull
-  static <T> FoundHandleForT<T> found(final T ¢) {
+  /** @param <T> JD
+   * @param ¢ JD */
+  @NotNull static <T> FoundHandleForT<T> found(final T ¢) {
     return new FoundHandleForT<>(¢);
   }
 
@@ -227,7 +212,7 @@ public interface Utils {
   }
 
   /** Determine if an item can be found in a list of values
-   * @param < T > JD
+   * @param <T> JD
    * @param candidate what to search for
    * @param ts where to search
    * @return true if the the item is found in the list */
@@ -239,7 +224,7 @@ public interface Utils {
   }
 
   /** Determine whether an integer is a valid list index
-   * @param < T > JD
+   * @param <T> JD
    * @param i some integer
    * @param ts a list of things
    * @return <code><b>true</b></code> <i>iff</i> the index is valid index into
@@ -259,7 +244,7 @@ public interface Utils {
     return false;
   }
 
-  /** @param < T > JD
+  /** @param <T> JD
    * @param ¢ JD
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
@@ -301,7 +286,7 @@ public interface Utils {
   /** Aborts in case a given value is <code><b>null</b></code>.
    * <p>
    * This function is the lesser used dual of {@link #cantBeNull(Object)} .
-   * @param < T > some arbitrary type
+   * @param <T> some arbitrary type
    * @param $ an instance of the type parameter which is required to be
    *        <code><b>null</b></code>.
    * @return parameter */
@@ -313,8 +298,7 @@ public interface Utils {
   /** @param ¢ JD
    * @return name of the parameter, which must not be
    *         <code><b>null</b></code> */
-  @NotNull
-  static String name(@NotNull final File ¢) {
+  @NotNull static String name(@NotNull final File ¢) {
     return cantBeNull(¢.getName());
   }
 
@@ -325,7 +309,7 @@ public interface Utils {
     return ¢;
   }
 
-  /** @param < T > JD
+  /** @param <T> JD
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
@@ -334,7 +318,7 @@ public interface Utils {
   }
 
   /** Determine whether an {@link Object} is penultimate in its {@link List} .
-   * @param < T > JD
+   * @param <T> JD
    * @param o JD
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
@@ -349,8 +333,7 @@ public interface Utils {
    * @param c what needs to be prepended
    * @return {@link StringBuilder} parameter with the <code><b>char</b></code>
    *         parameter prepended to it */
-  @NotNull
-  static StringBuilder prepend(@NotNull final StringBuilder $, final char c) {
+  @NotNull static StringBuilder prepend(@NotNull final StringBuilder $, final char c) {
     return cantBeNull($.insert(0, c));
   }
 
@@ -359,21 +342,19 @@ public interface Utils {
    * @param s what needs to be prepended
    * @return {@link StringBuilder} parameter with the {@link String} parameter
    *         prepended to it */
-  @NotNull
-  static StringBuilder prepend(@NotNull final StringBuilder $, final String s) {
+  @NotNull static StringBuilder prepend(@NotNull final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
   }
 
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  @NotNull
-  static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
+  @NotNull static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** Remove any duplicates that may be present in a given {@link List}
-   * @param < T > JD
+   * @param <T> JD
    * @param ts JD */
   static <T> void removeDuplicates(@NotNull final List<T> ts) {
     final Set<T> noDuplicates = new LinkedHashSet<>(ts);
@@ -404,16 +385,14 @@ public interface Utils {
   /** Remove all occurrences of white space character in a given {@link String}
    * @param ¢ JD
    * @return parameter after all such occurrences are removed. */
-  @NotNull
-  static String removeWhites(@NotNull final String ¢) {
+  @NotNull static String removeWhites(@NotNull final String ¢) {
     return cantBeNull(¢.replaceAll("\\s+", ""));
   }
 
   /** Sorts an array
    * @param ¢ what to sort
    * @return given array with elements in sorted order */
-  @NotNull
-  static int[] sort(@NotNull final int[] ¢) {
+  @NotNull static int[] sort(@NotNull final int[] ¢) {
     Arrays.sort(¢);
     return ¢;
   }
@@ -500,8 +479,7 @@ public interface Utils {
       this.function = function;
     }
 
-    @NotNull
-    @SafeVarargs final Iterable<T> to(@NotNull final F... fs) {
+    @NotNull @SafeVarargs final Iterable<T> to(@NotNull final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F ¢ : fs)
         if (¢ != null)
@@ -510,8 +488,7 @@ public interface Utils {
     }
 
     /** @param <FS> JD
-     * @param s JD
-     * */
+     * @param s JD */
     @NotNull <FS extends Iterable<? extends F>> Iterable<T> to(@NotNull final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F ¢ : s)
@@ -522,7 +499,7 @@ public interface Utils {
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param < T > JD
+   * @param <T> JD
    * @since 2016 */
   class FoundHandleForT<T> {
     final T candidate;
@@ -572,10 +549,8 @@ public interface Utils {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" })
-  class TEST {
-    @NotNull
-    public static Integer[] intToIntegers(@NotNull final int... is) {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) class TEST {
+    @NotNull public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
         $[¢] = box.it(is[¢]);

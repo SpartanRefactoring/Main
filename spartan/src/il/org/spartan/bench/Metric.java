@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** An interface for a metric returning a <code><b>double</b></code> value.
  * @author Yossi Gil
@@ -20,8 +20,7 @@ public class Metric {
     return name;
   }
 
-  @NotNull
-  public Metric name(final String __name) {
+  @NotNull public Metric name(final String __name) {
     name = __name;
     return this;
   }
@@ -46,24 +45,19 @@ public class Metric {
   }
 
   public abstract static class Long extends Metric {
-    /**
-    * Instantiate  {@link Long} . 
-    */
+    /** Instantiate {@link Long} . */
     public Long() {
     }
 
-    /**
-    * Instantiate  {@link Long} .
-    * @param name  
-    */
+    /** Instantiate {@link Long} .
+     * @param name */
     public Long(final String name) {
       super(name);
     }
 
     public abstract long __();
 
-    @NotNull
-    @Override public Long name(final String name) {
+    @NotNull @Override public Long name(final String name) {
       super.name(name);
       return this;
     }

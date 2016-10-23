@@ -1,13 +1,10 @@
-/**
- *
- */
 package il.org.spartan.java;
-
-import org.jetbrains.annotations.NotNull;
 
 import static il.org.spartan.java.Token.*;
 
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 /** Forwards all tokens from a {@link RawTokenizer} to a {@link TokenProcessor}
  * @author Yossi Gil
@@ -29,8 +26,7 @@ public final class TokenFeeder {
     this.processor = processor;
   }
 
-  @NotNull
-  public TokenFeeder go() {
+  @NotNull public TokenFeeder go() {
     processor.before();
     for (Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
       processor.process(¢, tokenizer.text());

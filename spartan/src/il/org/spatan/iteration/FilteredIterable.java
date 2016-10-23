@@ -2,9 +2,10 @@ package il.org.spatan.iteration;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.iteration.closures.*;
 import il.org.spatan.iteration.Iterables.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Makes a filtered version of a stream (realized by the {@link Iterable}
  * interface). Only those elements of the stream which satisfy a given boolean
@@ -26,8 +27,7 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
    * @return true, if and only if, this element is to be passed through. */
   @Override public abstract boolean holds(T t);
 
-  @NotNull
-  @Override public final Iterator<T> iterator() {
+  @NotNull @Override public final Iterator<T> iterator() {
     return new ReadonlyIterator<T>() {
       T pending;
       boolean hasNext = true;

@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since February 22, 2012 */
@@ -29,8 +26,7 @@ public class WeightedDisribution {
     return sum2 / sumw;
   }
 
-  @NotNull
-  public WeightedDisribution record(final double x, final double w) {
+  @NotNull public WeightedDisribution record(final double x, final double w) {
     sumw += w;
     sum += w * x;
     sum2 += w * x * x;

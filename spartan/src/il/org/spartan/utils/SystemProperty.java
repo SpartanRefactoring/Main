@@ -2,8 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.strings.*;
-import org.jetbrains.annotations.NotNull;
 
 public enum SystemProperty {
   FILE_SEPARATOR, //
@@ -38,16 +39,14 @@ public enum SystemProperty {
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
 
-  @NotNull
-  private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> os) {
+  @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> os) {
     final TreeSet<String> $ = new TreeSet<>();
     for (final Object ¢ : os)
       $.add((String) ¢);
     return $;
   }
 
-  @NotNull
-  public final String key;
+  @NotNull public final String key;
 
   SystemProperty() {
     key = name().toLowerCase().replace('_', '.');

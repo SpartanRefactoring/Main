@@ -5,10 +5,10 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A bunch of string functions.
  * @author Yossi Gil */
@@ -34,24 +34,21 @@ import org.jetbrains.annotations.Nullable;
     return Long.valueOf(¢).longValue();
   }
 
-  @NotNull
-  public static String capitalize(@NotNull final String ¢) {
+  @NotNull public static String capitalize(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toUpperCase() + rest(¢).toLowerCase();
   }
 
   /** Concatenate any number of strings.
    * @param ss a variable number of strings
    * @return the concatenation of the strings in <code>ss</code> */
-  @NotNull
-  public static String cat(@NotNull final String... ss) {
+  @NotNull public static String cat(@NotNull final String... ss) {
     final StringBuilder $ = new StringBuilder("");
     for (final String ¢ : ss)
       $.append(¢);
     return $ + "";
   }
 
-  @NotNull
-  public static String cat(@NotNull final String[]... sss) {
+  @NotNull public static String cat(@NotNull final String[]... sss) {
     final StringBuilder $ = new StringBuilder("");
     for (final String[] ¢ : sss)
       $.append(cat(¢));
@@ -62,8 +59,7 @@ import org.jetbrains.annotations.Nullable;
     return a == d ? 0 : signum(a) != signum(d) ? Double.NaN : 2 * Math.abs(a - d) / Math.abs(a + d);
   }
 
-  @NotNull
-  public static String dtoa(final double ¢) {
+  @NotNull public static String dtoa(final double ¢) {
     return ¢ + "";
   }
 
@@ -71,8 +67,7 @@ import org.jetbrains.annotations.Nullable;
     return a == null ? b == null : a.equals(b);
   }
 
-  @NotNull
-  public static String esc(final char ¢) {
+  @NotNull public static String esc(final char ¢) {
     switch (¢) {
       case '\n':
         return "\\n";
@@ -91,8 +86,7 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String esc(@Nullable final String s) {
+  @NotNull public static String esc(@Nullable final String s) {
     if (s == null)
       return "(null)";
     final StringBuilder $ = new StringBuilder(s.length());
@@ -111,13 +105,11 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String fill(final int i, final char c) {
+  @NotNull public static String fill(final int i, final char c) {
     return fill(i, c + "");
   }
 
-  @NotNull
-  public static String fill(final int i, final String s) {
+  @NotNull public static String fill(final int i, final String s) {
     final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.append(s);
@@ -130,8 +122,7 @@ import org.jetbrains.annotations.Nullable;
     return ¢.charAt(0);
   }
 
-  @NotNull
-  public static String ftoa(final float ¢) {
+  @NotNull public static String ftoa(final float ¢) {
     return ¢ + "";
   }
 
@@ -171,13 +162,11 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String itoa(final int ¢) {
+  @NotNull public static String itoa(final int ¢) {
     return ¢ + "";
   }
 
-  @NotNull
-  public static String javaCase(@NotNull final String ¢) {
+  @NotNull public static String javaCase(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toLowerCase() + rest(¢);
   }
 
@@ -187,8 +176,7 @@ import org.jetbrains.annotations.Nullable;
     return ¢.charAt(¢.length() - 1);
   }
 
-  @NotNull
-  public static String lowCounter(final int ¢) {
+  @NotNull public static String lowCounter(final int ¢) {
     switch (¢) {
       case -1:
         return "";
@@ -199,8 +187,7 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String ltoa(final long ¢) {
+  @NotNull public static String ltoa(final long ¢) {
     return ¢ + "";
   }
 
@@ -208,8 +195,7 @@ import org.jetbrains.annotations.Nullable;
    * return "1st", for 22, the "22nd", etc.
    * @param i a non-negative integer to convert
    * @return the ordinal string representation of <code>n</code> */
-  @NotNull
-  public static String ordinal(final int i) {
+  @NotNull public static String ordinal(final int i) {
     nonnegative(i);
     switch (i % 10) {
       case 1:
@@ -224,18 +210,15 @@ import org.jetbrains.annotations.Nullable;
   /** Wrap an object in parenthesis
    * @param ¢ a non-<code><b>null</b></code> object for wrapping in parenthesis
    * @return the result of <code>o.toString()</code> wrapped parenthesis */
-  @NotNull
-  public static String paren(final Object ¢) {
+  @NotNull public static String paren(final Object ¢) {
     return "(" + ¢ + ")";
   }
 
-  @NotNull
-  public static String pluralize(final int i, final String singular) {
+  @NotNull public static String pluralize(final int i, final String singular) {
     return pluralize(i, singular, singular + "s");
   }
 
-  @NotNull
-  public static String pluralize(final int i, final String singular, final String plural) {
+  @NotNull public static String pluralize(final int i, final String singular, final String plural) {
     switch (i) {
       case 0:
         return "no " + plural;
@@ -262,13 +245,11 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String pretty(final String singular, final Collection<? extends Object> a) {
+  @NotNull public static String pretty(final String singular, final Collection<? extends Object> a) {
     return pretty(singular, singular + "s", a);
   }
 
-  @NotNull
-  public static String pretty(final String singular, final String plural, @Nullable final Collection<? extends Object> a) {
+  @NotNull public static String pretty(final String singular, final String plural, @Nullable final Collection<? extends Object> a) {
     if (a == null || a.isEmpty())
       return "";
     if (a.size() == 1)
@@ -287,13 +268,11 @@ import org.jetbrains.annotations.Nullable;
    * @param ¢ a non-<code><b>null</b></code> object for quoting
    * @return the result of <code>o.toString()</code> wrapped with single
    *         quotes */
-  @NotNull
-  public static String quote(final Object ¢) {
+  @NotNull public static String quote(final Object ¢) {
     return wrap('\'', ¢ + "");
   }
 
-  @NotNull
-  public static String repeat(final int i, final char c) {
+  @NotNull public static String repeat(final int i, final char c) {
     return repeat(i, c + "");
   }
 
@@ -302,8 +281,7 @@ import org.jetbrains.annotations.Nullable;
    * @param s a string to repeat
    * @return a {@link String} containing <code>s</code> concatenated
    *         <code>n</code> times */
-  @NotNull
-  public static String repeat(final int i, final String s) {
+  @NotNull public static String repeat(final int i, final String s) {
     final StringBuffer $ = new StringBuffer();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.append(s);
@@ -323,8 +301,7 @@ import org.jetbrains.annotations.Nullable;
     return ¢ == 0 ? 0 : ¢ > 0 ? 1 : -1;
   }
 
-  @NotNull
-  public static String sprintf(@NotNull final String format, final Object... args) {
+  @NotNull public static String sprintf(@NotNull final String format, final Object... args) {
     return new Formatter().format(format, args) + "";
   }
 
@@ -352,8 +329,7 @@ import org.jetbrains.annotations.Nullable;
     return ¢.substring(1, ¢.length() - 1);
   }
 
-  @NotNull
-  public static List<String> toLines(@NotNull final String s) throws IOException {
+  @NotNull public static List<String> toLines(@NotNull final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
     for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
@@ -363,8 +339,7 @@ import org.jetbrains.annotations.Nullable;
     }
   }
 
-  @NotNull
-  public static String upCounter(final int ¢) {
+  @NotNull public static String upCounter(final int ¢) {
     switch (¢) {
       case -1:
         return "";
@@ -379,23 +354,19 @@ import org.jetbrains.annotations.Nullable;
     return esc(¢).replaceAll(" ", "\\s");
   }
 
-  @NotNull
-  public static String wrap(final char with, final String s) {
+  @NotNull public static String wrap(final char with, final String s) {
     return with + s + with;
   }
 
-  @NotNull
-  public static String wrap(final String with, final String s) {
+  @NotNull public static String wrap(final String with, final String s) {
     return with + s + with;
   }
 
-  @NotNull
-  private static String tolow(final int ¢) {
+  @NotNull private static String tolow(final int ¢) {
     return ¢ == 0 ? "" : tolow(¢ / 26) + (char) ('a' + ¢ % 26);
   }
 
-  @NotNull
-  private static String toup(final int ¢) {
+  @NotNull private static String toup(final int ¢) {
     return ¢ == 0 ? "" : toup(¢ / 26) + (char) ('A' + ¢ % 26);
   }
 }

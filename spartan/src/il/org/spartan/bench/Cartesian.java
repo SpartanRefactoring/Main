@@ -3,15 +3,12 @@ package il.org.spartan.bench;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.___.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
-/**
- *
- */
 /** @author Yossi Gil
  * @since 29/05/2011 */
 public class Cartesian {

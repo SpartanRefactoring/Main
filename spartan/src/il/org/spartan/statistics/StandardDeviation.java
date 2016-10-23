@@ -1,13 +1,11 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Mean.*;
 import static il.org.spartan.statistics.Sum.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */
@@ -25,8 +23,7 @@ import org.jetbrains.annotations.NotNull;
     return destructiveMoment(2, vs);
   }
 
-  @NotNull
-  public static double[] normalize(final double[] vs) {
+  @NotNull public static double[] normalize(final double[] vs) {
     return scale(shift(vs));
   }
 
@@ -40,8 +37,7 @@ import org.jetbrains.annotations.NotNull;
     return sum2(ds) / (ds.length - 1) - sum * sum / (ds.length * ds.length - ds.length);
   }
 
-  @NotNull
-  public static double[] scale(@NotNull final double[] vs) {
+  @NotNull public static double[] scale(@NotNull final double[] vs) {
     final double sd = sd(vs);
     for (int ¢ = 0; ¢ < vs.length; ++¢)
       vs[¢] /= sd;

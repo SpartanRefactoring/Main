@@ -1,10 +1,9 @@
 package il.org.spartan.iteration.closures;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.___.*;
+
+import org.jetbrains.annotations.*;
 
 /** An interface supplying a function object pointer, where the function return
  * value is {@link String}. To create such a pointer, create a subclass that
@@ -16,12 +15,10 @@ import static il.org.spartan.utils.___.*;
 public interface Stringer<T> extends Converter<T, String> {
   /** {@inheritDoc}
    * @see Converter#__ */
-  @NotNull
-  @Override String __(T t);
+  @NotNull @Override String __(T t);
 
   class Default<T> implements Stringer<T> {
-    @NotNull
-    @Override public String __(final T ¢) {
+    @NotNull @Override public String __(final T ¢) {
       return ¢ + "";
     }
   }
@@ -43,13 +40,11 @@ public interface Stringer<T> extends Converter<T, String> {
       this.quote = quote;
     }
 
-    @NotNull
-    @Override public final String __(@Nullable final T ¢) {
+    @NotNull @Override public final String __(@Nullable final T ¢) {
       return quote(¢ == null ? "" : super.__(¢));
     }
 
-    @NotNull
-    public final String quote(@NotNull final String ¢) {
+    @NotNull public final String quote(@NotNull final String ¢) {
       nonnull(¢);
       return wrap(quote, ¢.replaceAll(quote, quote + quote));
     }

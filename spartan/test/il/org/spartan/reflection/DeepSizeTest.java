@@ -2,7 +2,7 @@ package il.org.spartan.reflection;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -11,8 +11,7 @@ import il.org.spartan.sequence.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class DeepSizeTest {
-  @NotNull
-  private static MyHashMap<String, String> createHashTable(final int i) {
+  @NotNull private static MyHashMap<String, String> createHashTable(final int i) {
     final MyHashMap<String, String> $ = new MyHashMap<>();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.put(String.valueOf(¢ * ¢ + 1), String.valueOf((¢ + 5) * (¢ - 9) + 1));
@@ -182,7 +181,7 @@ public class DeepSizeTest {
   }
 
   @Test public void of_MyHashMap_table_size_80() {
-    azzert.that(ShallowSize.of((new MyHashMap<>()).table), is(80));
+    azzert.that(ShallowSize.of(new MyHashMap<>().table), is(80));
   }
 
   @Test public void of_object() {
@@ -222,7 +221,7 @@ public class DeepSizeTest {
 
   @Test public void shallow_of_MyHashMap() {
     for (final Sequence f = new Fibonacci(1000); f.more(); f.advance())
-      azzert.that(ShallowSize.of(createHashTable(f.current())), is(ShallowSize.of((new MyHashMap<>()))));
+      azzert.that(ShallowSize.of(createHashTable(f.current())), is(ShallowSize.of(new MyHashMap<>())));
   }
 
   @Test public void ShallowSize_of_Array_non_null() {

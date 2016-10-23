@@ -1,37 +1,31 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.classfiles.reify.ClassInfo.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
 import il.org.spartan.classfiles.reify.OpCode.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public class ExecutableEntity extends TypedEntity {
-  @NotNull
-  public static String signature(final String className, final String s, @NotNull final String d) {
+  @NotNull public static String signature(final String className, final String s, @NotNull final String d) {
     return className + "." + signature(s, d);
   }
 
-  @Nullable
-  private static String signature(final String s, @NotNull final String d) {
+  @Nullable private static String signature(final String s, @NotNull final String d) {
     return s + ":" + decode(d);
   }
 
-  @NotNull
-  public final ClassConstant[] exceptions;
+  @NotNull public final ClassConstant[] exceptions;
   @Nullable CodeEntity code;
   Map<String, int[]> class2refsByComponents;
   Map<String, int[]> class2staticRefsByComponents;
 
   public ExecutableEntity(final ConstantPool constantPool, final int accessFlags, final String name, @NotNull final String descriptor,
-                          final AttributeInfo[] attributes) {
+      final AttributeInfo[] attributes) {
     super(constantPool, accessFlags, name, descriptor, attributes);
     exceptions = readExceptions();
     code = readCodeAttribute();
@@ -57,13 +51,11 @@ public class ExecutableEntity extends TypedEntity {
     return code == null ? 0 : code.cyclomaticComplexity();
   }
 
-  @Nullable
-  public CodeEntity getCode() {
+  @Nullable public CodeEntity getCode() {
     return code;
   }
 
-  @NotNull
-  public Set<String> getReferencedMethods() {
+  @NotNull public Set<String> getReferencedMethods() {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
@@ -79,8 +71,7 @@ public class ExecutableEntity extends TypedEntity {
     return $;
   }
 
-  @NotNull
-  public Set<String> instanceVariables() {
+  @NotNull public Set<String> instanceVariables() {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
@@ -128,8 +119,7 @@ public class ExecutableEntity extends TypedEntity {
     return class2refsByComponents.get(className);
   }
 
-  @Nullable
-  public String signature() {
+  @Nullable public String signature() {
     return signature(name, descriptor);
   }
 
@@ -158,14 +148,12 @@ public class ExecutableEntity extends TypedEntity {
     return $ == null ? null : readCodeAttribute($);
   }
 
-  @NotNull
-  private CodeEntity readCodeAttribute(@NotNull final AttributeInfo i) {
+  @NotNull private CodeEntity readCodeAttribute(@NotNull final AttributeInfo i) {
     final ConstantPoolReader r = i.reader(constantPool);
     return new CodeEntity(r.readUnsignedShort(), r.readUnsignedShort(), r.readBytesArrray());
   }
 
-  @NotNull
-  private ClassConstant[] readExceptions() {
+  @NotNull private ClassConstant[] readExceptions() {
     final AttributeInfo $ = findAttribute("Exceptions");
     return $ == null ? new ClassConstant[0] : $.reader(constantPool).readClasses();
   }

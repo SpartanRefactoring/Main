@@ -1,12 +1,12 @@
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** Provides an encoding of an object (drawn from a given, predetermined, set of
  * objects) as an <code><b>int</b></code> value, and a representation of a set
@@ -15,10 +15,8 @@ import java.util.*;
  * @param <T> type of encoded elements */
 public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   private static final long serialVersionUID = -6058325247331073511L;
-  @NotNull
-  private final Vector<T> int2objects;
-  @NotNull
-  private final Map<T, Integer> objects2ints;
+  @NotNull private final Vector<T> int2objects;
+  @NotNull private final Map<T, Integer> objects2ints;
 
   /** Constructs a translator for the specified set.
    * @param ts the set of objects/attributes that shall be translated. */
@@ -46,8 +44,7 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     return int2objects.get(¢);
   }
 
-  @NotNull
-  @Override public Iterable<T> elements() {
+  @NotNull @Override public Iterable<T> elements() {
     return int2objects;
   }
 

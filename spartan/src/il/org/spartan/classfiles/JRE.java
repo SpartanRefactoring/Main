@@ -5,9 +5,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class representing the location on the file system of the <em>Java Runtime
  * Environment</em> (JRE), that is the standard Java library.
@@ -27,8 +28,7 @@ import org.jetbrains.annotations.NotNull;
   ;
   /** retrieve the system's CLASSPATH
    * @return the content of the classpath, broken into array entries */
-  @NotNull
-  public static List<File> asList() {
+  @NotNull public static List<File> asList() {
     try {
       return fromClass(Object.class);
     } catch (@NotNull final Throwable __) {
@@ -46,8 +46,7 @@ import org.jetbrains.annotations.NotNull;
    * @return a list of files
    * @throws IllegalArgumentException If the class loader of <code>c</code> is
    *         not a URLClassLoader */
-  @NotNull
-  public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
+  @NotNull public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
     final List<File> $ = new ArrayList<>();
     for (final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();

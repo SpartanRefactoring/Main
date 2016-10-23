@@ -7,7 +7,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -24,22 +24,19 @@ import il.org.spartan.text.*;
  * @since 2014-06-17 */
 public class LCS {
   /** @param ia JD
-   * @param is2 JD
-   * */
+   * @param is2 JD */
   public static int length(@NotNull final int[] ia, @NotNull final int[] is2) {
     return new LCS(ia, is2).length();
   }
 
   /** @param a JD
-   * @param s2 JD
-   * */
+   * @param s2 JD */
   public static int length(final String a, final String s2) {
     return new LCS(a, s2).length();
   }
 
   /** @param ssa JD
-   * @param ssb JD
-   * */
+   * @param ssb JD */
   public static int length(@NotNull final String[] ssa, @NotNull final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
@@ -48,14 +45,12 @@ public class LCS {
     return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
   }
 
-  /** @param ¢
-   * */
+  /** @param ¢ */
   private static int hash(@NotNull final String ¢) {
     return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
 
-  @NotNull
-  private static int[] hash(@NotNull final String[] ss) {
+  @NotNull private static int[] hash(@NotNull final String[] ss) {
     final int @NonNull [] $ = new int @NonNull [ss.length];
     for (int i = 0; i < $.length; ++i) {
       @SuppressWarnings("null") final @NonNull String s = ss[i];
@@ -64,12 +59,9 @@ public class LCS {
     return $;
   }
 
-  @NotNull
-  private final int[] A_s;
-  @NotNull
-  private final int[] B_s;
-  @NotNull
-  private final int[][] length;
+  @NotNull private final int[] A_s;
+  @NotNull private final int[] B_s;
+  @NotNull private final int[][] length;
 
   /** Instantiates this class.
    * @param as JD
@@ -109,8 +101,7 @@ public class LCS {
    * j) must be a valid index of array a (respectively b), or else, the
    * substring of a (respectively b) are empty.
    * @param i JD
-   * @param j
-   * */
+   * @param j */
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
   }

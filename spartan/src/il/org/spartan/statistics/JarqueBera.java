@@ -1,14 +1,12 @@
-/**
- *
- */
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Kurtosis.*;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spartan.statistics.Skewness.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */

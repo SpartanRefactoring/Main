@@ -1,15 +1,12 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
-
-import org.jetbrains.annotations.NotNull;
 
 import static java.lang.annotation.RetentionPolicy.*;
 
 import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */
@@ -28,8 +25,7 @@ import java.util.*;
   }
 
   class Extractor {
-    @NotNull
-    public static List<Content> attributes(@NotNull final Object target) {
+    @NotNull public static List<Content> attributes(@NotNull final Object target) {
       final List<Content> $ = new ArrayList<>();
       for (final Method ¢ : target.getClass().getMethods())
         if (isAttribute(¢))
@@ -41,8 +37,7 @@ import java.util.*;
       return ¢.getAnnotation(Attribute.class) != null;
     }
 
-    @NotNull
-    private static String value(final Object target, @NotNull final Method m) {
+    @NotNull private static String value(final Object target, @NotNull final Method m) {
       try {
         return m.invoke(target) + "";
       } catch (@NotNull final IllegalArgumentException e) {

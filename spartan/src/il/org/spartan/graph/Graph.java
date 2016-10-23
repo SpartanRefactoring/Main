@@ -2,9 +2,10 @@ package il.org.spartan.graph;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
 import il.org.spartan.streotypes.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A simple reference compact implementation of a {@link AbstractGraph} of
  * arbitrary objects, using a {@Codex} and Java arrays.
@@ -20,8 +21,7 @@ public class Graph<E> extends AbstractGraph<E> {
     return ImmutableArrayList.make($);
   }
 
-  @NotNull
-  private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> e) {
+  @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> e) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (final Vertex<E> ¢ : e)
       if (¢.incoming().size() == 0)
@@ -30,11 +30,9 @@ public class Graph<E> extends AbstractGraph<E> {
   }
 
   private final ImmutableArrayList<Vertex<E>> vertices;
-  @NotNull
-  private final ImmutableArrayList<Vertex<E>> sources;
+  @NotNull private final ImmutableArrayList<Vertex<E>> sources;
   private final ImmutableArrayList<Vertex<E>> sinks;
-  @NotNull
-  private final Map<E, Vertex<E>> map;
+  @NotNull private final Map<E, Vertex<E>> map;
   private final String description;
   private final String name;
 
@@ -88,8 +86,7 @@ public class Graph<E> extends AbstractGraph<E> {
     return sinks.size();
   }
 
-  @NotNull
-  @Override public ImmutableArrayList<Vertex<E>> sources() {
+  @NotNull @Override public ImmutableArrayList<Vertex<E>> sources() {
     return sources;
   }
 
@@ -109,8 +106,7 @@ public class Graph<E> extends AbstractGraph<E> {
    * @since Dec 7, 2011
    * @param <E> type of elements stored in this graph */
   public static class Builder<E> {
-    @NotNull
-    private static <E> HashSet<E> emptySet() {
+    @NotNull private static <E> HashSet<E> emptySet() {
       return new HashSet<>();
     }
 
@@ -120,8 +116,7 @@ public class Graph<E> extends AbstractGraph<E> {
         vs[i++] = e.get(¢);
     }
 
-    @NotNull
-    @SuppressWarnings("unchecked") //
+    @NotNull @SuppressWarnings("unchecked") //
     private static <E> Vertex<E>[] newVertexArray(final int size) {
       return new Vertex[size];
     }
@@ -163,8 +158,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * supplied graph.
      * @param e an arbitrary graph
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> addGraph(@NotNull final Graph<E> e) {
+    @NotNull public Builder<E> addGraph(@NotNull final Graph<E> e) {
       for (final Vertex<E> v : e.vertices())
         if (e.outDegree(v) == 0)
           newVertex(v.e());
@@ -177,8 +171,7 @@ public class Graph<E> extends AbstractGraph<E> {
     /** The actual function to create the graph, defined by all associations
      * recorded so far.
      * @return the Graph object defined by the associations. */
-    @NotNull
-    @SuppressWarnings("synthetic-access") public Graph<E> build() {
+    @NotNull @SuppressWarnings("synthetic-access") public Graph<E> build() {
       return new Graph<>(name, description, makeVerticesMap());
     }
 
@@ -196,8 +189,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param to the target of the associations.
      * @param froms the sources of the associations
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> incoming(final E to, @NotNull final E... froms) {
+    @NotNull public Builder<E> incoming(final E to, @NotNull final E... froms) {
       for (final E from : froms)
         newEdge(from, to);
       return this;
@@ -209,8 +201,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param from association starts here
      * @param to association ends here
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> newEdge(final E from, final E to) {
+    @NotNull public Builder<E> newEdge(final E from, final E to) {
       newVertex(from).newVertex(to);
       edges.add(new BuildingEdge<>(from, to));
       return this;
@@ -220,8 +211,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * cases in which these data element may not participate in any association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> newSelfLoops(@NotNull final E... es) {
+    @NotNull public Builder<E> newSelfLoops(@NotNull final E... es) {
       for (final E ¢ : es)
         newEdge(¢, ¢);
       return this;
@@ -231,8 +221,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * which the data element may not participate in any association.
      * @param ¢ a data element.
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> newVertex(final E ¢) {
+    @NotNull public Builder<E> newVertex(final E ¢) {
       outgoing.put(¢, Builder.emptySet());
       incoming.put(¢, Builder.emptySet());
       return this;
@@ -243,8 +232,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> newVertices(@NotNull final E... es) {
+    @NotNull public Builder<E> newVertices(@NotNull final E... es) {
       for (final E ¢ : es)
         newVertex(¢);
       return this;
@@ -256,15 +244,13 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param from the source of the associations
      * @param tos the targets of the associations.
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Builder<E> outgoing(final E from, @NotNull final E... tos) {
+    @NotNull public Builder<E> outgoing(final E from, @NotNull final E... tos) {
       for (final E to : tos)
         newEdge(from, to);
       return this;
     }
 
-    @NotNull
-    private Map<E, Vertex<E>> makeVerticesMap() {
+    @NotNull private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
       for (final BuildingEdge<E> ¢ : edges) {
         outgoing.get(¢.from).add(¢.to);
@@ -309,8 +295,7 @@ public class Graph<E> extends AbstractGraph<E> {
         return to.hashCode() ^ from.hashCode() >>> 1;
       }
 
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return "<" + from + "," + to + ">";
       }
     }

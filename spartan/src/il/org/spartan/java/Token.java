@@ -5,8 +5,9 @@ import static il.org.spartan.java.Token.Kind.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 public enum Token {
   // Literals:

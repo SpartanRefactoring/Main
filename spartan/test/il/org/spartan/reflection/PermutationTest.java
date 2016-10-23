@@ -39,9 +39,8 @@ import il.org.spartan.utils.*;
     final int N = 1000;
     final int a[] = Permutation.random(N);
     Arrays.sort(a);
-    for (int ¢ = 0; ¢ < N; ++¢) {
+    for (int ¢ = 0; ¢ < N; ++¢)
       azzert.that(Arrays.binarySearch(a, ¢), is(¢));
-    }
   }
 
   @Test public void testIsRandomPermutation() {

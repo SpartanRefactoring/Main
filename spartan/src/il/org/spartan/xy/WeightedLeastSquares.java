@@ -1,13 +1,10 @@
-/**
- *
- */
 package il.org.spartan.xy;
 
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Double.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -47,8 +44,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
     return beta() + x * alpha();
   }
 
-  @NotNull
-  public double[] eval(@NotNull final double[] x) {
+  @NotNull public double[] eval(@NotNull final double[] x) {
     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = eval(x[¢]);

@@ -1,14 +1,10 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -188,8 +184,7 @@ public enum OpCode {
   JSR(2), // 168 (0xA8)
   RET(1), // 169 (0xA9)
   TABLESWITCH { // 170 (0xAA)
-    @NotNull
-    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
+    @NotNull @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
         final int defaultOffset = s.readInt();
@@ -206,8 +201,7 @@ public enum OpCode {
     }
   },
   LOOKUPSWITCH { // 171 (0xAB)
-    @NotNull
-    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
+    @NotNull @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
         final int defaultOffset = s.readInt();
@@ -248,8 +242,7 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Nullable
-    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
+    @Nullable @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       final OpCode o = OpCode.values()[s.read()];
       if (o != IINC)
         return readContent(s);
@@ -352,12 +345,10 @@ public enum OpCode {
 
   public class Instruction {
     public final OpCode opCode;
-    @Nullable
-    final short[] args;
+    @Nullable final short[] args;
     // for tableswhitch and lookupswitch
     final int defaultOffset;
-    @Nullable
-    final int[] offsets;
+    @Nullable final int[] offsets;
 
     public Instruction(final OpCode opCode, final int defaultOffset, final int[] offsets) {
       this.opCode = opCode;
@@ -373,8 +364,7 @@ public enum OpCode {
       offsets = null;
     }
 
-    @Nullable
-    public short[] args() {
+    @Nullable public short[] args() {
       return args;
     }
 

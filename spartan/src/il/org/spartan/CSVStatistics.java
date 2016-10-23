@@ -5,9 +5,10 @@ package il.org.spartan;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Similar to {@link CSVWriter}, except that in addition to the production of
  * output to the main CSV file, this class generates a secondary CSV file,
@@ -24,13 +25,10 @@ public class CSVStatistics extends CSVLine.Ordered {
     return baseName.replaceFirst("\\.csv$", "");
   }
 
-  @NotNull
-  private final String keysHeader;
+  @NotNull private final String keysHeader;
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
-  @NotNull
-  final CSVWriter inner;
-  @NotNull
-  final CSVWriter summarizer;
+  @NotNull final CSVWriter inner;
+  @NotNull final CSVWriter summarizer;
 
   /** Instantiate this class, setting the names of the main and secondary CSV
    * files.
@@ -47,8 +45,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     this.keysHeader = keysHeader;
   }
 
-  @NotNull
-  public String close() {
+  @NotNull public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
       final CSVLine l = new CSVLine.Ordered.Separated("%");
@@ -71,8 +68,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     return summarizer.close();
   }
 
-  @NotNull
-  public String mainFileName() {
+  @NotNull public String mainFileName() {
     return inner.fileName();
   }
 
@@ -95,8 +91,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     return super.put(key, value);
   }
 
-  @NotNull
-  public String summaryFileName() {
+  @NotNull public String summaryFileName() {
     return summarizer.fileName();
   }
 

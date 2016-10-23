@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** An interface representing a procedure which takes two arguments
  * @param <A1> type of first argument

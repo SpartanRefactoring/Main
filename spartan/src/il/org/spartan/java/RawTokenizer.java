@@ -4,10 +4,9 @@
  * @since 2007/04/02 */
 package il.org.spartan.java;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import static il.org.spartan.java.Token.*;
+
+import org.jetbrains.annotations.*;
 
 /** [[SuppressWarningsSpartan]] */
 @SuppressWarnings("all")
@@ -124,8 +123,7 @@ public class RawTokenizer {
       + "\1\1\1\11\1\1\1\11\1\1\1\11\1\1\1\11" + "\2\1\1\11\2\1\1\11\1\1\1\11\2\1\2\0" + "\1\1\1\0\6\11\1\1\2\11\2\1\2\11\1\1"
       + "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1" + "\2\11\1\1\1\11\6\1";
 
-  @NotNull
-  private static int[] zzUnpackAction() {
+  @NotNull private static int[] zzUnpackAction() {
     final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, $);
@@ -146,8 +144,7 @@ public class RawTokenizer {
     return $;
   }
 
-  @NotNull
-  private static int[] zzUnpackAttribute() {
+  @NotNull private static int[] zzUnpackAttribute() {
     final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, $);
@@ -171,8 +168,7 @@ public class RawTokenizer {
   /** Unpacks the compressed character translation table.
    * @param packed the packed character translation table
    * @return the unpacked character translation table */
-  @NotNull
-  private static char[] zzUnpackCMap(@NotNull final String packed) {
+  @NotNull private static char[] zzUnpackCMap(@NotNull final String packed) {
     final char[] $ = new char[0x10000];
     int i = 0; /* index in packed string */
     int j = 0; /* index in unpacked array */
@@ -186,8 +182,7 @@ public class RawTokenizer {
     return $;
   }
 
-  @NotNull
-  private static int[] zzUnpackRowMap() {
+  @NotNull private static int[] zzUnpackRowMap() {
     final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, $);
@@ -205,8 +200,7 @@ public class RawTokenizer {
     return $;
   }
 
-  @NotNull
-  private static int[] zzUnpackTrans() {
+  @NotNull private static int[] zzUnpackTrans() {
     final int[] $ = new int[3162];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, $);
@@ -236,8 +230,7 @@ public class RawTokenizer {
   private int zzLexicalState = YYINITIAL;
   /** this buffer contains the current text to be matched and is the source of
    * the yytext() string */
-  @NotNull
-  private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
+  @NotNull private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
   /** the textposition at the last accepting state */
   private int zzMarkedPos;
   /** the current text position in the buffer */
@@ -290,8 +283,7 @@ public class RawTokenizer {
     return yyline + 1;
   }
 
-  @NotNull
-  public String location() {
+  @NotNull public String location() {
     return "[" + line() + "," + column() + "]: ";
   }
 
@@ -299,8 +291,7 @@ public class RawTokenizer {
    * input is encountered or an I/O-Error occurs.
    * @return the next token
    * @exception java.io.IOException if any I/O-Error occurs */
-  @Nullable
-  public Token next() throws java.io.IOException {
+  @Nullable public Token next() throws java.io.IOException {
     int zzInput;
     int zzAction;
     // cached fields:
@@ -854,8 +845,7 @@ public class RawTokenizer {
     }
   }
 
-  @NotNull
-  public String notify(final String ¢) {
+  @NotNull public String notify(final String ¢) {
     return location() + ¢ + " " + token();
   }
 
@@ -865,13 +855,11 @@ public class RawTokenizer {
   }
 
   /* user code: */
-  @NotNull
-  public String text() {
+  @NotNull public String text() {
     return $.length() > 0 ? $ + "" : yytext();
   }
 
-  @NotNull
-  public String token() {
+  @NotNull public String token() {
     return "<" + text() + ">";
   }
 
@@ -933,8 +921,7 @@ public class RawTokenizer {
   }
 
   /** Returns the text matched by the current regular expression. */
-  @NotNull
-  public final String yytext() {
+  @NotNull public final String yytext() {
     return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
   }
 
@@ -1015,7 +1002,7 @@ public class RawTokenizer {
         return false;
       }
     }
-    // numRead < 0
+    // numRead <0
     return true;
   }
 

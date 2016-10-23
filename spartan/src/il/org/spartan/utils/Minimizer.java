@@ -1,9 +1,6 @@
-/**
- *
- */
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since Mar 6, 2012
@@ -22,8 +19,7 @@ public class Minimizer<T> {
     return min;
   }
 
-  @NotNull
-  public Minimizer<T> next(final T t, final double next) {
+  @NotNull public Minimizer<T> next(final T t, final double next) {
     ___.nonnull(t);
     if (Double.isNaN(min) || next < min) {
       min = next;

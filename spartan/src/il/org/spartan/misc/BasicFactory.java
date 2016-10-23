@@ -1,8 +1,8 @@
 package il.org.spartan.misc;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** This cache class allows a value to be retrieved by either by a String key or
  * by another value. If the key object was used in the past, the returned value
@@ -23,6 +23,5 @@ public abstract class BasicFactory<V> implements FactoryConcept<V> {
     return from(stringToValue(¢));
   }
 
-  @NotNull
-  protected abstract V stringToValue(String s);
+  @NotNull protected abstract V stringToValue(String s);
 }

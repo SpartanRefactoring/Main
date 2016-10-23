@@ -1,11 +1,8 @@
-/**
- *
- */
 package il.org.spartan.classfiles.reify;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 public class AttributeInfo {
   public final String name;
@@ -16,8 +13,7 @@ public class AttributeInfo {
     this.data = data;
   }
 
-  @NotNull
-  final ConstantPoolReader reader(final ConstantPool ¢) {
+  @NotNull final ConstantPoolReader reader(final ConstantPool ¢) {
     return new ConstantPoolReader(new DataInputStream(new ByteArrayInputStream(data)), ¢);
   }
 }

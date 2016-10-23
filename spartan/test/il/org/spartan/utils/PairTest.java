@@ -2,8 +2,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -27,8 +26,7 @@ import il.org.spartan.*;
       return o == this || o != null && o instanceof NamedPair && equals((NamedPair) o);
     }
 
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return name + super.toString();
     }
 

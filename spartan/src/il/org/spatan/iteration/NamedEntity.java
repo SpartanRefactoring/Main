@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public interface NamedEntity {
   String INVERTED = "'";
