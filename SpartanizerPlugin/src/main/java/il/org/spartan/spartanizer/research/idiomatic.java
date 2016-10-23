@@ -12,6 +12,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -135,7 +136,7 @@ public interface idiomatic {
     };
   }
 
-  static <T> Storer<T> defolt(final T ¢) {
+  static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
 

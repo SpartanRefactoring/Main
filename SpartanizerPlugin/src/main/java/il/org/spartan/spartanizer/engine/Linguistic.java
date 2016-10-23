@@ -97,22 +97,14 @@ public interface Linguistic {
 
   /** @param ¢ something
    * @return printable {@link String} for it */
-  static <X> String nanable(final X ¢) {
+  static <X> String unknownIfNull(final X ¢) {
     return ¢ != null ? ¢ + "" : UNKNOWN;
   }
 
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
-  static <X> String nanable(final X x, final Function<X, ?> f) {
+  static <X> String unknownIfNull(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
-  }
-
-  static String merge(final Object[] ¢) {
-    return separate.these(¢).by(SEPARATOR);
-  }
-
-  static String merge(final Object[] os, final String separator) {
-    return separate.these(os).by(separator);
   }
 }

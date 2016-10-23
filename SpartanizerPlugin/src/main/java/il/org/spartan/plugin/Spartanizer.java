@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** Possible events during spartanization process
  * <p>
@@ -38,7 +39,7 @@ public class Spartanizer extends Applicator {
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
       final int l = passes();
-      for (int pass = 0; pass < l; ++pass) {
+      for (int pass = 1; pass <= l; ++pass) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
@@ -163,7 +164,7 @@ public class Spartanizer extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.nanable(os, xs -> xs[index]);
+      return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }
   }
 }
