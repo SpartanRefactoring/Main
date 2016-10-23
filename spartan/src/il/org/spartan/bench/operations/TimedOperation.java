@@ -4,6 +4,7 @@
 package il.org.spartan.bench.operations;
 
 import il.org.spartan.bench.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 26/04/2011 */
@@ -14,10 +15,12 @@ public abstract class TimedOperation extends NamedOperation {
     super(name);
   }
 
+  @NotNull
   @Override public final Stopwatch call() {
     return run(makeStopWatch());
   }
 
+  @NotNull
   @Override public Stopwatch netTime(final Stopwatch netTime) {
     return run(netTime);
   }
@@ -28,5 +31,6 @@ public abstract class TimedOperation extends NamedOperation {
     return netTime;
   }
 
+  @NotNull
   public abstract Stopwatch run(Stopwatch s);
 }

@@ -6,6 +6,7 @@ import static il.org.spartan.graph.GraphsSamplesGenerator.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,7 +15,7 @@ import il.org.spatan.iteration.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class GraphTest {
-  static void verifyEdge(final Graph<String> s, final int from, final int to) {
+  static void verifyEdge(@NotNull final Graph<String> s, final int from, final int to) {
     assert s.vertices().get(from) != null;
     assert s.vertices().get(to) != null;
     assert s.vertices().get(from).outgoing() != null;
@@ -23,18 +24,18 @@ public class GraphTest {
     verifyFound(s.vertices().get(to).incoming(), s.vertices().get(from));
   }
 
-  static void verifyEdge(final Graph<String> s, final String from, final String to) {
+  static void verifyEdge(@NotNull final Graph<String> s, final String from, final String to) {
     verifyEdge(s, index(s, from), index(s, to));
   }
 
-  static void verifyGraph(final Graph<String> ¢) {
+  static void verifyGraph(@NotNull final Graph<String> ¢) {
     verifyVertices(¢);
     verifySources(¢);
     verifySinks(¢);
     verifyPreorder(¢);
   }
 
-  static void verifyGraphsEquivlanet(final Graph<String> g1, final Graph<String> g2) {
+  static void verifyGraphsEquivlanet(@NotNull final Graph<String> g1, @NotNull final Graph<String> g2) {
     assertEquals(g1.size(), g2.size());
     if (g1.size() > 0)
       for (final Vertex<String> sv : g1.vertices()) {
@@ -49,75 +50,75 @@ public class GraphTest {
       }
   }
 
-  static void verifyPreorder(final Graph<String> s) {
-    verifyCollection(s, s.preOrder(), s.vertices().size(), (Query) sink -> verifyVertex(s, sink.e()));
+  static void verifyPreorder(@NotNull final Graph<String> s) {
+    verifyCollection(s, s.preOrder(), s.vertices().size(), sink -> verifyVertex(s, sink.e()));
   }
 
-  static void verifySink(final Graph<String> s, final String sink) {
+  static void verifySink(@NotNull final Graph<String> s, final String sink) {
     verifySink(s, s.vertex(sink));
   }
 
-  static void verifySink(final Graph<String> s, final Vertex<String> v) {
+  static void verifySink(@NotNull final Graph<String> s, final Vertex<String> v) {
     assertEquals(0, s.outgoing(v).size());
   }
 
-  static void verifySinks(final Graph<String> s) {
-    verifyCollection(s, s.sinks(), s.sinksCount(), (Query) sink -> verifySink(s, sink));
+  static void verifySinks(@NotNull final Graph<String> s) {
+    verifyCollection(s, s.sinks(), s.sinksCount(), sink -> verifySink(s, sink));
   }
 
-  static void verifySource(final Graph<String> s, final String source) {
+  static void verifySource(@NotNull final Graph<String> s, final String source) {
     verifySource(s, s.vertex(source));
   }
 
-  static void verifySource(final Graph<String> s, final Vertex<String> v) {
+  static void verifySource(@NotNull final Graph<String> s, @NotNull final Vertex<String> v) {
     assert s.isSource(v);
     assertEquals(0, v.incoming().size());
   }
 
-  static void verifySources(final Graph<String> s) {
-    verifyCollection(s, s.sources(), s.sourcesCount(), (Query) source -> verifySource(s, source));
+  static void verifySources(@NotNull final Graph<String> s) {
+    verifyCollection(s, s.sources(), s.sourcesCount(), source -> verifySource(s, source));
   }
 
-  static void verifyVertex(final Graph<String> s, final String... vertices) {
+  static void verifyVertex(@NotNull final Graph<String> s, @NotNull final String... vertices) {
     for (final String vertex : vertices)
       assert vertex != null : s.vertex(vertex);
     for (final String vertex : vertices)
       verifyVertex(s, s.vertex(vertex));
   }
 
-  static void verifyVertex(final Graph<String> s, final Vertex<String> v) {
+  static void verifyVertex(@NotNull final Graph<String> s, @NotNull final Vertex<String> v) {
     assert v != null;
     assert index(s, v) >= 0;
     assert index(s, v) < s.size();
     assertEquals(v, s.vertices().get(index(s, v)));
   }
 
-  static void verifyVertices(final Graph<String> s) {
-    verifyCollection(s, s.vertices(), s.size(), (Query) v -> verifyVertex(s, v));
+  static void verifyVertices(@NotNull final Graph<String> s) {
+    verifyCollection(s, s.vertices(), s.size(), v -> verifyVertex(s, v));
   }
 
-  private static boolean among(final String what, final String... where) {
+  private static boolean among(@NotNull final String what, @NotNull final String... where) {
     for (final String ¢ : where)
       if (what.equals(¢))
         return true;
     return false;
   }
 
-  private static int index(final Graph<String> s, final String v) {
+  private static int index(@NotNull final Graph<String> s, final String v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($).e().equals(v))
         return $;
     return -1;
   }
 
-  private static int index(final Graph<String> s, final Vertex<String> v) {
+  private static int index(@NotNull final Graph<String> s, final Vertex<String> v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($) == v)
         return $;
     return -1;
   }
 
-  private static void verifyCollection(final Graph<String> s, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
+  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final ImmutableArrayList<Vertex<String>> vs, final int size, @NotNull final Query q) {
     assert vs != null;
     for (final Vertex<String> ¢ : vs)
       q.test(¢);
@@ -129,7 +130,7 @@ public class GraphTest {
     }
   }
 
-  private static void verifyCollection(final Graph<String> s, final Iterable<Vertex<String>> ss, final int length, final Query q) {
+  private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final Iterable<Vertex<String>> ss, final int length, @NotNull final Query q) {
     assert ss != null;
     for (final Vertex<String> ¢ : ss)
       q.test(¢);

@@ -6,12 +6,15 @@ import java.net.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil
  * @see JRE */
 @Utility public class CLASSPATH {
   /** A class loader, which represents a */
+  @Nullable
   private static ClassLoader classLoader;
   /** Which system property contains the class path? */
   private static final String JAVA_CLASS_PATH = "java.class.path";
@@ -31,17 +34,19 @@ import il.org.spatan.iteration.*;
 
   /** Retrieves the system's CLASSPATH in an {@link Iterable}
    * @return the content of the CLASSPATH, broken into array entries */
+  @NotNull
   public static Iterable<String> asIterable() {
     return Iterables.make(asArray());
   }
 
+  @Nullable
   public static ClassLoader classLoader() {
     return classLoader != null ? classLoader : (classLoader = computeClassLoader());
   }
 
   /** Reset the class path and prepend multiple locations to the class path.
    * @param locations locations to prepend to the class path. */
-  public static void fix(final String... locations) {
+  public static void fix(@NotNull final String... locations) {
     reset();
     for (final String location : locations)
       prepend(location);
@@ -111,18 +116,19 @@ import il.org.spatan.iteration.*;
 
   /** Sets the system's CLASSPATH
    * @param path the new value of the CLASSPATH */
-  public static void set(final String path) {
+  public static void set(@NotNull final String path) {
     System.setProperty(JAVA_CLASS_PATH, path);
     classLoader = null;
   }
 
+  @NotNull
   private static ClassLoader computeClassLoader() {
     final String[] path = asArray();
     final URL[] urls = new URL[path.length];
     for (int i = 0; i < path.length; ++i)
       try {
         urls[i] = new File(path[i]).toURI().toURL();
-      } catch (final MalformedURLException __) {
+      } catch (@NotNull final MalformedURLException __) {
         // Ignore
       }
     return new URLClassLoader(urls);

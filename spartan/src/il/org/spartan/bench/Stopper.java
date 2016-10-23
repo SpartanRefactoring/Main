@@ -2,6 +2,8 @@
 package il.org.spartan.bench;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A class serving as stopwatch for measuring runtime of programs. To start a
  * stop watch, create an instance of this class. Method {@link #peep()} can be
@@ -36,6 +38,7 @@ import il.org.spartan.streotypes.*;
   private long begin;
   private int cases = 1;
   private long time;
+  @Nullable
   private final String what;
 
   /** Create a new instance */
@@ -46,7 +49,7 @@ import il.org.spartan.streotypes.*;
   /** Create a new instance distinguishable by a descriptive string, and print a
    * log message.
    * @param what a textual description of this instance, used in printouts */
-  public Stopper(final String what) {
+  public Stopper(@Nullable final String what) {
     this.what = what;
     if (what != null)
       out("Started " + what);
@@ -54,6 +57,7 @@ import il.org.spartan.streotypes.*;
   }
 
   /** @return the time since creation, per cases. */
+  @NotNull
   public String average() {
     return peep() / 1E9 / cases + " sec";
   }
@@ -83,6 +87,7 @@ import il.org.spartan.streotypes.*;
   /** Stop the timer, and print a log message with the time elapsed since
    * creation.
    * @return <code><b>this</b></code> */
+  @NotNull
   public Stopper stop() {
     time = System.nanoTime() - begin;
     out("Finished " + what + ": " + time + "ns");
@@ -98,6 +103,7 @@ import il.org.spartan.streotypes.*;
     return time;
   }
 
+  @NotNull
   @Override public String toString() {
     return peep() / 1E9 + " sec";
   }

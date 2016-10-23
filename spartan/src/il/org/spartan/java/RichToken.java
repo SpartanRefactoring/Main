@@ -1,5 +1,7 @@
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RichToken {
   private final Token token;
   private final RawTokenizer tokenizer;
@@ -49,6 +51,7 @@ public class RichToken {
     return tokenizer.token();
   }
 
+  @NotNull
   @Override public String toString() {
     return token + "";
   }
@@ -60,6 +63,7 @@ public class RichToken {
       this.tokenizer = tokenizer;
     }
 
+    @NotNull
     @SuppressWarnings("synthetic-access") public RichToken make(final Token ¢) {
       return new RichToken(tokenizer, ¢);
     }

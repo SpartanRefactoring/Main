@@ -7,24 +7,30 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.graph.Graph.*;
+import org.jetbrains.annotations.NotNull;
 
 public class GraphsSamplesGenerator {
+  @NotNull
   public static Graph<String> make1By2Clique() {
     return makeCliqueBuilder(2).newEdge("START", "A").newEdge("START", "B").build();
   }
 
+  @NotNull
   public static Graph<String> make1By3Clique() {
     return makeCliqueBuilder(3).newEdge("START", "A").newEdge("START", "B").newEdge("START", "C").build();
   }
 
+  @NotNull
   public static Graph<String> make1Clique() {
     return new Graph.Builder<String>().newVertex("A").build();
   }
 
+  @NotNull
   public static Graph<String> make2And1() {
     return makeCliqueBuilder(2).newEdge("A", "END").build();
   }
 
+  @NotNull
   public static Graph<String> make2By2() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("A1", "B1").newEdge("A1", "B2");
@@ -32,14 +38,17 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> make2Clique() {
     return makeClique(2);
   }
 
+  @NotNull
   public static Graph<String> make2CliqueBy1() {
     return makeCliqueBuilder(2).newEdge("A", "END").newEdge("B", "END").build();
   }
 
+  @NotNull
   public static Graph<String> make3By3() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("A1", "B1").newEdge("A1", "B2").newEdge("A1", "B3");
@@ -48,6 +57,7 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> make3By4() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("A1", "B1").newEdge("A1", "B2").newEdge("A1", "B3").newEdge("A1", "B4");
@@ -56,10 +66,12 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> make3CliqueBy1() {
     return makeCliqueBuilder(3).newEdge("A", "END").newEdge("B", "END").newEdge("C", "END").build();
   }
 
+  @NotNull
   public static Iterable<Graph<String>> makeAll() {
     final List<Graph<String>> $ = new ArrayList<>();
     final Class<GraphsSamplesGenerator> c = GraphsSamplesGenerator.class;
@@ -68,11 +80,11 @@ public class GraphsSamplesGenerator {
         try {
           @SuppressWarnings("unchecked") final Graph<String> g = (Graph<String>) m.invoke(null);
           $.add(g);
-        } catch (final IllegalArgumentException e) {
+        } catch (@NotNull final IllegalArgumentException e) {
           e.printStackTrace();
-        } catch (final IllegalAccessException e) {
+        } catch (@NotNull final IllegalAccessException e) {
           e.printStackTrace();
-        } catch (final InvocationTargetException e) {
+        } catch (@NotNull final InvocationTargetException e) {
           e.printStackTrace();
         }
     azzert.that($.size(), is(28));
@@ -84,6 +96,7 @@ public class GraphsSamplesGenerator {
     return $;
   }
 
+  @NotNull
   public static Graph<String> makeAloofNodeAndAloofCycle() {
     return new Graph.Builder<String>() //
         .newVertex("A")//
@@ -91,6 +104,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeCFGExample() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("START", "END").newEdge("START", "a");
@@ -103,6 +117,7 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> makeChain(final int i) {
     final Graph.Builder<String> $ = new Graph.Builder<>("Chain " + i);
     for (char from = 'A'; from < 'A' + i - 1; ++from)
@@ -110,10 +125,12 @@ public class GraphsSamplesGenerator {
     return $.build();
   }
 
+  @NotNull
   public static Graph<String> makeChainABC() {
     return new Graph.Builder<String>("ABC").newEdge("A", "B").newEdge("B", "C").build();
   }
 
+  @NotNull
   public static Graph<String> makeChainABCDEF() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("A", "B");
@@ -124,10 +141,12 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> makeClique(final int ¢) {
     return makeCliqueBuilder(¢).build();
   }
 
+  @NotNull
   public static Graph<String> makeCLIQUE(final int i) {
     final Graph.Builder<String> $ = makeCliqueBuilder(i);
     for (char ¢ = 'A'; ¢ < 'A' + i; ++¢)
@@ -135,6 +154,7 @@ public class GraphsSamplesGenerator {
     return $.build();
   }
 
+  @NotNull
   public static Builder<String> makeCliqueBuilder(final int i) {
     final Graph.Builder<String> $ = new Graph.Builder<>("Clique " + i);
     for (char from = 'A'; from < 'A' + i; ++from) {
@@ -146,6 +166,7 @@ public class GraphsSamplesGenerator {
     return $;
   }
 
+  @NotNull
   public static Graph<String> makeDiamond() {
     return new Graph.Builder<String>("diamond") //
         .newEdge("B1", "V").newEdge("B2", "V") //
@@ -153,6 +174,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeHujiLectureGraph() {
     return new Graph.Builder<String>() //
         .incoming("b", "a", "c", "d", "e") //
@@ -165,6 +187,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeInvertedTree() {
     return new Graph.Builder<String>("Inverted tree") //
         .newVertices("A", "B", "C", "D")//
@@ -176,6 +199,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeInvertedTreeWithLoops() {
     return new Graph.Builder<String>("Inverted tree with loops") //
         .newVertices("A", "B", "C", "D")//
@@ -188,6 +212,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeOneTwoThreeTrianble() {
     return new Graph.Builder<String>()//
         .outgoing("one", "two", "three") //
@@ -195,20 +220,24 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeSingleEdge() {
     final Graph.Builder<String> b = new Graph.Builder<>();
     b.newEdge("A", "B");
     return b.build();
   }
 
+  @NotNull
   public static Graph<String> makeSingletonLoop() {
     return new Graph.Builder<String>("Singleton Loop").newEdge("A", "A").build();
   }
 
+  @NotNull
   public static Graph<String> makeSingletonNode() {
     return new Graph.Builder<String>("Singleton").newVertex("A").build();
   }
 
+  @NotNull
   public static Graph<String> makeTree() {
     return new Graph.Builder<String>() //
         .newVertices("A", "B", "C", "D")//
@@ -220,6 +249,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeTreeWithLoops() {
     return new Graph.Builder<String>("Tree with Loops") //
         .newVertices("A", "B", "C", "D")//
@@ -232,10 +262,12 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeTwoAloofNodes() {
     return new Graph.Builder<String>().newVertex("A").newVertex("B").build();
   }
 
+  @NotNull
   public static Graph<String> makeTwoConnectedPairs() {
     return new Graph.Builder<String>("Two Connected Pairs") //
         .newEdge("A", "B").newEdge("B", "A")//
@@ -244,6 +276,7 @@ public class GraphsSamplesGenerator {
         .build();
   }
 
+  @NotNull
   public static Graph<String> makeTwoConnectedTriples() {
     return new Graph.Builder<String>("Two connected Triples") //
         .newEdge("A", "B").newEdge("B", "C").newEdge("C", "A")//
@@ -251,6 +284,7 @@ public class GraphsSamplesGenerator {
         .newEdge("C", "D").build();
   }
 
+  @NotNull
   public static Graph<String> makeWikiExample() {
     final Graph.Builder<String> b = new Graph.Builder<>("PageRank wiki example");
     b.incoming("A", "D");

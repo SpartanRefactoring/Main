@@ -6,6 +6,7 @@ import static il.org.spartan.java.Token.Kind.*;
 import java.io.*;
 
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 public enum Token {
   // Literals:
@@ -87,7 +88,7 @@ public enum Token {
     main(new RawTokenizer(System.in));
   }
 
-  private static void main(final RawTokenizer tokenizer) throws IOException {
+  private static void main(@NotNull final RawTokenizer tokenizer) throws IOException {
     for (;;) {
       final Token t = tokenizer.next();
       System.out.println(Separate.bySpaces(//
@@ -105,15 +106,15 @@ public enum Token {
   public final Kind kind;
   final boolean isError;
 
-  private Token() {
+  Token() {
     this(KEYWORD);
   }
 
-  private Token(final Kind kind) {
+  Token(final Kind kind) {
     this(kind, false);
   }
 
-  private Token(final Kind kind, final boolean isError) {
+  Token(final Kind kind, final boolean isError) {
     this.kind = kind;
     this.isError = isError;
   }
@@ -127,7 +128,7 @@ public enum Token {
   }
 
   public enum Category {
-    ALPHANUMERIC, PUNCTUATIONAL, IGNORE, ANY;
+    ALPHANUMERIC, PUNCTUATIONAL, IGNORE, ANY
   }
 
   public enum Kind {
@@ -140,7 +141,7 @@ public enum Token {
     NONCODE(IGNORE);
     public final Category category;
 
-    private Kind(final Category category) {
+    Kind(final Category category) {
       this.category = category;
     }
   }

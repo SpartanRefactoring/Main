@@ -7,6 +7,7 @@ import java.util.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A class representing the location on the file system of the <em>Java Runtime
  * Environment</em> (JRE), that is the standard Java library.
@@ -26,10 +27,11 @@ import il.org.spartan.utils.*;
   ;
   /** retrieve the system's CLASSPATH
    * @return the content of the classpath, broken into array entries */
+  @NotNull
   public static List<File> asList() {
     try {
       return fromClass(Object.class);
-    } catch (final Throwable __) {
+    } catch (@NotNull final Throwable __) {
       // Absorb this exception, let's try the other option...
       final List<File> $ = new ArrayList<>();
       final String cp = System.getProperty("sun.boot.class.path");
@@ -44,7 +46,8 @@ import il.org.spartan.utils.*;
    * @return a list of files
    * @throws IllegalArgumentException If the class loader of <code>c</code> is
    *         not a URLClassLoader */
-  public static List<File> fromClass(final Class<?>... cs) throws IllegalArgumentException {
+  @NotNull
+  public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
     final List<File> $ = new ArrayList<>();
     for (final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();
@@ -53,7 +56,7 @@ import il.org.spartan.utils.*;
       for (final URL url : ((URLClassLoader) cl).getURLs())
         try {
           $.add(new File(url.toURI()));
-        } catch (final URISyntaxException e) {
+        } catch (@NotNull final URISyntaxException e) {
           throw new IllegalArgumentException("I cannot obtain a file from url " + url);
         }
     }

@@ -5,6 +5,8 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -45,7 +47,8 @@ public enum Lines {
    * @param text some string of characters
    * @return parameter, split into an array if lines
    * @see #gather */
-  public static String[] scatter(final @Nullable String text) {
+  @NotNull
+  public static String[] scatter(@org.jetbrains.annotations.Nullable final @Nullable String text) {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
 

@@ -4,9 +4,10 @@ import java.lang.reflect.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 public class ClassPredicates {
-  public static boolean hasMutableFields(final Class<?> c) {
+  public static boolean hasMutableFields(@NotNull final Class<?> c) {
     for (final Field ¢ : c.getDeclaredFields())
       if (!Modifier.isFinal(¢.getModifiers()))
         return true;
@@ -14,11 +15,11 @@ public class ClassPredicates {
     return parent != null && hasMutableFields(parent);
   }
 
-  public static boolean isImmutable(final Class<?> ¢) {
+  public static boolean isImmutable(@NotNull final Class<?> ¢) {
     return !¢.isEnum() && nFields(¢) > 0 && !hasMutableFields(¢);
   }
 
-  public static int nFields(final Class<?> c) {
+  public static int nFields(@NotNull final Class<?> c) {
     int $ = 0;
     for (final Field ¢ : c.getDeclaredFields())
       $ += as.bit(!¢.isSynthetic() && !Modifier.isStatic(¢.getModifiers()));

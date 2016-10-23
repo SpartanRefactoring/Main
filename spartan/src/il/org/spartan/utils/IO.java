@@ -6,10 +6,12 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Static methods for I/O related operations */
 @Antiexample public class IO {
-  public static String concatLines(final Iterable<String> ss) {
+  @NotNull
+  public static String concatLines(@NotNull final Iterable<String> ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
@@ -17,7 +19,8 @@ import il.org.spartan.streotypes.*;
     return sb + "";
   }
 
-  public static String concatLines(final String... ss) {
+  @NotNull
+  public static String concatLines(@NotNull final String... ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
@@ -25,7 +28,8 @@ import il.org.spartan.streotypes.*;
     return sb + "";
   }
 
-  public static List<String> lines(final String s) throws IOException {
+  @NotNull
+  public static List<String> lines(@NotNull final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
     for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
@@ -35,10 +39,10 @@ import il.org.spartan.streotypes.*;
     }
   }
 
-  public static InputStream toInputStream(final String s) {
+  public static InputStream toInputStream(@NotNull final String s) {
     try {
       return new ByteArrayInputStream(s.getBytes("UTF-8"));
-    } catch (final UnsupportedEncodingException e) {
+    } catch (@NotNull final UnsupportedEncodingException e) {
       unreachable();
       return null;
     }
@@ -49,7 +53,8 @@ import il.org.spartan.streotypes.*;
    * @param path Relative path to the file from the given class
    * @return Contents of the file
    * @throws IOException If an I/O error occur */
-  public static String toString(final Class<?> clazz, final String path) throws IOException {
+  @NotNull
+  public static String toString(@NotNull final Class<?> clazz, final String path) throws IOException {
     return toString(clazz.getResourceAsStream(path));
   }
 
@@ -57,7 +62,8 @@ import il.org.spartan.streotypes.*;
    * @param ¢ Input stream
    * @return the entire content of <code>is</code>
    * @throws IOException If an I/O error occur */
-  public static String toString(final InputStream ¢) throws IOException {
+  @NotNull
+  public static String toString(@NotNull final InputStream ¢) throws IOException {
     return toString(new InputStreamReader(¢));
   }
 
@@ -65,7 +71,8 @@ import il.org.spartan.streotypes.*;
    * @param r Reader
    * @return the entire content of <code>r</code>
    * @throws IOException If an I/O error occur */
-  public static String toString(final Reader r) throws IOException {
+  @NotNull
+  public static String toString(@NotNull final Reader r) throws IOException {
     final StringBuilder $ = new StringBuilder();
     for (int c = r.read(); c >= 0; c = r.read())
       $.append((char) c);
@@ -76,7 +83,7 @@ import il.org.spartan.streotypes.*;
    * @param outputFile File to be written
    * @param ss Strings to write
    * @throws IOException If an I/O error occur */
-  public static void writeLines(final File outputFile, final String... ss) throws IOException {
+  public static void writeLines(@NotNull final File outputFile, @NotNull final String... ss) throws IOException {
     final FileWriter fw = new FileWriter(outputFile);
     try {
       for (final String ¢ : ss) {

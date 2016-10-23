@@ -9,6 +9,7 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.___.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization
@@ -29,14 +30,15 @@ import il.org.spartan.utils.___.*;
 
   /** Restore the saved snapshot
    * @return a copy of the saved object */
+  @NotNull
   public T restore() {
     try {
       @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       unreachable(e.getMessage());
       throw new RuntimeException(e);
-    } catch (final ClassNotFoundException e) {
+    } catch (@NotNull final ClassNotFoundException e) {
       unreachable(e.getMessage());
       throw new RuntimeException(e);
     }
@@ -68,10 +70,10 @@ import il.org.spartan.utils.___.*;
       final ByteArrayOutputStream $ = new ByteArrayOutputStream();
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
-    } catch (final NotSerializableException e) {
+    } catch (@NotNull final NotSerializableException e) {
       dump.go(e);
       throw new Bug.Contract.Precondition("Cannot serialize object of class " + e.getMessage());
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       unreachable(e.getMessage());
       throw new RuntimeException(e);
     }

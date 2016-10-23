@@ -9,13 +9,14 @@ import java.util.*;
 
 import il.org.spartan.Aggregator.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** import static il.org.spartan.utils.Box.*; import java.util.*; import
  * il.org.spartan.iteration.Iterables; import il.org.spartan.Aggregator.*; /**
  * @author Yossi Gil
  * @since Apr 5, 2012 */
 public class LaTeXTableWriter extends CSVLineWriter {
-  private static <K, V> void ensure(final Map<K, V> m, final K k, final V v) {
+  private static <K, V> void ensure(@NotNull final Map<K, V> m, final K k, final V v) {
     if (!m.containsKey(k))
       m.put(k, v);
   }
@@ -40,6 +41,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return $;
   }
 
+  @NotNull
   @Override public final Iterable<Aggregation> aggregations() {
     final Set<Aggregation> $ = new LinkedHashSet<>();
     Iterables.addAll($, super.aggregations());
@@ -57,6 +59,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return super.close();
   }
 
+  @NotNull
   @Override public String header() {
     return renderer.allTop() + wrappingHeader() + makeLine(keys()) + renderer.headerEnd();
   }
@@ -70,6 +73,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return inner.get(innerTableName);
   }
 
+  @NotNull
   @Override public Collection<String> keys() {
     final List<String> $ = new ArrayList<>(super.keys());
     for (final AbstractStringProperties nested : inner.values())
@@ -77,6 +81,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return $;
   }
 
+  @NotNull
   @Override public Collection<String> values() {
     final List<String> $ = new ArrayList<>(super.values());
     for (final AbstractStringProperties nested : inner.values())
@@ -84,10 +89,12 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return $;
   }
 
+  @NotNull
   @Override protected String extension() {
     return ".tex";
   }
 
+  @NotNull
   private AbstractStringProperties collect(final Aggregation a) {
     final AbstractStringProperties $ = new ListProperties();
     addAggregates($, a);
@@ -96,6 +103,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return $;
   }
 
+  @NotNull
   private String wrappingHeader() {
     if (inner.isEmpty())
       return "";

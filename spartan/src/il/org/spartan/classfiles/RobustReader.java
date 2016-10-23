@@ -3,22 +3,27 @@
  */
 package il.org.spartan.classfiles;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.*;
 import java.util.*;
 
 /** @author Yossi Gil
  * @since 11 November 2011 */
 public class RobustReader {
-  protected static DataInputStream asDataInputStream(final InputStream ¢) {
+  @Nullable
+  protected static DataInputStream asDataInputStream(@Nullable final InputStream ¢) {
     return ¢ == null ? null : new DataInputStream(¢);
   }
 
-  protected static FileInputStream asFileInputStream(final File f) {
+  @Nullable
+  protected static FileInputStream asFileInputStream(@Nullable final File f) {
     if (f == null)
       return null;
     try {
       return new FileInputStream(f);
-    } catch (final FileNotFoundException e) {
+    } catch (@NotNull final FileNotFoundException e) {
       return null;
     }
   }
@@ -45,7 +50,7 @@ public class RobustReader {
 
   /** Instantiate {@link RobustReader}.
    * @param fileName an arbitrary file name */
-  public RobustReader(final String fileName) {
+  public RobustReader(@NotNull final String fileName) {
     this(new File(fileName));
   }
 
@@ -53,7 +58,7 @@ public class RobustReader {
     if (inner != null)
       try {
         inner.close();
-      } catch (final IOException e) {
+      } catch (@NotNull final IOException e) {
         recordError(e);
       }
   }
@@ -67,7 +72,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readDouble();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -77,7 +82,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readFloat();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -87,7 +92,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readInt();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -97,7 +102,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readLong();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -107,7 +112,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedByte();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -117,7 +122,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedShort();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return recordError(e);
     }
   }
@@ -127,7 +132,7 @@ public class RobustReader {
       return "";
     try {
       return inner.readUTF();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       recordError(e);
       return null;
     }
@@ -138,7 +143,8 @@ public class RobustReader {
       readUnsignedByte();
   }
 
-  protected final byte[] readBytes(final byte[] $) {
+  @NotNull
+  protected final byte[] readBytes(@NotNull final byte[] $) {
     if (inner == null)
       return new byte[0];
     for (int left = $.length; left > 0;)
@@ -152,10 +158,10 @@ public class RobustReader {
     return 0;
   }
 
-  int readBytes(final byte[] bs, final int offset, final int howMany) {
+  int readBytes(@NotNull final byte[] bs, final int offset, final int howMany) {
     try {
       return inner.read(bs, offset, howMany);
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       recordError(e);
       return howMany;
     }

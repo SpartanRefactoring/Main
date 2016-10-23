@@ -1,6 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
+import org.jetbrains.annotations.NotNull;
+
 /** A {@link FunctionalInterface} encapsulating a function with three arguments
  * @param <T> type of the function result
  * @param <A1> type of the 1st argument
@@ -15,5 +17,5 @@ package il.org.spartan.lazy;
    * @param ¢3 3rd argument
    * @throws Exception in case the function failed
    * @return result of applying the function to the arguments */
-  T ϑ(A1 ¢1, A2 ¢2, A3 ¢3) throws Exception;
+  @NotNull T ϑ(A1 ¢1, A2 ¢2, A3 ¢3) throws Exception;
 }

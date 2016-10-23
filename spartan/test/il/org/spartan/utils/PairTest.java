@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -21,15 +23,16 @@ import il.org.spartan.*;
       this.name = name;
     }
 
-    public boolean equals(final Pair<Integer, Integer> o) {
+    public boolean equals(@Nullable final Pair<Integer, Integer> o) {
       return o == this || o != null && o instanceof NamedPair && equals((NamedPair) o);
     }
 
+    @NotNull
     @Override public String toString() {
       return name + super.toString();
     }
 
-    private boolean equals(final NamedPair that) {
+    private boolean equals(@NotNull final NamedPair that) {
       return first.equals(that.first) && second.equals(that.second) && name.equals(that.name);
     }
   }

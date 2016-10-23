@@ -1,6 +1,8 @@
 package il.org.spartan;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A generic wrapper classes which can store and retrieve values of any type.
  * @author Yossi Gil
@@ -20,19 +22,20 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
+  @NotNull
   @SuppressWarnings("unchecked") //
   @Override public Wrapper<T> clone() throws CloneNotSupportedException {
     return (Wrapper<T>) Utils.cantBeNull(super.clone());
   }
 
-  @Override public final boolean equals(@Nullable final Object ¢) {
+  @Override public final boolean equals(@org.jetbrains.annotations.Nullable @Nullable final Object ¢) {
     return super.equals(¢) || ¢ != null && getClass() == ¢.getClass() && equals((Wrapper<?>) ¢);
   }
 
   /** @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> method <code>equals</code>
    *         returns <code><b>true</b></code> for the wrapped objects. */
-  public boolean equals(final Wrapper<?> ¢) {
+  public boolean equals(@NotNull final Wrapper<?> ¢) {
     return inner == null ? ¢.inner == null : inner.equals(¢.inner);
   }
 
@@ -50,6 +53,7 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
+  @NotNull
   @Override public String toString() {
     return inner == null ? "null" : Utils.cantBeNull(inner + "");
   }

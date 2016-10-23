@@ -5,6 +5,8 @@ package il.org.spartan.bench;
 
 import static il.org.spartan.bench.Unit.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -24,7 +26,7 @@ public enum BenchingPolicy {
   public static final int MIN_RUNS = 17;
   public static final int MAX_RUNS = 1 << 30;
 
-  public static void after(final Operation after) {
+  public static void after(@Nullable final Operation after) {
     if (after != null)
       after.call();
   }
@@ -33,7 +35,7 @@ public enum BenchingPolicy {
    * @param o what to execute
    * @return the average time in nanoseconds for execution (always a positive
    *         number) */
-  public static double approximateSteadyStateTime(final Operation o) {
+  public static double approximateSteadyStateTime(@NotNull final Operation o) {
     for (int runs = 1;; runs <<= 1) {
       // JVM.gc();
       final Stopwatch grossTime = new Stopwatch().start();
@@ -45,12 +47,12 @@ public enum BenchingPolicy {
     }
   }
 
-  public static long gcCylces(final LogBook.Mutable m, final Bencheon b, final int runs) {
+  public static long gcCylces(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b, final int runs) {
     m.set("operation", b.name).set("size", b.size);
     return gcCylces(m, (Operation) b, runs);
   }
 
-  public static long gcCylces(final LogBook.Mutable m, final Operation o, final int runs) {
+  public static long gcCylces(@NotNull final LogBook.Mutable m, @NotNull final Operation o, final int runs) {
     final JVM before = new JVM();
     for (int ¢ = 0; ¢ < runs; ++¢)
       o.call();
@@ -63,15 +65,15 @@ public enum BenchingPolicy {
     return benchingTime;
   }
 
-  public static void go(final LogBook.Mutable m, final Bencheon b) {
+  public static void go(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b) {
     go(m, b.size, b);
   }
 
-  public static void go(final LogBook.Mutable m, final long size, final NamedOperation o) {
+  public static void go(@NotNull final LogBook.Mutable m, final long size, @NotNull final NamedOperation o) {
     go(m, o.name, size, o);
   }
 
-  public static void go(final LogBook.Mutable m, final String name, final long size, final Operation o) {
+  public static void go(@NotNull final LogBook.Mutable m, final String name, final long size, @NotNull final Operation o) {
     Log.beginStage("Benchmarking", name + ":" + size);
     m.set("operation", name).set("size", size);
     final TimingEstimator e = TimingEstimator.estimator(o);
@@ -87,7 +89,7 @@ public enum BenchingPolicy {
     new TEST().compareHash();
   }
 
-  public static void measure(final LogBook.Mutable m, final Bencheon b, final int initialRuns) {
+  public static void measure(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b, final int initialRuns) {
     m.set("operation", b.name).set("size", b.size);
     measure(m, b.size, b, initialRuns);
   }
@@ -98,7 +100,7 @@ public enum BenchingPolicy {
     return (int) Math.round(benchingTime / time + 0.5);
   }
 
-  public static int runs(final Operation ¢) {
+  public static int runs(@NotNull final Operation ¢) {
     return runs(approximateSteadyStateTime(¢));
   }
 
@@ -118,7 +120,7 @@ public enum BenchingPolicy {
     BenchingPolicy.minWarmup = minWarmup;
   }
 
-  public static int warmup(final TimingEstimator e, final int initialApproximation) {
+  public static int warmup(@NotNull final TimingEstimator e, final int initialApproximation) {
     Log.ln("Time approximation at warmup begin:", Unit.formatNanoseconds(e.estimate()));
     Log.beginCompoundStage("Warmup", "[" + thousands(initialApproximation), "runs/iteration]");
     int $ = initialApproximation;
@@ -144,7 +146,7 @@ public enum BenchingPolicy {
     return $;
   }
 
-  static void measure(final LogBook.Mutable m, final long size, final Operation o, final int initialRuns) {
+  static void measure(@NotNull final LogBook.Mutable m, final long size, @NotNull final Operation o, final int initialRuns) {
     for (int runs = initialRuns;;) {
       Log.print("Silence, measuring " + Unit.INTEGER.format(runs) + " runs ... ");
       final JVM before = new JVM();
@@ -168,7 +170,7 @@ public enum BenchingPolicy {
     }
   }
 
-  private static double approximateSteadyStateTime(final TimingEstimator e) {
+  private static double approximateSteadyStateTime(@NotNull final TimingEstimator e) {
     for (final Sequence s = new Multiplicative(0.3);; s.advance()) {
       final RunRecord r = e.run(s.current(), 5);
       if (r == null || r.ok() || e.steady())
@@ -176,13 +178,13 @@ public enum BenchingPolicy {
     }
   }
 
-  private static void calibrate(final TimingEstimator ¢) {
+  private static void calibrate(@NotNull final TimingEstimator ¢) {
     Log.beginCompoundStage("Calibration");
     approximateSteadyStateTime(¢);
     Log.endCompoundStage();
   }
 
-  private static double tuneupSteadyState(final TimingEstimator e) {
+  private static double tuneupSteadyState(@NotNull final TimingEstimator e) {
     for (int estimatedRuns = runs(e.estimate()); estimatedRuns > 1; estimatedRuns /= 2)
       if (e.run(estimatedRuns) != null)
         break;
@@ -280,14 +282,14 @@ public enum BenchingPolicy {
       timeBencheon(new Bencheon.Hash());
     }
 
-    void pure(final Bencheon b) {
+    void pure(@NotNull final Bencheon b) {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       l.set("Type", "BENCH");
       go(l, b);
       l.printBy(Consolidation.LIST);
     }
 
-    void timeBencheon(final Bencheon b) {
+    void timeBencheon(@NotNull final Bencheon b) {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       l.set("Type", "Exponential Runs");
       for (int runs = 1; runs < 1 << 20; runs <<= 1) {

@@ -7,6 +7,8 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 /** A <b>Utility class</b> providing functions to remove
@@ -28,7 +30,8 @@ public enum prune {
    * @param <C> JD
    * @param ts JD
    * */
-  public static <T, C extends Collection<T>> C nulls(final C ts) {
+  @NotNull
+  public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
     for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
@@ -42,7 +45,8 @@ public enum prune {
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
-  public static <T> List<T> nulls(final Iterable<T> ts) {
+  @NotNull
+  public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
@@ -57,7 +61,8 @@ public enum prune {
    *         <code><b>null</b></code> elements of the parameter, and in the same
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
-  public static <T> T[] nulls(final T[] ts) {
+  @NotNull
+  public static <T> T[] nulls(@NotNull final T[] ts) {
     final List<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
@@ -67,7 +72,8 @@ public enum prune {
 
   /** @param ss JD
    * */
-  @SafeVarargs public static String[] whites(final String... ss) {
+  @NotNull
+  @SafeVarargs public static String[] whites(@NotNull final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String ¢ : ss)
       if (¢ != null)
@@ -77,7 +83,8 @@ public enum prune {
 
   /** @param $
    * */
-  private static String[] asArrray(final List<String> $) {
+  @NotNull
+  private static String[] asArrray(@NotNull final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
 
@@ -85,7 +92,8 @@ public enum prune {
    * @param <T> type of elements in the input array.
    * @param ¢ an array of values.
    * @return an array of size 0 of elements of type <code>T</code>. */
-  private static <T> T[] shrink(final T @Nullable [] ¢) {
+  @NotNull
+  private static <T> T[] shrink(@NotNull final T @Nullable [] ¢) {
     return cantBeNull(Arrays.copyOf(¢, 0));
   }
 
@@ -95,6 +103,7 @@ public enum prune {
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
+      @NotNull
       @Override protected List<@Nullable String> ____() {
         final List<@Nullable String> $ = new ArrayList<>();
         $.add(null);
@@ -116,6 +125,7 @@ public enum prune {
         return $;
       }
     };
+    @org.jetbrains.annotations.Nullable
     final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
 
@@ -164,7 +174,7 @@ public enum prune {
     }
 
     @Test public void whitesEmptyArray() {
-      assertEquals(0, prune.whites(new String @NonNull [] {}).length);
+      assertEquals(0, prune.whites().length);
     }
 
     @Test public void whitesEmptyList() {

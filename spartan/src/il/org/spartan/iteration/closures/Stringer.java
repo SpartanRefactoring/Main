@@ -1,5 +1,8 @@
 package il.org.spartan.iteration.closures;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.___.*;
 
@@ -13,21 +16,23 @@ import static il.org.spartan.utils.___.*;
 public interface Stringer<T> extends Converter<T, String> {
   /** {@inheritDoc}
    * @see Converter#__ */
+  @NotNull
   @Override String __(T t);
 
-  static class Default<T> implements Stringer<T> {
+  class Default<T> implements Stringer<T> {
+    @NotNull
     @Override public String __(final T ¢) {
       return ¢ + "";
     }
   }
 
-  static class DoubleQuoter<T> extends Quoter<T> {
+  class DoubleQuoter<T> extends Quoter<T> {
     public DoubleQuoter() {
       super('"');
     }
   }
 
-  static class Quoter<T> extends Default<T> {
+  class Quoter<T> extends Default<T> {
     public final String quote;
 
     public Quoter(final char quote) {
@@ -38,17 +43,19 @@ public interface Stringer<T> extends Converter<T, String> {
       this.quote = quote;
     }
 
-    @Override public final String __(final T ¢) {
+    @NotNull
+    @Override public final String __(@Nullable final T ¢) {
       return quote(¢ == null ? "" : super.__(¢));
     }
 
-    public final String quote(final String ¢) {
+    @NotNull
+    public final String quote(@NotNull final String ¢) {
       nonnull(¢);
       return wrap(quote, ¢.replaceAll(quote, quote + quote));
     }
   }
 
-  static class SingleQuoter<T> extends Quoter<T> {
+  class SingleQuoter<T> extends Quoter<T> {
     public SingleQuoter() {
       super('\'');
     }

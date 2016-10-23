@@ -4,6 +4,9 @@
  * @since 2007/04/02 */
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import static il.org.spartan.java.Token.*;
 
 /** [[SuppressWarningsSpartan]] */
@@ -121,6 +124,7 @@ public class RawTokenizer {
       + "\1\1\1\11\1\1\1\11\1\1\1\11\1\1\1\11" + "\2\1\1\11\2\1\1\11\1\1\1\11\2\1\2\0" + "\1\1\1\0\6\11\1\1\2\11\2\1\2\11\1\1"
       + "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1" + "\2\11\1\1\1\11\6\1";
 
+  @NotNull
   private static int[] zzUnpackAction() {
     final int[] $ = new int[115];
     int offset = 0;
@@ -128,7 +132,7 @@ public class RawTokenizer {
     return $;
   }
 
-  private static int zzUnpackAction(final String packed, final int offset, final int[] result) {
+  private static int zzUnpackAction(@NotNull final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
     int $ = offset; /* index in unpacked array */
     final int l = packed.length();
@@ -142,6 +146,7 @@ public class RawTokenizer {
     return $;
   }
 
+  @NotNull
   private static int[] zzUnpackAttribute() {
     final int[] $ = new int[115];
     int offset = 0;
@@ -149,7 +154,7 @@ public class RawTokenizer {
     return $;
   }
 
-  private static int zzUnpackAttribute(final String packed, final int offset, final int[] result) {
+  private static int zzUnpackAttribute(@NotNull final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
     int $ = offset; /* index in unpacked array */
     final int l = packed.length();
@@ -166,7 +171,8 @@ public class RawTokenizer {
   /** Unpacks the compressed character translation table.
    * @param packed the packed character translation table
    * @return the unpacked character translation table */
-  private static char[] zzUnpackCMap(final String packed) {
+  @NotNull
+  private static char[] zzUnpackCMap(@NotNull final String packed) {
     final char[] $ = new char[0x10000];
     int i = 0; /* index in packed string */
     int j = 0; /* index in unpacked array */
@@ -180,6 +186,7 @@ public class RawTokenizer {
     return $;
   }
 
+  @NotNull
   private static int[] zzUnpackRowMap() {
     final int[] $ = new int[115];
     int offset = 0;
@@ -187,7 +194,7 @@ public class RawTokenizer {
     return $;
   }
 
-  private static int zzUnpackRowMap(final String packed, final int offset, final int[] result) {
+  private static int zzUnpackRowMap(@NotNull final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
     int $ = offset; /* index in unpacked array */
     final int l = packed.length();
@@ -198,6 +205,7 @@ public class RawTokenizer {
     return $;
   }
 
+  @NotNull
   private static int[] zzUnpackTrans() {
     final int[] $ = new int[3162];
     int offset = 0;
@@ -205,7 +213,7 @@ public class RawTokenizer {
     return $;
   }
 
-  private static int zzUnpackTrans(final String packed, final int offset, final int[] result) {
+  private static int zzUnpackTrans(@NotNull final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
     int $ = offset; /* index in unpacked array */
     final int l = packed.length();
@@ -228,6 +236,7 @@ public class RawTokenizer {
   private int zzLexicalState = YYINITIAL;
   /** this buffer contains the current text to be matched and is the source of
    * the yytext() string */
+  @NotNull
   private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
   /** the textposition at the last accepting state */
   private int zzMarkedPos;
@@ -252,7 +261,7 @@ public class RawTokenizer {
   /** Creates a new scanner. There is also java.io.Reader version of this
    * constructor.
    * @param in the java.io.Inputstream to read input from. */
-  public RawTokenizer(final java.io.InputStream in) {
+  public RawTokenizer(@NotNull final java.io.InputStream in) {
     this(new java.io.InputStreamReader(in));
   }
 
@@ -281,6 +290,7 @@ public class RawTokenizer {
     return yyline + 1;
   }
 
+  @NotNull
   public String location() {
     return "[" + line() + "," + column() + "]: ";
   }
@@ -289,6 +299,7 @@ public class RawTokenizer {
    * input is encountered or an I/O-Error occurs.
    * @return the next token
    * @exception java.io.IOException if any I/O-Error occurs */
+  @Nullable
   public Token next() throws java.io.IOException {
     int zzInput;
     int zzAction;
@@ -520,7 +531,7 @@ public class RawTokenizer {
         case 5: {
           try {
             return Token.valueOf("__" + yytext());
-          } catch (final IllegalArgumentException e) {
+          } catch (@NotNull final IllegalArgumentException e) {
             return IDENTIFIER;
           }
         }
@@ -843,6 +854,7 @@ public class RawTokenizer {
     }
   }
 
+  @NotNull
   public String notify(final String ¢) {
     return location() + ¢ + " " + token();
   }
@@ -853,10 +865,12 @@ public class RawTokenizer {
   }
 
   /* user code: */
+  @NotNull
   public String text() {
     return $.length() > 0 ? $ + "" : yytext();
   }
 
+  @NotNull
   public String token() {
     return "<" + text() + ">";
   }
@@ -919,6 +933,7 @@ public class RawTokenizer {
   }
 
   /** Returns the text matched by the current regular expression. */
+  @NotNull
   public final String yytext() {
     return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
   }
@@ -1015,7 +1030,7 @@ public class RawTokenizer {
     String message;
     try {
       message = ZZ_ERROR_MSG[errorCode];
-    } catch (final ArrayIndexOutOfBoundsException e) {
+    } catch (@NotNull final ArrayIndexOutOfBoundsException e) {
       message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
     }
     throw new Error(message);

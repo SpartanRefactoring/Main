@@ -3,41 +3,43 @@
  */
 package il.org.spartan.statistics;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 /** @author Yossi Gil
  * @since 31 ביול 2011 */
 public class MomentUtils {
-  public static double getJarqueBera(final double[] vs) {
+  public static double getJarqueBera(@NotNull final double[] vs) {
     return vs.length * (sqr(skewness(vs)) + sqr(kurotsis(vs) / 2)) / 6;
   }
 
-  public static double getJarqueBera(final RealStatistics ¢) {
+  public static double getJarqueBera(@NotNull final RealStatistics ¢) {
     return getJarqueBera(¢.all());
   }
 
-  public static double[] getValues(final RealStatistics ¢) {
+  public static double[] getValues(@NotNull final RealStatistics ¢) {
     return ¢.values;
   }
 
-  public static double kurotsis(final double... vs) {
+  public static double kurotsis(@NotNull final double... vs) {
     normalize(vs);
     return moment(vs, 4) / pow(moment(vs, 2), 2) - 3;
   }
 
-  public static double kurotsis(final RealStatistics ¢) {
+  public static double kurotsis(@NotNull final RealStatistics ¢) {
     return kurotsis(¢.all());
   }
 
-  public static double mean(final double... vs) {
+  public static double mean(@NotNull final double... vs) {
     return moment(vs, 1);
   }
 
-  public static double moment(final double[] ds, final int i) {
+  public static double moment(@NotNull final double[] ds, final int i) {
     return sum(ds, i) / ds.length;
   }
 
-  public static double[] normalize(final double[] vs) {
+  @NotNull
+  public static double[] normalize(@NotNull final double[] vs) {
     final double mean = moment(vs, 1);
     for (int ¢ = 0; ¢ < vs.length; ++¢)
       vs[¢] -= mean;
@@ -48,7 +50,7 @@ public class MomentUtils {
     return i < 0 ? 1 / pow(d, -i) : i == 0 ? 1 : i == 1 ? d : pow(d, i % 2) * pow(d * d, i / 2);
   }
 
-  public static double skewness(final RealStatistics ¢) {
+  public static double skewness(@NotNull final RealStatistics ¢) {
     return skewness(¢.all());
   }
 
@@ -56,7 +58,7 @@ public class MomentUtils {
     return ¢ * ¢;
   }
 
-  public static double sum(final double[] ds, final int i) {
+  public static double sum(@NotNull final double[] ds, final int i) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += pow(¢, i);
@@ -67,12 +69,12 @@ public class MomentUtils {
     return sd(vs) * sdCorrection(vs);
   }
 
-  static double sd(final double... vs) {
+  static double sd(@NotNull final double... vs) {
     normalize(vs);
     return Math.sqrt(moment(vs, 2));
   }
 
-  static double sdCorrection(final double... vs) {
+  static double sdCorrection(@NotNull final double... vs) {
     return sdCorrection(vs.length);
   }
 
@@ -80,7 +82,7 @@ public class MomentUtils {
     return Math.sqrt(1. * ¢ / (¢ - 1));
   }
 
-  static double skewenessCorrection(final double... vs) {
+  static double skewenessCorrection(@NotNull final double... vs) {
     return skewenessCorrection(vs.length);
   }
 
@@ -88,7 +90,7 @@ public class MomentUtils {
     return Math.sqrt(¢ * (¢ - 1)) / (¢ - 2);
   }
 
-  static double skewness(final double... vs) {
+  static double skewness(@NotNull final double... vs) {
     normalize(vs);
     return moment(vs, 3) / Math.pow(moment(vs, 2), 1.5);
   }

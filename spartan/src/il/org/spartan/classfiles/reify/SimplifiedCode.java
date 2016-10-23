@@ -3,9 +3,10 @@ package il.org.spartan.classfiles.reify;
 import java.util.*;
 
 import il.org.spartan.classfiles.reify.OpCode.*;
+import org.jetbrains.annotations.NotNull;
 
 public class SimplifiedCode {
-  private static boolean isRelevant(final Instruction ¢) {
+  private static boolean isRelevant(@NotNull final Instruction ¢) {
     switch (¢.opCode) {
       case GETSTATIC:
       case PUTSTATIC:
@@ -36,6 +37,7 @@ public class SimplifiedCode {
     return new CFG(codes).cyclomaticComplexity();
   }
 
+  @NotNull
   public List<Instruction> instructions() {
     parse();
     return instructions;

@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -34,6 +36,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     return has(n1) && has(n2) && binarySearch(neighbors[n1], (short) n2) >= 0;
   }
 
+  @Nullable
   public short[] neighbors(final int ¢) {
     return ¢ < 0 || ¢ >= neighbors.length ? null : neighbors[¢].clone();
   }
@@ -45,7 +48,8 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
   public static class Builder {
     private static final short[] noNeighbors = new short[0];
 
-    private static short[] append(final short[] as, final short a) {
+    @NotNull
+    private static short[] append(@NotNull final short[] as, final short a) {
       if (Arrays.binarySearch(as, a) >= 0)
         return as;
       final short[] $ = copyOf(as, as.length + 1);
@@ -60,14 +64,19 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       return (short) ¢;
     }
 
+    @NotNull
     private short[][] neighbors = new short[0][];
+    @NotNull
     private short[] component = new short[0];
+    @NotNull
     private short[] nodes = new short[0];
 
+    @NotNull
     public Builder add(final int ¢) {
       return add(makeShort(¢));
     }
 
+    @NotNull
     public Builder add(final short n) {
       final int m = neighbors.length;
       if (n >= m) {
@@ -80,19 +89,23 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       return this;
     }
 
+    @NotNull
     public Builder connect(final int i, final int j) {
       return connect(makeShort(i), makeShort(j));
     }
 
+    @NotNull
     public Builder connect(final short i, final short j) {
       return add(i).add(j).append(i, j).append(j, i).union(i, j);
     }
 
+    @NotNull
     @SuppressWarnings("synthetic-access") //
     public MatrixSmallIntegersGraph go() {
       return new MatrixSmallIntegersGraph(neighbors, countArcs(), component, nodes);
     }
 
+    @NotNull
     private Builder append(final short i, final short j) {
       neighbors[i] = append(neighbors[i], j);
       return this;
@@ -110,6 +123,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       return component[n] < 0 ? n : (component[n] = find(component[n]));
     }
 
+    @NotNull
     private Builder union(final short n1, final short n2) {
       if (find(n1) != find(n2))
         component[find(n1)] = find(n2);

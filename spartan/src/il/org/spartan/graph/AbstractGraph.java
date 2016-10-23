@@ -7,6 +7,8 @@ import java.util.concurrent.*;
 
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.Iterables.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An abstract representation of an immutable directed graph
  * @param <E> type of elements stored in this graph
@@ -31,11 +33,11 @@ public abstract class AbstractGraph<E> {
    * @return if v has no incoming edges then <code><b>null</b></code>,
    *         otherwise, all vertices from which there an edge leading to v. */
   @SuppressWarnings("static-method") //
-  public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
+  public ImmutableArrayList<Vertex<E>> incoming(@NotNull final Vertex<E> ¢) {
     return ¢.incoming();
   }
 
-  public int inDegree(final Vertex<E> ¢) {
+  public int inDegree(@NotNull final Vertex<E> ¢) {
     return incoming(¢).size();
   }
 
@@ -51,7 +53,7 @@ public abstract class AbstractGraph<E> {
    * @param ¢ some Vertex<E>
    * @return <code><b>true</b></code> if and only if this Vertex<E> is a
    *         source */
-  public final boolean isSource(final Vertex<E> ¢) {
+  public final boolean isSource(@NotNull final Vertex<E> ¢) {
     return inDegree(¢) == 0;
   }
 
@@ -60,7 +62,7 @@ public abstract class AbstractGraph<E> {
   public abstract String name();
 
   @SuppressWarnings("static-method") //
-  public int outDegree(final Vertex<E> ¢) {
+  public int outDegree(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing().size();
   }
 
@@ -70,12 +72,13 @@ public abstract class AbstractGraph<E> {
    *         otherwise, all vertices u such that there is an edge emanating from
    *         v and leading to u */
   @SuppressWarnings("static-method") //
-  public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
+  public ImmutableArrayList<Vertex<E>> outgoing(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing();
   }
 
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
+  @Nullable
   public Iterable<Vertex<E>> preOrder() {
     return () -> new ReadonlyIterator<Vertex<E>>() {
       final Set<Vertex<E>> visited = new HashSet<>();
@@ -87,12 +90,13 @@ public abstract class AbstractGraph<E> {
         for (final Vertex<E> ¢ : sources())
           stack.push(¢);
       }
-      Vertex<E> pending = findNext();
+      @Nullable Vertex<E> pending = findNext();
 
       @Override public boolean hasNext() {
         return pending != null;
       }
 
+      @Nullable
       @Override public Vertex<E> next() {
         final Vertex<E> $ = pending;
         pending = findNext();
@@ -196,6 +200,7 @@ public abstract class AbstractGraph<E> {
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sourcesCount();
 
+  @NotNull
   @Override public String toString() {
     return name() + "<" + size() + ";" + countEdges() + "> ";
   }

@@ -12,6 +12,8 @@ import java.util.*;
 import javax.xml.bind.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -56,22 +58,27 @@ import il.org.spartan.reap.Cookbook.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
-  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> ¢) {
+  @NotNull
+  static <@Nullable T, @Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> ¢) {
+  @NotNull
+  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(@NotNull final Function2<T, A1, A2> ¢) {
     return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> ¢) {
+  @NotNull
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> ¢) {
     return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> ¢) {
+  @NotNull
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(@NotNull final Function4<T, A1, A2, A3, A4> ¢) {
     return new Property<T>().bind(¢);
   }
 
+  @NotNull
   static <@Nullable T> Property<T> function(final Function0<T> ¢) {
     return new Property<T>().ϑ(¢);
   }
@@ -81,6 +88,7 @@ import il.org.spartan.reap.Cookbook.*;
    * @param < T > JD
    * @return newly created instance of {@link Property} containing null value of
    *         the type parameter */
+  @NotNull
   static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
@@ -93,6 +101,7 @@ import il.org.spartan.reap.Cookbook.*;
    *
    * @param i JD
    * @return newly created instance of {@link Ingredient} */
+  @NotNull
   static Property<@Nullable Boolean> value(final boolean ¢) {
     return new Property<>(Boolean.valueOf(¢));
   }
@@ -105,6 +114,7 @@ import il.org.spartan.reap.Cookbook.*;
    *
    * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
+  @NotNull
   static Property<@Nullable Integer> value(final int ¢) {
     return new Property<>(Integer.valueOf(¢));
   }
@@ -118,12 +128,13 @@ import il.org.spartan.reap.Cookbook.*;
    * @param < T > JD
    * @param ¢ JD
    * @return newly created instance of {@link Property} */
+  @NotNull
   static <@Nullable T> Property<@Nullable T> value(final T ¢) {
     return new Property<>(¢);
   }
 
   @SuppressWarnings({ "static-method", "null" }) interface ____META {
-    static class TEST {
+    class TEST {
       private static final String EMPTY = "";
       private static final int FIRST_MAGIC_NUMBER = 1729;
       private static final String HELLO = "Hello";
@@ -133,12 +144,14 @@ import il.org.spartan.reap.Cookbook.*;
       private Property<String> emptyString;
       private Property<String> hello;
       private Property<String> helloWorld;
+      @org.jetbrains.annotations.Nullable
       private Property<String> nullProperty;
       private Property<String> separator;
       private int supplierCalls;
+      @NotNull
       private Property<String> undefinedProperty = undefined();
       private Property<String> world;
-      Property<Integer> integer = function(() -> {
+      @NotNull Property<Integer> integer = function(() -> {
         ++supplierCalls;
         return Integer.valueOf(FIRST_MAGIC_NUMBER);
       });
@@ -150,7 +163,7 @@ import il.org.spartan.reap.Cookbook.*;
         world = value(WORLD);
         separator = value(SEPARATOR);
         emptyString = value(EMPTY);
-        helloWorld = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+        helloWorld = bind((@NotNull final String ¢1, @NotNull final String ¢2, @NotNull final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
       }
 
       @Test public void seriesA0() {
@@ -176,7 +189,7 @@ import il.org.spartan.reap.Cookbook.*;
 
       @Test public void seriesA3() {
         azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
-        helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
+        helloWorld.bind((@NotNull final String ¢1, @NotNull final String ¢2, @NotNull final String ¢3, @NotNull final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
         azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
       }
 
@@ -214,7 +227,7 @@ import il.org.spartan.reap.Cookbook.*;
       }
 
       @Test public void seriesA6() {
-        final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
+        final Property<String> $ = bind((@NotNull final String ¢1, @NotNull final String ¢2, @NotNull final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
         azzert.that($.prerequisites.size(), is(3));
         azzert.that($.dependents, empty());
         azzert.that($.version, is(0L));
@@ -262,30 +275,30 @@ import il.org.spartan.reap.Cookbook.*;
         final Property<String> b = new Property<>();
         azzert.aye(b.dependents.isEmpty()).andAye(b.prerequisites.isEmpty());
         azzert.zero(b.version);
-        b.bind((final String ¢) -> "Hello, " + ¢).to(a);
+        b.bind((@NotNull final String ¢) -> "Hello, " + ¢).to(a);
         azzert.that(b.dependents, empty());
         azzert.nay(b.prerequisites.isEmpty());
         azzert.that(b.prerequisites, contains(azzert.is(a)));
-        b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
-        b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
+        b.bind((@NotNull final String ¢) -> "Hello, " + a.¢()).to(a);
+        b.bind((@NotNull final String ¢) -> "Hello, " + a.¢()).to(a);
       }
     }
   }
 
   @FunctionalInterface interface Binder1<@Nullable T, @Nullable A> {
-    Property<T> to(Property<A> ¢);
+    @NotNull Property<T> to(Property<A> ¢);
   }
 
   @FunctionalInterface interface Binder2<@Nullable T, @Nullable A1, @Nullable A2> {
-    Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
+    @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
   }
 
   @FunctionalInterface interface Binder3<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> {
-    Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
+    @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
   }
 
   @FunctionalInterface interface Binder4<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> {
-    Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
+    @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
   }
 
   /** A property stores a value of some type (which is passed by parameter). A
@@ -297,8 +310,8 @@ import il.org.spartan.reap.Cookbook.*;
    * @param < T > type of value of this property
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  static class Property<@Nullable T> implements Function0<T>, Cloneable {
-    private static long maxVersion(final Iterable<Property<?>> ps) {
+  class Property<@Nullable T> implements Function0<T>, Cloneable {
+    private static long maxVersion(@NotNull final Iterable<Property<?>> ps) {
       long $ = 0;
       for (final Property<?> c : ps)
         $ = max($, c.version());
@@ -314,7 +327,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** version of this instance */
     long version;
     /** returns the instance updated value when invoked */
-    @Nullable Function0<? extends @Nullable T> ϑ;
+    @org.jetbrains.annotations.Nullable @Nullable Function0<? extends @Nullable T> ϑ;
     private boolean frozen;
 
     /** Instantiates this class. */
@@ -352,7 +365,8 @@ import il.org.spartan.reap.Cookbook.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    public <@Nullable A> Property<@Nullable T> bind(final Function0<T> ¢) {
+    @NotNull
+    public <@Nullable A> Property<@Nullable T> bind(@NotNull final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
 
@@ -368,7 +382,8 @@ import il.org.spartan.reap.Cookbook.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    public <@Nullable A> Binder1<T, A> bind(final Function1<T, A> t) {
+    @NotNull
+    public <@Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> t) {
       return ¢ -> ϑ(() -> t.ϑ(¢.¢()), ¢);
     }
 
@@ -381,7 +396,8 @@ import il.org.spartan.reap.Cookbook.*;
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> t) {
+    @NotNull
+    public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(@NotNull final Function2<T, A1, A2> t) {
       return (¢1, ¢2) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
 
@@ -395,7 +411,8 @@ import il.org.spartan.reap.Cookbook.*;
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> t) {
+    @NotNull
+    public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> t) {
       return (¢1, ¢2, ¢3) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
 
@@ -410,7 +427,8 @@ import il.org.spartan.reap.Cookbook.*;
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> t) {
+    @NotNull
+    public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(@NotNull final Function4<T, A1, A2, A3, A4> t) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
 
@@ -426,7 +444,8 @@ import il.org.spartan.reap.Cookbook.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> ¢) {
+    @NotNull
+    public <@Nullable A> Property<@Nullable T> bind2(@NotNull final Function0<T> ¢) {
       this.ϑ = (Function0<@Nullable T>) () -> ¢.¢();
       prerequisites.clear();
       ingredients(this);
@@ -438,10 +457,11 @@ import il.org.spartan.reap.Cookbook.*;
       return cache;
     }
 
+    @NotNull
     @Override @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
-      } catch (final CloneNotSupportedException x) {
+      } catch (@NotNull final CloneNotSupportedException x) {
         throw new RuntimeException(x);
       }
     }
@@ -466,7 +486,8 @@ import il.org.spartan.reap.Cookbook.*;
     /** Add another property on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
-    public Property<T> ingredient(final Property<?> ¢) {
+    @NotNull
+    public Property<T> ingredient(@NotNull final Property<?> ¢) {
       run(() -> ¢.dependents.add(Property.this)).unless(¢.dependents.contains(this));
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
@@ -475,7 +496,8 @@ import il.org.spartan.reap.Cookbook.*;
     /** Add another property on which this instance depends
      * @param ps JD
      * @return <code><b>this</b></code> */
-    public Property<T> ingredients(final Property<?>... ps) {
+    @NotNull
+    public Property<T> ingredients(@NotNull final Property<?>... ps) {
       for (final Property<?> ¢ : ps)
         ingredient(¢);
       return this;
@@ -488,6 +510,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ a no-arguments function that returns a value for this instance
      * @return <code><b>this</b></code> */
+    @NotNull
     public Property<T> of(final Function0<T> ¢) {
       return ϑ(¢);
     }
@@ -495,6 +518,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ JD
      * @return <code><b>this</b></code>* */
+    @NotNull
     public Property<T> of(final T ¢) {
       cache(¢);
       ϑ = null;
@@ -503,10 +527,12 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
+    @NotNull
     public Property<T> push(final Function0<T> __) {
       return this;
     }
 
+    @NotNull
     public Property<T> push(final T __) {
       return this;
     }
@@ -523,6 +549,7 @@ import il.org.spartan.reap.Cookbook.*;
 
     /** puts this instance in an undefined state
      * @return <code><b>this</b></code> */
+    @NotNull
     public Property<@Nullable T> undefine() {
       cache(null);
       return this;
@@ -539,7 +566,7 @@ import il.org.spartan.reap.Cookbook.*;
       try {
         @Nullable final T $ = set(ϑ.¢());
         azzert.notNull($);
-      } catch (final Exception x) {
+      } catch (@NotNull final Exception x) {
         x.printStackTrace();
         undefine();
       }
@@ -579,7 +606,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** @param ϑ a no-arguments function that returns a value for this instance
      * @param cs instances on which the cell depends
      * @return <code><b>this</b></code> */
-    Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
+    @NotNull Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
       this.ϑ = ϑ;
       prerequisites.clear();
       ingredients(cs);

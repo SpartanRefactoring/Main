@@ -1,31 +1,39 @@
 package il.org.spartan.statistics;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum Significance {
   INSIGNIFICANT {
+    @NotNull
     @Override public String toString() {
       return "sig. < 95%";
     }
   },
   FIVE_PERCENT {
+    @NotNull
     @Override public String toString() {
       return "sig. > 95%";
     }
   },
   ONE_PERCENT {
+    @NotNull
     @Override public String toString() {
       return "sig. > 99%";
     }
   },
   ONE_PERMILLE {
+    @NotNull
     @Override public String toString() {
       return "sig. > 99.9%";
     }
   };
+  @NotNull
   public static Significance signifcance(final double z) {
     return Math.abs(z) < 1.960 ? INSIGNIFICANT : Math.abs(z) < 2.575 ? FIVE_PERCENT : Math.abs(z) < 3.08 ? ONE_PERCENT : ONE_PERMILLE;
   }
 
-  public static Significance signifcance(final Kendall.Charectristics c) {
+  @NotNull
+  public static Significance signifcance(@NotNull final Kendall.Charectristics c) {
     if (c.n > 10)
       return signifcance(c.z);
     double thresholdA;

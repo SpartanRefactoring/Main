@@ -73,11 +73,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testNotNull_StringArrayNoNulls() {
-    assert All.notNull((Object[]) new String[] { "Hello", "World" });
+    assert All.notNull(new String[] { "Hello", "World" });
   }
 
   @Test public void testNotNull_StringArrayWithNulls() {
-    assert !All.notNull((Object[]) new String[] { "Hello", null, "World" });
+    assert !All.notNull(new String[] { "Hello", null, "World" });
   }
 
   @Test public void testNotNull_TwoNulls() {

@@ -3,6 +3,8 @@
  */
 package il.org.spartan.classfiles.reify;
 
+import org.jetbrains.annotations.NotNull;
+
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public final class FieldInfo extends TypedEntity {
@@ -10,7 +12,7 @@ public final class FieldInfo extends TypedEntity {
     super(constantPool, flags, name, descriptor, attributes);
   }
 
-  public FieldInfo(final TypedEntity t) {
+  public FieldInfo(@NotNull final TypedEntity t) {
     super(t.constantPool, t.flags, t.name, t.descriptor, t.attributes);
   }
 }

@@ -7,6 +7,8 @@ import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -186,7 +188,8 @@ public enum OpCode {
   JSR(2), // 168 (0xA8)
   RET(1), // 169 (0xA9)
   TABLESWITCH { // 170 (0xAA)
-    @Override Instruction readContent(final BufferDataInputStream s) {
+    @NotNull
+    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
         final int defaultOffset = s.readInt();
@@ -197,13 +200,14 @@ public enum OpCode {
         for (int k = 0; k < high - low + 1; ++k)
           offsets[k] = s.readInt();
         return new Instruction(this, defaultOffset, offsets);
-      } catch (final IOException e) {
+      } catch (@NotNull final IOException e) {
         throw new RuntimeException();
       }
     }
   },
   LOOKUPSWITCH { // 171 (0xAB)
-    @Override Instruction readContent(final BufferDataInputStream s) {
+    @NotNull
+    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
         final int defaultOffset = s.readInt();
@@ -214,7 +218,7 @@ public enum OpCode {
           offsets[k] = s.readInt();
         }
         return new Instruction(this, defaultOffset, offsets);
-      } catch (final IOException e) {
+      } catch (@NotNull final IOException e) {
         throw new RuntimeException();
       }
     }
@@ -244,7 +248,8 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Override Instruction readContent(final BufferDataInputStream s) {
+    @Nullable
+    @Override Instruction readContent(@NotNull final BufferDataInputStream s) {
       final OpCode o = OpCode.values()[s.read()];
       if (o != IINC)
         return readContent(s);
@@ -312,14 +317,14 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
-  public static Instruction read(final BufferDataInputStream s) {
+  public static Instruction read(@NotNull final BufferDataInputStream s) {
     if (s.eof())
       return null;
     try {
       return OpCode.values()[s.readUnsignedByte()].readContent(s);
-    } catch (final EOFException e) {
+    } catch (@NotNull final EOFException e) {
       return null;
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       throw new CorruptClassFile(e);
     }
   }
@@ -338,7 +343,7 @@ public enum OpCode {
     return size < 0;
   }
 
-  Instruction readContent(final BufferDataInputStream s) throws IOException {
+  @Nullable Instruction readContent(@NotNull final BufferDataInputStream s) throws IOException {
     final short[] args = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
       args[¢] = (short) (0x000000FF & s.readByte());
@@ -347,9 +352,11 @@ public enum OpCode {
 
   public class Instruction {
     public final OpCode opCode;
+    @Nullable
     final short[] args;
     // for tableswhitch and lookupswitch
     final int defaultOffset;
+    @Nullable
     final int[] offsets;
 
     public Instruction(final OpCode opCode, final int defaultOffset, final int[] offsets) {
@@ -366,6 +373,7 @@ public enum OpCode {
       offsets = null;
     }
 
+    @Nullable
     public short[] args() {
       return args;
     }

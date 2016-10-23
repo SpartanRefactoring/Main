@@ -3,34 +3,36 @@ package il.org.spartanl.testing;
 import java.util.*;
 
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Extends {@link org.junit.Assert} with more assertion for equality
  * comparisons. If the comparison yields a "not-equal" result, a JUnit assertion
  * failure is issued.
  * @author Itay Maman Jul 9, 2007 */
 public class Assert extends org.junit.Assert {
-  public static <T> void assertCollectionsEqual(final Collection<T> c1, final Collection<T> c2) {
+  public static <T> void assertCollectionsEqual(@NotNull final Collection<T> c1, @NotNull final Collection<T> c2) {
     assertCollectionsEqual("", c1, c2);
   }
 
-  public static <T> void assertCollectionsEqual(final Collection<T> ts1, final T[] ts2) {
+  public static <T> void assertCollectionsEqual(@NotNull final Collection<T> ts1, final T[] ts2) {
     assertCollectionsEqual("", ts1, Arrays.asList(ts2));
   }
 
-  public static <T> void assertCollectionsEqual(final String s, final Collection<T> c1, final Collection<T> c2) {
+  public static <T> void assertCollectionsEqual(final String s, @NotNull final Collection<T> c1, @NotNull final Collection<T> c2) {
     assertContained(s, c1, c2);
     assertContained(s, c2, c1);
   }
 
-  public static <T> void assertCollectionsEqual(final String s, final Collection<T> ts1, final T[] ts2) {
+  public static <T> void assertCollectionsEqual(final String s, @NotNull final Collection<T> ts1, final T[] ts2) {
     assertCollectionsEqual(s, ts1, Arrays.asList(ts2));
   }
 
-  public static <T> void assertCollectionsEqual(final String s, final T[] ts1, final Collection<T> ts2) {
+  public static <T> void assertCollectionsEqual(final String s, final T[] ts1, @NotNull final Collection<T> ts2) {
     assertCollectionsEqual(s, ts2, ts1);
   }
 
-  public static <T> void assertContained(final String s, final Collection<T> c1, final Collection<T> c2) {
+  public static <T> void assertContained(final String s, @NotNull final Collection<T> c1, @NotNull final Collection<T> c2) {
     // assertLE(s, c1.size(), c2.size());
     final ArrayList<T> missing = new ArrayList<>();
     for (final T ¢ : c1)
@@ -49,11 +51,11 @@ public class Assert extends org.junit.Assert {
     }
   }
 
-  public static <T> void assertContains(final Collection<T> ts, final T t) {
+  public static <T> void assertContains(@NotNull final Collection<T> ts, final T t) {
     assertContains("", ts, t);
   }
 
-  public static <T> void assertContains(final String s, final Collection<T> ts, final T t) {
+  public static <T> void assertContains(final String s, @NotNull final Collection<T> ts, final T t) {
     assert ts.contains(t) : s + " t = " + t;
   }
 
@@ -101,31 +103,31 @@ public class Assert extends org.junit.Assert {
     assert i <= m : s + " n=" + i + " m=" + m;
   }
 
-  public static <T> void assertNotContains(final Collection<T> ts, final T t) {
+  public static <T> void assertNotContains(@NotNull final Collection<T> ts, final T t) {
     assertNotContains("", ts, t);
   }
 
-  public static <T> void assertNotContains(final String s, final Collection<T> ts, final T t) {
+  public static <T> void assertNotContains(final String s, @NotNull final Collection<T> ts, final T t) {
     assert !ts.contains(t) : s + " t = " + t;
   }
 
-  public static void assertNotEquals(final Object o1, final Object o2) {
+  public static void assertNotEquals(@NotNull final Object o1, final Object o2) {
     assertNotEquals(null, o1, o2);
   }
 
-  public static void assertNotEquals(final String message, final Object o1, final Object o2) {
+  public static void assertNotEquals(final String message, @NotNull final Object o1, final Object o2) {
     assert !o1.equals(o2);
   }
 
-  public static void assertNotEquals(final String s1, final String s2) {
+  public static void assertNotEquals(@NotNull final String s1, final String s2) {
     assertNotEquals(null, s1, s2);
   }
 
-  public static void assertNotEquals(final String message, final String s1, final String s2) {
+  public static void assertNotEquals(final String message, @NotNull final String s1, final String s2) {
     assert !s1.equals(s2) : message;
   }
 
-  public static void assertNull(final Object ¢) {
+  public static void assertNull(@Nullable final Object ¢) {
     assert ¢ == null;
   }
 
@@ -137,7 +139,7 @@ public class Assert extends org.junit.Assert {
     assert ¢ > 0 : "Expecting a positive value, but got " + ¢;
   }
 
-  public static <T> void assertSubset(final Collection<T> c1, final Collection<T> c2) {
+  public static <T> void assertSubset(@NotNull final Collection<T> c1, @NotNull final Collection<T> c2) {
     assertContained("", c1, c2);
   }
 
@@ -145,7 +147,7 @@ public class Assert extends org.junit.Assert {
     assertEquals("Expecting a zero", ¢, 0);
   }
 
-  public static <T> void equals(final String prefix, final Set<T> set, final Iterable<T> ts) {
+  public static <T> void equals(final String prefix, @NotNull final Set<T> set, @NotNull final Iterable<T> ts) {
     final List<T> list = Iterables.toList(ts);
     Set<T> temp = new HashSet<>();
     temp.addAll(set);

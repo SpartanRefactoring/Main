@@ -6,6 +6,7 @@ package il.org.spartan.statistics;
 import static il.org.spartan.statistics.Skewness.*;
 import static il.org.spartan.statistics.Sum.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -14,19 +15,20 @@ import il.org.spartan.streotypes.*;
  * @since 2011-08-1 */
 @Utility public enum Mean {
   ;
-  public static double destructiveMoment(final int i, final double... ds) {
+  public static double destructiveMoment(final int i, @NotNull final double... ds) {
     return sum(i, shift(ds)) / ds.length;
   }
 
-  public static double mean(final double... ¢) {
+  public static double mean(@NotNull final double... ¢) {
     return sum(¢) / ¢.length;
   }
 
-  public static double moment(final int i, final double... ds) {
+  public static double moment(final int i, @NotNull final double... ds) {
     return destructiveMoment(i, ds.clone());
   }
 
-  public static double[] shift(final double... ds) {
+  @NotNull
+  public static double[] shift(@NotNull final double... ds) {
     final double mean = mean(ds);
     for (int ¢ = 0; ¢ < ds.length; ++¢)
       ds[¢] -= mean;

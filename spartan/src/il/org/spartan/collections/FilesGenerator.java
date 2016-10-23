@@ -6,6 +6,8 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
@@ -45,13 +47,14 @@ public class FilesGenerator {
 
   /** @param directory should be a directory, but we still need to account for
    *        weird creatures such as "System Volume Information" */
-  static Iterator<File> directoryIterator(final File directory) {
+  @org.jetbrains.annotations.Nullable
+  static Iterator<File> directoryIterator(@org.jetbrains.annotations.Nullable final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     as.iterable(directory.list());
     final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
-      File next;
+      @org.jetbrains.annotations.Nullable File next;
 
       @Override public boolean hasNext() {
         for (;;) {
@@ -65,13 +68,15 @@ public class FilesGenerator {
         }
       }
 
+      @org.jetbrains.annotations.Nullable
       @Override public File next() {
         return next;
       }
     };
   }
 
-  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
+  @NotNull
+  private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
     final List<File> $ = new ArrayList<>();
     for (final String fileName : fileNames)
       $.add(new File(fileName));
@@ -100,7 +105,8 @@ public class FilesGenerator {
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
-  public From from(final Iterable<String> from) {
+  @NotNull
+  public From from(@NotNull final Iterable<String> from) {
     return new From(asFiles(from));
   }
 
@@ -109,6 +115,7 @@ public class FilesGenerator {
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
+  @NotNull
   public From from(final String... from) {
     return from(as.iterable(from));
   }
@@ -125,6 +132,7 @@ public class FilesGenerator {
       this.from = from;
     }
 
+    @NotNull
     @Override public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }

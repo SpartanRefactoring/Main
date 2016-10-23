@@ -4,6 +4,7 @@ package il.org.spartan.collections;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** import static il.org.spartan.utils.Box.*; import java.util.*; import
  * java.util.Map.*; import il.org.spartan.utils.*; /** import
@@ -18,6 +19,7 @@ import il.org.spartan.streotypes.*;
  * @param <V> Type of images */
 @Canopy public final class MultiMap<K, V> implements Iterable<K> {
   /** Actual implementation */
+  @NotNull
   private final HashMap<K, Set<V>> implementation;
 
   /** Create a new empty {@link MultiMap} */
@@ -41,6 +43,7 @@ import il.org.spartan.streotypes.*;
   /** Clear the set of all images of the given source value
    * @param ¢ Source value
    * @return the newly created set object */
+  @NotNull
   public Set<V> clear(final K ¢) {
     final Set<V> $ = new HashSet<>();
     implementation.put(¢, $);
@@ -52,6 +55,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ key value
    * @return A non-<code><b>null</b></code> representing the set of images
    *         associated with <code>k</code> */
+  @NotNull
   public Set<V> get(final K ¢) {
     final Set<V> $ = implementation.get(¢);
     return $ != null ? $ : clear(¢);
@@ -80,6 +84,7 @@ import il.org.spartan.streotypes.*;
     return implementation.size();
   }
 
+  @NotNull
   @Override public String toString() {
     final StringBuilder $ = new StringBuilder();
     for (final K ¢ : this)
@@ -89,6 +94,7 @@ import il.org.spartan.streotypes.*;
 
   /** Obtain all images
    * @return Set of V objects */
+  @NotNull
   public Set<V> values() {
     final Set<V> $ = new HashSet<>();
     for (final Set<V> curr : implementation.values())

@@ -3,11 +3,15 @@
  */
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Triple<First, Second, Third> extends Pair<First, Second> {
+  @NotNull
   public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
     return new Triple<>(f, s, t);
   }
 
+  @NotNull
   @SuppressWarnings("unchecked") //
   public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
@@ -15,6 +19,7 @@ public class Triple<First, Second, Third> extends Pair<First, Second> {
     return new Triple[¢];
   }
 
+  @NotNull
   public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int i, final int m, final int k) {

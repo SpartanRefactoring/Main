@@ -3,6 +3,8 @@
  */
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 /** @author Yossi Gil
  * @since Mar 6, 2012
  * @param <T> an arbitrary type */
@@ -20,6 +22,7 @@ public class Minimizer<T> {
     return min;
   }
 
+  @NotNull
   public Minimizer<T> next(final T t, final double next) {
     ___.nonnull(t);
     if (Double.isNaN(min) || next < min) {

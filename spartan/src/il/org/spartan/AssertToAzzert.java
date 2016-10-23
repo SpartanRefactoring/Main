@@ -1,6 +1,8 @@
 /** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.azzert.*;
 
 /** Fluent API
@@ -32,11 +34,11 @@ public interface AssertToAzzert {
     azzert.that(t2, is(not(t1)));
   }
 
-  static <T> void assertNotNull(final Object reason, final T t) {
+  static <T> void assertNotNull(final Object reason, @NotNull final T t) {
     assert t != null : reason;
   }
 
-  static <T> void assertNotNull(final T ¢) {
+  static <T> void assertNotNull(@NotNull final T ¢) {
     assert ¢ != null;
   }
 

@@ -8,25 +8,30 @@ import java.util.*;
 import il.org.spartan.classfiles.reify.ClassInfo.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
 import il.org.spartan.classfiles.reify.OpCode.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public class ExecutableEntity extends TypedEntity {
-  public static String signature(final String className, final String s, final String d) {
+  @NotNull
+  public static String signature(final String className, final String s, @NotNull final String d) {
     return className + "." + signature(s, d);
   }
 
-  private static String signature(final String s, final String d) {
+  @Nullable
+  private static String signature(final String s, @NotNull final String d) {
     return s + ":" + decode(d);
   }
 
+  @NotNull
   public final ClassConstant[] exceptions;
-  CodeEntity code;
+  @Nullable CodeEntity code;
   Map<String, int[]> class2refsByComponents;
   Map<String, int[]> class2staticRefsByComponents;
 
-  public ExecutableEntity(final ConstantPool constantPool, final int accessFlags, final String name, final String descriptor,
-      final AttributeInfo[] attributes) {
+  public ExecutableEntity(final ConstantPool constantPool, final int accessFlags, final String name, @NotNull final String descriptor,
+                          final AttributeInfo[] attributes) {
     super(constantPool, accessFlags, name, descriptor, attributes);
     exceptions = readExceptions();
     code = readCodeAttribute();
@@ -38,7 +43,7 @@ public class ExecutableEntity extends TypedEntity {
     exceptions = readExceptions();
   }
 
-  public ExecutableEntity(final TypedEntity t) {
+  public ExecutableEntity(@NotNull final TypedEntity t) {
     super(t.constantPool, t.flags, t.name, t.descriptor, t.attributes);
     exceptions = readExceptions();
     code = readCodeAttribute();
@@ -52,10 +57,12 @@ public class ExecutableEntity extends TypedEntity {
     return code == null ? 0 : code.cyclomaticComplexity();
   }
 
+  @Nullable
   public CodeEntity getCode() {
     return code;
   }
 
+  @NotNull
   public Set<String> getReferencedMethods() {
     final Set<String> $ = new HashSet<>();
     if (code == null)
@@ -72,6 +79,7 @@ public class ExecutableEntity extends TypedEntity {
     return $;
   }
 
+  @NotNull
   public Set<String> instanceVariables() {
     final Set<String> $ = new HashSet<>();
     if (code == null)
@@ -91,7 +99,7 @@ public class ExecutableEntity extends TypedEntity {
     return code == null ? 0 : code.instructionsCount();
   }
 
-  public boolean isAccessed(final TypedEntity e, final String thisClassName) {
+  public boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName) {
     if (code == null)
       return false;
     for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
@@ -120,6 +128,7 @@ public class ExecutableEntity extends TypedEntity {
     return class2refsByComponents.get(className);
   }
 
+  @Nullable
   public String signature() {
     return signature(name, descriptor);
   }
@@ -137,7 +146,7 @@ public class ExecutableEntity extends TypedEntity {
     return $;
   }
 
-  private boolean isAccessed(final TypedEntity e, final String thisClassName, final Instruction i) {
+  private boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName, @NotNull final Instruction i) {
     final int cpIndex = i.args()[1] | i.args()[0] << 8;
     final MemberReference mr = constantPool.getMemberReference(cpIndex);
     return mr.getNameAndType().getName().equals(e.name) && mr.getNameAndType().getDescriptor().equals(e.descriptor)
@@ -149,11 +158,13 @@ public class ExecutableEntity extends TypedEntity {
     return $ == null ? null : readCodeAttribute($);
   }
 
-  private CodeEntity readCodeAttribute(final AttributeInfo i) {
+  @NotNull
+  private CodeEntity readCodeAttribute(@NotNull final AttributeInfo i) {
     final ConstantPoolReader r = i.reader(constantPool);
     return new CodeEntity(r.readUnsignedShort(), r.readUnsignedShort(), r.readBytesArrray());
   }
 
+  @NotNull
   private ClassConstant[] readExceptions() {
     final AttributeInfo $ = findAttribute("Exceptions");
     return $ == null ? new ClassConstant[0] : $.reader(constantPool).readClasses();

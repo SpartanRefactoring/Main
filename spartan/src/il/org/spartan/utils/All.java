@@ -2,6 +2,7 @@
 package il.org.spartan.utils;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility class to realize universally quantified checks of an entire
  * collection.
@@ -16,7 +17,7 @@ import il.org.spartan.streotypes.*;
    * @return <code><b>true</b></code> <i>iff</i> <code>ts</code> is not
    *         <code><b>null</b></code> and all elements in it is not are not
    *         <code><b>null</b></code> */
-  public static <T> boolean notNull(final Iterable<T> ts) {
+  public static <T> boolean notNull(@Nullable final Iterable<T> ts) {
     if (ts == null)
       return false;
     for (final T ¢ : ts)
@@ -31,7 +32,7 @@ import il.org.spartan.streotypes.*;
    * @return <code><b>true</b></code> <i>iff</i> <code>ts</code> is not
    *         <code><b>null</b></code> and all elements in it are not
    *         <code><b>null</b></code>. */
-  public static <T> boolean notNull(final T[] ts) {
+  public static <T> boolean notNull(@Nullable final T[] ts) {
     if (ts == null)
       return false;
     for (final T ¢ : ts)

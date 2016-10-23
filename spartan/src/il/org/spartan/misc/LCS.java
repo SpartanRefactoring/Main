@@ -7,6 +7,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -25,7 +26,7 @@ public class LCS {
   /** @param ia JD
    * @param is2 JD
    * */
-  public static int length(final int[] ia, final int[] is2) {
+  public static int length(@NotNull final int[] ia, @NotNull final int[] is2) {
     return new LCS(ia, is2).length();
   }
 
@@ -39,21 +40,22 @@ public class LCS {
   /** @param ssa JD
    * @param ssb JD
    * */
-  public static int length(final String[] ssa, final String[] ssb) {
+  public static int length(@NotNull final String[] ssa, @NotNull final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
 
-  static double distance(final String s1, final String s2) {
+  static double distance(@NotNull final String s1, @NotNull final String s2) {
     return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
   }
 
   /** @param ¢
    * */
-  private static int hash(final String ¢) {
+  private static int hash(@NotNull final String ¢) {
     return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
 
-  private static int[] hash(final String[] ss) {
+  @NotNull
+  private static int[] hash(@NotNull final String[] ss) {
     final int @NonNull [] $ = new int @NonNull [ss.length];
     for (int i = 0; i < $.length; ++i) {
       @SuppressWarnings("null") final @NonNull String s = ss[i];
@@ -62,14 +64,17 @@ public class LCS {
     return $;
   }
 
+  @NotNull
   private final int[] A_s;
+  @NotNull
   private final int[] B_s;
+  @NotNull
   private final int[][] length;
 
   /** Instantiates this class.
    * @param as JD
    * @param bs JD */
-  public LCS(final int[] as, final int[] bs) {
+  public LCS(@NotNull final int[] as, @NotNull final int[] bs) {
     A_s = as;
     B_s = bs;
     length = new int @NonNull [as.length][];
@@ -87,7 +92,7 @@ public class LCS {
   /** TODO:Document this method Instantiates this class.
    * @param as JD
    * @param bs JD */
-  public LCS(final String[] as, final String[] bs) {
+  public LCS(@NotNull final String[] as, @NotNull final String[] bs) {
     this(hash(as), hash(bs));
   }
 
@@ -122,7 +127,7 @@ public class LCS {
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
-    private static String[] chars2Lines(final String s) {
+    private static String[] chars2Lines(@NotNull final String s) {
       final StringBuilder $ = new StringBuilder();
       for (final char ¢ : s.toCharArray())
         $.append(¢).append('\n');

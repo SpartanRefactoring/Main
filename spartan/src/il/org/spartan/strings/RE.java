@@ -2,20 +2,24 @@ package il.org.spartan.strings;
 
 import java.util.regex.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separate.*;
 
 public class RE {
+  @NotNull
   public static String all(final String ¢) {
     return beginLine() + ¢ + endLine();
   }
 
+  @NotNull
   public static String anyNumberOf(final String regularExpression) {
     return parenthesis(regularExpression) + "*";
   }
 
+  @NotNull
   public static String anyNumberOfReluctant(final String regularExpression) {
     return parenthesis(regularExpression) + "*?";
   }
@@ -28,20 +32,22 @@ public class RE {
     return "$";
   }
 
-  public static String find(final String regularExpression, final String text) {
+  public static String find(@NotNull final String regularExpression, @NotNull final String text) {
     final Pattern p = Pattern.compile(regularExpression);
     final Matcher m = p.matcher(text);
     return !m.find() ? null : m.group();
   }
 
-  public static boolean found(final String regularExpression, final String text) {
+  public static boolean found(@NotNull final String regularExpression, @NotNull final String text) {
     return !text.equals(text.replaceAll(regularExpression, ""));
   }
 
+  @NotNull
   public static String fulllyQualifiedIdentifier() {
     return identifier() + anyNumberOf(whites() + "[.]" + whites() + identifier());
   }
 
+  @NotNull
   public static String group(final String regularExpression) {
     return "(" + regularExpression + ")";
   }
@@ -58,22 +64,27 @@ public class RE {
     return "(?m)";
   }
 
+  @NotNull
   public static String newLine() {
     return or("\r\n", "\n");
   }
 
+  @NotNull
   public static String optional(final String regularExpression) {
     return parenthesis(regularExpression) + "?";
   }
 
-  public static String or(final String... alternatives) {
-    return parenthesis(Separate.by((F<String>) s -> parenthesis(s), alternatives, "|"));
+  @NotNull
+  public static String or(@NotNull final String... alternatives) {
+    return parenthesis(Separate.by(s -> parenthesis(s), alternatives, "|"));
   }
 
+  @NotNull
   public static String padded(final String regularExpression) {
     return whites() + regularExpression + whites();
   }
 
+  @NotNull
   public static String parenthesis(final String regularExpression) {
     return "(?:" + regularExpression + ")";
   }

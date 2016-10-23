@@ -9,6 +9,8 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.reflection.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A class to print all properties of an arbitrary object which can be
  * retrieved by getters methods (i.e., getXXX()) methods and boolean inspection
@@ -18,7 +20,7 @@ import il.org.spartan.reflection.*;
 public class dump {
   /** Dump a class object
    * @param ¢ JD */
-  public static void go(final Class<?> ¢) {
+  public static void go(@NotNull final Class<?> ¢) {
     out("\n\n--IDENTIFICATION--\n");
     out("Simple Name", ¢.getSimpleName());
     out("Canonical Name", ¢.getCanonicalName());
@@ -71,7 +73,7 @@ public class dump {
     out("---------------------------\n");
   }
 
-  public static <T> void go(final List<T> ts, final String... ss) {
+  public static <T> void go(@NotNull final List<T> ts, @NotNull final String... ss) {
     out("Exploring list");
     for (final String ¢ : ss)
       out(¢);
@@ -79,13 +81,13 @@ public class dump {
       dump.go(¢);
   }
 
-  public static void go(final Object os[], final String... ss) {
+  public static void go(final Object os[], @NotNull final String... ss) {
     for (final String ¢ : ss)
       out(¢);
     out("elements", os);
   }
 
-  public static void go(final @Nullable Object o, final String... ss) {
+  public static void go(@org.jetbrains.annotations.Nullable final @Nullable Object o, @NotNull final String... ss) {
     for (final String ¢ : ss)
       out(¢);
     if (o == null) {
@@ -124,7 +126,7 @@ public class dump {
           @SuppressWarnings("unchecked") final Collection<Object> os = (Collection<Object>) $;
           out(name, os);
         }
-      } catch (final Throwable e) {
+      } catch (@NotNull final Throwable e) {
         // For some reason, a reflection call to method
         // getContent() in URL objects throws this exception.
         // We do not have much to do in this and other similar cases.

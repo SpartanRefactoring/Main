@@ -8,6 +8,7 @@ import static il.org.spartan.azzert.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.experimental.theories.*;
 import org.junit.runner.*;
@@ -33,7 +34,7 @@ public class TestNoOther {
     return Iterables.toArray($, File.class);
   }
 
-  public static String read(final File f) throws IOException {
+  public static String read(@NotNull final File f) throws IOException {
     final char[] $ = new char[(int) f.length()];
     final FileReader x = new FileReader(f);
     final int n = x.read($);
@@ -41,7 +42,7 @@ public class TestNoOther {
     return String.valueOf(Arrays.copyOf($, n));
   }
 
-  public static void write(final File f, final String text) throws IOException {
+  public static void write(@NotNull final File f, @NotNull final String text) throws IOException {
     final Writer w = new FileWriter(f);
     w.write(text);
     w.close();
@@ -53,7 +54,7 @@ public class TestNoOther {
     azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
 
-  @Theory public void fullTokenization(final File ¢) throws IOException {
+  @Theory public void fullTokenization(@NotNull final File ¢) throws IOException {
     System.err.println("Testing " + ¢);
     azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
   }

@@ -1,6 +1,8 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
+import org.jetbrains.annotations.NotNull;
+
 /** A <b>utility</b> class, providing services of determining whether a
  * {@link String} starts with a given {@link String} or one of a bunch of
  * {@link String}s. For example,
@@ -31,7 +33,7 @@ public enum Prefixed {
    * @param prefixes a list of potential extensions
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> starts with
    *         any one of the supplied prefixes.. */
-  public static boolean by(final String s, final String... prefixes) {
+  public static boolean by(@NotNull final String s, @NotNull final String... prefixes) {
     for (final String prefix : prefixes)
       if (s.startsWith(prefix))
         return true;

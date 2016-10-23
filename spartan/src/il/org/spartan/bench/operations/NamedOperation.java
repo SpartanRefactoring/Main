@@ -4,6 +4,7 @@
 package il.org.spartan.bench.operations;
 
 import il.org.spartan.bench.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 30/05/2011 */
@@ -16,6 +17,7 @@ public abstract class NamedOperation extends Operation {
     this.name = name;
   }
 
+  @NotNull
   @Override public final Stopwatch makeStopWatch() {
     return new Stopwatch(name);
   }

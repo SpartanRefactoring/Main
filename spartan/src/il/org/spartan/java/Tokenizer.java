@@ -5,16 +5,21 @@ import static il.org.spartan.strings.StringUtils.*;
 import java.io.*;
 
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Tokenizer {
-  public static Reader reader(final File ¢) throws FileNotFoundException {
+  @NotNull
+  public static Reader reader(@NotNull final File ¢) throws FileNotFoundException {
     return new FileReader(¢);
   }
 
-  public static Reader reader(final String fileName) throws FileNotFoundException {
+  @NotNull
+  public static Reader reader(@Nullable final String fileName) throws FileNotFoundException {
     return fileName != null ? reader(new File(fileName)) : new InputStreamReader(System.in);
   }
 
+  @NotNull
   private final RawTokenizer inner;
   private final String streamName;
   private final Reader reader;
@@ -22,7 +27,7 @@ public class Tokenizer {
   /** Instantiate {@link Tokenizer}.
    * @param f read input from this file
    * @throws FileNotFoundException */
-  public Tokenizer(final File f) throws FileNotFoundException {
+  public Tokenizer(@NotNull final File f) throws FileNotFoundException {
     this(f.getPath(), reader(f));
   }
 
@@ -45,7 +50,7 @@ public class Tokenizer {
   public void closeReader() {
     try {
       reader.close();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       e.printStackTrace();
     }
   }
@@ -54,7 +59,8 @@ public class Tokenizer {
     return inner.column();
   }
 
-  public String description(final Token ¢) {
+  @NotNull
+  public String description(@NotNull final Token ¢) {
     return location() + ¢ + " / " + ¢.kind + "<" + esc(text()) + "> S=" + state();
   }
 
@@ -66,10 +72,11 @@ public class Tokenizer {
     return inner.location();
   }
 
+  @Nullable
   public Token next() {
     try {
       return inner.next();
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       e.printStackTrace();
       ___.unreachable();
       return null;
@@ -84,6 +91,7 @@ public class Tokenizer {
     return inner.text();
   }
 
+  @NotNull
   protected String state() {
     return inner.yystate() + "";
   }

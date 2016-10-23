@@ -5,19 +5,23 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import il.org.spartan.misc.*;
 import il.org.spartan.xy.XYProcessor.*;
+import org.jetbrains.annotations.NotNull;
 
 /** /**
  * @author Yossi Gil
  * @since Mar 1, 2012 */
 public class XYSeries {
-  public static XYSeries histogram(final double[] y) {
+  @NotNull
+  public static XYSeries histogram(@NotNull final double[] y) {
     return new XYSeries(seq(y.length), y);
   }
 
-  public static XYSeries histogram(final double[] y, final double[] dy) {
+  @NotNull
+  public static XYSeries histogram(@NotNull final double[] y, final double[] dy) {
     return new XYSeries(seq(y.length), y, dy);
   }
 
+  @NotNull
   public static XYSeries histogram(final int[] y) {
     return histogram(LinearAlgebra.promote(y));
   }
@@ -36,10 +40,11 @@ public class XYSeries {
     this.dy = dy;
   }
 
-  public XYSeries(final Gatherer g) {
+  public XYSeries(@NotNull final Gatherer g) {
     this(g.xs(), g.ys(), g.dys());
   }
 
+  @NotNull
   public XYSeries log() {
     final XYProcessor.RealsOnly p = new XYProcessor.RealsOnly();
     p.feed(LinearAlgebra.log(x), LinearAlgebra.log(y), dLogY());
@@ -50,18 +55,22 @@ public class XYSeries {
     return y.length;
   }
 
+  @NotNull
   public XYSeries scale(final double newMaxY) {
     return scale(max(y), newMaxY);
   }
 
+  @NotNull
   public XYSeries xshift(final double c) {
     return new XYSeries(add(c, x), y, dy);
   }
 
+  @NotNull
   public XYSeries yshift(final double c) {
     return new XYSeries(x, add(c, y), dy);
   }
 
+  @NotNull
   private double[] dLogY() {
     final double $[] = new double[y.length];
     for (int ¢ = 0; ¢ < y.length; ++¢)
@@ -69,6 +78,7 @@ public class XYSeries {
     return $;
   }
 
+  @NotNull
   private XYSeries scale(final double oldMaxY, final double newMaxY) {
     for (int ¢ = 0; ¢ < n(); ++¢) {
       y[¢] = newMaxY * y[¢] / oldMaxY;

@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 @SuppressWarnings({ "unchecked", "static-method", "javadoc" }) //
 public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
@@ -53,6 +55,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
+  @org.jetbrains.annotations.Nullable
   private transient Set<Map.Entry<K, V>> entrySet;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
@@ -99,7 +102,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * specified <tt>Map</tt>.
    * @param m the map whose mappings are to be placed in this map
    * @throws NullPointerException if the specified map is null */
-  public MyHashMap(final Map<? extends K, ? extends V> m) {
+  public MyHashMap(@NotNull final Map<? extends K, ? extends V> m) {
     this(Math.max((int) (m.size() / DEFAULT_LOAD_FACTOR) + 1, DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
     putAllForCreate(m);
   }
@@ -121,7 +124,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     MyHashMap<K, V> $ = null;
     try {
       $ = (MyHashMap<K, V>) super.clone();
-    } catch (final CloneNotSupportedException e) {
+    } catch (@NotNull final CloneNotSupportedException e) {
       assert false;
       return null;
     }
@@ -146,7 +149,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * @param value value whose presence in this map is to be tested
    * @return <tt>true</tt> if this map maps one or more keys to the specified
    *         value */
-  @Override public boolean containsValue(final Object value) {
+  @Override public boolean containsValue(@org.jetbrains.annotations.Nullable final Object value) {
     if (value == null)
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
@@ -168,6 +171,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations.
    * @return a set view of the mappings contained in this map */
+  @NotNull
   @Override public Set<Map.Entry<K, V>> entrySet() {
     return entrySet0();
   }
@@ -185,7 +189,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * explicitly maps the key to {@code null}. The {@link #containsKey
    * containsKey} operation may be used to distinguish these two cases.
    * @see #put(Object, Object) */
-  @Override public V get(final Object key) {
+  @Override public V get(@org.jetbrains.annotations.Nullable final Object key) {
     if (key == null)
       return getForNullKey();
     final int hash = hash(key.hashCode());
@@ -214,6 +218,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
    * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations. */
+  @NotNull
   @Override public Set<K> keySet() {
     return keySet != null ? keySet : (keySet = new KeySet());
   }
@@ -226,7 +231,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *         if there was no mapping for <tt>key</tt>. (A <tt>null</tt> return
    *         can also indicate that the map previously associated <tt>null</tt>
    *         with <tt>key</tt>.) */
-  @Override public V put(final K key, final V value) {
+  @Override public V put(@org.jetbrains.annotations.Nullable final K key, final V value) {
     if (key == null)
       return putForNullKey(value);
     final int hash = hash(key.hashCode());
@@ -322,6 +327,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
    * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
    * <tt>addAll</tt> operations. */
+  @NotNull
   @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
     return values != null ? values : (values = new Values());
   }
@@ -355,7 +361,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
 
   /** Returns the entry associated with the specified key in the HashMap.
    * Returns null if the HashMap contains no mapping for the key. */
-  Entry<K, V> getEntry(final Object key) {
+  Entry<K, V> getEntry(@org.jetbrains.annotations.Nullable final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     for (Entry<K, V> $ = table[indexFor(hash, table.length)]; $ != null; $ = $.next) {
       Object k;
@@ -369,22 +375,22 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return loadFactor;
   }
 
-  Iterator<Map.Entry<K, V>> newEntryIterator() {
+  @NotNull Iterator<Map.Entry<K, V>> newEntryIterator() {
     return new EntryIterator();
   }
 
   // Subclass overrides these to alter behavior of views' iterator() method
-  Iterator<K> newKeyIterator() {
+  @NotNull Iterator<K> newKeyIterator() {
     return new KeyIterator();
   }
 
-  Iterator<V> newValueIterator() {
+  @NotNull Iterator<V> newValueIterator() {
     return new ValueIterator();
   }
 
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
-  Entry<K, V> removeEntryForKey(final Object key) {
+  Entry<K, V> removeEntryForKey(@org.jetbrains.annotations.Nullable final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     Entry<K, V> prev = table[i];
@@ -409,7 +415,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   }
 
   /** Special version of remove for EntrySet. */
-  Entry<K, V> removeMapping(final Object o) {
+  @org.jetbrains.annotations.Nullable Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;
     final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
@@ -458,7 +464,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   }
 
   /** Transfers all entries from current table to newTable. */
-  void transfer(@SuppressWarnings("rawtypes") final Entry[] newTable) {
+  void transfer(@NotNull @SuppressWarnings("rawtypes") final Entry[] newTable) {
     @SuppressWarnings("rawtypes") final Entry[] src = table;
     for (int j = 0; j < src.length; ++j) {
       Entry<K, V> e = src[j];
@@ -485,6 +491,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return false;
   }
 
+  @org.jetbrains.annotations.Nullable
   private Set<Map.Entry<K, V>> entrySet0() {
     return entrySet != null ? entrySet : (entrySet = new EntrySet());
   }
@@ -500,7 +507,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return null;
   }
 
-  private void putAllForCreate(final Map<? extends K, ? extends V> k) {
+  private void putAllForCreate(@NotNull final Map<? extends K, ? extends V> k) {
     for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
       putForCreate(¢.getKey(), ¢.getValue());
   }
@@ -508,7 +515,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** This method is used instead of put by constructors and pseudoconstructors
    * (clone, readObject). It does not resize the table, check for
    * comodification, etc. It calls createEntry rather than addEntry. */
-  private void putForCreate(final K key, final V value) {
+  private void putForCreate(@org.jetbrains.annotations.Nullable final K key, final V value) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     /** Look for preexisting entry for key. This will never happen for clone or
@@ -545,7 +552,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *             the number of key-value mappings), followed by the key (Object)
    *             and value (Object) for each key-value mapping. The key-value
    *             mappings are emitted in no particular order. */
-  private void writeObject(final java.io.ObjectOutputStream s) throws IOException {
+  private void writeObject(@NotNull final java.io.ObjectOutputStream s) throws IOException {
     final Iterator<Map.Entry<K, V>> i = size <= 0 ? null : entrySet0().iterator();
     // Write out the threshold, loadfactor, and any hidden stuff
     s.defaultWriteObject();
@@ -609,6 +616,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return $;
     }
 
+    @NotNull
     @Override public final String toString() {
       return getKey() + "=" + getValue();
     }
@@ -644,6 +652,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return candidate != null && candidate.equals(e);
     }
 
+    @NotNull
     @Override public Iterator<Map.Entry<K, V>> iterator() {
       return newEntryIterator();
     }
@@ -672,6 +681,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsKey(¢);
     }
 
+    @NotNull
     @Override public Iterator<K> iterator() {
       return newKeyIterator();
     }
@@ -695,7 +705,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     Entry<K, V> next; // next entry to return
     int expectedModCount; // For fast-fail
     int index; // current slot
-    Entry<K, V> current; // current entry
+    @org.jetbrains.annotations.Nullable Entry<K, V> current; // current entry
 
     HashIterator() {
       expectedModCount = modCount;
@@ -742,6 +752,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsValue(¢);
     }
 
+    @NotNull
     @Override public Iterator<V> iterator() {
       return newValueIterator();
     }

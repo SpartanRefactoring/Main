@@ -7,6 +7,7 @@ import java.math.*;
 import java.util.*;
 
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A collection of utility function to generate permutations.
  * @author Yossi Gil,
@@ -17,6 +18,7 @@ import il.org.spartan.streotypes.*;
 
   /** @param i a non-negative integer
    * @return the decreasing permutation of length n, represented as an array. */
+  @NotNull
   public static int[] decreasing(final int i) {
     nonnegative(i);
     final int[] $ = new int[i];
@@ -34,6 +36,7 @@ import il.org.spartan.streotypes.*;
 
   /** @param i a non-negative integer
    * @return the increasing permutation of length n, represented as an array. */
+  @NotNull
   public static int[] identity(final int i) {
     nonnegative(i);
     final int[] $ = new int[i];
@@ -42,7 +45,8 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  public static int[] invert(final int[] a) {
+  @NotNull
+  public static int[] invert(@NotNull final int[] a) {
     final int[] $ = new int[a.length];
     for (int ¢ = 0; ¢ < a.length; ++¢)
       $[a[¢]] = ¢;
@@ -51,11 +55,13 @@ import il.org.spartan.streotypes.*;
 
   /** @param ¢ a non-negative integer
    * @return a random permutation of length n, represented as an array. */
+  @NotNull
   public static int[] random(final int ¢) {
     nonnegative(¢);
     return shuffle(identity(¢));
   }
 
+  @NotNull
   public static int[] scramble(final int n) {
     final int[] $ = identity(n);
     for (int i = 0; i < n; ++i) {
@@ -66,21 +72,23 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  public static float[] shuffle(final float[] fs) {
+  @NotNull
+  public static float[] shuffle(@NotNull final float[] fs) {
     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < fs.length; ++¢)
       swap(fs, ¢, r.nextInt(fs.length));
     return fs;
   }
 
-  public static int[] shuffle(final int[] a) {
+  @NotNull
+  public static int[] shuffle(@NotNull final int[] a) {
     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < a.length; ++¢)
       swap(a, ¢, r.nextInt(a.length));
     return a;
   }
 
-  public static <T> void shuffle(final T[] ts) {
+  public static <T> void shuffle(@NotNull final T[] ts) {
     for (int ¢ = 0; ¢ < ts.length; ++¢)
       swap(ts, ¢, (new Random(System.nanoTime())).nextInt(ts.length));
   }
@@ -89,7 +97,7 @@ import il.org.spartan.streotypes.*;
    * @param fs the array with two cells to be swapped
    * @param i index of this first array cell
    * @param j index of the second array cell */
-  public static void swap(final float[] fs, final int i, final int j) {
+  public static void swap(@NotNull final float[] fs, final int i, final int j) {
     nonnegative(i);
     nonnegative(j);
     require(i <= fs.length);
@@ -107,7 +115,7 @@ import il.org.spartan.streotypes.*;
    * @param a the array with two cells to be swapped
    * @param i index of this first array cell
    * @param j index of the second array cell */
-  public static void swap(final int[] a, final int i, final int j) {
+  public static void swap(@NotNull final int[] a, final int i, final int j) {
     nonnegative(i);
     nonnegative(j);
     require(i <= a.length);
@@ -166,7 +174,7 @@ import il.org.spartan.streotypes.*;
       return fraction;
     }
 
-    public void multiply(final BigFloat other) {
+    public void multiply(@NotNull final BigFloat other) {
       whole.multiply(other.whole);
       fraction *= other.fraction;
     }

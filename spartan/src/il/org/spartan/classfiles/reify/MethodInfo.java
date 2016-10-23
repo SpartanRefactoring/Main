@@ -8,26 +8,30 @@ import java.lang.reflect.*;
 import il.org.spartan.classfiles.reify.TypeInfo.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public class MethodInfo extends ExecutableEntity {
+  @NotNull
   private static String class2name(final Class<?> param) {
     return !(param + "").startsWith("class ") ? param + "" : (param + "").substring((param + "").indexOf(' ') + 1);
   }
 
-  private static String[] class2name(final Class<?>[] params) {
+  @NotNull
+  private static String[] class2name(@NotNull final Class<?>[] params) {
     final String[] $ = new String[params.length];
     for (int ¢ = 0; ¢ < params.length; ++¢)
       $[¢] = class2name(params[¢]);
     return $;
   }
 
-  private static String signature(final String name, final String returnType, final String[] parameterTypes) {
+  @NotNull
+  private static String signature(final String name, final String returnType, @NotNull final String[] parameterTypes) {
     return name + ":" + returnType + " (" + Separate.by(parameterTypes, ", ") + ")";
   }
 
-  public MethodInfo(final TypedEntity t) {
+  public MethodInfo(@NotNull final TypedEntity t) {
     super(t.constantPool, t.flags, t.name, t.descriptor, t.attributes);
   }
 
@@ -36,6 +40,7 @@ public class MethodInfo extends ExecutableEntity {
         .toCharArray()).iterator()).length;
   }
 
+  @NotNull
   public MethodType getMethodType() {
     return (MethodType) type;
   }
@@ -48,7 +53,7 @@ public class MethodInfo extends ExecutableEntity {
         if (signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes())).equals(signature()))
           return true;
       }
-    } catch (final ClassNotFoundException e) {
+    } catch (@NotNull final ClassNotFoundException e) {
       e.printStackTrace();
     }
     return false;

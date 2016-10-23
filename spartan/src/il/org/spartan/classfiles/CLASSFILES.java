@@ -8,6 +8,8 @@ import java.util.zip.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility class, serving as a façade to {@link CLASSPATH}, {@link JRE},
  * {@link EXTENSIONPATH}, {@link ZipFile} and {@link File} providing a unified
@@ -15,11 +17,13 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil */
 @Utility public enum CLASSFILES {
   ;
+  @NotNull
   static Set<ZipFile> zipsInUse = new HashSet<>();
 
   /** Where are all Java class files found
    * @return the list of directories and ZIP archives in the current search
    *         path. */
+  @NotNull
   public static Iterable<File> asFiles() {
     final ArrayList<File> $ = new ArrayList<>();
     $.addAll(JRE.asList());
@@ -37,7 +41,7 @@ import il.org.spartan.utils.*;
    *         class has no corresponding <tt>.class</tt> file (e.g., in the case
    *         it is a primitive or an array type), or in the case that the
    *         corresponding <tt>.class</tt> file could not be found. */
-  public static String location(final String className) {
+  public static String location(@NotNull final String className) {
     nonnull(className);
     for (final File where : asFiles()) {
       final String $ = location(where, className);
@@ -64,7 +68,8 @@ import il.org.spartan.utils.*;
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  public static InputStream open(final Class<?> ¢) {
+  @Nullable
+  public static InputStream open(@NotNull final Class<?> ¢) {
     nonnull(¢);
     return open(¢.getName());
   }
@@ -82,14 +87,14 @@ import il.org.spartan.utils.*;
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  public static InputStream open(final String fullClassName) {
+  public static InputStream open(@NotNull final String fullClassName) {
     nonnull(fullClassName);
     for (final File f : asFiles()) {
       final InputStream $ = open(f, fullClassName);
       if ($ != null)
         try {
           $.available();
-        } catch (final IOException e) {
+        } catch (@NotNull final IOException e) {
           e.printStackTrace();
         }
       if ($ != null)
@@ -102,50 +107,53 @@ import il.org.spartan.utils.*;
     for (final ZipFile z : zipsInUse)
       try {
         z.close();
-      } catch (final IOException __) {
+      } catch (@NotNull final IOException __) {
         // Absorb (we do not care about errors)
         __.printStackTrace();
       }
     zipsInUse.clear();
   }
 
-  private static void add(final ArrayList<File> ds, final String[]... directoryNamesArray) {
+  private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[]... directoryNamesArray) {
     for (final String[] directories : directoryNamesArray)
       add(ds, directories);
   }
 
-  private static void add(final ArrayList<File> ds, final String[] directoryNames) {
+  private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[] directoryNames) {
     for (final String directory : directoryNames)
       ds.add(new File(directory));
   }
 
-  private static String canonicalFileName(final String className) {
+  @NotNull
+  private static String canonicalFileName(@NotNull final String className) {
     return className.replace('.', File.separatorChar) + ".class";
   }
 
-  private static String class2ZipFileName(final String className) {
+  @NotNull
+  private static String class2ZipFileName(@NotNull final String className) {
     return className.replace('.', '/') + ".class";
   }
 
-  private static String location(final File where, final String className) {
+  private static String location(@NotNull final File where, @NotNull final String className) {
     return where.isDirectory() ? searchDirectory(where, className) == null ? null : where.getName()
         : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
 
-  private static InputStream open(final File where, final String className) {
+  @Nullable
+  private static InputStream open(@NotNull final File where, @NotNull final String className) {
     return where.isDirectory() ? searchDirectory(where, className) : searchZip(where, class2ZipFileName(className));
   }
 
-  private static InputStream searchDirectory(final File where, final String className) {
+  private static InputStream searchDirectory(final File where, @NotNull final String className) {
     final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
-    } catch (final FileNotFoundException __) {
+    } catch (@NotNull final FileNotFoundException __) {
       return null;
     }
   }
 
-  private static InputStream searchZip(final File where, final String fileName) {
+  private static InputStream searchZip(@NotNull final File where, @NotNull final String fileName) {
     try {
       final ZipFile z = new ZipFile(where.getAbsoluteFile());
       final ZipEntry e = z.getEntry(fileName);
@@ -158,7 +166,7 @@ import il.org.spartan.utils.*;
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */
-    } catch (final IOException __) {
+    } catch (@NotNull final IOException __) {
       // Absorb (we do not care about errors)
     }
     return null;

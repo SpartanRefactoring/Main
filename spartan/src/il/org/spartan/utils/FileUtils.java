@@ -1,5 +1,8 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.*;
 import java.nio.charset.*;
 import java.nio.file.*;
@@ -14,7 +17,8 @@ public class FileUtils {
    * @param paths Directories to scan
    * @return a list of absolute paths to .java files found within the provided
    *         directories. If no files were found, an empty list is returned */
-  public static List<String> findAllJavaFiles(final String... paths) {
+  @NotNull
+  public static List<String> findAllJavaFiles(@NotNull final String... paths) {
     final List<String> $ = new ArrayList<>();
     if (paths.length == 0)
       return $;
@@ -32,7 +36,8 @@ public class FileUtils {
    * @param f JD
    * @return a string representing the contents of a file.
    * @throws IOException in case of error */
-  public static String read(final File f) throws IOException {
+  @NotNull
+  public static String read(@NotNull final File f) throws IOException {
     final String ls = System.getProperty("line.separator");
     final StringBuilder $ = new StringBuilder();
     try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
@@ -46,21 +51,22 @@ public class FileUtils {
    * @param fileName The source file's path
    * @return source file's contents, or an empty string in case of an error
    * @throws IOException in case of error */
-  public static String readFromFile(final String fileName) throws IOException {
+  @NotNull
+  public static String readFromFile(@NotNull final String fileName) throws IOException {
     return read(Paths.get(fileName));
   }
 
   /** @param fileName where to write
    * @param text what to write
    * @throws FileNotFoundException in case the file could not be found */
-  public static void writeToFile(final String fileName, final String text) throws FileNotFoundException {
+  public static void writeToFile(@NotNull final String fileName, @NotNull final String text) throws FileNotFoundException {
     try (final PrintWriter p = new PrintWriter(fileName)) {
       p.write(text);
       p.flush();
     }
   }
 
-  private static void iterateFiles(final File dir, final List<String> files) {
+  private static void iterateFiles(@Nullable final File dir, @NotNull final List<String> files) {
     if (dir != null)
       for (final File ¢ : dir.listFiles()) {
         if (¢.isDirectory())
@@ -70,7 +76,8 @@ public class FileUtils {
       }
   }
 
-  private static String read(final Path ¢) throws IOException {
+  @NotNull
+  private static String read(@NotNull final Path ¢) throws IOException {
     return new String(Files.readAllBytes(¢), StandardCharsets.UTF_8);
   }
 }

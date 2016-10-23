@@ -19,6 +19,6 @@ public class JavaFilesClasspathVisitor extends ClasspathVisitor {
    *        visited <code>.java</code> file
    * @see #go() */
   public JavaFilesClasspathVisitor(final FileOnlyAction action) {
-    super(action, new String[] { ".java" });
+    super(action, ".java");
   }
 }

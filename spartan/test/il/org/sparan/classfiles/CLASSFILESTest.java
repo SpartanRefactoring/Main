@@ -2,6 +2,7 @@ package il.org.sparan.classfiles;
 
 import java.io.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -19,7 +20,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindInner() {
-    assert CLASSFILES.open(new InnerClass().getClass()) != null;
+    assert CLASSFILES.open(InnerClass.class) != null;
   }
 
   @Test public void testFindInnerAnnotation() {
@@ -99,7 +100,7 @@ import il.org.spartan.utils.*;
     assert CLASSFILES.open(Separate.class) != null;
   }
 
-  static @interface Annotation {
+  @interface Annotation {
     // Empty
   }
 
@@ -113,15 +114,17 @@ import il.org.spartan.utils.*;
 
   enum InnerEnumValues {
     A() {
+      @NotNull
       @Override public String toString() {
         return "My value";
       }
     },
     B() {
+      @NotNull
       @Override public String toString() {
         return "My value";
       }
-    };
+    }
   }
 
   interface InnerInterface {

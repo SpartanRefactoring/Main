@@ -1,5 +1,7 @@
 package il.org.spartan.misc;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.utils.___.*;
 
 import java.util.*;
@@ -34,6 +36,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     this.factory = factory;
   }
 
+  @NotNull
   public Collection<T> all() {
     if (!exhaustive)
       map.putAll(factory.all());
@@ -60,6 +63,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
 
   /** Obtain an iterator over the cached object
    * @return Iterator of Entry<String,T> */
+  @NotNull
   @Override public Iterator<Entry<String, T>> iterator() {
     return map.entrySet().iterator();
   }
@@ -89,6 +93,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     * retrieve the universal set, i.e., the set of all possible objects, indexed by their respective keys.
     * @return  the base implementation returns the empty set, but it is meant to be overridden by concrete classes inheriting from {@link Cache.Factory}  
     */
+    @NotNull
     @SuppressWarnings("static-method") public Map<String, T> all() {
       return new HashMap<>();
     }
@@ -98,6 +103,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     * @param key  the identifier for the newly created object.
     * @return  the newly created object, or <code><b>null</b></code> if no such object can be created. 
     */
+    @NotNull
     public abstract T make(String key);
   }
 }

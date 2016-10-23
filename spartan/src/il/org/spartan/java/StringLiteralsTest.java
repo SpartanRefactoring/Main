@@ -4,18 +4,21 @@ import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class StringLiteralsTest {
-  static Token toToken(final String s) {
+  @Nullable
+  static Token toToken(@NotNull final String s) {
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
       final Token $ = J.next();
       azzert.that(J.next(), is(Token.EOF));
       return $;
-    } catch (final IOException E) {
+    } catch (@NotNull final IOException E) {
       return Token.EOF;
     }
   }

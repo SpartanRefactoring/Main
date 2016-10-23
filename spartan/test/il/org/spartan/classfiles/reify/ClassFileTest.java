@@ -6,6 +6,8 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -777,11 +779,12 @@ import il.org.spartan.utils.*;
   }
 
   public static class ClassWithCapitalL {
-    ClassWithCapitalL fieldName = new ClassWithCapitalL();
+    @NotNull ClassWithCapitalL fieldName = new ClassWithCapitalL();
   }
 
   public static class ComplexMethod {
-    public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] dss) {
+    @NotNull
+    public final Object[][][] m(final Void v, final Object a, final int b, final float c, @NotNull final double[][] dss) {
       ___.unused(v, a, Box.it(b), Box.it(c));
       return new Object[dss.length][][];
     }
@@ -803,7 +806,7 @@ import il.org.spartan.utils.*;
   }
 
   public abstract static class Initializer {
-    {
+    static {
       System.getenv();
       System.getenv("PATH");
       for (final String key : System.getenv().keySet())
@@ -833,14 +836,16 @@ import il.org.spartan.utils.*;
   }
 
   public static class ObjectField {
-    Object fieldName = new Object();
+    @NotNull Object fieldName = new Object();
   }
 
   public static class OneField {
+    @Nullable
     @Deprecated public final String fieldName = null;
   }
 
   public static class OneMethod {
+    @NotNull
     public final Object methodName() {
       return this;
     }
@@ -857,22 +862,24 @@ import il.org.spartan.utils.*;
     int nMethods;
     int nCodes;
     int nInstructions;
-    Stopper s = new Stopper();
+    @NotNull Stopper s = new Stopper();
 
     /** [[SuppressWarningsSpartan]] */
+    @NotNull
     @Override public String toString() {
       final long stop = s.time();
       return String.format(
-          "Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+          "Processed %s files, consisting of %s methods with %s code blocks\n" + //
+                   "comprising a total of %s bytecode instructions in %s.",
           Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
           Unit.NANOSECONDS.format(stop)) + "";
     }
 
-    void parse(final ClassInfo ¢) {
+    void parse(@NotNull final ClassInfo ¢) {
       parse(¢.methods);
     }
 
-    void parse(final MethodInfo[] is) {
+    void parse(@NotNull final MethodInfo[] is) {
       ++nFiles;
       for (final MethodInfo ¢ : is)
         parseMethod(¢);
@@ -886,7 +893,7 @@ import il.org.spartan.utils.*;
           @Override public void visitFile(final File f) {
             try {
               parse(ClassInfo.make(f));
-            } catch (final RuntimeException e) {
+            } catch (@NotNull final RuntimeException e) {
               System.out.println("\n** " + f + ": " + e);
             }
           }
@@ -898,24 +905,24 @@ import il.org.spartan.utils.*;
           @Override public void visitZipEntry(final String entryName, final InputStream s) {
             try {
               parse(ClassInfo.make(s));
-            } catch (final RuntimeException e) {
+            } catch (@NotNull final RuntimeException e) {
               System.out.println(zipFile + ":" + entryName);
             }
           }
         }).go();
-      } catch (final IOException e) {
+      } catch (@NotNull final IOException e) {
         e.printStackTrace();
-      } catch (final StopTraversal e) {
+      } catch (@NotNull final StopTraversal e) {
         e.printStackTrace();
       }
     }
 
-    private void parse(final CodeEntity ¢) {
+    private void parse(@NotNull final CodeEntity ¢) {
       ++nCodes;
       nInstructions += ¢.instructionsCount();
     }
 
-    private void parseMethod(final MethodInfo ¢) {
+    private void parseMethod(@NotNull final MethodInfo ¢) {
       ++nMethods;
       if (¢.getCode() != null)
         parse(¢.getCode());
@@ -950,14 +957,19 @@ import il.org.spartan.utils.*;
   }
 
   public static class TwoAnnotatedFields {
+    @Nullable
     @External @Deprecated private static final String firstField = null;
+    @Nullable
     @Deprecated final String secondField = null;
   }
 
   public static class TwoFields {
+    @Nullable
     static final String firstField = null;
+    @Nullable
     private final String secondField = null;
 
+    @Nullable
     public String getSecondField() {
       return secondField;
     }
@@ -968,6 +980,7 @@ import il.org.spartan.utils.*;
       return null;
     }
 
+    @NotNull
     abstract String firstMethod(int a, int b);
   }
 
@@ -995,17 +1008,20 @@ import il.org.spartan.utils.*;
   static class LargeClass implements Serializable, Cloneable, Interface {
     private static final long serialVersionUID = 1L;
     private static int field1;
+    @NotNull
     static Random field4 = new Random();
     static {
       field4 = new Random(field4.nextLong());
       for (int ¢ = 1; ¢ < 10; ++¢)
         field4.nextDouble();
     }
+    @NotNull
     static Random field5 = new Random(field4.nextLong() + method3());
     static {
       for (int ¢ = 1; ¢ < 20; ++¢)
         field5.nextDouble();
     }
+    @NotNull
     static Random field6 = new Random(field5.nextLong());
     static {
       for (int ¢ = 1; ¢ < 20; ++¢)

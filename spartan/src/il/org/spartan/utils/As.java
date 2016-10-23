@@ -2,6 +2,7 @@ package il.org.spartan.utils;
 
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility encapsulating conversion function.
  * @author Yossi Gil
@@ -20,7 +21,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ an arbitrary object
    * @return <code>0</code> if the parameter is <code><b>0</b></code>;
    *         <code>1</code> otherwise */
-  public static int binary(final Object ¢) {
+  public static int binary(@Nullable final Object ¢) {
     return ¢ == null ? 0 : 1;
   }
 }

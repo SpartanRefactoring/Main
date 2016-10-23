@@ -3,6 +3,8 @@
  */
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 /** @author Yossi Gil
  * @since Mar 6, 2012
  * @param <T> an arbitrary type */
@@ -14,6 +16,7 @@ public class Maximizer<T> {
     return max;
   }
 
+  @NotNull
   public Maximizer<T> next(final T t, final double next) {
     if (Double.isNaN(max) || next > max) {
       max = next;

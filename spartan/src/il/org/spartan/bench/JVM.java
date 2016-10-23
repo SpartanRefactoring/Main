@@ -9,6 +9,8 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separator;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /* Records some characteristics of the JVM state.
  *
@@ -59,6 +61,7 @@ public final class JVM {
     dump.go(ManagementFactory.getRuntimeMXBean());
   }
 
+  @NotNull
   public static String status() {
     return new StringBuilder() //
         .append(TotalMemory.format())//
@@ -88,7 +91,7 @@ public final class JVM {
     this(ManagementFactory.getClassLoadingMXBean(), ManagementFactory.getCompilationMXBean());
   }
 
-  private JVM(final ClassLoadingMXBean l, final CompilationMXBean c) {
+  private JVM(@NotNull final ClassLoadingMXBean l, @Nullable final CompilationMXBean c) {
     seenClasses = l.getTotalLoadedClassCount();
     removedClasses = l.getUnloadedClassCount();
     loadedClasses = l.getLoadedClassCount();
@@ -103,7 +106,7 @@ public final class JVM {
     return ¢ == this || ¢ instanceof JVM && equals((JVM) ¢);
   }
 
-  public boolean equalsWoGC(final JVM o) {
+  public boolean equalsWoGC(@NotNull final JVM o) {
     return seenClasses == o.seenClasses //
         && removedClasses == o.removedClasses //
         && loadedClasses == o.loadedClasses //
@@ -115,10 +118,11 @@ public final class JVM {
         + 31 * ((int) (gcTime ^ gcTime >>> 32) + 31 * ((int) (gcCycles ^ gcCycles >>> 32) + 31 * ((int) (compileTime ^ compileTime >>> 32) + 31)))));
   }
 
-  public boolean jitChange(final JVM o) {
+  public boolean jitChange(@NotNull final JVM o) {
     return compileTime != o.compileTime;
   }
 
+  @NotNull
   @Override public String toString() {
     return new StringBuilder() //
         .append("JIT𝝉=" + Unit.MILLISECONDS.format(compileTime)) //
@@ -129,7 +133,7 @@ public final class JVM {
         + "";
   }
 
-  private boolean equals(final JVM o) {
+  private boolean equals(@NotNull final JVM o) {
     return seenClasses == o.seenClasses //
         && removedClasses == o.removedClasses //
         && loadedClasses == o.loadedClasses //
@@ -143,22 +147,24 @@ public final class JVM {
       return cycles(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    public static long cycles(final GarbageCollectorMXBean ¢) {
+    public static long cycles(@NotNull final GarbageCollectorMXBean ¢) {
       return ¢.getCollectionCount();
     }
 
-    public static long cycles(final List<GarbageCollectorMXBean> bs) {
+    public static long cycles(@NotNull final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
       for (final GarbageCollectorMXBean ¢ : bs)
         $ += cycles(¢);
       return $;
     }
 
+    @NotNull
     public static String format() {
       return "GCs: " + format(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    public static String format(final Iterable<GarbageCollectorMXBean> bs) {
+    @NotNull
+    public static String format(@NotNull final Iterable<GarbageCollectorMXBean> bs) {
       final StringBuffer $ = new StringBuffer();
       final Separator s = new Separator(", ");
       for (final GarbageCollectorMXBean ¢ : bs)
@@ -170,18 +176,19 @@ public final class JVM {
       return time(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    public static long time(final GarbageCollectorMXBean ¢) {
+    public static long time(@NotNull final GarbageCollectorMXBean ¢) {
       return ¢.getCollectionTime();
     }
 
-    public static long time(final List<GarbageCollectorMXBean> bs) {
+    public static long time(@NotNull final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
       for (final GarbageCollectorMXBean ¢ : bs)
         $ += time(¢);
       return $;
     }
 
-    static String format(final GarbageCollectorMXBean ¢) {
+    @NotNull
+    static String format(@NotNull final GarbageCollectorMXBean ¢) {
       return new StringBuffer().append(¢.getName()) //
           .append((¢.isValid() ? "" : "/invalid") + " ") //
           .append(¢.getCollectionCount()) //
@@ -193,11 +200,13 @@ public final class JVM {
   }
 
   public static class MemoryManagement {
+    @NotNull
     public static String format() {
       return "Memory managers: " + format(ManagementFactory.getMemoryManagerMXBeans());
     }
 
-    public static String format(final Iterable<MemoryManagerMXBean> bs) {
+    @NotNull
+    public static String format(@NotNull final Iterable<MemoryManagerMXBean> bs) {
       final StringBuffer $ = new StringBuffer("");
       final Separator s = new Separator(", ");
       for (final MemoryManagerMXBean ¢ : bs)
@@ -205,7 +214,8 @@ public final class JVM {
       return $ + "";
     }
 
-    public static String format(final MemoryManagerMXBean ¢) {
+    @NotNull
+    public static String format(@NotNull final MemoryManagerMXBean ¢) {
       return new StringBuffer().append(¢.getName()) //
           .append(¢.isValid() ? "" : "/invalid") //
           .append("(").append(Separate.by(¢.getMemoryPoolNames(), ",")).append(")") //
@@ -214,11 +224,13 @@ public final class JVM {
   }
 
   public static class TotalMemory {
+    @NotNull
     public static String format() {
       return "Total memory: " + format(ManagementFactory.getMemoryMXBean());
     }
 
-    public static String format(final MemoryMXBean ¢) {
+    @NotNull
+    public static String format(@NotNull final MemoryMXBean ¢) {
       return new StringBuffer() //
           .append("Zombies=").append(¢.getObjectPendingFinalizationCount()).append("\t") //
           .append("Heap [").append(format(¢.getHeapMemoryUsage())).append("]\n")//
@@ -226,7 +238,8 @@ public final class JVM {
           + "";
     }
 
-    public static String format(final MemoryUsage ¢) {
+    @NotNull
+    public static String format(@NotNull final MemoryUsage ¢) {
       return new StringBuffer() //
           .append("Init:").append(format(¢.getInit())).append(" ")//
           .append("Max:").append(format(¢.getMax())).append(" ")//

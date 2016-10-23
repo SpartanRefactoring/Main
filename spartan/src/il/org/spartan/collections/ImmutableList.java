@@ -1,5 +1,8 @@
 package il.org.spartan.collections;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,12 +13,14 @@ import java.util.*;
  * @since 01/05/2007 */
 public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
   private static final long serialVersionUID = 3846444108525783786L;
+  @NotNull
   protected List<T> data = new ArrayList<>();
 
   /** Add an element to the collection.
    * @param element The element to be added.
    * @return The added element */
-  public T add(final T element) {
+  @Nullable
+  public T add(@Nullable final T element) {
     if (element != null)
       data.add(element);
     return element;
@@ -23,13 +28,13 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
 
   /** Adds another collection to this one.
    * @param other The element to be added.t */
-  public void addAll(final ImmutableList<T> other) {
+  public void addAll(@NotNull final ImmutableList<T> other) {
     data.addAll(other.data);
   }
 
   /** Adds another collection to this one.
    * @param other The element to be added.t */
-  public void addAll(final Set<T> other) {
+  public void addAll(@NotNull final Set<T> other) {
     data.addAll(other);
   }
 
@@ -37,11 +42,11 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.contains(¢);
   }
 
-  public boolean containsAll(final Collection<?> ¢) {
+  public boolean containsAll(@NotNull final Collection<?> ¢) {
     return data.containsAll(¢);
   }
 
-  @Override public boolean equals(final Object o) {
+  @Override public boolean equals(@Nullable final Object o) {
     if (o == this)
       return true;
     if (o == null || getClass() != o.getClass())
@@ -58,6 +63,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.isEmpty();
   }
 
+  @NotNull
   @Override public Iterator<T> iterator() {
     return data.iterator();
   }
@@ -69,13 +75,16 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
 
   /** convert this collection into an array
    * @return an array of the elements stored in this collection */
+  @NotNull
   public abstract T[] toArrary();
 
+  @NotNull
   public Object[] toArray() {
     return data.toArray();
   }
 
-  public T[] toArray(final T[] ¢) {
+  @NotNull
+  public T[] toArray(@NotNull final T[] ¢) {
     return data.toArray(¢);
   }
 }

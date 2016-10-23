@@ -2,6 +2,7 @@ package il.org.spartan.fun.Dr.Seuss;
 
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Dr. Seuss Nonsense
  * @author Yossi Gil
@@ -24,7 +25,7 @@ public class Things {
     nothing(o1, o2);
   }
 
-  private static void nothing(final Object... os) {
+  private static void nothing(@NotNull final Object... os) {
     if (os.length >= 2)
       for (final Object ¢ : os)
         nothing(¢);
@@ -67,11 +68,11 @@ interface Cat {
   interface in {
     interface the {
       interface Hat {
-        final Thing thing1 = new Thing() {
+        Thing thing1 = new Thing() {
         };
-        final Thing thing2 = new Thing() {
+        Thing thing2 = new Thing() {
         };
-        final Thing[] things = { thing1, thing2 };
+        Thing[] things = { thing1, thing2 };
 
         interface Thing {
           /* Intentionally empty */

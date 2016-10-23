@@ -1,8 +1,11 @@
 package il.org.spartan.sequence;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class Sequence implements Cloneable {
   protected static final int MAX_VALUE = Integer.MAX_VALUE / 3;
 
+  @NotNull
   public static Sequence merge(final Sequence s1, final Sequence s2) {
     return new Merged(s1, s2);
   }
@@ -20,16 +23,18 @@ public abstract class Sequence implements Cloneable {
 
   public abstract Sequence advance();
 
+  @NotNull
   public final Sequence advanceTo(final int ¢) {
     while (current() < ¢ && more())
       advance();
     return this;
   }
 
+  @NotNull
   @Override public final Sequence clone() {
     try {
       return (Sequence) super.clone();
-    } catch (final CloneNotSupportedException e) {
+    } catch (@NotNull final CloneNotSupportedException e) {
       throw new RuntimeException(e);
     }
   }
@@ -52,6 +57,7 @@ public abstract class Sequence implements Cloneable {
 
   public abstract Sequence reset();
 
+  @NotNull
   public Sequence startAt(final int ¢) {
     return reset().advanceTo(¢);
   }
@@ -82,11 +88,13 @@ public abstract class Sequence implements Cloneable {
       current = 1;
     }
 
+    @NotNull
     @Override public Sequence advance() {
       current += current;
       return this;
     }
 
+    @NotNull
     @Override public Sequence reset() {
       current = 1;
       return this;
@@ -103,6 +111,7 @@ public abstract class Sequence implements Cloneable {
       current = Math.min(s1.current(), s2.current());
     }
 
+    @NotNull
     @Override public Sequence advance() {
       if (current < s1.current())
         s2.advance();
@@ -115,6 +124,7 @@ public abstract class Sequence implements Cloneable {
       return this;
     }
 
+    @NotNull
     @Override public Sequence reset() {
       s1.reset();
       s2.reset();

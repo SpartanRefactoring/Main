@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A cell stores a value of some type (which is passed by parameter). A cell
  * may be either {@link Ingredient} or {@link Recipe}. A computed cell typically
@@ -40,6 +42,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    * value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code>* */
+  @NotNull
   public final Cell<T> of(final T ¢) {
     return set(¢);
   }
@@ -47,6 +50,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   /** sets the current value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code> */
+  @NotNull
   public final Cell<T> set(final T ¢) {
     cache(¢);
     uponForcedSet();
@@ -61,10 +65,11 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    *         stored in this node is updated. */
   public abstract boolean updated();
 
+  @org.jetbrains.annotations.Nullable
   @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
-    } catch (final CloneNotSupportedException e) {
+    } catch (@NotNull final CloneNotSupportedException e) {
       return null;
     }
   }
@@ -91,7 +96,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   }
 
   @FunctionalInterface interface Function2<T1, T2, R> {
-    R apply(T1 ¢1, T2 ¢2);
+    @NotNull R apply(T1 ¢1, T2 ¢2);
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -102,22 +107,23 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
      *         <code>@NonNull</code> {@link Void} is empty. (
      *         <code><b>null</b></code> is the single vale of {@link Void}, but
      *         it does not obey the {@link @NonNull} annotation. */
+    @NotNull
     static @NonNull Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
     }
 
     interface $$Function<T, R> {
-      Cell<R> from(Cell<T> ¢);
+      @NotNull Cell<R> from(Cell<T> ¢);
     }
 
     interface $$Function2<T1, T2, R> {
-      Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
+      @NotNull Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
     }
 
     /** Fluent API */
     interface $$RecipeMaker {
-      <X> Cell<@Nullable X> make(final Supplier<X> x);
+      @NotNull <X> Cell<@Nullable X> make(final Supplier<X> x);
     }
 
     /** <code>Cookbook</code>
@@ -128,7 +134,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
     @FunctionalInterface interface Function3<T1, T2, T3, R> {
-      R apply(T1 ¢1, T2 ¢2, T3 ¢3);
+      @NotNull R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
   }
 }

@@ -1,5 +1,8 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.*;
 
 /** Represents a position in a file, including a column and line number.
@@ -16,7 +19,7 @@ public final class Position implements Comparable<Position>, Serializable {
     this.column = column;
   }
 
-  public boolean before(final Position ¢) {
+  public boolean before(@NotNull final Position ¢) {
     return compareTo(¢) < 0;
   }
 
@@ -24,7 +27,7 @@ public final class Position implements Comparable<Position>, Serializable {
     return line != ¢.line ? line - ¢.line : column - ¢.column;
   }
 
-  @Override public boolean equals(final Object ¢) {
+  @Override public boolean equals(@Nullable final Object ¢) {
     return ¢ == this || ¢ != null && getClass() == ¢.getClass() && column == ((Position) ¢).column && line == ((Position) ¢).line;
   }
 
@@ -32,14 +35,17 @@ public final class Position implements Comparable<Position>, Serializable {
     return line ^ column;
   }
 
+  @NotNull
   public Position nextChar() {
     return new Position(line, column + 1);
   }
 
+  @NotNull
   public Position nextLine() {
     return new Position(line + 1, 1);
   }
 
+  @NotNull
   @Override public String toString() {
     return "(" + line + ":" + column + ")";
   }

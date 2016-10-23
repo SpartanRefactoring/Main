@@ -5,14 +5,18 @@ import static il.org.spartan.Utils.*;
 import java.util.*;
 
 import il.org.spartan.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Utility class for computing the "Longest Common Subsequence" of two strings.
  * The LCS is computed after removing all spaces from both strings.
  * @author Yossi Gil
  * @since 2015-09-23 */
 public class LongestCommonSubsequence {
+  @NotNull
   private final char[] as;
+  @NotNull
   private final char[] bs;
+  @NotNull
   private final int[][] length;
 
   public LongestCommonSubsequence(final String a, final String b) {

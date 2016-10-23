@@ -3,10 +3,12 @@
  */
 package il.org.spartan.java;
 
+import org.jetbrains.annotations.NotNull;
+
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class SignatureFilter extends CodeOnlyFilter {
-  private static boolean usefulKeyword(final Token ¢) {
+  private static boolean usefulKeyword(@NotNull final Token ¢) {
     switch (¢) {
       default:
         return false;
@@ -21,7 +23,7 @@ public class SignatureFilter extends CodeOnlyFilter {
   }
 
   /** @param ¢ a token */
-  private static boolean usefulPucntuation(final Token ¢) {
+  private static boolean usefulPucntuation(@NotNull final Token ¢) {
     switch (¢) {
       default:
         return false;
@@ -37,7 +39,7 @@ public class SignatureFilter extends CodeOnlyFilter {
     }
   }
 
-  @Override protected boolean ok(final Token ¢) {
+  @Override protected boolean ok(@NotNull final Token ¢) {
     switch (¢.kind) {
       case KEYWORD:
         return usefulKeyword(¢);

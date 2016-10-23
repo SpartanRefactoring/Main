@@ -1,5 +1,8 @@
 package il.org.spartan.reflection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -42,6 +45,7 @@ public class DeepSize {
   }
 
   static class Visitor {
+    @NotNull
     private static Class<?>[] nonReference = new Class<?>[] { //
         boolean.class, char.class, void.class, //
         boolean[].class, char[].class, //
@@ -51,6 +55,7 @@ public class DeepSize {
         float[].class, double[].class,//
     };
 
+    @NotNull
     static ArrayList<Field> getAllFields(final Class<?> c) {
       final ArrayList<Field> $ = new ArrayList<>();
       for (Class<?> p = c; p != null; p = p.getSuperclass())
@@ -59,20 +64,20 @@ public class DeepSize {
       return $;
     }
 
-    private static Object get(final Field f, final Object o) {
+    private static Object get(@NotNull final Field f, final Object o) {
       f.setAccessible(true);
       // System.out.println("Extracting field " + f + " named '" + f.getName() +
       // "' of type " + f.getType());
       try {
         return f.get(o);
-      } catch (final IllegalArgumentException e) {
+      } catch (@NotNull final IllegalArgumentException e) {
         throw new RuntimeException(e);
-      } catch (final IllegalAccessException e) {
+      } catch (@NotNull final IllegalAccessException e) {
         throw new RuntimeException(e);
       }
     }
 
-    private static boolean isReference(final Field f) {
+    private static boolean isReference(@NotNull final Field f) {
       final Class<?> c = f.getType();
       for (final Class<?> p : nonReference)
         if (p == c)
@@ -82,14 +87,14 @@ public class DeepSize {
 
     final Set<Object> seen = new HashSet<>();
 
-    public int size(final Object ¢) {
+    public int size(@Nullable final Object ¢) {
       if (seen.contains(¢))
         return 0;
       seen.add(¢);
       return ¢ == null ? 0 : size(¢, ¢.getClass());
     }
 
-    int size(final Object o, final Class<?> c) {
+    int size(final Object o, @NotNull final Class<?> c) {
       if (c.isArray())
         return size(Object[].class.cast(o));
       int $ = ShallowSize.of(o);
@@ -99,11 +104,11 @@ public class DeepSize {
       return $;
     }
 
-    private int size(final Object o, final Field f) {
+    private int size(final Object o, @NotNull final Field f) {
       return Modifier.isStatic(f.getModifiers()) || !isReference(f) ? 0 : size(get(f, o));
     }
 
-    private int size(final Object[] os) {
+    private int size(@NotNull final Object[] os) {
       int $ = ShallowSize.of(os);
       for (final Object ¢ : os)
         $ += size(¢);

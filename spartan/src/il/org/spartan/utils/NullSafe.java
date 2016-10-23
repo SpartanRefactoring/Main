@@ -3,10 +3,12 @@
  */
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 /** @author Yossi Gil
  * @since Apr 20, 2012 */
 public class NullSafe {
-  public static <T> boolean equals(final T t1, final T t2) {
+  public static <T> boolean equals(@Nullable final T t1, final T t2) {
     return t1 == t2 || t1 != null && t1.equals(t2);
   }
 
@@ -15,7 +17,7 @@ public class NullSafe {
    * @param ¢ a possibly <code><b>null</b></code> value
    * @return <code>t.hashCode()</code> if <code>t</code> is not
    *         <code><b>null</b></code>, otherwise <code>0</code> */
-  public static <T> int hashCode(final T ¢) {
+  public static <T> int hashCode(@Nullable final T ¢) {
     return ¢ == null ? 0 : ¢.hashCode();
   }
 }

@@ -1,5 +1,7 @@
 package il.org.spartan.collections;
 
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.utils.___.*;
 
 /** A collection of functions and data structures pertaining to the
@@ -22,6 +24,7 @@ public enum BitSet {
    * <p>
    * Viewed differently, <code>{@link #$$}[p]</code> is the bit mask whose
    * <i>p</i><sup>th</sup> bit is set. */
+  @NotNull
   public static final short $$[];
   static {
     $$ = new short[MAX + 1];
@@ -132,7 +135,7 @@ public enum BitSet {
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask(final int[] set) {
+  public static short toMask(@NotNull final int[] set) {
     short $ = 0;
     for (final int position : set)
       $ = raise($, position);
@@ -144,7 +147,7 @@ public enum BitSet {
    *        <code><b>null</b></code> and in the range <code>0...
    *            {@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask(final Iterable<Integer> set) {
+  public static short toMask(@NotNull final Iterable<Integer> set) {
     short $ = 0;
     for (final int position : set)
       $ = raise($, position);
@@ -155,7 +158,7 @@ public enum BitSet {
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask(final short[] set) {
+  public static short toMask(@NotNull final short[] set) {
     short $ = 0;
     for (final short position : set)
       $ = raise($, position);

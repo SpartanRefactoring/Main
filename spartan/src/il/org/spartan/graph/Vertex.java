@@ -4,6 +4,7 @@
 package il.org.spartan.graph;
 
 import il.org.spartan.collections.*;
+import org.jetbrains.annotations.Nullable;
 
 /** A representation of an immutable vertex in an immutable graph
  * @author Yossi Gil
@@ -30,7 +31,7 @@ public class Vertex<E> {
     return e;
   }
 
-  @Override public boolean equals(final Object o) {
+  @Override public boolean equals(@Nullable final Object o) {
     if (o == this)
       return true;
     if (o == null || getClass() != o.getClass())

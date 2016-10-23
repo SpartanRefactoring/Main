@@ -1,5 +1,8 @@
 package il.org.spartan;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 
 public class Out {
@@ -14,7 +17,7 @@ public class Out {
     System.out.printf("%s = %b\n", name, Boolean.valueOf(b));
   }
 
-  public static void out(final String name, final Collection<Object> os) {
+  public static void out(@NotNull final String name, @Nullable final Collection<Object> os) {
     assert name != null;
     if (os == null || os.isEmpty()) {
       System.out.printf("No %s\n", name);
@@ -40,11 +43,11 @@ public class Out {
     System.out.printf("%s = %d\n", name, Integer.valueOf(i));
   }
 
-  public static void out(final String name, final Object a) {
+  public static void out(final String name, @Nullable final Object a) {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
 
-  public static void out(final String name, final Object[] os) {
+  public static void out(@NotNull final String name, @Nullable final Object[] os) {
     assert name != null;
     if (os == null || os.length <= 0)
       System.out.printf("No %s\n", name);

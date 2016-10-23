@@ -3,6 +3,8 @@
  */
 package il.org.spartan.classfiles.reify;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 
 public class AttributeInfo {
@@ -14,6 +16,7 @@ public class AttributeInfo {
     this.data = data;
   }
 
+  @NotNull
   final ConstantPoolReader reader(final ConstantPool ¢) {
     return new ConstantPoolReader(new DataInputStream(new ByteArrayInputStream(data)), ¢);
   }

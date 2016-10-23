@@ -3,6 +3,8 @@ package il.org.spartan.bench.operations;
 import java.util.concurrent.*;
 
 import il.org.spartan.bench.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A typed procedure with no arguments, which is also suitable for time
  * measurement, i.e., its execution time is sufficiently greater than the time
@@ -11,6 +13,7 @@ import il.org.spartan.bench.*;
 public abstract class Operation implements Callable<Object> {
   /** The body of this operation; to be filled in by sub-classes.
    * @return whatever */
+  @Nullable
   @Override public abstract Object call();
 
   @SuppressWarnings("static-method") //
@@ -26,13 +29,13 @@ public abstract class Operation implements Callable<Object> {
     return netTime(makeStopWatch(), runs);
   }
 
-  public Stopwatch netTime(final Stopwatch netTime) {
+  public Stopwatch netTime(@NotNull final Stopwatch netTime) {
     netTime.start();
     call();
     return netTime.stop();
   }
 
-  public Stopwatch netTime(final Stopwatch netTime, final int runs) {
+  public Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
     netTime.start();
     for (int ¢ = 0; ¢ < runs; ++¢)
       call();

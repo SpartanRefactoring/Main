@@ -1,6 +1,7 @@
 package il.org.spartan.graph;
 
 import il.org.spartan.collections.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A basic graph decorator, which does nothing except for delegating all its
  * missions to an encapsulated {@link AbstractGraph}. To be used as base class
@@ -36,7 +37,7 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#incoming(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
+  @Override public ImmutableArrayList<Vertex<E>> incoming(@NotNull final Vertex<E> ¢) {
     return inner.incoming(¢);
   }
 
@@ -51,7 +52,7 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#outgoing(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
+  @Override public ImmutableArrayList<Vertex<E>> outgoing(@NotNull final Vertex<E> ¢) {
     return inner.outgoing(¢);
   }
 
