@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-public abstract class AbstractSpartanizer extends Applicator{
+public abstract class AbstractSpartanizer {
   static String presentFileName;
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
