@@ -12,7 +12,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -36,8 +35,8 @@ public interface idiomatic {
     }
   };
 
-  static void addImport(CompilationUnit u, ASTRewrite r) {
-    ImportDeclaration d = u.getAST().newImportDeclaration();
+  static void addImport(final CompilationUnit u, final ASTRewrite r) {
+    final ImportDeclaration d = u.getAST().newImportDeclaration();
     d.setStatic(true);
     d.setOnDemand(true);
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));

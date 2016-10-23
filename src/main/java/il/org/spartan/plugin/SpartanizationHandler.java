@@ -91,7 +91,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               runAsynchronouslyInUIThread(() -> {
-                d.getProgressMonitor().beginTask(Linguistic.trim($.name()) + " : " + separate.these(¢).by(Linguistic.SEPARATOR), $.selection().size());
+                d.getProgressMonitor().beginTask(Linguistic.trim($.name()) + " : " + separate.these(¢).by(Linguistic.SEPARATOR),
+                    $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
@@ -108,9 +109,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_CREATION:
             if (dialogOpen)
               Dialogs.message(separate.these(new Object[] { //
-              message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
-              message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
-              message.time.get(Linguistic.time(System.nanoTime() - startTime)) }).by("\n")).open();
+                  message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
+                  message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
+                  message.time.get(Linguistic.time(System.nanoTime() - startTime)) }).by("\n")).open();
             break;
           case DIALOG_PROCESSING:
             break;

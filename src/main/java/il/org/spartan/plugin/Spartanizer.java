@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 
 /** Possible events during spartanization process
  * <p>
