@@ -18,10 +18,10 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("$X1 != null ? $X1 : $X2", "defolt($X1).to($X2)", ""));
-      add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "defolt($X1).to($X2)", ""));
-      add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "defolt($X1).to($X2)", ""));
-      add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "defolt($X1).to($X2)", ""));
+      add(TipperFactory.tipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
       // TODO: Marco add(TipperFactory.tipper("$X1 != null ? $X2 : $X3",
       // "defaultsTo($X1, $X2, $X3)", ""));
       // add(TipperFactory.tipper("$X1 == null ? $X2 : $X3", "defaultsTo($X1,
