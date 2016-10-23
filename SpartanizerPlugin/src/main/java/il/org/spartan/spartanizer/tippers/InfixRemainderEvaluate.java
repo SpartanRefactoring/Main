@@ -56,10 +56,10 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
       $ = az.throwing.long¢(first(xs));
       for (final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
-          throw new NumberFormatException();
+          throw new NumberFormatException("Expected long or int, but found: " + ¢);
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
-          throw new IllegalArgumentException("remainder in division by zero is undefined");
+          throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
     } catch (final NumberFormatException e) {
