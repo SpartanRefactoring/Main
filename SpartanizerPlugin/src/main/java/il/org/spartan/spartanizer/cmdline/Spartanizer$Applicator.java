@@ -254,4 +254,8 @@ public class Spartanizer$Applicator {
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
+
+  public String getName() {
+    return null;
+  }
 }
