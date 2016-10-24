@@ -32,6 +32,13 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   public List<WrappedCompilationUnit> get() {
     return compilationUnits;
   }
+  
+  /** Factory method for empty selection
+   * @return empty selection */
+  
+  public static CommandLineSelection empty() {
+    return new CommandLineSelection(null, null);
+  }
 
   public static class Util {
     private static String inputPath = "."; // default input path
