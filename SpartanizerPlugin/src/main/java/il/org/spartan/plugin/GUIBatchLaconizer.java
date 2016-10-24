@@ -118,10 +118,10 @@ public class GUIBatchLaconizer extends Applicator {
 
   // TODO Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize the
-   * {@link ICompilationUnit} using received {@link GUI$Applicator}.
+   * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return this applicator */
-  public GUIBatchLaconizer defaultRunAction(final GUI$Applicator a) {
+  public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
     setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
     name(a.getName());
     return this;

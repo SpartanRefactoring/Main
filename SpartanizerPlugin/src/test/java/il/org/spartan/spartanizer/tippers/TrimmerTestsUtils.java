@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public final class TrimmerTestsUtils {
-  public static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
+  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
 

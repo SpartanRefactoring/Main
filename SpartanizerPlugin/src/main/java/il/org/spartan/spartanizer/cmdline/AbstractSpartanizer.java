@@ -28,7 +28,7 @@ public abstract class AbstractSpartanizer {
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
-  static GUI$Applicator getSpartanizer(final String tipperName) {
+  static AbstractGUIApplicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
 

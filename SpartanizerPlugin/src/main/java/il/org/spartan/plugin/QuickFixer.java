@@ -42,7 +42,7 @@ import il.org.spartan.spartanizer.tipping.*;
       ¢ -> new GUIBatchLaconizer().defaultSettings().defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.by(¢)).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
-    final GUI$Applicator g = getSpartanizer(¢);
+    final AbstractGUIApplicator g = getSpartanizer(¢);
     final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
     a.setRunAction(u -> {
       try {
@@ -96,7 +96,7 @@ import il.org.spartan.spartanizer.tipping.*;
     };
   }
 
-  static GUI$Applicator getSpartanizer(final IMarker m) {
+  static AbstractGUIApplicator getSpartanizer(final IMarker m) {
     try {
       return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException x) {
