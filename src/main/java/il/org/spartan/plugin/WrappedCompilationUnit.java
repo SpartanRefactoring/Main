@@ -51,7 +51,7 @@ public class WrappedCompilationUnit {
   public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
-  
+
   /** Factory method that takes a list of CompilationUnit
    * @author matteo
    * @param ¢ JD
