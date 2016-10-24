@@ -10,12 +10,12 @@ public abstract class Applicator {
   /** Generic listener. */
   private Listener listener;
   /** The selection covered by this applicator. */
-  private Selection selection;
+  private AbstractSelection<?> selection;
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
   /** The modification process for each {@link ICU} in {@link Selection}. May
-   * activate, for instance, a {@link GUI$Applicator}. The return value
+   * activate, for instance, a {@link AbstractGUIApplicator}. The return value
    * determines whether the compilation unit should continue to the next pass or
    * not. */
   private Function<WrappedCompilationUnit, Integer> runAction;
@@ -60,7 +60,7 @@ public abstract class Applicator {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator runAction(final Function<WrappedCompilationUnit, Integer> ¢) {
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }
@@ -92,7 +92,7 @@ public abstract class Applicator {
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public Selection selection() {
+  public AbstractSelection<?> selection() {
     return selection;
   }
 
@@ -100,6 +100,11 @@ public abstract class Applicator {
    * @param ¢ JD
    * @return this applicator */
   public Applicator selection(final Selection ¢) {
+    selection = ¢;
+    return this;
+  }
+  
+  public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }

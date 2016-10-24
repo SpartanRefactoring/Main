@@ -18,8 +18,8 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
   public InfixIndexOfToStringContains() {
     if (tippers.size() == 4)
       return;
-    tippers.add(TipperFactory.tipper("$X1.indexOf($X2) >= 0", "$X1.contains($X2)", "replace indexOf >= 0 with contains"));
-    tippers.add(TipperFactory.tipper("$X1.indexOf($X2) < 0", "!$X1.contains($X2)", "replace indexOf < 0 with !contains"));
+    tippers.add(TipperFactory.tipper("$X1.indexOf($X2)>= 0", "$X1.contains($X2)", "replace indexOf>= 0 with contains"));
+    tippers.add(TipperFactory.tipper("$X1.indexOf($X2) <0", "!$X1.contains($X2)", "replace indexOf <0 with !contains"));
     tippers.add(TipperFactory.tipper("$X1.indexOf($X2) != -1", "$X1.contains($X2)", "replace indexOf != -1 with contains"));
     tippers.add(TipperFactory.tipper("$X1.indexOf($X2) == -1", "!$X1.contains($X2)", "replace indexOf == -1 with !contains"));
   }

@@ -28,18 +28,7 @@ public abstract class AbstractSpartanizer {
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
-  static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    ASTNode parentNode = ¢.getParent();
-    assert parentNode != null;
-    while (parentNode.getNodeType() != ASTNode.METHOD_DECLARATION) {
-      if (parentNode instanceof CompilationUnit)
-        return null;
-      parentNode = parentNode.getParent();
-    }
-    return ((MethodDeclaration) parentNode).getName() + "";
-  }
-
-  static GUI$Applicator getSpartanizer(final String tipperName) {
+  static AbstractGUIApplicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
 
@@ -131,7 +120,7 @@ public abstract class AbstractSpartanizer {
   }
 
   void fire() {
-    go();
+    run();
     reportSpectrum();
     // reportCoverage();
     runEssence();
@@ -164,7 +153,7 @@ public abstract class AbstractSpartanizer {
     return toolbox.firstTipper(¢);
   }
 
-  private void go() {
+  private void run() {
     System.err.printf( //
         " Input path=%s\n" + //
             "Before path=%s\n" + //

@@ -14,21 +14,6 @@ import il.org.spartan.spartanizer.java.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class ArithmeticTest {
   public static class Working {
-    @Test public void sanity() {
-      trimmingOf("10/2/1L")//
-          .gives("5L");
-    }
-
-    @Test public void sanity2() {
-      trimmingOf("10/2/1.")//
-          .gives("5.0");
-    }
-
-    @Test public void sanity3() {
-      trimmingOf("10/2/0L")//
-          .stays();
-    }
-
     @Test public void additionIsLong() {
       assert atomic.isLong(2L);
     }
@@ -86,7 +71,15 @@ public final class ArithmeticTest {
     }
 
     @Test public void issue171_6() {
-      trimmingOf("5L%6.").gives("5L").stays();
+      trimmingOf("5L%6.").stays();
+    }
+
+    @Test public void issue171_7() {
+      trimmingOf("5%6.").stays();
+    }
+
+    @Test public void issue171_8() {
+      trimmingOf("5%6.F").stays();
     }
 
     @Test public void issue201_1() {
@@ -105,11 +98,11 @@ public final class ArithmeticTest {
       trimmingOf(
           "public int compareTo(final Fraction other) {" + "return other == this || numerator == other.numerator && denominator == other.denominator"
               + "|| 1L * 1L * numerator * other.denominator == 1L * 1L * denominator * other.numerator ? 0"
-              + ": 1L * 1L * numerator * other.denominator < 1L * 1L * denominator * other.numerator ? -1 : 1;" + "}")
+              + ": 1L * 1L * numerator * other.denominator <1L * 1L * denominator * other.numerator ? -1 : 1;" + "}")
                   .gives("public int compareTo(final Fraction other) {"
                       + "return other == this || numerator == other.numerator && denominator == other.denominator"
                       + "|| 1L * numerator * other.denominator == 1L * denominator * other.numerator ? 0"
-                      + ": 1L * numerator * other.denominator < 1L * denominator * other.numerator ? -1 : 1;" + "}");
+                      + ": 1L * numerator * other.denominator <1L * denominator * other.numerator ? -1 : 1;" + "}");
     }
 
     @Test public void issue206_12() {
@@ -368,6 +361,21 @@ public final class ArithmeticTest {
 
     @Test public void issue92_9() {
       trimmingOf("3*4+2").gives("12+2").gives("14").stays();
+    }
+
+    @Test public void sanity() {
+      trimmingOf("10/2/1L")//
+          .gives("5L");
+    }
+
+    @Test public void sanity2() {
+      trimmingOf("10/2/1.")//
+          .gives("5.0");
+    }
+
+    @Test public void sanity3() {
+      trimmingOf("10/2/0L")//
+          .stays();
     }
   }
 }

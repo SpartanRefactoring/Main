@@ -152,6 +152,6 @@ public interface system {
   }
 
   static Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
+    return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 }

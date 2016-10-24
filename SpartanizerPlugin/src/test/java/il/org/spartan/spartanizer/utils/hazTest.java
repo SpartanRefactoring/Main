@@ -36,7 +36,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   }
 
   @Test public void seriesA_07() {
-    assert haz.variableDefinition(s("class C {void f(){for (int a = 0;i < 100; i++) ++i;}}"));
+    assert haz.variableDefinition(s("class C {void f(){for (int a = 0;i <100; i++) ++i;}}"));
   }
 
   @Test public void seriesA_08() {

@@ -9,7 +9,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-/** Test for the Spartanizer class
+/** Test for the GUIBatchLaconizer class
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
@@ -293,24 +293,24 @@ public class SpartanizerTest {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         System.out.println(AnnotationTypeDeclaration.class);
         // assertTrue("AnnotationTypeDeclaration is not included",
-        // spartanizer.check(¢));
+        // gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final MethodDeclaration ¢) {
         // assertFalse("MethodDeclaration is not included",
-        // spartanizer.check(¢));
+        // gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        // assertTrue("TypeDeclaration is not included", !spartanizer.check(¢));
+        // assertTrue("TypeDeclaration is not included", !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final FieldDeclaration ¢) {
         // assertFalse("FieldDeclaration is not included",
-        // !spartanizer.check(¢));
+        // !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
     });
