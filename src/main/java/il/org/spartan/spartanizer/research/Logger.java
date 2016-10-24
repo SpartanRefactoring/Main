@@ -10,6 +10,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.spartanizer.research.idiomatic.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -105,8 +106,7 @@ public class Logger {
   /** @param n
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
-    if (!npStatistics.containsKey(np))
-      npStatistics.put(np, new NPRecord(np, n.getClass()));
+    execute((__) -> npStatistics.put(np, new NPRecord(np, n.getClass()))).when(!npStatistics.containsKey(np));
     npStatistics.get(np).markNP(n);
   }
 
@@ -114,16 +114,14 @@ public class Logger {
    * @param np */
   static void logNodeInfo(final ASTNode ¢) {
     final String nodeClassName = ¢.getClass().getSimpleName();
-    if (!nodesStatistics.containsKey(nodeClassName))
-      nodesStatistics.put(nodeClassName, new Int());
+    execute((__) -> nodesStatistics.put(nodeClassName, new Int())).when(!nodesStatistics.containsKey(nodeClassName));
     ++nodesStatistics.get(nodeClassName).inner;
   }
 
   /** @param ¢
    * @param np */
   static void addToNodeType(final Class<? extends ASTNode> n, final int num) {
-    if (!codeStatistics.containsKey(n))
-      codeStatistics.put(n, new Int());
+    execute((__) -> codeStatistics.put(n, new Int())).when(!codeStatistics.containsKey(n));
     codeStatistics.get(n).inner += num;
   }
 
@@ -134,8 +132,7 @@ public class Logger {
       return;
     }
     final Integer key = Integer.valueOf(m.hashCode());
-    if (!methodsStatistics.containsKey(key))
-      methodsStatistics.put(key, new MethodRecord(m));
+    execute((__) -> methodsStatistics.put(key, new MethodRecord(m))).when(!methodsStatistics.containsKey(key));
     methodsStatistics.get(key).markNP(n, np);
   }
 
