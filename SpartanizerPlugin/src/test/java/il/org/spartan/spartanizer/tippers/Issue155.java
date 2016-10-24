@@ -11,8 +11,8 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue155 {
   @Test public void inlineFinal() {
     trimmingOf(
-        "for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")
-            .gives("for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" + "}");
+        "for (int i = 0; i <versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")
+            .gives("for (int i = 0; i <versionNumbers.length; ++i) {\n" + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" + "}");
   }
 
   @Test public void inlineNonFinalIntoClassInstanceCreation() {

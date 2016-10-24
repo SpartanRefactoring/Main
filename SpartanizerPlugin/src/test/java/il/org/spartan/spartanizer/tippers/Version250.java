@@ -130,15 +130,15 @@ import il.org.spartan.*;
   }
 
   @Test public void issue083i() {
-    trimmingOf("if(es.size() >= 2) return a;").stays();
+    trimmingOf("if(es.size()>= 2) return a;").stays();
   }
 
   @Test public void issue083j() {
-    trimmingOf("if(es.size() > 2) return a;").stays();
+    trimmingOf("if(es.size()> 2) return a;").stays();
   }
 
   @Test public void issue083k() {
-    trimmingOf("if(es.size() < 2) return a;").stays();
+    trimmingOf("if(es.size() <2) return a;").stays();
   }
 
   @Test public void issue083l() {
@@ -146,7 +146,7 @@ import il.org.spartan.*;
   }
 
   @Test public void issue083m() {
-    trimmingOf("if(a.size() >= -3) ++a;")//
+    trimmingOf("if(a.size()>= -3) ++a;")//
         .gives("if(true) ++a;")//
         .gives("++a;");
   }
@@ -281,8 +281,8 @@ import il.org.spartan.*;
   }
 
   @Test public void simpleForLoop() {
-    trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
-        .gives("for (int ¢ = 0; ¢ < 100; ++¢) sum+=¢;").stays();
+    trimmingOf("for (int i = 0; i <100; ++i) sum+=i;")//
+        .gives("for (int ¢ = 0; ¢ <100; ++¢) sum+=¢;").stays();
   }
 
   @Test public void test_b() {

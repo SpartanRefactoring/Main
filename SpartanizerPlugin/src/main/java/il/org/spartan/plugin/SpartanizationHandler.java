@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link Spartanizer} as its applicator.
+ * that uses {@link GUIBatchLaconizer} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
@@ -27,7 +27,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final Spartanizer a = applicator().defaultSelection();
+    final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -43,8 +43,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static Spartanizer applicator() {
-    final Spartanizer $ = new Spartanizer();
+  public static GUIBatchLaconizer applicator() {
+    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
@@ -131,8 +131,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("deprecation") @Deprecated public static Spartanizer applicatorMapper() {
-    final Spartanizer $ = new Spartanizer();
+  @SuppressWarnings("deprecation") @Deprecated public static GUIBatchLaconizer applicatorMapper() {
+    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final AtomicBoolean openDialog = new AtomicBoolean(false);

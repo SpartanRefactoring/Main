@@ -135,7 +135,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   @Test public void subjectOperands() {
-    final Expression e = into.e("2 + a < b");
+    final Expression e = into.e("2 + a <b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);

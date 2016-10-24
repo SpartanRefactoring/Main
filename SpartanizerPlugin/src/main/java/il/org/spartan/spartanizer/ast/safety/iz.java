@@ -33,16 +33,6 @@ public interface iz {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
 
-  /** @param ¢ JD
-   * @return */
-  static boolean booleanType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
-  }
-
-  static boolean typeDeclaration(final ASTNode ¢) {
-    return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
-  }
-
   static boolean annotation(final IExtendedModifier ¢) {
     return ¢ != null && ¢ instanceof Annotation;
   }
@@ -116,6 +106,10 @@ public interface iz {
         && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
 
+  static boolean bodyDeclaration(final ASTNode ¢) {
+    return ¢ != null && ¢ instanceof BodyDeclaration;
+  }
+
   /** Determine whether a node is a boolean literal
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
@@ -129,6 +123,12 @@ public interface iz {
    *         null literal or false otherwise */
   static boolean booleanOrNullLiteral(final ASTNode ¢) {
     return iz.nodeTypeIn(¢, BOOLEAN_LITERAL, NULL_LITERAL);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean booleanType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
 
   static boolean breakStatement(final Statement ¢) {
@@ -817,6 +817,10 @@ public interface iz {
     return iz.nodeTypeEquals(¢, TRY_STATEMENT);
   }
 
+  static boolean typeDeclaration(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
+  }
+
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em> the statement is side effect
    *         and updating an initializer from the for initializers. returns
@@ -897,12 +901,7 @@ public interface iz {
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
-      return true;
-    for (final Expression ¢ : updaters(s))
-      if (!Collect.usesOf(n).in(¢).isEmpty())
-        return true;
-    return false;
+    return !Collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !Collect.usesOf(n).in(step.updaters(s)).isEmpty();
   }
 
   static boolean whileStatement(final ASTNode x) {
@@ -945,10 +944,22 @@ public interface iz {
 
   interface literal {
     /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
      * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
      *         false or false otherwise */
     static boolean false¢(final ASTNode ¢) {
       return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
     }
 
     /** @param ¢ JD
@@ -960,18 +971,6 @@ public interface iz {
 
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
     }
   }
 }

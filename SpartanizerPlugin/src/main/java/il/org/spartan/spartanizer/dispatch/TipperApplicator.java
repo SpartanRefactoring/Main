@@ -12,10 +12,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
- * into that of {@link GUI$Applicator}. This class must eventually die.
+ * into that of {@link AbstractGUIApplicator}. This class must eventually die.
  * @author Yossi Gil
  * @since 2015/07/25 */
-public final class TipperApplicator extends GUI$Applicator {
+public final class TipperApplicator extends AbstractGUIApplicator {
   final Tipper<ASTNode> tipper;
   final Class<? extends ASTNode> clazz;
 

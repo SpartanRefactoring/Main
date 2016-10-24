@@ -47,10 +47,10 @@ public enum Collect {
   };
   static final ASTMatcher matcher = new ASTMatcher();
 
-  /** Creates a new spartanizer which holds the occurrences of the provided name
+  /** Creates a new gUIBatchLaconizer which holds the occurrences of the provided name
    * in declarations.
    * @param n JD
-   * @return A {@link Spartanizer}, with the uses of the provided identifier
+   * @return A {@link GUIBatchLaconizer}, with the uses of the provided identifier
    *         within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
@@ -77,7 +77,7 @@ public enum Collect {
 
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link Spartanizer} of all occurrences which are not
+   * @return {@link GUIBatchLaconizer} of all occurrences which are not
    *         definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
@@ -93,7 +93,7 @@ public enum Collect {
   /** finds all the occurrences of the given name (n) in which it is a
    * {@link ClassInstanceCreation}
    * @param n JD
-   * @return a spartanizer with all unsafe uses of the identifier (n) */
+   * @return a gUIBatchLaconizer with all unsafe uses of the identifier (n) */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -105,10 +105,10 @@ public enum Collect {
     };
   }
 
-  /** Creates a new spartanizer which holds all the occurrences of the provided
+  /** Creates a new gUIBatchLaconizer which holds all the occurrences of the provided
    * name.
    * @param n JD
-   * @return A {@link Spartanizer}, with the uses of the provided identifier
+   * @return A {@link GUIBatchLaconizer}, with the uses of the provided identifier
    *         within the provided {@link ASTNode}s array to the in function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
@@ -480,6 +480,10 @@ public enum Collect {
      * @return */
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return new ArrayList<>();
+    }
+
+    public final List<SimpleName> in(final List<? extends ASTNode> ¢) {
+      return in(¢.toArray(new ASTNode[¢.size()]));
     }
 
     Collector(final String name) {

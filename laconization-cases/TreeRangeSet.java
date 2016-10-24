@@ -170,7 +170,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
     if (rangeToAdd.isEmpty())
 		return;
 
-    // We will use { } to illustrate ranges currently in the range set, and < >
+    // We will use { } to illustrate ranges currently in the range set, and <>
     // to illustrate rangeToAdd.
     Cut<C> lbToAdd = rangeToAdd.lowerBound;
     Cut<C> ubToAdd = rangeToAdd.upperBound;
@@ -179,9 +179,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
     if (entryBelowLB != null) {
       // { <
       Range<C> rangeBelowLB = entryBelowLB.getValue();
-      if (rangeBelowLB.upperBound.compareTo(lbToAdd) >= 0) {
-        // { < }, and we will need to coalesce
-        if (rangeBelowLB.upperBound.compareTo(ubToAdd) >= 0)
+      if (rangeBelowLB.upperBound.compareTo(lbToAdd)>= 0) {
+        // { <}, and we will need to coalesce
+        if (rangeBelowLB.upperBound.compareTo(ubToAdd)>= 0)
 			ubToAdd = rangeBelowLB.upperBound;
         lbToAdd = rangeBelowLB.lowerBound;
       }
@@ -189,9 +189,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 
     Entry<Cut<C>, Range<C>> entryBelowUB = rangesByLowerBound.floorEntry(ubToAdd);
     if (entryBelowUB != null) {
-      // { >
+      // {>
       Range<C> rangeBelowUB = entryBelowUB.getValue();
-      if (rangeBelowUB.upperBound.compareTo(ubToAdd) >= 0)
+      if (rangeBelowUB.upperBound.compareTo(ubToAdd)>= 0)
 		ubToAdd = rangeBelowUB.upperBound;
     }
 
@@ -208,17 +208,17 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
     if (rangeToRemove.isEmpty())
 		return;
 
-    // We will use { } to illustrate ranges currently in the range set, and < >
+    // We will use { } to illustrate ranges currently in the range set, and <>
     // to illustrate rangeToRemove.
 
     Entry<Cut<C>, Range<C>> entryBelowLB = rangesByLowerBound.lowerEntry(rangeToRemove.lowerBound);
     if (entryBelowLB != null) {
       // { <
       Range<C> rangeBelowLB = entryBelowLB.getValue();
-      if (rangeBelowLB.upperBound.compareTo(rangeToRemove.lowerBound) >= 0) {
-        // { < }, and we will need to subdivide
+      if (rangeBelowLB.upperBound.compareTo(rangeToRemove.lowerBound)>= 0) {
+        // { <}, and we will need to subdivide
         if (rangeToRemove.hasUpperBound()
-            && rangeBelowLB.upperBound.compareTo(rangeToRemove.upperBound) >= 0)
+            && rangeBelowLB.upperBound.compareTo(rangeToRemove.upperBound)>= 0)
 			replaceRangeWithSameLowerBound(Range.create(rangeToRemove.upperBound, rangeBelowLB.upperBound));
         replaceRangeWithSameLowerBound(
             Range.create(rangeBelowLB.lowerBound, rangeToRemove.lowerBound));
@@ -227,10 +227,10 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 
     Entry<Cut<C>, Range<C>> entryBelowUB = rangesByLowerBound.floorEntry(rangeToRemove.upperBound);
     if (entryBelowUB != null) {
-      // { >
+      // {>
       Range<C> rangeBelowUB = entryBelowUB.getValue();
       if (rangeToRemove.hasUpperBound()
-          && rangeBelowUB.upperBound.compareTo(rangeToRemove.upperBound) >= 0)
+          && rangeBelowUB.upperBound.compareTo(rangeToRemove.upperBound)>= 0)
 		replaceRangeWithSameLowerBound(Range.create(rangeToRemove.upperBound, rangeBelowUB.upperBound));
     }
 
@@ -666,7 +666,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
       if (key instanceof Cut)
 		try {
       @SuppressWarnings("unchecked") Cut<C> cut = (Cut<C>) key;
-      if (!lowerBoundWindow.contains(cut) || cut.compareTo(restriction.lowerBound) < 0 || cut.compareTo(restriction.upperBound) >= 0)
+      if (!lowerBoundWindow.contains(cut) || cut.compareTo(restriction.lowerBound) <0 || cut.compareTo(restriction.upperBound)>= 0)
         return null;
       if (!cut.equals(restriction.lowerBound)) {
         Range<C> result = rangesByLowerBound.get(cut);
@@ -674,7 +674,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
           return result.intersection(restriction);
       } else {
         Range<C> candidate = Maps.valueOrNull(rangesByLowerBound.floorEntry(cut));
-        if (candidate != null && candidate.upperBound.compareTo(restriction.lowerBound) > 0)
+        if (candidate != null && candidate.upperBound.compareTo(restriction.lowerBound)> 0)
           return candidate.intersection(restriction);
       }
     } catch (ClassCastException e) {
@@ -733,7 +733,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
           if (!completeRangeItr.hasNext())
 			return endOfData();
           Range<C> nextRange = completeRangeItr.next();
-          if (restriction.lowerBound.compareTo(nextRange.upperBound) >= 0)
+          if (restriction.lowerBound.compareTo(nextRange.upperBound)>= 0)
 			return endOfData();
           nextRange = nextRange.intersection(restriction);
           return !lowerBoundWindow.contains(nextRange.lowerBound) ? endOfData()

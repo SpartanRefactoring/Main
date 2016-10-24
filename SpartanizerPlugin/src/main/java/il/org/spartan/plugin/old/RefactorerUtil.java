@@ -65,7 +65,7 @@ public class RefactorerUtil {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final GUI$Applicator __, final List<ICompilationUnit> us,
+  public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
       final Map<attribute, Object> m, final attribute t) {
     if (us.isEmpty())
       return null;
