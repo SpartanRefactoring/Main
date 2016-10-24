@@ -285,7 +285,7 @@ public class Toolbox {
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
     removing: for (;;) {
-      for (int ¢ = 0; ¢ <ns.size(); ++¢)
+      for (int ¢ = 0; ¢ < ns.size(); ++¢)
         if (c.isAssignableFrom(ns.get(¢).getClass())) {
           ns.remove(¢);
           continue removing;

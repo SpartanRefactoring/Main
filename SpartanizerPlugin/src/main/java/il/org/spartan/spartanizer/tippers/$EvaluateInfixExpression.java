@@ -25,7 +25,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     int $ = 0;
     for (final Expression ¢ : lst) {
       if (!iz.number(¢))
-        return $> 1 ? $ : 0;
+        return $ > 1 ? $ : 0;
       ++$;
     }
     return 0;
@@ -33,9 +33,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
 
   public static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
-    for (int $ = 0, ¢ = lst.size() - 1; ¢>= 0; --¢, ++$)
+    for (int $ = 0, ¢ = lst.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(lst.get(¢)))
-        return $> 1 ? $ : 0;
+        return $ > 1 ? $ : 0;
     return -1;
   }
 
@@ -55,10 +55,10 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     try {
       if (iz.validForEvaluation(x)) {
         final String $ = opportunisticReplacement(x);
-        if ($ != null && $.length() <(x + "").length())
+        if ($ != null && $.length() < (x + "").length())
           return x.getAST().newNumberLiteral($);
       }
-      if (indexForLeftEvaluation(x)> 1) {
+      if (indexForLeftEvaluation(x) > 1) {
         final int index = indexForLeftEvaluation(x);
         final InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(0, index)).to(operator());
         final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
@@ -71,7 +71,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
                 .to(operator());
         }
       }
-      if (indexForRightEvaluation(x)> 1 && operator() != DIVIDE && operator() != REMAINDER) {
+      if (indexForRightEvaluation(x) > 1 && operator() != DIVIDE && operator() != REMAINDER) {
         final int index = indexForRightEvaluation(x);
         final InfixExpression cuttedExpression = subject
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());

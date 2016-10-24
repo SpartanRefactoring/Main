@@ -65,7 +65,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
    *         invocation with more arguments that the second argument */
   public static boolean moreArguments(final Expression e1, final Expression e2) {
-    return argumentsCompare(e1, e2)> 0;
+    return argumentsCompare(e1, e2) > 0;
   }
 
   /** Lexicographical comparison expressions by their number of characters
@@ -106,13 +106,13 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int round(final int $, final int threshold) {
-    return Math.abs($)> threshold ? $ : 0;
+    return Math.abs($) > threshold ? $ : 0;
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNull(e1, e2) && (//
-    count.nodes(e1)> count.nodes(e2) + NODES_THRESHOLD || //
-        count.nodes(e1)>= count.nodes(e2) && moreArguments(e1, e2)//
+    count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD || //
+        count.nodes(e1) >= count.nodes(e2) && moreArguments(e1, e2)//
     );
   }
 
@@ -122,8 +122,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public boolean sort(final List<Expression> xs) {
     boolean $ = false;
     // Bubble sort
-    for (int i = 0, size = xs.size(); i <size; ++i)
-      for (int j = 0; j <size - 1; ++j) {
+    for (int i = 0, size = xs.size(); i < size; ++i)
+      for (int j = 0; j < size - 1; ++j) {
         final Expression e0 = xs.get(j);
         final Expression e1 = xs.get(j + 1);
         if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)

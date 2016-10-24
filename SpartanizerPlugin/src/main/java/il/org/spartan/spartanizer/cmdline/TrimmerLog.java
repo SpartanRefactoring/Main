@@ -105,7 +105,7 @@ public class TrimmerLog {
   }
 
   public static void visitation(final ASTNode ¢) {
-    if (--maxVisitations> 0)
+    if (--maxVisitations > 0)
       System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");

@@ -39,9 +39,9 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> operands = extract.allOperands(x);
-    assert operands.size()>= 2;
+    assert operands.size() >= 2;
     boolean isChanged = false;
-    for (int i = 0; i <operands.size() - 1;)
+    for (int i = 0; i < operands.size() - 1;)
       if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
         ++i;
       else {

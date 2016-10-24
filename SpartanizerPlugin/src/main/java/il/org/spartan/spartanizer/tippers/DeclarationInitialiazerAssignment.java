@@ -45,7 +45,7 @@ public final class DeclarationInitialiazerAssignment extends $VariableDeclaratio
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer)> 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);

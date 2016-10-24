@@ -56,10 +56,10 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
       final Expression alignTo = parent.getThenExpression();
       final double a1 = align(elze, alignTo);
       final double a2 = align(then, alignTo);
-      if (Math.abs(a1 - a2)> 0.1)
-        return a1> a2 ? $ : null;
+      if (Math.abs(a1 - a2) > 0.1)
+        return a1 > a2 ? $ : null;
     }
     final Expression condition = make.notOf($.getExpression());
-    return metrics.length(condition, then)> metrics.length(make.notOf(condition), elze) ? $ : null;
+    return metrics.length(condition, then) > metrics.length(make.notOf(condition), elze) ? $ : null;
   }
 }

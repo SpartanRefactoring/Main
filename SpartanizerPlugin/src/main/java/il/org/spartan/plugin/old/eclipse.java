@@ -220,8 +220,8 @@ public enum eclipse {
 
   public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
-      return n.getStartPosition() <((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition()> ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
       return true;
