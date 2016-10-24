@@ -10,7 +10,7 @@ public abstract class Applicator {
   /** Generic listener. */
   private Listener listener;
   /** The selection covered by this applicator. */
-  private Selection selection;
+  private AbstractSelection<?> selection;
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
@@ -92,7 +92,7 @@ public abstract class Applicator {
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public Selection selection() {
+  public AbstractSelection<?> selection() {
     return selection;
   }
 
@@ -100,6 +100,11 @@ public abstract class Applicator {
    * @param ¢ JD
    * @return this applicator */
   public Applicator selection(final Selection ¢) {
+    selection = ¢;
+    return this;
+  }
+  
+  public Applicator selection(final AbstractSelection ¢) {
     selection = ¢;
     return this;
   }
