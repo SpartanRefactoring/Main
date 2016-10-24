@@ -37,8 +37,8 @@ import org.junit.runners.*;
   }
 
   @Test public void A$d() {
-    trimmingOf("public interface A {\n" + "public abstract void add();\n" + "abstract void remove()\n; " + "static final void remove()\n; " + "}")
-        .gives("public interface A {\n" + "void add();\n" + "void remove()\n; " + "static void remove()\n; " + "}");
+    trimmingOf("public interface A{public abstract void a();abstract void r();static final void s();}")
+        .gives("public interface A{void a();void r();static void s();}");
   }
 
   @Test public void A$e() {
