@@ -901,11 +901,7 @@ public interface iz {
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    if (!Collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty())
-      return true;
-    if (!Collect.usesOf(n).in(step.updaters(s)).isEmpty())
-      return true;
-    return false;
+    return !Collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !Collect.usesOf(n).in(step.updaters(s)).isEmpty();
   }
 
   static boolean whileStatement(final ASTNode x) {
