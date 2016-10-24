@@ -5,6 +5,6 @@ import org.eclipse.jdt.core.dom.*;
 /** Remove redundant modifiers from a {@link TypeDeclaration}
  * @author Yossi Gil
  * @year 2016 */
-public final class TypeRedundantModifiers extends $BodyDeclarationModifiersPrune<TypeDeclaration> {
+public final class TypeRedundantModifiers extends $BodyDeclarationRedundantModifiers<TypeDeclaration> {
   // Intentionally empty, all clever stuff is in the superclass
 }

@@ -106,13 +106,13 @@ import org.junit.runners.*;
 
   @Test public void inlineSingleUse06() {
     trimmingOf(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.x.f(coes.size()); ")
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.x.f(coes.size()); ")
             .stays();
   }
 
   @Test public void inlineSingleUse08() {
     trimmingOf(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.x.f(coes.size());     S.x.f(outdated.size()); ")
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     S.x.f(coes.size());     S.x.f(outdated.size()); ")
             .stays();
   }
 
@@ -157,15 +157,15 @@ import org.junit.runners.*;
   }
 
   @Test public void issue54ForPlainUseInCondition() {
-    trimmingOf("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;").stays();
+    trimmingOf("int a  = f(); for (int i = 0; a <100;  ++i) b[i] = 3;").stays();
   }
 
   @Test public void issue54ForPlainUseInInitializer() {
-    trimmingOf("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;").gives(" for (int i = f(); i < 100; i++) b[i] = 3;");
+    trimmingOf("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;").gives(" for (int i = f(); i <100; i++) b[i] = 3;");
   }
 
   @Test public void issue54ForPlainUseInUpdaters() {
-    trimmingOf("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;").stays();
+    trimmingOf("int a  = f(); for (int i = 0; i <100; i *= a) b[i] = 3;").stays();
   }
 
   public void issue62b() {
@@ -274,7 +274,7 @@ import org.junit.runners.*;
   }
 
   @Test public void shortestOperand09() {
-    trimmingOf("return 2 - 4 < 50 - 20 - 10 - 5;").gives("return 2 - 4 < 50 - 5 - 10 - 20 ;");
+    trimmingOf("return 2 - 4 <50 - 20 - 10 - 5;").gives("return 2 - 4 <50 - 5 - 10 - 20 ;");
   }
 
   @Test public void sortSubstraction() {

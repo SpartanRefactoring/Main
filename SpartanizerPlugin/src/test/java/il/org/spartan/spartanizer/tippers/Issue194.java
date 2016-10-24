@@ -99,7 +99,7 @@ import org.junit.*;
   }
 
   @Test public void test06() {
-    trimmingOf("if(x > y){ \n" //
+    trimmingOf("if(x> y){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //

@@ -15,7 +15,7 @@ public abstract class Applicator {
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
   /** The modification process for each {@link ICU} in {@link Selection}. May
-   * activate, for instance, a {@link GUI$Applicator}. The return value
+   * activate, for instance, a {@link AbstractGUIApplicator}. The return value
    * determines whether the compilation unit should continue to the next pass or
    * not. */
   private Function<WrappedCompilationUnit, Integer> runAction;
@@ -60,7 +60,7 @@ public abstract class Applicator {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator runAction(final Function<WrappedCompilationUnit, Integer> ¢) {
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }
@@ -104,7 +104,7 @@ public abstract class Applicator {
     return this;
   }
   
-  public Applicator selection(final AbstractSelection ¢) {
+  public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }

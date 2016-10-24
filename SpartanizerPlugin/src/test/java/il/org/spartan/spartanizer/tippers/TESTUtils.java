@@ -49,7 +49,7 @@ import il.org.spartan.spartanizer.utils.*;
     return extract.singleStatement(n);
   }
 
-  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
@@ -66,7 +66,7 @@ import il.org.spartan.spartanizer.utils.*;
     return TESTUtils.rewrite(t, u, d).get();
   }
 
-  static void assertNoOpportunity(final GUI$Applicator a, final String from) {
+  static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
@@ -75,7 +75,7 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
 
-  static void assertOneOpportunity(final GUI$Applicator a, final String from) {
+  static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));

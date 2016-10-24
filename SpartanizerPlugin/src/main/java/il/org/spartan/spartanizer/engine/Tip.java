@@ -48,7 +48,7 @@ public abstract class Tip extends Range {
   public Tip(final String description, final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
       final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
-    lineNumber = ((CompilationUnit) searchAncestors.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
+    lineNumber = searchAncestors.forClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
 
   Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {

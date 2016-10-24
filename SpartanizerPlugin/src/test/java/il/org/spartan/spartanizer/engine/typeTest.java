@@ -700,7 +700,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void context12() {
-      final InfixExpression e = az.infixExpression(into.e("x < 7"));
+      final InfixExpression e = az.infixExpression(into.e("x <7"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(INT));
     }
@@ -718,7 +718,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void context15() {
-      final InfixExpression e = az.infixExpression(into.e("y > 7.3"));
+      final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(DOUBLE));
     }

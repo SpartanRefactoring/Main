@@ -67,7 +67,7 @@ public class Spartanizer$Applicator {
     // if (textChange.getEdit().getLength() != 0)
     // textChange.perform(progressMonitor);
     // progressMonitor.done();
-    // return counter.get() > 0;
+    // return counter.get()> 0;
     // } catch (final CoreException x) {
     // monitor.logEvaluationError(this, x);
     // }

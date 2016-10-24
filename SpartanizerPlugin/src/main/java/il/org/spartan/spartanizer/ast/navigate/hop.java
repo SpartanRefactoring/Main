@@ -60,6 +60,10 @@ public interface hop {
     return null;
   }
 
+  static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
+    return searchAncestors.forClass(BodyDeclaration.class).from(¢);
+  }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   static List<ASTNode> descendants(final ASTNode root) {
@@ -75,25 +79,20 @@ public interface hop {
     return $;
   }
 
-  static VariableDeclarationFragment findDefinition(final VariableDeclarationStatement s, final SimpleName n) {
-    return hop.findVariableDeclarationFragment(step.fragments(s), n);
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
+    return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment findVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     for (final VariableDeclarationFragment $ : fs)
       if (wizard.same(¢, $.getName()))
         return $;
     return null;
   }
 
-  /** @param n the node from which to extract the proper fragment
-   * @param x the name by which to look for the fragment
-   * @return fragment if such with the given name exists or null otherwise (or
-   *         if ¢ or name are null) */
-  // TODO Yossi Gil: this seems a bug
-  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
-    return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
-        : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
+  static String getEnclosingMethodName(final BodyDeclaration ¢) {
+    final MethodDeclaration $ = searchAncestors.forClass(MethodDeclaration.class).from(¢);
+    return $ == null ? null : $.getName() + "";
   }
 
   static SimpleName lastComponent(final Name ¢) {
@@ -140,18 +139,6 @@ public interface hop {
     return $;
   }
 
-  /** @param s current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  static Statement previousStatementInBody(final Statement s) {
-    final Block b = az.block(s.getParent());
-    if (b == null)
-      return null;
-    final List<Statement> statements = statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
-  }
-
   /** @param ¢ JD
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
@@ -184,6 +171,18 @@ public interface hop {
       return null;
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     return vds == null ? null : findFirst.elementOf(step.fragments(vds));
+  }
+
+  /** @param s current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  static Statement previousStatementInBody(final Statement s) {
+    final Block b = az.block(s.getParent());
+    if (b == null)
+      return null;
+    final List<Statement> statements = statements(b);
+    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {

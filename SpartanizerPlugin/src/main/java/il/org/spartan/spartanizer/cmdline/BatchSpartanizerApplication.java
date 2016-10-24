@@ -65,7 +65,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     // .selection(Selection.Util.by(¢).buildAll())
     // .go());
     // final FileStats s = new FileStats(f);
-    // for (int i = 0; i < optRounds; ++i) {
+    // for (int i = 0; i <optRounds; ++i) {
     // final int n = new LaconizeProject().countTips();
     // if (n == 0)
     // break;
@@ -195,7 +195,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   }
 
   static void printHelpPrompt() {
-    System.out.println("Batch spartanizer");
+    System.out.println("Batch gUIBatchLaconizer");
     System.out.println("");
     System.out.println("Options:");
     System.out.println("  -d       default directory: use the current directory for the analysis");
