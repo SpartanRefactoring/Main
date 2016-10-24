@@ -41,9 +41,9 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
-    for (int ¢ = 0; ¢ < es1.size(); ++¢)
+    for (int ¢ = 0; ¢ <es1.size(); ++¢)
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
-        if ($ >= 0)
+        if ($>= 0)
           return -1;
         $ = ¢;
       }
@@ -51,7 +51,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   }
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
+    return !precedence.is.legal(precedence.of(n)) || precedence.of(n)>= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -62,7 +62,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
-    if (i < 0)
+    if (i <0)
       return null;
     final ClassInstanceCreation $ = duplicate.of(e1);
     arguments($).remove(i);
@@ -107,7 +107,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
-    if (i < 0)
+    if (i <0)
       return null;
     final InfixExpression $ = duplicate.of(e1);
     final List<Expression> operands = hop.operands($);
@@ -134,7 +134,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
-    if (i < 0)
+    if (i <0)
       return null;
     final MethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);
@@ -150,7 +150,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
-    if (i < 0)
+    if (i <0)
       return null;
     final SuperMethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);

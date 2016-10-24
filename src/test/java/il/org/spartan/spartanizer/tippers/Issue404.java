@@ -110,14 +110,14 @@ public class Issue404 {
         .stringLiterals(into.cu(//
             "class A {\n"//
                 + "String maxLength(String s1, String s2){\n"//
-                + "s1.size() > s2.size() ? s1 : s2;"//
+                + "s1.size()> s2.size() ? s1 : s2;"//
                 + "}\n"//
                 + "}"))//
         .isEmpty() : "The List was not empty.";
   }
 
   @Test public void jb() {
-    assert dig.stringLiterals(into.s("String maxLength = s1.size() > s2.size() ? s1 : s2;")).isEmpty() : "The List was not empty.";
+    assert dig.stringLiterals(into.s("String maxLength = s1.size()> s2.size() ? s1 : s2;")).isEmpty() : "The List was not empty.";
   }
 
   @Test public void jc() {
@@ -148,7 +148,7 @@ public class Issue404 {
   }
 
   @Test public void kd() {
-    final List<String> $ = dig.stringLiterals(into.c("\"a\".size() > b.size() ? b : a"));
+    final List<String> $ = dig.stringLiterals(into.c("\"a\".size()> b.size() ? b : a"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert "a".equals($.get(0));
   }
@@ -231,7 +231,7 @@ public class Issue404 {
     final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
         + "int i = \"first\".size();\n"//
         + "String s = \"second\"" + "String foo(){\n"//
-        + "return i > 5 ? \"third\" : \"fourth\";\n"//
+        + "return i> 5 ? \"third\" : \"fourth\";\n"//
         + "}\n"//
         + "}"));
     assert $.size() == 4 : "The List did not contain the expected number of elements.";
@@ -305,7 +305,7 @@ public class Issue404 {
         "class A{\n"//
             + "int i = \"ĀĆ\".size();\n"//
             + "String s = \"Ēċ\"" + "String foo(){\n"//
-            + "return i > 5 ? \"ĘŦţţſ\" : \"ŒĤĦfgdr453Ŵ\";\n"//
+            + "return i> 5 ? \"ĘŦţţſ\" : \"ŒĤĦfgdr453Ŵ\";\n"//
             + "}\n"//
             + "}"));
     assert $.size() == 4 : "The List did not contain the expected number of elements.";
@@ -320,7 +320,7 @@ public class Issue404 {
         "class A{\n"//
             + "int i = \"עוד חוזר הניגון שזנחת לשווא\".size();\n"//
             + "String s = \"והדרך עודנה נפקחת לאורך\"" + "String foo(){\n"//
-            + "return i > 5 ? \"וענן בשמיו ואילן בגשמיו\" :\n"//
+            + "return i> 5 ? \"וענן בשמיו ואילן בגשמיו\" :\n"//
             + "\"מצפים עוד לך, עובר אורח\";\n"//
             + "}\n"//
             + "}"));

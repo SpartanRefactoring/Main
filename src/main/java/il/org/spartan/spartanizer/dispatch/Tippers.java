@@ -89,7 +89,7 @@ public enum Tippers {
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
-      if (¢ < 0)
+      if (¢ <0)
         return $;
   }
 
@@ -115,7 +115,7 @@ public enum Tippers {
       return main;
     final int rankThen = Tippers.sequencerRank(lisp.last(then));
     final int rankElse = Tippers.sequencerRank(lisp.last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
+    return rankElse> rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(final List<Expression> xs) {
@@ -125,7 +125,7 @@ public enum Tippers {
     for (final Expression x : xs)
       if (x instanceof NumberLiteral || x instanceof CharacterLiteral) {
         final int currentKind = new NumericLiteralClassifier(x + "").type().ordinal();
-        assert currentKind >= 0;
+        assert currentKind>= 0;
         if (previousKind == -1)
           previousKind = currentKind;
         else if (previousKind != currentKind)
@@ -155,7 +155,7 @@ public enum Tippers {
   public static boolean shoudlInvert(final IfStatement s) {
     final int rankThen = sequencerRank(hop.lastStatement(then(s)));
     final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s);
+    return rankElse> rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(final IfStatement s) {
@@ -165,20 +165,20 @@ public enum Tippers {
       return true;
     final int s1 = count.lines(then);
     final int s2 = count.lines(elze);
-    if (s1 < s2)
+    if (s1 <s2)
       return true;
-    if (s1 > s2)
+    if (s1> s2)
       return false;
     assert s1 == s2;
     final int n2 = extract.statements(elze).size();
     final int n1 = extract.statements(then).size();
-    if (n1 < n2)
+    if (n1 <n2)
       return true;
-    if (n1 > n2)
+    if (n1> n2)
       return false;
     assert n1 == n2;
     final IfStatement $ = invert(s);
-    return positivePrefixLength($) >= positivePrefixLength(invert($));
+    return positivePrefixLength($)>= positivePrefixLength(invert($));
   }
 
   private static int positivePrefixLength(final IfStatement $) {

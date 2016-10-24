@@ -28,7 +28,7 @@ public class TrackerSelection extends Selection {
   public void update() {
     inner.get(0).dispose();
     final ASTNode newTrack = fix(track.getNodeType(),
-        track.getLength() > length
+        track.getLength()> length
             ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
             : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {

@@ -71,7 +71,7 @@ public final class LaconizeProject extends BaseHandler {
     final int finalCount = countTips();
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
-            + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - finalCount) + "\n" + "Tips before: "
+            + (passNumber <MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - finalCount) + "\n" + "Tips before: "
             + initialCount + "\n" + "Tips after: " + finalCount + "\n");
   }
 
@@ -79,7 +79,7 @@ public final class LaconizeProject extends BaseHandler {
 
   void manyPasses() {
     for (passNumber = 1;; ++passNumber)
-      if (passNumber > MAX_PASSES || singlePass())
+      if (passNumber> MAX_PASSES || singlePass())
         return;
   }
 

@@ -87,7 +87,7 @@ public enum monitor {
         "   Got an exception of type : " + x.getClass().getSimpleName() + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
-            "\n        >>>'" + message + "'<<<" //
+            "\n       >>>'" + message + "'<<<" //
     );
   }
 

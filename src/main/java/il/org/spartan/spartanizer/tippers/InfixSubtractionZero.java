@@ -46,7 +46,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     assert !prune.isEmpty();
     if (prune.size() == 1)
       return !iz.literal0(first) ? first : minus(first(prune));
-    assert prune.size() >= 2;
+    assert prune.size()>= 2;
     return subject.operands(!iz.literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
   }
 

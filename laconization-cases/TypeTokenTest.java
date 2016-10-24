@@ -290,7 +290,7 @@ public class TypeTokenTest extends TestCase {
       int j = 0;
       for (TypeToken<?> right : ts) {
         if (left.isSupertypeOf(right))
-			assertTrue(left + " should be after " + right, i >= j);
+			assertTrue(left + " should be after " + right, i>= j);
         ++j;
       }
       ++i;
@@ -303,7 +303,7 @@ public class TypeTokenTest extends TestCase {
       int j = 0;
       for (Class<?> right : types) {
         if (left.isAssignableFrom(right))
-			assertTrue(left + " should be after " + right, i >= j);
+			assertTrue(left + " should be after " + right, i>= j);
         ++j;
       }
       ++i;
@@ -1665,7 +1665,7 @@ public class TypeTokenTest extends TestCase {
       for (Method method : RawTypeConsistencyTester.class.getDeclaredMethods()) {
         assertEquals(method.getReturnType(),
             TypeToken.of(method.getGenericReturnType()).getRawType());
-        for (int ¢ = 0; ¢ < method.getParameterTypes().length; ++¢)
+        for (int ¢ = 0; ¢ <method.getParameterTypes().length; ++¢)
 			assertEquals(method.getParameterTypes()[¢],
 					TypeToken.of(method.getGenericParameterTypes()[¢]).getRawType());
       }

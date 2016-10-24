@@ -47,9 +47,9 @@ public class SpartanMovie extends AbstractHandler {
           final IFile file = (IFile) currentCompilationUnit.getResource();
           try {
             IMarker[] markers = getMarkers(file);
-            if (markers.length > 0)
+            if (markers.length> 0)
               ++filesModified;
-            for (; markers.length > 0; markers = getMarkers(file)) {
+            for (; markers.length> 0; markers = getMarkers(file)) {
               final IMarker marker = getFirstMarker(markers);
               pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
                   + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
@@ -157,9 +157,9 @@ public class SpartanMovie extends AbstractHandler {
    * @author Ori Roth */
   static IMarker getFirstMarker(final IMarker[] ¢) {
     int $ = 0;
-    for (int i = 0; i < ¢.length; ++i)
+    for (int i = 0; i <¢.length; ++i)
       try {
-        if (((Integer) ¢[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ¢[$].getAttribute(IMarker.CHAR_START)).intValue())
+        if (((Integer) ¢[i].getAttribute(IMarker.CHAR_START)).intValue() <((Integer) ¢[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
       } catch (final CoreException x) {
         monitor.log(x);

@@ -46,16 +46,16 @@ import il.org.spartan.spartanizer.engine.type.*;
     private static final int __33 = 3;
     /** Make sure the compiler cannot optimize this out */
     private byte b = (byte) (hashCode() ^ 0xDEADdeaf);
-    private final boolean b1 = b > (byte) hashCode();
-    private final boolean b2 = (b & (byte) hashCode() << 3) < 0;
-    private char c = (char) (b << __2L);
-    private final char c1 = (char) (hashCode() ^ hashCode() << 7);
-    private final char c2 = (char) (c1 << 13 ^ hashCode());
+    private final boolean b1 = b> (byte) hashCode();
+    private final boolean b2 = (b & (byte) hashCode() <<3) <0;
+    private char c = (char) (b <<__2L);
+    private final char c1 = (char) (hashCode() ^ hashCode() <<7);
+    private final char c2 = (char) (c1 <<13 ^ hashCode());
     private double d = c1 / c2;
     private float f = (float) (0xCABAC0DAABBAL * c * d / b - (c1 ^ c2));
     private int i = (int) d;
-    private long l = c2 + c1 * (b + i) << b;
-    private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
+    private long l = c2 + c1 * (b + i) <<b;
+    private short s = (short) ((i ^ l) * (1L * c1 ^ c2 <<0xF) / d);
     private final String str = "string";
 
     @Test public void assingment1() {
@@ -127,7 +127,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void axiomBoolean3() {
-      azzert.that(Axiom.type(5 > 6 && 8 != 14), is(BOOLEAN));
+      azzert.that(Axiom.type(5> 6 && 8 != 14), is(BOOLEAN));
     }
 
     @Test public void axiomByte() {
@@ -700,7 +700,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void context12() {
-      final InfixExpression e = az.infixExpression(into.e("x < 7"));
+      final InfixExpression e = az.infixExpression(into.e("x <7"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(INT));
     }
@@ -718,7 +718,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void context15() {
-      final InfixExpression e = az.infixExpression(into.e("y > 7.3"));
+      final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(DOUBLE));
     }
@@ -855,7 +855,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void makeSureIUnderstandSemanticsOfShift() {
-      azzert.that(Axiom.type((short) 1 << 1L), is(INT));
+      azzert.that(Axiom.type((short) 1 <<1L), is(INT));
     }
 
     @Test public void methods1() {

@@ -103,10 +103,10 @@ public interface system {
   }
 
   static String format2(final double d) {
-    if (d < 0)
+    if (d <0)
       return "-" + format2(-d);
     final double p = 100 * d;
-    return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
+    return "%" + (p <0.01 ? ".0f" : p <0.1 ? ".2f" : p <1 || p <10 ? ".1f" : p <100 || p <1000 ? ".0f" : "5.0g");
   }
 
   static double round3(final double ¢) {
@@ -127,12 +127,12 @@ public interface system {
     if (d == 0)
       return -1;
     final double log = Math.log10(d);
-    return log < 0 ? 0 : (int) log + 1;
+    return log <0 ? 0 : (int) log + 1;
   }
 
   static String format3(final double d) {
     final double fraction = d - (int) d;
-    if (d == 0 || d >= 1 && fraction < 0.0005)
+    if (d == 0 || d>= 1 && fraction <0.0005)
       return "%.0f";
     switch (digits(round3(d))) {
       case -1:
@@ -152,6 +152,6 @@ public interface system {
   }
 
   static Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
+    return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 }

@@ -304,10 +304,10 @@ public final class subject {
     public InfixExpression to(final InfixExpression.Operator o) {
       assert !operands.isEmpty();
       assert operands.size() != 1;
-      assert operands.size() >= 2;
+      assert operands.size()>= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
       for (int ¢ = 2;; extendedOperands($).add(make.plant(operands.get(¢++)).into($)))
-        if (¢ >= operands.size())
+        if (¢>= operands.size())
           return $;
     }
   }

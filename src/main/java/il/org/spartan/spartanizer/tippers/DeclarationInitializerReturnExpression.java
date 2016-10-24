@@ -30,7 +30,7 @@ public final class DeclarationInitializerReturnExpression extends $VariableDecla
       return null;
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
-        || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+        || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue)> 0)
       return null;
     r.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);

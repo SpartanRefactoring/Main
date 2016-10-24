@@ -41,7 +41,7 @@ public class CommandLineApplicator extends Applicator {
     // }
     runContext().accept(() -> {
       final int l = passes();
-      for (int pass = 0; pass < l; ++pass) {
+      for (int pass = 0; pass <l; ++pass) {
         final List<CompilationUnit> alive = new LinkedList<>();
         alive.addAll(getSelection().getCompilationUnits());
         @SuppressWarnings("unused") final List<CompilationUnit> dead = new LinkedList<>();
