@@ -18,10 +18,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dor Ma'ayan
  * @since 2016 */
-abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
+public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
-      m2);
+  static final Comparator<IExtendedModifier> comp = (m1, m2) -> IExtendedModifiersOrdering.compare(m1, m2);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
     IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
@@ -47,7 +46,14 @@ abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(Collectors.toList());
+    return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
+  }
+
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {
+    for (int i = 0; i < ms.size(); ++i)
+      while (i < ms.size() + 1 && comp.compare(ms.get(i), ms.get(i + 1)) == 0)
+        ms.remove(i + 1);
+    return ms;
   }
 
   @Override public String description(final N ¢) {
@@ -63,8 +69,8 @@ abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
     final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
+    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
