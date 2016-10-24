@@ -61,10 +61,8 @@ public interface hop {
   }
 
   static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
-    for (ASTNode $ = parent(¢); $ != null; $ = parent($))
-      if (iz.bodyDeclaration($))
-        return (BodyDeclaration) $;
-    return null;
+    final BodyDeclaration $ = searchAncestors.forClass(BodyDeclaration.class).from(¢);
+    return $;
   }
 
   /** @param root the node whose children we return
@@ -93,24 +91,11 @@ public interface hop {
     return null;
   }
 
-  /** @param n the node from which to extract the proper fragment
-   * @param x the name by which to look for the fragment
-   * @return fragment if such with the given name exists or null otherwise (or
-   *         if ¢ or name are null) */
-  // TODO Yossi Gil: this seems a bug
-  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
-    return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
-        : correspondingVariableDeclarationFragment((VariableDeclarationStatement) n, (SimpleName) x);
-  }
-
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    ASTNode parent = parent(¢);
-    while (parent.getNodeType() != ASTNode.METHOD_DECLARATION) {
-      if (parent instanceof CompilationUnit)
-        return null;
-      parent = parent.getParent();
-    }
-    return ((MethodDeclaration) parent).getName() + "";
+    final MethodDeclaration $ = searchAncestors.forClass(MethodDeclaration.class).from(¢);
+    if (null == $)
+      return null;
+    return $.getName().toString();
   }
 
   static SimpleName lastComponent(final Name ¢) {
