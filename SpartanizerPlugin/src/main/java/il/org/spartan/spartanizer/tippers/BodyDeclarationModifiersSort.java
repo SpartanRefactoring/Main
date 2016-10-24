@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
 import java.util.stream.*;
@@ -11,13 +11,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
  * @author Alex Kopzon
  * @author Dor Ma'ayan
  * @since 2016 */
-public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
+abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
   static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
       m2);
