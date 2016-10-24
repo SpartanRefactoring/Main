@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.io.*;
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 
 /** A configurable version of the GUIBatchLaconizer that relies on
@@ -37,6 +38,18 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
     } catch (final FileNotFoundException x) {
       x.printStackTrace();
     }
+    
+    // Matteo: Please do not delete the following instructions. 
+    // They are needed to instantiate report in commandline classes
+    
+    try {
+      report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      System.err.println("problem in setting up reports");
+    }
+
   }
 
   @Override public void apply() {
