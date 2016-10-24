@@ -10,8 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
-@Ignore
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue230 {
   @Test public void a() {
@@ -33,7 +32,7 @@ public class Issue230 {
 
   @Test public void a2() {
     trimmingOf("@Nullable private T value = null;")//
-    .stays();
+        .stays();
   }
 
   @Test public void a3() {
