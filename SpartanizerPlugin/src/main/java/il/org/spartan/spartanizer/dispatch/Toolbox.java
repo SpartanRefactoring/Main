@@ -104,6 +104,7 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(Modifier.class, new RedundantModifier())//
         .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
@@ -174,7 +175,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
-            new MethodDeclarationModifiersRedundant(), //
+            // new MethodDeclarationModifiersRedundant(), //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             null)
@@ -221,14 +222,15 @@ public class Toolbox {
             new TernaryPushdownStrings(), //
             null) //
         .add(TypeDeclaration.class, //
-            new TypeRedundantModifiers(), //
+            // new TypeRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
-            new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
+            // new EnumRedundantModifiers(), //
+            new BodyDeclarationModifiersSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
-            new FieldRedundantModifiers(), //
+            // new FieldRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofField(), //
             null) //
         .add(CastExpression.class, //
@@ -236,7 +238,7 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new EnumConstantRedundantModifiers(), //
+            // new EnumConstantRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
@@ -245,7 +247,8 @@ public class Toolbox {
             null) //
         .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), //
             null) //
-        .add(VariableDeclarationFragment.class, new DeclarationRedundantInitializer(), //
+        .add(VariableDeclarationFragment.class, //
+            new DeclarationRedundantInitializer(), //
             new DeclarationAssignment(), //
             new DeclarationInitialiazelUpdateAssignment(), //
             new DeclarationInitializerIfAssignment(), //
