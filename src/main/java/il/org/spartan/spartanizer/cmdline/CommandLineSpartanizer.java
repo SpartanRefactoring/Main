@@ -10,7 +10,7 @@ import il.org.spartan.plugin.*;
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSpartanizer extends AbstractSpartanizer {
+public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   private CommandLineSelection selection;
   // private final boolean shouldRun = false;
   private final boolean applyToEntireProject = false;
