@@ -15,7 +15,7 @@ abstract class HidingDepth extends ScopeManager {
   private int hideDepth = Integer.MAX_VALUE;
 
   boolean hidden() {
-    return depth >= hideDepth;
+    return depth>= hideDepth;
   }
 
   void hide() {
@@ -23,7 +23,7 @@ abstract class HidingDepth extends ScopeManager {
   }
 
   @Override void pop() {
-    if (--depth < hideDepth)
+    if (--depth <hideDepth)
       hideDepth = Integer.MAX_VALUE;
   }
 

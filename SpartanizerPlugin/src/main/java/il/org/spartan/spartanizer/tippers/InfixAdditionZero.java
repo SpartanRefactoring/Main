@@ -95,7 +95,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
 
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
-    if (es.size() < 2)
+    if (es.size() <2)
       return null;
     final int n = minus.level(es);
     if (n == 0 || n == 1 && minus.level(first(es)) == 1)
@@ -106,7 +106,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
-          if (¢ != first && minus.level(¢) > 0)
+          if (¢ != first && minus.level(¢)> 0)
             r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);

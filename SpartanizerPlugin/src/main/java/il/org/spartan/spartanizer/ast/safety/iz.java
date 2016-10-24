@@ -211,7 +211,7 @@ public interface iz {
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
     return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
+    })> 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {
@@ -371,7 +371,7 @@ public interface iz {
 
   // TODO Yossi: Move to lisp
   static int index(final int i, final int... is) {
-    for (int $ = 0; $ < is.length; ++$)
+    for (int $ = 0; $ <is.length; ++$)
       if (is[$] == i)
         return $;
     return -1;

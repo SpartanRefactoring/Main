@@ -326,43 +326,43 @@ import il.org.spartan.spartanizer.engine.Collect.*;
   }
 
   @Test public void forLoop() {
-    azzert.that(nCount("for (int a = n; a < n; a++);"), is(2));
+    azzert.that(nCount("for (int a = n; a <n; a++);"), is(2));
   }
 
   @Test public void forLoop0() {
-    azzert.that(nCount("for (int a = 2; a < 2; a++);"), is(0));
+    azzert.that(nCount("for (int a = 2; a <2; a++);"), is(0));
   }
 
   @Test public void forLoop1() {
-    azzert.that(nCount("for (int a = n; a < 2; a++);"), is(1));
+    azzert.that(nCount("for (int a = n; a <2; a++);"), is(1));
   }
 
   @Test public void forLoop1A() {
-    azzert.that(nCount("for (int a = n * n + n; a < 2; a++);"), is(3));
+    azzert.that(nCount("for (int a = n * n + n; a <2; a++);"), is(3));
   }
 
   @Test public void forLoop2() {
-    azzert.that(nCount("for (int a = 1; a < n; a=1);"), is(1));
+    azzert.that(nCount("for (int a = 1; a <n; a=1);"), is(1));
   }
 
   @Test public void forLoop3() {
-    azzert.that(nCount("for (int a = 1; a < 2; a=n);"), is(1));
+    azzert.that(nCount("for (int a = 1; a <2; a=n);"), is(1));
   }
 
   @Test public void forLoop4() {
-    azzert.that(nCount("for (int a = 1; a < 2; a++) a=n;"), is(1));
+    azzert.that(nCount("for (int a = 1; a <2; a++) a=n;"), is(1));
   }
 
   @Test public void forLoop5() {
-    azzert.that(nCount("for (int a = 1; a < 2; a++) a=2; a = n;"), is(1));
+    azzert.that(nCount("for (int a = 1; a <2; a++) a=2; a = n;"), is(1));
   }
 
   @Test public void forLoop6() {
-    azzert.that(nCount("int a = n; for (int a = 1; a < 2; a++) a=2; a = 1;"), is(1));
+    azzert.that(nCount("int a = n; for (int a = 1; a <2; a++) a=2; a = 1;"), is(1));
   }
 
   @Test public void forLoop7() {
-    azzert.that(nCount("int a = 2; for (int a = 1; a < 2; a++) { a=2; } a = n;"), is(1));
+    azzert.that(nCount("int a = 2; for (int a = 1; a <2; a++) { a=2; } a = n;"), is(1));
   }
 
   @Test public void forLoopEnhanced0() {

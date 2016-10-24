@@ -48,8 +48,8 @@ import il.org.spartan.spartanizer.engine.*;
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
     final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
-    if ($.indexOf(testKeyword) > 0)
-      $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
+    if ($.indexOf(testKeyword)> 0)
+      $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n")> 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
   }
 
@@ -108,7 +108,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   private static StringBuilder deleteTestKeyword(final StringBuilder $) {
-    if ($.indexOf(testKeyword) > 0)
+    if ($.indexOf(testKeyword)> 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
   }

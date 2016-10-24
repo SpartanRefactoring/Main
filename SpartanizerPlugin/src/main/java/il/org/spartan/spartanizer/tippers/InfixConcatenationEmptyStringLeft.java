@@ -34,7 +34,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
   private static <T> List<T> swap(final List<T> ts, final int i1, final int i2) {
-    if (i1 < ts.size() && i2 < ts.size()) {
+    if (i1 <ts.size() && i2 <ts.size()) {
       final T t = ts.get(i1);
       lisp.replace(ts, ts.get(i2), i1);
       lisp.replace(ts, t, i2);

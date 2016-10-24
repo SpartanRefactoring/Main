@@ -69,7 +69,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);
-    if (addedSize - removalSaving > 0)
+    if (addedSize - removalSaving> 0)
       return null;
     r.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);

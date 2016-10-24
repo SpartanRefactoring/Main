@@ -149,7 +149,7 @@ public interface hop {
     if (b == null)
       return null;
     final List<Statement> statements = statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
+    return statements.indexOf(s) <1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
   /** @param ¢ JD

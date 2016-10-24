@@ -201,7 +201,7 @@ import il.org.spartan.plugin.*;
         int totalTips = 0;
         final List<ICompilationUnit> deadCompilationUnits = new ArrayList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
-        for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
+        for (pass = 0; pass <passesCount && !finish(pm); ++pass) {
           pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
           final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), deadCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {

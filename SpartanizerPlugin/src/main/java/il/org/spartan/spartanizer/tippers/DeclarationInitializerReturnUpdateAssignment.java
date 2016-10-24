@@ -50,7 +50,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends $Variabl
       return null;
     final Expression newReturnValue = assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue)> 0)
       return null;
     r.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

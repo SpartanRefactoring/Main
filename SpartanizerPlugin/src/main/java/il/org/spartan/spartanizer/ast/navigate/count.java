@@ -52,7 +52,7 @@ public interface count {
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
         if (iz.nodeTypeEquals(¢, BLOCK)) {
-          if (extract.statements(¢).size() > 1)
+          if (extract.statements(¢).size()> 1)
             ++a.inner;
         } else if (!iz.nodeTypeEquals(¢, EMPTY_STATEMENT))
           if (iz.nodeTypeIn(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT))

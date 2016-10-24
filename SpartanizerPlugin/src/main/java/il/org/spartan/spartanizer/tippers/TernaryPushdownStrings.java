@@ -49,7 +49,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     assert s1.length() <= s2.length();
     if (s1.length() == 0)
       return 0;
-    for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
+    for (int $ = 0, ¢ = 0; ¢ <s1.length(); ++¢) {
       if (!Character.isAlphabetic(first(s1, ¢)) && !Character.isAlphabetic(first(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(first(s2, ¢)))
         $ = first(s1, ¢) != first(s2, ¢) ? ¢ : ¢ + 1;
@@ -85,7 +85,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     assert s1.length() <= s2.length();
     if (s1.length() == 0)
       return 0;
-    for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
+    for (int $ = 0, ¢ = 0; ¢ <s1.length(); ++¢) {
       if (!Character.isAlphabetic(last(s1, ¢)) && !Character.isAlphabetic(last(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(last(s2, ¢)))
         $ = last(s1, ¢) != last(s2, ¢) ? ¢ : ¢ + 1;
@@ -113,7 +113,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> es = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(first(es));
     assert l != null;
-    assert l.getLiteralValue().length() >= i;
+    assert l.getLiteralValue().length()>= i;
     final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, x);
     replaceFirst(es, suffix);
     return subject.operands(es).to(PLUS2);
@@ -124,7 +124,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> es = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(last(es));
     assert l != null;
-    assert l.getLiteralValue().length() >= i : fault.dump() + //
+    assert l.getLiteralValue().length()>= i : fault.dump() + //
         "\n x = " + x + //
         "\n i = " + i + //
         "\n es = " + es + //
@@ -136,7 +136,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static String shorter(final String s1, final String s2) {
-    return s1.length() > s2.length() ? s2 : s1;
+    return s1.length()> s2.length() ? s2 : s1;
   }
 
   private static Expression simplify(final Expression condition, final InfixExpression then, final InfixExpression elze) {

@@ -169,7 +169,7 @@ public interface idiomatic {
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
    * @author Yossi Gil
-   * @param < T > JD
+   * @param <T> JD
    * @since 2016` */
   @FunctionalInterface interface Producer<T> {
     /** @return next value provided by this instance
