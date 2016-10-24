@@ -8,25 +8,32 @@ import il.org.spartan.plugin.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
- * @param EventListener<event>
  * @since 2016 */
 public class CommandLineApplicator extends Applicator {
+  
   private static final int PASSES_FEW = 1;
-  private CommandLineSelection selection;
   GUIBatchLaconizer gUIBatchLaconizer;
 
-  /** Initialize the selection of this applicator.
-   * @param ¢ JD
-   * @return this applicator */
-  public Applicator selection(final CommandLineSelection ¢) {
-    selection = ¢;
-    return this;
+  private void foo1(){
+   selection(new CommandLineSelection(null, "selection"));
+  }
+  
+  private void foo2(){
+    CommandLineSelection sel = (CommandLineSelection) selection();
   }
 
+//  /** Initialize the selection of this applicator.
+//   * @param ¢ JD
+//   * @return this applicator */
+//  public Applicator selection(final AbstractSelection<?> ¢) {
+//    selection = ¢;
+//    return this;
+//  }
+
   // TODO Matteo: change selection() in Applicator to return AbstractSelection?
-  public CommandLineSelection getSelection() {
-    return selection;
-  }
+//  public CommandLineSelection getSelection() {
+//    return selection;
+//  }
 
   /* (non-Javadoc)
    *
@@ -43,7 +50,7 @@ public class CommandLineApplicator extends Applicator {
       final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
         final List<CompilationUnit> alive = new LinkedList<>();
-        alive.addAll(getSelection().getCompilationUnits());
+        alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
         @SuppressWarnings("unused") final List<CompilationUnit> dead = new LinkedList<>();
         for (final CompilationUnit ¢ : alive)
           System.out.println(¢);
@@ -73,13 +80,13 @@ public class CommandLineApplicator extends Applicator {
     // TODO Matteo: Auto-generated method stub
   }
 
-  /** Initialize the selection of this applicator.
-   * @param s JD
-   * @return this applicator */
-  public CommandLineApplicator setSelection(final CommandLineSelection $) {
-    selection = $;
-    return this;
-  }
+//  /** Initialize the selection of this applicator.
+//   * @param s JD
+//   * @return this applicator */
+//  public CommandLineApplicator setSelection(final CommandLineSelection $) {
+//    selection = $;
+//    return this;
+//  }
 
   /** @return this */
   private CommandLineApplicator defaultRunContext() {
@@ -132,7 +139,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** @param ¢ JD
    * @return */
-  public CommandLineApplicator defaultSelection(final CommandLineSelection ¢) {
+  public CommandLineApplicator defaultSelection(final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
@@ -140,4 +147,8 @@ public class CommandLineApplicator extends Applicator {
   // public CommandLineSelection selection() {
   // return this.selection;
   // }
+
+  public Applicator defaultListenerNoisy() {
+    return null;
+  }
 }
