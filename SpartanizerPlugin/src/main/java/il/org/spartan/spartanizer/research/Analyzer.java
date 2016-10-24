@@ -94,8 +94,8 @@ public class Analyzer {
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
-   * the spartanizer.
-   * @param ¢ our spartanizer
+   * the gUIBatchLaconizer.
+   * @param ¢ our gUIBatchLaconizer
    * @return */
   private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
     return ¢
