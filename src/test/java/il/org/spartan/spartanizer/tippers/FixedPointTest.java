@@ -50,7 +50,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test(timeout = 2000) public void desiredSimplificationOfExample() {
-    assertSimplifiesTo("on * notion * of * no * nothion < the * plain + kludge", "no*of*on*notion*nothion<kludge+the*plain");
+    assertSimplifiesTo("on * notion * of * no * nothion <the * plain + kludge", "no*of*on*notion*nothion<kludge+the*plain");
   }
 
   @Test(timeout = 2000) public void eliminateRedundantIf1() {
@@ -115,13 +115,13 @@ import il.org.spartan.spartanizer.utils.*;
     trimmingOf(
         "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else  if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
             .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i < s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i <s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")
             .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$-=1; return $;}")
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$-=1; return $;}")
             .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$--; return $;}")
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$--; return $;}")
             .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')--$; return $;}");
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')--$; return $;}");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
@@ -143,29 +143,29 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst13() {
-    assertConvertsTo("    int a = 0;\n" + "    if (a > 0)\n" + "      return 6;\n" + "    else {\n" + "      int b = 9;\n" + "      b *= b;\n"
+    assertConvertsTo("    int a = 0;\n" + "    if (a> 0)\n" + "      return 6;\n" + "    else {\n" + "      int b = 9;\n" + "      b *= b;\n"
         + "      return b;\n" + "    }\n" + "    ;", "return 0>0?6:81;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst14() {
-    assertConvertsTo("    int a = 0;\n" + "    if (a > 0) {\n" + "      int b = 9;\n" + "      b *= b;\n" + "      return 6;\n" + "    } else {\n"
+    assertConvertsTo("    int a = 0;\n" + "    if (a> 0) {\n" + "      int b = 9;\n" + "      b *= b;\n" + "      return 6;\n" + "    } else {\n"
         + "      int a = 5;\n" + "      return b;\n" + "    }", "return 0>0?6:b;");
   }
 
   @Test(timeout = 2000) public void shortestOperand03() {
-    assertConvertsTo("k = k * 4;if (1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9 > 4+k) return true;", "k*=4;if(k+4<61)return true;");
+    assertConvertsTo("k = k * 4;if (1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9> 4+k) return true;", "k*=4;if(k+4<61)return true;");
   }
 
   @Test(timeout = 2000) public void shortestOperand04() {
-    assertConvertsTo("return (1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1);", "return(3<3&11>3||-1<3);");
+    assertConvertsTo("return (1 + 2 <3 & 7 + 4> 2 + 1 || 6 - 7 <2 + 1);", "return(3<3&11>3||-1<3);");
   }
 
   @Test(timeout = 2000) public void shortestOperand07() {
-    assertConvertsTo("int y,o,g,i,s;return ( y + o + s > s + i |  g > 42);", "int y,o,g,i,s;return(g>42|o+s+y>i+s);");
+    assertConvertsTo("int y,o,g,i,s;return ( y + o + s> s + i |  g> 42);", "int y,o,g,i,s;return(g>42|o+s+y>i+s);");
   }
 
   @Test(timeout = 2000) public void shortestOperand08() {
-    assertConvertsTo("if (bob.father.age > 42 && bob.mother.father.age > bob.age ) return true; else return false;",
+    assertConvertsTo("if (bob.father.age> 42 && bob.mother.father.age> bob.age ) return true; else return false;",
         "return bob.father.age>42&&bob.mother.father.age>bob.age;");
   }
 
@@ -178,7 +178,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 6 < -1");
+    assertSimplifiesTo("1 + 2  + 3 + a <3 -4", "a + 6 <-1");
   }
 
   @Test(timeout = 2000) public void ternarize01() {
@@ -241,8 +241,8 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test(timeout = 2000) public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ < size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
-            + "   else\n" + "     for (int ¢=0; ¢ < size; ¢++){\n" + "       S.out.l('f',¢);\n" + "     }",
+        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
+            + "   else\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       S.out.l('f',¢);\n" + "     }",
         "if(m.equals(153))" + "for(int ¢=0;¢<17;++¢)sum += ¢;\n" + "else " + "  for(int ¢=0;¢<17;++¢) " + "S.out.l('f',¢);");
   }
 

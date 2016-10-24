@@ -36,15 +36,15 @@ public class Issue312 {
   }
 
   @Test public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .gives("for (int i = 0; i < 100;  ++i) b[i] = f();")//
-        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();")//
+    trimmingOf("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
+        .gives("for (int i = 0; i <100;  ++i) b[i] = f();")//
+        .gives("for (int ¢ = 0; ¢ <100;  ++¢) b[¢] = f();")//
         .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;")//
-        .gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;")//
+    trimmingOf("for (int s = i++; i <10; ++s) sum+=s;")//
+        .gives("for (int ¢ = i++; i <10; ++¢) sum+=¢;")//
         .stays();
   }
 
@@ -53,6 +53,6 @@ public class Issue312 {
   }
 
   @Test public void refactorUtilBug() {
-    trimmingOf("for (; i.length() < s.length();)" + "i = \" \" + i;").stays();
+    trimmingOf("for (; i.length() <s.length();)" + "i = \" \" + i;").stays();
   }
 }

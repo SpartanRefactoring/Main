@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
+  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
 
