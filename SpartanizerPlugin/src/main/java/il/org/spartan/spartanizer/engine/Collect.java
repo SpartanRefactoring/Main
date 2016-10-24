@@ -482,8 +482,8 @@ public enum Collect {
       return new ArrayList<>();
     }
 
-    public final List<SimpleName> in(final List<? extends ASTNode> ns) {
-      return in(ns.toArray(new ASTNode[ns.size()]));
+    public final List<SimpleName> in(final List<? extends ASTNode> ¢) {
+      return in(¢.toArray(new ASTNode[¢.size()]));
     }
 
     Collector(final String name) {
