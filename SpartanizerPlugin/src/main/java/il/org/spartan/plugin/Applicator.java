@@ -103,7 +103,7 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-  
+
   public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
