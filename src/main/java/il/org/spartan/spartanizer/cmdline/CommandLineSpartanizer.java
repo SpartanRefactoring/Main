@@ -5,7 +5,7 @@ import java.util.*;
 
 import il.org.spartan.plugin.*;
 
-/** A configurable version of the Spartanizer that relies on
+/** A configurable version of the GUIBatchLaconizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
