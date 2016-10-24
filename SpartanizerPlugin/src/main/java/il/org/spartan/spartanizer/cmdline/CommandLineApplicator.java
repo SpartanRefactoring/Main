@@ -138,8 +138,10 @@ public class CommandLineApplicator extends Applicator {
 
   /** @return this */
   private Applicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection();
-    // .defaultRunAction(new Trimmer()); ???
+    return defaultListenerSilent().defaultPassesFew()
+                                  .defaultRunContext()
+                                  .defaultSelection()
+                                  .defaultRunAction(new Spartanizer$Applicator());
   }
 
   /* (non-Javadoc)
@@ -165,6 +167,6 @@ public class CommandLineApplicator extends Applicator {
         // dead.add(¢);
       }
     });
-    // System.err.println("go go go!");
+    System.err.println("go go go!");
   }
 }
