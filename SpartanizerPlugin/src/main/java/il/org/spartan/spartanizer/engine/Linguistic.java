@@ -22,7 +22,7 @@ public interface Linguistic {
    * @return cut string [[SuppressWarningsSpartan]] */
   static String trim(final String ¢) {
     final String[] rows = ¢.split("\n");
-    for (int i = 0; i <rows.length; ++i)
+    for (int i = 0; i < rows.length; ++i)
       rows[i] = trimAbsolute(rows[i], TRIM_THRESHOLD, TRIM_SUFFIX);
     return String.join("\n", rows);
   }
@@ -33,7 +33,7 @@ public interface Linguistic {
    * @param x replacement suffix string
    * @return cut string */
   static String trimAbsolute(final String s, final int l, final String x) {
-    assert l - x.length()>= 0;
+    assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 

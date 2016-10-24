@@ -57,11 +57,11 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     @SuppressWarnings("unused") final List<Operator> allOperators = extract.allOperators(x);
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int ¢ = 0; ¢ <ops.size(); ++¢)
+    for (int ¢ = 0; ¢ < ops.size(); ++¢)
       if (!iz.literal0(ops.get(¢)))
         ops2.add(ops.get(¢));
     InfixExpression $ = null;
-    for (int ¢ = 0; ¢ <ops2.size() - 1; ++¢)
+    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
@@ -84,11 +84,11 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int ¢ = 0; ¢ <ops.size(); ++¢)
+    for (int ¢ = 0; ¢ < ops.size(); ++¢)
       if (!iz.literal0(ops.get(¢)))
         ops2.add(ops.get(¢));
     InfixExpression $ = null;
-    for (int ¢ = 0; ¢ <ops2.size() - 1; ++¢)
+    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }

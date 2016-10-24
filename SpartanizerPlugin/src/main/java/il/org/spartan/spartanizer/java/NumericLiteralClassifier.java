@@ -41,9 +41,9 @@ public final class NumericLiteralClassifier {
       case 'P':
         return Primitive.Certain.DOUBLE;
       default:
-        if (literal.indexOf('.')>= 0)
+        if (literal.indexOf('.') >= 0)
           return Primitive.Certain.DOUBLE;
-        if (literal.indexOf('E')>= 0 || literal.indexOf('e')>= 0)
+        if (literal.indexOf('E') >= 0 || literal.indexOf('e') >= 0)
           return Primitive.Certain.DOUBLE;
         return Primitive.Certain.INT;
     }

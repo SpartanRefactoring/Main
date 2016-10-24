@@ -451,7 +451,7 @@ public interface wizard {
       return true;
     if (ns1.size() != ns2.size())
       return false;
-    for (int ¢ = 0; ¢ <ns1.size(); ++¢)
+    for (int ¢ = 0; ¢ < ns1.size(); ++¢)
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
@@ -465,7 +465,7 @@ public interface wizard {
         return false;
       }
     });
-    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x)> metrics.countStatements(y)
-        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size()> y.parameters().size() ? -1 : 1);
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
+        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
 }

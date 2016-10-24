@@ -72,7 +72,7 @@ public final class BatchSpartanizer {
 
   /** @param args */
   private static void parseCommandLineArgs(final String[] args) {
-    for (int ¢ = 0; ¢ <args.length;)
+    for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
         // System.out.println("OutputDir: " + outputDir);

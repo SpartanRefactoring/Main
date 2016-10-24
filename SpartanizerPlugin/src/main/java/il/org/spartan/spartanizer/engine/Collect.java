@@ -420,7 +420,7 @@ public enum Collect {
       }
 
       boolean repeated() {
-        return !lexicalOnly && loopDepth> 0;
+        return !lexicalOnly && loopDepth > 0;
       }
     };
   }
@@ -480,6 +480,10 @@ public enum Collect {
      * @return */
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return new ArrayList<>();
+    }
+
+    public final List<SimpleName> in(final List<? extends ASTNode> ns) {
+      return in(ns.toArray(new ASTNode[ns.size()]));
     }
 
     Collector(final String name) {

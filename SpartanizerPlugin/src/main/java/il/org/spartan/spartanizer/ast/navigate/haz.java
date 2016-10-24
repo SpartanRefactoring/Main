@@ -56,7 +56,7 @@ public enum haz {
   @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
     return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    })> 0;
+    }) > 0;
   }
 
   public static boolean dollar(final List<SimpleName> ns) {

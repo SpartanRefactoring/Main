@@ -323,7 +323,7 @@ public enum extract {
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ <ss.size() - 1; ++¢)
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
       if (ss.get(¢) == s)
         return ss.get(¢ + 1);
     return null;

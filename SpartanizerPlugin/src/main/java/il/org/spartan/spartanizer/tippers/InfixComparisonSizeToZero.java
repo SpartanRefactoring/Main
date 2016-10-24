@@ -48,7 +48,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (o == LESS_EQUALS)
       return replacement(LESS, threshold + 1, $);
     final AST ast = $.getAST();
-    if (threshold <0)
+    if (threshold < 0)
       return ast.newBooleanLiteral(!in(o, EQUALS, LESS));
     if (o == EQUALS)
       return threshold == 0 ? $ : null;

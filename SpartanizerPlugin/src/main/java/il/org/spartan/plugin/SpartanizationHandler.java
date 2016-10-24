@@ -79,7 +79,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       @Override public void push(final Object... ¢) {
         switch (++level) {
           case DIALOG_CREATION:
-            if ($.selection().size()>= DIALOG_THRESHOLD)
+            if ($.selection().size() >= DIALOG_THRESHOLD)
               if (!Dialogs.ok(Dialogs.message(separate.these(¢).by(Linguistic.SEPARATOR))))
                 $.stop();
               else {
@@ -158,7 +158,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             });
         })) //
         .expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
-          if ($.selection().size()>= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD)
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(¢.get(event.visit_root)))))
               $.stop();
             else {

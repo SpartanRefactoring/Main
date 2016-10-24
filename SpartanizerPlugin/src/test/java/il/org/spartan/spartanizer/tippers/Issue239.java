@@ -69,7 +69,7 @@ import il.org.spartan.spartanizer.engine.*;
             "  f1(i1,i2);\n"//
     )); //
     assert block != null;
-    assert count.nodes(block)> 10;
+    assert count.nodes(block) > 10;
     final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;
@@ -91,6 +91,6 @@ import il.org.spartan.spartanizer.engine.*;
     assert use != null;
     assert !haz.unknownNumberOfEvaluations(use, nextStatement);
     assert !DeclarationInitializerStatementTerminatingScope.never(name, nextStatement);
-    assert $VariableDeclarationFragementAndStatement.removalSaving(f)> 0;
+    assert $VariableDeclarationFragementAndStatement.removalSaving(f) > 0;
   }
 }

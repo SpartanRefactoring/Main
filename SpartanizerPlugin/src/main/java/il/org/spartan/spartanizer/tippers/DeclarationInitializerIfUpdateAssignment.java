@@ -52,7 +52,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends $VariableDec
       return null;
     final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer)> 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());

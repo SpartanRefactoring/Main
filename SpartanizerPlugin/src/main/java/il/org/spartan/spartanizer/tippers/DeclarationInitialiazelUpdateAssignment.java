@@ -47,7 +47,7 @@ public final class DeclarationInitialiazelUpdateAssignment extends $VariableDecl
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer)> 0)
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);

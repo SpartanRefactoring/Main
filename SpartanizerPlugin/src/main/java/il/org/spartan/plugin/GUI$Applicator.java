@@ -54,7 +54,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public boolean apply(final ICompilationUnit cu, final Range r) {
-    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()))> 0;
+    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
@@ -154,7 +154,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public int fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
     try {
       setICompilationUnit(cu);
-      setSelection(s != null && s.getLength()> 0 && !s.isEmpty() ? s : null);
+      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
@@ -249,7 +249,7 @@ public abstract class GUI$Applicator extends Refactoring {
    * @return <code><b>true</b></code> <em>iff</em>there are tipss which can be
    *         performed on the compilation unit. */
   public final boolean haveTips() {
-    return countTips()> 0;
+    return countTips() > 0;
   }
 
   /** @param m marker which represents the range to apply the tipper within
@@ -437,7 +437,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   private boolean isSelected(final int offset) {
-    return isTextSelected() && offset>= selection.getOffset() && offset <selection.getLength() + selection.getOffset();
+    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
   }
 
   protected boolean isTextSelected() {

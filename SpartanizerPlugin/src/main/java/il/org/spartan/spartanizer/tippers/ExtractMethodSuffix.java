@@ -38,7 +38,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   private static boolean isValid(final MethodDeclaration ¢) {
-    return !¢.isConstructor() && ¢.getBody() != null && ¢.getBody().statements().size()>= MINIMAL_STATEMENTS_COUNT;
+    return !¢.isConstructor() && ¢.getBody() != null && ¢.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
   }
 
   /** @param d JD
@@ -143,7 +143,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
         hasParamTags = true;
-        if (tagPosition <0)
+        if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
         if (!ns.contains(¢.fragments().get(0)))
           xs.add(¢);
@@ -219,7 +219,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     public boolean isOptionalForkPoint() {
-      return variablesTerminated> 0;// && active.isEmpty();
+      return variablesTerminated > 0;// && active.isEmpty();
     }
 
     public List<VariableDeclaration> usedVariables() {
@@ -229,7 +229,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (int ¢ = starting; ¢ <statements.size(); ++¢)
+      for (int ¢ = starting; ¢ < statements.size(); ++¢)
         setUsesMapping(d, statements.get(¢));
     }
 

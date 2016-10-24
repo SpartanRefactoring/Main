@@ -1377,7 +1377,7 @@ public final class Version230 {
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = count.nodes(e1)> count.nodes(e2) + NODES_THRESHOLD;
+    final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
@@ -1399,7 +1399,7 @@ public final class Version230 {
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = count.nodes(e1)> count.nodes(e2) + NODES_THRESHOLD;
+    final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
@@ -2929,8 +2929,8 @@ public final class Version230 {
   @Test public void shortestIfBranchFirst02b() {
     trimmingOf("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
         + "        else " + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")
-            .gives("      int res = 0;\n" + "      for (int ¢ = 0;¢ <s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n"
-                + "          res += 2;\n" + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n")
+            .gives("      int res = 0;\n" + "      for (int ¢ = 0;¢ <s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n"
+                + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n")
             .stays();
   }
 

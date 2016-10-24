@@ -42,7 +42,7 @@ public class MockApplication implements IApplication {
 
   /** @param u */
   private void processCU(final ICompilationUnit u) {
-    for (int i = 0; i <optRounds; ++i) {
+    for (int i = 0; i < optRounds; ++i) {
       final int n = new LaconizeProject().countTips();
       if (n == 0)
         break;
