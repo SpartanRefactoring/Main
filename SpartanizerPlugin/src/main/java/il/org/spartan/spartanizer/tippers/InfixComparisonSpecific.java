@@ -34,7 +34,7 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
   }
 
   @Override public boolean prerequisite(final InfixExpression ¢) {
-    return specifity.compare(left(¢), right(¢)) < 0 && !¢.hasExtendedOperands() && iz.comparison(¢)
+    return specifity.compare(left(¢), right(¢)) <0 && !¢.hasExtendedOperands() && iz.comparison(¢)
         && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 

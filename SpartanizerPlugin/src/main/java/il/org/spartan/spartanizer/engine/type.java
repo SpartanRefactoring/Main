@@ -199,7 +199,7 @@ public interface type {
         return false;
       final NumberLiteral l = az.numberLiteral(x);
       final int n = Integer.parseInt(step.token(l));
-      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
+      return n <Short.MAX_VALUE && n> Short.MIN_VALUE;
     }
 
     private static implementation lookDown(final Assignment x) {
@@ -267,7 +267,7 @@ public interface type {
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
-      assert es.size() >= 2;
+      assert es.size()>= 2;
       implementation $ = get(first(es));
       for (final Expression ¢ : rest(es))
         $ = $.underBinaryOperator(o, get(¢));

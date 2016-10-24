@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.annotation.*;
       String y;
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
-        for (int ¢ = 0; ¢ < 10; ++¢, x = ¢)
+        for (int ¢ = 0; ¢ <10; ++¢, x = ¢)
           ;
       }
 
@@ -400,7 +400,7 @@ import il.org.spartan.spartanizer.annotation.*;
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 
           @Override public boolean hasNext() {
-            return currentIndex < currentSize && arrayList[currentIndex] != null;
+            return currentIndex <currentSize && arrayList[currentIndex] != null;
           }
 
           @Override public Type next() {

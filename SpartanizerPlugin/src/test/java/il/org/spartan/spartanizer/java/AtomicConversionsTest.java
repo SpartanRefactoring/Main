@@ -11,11 +11,11 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = getClass().equals(getClass());
-  private final boolean b2 = !b1 | b << b == (b & 1);
+  private final boolean b2 = !b1 | b <<b == (b & 1);
   private char c = 'c';
   private double d = Math.sin(b * c);
   private float f = (float) Math.cos(d);
-  private int i = c ^ hashCode() << (b & 0xF);
+  private int i = c ^ hashCode() <<(b & 0xF);
   private final long l = 1L * (i + "").hashCode() * new Object().hashCode();
   private short s = (short) (i * (l % i * (b + c)));
   private final Object o = getClass().getClassLoader().getClass();
@@ -82,60 +82,60 @@ import il.org.spartan.spartanizer.engine.*;
 
   @Test public void shift2() {
     assert atomic.isByte(b);
-    assert !atomic.isByte(b << l);
-    assert !atomic.isShort(b << l);
+    assert !atomic.isByte(b <<l);
+    assert !atomic.isShort(b <<l);
     assert atomic.isShort(s);
-    assert atomic.isInt(b << l);
-    assert !atomic.isChar(c << l);
-    assert !atomic.isShort(c << l);
-    assert atomic.isInt(c << i);
-    assert atomic.isLong(c << l);
-    assert atomic.isInt(c << i);
-    assert atomic.isInt(i << l);
-    assert atomic.isLong(l << l);
+    assert atomic.isInt(b <<l);
+    assert !atomic.isChar(c <<l);
+    assert !atomic.isShort(c <<l);
+    assert atomic.isInt(c <<i);
+    assert atomic.isLong(c <<l);
+    assert atomic.isInt(c <<i);
+    assert atomic.isInt(i <<l);
+    assert atomic.isLong(l <<l);
   }
 
   @Test public void shiftByByte() {
-    assert atomic.isInt(b << b);
-    assert atomic.isInt(s << b);
-    assert atomic.isInt(c << b);
-    assert atomic.isInt(i << b);
+    assert atomic.isInt(b <<b);
+    assert atomic.isInt(s <<b);
+    assert atomic.isInt(c <<b);
+    assert atomic.isInt(i <<b);
   }
 
   @Test public void shiftByChar() {
-    assert atomic.isInt(b << c);
-    assert atomic.isInt(s << c);
-    assert atomic.isInt(c << c);
-    assert atomic.isInt(i << c);
+    assert atomic.isInt(b <<c);
+    assert atomic.isInt(s <<c);
+    assert atomic.isInt(c <<c);
+    assert atomic.isInt(i <<c);
   }
 
   @Test public void shiftByInt() {
-    assert atomic.isInt(b << i);
-    assert atomic.isInt(s << i);
-    assert atomic.isInt(c << i);
-    assert atomic.isInt(i << i);
+    assert atomic.isInt(b <<i);
+    assert atomic.isInt(s <<i);
+    assert atomic.isInt(c <<i);
+    assert atomic.isInt(i <<i);
   }
 
   @Test public void shiftByLong() {
-    assert atomic.isInt(b << l);
-    assert atomic.isInt(s << l);
-    assert atomic.isInt(c << l);
-    assert atomic.isInt(i << l);
+    assert atomic.isInt(b <<l);
+    assert atomic.isInt(s <<l);
+    assert atomic.isInt(c <<l);
+    assert atomic.isInt(i <<l);
   }
 
   @Test public void shiftByShort() {
-    assert atomic.isInt(b << s);
-    assert atomic.isInt(s << s);
-    assert atomic.isInt(c << s);
-    assert atomic.isInt(i << s);
+    assert atomic.isInt(b <<s);
+    assert atomic.isInt(s <<s);
+    assert atomic.isInt(c <<s);
+    assert atomic.isInt(i <<s);
   }
 
   @Test public void shiftOfLong() {
-    assert atomic.isLong(l << b);
-    assert atomic.isLong(l << c);
-    assert atomic.isLong(l << s);
-    assert atomic.isLong(l << i);
-    assert atomic.isLong(l << l);
+    assert atomic.isLong(l <<b);
+    assert atomic.isLong(l <<c);
+    assert atomic.isLong(l <<s);
+    assert atomic.isLong(l <<i);
+    assert atomic.isLong(l <<l);
   }
 
   @Test public void strings() {
@@ -143,8 +143,8 @@ import il.org.spartan.spartanizer.engine.*;
     assert atomic.isDouble(d + f);
     assert !atomic.isString(d + f);
     assert atomic.isString(d + "");
-    assert atomic.isLong(l << s);
-    assert atomic.isLong(l << i);
-    assert atomic.isLong(l << l);
+    assert atomic.isLong(l <<s);
+    assert atomic.isLong(l <<i);
+    assert atomic.isLong(l <<l);
   }
 }

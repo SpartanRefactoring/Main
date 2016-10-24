@@ -80,7 +80,7 @@ public class TestFactory {
         if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
           final String name = ((Name) ¢).getFullyQualifiedName();
           if (!renaming.containsKey(name))
-            if (name.charAt(0) < 'A' || name.charAt(0) > 'Z') {
+            if (name.charAt(0) <'A' || name.charAt(0)> 'Z') {
               id.set(renderIdentifier(id.get()));
               renaming.put(name, id.get());
             } else {

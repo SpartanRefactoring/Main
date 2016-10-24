@@ -27,7 +27,7 @@ import org.junit.runners.*;
   }
 
   @Test public void vanilla02() {
-    trimmingOf("for(int i = 2; i < xs.size(); ++i)step.extendedOperands($).add(duplicate.of(xs.get(i)));")
-        .gives("for(int ¢ = 2; ¢ < xs.size(); ++¢)step.extendedOperands($).add(duplicate.of(xs.get(¢)));").stays();
+    trimmingOf("for(int i = 2; i <xs.size(); ++i)step.extendedOperands($).add(duplicate.of(xs.get(i)));")
+        .gives("for(int ¢ = 2; ¢ <xs.size(); ++¢)step.extendedOperands($).add(duplicate.of(xs.get(¢)));").stays();
   }
 }

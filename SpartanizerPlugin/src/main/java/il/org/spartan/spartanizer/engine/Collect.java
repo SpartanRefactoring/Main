@@ -420,7 +420,7 @@ public enum Collect {
       }
 
       boolean repeated() {
-        return !lexicalOnly && loopDepth > 0;
+        return !lexicalOnly && loopDepth> 0;
       }
     };
   }

@@ -125,7 +125,7 @@ public enum make {
     $.setLeftOperand(duplicate.of(first(xs)));
     $.setRightOperand(duplicate.of(second(xs)));
     for (int ¢ = 2;; ++¢, extendedOperands($).add(duplicate.of(xs.get(¢))))
-      if (¢ >= xs.size())
+      if (¢>= xs.size())
         return $;
   }
 

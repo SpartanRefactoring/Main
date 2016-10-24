@@ -121,13 +121,13 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
             return;
           if (getRemoveButton().equals(x.widget)) {
             final int i = selection.index;
-            if (i >= 0) {
+            if (i>= 0) {
               final String r = selection.text;
               if (alive.contains(r)) {
                 alive.remove(r);
                 dead.add(r);
                 getAddButton().setEnabled(true);
-                if (getList().getItemCount() > 0)
+                if (getList().getItemCount()> 0)
                   selection.text = getList().getItem(selection.index);
                 else {
                   selection.index = -1;
@@ -143,7 +143,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
           if (x == null)
             return;
           selection.index = getList().getSelectionIndex();
-          if (selection.index >= 0 && selection.index < getList().getItemCount())
+          if (selection.index>= 0 && selection.index <getList().getItemCount())
             selection.text = getList().getItem(selection.index);
         }
       });

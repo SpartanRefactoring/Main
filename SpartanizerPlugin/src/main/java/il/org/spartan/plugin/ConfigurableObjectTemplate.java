@@ -51,12 +51,12 @@ public interface ConfigurableObjectTemplate {
           listeners().pop("we dare do nothing in robust mode");
           return 0;
         }
-        for (int i = 0, $ = 0; i < howMany; ++i) {
+        for (int i = 0, $ = 0; i <howMany; ++i) {
           listeners().tick("Iteration", Integer.valueOf(i), "of", Integer.valueOf(howMany));
           $ += fields.hashCode();
           $ *= in.hashCode();
           form.notify();
-          if ($ < 0) {
+          if ($ <0) {
             listeners().pop("overflow");
             return $;
           }

@@ -16,7 +16,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
-    for (int i = 0; i < natures.length; ++i)
+    for (int i = 0; i <natures.length; ++i)
       if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);

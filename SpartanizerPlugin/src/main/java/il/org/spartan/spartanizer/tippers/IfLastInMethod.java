@@ -42,7 +42,7 @@ public final class IfLastInMethod extends EagerTipper<IfStatement> implements Ti
   }
 
   @Override public Tip tip(final IfStatement s) {
-    if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
+    if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() <2)
       return null;
     final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null
