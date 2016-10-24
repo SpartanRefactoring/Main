@@ -461,14 +461,20 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = init(u);
     assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
+    final WrappedCompilationUnit u1 = u.build();
+    final CompilationUnit u2 = u1.compilationUnit;
+    final ASTRewrite r = createRewrite(u2, $);
     try {
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) { // assert unreachable():
       System.out.println(dump() + //
           "\n x=" + x + //
-          "\n counter=" + $ + //
+          "\n $=" + $ + //
           "\n u=" + u + //
           "\n u=" + u.name() + //
+          "\n u1=" + u1 + //
+          "\n u2=" + u2 + //
+          "\n r=" + r + //
           "\n textchange=" + textChange + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
           "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
