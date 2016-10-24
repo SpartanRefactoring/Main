@@ -43,14 +43,14 @@ import il.org.spartan.plugin.*;
   /** @param e JD
    * @return the applicator used by this refactorer
    *         [[SuppressWarningsSpartan]] */
-  public GUI$Applicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent e) {
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent e) {
     return null;
   }
 
   /** @param m JD
    * @return the applicator used by this refactorer
    *         [[SuppressWarningsSpartan]] */
-  public GUI$Applicator getApplicator(@SuppressWarnings("unused") final IMarker m) {
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker m) {
     return null;
   }
 
@@ -117,7 +117,7 @@ import il.org.spartan.plugin.*;
    * @param attributes JD
    * @return work to be done before running the refactorer main loop
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUI$Applicator applicator,
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator applicator,
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
@@ -127,7 +127,7 @@ import il.org.spartan.plugin.*;
    * @param attributes JD
    * @return work to be done after running the refactorer main loop
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUI$Applicator applicator,
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator applicator,
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
@@ -147,7 +147,7 @@ import il.org.spartan.plugin.*;
 
   private Void go(final ExecutionEvent e, final IMarker m) {
     final Selection selection = either(getSelection(), getSelection(m));
-    final GUI$Applicator applicator = either(getApplicator(e), getApplicator(m));
+    final AbstractGUIApplicator applicator = either(getApplicator(e), getApplicator(m));
     if (!valid(selection, applicator) || selection.inner.isEmpty())
       return null;
     final Map<attribute, Object> attributes = unknowns();
@@ -193,7 +193,7 @@ import il.org.spartan.plugin.*;
     return true;
   }
 
-  private IRunnableWithProgress runnable(final Selection s, final GUI$Applicator a, final Map<attribute, Object> attributes) {
+  private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
       @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
         final int passesCount = passesCount();
