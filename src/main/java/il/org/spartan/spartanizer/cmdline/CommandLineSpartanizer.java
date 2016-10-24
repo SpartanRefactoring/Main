@@ -58,7 +58,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
       selection.createSelectionFromProjectDir(inputPath);
     }
     if (entireProject)
-      CommandLineApplicator.defaultApplicator().defaultRunAction();
+      CommandLineApplicator.defaultApplicator().runAction();
     if (specificTipper)
       CommandLineApplicator.defaultApplicator();
   }
