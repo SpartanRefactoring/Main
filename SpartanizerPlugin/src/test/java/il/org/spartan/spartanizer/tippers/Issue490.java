@@ -70,9 +70,11 @@ public class Issue490 {
   }
 
   @Test public void report1() {
-    trimmingOf("int a(B b){if(b instanceof C){C<?>c=(C<?>)b;D<E<F,C<G>>>d=e.f().g().h();while(d.i()){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;} }}return false;}")//
-        .gives("int a(B b){if(b instanceof C){C<?>c=(C<?>)b;for(D<E<F,C<G>>>d=e.f().g().h();d.i();){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;}}}return false;}")//
-        ;
+    trimmingOf(
+        "int a(B b){if(b instanceof C){C<?>c=(C<?>)b;D<E<F,C<G>>>d=e.f().g().h();while(d.i()){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;} }}return false;}")//
+            .gives(
+                "int a(B b){if(b instanceof C){C<?>c=(C<?>)b;for(D<E<F,C<G>>>d=e.f().g().h();d.i();){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;}}}return false;}")//
+    ;
   }
 
   @Test public void report2() {
