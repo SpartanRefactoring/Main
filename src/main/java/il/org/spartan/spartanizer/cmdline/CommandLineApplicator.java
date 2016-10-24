@@ -13,7 +13,7 @@ import il.org.spartan.plugin.*;
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private CommandLineSelection selection;
-  SpartanizerOld spartanizer;
+  GUIBatchLaconizer gUIBatchLaconizer;
 
   /** Initialize the selection of this applicator.
    * @param ¢ JD
@@ -37,7 +37,7 @@ public class CommandLineApplicator extends Applicator {
     // List<CompilationUnit> list = getSelection().getCompilationUnits();
     // for(CompilationUnit cu: list){
     // System.err.println(cu);
-    // spartanizer.go(cu);
+    // gUIBatchLaconizer.go(cu);
     // }
     runContext().accept(() -> {
       final int l = passes();
@@ -92,7 +92,7 @@ public class CommandLineApplicator extends Applicator {
     passes(PASSES_FEW);
     return this;
   }
-  
+
   /** @return this */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
@@ -116,17 +116,17 @@ public class CommandLineApplicator extends Applicator {
   public CommandLineApplicator defaultRunAction() {
     // final Trimmer t = new Trimmer();
     final Spartanizer$Applicator s = new Spartanizer$Applicator();
-    runAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
+    setRunAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
     return this;
   }
 
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
-   * {@link Spartanizer$Applicator}.
+   * {@link GUIBatchLaconizer$Applicator}.
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
-    runAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     return this;
   }
 
