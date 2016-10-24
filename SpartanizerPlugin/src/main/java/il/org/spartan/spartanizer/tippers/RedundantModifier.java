@@ -1,8 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
-import java.util.*;
-import java.util.function.*;
-
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -21,11 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class RedundantModifier extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final Modifier ¢) {
-    return "Remove redundant [" + ¢ + "] modifier";
+    return "Eliminate redundant [" + ¢ + "] modifier";
   }
 
   @Override public String description() {
-    return "Remove redundant modifier";
+    return "Eliminate redundant modifier";
   }
 
   @Override public Tip tip(final Modifier ¢) {
@@ -38,8 +35,6 @@ public final class RedundantModifier extends CarefulTipper<Modifier> implements 
   }
 
   @Override public boolean prerequisite(final Modifier ¢) {
-    final BodyDeclaration d = az.bodyDeclaration(parent(¢));
-    final Set<Predicate<Modifier>> ps = wizard.redundancies(d);
-    return !ps.isEmpty() && !wizard.test(¢, ps);
+    return test(¢, redundancies(az.bodyDeclaration(parent(¢))));
   }
 }
