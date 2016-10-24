@@ -104,7 +104,7 @@ public abstract class Applicator {
     return this;
   }
   
-  public Applicator selection(final AbstractSelection ¢) {
+  public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }
