@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.java.Environment.*;
 
   @Test public void useTestUsesAndDefinitions2() {
     final Set<Map.Entry<String, Information>> $ = Environment
-        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i < 10; ++i)x+=i").get()));
+        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i <10; ++i)x+=i").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }

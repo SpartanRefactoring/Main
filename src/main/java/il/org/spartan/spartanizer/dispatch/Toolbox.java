@@ -23,25 +23,24 @@ import il.org.spartan.spartanizer.utils.*;
 public class Toolbox {
   @SuppressWarnings({ "unchecked" }) //
   static final Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType //
-      = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
-        static final long serialVersionUID = 1L;
-        {
-          for (int nodeType = 1;; ++nodeType)
-            try {
-              monitor.debug("Searching for " + nodeType);
-              final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-              monitor.debug("Found for " + nodeClassForType);
-              put(nodeClassForType, Integer.valueOf(nodeType));
-            } catch (final IllegalArgumentException x) {
-              monitor.debug(this, x);
-              break;
-            } catch (final Exception x) {
-              monitor.logEvaluationError(this, x);
-              break;
-            }
+  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+    static final long serialVersionUID = 1L;
+    {
+      for (int nodeType = 1;; ++nodeType)
+        try {
+          monitor.debug("Searching for " + nodeType);
+          final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
+          monitor.debug("Found for " + nodeClassForType);
+          put(nodeClassForType, Integer.valueOf(nodeType));
+        } catch (final IllegalArgumentException x) {
+          monitor.debug(this, x);
+          break;
+        } catch (final Exception x) {
+          monitor.logEvaluationError(this, x);
+          break;
         }
-      };
+    }
+  };
   /** The default Instance of this class */
   static Toolbox defaultInstance;
 
@@ -226,7 +225,6 @@ public class Toolbox {
             new BodyDeclarationModifiersSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
-            new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //

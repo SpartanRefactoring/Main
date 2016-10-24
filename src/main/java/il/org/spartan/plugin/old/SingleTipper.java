@@ -136,11 +136,11 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return true;
     }
 
-    @Override public IRunnableWithProgress initialWork(final GUI$Applicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
+    @Override public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_BEFORE);
     }
 
-    @Override public IRunnableWithProgress finalWork(final GUI$Applicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
+    @Override public IRunnableWithProgress finalWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_AFTER);
     }
 
@@ -165,7 +165,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     public abstract String getLabelSuffix();
 
     @SuppressWarnings({ "unchecked", "rawtypes" }) //
-    @Override public GUI$Applicator getApplicator(final IMarker m) {
+    @Override public AbstractGUIApplicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));

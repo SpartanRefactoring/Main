@@ -60,8 +60,8 @@ public class XmlEscapersTest extends TestCase {
     assertEquals("xxx", xmlEscaper.escape("xxx"));
     assertEquals("test &amp; test &amp; test",
         xmlEscaper.escape("test & test & test"));
-    assertEquals("test &lt;&lt; 1", xmlEscaper.escape("test << 1"));
-    assertEquals("test &gt;&gt; 1", xmlEscaper.escape("test >> 1"));
+    assertEquals("test &lt;&lt; 1", xmlEscaper.escape("test <<1"));
+    assertEquals("test &gt;&gt; 1", xmlEscaper.escape("test>> 1"));
     assertEquals("&lt;tab&gt;", xmlEscaper.escape("<tab>"));
 
     // Test all non-escaped ASCII characters.
@@ -72,7 +72,7 @@ public class XmlEscapersTest extends TestCase {
     assertEquals(s, xmlEscaper.escape(s));
 
     // Test ASCII control characters.
-    for (char ¢ = 0; ¢ < 0x20; ++¢)
+    for (char ¢ = 0; ¢ <0x20; ++¢)
       if (¢ != '\t' && ¢ != '\n' && ¢ != '\r')
         assertEscaping(xmlEscaper, "\uFFFD", ¢);
       else if (!shouldEscapeWhitespaceChars)

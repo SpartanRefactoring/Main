@@ -1,11 +1,8 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.Listener.*;
-
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-import il.org.spartan.utils.*;
 
 /** An abstract listener taking events that may have any number of parameters of
  * any kind; default implementation is empty, override to specialize, or use
@@ -16,6 +13,7 @@ import il.org.spartan.utils.*;
  * @see #push(Object...)
  * @see #pop(Object...)
  * @see TicksStack
+ * @see StringBuilderListener demo implementation 
  * @since 2.6 */
 public interface Listener {
   final AtomicLong eventId = new AtomicLong();
@@ -77,42 +75,6 @@ public interface Listener {
       asListener().tick(os);
       for (final Listener ¢ : this)
         ¢.tick(os);
-    }
-  }
-
-  /** A kind of {@link Listener} that records a long string of the message it
-   * got.
-   * @author Yossi Gil
-   * @since 2016 */
-  class Tracing implements Listener {
-    private static Tab tab = new Tab();
-
-    private static String trim(final Object ¢) {
-      return (¢ + "").substring(1, 35);
-    }
-
-    private final StringBuilder $ = new StringBuilder();
-
-    public String $() {
-      return $ + "";
-    }
-
-    @Override public void pop(final Object... ¢) {
-      $.append(tab.end());
-      Listener.super.pop(¢);
-    }
-
-    @Override public void push(final Object... ¢) {
-      $.append(tab.begin());
-      Listener.super.push(¢);
-    }
-
-    @Override public void tick(final Object... os) {
-      $.append(newId() + ": ");
-      final Separator s = new Separator(", ");
-      for (final Object ¢ : os)
-        $.append(s + trim(¢));
-      $.append('\n');
     }
   }
 }

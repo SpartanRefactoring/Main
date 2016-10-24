@@ -12,13 +12,13 @@ import il.org.spartan.*;
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
  * @since 2015-08-22 */
-public abstract class searchAncestors {
+public abstract class searchAncestors<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> searchAncestors forClass(final Class<N> ¢) {
-    return new ByNodeClass(¢);
+  public static <N extends ASTNode> searchAncestors<N> forClass(final Class<N> ¢) {
+    return new ByNodeClass<>(¢);
   }
 
   /** Factory method, returning an instance which can search by the integer
@@ -26,7 +26,7 @@ public abstract class searchAncestors {
    * @param type JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static searchAncestors forType(final int type) {
+  public static searchAncestors<ASTNode> forType(final int type) {
     return new ByNodeType(type);
   }
 
@@ -34,7 +34,7 @@ public abstract class searchAncestors {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-  public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
+  public static <N extends ASTNode> searchAncestors<N> specificallyFor(final List<N> ¢) {
     return new ByNodeInstances<>(¢);
   }
 
@@ -53,7 +53,7 @@ public abstract class searchAncestors {
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
-  public abstract ASTNode from(final ASTNode n);
+  public abstract N from(final ASTNode n);
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
@@ -104,18 +104,18 @@ public abstract class searchAncestors {
     }
   }
 
-  static class ByNodeClass extends searchAncestors {
-    private final Class<? extends ASTNode> clazz;
+  static class ByNodeClass<N extends ASTNode> extends searchAncestors<N> {
+    private final Class<N> clazz;
 
-    public ByNodeClass(final Class<? extends ASTNode> clazz) {
+    public ByNodeClass(final Class<N> clazz) {
       this.clazz = clazz;
     }
 
-    @Override public ASTNode from(final ASTNode ¢) {
+    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢; $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
-            return $;
+            return (N) $;
       return null;
     }
 
@@ -124,18 +124,18 @@ public abstract class searchAncestors {
     }
   }
 
-  static class ByNodeInstances<N extends ASTNode> extends searchAncestors {
+  static class ByNodeInstances<N extends ASTNode> extends searchAncestors<N> {
     private final List<N> instances;
 
     public ByNodeInstances(final List<N> instances) {
       this.instances = instances;
     }
 
-    @Override public ASTNode from(final ASTNode ¢) {
+    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (instances.contains($))
-            return $;
+            return (N) $;
       return null;
     }
 
@@ -144,7 +144,7 @@ public abstract class searchAncestors {
     }
   }
 
-  static class ByNodeType extends searchAncestors {
+  static class ByNodeType extends searchAncestors<ASTNode> {
     final int type;
 
     public ByNodeType(final int type) {

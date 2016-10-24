@@ -32,7 +32,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-public abstract class GUI$Applicator extends Refactoring {
+public abstract class AbstractGUIApplicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
@@ -45,7 +45,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
-  protected GUI$Applicator(final String name) {
+  protected AbstractGUIApplicator(final String name) {
     this.name = name;
   }
 
@@ -201,8 +201,8 @@ public abstract class GUI$Applicator extends Refactoring {
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
-          new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Laconization: " + s + GUI$Applicator.this);
+          new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
+              "Laconization: " + s + AbstractGUIApplicator.this);
         } catch (final InterruptedException e) {
           monitor.logCancellationRequest(this, e);
         }
@@ -461,18 +461,24 @@ public abstract class GUI$Applicator extends Refactoring {
     final TextFileChange textChange = init(u);
     assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
+    final WrappedCompilationUnit u1 = u.build();
+    final CompilationUnit u2 = u1.compilationUnit;
+    final ASTRewrite r = createRewrite(u2, $);
     try {
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) { // assert unreachable():
       System.out.println(dump() + //
           "\n x=" + x + //
-          "\n counter=" + $ + //
+          "\n $=" + $ + //
           "\n u=" + u + //
           "\n u=" + u.name() + //
+          "\n u1=" + u1 + //
+          "\n u2=" + u2 + //
+          "\n r=" + r + //
           "\n textchange=" + textChange + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
           "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
-          done());
+          done(x));
       return 0;
     }
     if (textChange.getEdit().getLength() != 0)

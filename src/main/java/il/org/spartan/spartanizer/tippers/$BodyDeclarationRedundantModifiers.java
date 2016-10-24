@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -17,7 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements TipperCategory.SyntacticBaggage {
+abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
+    implements TipperCategory.SyntacticBaggage {
   private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   private static final Predicate<Modifier> isFinal = Modifier::isFinal;
   private static final Predicate<Modifier> isPrivate = Modifier::isPrivate;
@@ -29,35 +31,29 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢).isEmpty())
       return $;
-    if (iz.enumDeclaration(¢)) {
-      $.add(isStatic);
-      $.add(isAbstract);
-      $.add(isFinal);
-    }
-    if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration) {
-      $.add(isStatic);
-      $.add(isAbstract);
-    }
+    if (iz.enumDeclaration(¢))
+      $.addAll(as.list(isStatic, isAbstract, isFinal));
+    if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
+      $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
       $.add(isFinal);
-    final ASTNode container = hop.containerType(¢);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
+    final ASTNode container = hop.containerType(¢);
     if (container == null)
       return $;
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
-    if (iz.interface¢(container)) {
-      $.add(isPublic);
-      $.add(isPrivate);
+    if (iz.enumDeclaration(container))
       $.add(isProtected);
+    if (iz.interface¢(container)) {
+      $.addAll(as.list(isPublic, isPrivate, isProtected));
       if (iz.isMethodDeclaration(¢))
         $.add(isAbstract);
       if (iz.fieldDeclaration(¢))
         $.add(isStatic);
-    } else if (iz.enumDeclaration(container))
-      $.add(isProtected);
-    else if (iz.anonymousClassDeclaration(container)) {
+    }
+    if (iz.anonymousClassDeclaration(container)) {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
@@ -128,6 +124,9 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
   }
 
   @Override public BodyDeclaration replacement(final BodyDeclaration $) {
-    return prune(duplicate.of($), redundancies($));
+    final Set<Predicate<Modifier>> redundancies = redundancies($);
+    if (redundancies.isEmpty())
+      return null;
+    return prune(duplicate.of($), redundancies);
   }
 }
