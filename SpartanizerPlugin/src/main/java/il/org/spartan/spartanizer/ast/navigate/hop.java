@@ -61,8 +61,7 @@ public interface hop {
   }
 
   static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
-    final BodyDeclaration $ = searchAncestors.forClass(BodyDeclaration.class).from(¢);
-    return $;
+    return searchAncestors.forClass(BodyDeclaration.class).from(¢);
   }
 
   /** @param root the node whose children we return
@@ -93,9 +92,7 @@ public interface hop {
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     final MethodDeclaration $ = searchAncestors.forClass(MethodDeclaration.class).from(¢);
-    if (null == $)
-      return null;
-    return $.getName().toString();
+    return $ == null ? null : $.getName() + "";
   }
 
   static SimpleName lastComponent(final Name ¢) {
