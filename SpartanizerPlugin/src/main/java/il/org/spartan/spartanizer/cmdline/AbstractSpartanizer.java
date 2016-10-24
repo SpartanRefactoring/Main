@@ -175,7 +175,14 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
+    System.err.println("start running apply");
     apply();
+//    System.err.println("------------------");
+    System.err.println(Spartanizer.defaultApplicator()
+               .defaultListenerNoisy()
+               .passes(20)
+               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))));
+    System.err.println("stop running apply");    
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());

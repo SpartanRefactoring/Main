@@ -13,7 +13,7 @@ import il.org.spartan.plugin.*;
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private CommandLineSelection selection;
-  Spartanizer spartanizer;
+  SpartanizerOld spartanizer;
 
   /** Initialize the selection of this applicator.
    * @param ¢ JD
@@ -92,7 +92,7 @@ public class CommandLineApplicator extends Applicator {
     passes(PASSES_FEW);
     return this;
   }
-
+  
   /** @return this */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
