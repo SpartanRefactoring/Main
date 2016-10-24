@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
+@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue230 {
