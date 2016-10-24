@@ -119,7 +119,7 @@ public final class Application implements IApplication {
       try {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
-        for (int i = 0; i <optRounds; ++i) {
+        for (int i = 0; i < optRounds; ++i) {
           final int n = new LaconizeProject().countTips();
           if (n == 0)
             break;
@@ -268,15 +268,15 @@ public final class Application implements IApplication {
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
-        for (int ¢ = 0; ¢ <optRounds; ++¢)
-          System.out.println("    Round #" + ¢ + 1 + ": " + (¢ <9 ? " " : "") + f.getRoundStat(¢));
+        for (int ¢ = 0; ¢ < optRounds; ++¢)
+          System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));
       }
     else
-      for (int i = 0; i <optRounds; ++i) {
+      for (int i = 0; i < optRounds; ++i) {
         int roundSum = 0;
         for (final FileStats ¢ : ss)
           roundSum += ¢.getRoundStat(i);
-        System.out.println("    Round #" + i + 1 + ": " + (i <9 ? " " : "") + roundSum);
+        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
 

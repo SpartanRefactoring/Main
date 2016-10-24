@@ -104,11 +104,11 @@ public class TipperFactory {
 
   public static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
     final int end = az.block(n).statements().size();
-    return start>= end ? "" : stringifySubBlock(n, start, end);
+    return start >= end ? "" : stringifySubBlock(n, start, end);
   }
 
   public static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
-    if (start>= end)
+    if (start >= end)
       return "";
     @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
     return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
@@ -119,7 +119,7 @@ public class TipperFactory {
    * @return */
   @SuppressWarnings("boxing") protected static ASTNode[] getMatchedNodes(final Block b, final Pair<Integer, Integer> idxs) {
     final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
-    for (int ¢ = idxs.first; ¢ <idxs.second; ++¢)
+    for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
       $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
     return $;
   }

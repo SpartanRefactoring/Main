@@ -17,7 +17,7 @@ public class Matcher {
       return false;
     @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
     @SuppressWarnings("unchecked") final List<Statement> sn = az.block(n).statements();
-    if (sp == null || sn == null || sp.size()> sn.size())
+    if (sp == null || sn == null || sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
       if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
@@ -42,7 +42,7 @@ public class Matcher {
    * @param subList
    * @return */
   private boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
-    for (int ¢ = 0; ¢ <sp.size(); ++¢)
+    for (int ¢ = 0; ¢ < sp.size(); ++¢)
       if (!matchesAux(sp.get(¢), subList.get(¢)))
         return false;
     return true;
@@ -112,7 +112,7 @@ public class Matcher {
     }
     if (nChildren.size() != pChildren.size())
       return false;
-    for (int ¢ = 0; ¢ <pChildren.size(); ++¢)
+    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢)))
         return false;
     return true;
@@ -206,7 +206,7 @@ public class Matcher {
         nChildren.addAll(az.methodInvocation(n).arguments());
         pChildren.addAll(az.methodInvocation(p).arguments());
       }
-      for (int ¢ = 0; ¢ <pChildren.size(); ++¢)
+      for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
     return enviroment;

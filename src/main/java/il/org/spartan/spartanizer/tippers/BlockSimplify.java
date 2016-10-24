@@ -60,7 +60,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
       return false;
-    for (int ¢ = 0; ¢ <os1.size(); ++¢)
+    for (int ¢ = 0; ¢ < os1.size(); ++¢)
       if (os1.get(¢) != os2.get(¢))
         return false;
     return true;

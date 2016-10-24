@@ -34,17 +34,17 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);
-    assert es.size()> 1;
+    assert es.size() > 1;
     final List<Expression> $ = new ArrayList<>();
     boolean isString = false;
-    for (int i = 0; i <es.size(); ++i) {
+    for (int i = 0; i < es.size(); ++i) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);
         if (type.of(e) == Certain.STRING)
           isString = true;
       } else {
-        if (i <es.size() - 1 && type.of(es.get(i + 1)) == Certain.STRING)
+        if (i < es.size() - 1 && type.of(es.get(i + 1)) == Certain.STRING)
           continue;
         if (!isString) {
           $.add(e);

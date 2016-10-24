@@ -81,7 +81,7 @@ abstract class AbstractRenamePolicy {
 class Aggressive extends AbstractRenamePolicy {
   private static SimpleName bestCandidate(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     final int bestScore = bestScore(ns, ss);
-    if (bestScore> 0)
+    if (bestScore > 0)
       for (final SimpleName $ : ns)
         if (bestScore == score($, ss))
           return noRivals($, ns, ss) ? $ : null;
@@ -97,7 +97,7 @@ class Aggressive extends AbstractRenamePolicy {
 
   private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
     for (final SimpleName rival : ns)
-      if (rival != candidate && score(rival, ss)>= score(candidate, ss))
+      if (rival != candidate && score(rival, ss) >= score(candidate, ss))
         return false;
     return true;
   }

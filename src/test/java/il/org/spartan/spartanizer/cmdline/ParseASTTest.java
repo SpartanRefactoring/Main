@@ -44,7 +44,7 @@ public class ParseASTTest {
 
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> modifiers = d.modifiers();
-        for (int ¢ = 0; ¢ <modifiers.size(); ++¢)
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
           if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
             return true;
         return false;

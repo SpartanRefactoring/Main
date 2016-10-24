@@ -54,7 +54,7 @@ public enum precedence {
    * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
    *         parameter is strictly greater than that of the second parameter. */
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
-    return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1)> precedence.of(e2);
+    return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
   }
 
   /** determine whether the precedence of a given {@link Expression} can be
@@ -148,7 +148,7 @@ public enum precedence {
      * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
      *         precedence of Java. */
     public static boolean legal(final int precedence) {
-      return precedence>= 1 && precedence <= 15;
+      return precedence >= 1 && precedence <= 15;
     }
   }
 }

@@ -55,7 +55,7 @@ public final class DeclarationInitializerIfAssignment //
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
     final int savings = metrics.size(nextStatement, initializer);
-    if (spending> savings)
+    if (spending > savings)
       return null;
     r.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());

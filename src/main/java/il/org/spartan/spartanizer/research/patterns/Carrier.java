@@ -23,7 +23,7 @@ public class Carrier extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (ss.size() != 1 || !iz.returnStatement(ss.get(0)) || !tipper.canTip(az.returnStatement(ss.get(0))))
       return false;
     final Expression e = step.expression(az.returnStatement(ss.get(0)));
-    return iz.methodInvocation(e) && containsParameters(¢, e) && step.arguments(az.methodInvocation(e)).size()> step.parametersNames(¢).size();
+    return iz.methodInvocation(e) && containsParameters(¢, e) && step.arguments(az.methodInvocation(e)).size() > step.parametersNames(¢).size();
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {

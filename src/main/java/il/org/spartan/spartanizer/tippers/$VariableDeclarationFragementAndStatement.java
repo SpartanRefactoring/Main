@@ -81,7 +81,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
    * @param g */
   protected static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size()> 1 ? f : parent, g);
+    r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
   static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {

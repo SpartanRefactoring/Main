@@ -50,11 +50,11 @@ public enum IExtendedModifiersOrdering {
   }
 
   public static boolean greaterThan(final IExtendedModifier m1, final IExtendedModifiersOrdering m2) {
-    return compare(m1, m2)> 0;
+    return compare(m1, m2) > 0;
   }
 
   public static boolean greaterThanOrEquals(final IExtendedModifier m1, final IExtendedModifiersOrdering m2) {
-    return compare(m1, m2)>= 0;
+    return compare(m1, m2) >= 0;
   }
 
   public static boolean isUserDefinedAnnotation(final IExtendedModifier m1) {

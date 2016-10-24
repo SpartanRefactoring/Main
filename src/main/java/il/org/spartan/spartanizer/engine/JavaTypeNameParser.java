@@ -92,7 +92,7 @@ import org.eclipse.jdt.core.dom.*;
   int lastNameIndex() {
     if (isUpper(typeName.length() - 1))
       return typeName.length() - 1;
-    for (int $ = typeName.length() - 1; $> 0; --$) {
+    for (int $ = typeName.length() - 1; $ > 0; --$) {
       if (isLower($) && isUpper($ - 1))
         return $ - 1;
       if (isUpper($) && isLower($ - 1))
@@ -114,7 +114,7 @@ import org.eclipse.jdt.core.dom.*;
   }
 
   private String lastNameCharIndex(final int ¢) {
-    return lastName().length() <¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
+    return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
 
   private boolean lowerCaseContains(final String s, final String substring) {

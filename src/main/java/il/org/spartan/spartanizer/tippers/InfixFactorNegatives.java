@@ -89,7 +89,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
 
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
-    if (es.size() <2)
+    if (es.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
     if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
@@ -100,7 +100,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
-          if (¢ != first && minus.level(¢)> 0)
+          if (¢ != first && minus.level(¢) > 0)
             r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
