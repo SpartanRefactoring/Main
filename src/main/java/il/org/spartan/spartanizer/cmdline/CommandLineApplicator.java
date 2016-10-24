@@ -2,11 +2,9 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.dispatch.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -142,14 +140,6 @@ public class CommandLineApplicator extends Applicator {
   private Applicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection();
     // .defaultRunAction(new Trimmer()); ???
-  }
-
-  private void foo1() {
-    selection(new CommandLineSelection(null, "selection"));
-  }
-
-  private void foo2() {
-    final CommandLineSelection sel = (CommandLineSelection) selection();
   }
 
   /* (non-Javadoc)
