@@ -28,18 +28,7 @@ public abstract class AbstractSpartanizer {
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
-  static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    ASTNode parentNode = ¢.getParent();
-    assert parentNode != null;
-    while (parentNode.getNodeType() != ASTNode.METHOD_DECLARATION) {
-      if (parentNode instanceof CompilationUnit)
-        return null;
-      parentNode = parentNode.getParent();
-    }
-    return ((MethodDeclaration) parentNode).getName() + "";
-  }
-
-  static GUI$Applicator getSpartanizer(final String tipperName) {
+  static AbstractGUIApplicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
 
@@ -175,14 +164,7 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-    System.err.println("start running apply");
     apply();
-//    System.err.println("------------------");
-    System.err.println(Spartanizer.defaultApplicator()
-               .defaultListenerNoisy()
-               .passes(20)
-               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))));
-    System.err.println("stop running apply");    
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
