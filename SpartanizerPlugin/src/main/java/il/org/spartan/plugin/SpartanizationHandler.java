@@ -14,11 +14,12 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link Spartanizer} as its applicator.
+ * that uses {@link GUIBatchLaconizer} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
@@ -26,7 +27,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final Spartanizer a = applicator().defaultSelection();
+    final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -42,8 +43,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static Spartanizer applicator() {
-    final Spartanizer $ = new Spartanizer();
+  public static GUIBatchLaconizer applicator() {
+    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
@@ -66,7 +67,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
       @Override public void tick(final Object... ¢) {
         runAsynchronouslyInUIThread(() -> {
-          d.getProgressMonitor().subTask(Linguistic.trim(Linguistic.merge(¢)));
+          d.getProgressMonitor().subTask(Linguistic.trim(separate.these(¢).by(Linguistic.SEPARATOR)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
@@ -79,7 +80,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         switch (++level) {
           case DIALOG_CREATION:
             if ($.selection().size() >= DIALOG_THRESHOLD)
-              if (!Dialogs.ok(Dialogs.message(Linguistic.merge(¢))))
+              if (!Dialogs.ok(Dialogs.message(separate.these(¢).by(Linguistic.SEPARATOR))))
                 $.stop();
               else {
                 dialogOpen = true;
@@ -90,7 +91,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               runAsynchronouslyInUIThread(() -> {
-                d.getProgressMonitor().beginTask(Linguistic.trim($.name()) + " : " + Linguistic.merge(¢), $.selection().size());
+                d.getProgressMonitor().beginTask(Linguistic.trim($.name()) + " : " + separate.these(¢).by(Linguistic.SEPARATOR),
+                    $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
@@ -106,10 +108,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         switch (level--) {
           case DIALOG_CREATION:
             if (dialogOpen)
-              Dialogs.message(Linguistic.merge(new Object[] { //
-                  message.title.get(Linguistic.merge(¢)), //
+              Dialogs.message(separate.these(new Object[] { //
+                  message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
                   message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
-                  message.time.get(Linguistic.time(System.nanoTime() - startTime)) }, "\n")).open();
+                  message.time.get(Linguistic.time(System.nanoTime() - startTime)) }).by("\n")).open();
             break;
           case DIALOG_PROCESSING:
             break;
@@ -129,8 +131,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("deprecation") @Deprecated public static Spartanizer applicatorMapper() {
-    final Spartanizer $ = new Spartanizer();
+  @SuppressWarnings("deprecation") @Deprecated public static GUIBatchLaconizer applicatorMapper() {
+    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final AtomicBoolean openDialog = new AtomicBoolean(false);
@@ -157,7 +159,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         })) //
         .expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
-            if (!Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
+            if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(¢.get(event.visit_root)))))
               $.stop();
             else {
               runAsynchronouslyInUIThread(() -> d.open());
@@ -169,9 +171,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             runAsynchronouslyInUIThread(() -> d.close());
         }).does(¢ -> {
           if (openDialog.get())
-            Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
-                + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
-                + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
+            Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) //
+                + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root)) //
+                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), c -> {
                   return Integer.valueOf(c.size());
                 }) + " files" //
                 + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();

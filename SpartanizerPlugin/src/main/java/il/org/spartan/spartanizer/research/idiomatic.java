@@ -35,8 +35,8 @@ public interface idiomatic {
     }
   };
 
-  static void addImport(CompilationUnit u, ASTRewrite r) {
-    ImportDeclaration d = u.getAST().newImportDeclaration();
+  static void addImport(final CompilationUnit u, final ASTRewrite r) {
+    final ImportDeclaration d = u.getAST().newImportDeclaration();
     d.setStatic(true);
     d.setOnDemand(true);
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
@@ -135,7 +135,7 @@ public interface idiomatic {
     };
   }
 
-  static <T> Storer<T> defolt(final T ¢) {
+  static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
 
@@ -169,7 +169,7 @@ public interface idiomatic {
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
    * @author Yossi Gil
-   * @param < T > JD
+   * @param <T> JD
    * @since 2016` */
   @FunctionalInterface interface Producer<T> {
     /** @return next value provided by this instance

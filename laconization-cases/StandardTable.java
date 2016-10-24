@@ -159,17 +159,17 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
   }
   void r7(Map<R, V> $) {
 	 for (Iterator<Entry<R, V>> ¢ = $.entrySet().iterator(); ¢.hasNext();)
-			if (¢.hashCode() > 12)
+			if (¢.hashCode()> 12)
 				return;
 	  }  
   void r6(Map<R, V> $) {
 	 for (Iterator<Entry<R, V>> ¢ = $.entrySet().iterator(); ¢.hasNext();)
-			if (¢.hashCode() > 12)
+			if (¢.hashCode()> 12)
 				return;
 	  }  
   void r5() {
 	    for (Iterator<Entry<R, V>> ¢ = (new LinkedHashMap<R, V>()).entrySet().iterator(); ¢.hasNext();)
-        if (¢.hashCode() > 12)
+        if (¢.hashCode()> 12)
           return;
 	  }
   private int r4() {

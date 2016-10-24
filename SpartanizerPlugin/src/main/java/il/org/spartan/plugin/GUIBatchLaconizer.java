@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class Spartanizer extends Applicator {
+public class GUIBatchLaconizer extends Applicator {
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -38,7 +38,7 @@ public class Spartanizer extends Applicator {
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
       final int l = passes();
-      for (int pass = 0; pass < l; ++pass) {
+      for (int pass = 1; pass <= l; ++pass) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
@@ -65,10 +65,10 @@ public class Spartanizer extends Applicator {
     listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
   }
 
-  /** Default listener configuration of {@link Spartanizer}. Simple printing to
+  /** Default listener configuration of {@link GUIBatchLaconizer}. Simple printing to
    * console.
    * @return this applicator */
-  public Spartanizer defaultListenerNoisy() {
+  public GUIBatchLaconizer defaultListenerNoisy() {
     listener(os -> {
       for (final Object ¢ : os)
         System.out.print(¢ + " ");
@@ -77,67 +77,66 @@ public class Spartanizer extends Applicator {
     return this;
   }
 
-  /** Default listener configuration of {@link Spartanizer}. Silent listener.
+  /** Default listener configuration of {@link GUIBatchLaconizer}. Silent listener.
    * @return this applicator */
-  public Spartanizer defaultListenerSilent() {
+  public GUIBatchLaconizer defaultListenerSilent() {
     listener((final Object... __) -> {
       //
     });
     return this;
   }
 
-  /** Default selection configuration of {@link Spartanizer}. Normal eclipse
+  /** Default selection configuration of {@link GUIBatchLaconizer}. Normal eclipse
    * user selection.
    * @return this applicator */
-  public Spartanizer defaultSelection() {
+  public GUIBatchLaconizer defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
 
-  /** Default passes configuration of {@link Spartanizer}, with few passes.
+  /** Default passes configuration of {@link GUIBatchLaconizer}, with few passes.
    * @return this applicator */
-  public Spartanizer defaultPassesFew() {
+  public GUIBatchLaconizer defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
-  /** Default passes configuration of {@link Spartanizer}, with many passes.
+  /** Default passes configuration of {@link GUIBatchLaconizer}, with many passes.
    * @return this applicator */
-  public Spartanizer defaultPassesMany() {
+  public GUIBatchLaconizer defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
 
-  /** Default run context configuration of {@link Spartanizer}. Simply runs the
+  /** Default run context configuration of {@link GUIBatchLaconizer}. Simply runs the
    * {@link Runnable} in the current thread.
    * @return this applicator */
-  public Spartanizer defaultRunContext() {
+  public GUIBatchLaconizer defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
 
   // TODO Roth: use Policy / replacement for Trimmer.
-  /** Default run action configuration of {@link Spartanizer}. Spartanize the
-   * {@link ICompilationUnit} using received {@link GUI$Applicator}.
+  /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize the
+   * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return this applicator */
-  public Spartanizer defaultRunAction(final GUI$Applicator a) {
-    assert a != null;
-    runAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+  public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
+    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
     name(a.getName());
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
-  public Spartanizer defaultSettings() {
+  public GUIBatchLaconizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer());
   }
 
   /** Factory method.
    * @return default event applicator */
-  public static Spartanizer defaultApplicator() {
-    return new Spartanizer().defaultSettings();
+  public static GUIBatchLaconizer defaultApplicator() {
+    return new GUIBatchLaconizer().defaultSettings();
   }
 
   /** Printing definition of events that occur during spartanization.
@@ -163,7 +162,7 @@ public class Spartanizer extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.nanable(os, xs -> xs[index]);
+      return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }
   }
 }

@@ -54,7 +54,7 @@ import org.junit.runners.*;
   }
 
   @Test public void expressionVsExpression() {
-    trimmingOf("6 - 7 < a * 3").gives("-1 < 3 * a");
+    trimmingOf("6 - 7 <a * 3").gives("-1 <3 * a");
   }
 
   @Test public void literalVsLiteral() {

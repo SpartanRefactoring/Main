@@ -27,7 +27,7 @@ public abstract class LaconizeSelection extends BaseHandler {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
     final IWorkbench wb = PlatformUI.getWorkbench();
-    final GUI$Applicator applicator = new Trimmer();
+    final AbstractGUIApplicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
     int i, total = 0;
     for (i = 0; i < (!isRepeating() ? 1 : MAX_PASSES); ++i) {
