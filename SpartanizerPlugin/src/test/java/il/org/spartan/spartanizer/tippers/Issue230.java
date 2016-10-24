@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Unit tests for {@link BodyDeclarationModifiersSort}
+/** Unit tests for {@link $BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
 @Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
