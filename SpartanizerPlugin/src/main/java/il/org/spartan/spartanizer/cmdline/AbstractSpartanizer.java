@@ -120,7 +120,7 @@ public abstract class AbstractSpartanizer {
   }
 
   void fire() {
-    go();
+    run();
     reportSpectrum();
     // reportCoverage();
     runEssence();
@@ -153,7 +153,7 @@ public abstract class AbstractSpartanizer {
     return toolbox.firstTipper(¢);
   }
 
-  private void go() {
+  private void run() {
     System.err.printf( //
         " Input path=%s\n" + //
             "Before path=%s\n" + //

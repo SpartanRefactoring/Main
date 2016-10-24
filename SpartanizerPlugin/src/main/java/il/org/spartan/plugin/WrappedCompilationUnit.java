@@ -51,6 +51,18 @@ public class WrappedCompilationUnit {
   public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
+  
+  /** Factory method that takes a list of CompilationUnit
+   * @author matteo
+   * @param ¢ JD
+   * @return an instance created by the parameter */
+  /** [[SuppressWarningsSpartan]] */
+  public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
+    final List<WrappedCompilationUnit> $ = new ArrayList<>();
+    for (final CompilationUnit u : ¢)
+      $.add(new WrappedCompilationUnit(u));
+    return $;
+  }
 
   /** [[SuppressWarningsSpartan]] */
   public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
