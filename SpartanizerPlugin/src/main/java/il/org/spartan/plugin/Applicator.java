@@ -60,7 +60,7 @@ public abstract class Applicator {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator runAction(final Function<WrappedCompilationUnit, Integer> ¢) {
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }

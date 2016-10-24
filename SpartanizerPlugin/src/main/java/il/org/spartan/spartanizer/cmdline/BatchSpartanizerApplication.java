@@ -195,7 +195,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   }
 
   static void printHelpPrompt() {
-    System.out.println("Batch spartanizer");
+    System.out.println("Batch gUIBatchLaconizer");
     System.out.println("");
     System.out.println("Options:");
     System.out.println("  -d       default directory: use the current directory for the analysis");
