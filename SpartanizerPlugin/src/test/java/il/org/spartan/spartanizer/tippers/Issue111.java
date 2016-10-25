@@ -11,14 +11,14 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue111 {
   @Test public void A$a_1() {
-    trimmingOf("public final class A {" + "static public int a;" + "}")//
-        .gives("public final class A {" + "public static int a;" + "}")//
+    trimmingOf("public final class A { static public int a; }")//
+        .gives("public final class A { public static int a; }")//
         .stays();
   }
 
   @Test public void A$b_1() {
-    trimmingOf("public final class A {" + "static final public int a;" + "}")//
-        .gives("public final class A {" + "public static final int a;" + "}")//
+    trimmingOf("public final class A { static final public int a; }")//
+        .gives("public final class A { public static final int a; }")//
         .stays();
   }
 
@@ -29,8 +29,8 @@ public class Issue111 {
   }
 
   @Test public void A$c_2() {
-    trimmingOf("public final class A{" + "synchronized public void fun(final int __) {}" + "final private String s = \"Alex\";" + "}")
-        .gives("public final class A{" + "public synchronized void fun(final int __) {}" + "private final String s = \"Alex\";" + "}")//
+    trimmingOf("public final class A{ synchronized public void fun(final int __) {} final private String s = \"Alex\"; }")
+        .gives("public final class A{ public synchronized void fun(final int __) {} private final String s = \"Alex\"; }")//
         .stays();
   }
 
