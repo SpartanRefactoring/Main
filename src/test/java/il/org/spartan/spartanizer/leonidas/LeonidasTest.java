@@ -39,7 +39,7 @@ import org.junit.*;
     leonidasSays.that("if(true) $B();").matches("if(true) foo();");
   }
 
-  @Test public void testMatches10() {
+  @Ignore @Test public void testMatches10() {
     leonidasSays.that("for($N1 $N2 : $X) $N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
   }
 
