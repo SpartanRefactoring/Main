@@ -124,13 +124,13 @@ public interface idiomatic {
     public abstract <T> void when(final boolean c);
   }
 
-  static <S> Executor execute(final Consumer<S> s) {
+  static Executor execute(final Runnable r) {
     return new Executor() {
-      final Consumer<S> consumer = s;
+      final Runnable runnable = r;
 
       @Override public void when(final boolean condition) {
         if (condition)
-          consumer.accept(null);
+          runnable.run();
       }
     };
   }
@@ -287,23 +287,23 @@ public interface idiomatic {
       return ¢ + "";
     }
 
-    @Test public void useApplier() {
+    @Test public void useMapper() {
       final List<String> before = new ArrayList<>();
       before.add("1");
       before.add("2");
       before.add("3");
-      final List<String> after = on(before).apply(x -> mapper(x));
+      final List<String> after = on(before).map(x -> mapper(x));
       assertEquals("11", after.get(0));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
 
-    @SuppressWarnings("boxing") @Test public void useApplier2() {
+    @SuppressWarnings("boxing") @Test public void useMapper2() {
       final List<Integer> before = new ArrayList<>();
       before.add(1);
       before.add(2);
       before.add(3);
-      final List<String> after = on(before).apply(x -> mapper(x));
+      final List<String> after = on(before).map(x -> mapper(x));
       assertEquals("1", after.get(0));
       assertEquals("2", after.get(1));
       assertEquals("3", after.get(2));
@@ -378,8 +378,8 @@ public interface idiomatic {
       this.collection = collection;
     }
 
-    public <R, CR extends Collection<R>> CR apply(final Function<? super T, ? extends R> mapper) {
-      return map(mapper);
+    public void apply(final Consumer<? super T> mapper) {
+      collection.stream().forEach(mapper);
     }
 
     @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
