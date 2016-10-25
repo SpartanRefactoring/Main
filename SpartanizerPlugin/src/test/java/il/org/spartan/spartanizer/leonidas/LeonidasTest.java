@@ -39,6 +39,10 @@ import org.junit.*;
     leonidasSays.that("if(true) $B();").matches("if(true) foo();");
   }
 
+  @Ignore @Test public void testMatches10() {
+    leonidasSays.that("for($N1 $N2 : $X) $N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
+  }
+
   @Test public void testMutation1() {
     leonidasSays.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
   }
