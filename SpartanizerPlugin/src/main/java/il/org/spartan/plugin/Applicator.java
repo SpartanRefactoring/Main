@@ -103,12 +103,11 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-  
+
   /** Initialize the selection of this applicator using AbstractSelection.
    * @param ¢ JD
    * @author Matteo Orru'
    * @return this applicator */
-  
   public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;

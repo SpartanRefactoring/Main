@@ -3,7 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-
 /** An abstract listener taking events that may have any number of parameters of
  * any kind; default implementation is empty, override to specialize, or use
  * {@link Listener.S}
@@ -13,7 +12,7 @@ import java.util.concurrent.atomic.*;
  * @see #push(Object...)
  * @see #pop(Object...)
  * @see TicksStack
- * @see StringBuilderListener demo implementation 
+ * @see StringBuilderListener demo implementation
  * @since 2.6 */
 public interface Listener {
   final AtomicLong eventId = new AtomicLong();

@@ -7,6 +7,7 @@
 # @author and @since fields.
 
 # Keep this list alphabetically sorted, on vim: +,$!sort -u
+Adi Omari <adiomari [at] gmail.com>
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
@@ -14,6 +15,7 @@ Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Itai Dabran <idabran.cs.technion [at] gmail.com>
+Joha <joha [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Ori Roth <ori.rothh [at] gmail.com>

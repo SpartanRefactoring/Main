@@ -8,7 +8,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.junit.*;
+import org.junit.Test;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -292,7 +292,7 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      final List<String> after = apply(before).to(x -> mapper(x));
+      final List<String> after = on(before).apply(x -> mapper(x));
       assertEquals("11", after.get(0));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
@@ -303,18 +303,44 @@ public interface idiomatic {
       before.add(1);
       before.add(2);
       before.add(3);
-      final List<String> after = apply(before).to(x -> mapper(x));
+      final List<String> after = on(before).apply(x -> mapper(x));
       assertEquals("1", after.get(0));
       assertEquals("2", after.get(1));
       assertEquals("3", after.get(2));
     }
 
-    @Test public void useReducer() {
+    @SuppressWarnings("boxing") @Test public void useFilter() {
+      final List<Integer> before = new ArrayList<>();
+      before.add(1);
+      before.add(2);
+      before.add(3);
+      final List<Integer> after = on(before).filter(x -> x % 2 == 1);
+      assertEquals(1, after.get(0).intValue());
+      assertEquals(3, after.get(1).intValue());
+    }
+
+    @Test public void useReduce() {
       final List<String> before = new ArrayList<>();
       before.add("1");
       before.add("2");
       before.add("3");
-      assertEquals("123", reduce(before).with((x, y) -> x + y));
+      assertEquals("123", on(before).reduce((x, y) -> x + y));
+    }
+
+    @Test public void useMax() {
+      final List<String> before = new ArrayList<>();
+      before.add("1");
+      before.add("2");
+      before.add("3");
+      assertEquals("3", on(before).max(String::compareTo));
+    }
+
+    @Test public void useMin() {
+      final List<String> before = new ArrayList<>();
+      before.add("1");
+      before.add("2");
+      before.add("3");
+      assertEquals("1", on(before).min(String::compareTo));
     }
   }
 
@@ -337,24 +363,44 @@ public interface idiomatic {
   //////////////////////////////////////////////////////
   /////////////////// Collections //////////////////////
   //////////////////////////////////////////////////////
-  static <T> MapperCollectionHolder<T> apply(final Collection<T> ¢) {
-    return map(¢);
+  /** A class to hold a collection which on, operations can be made, like map,
+   * apply, reduce, ...
+   * @param ¢
+   * @return */
+  static <T, CT extends Collection<T>> CollectionHolder<T, CT> on(final CT ¢) {
+    return new CollectionHolder<>(¢);
   }
 
-  static <T> MapperCollectionHolder<T> map(final Collection<T> ¢) {
-    return new MapperCollectionHolder<>(¢);
-  }
+  class CollectionHolder<T, CT extends Collection<T>> {
+    final CT collection;
 
-  static <T> ReducerCollectionHolder<T> reduce(final Collection<T> ¢) {
-    return new ReducerCollectionHolder<>(¢);
-  }
+    public CollectionHolder(final CT collection) {
+      this.collection = collection;
+    }
 
-  static <T> MaxCollectionHolder<T> max(final Collection<T> ¢) {
-    return new MaxCollectionHolder<>(¢);
-  }
+    public <R, CR extends Collection<R>> CR apply(final Function<? super T, ? extends R> mapper) {
+      return map(mapper);
+    }
 
-  static <T> MinCollectionHolder<T> min(final Collection<T> ¢) {
-    return new MinCollectionHolder<>(¢);
+    @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
+      return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
+    }
+
+    @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
+      return (CT) collection.stream().filter(mapper).collect(new GenericCollector<T>(collection.getClass()));
+    }
+
+    public T reduce(final BinaryOperator<T> reducer) {
+      return collection.stream().reduce(reducer).get();
+    }
+
+    public T max(final Comparator<? super T> comperator) {
+      return collection.stream().max(comperator).get();
+    }
+
+    public T min(final Comparator<? super T> comperator) {
+      return collection.stream().min(comperator).get();
+    }
   }
 
   /** This is not good. java cannot infer types.
@@ -371,59 +417,25 @@ public interface idiomatic {
       this.mapper = mapper;
     }
 
-    public Collection<R> to(final Collection<T> ¢) {
-      return ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
+    @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(final CT ¢) {
+      return (CR) ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
     }
+    // @SuppressWarnings("boxing") @Test public void useNewMapper() {
+    // final List<Integer> before = new ArrayList<>();
+    // before.add(1);
+    // before.add(2);
+    // before.add(3);
+    // final List<String> after = mapp(x -> mapper(x)).apply(before);
+    // assertEquals("1", after.get(0));
+    // assertEquals("2", after.get(1));
+    // assertEquals("3", after.get(2));
+    // }
   }
 
-  class MapperCollectionHolder<T> {
-    final Collection<T> collection;
-
-    public MapperCollectionHolder(final Collection<T> collection) {
-      this.collection = collection;
-    }
-
-    @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR to(final Function<? super T, ? extends R> mapper) {
-      return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
-    }
-  }
-
-  class ReducerCollectionHolder<T> {
-    final Collection<T> collection;
-
-    public ReducerCollectionHolder(final Collection<T> collection) {
-      this.collection = collection;
-    }
-
-    public T with(final BinaryOperator<T> reducer) {
-      return collection.stream().reduce(reducer).get();
-    }
-  }
-
-  class MaxCollectionHolder<T> {
-    final Collection<T> collection;
-
-    public MaxCollectionHolder(final Collection<T> collection) {
-      this.collection = collection;
-    }
-
-    public T to(final Comparator<? super T> comperator) {
-      return collection.stream().max(comperator).get();
-    }
-  }
-
-  class MinCollectionHolder<T> {
-    final Collection<T> collection;
-
-    public MinCollectionHolder(final Collection<T> collection) {
-      this.collection = collection;
-    }
-
-    public T to(final Comparator<? super T> comperator) {
-      return collection.stream().min(comperator).get();
-    }
-  }
-
+  /** A class to collect collections without need to specify their type. should
+   * work for most of common collections.
+   * @author Ori Marcovitch
+   * @since 2016 */
   @SuppressWarnings("rawtypes") class GenericCollector<R> implements Collector<R, Collection<R>, Collection<R>> {
     private final Class<? extends Collection> cls;
 

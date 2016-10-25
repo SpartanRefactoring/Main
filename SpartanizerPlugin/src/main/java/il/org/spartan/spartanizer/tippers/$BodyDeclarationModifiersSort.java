@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
 import java.util.stream.*;
@@ -11,16 +11,16 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
  * @author Alex Kopzon
  * @author Dor Ma'ayan
  * @since 2016 */
-public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
+public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
-      m2);
+  static final Comparator<IExtendedModifier> comp = (m1, m2) -> IExtendedModifiersOrdering.compare(m1, m2);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
     IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
@@ -46,7 +46,14 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(Collectors.toList());
+    return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
+  }
+
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {;
+    for (int i = 0; i < ms.size(); ++i)
+      while (i < ms.size() + 1 && comp.compare(ms.get(i), ms.get(i + 1)) == 0)
+        ms.remove(i + 1);
+    return ms;
   }
 
   @Override public String description(final N ¢) {
@@ -62,8 +69,8 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
     final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
+    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
@@ -74,27 +81,27 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return sort(removeSame(extract.modifiers($)));
   }
 
-  public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
+  public static final class ofAnnotation extends $BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
   }
 
-  public static final class ofAnnotationTypeMember extends BodyDeclarationModifiersSort<AnnotationTypeMemberDeclaration> { //
+  public static final class ofAnnotationTypeMember extends $BodyDeclarationModifiersSort<AnnotationTypeMemberDeclaration> { //
   }
 
-  public static final class ofEnum extends BodyDeclarationModifiersSort<EnumDeclaration> { //
+  public static final class ofEnum extends $BodyDeclarationModifiersSort<EnumDeclaration> { //
   }
 
-  public static final class ofEnumConstant extends BodyDeclarationModifiersSort<EnumConstantDeclaration> { //
+  public static final class ofEnumConstant extends $BodyDeclarationModifiersSort<EnumConstantDeclaration> { //
   }
 
-  public static final class ofField extends BodyDeclarationModifiersSort<FieldDeclaration> { //
+  public static final class ofField extends $BodyDeclarationModifiersSort<FieldDeclaration> { //
   }
 
-  public static final class ofInitializer extends BodyDeclarationModifiersSort<Initializer> { //
+  public static final class ofInitializer extends $BodyDeclarationModifiersSort<Initializer> { //
   }
 
-  public static final class ofMethod extends BodyDeclarationModifiersSort<MethodDeclaration> { //
+  public static final class ofMethod extends $BodyDeclarationModifiersSort<MethodDeclaration> { //
   }
 
-  public static final class ofType extends BodyDeclarationModifiersSort<TypeDeclaration> { //
+  public static final class ofType extends $BodyDeclarationModifiersSort<TypeDeclaration> { //
   }
 }

@@ -104,6 +104,7 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(Modifier.class, new RedundantModifier())//
         .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
@@ -174,8 +175,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
-            new MethodDeclarationModifiersRedundant(), //
-            new BodyDeclarationModifiersSort.ofMethod(), //
+            new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             null)
         .add(MethodInvocation.class, //
@@ -221,31 +221,29 @@ public class Toolbox {
             new TernaryPushdownStrings(), //
             null) //
         .add(TypeDeclaration.class, //
-            new TypeRedundantModifiers(), //
-            new BodyDeclarationModifiersSort.ofType(), //
+            new $BodyDeclarationModifiersSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
-            new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
+            new $BodyDeclarationModifiersSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
-            new FieldRedundantModifiers(), //
-            new BodyDeclarationModifiersSort.ofField(), //
+            new $BodyDeclarationModifiersSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new EnumConstantRedundantModifiers(), //
-            new BodyDeclarationModifiersSort.ofEnumConstant(), //
+            new $BodyDeclarationModifiersSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), //
+        .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
             null) //
-        .add(VariableDeclarationFragment.class, new DeclarationRedundantInitializer(), //
+        .add(VariableDeclarationFragment.class, //
+            new DeclarationRedundantInitializer(), //
             new DeclarationAssignment(), //
             new DeclarationInitialiazelUpdateAssignment(), //
             new DeclarationInitializerIfAssignment(), //
