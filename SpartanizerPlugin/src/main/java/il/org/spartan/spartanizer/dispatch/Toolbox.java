@@ -104,7 +104,9 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
+        .add(EnhancedForStatement.class, //
+            new EnhancedForParameterRenameToCent(), //
+            null)//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
