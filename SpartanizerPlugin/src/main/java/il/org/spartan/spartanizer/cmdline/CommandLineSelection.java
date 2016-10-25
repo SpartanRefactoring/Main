@@ -5,9 +5,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** Selection useful to deal with projects using the command line
  * @author Matteo Orru'
@@ -29,6 +31,13 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
 
   public List<WrappedCompilationUnit> get() {
     return compilationUnits;
+  }
+  
+  /** Factory method for empty selection
+   * @return empty selection */
+  
+  public static CommandLineSelection empty() {
+    return new CommandLineSelection(null, null);
   }
 
   public static class Util {
@@ -65,6 +74,23 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
         cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
       return new CommandLineSelection(cuList, "selection");
     }
+
+    public static List<CompilationUnit> getAllCompilationUnit(String from) {
+      List<CompilationUnit> $ = new ArrayList<>();
+      for (final File ¢ : new FilesGenerator(".java").from(from)) {
+        System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
+        CompilationUnit cu;
+        if (!system.isTestFile(¢))
+          try {
+            cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(¢));
+            $.add(cu);
+          } catch (IOException x) {
+            monitor.log(x);
+            x.printStackTrace();
+          }
+       }
+      return $;
+    }
   }
 
   /** @param inputPath
@@ -90,4 +116,12 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   // compilationUnit = makeAST.COMPILATION_UNIT.from("");
   // return this;
   // }
+
+  public static AbstractSelection of(List<CompilationUnit> ¢) {
+    return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
+  }
+
+  private static Object getName(List<CompilationUnit> ¢) {
+    return null;
+  }
 }

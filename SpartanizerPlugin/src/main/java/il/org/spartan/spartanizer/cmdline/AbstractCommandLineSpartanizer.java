@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-public abstract class AbstractSpartanizer {
+public abstract class AbstractCommandLineSpartanizer {
   static String presentFileName;
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
@@ -165,6 +165,11 @@ public abstract class AbstractSpartanizer {
         afterFileName, //
         reportFileName);
     apply();
+//    System.out.println("------------------");
+//    CommandLineApplicator.defaultApplicator()
+//               .passes(20)
+//               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
+//               .go();
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
