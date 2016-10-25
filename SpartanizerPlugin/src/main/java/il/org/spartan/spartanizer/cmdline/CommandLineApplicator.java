@@ -3,8 +3,15 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -12,10 +19,14 @@ import il.org.spartan.plugin.*;
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
-
+  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+  Toolbox toolbox;// = new Toolbox();
+  
   public static Applicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
+
+  @SuppressWarnings("unused") private int tippersAppliedOnCurrentObject;
 
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple printing to
    * console. 
@@ -150,23 +161,117 @@ public class CommandLineApplicator extends Applicator {
   @Override public void go() {
     if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
       return;
-    // List<CompilationUnit> list = getSelection().getCompilationUnits();
-    // for(CompilationUnit cu: list){
-    // System.err.println(cu);
-    // gUIBatchLaconizer.go(cu);
-    // }
+    List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
+    for(CompilationUnit cu: list){
+//     System.err.println(cu);
+     go(cu);
+    }
+    if(false)
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
         final List<CompilationUnit> alive = new LinkedList<>();
         alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
         @SuppressWarnings("unused") final List<CompilationUnit> dead = new LinkedList<>();
-        for (final CompilationUnit ¢ : alive)
-          System.out.println(¢);
+        for (final CompilationUnit ¢ : alive){
+          System.err.println("¢.getLength(): " + ¢.getLength());
+          go(¢);
+        }
         // if(!runAction().apply(¢.build()).booleanValue())
         // dead.add(¢);
       }
     });
+  
     System.err.println("go go go!");
   }
+  
+  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
+  
+  void go(final CompilationUnit u) {
+    u.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+//        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
+      }
+    });
+  }
+  
+  boolean go(final ASTNode input) {
+    tippersAppliedOnCurrentObject = 0;
+    final String output = fixedPoint(input);
+    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
+//    befores.print(input);
+//    afters.print(output);
+//    computeMetrics(input, outputASTNode);
+    return false;
+  }
+  
+  String fixedPoint(final ASTNode ¢) {
+    return fixedPoint(¢ + "");
+  }
+  
+  public String fixedPoint(final String from) {
+    for (final Document $ = new Document(from);;) {
+      final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
+      final ASTRewrite r = createRewrite(u);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        monitor.logEvaluationError(this, x);
+        throw new AssertionError(x);
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
+  }
+  
+  public ASTRewrite createRewrite(final BodyDeclaration u) {
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    consolidateTips($, u);
+    return $;
+  }
+    
+  public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
+    toolbox = Toolbox.defaultInstance();
+    u.accept(new DispatchingVisitor() {
+      @SuppressWarnings("synthetic-access") @Override protected <N extends ASTNode> boolean go(final N n) {
+        TrimmerLog.visitation(n);
+        if (disabling.on(n))
+          return true;
+        Tipper<N> tipper = null;
+        try {
+          tipper = getTipper(n);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
+        if (tipper == null)
+          return true;
+        Tip s = null;
+        try {
+          s = tipper.tip(n, exclude);
+//          tick(n, tipper);
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
+        if (s != null) {
+          ++tippersAppliedOnCurrentObject;
+//          tick2(tipper); // save coverage info
+          TrimmerLog.application(r, s);
+        }
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+  }
+  
+  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
+  }
+    
 }
