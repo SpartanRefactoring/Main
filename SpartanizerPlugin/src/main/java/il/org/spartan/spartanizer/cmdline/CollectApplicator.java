@@ -6,6 +6,6 @@ import il.org.spartan.plugin.*;
  * @author Matteo Orru */
 public class CollectApplicator extends Applicator {
   @Override public void go() {
-    //TODO: I am not sure you need one. Just use Listener(S), --yg
+    // TODO: I am not sure you need one. Just use Listener(S), --yg
   }
 }

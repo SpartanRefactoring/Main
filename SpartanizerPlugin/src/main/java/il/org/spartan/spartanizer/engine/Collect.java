@@ -47,11 +47,11 @@ public enum Collect {
   };
   static final ASTMatcher matcher = new ASTMatcher();
 
-  /** Creates a new gUIBatchLaconizer which holds the occurrences of the provided name
-   * in declarations.
+  /** Creates a new gUIBatchLaconizer which holds the occurrences of the
+   * provided name in declarations.
    * @param n JD
-   * @return A {@link GUIBatchLaconizer}, with the uses of the provided identifier
-   *         within declarations. */
+   * @return A {@link GUIBatchLaconizer}, with the uses of the provided
+   *         identifier within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -105,11 +105,12 @@ public enum Collect {
     };
   }
 
-  /** Creates a new gUIBatchLaconizer which holds all the occurrences of the provided
-   * name.
+  /** Creates a new gUIBatchLaconizer which holds all the occurrences of the
+   * provided name.
    * @param n JD
-   * @return A {@link GUIBatchLaconizer}, with the uses of the provided identifier
-   *         within the provided {@link ASTNode}s array to the in function.. */
+   * @return A {@link GUIBatchLaconizer}, with the uses of the provided
+   *         identifier within the provided {@link ASTNode}s array to the in
+   *         function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
