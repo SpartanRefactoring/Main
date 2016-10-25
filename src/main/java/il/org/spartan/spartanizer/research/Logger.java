@@ -106,7 +106,7 @@ public class Logger {
   /** @param n
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
-    execute((__) -> npStatistics.put(np, new NPRecord(np, n.getClass()))).when(!npStatistics.containsKey(np));
+    execute(() -> npStatistics.put(np, new NPRecord(np, n.getClass()))).when(!npStatistics.containsKey(np));
     npStatistics.get(np).markNP(n);
   }
 
@@ -114,14 +114,14 @@ public class Logger {
    * @param np */
   static void logNodeInfo(final ASTNode ¢) {
     final String nodeClassName = ¢.getClass().getSimpleName();
-    execute((__) -> nodesStatistics.put(nodeClassName, new Int())).when(!nodesStatistics.containsKey(nodeClassName));
+    execute(() -> nodesStatistics.put(nodeClassName, new Int())).when(!nodesStatistics.containsKey(nodeClassName));
     ++nodesStatistics.get(nodeClassName).inner;
   }
 
   /** @param ¢
    * @param np */
   static void addToNodeType(final Class<? extends ASTNode> n, final int num) {
-    execute((__) -> codeStatistics.put(n, new Int())).when(!codeStatistics.containsKey(n));
+    execute(() -> codeStatistics.put(n, new Int())).when(!codeStatistics.containsKey(n));
     codeStatistics.get(n).inner += num;
   }
 
@@ -132,7 +132,7 @@ public class Logger {
       return;
     }
     final Integer key = Integer.valueOf(m.hashCode());
-    execute((__) -> methodsStatistics.put(key, new MethodRecord(m))).when(!methodsStatistics.containsKey(key));
+    execute(() -> methodsStatistics.put(key, new MethodRecord(m))).when(!methodsStatistics.containsKey(key));
     methodsStatistics.get(key).markNP(n, np);
   }
 

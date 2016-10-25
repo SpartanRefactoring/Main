@@ -124,13 +124,13 @@ public interface idiomatic {
     public abstract <T> void when(final boolean c);
   }
 
-  static <S> Executor execute(final Consumer<S> s) {
+  static Executor execute(final Runnable r) {
     return new Executor() {
-      final Consumer<S> consumer = s;
+      final Runnable consumer = r;
 
       @Override public void when(final boolean condition) {
         if (condition)
-          consumer.accept(null);
+          consumer.run();
       }
     };
   }
