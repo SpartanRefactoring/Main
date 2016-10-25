@@ -103,12 +103,11 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-  
+
   /** Initialize the selection of this applicator using AbstractSelection.
    * @param ¢ JD
    * @author Matteo Orru'
    * @return this applicator */
-  
   public Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
@@ -126,7 +125,7 @@ public abstract class Applicator {
     name = ¢;
     return this;
   }
-
+  
   /** Main operation of this applicator. */
   public abstract void go();
 }

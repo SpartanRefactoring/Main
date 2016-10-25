@@ -304,7 +304,8 @@ public class SpartanizerTest {
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        // assertTrue("TypeDeclaration is not included", !gUIBatchLaconizer.check(¢));
+        // assertTrue("TypeDeclaration is not included",
+        // !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 

@@ -4,8 +4,7 @@ import static il.org.spartan.plugin.Listener.*;
 
 import il.org.spartan.utils.*;
 
-/** A kind of {@link Listener} that records a long string of the message it
- * got.
+/** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil
  * @since 2016 */
 public class StringBuilderListener implements Listener {

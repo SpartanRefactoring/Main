@@ -441,7 +441,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   protected boolean isTextSelected() {
-    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+    return selection != null && !selection.isEmpty();
   }
 
   public int apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {

@@ -5,12 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tipping.*;
-
-/** Unit tests for {@link BodyDeclarationModifiersSort}
+/** Unit tests for {@link $BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue230 {
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) //
+public class Issue230 {
   @Test public void a() {
     trimmingOf("protected public final class A{volatile static int a;}").gives("public protected final class A{volatile static int a;}")
         .gives("public protected final class A{static volatile int a;}").stays();
@@ -28,8 +28,9 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("class A{@Deprecated @Deprecated int a;}").gives("class A{@Deprecated int a;}").stays();
   }
 
-  @Ignore("Issue #230") @Test public void a2() {
-    trimmingOf("private @Nullable T value = null;").gives("@Nullable private T value = null;").stays();
+  @Test public void a2() {
+    trimmingOf("@Nullable private T value = null;")//
+        .stays();
   }
 
   @Test public void a3() {
