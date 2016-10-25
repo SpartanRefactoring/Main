@@ -44,7 +44,7 @@ public interface ConfigurableObjectTemplate {
      * @author Yossi Gil
      * @year 2016 */
     class Action extends Settings {
-      /** real serialvVersionUID comes much later in production code */
+      /** real serialVersionUID comes much later in production code */
       private static final long serialVersionUID = 1L;
 
       int go() {
