@@ -110,15 +110,15 @@ public interface wizard {
     }
   };
 
-  public static Set<Modifier> redundants(final BodyDeclaration ¢) {
+  static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
   }
 
-  public static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
+  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
     return m instanceof Modifier && test((Modifier) m, ms);
   }
 
-  public static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
+  static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     for (final Predicate<Modifier> ¢ : ms)
       if (¢.test(m))
         return true;
