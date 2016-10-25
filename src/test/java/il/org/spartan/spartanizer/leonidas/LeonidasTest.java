@@ -1,6 +1,10 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
   @Test public void testMatches1() {
@@ -37,6 +41,10 @@ import org.junit.*;
 
   @Test public void testMatches9() {
     leonidasSays.that("if(true) $B();").matches("if(true) foo();");
+  }
+
+  @Test public void testMatches10() {
+    leonidasSays.that("for($N1 $N2 : $X) $N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
   }
 
   @Test public void testMutation1() {

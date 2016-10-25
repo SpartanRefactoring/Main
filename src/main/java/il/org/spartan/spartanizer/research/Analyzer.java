@@ -109,6 +109,9 @@ public class Analyzer {
         .add(CastExpression.class, //
             new Coercion(), //
             null) //
+        .add(EnhancedForStatement.class, //
+            new ApplyToEach(), //
+            null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             new IfNullReturn(), //
@@ -121,7 +124,7 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
-            new JDPattern(), //
+            // new JDPattern(), //
             new Examiner(), //
             new Delegator(), //
             new Carrier(), //
