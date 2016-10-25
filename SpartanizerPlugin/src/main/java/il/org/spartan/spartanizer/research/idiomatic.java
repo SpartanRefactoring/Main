@@ -126,11 +126,11 @@ public interface idiomatic {
 
   static Executor execute(final Runnable r) {
     return new Executor() {
-      final Runnable consumer = r;
+      final Runnable runnable = r;
 
       @Override public void when(final boolean condition) {
         if (condition)
-          consumer.run();
+          runnable.run();
       }
     };
   }
