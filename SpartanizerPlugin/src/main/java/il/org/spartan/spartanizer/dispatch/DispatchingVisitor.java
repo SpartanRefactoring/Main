@@ -73,6 +73,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final Modifier ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final NormalAnnotation ¢) {
     return cautiousGo(¢);
   }
@@ -121,13 +125,13 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  protected boolean cautiousGo(final ASTNode ¢) {
+    return !exclude.isExcluded(¢) && go(¢);
+  }
+
   protected abstract <N extends ASTNode> boolean go(final N n);
 
   protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
     // overridden
-  }
-
-  protected boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
   }
 }

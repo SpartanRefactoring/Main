@@ -136,7 +136,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return true;
     }
 
-    @Override public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
+    @Override public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
+        final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_BEFORE);
     }
 
