@@ -1,10 +1,6 @@
 package il.org.spartan.spartanizer.leonidas;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
   @Test public void testMatches1() {
