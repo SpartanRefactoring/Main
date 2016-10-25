@@ -98,7 +98,7 @@ public abstract class ENVTestEngineAbstract {
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
     assert from != null;
-    final String ROOT = "./src/test/java/il/org/spartan/gUIBatchLaconizer/java/";
+    final String ROOT = "./src/test/java/il/org/spartan/spartanizer/java/";
     assert ROOT != null;
     final File f = new File(ROOT + from);
     assert f != null;

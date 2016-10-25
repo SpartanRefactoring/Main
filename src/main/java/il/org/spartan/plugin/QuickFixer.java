@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
+
 import static il.org.spartan.plugin.GUIBatchLaconizer.*;
+
 import java.util.function.*;
 
 import org.eclipse.core.resources.*;
@@ -56,11 +58,11 @@ import il.org.spartan.spartanizer.tipping.*;
     a.go();
   });
   /** Spartanize current file. */
-  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢))
-      .defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+  private final IMarkerResolution laconizeFile = quickFix("Laconize file",
+      ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Spartanize current function. */
-  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expand(¢, MethodDeclaration.class)).go());
+  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢))
+      .defaultPassesMany().selection(Selection.Util.expand(¢, MethodDeclaration.class)).go());
   /** Spartanize current class. */
   private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢))
       .defaultPassesMany().selection(Selection.Util.expand(¢, AbstractTypeDeclaration.class)).go());
