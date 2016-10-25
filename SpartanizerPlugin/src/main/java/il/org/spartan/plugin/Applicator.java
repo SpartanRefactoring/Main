@@ -126,7 +126,7 @@ public abstract class Applicator {
     name = ¢;
     return this;
   }
-
+  
   /** Main operation of this applicator. */
   public abstract void go();
 }
