@@ -1,10 +1,8 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 
 /** A configurable version of the GUIBatchLaconizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -17,10 +15,10 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   private final boolean entireProject = true;
   private final boolean specificTipper = false;
 
-  public static void main(final String[] args) {
-    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new CommandLineSpartanizer(¢).fire();
-  }
+//  public static void main(final String[] args) {
+//    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
+//      new CommandLineSpartanizer(¢).fire();
+//  }
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -53,13 +51,18 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   }
 
   @Override public void apply() {
-    if (applyToEntireProject) {
-      selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
-      selection.createSelectionFromProjectDir(inputPath);
-    }
-    if (entireProject)
-      CommandLineApplicator.defaultApplicator().runAction();
-    if (specificTipper)
-      CommandLineApplicator.defaultApplicator();
+    CommandLineApplicator.defaultApplicator()
+                         .passes(20)
+                         .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
+                         .go();
   }
+//    if (applyToEntireProject) {
+//      selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
+//      selection.createSelectionFromProjectDir(inputPath);
+//    }
+//    if (entireProject)
+//      CommandLineApplicator.defaultApplicator().runAction();
+//    if (specificTipper)
+//      CommandLineApplicator.defaultApplicator();
+//  }
 }
