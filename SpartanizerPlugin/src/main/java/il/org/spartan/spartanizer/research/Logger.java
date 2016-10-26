@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research;
 
+import static il.org.spartan.spartanizer.research.idiomatic.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,7 +12,6 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.spartanizer.research.idiomatic.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.

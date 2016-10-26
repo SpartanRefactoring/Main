@@ -18,8 +18,8 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   private List<WrappedCompilationUnit> compilationUnits;
 
   public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
-//    this.compilationUnits 
-    this.inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
+    // this.compilationUnits
+    inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
 
@@ -33,10 +33,9 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   public List<WrappedCompilationUnit> get() {
     return inner;
   }
-  
+
   /** Factory method for empty selection
    * @return empty selection */
-  
   public static CommandLineSelection empty() {
     return new CommandLineSelection(null, null);
   }
@@ -76,23 +75,25 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return new CommandLineSelection(cuList, "selection");
     }
 
-    public static List<CompilationUnit> getAllCompilationUnit(String from) {
-      List<CompilationUnit> $ = new ArrayList<>();
+    public static List<CompilationUnit> getAllCompilationUnit(final String from) {
+      final List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(from)) {
-//        System.out.println("¢: " + ¢.getAbsolutePath()); // TODO Matteo: remove this line
+        // System.out.println("¢: " + ¢.getAbsolutePath()); // TODO Matteo:
+        // remove this line
         System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
         CompilationUnit cu;
         if (!system.isTestFile(¢))
           try {
             cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(¢));
-//            System.out.println("cu: " + cu); // TODO Matteo: remove this line
+            // System.out.println("cu: " + cu); // TODO Matteo: remove this line
             $.add(cu);
-          } catch (IOException x) {
+          } catch (final IOException x) {
             monitor.log(x);
             x.printStackTrace();
           }
-       }
-//      System.out.println("$.size(): " + $.size()); // TODO Matteo: remove this line
+      }
+      // System.out.println("$.size(): " + $.size()); // TODO Matteo: remove
+      // this line
       return $;
     }
   }
@@ -106,7 +107,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       // System.out.println("Free memory (bytes): " +
       // Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
       cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
-//    compilationUnits = cuList;
+    // compilationUnits = cuList;
     inner = cuList;
     System.err.println("Loading selection: done!");
   }
@@ -122,14 +123,16 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   // return this;
   // }
 
-  public static AbstractSelection<?> of(List<CompilationUnit> ¢) {
-//    System.out.println("inside CommandLineSelecion.of --> ¢.size(): " + ¢.size()); // TODO Matteo: remove this line
-    CommandLineSelection commandLineSelection = new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
-//    System.out.println("commandLineSelection.size(): " + commandLineSelection.size()); // TODO Matteo: remove this line
+  public static AbstractSelection<?> of(final List<CompilationUnit> ¢) {
+    // System.out.println("inside CommandLineSelecion.of --> ¢.size(): " +
+    // ¢.size()); // TODO Matteo: remove this line
+    final CommandLineSelection commandLineSelection = new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
+    // System.out.println("commandLineSelection.size(): " +
+    // commandLineSelection.size()); // TODO Matteo: remove this line
     return commandLineSelection;
   }
 
-  @SuppressWarnings("unused") private static Object getName(List<CompilationUnit> ¢) {
+  @SuppressWarnings("unused") private static Object getName(final List<CompilationUnit> ¢) {
     return null;
   }
 }
