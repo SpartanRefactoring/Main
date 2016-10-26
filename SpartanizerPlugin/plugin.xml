@@ -74,7 +74,6 @@ https://goo.gl/OI2pBd -->
        syntactic baggage, ternarization, etc. -->
   <super type="org.eclipse.core.resources.problemmarker"/>
 </extension>
-
 <extension point="org.eclipse.ui.editors.annotationTypes">
   <type 
     name="il.org.spartan.tip"
@@ -83,12 +82,208 @@ https://goo.gl/OI2pBd -->
     markerSeverity="0"
   />
 </extension>
+<!-- Marker types -->
+<extension 
+  id="il.org.spartan.tip.Abbreviation"
+  name="Abbreviation"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Annonimaization"
+  name="Annonimaization"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Canonicalization"
+  name="Canonicalization"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.CommonFactoring"
+  name="CommonFactoring"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Centification"
+  name="Centification"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Dollarization"
+  name="Dollarization"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.EarlyReturn"
+  name="EarlyReturn"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Idiomatic"
+  name="Idiomatic"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Inlining"
+  name="Inlining"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.InVain"
+  name="InVain"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Nanopatterns"
+  name="Nanopatterns"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.ScopeReduction"
+  name="ScopeReduction"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Sorting"
+  name="Sorting"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.SyntacticBaggage"
+  name="SyntacticBaggage"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
+  id="il.org.spartan.tip.Ternarization"
+  name="Ternarization"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
 
 <!-- Marker resolution: this is where the quick fixg menus gets bound to the 
 Java class which generates several quick fix for tips. -->
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Abbreviation"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Annonimaization"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Canonicalization"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.CommonFactoring"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Centification"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Dollarization"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.EarlyReturn"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Idiomatic"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Inlining"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.InVain"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Nanopatterns"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.ScopeReduction"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Sorting"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.SyntacticBaggage"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Ternarization"
    class="il.org.spartan.plugin.QuickFixer"
   />
 </extension>
