@@ -1,25 +1,37 @@
 ﻿# This file holds the complete list of people who contributed to this
-# repository. Please keep this file maintained, and new contributors should be
-# added in an alphabetical order.
+# repository. Please keep this file maintained. New contributors should 
+# be added in an alphabetical order.
 #
-# Contributions can be found in individual files by the @author annotation.
-# Note that in our project, each and every class must have a @Javaod with at least the 
-# @author and @since fields.
+# Contributions can also be found in individual files by the @author 
+# annotation. 
+# 
+# CONTRIBUTORS: each and every class must have a Javadoc comment with 
+# one or more @author fields, and a single @since fields. If you rewrote 
+# a class, then add your name. The original author remains forever.
+
+# TROLLS: Since this repository hosts the YPP 234311 course of CS/Technion, some 
+# of the names in the list below might look funny. No worry, these are just 
+# the students training. 
 
 # Keep this list alphabetically sorted, on vim: +,$!sort -u
 Adi Omari <adiomari [at] gmail.com>
+ארבינקא The Blaumlich Tunnel
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
 Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
+Hershele Ostropoler https://en.wikipedia.org/wiki/Hershel_of_Ostropol
 Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
+Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Ori Roth <ori.rothh [at] gmail.com>
 Stav Namir <stav1472 [at] gmail.com>
+Till Eulenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
+خوجة نصر الدين <juha@nasereddi.in>
