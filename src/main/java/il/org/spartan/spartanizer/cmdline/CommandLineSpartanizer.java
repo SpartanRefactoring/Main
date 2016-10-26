@@ -9,16 +9,10 @@ import il.org.spartan.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
-  private CommandLineSelection selection;
-  // private final boolean shouldRun = false;
+  
   private final boolean applyToEntireProject = false;
   private final boolean entireProject = true;
   private final boolean specificTipper = false;
-
-//  public static void main(final String[] args) {
-//    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-//      new CommandLineSpartanizer(¢).fire();
-//  }
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -47,7 +41,6 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
       x.printStackTrace();
       System.err.println("problem in setting up reports");
     }
-
   }
 
   @Override public void apply() {
@@ -56,13 +49,9 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
                          .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
                          .go();
   }
-//    if (applyToEntireProject) {
-//      selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
-//      selection.createSelectionFromProjectDir(inputPath);
-//    }
-//    if (entireProject)
-//      CommandLineApplicator.defaultApplicator().runAction();
-//    if (specificTipper)
-//      CommandLineApplicator.defaultApplicator();
-//  }
+
+  @Override void go(String javaCode) {
+    // TODO Auto-generated method stub
+    
+  }
 }
