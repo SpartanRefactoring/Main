@@ -23,7 +23,7 @@ public class CommandLine$Applicator {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   public Toolbox toolbox;
   @SuppressWarnings("unused") public int tippersAppliedOnCurrentObject;
-
+  
   protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
@@ -32,21 +32,54 @@ public class CommandLine$Applicator {
   protected String spectrumFileName;
   protected PrintWriter afters;
   protected PrintWriter befores;
+  
   File currentFile;
   int done;
+  
   CSVStatistics report;
   CSVStatistics spectrumStats;
   CSVStatistics coverageStats;
+  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   
+  CommandLine$Applicator(final String path) {
+    this(path, system.folder2File(path));
+  }
+
+  CommandLine$Applicator(final String inputPath, final String name){
+    this.inputPath = inputPath;
+    beforeFileName = folder + name + ".before.java";
+    afterFileName = folder + name + ".after.java";
+    reportFileName = folder + name + ".CSV";
+    spectrumFileName = folder + name + ".spectrum.CSV";
+    try {
+      befores = new PrintWriter(beforeFileName);
+      afters = new PrintWriter(afterFileName);
+    } catch (final FileNotFoundException x) {
+      x.printStackTrace();
+    }
+    
+    // Matteo: Please do not delete the following instructions. 
+    // They are needed to instantiate report in commandline classes
+    
+    try {
+      report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      System.err.println("problem in setting up reports");
+    }
+  }
   
+ 
   // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
   
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
 //        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
+        assert ¢ != null;
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
@@ -134,9 +167,9 @@ public class CommandLine$Applicator {
     ;
     report.nl();
   }
-
   
   String fixedPoint(final ASTNode ¢) {
+    System.out.println(¢);
     return fixedPoint(¢ + "");
   }
   
