@@ -1,16 +1,11 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
-
-import il.org.spartan.*;
-import il.org.spartan.plugin.*;
-
 /**
  * Simplified version of command line client that uses spartizer applicator
  * @author Matteo Orru'
  */
 
-public class CommandLineClient extends AbstractCommandLineSpartanizer{
+public class CommandLineClient { // extends AbstractCommandLineSpartanizer{
   
 //  private Spartanizer $ = new Spartanizer();
   
@@ -47,36 +42,22 @@ public class CommandLineClient extends AbstractCommandLineSpartanizer{
 //    }
 //  }
   
-  @Override public void apply() {
-    
-    CommandLineApplicator.defaultApplicator()
-               .passes(20)
-               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
-               .go();
-    
-//    System.out.println("------------------");
-//    System.out.println(GUIBatchLaconizer.defaultApplicator()
+//  @Override public void apply() {
+//    
+//    CommandLineApplicator.defaultApplicator()
+//               .passes(20)
+//               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
+//               .go();
+//    
+//  }
+  
+//  public void method() {
+//    
+//    System.err.println("------------------");
+//    System.err.println(GUIBatchLaconizer.defaultApplicator()
 //               .defaultListenerNoisy()
 //               .passes(20)
 //               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))));
-  }
-  
-  public void method() {
-    
-    System.err.println("------------------");
-    System.err.println(GUIBatchLaconizer.defaultApplicator()
-               .defaultListenerNoisy()
-               .passes(20)
-               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))));
-  }
-  
-//  static CLApplicator getSpartanizer() {
-//    try {
-//      return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-//    } catch (final CoreException x) {
-//      monitor.log(x);
-//    }
-//    return null;
 //  }
 
 }
