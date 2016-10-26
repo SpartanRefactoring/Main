@@ -164,12 +164,10 @@ public abstract class AbstractCommandLineSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-//    apply();
-//    System.out.println("------------------");
-    CommandLineApplicator.defaultApplicator()
-               .passes(20)
-               .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath)))
-               .go();
+    // apply();
+    // System.out.println("------------------");
+    CommandLineApplicator.defaultApplicator().passes(20)
+        .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
@@ -226,6 +224,30 @@ public abstract class AbstractCommandLineSpartanizer {
   public void runReport(@SuppressWarnings("unused") final Consumer<CSVStatistics> __) {
     // TODO Matteo: implement this if we need it; found in random scan
   }
+
+  @FunctionalInterface public interface ToInt<R> {
+    int f(R r);
+  }
+
+  static NamedFunction m(String name, ToInt<String> f) {
+    return new NamedFunction(name, f);
+  }
+
+  static class NamedFunction {
+    NamedFunction(String name, ToInt<String> f) {
+      this.name = name;
+      this.f = f;
+    }
+
+    final String name;
+    final ToInt<String> f;
+  }
+
+  NamedFunction functions[] = as.array(//
+      m("seventeeen", (¢) -> 17), //
+      m("length", (¢) -> ¢.length()), //
+      m("essence", (¢) -> Essence.of(¢).length())//
+      );
 
   /** @param input
    * @param output */
