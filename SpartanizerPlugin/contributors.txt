@@ -23,6 +23,7 @@ Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Hershele Ostropoler https://en.wikipedia.org/wiki/Hershel_of_Ostropol
+Idan Atias <idan2k3 [at] gmail.com>
 Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
