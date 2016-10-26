@@ -441,7 +441,7 @@ public enum extract {
   public static Statement containingStatement(final ASTNode ¢) {
     for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
-        return az.asStatement($);
+        return az.statement($);
     return null;
   }
 
