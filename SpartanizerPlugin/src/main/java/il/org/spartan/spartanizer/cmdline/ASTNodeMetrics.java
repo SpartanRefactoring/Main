@@ -35,10 +35,12 @@ public class ASTNodeMetrics {
     this.tokens = metrics.tokens(n + "");
     this.nodes = count.nodes(n);
     this.body = metrics.bodySize(n);
-    this.statements = extract.statements(az.
-        methodDeclaration(n)
-        .getBody())
-        .size();
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(n);
+    this.statements = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
+//    extract.statements(az.
+//        methodDeclaration(n)
+//        .getBody())
+//        .size();
     this.tide = clean(n + "").length();
     this.essence = Essence.of(n + "").length();
   }
