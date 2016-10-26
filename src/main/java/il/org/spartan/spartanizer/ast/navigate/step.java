@@ -204,7 +204,7 @@ public enum step {
   /** FieldDeclarations of type
    * @param ¢ JD
    * @return */
-  public static FieldDeclaration[] fieldDeclarations(TypeDeclaration ¢) {
+  public static FieldDeclaration[] fieldDeclarations(final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
 

@@ -34,7 +34,7 @@ public class ApplyToEach extends NanoPatternTipper<EnhancedForStatement> {
     return "ApplyToEach pattern: conevrt to fluent API";
   }
 
-  @Override public Tip tip(EnhancedForStatement s) {
+  @Override public Tip tip(final EnhancedForStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
