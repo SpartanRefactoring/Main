@@ -87,7 +87,7 @@ import org.junit.runners.*;
 
   @Test public void A$50_SimpleWorking1() {
     trimmingOf("abstract abstract interface a{}")//
-        .gives("abstract abstract interface a{}")//
+        .gives("interface a{}")//
         .stays()//
     ;
   }
@@ -122,8 +122,7 @@ import org.junit.runners.*;
 
   @Test public void A$50c_interface_static_abstract() {
     trimmingOf("static abstract interface a{}")//
-        .gives("abstract static interface a{}")//
-        .gives("interface a{}") //
+        .gives("interface a{}")//
         .stays();
   }
 
@@ -155,7 +154,6 @@ import org.junit.runners.*;
 
   @Test public void A$50g_enum() {
     trimmingOf("static abstract enum a{x,y,z;void f(){}}")//
-        .gives("abstract static enum a{x,y,z;void f(){}}")//
         .gives("enum a{x,y,z;void f(){}}")//
         .stays() //
     ;
@@ -163,7 +161,6 @@ import org.junit.runners.*;
 
   @Test public void A$50h_enum() {
     trimmingOf("static abstract final enum a{x,y,z;void f(){}}")//
-        .gives("abstract static final enum a{x,y,z;void f(){}}") //
         .gives("enum a{x,y,z;void f(){}}") //
         .stays();
   }
