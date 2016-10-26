@@ -21,6 +21,14 @@ public abstract class searchAncestors<N extends ASTNode> {
     return new ByNodeClass<>(¢);
   }
 
+  public static searchAncestors<MethodDeclaration> forContainingMethod() {
+    return new ByNodeClass<>(MethodDeclaration.class);
+  }
+
+  public static searchAncestors<TypeDeclaration> forContainingType() {
+    return new ByNodeClass<>(TypeDeclaration.class);
+  }
+
   /** Factory method, returning an instance which can search by the integer
    * present on a node.
    * @param type JD
