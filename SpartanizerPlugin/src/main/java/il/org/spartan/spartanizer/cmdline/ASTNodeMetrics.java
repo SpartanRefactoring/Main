@@ -17,13 +17,13 @@ public class ASTNodeMetrics {
   
   private ASTNode n;
 
-  private int length;
-  private int tokens;
-  private int nodes;
-  private int body;
-  private int statements;
-  private int tide;
-  private int essence;
+  private static int length;
+  private static int tokens;
+  private static int nodes;
+  private static int body;
+  private static int statements;
+  private static int tide;
+  private static int essence;
     
   public ASTNodeMetrics(ASTNode n) {
     super();
@@ -31,68 +31,68 @@ public class ASTNodeMetrics {
   }  
   
   public void computeMetrics(){
-    this.length = n.getLength();
-    this.tokens = metrics.tokens(n + "");
-    this.nodes = count.nodes(n);
-    this.body = metrics.bodySize(n);
-    this.statements = extract.statements(az.methodDeclaration(n).getBody()).size();
-    this.tide = clean(n + "").length();
-    this.essence = Essence.of(n + "").length();
+    length = n.getLength();
+    tokens = metrics.tokens(n + "");
+    nodes = count.nodes(n);
+    body = metrics.bodySize(n);
+    statements = extract.statements(az.methodDeclaration(n).getBody()).size();
+    tide = clean(n + "").length();
+    essence = Essence.of(n + "").length();
   }
 
   /**
    * @return the n
    */
-  public ASTNode getN() {
+  public ASTNode n() {
     return n;
   }
 
   /**
    * @return the length
    */
-  public int getLength() {
+  public static int length() {
     return length;
   }
 
   /**
    * @return the tokens
    */
-  public int getTokens() {
+  public static int tokens() {
     return tokens;
   }
 
   /**
    * @return the nodes
    */
-  public int getNodes() {
+  public static int nodes() {
     return nodes;
   }
 
   /**
    * @return the body
    */
-  public int getBody() {
+  public static int body() {
     return body;
   }
 
   /**
    * @return the statements
    */
-  public int getStatements() {
+  public static int statements() {
     return statements;
   }
 
   /**
    * @return the tide
    */
-  public int getTide() {
+  public static int tide() {
     return tide;
   }
 
   /**
    * @return the essence
    */
-  public int getEssence() {
+  public static int essence() {
     return essence;
   }
   
