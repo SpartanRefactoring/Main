@@ -19,33 +19,33 @@ public class CommandLineClient extends AbstractCommandLineSpartanizer{
       new CommandLineSpartanizer(¢).fire();
   }
   
-  CommandLineClient(final String path) {
-    this(path, system.folder2File(path));
-  }
+//  CommandLineClient(final String path) {
+//    this(path, system.folder2File(path));
+//  }
 
-  CommandLineClient(final String inputPath, final String name) {
-    this.inputPath = inputPath;
-    beforeFileName = folder + name + ".before.java";
-    afterFileName = folder + name + ".after.java";
-    reportFileName = folder + name + ".CSV";
-    spectrumFileName = folder + name + ".spectrum.CSV";
-    try {
-      befores = new PrintWriter(beforeFileName);
-      afters = new PrintWriter(afterFileName);
-    } catch (final FileNotFoundException x) {
-      x.printStackTrace();
-    }
-    
-    // this is needed here, for the moment, otherwise report is not printed
-    
-    try {
-      report = new CSVStatistics(reportFileName, "property");
-      spectrumStats = new CSVStatistics(spectrumFileName, "property");
-    } catch (IOException x) {
-      x.printStackTrace();
-      System.err.println("problem in setting up reports");
-    }
-  }
+//  CommandLineClient(final String inputPath, final String name) {
+//    this.inputPath = inputPath;
+//    beforeFileName = folder + name + ".before.java";
+//    afterFileName = folder + name + ".after.java";
+//    reportFileName = folder + name + ".CSV";
+//    spectrumFileName = folder + name + ".spectrum.CSV";
+//    try {
+//      befores = new PrintWriter(beforeFileName);
+//      afters = new PrintWriter(afterFileName);
+//    } catch (final FileNotFoundException x) {
+//      x.printStackTrace();
+//    }
+//    
+//    // this is needed here, for the moment, otherwise report is not printed
+//    
+//    try {
+//      report = new CSVStatistics(reportFileName, "property");
+//      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+//    } catch (IOException x) {
+//      x.printStackTrace();
+//      System.err.println("problem in setting up reports");
+//    }
+//  }
   
   @Override public void apply() {
     
