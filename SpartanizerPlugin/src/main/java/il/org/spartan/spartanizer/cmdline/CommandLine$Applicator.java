@@ -23,7 +23,6 @@ public class CommandLine$Applicator {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   public Toolbox toolbox;
   @SuppressWarnings("unused") public int tippersAppliedOnCurrentObject;
-  
   protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
@@ -32,22 +31,19 @@ public class CommandLine$Applicator {
   protected String spectrumFileName;
   protected PrintWriter afters;
   protected PrintWriter befores;
-  
   File currentFile;
   int done;
-  
   CSVStatistics report;
   CSVStatistics spectrumStats;
   CSVStatistics coverageStats;
-  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  
+
   CommandLine$Applicator(final String path) {
     this(path, system.folder2File(path));
   }
 
-  CommandLine$Applicator(final String inputPath, final String name){
+  CommandLine$Applicator(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
@@ -59,32 +55,30 @@ public class CommandLine$Applicator {
     } catch (final FileNotFoundException x) {
       x.printStackTrace();
     }
-    
-    // Matteo: Please do not delete the following instructions. 
+    // Matteo: Please do not delete the following instructions.
     // They are needed to instantiate report in commandline classes
-    
     try {
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
-    } catch (IOException x) {
+    } catch (final IOException x) {
       x.printStackTrace();
       System.err.println("problem in setting up reports");
     }
   }
-  
- 
-  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
-  
+
+  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer
+  // (code duplication to be resolved)
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
-//        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
+        // System.out.println(!selectedNodeTypes.contains(¢.getClass()) ||
+        // go(¢));
         assert ¢ != null;
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
   }
-  
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -94,7 +88,7 @@ public class CommandLine$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
-  
+
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
     // input metrics
     final int length = input.getLength();
@@ -167,12 +161,12 @@ public class CommandLine$Applicator {
     ;
     report.nl();
   }
-  
+
   String fixedPoint(final ASTNode ¢) {
     System.out.println(¢);
     return fixedPoint(¢ + "");
   }
-  
+
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
@@ -188,13 +182,13 @@ public class CommandLine$Applicator {
         return $.get();
     }
   }
-  
+
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
-    
+
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -213,7 +207,7 @@ public class CommandLine$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
-//          tick(n, tipper);
+          // tick(n, tipper);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         } catch (final Exception x) {
@@ -221,7 +215,7 @@ public class CommandLine$Applicator {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-//          tick2(tipper); // save coverage info
+          // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
         }
         return true;
@@ -232,9 +226,8 @@ public class CommandLine$Applicator {
       }
     });
   }
-  
+
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-
 }

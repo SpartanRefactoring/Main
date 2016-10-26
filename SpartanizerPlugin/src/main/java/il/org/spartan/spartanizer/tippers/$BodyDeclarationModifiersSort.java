@@ -49,7 +49,8 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
     return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
   }
 
-  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {;
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {
+    ;
     for (int i = 0; i < ms.size(); ++i)
       while (i < ms.size() + 1 && comp.compare(ms.get(i), ms.get(i + 1)) == 0)
         ms.remove(i + 1);

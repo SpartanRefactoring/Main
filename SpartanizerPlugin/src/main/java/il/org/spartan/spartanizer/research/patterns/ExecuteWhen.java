@@ -37,7 +37,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
 
   /** @param x
    * @return */
-  private static boolean containsReferencesToNonFinal(@SuppressWarnings("unused") IfStatement __) {
+  private static boolean containsReferencesToNonFinal(@SuppressWarnings("unused") final IfStatement __) {
     // TODO: Marco
     // Set<Name> names = analyze.dependencies(x);
     // Set<VariableDeclaration> enviromentVariables =
