@@ -30,15 +30,21 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
 
   @Override public boolean canTip(final IfStatement x) {
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)) && !containsReferencesToNonFinal())
+      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)) && !containsReferencesToNonFinal(x))
         return true;
     return false;
   }
 
-  /** @return */
-  private static boolean containsReferencesToNonFinal() {
-    // TODO Marco find out if there are references to non final variable, this
-    // might cause a lambda to not compile...
+  /** @param x
+   * @return */
+  private static boolean containsReferencesToNonFinal(@SuppressWarnings("unused") IfStatement __) {
+    // TODO: Marco
+    // Set<Name> names = analyze.dependencies(x);
+    // Set<VariableDeclaration> enviromentVariables =
+    // analyze.enviromentVariables(x);
+    // TypeDeclaration t = searchAncestors.forContainingType().from(x);
+    // FieldDeclaration[] fieldDeclarationsVariables =
+    // step.fieldDeclarations(t);
     return false;
   }
 

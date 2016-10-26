@@ -32,4 +32,10 @@ public enum analyze {
     });
     return $;
   }
+
+  public static Set<VariableDeclaration> enviromentVariables(@SuppressWarnings("unused") final ASTNode __) {
+    // TODO: Marco search for all known variables
+    // MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
+    return null;
+  }
 }
