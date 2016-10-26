@@ -81,7 +81,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;
-    final ASTNode parent = az.asStatement(parent(b));
+    final ASTNode parent = az.statement(parent(b));
     if (parent == null || iz.tryStatement(parent))
       return reorganizeStatement(b);
     switch (ss.size()) {
