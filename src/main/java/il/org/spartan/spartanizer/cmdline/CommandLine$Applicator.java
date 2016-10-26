@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.tide.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -14,7 +12,6 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -35,6 +32,14 @@ public class CommandLine$Applicator {
   
   File currentFile;
   int done;
+  
+  List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
+  
+  public void setReport(final CSVStatistics r, final String name){
+    HashMap map = new HashMap<String, CSVStatistics>();
+    map.put(name, r);
+    reports.add(map);
+  }
   
   CSVStatistics report;
   CSVStatistics spectrumStats;
@@ -76,15 +81,23 @@ public class CommandLine$Applicator {
   // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
   
   void go(final CompilationUnit u) {
+    
+    apply(u);
+   
+//    System.err.print("\n Done! "); // + classesDone + " files processed.");
+//    System.err.print("\n Summary: " + report.close());
+  }
+  
+  private void apply(CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
 //        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
         assert ¢ != null;
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
-    });
+    });    
   }
-  
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -98,30 +111,10 @@ public class CommandLine$Applicator {
   ASTNodeMetrics nm1, nm2;
   
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
-    // input metrics
     nm1 = new ASTNodeMetrics(input);
     nm1.computeMetrics();
-//    final int length = input.getLength();
-//    final int tokens = metrics.tokens(input + "");
-//    final int nodes = count.nodes(input);
-//    final int body = metrics.bodySize(input);
-//    final int statements = extract.statements(az.methodDeclaration(input).getBody()).size();
-//    final int tide = clean(input + "").length();
-//    final int essence = Essence.of(input + "").length();
-    // output metrics
-//    final String outputString = output + "";
     nm2 = new ASTNodeMetrics(output);
     nm2.computeMetrics();
-//    final int length2 = outputString.length();
-//    final int tokens2 = metrics.tokens(outputString);
-//    final int nodes2 = count.nodes(output);
-//    final int body2 = metrics.bodySize(output);
-//    final MethodDeclaration methodDeclaration = az.methodDeclaration(output);
-//    final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
-//    final int tide2 = clean(outputString).length();
-//    final int essence2 = Essence.of(outputString).length();
-//    final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(outputString));
-    // final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(output);
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     System.out.println(befores.checkError());
     report.summaryFileName();
@@ -130,52 +123,6 @@ public class CommandLine$Applicator {
     reportDifferences(nm1, nm2);
     reportRatio(nm1, "1");
     reportRatio(nm2, "2");
-//    report//
-//        // .put("File", currentFile)//
-//        .put("Category", extract.category(input))//
-//        .put("Name", extract.name(input))//
-//        .put("# Tippers", tippersAppliedOnCurrentObject) //
-//        .put("Nodes1", nodes)//
-//        .put("Nodes2", nodes2)//
-//        .put("Δ Nodes", nodes - nodes2)//
-//        .put("δ Nodes", system.d(nodes, nodes2))//
-//        .put("δ Nodes %", system.p(nodes, nodes2))//
-//        .put("Body", body)//
-//        .put("Body2", body2)//
-//        .put("Δ Body", body - body2)//
-//        .put("δ Body", system.d(body, body2))//
-//        .put("% Body", system.p(body, body2))//
-//        .put("Length1", length)//
-//        .put("Tokens1", tokens)//
-//        .put("Tokens2", tokens2)//
-//        .put("Δ Tokens", tokens - tokens2)//
-//        .put("δ Tokens", system.d(tokens, tokens2))//
-//        .put("% Tokens", system.p(tokens, tokens2))//
-//        .put("Length1", length)//
-//        .put("Length2", length2)//
-//        .put("Δ Length", length - length2)//
-//        .put("δ Length", system.d(length, length2))//
-//        .put("% Length", system.p(length, length2))//
-//        .put("Tide1", tide)//
-//        .put("Tide2", tide2)//
-//        .put("Δ Tide2", tide - tide2)//
-//        .put("δ Tide2", system.d(tide, tide2))//
-//        .put("δ Tide2", system.p(tide, tide2))//
-//        .put("Essence1", essence)//
-//        .put("Essence2", essence2)//
-//        .put("Δ Essence", essence - essence2)//
-//        .put("δ Essence", system.d(essence, essence2))//
-//        .put("% Essence", system.p(essence, essence2))//
-//        .put("Statements1", statements)//
-//        .put("Statement2", statements2)//
-//        .put("Δ Statement", statements - statements2)//
-//        .put("δ Statement", system.d(statements, statements2))//
-//        .put("% Statement", system.p(essence, essence2))//
-//        .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
-//        .put("R(E/L)", system.ratio(length, essence)) //
-//        .put("R(E/T)", system.ratio(tide, essence)) //
-//        .put("R(B/S)", system.ratio(nodes, body)) //
-//    ;
     report.nl();
   }
   
@@ -233,7 +180,7 @@ public class CommandLine$Applicator {
    */
   
   public void reportRatio(final ASTNodeMetrics nm, final String id){
-    report
+    report //
 //    .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
     .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
     .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
