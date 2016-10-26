@@ -38,7 +38,7 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
   @Override protected ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
-    final Statement parent = az.asStatement(x.getParent());
+    final Statement parent = az.statement(x.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);

@@ -146,7 +146,7 @@ public interface hop {
     final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
     if (n == null)
       return null;
-    final Statement current = az.asStatement(n);
+    final Statement current = az.statement(n);
     if (current == null)
       return null;
     final Statement previous = previousStatementInBody(current);
@@ -163,7 +163,7 @@ public interface hop {
     final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
     if (n == null)
       return null;
-    final Statement current = az.asStatement(n);
+    final Statement current = az.statement(n);
     if (current == null)
       return null;
     final Statement previous = previousStatementInBody(current);

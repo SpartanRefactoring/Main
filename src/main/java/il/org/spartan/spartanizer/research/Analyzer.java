@@ -13,10 +13,25 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyzer {
+  static String outputDir = "/tmp";
+  static String inputDir;
+
   public static void main(final String args[]) {
-    if (args.length != 2)
-      System.out.println("Usage: Analyzer <inputFolder> <outputFolder>");
-    analyze(args[0], args[1]);
+    parseArguments(args);
+    analyze();
+  }
+
+  private static void parseArguments(final String[] args) {
+    if (args.length < 2)
+      System.out.println("Usage: Analyzer <inputDir> [-dir] <outputDir>");
+    inputDir = args[0];
+    if ("-dir".equals(args[1]))
+      outputDir = args[2];
+    else
+      outputDir += args[1];
+    final File dir = new File(outputDir);
+    if (!dir.exists())
+      dir.mkdir();
   }
 
   /** Append String to file.
@@ -75,15 +90,14 @@ public class Analyzer {
     return $;
   }
 
-  /** @param inputFolder of the project to be analyzed
-   * @param outputDir to which the spartanized code file and CSV files will be
+  /** @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
-  private static void analyze(final String inputFolder, final String outputDir) {
+  private static void analyze() {
     final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
     sanityCheck();
     String spartanizedCode = "";
     new File(outputDir + "/after.java").delete();
-    for (final File ¢ : getJavaFiles(inputFolder)) {
+    for (final File ¢ : getJavaFiles(inputDir)) {
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
@@ -128,6 +142,7 @@ public class Analyzer {
             new Examiner(), //
             new Delegator(), //
             new Carrier(), //
+            new Fluenter(), //
             null);
   }
 
