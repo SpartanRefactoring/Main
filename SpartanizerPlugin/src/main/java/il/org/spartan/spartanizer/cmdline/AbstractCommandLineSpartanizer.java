@@ -229,12 +229,12 @@ public abstract class AbstractCommandLineSpartanizer {
     int f(R r);
   }
 
-  static NamedFunction m(String name, ToInt<String> f) {
+  static NamedFunction m(final String name, final ToInt<String> f) {
     return new NamedFunction(name, f);
   }
 
   static class NamedFunction {
-    NamedFunction(String name, ToInt<String> f) {
+    NamedFunction(final String name, final ToInt<String> f) {
       this.name = name;
       this.f = f;
     }
@@ -247,7 +247,7 @@ public abstract class AbstractCommandLineSpartanizer {
       m("seventeeen", (¢) -> 17), //
       m("length", (¢) -> ¢.length()), //
       m("essence", (¢) -> Essence.of(¢).length())//
-      );
+  );
 
   /** @param input
    * @param output */
