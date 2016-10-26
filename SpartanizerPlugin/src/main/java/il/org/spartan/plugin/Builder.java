@@ -6,6 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -40,7 +41,7 @@ public final class Builder extends IncrementalProjectBuilder {
    *         change event notification¢ See {@link IResourceChangeEvent}¢for
    *         more details. */
   public static void deleteMarkers(final IFile ¢) throws CoreException {
-    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+    ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
 
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
@@ -79,8 +80,10 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggesions(u))
-        if (¢ != null)
-          addMarker(s, ¢, f.createMarker(MARKER_TYPE));
+        if (¢ != null) {
+          TipperGroup group = Toolbox.groupFor(¢.tipperClass);
+          addMarker(s, ¢, f.createMarker(MARKER_TYPE + (group == null || group.id == null ? "" : "." + group.name())));
+        }
   }
 
   private static String prefix() {
