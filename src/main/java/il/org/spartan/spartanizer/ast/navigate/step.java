@@ -201,6 +201,13 @@ public enum step {
     return ¢.extendedOperands();
   }
 
+  /** FieldDeclarations of type
+   * @param ¢ JD
+   * @return */
+  public static FieldDeclaration[] fieldDeclarations(TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
+  }
+
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
@@ -350,6 +357,13 @@ public enum step {
     return ¢.resources();
   }
 
+  /** Returns the return type of the function
+   * @param ¢ JD
+   * @return */
+  public static Type returnType(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.getReturnType2();
+  }
+
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return right side of the assignment */
@@ -451,12 +465,5 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢.values();
-  }
-
-  /** Returns the return type of the function
-   * @param ¢ JD
-   * @return */
-  public static Type returnType(final MethodDeclaration ¢) {
-    return ¢ == null ? null : ¢.getReturnType2();
   }
 }
