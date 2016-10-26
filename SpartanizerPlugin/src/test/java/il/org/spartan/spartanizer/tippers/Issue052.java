@@ -119,7 +119,7 @@ public class Issue052 {
 
   @Test public void A$p() {
     trimmingOf("enum A{a1,a2;static enum B{b1,b2;static class C{static enum D{c1,c2}}}")
-        .gives("enum A{a1,a2;enum B{b1,b2;static class C{static enum D{c1,c2}}}").gives("enum A{a1,a2;enum B{b1,b2;static class C{enum D{c1,c2}}}")//
+        .gives("enum A{a1,a2;enum B{b1,b2;static class C{enum D{c1,c2}}}")//
         .stays()//
     ;
   }
