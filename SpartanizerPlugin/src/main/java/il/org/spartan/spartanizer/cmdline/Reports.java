@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
+import il.org.spartan.csv.*;
 
 public class Reports {
   
@@ -10,18 +12,26 @@ public class Reports {
   protected String afterFileName;
   protected String beforeFileName;
   protected String inputPath;
-  protected String reportFileName;
+  protected static String reportFileName;
   protected String spectrumFileName;
 
   private static HashMap<String, CSVStatistics> map = new HashMap<String, CSVStatistics>(); 
   
-  
+  public static void intitialize(){
+    reportFileName = "/tmp/report.CSV";
+    try {
+      map.put("metrics", new CSVStatistics(reportFileName, "metrics"));
+    } catch (IOException x) {
+      x.printStackTrace();
+    }
+  }
   
   private static CSVStatistics report(String key) {
     return map.get(key);
   }
   
-  public void reportMetrics(final ASTNodeMetrics nm, final String id, final String key){
+  @SuppressWarnings("static-access") 
+  public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key){
     report(key)//
     .put("Nodes" + id, nm.nodes())//
     .put("Body" + id, nm.body())//
@@ -38,8 +48,9 @@ public class Reports {
    * @param nm2
    */
   
-  public void reportDifferences(@SuppressWarnings("hiding") final ASTNodeMetrics nm1, 
-      @SuppressWarnings("hiding") final ASTNodeMetrics nm2, final String key){
+  @SuppressWarnings("static-access") 
+  public static void reportDifferences(final ASTNodeMetrics nm1, 
+      final ASTNodeMetrics nm2, final String key){
    report(key) //
     .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
     .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
@@ -69,12 +80,29 @@ public class Reports {
    * @param nm
    */
   
-  public void reportRatio(final ASTNodeMetrics nm, final String id, final String key){
+  @SuppressWarnings("static-access") public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key){
     report(key) //
 //    .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
     .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
     .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
     .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
+  }
+
+  public static void initialize() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  public static void close(String key) {
+    report(key).close();
+    }
+
+  public static void summaryFileName(String key) {
+    report(key).summaryFileName();
+  }
+
+  public static void nl(String key) {
+    report(key).nl();
   }
 
   
