@@ -130,7 +130,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static Statement asStatement(final ASTNode $) {
+  public static Statement statement(final ASTNode $) {
     return !iz.statement($) ? null : (Statement) $;
   }
 

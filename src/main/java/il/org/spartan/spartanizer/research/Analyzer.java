@@ -128,6 +128,7 @@ public class Analyzer {
             new Examiner(), //
             new Delegator(), //
             new Carrier(), //
+            new Fluenter(), //
             null);
   }
 

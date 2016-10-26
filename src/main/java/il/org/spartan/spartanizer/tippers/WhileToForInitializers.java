@@ -50,7 +50,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
-      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), ¢.getName()))
+      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.statement(s), ¢.getName()))
         return false;
     return true;
   }
