@@ -21,7 +21,7 @@ public class Fluenter extends JavadocMarkerNanoPattern<MethodDeclaration> {
 
   /** @param ¢
    * @return */
-  private static boolean lastStatementReturnsThis(MethodDeclaration ¢) {
+  private static boolean lastStatementReturnsThis(final MethodDeclaration ¢) {
     return step.body(¢) != null && !step.body(¢).statements().isEmpty()
         && iz.returnStatement(step.statements(step.body(¢)).get(step.body(¢).statements().size() - 1))
         && tipper.canTip(az.returnStatement(az.statement(step.statements(step.body(¢)).get(step.body(¢).statements().size() - 1))));

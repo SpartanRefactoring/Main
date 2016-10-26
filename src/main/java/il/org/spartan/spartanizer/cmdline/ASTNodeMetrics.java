@@ -7,16 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/**
- * A Class that contains all the metrics for an {@link ASTNode}
- * @author Matteo Orru'
- */
-
-@SuppressWarnings("unused")
-public class ASTNodeMetrics {
-  
-  private ASTNode n;
-
+/** A Class that contains all the metrics for an {@link ASTNode}
+ * @author Matteo Orru' */
+@SuppressWarnings("unused") public class ASTNodeMetrics {
+  private final ASTNode n;
   private static int length;
   private static int tokens;
   private static int nodes;
@@ -24,13 +18,13 @@ public class ASTNodeMetrics {
   private static int statements;
   private static int tide;
   private static int essence;
-    
-  public ASTNodeMetrics(ASTNode n) {
+
+  public ASTNodeMetrics(final ASTNode n) {
     super();
     this.n = n;
-  }  
-  
-  public void computeMetrics(){
+  }
+
+  public void computeMetrics() {
     length = n.getLength();
     tokens = metrics.tokens(n + "");
     nodes = count.nodes(n);
@@ -40,60 +34,43 @@ public class ASTNodeMetrics {
     essence = Essence.of(n + "").length();
   }
 
-  /**
-   * @return the n
-   */
+  /** @return the n */
   public ASTNode n() {
     return n;
   }
 
-  /**
-   * @return the length
-   */
+  /** @return the length */
   public static int length() {
     return length;
   }
 
-  /**
-   * @return the tokens
-   */
+  /** @return the tokens */
   public static int tokens() {
     return tokens;
   }
 
-  /**
-   * @return the nodes
-   */
+  /** @return the nodes */
   public static int nodes() {
     return nodes;
   }
 
-  /**
-   * @return the body
-   */
+  /** @return the body */
   public static int body() {
     return body;
   }
 
-  /**
-   * @return the statements
-   */
+  /** @return the statements */
   public static int statements() {
     return statements;
   }
 
-  /**
-   * @return the tide
-   */
+  /** @return the tide */
   public static int tide() {
     return tide;
   }
 
-  /**
-   * @return the essence
-   */
+  /** @return the essence */
   public static int essence() {
     return essence;
   }
-  
 }
