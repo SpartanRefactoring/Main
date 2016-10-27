@@ -13,15 +13,13 @@ import org.junit.runners.*;
   }
 
   @Test public void A$50_EnumInInterface1() {
-    trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}")//
-        .gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
+    trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}").gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
         .stays()//
     ;
   }
 
   @Test public void A$50_Enums() {
-    trimmingOf("public final class ClassTest{static enum Day{SUNDAY,MONDAY}")//
-        .gives("public final class ClassTest{enum Day{SUNDAY,MONDAY}")//
+    trimmingOf("public final class ClassTest{static enum Day{SUNDAY,MONDAY}").gives("public final class ClassTest{enum Day{SUNDAY,MONDAY}")//
         .stays()//
     ;
   }
@@ -41,8 +39,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$50_FinalClassMethodsOnlyRightModifierRemoved() {
-    trimmingOf("final class ClassTest{public final void remove();}")//
-        .gives("final class ClassTest{public void remove();}")//
+    trimmingOf("final class ClassTest{public final void remove();}").gives("final class ClassTest{public void remove();}")//
         .stays()//
     ;
   }
@@ -61,8 +58,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$50_InterfaceMethods1() {
-    trimmingOf("public interface Int1{public void add();void remove()\n;}")//
-        .gives("public interface Int1{void add();void remove()\n;}")//
+    trimmingOf("public interface Int1{public void add();void remove()\n;}").gives("public interface Int1{void add();void remove()\n;}")//
         .stays()//
     ;
   }
@@ -75,8 +71,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$50_InterfaceMethods3() {
-    trimmingOf("public interface Int1{abstract void add();void remove()\n;}")//
-        .gives("public interface Int1{void add();void remove();}")//
+    trimmingOf("public interface Int1{abstract void add();void remove()\n;}").gives("public interface Int1{void add();void remove();}")//
         .stays()//
     ;
   }
