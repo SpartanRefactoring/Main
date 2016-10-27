@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.*;
 
 import il.org.spartan.*;
 
@@ -16,16 +17,16 @@ public class Reports {
   private PrintWriter afters;
   private int done;
    
-  private static HashMap<String, CSVStatistics> map = new HashMap<>();
+  private static HashMap<String, CSVStatistics> reports = new HashMap<>();
   private static HashMap<String, PrintWriter> files = new HashMap<>();
   
-  @SuppressWarnings("unused") static List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
-  
-  public void setReport(final CSVStatistics r, final String name){
-    HashMap map = new HashMap<String, CSVStatistics>();
-    map.put(name, r);
-    reports.add(map);
-  }
+//  @SuppressWarnings("unused") static List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
+//  
+//  public void setReport(final CSVStatistics r, final String name){
+//    HashMap map = new HashMap<String, CSVStatistics>();
+//    map.put(name, r);
+//    reports.add(map);
+//  }
   
   public static void initializeFile(final String fileName, final String id){
     try (PrintWriter w = new PrintWriter(new FileWriter(fileName));) {
@@ -35,26 +36,26 @@ public class Reports {
     }
   }
 
-  public static void intialize() {
-    reportFileName = "/tmp/report.CSV";
-    try {
-      map.put("metrics", new CSVStatistics(reportFileName, "metrics"));
-    } catch (final IOException x) {
-      x.printStackTrace();
-    }
-  }
+//  public static void intialize() {
+//    reportFileName = "/tmp/report.CSV";
+//    try {
+//      reports.put("metrics", new CSVStatistics(reportFileName, "metrics"));
+//    } catch (final IOException x) {
+//      x.printStackTrace();
+//    }
+//  }
   
-  public static void intializeReport(final String reportfileName, final String id) {
+  public static void intializeReport(final String reportFileName, final String id) {
 //    reportFileName = "/tmp/report.CSV";
     try {
-      map.put("metrics", new CSVStatistics(reportFileName, id));
+      reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException x) {
       x.printStackTrace();
     }
   }
 
   private static CSVStatistics report(final String key) {
-    return map.get(key);
+    return reports.get(key);
   }
 
   public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
@@ -117,24 +118,30 @@ public class Reports {
     report(key).nl();
   }
   
-  /** Setup PrintWriters
-   * @author matteo */
-  protected void setUpPrintWriters() {
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-      befores = b;
-      afters = a;
-    } catch (final IOException x) {
-      x.printStackTrace();
-      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-    }
-  }
-
-  public static void printFile(String string) {
-    
-  }
+//  /** Setup PrintWriters
+//   * @author matteo */
+//  protected void setUpPrintWriters() {
+//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+//      befores = b;
+//      afters = a;
+//    } catch (final IOException x) {
+//      x.printStackTrace();
+//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
+//    }
+//  }
 
   public static void printFile(final Object input, final String key) {
+    
+    System.out.println(input);
     files.get(key).print(input);
   }
+  
+  public static void closeFile(final String key) {
+    files.get(key).close();
+  }
+  
+//  public static void close(final Consumer<HashMap> c, final String key){
+//    c -> (c.get(key)).close();    
+//  }
 }
