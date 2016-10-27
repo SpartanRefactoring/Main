@@ -973,4 +973,16 @@ public interface iz {
       return literal(az.stringLiteral(¢), s);
     }
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean primitiveType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean Void(final Type ¢) {
+    return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
+  }
 }

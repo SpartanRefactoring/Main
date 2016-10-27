@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -551,5 +552,27 @@ public interface wizard {
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
+  }
+
+  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** @param d JD
+   * @param s JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  static void addStatement(MethodDeclaration d, ReturnStatement s, ASTRewrite r, TextEditGroup g) {
+    r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 }
