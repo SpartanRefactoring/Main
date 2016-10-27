@@ -670,7 +670,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, new int[] { CHARACTER_LITERAL, NUMBER_LITERAL });
   }
 
-  static boolean parenthesizedExpression(final Expression ¢) {
+  static boolean parenthesizedExpression(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
@@ -984,5 +984,11 @@ public interface iz {
    * @return */
   static boolean Void(final Type ¢) {
     return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean castExpression(ASTNode ¢) {
+    return ¢ != null && ¢ instanceof CastExpression;
   }
 }

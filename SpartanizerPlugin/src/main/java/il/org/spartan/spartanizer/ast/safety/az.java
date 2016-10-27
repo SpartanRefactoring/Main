@@ -493,9 +493,15 @@ public enum az {
     return chop(fragments);
   }
 
-  /** @param ¢
+  /** @param ¢ JD
    * @return */
   static PrimitiveType primitiveType(Type ¢) {
     return ¢ == null ? null : (PrimitiveType) ¢;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static CastExpression castExpression(Expression ¢) {
+    return ¢ == null ? null : (CastExpression) ¢;
   }
 }

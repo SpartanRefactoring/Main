@@ -133,6 +133,7 @@ public class Analyzer {
             new ExecuteWhen(), //
             null) //
         .add(MethodDeclaration.class, //
+            new Converter(), //
             new MethodEmpty(), //
             new Getter(), //
             new Setter(), //
