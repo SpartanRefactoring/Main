@@ -17,7 +17,8 @@ public class CommandLineApplicator extends Applicator {
     return new CommandLineApplicator().defaultSettings();
   }
 
-  private CommandLine$Applicator cla = new CommandLine$Applicator(".");
+//  private CommandLine$Applicator a = new CommandLine$Applicator(".");
+  private CommandLine$Applicator a = new CommandLine$Applicator();
 
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple printing to
    * console. 
@@ -90,7 +91,7 @@ public class CommandLineApplicator extends Applicator {
    * {@link GUIBatchLaconizer$Applicator}.
    * @param a JD
    * @return this applicator */
-  public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
+  public CommandLineApplicator defaultRunAction(@SuppressWarnings("hiding") final Spartanizer$Applicator a) {
     setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     name(a.getName());
     return this;
@@ -123,13 +124,14 @@ public class CommandLineApplicator extends Applicator {
     return defaultListenerSilent().defaultPassesFew()
                                   .defaultRunContext()
                                   .defaultSelection()
-                                  .defaultRunAction(new Spartanizer$Applicator());
+                                  .defaultRunAction();
+//                                  .defaultRunAction(new Spartanizer$Applicator());
   }
 
   /* (non-Javadoc)
    *
    * @see il.org.spartan.plugin.revision.Applicator#go() */
-  @Override public void go() {
+  @SuppressWarnings("unused") @Override public void go() {
     if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
       return;
     List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
@@ -137,7 +139,7 @@ public class CommandLineApplicator extends Applicator {
     for(CompilationUnit ¢: list){
      assert ¢ != null;
 //     System.err.println(cu);
-     cla.go(¢);
+     a.go(¢);
     }
     if(false)
     runContext().accept(() -> {
@@ -148,7 +150,7 @@ public class CommandLineApplicator extends Applicator {
         @SuppressWarnings("unused") final List<CompilationUnit> dead = new LinkedList<>();
         for (final CompilationUnit ¢ : alive){
           System.err.println("¢.getLength(): " + ¢.getLength());
-          cla.go(¢);
+          a.go(¢);
         }
         // if(!runAction().apply(¢.build()).booleanValue())
         // dead.add(¢);
