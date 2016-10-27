@@ -41,6 +41,18 @@ public class Toolbox {
         }
     }
   };
+  @SuppressWarnings({ "synthetic-access",
+      "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
+        static final long serialVersionUID = -4821340356894435723L;
+        {
+          final Toolbox t = freshCopyOfAllTippers();
+          assert t.implementation != null;
+          for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
+            if (ts != null)
+              for (final Tipper<? extends ASTNode> ¢ : ts)
+                put(¢.getClass(), ¢.tipperGroup());
+        }
+      };
   /** The default Instance of this class */
   static Toolbox defaultInstance;
 
@@ -382,5 +394,9 @@ public class Toolbox {
           if (¢.equals(p.tipperGroup()))
             $.add(p.myName());
     return $;
+  }
+
+  public static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+    return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
 }

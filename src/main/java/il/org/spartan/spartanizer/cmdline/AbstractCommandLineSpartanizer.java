@@ -164,10 +164,13 @@ public abstract class AbstractCommandLineSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-    // apply();
-    // System.out.println("------------------");
-    CommandLineApplicator.defaultApplicator().passes(20)
-        .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
+     apply();
+//     System.out.println("------------------");
+//    CommandLineApplicator.defaultApplicator()
+//                         .passes(20)
+//                         .selection(CommandLineSelection.of(CommandLineSelection.Util
+//                                                                                .getAllCompilationUnit(inputPath)))
+//                         .go();
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
