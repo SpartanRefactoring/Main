@@ -7,119 +7,88 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue052 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue052 {
   @Test public void A$a() {
-    trimmingOf("abstract abstract interface a{}")//
-        .gives("interface a{}")//
-        .stays()//
-    ;
+    trimmingOf("abstract abstract interface a" + "{}").gives("interface a {}");
   }
 
   @Test public void A$A() {
-    trimmingOf("void m(){return;}")//
-        .gives("void m(){}")//
-        .stays()//
-    ;
+    trimmingOf("void m() { return; }").gives("void m() {}");
   }
 
   @Test public void A$A1() {
-    trimmingOf("void m(){return a;}")//
-        .stays();
+    trimmingOf("void m() { return a; }").stays();
   }
 
   @Test public void A$b() {
-    trimmingOf("abstract interface a{}")//
-        .gives("interface a{}")//
-        .stays()//
-    ;
+    trimmingOf("abstract interface a" + "{}").gives("interface a {}");
   }
 
   @Test public void A$B1() {
-    trimmingOf("void m(){if (a){f();return;}}")//
-        .gives("void m(){if (a){f();;}}")//
-        .gives("void m(){if (a) f();}")//
-        .stays()//
-    ;
+    trimmingOf("void m() { if (a) { f(); return; }}").gives("void m() { if (a) { f(); ; }}");
   }
 
   @Test public void A$B2() {
-    trimmingOf("void m(){if (a) ++i;else{f();return;}}")//
-        .gives("void m(){if (a) ++i;else{f();;}}")//
-        .gives("void m(){if (a) ++i;else f();}")//
-        .stays()//
-    ;
+    trimmingOf("void m() { if (a) ++i; else { f(); return; }}").gives("void m() { if (a) ++i; else { f(); ; }}");
   }
 
   @Test public void A$c() {
-    trimmingOf("interface a{}")//
-        .stays();
+    trimmingOf("interface a" + "{}").stays();
   }
 
   @Test public void A$d() {
     trimmingOf("public interface A{public abstract void a();abstract void r();static final void s();}")
-        .gives("public interface A{void a();void r();static void s();}")//
-        .stays()//
-    ;
+        .gives("public interface A{void a();void r();static void s();}");
   }
 
   @Test public void A$e() {
-    trimmingOf("public interface A{static void remove();public static int i = 3;}").gives("public interface A{static void remove();int i = 3;}")//
-        .stays()//
-    ;
+    trimmingOf("public interface A {\n" + "static void remove()\n; " + "public static int i = 3\n; " + "}")
+        .gives("public interface A {\n" + "static void remove()\n; " + "int i = 3\n; " + "}");
   }
 
   @Test public void A$f() {
-    trimmingOf("public interface A{static void remove();public static int i;}").gives("public interface A{static void remove();int i;}")//
-        .stays()//
-    ;
+    trimmingOf("public interface A {\n" + "static void remove()\n; " + "public static int i\n; " + "}")
+        .gives("public interface A {\n" + "static void remove()\n; " + "int i\n; " + "}");
   }
 
   @Test public void A$g() {
-    trimmingOf("final class ClassTest{final void remove();}")//
-        .gives("final class ClassTest{void remove();}")//
-        .stays()//
-    ;
+    trimmingOf("final class ClassTest {\n" + "final void remove();\n" + "}").gives("final class ClassTest {\n" + "void remove();\n " + "}");
   }
 
   @Test public void A$h() {
-    trimmingOf("final class ClassTest{public final void remove();}").gives("final class ClassTest{public void remove();}")//
-        .stays()//
-    ;
+    trimmingOf("final class ClassTest {\n" + "public final void remove();\n" + "}")
+        .gives("final class ClassTest {\n" + "public void remove();\n " + "}");
   }
 
   @Test public void A$i() {
-    trimmingOf("public final class ClassTest{static enum Day{SUNDAY,MONDAYSUNDAY,MONDAY}");
+    trimmingOf("public final class ClassTest {\n" + "static enum Day {\n" + "SUNDAY, MONDAY\n" + "SUNDAY, MONDAY\n" + "}");
   }
 
   @Test public void A$j() {
-    trimmingOf("public final class ClassTest{private static enum Day{SUNDAY,MONDAY}");
+    trimmingOf("public final class ClassTest {\n" + "private static enum Day {\n" + "SUNDAY, MONDAY\n" + "}");
   }
 
   @Test public void A$k() {
-    trimmingOf("public final class ClassTest{public  ClassTest(){}}")//
-        .stays();
+    trimmingOf("public final class ClassTest {\n" + "public  ClassTest(){}\n" + "}").stays();
   }
 
   @Test public void A$l() {
-    trimmingOf("abstract class A{final void f(){}}")//
-        .stays();
+    trimmingOf("abstract class A { final void f() { }}").stays();
   }
 
   @Test public void A$n() {
-    trimmingOf("class A{public final static int i=3;}").gives("class A{public static final int i=3;}")//
-        .stays();
+    trimmingOf("abstract class A {\n" + "static void f() {}\n " + "public final static int i = 3; " + "}")
+        .gives("abstract class A {\n" + "static void f() {}\n " + "public static final int i = 3; " + "}").stays();
   }
 
   @Test public void A$o() {
-    trimmingOf("final class A{public final static int i = 3;}").gives("final class A{public static final int i = 3;}")//
-        .stays();
+    trimmingOf("final class A {\n" + "static void f() {}\n " + "public final static int i = 3; " + "}")
+        .gives("final class A {\n" + "static void f() {}\n " + "public static final int i = 3; " + "}").stays();
   }
 
   @Test public void A$p() {
-    trimmingOf("enum A{a1,a2;static enum B{b1,b2;static class C{static enum D{c1,c2}}}")
-        .gives("enum A{a1,a2;enum B{b1,b2;static class C{enum D{c1,c2}}}")//
+    trimmingOf("enum A{y,x;static enum B{b,v;static class C{static enum D{c,w}}}")
+        .gives("enum A{y,x;enum B{b,v;static class C{enum D{c,w}}}")//
         .stays()//
     ;
   }
