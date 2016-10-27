@@ -17,7 +17,7 @@ public class Reports {
 
   private static HashMap<String, CSVStatistics> map = new HashMap<String, CSVStatistics>(); 
   
-  public static void intitialize(){
+  public static void intialize(){
     reportFileName = "/tmp/report.CSV";
     try {
       map.put("metrics", new CSVStatistics(reportFileName, "metrics"));
@@ -86,11 +86,6 @@ public class Reports {
     .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
     .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
     .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
-  }
-
-  public static void initialize() {
-    // TODO Auto-generated method stub
-    
   }
 
   public static void close(String key) {

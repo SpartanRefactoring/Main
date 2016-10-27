@@ -8,9 +8,8 @@ public class CommandLineClient { // extends AbstractCommandLineSpartanizer{
   // TODO Matteo: Add prompt help
   
   public static void main(final String[] args) {
-    Reports.initialize();
-    for (final String ¢ : args.length != 0 ? args : new String[] { "." }){
+    Reports.intialize();
+    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new CommandLineSpartanizer(¢).fire();
-    }
   }
 }
