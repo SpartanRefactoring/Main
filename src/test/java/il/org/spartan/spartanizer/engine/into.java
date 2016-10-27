@@ -112,6 +112,12 @@ public enum into {
   }
 
   public static Type t(final String codeFragment) {
-    return findFirst.firstType(s(codeFragment));
+    return findFirst.type(s(codeFragment));
+  }
+
+  /** @param p
+   * @return */
+  public static MethodDeclaration m(String p) {
+    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.from(p));
   }
 }

@@ -56,7 +56,7 @@ public interface findFirst {
     return findFirst.instanceOf(Expression.class, ¢);
   }
 
-  static Type firstType(final Statement ¢) {
+  static Type type(final Statement ¢) {
     return instanceOf(Type.class, ¢);
   }
 
@@ -124,7 +124,7 @@ public interface findFirst {
    * @return first {@link MethodDeclaration} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    return findFirst.instanceOf(MethodDeclaration.class, ¢);
+    return instanceOf(MethodDeclaration.class, ¢);
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
