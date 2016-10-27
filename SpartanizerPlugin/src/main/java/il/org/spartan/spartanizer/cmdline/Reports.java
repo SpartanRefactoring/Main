@@ -10,35 +10,15 @@ public class Reports {
   protected String afterFileName;
   protected String beforeFileName;
   protected String inputPath;
-//  protected static String reportFileName;
   protected String spectrumFileName;
-//  private PrintWriter befores;
-//  private PrintWriter afters;
    
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-  
-//  @SuppressWarnings("unused") static List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
-//  
-//  public void setReport(final CSVStatistics r, final String name){
-//    HashMap map = new HashMap<String, CSVStatistics>();
-//    map.put(name, r);
-//    reports.add(map);
-//  }
   
   @SuppressWarnings("resource") 
   public static void initializeFile(final String fileName, final String id) throws IOException{
     files.put(id,new PrintWriter(new FileWriter(fileName)));
   }
-
-//  public static void intialize() {
-//    reportFileName = "/tmp/report.CSV";
-//    try {
-//      reports.put("metrics", new CSVStatistics(reportFileName, "metrics"));
-//    } catch (final IOException x) {
-//      x.printStackTrace();
-//    }
-//  }
   
   public static void intializeReport(final String reportFileName, final String id) {
 //    reportFileName = "/tmp/report.CSV";
@@ -117,40 +97,13 @@ public class Reports {
     report(key).nl();
   }
   
-//  /** Setup PrintWriters
-//   * @author matteo */
-//  protected void setUpPrintWriters() {
-//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-//      befores = b;
-//      afters = a;
-//    } catch (final IOException x) {
-//      x.printStackTrace();
-//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-//    }
-//  }
-
   public static void printFile(final String input, final String key) {
-//    System.out.println("---------->" + input);
     assert input != null;
-//    System.out.println("files.size(): " + files.size());
-//    PrintWriter a = files(key);
-//    a.print(input);
-////    System.out.println(input);
-//    files.put(key, a);
     files(key).print(input);
   }
   
   public static void closeFile(final String key) {
-//    System.out.println(key);
-//    System.out.println(files.get(key));
-//    System.out.println(files.get(key).toString());
-    PrintWriter a = files(key);
-    a.flush();
-    a.close();
+    files(key).flush();
+    files(key).close();
   }
-  
-//  public static void close(final Consumer<HashMap> c, final String key){
-//    c -> (c.get(key)).close();    
-//  }
 }
