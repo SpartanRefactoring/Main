@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.*;
 
 import il.org.spartan.*;
 
@@ -11,14 +10,13 @@ public class Reports {
   protected String afterFileName;
   protected String beforeFileName;
   protected String inputPath;
-  protected static String reportFileName;
+//  protected static String reportFileName;
   protected String spectrumFileName;
-  private PrintWriter befores;
-  private PrintWriter afters;
-  private int done;
+//  private PrintWriter befores;
+//  private PrintWriter afters;
    
-  private static HashMap<String, CSVStatistics> reports = new HashMap<>();
-  private static HashMap<String, PrintWriter> files = new HashMap<>();
+  protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
+  protected static HashMap<String, PrintWriter> files = new HashMap<>();
   
 //  @SuppressWarnings("unused") static List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
 //  
@@ -28,12 +26,9 @@ public class Reports {
 //    reports.add(map);
 //  }
   
-  public static void initializeFile(final String fileName, final String id){
-    try (PrintWriter w = new PrintWriter(new FileWriter(fileName));) {
-      files.put(id,w);
-    } catch (final IOException x) {
-      x.printStackTrace();
-    }
+  @SuppressWarnings("resource") 
+  public static void initializeFile(final String fileName, final String id) throws IOException{
+    files.put(id,new PrintWriter(new FileWriter(fileName)));
   }
 
 //  public static void intialize() {
@@ -56,6 +51,10 @@ public class Reports {
 
   private static CSVStatistics report(final String key) {
     return reports.get(key);
+  }
+  
+  private static PrintWriter files(final String key) {
+    return files.get(key);
   }
 
   public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
@@ -131,14 +130,24 @@ public class Reports {
 //    }
 //  }
 
-  public static void printFile(final Object input, final String key) {
-    
-    System.out.println(input);
-    files.get(key).print(input);
+  public static void printFile(final String input, final String key) {
+//    System.out.println("---------->" + input);
+    assert input != null;
+//    System.out.println("files.size(): " + files.size());
+//    PrintWriter a = files(key);
+//    a.print(input);
+////    System.out.println(input);
+//    files.put(key, a);
+    files(key).print(input);
   }
   
   public static void closeFile(final String key) {
-    files.get(key).close();
+//    System.out.println(key);
+//    System.out.println(files.get(key));
+//    System.out.println(files.get(key).toString());
+    PrintWriter a = files(key);
+    a.flush();
+    a.close();
   }
   
 //  public static void close(final Consumer<HashMap> c, final String key){
