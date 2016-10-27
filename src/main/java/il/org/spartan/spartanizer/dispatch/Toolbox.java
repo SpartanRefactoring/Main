@@ -121,8 +121,16 @@ public class Toolbox {
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
-        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
+        .add(ThrowStatement.class, //
+            new ThrowNotLastInBlock(), //
+            null) //
+        // TODO: Marco add this tipper when it's ready
+        // .add(CastExpression.class, //
+        // new Coercion(), //
+        // null)
+        .add(ClassInstanceCreation.class, //
+            new ClassInstanceCreationValueTypes(), //
+            null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(SingleVariableDeclaration.class, //

@@ -163,6 +163,8 @@ public interface wizard {
         return into.t(p);
       case STATEMENTS_LOOK_ALIKE:
         return into.s(p);
+      case METHOD_LOOKALIKE:
+        return into.m(p);
       default:
         break;
     }
@@ -574,5 +576,15 @@ public interface wizard {
    * @param g edit group, usually null */
   static void addStatement(MethodDeclaration d, ReturnStatement s, ASTRewrite r, TextEditGroup g) {
     r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
+  }
+
+  /** @param d JD
+   * @param m JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  static void addMethod(AbstractTypeDeclaration d, MethodDeclaration m, ASTRewrite r, TextEditGroup g) {
+    // System.out.println(d.bodyDeclarations());
+    System.out.println(m);
+    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(m, g);
   }
 }

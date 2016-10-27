@@ -140,6 +140,6 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   private Type t(final String codeFragment) {
-    return findFirst.firstType(s(codeFragment));
+    return findFirst.type(s(codeFragment));
   }
 }
