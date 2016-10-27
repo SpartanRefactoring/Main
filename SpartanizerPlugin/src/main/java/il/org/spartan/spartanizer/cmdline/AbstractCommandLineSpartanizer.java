@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("unused") 
-public abstract class AbstractCommandLineSpartanizer2 {
+public abstract class AbstractCommandLineSpartanizer {
   
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
@@ -35,21 +35,17 @@ public abstract class AbstractCommandLineSpartanizer2 {
   protected String folder = "/tmp/";
   protected String inputPath;
 
-
   public abstract void apply();
 
   void fire() {
-    run();
+    apply();
 //    reportSpectrum();
 //    reportCoverage();
 //    runEssence();
 //    runWordCount();
   }
 
-
-  private void run() {
-     apply();
-  }
+  // running report
 
   public void runReport(final Consumer<CSVStatistics> __) {
     // TODO Matteo: implement this if we need it; found in random scan
@@ -59,23 +55,30 @@ public abstract class AbstractCommandLineSpartanizer2 {
     int f(R r);
   }
 
-  static NamedFunction m(String name, ToInt<String> f) {
+  static NamedFunction m(String name, ToInt<ASTNode> f) {
     return new NamedFunction(name, f);
   }
 
   static class NamedFunction {
-    NamedFunction(String name, ToInt<String> f) {
+    NamedFunction(String name, ToInt<ASTNode> f) {
       this.name = name;
       this.f = f;
     }
 
     final String name;
-    final ToInt<String> f;
+    final ToInt<ASTNode> f;
   }
 
   NamedFunction functions[] = as.array(//
       m("seventeeen", (¢) -> 17), //
-      m("length", (¢) -> ¢.length()), //
-      m("essence", (¢) -> Essence.of(¢).length())//
+      m("length", (¢) -> (¢+"").length()), //
+      m("essence", (¢) -> Essence.of(¢+"").length()),
+      m("tokens", (¢) -> metrics.tokens(¢+"")),
+      m("nodes", (¢) -> count.nodes(¢)),//
+      m("body", (¢) -> metrics.bodySize(¢)),
+      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : 
+        extract.statements(az.methodDeclaration(¢).getBody()).size()),
+      m("tide", (¢) -> clean(¢+"").length())                                        
       );
+
 }
