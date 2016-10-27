@@ -6,7 +6,7 @@ import java.io.*;
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer2 {
+public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   private String name;
 
   CommandLineSpartanizer(final String path) {
@@ -19,6 +19,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer2 {
   }
 
   @Override public void apply() {
+    
+    System.out.println(inputPath);
     try {
       Reports.initializeFile(folder + name + ".before.java", "before");
       Reports.initializeFile(folder + name + ".after.java", "after");
