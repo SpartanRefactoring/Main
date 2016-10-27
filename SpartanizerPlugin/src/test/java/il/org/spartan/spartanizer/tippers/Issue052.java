@@ -87,8 +87,9 @@ import org.junit.runners.*;
   }
 
   @Test public void A$p() {
-    trimmingOf("enum A {a1, a2; static enum B {b1, b2; static class C { static enum D {c1, c2}}}")
-        .gives("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")
-        .gives("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}");
+    trimmingOf("enum A{y,x;static enum B{b,v;static class C{static enum D{c,w}}}")
+        .gives("enum A{y,x;enum B{b,v;static class C{enum D{c,w}}}")//
+        .stays()//
+    ;
   }
 }
