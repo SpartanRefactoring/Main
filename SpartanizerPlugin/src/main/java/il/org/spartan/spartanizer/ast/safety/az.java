@@ -492,4 +492,10 @@ public enum az {
     duplicate.into(step.fragments(¢), fragments);
     return chop(fragments);
   }
+
+  /** @param ¢
+   * @return */
+  static PrimitiveType primitiveType(Type ¢) {
+    return ¢ == null ? null : (PrimitiveType) ¢;
+  }
 }
