@@ -42,8 +42,16 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
         ReturnStatement s = d.getAST().newReturnStatement();
         s.setExpression(d.getAST().newThisExpression());
         wizard.addStatement(d, s, r, g);
+        d.setReturnType2(getType(searchAncestors.forContainingType().from(d)));
       }
     };
+  }
+
+  /** @param ¢
+   * @return */
+  protected static Type getType(TypeDeclaration ¢) {
+    // TODO Marco somehow get type out of TypeDeclaration
+    return ¢.getSuperclassType();
   }
 
   @Override public String description(final MethodDeclaration ¢) {
