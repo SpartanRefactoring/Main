@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.research;
 
 /** Factory to create tippers out of user strings! Much easier to implement
- * tippers with this. <br>
+ * tippers with. <br>
  * $Xi for expression i.e. - foo(a,b,c)*d + 17 <br>
  * $M for MethodInvocation i.e. - func() <br>
  * $N for Name i.e. - func <br>
  * $B for block or statement i.e. - if(x) return 17; <br>
+ * $A for method arguments i.e. - func($A) will match func(1,obj, 17+2) and even
+ * func() <br>
  * @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
@@ -22,6 +24,11 @@ import il.org.spartan.utils.*;
 
 public class TipperFactory {
   public static <N extends ASTNode> UserDefinedTipper<N> subBlockTipper(final String _pattern, final String _replacement, final String description) {
+    return newSubBlockTipper(_pattern, _replacement, description);
+  }
+
+  private static <N extends ASTNode> UserDefinedTipper<N> newSubBlockTipper(final String _pattern, final String _replacement,
+      final String description) {
     return new UserDefinedTipper<N>() {
       final ASTNode pattern = wizard.ast(reformat$Bs(_pattern));
       final String replacement = reformat$Bs(_replacement);
