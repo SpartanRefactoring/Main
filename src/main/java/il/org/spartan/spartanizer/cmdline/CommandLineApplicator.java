@@ -135,10 +135,8 @@ public class CommandLineApplicator extends Applicator {
     if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
       return;
     List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
-//    Reports r = new Reports();
     for(CompilationUnit ¢: list){
      assert ¢ != null;
-//     System.err.println(cu);
      a.go(¢);
     }
     if(false)
@@ -147,7 +145,7 @@ public class CommandLineApplicator extends Applicator {
       for (int pass = 0; pass < l; ++pass) {
         final List<CompilationUnit> alive = new LinkedList<>();
         alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
-        @SuppressWarnings("unused") final List<CompilationUnit> dead = new LinkedList<>();
+        final List<CompilationUnit> dead = new LinkedList<>();
         for (final CompilationUnit ¢ : alive){
           System.err.println("¢.getLength(): " + ¢.getLength());
           a.go(¢);
@@ -156,8 +154,6 @@ public class CommandLineApplicator extends Applicator {
         // dead.add(¢);
       }
     });
-  
-//    System.err.println("go go go!");
   }
   
 // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
