@@ -19,14 +19,14 @@ import il.org.spartan.spartanizer.tipping.*;
 public class CommandLine$Applicator {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   public Toolbox toolbox;
-  @SuppressWarnings("unused") public int tippersAppliedOnCurrentObject;
+  public int tippersAppliedOnCurrentObject;
   
-  protected String folder = "/tmp/";
-  protected String afterFileName;
-  protected String beforeFileName;
-  protected String inputPath;
-  protected String reportFileName;
-  protected String spectrumFileName;
+//  protected String folder = "/tmp/";
+//  protected String afterFileName;
+//  protected String beforeFileName;
+//  protected String inputPath;
+//  protected String reportFileName;
+//  protected String spectrumFileName;
   protected PrintWriter afters;
   protected PrintWriter befores;
   
@@ -41,41 +41,41 @@ public class CommandLine$Applicator {
 //    reports.add(map);
 //  }
   
-  CSVStatistics report;
-  CSVStatistics spectrumStats;
-  CSVStatistics coverageStats;
+//  CSVStatistics report;
+//  CSVStatistics spectrumStats;
+//  CSVStatistics coverageStats;
   
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   
-  CommandLine$Applicator(final String path) {
-    this(path, system.folder2File(path));
-  }
+//  CommandLine$Applicator(final String path) {
+//    this(path, system.folder2File(path));
+//  }
 
-  CommandLine$Applicator(final String inputPath, final String name){
-    this.inputPath = inputPath;
-    beforeFileName = folder + name + ".before.java";
-    afterFileName = folder + name + ".after.java";
-    reportFileName = folder + name + ".CSV";
-    spectrumFileName = folder + name + ".spectrum.CSV";
-    try {
-      befores = new PrintWriter(beforeFileName);
-      afters = new PrintWriter(afterFileName);
-    } catch (final FileNotFoundException x) {
-      x.printStackTrace();
-    }
-    
-    // Matteo: Please do not delete the following instructions. 
-    // They are needed to instantiate report in commandline classes
-    
-    try {
-      report = new CSVStatistics(reportFileName, "property");
-      spectrumStats = new CSVStatistics(spectrumFileName, "property");
-    } catch (IOException x) {
-      x.printStackTrace();
-      System.err.println("problem in setting up reports");
-    }
-  } 
+//  CommandLine$Applicator(final String inputPath, final String name){
+//    this.inputPath = inputPath;
+//    beforeFileName = folder + name + ".before.java";
+//    afterFileName = folder + name + ".after.java";
+//    reportFileName = folder + name + ".CSV";
+//    spectrumFileName = folder + name + ".spectrum.CSV";
+//    try {
+//      befores = new PrintWriter(beforeFileName);
+//      afters = new PrintWriter(afterFileName);
+//    } catch (final FileNotFoundException x) {
+//      x.printStackTrace();
+//    }
+//    
+//    // Matteo: Please do not delete the following instructions. 
+//    // They are needed to instantiate report in commandline classes
+//    
+//    try {
+//      report = new CSVStatistics(reportFileName, "property");
+//      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+//    } catch (IOException x) {
+//      x.printStackTrace();
+//      System.err.println("problem in setting up reports");
+//    }
+//  } 
  
   // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer 
   // (code duplication to be resolved)
@@ -93,7 +93,7 @@ public class CommandLine$Applicator {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
-    Reports.printFile(input, "before");
+    Reports.printFile(input+"", "before");
     Reports.printFile(output, "after");
 //    befores.print(input);
 //    afters.print(output);
@@ -104,12 +104,15 @@ public class CommandLine$Applicator {
   ASTNodeMetrics nm1, nm2;
   
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
+    //
     nm1 = new ASTNodeMetrics(input);
     nm1.computeMetrics();
+    //
     nm2 = new ASTNodeMetrics(output);
     nm2.computeMetrics();
+//    System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    System.out.println(befores.checkError());
+//    System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
 //    report.summaryFileName();
     Reports.reportMetrics(nm1, "1", "metrics");
@@ -128,16 +131,16 @@ public class CommandLine$Applicator {
    * @param id
    */
   
-  public void reportMetrics(final ASTNodeMetrics nm, final String id){
-    report//
-    .put("Nodes" + id, nm.nodes())//
-    .put("Body" + id, nm.body())//
-    .put("Length" + id, nm.length())//
-    .put("Tokens" + id, nm.tokens())//
-    .put("Tide" + id, nm.tide())//
-    .put("Essence" + id, nm.essence())//
-    .put("Statements" + id, nm.statements());//
-  }
+//  public void reportMetrics(final ASTNodeMetrics nm, final String id){
+//    report//
+//    .put("Nodes" + id, nm.nodes())//
+//    .put("Body" + id, nm.body())//
+//    .put("Length" + id, nm.length())//
+//    .put("Tokens" + id, nm.tokens())//
+//    .put("Tide" + id, nm.tide())//
+//    .put("Essence" + id, nm.essence())//
+//    .put("Statements" + id, nm.statements());//
+//  }
   
   /**
    * 
@@ -145,46 +148,46 @@ public class CommandLine$Applicator {
    * @param nm2
    */
   
-  public void reportDifferences(@SuppressWarnings("hiding") final ASTNodeMetrics nm1, @SuppressWarnings("hiding") final ASTNodeMetrics nm2){
-    report //
-    .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-    .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
-    .put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
-    .put("Δ Body", nm1.body() - nm2.body())//
-    .put("δ Body", system.d(nm1.body(), nm2.body()))//
-    .put("% Body", system.p(nm1.body(), nm2.body()))//
-    .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-    .put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
-    .put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
-    .put("Δ Length", nm1.length() - nm2.length())//
-    .put("δ Length", system.d(nm1.length(), nm2.length()))//
-    .put("% Length", system.p(nm1.length(), nm2.length()))//
-    .put("Δ Tide2", nm1.tide() - nm2.tide())//
-    .put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
-    .put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
-    .put("Δ Essence", nm1.essence() - nm2.essence())//
-    .put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
-    .put("% Essence", system.p(nm1.essence(), nm2.essence()))//
-    .put("Δ Statement", nm1.statements() - nm2.statements())//
-    .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
-    .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
-  }
+//  public void reportDifferences(@SuppressWarnings("hiding") final ASTNodeMetrics nm1, @SuppressWarnings("hiding") final ASTNodeMetrics nm2){
+//    report //
+//    .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
+//    .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
+//    .put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
+//    .put("Δ Body", nm1.body() - nm2.body())//
+//    .put("δ Body", system.d(nm1.body(), nm2.body()))//
+//    .put("% Body", system.p(nm1.body(), nm2.body()))//
+//    .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
+//    .put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
+//    .put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
+//    .put("Δ Length", nm1.length() - nm2.length())//
+//    .put("δ Length", system.d(nm1.length(), nm2.length()))//
+//    .put("% Length", system.p(nm1.length(), nm2.length()))//
+//    .put("Δ Tide2", nm1.tide() - nm2.tide())//
+//    .put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
+//    .put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
+//    .put("Δ Essence", nm1.essence() - nm2.essence())//
+//    .put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
+//    .put("% Essence", system.p(nm1.essence(), nm2.essence()))//
+//    .put("Δ Statement", nm1.statements() - nm2.statements())//
+//    .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
+//    .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
+//  }
   
   /**
    * 
    * @param nm
    */
   
-  public void reportRatio(final ASTNodeMetrics nm, final String id){
-    report //
-//    .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
-    .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
-    .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
-    .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
-  }
+//  public void reportRatio(final ASTNodeMetrics nm, final String id){
+//    report //
+////    .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
+//    .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
+//    .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
+//    .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
+//  }
   
   String fixedPoint(final ASTNode ¢) {
-    System.out.println(¢);
+//    System.out.println(¢);
     return fixedPoint(¢ + "");
   }
   
@@ -213,7 +216,7 @@ public class CommandLine$Applicator {
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @SuppressWarnings("synthetic-access") @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
