@@ -73,7 +73,8 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     public static List<CompilationUnit> getAllCompilationUnit(String from) {
       List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(from)) {
-        System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
+        System.out.println(¢.getName());
+//        System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
         CompilationUnit cu;
         if (!system.isTestFile(¢))
           try {
