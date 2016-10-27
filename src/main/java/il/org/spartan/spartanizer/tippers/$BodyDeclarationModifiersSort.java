@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -20,29 +22,30 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  static final Comparator<IExtendedModifier> comp = (m1, m2) -> IExtendedModifiersOrdering.compare(m1, m2);
+  static final Comparator<IExtendedModifier> comp = (m1, m2) -> compare(m1, m2);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
-    IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
+    IExtendedModifiersRank previousRank = Override;
     for (final IExtendedModifier current : ms) {
-      if (!IExtendedModifiersOrdering.greaterThan(current, previous))
+      final IExtendedModifiersRank currentRank = rank(current);
+      if (currentRank.ordinal() >= previousRank.ordinal())
         return false;
-      previous = IExtendedModifiersOrdering.find(current);
+      previousRank = currentRank;
     }
     return true;
   }
 
   private static boolean pred(final IExtendedModifier m, final boolean[] bitMap) {
-    final boolean $ = !bitMap[IExtendedModifiersOrdering.ordinal(m)];
-    bitMap[IExtendedModifiersOrdering.ordinal(m)] = true;
+    final boolean $ = !bitMap[IExtendedModifiersRank.ordinal(m)];
+    bitMap[IExtendedModifiersRank.ordinal(m)] = true;
     // Can'tipper compare different user defined annotations! So avoid removing
     // them.
-    bitMap[IExtendedModifiersOrdering.userDefinedAnnotationsOrdinal()] = false;
+    bitMap[IExtendedModifiersRank.userDefinedAnnotationsOrdinal()] = false;
     return $;
   }
 
   private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
-    return $.stream().filter(m -> pred(m, IExtendedModifiersOrdering.bitMap())).collect(Collectors.toList());
+    return $.stream().filter(m -> pred(m, IExtendedModifiersRank.bitMap())).collect(Collectors.toList());
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
