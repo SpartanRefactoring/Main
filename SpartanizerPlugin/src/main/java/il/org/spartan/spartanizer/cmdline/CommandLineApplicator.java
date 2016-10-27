@@ -131,7 +131,8 @@ public class CommandLineApplicator extends Applicator {
   /* (non-Javadoc)
    *
    * @see il.org.spartan.plugin.revision.Applicator#go() */
-  @SuppressWarnings("unused") @Override public void go() {
+  @Override public void go() {
+    System.out.println("selection().size(): " + selection().size());
     if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
       return;
     List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
@@ -139,21 +140,21 @@ public class CommandLineApplicator extends Applicator {
      assert ¢ != null;
      a.go(¢);
     }
-    if(false)
-    runContext().accept(() -> {
-      final int l = passes();
-      for (int pass = 0; pass < l; ++pass) {
-        final List<CompilationUnit> alive = new LinkedList<>();
-        alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
-        final List<CompilationUnit> dead = new LinkedList<>();
-        for (final CompilationUnit ¢ : alive){
-          System.err.println("¢.getLength(): " + ¢.getLength());
-          a.go(¢);
-        }
-        // if(!runAction().apply(¢.build()).booleanValue())
-        // dead.add(¢);
-      }
-    });
+//    if(false)
+//    runContext().accept(() -> {
+//      final int l = passes();
+//      for (int pass = 0; pass < l; ++pass) {
+//        final List<CompilationUnit> alive = new LinkedList<>();
+//        alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
+//        final List<CompilationUnit> dead = new LinkedList<>();
+//        for (final CompilationUnit ¢ : alive){
+//          System.err.println("¢.getLength(): " + ¢.getLength());
+//          a.go(¢);
+//        }
+//        // if(!runAction().apply(¢.build()).booleanValue())
+//        // dead.add(¢);
+//      }
+//    });
   }
   
 // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
