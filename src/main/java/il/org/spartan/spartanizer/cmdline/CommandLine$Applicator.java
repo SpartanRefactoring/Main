@@ -33,13 +33,13 @@ public class CommandLine$Applicator {
   File currentFile;
   int done;
   
-  List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
-  
-  public void setReport(final CSVStatistics r, final String name){
-    HashMap map = new HashMap<String, CSVStatistics>();
-    map.put(name, r);
-    reports.add(map);
-  }
+//  List<HashMap<String, CSVStatistics>> reports = new ArrayList<HashMap<String, CSVStatistics>>();
+//  
+//  public void setReport(final CSVStatistics r, final String name){
+//    HashMap map = new HashMap<String, CSVStatistics>();
+//    map.put(name, r);
+//    reports.add(map);
+//  }
   
   CSVStatistics report;
   CSVStatistics spectrumStats;
@@ -93,8 +93,10 @@ public class CommandLine$Applicator {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
-    befores.print(input);
-    afters.print(output);
+    Reports.printFile(input, "before");
+    Reports.printFile(output, "after");
+//    befores.print(input);
+//    afters.print(output);
     computeMetrics(input, outputASTNode);
     return false;
   }
@@ -109,7 +111,7 @@ public class CommandLine$Applicator {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
-    report.summaryFileName();
+//    report.summaryFileName();
     Reports.reportMetrics(nm1, "1", "metrics");
     Reports.reportMetrics(nm2, "2", "metrics");
     Reports.reportDifferences(nm1, nm2, "metrics");

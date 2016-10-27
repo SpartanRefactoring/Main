@@ -134,12 +134,11 @@ public class CommandLineApplicator extends Applicator {
       return;
     List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
 //    Reports r = new Reports();
-    for(CompilationUnit cu: list){
-     assert cu != null;
+    for(CompilationUnit ¢: list){
+     assert ¢ != null;
 //     System.err.println(cu);
-     cla.go(cu);
+     cla.go(¢);
     }
-    Reports.close("metrics");
     if(false)
     runContext().accept(() -> {
       final int l = passes();
@@ -156,9 +155,9 @@ public class CommandLineApplicator extends Applicator {
       }
     });
   
-    System.err.println("go go go!");
+//    System.err.println("go go go!");
   }
   
-//  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
+// TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
     
 }
