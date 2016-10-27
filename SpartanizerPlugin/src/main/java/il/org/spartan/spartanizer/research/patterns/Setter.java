@@ -3,10 +3,15 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -25,6 +30,20 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     final Assignment a = az.assignment(e);
     return (iz.name(a.getLeftHandSide()) || tipper.canTip(a.getLeftHandSide()))
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
+  }
+
+  @Override public Tip tip(MethodDeclaration d, ExclusionManager m) throws TipperFailure {
+    Tip tip = super.tip(d, m);
+    return new Tip(description(d), d, this.getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        tip.go(r, g);
+        if (!iz.Void(step.returnType(d)))
+          return;
+        ReturnStatement s = d.getAST().newReturnStatement();
+        s.setExpression(d.getAST().newThisExpression());
+        wizard.addStatement(d, s, r, g);
+      }
+    };
   }
 
   @Override public String description(final MethodDeclaration ¢) {
