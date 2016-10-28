@@ -12,7 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
@@ -22,13 +21,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  static final Comparator<IExtendedModifier> comp = (m1, m2) -> compare(m1, m2);
+  static final Comparator<IExtendedModifier> comp = (m1, m2) -> rank(m1) - rank(m2);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
-    IExtendedModifiersRank previousRank = Override;
+    int previousRank = -1; 
     for (final IExtendedModifier current : ms) {
-      final IExtendedModifiersRank currentRank = rank(current);
-      if (currentRank.ordinal() >= previousRank.ordinal())
+      final int currentRank = rank(current);
+      if (currentRank <= previousRank)
         return false;
       previousRank = currentRank;
     }

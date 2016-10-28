@@ -10,7 +10,9 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue052 {
   @Test public void A$a() {
     trimmingOf("abstract abstract interface a{}")//
+        .gives("abstract interface a{}")//
         .gives("interface a{}")//
+        .stays() //
     ;
   }
 
@@ -36,7 +38,8 @@ import org.junit.runners.*;
 
   @Test public void A$B1() {
     trimmingOf("void m(){if (a){f(); return;}}")//
-        .gives("void m(){if (a){f(); ;}}")//
+        .gives("void m(){if (a){f();;}}")//
+        .gives("void m(){if (a)f();}")//
         .stays() //
     ;
   }
@@ -44,6 +47,7 @@ import org.junit.runners.*;
   @Test public void A$B2() {
     trimmingOf("void m(){if (a) ++i; else{f(); return;}}")//
         .gives("void m(){if (a) ++i; else{f(); ;}}")//
+        .gives("void m(){if (a) ++i; else f();}")//
         .stays() //
     ;
   }
@@ -88,13 +92,16 @@ import org.junit.runners.*;
   }
 
   @Test public void A$i() {
-    trimmingOf("public final class ClassTest{static enum Day{SUNDAY, MONDAY SUNDAY, MONDAY}") //
+    trimmingOf("public final class ClassTest{static enum Day{SUNDAY, MONDAY, SUNDAY, MONDAY}}") //
+        .gives("public final class ClassTest{enum Day{SUNDAY, MONDAY, SUNDAY, MONDAY}}") //
         .stays() //
     ;
   }
 
   @Test public void A$j() {
-    trimmingOf("public final class ClassTest{private static enum Day{SUNDAY, MONDAY}").stays() //
+    trimmingOf("public final class ClassTest{private static enum Day{SUNDAY, MONDAY}") //
+        .gives("public final class ClassTest{private enum Day{SUNDAY, MONDAY}")//
+        .stays() //
     ;
   }
 
