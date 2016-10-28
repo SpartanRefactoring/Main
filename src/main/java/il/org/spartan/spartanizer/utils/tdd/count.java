@@ -20,6 +20,16 @@ public interface count {
         ++$.inner;
         return true;
       }
+
+      @Override public boolean visit(NullLiteral node) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(MethodInvocation node) {
+        ++$.inner;
+        return true;
+      }
     });
     return $.inner;
   }
