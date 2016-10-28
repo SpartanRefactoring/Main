@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
  * @since Oct 28, 2016 */
-public interface count {
+public interface enumerate {
   /** @author Ori Marcovitch
    * @param n node
    * @since Oct 28, 2016 */
