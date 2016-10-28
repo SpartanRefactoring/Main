@@ -11,9 +11,6 @@ public interface count {
   static int expressions(ASTNode n) {
     if (n == null)
       return 0;
-    if (n.toString().equals("a + b"))
-      return 2;
-    else
-      return 1;
+    return (n.toString().split(" ").length + 1) / 2;
   }
 }
