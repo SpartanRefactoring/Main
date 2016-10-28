@@ -8,7 +8,7 @@ public interface count {
   /** @author Ori Marcovitch
    * @param astNode
    * @since Oct 28, 2016 */
-  static int expressions(final ASTNode n) {
-    return n == null ? 0 : ((n + "").split(" ").length + 1) / 2;
+  static int expressions(final ASTNode ¢) {
+    return ¢ == null ? 0 : ((¢ + "").split(" ").length + 1) / 2;
   }
 }
