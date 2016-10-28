@@ -23,6 +23,10 @@ public class Issue552 {
     assertEquals(1, count.expressions(wizard.ast("a")));
   }
 
+  @Test public void c() {
+    assertEquals(2, count.expressions(wizard.ast("a + b")));
+  }
+
   void auxInt(@SuppressWarnings("unused") int __) {
     assert true;
   }
