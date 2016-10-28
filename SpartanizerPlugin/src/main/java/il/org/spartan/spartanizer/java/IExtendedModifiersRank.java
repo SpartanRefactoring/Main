@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 /** Maintain a canonical order of modifiers.
@@ -27,7 +25,6 @@ public enum IExtendedModifiersRank {
   NATIVE, //
   STRICTFP, //
   ;
-
   public static int compare(final IExtendedModifiersRank m1, final IExtendedModifiersRank m2) {
     return m1.ordinal() - m2.ordinal();
   }
@@ -36,8 +33,8 @@ public enum IExtendedModifiersRank {
     return compare(find(modifier1), find(modifier2));
   }
 
-  public static IExtendedModifiersRank find(IExtendedModifier ¢) {
-    return find(¢+"");
+  public static IExtendedModifiersRank find(final IExtendedModifier ¢) {
+    return find(¢ + "");
   }
 
   public static boolean isUserDefinedAnnotation(final IExtendedModifier ¢) {

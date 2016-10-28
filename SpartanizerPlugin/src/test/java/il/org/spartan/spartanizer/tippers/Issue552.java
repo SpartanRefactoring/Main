@@ -7,32 +7,52 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.utils.tdd.count;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
-/** Tests of {@link count.expressions}
+/** Tests of {@link enumerate.expressions}
  * @author Ori Marcovitch
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
   @Test public void a() {
-    auxInt(count.expressions((ASTNode) null));
+    auxInt(enumerate.expressions((ASTNode) null));
   }
 
   @Test public void b() {
-    assertEquals(1, count.expressions(wizard.ast("a")));
+    assertEquals(1, enumerate.expressions(wizard.ast("a")));
   }
 
   @Test public void c() {
-    assertEquals(2, count.expressions(wizard.ast("a + b")));
+    assertEquals(3, enumerate.expressions(wizard.ast("a + b")));
   }
 
   @Test public void d() {
-    assertEquals(0, count.expressions(null));
+    assertEquals(0, enumerate.expressions(null));
   }
 
   @Test public void e() {
-    assertEquals(3, count.expressions(wizard.ast("a + b + c")));
+    assertEquals(4, enumerate.expressions(wizard.ast("a + b + c")));
+  }
+
+  @Test public void f() {
+    assertEquals(4, enumerate.expressions(wizard.ast("return a + b + c;")));
+  }
+
+  @Test public void g() {
+    assertEquals(4, enumerate.expressions(wizard.ast("if(a == null) return null;")));
+  }
+
+  @Test public void h() {
+    assertEquals(4, enumerate.expressions(wizard.ast("while(true) print(i);")));
+  }
+
+  @Test public void i() {
+    assertEquals(1, enumerate.expressions(wizard.ast("true")));
+  }
+
+  @Test public void j() {
+    assertEquals(3, enumerate.expressions(wizard.ast("1 + 2")));
   }
 
   void auxInt(@SuppressWarnings("unused") final int __) {
