@@ -34,11 +34,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
   // running report
   public void runReport(final Consumer<CSVStatistics> __) {
-    // TODO Matteo: implement this if we need it; found in random scan
+    for (NamedFunction ¢ : functions) {
+      ¢.function().run(null);
+      ¢.name();
+    }
   }
 
   @FunctionalInterface public interface ToInt<R> {
-    int f(R r);
+    int run(R r);
   }
 
   static NamedFunction m(final String name, final ToInt<ASTNode> f) {
@@ -53,6 +56,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
     final String name;
     final ToInt<ASTNode> f;
+    
+    public String name(){
+      return this.name;
+    }
+    
+    public ToInt<ASTNode> function(){
+      return this.f;
+    }
   }
 
   NamedFunction functions[] = as.array(//
