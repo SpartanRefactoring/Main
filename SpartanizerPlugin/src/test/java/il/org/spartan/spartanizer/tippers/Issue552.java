@@ -44,7 +44,15 @@ public class Issue552 {
   }
 
   @Test public void h() {
-    assertEquals(3, count.expressions(wizard.ast("while(true) print(i);")));
+    assertEquals(4, count.expressions(wizard.ast("while(true) print(i);")));
+  }
+
+  @Test public void i() {
+    assertEquals(1, count.expressions(wizard.ast("true")));
+  }
+
+  @Test public void j() {
+    assertEquals(3, count.expressions(wizard.ast("1 + 2")));
   }
 
   void auxInt(@SuppressWarnings("unused") int __) {
