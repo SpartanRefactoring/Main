@@ -16,24 +16,9 @@ public interface count {
     final Int $ = new Int();
     $.inner = 0;
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(SimpleName node) {
-        ++$.inner;
-        return true;
-      }
-
-      @Override public boolean visit(NullLiteral node) {
-        ++$.inner;
-        return true;
-      }
-
-      @Override public boolean visit(MethodInvocation node) {
-        ++$.inner;
-        return true;
-      }
-
-      @Override public boolean visit(InfixExpression node) {
-        ++$.inner;
-        return true;
+      @Override public void preVisit(ASTNode node) {
+        if (node instanceof Expression)
+          ++$.inner;
       }
     });
     return $.inner;
