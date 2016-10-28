@@ -118,7 +118,7 @@ import org.junit.runners.*;
 
   @Test public void A$50c_interface_static_abstract() {
     trimmingOf("static abstract interface a{}")//
-    .gives("abstract static interface a{}")//
+        .gives("abstract static interface a{}")//
         .gives("interface a{}")//
         .stays();
   }

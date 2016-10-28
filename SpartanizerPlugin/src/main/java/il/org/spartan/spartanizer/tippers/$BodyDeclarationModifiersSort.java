@@ -24,7 +24,7 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
   static final Comparator<IExtendedModifier> comp = (m1, m2) -> rank(m1) - rank(m2);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
-    int previousRank = -1; 
+    int previousRank = -1;
     for (final IExtendedModifier current : ms) {
       final int currentRank = rank(current);
       if (currentRank <= previousRank)
