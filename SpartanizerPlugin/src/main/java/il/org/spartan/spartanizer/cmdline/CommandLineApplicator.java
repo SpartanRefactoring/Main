@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
@@ -12,18 +10,19 @@ import il.org.spartan.plugin.*;
 public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
-//  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+
+  // static List<Class<? extends BodyDeclaration>> selectedNodeTypes =
+  // as.list(MethodDeclaration.class);
   public static Applicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
 
-//  private CommandLine$Applicator a = new CommandLine$Applicator(".");
-  private CommandLine$Applicator a = new CommandLine$Applicator();
+  // private CommandLine$Applicator a = new CommandLine$Applicator(".");
+  private final CommandLine$Applicator a = new CommandLine$Applicator();
 
-  /** Default listener configuration of {@link GUIBatchLaconizer}. Simple printing to
-   * console. 
+  /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
+   * printing to console.
    * @return this applicator */
-  
   public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       for (final Object ¢ : os)
@@ -55,7 +54,8 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default passes configuration of {@link GUIBatchLaconizer}, with many passes.
+  /** Default passes configuration of {@link GUIBatchLaconizer}, with many
+   * passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
@@ -73,19 +73,18 @@ public class CommandLineApplicator extends Applicator {
     setRunAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
     return this;
   }
+  // // TODO Roth: use Policy / replacement for Trimmer.
+  // /** Default run action configuration of {@link GUIBatchLaconizer}.
+  // Spartanize the
+  // * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
+  // * @param a JD
+  // * @return this applicator */
+  // public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
+  // setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+  // name(a.getName());
+  // return this;
+  // }
 
-//  // TODO Roth: use Policy / replacement for Trimmer.
-//  /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize the
-//   * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
-//   * @param a JD
-//   * @return this applicator */
-//  public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
-//    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
-//    name(a.getName());
-//    return this;
-//  }
-  
-  
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
    * {@link GUIBatchLaconizer$Applicator}.
@@ -102,6 +101,7 @@ public class CommandLineApplicator extends Applicator {
     runContext(r -> r.run());
     return this;
   }
+
   /** @return this */
   CommandLineApplicator defaultSelection() {
     selection(CommandLineSelection.Util.get());
@@ -121,11 +121,8 @@ public class CommandLineApplicator extends Applicator {
 
   /** @return this */
   private Applicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew()
-                                  .defaultRunContext()
-                                  .defaultSelection()
-                                  .defaultRunAction();
-//                                  .defaultRunAction(new Spartanizer$Applicator());
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
+    // .defaultRunAction(new Spartanizer$Applicator());
   }
 
   /* (non-Javadoc)
@@ -133,30 +130,12 @@ public class CommandLineApplicator extends Applicator {
    * @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
     System.out.println("selection().size(): " + selection().size());
-    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
-      return;
-    List<CompilationUnit> list = ((CommandLineSelection) selection()).getCompilationUnits();
-    for(CompilationUnit ¢: list){
-     assert ¢ != null;
-     a.go(¢);
-    }
-//    if(false)
-//    runContext().accept(() -> {
-//      final int l = passes();
-//      for (int pass = 0; pass < l; ++pass) {
-//        final List<CompilationUnit> alive = new LinkedList<>();
-//        alive.addAll(((CommandLineSelection) selection()).getCompilationUnits());
-//        final List<CompilationUnit> dead = new LinkedList<>();
-//        for (final CompilationUnit ¢ : alive){
-//          System.err.println("¢.getLength(): " + ¢.getLength());
-//          a.go(¢);
-//        }
-//        // if(!runAction().apply(¢.build()).booleanValue())
-//        // dead.add(¢);
-//      }
-//    });
+    if (selection() != null && listener() != null && passes() > 0 && !selection().isEmpty())
+      for (final CompilationUnit ¢ : ((CommandLineSelection) selection()).getCompilationUnits()) {
+        assert ¢ != null;
+        a.go(¢);
+      }
   }
-  
-// TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer (code duplication to be resolved)
-    
+  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer
+  // (code duplication to be resolved)
 }

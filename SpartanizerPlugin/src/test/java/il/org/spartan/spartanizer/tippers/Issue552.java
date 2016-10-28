@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.navigate.wizard;
-import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.utils.tdd.count;
 
 /** Tests of {@link count.expressions}
  * @author Ori Marcovitch
@@ -35,7 +35,7 @@ public class Issue552 {
     assertEquals(3, count.expressions(wizard.ast("a + b + c")));
   }
 
-  void auxInt(@SuppressWarnings("unused") int __) {
+  void auxInt(@SuppressWarnings("unused") final int __) {
     assert true;
   }
 }

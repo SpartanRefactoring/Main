@@ -15,7 +15,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   static final Converter c = new Converter();
 
   @Override public boolean canTip(final CastExpression ¢) {
-    MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
+    final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
     return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m);
   }
