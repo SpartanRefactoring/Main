@@ -1659,12 +1659,17 @@ public final class Version230 {
 
   @Test public void issue51g() {
     trimmingOf("abstract abstract interface a" + "{}")//
-        .gives("interface a {}");
+        .gives("abstract interface a {}") //
+        .gives("interface a {}") //
+        .stays();
   }
 
   @Test public void issue53() {
     trimmingOf("int[] is = f(); for (int i: is) f(i);")//
-        .gives("for (int i: f()) f(i);");
+        .gives("for (int i: f()) f(i);") //
+        .gives("for (int ¢: f()) f(¢);") //
+        .stays() //
+        ;
   }
 
   @Test public void issue53a() {
