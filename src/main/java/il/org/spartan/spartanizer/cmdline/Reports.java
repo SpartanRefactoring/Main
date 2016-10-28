@@ -1,9 +1,17 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.tide.*;
+
 import java.io.*;
 import java.util.*;
+import java.util.function.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.AbstractCommandLineSpartanizer.*;
 
 public class Reports {
   protected String folder = "/tmp/";
@@ -13,6 +21,46 @@ public class Reports {
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
+  
+  private final static NamedFunction functions[] = as.array(//
+      m("seventeeen", (¢) -> 17), //
+      m("length", (¢) -> (¢ + "").length()), //
+      m("essence", (¢) -> Essence.of(¢ + "").length()), m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), //
+      m("body", (¢) -> metrics.bodySize(¢)),
+      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
+      m("tide", (¢) -> clean(¢ + "").length()));
+  
+  // running report
+  public static void writeRow(final CSVStatistics report, final ASTNode n) {
+    for (NamedFunction ¢ : functions)
+      report.put(¢.name(), ¢.function().run(n));
+  }
+
+  @FunctionalInterface public interface ToInt<R> {
+    int run(R r);
+  }
+
+  static NamedFunction m(final String name, final ToInt<ASTNode> f) {
+    return new NamedFunction(name, f);
+  }
+
+  static class NamedFunction {
+    NamedFunction(final String name, final ToInt<ASTNode> f) {
+      this.name = name;
+      this.f = f;
+    }
+
+    final String name;
+    final ToInt<ASTNode> f;
+    
+    public String name(){
+      return this.name;
+    }
+    
+    public ToInt<ASTNode> function(){
+      return this.f;
+    }
+  }
 
   @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
@@ -103,5 +151,9 @@ public class Reports {
   public static void closeFile(final String key) {
     files(key).flush();
     files(key).close();
+  }
+
+  public static HashMap<String, CSVStatistics> reports() {
+    return reports;
   }
 }
