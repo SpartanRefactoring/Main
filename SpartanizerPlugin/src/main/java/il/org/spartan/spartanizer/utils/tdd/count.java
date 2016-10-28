@@ -9,6 +9,6 @@ public interface count {
    * @param astNode
    * @since Oct 28, 2016 */
   static int expressions(ASTNode astNode) {
-    return 0;
+    return 1;
   }
 }
