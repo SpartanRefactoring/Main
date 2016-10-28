@@ -1,8 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static org.junit.Assert.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Tests of {@link count.expressions}
@@ -13,6 +17,10 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public class Issue552 {
   @Test public void a() {
     auxInt(count.expressions((ASTNode) null));
+  }
+
+  @Test public void b() {
+    assertEquals(1, count.expressions(wizard.ast("a")));
   }
 
   void auxInt(@SuppressWarnings("unused") int __) {
