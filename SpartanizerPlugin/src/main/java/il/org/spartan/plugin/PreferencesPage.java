@@ -17,7 +17,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -58,13 +57,22 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     // PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
     // getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
-    for (final TipperGroup ¢ : TipperGroup.values()) {
-      final GroupFieldEditor g = new GroupFieldEditor(null, getFieldEditorParent());
+    final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
+    for (final TipperGroup ¢ : TipperGroup.values())
       g.add(new BooleanFieldEditor(¢.id, ¢.label, g.getFieldEditor()));
-      g.add(getListEditor(¢, g));
-      g.init();
-      addField(g);
-    }
+    addField(g);
+    g.init();
+    // XXX: this is an experiment I made in order to improve preferences page.
+    // Aftermath: consider using {@link PreferencePage} or a view (part)
+    // instead.
+    // for (final TipperGroup ¢ : TipperGroup.values()) {
+    // final GroupFieldEditor g = new GroupFieldEditor(null,
+    // getFieldEditorParent());
+    // g.add(new BooleanFieldEditor(¢.id, ¢.label, g.getFieldEditor()));
+    // g.add(getListEditor(¢, g));
+    // g.init();
+    // addField(g);
+    // }
   }
 
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
@@ -91,7 +99,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     }
   }
 
-  private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
+  @SuppressWarnings("unused") private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
     return new TipsListEditor(g.label, "Available tippers", g, e);
   }
 
