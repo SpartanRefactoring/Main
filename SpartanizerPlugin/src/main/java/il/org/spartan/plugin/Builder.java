@@ -82,7 +82,7 @@ public final class Builder extends IncrementalProjectBuilder {
       for (final Tip ¢ : s.collectSuggesions(u))
         if (¢ != null) {
           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
-          addMarker(s, ¢, f.createMarker(MARKER_TYPE + (group == null || group.id == null ? "" : "." + group.name())));
+          addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
         }
   }
 
