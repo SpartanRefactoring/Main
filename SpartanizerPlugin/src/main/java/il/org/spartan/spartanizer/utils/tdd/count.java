@@ -10,7 +10,7 @@ public interface count {
    * @since Oct 28, 2016 */
   static int expressions(ASTNode n) {
     if (n == null)
-      return 7;
+      return 0;
     if (n.toString().equals("a + b"))
       return 2;
     else
