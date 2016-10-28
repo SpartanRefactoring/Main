@@ -7,7 +7,7 @@ import java.io.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
-  private String name;
+  private final String name;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -19,29 +19,23 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   }
 
   @Override public void apply() {
-    
     System.out.println(inputPath);
     try {
       Reports.initializeFile(folder + name + ".before.java", "before");
       Reports.initializeFile(folder + name + ".after.java", "after");
       Reports.intializeReport(folder + name + ".CSV", "metrics");
       Reports.intializeReport(folder + name + ".spectrum.CSV", "spectrum");
-      CommandLineApplicator.defaultApplicator()
-                         .passes(20)
-                         .selection(CommandLineSelection.of(CommandLineSelection.Util
-                                                                                .getAllCompilationUnit(inputPath)))
-                         .go();
+      CommandLineApplicator.defaultApplicator().passes(20)
+          .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
       Reports.close("metrics");
       Reports.close("spectrum");
       Reports.closeFile("before");
       Reports.closeFile("after");
-    } catch (IOException x) {
+    } catch (final IOException x) {
       x.printStackTrace();
     }
-    
   }
-
-//  @Override void go(@SuppressWarnings("unused") final String javaCode) {
-//    // TODO Matteo: take or remove this?
-//  }
+  // @Override void go(@SuppressWarnings("unused") final String javaCode) {
+  // // TODO Matteo: take or remove this?
+  // }
 }

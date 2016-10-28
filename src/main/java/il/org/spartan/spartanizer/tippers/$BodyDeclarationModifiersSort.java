@@ -35,28 +35,14 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
     return true;
   }
 
-  private static boolean pred(final IExtendedModifier m, final boolean[] bitMap) {
-    final boolean $ = !bitMap[IExtendedModifiersRank.ordinal(m)];
-    bitMap[IExtendedModifiersRank.ordinal(m)] = true;
-    // Can'tipper compare different user defined annotations! So avoid removing
-    // them.
-    bitMap[IExtendedModifiersRank.userDefinedAnnotationsOrdinal()] = false;
-    return $;
-  }
-
-  private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
-    return $.stream().filter(m -> pred(m, IExtendedModifiersRank.bitMap())).collect(Collectors.toList());
-  }
-
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
   }
 
   private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {
-    ;
-    for (int i = 0; i < ms.size(); ++i)
-      while (i < ms.size() + 1 && comp.compare(ms.get(i), ms.get(i + 1)) == 0)
-        ms.remove(i + 1);
+    for (int ¢ = 0; ¢ < ms.size(); ++¢)
+      while (¢ < ms.size() - 1 && comp.compare(ms.get(¢), ms.get(¢ + 1)) == 0)
+        ms.remove(¢ + 1);
     return ms;
   }
 
@@ -82,7 +68,7 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
   }
 
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
-    return sort(removeSame(extract.modifiers($)));
+    return sort(extract.modifiers($));
   }
 
   public static final class ofAnnotation extends $BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //

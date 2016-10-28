@@ -12,11 +12,11 @@ public class Converter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (step.body(d) == null || step.statements(step.body(d)) == null || step.statements(step.body(d)).size() != 1
         || !iz.returnStatement(step.statements(step.body(d)).get(0)) || step.parameters(d).size() != 1)
       return false;
-    ReturnStatement s = az.returnStatement(step.statements(step.body(d)).get(0));
+    final ReturnStatement s = az.returnStatement(step.statements(step.body(d)).get(0));
     if (!iz.castExpression(step.expression(s)))
       return false;
-    SingleVariableDeclaration p = step.parameters(d).get(0);
-    CastExpression c = az.castExpression(step.expression(s));
+    final SingleVariableDeclaration p = step.parameters(d).get(0);
+    final CastExpression c = az.castExpression(step.expression(s));
     return (c.getType() + "").equals(step.returnType(d) + "") && (p.getName() + "").equals(c.getExpression() + "");
   }
 

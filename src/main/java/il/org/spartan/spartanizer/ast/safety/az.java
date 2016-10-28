@@ -495,13 +495,13 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  static PrimitiveType primitiveType(Type ¢) {
+  static PrimitiveType primitiveType(final Type ¢) {
     return ¢ == null ? null : (PrimitiveType) ¢;
   }
 
   /** @param ¢ JD
    * @return */
-  public static CastExpression castExpression(Expression ¢) {
+  public static CastExpression castExpression(final Expression ¢) {
     return ¢ == null ? null : (CastExpression) ¢;
   }
 }

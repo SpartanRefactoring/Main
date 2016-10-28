@@ -11,17 +11,15 @@ public class Reports {
   protected String beforeFileName;
   protected String inputPath;
   protected String spectrumFileName;
-   
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-  
-  @SuppressWarnings("resource") 
-  public static void initializeFile(final String fileName, final String id) throws IOException{
-    files.put(id,new PrintWriter(new FileWriter(fileName)));
+
+  @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
+    files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
-  
+
   public static void intializeReport(final String reportFileName, final String id) {
-//    reportFileName = "/tmp/report.CSV";
+    // reportFileName = "/tmp/report.CSV";
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException x) {
@@ -32,7 +30,7 @@ public class Reports {
   private static CSVStatistics report(final String key) {
     return reports.get(key);
   }
-  
+
   private static PrintWriter files(final String key) {
     return files.get(key);
   }
@@ -96,12 +94,12 @@ public class Reports {
   public static void nl(final String key) {
     report(key).nl();
   }
-  
+
   public static void printFile(final String input, final String key) {
     assert input != null;
     files(key).print(input);
   }
-  
+
   public static void closeFile(final String key) {
     files(key).flush();
     files(key).close();
