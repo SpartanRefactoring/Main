@@ -18,7 +18,6 @@ public class Issue111 {
 
   @Test public void A$a_1a() {
     trimmingOf("public final class A{public static int a;}")//
-        .gives("public final class A{static public int a;}")//
         .stays();
   }
 
@@ -30,7 +29,6 @@ public class Issue111 {
 
   @Test public void A$a_1a2() {
     trimmingOf("public final class A{}")//
-        .gives("final public class A{}")//
         .stays();
   }
 
@@ -72,8 +70,8 @@ public class Issue111 {
 
   @Test public void A$g() {
     trimmingOf("protected public final public enum Level{HIGH, MEDIUM, LOW}")//
-        .gives("protected public public enum Level{HIGH, MEDIUM, LOW}")//
-        .gives("public public protected enum Level{HIGH, MEDIUM, LOW}")//
+        .gives("public protected final enum Level{HIGH, MEDIUM, LOW}")//
+        .gives("public protected enum Level{HIGH, MEDIUM, LOW}")//
         .stays();
   }
 
