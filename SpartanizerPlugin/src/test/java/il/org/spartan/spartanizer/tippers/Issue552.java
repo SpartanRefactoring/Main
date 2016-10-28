@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -10,8 +11,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
-  public void a() {
-    auxInt(count.expressions());
+  @Test public void a() {
+    auxInt(count.expressions((ASTNode) null));
   }
 
   void auxInt(@SuppressWarnings("unused") int __) {
