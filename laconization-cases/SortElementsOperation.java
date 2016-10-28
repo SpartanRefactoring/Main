@@ -81,14 +81,13 @@ public class SortElementsOperation extends JavaModelOperation {
 		return this.elementsToProcess.length;
 	}
 
-	boolean checkMalformedNodes(ASTNode node) {
-		Object property = node.getProperty(CONTAINS_MALFORMED_NODES);
-		if (property == null) return false;
-		return ((Boolean) property).booleanValue();
-	}
+	boolean checkMalformedNodes(ASTNode n) {
+    Object property = n.getProperty(CONTAINS_MALFORMED_NODES);
+    return property != null && ((Boolean) property).booleanValue();
+  }
 
-	protected boolean isMalformed(ASTNode node) {
-		return (node.getFlags() & ASTNode.MALFORMED) != 0;
+	protected boolean isMalformed(ASTNode ¢) {
+		return (¢.getFlags() & ASTNode.MALFORMED) != 0;
 	}
 
 	/**
@@ -100,14 +99,12 @@ public class SortElementsOperation extends JavaModelOperation {
 			CompilationUnit copy = (CompilationUnit) this.elementsToProcess[0];
 			ICompilationUnit unit = copy.getPrimary();
 			IBuffer buffer = copy.getBuffer();
-			if (buffer  == null) {
-				return;
-			}
+			if (buffer  == null)
+        return;
 			char[] bufferContents = buffer.getCharacters();
 			String result = processElement(unit, bufferContents);
-			if (!CharOperation.equals(result.toCharArray(), bufferContents)) {
-				copy.getBuffer().setContents(result);
-			}
+			if (!CharOperation.equals(result.toCharArray(), bufferContents))
+        copy.getBuffer().setContents(result);
 			worked(1);
 		} finally {
 			done();
@@ -116,10 +113,10 @@ public class SortElementsOperation extends JavaModelOperation {
 
 	/**
 	 * Calculates the required text edits to sort the <code>unit</code>
-	 * @param group
+	 * @param g
 	 * @return the edit or null if no sorting is required
 	 */
-	public TextEdit calculateEdit(org.eclipse.jdt.core.dom.CompilationUnit unit, TextEditGroup group) throws JavaModelException {
+	public TextEdit calculateEdit(org.eclipse.jdt.core.dom.CompilationUnit u, TextEditGroup g) throws JavaModelException {
 		if (this.elementsToProcess.length != 1)
 			throw new JavaModelException(new JavaModelStatus(IJavaModelStatusConstants.NO_ELEMENTS_TO_PROCESS));
 
@@ -127,30 +124,24 @@ public class SortElementsOperation extends JavaModelOperation {
 			throw new JavaModelException(new JavaModelStatus(IJavaModelStatusConstants.INVALID_ELEMENT_TYPES, this.elementsToProcess[0]));
 
 		try {
-			beginTask(Messages.operation_sortelements, getMainAmountOfWork());
-
-			ICompilationUnit cu= (ICompilationUnit)this.elementsToProcess[0];
-			String content= cu.getBuffer().getContents();
-			ASTRewrite rewrite= sortCompilationUnit(unit, group);
-			if (rewrite == null) {
-				return null;
-			}
-
-			Document document= new Document(content);
-			return rewrite.rewriteAST(document, null);
-		} finally {
+      beginTask(Messages.operation_sortelements, getMainAmountOfWork());
+      ICompilationUnit cu = (ICompilationUnit) this.elementsToProcess[0];
+      String content = cu.getBuffer().getContents();
+      ASTRewrite rewrite = sortCompilationUnit(u, g);
+      return rewrite == null ? null : rewrite.rewriteAST((new Document(content)), null);
+    } finally {
 			done();
 		}
 	}
 
 	/**
 	 * Method processElement.
-	 * @param unit
+	 * @param u
 	 * @param source
 	 */
-	private String processElement(ICompilationUnit unit, char[] source) {
-		Document document = new Document(new String(source));
-		CompilerOptions options = new CompilerOptions(unit.getJavaProject().getOptions(true));
+	private String processElement(ICompilationUnit u, char[] source) {
+		Document document = new Document(String.valueOf(source));
+		CompilerOptions options = new CompilerOptions(u.getJavaProject().getOptions(true));
 		ASTParser parser = ASTParser.newParser(this.apiLevel);
 		parser.setCompilerOptions(options.getMap());
 		parser.setSource(source);
@@ -167,18 +158,16 @@ public class SortElementsOperation extends JavaModelOperation {
 		RangeMarker[] markers = null;
 		if (this.positions != null) {
 			markers = new RangeMarker[this.positions.length];
-			for (int i = 0, max = this.positions.length; i < max; i++) {
-				markers[i]= new RangeMarker(this.positions[i], 0);
-				insert(edits, markers[i]);
+			for (int ¢ = 0, max = this.positions.length; ¢ < max; ++¢) {
+				markers[¢]= new RangeMarker(this.positions[¢], 0);
+				insert(edits, markers[¢]);
 			}
 		}
 		try {
 			edits.apply(document, TextEdit.UPDATE_REGIONS);
-			if (this.positions != null) {
-				for (int i= 0, max = markers.length; i < max; i++) {
-					this.positions[i]= markers[i].getOffset();
-				}
-			}
+			if (this.positions != null)
+        for (int ¢ = 0, max = markers.length; ¢ < max; ++¢)
+          this.positions[¢] = markers[¢].getOffset();
 		} catch (BadLocationException e) {
 			// ignore
 		}
@@ -186,139 +175,123 @@ public class SortElementsOperation extends JavaModelOperation {
 	}
 
 
-	private ASTRewrite sortCompilationUnit(org.eclipse.jdt.core.dom.CompilationUnit ast, final TextEditGroup group) {
-		ast.accept(new ASTVisitor() {
-			public boolean visit(org.eclipse.jdt.core.dom.CompilationUnit compilationUnit) {
-				List types = compilationUnit.types();
-				for (Iterator iter = types.iterator(); iter.hasNext();) {
-					AbstractTypeDeclaration typeDeclaration = (AbstractTypeDeclaration) iter.next();
-					typeDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(typeDeclaration.getStartPosition()));
-					compilationUnit.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(typeDeclaration)));
-				}
-				return true;
-			}
-			public boolean visit(AnnotationTypeDeclaration annotationTypeDeclaration) {
-				List bodyDeclarations = annotationTypeDeclaration.bodyDeclarations();
-				for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
-					BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
-					bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(bodyDeclaration.getStartPosition()));
-					annotationTypeDeclaration.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
-				}
-				return true;
-			}
+	private ASTRewrite sortCompilationUnit(org.eclipse.jdt.core.dom.CompilationUnit ast, final TextEditGroup g) {
+    ast.accept(new ASTVisitor() {
+      public boolean visit(org.eclipse.jdt.core.dom.CompilationUnit u) {
+        List types = u.types();
+        for (Iterator iter = types.iterator(); iter.hasNext();) {
+          AbstractTypeDeclaration typeDeclaration = (AbstractTypeDeclaration) iter.next();
+          typeDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(typeDeclaration.getStartPosition()));
+          u.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(typeDeclaration)));
+        }
+        return true;
+      }
 
-			public boolean visit(AnonymousClassDeclaration anonymousClassDeclaration) {
-				List bodyDeclarations = anonymousClassDeclaration.bodyDeclarations();
-				for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
-					BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
-					bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(bodyDeclaration.getStartPosition()));
-					anonymousClassDeclaration.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
-				}
-				return true;
-			}
+      public boolean visit(AnnotationTypeDeclaration d) {
+        List bodyDeclarations = d.bodyDeclarations();
+        for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
+          BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
+          bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(bodyDeclaration.getStartPosition()));
+          d.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
+        }
+        return true;
+      }
 
-			public boolean visit(TypeDeclaration typeDeclaration) {
-				List bodyDeclarations = typeDeclaration.bodyDeclarations();
-				for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
-					BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
-					bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(bodyDeclaration.getStartPosition()));
-					typeDeclaration.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
-				}
-				return true;
-			}
+      public boolean visit(AnonymousClassDeclaration d) {
+        List bodyDeclarations = d.bodyDeclarations();
+        for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
+          BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
+          bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(bodyDeclaration.getStartPosition()));
+          d.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
+        }
+        return true;
+      }
 
-			public boolean visit(EnumDeclaration enumDeclaration) {
-				List bodyDeclarations = enumDeclaration.bodyDeclarations();
-				for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
-					BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
-					bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(bodyDeclaration.getStartPosition()));
-					enumDeclaration.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
-				}
-				List enumConstants = enumDeclaration.enumConstants();
-				for (Iterator iter = enumConstants.iterator(); iter.hasNext();) {
-					EnumConstantDeclaration enumConstantDeclaration = (EnumConstantDeclaration) iter.next();
-					enumConstantDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, new Integer(enumConstantDeclaration.getStartPosition()));
-					enumDeclaration.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(enumConstantDeclaration)));
-				}
-				return true;
-			}
-		});
+      public boolean visit(TypeDeclaration d) {
+        List bodyDeclarations = d.bodyDeclarations();
+        for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
+          BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
+          bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(bodyDeclaration.getStartPosition()));
+          d.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
+        }
+        return true;
+      }
 
-		final ASTRewrite rewriter= ASTRewrite.create(ast.getAST());
-		final boolean[] hasChanges= new boolean[] {false};
+      public boolean visit(EnumDeclaration d) {
+        List bodyDeclarations = d.bodyDeclarations();
+        for (Iterator iter = bodyDeclarations.iterator(); iter.hasNext();) {
+          BodyDeclaration bodyDeclaration = (BodyDeclaration) iter.next();
+          bodyDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(bodyDeclaration.getStartPosition()));
+          d.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(bodyDeclaration)));
+        }
+        List enumConstants = d.enumConstants();
+        for (Iterator iter = enumConstants.iterator(); iter.hasNext();) {
+          EnumConstantDeclaration enumConstantDeclaration = (EnumConstantDeclaration) iter.next();
+          enumConstantDeclaration.setProperty(CompilationUnitSorter.RELATIVE_ORDER, Integer.valueOf(enumConstantDeclaration.getStartPosition()));
+          d.setProperty(CONTAINS_MALFORMED_NODES, Boolean.valueOf(isMalformed(enumConstantDeclaration)));
+        }
+        return true;
+      }
+    });
+    final ASTRewrite $ = ASTRewrite.create(ast.getAST());
+    final boolean[] hasChanges = new boolean[] { false };
+    ast.accept(new ASTVisitor() {
+      void sortElements(List elements, ListRewrite r) {
+        if (elements.isEmpty())
+          return;
+        final List myCopy = new ArrayList();
+        myCopy.addAll(elements);
+        Collections.sort(myCopy, SortElementsOperation.this.comparator);
+        for (int i = 0; i < elements.size(); ++i) {
+          ASTNode oldNode = (ASTNode) elements.get(i);
+          ASTNode newNode = (ASTNode) myCopy.get(i);
+          if (oldNode != newNode) {
+            r.replace(oldNode, $.createMoveTarget(newNode), g);
+            hasChanges[0] = true;
+          }
+        }
+      }
 
-		ast.accept(new ASTVisitor() {
+      public boolean visit(org.eclipse.jdt.core.dom.CompilationUnit ¢) {
+        if (checkMalformedNodes(¢))
+          return true;
+        sortElements(¢.types(), $.getListRewrite(¢, org.eclipse.jdt.core.dom.CompilationUnit.TYPES_PROPERTY));
+        return true;
+      }
 
-			private void sortElements(List elements, ListRewrite listRewrite) {
-				if (elements.size() == 0)
-					return;
+      public boolean visit(AnnotationTypeDeclaration ¢) {
+        if (checkMalformedNodes(¢))
+          return true;
+        sortElements(¢.bodyDeclarations(),
+            $.getListRewrite(¢, AnnotationTypeDeclaration.BODY_DECLARATIONS_PROPERTY));
+        return true;
+      }
 
-				final List myCopy = new ArrayList();
-				myCopy.addAll(elements);
-				Collections.sort(myCopy, SortElementsOperation.this.comparator);
+      public boolean visit(AnonymousClassDeclaration ¢) {
+        if (checkMalformedNodes(¢))
+          return true;
+        sortElements(¢.bodyDeclarations(),
+            $.getListRewrite(¢, AnonymousClassDeclaration.BODY_DECLARATIONS_PROPERTY));
+        return true;
+      }
 
-				for (int i = 0; i < elements.size(); i++) {
-					ASTNode oldNode= (ASTNode) elements.get(i);
-					ASTNode newNode= (ASTNode) myCopy.get(i);
-					if (oldNode != newNode) {
-						listRewrite.replace(oldNode, rewriter.createMoveTarget(newNode), group);
-						hasChanges[0]= true;
-					}
-				}
-			}
+      public boolean visit(TypeDeclaration ¢) {
+        if (checkMalformedNodes(¢))
+          return true;
+        sortElements(¢.bodyDeclarations(), $.getListRewrite(¢, TypeDeclaration.BODY_DECLARATIONS_PROPERTY));
+        return true;
+      }
 
-			public boolean visit(org.eclipse.jdt.core.dom.CompilationUnit compilationUnit) {
-				if (checkMalformedNodes(compilationUnit)) {
-					return true; // abort sorting of current element
-				}
-
-				sortElements(compilationUnit.types(), rewriter.getListRewrite(compilationUnit, org.eclipse.jdt.core.dom.CompilationUnit.TYPES_PROPERTY));
-				return true;
-			}
-
-			public boolean visit(AnnotationTypeDeclaration annotationTypeDeclaration) {
-				if (checkMalformedNodes(annotationTypeDeclaration)) {
-					return true; // abort sorting of current element
-				}
-
-				sortElements(annotationTypeDeclaration.bodyDeclarations(), rewriter.getListRewrite(annotationTypeDeclaration, AnnotationTypeDeclaration.BODY_DECLARATIONS_PROPERTY));
-				return true;
-			}
-
-			public boolean visit(AnonymousClassDeclaration anonymousClassDeclaration) {
-				if (checkMalformedNodes(anonymousClassDeclaration)) {
-					return true; // abort sorting of current element
-				}
-
-				sortElements(anonymousClassDeclaration.bodyDeclarations(), rewriter.getListRewrite(anonymousClassDeclaration, AnonymousClassDeclaration.BODY_DECLARATIONS_PROPERTY));
-				return true;
-			}
-
-			public boolean visit(TypeDeclaration typeDeclaration) {
-				if (checkMalformedNodes(typeDeclaration)) {
-					return true; // abort sorting of current element
-				}
-
-				sortElements(typeDeclaration.bodyDeclarations(), rewriter.getListRewrite(typeDeclaration, TypeDeclaration.BODY_DECLARATIONS_PROPERTY));
-				return true;
-			}
-
-			public boolean visit(EnumDeclaration enumDeclaration) {
-				if (checkMalformedNodes(enumDeclaration)) {
-					return true; // abort sorting of current element
-				}
-
-				sortElements(enumDeclaration.bodyDeclarations(), rewriter.getListRewrite(enumDeclaration, EnumDeclaration.BODY_DECLARATIONS_PROPERTY));
-				sortElements(enumDeclaration.enumConstants(), rewriter.getListRewrite(enumDeclaration, EnumDeclaration.ENUM_CONSTANTS_PROPERTY));
-				return true;
-			}
-		});
-
-		if (!hasChanges[0])
-			return null;
-
-		return rewriter;
-	}
+      public boolean visit(EnumDeclaration ¢) {
+        if (checkMalformedNodes(¢))
+          return true;
+        sortElements(¢.bodyDeclarations(), $.getListRewrite(¢, EnumDeclaration.BODY_DECLARATIONS_PROPERTY));
+        sortElements(¢.enumConstants(), $.getListRewrite(¢, EnumDeclaration.ENUM_CONSTANTS_PROPERTY));
+        return true;
+      }
+    });
+    return hasChanges[0] ? $ : null;
+  }
 
 	/**
 	 * Possible failures:
@@ -329,58 +302,40 @@ public class SortElementsOperation extends JavaModelOperation {
 	 * @return IJavaModelStatus
 	 */
 	public IJavaModelStatus verify() {
-		if (this.elementsToProcess.length != 1) {
-			return new JavaModelStatus(IJavaModelStatusConstants.NO_ELEMENTS_TO_PROCESS);
-		}
-		if (this.elementsToProcess[0] == null) {
-			return new JavaModelStatus(IJavaModelStatusConstants.NO_ELEMENTS_TO_PROCESS);
-		}
-		if (!(this.elementsToProcess[0] instanceof ICompilationUnit) || !((ICompilationUnit) this.elementsToProcess[0]).isWorkingCopy()) {
-			return new JavaModelStatus(IJavaModelStatusConstants.INVALID_ELEMENT_TYPES, this.elementsToProcess[0]);
-		}
-		return JavaModelStatus.VERIFIED_OK;
-	}
+    return this.elementsToProcess.length != 1 || this.elementsToProcess[0] == null
+        ? new JavaModelStatus(IJavaModelStatusConstants.NO_ELEMENTS_TO_PROCESS)
+        : !(this.elementsToProcess[0] instanceof ICompilationUnit) || !((ICompilationUnit) this.elementsToProcess[0]).isWorkingCopy()
+            ? new JavaModelStatus(IJavaModelStatusConstants.INVALID_ELEMENT_TYPES, this.elementsToProcess[0]) : JavaModelStatus.VERIFIED_OK;
+  }
 
-	public static void insert(TextEdit parent, TextEdit edit) {
+	public static void insert(TextEdit parent, TextEdit e) {
 		if (!parent.hasChildren()) {
-			parent.addChild(edit);
+			parent.addChild(e);
 			return;
 		}
 		TextEdit[] children= parent.getChildren();
 		// First dive down to find the right parent.
-		for (int i= 0; i < children.length; i++) {
-			TextEdit child= children[i];
-			if (covers(child, edit)) {
-				insert(child, edit);
-				return;
-			}
-		}
+		for (int ¢= 0; ¢ < children.length; ++¢)
+      if (covers(children[¢], e)) {
+        insert(children[¢], e);
+        return;
+      }
 		// We have the right parent. Now check if some of the children have to
 		// be moved under the new edit since it is covering it.
-		for (int i= children.length - 1; i >= 0; i--) {
-			TextEdit child= children[i];
-			if (covers(edit, child)) {
-				parent.removeChild(i);
-				edit.addChild(child);
-			}
-		}
-		parent.addChild(edit);
+		for (int ¢= children.length - 1; ¢ >= 0; --¢)
+      if (covers(e, children[¢])) {
+        parent.removeChild(¢);
+        e.addChild(children[¢]);
+      }
+		parent.addChild(e);
 	}
 
 	private static boolean covers(TextEdit thisEdit, TextEdit otherEdit) {
-		if (thisEdit.getLength() == 0) {
-			return false;
-		}
-
-		int thisOffset= thisEdit.getOffset();
-		int thisEnd= thisEdit.getExclusiveEnd();
-		if (otherEdit.getLength() == 0) {
-			int otherOffset= otherEdit.getOffset();
-			return thisOffset <= otherOffset && otherOffset < thisEnd;
-		} else {
-			int otherOffset= otherEdit.getOffset();
-			int otherEnd= otherEdit.getExclusiveEnd();
-			return thisOffset <= otherOffset && otherEnd <= thisEnd;
-		}
-	}
+    if (thisEdit.getLength() == 0)
+      return false;
+    int thisOffset = thisEdit.getOffset();
+    int thisEnd = thisEdit.getExclusiveEnd();
+    int otherOffset = otherEdit.getOffset();
+    return thisOffset <= otherOffset && (otherEdit.getLength() == 0 ? otherOffset < thisEnd : otherEdit.getExclusiveEnd() <= thisEnd);
+  }
 }

@@ -40,8 +40,8 @@ public enum IExtendedModifiersRank {
     return find(¢+"");
   }
 
-  public static boolean isUserDefinedAnnotation(final IExtendedModifier m) {
-    return rank(m) == $USER_DEFINED_ANNOTATION$.ordinal();
+  public static boolean isUserDefinedAnnotation(final IExtendedModifier ¢) {
+    return rank(¢) == $USER_DEFINED_ANNOTATION$.ordinal();
   }
 
   public static int ordinal(final IExtendedModifier ¢) {
