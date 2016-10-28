@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 /** A Class that contains all the metrics for an {@link ASTNode}
  * @author Matteo Orru' */
-@SuppressWarnings("unused") public class ASTNodeMetrics {
+public class ASTNodeMetrics {
   private final ASTNode n;
   private int length;
   private int tokens;
