@@ -1,17 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Tests of {@link count.expressions}
  * @author Ori Marcovitch
@@ -19,4 +10,11 @@ import il.org.spartan.spartanizer.java.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
+  public void a() {
+    auxInt(count.expressions());
+  }
+
+  void auxInt(@SuppressWarnings("unused") int __) {
+    assert true;
+  }
 }
