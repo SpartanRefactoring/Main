@@ -16,6 +16,7 @@
 # Keep this list alphabetically sorted, on vim: +,$!sort -u
 Adi Omari <adiomari [at] gmail.com>
 ארבינקא The Blaumlich Tunnel
+Alexander Kaplan <alexkaplan.mail [at] gmail.com>
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
