@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Oct 28, 2016 */
 public interface count {
   /** @author Ori Marcovitch
-   * @param n JD
+   * @param n node
    * @since Oct 28, 2016 */
   static int expressions(ASTNode n) {
     if (n == null)
