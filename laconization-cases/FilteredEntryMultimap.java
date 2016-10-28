@@ -104,7 +104,7 @@ void r() {
     public void f() {
       
       return new O() {
-        private boolean g() {
+        boolean g() {
           return r(new Predicate<Map.Entry<K, Collection<V>>>(){});
         }
       };
@@ -112,7 +112,7 @@ void r() {
   @class K {
     public void f() {
       return new O() {
-        private boolean g() {
+        boolean g() {
           return r(new Predicate<Map.Entry<K, Collection<V>>>(){});
         }
       };
@@ -124,7 +124,7 @@ void r() {
     public Set<Multiset.Entry<K>> entrySet() {
       return new Multisets.EntrySet<K>() {
 
-        private boolean removeEntriesIf(final Predicate<? super Multiset.Entry<K>> k) {
+        boolean removeEntriesIf(final Predicate<? super Multiset.Entry<K>> k) {
           return FilteredEntryMultimap.this
               .removeEntriesIf(
                   new Predicate<Map.Entry<K, Collection<V>>>() {
@@ -140,29 +140,29 @@ void r() {
   }
 public void f1() {
       return new O() {
-        private boolean g() {
+        boolean g() {
           return r(new O<Map.Entry<K, Collection<V>>>(){});
         }
       };
     }
 public void f2() {
       return new O() {
-        private boolean g() {
+        boolean g() {
           return r(new O<Map.Entry<K, Collection<V>>>(){});
         }
       };
     }
 
-public void f3() { return new O() { private boolean g() { return r(new O<M.E<K,C<V>>>(){}); } }; }
-int f4(){return new O(){private boolean g() {return r(new O<M.E<K,C<V>>>(){});}};}
-int f5(){return new O(){private boolean g() {return r(new O<M.E<K,C<V>>>(){});}};}
-int f6(){return new O(){private void g() {return r(new O<E<K,C<V>>>(){});}};}
-int f7(){return new O(){private void g() {r(new O<E<K,C<V>>>(){});}};}
-int f8(){return new O(){private void g() {r(new O<E<C<V>>>(){});}};}
-int f9(){return new O(){private void g() {new O<E<C<V>>>(){};}};}
-int f10(){return new O(){private int g() {new O<E<C<V>>>(){};}};}
-int f11(){return new O(){private int g() {new O<E<C>>(){};}};}
-int f12(){return new O(){private int g() {O<E<C<K>>> a;}};}
+public void f3() { return new O() { boolean g() { return r(new O<M.E<K,C<V>>>(){}); } }; }
+int f4(){return new O(){boolean g() {return r(new O<M.E<K,C<V>>>(){});}};}
+int f5(){return new O(){boolean g() {return r(new O<M.E<K,C<V>>>(){});}};}
+int f6(){return new O(){void g() {return r(new O<E<K,C<V>>>(){});}};}
+int f7(){return new O(){void g() {r(new O<E<K,C<V>>>(){});}};}
+int f8(){return new O(){void g() {r(new O<E<C<V>>>(){});}};}
+int f9(){return new O(){void g() {new O<E<C<V>>>(){};}};}
+int f10(){return new O(){int g() {new O<E<C<V>>>(){};}};}
+int f11(){return new O(){int g() {new O<E<C>>(){};}};}
+int f12(){return new O(){int g() {O<E<C<K>>> a;}};}
 
 int f13(){return new O(){boolean g() {return r(new O<M.E<K, C>>(){});}};}
 }

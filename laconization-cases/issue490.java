@@ -1,1 +1,1 @@
-class I{int f(){return new O(){private V g(){O<E<C<K>>>a;}};}}
+class I{int f(){return new O(){V g(){O<E<C<K>>>a;}};}}
