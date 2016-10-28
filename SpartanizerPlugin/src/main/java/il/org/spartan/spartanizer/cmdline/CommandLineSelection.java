@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -18,7 +17,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   private List<WrappedCompilationUnit> compilationUnits;
 
   public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
-    this.inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
+    inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
 
@@ -32,10 +31,9 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   public List<WrappedCompilationUnit> get() {
     return inner;
   }
-  
+
   /** Factory method for empty selection
    * @return empty selection */
-  
   public static CommandLineSelection empty() {
     return new CommandLineSelection(null, null);
   }
@@ -70,21 +68,22 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return new CommandLineSelection(cuList, "selection");
     }
 
-    public static List<CompilationUnit> getAllCompilationUnit(String from) {
-      List<CompilationUnit> $ = new ArrayList<>();
+    public static List<CompilationUnit> getAllCompilationUnit(final String from) {
+      final List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(from)) {
         System.out.println(¢.getName());
-//        System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
+        // System.out.println("Free memory (bytes): " +
+        // Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
         CompilationUnit cu;
         if (!system.isTestFile(¢))
           try {
             cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(¢));
             $.add(cu);
-          } catch (IOException x) {
+          } catch (final IOException x) {
             monitor.log(x);
             x.printStackTrace();
           }
-       }
+      }
       return $;
     }
   }
@@ -96,7 +95,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     System.err.println("Loading selection ...");
     for (final File ¢ : new FilesGenerator(".java").from(inputPath))
       cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
-//    compilationUnits = cuList;
+    // compilationUnits = cuList;
     inner = cuList;
     System.err.println("Loading selection: done!");
   }
@@ -107,12 +106,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     return this;
   }
 
-  public static AbstractSelection<?> of(List<CompilationUnit> ¢) {
-    CommandLineSelection commandLineSelection = new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
-    return commandLineSelection;
-  }
-
-  @SuppressWarnings("unused") private static Object getName(List<CompilationUnit> ¢) {
-    return null;
+  public static AbstractSelection<?> of(final List<CompilationUnit> ¢) {
+    return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
   }
 }

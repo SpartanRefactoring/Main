@@ -556,7 +556,7 @@ public interface wizard {
     return true;
   }
 
-  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, String addedJavadoc) {
+  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
       r.replace(n,
@@ -574,7 +574,7 @@ public interface wizard {
    * @param s JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addStatement(MethodDeclaration d, ReturnStatement s, ASTRewrite r, TextEditGroup g) {
+  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
@@ -582,7 +582,7 @@ public interface wizard {
    * @param m JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addMethod(AbstractTypeDeclaration d, MethodDeclaration m, ASTRewrite r, TextEditGroup g) {
+  static void addMethod(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
     // System.out.println(d.bodyDeclarations());
     System.out.println(m);
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(m, g);

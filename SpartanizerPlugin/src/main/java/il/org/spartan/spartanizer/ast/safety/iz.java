@@ -988,7 +988,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean castExpression(ASTNode ¢) {
+  static boolean castExpression(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof CastExpression;
   }
 }

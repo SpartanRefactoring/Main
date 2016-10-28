@@ -7,16 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/**
- * A Class that contains all the metrics for an {@link ASTNode}
- * @author Matteo Orru'
- */
-
-@SuppressWarnings("unused")
-public class ASTNodeMetrics {
-  
-  private ASTNode n;
-
+/** A Class that contains all the metrics for an {@link ASTNode}
+ * @author Matteo Orru' */
+@SuppressWarnings("unused") public class ASTNodeMetrics {
+  private final ASTNode n;
   private int length;
   private int tokens;
   private int nodes;
@@ -24,81 +18,63 @@ public class ASTNodeMetrics {
   private int statements;
   private int tide;
   private int essence;
-    
-  public ASTNodeMetrics(ASTNode n) {
-    super();
+
+  public ASTNodeMetrics(final ASTNode n) {
     this.n = n;
-  }  
-  
-  public void computeMetrics(){
-    this.length = n.getLength();
-    this.tokens = metrics.tokens(n + "");
-    this.nodes = count.nodes(n);
-    this.body = metrics.bodySize(n);
-    final MethodDeclaration methodDeclaration = az.methodDeclaration(n);
-    this.statements = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
-//    extract.statements(az.
-//        methodDeclaration(n)
-//        .getBody())
-//        .size();
-    this.tide = clean(n + "").length();
-    this.essence = Essence.of(n + "").length();
   }
 
-  /**
-   * @return the n
-   */
+  public void computeMetrics() {
+    length = n.getLength();
+    tokens = metrics.tokens(n + "");
+    nodes = count.nodes(n);
+    body = metrics.bodySize(n);
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(n);
+    statements = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
+    // extract.statements(az.
+    // methodDeclaration(n)
+    // .getBody())
+    // .size();
+    tide = clean(n + "").length();
+    essence = Essence.of(n + "").length();
+  }
+
+  /** @return the n */
   public ASTNode n() {
     return n;
   }
 
-  /**
-   * @return the length
-   */
+  /** @return the length */
   public int length() {
     return length;
   }
 
-  /**
-   * @return the tokens
-   */
+  /** @return the tokens */
   public int tokens() {
     return tokens;
   }
 
-  /**
-   * @return the nodes
-   */
+  /** @return the nodes */
   public int nodes() {
     return nodes;
   }
 
-  /**
-   * @return the body
-   */
+  /** @return the body */
   public int body() {
     return body;
   }
 
-  /**
-   * @return the statements
-   */
+  /** @return the statements */
   public int statements() {
     return statements;
   }
 
-  /**
-   * @return the tide
-   */
+  /** @return the tide */
   public int tide() {
     return tide;
   }
 
-  /**
-   * @return the essence
-   */
+  /** @return the essence */
   public int essence() {
     return essence;
   }
-  
 }

@@ -18,7 +18,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -165,13 +164,13 @@ public abstract class AbstractCommandLineSpartanizerOld {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-     apply();
-//     System.out.println("------------------");
-//    CommandLineApplicator.defaultApplicator()
-//                         .passes(20)
-//                         .selection(CommandLineSelection.of(CommandLineSelection.Util
-//                                                                                .getAllCompilationUnit(inputPath)))
-//                         .go();
+    apply();
+    // System.out.println("------------------");
+    // CommandLineApplicator.defaultApplicator()
+    // .passes(20)
+    // .selection(CommandLineSelection.of(CommandLineSelection.Util
+    // .getAllCompilationUnit(inputPath)))
+    // .go();
     closePrintWriters();
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
@@ -233,12 +232,12 @@ public abstract class AbstractCommandLineSpartanizerOld {
     int f(R r);
   }
 
-  static NamedFunction m(String name, ToInt<String> f) {
+  static NamedFunction m(final String name, final ToInt<String> f) {
     return new NamedFunction(name, f);
   }
 
   static class NamedFunction {
-    NamedFunction(String name, ToInt<String> f) {
+    NamedFunction(final String name, final ToInt<String> f) {
       this.name = name;
       this.f = f;
     }
@@ -251,7 +250,7 @@ public abstract class AbstractCommandLineSpartanizerOld {
       m("seventeeen", (¢) -> 17), //
       m("length", (¢) -> ¢.length()), //
       m("essence", (¢) -> Essence.of(¢).length())//
-      );
+  );
 
   /** @param input
    * @param output */

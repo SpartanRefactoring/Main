@@ -32,14 +32,14 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 
-  @Override public Tip tip(MethodDeclaration d, ExclusionManager m) throws TipperFailure {
-    Tip tip = super.tip(d, m);
+  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) throws TipperFailure {
+    final Tip tip = super.tip(d, m);
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         tip.go(r, g);
         if (!iz.Void(step.returnType(d)))
           return;
-        ReturnStatement s = d.getAST().newReturnStatement();
+        final ReturnStatement s = d.getAST().newReturnStatement();
         s.setExpression(d.getAST().newThisExpression());
         wizard.addStatement(d, s, r, g);
         d.setReturnType2(getType(searchAncestors.forContainingType().from(d)));
@@ -49,7 +49,7 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
 
   /** @param ¢
    * @return */
-  protected static Type getType(TypeDeclaration ¢) {
+  protected static Type getType(final TypeDeclaration ¢) {
     // TODO Marco somehow get type out of TypeDeclaration
     return ¢.getSuperclassType();
   }
