@@ -109,6 +109,8 @@ public class CommandLine$Applicator {
     // System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
     // report.summaryFileName();
+    Reports.writeRow(Reports.reports().get("metrics"),input);
+    Reports.writeRow(Reports.reports().get("metrics"),output);
     Reports.reportMetrics(nm1, "1", "metrics");
     Reports.reportMetrics(nm2, "2", "metrics");
     Reports.reportDifferences(nm1, nm2, "metrics");
