@@ -92,7 +92,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(@SuppressWarnings("hiding") final Spartanizer$Applicator a) {
     setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
-    name(a.getName());
+    name(a.getClass().getSimpleName());
     return this;
   }
 

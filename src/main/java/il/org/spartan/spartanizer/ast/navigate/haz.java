@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -66,9 +66,9 @@ public enum haz {
     return false;
   }
 
-  public static boolean Final(final List<IExtendedModifier> ms) {
+  public static boolean final¢(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
-      if (IExtendedModifiersRank.compare(¢, IExtendedModifiersRank.FINAL) == 0)
+      if (IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL)
         return true;
     return false;
   }
