@@ -37,8 +37,8 @@ public enum IExtendedModifiersRank {
     return compare(rank(modifier1), rank(modifier2));
   }
 
-  public static int compare(final IExtendedModifier m, final IExtendedModifiersRank o) {
-    return compare(rank(m), o);
+  public static int compare(final IExtendedModifier m, final IExtendedModifiersRank r) {
+    return compare(rank(m), r);
   }
 
   public static int compare(final String modifier1, final String modifier2) {
