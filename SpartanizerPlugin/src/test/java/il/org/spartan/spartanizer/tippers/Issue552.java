@@ -35,6 +35,18 @@ public class Issue552 {
     assertEquals(3, count.expressions(wizard.ast("a + b + c")));
   }
 
+  @Test public void f() {
+    assertEquals(3, count.expressions(wizard.ast("return a + b + c;")));
+  }
+
+//  @Test public void g() {
+//    assertEquals(3, count.expressions(wizard.ast("if(a == null) return null;")));
+//  }
+//
+//  @Test public void h() {
+//    assertEquals(3, count.expressions(wizard.ast("while(true) print(i);")));
+//  }
+
   void auxInt(@SuppressWarnings("unused") int __) {
     assert true;
   }

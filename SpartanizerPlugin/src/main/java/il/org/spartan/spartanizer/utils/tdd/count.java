@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.utils.*;
+
 /** @author Ori Marcovitch
  * @since Oct 28, 2016 */
 public interface count {
@@ -11,6 +13,14 @@ public interface count {
   static int expressions(ASTNode n) {
     if (n == null)
       return 0;
-    return (n.toString().split(" ").length + 1) / 2;
+    final Int $ = new Int();
+    $.inner = 0;
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(SimpleName node) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
   }
 }
