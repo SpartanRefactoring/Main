@@ -1669,7 +1669,7 @@ public final class Version230 {
         .gives("for (int i: f()) f(i);") //
         .gives("for (int ¢: f()) f(¢);") //
         .stays() //
-        ;
+    ;
   }
 
   @Test public void issue53a() {

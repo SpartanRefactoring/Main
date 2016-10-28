@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
