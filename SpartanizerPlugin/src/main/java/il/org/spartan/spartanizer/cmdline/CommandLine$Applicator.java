@@ -20,56 +20,12 @@ public class CommandLine$Applicator {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
-  // protected String folder = "/tmp/";
-  // protected String afterFileName;
-  // protected String beforeFileName;
-  // protected String inputPath;
-  // protected String reportFileName;
-  // protected String spectrumFileName;
   protected PrintWriter afters;
   protected PrintWriter befores;
   File currentFile;
   int done;
-  // List<HashMap<String, CSVStatistics>> reports = new
-  // ArrayList<HashMap<String, CSVStatistics>>();
-  //
-  // public void setReport(final CSVStatistics r, final String name){
-  // HashMap map = new HashMap<String, CSVStatistics>();
-  // map.put(name, r);
-  // reports.add(map);
-  // }
-  // CSVStatistics report;
-  // CSVStatistics spectrumStats;
-  // CSVStatistics coverageStats;
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  // CommandLine$Applicator(final String path) {
-  // this(path, system.folder2File(path));
-  // }
-  // CommandLine$Applicator(final String inputPath, final String name){
-  // this.inputPath = inputPath;
-  // beforeFileName = folder + name + ".before.java";
-  // afterFileName = folder + name + ".after.java";
-  // reportFileName = folder + name + ".CSV";
-  // spectrumFileName = folder + name + ".spectrum.CSV";
-  // try {
-  // befores = new PrintWriter(beforeFileName);
-  // afters = new PrintWriter(afterFileName);
-  // } catch (final FileNotFoundException x) {
-  // x.printStackTrace();
-  // }
-  //
-  // // Matteo: Please do not delete the following instructions.
-  // // They are needed to instantiate report in commandline classes
-  //
-  // try {
-  // report = new CSVStatistics(reportFileName, "property");
-  // spectrumStats = new CSVStatistics(spectrumFileName, "property");
-  // } catch (IOException x) {
-  // x.printStackTrace();
-  // System.err.println("problem in setting up reports");
-  // }
-  // }
 
   // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer
   // (code duplication to be resolved)
@@ -88,8 +44,6 @@ public class CommandLine$Applicator {
     final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
     Reports.printFile(input + "", "before");
     Reports.printFile(output, "after");
-    // befores.print(input);
-    // afters.print(output);
     computeMetrics(input, outputASTNode);
     return false;
   }
@@ -169,7 +123,6 @@ public class CommandLine$Applicator {
   // .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
   // }
   String fixedPoint(final ASTNode ¢) {
-    // System.out.println(¢);
     return fixedPoint(¢ + "");
   }
 
