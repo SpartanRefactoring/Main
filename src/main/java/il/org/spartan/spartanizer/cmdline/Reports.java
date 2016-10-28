@@ -22,17 +22,27 @@ public class Reports {
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
   
-  private final static NamedFunction functions[] = as.array(//
-      m("seventeeen", (¢) -> 17), //
-      m("length", (¢) -> (¢ + "").length()), //
-      m("essence", (¢) -> Essence.of(¢ + "").length()), m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), //
-      m("body", (¢) -> metrics.bodySize(¢)),
-      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-      m("tide", (¢) -> clean(¢ + "").length()));
+  private static class Util {
+    
+    private static NamedFunction functions[]; 
+    
+    public static NamedFunction[] functions(final String id){
+      return functions = as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
+          m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
+          m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
+              : extract.statements(az.methodDeclaration(¢).getBody()).size()),
+          m("tide" + id, (¢) -> clean(¢ + "").length()));
+    }
+  }
+  
+//  private static final NamedFunction functions[] = as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
+//      m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), m("body", (¢) -> metrics.bodySize(¢)),
+//      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
+//      m("tide", (¢) -> clean(¢ + "").length()));
   
   // running report
-  public static void writeRow(final CSVStatistics report, final ASTNode n) {
-    for (NamedFunction ¢ : functions)
+  public static void writeRow(final CSVStatistics report, final ASTNode n, final String id) {
+    for (NamedFunction ¢ : Reports.Util.functions(id))
       report.put(¢.name(), ¢.function().run(n));
   }
 
