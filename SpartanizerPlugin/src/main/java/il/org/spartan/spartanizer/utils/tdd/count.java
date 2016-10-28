@@ -30,6 +30,11 @@ public interface count {
         ++$.inner;
         return true;
       }
+
+      @Override public boolean visit(InfixExpression node) {
+        ++$.inner;
+        return true;
+      }
     });
     return $.inner;
   }

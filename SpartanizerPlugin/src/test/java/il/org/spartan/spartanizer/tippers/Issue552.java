@@ -24,7 +24,7 @@ public class Issue552 {
   }
 
   @Test public void c() {
-    assertEquals(2, count.expressions(wizard.ast("a + b")));
+    assertEquals(3, count.expressions(wizard.ast("a + b")));
   }
 
   @Test public void d() {
@@ -32,15 +32,15 @@ public class Issue552 {
   }
 
   @Test public void e() {
-    assertEquals(3, count.expressions(wizard.ast("a + b + c")));
+    assertEquals(4, count.expressions(wizard.ast("a + b + c")));
   }
 
   @Test public void f() {
-    assertEquals(3, count.expressions(wizard.ast("return a + b + c;")));
+    assertEquals(4, count.expressions(wizard.ast("return a + b + c;")));
   }
 
   @Test public void g() {
-    assertEquals(3, count.expressions(wizard.ast("if(a == null) return null;")));
+    assertEquals(4, count.expressions(wizard.ast("if(a == null) return null;")));
   }
 
   @Test public void h() {
