@@ -15,21 +15,23 @@
 
 # Keep this list alphabetically sorted, on vim: +,$!sort -u
 Adi Omari <adiomari [at] gmail.com>
-ארבינקא The Blaumlich Tunnel
 Alexander Kaplan <alexkaplan.mail [at] gmail.com>
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
+Aviad Cohen <aviadcohen7 [at] gmail.com>
+Aviad Cohen <aviadcohen7 [at] gmail.com?
 Boris van Sosin <boris.van.sosin [at] gmail.com>
 Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Hershele Ostropoler https://en.wikipedia.org/wiki/Hershel_of_Ostropol
-Inbal Matityahu <matityahuinbal [at] gmail.com>
 Idan Atias <idan2k3 [at] gmail.com>
+Inbal Matityahu <matityahuinbal [at] gmail.com>
 Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Koby Ben Shimol <kobybs [at] gmail.com>
+Nisan Arzoan <nisanarz [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Ori Roth <ori.rothh [at] gmail.com>
@@ -42,5 +44,4 @@ Yuval Simon <yuvaltechnion [at] gmail.com>
 Zahi Mizrahi <zahimizra [at] gmail.com>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
 خوجة نصر الدين <juha@nasereddi.in>
-Aviad Cohen <aviadcohen7 [at] gmail.com?
-Aviad Cohen <aviadcohen7 [at] gmail.com>
+ארבינקא The Blaumlich Tunnel
