@@ -19,10 +19,9 @@ public class Reports {
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-  
-  private static class Util {
-    
-    public static NamedFunction[] functions(final String id){
+
+  public static class Util {
+    @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
@@ -31,41 +30,95 @@ public class Reports {
     }
 
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunction<ASTNode>(name,f);
+      return new NamedFunction<>(name, f);
     }
-  
+
+    static CSVStatistics report(final String ¢) {
+      assert ¢ != null;
+      return reports.get(¢);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes"}) public static NamedFunction<ASTNode> find(final String ¢) {
+      for (final NamedFunction $ : Reports.Util.functions(""))
+        if ($.name() == ¢)
+          return $;
+      return null;
+    }
   }
-  
+
   // running report
-  public static void writeMetrics(final CSVStatistics report, final ASTNode n, final String id) {
-    for (NamedFunction ¢ : Reports.Util.functions(id))
-      report.put(¢.name(), ¢.function().run(n));
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
+      Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
+    }
+  }
+
+  @FunctionalInterface public interface BiFunction<T, R> {
+    double apply(T t, R r);
   }
   
-  public static void writeDiff(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void write(final ASTNode input, final ASTNode output, final String id, final BiFunction<Integer, Integer> i) {
+    double a;
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = i.apply(¢.function().run(input), ¢.function().run(output)); // system.d(¢.function().run(n1),
+                                                                      // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
+    }
+  }
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     int a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = ¢.function().run(n1) - ¢.function().run(n2);
-      report.put(id + ¢.name(), a);
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = (int) f.apply(¢.function().run(n1), ¢.function().run(n2)); // - ;
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
-   }
-  
-  public static void writeDelta(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+  }
+
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     double a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = system.d(¢.function().run(n1), ¢.function().run(n2));
-      report.put(id + ¢.name(), a);
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
+                                                               // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
-   }
+  }
   
-  public static void writePerc(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
-    double a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = Double.parseDouble(system.p(¢.function().run(n1), ¢.function().run(n2)));
-      report.put(id + ¢.name() + " %", a);
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = "" + f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.p(¢.function().run(n1),
+                                                                    // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
-   }
-  
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = system.p(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+    }
+  }
+
+  /** @param nm */
+  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __,
+     
+      final String id, final BiFunction<Integer, Integer> i) {
+    final int len = Reports.Util.find("length").function().run(n1);
+    final int ess = Reports.Util.find("essence").function().run(n1);
+    final int tide = Reports.Util.find("tide").function().run(n1);
+    final int body = Reports.Util.find("body").function().run(n1);
+    final int nodes = Reports.Util.find("nodes").function().run(n1);
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
+  }
+
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
@@ -73,17 +126,17 @@ public class Reports {
   static class NamedFunction<R> {
     final String name;
     final ToInt<R> f;
-    
-    NamedFunction(final String name, ToInt<R> f) {
+
+    NamedFunction(final String name, final ToInt<R> f) {
       this.name = name;
       this.f = f;
     }
-   
-    public String name(){
+
+    public String name() {
       return this.name;
     }
-    
-    public ToInt<R> function(){
+
+    public ToInt<R> function() {
       return this.f;
     }
   }
@@ -180,5 +233,10 @@ public class Reports {
 
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
+  }
+
+  public static void name(final ASTNode input) {
+    Reports.report("metrics").put("name", extract.name(input));
+    Reports.report("metrics").put("category", extract.category(input));
   }
 }
