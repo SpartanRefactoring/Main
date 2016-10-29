@@ -111,6 +111,14 @@ public class Reports {
     double a;
     for (NamedFunction ¢ : Reports.Util.functions("")){
       a = system.d(¢.function().run(n1), ¢.function().run(n2));
+      report.put(id + ¢.name(), a);
+    }
+   }
+  
+  public static void writePerc(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+    double a;
+    for (NamedFunction ¢ : Reports.Util.functions("")){
+      a = Double.parseDouble(system.p(¢.function().run(n1), ¢.function().run(n2)));
       report.put(id + ¢.name() + " %", a);
     }
    }

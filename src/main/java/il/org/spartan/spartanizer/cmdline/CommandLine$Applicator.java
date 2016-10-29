@@ -70,6 +70,8 @@ public class CommandLine$Applicator {
 //    Reports.reportMetrics(nm2, "2", "metrics");
 //    Reports.reportDifferences(nm1, nm2, "metrics");
     Reports.writeDelta(Reports.reports().get("metrics"), input, output, "δ ");
+    Reports.writeDelta(Reports.reports().get("metrics"), input, output, "% ");
+
 //    Reports.reportRatio(nm1, "1", "metrics");
 //    Reports.reportRatio(nm2, "1", "metrics");
     // reportRatio(nm1, "1");
