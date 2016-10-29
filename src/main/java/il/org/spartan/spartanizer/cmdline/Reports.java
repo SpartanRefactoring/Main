@@ -47,6 +47,14 @@ public class Reports {
     static NamedFunction m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction(name,f);
     }
+
+//    public static Object functions() {
+//      return functions = as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
+//          m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), m("body", (¢) -> metrics.bodySize(¢)),
+//          m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1
+//              : extract.statements(az.methodDeclaration(¢).getBody()).size()),
+//          m("tide", (¢) -> clean(¢ + "").length()));//
+//    }
     
 //    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
 //      return new NamedBiFunctionInt(name,biToI);
@@ -93,17 +101,17 @@ public class Reports {
   
   public static void writeDiff(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
     int a;
-    for (NamedFunction ¢ : Reports.Util.functions(id)){
+    for (NamedFunction ¢ : Reports.Util.functions("")){
       a = ¢.function().run(n1) - ¢.function().run(n2);
-      report.put(¢.name(), a);
+      report.put(id + ¢.name(), a);
     }
    }
   
-  public static void writePerc(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+  public static void writeDelta(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
     double a;
-    for (NamedFunction ¢ : Reports.Util.functions(id)){
+    for (NamedFunction ¢ : Reports.Util.functions("")){
       a = system.d(¢.function().run(n1), ¢.function().run(n2));
-      report.put(¢.name() + " %", a);
+      report.put(id + ¢.name() + " %", a);
     }
    }
   
