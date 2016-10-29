@@ -214,4 +214,9 @@ public class Reports {
     return reports;
   }
 
+  public static void name(ASTNode input) {
+    Reports.report("metrics").put("name",extract.name(input));
+    Reports.report("metrics").put("category",extract.category(input)); 
+  }
+
 }
