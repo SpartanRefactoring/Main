@@ -86,22 +86,38 @@ public class Reports {
 //      m("tide", (¢) -> clean(¢ + "").length()));
   
   // running report
-  public static void writeRow(final CSVStatistics report, final ASTNode n, final String id) {
+  public static void writeMetrics(final CSVStatistics report, final ASTNode n, final String id) {
     for (NamedFunction ¢ : Reports.Util.functions(id))
       report.put(¢.name(), ¢.function().run(n));
   }
+  
+  public static void writeDiff(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+    int a;
+    for (NamedFunction ¢ : Reports.Util.functions(id)){
+      a = ¢.function().run(n1) - ¢.function().run(n2);
+      report.put(id + ¢.name(), a);
+    }
+   }
+  
+  public static void writePerc(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+    double a;
+    for (NamedFunction ¢ : Reports.Util.functions(id)){
+      a = system.d(¢.function().run(n1), ¢.function().run(n2));
+      report.put(id + ¢.name() + " %", a);
+    }
+   }
   
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
   
-  @FunctionalInterface public interface BiToInt<R,S> {
-    int run(R r, S s);
-  }
-  
-  @FunctionalInterface public interface BiToDouble<R,S> {
-    double run(R r, S s);
-  }
+//  @FunctionalInterface public interface BiToInt<R,S> {
+//    int run(R r, S s);
+//  }
+//  
+//  @FunctionalInterface public interface BiToDouble<R,S> {
+//    double run(R r, S s);
+//  }
   
 //  static class NamedFunctionInt extends NamedFunction{
 //    

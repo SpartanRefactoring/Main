@@ -63,11 +63,12 @@ public class CommandLine$Applicator {
     // System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
     // report.summaryFileName();
-    Reports.writeRow(Reports.reports().get("metrics"),input,"1");
-    Reports.writeRow(Reports.reports().get("metrics"),output,"2");
+    Reports.writeMetrics(Reports.reports().get("metrics"),input,"1");
+    Reports.writeMetrics(Reports.reports().get("metrics"),output,"2");
+    Reports.writeDiff(Reports.reports().get("metrics"), input, output, "Δ ");
 //    Reports.reportMetrics(nm1, "1", "metrics");
 //    Reports.reportMetrics(nm2, "2", "metrics");
-    Reports.reportDifferences(nm1, nm2, "metrics");
+//    Reports.reportDifferences(nm1, nm2, "metrics");
     Reports.reportRatio(nm1, "1", "metrics");
     Reports.reportRatio(nm2, "1", "metrics");
     // reportRatio(nm1, "1");
