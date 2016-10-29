@@ -19,6 +19,7 @@ public class Reports {
   protected String beforeFileName;
   protected String inputPath;
   protected String spectrumFileName;
+//  protected <HashMap<Object, List<HashMap<String,Object>>>> metrics = null;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
   
@@ -42,10 +43,19 @@ public class Reports {
 //              : extract.statements(az.methodDeclaration(¢).getBody()).size()))
     }
 
-    private static Object m(String string, Object object) {
-      // TODO Auto-generated method stub
-      return null;
+    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
+      return new NamedFunctionInt(name,f);
     }
+    
+//    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
+//      return new NamedBiFunctionInt(name,biToI);
+//    }
+    
+    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
+      return new NamedBiFunctionDouble(name,biToD);
+    }
+
+    
   }
   
 //.put("Δ Nodes", nm1.nodes() - nm2.nodes())//
@@ -78,7 +88,8 @@ public class Reports {
   // running report
   public static void writeRow(final CSVStatistics report, final ASTNode n, final String id) {
     for (NamedFunction ¢ : Reports.Util.functions(id))
-      report.put(¢.name(), ¢.function().run(n));
+      if(¢ instanceof NamedFunctionInt)
+        report.put(¢.name(), ¢.function().run(n));
   }
   
   @FunctionalInterface public interface ToInt<R> {
@@ -94,19 +105,21 @@ public class Reports {
   }
   
   static class NamedFunctionInt extends NamedFunction{
+    
     NamedFunctionInt(final String name, final ToInt<ASTNode> f) {
       super(name);
       this.f = f;
     }
+    
     ToInt<ASTNode> f;
     
     public ToInt<ASTNode> function(){
       return this.f;
     }
     
-    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunctionInt(name,f);
-    }
+//    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
+//      return new NamedFunctionInt(name,f);
+//    }
   }
   
   static class NamedBiFunctionInt extends NamedFunction{
@@ -121,9 +134,9 @@ public class Reports {
       return this.biToI;
     }
     
-    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-      return new NamedBiFunctionInt(name,biToI);
-    }
+//    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
+//      return new NamedBiFunctionInt(name,biToI);
+//    }
   }
   
   static class NamedBiFunctionDouble extends NamedFunction{
@@ -138,9 +151,9 @@ public class Reports {
       return this.biToD;
     }
     
-    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-      return new NamedBiFunctionDouble(name,biToD);
-    }
+//    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
+//      return new NamedBiFunctionDouble(name,biToD);
+//    }
   }
 
 
@@ -148,12 +161,14 @@ public class Reports {
 //    return new NamedFunction(name);
 //  }
 
-  static class NamedFunction {
+  static abstract class NamedFunction {
     NamedFunction(final String name) {
       this.name = name;
 //      this.f = f;
     }
     
+    abstract public ToInt<ASTNode> function(); 
+
 //    NamedFunction(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
 //      this.name = name;
 //      this.biToI = biToI;
