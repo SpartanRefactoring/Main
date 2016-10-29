@@ -39,6 +39,13 @@ public class Reports {
       assert ¢ != null;
       return reports.get(¢);
     }
+    
+    public static NamedFunction find(final String ¢) {
+      for(NamedFunction f: Reports.Util.functions(""))
+        if(f.name() == ¢)
+          return f;
+        return null;
+      }
   }
 
   // running report
@@ -94,10 +101,32 @@ public class Reports {
     }
   }
   
-//  public static <T, U, R> void write(final CSVStatistics report, final BiFunction<T,U,R> f){
-////    f.apply(t, u);
-//  }
+  /** @param nm */
+  @SuppressWarnings("unchecked")
+  public static void writeRatio(final ASTNode n1, @SuppressWarnings("unused") final ASTNode __, @SuppressWarnings("unused") final String id, final BiFunction<Integer, Integer> i) {
+    int len = Reports.Util.find("length").function().run(n1);
+    int ess = Reports.Util.find("essence").function().run(n1);
+    int tide = Reports.Util.find("tide").function().run(n1);
+    int body = Reports.Util.find("body").function().run(n1);
+    int nodes = Reports.Util.find("nodes").function().run(n1);
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(len,ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide,ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes,body));
+    
+//    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+//      a = system.p(¢.function().run(n1), ¢.function().run(n2));
+//      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+//    }
+    
+//    report(key) //
+//        // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
+//        // //
+//        .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
+//        .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
+//        .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
+  }
 
+  
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
