@@ -52,46 +52,14 @@ public class CommandLine$Applicator {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
     Reports.name(input);
-    Reports.writeMetrics(input,output,null);
-    Reports.write(input, output, "Δ ", (n1,n2)->(n1 - n2));
-    Reports.write(input, output, "δ ", (n1,n2)->system.d(n1,n2));
+    Reports.writeMetrics(input, output, null);
+    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
     Reports.writePerc(input, output, "δ ");
-//    Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
+    // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
-  // public void reportDifferences(@SuppressWarnings("hiding") final
-  // ASTNodeMetrics nm1, @SuppressWarnings("hiding") final ASTNodeMetrics nm2){
-  // report //
-  // .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-  // .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
-  // .put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
-  // .put("Δ Body", nm1.body() - nm2.body())//
-  // .put("δ Body", system.d(nm1.body(), nm2.body()))//
-  // .put("% Body", system.p(nm1.body(), nm2.body()))//
-  // .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-  // .put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
-  // .put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
-  // .put("Δ Length", nm1.length() - nm2.length())//
-  // .put("δ Length", system.d(nm1.length(), nm2.length()))//
-  // .put("% Length", system.p(nm1.length(), nm2.length()))//
-  // .put("Δ Tide2", nm1.tide() - nm2.tide())//
-  // .put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
-  // .put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
-  // .put("Δ Essence", nm1.essence() - nm2.essence())//
-  // .put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
-  // .put("% Essence", system.p(nm1.essence(), nm2.essence()))//
-  // .put("Δ Statement", nm1.statements() - nm2.statements())//
-  // .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
-  // .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
-  // }
-  /** @param nm */
-  // public void reportRatio(final ASTNodeMetrics nm, final String id){
-  // report //
-  //// .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
-  // .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
-  // .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
-  // .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
-  // }
+
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
