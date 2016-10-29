@@ -32,30 +32,30 @@ public class Reports {
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-          m("tide" + id, (¢) -> clean(¢ + "").length()),//
-          m("Δ Nodes", (¢1,¢2) -> (count.nodes(¢1)-count.nodes(¢2))),//
-          m("Δ Body", (¢1,¢2) -> (metrics.bodySize(¢1)-metrics.bodySize(¢2))),//
-          m("Δ Tokens", (¢1,¢2) -> (metrics.tokens(¢1 + "")-metrics.tokens(¢2 + ""))),//
-          m("Δ Length", (¢1,¢2) -> ((¢1 + "").length()-(¢2 + "").length())),//
-          m("Δ Tide2", (¢1,¢2) -> (clean(¢1 + "").length()-clean(¢2 + "").length())),//
-          m("Δ Essence", (¢1,¢2) -> (Essence.of(¢1 + "").length()-Essence.of(¢2 + "").length())));
+          m("tide" + id, (¢) -> clean(¢ + "").length()));//
+//          m("Δ Nodes", (¢1,¢2) -> (count.nodes(¢1)-count.nodes(¢2))),//
+//          m("Δ Body", (¢1,¢2) -> (metrics.bodySize(¢1)-metrics.bodySize(¢2))),//
+//          m("Δ Tokens", (¢1,¢2) -> (metrics.tokens(¢1 + "")-metrics.tokens(¢2 + ""))),//
+//          m("Δ Length", (¢1,¢2) -> ((¢1 + "").length()-(¢2 + "").length())),//
+//          m("Δ Tide2", (¢1,¢2) -> (clean(¢1 + "").length()-clean(¢2 + "").length())),//
+//          m("Δ Essence", (¢1,¢2) -> (Essence.of(¢1 + "").length()-Essence.of(¢2 + "").length()))
+//          );
 //          m("Δ Statements", (¢1,¢2) -> (az.methodDeclaration(¢) == null ? -1
 //              : extract.statements(az.methodDeclaration(¢).getBody()).size()))
     }
 
     static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunctionInt(name,f);
+      return new NamedFunction(name,f);
     }
     
 //    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
 //      return new NamedBiFunctionInt(name,biToI);
 //    }
     
-    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-      return new NamedBiFunctionDouble(name,biToD);
-    }
-
-    
+//    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
+//      return new NamedBiFunctionDouble(name,biToD);
+//    }
+   
   }
   
 //.put("Δ Nodes", nm1.nodes() - nm2.nodes())//
@@ -88,8 +88,7 @@ public class Reports {
   // running report
   public static void writeRow(final CSVStatistics report, final ASTNode n, final String id) {
     for (NamedFunction ¢ : Reports.Util.functions(id))
-      if(¢ instanceof NamedFunctionInt)
-        report.put(¢.name(), ¢.function().run(n));
+      report.put(¢.name(), ¢.function().run(n));
   }
   
   @FunctionalInterface public interface ToInt<R> {
@@ -104,102 +103,79 @@ public class Reports {
     double run(R r, S s);
   }
   
-  static class NamedFunctionInt extends NamedFunction{
-    
-    NamedFunctionInt(final String name, final ToInt<ASTNode> f) {
-      super(name);
-      this.f = f;
-    }
-    
-    ToInt<ASTNode> f;
-    
-    public ToInt<ASTNode> function(){
-      return this.f;
-    }
-    
-//    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-//      return new NamedFunctionInt(name,f);
+//  static class NamedFunctionInt extends NamedFunction{
+//    
+//    NamedFunctionInt(final String name, final ToInt<ASTNode> f) {
+//      super(name);
+//      this.f = f;
 //    }
-  }
+//    
+//    ToInt<ASTNode> f;
+//    
+//    public ToInt<ASTNode> function(){
+//      return this.f;
+//    }
+//    
+////    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
+////      return new NamedFunctionInt(name,f);
+////    }
+//  }
   
-  static class NamedBiFunctionInt extends NamedFunction{
-    NamedBiFunctionInt(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-      super(name);
-      this.biToI = biToI;
-    }
-    
-    BiToInt<ASTNode, ASTNode> biToI;
-    
-    public BiToInt<ASTNode,ASTNode> function(){
-      return this.biToI;
-    }
+//  static class NamedBiFunctionInt extends NamedFunction{
+//    NamedBiFunctionInt(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
+//      super(name);
+//      this.biToI = biToI;
+//    }
+//    
+//    BiToInt<ASTNode, ASTNode> biToI;
+//    
+//    public BiToInt<ASTNode,ASTNode> function(){
+//      return this.biToI;
+//    }
     
 //    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
 //      return new NamedBiFunctionInt(name,biToI);
 //    }
-  }
+//  }
   
-  static class NamedBiFunctionDouble extends NamedFunction{
-    NamedBiFunctionDouble(String name, BiToDouble<ASTNode, ASTNode> biToD) {
-      super(name);
-      this.biToD = biToD;
-    }
-    
-    BiToDouble<ASTNode, ASTNode> biToD;
-    
-    public BiToDouble<ASTNode,ASTNode> function(){
-      return this.biToD;
-    }
-    
-//    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-//      return new NamedBiFunctionDouble(name,biToD);
+//  static class NamedBiFunctionDouble extends NamedFunction{
+//    NamedBiFunctionDouble(String name, BiToDouble<ASTNode, ASTNode> biToD) {
+//      super(name);
+//      this.biToD = biToD;
 //    }
-  }
+//    
+//    BiToDouble<ASTNode, ASTNode> biToD;
+//    
+//    public BiToDouble<ASTNode,ASTNode> function(){
+//      return this.biToD;
+//    }
+//    
+////    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
+////      return new NamedBiFunctionDouble(name,biToD);
+////    }
+//  }
 
 
 //  static NamedFunction m(final String name, final ToInt<ASTNode> f) {
 //    return new NamedFunction(name);
 //  }
 
-  static abstract class NamedFunction {
-    NamedFunction(final String name) {
-      this.name = name;
-//      this.f = f;
-    }
-    
-    abstract public ToInt<ASTNode> function(); 
-
-//    NamedFunction(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-//      this.name = name;
-//      this.biToI = biToI;
-//    }
-    
-//    NamedFunction(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-//      this.name = name;
-//      this.biToD = biToD;
-//    }
-
-
+  static class NamedFunction {
     final String name;
-//    ToInt<ASTNode> f;
-//    BiToInt<ASTNode, ASTNode> biToI;
-//    BiToDouble<ASTNode, ASTNode> biToD;
+    final ToInt f;
     
+    NamedFunction(final String name, ToInt f) {
+      this.name = name;
+      this.f = f;
+    }
+   
     public String name(){
       return this.name;
     }
     
-//    public ToInt<ASTNode> function(){
-//      return this.f;
-//    }
-//    
-//    public BiToInt<ASTNode,ASTNode> function2(){
-//      return this.biToI;
-//    }
-//    
-//    public BiToDouble<ASTNode,ASTNode> function3(){
-//      return this.biToD;
-//    }
+    public ToInt<ASTNode> function(){
+      return this.f;
+    }
   }
 
   @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
