@@ -95,7 +95,7 @@ public class Reports {
     int a;
     for (NamedFunction ¢ : Reports.Util.functions(id)){
       a = ¢.function().run(n1) - ¢.function().run(n2);
-      report.put(id + ¢.name(), a);
+      report.put(¢.name(), a);
     }
    }
   
@@ -103,7 +103,7 @@ public class Reports {
     double a;
     for (NamedFunction ¢ : Reports.Util.functions(id)){
       a = system.d(¢.function().run(n1), ¢.function().run(n2));
-      report.put(id + ¢.name() + " %", a);
+      report.put(¢.name() + " %", a);
     }
    }
   

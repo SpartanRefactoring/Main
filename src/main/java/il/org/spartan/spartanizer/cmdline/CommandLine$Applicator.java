@@ -69,8 +69,9 @@ public class CommandLine$Applicator {
 //    Reports.reportMetrics(nm1, "1", "metrics");
 //    Reports.reportMetrics(nm2, "2", "metrics");
 //    Reports.reportDifferences(nm1, nm2, "metrics");
-    Reports.reportRatio(nm1, "1", "metrics");
-    Reports.reportRatio(nm2, "1", "metrics");
+    Reports.writePerc(Reports.reports().get("metrics"), input, output, "Δ ");
+//    Reports.reportRatio(nm1, "1", "metrics");
+//    Reports.reportRatio(nm2, "1", "metrics");
     // reportRatio(nm1, "1");
     // reportRatio(nm2, "2");
     Reports.nl("metrics");
