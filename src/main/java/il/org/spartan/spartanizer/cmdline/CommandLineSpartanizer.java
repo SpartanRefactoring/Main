@@ -35,7 +35,4 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
       x.printStackTrace();
     }
   }
-  // @Override void go(@SuppressWarnings("unused") final String javaCode) {
-  // // TODO Matteo: take or remove this?
-  // }
 }

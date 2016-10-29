@@ -48,84 +48,18 @@ public class CommandLine$Applicator {
     return false;
   }
 
-  ASTNodeMetrics nm1, nm2;
-
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
-    //
-    nm1 = new ASTNodeMetrics(input);
-    nm1.computeMetrics();
-    //
-    nm2 = new ASTNodeMetrics(output);
-    nm2.computeMetrics();
-    // System.err.println(++done + " " + extract.category(input) + " " +
-    // extract.name(input));
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    // System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
-    // report.summaryFileName();
-    Reports.writeMetrics(Reports.reports().get("metrics"),input,"1");
-    Reports.writeMetrics(Reports.reports().get("metrics"),output,"2");
-    Reports.writeDiff(Reports.reports().get("metrics"), input, output, "Δ ");
-//    Reports.reportMetrics(nm1, "1", "metrics");
-//    Reports.reportMetrics(nm2, "2", "metrics");
-//    Reports.reportDifferences(nm1, nm2, "metrics");
-    Reports.writeDelta(Reports.reports().get("metrics"), input, output, "δ ");
-    Reports.writeDelta(Reports.reports().get("metrics"), input, output, "% ");
-
-//    Reports.reportRatio(nm1, "1", "metrics");
-//    Reports.reportRatio(nm2, "1", "metrics");
-    // reportRatio(nm1, "1");
-    // reportRatio(nm2, "2");
+    Reports.name(input);
+    Reports.writeMetrics(input, output, null);
+    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
+    Reports.writePerc(input, output, "δ ");
+    // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
-  /** @param nm
-   * @param id */
-  // public void reportMetrics(final ASTNodeMetrics nm, final String id){
-  // report//
-  // .put("Nodes" + id, nm.nodes())//
-  // .put("Body" + id, nm.body())//
-  // .put("Length" + id, nm.length())//
-  // .put("Tokens" + id, nm.tokens())//
-  // .put("Tide" + id, nm.tide())//
-  // .put("Essence" + id, nm.essence())//
-  // .put("Statements" + id, nm.statements());//
-  // }
-  /** @param nm1
-   * @param nm2 */
 
-  // public void reportDifferences(@SuppressWarnings("hiding") final
-  // ASTNodeMetrics nm1, @SuppressWarnings("hiding") final ASTNodeMetrics nm2){
-  // report //
-  // .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-  // .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
-  // .put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
-  // .put("Δ Body", nm1.body() - nm2.body())//
-  // .put("δ Body", system.d(nm1.body(), nm2.body()))//
-  // .put("% Body", system.p(nm1.body(), nm2.body()))//
-  // .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-  // .put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
-  // .put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
-  // .put("Δ Length", nm1.length() - nm2.length())//
-  // .put("δ Length", system.d(nm1.length(), nm2.length()))//
-  // .put("% Length", system.p(nm1.length(), nm2.length()))//
-  // .put("Δ Tide2", nm1.tide() - nm2.tide())//
-  // .put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
-  // .put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
-  // .put("Δ Essence", nm1.essence() - nm2.essence())//
-  // .put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
-  // .put("% Essence", system.p(nm1.essence(), nm2.essence()))//
-  // .put("Δ Statement", nm1.statements() - nm2.statements())//
-  // .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
-  // .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
-  // }
-  /** @param nm */
-  // public void reportRatio(final ASTNodeMetrics nm, final String id){
-  // report //
-  //// .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
-  // .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
-  // .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
-  // .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
-  // }
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
