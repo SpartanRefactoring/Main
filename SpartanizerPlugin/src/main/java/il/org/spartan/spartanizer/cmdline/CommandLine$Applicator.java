@@ -51,48 +51,19 @@ public class CommandLine$Applicator {
   ASTNodeMetrics nm1, nm2;
 
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
-    //
     nm1 = new ASTNodeMetrics(input);
     nm1.computeMetrics();
-    //
     nm2 = new ASTNodeMetrics(output);
     nm2.computeMetrics();
-    // System.err.println(++done + " " + extract.category(input) + " " +
-    // extract.name(input));
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    // System.out.println(befores.checkError());
     Reports.summaryFileName("metrics");
-    // report.summaryFileName();
     Reports.writeMetrics(Reports.reports().get("metrics"),input,"1");
     Reports.writeMetrics(Reports.reports().get("metrics"),output,"2");
     Reports.writeDiff(Reports.reports().get("metrics"), input, output, "Δ ");
-//    Reports.reportMetrics(nm1, "1", "metrics");
-//    Reports.reportMetrics(nm2, "2", "metrics");
-//    Reports.reportDifferences(nm1, nm2, "metrics");
     Reports.writeDelta(Reports.reports().get("metrics"), input, output, "δ ");
-    Reports.writeDelta(Reports.reports().get("metrics"), input, output, "% ");
-
-//    Reports.reportRatio(nm1, "1", "metrics");
-//    Reports.reportRatio(nm2, "1", "metrics");
-    // reportRatio(nm1, "1");
-    // reportRatio(nm2, "2");
+    Reports.writePerc(Reports.reports().get("metrics"), input, output, "% ");
     Reports.nl("metrics");
   }
-  /** @param nm
-   * @param id */
-  // public void reportMetrics(final ASTNodeMetrics nm, final String id){
-  // report//
-  // .put("Nodes" + id, nm.nodes())//
-  // .put("Body" + id, nm.body())//
-  // .put("Length" + id, nm.length())//
-  // .put("Tokens" + id, nm.tokens())//
-  // .put("Tide" + id, nm.tide())//
-  // .put("Essence" + id, nm.essence())//
-  // .put("Statements" + id, nm.statements());//
-  // }
-  /** @param nm1
-   * @param nm2 */
-
   // public void reportDifferences(@SuppressWarnings("hiding") final
   // ASTNodeMetrics nm1, @SuppressWarnings("hiding") final ASTNodeMetrics nm2){
   // report //
