@@ -4,6 +4,7 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -19,10 +20,10 @@ public class Reports {
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-  
-  private static class Util {
-    
-    public static NamedFunction[] functions(final String id){
+
+  public static class Util {
+    @SuppressWarnings("rawtypes") 
+    public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
@@ -31,41 +32,72 @@ public class Reports {
     }
 
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunction<ASTNode>(name,f);
+      return new NamedFunction<>(name, f);
     }
-  
+    
+    static CSVStatistics report(final String ¢) {
+      assert ¢ != null;
+      return reports.get(¢);
+    }
   }
-  
+
   // running report
-  public static void writeMetrics(final CSVStatistics report, final ASTNode n, final String id) {
-    for (NamedFunction ¢ : Reports.Util.functions(id))
-      report.put(¢.name(), ¢.function().run(n));
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final NamedFunction ¢ : Reports.Util.functions("")){
+      Reports.Util.report("metrics").put(¢.name()+"1", ¢.function().run(n1));
+      Reports.Util.report("metrics").put(¢.name()+"2", ¢.function().run(n2));
+    }
   }
   
-  public static void writeDiff(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+  @FunctionalInterface
+  public interface BiFunction<T,R>{
+    double apply(T t, R r);
+  }
+  
+  public static void write(ASTNode input, ASTNode output, String id, BiFunction<Integer, Integer> f) {
+    double a;
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = f.apply(¢.function().run(input),¢.function().run(output)); //system.d(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
+    }
+  }
+
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, BiFunction<Integer, Integer> f) {
     int a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = ¢.function().run(n1) - ¢.function().run(n2);
-      report.put(id + ¢.name(), a);
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = (int) f.apply(¢.function().run(n1),¢.function().run(n2)); //  - ;
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
-   }
-  
-  public static void writeDelta(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
+  }
+
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     double a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = system.d(¢.function().run(n1), ¢.function().run(n2));
-      report.put(id + ¢.name(), a);
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = f.apply(¢.function().run(n1),¢.function().run(n2)); //system.d(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
-   }
-  
-  public static void writePerc(final CSVStatistics report, final ASTNode n1, final ASTNode n2, final String id) {
-    double a;
-    for (NamedFunction ¢ : Reports.Util.functions("")){
-      a = Double.parseDouble(system.p(¢.function().run(n1), ¢.function().run(n2)));
-      report.put(id + ¢.name() + " %", a);
+  }
+
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = "" + f.apply(¢.function().run(n1),¢.function().run(n2)); //system.p(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
-   }
+  }
   
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = system.p(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+    }
+  }
+  
+//  public static <T, U, R> void write(final CSVStatistics report, final BiFunction<T,U,R> f){
+////    f.apply(t, u);
+//  }
+
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
@@ -73,17 +105,17 @@ public class Reports {
   static class NamedFunction<R> {
     final String name;
     final ToInt<R> f;
-    
-    NamedFunction(final String name, ToInt<R> f) {
+
+    NamedFunction(final String name, final ToInt<R> f) {
       this.name = name;
       this.f = f;
     }
-   
-    public String name(){
+
+    public String name() {
       return this.name;
     }
-    
-    public ToInt<R> function(){
+
+    public ToInt<R> function() {
       return this.f;
     }
   }
@@ -181,4 +213,5 @@ public class Reports {
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
+
 }
