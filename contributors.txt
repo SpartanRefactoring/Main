@@ -30,7 +30,7 @@ Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Entony Lekhtman <tony.lek1995 [at] gmail.com>
-Hershele Ostropoler https://en.wikipedia.org/wiki/Hershel_of_Ostropol
+Hershele Ostropolerr https://en.wikipedia.org/wiki/Hershel_of_Ostropol
 Idan Atias <idan2k3 [at] gmail.com>
 Inbal Matityahu <matityahuinbal [at] gmail.com>
 Itai Dabran <idabran.cs.technion [at] gmail.com>
@@ -48,8 +48,9 @@ Raviv Rachmiel <raviv.rachmiel [at] gmail.com>
 Roei Rosenzweig <m.roei.raz@gmail.com>
 Ron Gatenio <ron.gatenio [at] gmail.com>
 Roy Shchory <royshch1 [at] gmail.com>
+Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
 Stav Namir <stav1472 [at] gmail.com>
-Till Eulenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
+Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yonatan Zarecki <yonilx [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>

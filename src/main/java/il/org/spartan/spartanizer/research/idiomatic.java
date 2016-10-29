@@ -111,6 +111,52 @@ public interface idiomatic {
     return incase(!condition, t);
   }
 
+  static class ObjectHolder<T> {
+    T t;
+
+    public ObjectHolder(T t) {
+      this.t = t;
+    }
+
+    public ConditionHolder nulls() {
+      return new ConditionHolder(t == null);
+    }
+  }
+
+  static class ConditionHolder {
+    final boolean b;
+
+    public ConditionHolder(final boolean b) {
+      this.b = b;
+    }
+
+    public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
+      return new SupplierHolder<>(¢, b);
+    }
+  }
+
+  static class SupplierHolder<T> {
+    final Supplier<T> s;
+    final boolean b;
+
+    public SupplierHolder(final Supplier<T> ¢, final boolean b) {
+      s = ¢;
+      this.b = b;
+    }
+
+    public T elze(Supplier<T> ¢) {
+      return (b ? s : ¢).get();
+    }
+  }
+
+  static <T> ObjectHolder<T> when(final T ¢) {
+    return new ObjectHolder<>(¢);
+  }
+
+  static ConditionHolder when(final boolean ¢) {
+    return new ConditionHolder(¢);
+  }
+
   /** @param condition JD
    * @return */
   static Trigger vhen(final boolean condition) {
@@ -341,6 +387,11 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       assertEquals("1", on(before).min(String::compareTo));
+    }
+
+    @SuppressWarnings("boxing") @Test public void whenNullsEval() {
+      Object o = new Object();
+      when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
     }
   }
 
