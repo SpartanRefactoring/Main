@@ -51,6 +51,7 @@ Roy Shchory <royshch1 [at] gmail.com>
 Stav Namir <stav1472 [at] gmail.com>
 Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Zeltzer <tomerr90 [at] gmail.com>
+Yarden Lev <ylev [at] campus.technion.ac.il>
 Yonatan Zarecki <yonilx [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
 Yuval Simon <yuvaltechnion [at] gmail.com>
