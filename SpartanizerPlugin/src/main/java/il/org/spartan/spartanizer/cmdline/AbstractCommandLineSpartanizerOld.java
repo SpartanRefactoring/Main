@@ -224,33 +224,33 @@ public abstract class AbstractCommandLineSpartanizerOld {
     report.nl();
   }
 
-  public void runReport(@SuppressWarnings("unused") final Consumer<CSVStatistics> __) {
-    // TODO Matteo: implement this if we need it; found in random scan
-  }
+//  public void runReport(@SuppressWarnings("unused") final Consumer<CSVStatistics> __) {
+//    // TODO Matteo: implement this if we need it; found in random scan
+//  }
 
-  @FunctionalInterface public interface ToInt<R> {
-    int f(R r);
-  }
+//  @FunctionalInterface public interface ToInt<R> {
+//    int f(R r);
+//  }
 
-  static NamedFunction m(final String name, final ToInt<String> f) {
-    return new NamedFunction(name, f);
-  }
+//  static NamedFunction m(final String name, final ToInt<String> f) {
+//    return new NamedFunction(name, f);
+//  }
 
-  static class NamedFunction {
-    NamedFunction(final String name, final ToInt<String> f) {
-      this.name = name;
-      this.f = f;
-    }
+//  static class NamedFunction {
+//    NamedFunction(final String name, final ToInt<String> f) {
+//      this.name = name;
+//      this.f = f;
+//    }
+//
+//    final String name;
+//    final ToInt<String> f;
+//  }
 
-    final String name;
-    final ToInt<String> f;
-  }
-
-  NamedFunction functions[] = as.array(//
-      m("seventeeen", (¢) -> 17), //
-      m("length", (¢) -> ¢.length()), //
-      m("essence", (¢) -> Essence.of(¢).length())//
-  );
+//  NamedFunction functions[] = as.array(//
+//      m("seventeeen", (¢) -> 17), //
+//      m("length", (¢) -> ¢.length()), //
+//      m("essence", (¢) -> Essence.of(¢).length())//
+//  );
 
   /** @param input
    * @param output */
