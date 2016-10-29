@@ -51,17 +51,18 @@ public class CommandLine$Applicator {
   ASTNodeMetrics nm1, nm2;
 
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
-    nm1 = new ASTNodeMetrics(input);
-    nm1.computeMetrics();
-    nm2 = new ASTNodeMetrics(output);
-    nm2.computeMetrics();
+//    nm1 = new ASTNodeMetrics(input);
+//    nm1.computeMetrics();
+//    nm2 = new ASTNodeMetrics(output);
+//    nm2.computeMetrics();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
-    Reports.writeMetrics(Reports.reports().get("metrics"),input,"1");
-    Reports.writeMetrics(Reports.reports().get("metrics"),output,"2");
-    Reports.writeDiff(Reports.reports().get("metrics"), input, output, "Δ ");
-    Reports.writeDelta(Reports.reports().get("metrics"), input, output, "δ ");
-    Reports.writePerc(Reports.reports().get("metrics"), input, output, "% ");
+    Reports.writeMetrics(input,output,null);
+//    Reports.writeMetrics(output,"2");
+    Reports.write(input, output, "Δ ", (n1,n2)->(n1 - n2));
+    Reports.write(input, output, "δ ", (n1,n2)->system.d(n1,n2));
+//    Reports.writePerc(input, output, "δ ", (n1,n2)->(Double.parseDouble(system.p(n1,n2))));
+    Reports.writePerc(input, output, "δ ");
     Reports.nl("metrics");
   }
   // public void reportDifferences(@SuppressWarnings("hiding") final
