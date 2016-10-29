@@ -4,7 +4,6 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -22,8 +21,7 @@ public class Reports {
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
 
   public static class Util {
-    @SuppressWarnings("rawtypes") 
-    public static NamedFunction[] functions(final String id) {
+    @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
@@ -34,65 +32,71 @@ public class Reports {
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
-    
+
     static CSVStatistics report(final String ¢) {
       assert ¢ != null;
       return reports.get(¢);
     }
-    
-    public static NamedFunction find(final String ¢) {
-      for(NamedFunction f: Reports.Util.functions(""))
-        if(f.name() == ¢)
-          return f;
-        return null;
-      }
+
+    @SuppressWarnings({ "unchecked", "rawtypes"}) public static NamedFunction<ASTNode> find(final String ¢) {
+      for (final NamedFunction $ : Reports.Util.functions(""))
+        if ($.name() == ¢)
+          return $;
+      return null;
+    }
   }
 
   // running report
-  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : Reports.Util.functions("")){
-      Reports.Util.report("metrics").put(¢.name()+"1", ¢.function().run(n1));
-      Reports.Util.report("metrics").put(¢.name()+"2", ¢.function().run(n2));
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
+      Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
     }
   }
-  
-  @FunctionalInterface
-  public interface BiFunction<T,R>{
+
+  @FunctionalInterface public interface BiFunction<T, R> {
     double apply(T t, R r);
   }
   
-  public static void write(ASTNode input, ASTNode output, String id, BiFunction<Integer, Integer> f) {
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void write(final ASTNode input, final ASTNode output, final String id, final BiFunction<Integer, Integer> i) {
     double a;
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = f.apply(¢.function().run(input),¢.function().run(output)); //system.d(¢.function().run(n1), ¢.function().run(n2));
+      a = i.apply(¢.function().run(input), ¢.function().run(output)); // system.d(¢.function().run(n1),
+                                                                      // ¢.function().run(n2));
       Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
-
-  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, BiFunction<Integer, Integer> f) {
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     int a;
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = (int) f.apply(¢.function().run(n1),¢.function().run(n2)); //  - ;
+      a = (int) f.apply(¢.function().run(n1), ¢.function().run(n2)); // - ;
       Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
 
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
   public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     double a;
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = f.apply(¢.function().run(n1),¢.function().run(n2)); //system.d(¢.function().run(n1), ¢.function().run(n2));
+      a = f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
+                                                               // ¢.function().run(n2));
       Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
-
+  
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
   public static void writePerc(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
     String a; // TODO Matteo: to be converted to double or float?
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = "" + f.apply(¢.function().run(n1),¢.function().run(n2)); //system.p(¢.function().run(n1), ¢.function().run(n2));
+      a = "" + f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.p(¢.function().run(n1),
+                                                                    // ¢.function().run(n2));
       Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
-  
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     String a; // TODO Matteo: to be converted to double or float?
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
@@ -100,33 +104,21 @@ public class Reports {
       Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
-  
+
   /** @param nm */
-  @SuppressWarnings("unchecked")
-  public static void writeRatio(final ASTNode n1, @SuppressWarnings("unused") final ASTNode __, @SuppressWarnings("unused") final String id, final BiFunction<Integer, Integer> i) {
-    int len = Reports.Util.find("length").function().run(n1);
-    int ess = Reports.Util.find("essence").function().run(n1);
-    int tide = Reports.Util.find("tide").function().run(n1);
-    int body = Reports.Util.find("body").function().run(n1);
-    int nodes = Reports.Util.find("nodes").function().run(n1);
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(len,ess));
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide,ess));
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes,body));
-    
-//    for (final NamedFunction ¢ : Reports.Util.functions("")) {
-//      a = system.p(¢.function().run(n1), ¢.function().run(n2));
-//      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
-//    }
-    
-//    report(key) //
-//        // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
-//        // //
-//        .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
-//        .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
-//        .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
+  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __,
+     
+      final String id, final BiFunction<Integer, Integer> i) {
+    final int len = Reports.Util.find("length").function().run(n1);
+    final int ess = Reports.Util.find("essence").function().run(n1);
+    final int tide = Reports.Util.find("tide").function().run(n1);
+    final int body = Reports.Util.find("body").function().run(n1);
+    final int nodes = Reports.Util.find("nodes").function().run(n1);
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
   }
 
-  
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
@@ -243,9 +235,8 @@ public class Reports {
     return reports;
   }
 
-  public static void name(ASTNode input) {
-    Reports.report("metrics").put("name",extract.name(input));
-    Reports.report("metrics").put("category",extract.category(input)); 
+  public static void name(final ASTNode input) {
+    Reports.report("metrics").put("name", extract.name(input));
+    Reports.report("metrics").put("category", extract.category(input));
   }
-
 }
