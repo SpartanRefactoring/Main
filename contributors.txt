@@ -36,6 +36,7 @@ Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
 Koby Ben Shimol <kobybs [at] gmail.com>
+Lidia Piatigorski <lidkin5@gmail.com>
 Nisan Arzoan <nisanarz [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
@@ -52,4 +53,4 @@ Zahi Mizrahi <zahimizra [at] gmail.com>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
 خوجة نصر الدين <juha@nasereddi.in>
 ארבינקא The Blaumlich Tunnel
-Lidia Piatigorski <lidkin5@gmail.com>
+
