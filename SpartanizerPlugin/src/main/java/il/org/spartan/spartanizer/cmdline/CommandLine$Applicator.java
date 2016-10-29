@@ -56,6 +56,7 @@ public class CommandLine$Applicator {
     Reports.write(input, output, "Δ ", (n1,n2)->(n1 - n2));
     Reports.write(input, output, "δ ", (n1,n2)->system.d(n1,n2));
     Reports.writePerc(input, output, "δ ");
+//    Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
   // public void reportDifferences(@SuppressWarnings("hiding") final
