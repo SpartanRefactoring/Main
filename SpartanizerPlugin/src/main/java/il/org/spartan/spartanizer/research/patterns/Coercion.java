@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -23,12 +25,35 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public Tip tip(final CastExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + ¢.getType() + "(" + ¢.getExpression() + ")"), g);
-        wizard.addMethod(searchAncestors.forContainingType().from(¢),
-            az.methodDeclaration(wizard.ast("static " + ¢.getType() + " az" + ¢.getType() + "(Object ¢){ return (" + ¢.getType() + ")¢;}")), r, g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + step.type(¢) + "(" + ¢.getExpression() + ")"), g);
+        if (!azMethodExist(¢))
+          addAzMethod(¢, r, g);
         Logger.logNP(¢, "azX (coercion)");
       }
     };
+  }
+
+  static boolean azMethodExist(CastExpression ¢) {
+    return Arrays.stream(containingType(¢).getMethods())
+        .filter(m -> ("az" + step.type(¢)).equals((m.getName() + "")) && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
+  }
+
+  private static boolean typesEqual(Type returnType, Type t) {
+    return (returnType + "").equals((t + ""));
+  }
+
+  static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
+    wizard.addMethodToType(containingType(¢), createAzMethod(¢), r, g);
+  }
+
+  private static MethodDeclaration createAzMethod(final CastExpression ¢) {
+    return az.methodDeclaration(wizard.ast("static " + step.type(¢) + " az" + step.type(¢) + "(Object ¢){ return (" + ¢.getType() + ")¢;}"));
+  }
+
+  private static TypeDeclaration containingType(final CastExpression ¢) {
+    // TODO: Marco maybe in the future change to az.java in package which will
+    // be created automatically...
+    return searchAncestors.forContainingType().from(¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
