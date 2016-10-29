@@ -4,14 +4,12 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.AbstractCommandLineSpartanizer.*;
 
 public class Reports {
   protected String folder = "/tmp/";
@@ -19,79 +17,24 @@ public class Reports {
   protected String beforeFileName;
   protected String inputPath;
   protected String spectrumFileName;
-//  protected <HashMap<Object, List<HashMap<String,Object>>>> metrics = null;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
   
   private static class Util {
     
-    private static NamedFunction functions[]; 
-    
     public static NamedFunction[] functions(final String id){
-      return functions = as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
+      return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
-//          m("Δ Nodes", (¢1,¢2) -> (count.nodes(¢1)-count.nodes(¢2))),//
-//          m("Δ Body", (¢1,¢2) -> (metrics.bodySize(¢1)-metrics.bodySize(¢2))),//
-//          m("Δ Tokens", (¢1,¢2) -> (metrics.tokens(¢1 + "")-metrics.tokens(¢2 + ""))),//
-//          m("Δ Length", (¢1,¢2) -> ((¢1 + "").length()-(¢2 + "").length())),//
-//          m("Δ Tide2", (¢1,¢2) -> (clean(¢1 + "").length()-clean(¢2 + "").length())),//
-//          m("Δ Essence", (¢1,¢2) -> (Essence.of(¢1 + "").length()-Essence.of(¢2 + "").length()))
-//          );
-//          m("Δ Statements", (¢1,¢2) -> (az.methodDeclaration(¢) == null ? -1
-//              : extract.statements(az.methodDeclaration(¢).getBody()).size()))
     }
 
-    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-      return new NamedFunction(name,f);
+    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+      return new NamedFunction<ASTNode>(name,f);
     }
-
-//    public static Object functions() {
-//      return functions = as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
-//          m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), m("body", (¢) -> metrics.bodySize(¢)),
-//          m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1
-//              : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-//          m("tide", (¢) -> clean(¢ + "").length()));//
-//    }
-    
-//    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-//      return new NamedBiFunctionInt(name,biToI);
-//    }
-    
-//    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-//      return new NamedBiFunctionDouble(name,biToD);
-//    }
-   
+  
   }
-  
-//.put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-//.put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
-//.put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
-//.put("Δ Body", nm1.body() - nm2.body())//
-//.put("δ Body", system.d(nm1.body(), nm2.body()))//
-//.put("% Body", system.p(nm1.body(), nm2.body()))//
-//.put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-//.put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
-//.put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
-//.put("Δ Length", nm1.length() - nm2.length())//
-//.put("δ Length", system.d(nm1.length(), nm2.length()))//
-//.put("% Length", system.p(nm1.length(), nm2.length()))//
-//.put("Δ Tide2", nm1.tide() - nm2.tide())//
-//.put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
-//.put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
-//.put("Δ Essence", nm1.essence() - nm2.essence())//
-//.put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
-//.put("% Essence", system.p(nm1.essence(), nm2.essence()))//
-//.put("Δ Statement", nm1.statements() - nm2.statements())//
-//.put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
-//.put("% Statement", system.p(nm1.statements(), nm2.statements()));//
-  
-//  private static final NamedFunction functions[] = as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
-//      m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), m("body", (¢) -> metrics.bodySize(¢)),
-//      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-//      m("tide", (¢) -> clean(¢ + "").length()));
   
   // running report
   public static void writeMetrics(final CSVStatistics report, final ASTNode n, final String id) {
@@ -126,77 +69,12 @@ public class Reports {
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
-  
-//  @FunctionalInterface public interface BiToInt<R,S> {
-//    int run(R r, S s);
-//  }
-//  
-//  @FunctionalInterface public interface BiToDouble<R,S> {
-//    double run(R r, S s);
-//  }
-  
-//  static class NamedFunctionInt extends NamedFunction{
-//    
-//    NamedFunctionInt(final String name, final ToInt<ASTNode> f) {
-//      super(name);
-//      this.f = f;
-//    }
-//    
-//    ToInt<ASTNode> f;
-//    
-//    public ToInt<ASTNode> function(){
-//      return this.f;
-//    }
-//    
-////    static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-////      return new NamedFunctionInt(name,f);
-////    }
-//  }
-  
-//  static class NamedBiFunctionInt extends NamedFunction{
-//    NamedBiFunctionInt(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-//      super(name);
-//      this.biToI = biToI;
-//    }
-//    
-//    BiToInt<ASTNode, ASTNode> biToI;
-//    
-//    public BiToInt<ASTNode,ASTNode> function(){
-//      return this.biToI;
-//    }
-    
-//    static NamedFunction m(final String name, final BiToInt<ASTNode,ASTNode> biToI) {
-//      return new NamedBiFunctionInt(name,biToI);
-//    }
-//  }
-  
-//  static class NamedBiFunctionDouble extends NamedFunction{
-//    NamedBiFunctionDouble(String name, BiToDouble<ASTNode, ASTNode> biToD) {
-//      super(name);
-//      this.biToD = biToD;
-//    }
-//    
-//    BiToDouble<ASTNode, ASTNode> biToD;
-//    
-//    public BiToDouble<ASTNode,ASTNode> function(){
-//      return this.biToD;
-//    }
-//    
-////    static NamedFunction m(final String name, final BiToDouble<ASTNode,ASTNode> biToD) {
-////      return new NamedBiFunctionDouble(name,biToD);
-////    }
-//  }
 
-
-//  static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-//    return new NamedFunction(name);
-//  }
-
-  static class NamedFunction {
+  static class NamedFunction<R> {
     final String name;
-    final ToInt f;
+    final ToInt<R> f;
     
-    NamedFunction(final String name, ToInt f) {
+    NamedFunction(final String name, ToInt<R> f) {
       this.name = name;
       this.f = f;
     }
@@ -205,7 +83,7 @@ public class Reports {
       return this.name;
     }
     
-    public ToInt<ASTNode> function(){
+    public ToInt<R> function(){
       return this.f;
     }
   }
@@ -215,7 +93,6 @@ public class Reports {
   }
 
   public static void intializeReport(final String reportFileName, final String id) {
-    // reportFileName = "/tmp/report.CSV";
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException x) {
