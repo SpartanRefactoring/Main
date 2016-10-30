@@ -11,16 +11,13 @@ public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
 
-  // static List<Class<? extends BodyDeclaration>> selectedNodeTypes =
-  // as.list(MethodDeclaration.class);
   public static Applicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
 
-  // private CommandLine$Applicator a = new CommandLine$Applicator(".");
   private final CommandLine$Applicator a = new CommandLine$Applicator();
 
-  /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
+  /** Default listener configuration. Simple
    * printing to console.
    * @return this applicator */
   public CommandLineApplicator defaultListenerNoisy() {
@@ -47,14 +44,13 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  // TODO Matteo: change selection() in Applicator to return AbstractSelection?
   /** @return this */
   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
-  /** Default passes configuration of {@link GUIBatchLaconizer}, with many
+  /** Default passes configuration, with many
    * passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
@@ -114,22 +110,19 @@ public class CommandLineApplicator extends Applicator {
     selection(¢);
     return this;
   }
-  // /** @return selection of the applicator, ready to be configured. */
-  // public CommandLineSelection selection() {
-  // return this.selection;
-  // }
 
   /** @return this */
   private Applicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
-    // .defaultRunAction(new Spartanizer$Applicator());
+    return defaultListenerSilent().defaultPassesFew()
+                                  .defaultRunContext()
+                                  .defaultSelection()
+                                  .defaultRunAction();
   }
 
   /* (non-Javadoc)
    *
    * @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
-    System.out.println("selection().size(): " + selection().size());
     if (selection() != null && listener() != null && passes() > 0 && !selection().isEmpty())
       for (final CompilationUnit ¢ : ((CommandLineSelection) selection()).getCompilationUnits()) {
         assert ¢ != null;
