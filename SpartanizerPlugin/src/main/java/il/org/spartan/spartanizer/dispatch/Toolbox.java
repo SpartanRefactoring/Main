@@ -125,9 +125,9 @@ public class Toolbox {
             new ThrowNotLastInBlock(), //
             null) //
         // TODO: Marco add this tipper when it's ready
-         .add(CastExpression.class, //
-         new Coercion(), //
-         null)
+//         .add(CastExpression.class, //
+//         new Coercion(), //
+//         null)
         .add(ClassInstanceCreation.class, //
             new ClassInstanceCreationValueTypes(), //
             null) //
