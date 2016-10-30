@@ -14,7 +14,7 @@ public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
-      BatchSpartanizer.main(fileNames);
+      BatchSpartanizer.fire(fileNames); // change from main to fire
     else
       System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
   }
