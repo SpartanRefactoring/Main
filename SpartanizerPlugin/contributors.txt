@@ -22,6 +22,7 @@ Amir Sagiv <amirsagiv15 [at] gmail.com>
 Amit Ohayon <amitoha94 [at] gmail.com>
 Anna Belozovsky <anechka2005 [at] gmail.com>
 Ariel Kolikant <a.kolikant [at] gmail.com>
+Arthur Sapozhnikov <depaix3 [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Aviad Cohen <aviadcohen7 [at] gmail.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
