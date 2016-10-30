@@ -7,25 +7,43 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
+ * @author Matteo Orru'
  * @since 2016 */
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
       BatchSpartanizer.fire(fileNames); // change from main to fire
-    else
-      System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
+    else{
+      String input = read();
+      System.err.println("input: " + input); // 
+      GuessedContext c = GuessedContext.find(input);
+      System.out.println(c.name());
+      CompilationUnit cu = null;    
+      String output;
+      if(!c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE)){
+        cu = c.intoCompilationUnit(input);
+        assert cu != null;
+        output = new InteractiveSpartanizer().fixedPoint(cu + "");
+      } else {
+       output = new InteractiveSpartanizer().fixedPoint(input);
+      }
+      System.err.println("output: " + output); // new InteractiveSpartanizer().fixedPoint(read()));
+    }
   }
 
   static String read() {
     String $ = "";
     try (final Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
-        if (!s.hasNext())
+        if (!s.hasNext()){
+//          s.close();
           return $;
-    }
+        }
+    } 
     return $;
   }
 
