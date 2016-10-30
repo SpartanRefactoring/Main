@@ -29,7 +29,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
             g);
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
-        Logger.logNP(¢, "azX (coercion)");
+        Logger.logNP(¢, getClass().getSimpleName());
       }
     };
   }

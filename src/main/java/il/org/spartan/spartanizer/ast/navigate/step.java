@@ -479,4 +479,10 @@ public enum step {
   public static MethodDeclaration[] methods(TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getMethods();
   }
+
+  /** @param p JD
+   * @return */
+  public static Type type(SingleVariableDeclaration ¢) {
+    return ¢ == null ? null : ¢.getType();
+  }
 }
