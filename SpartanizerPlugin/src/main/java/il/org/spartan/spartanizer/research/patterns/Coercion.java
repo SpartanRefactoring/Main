@@ -34,7 +34,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(CastExpression ¢) {
-    return Arrays.stream(containingType(¢).getMethods())
+    return Arrays.stream(step.methods(containingType(¢)))
         .filter(m -> ("az" + step.type(¢)).equals((m.getName() + "")) && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
 

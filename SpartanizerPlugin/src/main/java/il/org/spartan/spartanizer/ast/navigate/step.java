@@ -466,4 +466,10 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢.values();
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static MethodDeclaration[] methods(TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getMethods();
+  }
 }
