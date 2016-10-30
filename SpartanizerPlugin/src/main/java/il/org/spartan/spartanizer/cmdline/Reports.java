@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 
 public class Reports {
   protected String folder = "/tmp/";
@@ -19,7 +20,7 @@ public class Reports {
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-
+  
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
@@ -38,7 +39,8 @@ public class Reports {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes"}) public static NamedFunction<ASTNode> find(final String ¢) {
+    @SuppressWarnings({ "unchecked", "rawtypes"}) 
+    public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : Reports.Util.functions(""))
         if ($.name() == ¢)
           return $;
@@ -47,7 +49,8 @@ public class Reports {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
       Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
       Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
@@ -106,9 +109,7 @@ public class Reports {
   }
 
   /** @param nm */
-  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __,
-     
-      final String id, final BiFunction<Integer, Integer> i) {
+  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id, final BiFunction<Integer, Integer> i) {
     final int len = Reports.Util.find("length").function().run(n1);
     final int ess = Reports.Util.find("essence").function().run(n1);
     final int tide = Reports.Util.find("tide").function().run(n1);
@@ -145,7 +146,7 @@ public class Reports {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
 
-  public static void intializeReport(final String reportFileName, final String id) {
+  public static void initializeReport(final String reportFileName, final String id) {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException x) {
@@ -238,5 +239,14 @@ public class Reports {
   public static void name(final ASTNode input) {
     Reports.report("metrics").put("name", extract.name(input));
     Reports.report("metrics").put("category", extract.category(input));
+  }
+  
+  public static void tip(Tip t) {
+    Reports.report("tips").put("name",t.getClass());
+    Reports.report("tips").put("description",t.description);
+    Reports.report("tips").put("LineNumber", t.lineNumber);
+    Reports.report("tips").put("from", t.from);
+    Reports.report("tips").put("to", t.to);
+    Reports.report("tips").put("tipperClass", t.tipperClass);
   }
 }
