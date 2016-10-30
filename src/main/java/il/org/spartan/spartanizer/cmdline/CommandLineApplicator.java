@@ -129,6 +129,4 @@ public class CommandLineApplicator extends Applicator {
         a.go(¢);
       }
   }
-  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer
-  // (code duplication to be resolved)
 }
