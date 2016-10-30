@@ -19,12 +19,4 @@ public class Examiner extends JavadocMarkerNanoPattern<MethodDeclaration> {
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     return ss.size() == 1 && iz.returnStatement(ss.get(0)) && tipper.canTip(az.returnStatement(ss.get(0)));
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is an examiner method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Examiner]]";
-  }
 }

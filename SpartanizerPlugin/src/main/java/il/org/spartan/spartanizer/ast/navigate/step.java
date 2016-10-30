@@ -438,6 +438,13 @@ public enum step {
     return ¢.getType();
   }
 
+  /** Shorthand for {@link InstanceofExpression#getRightOperand()}
+   * @param ¢ JD
+   * @return the Type of the right operand */
+  public static Type type(final InstanceofExpression ¢) {
+    return ¢.getRightOperand();
+  }
+
   /** Shorthand for {@link ClassInstanceCreation#getType()}
    * @param ¢ JD
    * @return the Type of the {@link ClassInstanceCreation} */
