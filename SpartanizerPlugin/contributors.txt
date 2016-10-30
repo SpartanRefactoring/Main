@@ -35,6 +35,7 @@ Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
+Kilroy https://en.wikipedia.org/wiki/Kilroy_was_here
 Koby Ben Shimol <kobybs [at] gmail.com>
 Nisan Arzoan <nisanarz [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
