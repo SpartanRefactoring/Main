@@ -26,12 +26,4 @@ public class Mapper extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return true;
     return false;
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a mapper method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Mapper]]";
-  }
 }

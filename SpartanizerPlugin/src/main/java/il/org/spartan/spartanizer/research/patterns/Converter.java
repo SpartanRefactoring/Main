@@ -19,12 +19,4 @@ public class Converter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     final CastExpression c = az.castExpression(step.expression(s));
     return (c.getType() + "").equals(step.returnType(d) + "") && (p.getName() + "").equals(c.getExpression() + "");
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + "is a " + getClass().getSimpleName() + " method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[" + getClass().getSimpleName() + "]]";
-  }
 }

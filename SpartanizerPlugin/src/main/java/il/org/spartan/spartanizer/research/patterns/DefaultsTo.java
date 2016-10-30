@@ -22,8 +22,6 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
       add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
       add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
       add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
-      // TODO: Marco add(TipperFactory.tipper("$X1 != null ? $X2 : $X3",
-      // "defaultsTo($X1, $X2, $X3)", ""));
       // add(TipperFactory.tipper("$X1 == null ? $X2 : $X3", "defaultsTo($X1,
       // $X2, $X3)", ""));
       // add(TipperFactory.tipper("null != $X1 ? $X2 : $X3", "defaultsTo($X1,

@@ -438,6 +438,13 @@ public enum step {
     return ¢.getType();
   }
 
+  /** Shorthand for {@link InstanceofExpression#getRightOperand()}
+   * @param ¢ JD
+   * @return the Type of the right operand */
+  public static Type type(final InstanceofExpression ¢) {
+    return ¢.getRightOperand();
+  }
+
   /** Shorthand for {@link ClassInstanceCreation#getType()}
    * @param ¢ JD
    * @return the Type of the {@link ClassInstanceCreation} */
@@ -465,5 +472,11 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢.values();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static MethodDeclaration[] methods(TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getMethods();
   }
 }

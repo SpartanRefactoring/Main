@@ -35,12 +35,4 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
     }
     return new ArrayList<>(names).stream().map(n -> n + "").collect(Collectors.toList());
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a delegator method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Delegator]]";
-  }
 }
