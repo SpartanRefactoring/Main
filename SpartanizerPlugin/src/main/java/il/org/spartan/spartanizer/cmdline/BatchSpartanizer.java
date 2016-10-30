@@ -119,6 +119,7 @@ public final class BatchSpartanizer {
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
         inputDir = ".";
+        outputDir = folder;
         ¢ += 1;
       } else {
         System.out.println(args[¢]);
@@ -133,9 +134,12 @@ public final class BatchSpartanizer {
 
   private BatchSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
-    beforeFileName = folder + outputDir + "/" + name + ".before.java";
-    afterFileName = folder + outputDir + "/" + name + ".after.java";
-    reportFileName = folder + outputDir + "/" + name + ".CSV";
+//    beforeFileName = folder + outputDir + "/" + name + ".before.java";
+//    afterFileName = folder + outputDir + "/" + name + ".after.java";
+//    reportFileName = folder + outputDir + "/" + name + ".CSV";
+    beforeFileName = outputDir + "/" + name + ".before.java";
+    afterFileName = outputDir + "/" + name + ".after.java";
+    reportFileName = outputDir + "/" + name + ".CSV";
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
@@ -308,6 +312,7 @@ public final class BatchSpartanizer {
 
   public static void fire(String[] fileNames) {
      inputDir = fileNames[0];
+     outputDir = folder;
      spartanize();
   }
 }
