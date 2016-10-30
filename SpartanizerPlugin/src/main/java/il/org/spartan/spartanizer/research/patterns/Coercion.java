@@ -25,7 +25,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public Tip tip(final CastExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + step.type(¢) + "(" + ¢.getExpression() + ")"), g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + step.type(¢) + "(" + step.expression(¢) + ")"),
+            g);
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
         Logger.logNP(¢, "azX (coercion)");
@@ -47,7 +48,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(wizard.ast("static " + step.type(¢) + " az" + step.type(¢) + "(Object ¢){ return (" + ¢.getType() + ")¢;}"));
+    return az.methodDeclaration(wizard.ast("static " + step.type(¢) + " az" + step.type(¢) + "(Object ¢){ return (" + step.type(¢) + ")¢;}"));
   }
 
   private static TypeDeclaration containingType(final CastExpression ¢) {
