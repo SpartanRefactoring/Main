@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class WhenThenElse extends NanoPatternTipper<ConditionalExpression> {
-  UserDefinedTipper<ConditionalExpression> tipper = TipperFactory.tipper("$X1 ? $X2 : $X3", "when($X1 != null).then($X2).elze($X3)", "");
+  UserDefinedTipper<ConditionalExpression> tipper = TipperFactory.tipper("$X1 ? $X2 : $X3", "when($X1).then($X2).elze($X3)", "");
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return getClass().getSimpleName() + " pattern";
