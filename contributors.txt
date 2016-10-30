@@ -49,6 +49,7 @@ Ori Marcovitch <marcovitch.ori [at] gmail.com>
 Ori Roth <ori.rothh [at] gmail.com>
 Raviv Rachmiel <raviv.rachmiel [at] gmail.com>
 Roei Rosenzweig <m.roei.raz@gmail.com>
+Roded Zats <rodedzats [at] gmail.com>
 Ron Gatenio <ron.gatenio [at] gmail.com>
 Roy Shchory <royshch1 [at] gmail.com>
 Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
