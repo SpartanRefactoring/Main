@@ -55,6 +55,7 @@ Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
 Stav Namir <stav1472 [at] gmail.com>
 Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Zeltzer <tomerr90 [at] gmail.com>
+Yael Amitay <syaelam [at] campus.technion.ac.il>
 Yarden Lev <ylev [at] campus.technion.ac.il>
 Yonatan Zarecki <szarecki [at] campus.technion.ac.il>
 Yosef Raisman <yosefraisman [at] gmail.com>
