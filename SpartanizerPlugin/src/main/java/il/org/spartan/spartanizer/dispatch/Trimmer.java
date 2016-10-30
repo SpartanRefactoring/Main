@@ -90,6 +90,7 @@ public class Trimmer extends AbstractGUIApplicator {
       }
       if (!e.hasChildren())
         return $.get();
+//      return "nothing changed!";
     }
   }
 
