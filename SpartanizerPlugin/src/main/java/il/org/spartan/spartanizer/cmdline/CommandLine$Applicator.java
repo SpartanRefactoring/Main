@@ -27,8 +27,6 @@ public class CommandLine$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
-  // TODO Matteo (reminder for himself): same as AbstractCommandLineSpartanizer
-  // (code duplication to be resolved)
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -48,7 +46,7 @@ public class CommandLine$Applicator {
     return false;
   }
 
-  protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
     Reports.name(input);
