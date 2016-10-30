@@ -18,6 +18,7 @@ Adi Omari <adiomari [at] gmail.com>
 Alexander Kaplan <alexkaplan.mail [at] gmail.com>
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Alexander Vitho <alexvitho [at] gmail.com>
+Amir Sagiv <amirsagiv15 [at] gmail.com>
 Amit Ohayon <amitoha94 [at] gmail.com>
 Anna Belozovsky <anechka2005 [at] gmail.com>
 Ariel Kolikant <a.kolikant [at] gmail.com>
@@ -36,6 +37,7 @@ Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
+Kilroy https://en.wikipedia.org/wiki/Kilroy_was_here
 Koby Ben Shimol <kobybs [at] gmail.com>
 Lidia Piatigorski <lidkin5 [at] gmail.com>
 Nisan Arzoan <nisanarz [at] gmail.com>
@@ -60,4 +62,5 @@ Zahi Mizrahi <zahimizra [at] gmail.com>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
 خوجة نصر الدين <juha@nasereddi.in>
 ארבינקא The Blaumlich Tunnel
-
+Oren Afek <oren.afek [at] gmail.com>
+Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
