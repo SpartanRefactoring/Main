@@ -25,6 +25,10 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
       Reports.initializeFile(folder + name + ".after.java", "after");
       Reports.intializeReport(folder + name + ".CSV", "metrics");
       Reports.intializeReport(folder + name + ".spectrum.CSV", "spectrum");
+      
+      CollectApplicator.defaultApplicator().passes(20)
+      .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
+      
       CommandLineApplicator.defaultApplicator().passes(20)
           .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
       Reports.close("metrics");
