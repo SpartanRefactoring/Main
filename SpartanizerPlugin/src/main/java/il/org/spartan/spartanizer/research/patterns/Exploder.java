@@ -19,12 +19,4 @@ public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     return ss.size() == 1 && iz.ifStatement(ss.get(0)) && tipper.canTip(az.ifStatement(ss.get(0)));
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is an exploder method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Exploder]]";
-  }
 }
