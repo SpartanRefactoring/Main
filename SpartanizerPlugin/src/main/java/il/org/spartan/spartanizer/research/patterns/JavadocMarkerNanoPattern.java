@@ -27,5 +27,11 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
     };
   }
 
-  protected abstract String javadoc();
+  @Override public final String description(final MethodDeclaration ¢) {
+    return ¢.getName() + " is a " + this.getClass().getSimpleName() + " method";
+  }
+
+  protected final String javadoc() {
+    return "[[" + this.getClass().getSimpleName() + "]]";
+  }
 }

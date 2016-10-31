@@ -4,14 +4,13 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.AbstractCommandLineSpartanizer.*;
+import il.org.spartan.spartanizer.engine.*;
 
 public class Reports {
   protected String folder = "/tmp/";
@@ -22,52 +21,123 @@ public class Reports {
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
   
-  private static class Util {
-    
-    private static NamedFunction functions[]; 
-    
-    public static NamedFunction[] functions(final String id){
-      return functions = as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
+  public static class Util {
+    @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
+      return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
           m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, (¢) -> count.nodes(¢)), m("body" + id, (¢) -> metrics.bodySize(¢)),
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-          m("tide" + id, (¢) -> clean(¢ + "").length()));
+          m("tide" + id, (¢) -> clean(¢ + "").length()));//
+    }
+
+    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+      return new NamedFunction<>(name, f);
+    }
+
+    static CSVStatistics report(final String ¢) {
+      assert ¢ != null;
+      return reports.get(¢);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes"}) 
+    public static NamedFunction<ASTNode> find(final String ¢) {
+      for (final NamedFunction $ : Reports.Util.functions(""))
+        if ($.name() == ¢)
+          return $;
+      return null;
+    }
+  }
+
+  // running report
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
+      Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
+    }
+  }
+
+  @FunctionalInterface public interface BiFunction<T, R> {
+    double apply(T t, R r);
+  }
+  
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void write(final ASTNode input, final ASTNode output, final String id, final BiFunction<Integer, Integer> i) {
+    double a;
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = i.apply(¢.function().run(input), ¢.function().run(output)); // system.d(¢.function().run(n1),
+                                                                      // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
+    }
+  }
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+    int a;
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = (int) f.apply(¢.function().run(n1), ¢.function().run(n2)); // - ;
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
+    }
+  }
+
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+    double a;
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
+                                                               // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
   
-//  private static final NamedFunction functions[] = as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
-//      m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes(¢)), m("body", (¢) -> metrics.bodySize(¢)),
-//      m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-//      m("tide", (¢) -> clean(¢ + "").length()));
-  
-  // running report
-  public static void writeRow(final CSVStatistics report, final ASTNode n, final String id) {
-    for (NamedFunction ¢ : Reports.Util.functions(id))
-      report.put(¢.name(), ¢.function().run(n));
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = "" + f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.p(¢.function().run(n1),
+                                                                    // ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+    }
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+    String a; // TODO Matteo: to be converted to double or float?
+    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+      a = system.p(¢.function().run(n1), ¢.function().run(n2));
+      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+    }
+  }
+
+  /** @param nm */
+  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id, final BiFunction<Integer, Integer> i) {
+    final int len = Reports.Util.find("length").function().run(n1);
+    final int ess = Reports.Util.find("essence").function().run(n1);
+    final int tide = Reports.Util.find("tide").function().run(n1);
+    final int body = Reports.Util.find("body").function().run(n1);
+    final int nodes = Reports.Util.find("nodes").function().run(n1);
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
   }
 
   @FunctionalInterface public interface ToInt<R> {
     int run(R r);
   }
 
-  static NamedFunction m(final String name, final ToInt<ASTNode> f) {
-    return new NamedFunction(name, f);
-  }
+  static class NamedFunction<R> {
+    final String name;
+    final ToInt<R> f;
 
-  static class NamedFunction {
-    NamedFunction(final String name, final ToInt<ASTNode> f) {
+    NamedFunction(final String name, final ToInt<R> f) {
       this.name = name;
       this.f = f;
     }
 
-    final String name;
-    final ToInt<ASTNode> f;
-    
-    public String name(){
+    public String name() {
       return this.name;
     }
-    
-    public ToInt<ASTNode> function(){
+
+    public ToInt<R> function() {
       return this.f;
     }
   }
@@ -76,8 +146,7 @@ public class Reports {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
 
-  public static void intializeReport(final String reportFileName, final String id) {
-    // reportFileName = "/tmp/report.CSV";
+  public static void initializeReport(final String reportFileName, final String id) {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException x) {
@@ -165,5 +234,19 @@ public class Reports {
 
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
+  }
+
+  public static void name(final ASTNode input) {
+    Reports.report("metrics").put("name", extract.name(input));
+    Reports.report("metrics").put("category", extract.category(input));
+  }
+  
+  public static void tip(Tip t) {
+    Reports.report("tips").put("name",t.getClass());
+    Reports.report("tips").put("description",t.description);
+    Reports.report("tips").put("LineNumber", t.lineNumber);
+    Reports.report("tips").put("from", t.from);
+    Reports.report("tips").put("to", t.to);
+    Reports.report("tips").put("tipperClass", t.tipperClass);
   }
 }

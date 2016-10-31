@@ -26,12 +26,4 @@ public class Fluenter extends JavadocMarkerNanoPattern<MethodDeclaration> {
         && iz.returnStatement(step.statements(step.body(¢)).get(step.body(¢).statements().size() - 1))
         && tipper.canTip(az.returnStatement(az.statement(step.statements(step.body(¢)).get(step.body(¢).statements().size() - 1))));
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a Fluent method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Fluent]]";
-  }
 }

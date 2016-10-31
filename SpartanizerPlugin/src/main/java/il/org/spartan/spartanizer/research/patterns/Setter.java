@@ -53,12 +53,4 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     // TODO Marco somehow get type out of TypeDeclaration
     return ¢.getSuperclassType();
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a setter method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Setter]]";
-  }
 }
