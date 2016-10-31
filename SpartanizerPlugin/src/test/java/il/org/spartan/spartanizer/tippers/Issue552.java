@@ -18,7 +18,7 @@ public class Issue552 {
 //  @Test public void a() {
 //    auxInt(enumerate.expressions((ASTNode) null));
 //  }
-//
+
 //  @Test public void b() {
 //    assertEquals(1, enumerate.expressions(ast("a")));
 //  }
