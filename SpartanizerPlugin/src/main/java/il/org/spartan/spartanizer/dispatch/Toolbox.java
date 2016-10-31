@@ -132,7 +132,6 @@ public class Toolbox {
             new ClassInstanceCreationValueTypes(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
@@ -195,6 +194,10 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
             null)
+        // TODO: Marco add when ready
+        // .add(InstanceofExpression.class, //
+        // new InstanceOf(), //
+        // null)//
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
