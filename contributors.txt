@@ -51,8 +51,8 @@ Ofir Elmakias <elmakias [at] outlook.com>
 Ori Marcovitch <marcovitch.ori [at] gmail.com>
 Ori Roth <ori.rothh [at] gmail.com>
 Raviv Rachmiel <raviv.rachmiel [at] gmail.com>
-Roei Rosenzweig <m.roei.raz@gmail.com>
-Roey Maor <maor.roey@gmail.com>
+Roei Rosenzweig <m.roei.raz [at] gmail.com>
+Roey Maor <maor.roey [at] gmail.com>
 Ron Gatenio <ron.gatenio [at] gmail.com>
 Roy Shchory <royshch1 [at] gmail.com>
 Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
@@ -69,7 +69,7 @@ Yuval Simon <yuvaltechnion [at] gmail.com>
 Zahi Mizrahi <zahimizra [at] gmail.com>
 Ziv Izhar <szizhar [at] campus.techion.ac.il>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
-خوجة نصر الدين <juha@nasereddi.in>
+خوجة نصر الدين <juha [at] nasereddi.in>
 ארבינקא The Blaumlich Tunnel
 Oren Afek <oren.afek [at] gmail.com>
 Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
