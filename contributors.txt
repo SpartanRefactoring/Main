@@ -67,6 +67,7 @@ Stav Namir <stav1472 [at] gmail.com>
 Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Dragucki <tomerd [at] campus.technion.ac.il>
 Tomer Zeltzer <tomerr90 [at] gmail.com>
+Vivian Shehadeh <vivian.sh185 [at] gmail.com>
 Yael Amitay <syaelam [at] campus.technion.ac.il>
 Yaniv Levinsky <leyaniv [at] gmail.com>
 Yarden Lev <ylev [at] campus.technion.ac.il>
