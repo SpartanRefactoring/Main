@@ -41,7 +41,9 @@ public class Dialogs {
     if (!iconInitialized) {
       iconInitialized = true;
       try {
-        icon = new Image(null, ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData());
+        final ImageData d = ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData();
+        if (d != null)
+          icon = new Image(null, d);
       } catch (final MalformedURLException x) {
         monitor.log(x);
       }
@@ -55,7 +57,9 @@ public class Dialogs {
     if (!logoInitialized) {
       logoInitialized = true;
       try {
-        logo = new Image(null, ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData());
+        final ImageData d = ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData();
+        if (d != null)
+          logo = new Image(null, d);
       } catch (final MalformedURLException x) {
         monitor.log(x);
       }
