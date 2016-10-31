@@ -33,7 +33,7 @@ Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Elia Traore <set [at] campus.technion.ac.il>
 Entony Lekhtman <tony.lek1995 [at] gmail.com>
-Hershele Ostropolerr https://en.wikipedia.org/wiki/Hershel_of_Ostropol
+Hershele Ostropolerrrr https://en.wikipedia.org/wiki/Hershel_of_Ostropol
 Idan Atias <idan2k3 [at] gmail.com>
 Inbal Matityahu <matityahuinbal [at] gmail.com>
 Inbal Zukerman <inbal.zukerman [at] gmail.com>
@@ -41,7 +41,12 @@ Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
+<<<<<<< HEAD
+Killroy
+=======
 Kilroyss https://en.wikipedia.org/wiki/Kilroy_was_here
+>>>>>>> 3fb6917fc5f0c1d77f50038da128d575cb7764ee
+killroy
 Koby Ben Shimol <kobybs [at] gmail.com>
 Koral  Chapnik <chapnikkoral [at] gmail.com>
 Lidia Piatigorski <lidkin5 [at] gmail.com>
@@ -81,3 +86,4 @@ Oren Afek <oren.afek [at] gmail.com>
 Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
 Netanel Felcher <netanel_felcher [at] hotmail.com>
 Moshe Eliasof   <moshikoalis [at] gmail.com>
+Doron Meshulam  <doronmmm@gmail.com>
