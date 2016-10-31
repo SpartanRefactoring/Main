@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.java.*;
 // @Ignore //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue490 {
+public class Issue500 {
   @Test public void a() {
     assert true;
   }
