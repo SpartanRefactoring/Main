@@ -51,6 +51,7 @@ Niv Shalmon <shalmon.niv [at] gmail.com>
 Noam Yefet <noamyft [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Or Troyaner <or.troyaner [at] gmail.com>
+Oren Afek <oren.afek [at] gmail.com>
 Ori Marcovitch <marcovitch.ori [at] gmail.com>
 Ori Roth <ori.rothh [at] gmail.com>
 Osher Hajaj <osherh [at] campus.technion.ac.il>
@@ -78,7 +79,6 @@ Ziv Izhar <szizhar [at] campus.techion.ac.il>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
 خوجة نصر الدين <juha [at] nasereddi.in>
 ארבינקא The Blaumlich Tunnel
-Oren Afek <oren.afek [at] gmail.com>
 Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
 Netanel Felcher <netanel_felcher [at] hotmail.com>
 Moshe Eliasof   <moshikoalis [at] gmail.com>
