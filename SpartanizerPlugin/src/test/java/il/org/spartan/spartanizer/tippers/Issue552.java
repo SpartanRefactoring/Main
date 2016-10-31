@@ -15,12 +15,13 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
-  @Test public void a0(){
-    int x = enumerate.expressions(null);
+  @Test public void a0() {
+    @SuppressWarnings("unused") int x = enumerate.expressions(null);
   }
-//  @Test public void a() {
-//    auxInt(enumerate.expressions((ASTNode) null));
-//  }
+
+  @Test public void a() {
+    auxInt(enumerate.expressions((ASTNode) null));
+  }
 
   @Test public void b() {
     assertEquals(1, enumerate.expressions(ast("a")));
@@ -33,14 +34,11 @@ public class Issue552 {
   @Test public void d() {
     assertEquals(0, enumerate.expressions(null));
   }
-//
-//  @Test public void e() {
-//    assertEquals(3, enumerate.expressions(ast("b + c")));
-//  }
 
   @Test public void e() {
     assertEquals(4, enumerate.expressions(ast("a + b + c")));
   }
+
   @Test public void f() {
     assertEquals(4, enumerate.expressions(ast("return a + b + c;")));
   }
@@ -64,8 +62,8 @@ public class Issue552 {
   static void auxInt(@SuppressWarnings("unused") final int __) {
     assert true;
   }
-  
-  static ASTNode ast(String ¢){
+
+  static ASTNode ast(String ¢) {
     return wizard.ast(¢);
   }
 }
