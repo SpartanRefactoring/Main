@@ -9,8 +9,9 @@ import il.org.spartan.spartanizer.research.patterns.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@SuppressWarnings("static-method") public class DefaultsToTest {
+@SuppressWarnings("static-method") public class WhenThenElseTest {
   @Test public void basic() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";").withTipper(ConditionalExpression.class, new DefaultsTo()).gives("return default¢(¢).to(\"\");");
+    trimmingOf("return ¢ == null ? null : x.apply(¢) + \"\";").withTipper(ConditionalExpression.class, new WhenThenElse())
+        .gives("return when(¢ == null).then(null).elze(x.apply(¢) + \"\");");
   }
 }

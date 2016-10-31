@@ -133,12 +133,4 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return true;
     return false;
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a JD method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[JDPattern]]";
-  }
 }

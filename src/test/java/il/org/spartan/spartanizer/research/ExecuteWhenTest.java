@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
 // to trimmingOf might be needed... Or just use another testing method.
 @Ignore @SuppressWarnings("static-method") public class ExecuteWhenTest {
   @Test public void basic() {
-    trimmingOf("if(x == 8) print(8);").withTipper(IfStatement.class, new ExecuteWhen()).gives("execute((__) -> print(8)).when(x==8);");
+    trimmingOf("if(x == 8) print(8);").withTipper(IfStatement.class, new ExecuteWhen()).gives("execute(() -> print(8)).when(x==8);");
   }
 
   @Test public void comlicated() {

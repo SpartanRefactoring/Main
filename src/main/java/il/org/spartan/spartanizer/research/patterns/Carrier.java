@@ -35,12 +35,4 @@ public class Carrier extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return false;
     return true;
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a carrier method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Carrier]]";
-  }
 }
