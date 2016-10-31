@@ -26,12 +26,4 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return true;
     return false;
   }
-
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a getter method";
-  }
-
-  @Override protected String javadoc() {
-    return "[[Getter]]";
-  }
 }

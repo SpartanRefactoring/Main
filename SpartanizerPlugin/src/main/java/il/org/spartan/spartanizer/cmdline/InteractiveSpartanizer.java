@@ -9,14 +9,29 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Yossi Gil
+ * @author Matteo Orru'
  * @since 2016 */
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
-      BatchSpartanizer.main(fileNames);
-    else
-      System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
+      BatchSpartanizer.fire(fileNames); // change from main to fire
+    else{
+      String input = read();
+//      System.err.println("input: " + input); // 
+      GuessedContext c = GuessedContext.find(input);
+//      System.out.println(c.name());
+      CompilationUnit cu = null;    
+      String output;
+      if (c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE))
+        output = new InteractiveSpartanizer().fixedPoint(input);
+      else {
+        cu = c.intoCompilationUnit(input);
+        assert cu != null;
+        output = new InteractiveSpartanizer().fixedPoint(cu + "");
+      }
+      System.err.println("output: " + output); // new InteractiveSpartanizer().fixedPoint(read()));
+    }
   }
 
   static String read() {
@@ -25,7 +40,7 @@ public final class InteractiveSpartanizer {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;
-    }
+    } 
     return $;
   }
 
