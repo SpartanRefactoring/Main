@@ -41,7 +41,12 @@ Itai Dabran <idabran.cs.technion [at] gmail.com>
 Joha <joha [at] gmail.com>
 Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
+<<<<<<< HEAD
+Killroy
+=======
 Kilroyss https://en.wikipedia.org/wiki/Kilroy_was_here
+>>>>>>> 3fb6917fc5f0c1d77f50038da128d575cb7764ee
+killroy
 Koby Ben Shimol <kobybs [at] gmail.com>
 Koral  Chapnik <chapnikkoral [at] gmail.com>
 Lidia Piatigorski <lidkin5 [at] gmail.com>
