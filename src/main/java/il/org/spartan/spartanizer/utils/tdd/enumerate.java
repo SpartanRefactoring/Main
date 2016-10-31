@@ -24,4 +24,5 @@ public interface enumerate {
     });
     return $.inner;
   }
+  // For you to implement! Let's TDD and get it on!
 }
