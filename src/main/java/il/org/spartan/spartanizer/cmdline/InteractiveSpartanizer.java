@@ -18,17 +18,17 @@ public final class InteractiveSpartanizer {
       BatchSpartanizer.fire(fileNames); // change from main to fire
     else{
       String input = read();
-      System.err.println("input: " + input); // 
+//      System.err.println("input: " + input); // 
       GuessedContext c = GuessedContext.find(input);
-      System.out.println(c.name());
+//      System.out.println(c.name());
       CompilationUnit cu = null;    
       String output;
-      if(!c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE)){
+      if (c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE))
+        output = new InteractiveSpartanizer().fixedPoint(input);
+      else {
         cu = c.intoCompilationUnit(input);
         assert cu != null;
         output = new InteractiveSpartanizer().fixedPoint(cu + "");
-      } else {
-       output = new InteractiveSpartanizer().fixedPoint(input);
       }
       System.err.println("output: " + output); // new InteractiveSpartanizer().fixedPoint(read()));
     }
@@ -38,10 +38,8 @@ public final class InteractiveSpartanizer {
     String $ = "";
     try (final Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
-        if (!s.hasNext()){
-//          s.close();
+        if (!s.hasNext())
           return $;
-        }
     } 
     return $;
   }
