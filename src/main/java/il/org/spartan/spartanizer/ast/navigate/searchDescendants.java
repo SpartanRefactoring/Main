@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -24,11 +25,21 @@ public abstract class searchDescendants<N extends ASTNode> {
    * @return descendants whose type matches the given type. */
   public abstract List<N> inclusiveFrom(final ASTNode n);
 
+  /** @param ¢ JD
+   * @return add predicate to filter elements */
+  public abstract searchDescendants<N> satisfying(final Predicate<N> ¢);
+
   static class ByNodeClass<N extends ASTNode> extends searchDescendants<N> {
     final Class<N> clazz;
+    Predicate<N> p = (x) -> true;
 
     public ByNodeClass(final Class<N> clazz) {
       this.clazz = clazz;
+    }
+
+    @Override public ByNodeClass<N> satisfying(final Predicate<N> ¢) {
+      p = ¢;
+      return this;
     }
 
     @Override public List<N> from(final ASTNode ¢) {
@@ -41,9 +52,9 @@ public abstract class searchDescendants<N extends ASTNode> {
     @Override public List<N> inclusiveFrom(final ASTNode n) {
       final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor() {
-        @SuppressWarnings("unchecked") @Override public void preVisit(final ASTNode ¢) {
-          if (n.getClass().equals(clazz))
-            $.add((N) ¢);
+        @Override public void preVisit(final ASTNode ¢) {
+          if (¢.getClass().equals(clazz) && p.test(clazz.cast(¢)))
+            $.add(clazz.cast(¢));
         }
       });
       return $;

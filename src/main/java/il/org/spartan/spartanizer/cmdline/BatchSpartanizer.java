@@ -19,38 +19,74 @@ import il.org.spartan.utils.*;
  * @author Matteo Orru'
  * @year 2016 */
 public final class BatchSpartanizer {
+  
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
   private static String outputDir;
   private static String inputDir;
+  
+  private int classesDone;
+  private final String inputPath;
+  private final String beforeFileName;
+  private final String afterFileName;
+  private PrintWriter befores;
+  private PrintWriter afters;
+  private CSVStatistics report;
+  private final String reportFileName;
+  
+  /**
+   * Main method used to run BatchSpartanizer as a stand alone application
+   * @param args
+   */
 
   public static void main(final String[] args) {
     if (args.length == 0)
       printHelpPrompt();
     else {
       parseCommandLineArgs(args);
-      if (inputDir != null && outputDir != null) {
-        final File input = new File(inputDir);
-        if (!input.isDirectory()) {
-          System.out.println("Analyzing single file: " + input.getAbsolutePath());
-          new BatchSpartanizer(input.getAbsolutePath()).fire();
-        } else {
-          System.out.println("Analyzing directory: " + input.getAbsolutePath());
-          for (final File ¢ : input.listFiles())
-            if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
-              System.out.println(¢.getAbsolutePath());
-              new BatchSpartanizer(¢.getAbsolutePath()).fire();
-            }
-        }
-      }
+      if (inputDir != null && outputDir != null)
+        spartanize();
       if (defaultDir) {
+//        spartanizeDir(".");
         new BatchSpartanizer(".", "current-working-directory").fire();
         for (final String ¢ : args)
           new BatchSpartanizer(¢).fire();
       }
     }
+  }
+
+  /**
+   * 
+   */
+  private static void spartanize() {
+    final File input = new File(inputDir);
+    if (input.isDirectory()) {
+      System.out.println(" ---- Analyzing directory: " + input.getAbsolutePath() + " -------- ");
+      spartanizeDir(input);
+    } else {
+      System.out.println(" ---- Analyzing single file: " + input.getAbsolutePath() + " -------- ");
+      spartanizeFile(input);
+    }
+  }
+
+  /**
+   * @param input
+   */
+  private static void spartanizeFile(final File input) {
+    new BatchSpartanizer(input.getAbsolutePath()).fire();
+  }
+
+  /**
+   * @param input
+   */
+  private static void spartanizeDir(final File input) {
+    for (final File ¢ : input.listFiles())
+      if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
+        System.out.println(¢.getAbsolutePath());
+        spartanizeFile(¢);
+      }
   }
 
   public static ProcessBuilder runScript¢(final String pathname) {
@@ -61,7 +97,7 @@ public final class BatchSpartanizer {
   }
 
   static void printHelpPrompt() {
-    System.out.println("Batch gUIBatchLaconizer");
+    System.out.println("Batch GUIBatchLaconizer");
     System.out.println("");
     System.out.println("Options:");
     System.out.println("  -d       default directory: use the current directory for the analysis");
@@ -83,6 +119,7 @@ public final class BatchSpartanizer {
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
         inputDir = ".";
+        outputDir = folder;
         ¢ += 1;
       } else {
         System.out.println(args[¢]);
@@ -91,24 +128,18 @@ public final class BatchSpartanizer {
       }
   }
 
-  private int classesDone;
-  private final String inputPath;
-  private final String beforeFileName;
-  private final String afterFileName;
-  private PrintWriter befores;
-  private PrintWriter afters;
-  private CSVStatistics report;
-  private final String reportFileName;
-
   private BatchSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
   private BatchSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
-    beforeFileName = folder + outputDir + "/" + name + ".before.java";
-    afterFileName = folder + outputDir + "/" + name + ".after.java";
-    reportFileName = folder + outputDir + "/" + name + ".CSV";
+//    beforeFileName = folder + outputDir + "/" + name + ".before.java";
+//    afterFileName = folder + outputDir + "/" + name + ".after.java";
+//    reportFileName = folder + outputDir + "/" + name + ".CSV";
+    beforeFileName = outputDir + "/" + name + ".before.java";
+    afterFileName = outputDir + "/" + name + ".after.java";
+    reportFileName = outputDir + "/" + name + ".CSV";
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
@@ -272,5 +303,16 @@ public final class BatchSpartanizer {
         if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
           return true;
     return false;
+  }
+  
+  /**
+   * This method is called from outside, like in the case of {@link InteractiveSpartanizer}
+   * @param fileNames
+   */
+
+  public static void fire(String[] fileNames) {
+     inputDir = fileNames[0];
+     outputDir = folder;
+     spartanize();
   }
 }
