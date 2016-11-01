@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
