@@ -438,25 +438,14 @@ public class LinkedListMultimapTest extends TestCase {
   @SuppressWarnings("unchecked")
   @GwtIncompatible // unreasonably slow
   public void testAsSetIteration() {
-    Set<Entry<String, Collection<Integer>>> set = Sets.newLinkedHashSet(asList(
-        Maps.immutableEntry("foo",
-            (Collection<Integer>) asList(2, 3, 6)),
-        Maps.immutableEntry("bar",
-            (Collection<Integer>) asList(4, 5, 10, 11)),
-        Maps.immutableEntry("baz",
-            (Collection<Integer>) asList(7, 8)),
-        Maps.immutableEntry("dog",
-            (Collection<Integer>) asList(9)),
-        Maps.immutableEntry("cat",
-            (Collection<Integer>) asList(12, 13, 14))
-    ));
-
-    new IteratorTester<Entry<String, Collection<Integer>>>(6, MODIFIABLE, set,
+    new IteratorTester<Entry<String, Collection<Integer>>>(6, MODIFIABLE,
+        Sets.newLinkedHashSet(asList(Maps.immutableEntry("foo", (Collection<Integer>) asList(2, 3, 6)),
+            Maps.immutableEntry("bar", (Collection<Integer>) asList(4, 5, 10, 11)), Maps.immutableEntry("baz", (Collection<Integer>) asList(7, 8)),
+            Maps.immutableEntry("dog", (Collection<Integer>) asList(9)), Maps.immutableEntry("cat", (Collection<Integer>) asList(12, 13, 14)))),
         IteratorTester.KnownOrder.KNOWN_ORDER) {
       Multimap<String, Integer> multimap;
 
-      @Override protected Iterator<Entry<String, Collection<Integer>>>
-          newTargetIterator() {
+      @Override protected Iterator<Entry<String, Collection<Integer>>> newTargetIterator() {
         multimap = create();
         multimap.putAll("foo", asList(2, 3));
         multimap.putAll("bar", asList(4, 5));
@@ -468,8 +457,7 @@ public class LinkedListMultimapTest extends TestCase {
         return multimap.asMap().entrySet().iterator();
       }
 
-      @Override protected void verify(
-          List<Entry<String, Collection<Integer>>> elements) {
+      @Override protected void verify(List<Entry<String, Collection<Integer>>> elements) {
         assertEquals(newHashSet(elements), multimap.asMap().entrySet());
       }
     }.test();

@@ -37,12 +37,12 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "iz" + step.type(¢);
   }
 
-  static boolean izMethodExist(InstanceofExpression ¢) {
-    return Arrays.stream(step.methods(containingType(¢))).filter(m -> izMethodName(¢).equals((m.getName() + "")) && booleanType(step.returnType(m)))
+  static boolean izMethodExist(final InstanceofExpression ¢) {
+    return Arrays.stream(step.methods(containingType(¢))).filter(m -> izMethodName(¢).equals(m.getName() + "") && booleanType(step.returnType(m)))
         .count() != 0;
   }
 
-  private static boolean booleanType(Type returnType) {
+  private static boolean booleanType(final Type returnType) {
     return "boolean".equals(returnType + "");
   }
 

@@ -16,7 +16,7 @@ import org.junit.runners.*;
     ;
   }
 
-  @Test public void A$A() {
+  @Ignore @Test public void A$A() {
     trimmingOf("void m(){return;}")//
         .gives("void m(){}")//
         .stays() //

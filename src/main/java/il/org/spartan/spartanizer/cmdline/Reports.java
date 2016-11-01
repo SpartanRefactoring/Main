@@ -20,7 +20,7 @@ public class Reports {
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
-  
+
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
@@ -39,8 +39,7 @@ public class Reports {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes"}) 
-    public static NamedFunction<ASTNode> find(final String ¢) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : Reports.Util.functions(""))
         if ($.name() == ¢)
           return $;
@@ -49,8 +48,7 @@ public class Reports {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
-  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
       Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
       Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
@@ -60,47 +58,40 @@ public class Reports {
   @FunctionalInterface public interface BiFunction<T, R> {
     double apply(T t, R r);
   }
-  
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
-  public static void write(final ASTNode input, final ASTNode output, final String id, final BiFunction<Integer, Integer> i) {
-    double a;
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = i.apply(¢.function().run(input), ¢.function().run(output)); // system.d(¢.function().run(n1),
-                                                                      // ¢.function().run(n2));
-      Reports.Util.report("metrics").put(id + ¢.name(), a);
-    }
-  }
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
-  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
-    int a;
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = (int) f.apply(¢.function().run(n1), ¢.function().run(n2)); // - ;
-      Reports.Util.report("metrics").put(id + ¢.name(), a);
-    }
+
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void write(final ASTNode input, final ASTNode output, final String id,
+      final BiFunction<Integer, Integer> i) {
+    for (final NamedFunction ¢ : Reports.Util.functions(""))
+      Reports.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
-  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
+      final BiFunction<Integer, Integer> i) {
+    for (final NamedFunction ¢ : Reports.Util.functions(""))
+      Reports.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
+  }
+
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
+      final BiFunction<Integer, Integer> i) {
     double a;
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
+      a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
                                                                // ¢.function().run(n2));
       Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
-  
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
-  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id, final BiFunction<Integer, Integer> f) {
+
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
+      final BiFunction<Integer, Integer> i) {
     String a; // TODO Matteo: to be converted to double or float?
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      a = "" + f.apply(¢.function().run(n1), ¢.function().run(n2)); // system.p(¢.function().run(n1),
+      a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // system.p(¢.function().run(n1),
                                                                     // ¢.function().run(n2));
       Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     String a; // TODO Matteo: to be converted to double or float?
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
       a = system.p(¢.function().run(n1), ¢.function().run(n2));
@@ -109,7 +100,8 @@ public class Reports {
   }
 
   /** @param nm */
-  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id, final BiFunction<Integer, Integer> i) {
+  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
+      final BiFunction<Integer, Integer> i) {
     final int len = Reports.Util.find("length").function().run(n1);
     final int ess = Reports.Util.find("essence").function().run(n1);
     final int tide = Reports.Util.find("tide").function().run(n1);
@@ -240,13 +232,13 @@ public class Reports {
     Reports.report("metrics").put("name", extract.name(input));
     Reports.report("metrics").put("category", extract.category(input));
   }
-  
-  public static void tip(Tip t) {
-    Reports.report("tips").put("name",t.getClass());
-    Reports.report("tips").put("description",t.description);
-    Reports.report("tips").put("LineNumber", t.lineNumber);
-    Reports.report("tips").put("from", t.from);
-    Reports.report("tips").put("to", t.to);
-    Reports.report("tips").put("tipperClass", t.tipperClass);
+
+  public static void tip(final Tip ¢) {
+    Reports.report("tips").put("name", ¢.getClass());
+    Reports.report("tips").put("description", ¢.description);
+    Reports.report("tips").put("LineNumber", ¢.lineNumber);
+    Reports.report("tips").put("from", ¢.from);
+    Reports.report("tips").put("to", ¢.to);
+    Reports.report("tips").put("tipperClass", ¢.tipperClass);
   }
 }
