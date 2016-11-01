@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -40,7 +38,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   static boolean izMethodExist(final InstanceofExpression ¢) {
-    return Arrays.stream(step.methods(containingType(¢))).filter(m -> izMethodName(¢).equals(m.getName() + "") && booleanType(step.returnType(m)))
+    return step.methods(containingType(¢)).stream().filter(m -> izMethodName(¢).equals(m.getName() + "") && booleanType(step.returnType(m)))
         .count() != 0;
   }
 
