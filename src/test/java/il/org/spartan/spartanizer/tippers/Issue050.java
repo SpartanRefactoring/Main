@@ -48,8 +48,7 @@ import org.junit.runners.*;
     trimmingOf("enum A{;final void f(){}public final void g(){}}").stays();
   }
 
-  @Ignore 
-  @Test public void A$50_inEnumMemberComplex() {
+  @Ignore @Test public void A$50_inEnumMemberComplex() {
     trimmingOf("enum A{a1{{f();}protected final void f(){g();}public final void g(){h();}\n"
         + "private final void h(){i();}final void i(){f();}},a2{{f();}final protected void f(){g();}\n"
         + "final void g(){h();}final private void h(){i();}final protected void i(){f();}};\n"

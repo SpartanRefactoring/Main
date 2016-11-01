@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -54,10 +55,30 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static TypeDeclaration containingType(final CastExpression ¢) {
-    // TODO: Marco maybe in the future change to az.java in package which will
-    // be created automatically...
     String s = AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiLevel");
-    return s == null || !"type".equals(s) ? null : searchAncestors.forContainingType().from(¢);
+    if (s == null)
+      return null;
+    switch (s) {
+      case "type":
+        return searchAncestors.forContainingType().from(¢);
+      case "package":
+        return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
+            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(new File(getContainingPackage(¢) + ".iz.java")))).get(0));
+      case "file":
+        return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
+            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(new File(AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiFile")))))
+            .get(0));
+      default:
+        break;
+    }
+    assert false : "illegal apiLevel [" + s + "]";
+    return null;
+  }
+
+  /** @param ¢
+   * @return */
+  private static String getContainingPackage(CastExpression ¢) {
+    return searchAncestors.forContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {

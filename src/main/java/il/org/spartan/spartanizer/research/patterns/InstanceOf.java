@@ -17,6 +17,8 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   static final TypeChecker c = new TypeChecker();
 
   @Override public boolean canTip(final InstanceofExpression ¢) {
+    if (!(step.type(¢) instanceof SimpleType))
+      return false;
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
     return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m);

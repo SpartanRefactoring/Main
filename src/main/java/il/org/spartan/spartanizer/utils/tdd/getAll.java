@@ -11,12 +11,10 @@ import org.eclipse.jdt.core.dom.*;
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
-  /**
-   * Get all the methods invoked in m
-   * @param m JD
-   * @return List of the names of the methods
-   */
-  public static Set<String> invocations(MethodDeclaration m){
+  /** Get all the methods invoked in m
+   * @param d JD
+   * @return List of the names of the methods */
+  public static Set<String> invocations(@SuppressWarnings("unused") MethodDeclaration __) {
     return null;
   }
   /**

@@ -25,14 +25,30 @@ public enum enumerate {
     });
     return $.inner;
   }
-  
+
   /** @author Aviad Cohen & Noam Yefet
-   *  @param n
+   *  @param ¢
    *  @since Nov 1, 2016 */
   public static int statements(ASTNode n) {
+    final Int count = new Int();
+
     if (n == null)
       return 0;
-    return 1;
+
+    n.accept(new ASTVisitor() {
+      @SuppressWarnings("unused") @Override public boolean visit(ReturnStatement __) {
+        ++count.inner;
+        
+        return true;
+      }
+      
+      @SuppressWarnings("unused") @Override public boolean visit(Assignment __) {
+        ++count.inner;
+        
+        return true;
+      }
+    });   
+    return count.inner;
   }
   // For you to implement! Let's TDD and get it on!
 }
