@@ -37,20 +37,21 @@ public enum enumerate {
 
     n.accept(new ASTVisitor() {
       @SuppressWarnings("unused") @Override public boolean visit( ReturnStatement s) {
-        ++count.inner;
-        
+        ++count.inner; 
         return true;
       }
       
       @SuppressWarnings("unused") @Override public boolean visit(Assignment a) {
-        ++count.inner;
-        
+        ++count.inner;  
         return true;
       }
       
       @SuppressWarnings("unused") @Override public boolean visit(EmptyStatement s) {
-        ++count.inner;
-        
+        ++count.inner;       
+        return true;
+      }
+      @SuppressWarnings("unused") @Override public boolean visit(IfStatement s) {
+        ++count.inner;       
         return true;
       }
     });   
