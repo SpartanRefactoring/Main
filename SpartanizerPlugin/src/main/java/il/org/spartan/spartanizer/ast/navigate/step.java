@@ -463,6 +463,12 @@ public enum step {
     return ¢.typeArguments();
   }
 
+  /** @param ¢ JD
+   * @return types in ¢ */
+  @SuppressWarnings("unchecked") public static List<AbstractTypeDeclaration> types(final CompilationUnit ¢) {
+    return ¢.types();
+  }
+
   /** Expose the list of updaters contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
@@ -476,8 +482,11 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static MethodDeclaration[] methods(final TypeDeclaration ¢) {
-    return ¢ == null ? null : ¢.getMethods();
+  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
+    return ¢ == null ? null
+        : iz.typeDeclaration(¢) ? Arrays.asList((az.typeDeclaration(¢).getMethods()))
+            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
+                .filter(d -> iz.methodDeclaration((ASTNode) d)).collect(Collectors.toList()) : null;
   }
 
   /** @param p JD
