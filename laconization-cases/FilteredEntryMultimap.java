@@ -56,17 +56,15 @@ class FilteredEntryMultimap<K, V> extends AbstractMultimap<K, V> implements Filt
     void g() {
       class V {
         public boolean r() {
-            Iterator<Entry<K, C<V>>> e = f();
-            while (e.hasNext()) 
-              a++;
+            for (Iterator<Entry<K, C<V>>> ¢ = f(); ¢.hasNext();)
+              ++a;
         }
       }
     }
   }
 
 void r() {
-            Iterator<Entry<K, C<V>>> e = f();
-            while (e.g()) 
+            for (Iterator<Entry<K, C<V>>> ¢ = f(); ¢.g();)
               ++a;
         }
   @WeakOuter
@@ -77,16 +75,12 @@ void r() {
       class ValuesImpl extends Maps.Values<K, Collection<V>> {
         @Override
         public boolean remove(@Nullable Object o) {
-          if (o instanceof Collection) {
-            Collection<?> c = (Collection<?>) o;
-            Iterator<Entry<K, Collection<V>>> entryIterator =
-                unfiltered.asMap().entrySet().iterator();
-            while (entryIterator.hasNext()) {
+          if (o instanceof Collection)
+            for (Iterator<Entry<K, Collection<V>>> entryIterator = unfiltered.asMap().entrySet().iterator(); entryIterator.hasNext();) {
               Entry<K, Collection<V>> entry = entryIterator.next();
               K key = entry.getKey();
-              Collection<V> collection =
-                  filterCollection(entry.getValue(), new ValuePredicate(key));
-              if (!collection.isEmpty() && c.equals(collection)) {
+              Collection<V> collection = filterCollection(entry.getValue(), new ValuePredicate(key));
+              if (!collection.isEmpty() && ((Collection<?>) o).equals(collection)) {
                 if (collection.size() != entry.getValue().size())
                   collection.clear();
                 else
@@ -94,7 +88,6 @@ void r() {
                 return true;
               }
             }
-          }
           return false;
         }
       }

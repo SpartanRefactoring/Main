@@ -16,12 +16,12 @@ public final class InteractiveSpartanizer {
   public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
       BatchSpartanizer.fire(fileNames); // change from main to fire
-    else{
-      String input = read();
-//      System.err.println("input: " + input); // 
-      GuessedContext c = GuessedContext.find(input);
-//      System.out.println(c.name());
-      CompilationUnit cu = null;    
+    else {
+      final String input = read();
+      // System.err.println("input: " + input); //
+      final GuessedContext c = GuessedContext.find(input);
+      // System.out.println(c.name());
+      CompilationUnit cu = null;
       String output;
       if (c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE))
         output = new InteractiveSpartanizer().fixedPoint(input);
@@ -30,7 +30,8 @@ public final class InteractiveSpartanizer {
         assert cu != null;
         output = new InteractiveSpartanizer().fixedPoint(cu + "");
       }
-      System.err.println("output: " + output); // new InteractiveSpartanizer().fixedPoint(read()));
+      System.err.println("output: " + output); // new
+                                               // InteractiveSpartanizer().fixedPoint(read()));
     }
   }
 
@@ -40,7 +41,7 @@ public final class InteractiveSpartanizer {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;
-    } 
+    }
     return $;
   }
 
