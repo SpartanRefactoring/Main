@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
   @Test public void a0() {
-    @SuppressWarnings("unused") int x = enumerate.expressions(null);
+    @SuppressWarnings("unused") final int x = enumerate.expressions(null);
   }
 
   @Test public void a() {
@@ -63,7 +63,7 @@ public class Issue552 {
     assert true;
   }
 
-  static ASTNode ast(String ¢) {
+  static ASTNode ast(final String ¢) {
     return wizard.ast(¢);
   }
 }
