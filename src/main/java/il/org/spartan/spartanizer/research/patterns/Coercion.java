@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -38,7 +37,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(final CastExpression ¢) {
-    return Arrays.stream(step.methods(containingType(¢)))
+    return step.methods(containingType(¢)).stream()
         .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
 
@@ -63,7 +62,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         return searchAncestors.forContainingType().from(¢);
       case "package":
         return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
-            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(new File(getContainingPackage(¢) + ".iz.java")))).get(0));
+            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(prepareFile(new File(getContainingPackage(¢) + ".iz.java"))))).get(0));
       case "file":
         return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
             .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(new File(AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiFile")))))
@@ -73,6 +72,13 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
     assert false : "illegal apiLevel [" + s + "]";
     return null;
+  }
+
+  /** @param file
+   * @return */
+  private static File prepareFile(File ¢) {
+    // TODO: Marco ASTNode cu = makeAST.COMPILATION_UNIT.from(f);
+    return ¢;
   }
 
   /** @param ¢
