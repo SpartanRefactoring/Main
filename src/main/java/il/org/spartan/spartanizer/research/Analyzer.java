@@ -13,9 +13,13 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyzer {
-  static String outputDir = "/tmp";
-  static String inputDir;
-  static IzOptions izOptions = new IzOptions();
+  static Map<String, String> options = new HashMap<String, String>() {
+    static final long serialVersionUID = 1L;
+    {
+      // TODO: check what to do with this
+      put("outputDir", "/tmp");
+    }
+  };
 
   public static void main(final String args[]) {
     parseArguments(args);
@@ -24,20 +28,75 @@ public class Analyzer {
   }
 
   private static void createOutputDirIfNeeded() {
-    final File dir = new File(outputDir);
+    final File dir = new File(get("outputDir"));
     if (!dir.exists())
       dir.mkdir();
   }
 
+  /** @param ¢
+   * @return */
+  private static String get(String ¢) {
+    return options.get(¢);
+  }
+
   private static void parseArguments(final String[] args) {
     if (args.length < 2)
-      System.out.println("Usage: Analyzer <inputDir> [-dir] <outputDir>");
-    inputDir = args[0];
-    for (int ¢ = 1; ¢ < args.length; ++¢)
-      if ("-dir".equals(args[¢]))
-        outputDir = args[++¢];
-      else
-        outputDir += args[1];
+      System.out.println("You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n");
+    for (String arg : args)
+      parseArgument(arg);
+    // set("inputDir", args[0]);
+    // for (int ¢ = 1; ¢ < args.length; ++¢)
+    // if ("-dir".equals(args[¢]))
+    // set("outputDir", args[++¢]);
+    // else
+    // set("outputDir", get("outputDir") + args[1]);
+  }
+
+  /** @param key
+   * @param value */
+  private static void set(String key, String value) {
+    options.put(key, value);
+  }
+
+  static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
+
+  private static void parseArgument(String s) {
+    assert s.charAt(0) == '-' : "property should start with '-'";
+    String[] li = bisect(s.substring(1), "=");
+    assert li.length == 2 : "property should be of the form -x=y or -x.p=y but was [" + s + "]";
+    if (!li[0].contains("."))
+      setLocalProperty(li[0], li[1]);
+    else
+      setExternalProperty(li[0], li[1]);
+    System.out.println(options);
+  }
+
+  /** @param s
+   * @param by
+   * @return */
+  private static String[] bisect(String s, String by) {
+    String[] $ = new String[2];
+    int i = s.indexOf(by);
+    $[0] = s.substring(0, i);
+    $[1] = s.substring(i + 1);
+    return $;
+  }
+
+  /** @param key
+   * @param value */
+  private static void setLocalProperty(String key, String value) {
+    set(key, value);
+  }
+
+  /** @param left
+   * @param right */
+  private static void setExternalProperty(String left, String right) {
+    setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
+    System.out.println(AnalyzerOptions.options);
+  }
+
+  private static void setExternalProperty(String cls, String property, String value) {
+    AnalyzerOptions.set(cls, property, value);
   }
 
   /** Append String to file.
@@ -102,15 +161,15 @@ public class Analyzer {
     final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
     sanityCheck();
     String spartanizedCode = "";
-    new File(outputDir + "/after.java").delete();
-    for (final File ¢ : getJavaFiles(inputDir)) {
+    new File(get("outputDir") + "/after.java").delete();
+    for (final File ¢ : getJavaFiles(get("inputDir"))) {
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
-      appendFile(new File(outputDir + "/after.java"), spartanizedCode);
+      appendFile(new File(get("outputDir") + "/after.java"), spartanizedCode);
       Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
     }
-    Logger.summarize(outputDir);
+    Logger.summarize(get("outputDir"));
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
@@ -145,7 +204,7 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
-            // new JDPattern(), //
+            new JDPattern(), //
             new Examiner(), //
             new Delegator(), //
             new Carrier(), //
