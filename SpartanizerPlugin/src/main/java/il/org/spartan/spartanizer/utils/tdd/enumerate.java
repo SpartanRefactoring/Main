@@ -36,13 +36,19 @@ public enum enumerate {
       return 0;
 
     n.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public boolean visit(ReturnStatement __) {
+      @SuppressWarnings("unused") @Override public boolean visit( ReturnStatement s) {
         ++count.inner;
         
         return true;
       }
       
-      @SuppressWarnings("unused") @Override public boolean visit(Assignment __) {
+      @SuppressWarnings("unused") @Override public boolean visit(Assignment a) {
+        ++count.inner;
+        
+        return true;
+      }
+      
+      @SuppressWarnings("unused") @Override public boolean visit(EmptyStatement s) {
         ++count.inner;
         
         return true;
