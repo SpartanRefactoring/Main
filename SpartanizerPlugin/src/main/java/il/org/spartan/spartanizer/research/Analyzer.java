@@ -15,23 +15,29 @@ import il.org.spartan.spartanizer.research.patterns.*;
 public class Analyzer {
   static String outputDir = "/tmp";
   static String inputDir;
+  static IzOptions izOptions = new IzOptions();
 
   public static void main(final String args[]) {
     parseArguments(args);
+    createOutputDirIfNeeded();
     analyze();
+  }
+
+  private static void createOutputDirIfNeeded() {
+    final File dir = new File(outputDir);
+    if (!dir.exists())
+      dir.mkdir();
   }
 
   private static void parseArguments(final String[] args) {
     if (args.length < 2)
       System.out.println("Usage: Analyzer <inputDir> [-dir] <outputDir>");
     inputDir = args[0];
-    if ("-dir".equals(args[1]))
-      outputDir = args[2];
-    else
-      outputDir += args[1];
-    final File dir = new File(outputDir);
-    if (!dir.exists())
-      dir.mkdir();
+    for (int ¢ = 1; ¢ < args.length; ++¢)
+      if ("-dir".equals(args[¢]))
+        outputDir = args[++¢];
+      else
+        outputDir += args[1];
   }
 
   /** Append String to file.
@@ -152,5 +158,15 @@ public class Analyzer {
   private static void sanityCheck() {
     assert addNanoPatterns(new InteractiveSpartanizer())
         .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
+  }
+
+  static class IzOptions {
+    public String file;
+    public boolean appendExisting;
+    public ApiLevel a;
+
+    enum ApiLevel {
+      COMPILATION_UNIT, PACKAGE, PROJECT;
+    }
   }
 }

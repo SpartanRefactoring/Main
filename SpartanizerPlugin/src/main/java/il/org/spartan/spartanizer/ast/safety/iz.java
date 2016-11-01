@@ -994,7 +994,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean instanceofExpression(Expression ¢) {
+  static boolean instanceofExpression(final Expression ¢) {
     return ¢ != null && ¢ instanceof InstanceofExpression;
   }
 }
