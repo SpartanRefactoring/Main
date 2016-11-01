@@ -29,6 +29,10 @@ public abstract class searchAncestors<N extends ASTNode> {
     return new ByNodeClass<>(TypeDeclaration.class);
   }
 
+  public static searchAncestors<CompilationUnit> forContainingCompilationUnit() {
+    return new ByNodeClass<>(CompilationUnit.class);
+  }
+
   /** Factory method, returning an instance which can search by the integer
    * present on a node.
    * @param type JD
