@@ -219,6 +219,12 @@ public enum az {
     return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
   }
 
+  /** @param ¢ JD
+   * @return */
+  public static EnumDeclaration enumDeclaration(final ASTNode ¢) {
+    return !(¢ instanceof EnumDeclaration) ? null : (EnumDeclaration) ¢;
+  }
+
   /** Down-cast, if possible, to {@link Expression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
