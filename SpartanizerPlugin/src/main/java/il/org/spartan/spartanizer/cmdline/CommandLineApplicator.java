@@ -101,8 +101,8 @@ public class CommandLineApplicator extends Applicator {
     selection(CommandLineSelection.Util.get());
     return this;
   }
-  
-  /** Default run action configuration of {@link CommandLineApplicator}. 
+
+  /** Default run action configuration of {@link CommandLineApplicator}.
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator a) {
