@@ -25,5 +25,10 @@ public enum enumerate {
     });
     return $.inner;
   }
+  /** @author Aviad Cohen & Noam Yefet
+   *  @param n
+   *  @since Nov 1, 2016 */
+  public static void statements(ASTNode n) {
+  }
   // For you to implement! Let's TDD and get it on!
 }
