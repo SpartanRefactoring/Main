@@ -55,7 +55,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   private static TypeDeclaration containingType(final InstanceofExpression ¢) {
-    // TODO: Marco maybe in the future change to az.java in package which will
+    // TODO: Marco maybe in the future change to iz.java in package which will
     // be created automatically...
     return searchAncestors.forContainingType().from(¢);
   }
