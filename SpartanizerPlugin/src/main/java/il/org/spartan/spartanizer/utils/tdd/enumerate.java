@@ -63,6 +63,11 @@ public enum enumerate {
         ++count.inner;       
         return true;
       }
+      
+      @SuppressWarnings("unused") @Override public boolean visit(ContinueStatement s) {
+        ++count.inner;       
+        return true;
+      }
     });
     return count.inner;
   }
