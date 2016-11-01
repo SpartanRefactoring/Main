@@ -27,14 +27,12 @@ public enum enumerate {
   }
 
   /** @author Aviad Cohen & Noam Yefet
-   *  @param ¢
-   *  @since Nov 1, 2016 */
-  public static int statements(ASTNode n) {
+   * @param ¢
+   * @since Nov 1, 2016 */
+  public static int statements(final ASTNode n) {
     final Int count = new Int();
-
     if (n == null)
       return 0;
-
     n.accept(new ASTVisitor() {
       @SuppressWarnings("unused") @Override public boolean visit( ReturnStatement s) {
         ++count.inner; 
@@ -50,11 +48,12 @@ public enum enumerate {
         ++count.inner;       
         return true;
       }
+      
       @SuppressWarnings("unused") @Override public boolean visit(IfStatement s) {
         ++count.inner;       
         return true;
       }
-    });   
+    });
     return count.inner;
   }
   // For you to implement! Let's TDD and get it on!
