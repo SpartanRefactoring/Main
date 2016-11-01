@@ -39,4 +39,8 @@ public class Issue675 {
   @Test public void statements_test6() {
     assertEquals(enumerate.statements(wizard.ast("if (true) { x = 0; }")), 2);
   }
+  
+  @Test public void statements_test7() {
+    assertEquals(enumerate.statements(wizard.ast("while (true) { if (true) { x = 0; } }")), 3);
+  }
 }
