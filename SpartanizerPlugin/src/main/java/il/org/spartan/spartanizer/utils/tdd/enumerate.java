@@ -58,6 +58,11 @@ public enum enumerate {
         ++count.inner;       
         return true;
       }
+      
+      @SuppressWarnings("unused") @Override public boolean visit(BreakStatement s) {
+        ++count.inner;       
+        return true;
+      }
     });
     return count.inner;
   }
