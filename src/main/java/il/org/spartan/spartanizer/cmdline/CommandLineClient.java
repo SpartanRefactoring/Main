@@ -9,7 +9,7 @@ public class CommandLineClient { // extends AbstractCommandLineSpartanizer{
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new CommandLineSpartanizer(¢).fire();
   }
-  
+
   static void printPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");

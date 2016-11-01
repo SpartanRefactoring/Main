@@ -114,7 +114,7 @@ public interface idiomatic {
   static class ObjectHolder<T> {
     T t;
 
-    public ObjectHolder(T t) {
+    public ObjectHolder(final T t) {
       this.t = t;
     }
 
@@ -144,7 +144,7 @@ public interface idiomatic {
       this.b = b;
     }
 
-    public T elze(Supplier<T> ¢) {
+    public T elze(final Supplier<T> ¢) {
       return (b ? s : ¢).get();
     }
   }
@@ -390,7 +390,7 @@ public interface idiomatic {
     }
 
     @SuppressWarnings("boxing") @Test public void whenNullsEval() {
-      Object o = new Object();
+      final Object o = new Object();
       when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
     }
   }

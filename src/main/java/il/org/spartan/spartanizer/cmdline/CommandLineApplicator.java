@@ -17,8 +17,7 @@ public class CommandLineApplicator extends Applicator {
 
   private final CommandLine$Applicator a = new CommandLine$Applicator();
 
-  /** Default listener configuration. Simple
-   * printing to console.
+  /** Default listener configuration. Simple printing to console.
    * @return this applicator */
   public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
@@ -50,8 +49,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default passes configuration, with many
-   * passes.
+  /** Default passes configuration, with many passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
@@ -113,10 +111,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** @return this */
   private Applicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew()
-                                  .defaultRunContext()
-                                  .defaultSelection()
-                                  .defaultRunAction();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
   /* (non-Javadoc)
