@@ -16,4 +16,8 @@ public class Issue675 {
     enumerate.statements(null);
     assert true;
   }
+  
+  @Test public void statements_test1() {
+    assertEquals(enumerate.statements(null), 0);
+  }
 }
