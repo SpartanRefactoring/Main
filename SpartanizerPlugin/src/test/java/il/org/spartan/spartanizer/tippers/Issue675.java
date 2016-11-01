@@ -27,4 +27,8 @@ public class Issue675 {
   @Test public void statements_test3() {
     assertEquals(enumerate.statements(wizard.ast("aValue = 8933; return 0;")), 2);
   }
+  
+  @Test public void statements_test4() {
+    assertEquals(enumerate.statements(wizard.ast("x = 5; aValue = 8933; return 0;")), 3);
+  }
 }
