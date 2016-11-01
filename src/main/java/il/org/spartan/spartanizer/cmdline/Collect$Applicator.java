@@ -61,10 +61,6 @@ public class Collect$Applicator {
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
-          if (s != null) {
-//              ++tippersAppliedOnCurrentObject;
-//              TrimmerLog.application(r, s);
-          }
           return true;
         }
         
@@ -107,10 +103,6 @@ public class Collect$Applicator {
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
-          if (s != null) {
-//              ++tippersAppliedOnCurrentObject;
-//              TrimmerLog.application(r, s);
-          }
           return true;
         }
         
@@ -118,18 +110,6 @@ public class Collect$Applicator {
           disabling.scan(¢);
         }
       });
-
-//      consolidateTips($1, u);
-//      final ASTRewrite r = $1;
-//      final TextEdit e = r.rewriteAST($, null);
-//      try {
-//        e.apply($);
-//      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-//        monitor.logEvaluationError(this, x);
-//        throw new AssertionError(x);
-//      }
-//      if (!e.hasChildren())
-//        return $.get();
     }
   }
   

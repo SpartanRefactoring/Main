@@ -686,29 +686,24 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
     @Override
     Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {
       if (restriction.isEmpty())
-		return Iterators.emptyIterator();
+        return Iterators.emptyIterator();
       final Iterator<Range<C>> completeRangeItr;
       if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound))
-		return Iterators.emptyIterator();
-	else
-		completeRangeItr = ((lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound)
-				? rangesByUpperBound.tailMap(restriction.lowerBound, false)
-				: rangesByLowerBound.tailMap(lowerBoundWindow.lowerBound.endpoint(),
-						lowerBoundWindow.lowerBoundType() == BoundType.CLOSED)).values()).iterator();
-      final Cut<Cut<C>> upperBoundOnLowerBounds =
-          Ordering.natural()
-              .min(lowerBoundWindow.upperBound, Cut.belowValue(restriction.upperBound));
+        return Iterators.emptyIterator();
+      completeRangeItr = ((lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound) ? rangesByUpperBound.tailMap(restriction.lowerBound, false)
+          : rangesByLowerBound.tailMap(lowerBoundWindow.lowerBound.endpoint(), lowerBoundWindow.lowerBoundType() == BoundType.CLOSED)).values())
+              .iterator();
+      final Cut<Cut<C>> upperBoundOnLowerBounds = Ordering.natural().min(lowerBoundWindow.upperBound, Cut.belowValue(restriction.upperBound));
       return new AbstractIterator<Entry<Cut<C>, Range<C>>>() {
-        @Override
-        protected Entry<Cut<C>, Range<C>> computeNext() {
-			if (!completeRangeItr.hasNext())
-				return endOfData();
-			Range<C> nextRange = completeRangeItr.next();
-			if (upperBoundOnLowerBounds.isLessThan(nextRange.lowerBound))
-				return endOfData();
-			nextRange = nextRange.intersection(restriction);
-			return Maps.immutableEntry(nextRange.lowerBound, nextRange);
-		}
+        @Override protected Entry<Cut<C>, Range<C>> computeNext() {
+          if (!completeRangeItr.hasNext())
+            return endOfData();
+          Range<C> nextRange = completeRangeItr.next();
+          if (upperBoundOnLowerBounds.isLessThan(nextRange.lowerBound))
+            return endOfData();
+          nextRange = nextRange.intersection(restriction);
+          return Maps.immutableEntry(nextRange.lowerBound, nextRange);
+        }
       };
     }
 
