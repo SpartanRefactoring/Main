@@ -27,10 +27,10 @@ public final class WhenThenElse extends NanoPatternTipper<ConditionalExpression>
   @Override public Tip tip(final ConditionalExpression x) {
     Logger.logNP(x, getClass().getSimpleName());
     return new Tip(this.description(x), x, getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         try {
           tipper.tip(x).go(r, g);
-        } catch (TipperFailure x1) {
+        } catch (final TipperFailure x1) {
           x1.printStackTrace();
         }
       }

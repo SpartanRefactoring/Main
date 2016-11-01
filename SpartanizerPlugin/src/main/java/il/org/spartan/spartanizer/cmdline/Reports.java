@@ -68,7 +68,7 @@ public class Reports {
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : Reports.Util.functions(""))
-      Reports.Util.report("metrics").put(id + ¢.name(), ((int) i.apply(¢.function().run(n1), ¢.function().run(n2))));
+      Reports.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
@@ -233,7 +233,7 @@ public class Reports {
     Reports.report("metrics").put("category", extract.category(input));
   }
 
-  public static void tip(Tip ¢) {
+  public static void tip(final Tip ¢) {
     Reports.report("tips").put("name", ¢.getClass());
     Reports.report("tips").put("description", ¢.description);
     Reports.report("tips").put("LineNumber", ¢.lineNumber);
