@@ -37,12 +37,12 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         tip.go(r, g);
-        if (!iz.Void(step.returnType(d)))
-          return;
-        final ReturnStatement s = d.getAST().newReturnStatement();
-        s.setExpression(d.getAST().newThisExpression());
-        wizard.addStatement(d, s, r, g);
-        d.setReturnType2(getType(searchAncestors.forContainingType().from(d)));
+        // TODO: Marco if (!iz.Void(step.returnType(d)))
+        // return;
+        // final ReturnStatement s = d.getAST().newReturnStatement();
+        // s.setExpression(d.getAST().newThisExpression());
+        // wizard.addStatement(d, s, r, g);
+        // d.setReturnType2(getType(searchAncestors.forContainingType().from(d)));
       }
     };
   }
