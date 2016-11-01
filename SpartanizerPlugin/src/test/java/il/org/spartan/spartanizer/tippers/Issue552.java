@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -13,7 +11,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Ori Marcovitch
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@SuppressWarnings({ "javadoc" }) //
 public class Issue552 {
 //  @Test public void a() {
 //    auxInt(enumerate.expressions((ASTNode) null));

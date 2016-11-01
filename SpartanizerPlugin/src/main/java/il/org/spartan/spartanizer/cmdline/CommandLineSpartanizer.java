@@ -8,7 +8,7 @@ import java.io.*;
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
   private final String name;
-  private boolean commandLineApplicator=false;
+  private boolean commandLineApplicator;
   private boolean collectApplicator=true;
 
   CommandLineSpartanizer(final String path) {
