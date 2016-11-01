@@ -103,11 +103,11 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** Default run action configuration of {@link CommandLineApplicator}.
-   * @param a JD
+   * @param ¢ JD
    * @return this applicator */
-  public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator a) {
-    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
-    name(a.getName());
+  public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator ¢) {
+    setRunAction(¢¢ -> Integer.valueOf(¢.apply(¢¢, selection())));
+    name(¢.getName());
     return this;
   }
 

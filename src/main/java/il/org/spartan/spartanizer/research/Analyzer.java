@@ -35,14 +35,14 @@ public class Analyzer {
 
   /** @param ¢
    * @return */
-  private static String get(String ¢) {
+  private static String get(final String ¢) {
     return options.get(¢);
   }
 
   private static void parseArguments(final String[] args) {
     if (args.length < 2)
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
-    for (String arg : args)
+    for (final String arg : args)
       parseArgument(arg);
     System.out.println(options);
     System.out.println(AnalyzerOptions.options);
@@ -50,15 +50,15 @@ public class Analyzer {
 
   /** @param key
    * @param value */
-  private static void set(String key, String value) {
+  private static void set(final String key, final String value) {
     options.put(key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
 
-  private static void parseArgument(String s) {
+  private static void parseArgument(final String s) {
     assert s.charAt(0) == '-' : "property should start with '-'";
-    String[] li = bisect(s.substring(1), "=");
+    final String[] li = bisect(s.substring(1), "=");
     assert li.length == 2 : "property should be of the form -x=y or -x.p=y but was [" + s + "]";
     if (!li[0].contains("."))
       setLocalProperty(li[0], li[1]);
@@ -69,9 +69,9 @@ public class Analyzer {
   /** @param s
    * @param by
    * @return */
-  private static String[] bisect(String s, String by) {
-    String[] $ = new String[2];
-    int i = s.indexOf(by);
+  private static String[] bisect(final String s, final String by) {
+    final String[] $ = new String[2];
+    final int i = s.indexOf(by);
     $[0] = s.substring(0, i);
     $[1] = s.substring(i + 1);
     return $;
@@ -79,17 +79,17 @@ public class Analyzer {
 
   /** @param key
    * @param value */
-  private static void setLocalProperty(String key, String value) {
+  private static void setLocalProperty(final String key, final String value) {
     set(key, value);
   }
 
   /** @param left
    * @param right */
-  private static void setExternalProperty(String left, String right) {
+  private static void setExternalProperty(final String left, final String right) {
     setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
   }
 
-  private static void setExternalProperty(String cls, String property, String value) {
+  private static void setExternalProperty(final String cls, final String property, final String value) {
     AnalyzerOptions.set(cls, property, value);
   }
 
