@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import static org.junit.Assert.*;
 
 import org.junit.*;
