@@ -17,6 +17,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   static final Converter c = new Converter();
 
   @Override public boolean canTip(final CastExpression ¢) {
+    if (!(step.type(¢) instanceof SimpleType))
+      return false;
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
     return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m);
@@ -54,7 +56,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static TypeDeclaration containingType(final CastExpression ¢) {
     // TODO: Marco maybe in the future change to az.java in package which will
     // be created automatically...
-    return searchAncestors.forContainingType().from(¢);
+    String s = AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiLevel");
+    return s == null || !"type".equals(s) ? null : searchAncestors.forContainingType().from(¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
