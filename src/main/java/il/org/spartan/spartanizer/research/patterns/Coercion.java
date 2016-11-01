@@ -34,13 +34,13 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     };
   }
 
-  static boolean azMethodExist(CastExpression ¢) {
+  static boolean azMethodExist(final CastExpression ¢) {
     return Arrays.stream(step.methods(containingType(¢)))
-        .filter(m -> ("az" + step.type(¢)).equals((m.getName() + "")) && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
+        .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
 
-  private static boolean typesEqual(Type returnType, Type t) {
-    return (returnType + "").equals((t + ""));
+  private static boolean typesEqual(final Type returnType, final Type t) {
+    return (returnType + "").equals(t + "");
   }
 
   static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
