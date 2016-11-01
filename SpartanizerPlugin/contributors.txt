@@ -32,6 +32,7 @@ Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 David Cohen <dcohen484 [at] gmail.com>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
+Doron Meshulam  <doronmmm@gmail.com>
 Elia Traore <set [at] campus.technion.ac.il>
 Entony Lekhtman <tony.lek1995 [at] gmail.com>
 Hershele Ostropolr8 https://en.wikipedia.org/wiki/Hershel_of_Ostropol
@@ -47,6 +48,8 @@ Koby Ben Shimol <kobybs [at] gmail.com>
 Koral  Chapnik <chapnikkoral [at] gmail.com>
 Lidia Piatigorski <lidkin5 [at] gmail.com>
 Michal Cohen <cohenmelany1 [at] gmail.com>
+Moshe Eliasof   <moshikoalis [at] gmail.com>
+Netanel Felcher <netanel_felcher [at] hotmail.com>
 Nikita Dizhur <blenderon [at] gmail.com
 Nisan Arzoan <nisanarz [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
@@ -64,9 +67,12 @@ Roei Rosenzweig <m.roei.raz [at] gmail.com>
 Roey Maor <maor.roey [at] gmail.com>
 Ron Gatenio <ron.gatenio [at] gmail.com>
 Roy Shchory <royshch1 [at] gmail.com>
+Sapir Bismot <sapirbismot@gmail.com>
+Sefi Albo <sefialbo [at] gmail.com>
 Shahar Yair <shya95 [at] gmail.com>
 Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
 Shay Segal <siglons [at] gmail.com>
+Shimon Azulay <sazulay [at] campus.technion.ac.il>
 Stav Namir <stav1472 [at] gmail.com>
 Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Dragucki <tomerd [at] campus.technion.ac.il>
@@ -76,6 +82,7 @@ Ward Mattar <ward.mattar [at] gmail.com>
 Yael Amitay <syaelam [at] campus.technion.ac.il>
 Yaniv Levinsky <leyaniv [at] gmail.com>
 Yarden Lev <ylev [at] campus.technion.ac.il>
+Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
 Yonatan Zarecki <szarecki [at] campus.technion.ac.il>
 Yosef Raisman <yosefraisman [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>
@@ -85,10 +92,4 @@ Ziv Izhar <szizhar [at] campus.techion.ac.il>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
 خوجة نصر الدين <juha [at] nasereddi.in>
 ארבינקא The Blaumlich Tunnel
-Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
-Netanel Felcher <netanel_felcher [at] hotmail.com>
-Moshe Eliasof   <moshikoalis [at] gmail.com>
-Doron Meshulam  <doronmmm@gmail.com>
-Sapir Bismot <sapirbismot@gmail.com>
-Shimon Azulay <sazulay [at] campus.technion.ac.il>
-Sefi Albo <sefialbo [at] gmail.com>
+
