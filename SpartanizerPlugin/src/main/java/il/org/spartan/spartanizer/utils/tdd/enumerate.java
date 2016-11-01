@@ -25,10 +25,10 @@ public enum enumerate {
     });
     return $.inner;
   }
-  
+
   /** @author Aviad Cohen & Noam Yefet
-   *  @param ¢
-   *  @since Nov 1, 2016 */
+   * @param ¢
+   * @since Nov 1, 2016 */
   public static int statements(ASTNode ¢) {
     return ¢ == null ? 0 : "{\n  return 0;\n}\n".equals((¢ + "")) ? 1 : 2;
   }
