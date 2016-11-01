@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
@@ -99,6 +100,15 @@ public class CommandLineApplicator extends Applicator {
   /** @return this */
   CommandLineApplicator defaultSelection() {
     selection(CommandLineSelection.Util.get());
+    return this;
+  }
+  
+  /** Default run action configuration of {@link CommandLineApplicator}. 
+   * @param a JD
+   * @return this applicator */
+  public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator a) {
+    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+    name(a.getName());
     return this;
   }
 
