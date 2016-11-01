@@ -54,7 +54,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static TypeDeclaration containingType(final CastExpression ¢) {
-    String s = AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiLevel");
+    final String s = AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiLevel");
     if (s == null)
       return null;
     switch (s) {
@@ -76,14 +76,14 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   /** @param file
    * @return */
-  private static File prepareFile(File ¢) {
+  private static File prepareFile(final File ¢) {
     // TODO: Marco ASTNode cu = makeAST.COMPILATION_UNIT.from(f);
     return ¢;
   }
 
   /** @param ¢
    * @return */
-  private static String getContainingPackage(CastExpression ¢) {
+  private static String getContainingPackage(final CastExpression ¢) {
     return searchAncestors.forContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 
