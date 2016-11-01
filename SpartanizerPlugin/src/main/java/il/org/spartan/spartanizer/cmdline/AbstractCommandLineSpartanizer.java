@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.plugin.*;
 
-@SuppressWarnings("unused") public abstract class AbstractCommandLineSpartanizer {
+public abstract class AbstractCommandLineSpartanizer {
   // TODO Matteo: useless here? look at CommandLine$Applicator
   // static List<Class<? extends BodyDeclaration>> selectedNodeTypes =
   // as.list(MethodDeclaration.class);
