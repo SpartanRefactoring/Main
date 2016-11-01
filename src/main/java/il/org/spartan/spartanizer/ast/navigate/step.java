@@ -476,13 +476,13 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static MethodDeclaration[] methods(TypeDeclaration ¢) {
+  public static MethodDeclaration[] methods(final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getMethods();
   }
 
   /** @param p JD
    * @return */
-  public static Type type(SingleVariableDeclaration ¢) {
+  public static Type type(final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 }

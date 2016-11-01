@@ -13,12 +13,10 @@ import il.org.spartan.spartanizer.tipping.*;
 
 public class Collect$Applicator {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
-  
-//  private static CSVStatistics report;
+  // private static CSVStatistics report;
   public Toolbox toolbox;
 
-
-  public void go(CompilationUnit u) {
+  public void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
@@ -26,15 +24,16 @@ public class Collect$Applicator {
       }
     });
   }
-  
+
   boolean go(final ASTNode input) {
     System.err.println("input: " + input);
-//    tippersAppliedOnCurrentObject = 0;
-//    final String output = fixedPoint(input + "");
+    // tippersAppliedOnCurrentObject = 0;
+    // final String output = fixedPoint(input + "");
     for (final Document $ = new Document(input + "");;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-//      final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
-//        final ASTRewrite $1 = ASTRewrite.create(u.getAST());
+      // final BodyDeclaration u = (BodyDeclaration)
+      // makeAST.CLASS_BODY_DECLARATIONS.from($.get());
+      // final ASTRewrite $1 = ASTRewrite.create(u.getAST());
       toolbox = Toolbox.defaultInstance();
       u.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -61,28 +60,23 @@ public class Collect$Applicator {
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
-          if (s != null) {
-//              ++tippersAppliedOnCurrentObject;
-//              TrimmerLog.application(r, s);
-          }
           return true;
         }
-        
+
         @Override protected void initialization(final ASTNode ¢) {
           disabling.scan(¢);
         }
       });
     }
   }
-  
-//  String fixedPoint(final ASTNode ¢) {
-//    return fixedPoint(¢ + "");
-//  }
-  
+
+  // String fixedPoint(final ASTNode ¢) {
+  // return fixedPoint(¢ + "");
+  // }
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
-//        final ASTRewrite $1 = ASTRewrite.create(u.getAST());
+      // final ASTRewrite $1 = ASTRewrite.create(u.getAST());
       toolbox = Toolbox.defaultInstance();
       u.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -107,71 +101,53 @@ public class Collect$Applicator {
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
-          if (s != null) {
-//              ++tippersAppliedOnCurrentObject;
-//              TrimmerLog.application(r, s);
-          }
           return true;
         }
-        
+
         @Override protected void initialization(final ASTNode ¢) {
           disabling.scan(¢);
         }
       });
-
-//      consolidateTips($1, u);
-//      final ASTRewrite r = $1;
-//      final TextEdit e = r.rewriteAST($, null);
-//      try {
-//        e.apply($);
-//      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-//        monitor.logEvaluationError(this, x);
-//        throw new AssertionError(x);
-//      }
-//      if (!e.hasChildren())
-//        return $.get();
     }
   }
-  
-//  public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
-//    toolbox = Toolbox.defaultInstance();
-//    u.accept(new DispatchingVisitor() {
-//      @Override protected <N extends ASTNode> boolean go(final N n) {
-//        TrimmerLog.visitation(n);
-//        if (disabling.on(n))
-//          return true;
-//        Tipper<N> tipper = null;
-//        try {
-//          tipper = getTipper(n);
-//        } catch (final Exception x) {
-//          monitor.debug(this, x);
-//        }
-//        if (tipper == null)
-//          return true;
-//        Tip s = null;
-//        try {
-//          s = tipper.tip(n, exclude);
-//          
-//        } catch (final TipperFailure f) {
-//          monitor.debug(this, f);
-//        } catch (final Exception x) {
-//          monitor.debug(this, x);
-//        }
-//        if (s != null) {
-////          ++tippersAppliedOnCurrentObject;
-//          TrimmerLog.application(r, s);
-//        }
-//        return true;
-//      }
-//
-//      @Override protected void initialization(final ASTNode ¢) {
-//        disabling.scan(¢);
-//      }
-//    });
-//  }
-  
+
+  // public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
+  // toolbox = Toolbox.defaultInstance();
+  // u.accept(new DispatchingVisitor() {
+  // @Override protected <N extends ASTNode> boolean go(final N n) {
+  // TrimmerLog.visitation(n);
+  // if (disabling.on(n))
+  // return true;
+  // Tipper<N> tipper = null;
+  // try {
+  // tipper = getTipper(n);
+  // } catch (final Exception x) {
+  // monitor.debug(this, x);
+  // }
+  // if (tipper == null)
+  // return true;
+  // Tip s = null;
+  // try {
+  // s = tipper.tip(n, exclude);
+  //
+  // } catch (final TipperFailure f) {
+  // monitor.debug(this, f);
+  // } catch (final Exception x) {
+  // monitor.debug(this, x);
+  // }
+  // if (s != null) {
+  //// ++tippersAppliedOnCurrentObject;
+  // TrimmerLog.application(r, s);
+  // }
+  // return true;
+  // }
+  //
+  // @Override protected void initialization(final ASTNode ¢) {
+  // disabling.scan(¢);
+  // }
+  // });
+  // }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-    
 }

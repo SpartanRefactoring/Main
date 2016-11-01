@@ -13,7 +13,7 @@ public class TypeChecker extends JavadocMarkerNanoPattern<MethodDeclaration> {
         || !iz.returnStatement(step.statements(step.body(d)).get(0)) || step.parameters(d).size() != 1)
       return false;
     final ReturnStatement s = az.returnStatement(step.statements(step.body(d)).get(0));
-    return iz.instanceofExpression(step.expression(s)) && ("boolean").equals(step.returnType(d) + "")
+    return iz.instanceofExpression(step.expression(s)) && "boolean".equals(step.returnType(d) + "")
         && (step.parameters(d).get(0).getName() + "").equals(step.left(az.instanceofExpression(step.expression(s))) + "");
   }
 }
