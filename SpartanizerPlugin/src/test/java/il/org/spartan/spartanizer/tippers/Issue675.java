@@ -20,4 +20,8 @@ public class Issue675 {
   @Test public void statements_test1() {
     assertEquals(enumerate.statements(null), 0);
   }
+  
+  @Test public void statements_test2() {
+    assertEquals(enumerate.statements(wizard.ast("return 0;")), 1);
+  }
 }

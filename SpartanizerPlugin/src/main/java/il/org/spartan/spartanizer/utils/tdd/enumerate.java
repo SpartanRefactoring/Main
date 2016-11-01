@@ -30,7 +30,9 @@ public enum enumerate {
    *  @param n
    *  @since Nov 1, 2016 */
   public static int statements(ASTNode n) {
-    return 0;
+    if (n == null)
+      return 0;
+    return 1;
   }
   // For you to implement! Let's TDD and get it on!
 }
