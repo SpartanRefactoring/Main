@@ -152,10 +152,8 @@ public class TypeTokenTest extends TestCase {
   }
 
   public void testResolveType_fromWildcard() {
-    ParameterizedType withWildcardType = (ParameterizedType)
-        new TypeCapture<Comparable<? extends Iterable<String>>>() {}.capture();
-    assertEquals(String.class, TypeToken.of(withWildcardType.getActualTypeArguments()[0])
-			.resolveType(Iterable.class.getTypeParameters()[0]).getType());
+    assertEquals(String.class, TypeToken.of(((ParameterizedType) new TypeCapture<Comparable<? extends Iterable<String>>>() {
+    }.capture()).getActualTypeArguments()[0]).resolveType(Iterable.class.getTypeParameters()[0]).getType());
   }
 
   public void testGetTypes_noSuperclass() {
@@ -1139,17 +1137,17 @@ public class TypeTokenTest extends TestCase {
   }
 
   public void testGetSupertype_fullySpecializedType() {
-    Type expectedType = new TypeToken<Map<String, List<Object>>>() {}.getType();
-    assertEquals(expectedType,
-        new TypeToken<ListMap<String, Object>>() {}.getSupertype(Map.class).getType());
+    assertEquals(new TypeToken<Map<String, List<Object>>>() {
+    }.getType(), new TypeToken<ListMap<String, Object>>() {
+    }.getSupertype(Map.class).getType());
   }
 
   private interface StringListMap<V> extends ListMap<String, V> {}
 
   public <V> void testGetSupertype_partiallySpecializedType() {
-    Type expectedType = new TypeToken<Map<String, List<V>>>() {}.getType();
-    assertEquals(expectedType,
-        new TypeToken<StringListMap<V>>() {}.getSupertype(Map.class).getType());
+    assertEquals(new TypeToken<Map<String, List<V>>>() {
+    }.getType(), new TypeToken<StringListMap<V>>() {
+    }.getSupertype(Map.class).getType());
   }
 
   public void testGetSubtype_withTypeVariable() {
@@ -1262,10 +1260,9 @@ public class TypeTokenTest extends TestCase {
     class TwoTypeArgs<K, V> {}
     class StringForFirstTypeArg<V> extends TwoTypeArgs<String, V> {}
     class OuterTypeVar<V> extends StringForFirstTypeArg<List<V>> {}
-    TypeToken<StringForFirstTypeArg<List<?>>> type =
-        new TypeToken<StringForFirstTypeArg<List<?>>>() {};
-    assertEquals(new TypeToken<OuterTypeVar<?>>() {},
-        type.getSubtype(OuterTypeVar.class));
+    assertEquals(new TypeToken<OuterTypeVar<?>>() {
+    }, (new TypeToken<StringForFirstTypeArg<List<?>>>() {
+    }).getSubtype(OuterTypeVar.class));
   }
 
   public void testGetSubtype_toWildcardWithBounds() {
