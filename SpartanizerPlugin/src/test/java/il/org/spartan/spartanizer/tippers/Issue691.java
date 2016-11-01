@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static org.junit.Assert.*;
-import il.org.spartan.spartanizer.utils.tdd.getAll;
+
 import org.junit.*;
+
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** @author Dor Ma'ayan
  * @author Omri Shmuel

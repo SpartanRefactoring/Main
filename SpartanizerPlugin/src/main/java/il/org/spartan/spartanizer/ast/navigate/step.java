@@ -484,7 +484,7 @@ public enum step {
    * @return */
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
-        : iz.typeDeclaration(¢) ? Arrays.asList((az.typeDeclaration(¢).getMethods()))
+        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
                 .filter(d -> iz.methodDeclaration((ASTNode) d)).collect(Collectors.toList()) : null;
   }
