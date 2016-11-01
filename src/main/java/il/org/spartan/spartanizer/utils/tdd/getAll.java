@@ -10,9 +10,9 @@ import org.eclipse.jdt.core.dom.*;
 public enum getAll {
   ;
   /** Get all the methods invoked in m
-   * @param m JD
+   * @param d JD
    * @return List of the names of the methods */
-  public static Set<String> invocations(MethodDeclaration m) {
+  public static Set<String> invocations(@SuppressWarnings("unused") MethodDeclaration __) {
     return null;
   }
   // For you to implement! Let's TDD and get it on!
