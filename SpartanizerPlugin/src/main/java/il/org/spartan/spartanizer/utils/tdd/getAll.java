@@ -21,8 +21,9 @@ public enum getAll {
   /** Get list of names in a Block
    * @param b Block
    * @return List of the names in the block */
-  public static List<Name> names(final Block b) {
+  public static List<Name> names(@SuppressWarnings("unused") final Block __) {
+    // TODO: For you to implement! Let's TDD and get it on! Add your name here.
+    // --yg
     return null;
   }
-  // For you to implement! Let's TDD and get it on!
 }
