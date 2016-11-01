@@ -41,15 +41,11 @@ public class Analyzer {
 
   private static void parseArguments(final String[] args) {
     if (args.length < 2)
-      System.out.println("You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n");
+      assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
     for (String arg : args)
       parseArgument(arg);
-    // set("inputDir", args[0]);
-    // for (int ¢ = 1; ¢ < args.length; ++¢)
-    // if ("-dir".equals(args[¢]))
-    // set("outputDir", args[++¢]);
-    // else
-    // set("outputDir", get("outputDir") + args[1]);
+    System.out.println(options);
+    System.out.println(AnalyzerOptions.options);
   }
 
   /** @param key
@@ -68,7 +64,6 @@ public class Analyzer {
       setLocalProperty(li[0], li[1]);
     else
       setExternalProperty(li[0], li[1]);
-    System.out.println(options);
   }
 
   /** @param s
@@ -92,7 +87,6 @@ public class Analyzer {
    * @param right */
   private static void setExternalProperty(String left, String right) {
     setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
-    System.out.println(AnalyzerOptions.options);
   }
 
   private static void setExternalProperty(String cls, String property, String value) {
@@ -197,18 +191,22 @@ public class Analyzer {
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
             null) //
+        .add(InstanceofExpression.class, //
+            new InstanceOf(), //
+            null)
         .add(MethodDeclaration.class, //
-            new Converter(), //
-            new MethodEmpty(), //
-            new Getter(), //
-            new Setter(), //
-            new Mapper(), //
-            new Exploder(), //
-            new JDPattern(), //
-            new Examiner(), //
-            new Delegator(), //
             new Carrier(), //
+            new Converter(), //
+            new Delegator(), //
+            new Examiner(), //
+            new Exploder(), //
             new Fluenter(), //
+            new Getter(), //
+            new JDPattern(), //
+            new Mapper(), //
+            new MethodEmpty(), //
+            new Setter(), //
+            new TypeChecker(), //
             null);
   }
 
