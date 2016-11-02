@@ -31,7 +31,7 @@ public enum determineIf {
    * @return true iff the class contains only final fields
    */
   public static boolean isImmutable(TypeDeclaration m){
-    return false;
+    return true;
   }
   
   // For you to implement! Let's TDD and get it on!
