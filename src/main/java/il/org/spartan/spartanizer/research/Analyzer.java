@@ -6,6 +6,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.*;
@@ -13,7 +15,6 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyzer {
-  static final long serialVersionUID = 1L;
   {
     set("outputDir", "/tmp");
   }
@@ -47,7 +48,7 @@ public class Analyzer {
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
-    AnalyzerOptions.set(Analyzer.class.getSimpleName(), key, value);
+    AnalyzerOptions.setMain(key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
@@ -160,6 +161,21 @@ public class Analyzer {
       Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
     }
     Logger.summarize(get("outputDir"));
+  }
+
+  @SuppressWarnings("unused") private static void analyzeMethods() {
+    final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+    List<MethodDeclaration> li = new ArrayList<>();
+    for (final File ¢ : getJavaFiles(get("inputDir"))) {
+      for (AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(¢)))))
+        li.addAll(step.methods(t));
+    }
+    for (MethodDeclaration m : li) {
+      // TODO: Marco count
+      // spartanize
+      // count
+      // log
+    }
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
