@@ -50,4 +50,13 @@ public enum getAll {
     }
     return new ArrayList<>();
   }
+  
+  
+  /** returns a list of all instances of expressions at given method
+   * @author Koby Ben Shimol
+   * @author Yuval Simon
+   * @since 16-11-01 */
+  public List<InstanceofExpression> instanceofs(MethodDeclaration m){
+    
+  }
 }
