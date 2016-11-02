@@ -19,7 +19,7 @@ public class Issue705 {
   }
   
   @Test public void b() {
-    assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }"))  );
+    assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size()  );
   }
   
   
