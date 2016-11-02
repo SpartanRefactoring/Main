@@ -22,11 +22,12 @@ public enum getAll {
     Set<String> $ = new TreeSet<>();
     if(¢.getBody().statements().isEmpty())
       return  $;
-    for(Statement s : (List<Statement>)¢.getBody().statements()){
-      if(iz.expressionStatement(s) && //
-          az.methodInvocation(az.expressionStatement(s).getExpression())!=null)
-        $.add((az.methodInvocation(az.expressionStatement(s).getExpression()).getName() + ""));
-    }
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit (MethodInvocation M) {
+        $.add(M.getName().toString());
+        return true;
+      }
+    });
     return $;
   }
 
