@@ -61,7 +61,7 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public void instanceofs(MethodDeclaration m){
-    
+  public static void instanceofs(MethodDeclaration m){
+
   }
 }
