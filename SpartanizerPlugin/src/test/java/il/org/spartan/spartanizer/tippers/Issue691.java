@@ -41,4 +41,28 @@ public class Issue691 {
     res.add("q");
     assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {t(); q();}")))),res);
   }
+  
+  @SuppressWarnings("static-method") @Test public void test5() {
+    Set<String> res = new TreeSet<>();
+    res.add("t");
+    res.add("q");
+    assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(); q();}")))),res);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void test6() {
+    Set<String> res = new TreeSet<>();
+    res.add("t");
+    res.add("x");
+    res.add("q");
+    assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(x(),z); q();}")))),res);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void test7() {
+    Set<String> res = new TreeSet<>();
+    res.add("t");
+    res.add("x");
+    res.add("q");
+    res.add("add");
+    assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(x(),z); q();int v = 5 +add();}")))),res);
+  }
 }
