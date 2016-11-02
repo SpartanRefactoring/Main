@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.io.*;
+import java.nio.file.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -74,11 +75,22 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return null;
   }
 
-  /** @param file
-   * @return */
   private static File prepareFile(final File ¢) {
-    // TODO: Marco ASTNode cu = makeAST.COMPILATION_UNIT.from(f);
-    return ¢;
+    return ¢.exists() ? ¢ : createFileFromTemplate(¢);
+  }
+
+  private static File createFileFromTemplate(final File f) {
+    try {
+      f.createNewFile();
+    } catch (IOException x1) {
+      x1.printStackTrace();
+    }
+    try (FileWriter w = new FileWriter(f)) {
+      w.write(String.valueOf(Files.readAllBytes(Paths.get("/src/main/java/il/org/spartan/spartanizer/research/az.template"))));
+    } catch (IOException x) {
+      x.printStackTrace();
+    }
+    return f;
   }
 
   /** @param ¢
