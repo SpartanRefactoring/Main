@@ -13,13 +13,10 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyzer {
-  static Map<String, String> options = new HashMap<String, String>() {
-    static final long serialVersionUID = 1L;
-    {
-      // TODO: check what to do with this
-      put("outputDir", "/tmp");
-    }
-  };
+  static final long serialVersionUID = 1L;
+  {
+    set("outputDir", "/tmp");
+  }
 
   public static void main(final String args[]) {
     parseArguments(args);
@@ -36,7 +33,7 @@ public class Analyzer {
   /** @param ¢
    * @return */
   private static String get(final String ¢) {
-    return options.get(¢);
+    return AnalyzerOptions.get(Analyzer.class.getSimpleName(), ¢);
   }
 
   private static void parseArguments(final String[] args) {
@@ -44,14 +41,13 @@ public class Analyzer {
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
     for (final String arg : args)
       parseArgument(arg);
-    System.out.println(options);
     System.out.println(AnalyzerOptions.options);
   }
 
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
-    options.put(key, value);
+    AnalyzerOptions.set(Analyzer.class.getSimpleName(), key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
