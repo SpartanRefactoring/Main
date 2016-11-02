@@ -43,17 +43,16 @@ public enum getAll {
    * @param ¢ Block
    * @return List of the names in the block */
   public static List<Name> names(final Block b) {
-    if(b==null) {
+    if(b==null)
       return null;
-    }
-    List<Name> names = new ArrayList<>();
+    List<Name> $ = new ArrayList<>();
     b.accept(new ASTVisitor() {
-      @Override public boolean visit(SimpleName n) {
-        names.add(n);
+      @Override public boolean visit(SimpleName ¢) {
+        $.add(¢);
         return true;
       }
     });
-    return names;
+    return $;
   }
   
   
