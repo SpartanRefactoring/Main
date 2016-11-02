@@ -27,4 +27,11 @@ public class Issue691 {
     res.add("t");
     assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a =  t();}")))),res);
   }
+  
+  @SuppressWarnings("static-method") @Test public void test3() {
+    Set<String> res = new TreeSet<>();
+    res.add("t");
+    res.add("g");
+    assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a =  t(); g();}")))),res);
+  }
 }
