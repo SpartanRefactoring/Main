@@ -26,7 +26,8 @@ public enum enumerate {
     return $.inner;
   }
 
-  /** @author Aviad Cohen & Noam Yefet
+  /** @author Aviad Cohen
+   * @author Noam Yefet
    * @param ¢
    * @since Nov 1, 2016 */
   public static int statements(final ASTNode n) {
