@@ -30,7 +30,7 @@ public class Issue714 {
   }
   
   @Test public void testSimpleTypeDecleration() {
-    assertTrue(determineIf.isImmutable((TypeDeclaration) wizard.ast("int x")));
+    assertTrue(determineIf.isImmutable((TypeDeclaration) wizard.ast("final int x")));
   }
   
   
