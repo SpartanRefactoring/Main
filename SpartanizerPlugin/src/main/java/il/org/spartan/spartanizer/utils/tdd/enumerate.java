@@ -42,7 +42,7 @@ public enum enumerate {
     return count.inner;
   }
 
-  public static int methods() {
+  @SuppressWarnings("unused") public static int methods(CompilationUnit cu) {
     return 0;
   }
   // For you to implement! Let's TDD and get it on!
