@@ -61,6 +61,10 @@ public enum getAll {
    * @author Yuval Simon
    * @since 16-11-01 */
   public static List<InstanceofExpression> instanceofs(MethodDeclaration m){
-    return null;
+    if(m == null){
+      return null;
+    }
+    return new LinkedList<InstanceofExpression>();
+    
   }
 }
