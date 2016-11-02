@@ -31,19 +31,19 @@ public enum enumerate {
    * @since Nov 1, 2016 */
   public static int statements(final ASTNode n) {
     final Int count = new Int();
-    
     if (n == null)
       return 0;
-    
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
           ++count.inner;
       }
-      
     });
-    
     return count.inner;
+  }
+
+  public static int methods() {
+    return 0;
   }
   // For you to implement! Let's TDD and get it on!
 }

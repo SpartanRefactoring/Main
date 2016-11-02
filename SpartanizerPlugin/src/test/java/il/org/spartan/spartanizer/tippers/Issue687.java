@@ -16,6 +16,7 @@ public class Issue687 {
    }
   @Test public void a() {
     assertNotNull(getAll.names(null));
+
   }
   @Test public void b() {
     assertTrue((getAll.names(null)) instanceof List<?>);
