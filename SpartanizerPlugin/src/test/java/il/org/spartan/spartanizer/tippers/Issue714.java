@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
+
 /**
  * see issue #714 for more details
  * @author Dan Abramovich
@@ -13,7 +16,7 @@ import org.junit.*;
  */
 
 public class Issue714 {
-  @Test public void test() {
-    fail("Not yet implemented");
+  @SuppressWarnings("static-method") @Test public void test0() {
+    @SuppressWarnings("unused") final boolean b = determineIf.isImmutable(null);
   }
 }
