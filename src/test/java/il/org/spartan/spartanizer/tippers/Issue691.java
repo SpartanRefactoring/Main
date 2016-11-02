@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -18,5 +20,11 @@ public class Issue691 {
   
   @SuppressWarnings("static-method") @Test public void test1() {
     assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {}")))).size(),0);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void test2() {
+    Set<String> res = new TreeSet<>();
+    res.add("t");
+    assertEquals((getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a =  t();}")))),res);
   }
 }
