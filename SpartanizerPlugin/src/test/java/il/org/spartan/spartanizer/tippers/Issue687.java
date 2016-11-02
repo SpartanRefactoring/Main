@@ -14,18 +14,17 @@ public class Issue687 {
   private static void forceTypeAtCompileTime(List<Name> ss) {
     assert true; 
    }
-  @Test public void a() {//gggg
-    assertNotNull(getAll.names(null));
+  @Test public void testGetNull() {
+    assertNull(getAll.names(null));
 
   }
-  @Test public void b() {
-    assertTrue((getAll.names(null)) instanceof List<?>);
-  }
-  @Test public void c() {
-    assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
-  }
-  @Test public void d() {
+
+  @Test public void testReturnType() {
     forceTypeAtCompileTime(getAll.names((Block) wizard.ast("{}")));
+  }
+  
+  @Test public void testGetEmpty() {
+    assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
   }
   
 }
