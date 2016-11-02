@@ -14,15 +14,15 @@ public enum getAll {
   /** Get all the methods invoked in m
    * @param d JD
    * @return List of the names of the methods */
-  public static Set<String> invocations(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return null;
+  public static Set<String> invocations(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return ¢ == null ? null : new TreeSet<>();
   }
 
   /** Get list of names in a Block
    * @param ¢ Block
    * @return List of the names in the block */
-  public static List<Name> names(final Block ¢) {
-    return ¢ == null ? null : new ArrayList<>();
+  public static List<Name> names(final Block b) {
+    return new ArrayList<>();
   }
   
 //TODO: For you to implement! Let's TDD and get it on! Add your name here.
