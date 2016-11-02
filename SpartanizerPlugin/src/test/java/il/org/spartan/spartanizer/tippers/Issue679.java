@@ -11,4 +11,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void checkExistence() {
     enumerate.methods();
   }
+
+  @Test public void checkReturnType() {
+    @SuppressWarnings("unused") int $ = enumerate.methods();
+  }
 }
