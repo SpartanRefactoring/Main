@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -20,12 +22,12 @@ public enum getAll {
     Set<String> $ = new TreeSet<>();
     if(¢.getBody().statements().isEmpty())
       return  $;
-    $.add("t");
-    if (¢.getBody().statements().size() == 1)
-      return $; 
-    $.add("g");
+    for(Statement s : (List<Statement>)¢.getBody().statements()){
+      if(iz.expressionStatement(s) && //
+          az.methodInvocation(az.expressionStatement(s).getExpression())!=null)
+        $.add((az.methodInvocation(az.expressionStatement(s).getExpression()).getName() + ""));
+    }
     return $;
-  
   }
 
   /** Get list of names in a Block
