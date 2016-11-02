@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
