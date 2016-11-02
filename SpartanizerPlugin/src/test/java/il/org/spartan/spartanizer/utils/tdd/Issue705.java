@@ -22,6 +22,15 @@ public class Issue705 {
     assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size()  );
   }
   
+  @Test public void c() {
+    Integer obj = 5;
+    if(obj instanceof Object){}
+    
+    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast(//
+        "Integer obj = 5;" 
+        + "if(obj instanceof Object){}")).size()  );
+  }
+  
   
   void auxList(@SuppressWarnings("unused") List<InstanceofExpression> __) {
     assert true;
