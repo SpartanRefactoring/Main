@@ -27,4 +27,9 @@ public class Issue687 {
     assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
   }
   
+  @Test public void testGetOneName() {
+    assertTrue(getAll.names((Block) wizard.ast("{a=1+1;}")).size()==1);
+  }
+  
+  
 }
