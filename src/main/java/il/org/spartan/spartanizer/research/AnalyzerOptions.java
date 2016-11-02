@@ -19,4 +19,8 @@ public interface AnalyzerOptions {
       options.put(cls, new HashMap<>());
     options.get(cls).put(property, value);
   }
+
+  static String getMain(final String property) {
+    return get(Analyzer.class.getSimpleName(), property);
+  }
 }
