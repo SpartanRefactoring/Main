@@ -60,7 +60,7 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public static void instanceofs(MethodDeclaration m){
-
+  public static List<InstanceofExpression> instanceofs(MethodDeclaration m){
+    return null;
   }
 }
