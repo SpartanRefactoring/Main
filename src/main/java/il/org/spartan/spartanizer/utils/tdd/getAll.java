@@ -50,6 +50,9 @@ public enum getAll {
       List<Name> l = new ArrayList<>();
       Name n = null; 
       l.add(n);
+      if(b.getLength()>8) {
+        l.add(n);
+      }
       return l; 
     }
     return new ArrayList<>();
