@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 public class Issue687 {
-  private static void forceTypeAtCompileTime(List<Name> ss) {
+  private static void forceTypeAtCompileTime(List<Name> ns) {
     assert true; 
    }
   @Test public void testGetNull() {
@@ -50,15 +50,15 @@ public class Issue687 {
   @Test public void testCheckNamesFineBlock() {
     //assuming we need to get all names in the block, including repetitions
     List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
-    assertTrue(n.get(0).toString().equals("a"));
-    assertTrue("b".equals(n.get(1).toString()));
-    assertTrue("System".equals(n.get(2).toString()));
-    assertTrue("out".equals(n.get(3).toString()));
-    assertTrue("println".equals(n.get(4).toString()));
-    assertTrue("a".equals(n.get(5).toString()));
-    assertTrue("c".equals(n.get(6).toString()));
-    assertTrue("c".equals(n.get(7).toString()));
-    assertTrue("a".equals(n.get(8).toString()));
+    assertTrue(("" + n.get(0)).equals("a"));
+    assertTrue("b".equals(("" + n.get(1))));
+    assertTrue("System".equals(("" + n.get(2))));
+    assertTrue("out".equals(("" + n.get(3))));
+    assertTrue("println".equals(("" + n.get(4))));
+    assertTrue("a".equals(("" + n.get(5))));
+    assertTrue("c".equals(("" + n.get(6))));
+    assertTrue("c".equals(("" + n.get(7))));
+    assertTrue("a".equals(("" + n.get(8))));
   }
   
 }
