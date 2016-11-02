@@ -20,5 +20,19 @@ public enum determineIf {
     return true;
   }
   
+  /**
+   * see issue #714 for more details
+   * 
+   * @author Arthur Sapozhnikov
+   * @author Assaf Lustig
+   * @author Dan Abramovich
+   * @since 16-11-02
+   * @param m
+   * @return true iff the class contains only final fields
+   */
+  public static void isImmutable(){
+    return;
+  }
+  
   // For you to implement! Let's TDD and get it on!
 }
