@@ -25,6 +25,10 @@ public interface AnalyzerOptions {
     return get(Analyzer.class.getSimpleName(), property);
   }
 
+  static void setMain(final String property, final String value) {
+    set(Analyzer.class.getSimpleName(), property, value);
+  }
+
   Int counter = new Int();
 
   static void tickNP() {
