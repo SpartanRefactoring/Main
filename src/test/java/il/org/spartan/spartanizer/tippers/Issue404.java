@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil
  * @author Dan Greenstein
- * @since 2016 */
+ * @since */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue404 {
