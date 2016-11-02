@@ -23,8 +23,8 @@ public enum getAll {
     if (¢.getBody().statements().isEmpty())
       return $;
     ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(MethodInvocation M) {
-        $.add(M.getName().toString());
+      @Override public boolean visit(MethodInvocation m) {
+        $.add(m.getName().toString());
         return true;
       }
     });
