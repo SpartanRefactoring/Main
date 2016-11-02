@@ -26,11 +26,6 @@ public class CleanerVisitor extends ASTVisitor {
     return true;
   }
 
-  @Override public boolean visit(final PackageDeclaration ¢) {
-    ¢.delete();
-    return true;
-  }
-
   @Override public boolean visit(final FieldDeclaration ¢) {
     ¢.delete();
     return true;
