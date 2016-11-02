@@ -583,8 +583,6 @@ public interface wizard {
    * @param r rewriter
    * @param g edit group, usually null */
   static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    // System.out.println(d.bodyDeclarations());
-    // System.out.println(m);
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(m, g);
   }
 }

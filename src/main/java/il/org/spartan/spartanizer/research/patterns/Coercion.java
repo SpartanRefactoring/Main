@@ -12,9 +12,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
-/** @author Ori Marcovitch
+/** Coercion pattern <br>
+ * Whenever we have ((Clazz)obj) turn into az.Clazz(obj) <br>
+ * So fluent, so delight.
+ * @author Ori Marcovitch
  * @since 2016 */
 public class Coercion extends NanoPatternTipper<CastExpression> {
+  private static final String API_FILE = "apiFile";
+  private static final String API_LEVEL = "apiLevel";
   static final Converter c = new Converter();
 
   @Override public boolean canTip(final CastExpression ¢) {
@@ -38,6 +43,11 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(final CastExpression ¢) {
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    System.out.println(containingType(¢));
+    step.methods(containingType(¢));
+    step.methods(containingType(¢)).stream()
+        .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)));
     return step.methods(containingType(¢)).stream()
         .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
@@ -51,28 +61,48 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(wizard.ast("static " + step.type(¢) + " az" + step.type(¢) + "(Object ¢){ return (" + step.type(¢) + ")¢;}"));
+    return az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)));
   }
 
-  private static TypeDeclaration containingType(final CastExpression ¢) {
-    final String s = AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiLevel");
-    if (s == null)
-      return null;
+  private static String azMethodModifier() {
+    return "static ";
+  }
+
+  private static String azMethodBody(final CastExpression ¢) {
+    return "(Object ¢){ return (" + step.type(¢) + ")¢;}";
+  }
+
+  private static String azMethodName(final CastExpression ¢) {
+    return (getProperty(API_LEVEL) == null ? "type" : !"type".equals(getProperty(API_LEVEL)) ? "" : "az") + step.type(¢);
+  }
+
+  private static AbstractTypeDeclaration containingType(final CastExpression ¢) {
+    String s = getProperty(API_LEVEL) == null ? "type" : getProperty(API_LEVEL);
     switch (s) {
       case "type":
         return searchAncestors.forContainingType().from(¢);
       case "package":
-        return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
-            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(prepareFile(new File(getContainingPackage(¢) + ".iz.java"))))).get(0));
+        System.out.println(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java");
+        System.out.println(getType(prepareFile(
+            new File(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java"))));
+        return getType(prepareFile(
+            new File(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java")));
       case "file":
-        return az.typeDeclaration(searchDescendants.forClass(TypeDeclaration.class)
-            .from(az.compilationUnit(makeAST.COMPILATION_UNIT.from(new File(AnalyzerOptions.get(Coercion.class.getSimpleName(), "apiFile")))))
-            .get(0));
+        return getType(new File(getProperty(API_FILE)));
       default:
         break;
     }
     assert false : "illegal apiLevel [" + s + "]";
     return null;
+  }
+
+  private static AbstractTypeDeclaration getType(File x) {
+    return az.abstractTypeDeclaration(
+        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(t -> "az".equals((t.getName() + ""))).findFirst().get());
+  }
+
+  private static String getProperty(String property) {
+    return AnalyzerOptions.get(Coercion.class.getSimpleName(), property);
   }
 
   private static File prepareFile(final File ¢) {
@@ -81,12 +111,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   private static File createFileFromTemplate(final File f) {
     try {
-      f.createNewFile();
-    } catch (IOException x1) {
-      x1.printStackTrace();
-    }
-    try (FileWriter w = new FileWriter(f)) {
-      w.write(String.valueOf(Files.readAllBytes(Paths.get("/src/main/java/il/org/spartan/spartanizer/research/az.template"))));
+      Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
+          f.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException x) {
       x.printStackTrace();
     }
