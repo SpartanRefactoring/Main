@@ -9,11 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 public class Issue687 {
-  @Test public void testGetNull() {
-    assertNull(getAll.names(null));
-  }
-
-  @Test public void testemptyBlock() {
-    assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
+  @Test public void a() {
+    assertNotNull(getAll.names(null));
   }
 }
