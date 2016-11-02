@@ -38,6 +38,11 @@ public class Issue687 {
   @Test public void testCheckActualName() {
     assertTrue(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0).toString().equals("a"));
   }
+  @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
+    List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
+    assertTrue(names.get(0).toString().equals("aba") && names.get(1).toString().equals("ima"));
+  }
+  
   
   
 }
