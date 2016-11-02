@@ -33,9 +33,10 @@ public enum getAll {
   /** Get list of names in a Block
    * @param ¢ Block
    * @return List of the names in the block */
-  public static List<Name> names(final Block b) {
-    return new ArrayList<>();
+  public static List<Name> names(final Block ¢) {
+    return ¢==null ? null: new ArrayList<>();
   }
   
-//TODO: For you to implement! Let's TDD and get it on! Add your name here.
+  
+
 }
