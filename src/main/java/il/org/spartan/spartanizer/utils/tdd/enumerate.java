@@ -42,8 +42,8 @@ public enum enumerate {
     return count.inner;
   }
 
-  public static void methods() {
-    // TODO: Implementation
+  public static int methods() {
+    return 0;
   }
   // For you to implement! Let's TDD and get it on!
 }
