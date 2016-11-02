@@ -14,8 +14,8 @@ public enum getAll {
   /** Get all the methods invoked in m
    * @param d JD
    * @return List of the names of the methods */
-  public static Set<String> invocations(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return null;
+  public static Set<String> invocations(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return ¢ == null ? null : new TreeSet<>();
   }
 
   /** Get list of names in a Block
