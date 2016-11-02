@@ -17,4 +17,7 @@ public class Issue687 {
   @Test public void b() {
     assertTrue((getAll.names(null)) instanceof List<?>);
   }
+  @Test public void c() {
+    assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
+  }
 }
