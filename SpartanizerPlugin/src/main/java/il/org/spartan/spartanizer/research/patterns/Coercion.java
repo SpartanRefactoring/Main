@@ -59,6 +59,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
+    // TODO: Marco clean :
     // AST a = ¢.getAST();
     // MethodDeclaration $ = a.newMethodDeclaration();
     // $.setName(a.newSimpleName(azMethodName(¢)));
