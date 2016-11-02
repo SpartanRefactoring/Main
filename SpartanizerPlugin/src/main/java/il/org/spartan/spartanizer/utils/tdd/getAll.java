@@ -21,7 +21,11 @@ public enum getAll {
     if(¢.getBody().statements().isEmpty())
       return  $;
     $.add("t");
+    if (¢.getBody().statements().size() == 1)
+      return $; 
+    $.add("g");
     return $;
+  
   }
 
   /** Get list of names in a Block
