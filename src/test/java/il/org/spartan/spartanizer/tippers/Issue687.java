@@ -14,7 +14,7 @@ public class Issue687 {
   private static void forceTypeAtCompileTime(List<Name> ss) {
     assert true; 
    }
-  @Test public void a() {
+  @Test public void a() {//gggg
     assertNotNull(getAll.names(null));
 
   }
