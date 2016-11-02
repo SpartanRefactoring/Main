@@ -55,4 +55,13 @@ public enum getAll {
     });
     return names;
   }
+  
+  
+  /** returns a list of all instances of expressions at given method
+   * @author Koby Ben Shimol
+   * @author Yuval Simon
+   * @since 16-11-01 */
+  public void instanceofs(MethodDeclaration m){
+    
+  }
 }
