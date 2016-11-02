@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research;
 import java.util.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Created out of {@link ConfigurableObjectTemplate}
  * @author Ori Marcovitch
@@ -22,5 +23,16 @@ public interface AnalyzerOptions {
 
   static String getMain(final String property) {
     return get(Analyzer.class.getSimpleName(), property);
+  }
+
+  Int counter = new Int();
+
+  static void tickNP() {
+    ++counter.inner;
+    if (counter.inner == 90) {
+      counter.inner = 0;
+      System.out.println("");
+    }
+    System.out.print(".");
   }
 }

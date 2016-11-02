@@ -43,8 +43,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(final CastExpression ¢) {
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    System.out.println(containingType(¢));
     step.methods(containingType(¢));
     step.methods(containingType(¢)).stream()
         .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)));
@@ -61,6 +59,20 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
+    // AST a = ¢.getAST();
+    // MethodDeclaration $ = a.newMethodDeclaration();
+    // $.setName(a.newSimpleName(azMethodName(¢)));
+    // Block b = a.newBlock();
+    // ReturnStatement rs = a.newReturnStatement();
+    // rs.setExpression(a.newNullLiteral());
+    // b.statements().add(rs);
+    // $.setBody(b);
+    // $.setReturnType2(a.newSimpleType(a.newSimpleName(step.type(¢).toString())));
+    // $.modifiers().add(a.newModifier(Modifier.ModifierKeyword.PUBLIC_KEYWORD));
+    // $.modifiers().add(a.newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
+    // System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    // System.out.println($);
+    // return $;
     return az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)));
   }
 
@@ -69,7 +81,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String azMethodBody(final CastExpression ¢) {
-    return "(Object ¢){ return (" + step.type(¢) + ")¢;}";
+    return "(Object ¢){return (" + step.type(¢) + ")¢;}";
   }
 
   private static String azMethodName(final CastExpression ¢) {
@@ -82,9 +94,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       case "type":
         return searchAncestors.forContainingType().from(¢);
       case "package":
-        System.out.println(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java");
-        System.out.println(getType(prepareFile(
-            new File(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java"))));
         return getType(prepareFile(
             new File(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java")));
       case "file":
@@ -110,6 +119,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static File createFileFromTemplate(final File f) {
+    // TODO: Marco change package declaration
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           f.toPath(), StandardCopyOption.REPLACE_EXISTING);

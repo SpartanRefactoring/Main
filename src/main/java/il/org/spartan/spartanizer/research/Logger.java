@@ -102,6 +102,7 @@ public class Logger {
   public static void logNP(final ASTNode n, final String np) {
     logMethodInfo(n, np);
     logNPInfo(n, np);
+    AnalyzerOptions.tickNP();
   }
 
   /** @param n
