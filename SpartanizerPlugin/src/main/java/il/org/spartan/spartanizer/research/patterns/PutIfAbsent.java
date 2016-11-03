@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -22,7 +24,9 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public boolean canTip(final IfStatement ¢) {
-    return tipper.canTip(¢);
+    System.out.println(¢);
+    System.out.println(analyze.type(az.simpleName(tipper.getMatching(¢, "$X1"))));
+    return tipper.canTip(¢) && analyze.type(az.simpleName(tipper.getMatching(¢, "$X1"))).startsWith("Map<");
   }
 
   @Override public Tip tip(final IfStatement s) {
