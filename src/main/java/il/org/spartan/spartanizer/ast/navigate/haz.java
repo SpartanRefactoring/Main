@@ -240,4 +240,10 @@ public enum haz {
     });
     return $.get().booleanValue();
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static boolean methods(AbstractTypeDeclaration ¢) {
+    return step.methods(¢) != null && !step.methods(¢).isEmpty();
+  }
 }
