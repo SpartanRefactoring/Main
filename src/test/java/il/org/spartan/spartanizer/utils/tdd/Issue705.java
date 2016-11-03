@@ -28,6 +28,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
         "if(obj instanceof Object){} }")).size());
   }
   
+  @Test public void d() {
+    assertEquals(2, getAll.instanceofs((MethodDeclaration) wizard.ast("boolean func (){"
+        + "Integer obj = 5;"
+        + "return (obj instanceof Object) || (obj instanceof Integer); }")).size());
+  }
+  
+  
+  
 
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
     assert true;
