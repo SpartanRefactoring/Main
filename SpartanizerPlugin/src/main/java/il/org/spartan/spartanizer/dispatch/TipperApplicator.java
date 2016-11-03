@@ -35,11 +35,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
-          try {
-            tipper.tip(¢).go(r, null);
-          } catch (final TipperFailure f) {
-            monitor.debug(this, f);
-          }
+          tipper.tip(¢).go(r, null);
       }
     });
   }
@@ -55,11 +51,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
         if (!tipper.canTip(¢))
           return;
         progressMonitor.worked(1);
-        try {
-          $.add(tipper.tip(¢));
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
-        }
+        $.add(tipper.tip(¢));
       }
     };
   }

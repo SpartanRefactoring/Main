@@ -63,12 +63,7 @@ public final class InteractiveSpartanizer {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> t = toolbox.firstTipper(n);
-        try {
-          return t == null || t.cantTip(n) || Trimmer.prune(t.tip(n, exclude), $);
-        } catch (final TipperFailure e) {
-          e.printStackTrace();
-        }
-        return false;
+        return t == null || t.cantTip(n) || Trimmer.prune(t.tip(n, exclude), $);
       }
     };
   }

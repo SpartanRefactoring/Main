@@ -102,9 +102,6 @@ public class CommandLine$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
-          // tick(n, tipper);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
