@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
   @Test public void a0() {
-    @SuppressWarnings("unused") final int x = enumerate.expressions(null);
+    enumerate.expressions(null);
   }
 
   @Test public void a() {
