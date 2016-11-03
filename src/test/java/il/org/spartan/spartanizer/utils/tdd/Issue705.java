@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     auxList(getAll.instanceofs((MethodDeclaration) null));
   }
 
-  @Ignore public void b() {
+  @Test public void b() {
     assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size());
   }
 
