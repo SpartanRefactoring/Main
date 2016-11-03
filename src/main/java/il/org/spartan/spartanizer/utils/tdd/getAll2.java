@@ -6,12 +6,18 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
+import java.util.List;
+
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+
 /** @author Ori Marcovitch
  * @author Moshe ELiasof
  * @author Netanel Felcher
  * @author Doron Meshulam
  * @author Tomer Dragucki
- * @since Nov 7, 2016 */
+ * @author Shimon Azulay
+ * @author Idan Atias
+ * @since Nov 8, 2016 */
 public enum getAll2 {
   ;
   // For you to implement! Let's TDD and get it on!
@@ -49,4 +55,10 @@ public enum getAll2 {
     });
     return $;
   }
+
+  /** @author Shimon Azulay & Idan Atias & Lior Ben Ami
+   * @since 16-11-3 */
+ public static List<String> publicFields(TypeDeclaration d){
+   return null;
+ }
 }
