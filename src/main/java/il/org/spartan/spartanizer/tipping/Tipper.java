@@ -58,11 +58,11 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
     return getClass().getSimpleName();
   }
 
-  public Tip tip(final N ¢) throws TipperFailure {
+  public Tip tip(final N ¢) {
     return tip(¢, null);
   }
 
-  public Tip tip(final N n, final ExclusionManager m) throws TipperFailure {
+  public Tip tip(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 

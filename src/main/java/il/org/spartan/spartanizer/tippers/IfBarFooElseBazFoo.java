@@ -99,7 +99,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
     };
   }
 
-  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) throws TipperFailure {
+  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
     return super.tip(s, exclude);
   }
 

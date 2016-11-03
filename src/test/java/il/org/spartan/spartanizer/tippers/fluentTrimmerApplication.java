@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -131,12 +130,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
           return true;
         final Tipper<N> w = trimmer().toolbox.firstTipper(n);
         if (w != null) {
-          Tip make = null;
-          try {
-            make = w.tip(n, exclude);
-          } catch (final TipperFailure f) {
-            monitor.debug(this, f);
-          }
+          Tip make = w.tip(n, exclude);
           if (make != null)
             make.go(r, null);
         }
