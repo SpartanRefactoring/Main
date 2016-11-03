@@ -21,11 +21,11 @@ public interface AnalyzerOptions {
     options.get(cls).put(property, value);
   }
 
-  static String getMain(final String property) {
+  static String getAnalyzer(final String property) {
     return get(Analyzer.class.getSimpleName(), property);
   }
 
-  static void setMain(final String property, final String value) {
+  static void setAnalyzer(final String property, final String value) {
     set(Analyzer.class.getSimpleName(), property, value);
   }
 
