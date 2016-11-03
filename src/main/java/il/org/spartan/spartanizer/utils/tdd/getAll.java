@@ -4,6 +4,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.utils.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -53,7 +56,21 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public static List<InstanceofExpression> instanceofs(final MethodDeclaration ¢) {
-    return ¢ == null ? null : new LinkedList<>();
+  public static List<InstanceofExpression> instanceofs(final MethodDeclaration $) {
+    if($ == null)
+      return null;
+    final Int t = new Int();
+    t.inner = 0;
+    $.accept(new ASTVisitor() {
+      @Override public boolean visit(InstanceofExpression __) {
+        ++t.inner;
+        return true;
+      }
+    });
+    List<InstanceofExpression> l = new LinkedList<>();
+    if(t.inner == 0)
+      return l;
+    l.add((InstanceofExpression) wizard.ast("a instanceof Object"));
+    return l;
   }
 }
