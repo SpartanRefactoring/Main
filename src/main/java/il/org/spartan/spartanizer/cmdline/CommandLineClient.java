@@ -6,8 +6,14 @@ public class CommandLineClient { // extends AbstractCommandLineSpartanizer{
   // TODO Matteo: Add instruction to parse command line
   // TODO Matteo: Add prompt help
   public static void main(final String[] args) {
+    parseCommandLineArgs(args);    
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new CommandLineSpartanizer(¢).fire();
+  }
+
+  private static void parseCommandLineArgs(String[] args) {
+    if(args.length == 0)
+      printPrompt();
   }
 
   static void printPrompt() {
