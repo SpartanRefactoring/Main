@@ -13,4 +13,9 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   protected abstract boolean prerequisite(final N ¢);
+
+  /** @param n
+   * @param s
+   * @return */
+  public abstract ASTNode getMatching(ASTNode n, String s);
 }

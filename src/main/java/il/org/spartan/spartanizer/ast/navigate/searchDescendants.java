@@ -27,7 +27,7 @@ public abstract class searchDescendants<N extends ASTNode> {
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-  public abstract searchDescendants<N> satisfying(final Predicate<N> ¢);
+  public abstract searchDescendants<N> suchThat(final Predicate<N> ¢);
 
   static class ByNodeClass<N extends ASTNode> extends searchDescendants<N> {
     final Class<N> clazz;
@@ -37,7 +37,7 @@ public abstract class searchDescendants<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @Override public ByNodeClass<N> satisfying(final Predicate<N> ¢) {
+    @Override public ByNodeClass<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
@@ -53,7 +53,7 @@ public abstract class searchDescendants<N extends ASTNode> {
       final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor() {
         @Override public void preVisit(final ASTNode ¢) {
-          if (¢.getClass().equals(clazz) && p.test(clazz.cast(¢)))
+          if (clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
             $.add(clazz.cast(¢));
         }
       });

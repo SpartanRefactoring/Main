@@ -55,8 +55,6 @@ public class Collect$Applicator {
             s = tipper.tip(n, exclude);
             Reports.tip(s);
             Reports.nl("tips");
-          } catch (final TipperFailure f) {
-            monitor.debug(this, f);
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
@@ -96,8 +94,6 @@ public class Collect$Applicator {
             s = tipper.tip(n, exclude);
             Reports.tip(s);
             Reports.nl("tips");
-          } catch (final TipperFailure f) {
-            monitor.debug(this, f);
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
