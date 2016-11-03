@@ -44,7 +44,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     return !arguments.isEmpty() && iz.expression(arguments.get(0)) && type.isString(az.expression(arguments.get(0)));
   }
 
-  @Override public Tip tip(final InfixExpression x) throws TipperFailure {
+  @Override public Tip tip(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);

@@ -6,7 +6,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** There is no reason to use this tipper, it won't make code look better. But
  * this can be used for replacing pattern with something so it won't be found
@@ -28,11 +27,7 @@ public final class WhenThenElse extends NanoPatternTipper<ConditionalExpression>
     Logger.logNP(x, getClass().getSimpleName());
     return new Tip(this.description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        try {
-          tipper.tip(x).go(r, g);
-        } catch (final TipperFailure x1) {
-          x1.printStackTrace();
-        }
+        tipper.tip(x).go(r, g);
       }
     };
   }
