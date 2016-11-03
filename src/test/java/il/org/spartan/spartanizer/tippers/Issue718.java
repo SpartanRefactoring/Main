@@ -13,8 +13,9 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Amir Sagiv
  * @since 16-11-03 */
 public class Issue718 {
-  MethodDeclaration loaded = (MethodDeclaration) methodDeclerationFromString("public void f(int x, int y, int z){ String a, b, c, d, e, f;}");
-  MethodDeclaration notLoaded = (MethodDeclaration) methodDeclerationFromString("public void g(int y, int z){ String a, b, c, d, e, f;}");
+  MethodDeclaration loaded = (MethodDeclaration) methodDeclarationFromString("public void f(int x, int y, int z){ String a, b, c, d, e, f;}");
+  MethodDeclaration notLoaded = (MethodDeclaration) methodDeclarationFromString("public void g(int x, int y, int z){ String a, b, c, d;}");
+  MethodDeclaration biMethod = (MethodDeclaration)methodDeclarationFromString("public void h(int x, int y){}");
   
   @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
     assert true;
@@ -24,15 +25,20 @@ public class Issue718 {
     @SuppressWarnings("unused") final boolean b = determineIf.loaded(null);
   }
 
-  @Test public void checkIfLoadedMethodReturnsTrue() {
+  @Test public void checkIfLoadedMethodPasses() {
     assertTrue(determineIf.loaded(loaded));
   }
   
-  @Test public void checkIfNotLoadedMethodReturnsFalse(){
+  @Test public void checkIfNotLoadedMethodFailes(){
     assertFalse(determineIf.loaded(notLoaded));
   }
-
-  private static ASTNode methodDeclerationFromString(String ¢) {
+  
+  @Test public void checkIfBiMethodFailes(){
+    assertFalse(determineIf.loaded(biMethod));
+  }
+  
+  
+  private static ASTNode methodDeclarationFromString(String ¢) {
     return wizard.ast(¢);
   }
 }
