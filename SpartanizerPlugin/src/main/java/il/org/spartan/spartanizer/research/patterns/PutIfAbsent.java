@@ -6,7 +6,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** if (!$X1.containsKey($X2)) <br>
  * <tab> $X1.put($X2, $X3); <br>
@@ -30,11 +29,7 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(s, getClass().getSimpleName());
-        try {
-          tipper.tip(s).go(r, g);
-        } catch (final TipperFailure x) {
-          x.printStackTrace();
-        }
+        tipper.tip(s).go(r, g);
       }
     };
   }

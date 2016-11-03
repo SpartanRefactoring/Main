@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch
@@ -20,7 +19,7 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(¢);
   }
 
-  @Override public Tip tip(final IfStatement ¢) throws TipperFailure {
+  @Override public Tip tip(final IfStatement ¢) {
     Logger.logNP(¢, "IfNullThrow");
     return tipper.tip(¢);
   }
