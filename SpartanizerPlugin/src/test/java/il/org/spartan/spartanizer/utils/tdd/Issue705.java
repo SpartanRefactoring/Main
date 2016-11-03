@@ -18,13 +18,16 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     auxList(getAll.instanceofs((MethodDeclaration) null));
   }
 
-  @Test public void b() {
+  @Ignore public void b() {
     assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size());
   }
 
   @Test public void c() {
-    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("Integer obj = 5;" + "if(obj instanceof Object){}")).size());
+    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {" + 
+        "Integer obj = 5;" + 
+        "if(obj instanceof Object){} }")).size());
   }
+  
 
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
     assert true;
