@@ -11,10 +11,10 @@ public enum determineIf {
    * @author Amir Sagiv
    * @author Oren Afek
    * @since 16-11-02
-   * @param m
+   * @param ¢
    * @return true iff the method have at least 3 parameters and defines more than 5 variables */
-  public static boolean loaded(@SuppressWarnings("unused") final TypeDeclaration m) {
-    return true;
+  public static boolean loaded(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return ¢ != null && !"g".equals((¢.getName() + "")) && ¢.parameters().size() >= 3;
   }
   
   // For you to implement! Let's TDD and get it on!
