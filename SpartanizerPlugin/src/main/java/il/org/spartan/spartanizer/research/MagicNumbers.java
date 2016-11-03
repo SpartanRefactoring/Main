@@ -13,14 +13,13 @@ public class MagicNumbers {
   static Map<Integer, Int> afterHistogram = new HashMap<>();
 
   public static void logMethod(final int statementsBefore, final int statementsAfter) {
-    ++safeGet(beforeHistogram, Integer(statementsBefore)).inner;
-    ++safeGet(afterHistogram, Integer(statementsAfter)).inner;
+    ++getSafe(beforeHistogram, Integer(statementsBefore)).inner;
+    ++getSafe(afterHistogram, Integer(statementsAfter)).inner;
   }
 
-  private static Int safeGet(final Map<Integer, Int> m, final Integer i) {
-    if (!m.containsKey(i))
-      m.put(i, new Int());
-    return m.get(m);
+  private static Int getSafe(final Map<Integer, Int> m, final Integer i) {
+    m.putIfAbsent(i, new Int());
+    return m.get(i);
   }
 
   private static Integer Integer(final int ¢) {
