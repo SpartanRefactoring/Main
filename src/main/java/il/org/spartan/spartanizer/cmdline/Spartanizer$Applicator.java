@@ -201,8 +201,6 @@ public class Spartanizer$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
@@ -226,9 +224,8 @@ public class Spartanizer$Applicator {
       }
 
       /** @param n
-       * @param w
-       * @throws TipperFailure */
-      <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
+       * @param w */
+      <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
