@@ -166,11 +166,11 @@ public class Analyzer {
 
   @SuppressWarnings("unused") private static void analyzeMethods() {
     final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    List<MethodDeclaration> li = new ArrayList<>();
+    final List<MethodDeclaration> li = new ArrayList<>();
     for (final File f : getJavaFiles(get("inputDir")))
-      for (AbstractTypeDeclaration ¢ : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
+      for (final AbstractTypeDeclaration ¢ : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
         li.addAll(step.methods(¢));
-    for (MethodDeclaration ¢ : li)
+    for (final MethodDeclaration ¢ : li)
       MagicNumbers.logMethod(count.statements(¢), count.statements(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
   }
 
