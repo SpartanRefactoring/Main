@@ -13,26 +13,20 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Koby Ben Shimol
  * @author Yuval Simon
  * @since 16-11-2 */
-public class Issue705 {
+@SuppressWarnings("static-method") public class Issue705 {
   @Test public void a() {
     auxList(getAll.instanceofs((MethodDeclaration) null));
   }
-  
+
   @Test public void b() {
-    assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size()  );
+    assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size());
   }
-  
+
   @Test public void c() {
-    Integer obj = 5;
-    if(obj instanceof Object){}
-    
-    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast(//
-        "Integer obj = 5;" 
-        + "if(obj instanceof Object){}")).size()  );
+    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("Integer obj = 5;" + "if(obj instanceof Object){}")).size());
   }
-  
-  
-  void auxList(@SuppressWarnings("unused") List<InstanceofExpression> __) {
+
+  void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
     assert true;
   }
 }

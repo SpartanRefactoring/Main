@@ -90,7 +90,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static AbstractTypeDeclaration containingType(final CastExpression ¢) {
-    String s = getProperty(API_LEVEL) == null ? "type" : getProperty(API_LEVEL);
+    final String s = getProperty(API_LEVEL) == null ? "type" : getProperty(API_LEVEL);
     switch (s) {
       case "type":
         return searchAncestors.forContainingType().from(¢);
@@ -106,12 +106,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return null;
   }
 
-  private static AbstractTypeDeclaration getType(File x) {
+  private static AbstractTypeDeclaration getType(final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(t -> "az".equals((t.getName() + ""))).findFirst().get());
+        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(t -> "az".equals(t.getName() + "")).findFirst().get());
   }
 
-  private static String getProperty(String property) {
+  private static String getProperty(final String property) {
     return AnalyzerOptions.get(Coercion.class.getSimpleName(), property);
   }
 
@@ -124,7 +124,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           f.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (IOException x) {
+    } catch (final IOException x) {
       x.printStackTrace();
     }
     return f;

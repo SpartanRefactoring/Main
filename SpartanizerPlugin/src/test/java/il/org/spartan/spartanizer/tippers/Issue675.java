@@ -31,27 +31,27 @@ public class Issue675 {
   @Test public void statements_test4() {
     assertEquals(enumerate.statements(wizard.ast("x = 5; aValue = 8933; return 0;")), 4);
   }
-  
+
   @Test public void statements_test5() {
     assertEquals(enumerate.statements(wizard.ast(";;")), 3);
   }
-  
+
   @Test public void statements_test6() {
     assertEquals(enumerate.statements(wizard.ast("if (true) { x = 0; }")), 4);
   }
-  
+
   @Test public void statements_test7() {
     assertEquals(enumerate.statements(wizard.ast("while (true) { if (true) { x = 0; } }")), 6);
   }
-  
+
   @Test public void statements_test8() {
     assertEquals(enumerate.statements(wizard.ast("while (true) { if (x == 0) { break; } }")), 6);
   }
-  
+
   @Test public void statements_test9() {
     assertEquals(enumerate.statements(wizard.ast("while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}")), 8);
   }
-  
+
   @Test public void statements_test10() {
     assertEquals(enumerate.statements(wizard.ast("int x = 5; while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}")), 9);
   }

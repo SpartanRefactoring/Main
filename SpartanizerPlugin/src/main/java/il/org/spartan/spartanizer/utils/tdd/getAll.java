@@ -2,13 +2,7 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import java.util.*;
 
-
-
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.classfiles.reify.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
@@ -25,12 +19,12 @@ public enum getAll {
   public static Set<String> invocations(final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
-    Set<String> $ = new TreeSet<>();
+    final Set<String> $ = new TreeSet<>();
     if (¢.getBody().statements().isEmpty())
       return $;
     ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(MethodInvocation m) {
-        $.add(m.getName().toString());
+      @Override public boolean visit(final MethodInvocation ¢¢) {
+        $.add(¢¢.getName() + "");
         return true;
       }
     });
@@ -43,28 +37,23 @@ public enum getAll {
    * @param ¢ Block
    * @return List of the names in the block */
   public static List<Name> names(final Block b) {
-    if(b==null)
+    if (b == null)
       return null;
-    List<Name> $ = new ArrayList<>();
+    final List<Name> $ = new ArrayList<>();
     b.accept(new ASTVisitor() {
-      @Override public boolean visit(SimpleName ¢) {
+      @Override public boolean visit(final SimpleName ¢) {
         $.add(¢);
         return true;
       }
     });
     return $;
   }
-  
-  
+
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public static List<InstanceofExpression> instanceofs(MethodDeclaration m){
-    if(m == null){
-      return null;
-    }
-    return new LinkedList<InstanceofExpression>();
-    
+  public static List<InstanceofExpression> instanceofs(final MethodDeclaration ¢) {
+    return ¢ == null ? null : new LinkedList<>();
   }
 }
