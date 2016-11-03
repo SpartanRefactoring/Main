@@ -9,6 +9,7 @@ import org.junit.*;
 /** @author Shimon Azulay & Idan Atias & Lior Ben Ami
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue741 {
+
   @Test public void publicFields_test0() {
     getAll2.publicFields(null);
     assert true;
@@ -21,5 +22,10 @@ import org.junit.*;
   @Test public void publicFields_test2() {
     assertNotNull(getAll2.publicFields(null));
   }
+
+  @Test public void publicFields_test3() {
+    assertEquals(0, getAll2.publicFields(null).size());
+  }
+
 
 }
