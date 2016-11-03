@@ -35,18 +35,22 @@ public enum analyze {
   }
 
   public static String type(Name n) {
-    TypeDeclaration t = searchAncestors.forContainingType().from(n);
-    Str str = new Str();
-    t.accept(new ASTVisitor() {
-      @Override public boolean visit(FieldDeclaration d) {
-        for (VariableDeclarationFragment ¢ : step.fragments(d)) {
-          if (str.inner == null && (step.name(¢) + "").equals((n + "")))
-            str.inner = step.type(d) + "";
-          return false;
-        }
-        return true;
-      }
+    MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
+    String s = findDeclarationInMethod(n, m);
+    return s != null ? s : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
+  }
 
+  private static String findDeclarationInType(Name n, TypeDeclaration t) {
+    for (FieldDeclaration d : step.fieldDeclarations(t))
+      for (VariableDeclarationFragment ¢ : step.fragments(d))
+        if ((step.name(¢) + "").equals((n + "")))
+          return step.type(d) + "";
+    return null;
+  }
+
+  private static String findDeclarationInMethod(Name n, MethodDeclaration d) {
+    Str str = new Str();
+    d.accept(new ASTVisitor() {
       @Override public boolean visit(SingleVariableDeclaration ¢) {
         if (str.inner != null || !(step.name(¢) + "").equals((n + "")))
           return true;

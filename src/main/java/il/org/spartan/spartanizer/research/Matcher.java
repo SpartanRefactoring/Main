@@ -211,6 +211,27 @@ public class Matcher {
     return enviroment;
   }
 
+  @SuppressWarnings("unchecked") public static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
+      final Map<String, ASTNode> enviroment) {
+    if (iz.name(p)) {
+      final String id = az.name(p).getFullyQualifiedName();
+      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N"))
+        enviroment.put(id, n);
+    } else if (isBlockVariable(p))
+      enviroment.put(blockName(p) + "();", n);
+    else {
+      final List<? extends ASTNode> nChildren = Recurser.children(n);
+      final List<? extends ASTNode> pChildren = Recurser.children(p);
+      if (iz.methodInvocation(p)) {
+        nChildren.addAll(az.methodInvocation(n).arguments());
+        pChildren.addAll(az.methodInvocation(p).arguments());
+      }
+      for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+        collectEnviromentNodes(pChildren.get(¢), nChildren.get(¢), enviroment);
+    }
+    return enviroment;
+  }
+
   /** @param p
    * @return */
   private static String argumentsId(final ASTNode p) {
