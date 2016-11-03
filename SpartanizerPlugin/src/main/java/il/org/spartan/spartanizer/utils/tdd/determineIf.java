@@ -13,7 +13,7 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the method have at least 3 parameters and defines more than 5 variables */
-  public static boolean loaded(@SuppressWarnings("unused") final TypeDeclaration m) {
+  public static boolean loaded(@SuppressWarnings("unused") final MethodDeclaration m) {
     return true;
   }
   
