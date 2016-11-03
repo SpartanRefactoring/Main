@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** A Class that contains all the metrics for an {@link ASTNode}
  * @author Matteo Orru' */
 public class ASTNodeMetrics {
-  private final ASTNode n;
+  private final ASTNode node;
   private int length;
   private int tokens;
   private int nodes;
@@ -20,27 +20,27 @@ public class ASTNodeMetrics {
   private int essence;
 
   public ASTNodeMetrics(final ASTNode n) {
-    this.n = n;
+    this.node = n;
   }
 
   public void computeMetrics() {
-    length = n.getLength();
-    tokens = metrics.tokens(n + "");
-    nodes = count.nodes(n);
-    body = metrics.bodySize(n);
-    final MethodDeclaration methodDeclaration = az.methodDeclaration(n);
+    length = node.getLength();
+    tokens = metrics.tokens(node + "");
+    nodes = count.nodes(node);
+    body = metrics.bodySize(node);
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(node);
     statements = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     // extract.statements(az.
-    // methodDeclaration(n)
+    // methodDeclaration(node)
     // .getBody())
     // .size();
-    tide = clean(n + "").length();
-    essence = Essence.of(n + "").length();
+    tide = clean(node + "").length();
+    essence = Essence.of(node + "").length();
   }
 
-  /** @return the n */
+  /** @return the node */
   public ASTNode n() {
-    return n;
+    return node;
   }
 
   /** @return the length */
