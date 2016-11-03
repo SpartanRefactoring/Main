@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -48,7 +49,7 @@ public class Analyzer {
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
-    AnalyzerOptions.setMain(key, value);
+    AnalyzerOptions.setAnalyzer(key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
@@ -166,16 +167,11 @@ public class Analyzer {
   @SuppressWarnings("unused") private static void analyzeMethods() {
     final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
     List<MethodDeclaration> li = new ArrayList<>();
-    for (final File ¢ : getJavaFiles(get("inputDir"))) {
-      for (AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(¢)))))
-        li.addAll(step.methods(t));
-    }
-    for (MethodDeclaration m : li) {
-      // TODO: Marco count
-      // spartanize
-      // count
-      // log
-    }
+    for (final File f : getJavaFiles(get("inputDir")))
+      for (AbstractTypeDeclaration ¢ : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
+        li.addAll(step.methods(¢));
+    for (MethodDeclaration ¢ : li)
+      MagicNumbers.logMethod(count.statements(¢), count.statements(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to

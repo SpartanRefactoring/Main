@@ -96,7 +96,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         return searchAncestors.forContainingType().from(¢);
       case "package":
         return getType(prepareFile(
-            new File(AnalyzerOptions.getMain("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java")));
+            new File(AnalyzerOptions.getAnalyzer("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java")));
       case "file":
         return getType(new File(getProperty(API_FILE)));
       default:
