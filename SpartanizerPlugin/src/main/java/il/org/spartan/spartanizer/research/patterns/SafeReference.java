@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace X == null ? null : X.Y with X?.Y <br>
  * replace X != null ? X.Y : null with X?.Y <br>
@@ -36,7 +35,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return false;
   }
 
-  @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
+  @Override public Tip tip(final ConditionalExpression x) {
     Logger.logNP(x, "safeReference");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))

@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -23,18 +24,21 @@ public class Analyzer {
   public static void main(final String args[]) {
     parseArguments(args);
     createOutputDirIfNeeded();
-    analyze();
+    if (!"true".equals(getProperty("methodsAnalyze")))
+      analyze();
+    else
+      methodsAnalyze();
   }
 
   private static void createOutputDirIfNeeded() {
-    final File dir = new File(get("outputDir"));
+    final File dir = new File(getProperty("outputDir"));
     if (!dir.exists())
       dir.mkdir();
   }
 
   /** @param ¢
    * @return */
-  private static String get(final String ¢) {
+  private static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyzer.class.getSimpleName(), ¢);
   }
 
@@ -150,28 +154,33 @@ public class Analyzer {
   /** @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze() {
-    final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+    final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
     sanityCheck();
     String spartanizedCode = "";
-    new File(get("outputDir") + "/after.java").delete();
-    for (final File ¢ : getJavaFiles(get("inputDir"))) {
+    new File(getProperty("outputDir") + "/after.java").delete();
+    for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
-      appendFile(new File(get("outputDir") + "/after.java"), spartanizedCode);
+      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanizedCode);
       Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
     }
-    Logger.summarize(get("outputDir"));
+    Logger.summarize(getProperty("outputDir"));
   }
 
-  @SuppressWarnings("unused") private static void analyzeMethods() {
+  private static void methodsAnalyze() {
     final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    final List<MethodDeclaration> li = new ArrayList<>();
-    for (final File f : getJavaFiles(get("inputDir")))
-      for (final AbstractTypeDeclaration ¢ : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
-        li.addAll(step.methods(¢));
-    for (final MethodDeclaration ¢ : li)
-      MagicNumbers.logMethod(count.statements(¢), count.statements(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+    for (final File f : getJavaFiles(getProperty("inputDir")))
+      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
+        if (haz.methods(t))
+          for (MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+            try {
+              MagicNumbers.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            } catch (@SuppressWarnings("unused") AssertionError __) {
+              //
+            }
+    MagicNumbers.printComparison();
+    MagicNumbers.printAccumulated();
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
@@ -198,24 +207,28 @@ public class Analyzer {
             new IfNullReturn(), //
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
+            new PutIfAbsent(), //
             null) //
         .add(InstanceofExpression.class, //
             new InstanceOf(), //
-            null)
-        .add(MethodDeclaration.class, //
-            new Carrier(), //
-            new Converter(), //
-            new Delegator(), //
-            new Examiner(), //
-            new Exploder(), //
-            new Fluenter(), //
-            new Getter(), //
-            new JDPattern(), //
-            new Mapper(), //
-            new MethodEmpty(), //
-            new Setter(), //
-            new TypeChecker(), //
             null);
+  }
+
+  private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
+    return ¢.add(MethodDeclaration.class, //
+        new Carrier(), //
+        new Converter(), //
+        new Delegator(), //
+        new Examiner(), //
+        new Exploder(), //
+        new Fluenter(), //
+        new Getter(), //
+        new JDPattern(), //
+        new Mapper(), //
+        new MethodEmpty(), //
+        new Setter(), //
+        new TypeChecker(), //
+        null);
   }
 
   /** This us just to check that the InteractiveSpartanizer works and that
@@ -223,15 +236,5 @@ public class Analyzer {
   private static void sanityCheck() {
     assert addNanoPatterns(new InteractiveSpartanizer())
         .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
-  }
-
-  static class IzOptions {
-    public String file;
-    public boolean appendExisting;
-    public ApiLevel a;
-
-    enum ApiLevel {
-      COMPILATION_UNIT, PACKAGE, PROJECT;
-    }
   }
 }

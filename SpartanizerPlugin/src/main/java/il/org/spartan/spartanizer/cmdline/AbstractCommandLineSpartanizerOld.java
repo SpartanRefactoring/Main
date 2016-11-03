@@ -70,8 +70,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
@@ -88,9 +86,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
       }
 
       /** @param n
-       * @param w
-       * @throws TipperFailure */
-      <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
+       * @param w */
+      <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }

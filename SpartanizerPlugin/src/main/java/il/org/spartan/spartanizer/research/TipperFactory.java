@@ -64,6 +64,10 @@ public class TipperFactory {
         return description;
       }
 
+      @Override public ASTNode getMatching(final ASTNode n, final String s) {
+        return Matcher.collectEnviromentNodes(pattern, n, new HashMap<>()).get(s);
+      }
+
       Map<String, String> collectEnviroment(final ASTNode ¢) {
         return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
       }
@@ -101,6 +105,10 @@ public class TipperFactory {
 
       @Override protected boolean prerequisite(final N ¢) {
         return Matcher.matches(pattern, ¢);
+      }
+
+      @Override public ASTNode getMatching(final ASTNode n, final String s) {
+        return Matcher.collectEnviromentNodes(pattern, n, new HashMap<>()).get(s);
       }
 
       Map<String, String> collectEnviroment(final ASTNode ¢) {

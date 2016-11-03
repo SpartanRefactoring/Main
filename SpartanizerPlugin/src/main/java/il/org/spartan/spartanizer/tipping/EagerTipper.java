@@ -7,11 +7,7 @@ import org.eclipse.jdt.core.dom.*;
  * @year 2016 */
 public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
-    try {
-      return this.tip(¢) != null;
-    } catch (@SuppressWarnings("unused") final TipperFailure __) {
-      return false;
-    }
+    return this.tip(¢) != null;
   }
 
   protected final boolean prerequisite(@SuppressWarnings("unused") final N __) {

@@ -57,8 +57,6 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
@@ -111,8 +109,6 @@ public class Trimmer extends AbstractGUIApplicator {
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
