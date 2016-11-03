@@ -227,7 +227,7 @@ public class Toolbox {
             new IfEmptyThen(), //
             new IfShortestFirst(), //
             // TODO: Marco add when ready. need to check type
-            // new PutIfAbsent(), //
+            new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //
