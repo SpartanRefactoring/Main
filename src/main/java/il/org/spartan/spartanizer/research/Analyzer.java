@@ -198,6 +198,7 @@ public class Analyzer {
             new IfNullReturn(), //
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
+            new PutIfAbsent(), //
             null) //
         .add(InstanceofExpression.class, //
             new InstanceOf(), //
