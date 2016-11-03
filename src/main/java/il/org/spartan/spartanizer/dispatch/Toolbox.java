@@ -87,12 +87,7 @@ public class Toolbox {
   }
 
   public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
-    try {
-      return t.tip(n);
-    } catch (final TipperFailure ¢) {
-      ¢.printStackTrace();
-      return null;
-    }
+    return t.tip(n);
   }
 
   public static Toolbox defaultInstance() {

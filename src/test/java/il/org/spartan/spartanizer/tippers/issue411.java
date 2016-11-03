@@ -10,7 +10,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Failing tests of issue 295 -
@@ -132,7 +131,7 @@ import il.org.spartan.spartanizer.utils.*;
         fault.done();
   }
 
-  @Test public void B20() throws TipperFailure {
+  @Test public void B20() {
     assert variableDeclarationFragment != null;
     azzert.that(tipper.tip(variableDeclarationFragment), iz("a"));
   }

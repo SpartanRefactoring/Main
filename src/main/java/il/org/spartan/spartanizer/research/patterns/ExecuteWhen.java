@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
@@ -62,15 +61,12 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-          if (¢.canTip(x))
-            try {
-              ¢.tip(x).go(r, g);
-              idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(x)), r);
-              Logger.logNP(x, "ApplyWhen");
-              return;
-            } catch (final TipperFailure x1) {
-              x1.printStackTrace();
-            }
+          if (¢.canTip(x)) {
+            ¢.tip(x).go(r, g);
+            idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(x)), r);
+            Logger.logNP(x, "ApplyWhen");
+            return;
+          }
         assert false;
       }
     };
