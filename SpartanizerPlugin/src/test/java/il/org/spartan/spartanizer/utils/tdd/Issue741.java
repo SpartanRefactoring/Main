@@ -17,4 +17,9 @@ import org.junit.*;
   @SuppressWarnings("cast") @Test public void publicFields_test1() {
     assertTrue(getAll2.publicFields(null) instanceof List<?>);
   }
+
+  @Test public void publicFields_test2() {
+    assertNotNull(getAll2.publicFields(null));
+  }
+
 }
