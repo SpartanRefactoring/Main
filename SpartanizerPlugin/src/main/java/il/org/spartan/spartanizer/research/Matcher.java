@@ -80,8 +80,7 @@ public class Matcher {
 
   /** Validates that matched variables are the same in all matching places. */
   private boolean consistent(final String id, final String s) {
-    if (!ids.containsKey(id))
-      ids.put(id, s);
+    ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
   }
 
