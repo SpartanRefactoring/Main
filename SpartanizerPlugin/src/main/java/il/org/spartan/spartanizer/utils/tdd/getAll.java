@@ -56,21 +56,16 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public static List<InstanceofExpression> instanceofs(final MethodDeclaration $) {
-    if($ == null)
+  public static List<InstanceofExpression> instanceofs(final MethodDeclaration d) {
+    if (d == null)
       return null;
-    final Int t = new Int();
-    t.inner = 0;
-    $.accept(new ASTVisitor() {
-      @Override public boolean visit(InstanceofExpression __) {
-        ++t.inner;
+    final List<InstanceofExpression> $ = new ArrayList<>();
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(InstanceofExpression node) {
+        $.add(node);
         return true;
       }
     });
-    List<InstanceofExpression> l = new LinkedList<>();
-    if(t.inner == 0)
-      return l;
-    l.add((InstanceofExpression) wizard.ast("a instanceof Object"));
-    return l;
+    return $;
   }
 }
