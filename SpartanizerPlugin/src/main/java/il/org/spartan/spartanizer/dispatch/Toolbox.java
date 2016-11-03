@@ -226,7 +226,6 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
-            // TODO: Marco add when ready. need to check type
             new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
