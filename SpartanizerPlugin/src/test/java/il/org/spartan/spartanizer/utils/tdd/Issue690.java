@@ -9,6 +9,8 @@ import java.util.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
+// TODO: Add @Author, etc. --yg
+// TODO: I get zillion of warnings on your code --yg
 public class Issue690 {
   @Test public void test0() {
     assertNull(getAll.casts(null));
