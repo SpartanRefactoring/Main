@@ -7,11 +7,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Collects boolean features of methods
  * @author Yossi Gil
  * @year 2016 */
-public class MethodFeaturesCollector extends FilesASTVisitor {
+public final class MethodFeaturesCollector extends FilesASTVisitor {
   int methodNesting;
   MethodDeclaration lastNode;
   private CSVLineWriter writer;
@@ -22,6 +23,12 @@ public class MethodFeaturesCollector extends FilesASTVisitor {
     return super.visit(node);
   }
 
+  /**
+   * TODO: Ori Roth: Please add here more boolean metrics such as 
+   * {@link #isJohnDoeWithResepctTo1stParameter}, 
+   * {@ link #isJohnDoeWithResepctTo2ndParameter},  --yg
+   * @param ¢ JD
+   */
   private void consider(final MethodDeclaration ¢) {
     dotter.click();
     writer.put("File", presentFile) //
@@ -44,14 +51,22 @@ public class MethodFeaturesCollector extends FilesASTVisitor {
         .put("side-effects", haz.sideEffects(¢)) //
         .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
         .put("array", ¢.getReturnType2().isArrayType()) //
-        .put("parameterized", ¢.getReturnType2().isParameterizedType()) // 
+        .put("parameterized", ¢.getReturnType2().isParameterizedType()) //
         .put("primitive", ¢.getReturnType2().isPrimitiveType()) //
-        .put("simple", ¢.getReturnType2().isSimpleType()) // 
-        .put("qualified", ¢.getReturnType2().isQualifiedType()) // 
-        .put("nullary",¢.parameters().isEmpty()) // 
-        .put("unary",¢.parameters().size() == 1) // 
-        .put("binary",¢.parameters().size() == 2) // 
-    ;
+        .put("simple", ¢.getReturnType2().isSimpleType()) //
+        .put("qualified", ¢.getReturnType2().isQualifiedType()) //
+        .put("no-arguments", ¢.parameters().isEmpty()) //
+        .put("unary", ¢.parameters().size() == 1) //
+        .put("binary", ¢.parameters().size() == 2) //
+        .put("no-exceptions", ¢.thrownExceptionTypes().isEmpty())//
+        .put("one-exception", ¢.thrownExceptionTypes().size() == 1) //
+        .put("getter", NameGuess.of(¢.getName() + "") == NameGuess.GETTER_METHOD) //
+        .put("setter", NameGuess.of(¢.getName() + "") == NameGuess.SETTTER_METHOD) //
+        .put("isMethod", NameGuess.of(¢.getName() + "") == NameGuess.IS_METHOD) //
+        .put("method", NameGuess.of(¢.getName() + "") == NameGuess.METHOD_OR_VARIABLE) //
+        .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) // 
+        .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) // 
+        ;
     writer.nl();
   }
 
