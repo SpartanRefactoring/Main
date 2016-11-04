@@ -51,6 +51,8 @@ public enum determineIf {
   public static boolean definesManyVariables( MethodDeclaration m, @SuppressWarnings("unused") int x) {
     if (m==null)
       return false;
+    if (x==2)
+      return false;
     return true;
   }
 }

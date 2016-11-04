@@ -23,4 +23,9 @@ public class Issue719 {
   @SuppressWarnings("static-method") @Test public void checkZeroDefinition() {
     assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {} ")), 0));
   }
+  
+  @SuppressWarnings("static-method") @Test public void checkOneDefinition() {
+    assertFalse(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x;} ")), 2));
+  }
+  
 }
