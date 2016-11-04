@@ -34,32 +34,32 @@ public enum analyze {
     return $;
   }
 
-  public static String type(Name n) {
-    MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
-    String s = findDeclarationInMethod(n, m);
+  public static String type(final Name n) {
+    final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
+    final String s = findDeclarationInMethod(n, m);
     return s != null ? s : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
 
-  private static String findDeclarationInType(Name n, TypeDeclaration t) {
-    for (FieldDeclaration d : step.fieldDeclarations(t))
-      for (VariableDeclarationFragment ¢ : step.fragments(d))
-        if ((step.name(¢) + "").equals((n + "")))
+  private static String findDeclarationInType(final Name n, final TypeDeclaration t) {
+    for (final FieldDeclaration d : step.fieldDeclarations(t))
+      for (final VariableDeclarationFragment ¢ : step.fragments(d))
+        if ((step.name(¢) + "").equals(n + ""))
           return step.type(d) + "";
     return null;
   }
 
-  private static String findDeclarationInMethod(Name n, MethodDeclaration d) {
-    Str str = new Str();
+  private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
+    final Str str = new Str();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(SingleVariableDeclaration ¢) {
-        if (str.inner != null || !(step.name(¢) + "").equals((n + "")))
+      @Override public boolean visit(final SingleVariableDeclaration ¢) {
+        if (str.inner != null || !(step.name(¢) + "").equals(n + ""))
           return true;
         str.inner = step.type(¢) + "";
         return false;
       }
 
-      @Override public boolean visit(VariableDeclarationFragment ¢) {
-        if (str.inner != null || !(step.name(¢) + "").equals((n + "")))
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        if (str.inner != null || !(step.name(¢) + "").equals(n + ""))
           return true;
         str.inner = step.type(¢) + "";
         return false;

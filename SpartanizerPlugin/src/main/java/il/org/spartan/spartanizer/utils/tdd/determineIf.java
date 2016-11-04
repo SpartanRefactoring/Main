@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
-
 /** @author Ori Marcovitch
  * @since Oct 31, 2016 */
 public enum determineIf {
@@ -17,7 +14,7 @@ public enum determineIf {
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
   public static boolean loaded(final MethodDeclaration ¢) {
-    return ¢ != null && !"g".equals((¢.getName() + "")) && ¢.parameters().size() >= 3;
+    return ¢ != null && !"g".equals(¢.getName() + "") && ¢.parameters().size() >= 3;
   }
 
   // For you to implement! Let's TDD and get it on!
@@ -50,17 +47,7 @@ public enum determineIf {
    * @param d
    * @param x
    * @return true iff the method defines at least x variables. */
-  public static boolean definesManyVariables(MethodDeclaration d, int x) {
-    if (d == null)
-      return false;
-    final Int $ = new Int();
-    $.inner = 0;
-    d.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
-        ++$.inner;
-        return true;
-      }
-    });
-    return $.inner >= x;
+  public static boolean definesManyVariables(@SuppressWarnings("unused") final MethodDeclaration __, @SuppressWarnings("unused") final int x) {
+    return true;
   }
 }

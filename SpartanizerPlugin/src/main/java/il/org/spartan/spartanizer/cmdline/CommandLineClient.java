@@ -4,8 +4,9 @@ import il.org.spartan.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
-@SuppressWarnings("unused") public class CommandLineClient { private static String outputDir;
-private static String folder;
+@SuppressWarnings("unused") public class CommandLineClient {
+  private static String outputDir;
+  private static String folder;
 
   public static void main(final String[] args) {
     parseCommandLineArgs(args);
@@ -15,7 +16,7 @@ private static String folder;
 
   static String inputDir;
 
-  private static void parseCommandLineArgs(String[] args) {
+  private static void parseCommandLineArgs(final String[] args) {
     if (args.length == 0)
       printPrompt();
     for (int ¢ = 0; ¢ < args.length;)
