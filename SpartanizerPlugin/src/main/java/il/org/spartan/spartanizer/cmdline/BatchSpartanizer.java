@@ -18,15 +18,14 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @author Matteo Orru'
  * @year 2016 */
-public final class BatchSpartanizer {
+public final class BatchSpartanizer extends FilesASTVisitor{
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
-  private static boolean defaultDir;
   private static String outputDir;
   private static String inputDir;
+  private static boolean defaultDir;
   private int classesDone;
-  private final String inputPath;
   private final String beforeFileName;
   private final String afterFileName;
   private PrintWriter befores;
@@ -52,9 +51,6 @@ public final class BatchSpartanizer {
     }
   }
 
-  /**
-   *
-   */
   private static void spartanize() {
     final File input = new File(inputDir);
     if (input.isDirectory()) {
@@ -119,15 +115,12 @@ public final class BatchSpartanizer {
       }
   }
 
-  private BatchSpartanizer(final String path) {
+  BatchSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private BatchSpartanizer(final String inputPath, final String name) {
-    this.inputPath = inputPath;
-    // beforeFileName = folder + outputDir + "/" + name + ".before.java";
-    // afterFileName = folder + outputDir + "/" + name + ".after.java";
-    // reportFileName = folder + outputDir + "/" + name + ".CSV";
+  BatchSpartanizer(final String presentSourcePath, final String name) {
+    this.presentSourcePath = presentSourcePath;
     beforeFileName = outputDir + "/" + name + ".before.java";
     afterFileName = outputDir + "/" + name + ".after.java";
     reportFileName = outputDir + "/" + name + ".CSV";
@@ -199,7 +192,7 @@ public final class BatchSpartanizer {
     return false;
   }
 
-  void collect(final CompilationUnit u) {
+  @Override void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
@@ -224,7 +217,7 @@ public final class BatchSpartanizer {
       }
   }
 
-  void collect(final String javaCode) {
+  @Override void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
@@ -263,7 +256,7 @@ public final class BatchSpartanizer {
             "Collective before path=%s\n" + //
             "Collective after path=%s\n" + //
             "\n", //
-        inputPath, //
+        presentSourcePath, //
         beforeFileName, //
         afterFileName);
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
@@ -271,11 +264,11 @@ public final class BatchSpartanizer {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
-      for (final File ¢ : new FilesGenerator(".java").from(inputPath))
+      for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
         collect(¢);
     } catch (final IOException x) {
       x.printStackTrace();
-      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
+      System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();
     System.err.print("\n Done: " + classesDone + " files processed.");

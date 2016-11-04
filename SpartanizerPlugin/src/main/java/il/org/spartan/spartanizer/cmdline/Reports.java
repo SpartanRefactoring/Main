@@ -16,7 +16,7 @@ public class Reports {
   protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
-  protected String inputPath;
+  protected String presentSourcePath;
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
