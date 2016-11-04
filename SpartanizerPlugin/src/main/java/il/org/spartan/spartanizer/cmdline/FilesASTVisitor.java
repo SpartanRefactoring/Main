@@ -5,6 +5,7 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
@@ -13,9 +14,14 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 public abstract class FilesASTVisitor extends ASTVisitor {
-  protected static String[] defaultArguments = new String[] { "." };
-  static Class<? extends FilesASTVisitor> clazz;
+  protected static String[] defaultArguments = as.array(".");
+  protected static Class<? extends FilesASTVisitor> clazz;
   private static Constructor<? extends FilesASTVisitor> declaredConstructor;
+  protected String outputFolder = "/tmp";
+  protected File presentFile;
+  protected String presentSourceName;
+  protected String presentSourcePath;
+  protected Dotter dotter = new Dotter();
 
   private static Constructor<? extends FilesASTVisitor> declaredConstructor() {
     if (clazz == null) {
@@ -31,11 +37,6 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     throw new RuntimeException();
   }
 
-  protected String outputFolder = "/tmp";
-  protected File presentFile;
-  protected String presentSourceName;
-  protected String presentSourcePath;
-  protected Dotter dotter = new Dotter();
 
   /** [[SuppressWarningsSpartan]] */
   public static void main(final String[] args)
