@@ -35,4 +35,8 @@ public class Issue719 {
   @SuppressWarnings("static-method") @Test public void checkThreeDefinitionsSameLine() {
     assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z;} ")), 3));
   }
+  
+  @SuppressWarnings("static-method") @Test public void checkFourDefinitionsWithAssignment() {
+    assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} ")), 4));
+  }
 }
