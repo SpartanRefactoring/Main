@@ -13,7 +13,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Unit test for {@link DeclarationInitializerStatementTerminatingScope} for
@@ -103,7 +102,7 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that(variableDeclarationFragment, iz("var=f(1)"));
   }
 
-  @Test public void B18() throws TipperFailure {
+  @Test public void B18() {
     assert tipper.tip(variableDeclarationFragment) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //

@@ -73,7 +73,7 @@ public final class Issue223 {
     assert tipper.canTip(focus);
   }
 
-  @Test public void B$040tipNotNull() throws TipperFailure {
+  @Test public void B$040tipNotNull() {
     A$040_init();
     assert tipper.tip(focus) != null;
   }
@@ -88,27 +88,27 @@ public final class Issue223 {
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
-  @Test public void B$070callSuggest() throws TipperFailure {
+  @Test public void B$070callSuggest() {
     A$040_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$080descriptionNotNull() throws TipperFailure {
+  @Test public void B$080descriptionNotNull() {
     A$040_init();
     assert tipper.tip(focus).description != null;
   }
 
-  @Test public void B$090suggestNotNull() throws TipperFailure {
+  @Test public void B$090suggestNotNull() {
     A$040_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$100descriptionContains() throws TipperFailure {
+  @Test public void B$100descriptionContains() {
     A$040_init();
     azzert.that(tipper.tip(focus).description, containsString(focus.getType() + ""));
   }
 
-  @Test public void B$110rangeNotEmpty() throws TipperFailure {
+  @Test public void B$110rangeNotEmpty() {
     A$040_init();
     assert !tipper.tip(focus).isEmpty();
   }

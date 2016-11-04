@@ -510,4 +510,10 @@ public enum az {
   public static CastExpression castExpression(final Expression ¢) {
     return ¢ == null ? null : (CastExpression) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static VariableDeclarationStatement variableDeclarationStatement(ASTNode ¢) {
+    return ¢ == null ? null : (VariableDeclarationStatement) ¢;
+  }
 }

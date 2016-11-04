@@ -494,4 +494,34 @@ public enum step {
   public static Type type(final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static SimpleName name(final VariableDeclarationFragment ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static Type type(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.getType();
+  }
+
+  /** @param ¢
+   * @return */
+  public static SimpleName name(final SingleVariableDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static Type type(VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.getType();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static Type type(VariableDeclarationFragment ¢) {
+    return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
+  }
 }
