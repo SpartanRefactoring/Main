@@ -29,6 +29,17 @@ public interface iz {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
 
+  static boolean synchronized¢(BodyDeclaration node) {
+    return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
+  }
+  static boolean native¢(BodyDeclaration node) {
+    return (Modifier.NATIVE & node.getModifiers()) != 0;
+  }
+
+  static boolean default¢(BodyDeclaration node) {
+    return (Modifier.DEFAULT & node.getModifiers()) != 0;
+  }
+
   static boolean abstractTypeDeclaration(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
@@ -133,6 +144,12 @@ public interface iz {
 
   static boolean breakStatement(final Statement ¢) {
     return iz.nodeTypeEquals(¢, BREAK_STATEMENT);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean castExpression(final ASTNode ¢) {
+    return ¢ != null && ¢ instanceof CastExpression;
   }
 
   /** @param ¢
@@ -402,6 +419,12 @@ public interface iz {
 
   static boolean infixTimes(final Expression ¢) {
     return operator(az.infixExpression(¢)) == TIMES;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean instanceofExpression(final Expression ¢) {
+    return ¢ != null && ¢ instanceof InstanceofExpression;
   }
 
   /** @param ¢ JD
@@ -695,6 +718,12 @@ public interface iz {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
 
+  /** @param ¢ JD
+   * @return */
+  static boolean primitiveType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType;
+  }
+
   /** Determine whether a declaration is private
    * @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>declaration is private */
@@ -702,8 +731,16 @@ public interface iz {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
 
+  static boolean protected¢(final BodyDeclaration ¢) {
+    return (¢.getModifiers() & Modifier.PROTECTED) != 0;
+  }
+
   static boolean pseudoNumber(final Expression ¢) {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
+  }
+
+  static boolean public¢(final BodyDeclaration ¢) {
+    return (Modifier.PUBLIC & ¢.getModifiers()) != 0;
   }
 
   /** Determine whether a node is a qualified name
@@ -904,6 +941,12 @@ public interface iz {
     return !Collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !Collect.usesOf(n).in(step.updaters(s)).isEmpty();
   }
 
+  /** @param ¢ JD
+   * @return */
+  static boolean Void(final Type ¢) {
+    return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
+  }
+
   static boolean whileStatement(final ASTNode x) {
     return iz.nodeTypeEquals(x, WHILE_STATEMENT);
   }
@@ -972,29 +1015,5 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean primitiveType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean Void(final Type ¢) {
-    return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean castExpression(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof CastExpression;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean instanceofExpression(final Expression ¢) {
-    return ¢ != null && ¢ instanceof InstanceofExpression;
   }
 }
