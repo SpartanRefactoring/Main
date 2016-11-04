@@ -51,12 +51,12 @@ public enum determineIf {
    * @param x
    * @return true iff the method defines at least x variables. */
   public static boolean definesManyVariables(MethodDeclaration d, int x) {
-    if(d == null)
+    if (d == null)
       return false;
     final Int $ = new Int();
     $.inner = 0;
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationStatement ¢) {
+      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
         ++$.inner;
         return true;
       }
