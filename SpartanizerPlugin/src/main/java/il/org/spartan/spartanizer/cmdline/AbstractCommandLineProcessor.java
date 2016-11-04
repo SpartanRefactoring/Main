@@ -6,7 +6,7 @@ public abstract class AbstractCommandLineProcessor {
 
   public abstract void apply();
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     if (args.length == 0)
       new BatchSpartanizer(".", "current-working-directory").fire();
     else

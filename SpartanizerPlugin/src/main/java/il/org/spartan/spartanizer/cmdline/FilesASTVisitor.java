@@ -37,7 +37,6 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     throw new RuntimeException();
   }
 
-
   /** [[SuppressWarningsSpartan]] */
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -57,7 +56,7 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     // Empty by default
   }
 
-  protected String makeFile(String fileName) {
+  protected String makeFile(final String fileName) {
     return outputFolder + "/" + presentSourceName + "." + fileName;
   }
 
