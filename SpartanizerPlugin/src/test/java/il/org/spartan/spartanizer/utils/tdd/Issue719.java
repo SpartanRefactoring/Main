@@ -7,7 +7,7 @@ import org.junit.*;
  * @author yaelAmitay
  * @since 16-11-04 */
 public class Issue719 {
-  @Test public static void test() {
+  @SuppressWarnings("static-method") @Test public void test() {
     assert true;
   }
 }
