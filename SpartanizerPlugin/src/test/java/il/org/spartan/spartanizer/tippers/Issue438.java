@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Failing (were ignored) tests of {@link TrimmerLogTest}
  * @since 2016 */
 @SuppressWarnings("static-method") @FixMethodOrder(MethodSorters.NAME_ASCENDING) @Ignore public class Issue438 {
-  @Test public void test01() throws TipperFailure {
+  @Test public void test01() {
     final Tipper<ASTNode> w = null;
     final ASTNode n = null;
     TrimmerLog.tip(w, n);

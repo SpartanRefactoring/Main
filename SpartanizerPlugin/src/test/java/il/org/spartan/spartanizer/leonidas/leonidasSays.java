@@ -174,11 +174,7 @@ public class leonidasSays {
       n.accept(new ASTVisitor() {
         @Override public void preVisit(final ASTNode node) {
           if (tipper.canTip(node))
-            try {
-              tipper.tip(node).go(r, null);
-            } catch (final TipperFailure e) {
-              e.printStackTrace();
-            }
+            tipper.tip(node).go(r, null);
         }
       });
       final TextEdit edits = r.rewriteAST(document, null);

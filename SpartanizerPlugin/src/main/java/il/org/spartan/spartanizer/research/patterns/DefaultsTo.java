@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace X != null ? X : Y with X ?? Y <br>
  * replace X == null ? Y : X with X ?? Y <br>
@@ -22,12 +21,6 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
       add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
       add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
       add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
-      // add(TipperFactory.tipper("$X1 == null ? $X2 : $X3", "defaultsTo($X1,
-      // $X2, $X3)", ""));
-      // add(TipperFactory.tipper("null != $X1 ? $X2 : $X3", "defaultsTo($X1,
-      // $X2, $X3)", ""));
-      // add(TipperFactory.tipper("null == $X1 ? $X2 : $X3", "defaultsTo($X1,
-      // $X2, $X3)", ""));
     }
   };
 
@@ -42,7 +35,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return false;
   }
 
-  @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
+  @Override public Tip tip(final ConditionalExpression x) {
     Logger.logNP(x, "defaultsTo");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
