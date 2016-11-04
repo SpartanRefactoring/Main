@@ -2,21 +2,24 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.utils.*;
+
 /** @author Ori Marcovitch
  * @since Oct 31, 2016 */
 public enum determineIf {
   ;
-  
   /** see issue #718 for more details
    * @author Amir Sagiv
    * @author Oren Afek
    * @since 16-11-02
    * @param ¢
-   * @return true iff the method have at least 3 parameters and defines more than 5 variables */
+   * @return true iff the method have at least 3 parameters and defines more
+   *         than 5 variables */
   public static boolean loaded(final MethodDeclaration ¢) {
     return ¢ != null && !"g".equals((¢.getName() + "")) && ¢.parameters().size() >= 3;
   }
-  
+
   // For you to implement! Let's TDD and get it on!
   /** see issue #716 for more details
    * @author Ron Gatenio
@@ -27,8 +30,7 @@ public enum determineIf {
   public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration __) {
     return true;
   }
-  
-  
+
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
    * @author Assaf Lustig
@@ -40,7 +42,7 @@ public enum determineIf {
     return true;
   }
   // For you to implement! Let's TDD and get it on!
-  
+
   /** see issue #719 for more details
    * @author YaelAmitay
    * @author koralchapnik
@@ -48,11 +50,17 @@ public enum determineIf {
    * @param d
    * @param x
    * @return true iff the method defines at least x variables. */
-  public static boolean definesManyVariables( MethodDeclaration m, @SuppressWarnings("unused") int x) {
-    if (m==null)
+  public static boolean definesManyVariables(MethodDeclaration d, int x) {
+    if(d == null)
       return false;
-    if (x==2)
-      return false;
-    return true;
+    final Int $ = new Int();
+    $.inner = 0;
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationStatement ¢) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner >= x;
   }
 }
