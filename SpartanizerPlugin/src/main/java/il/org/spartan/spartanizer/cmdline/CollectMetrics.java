@@ -25,7 +25,7 @@ public final class CollectMetrics {
   private static CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
   public static void main(final String[] where) {
-    go(where.length != 0 ? where : new String[] { "." });
+    go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
