@@ -39,7 +39,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public static class Util {
-    private static String inputPath = "."; // default input path
+    private static String presentSourcePath = "."; // default input path
 
     /** @return CommandLineSelection */
     public static CommandLineSelection getAllCompilationUnits() {
@@ -53,7 +53,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
 
     /** @return */
     public static AbstractSelection<CommandLineSelection> get() {
-      return getFromPath(inputPath);
+      return getFromPath(presentSourcePath);
     }
 
     /** @return */
@@ -88,12 +88,12 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     }
   }
 
-  /** @param inputPath
+  /** @param presentSourcePath
    * @return */
-  public void createSelectionFromProjectDir(final String inputPath) {
+  public void createSelectionFromProjectDir(final String presentSourcePath) {
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     System.err.println("Loading selection ...");
-    for (final File ¢ : new FilesGenerator(".java").from(inputPath))
+    for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
     // compilationUnits = cuList;
     inner = cuList;
