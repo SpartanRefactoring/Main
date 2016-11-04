@@ -20,12 +20,16 @@ public class Issue719 {
     assertFalse(determineIf.definesManyVariables(null, 0));
   }
 
-  @SuppressWarnings("static-method") @Test public void checkZeroDefinition() {
+  @SuppressWarnings("static-method") @Test public void checkZeroDefinitions() {
     assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {} ")), 0));
   }
   
-  @SuppressWarnings("static-method") @Test public void checkOneDefinition() {
+  @SuppressWarnings("static-method") @Test public void checkOneDefinitions() {
     assertFalse(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x;} ")), 2));
+  }
+  
+  @SuppressWarnings("static-method") @Test public void checkTwoDefinitions() {
+    assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x; int y;} ")), 2));
   }
   
 }
