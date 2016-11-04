@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Type;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 public final class MethodFeaturesCollector extends FilesASTVisitor {
   int methodNesting;
   MethodDeclaration lastNode;
-  private CSVLineWriter writer;
+  private CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
   @Override public boolean visit(final MethodDeclaration node) {
     ++methodNesting;
@@ -31,6 +32,7 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
    */
   private void consider(final MethodDeclaration ¢) {
     dotter.click();
+    final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
         .put("Name", ¢.getName()) //
         .put("Constructor", ¢.isConstructor()) //
@@ -50,12 +52,12 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
         .put("double", extract.statements(¢).size() == 1) //
         .put("side-effects", haz.sideEffects(¢)) //
         .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
-        .put("array", ¢.getReturnType2().isArrayType()) //
-        .put("parameterized", ¢.getReturnType2().isParameterizedType()) //
-        .put("primitive", ¢.getReturnType2().isPrimitiveType()) //
-        .put("simple", ¢.getReturnType2().isSimpleType()) //
-        .put("qualified", ¢.getReturnType2().isQualifiedType()) //
-        .put("no-arguments", ¢.parameters().isEmpty()) //
+        .put("array", type != null && type.isArrayType()) //
+        .put("parameterized", type != null && type.isParameterizedType()) //
+        .put("primitive", type != null && type.isPrimitiveType()) //
+        .put("simple", type != null && type.isSimpleType()) //
+        .put("qualified", type != null && type.isQualifiedType()) //
+        .put("no-arguments", type != null && ¢.parameters().isEmpty()) //
         .put("unary", ¢.parameters().size() == 1) //
         .put("binary", ¢.parameters().size() == 2) //
         .put("no-exceptions", ¢.thrownExceptionTypes().isEmpty())//
@@ -77,18 +79,16 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
   }
 
   @Override protected void done() {
+    dotter.end();
     System.err.println("Your output is in: " + writer.close());
     super.done();
   }
-
-  @Override protected void init() {
-    super.init();
-    writer = new CSVLineWriter(makeFile("method-properties"));
+  static {
+    clazz = MethodFeaturesCollector.class;
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    clazz = MethodFeaturesCollector.class;
     FilesASTVisitor.main(args);
   }
 }
