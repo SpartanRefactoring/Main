@@ -25,4 +25,11 @@ public class Issue690 {
   @Test public void test4() {
     assertEquals(2,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = (int)3.3;}"))).size());
   }
+  @Test public void test5() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = 3;}"))).size());
+  }
+  @Test public void test6() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {double a = (double)2.2;}"))).size());
+  }
+
 }
