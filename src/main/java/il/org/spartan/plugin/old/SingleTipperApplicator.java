@@ -208,7 +208,7 @@ public final class SingleTipperApplicator {
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
-            Tip make = x.tip(n, exclude);
+            final Tip make = x.tip(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
