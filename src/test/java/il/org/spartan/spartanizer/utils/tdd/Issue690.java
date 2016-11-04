@@ -17,6 +17,12 @@ public class Issue690 {
     assertEquals(0,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {}"))).size());
   }
   @Test public void test2() {
-    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a;}"))).size());
+    assertEquals(0,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a;}"))).size());
+  }
+  @Test public void test3() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2;}"))).size());
+  }
+  @Test public void test4() {
+    assertEquals(2,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = (int)3.3;}"))).size());
   }
 }
