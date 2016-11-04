@@ -25,7 +25,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
     try {
       if (collectApplicator) {
         Reports.initializeReport(folder + name + ".tips.CSV", "tips");
-        CollectApplicator.defaultApplicator().selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))).go();
+        CollectApplicator.defaultApplicator().selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
+            .go();
         Reports.close("tips");
         System.err.println("CollectApplicator: " + "Done!");
       }

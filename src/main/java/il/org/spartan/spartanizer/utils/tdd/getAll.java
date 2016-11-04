@@ -58,7 +58,7 @@ public enum getAll {
       return null;
     final List<InstanceofExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(InstanceofExpression node) {
+      @Override public boolean visit(final InstanceofExpression node) {
         $.add(node);
         return true;
       }

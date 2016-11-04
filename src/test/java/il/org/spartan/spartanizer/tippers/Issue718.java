@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public class Issue718 {
   MethodDeclaration loaded = (MethodDeclaration) methodDeclarationFromString("public void f(int x, int y, int z){ String a, b, c, d, e, f;}");
   MethodDeclaration notLoaded = (MethodDeclaration) methodDeclarationFromString("public void g(int x, int y, int z){ String a, b, c, d;}");
-  MethodDeclaration biMethod = (MethodDeclaration)methodDeclarationFromString("public void h(int x, int y){}");
-  
+  MethodDeclaration biMethod = (MethodDeclaration) methodDeclarationFromString("public void h(int x, int y){}");
+
   @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
     assert true;
   }
@@ -28,17 +28,16 @@ public class Issue718 {
   @Test public void checkIfLoadedMethodPasses() {
     assertTrue(determineIf.loaded(loaded));
   }
-  
-  @Test public void checkIfNotLoadedMethodFailes(){
+
+  @Test public void checkIfNotLoadedMethodFailes() {
     assertFalse(determineIf.loaded(notLoaded));
   }
-  
-  @Test public void checkIfBiMethodFailes(){
+
+  @Test public void checkIfBiMethodFailes() {
     assertFalse(determineIf.loaded(biMethod));
   }
-  
-  
-  private static ASTNode methodDeclarationFromString(String ¢) {
+
+  private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
   }
 }
