@@ -1,12 +1,8 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
-
-import il.org.spartan.*;
-
 /** Simplified version of command line client that uses spartizer applicator
  * @author Matteo Orru' */
-public class CommandLineClient { private static String outputDir;
+@SuppressWarnings("unused") public class CommandLineClient { private static String outputDir;
 private static String folder;
 
   public static void main(final String[] args) {
