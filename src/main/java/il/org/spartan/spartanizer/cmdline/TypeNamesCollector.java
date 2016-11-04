@@ -42,12 +42,10 @@ public final class TypeNamesCollector {
       }
 
       void record(final String longName) {
-        if (!longNames.containsKey(longName))
-          longNames.put(longName, Integer.valueOf(0));
+        longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
         final String shortName = spartan.shorten(longName);
-        if (!shortToFull.containsKey(shortName))
-          shortToFull.put(shortName, new HashSet<String>());
+        shortToFull.putIfAbsent(shortName, new HashSet<String>());
         shortToFull.get(shortName).add(longName);
       }
     });
