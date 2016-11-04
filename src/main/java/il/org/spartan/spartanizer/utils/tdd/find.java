@@ -14,6 +14,7 @@ public enum find {
   /** @author AnnaBel7
    * @author michalcohen
    * @since Nov 4, 2016 */
+  // TODO: Anna and Michal: I get a spartanization message on the following. --yg 
   static public TypeDeclaration ancestorType(ASTNode n){
     return null;
   }
