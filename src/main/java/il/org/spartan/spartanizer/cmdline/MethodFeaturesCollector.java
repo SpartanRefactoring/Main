@@ -43,6 +43,14 @@ public class MethodFeaturesCollector extends FilesASTVisitor {
         .put("double", extract.statements(¢).size() == 1) //
         .put("side-effects", haz.sideEffects(¢)) //
         .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
+        .put("array", ¢.getReturnType2().isArrayType()) //
+        .put("parameterized", ¢.getReturnType2().isParameterizedType()) // 
+        .put("primitive", ¢.getReturnType2().isPrimitiveType()) //
+        .put("simple", ¢.getReturnType2().isSimpleType()) // 
+        .put("qualified", ¢.getReturnType2().isQualifiedType()) // 
+        .put("nullary",¢.parameters().isEmpty()) // 
+        .put("unary",¢.parameters().size() == 1) // 
+        .put("binary",¢.parameters().size() == 2) // 
     ;
     writer.nl();
   }
