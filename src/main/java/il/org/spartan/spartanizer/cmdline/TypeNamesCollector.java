@@ -19,7 +19,7 @@ public final class TypeNamesCollector {
   static Map<String, Set<String>> shortToFull = new TreeMap<>();
 
   public static void main(final String[] where) throws IOException {
-    collect(where.length != 0 ? where : new String[] { "." });
+    collect(where.length != 0 ? where : as.array("."));
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
       final String shortName = spartan.shorten(s);
