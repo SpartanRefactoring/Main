@@ -6,7 +6,7 @@ import java.io.*;
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
+public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
   private boolean commandLineApplicator;
   private final boolean collectApplicator = true;
@@ -15,17 +15,17 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
     this(path, system.folder2File(path));
   }
 
-  CommandLineSpartanizer(final String inputPath, final String name) {
-    this.inputPath = inputPath;
+  CommandLineSpartanizer(final String presentSourcePath, final String name) {
+    this.presentSourcePath = presentSourcePath;
     this.name = name;
   }
 
   @Override public void apply() {
-    System.out.println(inputPath);
+    System.out.println(presentSourcePath);
     try {
       if (collectApplicator) {
         Reports.initializeReport(folder + name + ".tips.CSV", "tips");
-        CollectApplicator.defaultApplicator().selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
+        CollectApplicator.defaultApplicator().selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))).go();
         Reports.close("tips");
         System.err.println("CollectApplicator: " + "Done!");
       }
@@ -35,7 +35,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineSpartanizer {
         Reports.initializeReport(folder + name + ".CSV", "metrics");
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
         CommandLineApplicator.defaultApplicator().passes(20)
-            .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(inputPath))).go();
+            .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))).go();
         Reports.close("metrics");
         Reports.close("spectrum");
         Reports.closeFile("before");

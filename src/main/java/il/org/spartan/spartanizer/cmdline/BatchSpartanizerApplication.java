@@ -213,7 +213,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     this(path, system.folder2File(path));
   }
 
-  @SuppressWarnings("unused") private BatchSpartanizerApplication(final String inputPath, final String name) {
+  @SuppressWarnings("unused") private BatchSpartanizerApplication(final String presentSourcePath, final String name) {
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
@@ -365,7 +365,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   // "Collective before path=%s\n" + //
   // "Collective after path=%s\n" + //
   // "\n", //
-  // inputPath, //
+  // presentSourcePath, //
   // beforeFileName, //
   // afterFileName);
   // try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
@@ -373,12 +373,12 @@ public final class BatchSpartanizerApplication implements IApplication {
   // befores = b;
   // afters = a;
   // report = new CSVStatistics(reportFileName, "property");
-  // for (final File ¢ : new FilesGenerator(".java").from(inputPath))
+  // for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
   // collect(¢);
   // } catch (final IOException x) {
   // x.printStackTrace();
   // System.err.println(classesDone + " files processed; processing of " +
-  // inputPath + " failed for some I/O reason");
+  // presentSourcePath + " failed for some I/O reason");
   // }
   // applyEssenceCommandLine();
   // System.err.print("\n Done: " + classesDone + " files processed.");

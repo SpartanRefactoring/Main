@@ -29,10 +29,6 @@ public enum haz {
     return !extract.annotations(¢).isEmpty();
   }
 
-  static boolean binding(final ASTNode ¢) {
-    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
-  }
-
   /** Determines whether the method's return type is boolean.
    * @param ¢ method
    * @return */
@@ -44,10 +40,6 @@ public enum haz {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
 
-  public static boolean dollar(final ASTNode ¢) {
-    return !Collect.usesOf("$").inside(¢).isEmpty();
-  }
-
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
@@ -57,6 +49,10 @@ public enum haz {
     return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
     }) > 0;
+  }
+
+  public static boolean dollar(final ASTNode ¢) {
+    return !Collect.usesOf("$").inside(¢).isEmpty();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
@@ -73,13 +69,6 @@ public enum haz {
     return false;
   }
 
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
-  }
-
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
     return !¢.modifiers().isEmpty();
   }
@@ -87,6 +76,13 @@ public enum haz {
   public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
+
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
 
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
@@ -160,13 +156,6 @@ public enum haz {
             return true;
         return false;
       }
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
     }.test(ss);
   }
 
@@ -174,9 +163,27 @@ public enum haz {
     return !sideEffects.free(¢);
   }
 
+  public static boolean sideEffects(final MethodDeclaration d) {
+    final Block body = d.getBody();
+    if (body != null)
+      for (final Statement ¢ : statements(body))
+        if (haz.sideEffects(¢))
+          return true;
+    return false;
+  }
+
   public static boolean sideEffects(final Statement s) {
     final ExpressionStatement ¢ = az.expressionStatement(s);
     return ¢ != null && sideEffects(¢.getExpression());
+  }
+
+  public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
+    final Block body = body(d);
+    if (body != null)
+      for (final Statement ¢ : statements(body))
+        if (haz.unknownNumberOfEvaluations(d, ¢))
+          return true;
+    return false;
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
@@ -200,20 +207,6 @@ public enum haz {
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
-      boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          if (continue¢(¢.getName()))
-            return true;
-        return false;
-      }
-
-      boolean continue¢(final SimpleName ¢) {
-        if (iz.identifier("$", ¢))
-          return false;
-        $.set(Boolean.TRUE);
-        return true;
-      }
-
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return continue¢(¢.getName());
       }
@@ -237,7 +230,32 @@ public enum haz {
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         return continue¢(fragments(¢));
       }
+
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment ¢ : fs)
+          if (continue¢(¢.getName()))
+            return true;
+        return false;
+      }
+
+      boolean continue¢(final SimpleName ¢) {
+        if (iz.identifier("$", ¢))
+          return false;
+        $.set(Boolean.TRUE);
+        return true;
+      }
     });
     return $.get().booleanValue();
+  }
+
+  static boolean binding(final ASTNode ¢) {
+    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
+  }
+
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
+        return true;
+    return false;
   }
 }
