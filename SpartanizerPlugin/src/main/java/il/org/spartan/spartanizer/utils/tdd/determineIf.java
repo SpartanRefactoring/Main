@@ -40,4 +40,15 @@ public enum determineIf {
     return true;
   }
   // For you to implement! Let's TDD and get it on!
+  
+  /** see issue #719 for more details
+   * @author YaelAmitay
+   * @author koralchapnik
+   * @since 16-11-04
+   * @param d
+   * @param x
+   * @return true iff the method defines at least x variables. */
+  public static boolean definesManyVariables(@SuppressWarnings("unused") MethodDeclaration __, @SuppressWarnings("unused") int x) {
+    return true;
+  }
 }
