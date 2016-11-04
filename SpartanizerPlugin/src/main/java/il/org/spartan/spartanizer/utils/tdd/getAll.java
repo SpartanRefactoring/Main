@@ -65,4 +65,16 @@ public enum getAll {
     });
     return $;
   }
+  
+  /**
+   * Takes a single parameter m, which is a MethodDeclaration.
+   * Returns a List<CastExpression> which is all casts in m.
+   * @param m a MethodDeclaration
+   * @author Inbal Matityahu
+   * @author Or Troyaner
+   * @author Tom Nof
+   */
+  public static List<CastExpression> casts(MethodDeclaration m){
+    return null;
+  }
 }
