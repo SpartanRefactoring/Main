@@ -85,5 +85,6 @@ public enum getAll {
     });
     
     return $;
+    
   }
 }
