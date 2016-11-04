@@ -65,18 +65,26 @@ public enum getAll {
     });
     return $;
   }
-  
-  /**
-   * Takes a single parameter ¢, which is a MethodDeclaration.
-   * Returns a List<CastExpression> which is all casts in ¢.
-   * @param ¢ a MethodDeclaration
+
+  /** Takes a single parameter ¢, which is a MethodDeclaration. Returns a
+   * List<CastExpression> which is all casts in ¢.
+   * @param m a MethodDeclaration
    * @author Inbal Matityahu
    * @author Or Troyaner
-   * @author Tom Nof
-   */
-  public static List<CastExpression> casts(MethodDeclaration ¢){
+   * @author Tom Nof */
+  public static List<CastExpression> casts(MethodDeclaration m) {
+    if (m == null) {
+      return null;
+    }
+    List<CastExpression> expressions = new ArrayList<>();
     
-    return ¢ == null ? null : ¢.getBody().statements();
+    m.accept(new ASTVisitor() {
+      @Override public boolean visit(CastExpression node) {
+        expressions.add(node);
+        return true;
+      }
+    });
     
+    return expressions;
   }
 }
