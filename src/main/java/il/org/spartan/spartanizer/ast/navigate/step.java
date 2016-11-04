@@ -515,13 +515,13 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static Type type(VariableDeclarationStatement ¢) {
+  public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** @param ¢ JD
    * @return */
-  public static Type type(VariableDeclarationFragment ¢) {
+  public static Type type(final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
 }

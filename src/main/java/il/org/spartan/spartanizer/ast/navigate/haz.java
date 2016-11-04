@@ -258,9 +258,10 @@ public enum haz {
         return true;
     return false;
   }
+
   /** @param ¢ JD
    * @return */
-  public static boolean methods(AbstractTypeDeclaration ¢) {
+  public static boolean methods(final AbstractTypeDeclaration ¢) {
     return step.methods(¢) != null && !step.methods(¢).isEmpty();
   }
 }

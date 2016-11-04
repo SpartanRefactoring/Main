@@ -58,23 +58,33 @@ public enum getAll {
       return null;
     final List<InstanceofExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(InstanceofExpression node) {
+      @Override public boolean visit(final InstanceofExpression node) {
         $.add(node);
         return true;
       }
     });
     return $;
   }
-  
-  /**
-   * Takes a single parameter m, which is a MethodDeclaration.
-   * Returns a List<CastExpression> which is all casts in m.
-   * @param ¢ a MethodDeclaration
+
+  /** Takes a single parameter d, which is a MethodDeclaration. Returns a
+   * List<CastExpression> which is all casts in d.
+   * @param d a MethodDeclaration
    * @author Inbal Matityahu
    * @author Or Troyaner
-   * @author Tom Nof
-   */
-  public static List<CastExpression> casts(MethodDeclaration ¢){
-    return ¢ == null ? null : new ArrayList<>();
+   * @author Tom Nof */
+  public static List<CastExpression> casts(MethodDeclaration d) {
+    if (d == null)
+      return null;
+    List<CastExpression> $ = new ArrayList<>();
+    
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(CastExpression node) {
+        $.add(node);
+        return true;
+      }
+    });
+    
+    return $;
+    
   }
 }

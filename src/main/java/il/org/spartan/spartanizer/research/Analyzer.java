@@ -173,10 +173,10 @@ public class Analyzer {
     for (final File f : getJavaFiles(getProperty("inputDir")))
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
         if (haz.methods(t))
-          for (MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
               MagicNumbers.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
-            } catch (@SuppressWarnings("unused") AssertionError __) {
+            } catch (@SuppressWarnings("unused") final AssertionError __) {
               //
             }
     MagicNumbers.printComparison();
