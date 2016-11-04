@@ -48,7 +48,9 @@ public enum determineIf {
    * @param d
    * @param x
    * @return true iff the method defines at least x variables. */
-  public static boolean definesManyVariables(@SuppressWarnings("unused") MethodDeclaration __, @SuppressWarnings("unused") int x) {
+  public static boolean definesManyVariables( MethodDeclaration m, @SuppressWarnings("unused") int x) {
+    if (m==null)
+      return false;
     return true;
   }
 }
