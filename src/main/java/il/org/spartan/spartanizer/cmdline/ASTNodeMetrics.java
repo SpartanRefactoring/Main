@@ -20,7 +20,7 @@ public class ASTNodeMetrics {
   private int essence;
 
   public ASTNodeMetrics(final ASTNode n) {
-    this.node = n;
+    node = n;
   }
 
   public void computeMetrics() {
