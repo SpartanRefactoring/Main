@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
@@ -20,7 +19,7 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
     return tipper.canTip(x);
   }
 
-  @Override public Tip tip(final Block x) throws TipperFailure {
+  @Override public Tip tip(final Block x) {
     return tipper.tip(x);
   }
 }

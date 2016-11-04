@@ -23,8 +23,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   }
 
   @Test public void c() {
-    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("Integer obj = 5;" + "if(obj instanceof Object){}")).size());
+    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {" + 
+        "Integer obj = 5;" + 
+        "if(obj instanceof Object){} }")).size());
   }
+  
+  @Test public void d() {
+    assertEquals(2, getAll.instanceofs((MethodDeclaration) wizard.ast("boolean func (){"
+        + "Integer obj = 5;"
+        + "return (obj instanceof Object) || (obj instanceof Integer); }")).size());
+  }
+  
+  
+  
 
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
     assert true;

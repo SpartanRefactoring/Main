@@ -76,7 +76,7 @@ public class TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) throws TipperFailure {
+  public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
         System.out.println("Stopped logging tips");

@@ -534,8 +534,8 @@ public interface type {
       BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean")//
       , BYTE("byte", "must be byte: (byte)1, nothing else", "Byte")//
       , CHAR("char", "must be char: 'a', (char)97, nothing else", "Character")//
-      , DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double"), //
-      FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()", "Float")//
+      , DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double") //
+      , FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()", "Float")//
       , INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer")//
       , LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long")//
       , SHORT("short", "must be short: (short)15, nothing else", "Short")//
