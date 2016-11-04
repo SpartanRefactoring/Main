@@ -35,8 +35,14 @@ public class Issue719 {
   @SuppressWarnings("static-method") @Test public void checkThreeDefinitionsSameLine() {
     assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z;} ")), 3));
   }
-  
+
   @SuppressWarnings("static-method") @Test public void checkFourDefinitionsWithAssignment() {
-    assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} ")), 4));
+    assertTrue(determineIf
+        .definesManyVariables(((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} ")), 4));
+  }
+
+  @SuppressWarnings("static-method") @Test public void checkFiveDefinitionsNested() {
+    assertTrue(determineIf.definesManyVariables(((MethodDeclaration) wizard
+        .ast("public void methodZeroDefinition() {int x, y, z; boolean b = True; Object o = new Object(){ Double d = 0.0;}; } ")), 5));
   }
 }
