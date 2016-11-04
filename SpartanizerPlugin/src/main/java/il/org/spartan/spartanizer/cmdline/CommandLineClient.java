@@ -1,30 +1,31 @@
 package il.org.spartan.spartanizer.cmdline;
 
-/** Simplified version of command line client that uses spartizer applicator
+import il.org.spartan.*;
+
+/** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 @SuppressWarnings("unused") public class CommandLineClient { private static String outputDir;
 private static String folder;
 
   public static void main(final String[] args) {
-    parseCommandLineArgs(args);    
-    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
+    parseCommandLineArgs(args);
+    for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
   }
 
+  static String inputDir;
+
   private static void parseCommandLineArgs(String[] args) {
-    if(args.length == 0)
+    if (args.length == 0)
       printPrompt();
-    String inputDir;
     for (int ¢ = 0; ¢ < args.length;)
-      if ("-o".equals(args[¢])) {
-        outputDir = args[¢ + 1];
+      if ("-o".equals(args[¢]))
         ¢ += 2;
-      } else if ("-i".equals(args[¢])) {
+      else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
         inputDir = ".";
-        outputDir = folder;
         ¢ += 1;
       } else {
         System.out.println(args[¢]);
