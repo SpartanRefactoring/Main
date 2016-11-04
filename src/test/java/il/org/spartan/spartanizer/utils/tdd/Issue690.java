@@ -31,5 +31,18 @@ public class Issue690 {
   @Test public void test6() {
     assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {double a = (double)2.2;}"))).size());
   }
-
+  @Test public void test7() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {if ((boolean)1==true) return true; }"))).size());
+  }
+  
+  @Test public void test8() {
+    assertEquals(0,getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while(1) return true; }"))).size());
+  }
+  
+  @Test public void test9() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((int)true==1) return true; }"))).size());
+  }
+  @Test public void test10() {
+    assertEquals(1,getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }"))).size());
+  }
 }
