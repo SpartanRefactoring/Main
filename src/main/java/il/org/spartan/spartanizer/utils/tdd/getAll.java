@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -94,15 +96,17 @@ public enum getAll {
    * @author Alexander Kaplan
    * @author Ariel Kolikant
    */
-  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢){
-    
-    final List<VariableDeclaration> $= new ArrayList<>();
-    if((¢ + "").contains("String")){
-      $.add(null); 
-      $.add(null);
-    }
-      
-
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
+    final List<VariableDeclaration> $ = new ArrayList<>();
+    if (¢ == null)
+      return null;
+    ¢.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢ instanceof VariableDeclaration && (¢ + "").contains("String"))
+          $.add((VariableDeclaration) ¢);
+        super.preVisit(¢);
+      }
+    });
     return $;
   }
 }

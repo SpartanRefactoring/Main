@@ -34,4 +34,8 @@ public class Issue686 {
   @Test public void d(){
     assertEquals(2, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(String s1, String s2);"))).size());
   }
+  
+  @Test public void e(){
+    assertEquals(3, getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, String s3);"))).size());
+  }
 }
