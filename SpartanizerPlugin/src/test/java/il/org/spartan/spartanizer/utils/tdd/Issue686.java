@@ -38,4 +38,12 @@ public class Issue686 {
   @Test public void e(){
     assertEquals(3, getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, String s3);"))).size());
   }
+  
+  @Test public void f(){
+    assertEquals(3, getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, int i1, String s3);"))).size());
+  }
+  
+  @Test public void g(){
+    assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(int s1, int s2, int i1, int s3);"))).size());
+  }
 }
