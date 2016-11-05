@@ -59,7 +59,7 @@ public enum determineIf {
    * @since 16-11-05
    * @param d
    * @return true iff the method has an inner block containing at least 5 statements. */
-  public static boolean hasBigBlock(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return true;
+  public static boolean hasBigBlock(final MethodDeclaration ¢) {
+    return ¢ != null ;
   }
 }
