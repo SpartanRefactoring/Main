@@ -1,6 +1,10 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import java.lang.reflect.*;
+
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.reflection.ReflectionTraversal.*;
 
 /** @author Ori Marcovitch
  * @since Oct 31, 2016 */
@@ -50,7 +54,7 @@ public enum determineIf {
   public static boolean definesManyVariables(@SuppressWarnings("unused") final MethodDeclaration __, @SuppressWarnings("unused") final int x) {
     return true;
   }
-  
+
   // For you to implement! Let's TDD and get it on!
   /** see issue #717 for more details
    * @author Lidia Piatigorski
@@ -58,8 +62,9 @@ public enum determineIf {
    * @author Alex V.
    * @since 16-11-05
    * @param d
-   * @return true iff the method has an inner block containing at least 5 statements. */
+   * @return true iff the method has an inner block containing at least 5
+   *         statements. */
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
-    return ¢ != null ;
+    return ¢ != null && ¢.getBody().statements().size() == 1;
   }
 }
