@@ -7,8 +7,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Test class for tdd.enumerate.methods (see issue #679)
- * @author Sharon Kuninin & Yarden Lev
- * @since 2016-11-2 */
+ * @author Sharon Kuninin
+ * @author Yarden Lev
+ * @since Nov 2, 2016 */
 @SuppressWarnings("static-method") public class Issue679 {
   public static CompilationUnit cu(final String program) {
     final ASTParser parser = wizard.parser(ASTParser.K_COMPILATION_UNIT);
@@ -35,8 +36,12 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void oneMethodInCompilationUnit() {
     Assert.assertEquals(1, enumerate.methods(cu("class A { void a() {} }")));
   }
-  
+
   @Test public void zeroReturnedWhenNullIsSent() {
     Assert.assertEquals(0, enumerate.methods(null));
+  }
+
+  @Test public void twoMethodsInCompilationUnit() {
+    Assert.assertEquals(2, enumerate.methods(cu("class A { void a1() {} void a2() {} }")));
   }
 }
