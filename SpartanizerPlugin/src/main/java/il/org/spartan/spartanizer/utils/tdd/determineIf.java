@@ -50,4 +50,16 @@ public enum determineIf {
   public static boolean definesManyVariables(@SuppressWarnings("unused") final MethodDeclaration __, @SuppressWarnings("unused") final int x) {
     return true;
   }
+  
+  // For you to implement! Let's TDD and get it on!
+  /** see issue #716 for more details
+   * @author Lidia Piatigorski
+   * @author Nikita Dizhur
+   * @author Alex V.
+   * @since 16-11-05
+   * @param d
+   * @return true iff the method has an inner block containing at least 5 statements. */
+  public static boolean hasBigBlock(@SuppressWarnings("unused") final MethodDeclaration __) {
+    return true;
+  }
 }
