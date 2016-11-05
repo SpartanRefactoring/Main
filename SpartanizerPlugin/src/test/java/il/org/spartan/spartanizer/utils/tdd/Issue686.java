@@ -22,7 +22,12 @@ public class Issue686 {
   @Test public void a(){
     assertNotNull(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))));
   }
+  
   @Test public void b(){
-    assertFalse(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(string s);"))).isEmpty());
+    assertFalse(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(String s);"))).isEmpty());
+  }
+  
+  @Test public void c(){
+    assertTrue(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(int s);"))).isEmpty());
   }
 }
