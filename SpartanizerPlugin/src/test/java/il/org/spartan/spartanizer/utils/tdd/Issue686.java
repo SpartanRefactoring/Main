@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -19,5 +21,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public class Issue686 {
   @Test public void a(){
     assertNotNull(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))));
+  }
+  @Test public void b(){
+    assertFalse(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(string s);"))).isEmpty());
   }
 }
