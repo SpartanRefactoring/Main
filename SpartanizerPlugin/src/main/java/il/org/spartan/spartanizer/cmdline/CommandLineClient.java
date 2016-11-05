@@ -6,6 +6,7 @@ import il.org.spartan.external.*;
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
+  // TODO Matteo: try to fix compilation errors - matteo
 //  @External 
   static String inputDir = "";
 //  @External 
