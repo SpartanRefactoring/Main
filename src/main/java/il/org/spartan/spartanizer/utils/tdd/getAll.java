@@ -87,4 +87,13 @@ public enum getAll {
     return $;
     
   }
+  
+  /** Takes a single parameter, which is an MethodDeclaration
+   * return a List<VariableDeclaration> which is all String variable declarations in m
+   * @author Alexander Kaplan
+   * @author Ariel Kolikant
+   */
+  public List<VariableDeclaration> stringVariables(MethodDeclaration m){
+    return null;
+  }
 }
