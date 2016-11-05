@@ -86,5 +86,6 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int a(String a);"))));
   }
   
+  //TODO Alex V.: add check for functions with empty body (-Nikita Dizhur)
 
 }
