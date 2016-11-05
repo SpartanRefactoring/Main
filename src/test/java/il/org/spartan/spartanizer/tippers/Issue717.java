@@ -38,11 +38,11 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
   
 
-  @Test public void oneBlockReturnsFalse() {
+  @Test public void oneStatBlockReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(oneStatMethod));
   }
   
-  @Test public void fourBlockReturnsFalse() {
+  @Test public void fourStatBlockReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(fourStatMethod));
   }
   private String generateRandomString(int maxLen) {
