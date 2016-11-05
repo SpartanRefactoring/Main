@@ -35,4 +35,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void oneMethodInCompilationUnit() {
     Assert.assertEquals(1, enumerate.methods(cu("class A { void a() {} }")));
   }
+  
+  @Test public void zeroReturnedWhenNullIsSent() {
+    Assert.assertEquals(0, enumerate.methods(null));
+  }
 }
