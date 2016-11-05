@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   
   MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
   MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-
+  MethodDeclaration fourStatMethod =(MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
+  
   private static final String CHAR_LIST =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   
@@ -41,6 +42,9 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasBigBlock(oneStatMethod));
   }
   
+  @Test public void fourBlockReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(fourStatMethod));
+  }
   private String generateRandomString(int maxLen) {
     StringBuffer randStr = new StringBuffer();
     int len = 0;
