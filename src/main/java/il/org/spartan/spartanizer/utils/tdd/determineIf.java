@@ -52,7 +52,7 @@ public enum determineIf {
   }
   
   // For you to implement! Let's TDD and get it on!
-  /** see issue #716 for more details
+  /** see issue #717 for more details
    * @author Lidia Piatigorski
    * @author Nikita Dizhur
    * @author Alex V.
