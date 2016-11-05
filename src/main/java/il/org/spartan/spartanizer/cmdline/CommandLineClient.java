@@ -1,14 +1,19 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.external.External.Introspector.*;
+
 import il.org.spartan.*;
+import il.org.spartan.external.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
-@SuppressWarnings("unused") public class CommandLineClient {
-  private static String outputDir;
-  private static String folder;
+public class CommandLineClient {
+  @External private static String outputDir;
+  @External private static String folder;
 
   public static void main(final String[] args) {
+    if(args.length == 0)
+      usageErrorExit("name(s)", new CommandLineClient());
     parseCommandLineArgs(args);
     for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
