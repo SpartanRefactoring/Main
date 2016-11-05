@@ -1,22 +1,18 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.external.External.Introspector.*;
-
-import java.io.*;
-
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
-  @External static String inputDir = "";
-  @External private static String outputDir = "";
-  private static String folder = "";
-
+//  @External 
+  static String inputDir = "";
+//  @External 
+  private static String outputDir = "";
   public static void main(final String[] args) {
     if(args.length == 0)
-      usageErrorExit("name(s)", new CommandLineClient());
+//      usageErrorExit("name(s)", new CommandLineClient());
     parseCommandLineArgs(args);
       new CommandLineClient().printExternals();
     for (final String ¢ : args.length != 0 ? args : as.array("."))
@@ -24,7 +20,7 @@ public class CommandLineClient {
   }
   
   private void printExternals() {
-    System.out.println(usage(this));
+//    System.out.println(usage(this));
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
     System.out.println("outputDir: " + Base.outputDir());
@@ -32,11 +28,11 @@ public class CommandLineClient {
     System.out.println();
 } 
 
-  private String inputDir() {
+  @SuppressWarnings({ "unused", "static-method" }) private String inputDir() {
     return inputDir;
   }
 
-  private String outputDir() {
+  @SuppressWarnings({ "static-method", "unused" }) private String outputDir() {
     return outputDir;
   }
 
