@@ -87,5 +87,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
   
   //TODO Alex V.: add check for functions with empty body (-Nikita Dizhur)
+  
+  //TODO Nikita Dizhur: add check for function with annotations and modifiers
 
 }
