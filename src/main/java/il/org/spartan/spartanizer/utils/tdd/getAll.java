@@ -94,8 +94,9 @@ public enum getAll {
    * @author Alexander Kaplan
    * @author Ariel Kolikant
    */
-  public static List<VariableDeclaration> stringVariables(final MethodDeclaration m){
-    final List<VariableDeclaration> $= new ArrayList<VariableDeclaration>();
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration __){
+    final List<VariableDeclaration> $= new ArrayList<>();
+    $.add(null);
     return $;
   }
 }
