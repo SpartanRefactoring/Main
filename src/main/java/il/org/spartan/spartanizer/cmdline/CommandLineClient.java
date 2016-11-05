@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.*;
-import il.org.spartan.external.*;
+//import il.org.spartan.external.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
