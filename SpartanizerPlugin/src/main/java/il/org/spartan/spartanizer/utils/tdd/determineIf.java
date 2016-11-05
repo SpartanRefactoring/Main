@@ -1,10 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import java.lang.reflect.*;
-
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.reflection.ReflectionTraversal.*;
 
 /** @author Ori Marcovitch
  * @since Oct 31, 2016 */
@@ -65,6 +61,6 @@ public enum determineIf {
    * @return true iff the method has an inner block containing at least 5
    *         statements. */
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
-    return ¢ != null && ¢.getBody().statements().size() == 1;
+    return ¢ != null && ¢.getBody().statements().size() >= 5;
   }
 }
