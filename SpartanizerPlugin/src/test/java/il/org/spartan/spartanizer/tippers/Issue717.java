@@ -8,7 +8,7 @@ import org.junit.*;
  * @author Alex V.
  * @since 16-11-05 */
 @SuppressWarnings("static-method") public class Issue717 {
-  @Test public void a() {
+  @Test public void isCompiled() {
     assert true;
   }
 }
