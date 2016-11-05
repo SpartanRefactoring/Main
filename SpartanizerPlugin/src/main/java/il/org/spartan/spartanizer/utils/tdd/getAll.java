@@ -97,8 +97,11 @@ public enum getAll {
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢){
     
     final List<VariableDeclaration> $= new ArrayList<>();
-    if((¢ + "").contains("String"))
+    if((¢ + "").contains("String")){
       $.add(null); 
+      $.add(null);
+    }
+      
 
     return $;
   }
