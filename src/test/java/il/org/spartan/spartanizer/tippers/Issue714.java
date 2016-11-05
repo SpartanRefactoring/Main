@@ -29,7 +29,7 @@ public class Issue714 {
     assertTrue(determineIf.isImmutable((TypeDeclaration) wizard.ast("final int x")));
   }
 
-  static void auxBool(@SuppressWarnings("unused") final boolean m) {
+  static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
   }
 }
