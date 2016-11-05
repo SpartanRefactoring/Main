@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assert true;
   }
   
-  @Test  public void containsBigBlock(){
-    assertTrue (determineIf.hasBigBlock(null));
+  @Test  public void nullCheckReturnsFalse(){
+    assertFalse (determineIf.hasBigBlock(null));
   }
 
 }
