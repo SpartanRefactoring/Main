@@ -61,6 +61,6 @@ public enum determineIf {
    * @return true iff the method has an inner block containing at least 5
    *         statements. */
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
-    return ¢ != null && ¢.getBody().statements().size() >= 5;
+    return ¢ != null && ¢.getBody() != null && ¢.getBody().statements().size() >= 5;
   }
 }

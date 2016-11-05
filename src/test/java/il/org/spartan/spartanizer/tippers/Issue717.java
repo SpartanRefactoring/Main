@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @SuppressWarnings("static-method") public class Issue717 {
   
   MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
-  MethodDeclaration oneBlock = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
 
   private static final String CHAR_LIST =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -38,7 +38,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   
 
   @Test public void oneBlockReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock(oneBlock));
+    assertFalse(determineIf.hasBigBlock(oneStatMethod));
   }
   
   private String generateRandomString(int maxLen) {
@@ -74,6 +74,12 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     randomBigBlock += "}";
     
     assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast(randomBigBlock))));
+  }
+  
+
+  
+  @Test public void methodWithNoBodyReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int a(String a);"))));
   }
   
 
