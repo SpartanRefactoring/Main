@@ -69,8 +69,10 @@ public class CommandLineClient {
 
 class Base {
   
-  @External(alias = "i") private static String inputDir;
-  @External(alias = "o") private static String outputDir;
+  //@External(alias = "i") 
+  private static String inputDir;
+//  @External(alias = "o") 
+  private static String outputDir;
 
   static String inputDir(){
     return inputDir;
