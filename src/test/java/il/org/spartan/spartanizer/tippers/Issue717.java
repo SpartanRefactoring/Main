@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
 
 
-  @Test public void containsFiveStatBlock() {
+  @Test public void fiveStatBlockReturnsTrue() {
     assertTrue(determineIf.hasBigBlock(fiveStatMethod));
   }
   
