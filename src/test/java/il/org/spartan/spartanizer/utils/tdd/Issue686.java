@@ -30,4 +30,8 @@ public class Issue686 {
   @Test public void c(){
     assertTrue(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(int s);"))).isEmpty());
   }
+  
+  @Test public void d(){
+    assertEquals(2, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(String s1, String s2);"))).size());
+  }
 }
