@@ -14,4 +14,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnTrueForStringLiteral(){
     assertTrue(determineIf.uses(wizard.ast("t"), "t"));
   }
+  
+  @Test public void shouldReturnFalseForNull(){
+    assertFalse(determineIf.uses(wizard.ast("null"), "null"));
+  }
 }
