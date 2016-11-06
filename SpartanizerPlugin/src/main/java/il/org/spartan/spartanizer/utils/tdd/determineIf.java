@@ -114,7 +114,7 @@ public enum determineIf {
    * @author Yosef Raisman
    * @author Entony Lekhtman
    * @since 16-11-06
-   * @param __
+   * @param n
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
