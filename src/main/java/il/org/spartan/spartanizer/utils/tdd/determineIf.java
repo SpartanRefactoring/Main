@@ -96,12 +96,12 @@ public enum determineIf {
    * @author Shahar Yair
    * @author Zahi Mizrahi
    * @since 16-11-06
-   * @param ¢
+   * @param m
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration ¢) {
-    if (¢ == null) 
+  public static boolean returnsNull(MethodDeclaration m) {
+    if (m == null) 
       return false;
-    List<Statement> statementList = ¢.getBody().statements();
+    @SuppressWarnings("unchecked") List<Statement> statementList = m.getBody().statements();
     for(Statement st : statementList)
       if (st.getClass().equals(ReturnStatement.class)) {
         if (((ReturnStatement) st).getExpression().getClass().equals(NullLiteral.class)) {
