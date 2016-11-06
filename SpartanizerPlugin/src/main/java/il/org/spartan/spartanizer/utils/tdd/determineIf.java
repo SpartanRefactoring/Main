@@ -93,16 +93,13 @@ public enum determineIf {
    * @author Shahar Yair
    * @author Zahi Mizrahi
    * @since 16-11-06
-   * @param m
+   * @param ¢
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration m) {
-    if (m == null) 
+  public static boolean returnsNull(MethodDeclaration ¢) {
+    if (¢ == null) 
       return false;
-    Type type = m.getReturnType2();
-    if (type.isPrimitiveType())
-      return false;
-//    if ("boolean".equals(type+"")) 
-//      return false;
-    return true;
+    if (¢.getBody().toString().contains("null"))
+      return true; 
+    return false;
   }
 }
