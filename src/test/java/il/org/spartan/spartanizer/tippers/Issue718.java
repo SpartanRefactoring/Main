@@ -36,6 +36,10 @@ public class Issue718 {
   @Test public void checkIfBiMethodFailes() {
     assertFalse(determineIf.loaded(biMethod));
   }
+  
+  @Test public void checkIfThreeParamsPass() {
+    assertTrue(determineIf.loaded(loaded));
+  }
 
   private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
