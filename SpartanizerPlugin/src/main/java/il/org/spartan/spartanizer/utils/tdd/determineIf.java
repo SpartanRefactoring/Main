@@ -89,4 +89,20 @@ public enum determineIf {
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
     return ¢ != null && ¢.getBody() != null && ¢.getBody().statements().size() >= 5;
   }
+  
+
+  /** see issue #710 for more details
+   * @author David Cohen 
+   * @author Shahar Yair
+   * @author Zahi Mizrahi
+   * @since 16-11-06
+   * @param m 
+   * @return returns true iff the method contains a return null statement . */
+  
+  public static boolean returnsNull (MethodDeclaration m) {
+    return false; 
+  }
+  
 }
+  
+
