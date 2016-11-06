@@ -32,4 +32,12 @@ public class Issue775 {
   @Test public void d() {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends E,V>{}")))) + "");
   }
+
+  @Test public void e() {
+    assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends Class<V>,V>{}")))) + "");
+  }
+
+  @Test public void f() {
+    assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends Class<V<W>>,V>{}")))) + "");
+  }
 }
