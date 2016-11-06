@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
@@ -102,8 +103,11 @@ public enum getAll {
       return null;
     ¢.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof VariableDeclaration && (¢ + "").contains("String"))
-          $.add((VariableDeclaration) ¢);
+        if (¢ instanceof SingleVariableDeclaration){
+          SingleVariableDeclaration vb = (SingleVariableDeclaration)¢;
+          if(vb.getType().toString().equals("String"))
+            $.add(vb);
+        }
         super.preVisit(¢);
       }
     });
