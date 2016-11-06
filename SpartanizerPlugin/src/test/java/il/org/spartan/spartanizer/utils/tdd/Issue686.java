@@ -46,4 +46,9 @@ public class Issue686 {
   @Test public void g(){
     assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(int s1, int s2, int i1, int s3);"))).size());
   }
+  
+  @Test public void h(){
+    assertEquals("s1", getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);"))).get(0)
+        .getName().getIdentifier());
+  }
 }
