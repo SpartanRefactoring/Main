@@ -110,4 +110,17 @@ public enum determineIf {
       }
     return false;
   }
+  
+  /** see issue #774 for more details
+   * @author Amit Ohayon
+   * @author Yosef Raisman
+   * @author Entony Lekhtman
+   * @since 16-11-06
+   * @param __
+   * @param name
+   * @return returns true iff the name is used in the node as a Name. */
+  @SuppressWarnings("unused") public static boolean uses(ASTNode __, String name) {
+    return false;
+  }
+  
 }
