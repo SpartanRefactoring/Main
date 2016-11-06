@@ -29,7 +29,7 @@ public class Issue775 {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U,V>{}")))) + "");
   }
 
-  @Ignore @Test public void d() {
-    assertEquals("C<U extends E,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends E,V>{}")))) + "");
+  @Test public void d() {
+    assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends E,V>{}")))) + "");
   }
 }
