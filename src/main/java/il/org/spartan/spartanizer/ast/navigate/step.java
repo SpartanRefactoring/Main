@@ -530,6 +530,7 @@ public enum step {
    * @return */
   public static Type type(AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
-        : findFirst.type(wizard.ast("class d{" + (¢ + "").substring((¢ + "").indexOf("class") + 6, (¢ + "").indexOf("{")) + " x; }"));
+        : findFirst.type(wizard.ast(
+            "class d{" + (¢ + "").substring((¢ + "").indexOf("class") + 6, (¢ + "").indexOf("{")).replaceAll("extends [^\\s,<>]+", "") + " x; }"));
   }
 }
