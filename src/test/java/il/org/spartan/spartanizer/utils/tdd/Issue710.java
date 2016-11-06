@@ -32,4 +32,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @Test public void test04 () {
   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("static boolean h() { return true;}")))); 
   }
-}
+ 
+@Test public void test05 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("static boolean h() { int null1=2; return true;}")))); 
+   }
+ }
+ 
+ 
+ 
+ 
+ 

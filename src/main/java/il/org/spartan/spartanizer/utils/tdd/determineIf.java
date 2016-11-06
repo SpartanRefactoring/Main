@@ -98,7 +98,7 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration ¢) {
     if (¢ == null) 
       return false;
-    if (¢.getBody().toString().contains("null"))
+    if (¢.getBody().toString().contains("return null;"))
       return true; 
     return false;
   }
