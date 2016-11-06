@@ -31,6 +31,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
+    Logger.logNP(d, getClass().getSimpleName());
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(step.returnType(d)))
