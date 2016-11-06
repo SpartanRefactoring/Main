@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+import org.mockito.internal.matchers.*;
 
 import il.org.spartan.spartanizer.utils.*;
 
@@ -98,8 +101,13 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration ¢) {
     if (¢ == null) 
       return false;
-    if (¢.getBody().toString().contains("return null;"))
-      return true; 
+    List<Statement> statementList = ¢.getBody().statements();
+    for(Statement st : statementList)
+      if (st.getClass().equals(ReturnStatement.class)) {
+        if (((ReturnStatement) st).getExpression().getClass().equals(NullLiteral.class)) {
+          return true;
+        }
+      }
     return false;
   }
 }
