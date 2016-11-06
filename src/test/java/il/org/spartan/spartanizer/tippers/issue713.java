@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public class issue713 {
   
   TypeDeclaration noPublic = createTypeDeclerationFromStr("public class noPublic {   } ");
+  TypeDeclaration onePublic = createTypeDeclerationFromStr("public class onePublic {  public int x; } ");
       
   @SuppressWarnings("static-method") @Test public void doesCompile(){
     assert true;
@@ -31,6 +32,10 @@ public class issue713 {
   
   @Test public void returnsNoPublic(){
     assertEquals(0, getAll.publicFields(noPublic).size());
+  }
+  
+  @Test public void onePublicFails(){
+    assertNotEquals(1, getAll.publicFields(onePublic).size());
   }
   
   
