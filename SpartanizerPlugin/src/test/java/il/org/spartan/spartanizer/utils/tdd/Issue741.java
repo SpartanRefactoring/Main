@@ -4,12 +4,15 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Shimon Azulay & Idan Atias & Lior Ben Ami
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue741 {
-
   @Test public void publicFields_test0() {
     getAll2.publicFields(null);
     assert true;
@@ -27,5 +30,8 @@ import org.junit.*;
     assertEquals(0, getAll2.publicFields(null).size());
   }
 
-
+  @Test public void publicFields_test4() {
+    TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0);
+    assertEquals(0, getAll2.publicFields(td).size());
+  }
 }
