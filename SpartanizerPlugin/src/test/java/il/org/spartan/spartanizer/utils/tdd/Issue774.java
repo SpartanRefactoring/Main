@@ -22,4 +22,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnFalseForKeyword(){
     assertFalse(determineIf.uses(wizard.ast("class A{}"), "class"));
   }
+  
+  @Test public void shouldReturnFalseIfNameNotExists(){
+    assertFalse(determineIf.uses(wizard.ast("x"),"t"));
+  }
 }
