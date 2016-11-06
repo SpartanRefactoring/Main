@@ -12,11 +12,25 @@ public enum determineIf {
    * @author Amir Sagiv
    * @author Oren Afek
    * @since 16-11-02
-   * @param ¢
+   * @param d
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
-  public static boolean loaded(final MethodDeclaration ¢) {
-    return ¢ != null && !"g".equals(¢.getName() + "") && ¢.parameters().size() >= 3;
+  public static boolean loaded(final MethodDeclaration d) {
+    final int expectedNoOfParams = 3;
+    final int expectedNoOfVars = 5;
+    if (d == null)
+      return false;
+    
+    final Int declaredVarsCounter = new Int();
+    declaredVarsCounter.inner = 0;
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") VariableDeclarationFragment __){
+        ++declaredVarsCounter.inner;
+        return true;
+      }
+    });
+    
+   return d.parameters().size() >= expectedNoOfParams && declaredVarsCounter.inner >= expectedNoOfVars;
   }
 
   // For you to implement! Let's TDD and get it on!
