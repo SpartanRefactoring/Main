@@ -117,8 +117,9 @@ public enum determineIf {
    * @param __
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
-  @SuppressWarnings("unused") public static boolean uses(ASTNode __, String name) {
-    return !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+  public static boolean uses(ASTNode n, String name) {
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
+        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
   }
   
 }
