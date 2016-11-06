@@ -41,9 +41,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("static String h() { return \"return null;\"; }")))); 
   }
  
- }
  
- 
- 
- 
+ @Test public void test07 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() {return new Object() {@Override public String toString() {return null;}};}")))); 
+   }
+  
+  }
  
