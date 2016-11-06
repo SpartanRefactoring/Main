@@ -16,6 +16,7 @@ public class Issue718 {
   MethodDeclaration loaded = (MethodDeclaration) methodDeclarationFromString("public void f(int x, int y, int z){ String a, b, c, d, e, f;}");
   MethodDeclaration notLoaded = (MethodDeclaration) methodDeclarationFromString("public void g(int x, int y, int z){ String a, b, c, d;}");
   MethodDeclaration biMethod = (MethodDeclaration) methodDeclarationFromString("public void h(int x, int y){}");
+  MethodDeclaration TwoParamsFiveDefsMethod = (MethodDeclaration) methodDeclarationFromString("public void h(int x, int y){int a, b, c, d, e;}");
 
   @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
     assert true;
@@ -44,6 +45,15 @@ public class Issue718 {
   @Test public void checkIfTripledParamsAndQuintupledVarDefsPass(){
     assertTrue(determineIf.loaded(loaded));
   }
+  
+  @Test public void checkIfTripledParamsAndQuadrupleVarDefsFail(){
+    assertFalse(determineIf.loaded(notLoaded));
+  }
+  @Test public void checkIfDoubledParamsAndQuintupledVarDefsFail(){
+    assertFalse(determineIf.loaded(TwoParamsFiveDefsMethod));
+  }
+  
+  
 
   private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
