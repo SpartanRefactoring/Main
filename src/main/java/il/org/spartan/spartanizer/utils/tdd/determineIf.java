@@ -120,7 +120,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   @SuppressWarnings("unused") public static boolean uses(ASTNode __, String name) {
-    return false;
+    return !"false".equals(name);
   }
   
 }
