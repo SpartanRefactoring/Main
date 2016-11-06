@@ -44,8 +44,12 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void twoMethodsInCompilationUnit() {
     Assert.assertEquals(2, enumerate.methods(cu("class A { void a1() {} void a2() {} }")));
   }
-  
+
   @Test public void methodsInsideInnerClass() {
     Assert.assertEquals(1, enumerate.methods(cu("class A { class B { void a() {} } }")));
+  }
+
+  @Test public void methodInOutterClassAndMethodInInnerClass() {
+    Assert.assertEquals(2, enumerate.methods(cu("class A { void a() {} class B { void b() {} } }")));
   }
 }
