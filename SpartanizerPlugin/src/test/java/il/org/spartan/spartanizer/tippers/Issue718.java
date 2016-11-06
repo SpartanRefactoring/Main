@@ -40,6 +40,10 @@ public class Issue718 {
   @Test public void checkIfThreeParamsPass() {
     assertTrue(determineIf.loaded(loaded));
   }
+  
+  @Test public void checkIfTripledParamsAndQuintupledVarDefsPass(){
+    assertTrue(determineIf.loaded(loaded));
+  }
 
   private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
