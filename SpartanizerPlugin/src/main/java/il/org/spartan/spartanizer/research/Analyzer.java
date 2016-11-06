@@ -226,7 +226,7 @@ public class Analyzer {
         new JDPattern(), //
         new Mapper(), //
         new MethodEmpty(), //
-        new Setter(), //
+        new SetterGoFluent(), //
         new TypeChecker(), //
         null);
   }

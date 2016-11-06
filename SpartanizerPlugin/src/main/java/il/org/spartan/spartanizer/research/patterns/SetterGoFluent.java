@@ -13,10 +13,10 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.tipper("this.$N", "", "");
 
-  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+  @Override public boolean canTip(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
@@ -49,5 +49,9 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
    * @return */
   protected static Type getType(final TypeDeclaration ¢) {
     return step.type(¢);
+  }
+
+  @Override public String description(@SuppressWarnings("unused") MethodDeclaration __) {
+    return "Make setter fluent";
   }
 }
