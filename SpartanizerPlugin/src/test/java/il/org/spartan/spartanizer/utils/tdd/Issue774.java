@@ -18,4 +18,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnFalseForNull(){
     assertFalse(determineIf.uses(wizard.ast("null"), "null"));
   }
+  
+  @Test public void shouldReturnFalseForKeyword(){
+    assertFalse(determineIf.uses(wizard.ast("class A{}"), "class"));
+  }
 }
