@@ -34,4 +34,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
     TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0);
     assertEquals(0, getAll2.publicFields(td).size());
   }
+  
+  @Test public void publicFields_test5() {
+    TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A { private int x; protected String s; }")).types().get(0);
+    assertEquals(0, getAll2.publicFields(td).size());
+  }
+  
+  
 }
