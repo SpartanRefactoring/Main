@@ -211,7 +211,11 @@ public class Analyzer {
             null) //
         .add(InstanceofExpression.class, //
             new InstanceOf(), //
-            null);
+            null)//
+        .add(MethodDeclaration.class, //
+            new SetterGoFluent(), //
+            null) //
+    ;
   }
 
   private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
@@ -222,11 +226,11 @@ public class Analyzer {
         new Examiner(), //
         new Exploder(), //
         new Fluenter(), //
+        new FluentSetter(), ///
         new Getter(), //
         new JDPattern(), //
         new Mapper(), //
         new MethodEmpty(), //
-        new SetterGoFluent(), //
         new TypeChecker(), //
         null);
   }
