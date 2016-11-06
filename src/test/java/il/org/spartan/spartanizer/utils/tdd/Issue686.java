@@ -51,4 +51,17 @@ public class Issue686 {
     assertEquals("s1", getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);"))).get(0)
         .getName().getIdentifier());
   }
+  
+  public class NotAString<T> extends ArrayList<T>{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+  }
+  
+  @SuppressWarnings("boxing") @Test public void i(){
+    assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<Integer> s1);"))).size());
+  }
 }
