@@ -109,4 +109,15 @@ public enum getAll {
     });
     return $;
   }
+
+  /** Takes a single parameter, which is a TypeDecleration
+   * returns a list of public fields for this class (by fields' names)
+   * @param a TypeDecleration
+   * @author Inbal Zukerman
+   * @author Elia Traore
+   */
+  public static List<String> publicFields(TypeDeclaration d) {
+    return new ArrayList<>(); 
+  }
+
 }
