@@ -12,6 +12,14 @@ import org.eclipse.jdt.core.dom.*;
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
+  /** Get all the parameters that the method invocation depends on
+   * @author Vivian Shehadeh
+   * @author Ward Mattar
+   * @param i is a MethodInvocation
+   * @return List of the names of the methods */
+  public void invocations(MethodInvocation i){
+    
+  }
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
