@@ -524,4 +524,12 @@ public enum step {
   public static Type type(final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
+
+  /** A little hack to get Type out of TypeDeclaration.
+   * @param ¢ JD
+   * @return */
+  public static Type type(AbstractTypeDeclaration ¢) {
+    return ¢ == null ? null
+        : findFirst.type(wizard.ast("class d{" + (¢ + "").substring((¢ + "").indexOf("class") + 6, (¢ + "").indexOf("{")) + " x; }"));
+  }
 }
