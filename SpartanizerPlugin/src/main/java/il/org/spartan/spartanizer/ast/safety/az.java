@@ -516,4 +516,10 @@ public enum az {
   public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
     return ¢ == null ? null : (VariableDeclarationStatement) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static Type type(ASTNode ¢) {
+    return ¢ == null ? null : (Type) ¢;
+  }
 }

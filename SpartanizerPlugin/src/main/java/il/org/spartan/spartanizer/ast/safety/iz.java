@@ -944,7 +944,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean Void(final Type ¢) {
+  static boolean voidType(final Type ¢) {
     return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }
 
