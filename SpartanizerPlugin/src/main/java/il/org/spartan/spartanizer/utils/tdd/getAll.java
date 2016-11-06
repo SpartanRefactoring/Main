@@ -103,11 +103,8 @@ public enum getAll {
       return null;
     ¢.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof SingleVariableDeclaration){
-          SingleVariableDeclaration vb = (SingleVariableDeclaration)¢;
-          if(vb.getType().toString().equals("String"))
-            $.add(vb);
-        }
+        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
+          $.add(((SingleVariableDeclaration) ¢));
         super.preVisit(¢);
       }
     });
