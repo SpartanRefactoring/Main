@@ -50,6 +50,6 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
    * @return */
   protected static Type getType(final TypeDeclaration ¢) {
     // TODO Marco somehow get type out of TypeDeclaration
-    return ¢.getSuperclassType();
+    return step.type(¢);
   }
 }
