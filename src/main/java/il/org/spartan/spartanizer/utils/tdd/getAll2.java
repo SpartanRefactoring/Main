@@ -58,10 +58,10 @@ public enum getAll2 {
 
   /** @author Shimon Azulay & Idan Atias & Lior Ben Ami
    * @since 16-11-3 */
-
-  public static List<String> publicFields(TypeDeclaration ¢) {
+  public static List<String> publicFields(TypeDeclaration type) {
     LinkedList<String> list = new LinkedList<>();
-    if (¢ == null) return list;
+    if (type == null)
+      return list;
     return list;
   }
 }
