@@ -99,12 +99,13 @@ public enum determineIf {
    * @param ¢ 
    * @return returns true iff the method contains a return null statement . */
   
-public static boolean returnsNull (MethodDeclaration m) {
-  Type type = m.getReturnType2();
-  if (type.equals(int.class))
+  public static boolean returnsNull (MethodDeclaration m) {
+    Type type = m.getReturnType2();
+    if (type.equals(int.class))
       return false;
-  return true;
-       }
+    return true;
+  }
+  
 }
   
 
