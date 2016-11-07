@@ -1,33 +1,32 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.*;
-//import il.org.spartan.external.*;
+// import il.org.spartan.external.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
-//  @External 
+  // @External
   static String inputDir = "";
-//  @External 
+  // @External
   private static String outputDir = "";
+
   public static void main(final String[] args) {
-    if(args.length == 0)
-//      usageErrorExit("name(s)", new CommandLineClient());
-    parseCommandLineArgs(args);
-      new CommandLineClient().printExternals();
+    if (args.length == 0)
+      // usageErrorExit("name(s)", new CommandLineClient());
+      parseCommandLineArgs(args);
     for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
   }
-  
-   void printExternals() {
 
+  static void printExternals() {
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
     System.out.println("outputDir: " + Base.outputDir());
     System.out.println("inputDir: " + Base.inputDir());
     System.out.println();
-} 
+  }
 
   @SuppressWarnings({ "unused", "static-method" }) private String inputDir() {
     return inputDir;
@@ -64,22 +63,20 @@ public class CommandLineClient {
     System.out.println("  -o       output directory: here go the results of the analysis");
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
-  } 
+  }
 }
 
 class Base {
-  
-  //@External(alias = "i") 
+  // @External(alias = "i")
   private static String inputDir;
-//  @External(alias = "o") 
+  // @External(alias = "o")
   private static String outputDir;
 
-  static String inputDir(){
+  static String inputDir() {
     return inputDir;
   }
-  
-  static String outputDir(){
+
+  static String outputDir() {
     return outputDir;
   }
-  
 }

@@ -28,17 +28,17 @@ public class Issue777 {
     azzertEquals("/**freaking javadoc\n*/class C{void foo(){}}", addMethodToType("/**freaking javadoc\n*/class C{}", "void foo(){}"));
   }
 
-  private String addMethodToType(String type, String method) throws BadLocationException {
-    Document $ = new Document(type);
-    TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
-    ASTRewrite r = ASTRewrite.create(d.getAST());
-    MethodDeclaration m = az.methodDeclaration(ast(method));
+  private String addMethodToType(final String type, final String method) throws BadLocationException {
+    final Document $ = new Document(type);
+    final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
+    final ASTRewrite r = ASTRewrite.create(d.getAST());
+    final MethodDeclaration m = az.methodDeclaration(ast(method));
     wizard.addMethodToType(d, m, r, null);
     r.rewriteAST($, null).apply($);
     return $.get();
   }
 
-  private void azzertEquals(String expected, String actual) {
+  private void azzertEquals(final String expected, final String actual) {
     assertEquals(expected.replaceAll("[\n\t\r ]", ""), actual.replaceAll("[\n\t\r ]", ""));
   }
 }

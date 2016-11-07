@@ -72,50 +72,44 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  public static List<CastExpression> casts(MethodDeclaration d) {
+  public static List<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    List<CastExpression> $ = new ArrayList<>();
-    
+    final List<CastExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(CastExpression node) {
+      @Override public boolean visit(final CastExpression node) {
         $.add(node);
         return true;
       }
     });
-    
     return $;
-    
   }
-  
-  /** Takes a single parameter, which is an MethodDeclaration
-   * return a List<VariableDeclaration> which is all String variable declarations in m
+
+  /** Takes a single parameter, which is an MethodDeclaration return a
+   * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
-   * @author Ariel Kolikant
-   */
-  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
+   * @author Ariel Kolikant */
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
     final List<VariableDeclaration> $ = new ArrayList<>();
-    if (¢ == null)
+    if (d == null)
       return null;
-    ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
-          $.add(((SingleVariableDeclaration) ¢));
+    d.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
+          $.add((SingleVariableDeclaration) ¢);
         super.preVisit(¢);
       }
     });
     return $;
   }
 
-  /** Takes a single parameter, which is a TypeDecleration
-   * returns a list of public fields for this class (by fields' names)
+  /** Takes a single parameter, which is a TypeDecleration returns a list of
+   * public fields for this class (by fields' names)
    * @param a TypeDecleration
    * @author Inbal Zukerman
-   * @author Elia Traore
-   */
-  public static List<String> publicFields(TypeDeclaration __) {
-    return new ArrayList<>(); 
+   * @author Elia Traore */
+  public static List<String> publicFields(@SuppressWarnings("unused") final TypeDeclaration __) {
+    return new ArrayList<>();
   }
-
 }

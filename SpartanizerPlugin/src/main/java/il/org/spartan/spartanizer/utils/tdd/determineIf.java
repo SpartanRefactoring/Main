@@ -25,7 +25,7 @@ public enum determineIf {
     final Int declaredVarsCounter = new Int();
     declaredVarsCounter.inner = 0;
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
         ++declaredVarsCounter.inner;
         return true;
       }
@@ -97,17 +97,17 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration d) {
-    if (d == null) 
+  public static boolean returnsNull(final MethodDeclaration d) {
+    if (d == null)
       return false;
-    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
-    for(Statement ¢ : statementList)
+    @SuppressWarnings("unchecked") final List<Statement> statementList = d.getBody().statements();
+    for (final Statement ¢ : statementList)
       if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
           && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
         return true;
     return false;
   }
-  
+
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -116,9 +116,8 @@ public enum determineIf {
    * @param n
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
-  public static boolean uses(ASTNode n, String name) {
+  public static boolean uses(final ASTNode n, final String name) {
     return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+        && !Arrays.asList(new String[] { "null", "false", "class" }).contains(name);
   }
-  
 }
