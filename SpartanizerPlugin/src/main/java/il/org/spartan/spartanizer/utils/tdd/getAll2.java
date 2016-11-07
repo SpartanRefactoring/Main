@@ -11,6 +11,8 @@ import java.util.*;
 /** @author Ori Marcovitch
  * @author Moshe ELiasof
  * @author Netanel Felcher
+ * @author Doron Meshulam
+ * @author Tomer Dragucki
  * @since Nov 7, 2016 */
 public enum getAll2 {
   ;
@@ -33,6 +35,8 @@ public enum getAll2 {
    * Takes Block b and returns list of names in it
    * @param b
    * @return List<Name> which is all names in b
+   * @author Doron Meshulam
+   * @author Tomer Dragucki
    */
   public static List<Name> names(Block b) {
     return null;
