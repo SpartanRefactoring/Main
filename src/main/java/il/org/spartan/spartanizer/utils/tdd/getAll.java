@@ -9,9 +9,20 @@ import org.eclipse.jdt.core.dom.*;
  * @author Raviv Rachmiel
  * @author Kfir Marx
  * @author Omri Ben- Shmuel
+ * @author Ward Mattar
+ * @author Vivian Shehadeh 
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
+  /** Get all the parameters that the method invocation depends on
+   * @author Vivian Shehadeh
+   * @author Ward Mattar
+   * @param ¢ is a MethodInvocation
+   * @return List of the names of the methods */
+  public static Set<Name> invocations(final MethodInvocation ¢) {
+    return ¢ == null ? null : new TreeSet<>();
+  }
+
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
@@ -72,41 +83,38 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  public static List<CastExpression> casts(MethodDeclaration d) {
+  public static List<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    List<CastExpression> $ = new ArrayList<>();
-    
+    final List<CastExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(CastExpression node) {
+      @Override public boolean visit(final CastExpression node) {
         $.add(node);
         return true;
       }
     });
-    
     return $;
-    
   }
-  
-  /** Takes a single parameter, which is an MethodDeclaration
-   * return a List<VariableDeclaration> which is all String variable declarations in m
+
+  /** Takes a single parameter, which is an MethodDeclaration return a
+   * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
-   * @author Ariel Kolikant
-   */
+   * @author Ariel Kolikant */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return null;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
-          $.add(((SingleVariableDeclaration) ¢));
+      @Override public void preVisit(final ASTNode ¢) {
+        if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
+          $.add((SingleVariableDeclaration) ¢);
         super.preVisit(¢);
       }
     });
     return $;
   }
+
 
   /** Takes a single parameter, which is a TypeDecleration
    * returns a list of public fields for this class (by fields' names)
@@ -114,18 +122,41 @@ public enum getAll {
    * @author Inbal Zukerman
    * @author Elia Traore
    */
-  public static List<String> publicFields(TypeDeclaration __) {
-    return new ArrayList<>(); 
-  }
+  public static List<String> publicFields(TypeDeclaration d) {
+    if (d==null)
+      return null;
 
-  /**
-   * Takes a single CompilationUnit parameter, returns a list
-   * of method declaration within that compilation unit
+    List<String> $ = new ArrayList<>();
+   
+    d.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d){
+
+        if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
+          return true;
+        List<VariableDeclarationFragment> fragmentsLst = d.fragments();
+        for (VariableDeclarationFragment ¢ : fragmentsLst)
+          $.add(¢.getName().getIdentifier());
+        return true;
+      }
+    });
+    
+    return $;
+  }
+  /** Takes a single CompilationUnit parameter, returns a list of method
+   * declaration within that compilation unit
    * @param CompilationUnit
    * @author Roei-m
-   * @author RoeyMaor
-   */
-  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") CompilationUnit __) {
-    return null;
+   * @author RoeyMaor */
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
+    if(u == null)
+      return null;
+    List<MethodDeclaration> $ = new ArrayList<>();
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration node) {
+        $.add(node);
+        return super.visit(node);
+      }
+    });
+    return $;
   }
 }
