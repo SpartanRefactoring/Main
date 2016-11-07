@@ -18,9 +18,10 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  */
 
 public class issue713 {
-  
-  TypeDeclaration noPublic = createTypeDeclerationFromStr("public class noPublic {   } ");
-  TypeDeclaration onePublic = createTypeDeclerationFromStr("public class onePublic {  public int x; } ");
+  TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
+  TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
+  TypeDeclaration notOnlyPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" +
+                                                                                  " private boolean flag; public char ch; } ")).types().get(0);
       
   @SuppressWarnings("static-method") @Test public void doesCompile(){
     assert true;
@@ -34,12 +35,19 @@ public class issue713 {
     assertEquals(0, getAll.publicFields(noPublic).size());
   }
   
-  @Test public void onePublicFails(){
-    assertNotEquals(1, getAll.publicFields(onePublic).size());
+  @Test public void onePublicPass(){
+    assertEquals(1, getAll.publicFields(onePublic).size());
   }
   
+  @Test public void onlyPublicsDetected(){
+    assertEquals(2, getAll.publicFields(notOnlyPublic).size());
+  }
   
-  private static TypeDeclaration createTypeDeclerationFromStr( String ¢) {
-    return az.typeDeclaration(wizard.ast(¢));
+  @Test public void rightNamesReturned(){
+    List<String> names= new ArrayList<>();
+    names.add("x");
+    names.add("ch");
+    
+    assertEquals(names, getAll.publicFields(notOnlyPublic));
   }
 }
