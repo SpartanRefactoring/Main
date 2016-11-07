@@ -61,15 +61,16 @@ public class Issue686 {
     
   }
   
-  @SuppressWarnings("boxing") @Test public void i(){
+  @Test public void i(){
     assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<Integer> s1);"))).size());
   }
   
-  @SuppressWarnings("boxing") @Test public void j(){
+  @Test public void j(){
     assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<String> s1);"))).size());
+
   }
   
-  @SuppressWarnings("boxing") @Test public void k(){
+  @Test public void k(){
     assertEquals("s1", getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))).get(0)
         .getName().getIdentifier());}
   
