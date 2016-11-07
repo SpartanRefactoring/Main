@@ -159,7 +159,7 @@ public class Analyzer {
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
-      System.out.println("****************" + ¢.getPath() + "*****************");
+      System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
@@ -196,6 +196,9 @@ public class Analyzer {
             null) //
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
+            null) //
+        .add(Block.class, //
+            new ReturnOld(), //
             null) //
         .add(CastExpression.class, //
             new Coercion(), //

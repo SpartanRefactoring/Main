@@ -30,6 +30,7 @@ public interface AnalyzerOptions {
   }
 
   Int counter = new Int();
+  String INPUT_DIR = "inputDir";
 
   static void tickNP() {
     ++counter.inner;
