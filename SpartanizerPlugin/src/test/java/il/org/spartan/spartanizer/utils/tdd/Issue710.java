@@ -52,7 +52,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
    }
  
  @Test public void test10 () {
-   assertTrue(determineIf.returnsNull(az.methodDeclaration(wizard.ast("string f(int x) { if(x==5) { return null; } else { return \"Good Job!\"; } }"))));
+   assertTrue(determineIf.returnsNull(az.methodDeclaration(wizard.ast("String f(int x) { if(x==5) { return null; } else { return \"Good Job!\"; } }"))));
+   }
+ 
+ @Test public void test11 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("int f(int x) { int d = 0; for(int i = 0 ; i < x ; i++){ if(i%9 == 0){d++;} return d;}}"))));
    }
   
   }
