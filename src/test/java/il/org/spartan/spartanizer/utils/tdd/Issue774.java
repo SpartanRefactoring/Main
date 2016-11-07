@@ -26,8 +26,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnFalseIfNameNotExists() {
     assertFalse(determineIf.uses(wizard.ast("x"), "t"));
   }
-  
+
   @Test public void shouldReturnTrueForFullyQualifiedName() {
     assertTrue(determineIf.uses(wizard.ast("a.b"), "a.b"));
+  }
+
+  @Test public void shouldReturnTrueNameAfterDot() {
+    assertTrue(determineIf.uses(wizard.ast("a.b"), "b"));
   }
 }
