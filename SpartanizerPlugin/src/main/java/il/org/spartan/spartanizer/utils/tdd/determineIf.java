@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.mockito.internal.matchers.*;
 
 import il.org.spartan.spartanizer.utils.*;
 
