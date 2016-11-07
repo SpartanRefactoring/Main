@@ -53,7 +53,7 @@ public class Analyzer {
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
-    AnalyzerOptions.setAnalyzer(key, value);
+    AnalyzerOptions.set(key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
@@ -238,7 +238,7 @@ public class Analyzer {
   /** This us just to check that the InteractiveSpartanizer works and that
    * tippers can be added to it. */
   private static void sanityCheck() {
-    assert addNanoPatterns(new InteractiveSpartanizer())
+    assert addJavadocNanoPatterns(new InteractiveSpartanizer())
         .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }
