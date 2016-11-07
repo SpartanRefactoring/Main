@@ -20,7 +20,7 @@ public enum getAll2 {
   public static List<MethodDeclaration> methods(CompilationUnit cu)
   {
     List<MethodDeclaration> lst= new ArrayList<>();
-    return null;
+    return lst;
   }
   
 }
