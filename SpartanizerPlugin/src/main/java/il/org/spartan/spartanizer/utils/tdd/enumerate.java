@@ -110,7 +110,7 @@ public enum enumerate {
         ++$;
         arr[TRY] = true;
       } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && (¢ + "").contains("{")) {
-        ++$;
+        $++;
         arr[LAMBDA] = true;
       } 
     
