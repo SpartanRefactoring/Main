@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Raviv Rachmiel
  * @author Kfir Marx
  * @author Omri Ben- Shmuel
+ * @author Ward Mattar
+ * @author Vivian Shehadeh 
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
