@@ -22,7 +22,7 @@ public class CommandLineClient {
 //    processCommandLine(args);
   }
   
-  private static void processCommandLine(final String[] args) {
+  @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
     CommandLineClient r = new CommandLineClient();
     final List<String> remaining = extract(args, r);
     r.printExternals();
@@ -47,7 +47,7 @@ public class CommandLineClient {
     return outputDir;
   }
 
-  private static void parseCommandLineArgs(final String[] args) {
+  @SuppressWarnings("unused") private static void parseCommandLineArgs(final String[] args) {
     if (args.length == 0)
       printPrompt();
     for (int ¢ = 0; ¢ < args.length;)
