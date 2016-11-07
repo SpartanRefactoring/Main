@@ -20,8 +20,8 @@ public class CommandLineClient {
       new CommandLineSpartanizer(¢).apply();
   }
   
-  private void printExternals() {
-//    System.out.println(usage(this));
+   void printExternals() {
+
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
     System.out.println("outputDir: " + Base.outputDir());

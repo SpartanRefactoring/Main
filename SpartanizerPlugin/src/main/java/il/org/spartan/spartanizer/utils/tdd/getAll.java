@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
-
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -102,8 +100,8 @@ public enum getAll {
       return null;
     ¢.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof VariableDeclaration && (¢ + "").contains("String"))
-          $.add((VariableDeclaration) ¢);
+        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
+          $.add(((SingleVariableDeclaration) ¢));
         super.preVisit(¢);
       }
     });
@@ -116,7 +114,7 @@ public enum getAll {
    * @author Inbal Zukerman
    * @author Elia Traore
    */
-  public static List<String> publicFields(TypeDeclaration d) {
+  public static List<String> publicFields(TypeDeclaration __) {
     return new ArrayList<>(); 
   }
 
