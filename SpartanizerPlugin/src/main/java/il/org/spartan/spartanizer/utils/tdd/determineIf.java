@@ -98,13 +98,29 @@ public enum determineIf {
    * @param d
    * @return returns true iff the method contains a return null statement . */
   public static boolean returnsNull(MethodDeclaration d) {
-    if (d == null) 
+    if (d == null)
       return false;
-    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
-    for(Statement ¢ : statementList)
-      if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
-          && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
-        return true;
+ 
+    @SuppressWarnings("unchecked") List<ReturnStatement> statementList = new ArrayList<ReturnStatement>();
+      d.accept (new ASTVisitor() {
+       @Override public boolean visit ( LambdaExpression e1) {
+         
+         return false;
+        }
+       @Override public boolean visit ( AnonymousClassDeclaration e2) {
+         
+         return false;
+        }
+       @Override public boolean visit (ReturnStatement r) {
+          statementList.add (r);
+          return true;
+        }
+      });
+      for(ReturnStatement st : statementList){
+        if (st.getClass().equals(ReturnStatement.class)
+            && st.getExpression().getClass().equals(NullLiteral.class))
+          return true;
+    }  
     return false;
   }
   
