@@ -31,21 +31,29 @@ import il.org.spartan.spartanizer.ast.safety.*;
   }
 
   @Test public void publicFields_test4() {
-    TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0);
-    assertEquals(0, getAll2.publicFields(td).size());
+    assertEquals(0, getAll2.publicFields(getTypeDeclaration("public class A {}")).size());
   }
 
   @Test public void publicFields_test5() {
-    TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A { private int x; protected String s; }")).types().get(0);
-    assertEquals(0, getAll2.publicFields(td).size());
+    assertEquals(0, getAll2.publicFields(getTypeDeclaration("public class A { private int x; protected String s; }")).size());
   }
 
   @Test public void publicFields_test6() {
-    TypeDeclaration td = (TypeDeclaration) az
-        .compilationUnit(wizard.ast("public class A { private int x; public static char y; public static void f(){}}")).types().get(0);
+    TypeDeclaration td = getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}");
     List<String> pFields = getAll2.publicFields(td);
     assertTrue(pFields.contains("y"));
     assertFalse(pFields.contains("x"));
     assertFalse(pFields.contains("f"));
+  }
+
+  @Test public void publicFields_test7() {
+    TypeDeclaration td = getTypeDeclaration("public class A { public int x; class B { public int y; } }");
+    List<String> pFields = getAll2.publicFields(td);
+    assertTrue(pFields.contains("x"));
+    assertFalse(pFields.contains("y"));
+  }
+
+  static TypeDeclaration getTypeDeclaration(String td) {
+    return findFirst.typeDeclaration(wizard.ast(td));
   }
 }
