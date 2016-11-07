@@ -4,7 +4,9 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -43,36 +45,41 @@ public class Spartanizer$Applicator {
     this.toolbox = toolbox;
   }
 
-  /** @param u
+  /** 
+   * Apply the spartanization to a selection of CompilationUnits
+   * @param u
    * @param s
    * @return */
-  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
-    go(u.compilationUnit);
-    // if (s instanceof TrackerSelection)
-    // return apply(u, (TrackerSelection) s);
-    // try {
-    // setICompilationUnit(u.descriptor);
-    // setSelection(s == null || s.textSelection == null ||
-    // s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null :
-    // s.textSelection);
-    // progressMonitor.beginTask("Creating change for a single compilation
-    // unit...", IProgressMonitor.UNKNOWN);
-    // final TextFileChange textChange = new
-    // TextFileChange(u.descriptor.getElementName(), (IFile)
-    // u.descriptor.getResource());
-    // textChange.setTextType("java");
-    // final AtomicInteger counter = new AtomicInteger(0);
-    // textChange.setEdit(createRewrite(u.build().compilationUnit,
-    // counter).rewriteAST());
-    // if (textChange.getEdit().getLength() != 0)
-    // textChange.perform(progressMonitor);
-    // progressMonitor.done();
-    // return counter.get()> 0;
-    // } catch (final CoreException x) {
-    // monitor.logEvaluationError(this, x);
-    // }
+  public boolean apply(final AbstractSelection<?> __) {
+    System.out.println("apply");
+    for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
+      w.compilationUnit.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(final ASTNode ¢) {
+          return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
+        }
+      });
+      
+//     if (s instanceof TrackerSelection)
+//       return apply(u, (TrackerSelection) s);
+    //       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
+//     final AtomicInteger counter = new AtomicInteger(0);
+//           return counter.get()> 0;
     return false;
   }
+  
+  /**
+   * Apply the spartanization to a single CompilationUnit
+   * @param u
+   * @param s
+   * @return
+   * @author matteo
+   */
+  
+  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> s) {
+      go(u.compilationUnit);
+    return false;
+  }
+
 
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {

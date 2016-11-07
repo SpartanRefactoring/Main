@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -40,8 +41,18 @@ public enum determineIf {
    * @since 16-11-02
    * @param ¢
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
-    return ¢ != null && true;
+  public static boolean hasManyStatements(final MethodDeclaration ¢) {
+    if (¢ == null)
+      return false;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if (iz.statement(¢))
+          ++$.inner;
+      }
+    });
+    return $.inner - 1 >= 10;
   }
 
   /** see issue #714 for more details
@@ -51,7 +62,18 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(@SuppressWarnings("unused") final TypeDeclaration m) {
+  public static boolean isImmutable(final TypeDeclaration m) {
+    if (m == null)
+      return true;
+    boolean $ = false;
+    for (FieldDeclaration f : m.getFields()) {
+      for (Object ¢ : f.modifiers())
+        if (((Modifier) ¢).isFinal())
+          $ = true;
+      if (!$)
+        return false;
+      $ = false;
+    }
     return true;
   }
   // For you to implement! Let's TDD and get it on!
@@ -100,30 +122,28 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration mDec) {
     if (mDec == null)
       return false;
+    List<ReturnStatement> statementList = new ArrayList<>();
+    mDec.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") LambdaExpression e1) {
+        return false;
+      }
 
- 
-     List<ReturnStatement> statementList = new ArrayList<>();
-    mDec.accept (new ASTVisitor() {
-       @Override public boolean visit ( @SuppressWarnings("unused") LambdaExpression e1) {
-         
-         return false;
-        }
-       @Override public boolean visit ( @SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
-         
-         return false;
-        }
-       @Override public boolean visit ( @SuppressWarnings("unused") TypeDeclaration t) {
-         
-         return false;
-        }
-       @Override public boolean visit (ReturnStatement ¢) {
-          statementList.add (¢);
-          return true;
-        }
-      });
-      for(ReturnStatement ¢ : statementList)
-        if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
-          return true;  
+      @Override public boolean visit(@SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+        return false;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration __) {
+        return false;
+      }
+
+      @Override public boolean visit(ReturnStatement ¢) {
+        statementList.add(¢);
+        return true;
+      }
+    });
+    for (ReturnStatement ¢ : statementList)
+      if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
+        return true;
     return false;
   }
 
@@ -136,8 +156,27 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        || (n instanceof QualifiedName) && (((QualifiedName) n).getFullyQualifiedName().equals(name)
-            || ((QualifiedName) n).getName().getIdentifier().equals(name) || ((QualifiedName) n).getQualifier().getFullyQualifiedName().equals(name));
+    if (n == null)
+      return false;
+    Bool nameInAST = new Bool();
+    nameInAST.inner = false;
+    n.accept(new ASTVisitor() {
+      void innerVisit(Name node) {
+        nameInAST.inner = node.getFullyQualifiedName().equals(name);
+      }
+
+      @Override public boolean visit(QualifiedName node) {
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
+      }
+
+      @Override public boolean visit(SimpleName node) {
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
+      }
+    });
+    return nameInAST.inner;
   }
 }
