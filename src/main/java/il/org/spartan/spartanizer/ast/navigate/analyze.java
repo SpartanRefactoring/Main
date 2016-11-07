@@ -21,11 +21,9 @@ public enum analyze {
           $.add(node);
         return true;
       }
-
       boolean izMethodName(final SimpleName ¢) {
         return iz.methodInvocation(step.parent(¢)) && step.name(az.methodInvocation(step.parent(¢))).equals(¢);
       }
-
       @Override public boolean visit(final QualifiedName node) {
         $.add(node);
         return true;
@@ -33,21 +31,20 @@ public enum analyze {
     });
     return $;
   }
-
   public static String type(final Name n) {
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
     final String s = findDeclarationInMethod(n, m);
     return s != null ? s : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
-
-  private static String findDeclarationInType(final Name n, final TypeDeclaration t) {
-    for (final FieldDeclaration d : step.fieldDeclarations(t))
+  private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration t) {
+    if (!iz.typeDeclaration(t)) // TODO: Marco support all types of types
+      return null;
+    for (final FieldDeclaration d : step.fieldDeclarations(az.typeDeclaration(t)))
       for (final VariableDeclarationFragment ¢ : step.fragments(d))
         if ((step.name(¢) + "").equals(n + ""))
           return step.type(d) + "";
     return null;
   }
-
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
     final Str str = new Str();
     d.accept(new ASTVisitor() {
@@ -57,7 +54,6 @@ public enum analyze {
         str.inner = step.type(¢) + "";
         return false;
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         if (str.inner != null || !(step.name(¢) + "").equals(n + ""))
           return true;
@@ -67,7 +63,6 @@ public enum analyze {
     });
     return str.inner;
   }
-
   public static Set<VariableDeclaration> enviromentVariables(@SuppressWarnings("unused") final ASTNode __) {
     // TODO: Marco search for all known variables
     // MethodDeclaration m = searchAncestors.forContainingMethod().from(n);

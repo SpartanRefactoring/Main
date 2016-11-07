@@ -1,8 +1,13 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -11,7 +16,7 @@ public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
 
-  public static Applicator defaultApplicator() {
+  public static CommandLineApplicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
 
@@ -62,9 +67,11 @@ public class CommandLineApplicator extends Applicator {
   // - we will inspect it once we meet. --or
   /** @return this */
   public CommandLineApplicator defaultRunAction() {
+    System.out.println("defaultRunAction");
     // final Trimmer t = new Trimmer();
     final Spartanizer$Applicator s = new Spartanizer$Applicator();
-    setRunAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
+    setRunAction(u -> Integer.valueOf(s.apply(selection()) ? 1 : 0));
+    // System.out.println(" ---> " + runAction());
     return this;
   }
   // // TODO Roth: use Policy / replacement for Trimmer.
@@ -81,10 +88,22 @@ public class CommandLineApplicator extends Applicator {
 
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
+   * TODO maybe this method are going to die (as well as Spartanize$Applicator)
    * {@link GUIBatchLaconizer$Applicator}.
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(@SuppressWarnings("hiding") final Spartanizer$Applicator a) {
+    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    name(a.getClass().getSimpleName());
+    return this;
+  }
+
+  /** Default run action configuration of {@link CommandLineApplicator}.
+   * Spartanize the {@link CompilationUnit} using received
+   * {@link GUIBatchLaconizer$Applicator}.
+   * @param a JD
+   * @return this applicator */
+  public CommandLineApplicator defaultRunAction(@SuppressWarnings("hiding") final CommandLine$Applicator a) {
     setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
@@ -119,18 +138,78 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return this */
-  private Applicator defaultSettings() {
+  private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
-  /* (non-Javadoc)
-   *
-   * @see il.org.spartan.plugin.revision.Applicator#go() */
+  /* @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
-    if (selection() != null && listener() != null && passes() > 0 && !selection().isEmpty())
-      for (final CompilationUnit ¢ : ((CommandLineSelection) selection()).getCompilationUnits()) {
-        assert ¢ != null;
-        a.go(¢);
+    if (selection() == null && listener() == null && passes() <= 0 && selection().isEmpty())
+      return;
+    listener().push(message.run_start.get(selection().name));
+    if (!shouldRun())
+      return;
+    final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
+    runContext().accept(() -> {
+      System.out.println("inside go");
+      final int l = passes();
+      System.out.println("passes: " + l);
+      for (int pass = 1; pass <= l; ++pass) {
+        listener().push(message.run_pass.get(Integer.valueOf(pass)));
+        if (!shouldRun())
+          break;
+        final List<WrappedCompilationUnit> selected = selection().inner;
+        final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
+        final List<WrappedCompilationUnit> dead = new ArrayList<>();
+        for (final WrappedCompilationUnit ¢ : alive) {
+          // System.out.println(¢);
+          // System.out.println(runAction());
+          final int tipsInvoked = runAction().apply(¢).intValue();
+          if (tipsInvoked <= 0)
+            dead.add(¢);
+          // ¢.dispose(); // nullify the CompilationUnit associated to
+          // ICompilationUnit
+          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), "unknown"));
+          // ¢.descriptor.getElementName()));
+          totalTipsInvoked.addAndGet(tipsInvoked);
+          if (!shouldRun())
+            break;
+        }
+        listener().pop(message.run_pass_finish.get(Integer.valueOf(pass)));
+        selected.removeAll(dead);
+        if (selected.isEmpty() || !shouldRun())
+          break;
       }
+    });
+    listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
+    // for (final CompilationUnit ¢ : ((CommandLineSelection)
+    // selection()).getCompilationUnits()) {
+    // assert ¢ != null;
+    // a.go(¢);
+    // }
+  }
+
+  private enum message {
+    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
+    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
+    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
+    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
+    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
+    private final int inputCount;
+    private final Function<Object[], String> printing;
+
+    message(final int inputCount, final Function<Object[], String> printing) {
+      this.inputCount = inputCount;
+      this.printing = printing;
+    }
+
+    public String get(final Object... ¢) {
+      assert ¢.length == inputCount;
+      return printing.apply(¢);
+    }
+
+    private static String printableAt(final Object[] os, final int index) {
+      return Linguistic.unknownIfNull(os, xs -> xs[index]);
+    }
   }
 }

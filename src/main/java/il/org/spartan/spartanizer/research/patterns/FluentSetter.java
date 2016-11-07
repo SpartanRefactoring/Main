@@ -23,7 +23,6 @@ public class FluentSetter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (!iz.assignment(e))
       return false;
     final Assignment a = az.assignment(e);
-    return (iz.name(a.getLeftHandSide()) || tipper.canTip(step.body(¢)))
-        && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
+    return (iz.name(a.getLeftHandSide()) || tipper.canTip(step.body(¢))) && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 }

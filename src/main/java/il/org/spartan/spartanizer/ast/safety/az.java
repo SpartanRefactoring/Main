@@ -519,7 +519,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static Type type(ASTNode ¢) {
+  public static Type type(final ASTNode ¢) {
     return ¢ == null ? null : (Type) ¢;
   }
 }
