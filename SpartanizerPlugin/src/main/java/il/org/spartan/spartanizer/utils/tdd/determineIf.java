@@ -139,6 +139,7 @@ public enum determineIf {
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
     return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
-        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name));
+        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name))
+        || (n instanceof QualifiedName && ((QualifiedName) n).getName().getIdentifier().equals(name));
   }
 }
