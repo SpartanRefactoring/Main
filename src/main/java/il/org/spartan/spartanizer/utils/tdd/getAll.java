@@ -115,21 +115,48 @@ public enum getAll {
     return $;
   }
 
-  /** Takes a single parameter, which is a TypeDecleration returns a list of
-   * public fields for this class (by fields' names)
+
+  /** Takes a single parameter, which is a TypeDecleration
+   * returns a list of public fields for this class (by fields' names)
    * @param a TypeDecleration
    * @author Inbal Zukerman
-   * @author Elia Traore */
-  public static List<String> publicFields(final TypeDeclaration __) {
-    return new ArrayList<>();
-  }
+   * @author Elia Traore
+   */
+  public static List<String> publicFields(TypeDeclaration d) {
+    if (d==null)
+      return null;
 
+    List<String> $ = new ArrayList<>();
+   
+    d.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d){
+
+        if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
+          return true;
+        List<VariableDeclarationFragment> fragmentsLst = d.fragments();
+        for (VariableDeclarationFragment ¢ : fragmentsLst)
+          $.add(¢.getName().getIdentifier());
+        return true;
+      }
+    });
+    
+    return $;
+  }
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
    * @author Roei-m
    * @author RoeyMaor */
-  public static List<MethodDeclaration> methods(final CompilationUnit ¢) {
-    return ¢ == null ? null : new ArrayList<>();
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
+    if(u == null)
+      return null;
+    List<MethodDeclaration> $ = new ArrayList<>();
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration node) {
+        $.add(node);
+        return super.visit(node);
+      }
+    });
+    return $;
   }
 }
