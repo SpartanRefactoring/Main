@@ -118,4 +118,14 @@ public enum getAll {
     return new ArrayList<>(); 
   }
 
+  /**
+   * Takes a single CompilationUnit parameter, returns a list
+   * of method declaration within that compilation unit
+   * @param CompilationUnit
+   * @author Roei-m
+   * @author RoeyMaor
+   */
+  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") CompilationUnit __) {
+    return null;
+  }
 }
