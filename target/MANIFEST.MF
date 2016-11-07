@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
+Export-Package: il.org.spartan.plugin;version="2.6.3"; uses:="il.org.s
+ partan.plugin,   il.org.spartan.plugin.old,   il.org.spartan.spartani
+ zer.annotation,   il.org.spartan.spartanizer.annotations,   il.org.sp
+ artan.spartanizer.ast,   il.org.spartan.spartanizer.ast.engine,   il.
+ org.spartan.spartanizer.ast.factory,   il.org.spartan.spartanizer.ast
+ .navigate,   il.org.spartan.spartanizer.ast.safety,   il.org.spartan.
+ spartanizer.cmdline,   il.org.spartan.spartanizer.dispatch,   il.org.
+ spartan.spartanizer.engine,   il.org.spartan.spartanizer.java,   il.o
+ rg.spartan.spartanizer.leonidas,   il.org.spartan.spartanizer.researc
+ h,   il.org.spartan.spartanizer.research.patterns,   il.org.spartan.s
+ partanizer.spartanizations,   il.org.spartan.spartanizer.tippers,   i
+ l.org.spartan.spartanizer.tipping,   il.org.spartan.spartanizer.utils
+ ,   il.org.spartan.plugin.demos,   org.eclipse.jdt.core,   org.eclips
+ e.jdt.core.dom.rewrite,   org.eclipse.ltk.core.refactoring,   org.ecl
+ ipse.jdt.core.dom,   org.eclipse.jface.text,   org.eclipse.swt.widget
+ s,   org.eclipse.core.runtime.preferences,   org.eclipse.jface.dialog
+ s,   org.eclipse.core.commands,   org.eclipse.ui.plugin,   org.osgi.f
+ ramework,   org.eclipse.ui,   org.eclipse.core.runtime,   org.eclipse
+ .jface.util,   org.eclipse.jface.preference,   org.eclipse.core.resou
+ rces,   org.eclipse.ltk.ui.refactoring,   javax.swing"
+Bundle-Name: Spartan Refactoring
+Bundle-Version: 2.6.3
+Bundle-ClassPath: .,lib/hamcrest-all-1.3.jar,lib/junit-4.12.jar,lib/mo
+ ckito-all-2.0.2-beta.jar,lib/spartan-1.2.jar
+Require-Bundle: org.eclipse.ui;bundle-version="[3.108.0,4.0.0]",org.ec
+ lipse.core.runtime;bundle-version="[3.12.0,4.0.0]",org.eclipse.ltk.co
+ re.refactoring;bundle-version="[3.7.0,4.0.0]",org.eclipse.ltk.ui.refa
+ ctoring;bundle-version="[3.8.0,4.0.0]",org.eclipse.jdt.core;bundle-ve
+ rsion="[3.12.1,4.0.0]",org.eclipse.jdt.ui;bundle-version="[3.12.1,4.0
+ .0]",org.eclipse.jface.text;bundle-version="[3.11.1,4.0.0]",org.eclip
+ se.core.resources;bundle-version="[3.11.0,4.0.0]",org.eclipse.ui.ide;
+ bundle-version="[3.7.0,4.0.0]",org.junit;bundle-version="[4.12.0,5.0.
+ 0]"
+Bundle-ManifestVersion: 2
+Bundle-Activator: il.org.spartan.plugin.Plugin
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Technion--Israel Institute of Technology
+
