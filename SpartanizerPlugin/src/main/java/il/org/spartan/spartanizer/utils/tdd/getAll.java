@@ -115,6 +115,7 @@ public enum getAll {
     return $;
   }
 
+
   /** Takes a single parameter, which is a TypeDecleration
    * returns a list of public fields for this class (by fields' names)
    * @param a TypeDecleration
@@ -133,17 +134,14 @@ public enum getAll {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
         List<VariableDeclarationFragment> fragmentsLst = d.fragments();
-        for (VariableDeclarationFragment ¢ : fragmentsLst){
+        for (VariableDeclarationFragment ¢ : fragmentsLst)
           $.add(¢.getName().getIdentifier());
-          System.out.println(¢.getName().getIdentifier());
-        }
         return true;
       }
     });
     
     return $;
   }
-
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
