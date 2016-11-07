@@ -52,8 +52,12 @@ public class Issue775 {
   @Test public void i() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C implements D,E{}")))) + "");
   }
-  
+
   @Test public void j() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C implements D,E,F{}")))) + "");
+  }
+
+  @Test public void k() {
+    assertEquals("C<L,M,R>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<L, M, R> extends W<L, M, R>{}")))) + "");
   }
 }
