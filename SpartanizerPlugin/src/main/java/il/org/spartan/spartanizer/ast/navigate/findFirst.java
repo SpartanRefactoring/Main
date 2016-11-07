@@ -68,6 +68,12 @@ public interface findFirst {
     return instanceOf(TypeDeclaration.class, ¢);
   }
 
+  /** @param ¢ JD
+   * @return */
+  static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
+    return instanceOf(AbstractTypeDeclaration.class, ¢);
+  }
+
   /** Search for an {@link ForStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD
