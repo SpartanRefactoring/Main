@@ -145,8 +145,18 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
-        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name))
-        || (n instanceof QualifiedName && ((QualifiedName) n).getName().getIdentifier().equals(name));
+    Bool nameInAST = new Bool();
+    nameInAST.inner = false;
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(QualifiedName node) {
+        nameInAST.inner |= node.getFullyQualifiedName().equals(name);
+        return true;
+      }
+    });
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
+        || (n instanceof QualifiedName) && (((QualifiedName) n).getFullyQualifiedName().equals(name)
+            || ((QualifiedName) n).getName().getIdentifier().equals(name) || ((QualifiedName) n).getQualifier().getFullyQualifiedName().equals(name))
+        || nameInAST.inner;
   }
+
 }
