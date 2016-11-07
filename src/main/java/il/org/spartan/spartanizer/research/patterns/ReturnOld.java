@@ -7,9 +7,9 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class CachingPattern extends NanoPatternTipper<Block> {
+public final class ReturnOld extends NanoPatternTipper<Block> {
   private static final UserDefinedTipper<Block> tipper = TipperFactory//
-      .subBlockTipper("if($X1 == null)$X1 = $X2;return $X1;", "return $X1!=null?$X1:($X1=$X2);", "Caching nano: rewrite as return of ternary");
+      .subBlockTipper("$N1 $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();

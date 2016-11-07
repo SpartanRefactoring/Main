@@ -1,12 +1,8 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests of {@link tdd.find}
  * @author AnnaBel7
@@ -17,5 +13,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue683 {
   @Test public void a() {
     find.ancestorType(null);
+  }
+
+  @Test public void b() {
+    auxTypeDeclaration(find.ancestorType((ASTNode) null));
+  }
+
+  static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
+    assert true;
   }
 }

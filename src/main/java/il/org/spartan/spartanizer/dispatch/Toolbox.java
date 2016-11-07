@@ -113,6 +113,8 @@ public class Toolbox {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
             new EnhancedForParameterRenameToCent(), //
+            // TODO: Marco work on
+            // new FindFirst(), //
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
@@ -197,7 +199,8 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            null)
+            new SetterGoFluent(), //
+            new FluentSetter(), null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
