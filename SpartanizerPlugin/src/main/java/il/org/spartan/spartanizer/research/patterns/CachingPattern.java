@@ -20,6 +20,7 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
   }
 
   @Override public Tip tip(final Block x) {
+    Logger.logNP(x, getClass().getSimpleName());
     return tipper.tip(x);
   }
 }
