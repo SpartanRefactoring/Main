@@ -22,7 +22,12 @@ public class issue713 {
   TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
   TypeDeclaration notOnlyPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" +
                                                                                   " private boolean flag; public char ch; } ")).types().get(0);
-      
+  TypeDeclaration listOfPublicFields = (TypeDeclaration) az.compilationUnit(wizard.ast("public class foo {  public int x, y, z;" +
+                                                                                       " protected boolean flag; public char ch; } ")).types().get(0);
+  TypeDeclaration notCountingMethods = (TypeDeclaration) az.compilationUnit(wizard.ast("public class foo {  public int x, y;" +
+                                                                                       " public void func(){ int pi;} } ")).types().get(0);
+
+  
   @SuppressWarnings("static-method") @Test public void doesCompile(){
     assert true;
   }
@@ -50,4 +55,13 @@ public class issue713 {
     
     assertEquals(names, getAll.publicFields(notOnlyPublic));
   }
+  
+  @Test public void listOfPublicFields(){
+    assertEquals(4, getAll.publicFields(listOfPublicFields).size());
+  }
+  
+  @Test public void notCountingMethods(){
+    assertEquals(2, getAll.publicFields(notCountingMethods).size());
+  }
+  
 }

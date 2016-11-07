@@ -63,17 +63,19 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(final TypeDeclaration m) {
-    if(m==null){
-      return true;
-    }
-    if(!m.toString().contains("final") &&
-        (m.toString().contains("int")) || m.toString().contains("double")){
-      return false;
-    }
-    return true;
+  public static boolean isImmutable(final TypeDeclaration m) { 
+    if(m==null){ 
+      return true; 
+      
+    } 
+    for(FieldDeclaration f : m.getFields()){ 
+      if(!f.modifiers().contains("final")) 
+        return false; 
+      
+    } 
     
-  }
+    return true;
+    }
   // For you to implement! Let's TDD and get it on!
 
   /** see issue #719 for more details
