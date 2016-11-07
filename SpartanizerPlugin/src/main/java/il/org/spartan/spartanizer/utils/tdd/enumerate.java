@@ -109,7 +109,7 @@ public enum enumerate {
       } else if (¢ instanceof TryStatement && !arr[TRY]) {
         ++$;
         arr[TRY] = true;
-      } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && ("" + ¢).contains("{")) {
+      } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && (¢ + "").contains("{")) {
         ++$;
         arr[LAMBDA] = true;
       } 
