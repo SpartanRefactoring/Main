@@ -11,11 +11,12 @@ import il.org.spartan.spartanizer.utils.*;
 // TODO: I get warnings on unused imports in your code. --yg
 public enum find {
   ;
-  /** @author AnnaBel7
-   * @author michalcohen
-   * @since Nov 4, 2016 */
-  // TODO: Anna and Michal: I get a spartanization message on the following. --yg 
-  static public TypeDeclaration ancestorType(ASTNode n){
+  /**
+   * @author  AnnaBel7
+   * @author  michalcohen
+   * @since  Nov 4, 2016 
+   */
+  public static TypeDeclaration ancestorType(ASTNode __) {
     return null;
   }
 }
