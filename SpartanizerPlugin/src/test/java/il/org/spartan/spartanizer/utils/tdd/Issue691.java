@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -13,8 +14,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Omri Ben- Shmuel
  * @since 01-11-2016 */
 public class Issue691 {
+  /* @ward-mattar: Added casting to solve conflict */
   @SuppressWarnings("static-method") @Test public void test0() {
-    assertNull(getAll.invocations(null));
+    assertNull(getAll.invocations((MethodDeclaration) null));
   }
 
   @SuppressWarnings("static-method") @Test public void test1() {
