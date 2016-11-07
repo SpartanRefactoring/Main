@@ -25,4 +25,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{}{}}"))), 1);
   }
   
+  @Test public void checkSeveralBlocks() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {}}"))), 2);
+  }
+  
 }
