@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -61,14 +63,23 @@ public enum enumerate {
     });
     return counter.inner;
   }
-  
+
   /** see issue #776 for more details
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
    * @since 16-11-03 */
   public static int blockTypes(MethodDeclaration d) {
-    return 0;
+    int $ = 0;
+    List l = d.getBody().statements();
+    boolean[] arr = new boolean[15];
+    for (int ¢ = 0; ¢ < arr.length; ++¢)
+      arr[¢] = false;
+    for (Object ¢ : l)
+      if (¢ instanceof Block && !arr[0]) {
+        ++$;
+        arr[0] = true;
+      }
+    return $;
   }
-  
   // For you to implement! Let's TDD and get it on!
 }
