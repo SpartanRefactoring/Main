@@ -30,6 +30,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {}}"))), 2);
   }
   
+  @Test public void checkIfNoBlock() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{if (false) x=5;}"))), 0);
+  }
+  
   @Test public void checkWhileAndForBlocks() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}"))), 4);
   }
