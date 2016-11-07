@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
  
 /**
@@ -7,11 +8,16 @@ import org.junit.*;
  * @author Tomer Dragucki
  */
 
+@SuppressWarnings({ "static-method", "javadoc"})
 public class Issue707 {
   
   @Test
-  public void test1() {
+  public void a() {
     getAll2.names(null);
-    return;
+  }
+  
+  @Test
+  public void b() {
+    getAll2.names((Block) null);
   }
 }
