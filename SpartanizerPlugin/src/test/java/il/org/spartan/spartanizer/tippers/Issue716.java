@@ -41,5 +41,19 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasManyStatements(
         (MethodDeclaration) wizard.ast("public void nineStatements() {int a; int b; int c; int d; int e; int f; int g; int h; int i;} ")));
   }
+  
+  @Test public void checkWithIf() {
+    assertFalse(determineIf.hasManyStatements(
+        (MethodDeclaration) wizard.ast("public void withIf() {"
+            + "int a = 1;"
+            + "if (a == 2) {"
+            + "    ++a; ++a; ++a; ++a; ++a; ++a;} }")));
+    
+    assertTrue(determineIf.hasManyStatements(
+        (MethodDeclaration) wizard.ast("public void withIf() {"
+            + "int a = 1;"
+            + "if (a == 2) {"
+            + "    ++a; ++a; ++a; ++a; ++a; ++a; ++a;} }")));
+  }
 }
 
