@@ -41,7 +41,7 @@ public enum determineIf {
    * @param ¢
    * @return true iff the method has at least 10 statements */
   public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
-    return ¢ == null ? false : true;
+    return ¢ != null && true;
   }
 
   /** see issue #714 for more details
@@ -116,16 +116,14 @@ public enum determineIf {
          
          return false;
         }
-       @Override public boolean visit (ReturnStatement r) {
-          statementList.add (r);
+       @Override public boolean visit (ReturnStatement ¢) {
+          statementList.add (¢);
           return true;
         }
       });
-      for(ReturnStatement st : statementList){
-        if (st.getClass().equals(ReturnStatement.class)
-            && st.getExpression().getClass().equals(NullLiteral.class))
-          return true;
-    }  
+      for(ReturnStatement ¢ : statementList)
+        if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
+          return true;  
     return false;
   }
 

@@ -44,4 +44,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void checkSyncronize() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int x=0; synchronized(this) {++x;}}"))), 1);
   }
+  
+  @Test public void tryChatch() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{try {} catch (IndexOutOfBoundsException e) {}}"))), 1);
+  }
+  
 }

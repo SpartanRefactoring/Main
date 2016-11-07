@@ -70,16 +70,15 @@ public enum enumerate {
    * @since 16-11-07 */
   public static int blockTypes(MethodDeclaration d) {
     int $ = 0;
-    List<Statement> l = d.getBody().statements();
+    List<?> l = d.getBody().statements();
     boolean[] arr = new boolean[15];
    
     final int BLOCK=0; final int IFSTATE=1; final int FORSTATE=2; final int WHILESTATE=3;
-    final int SWITCHSTATE=4; final int DOSTATE=5; final int SYNC=6; 
-    //TODO: deal with if-else
+    final int SWITCHSTATE=4; final int DOSTATE=5; final int SYNC=6; final int TRY=7; 
     //TODO: deal with lambada-expr
     for (int ¢ = 0; ¢ < arr.length; ++¢)
       arr[¢] = false;
-    for (Statement ¢ : l)
+    for (Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {
         ++$;
         arr[BLOCK] = true;
@@ -101,7 +100,11 @@ public enum enumerate {
       } else if (¢ instanceof SynchronizedStatement && !arr[SYNC]) {
         ++$;
         arr[SYNC] = true;
-      }
+      } else if (¢ instanceof TryStatement && !arr[TRY]) {
+        ++$;
+        arr[TRY] = true;
+      } 
+    
     
     return $;
   }
