@@ -80,20 +80,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   static void addAzMethodToFile(final CastExpression ¢, String path) {
     wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
-    // try {
-    // String str = readFromFile(path);
-    // Document d = new Document(str);
-    // AbstractTypeDeclaration t =
-    // findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-    // ASTRewrite r = ASTRewrite.create(t.getAST());
-    // wizard.addMethodToType(t, az.methodDeclaration(createAzMethod(¢)), r,
-    // null);
-    // r.rewriteAST(d, null).apply(d);
-    // writeToFile(path, d.get());
-    // } catch (IOException | MalformedTreeException | IllegalArgumentException
-    // | BadLocationException x2) {
-    // x2.printStackTrace();
-    // }
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
