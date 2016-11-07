@@ -159,6 +159,7 @@ public class Analyzer {
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
+      System.out.println("****************" + ¢.getPath() + "*****************");
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
