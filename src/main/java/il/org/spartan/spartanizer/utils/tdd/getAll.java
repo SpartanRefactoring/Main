@@ -147,13 +147,16 @@ public enum getAll {
    * @param CompilationUnit
    * @author Roei-m
    * @author RoeyMaor */
-  public static List<MethodDeclaration> methods(final CompilationUnit x) {
-    if(x == null)
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
+    if(u == null)
       return null;
-    String cuRawString = x + "";
-    int numberOfFuncs = (cuRawString.length() - cuRawString.replaceAll("\\(\\)", "").length())/2;
     List<MethodDeclaration> $ = new ArrayList<>();
-    while(numberOfFuncs-- > 0) $.add(null);
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration node) {
+        $.add(node);
+        return super.visit(node);
+      }
+    });
     return $;
   }
 }
