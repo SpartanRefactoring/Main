@@ -85,8 +85,11 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void methodWithNoBodyReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int a(String a);"))));
   }
-  
-  //TODO Alex V.: add check for functions with empty body (-Nikita Dizhur)
+
+  @Test public void methodWithNoStatementsReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int f(int x){}"))));
+  }
+ 
   
   //TODO Nikita Dizhur: add check for function with annotations and modifiers
 
