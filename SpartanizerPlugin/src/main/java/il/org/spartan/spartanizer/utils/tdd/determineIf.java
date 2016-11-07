@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -40,9 +42,10 @@ public enum determineIf {
    * @since 16-11-02
    * @param ¢
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
-    return ¢ != null && true;
+  public static boolean hasManyStatements(final MethodDeclaration ¢) {
+    return ¢ != null;
   }
+
 
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
@@ -51,8 +54,15 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(@SuppressWarnings("unused") final TypeDeclaration m) {
+  public static boolean isImmutable(final TypeDeclaration m) {
+    if(m==null){
+      return true;
+    }
+    if(!m.toString().contains("final") &&m.toString().contains("int") ){
+      return false;
+    }
     return true;
+    
   }
   // For you to implement! Let's TDD and get it on!
 
@@ -136,7 +146,18 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
-        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name));
+    Bool nameInAST = new Bool();
+    nameInAST.inner = false;
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(QualifiedName node) {
+        nameInAST.inner |= node.getFullyQualifiedName().equals(name);
+        return true;
+      }
+    });
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
+        || (n instanceof QualifiedName) && (((QualifiedName) n).getFullyQualifiedName().equals(name)
+            || ((QualifiedName) n).getName().getIdentifier().equals(name) || ((QualifiedName) n).getQualifier().getFullyQualifiedName().equals(name))
+        || nameInAST.inner;
   }
+
 }

@@ -1,6 +1,11 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.internal.compiler.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+
 import java.util.*;
 
 /** @author Ori Marcovitch
@@ -13,14 +18,16 @@ public enum getAll2 {
   
   /** takes a single parameter, which is a CompilationUnit
    * returns a list of methods in cu.
-   * @param cu CompilationUnit
+   * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher
     */
-  public static List<MethodDeclaration> methods(CompilationUnit cu)
+  public static List<MethodDeclaration> methods(CompilationUnit __)
   {
-    List<MethodDeclaration> lst= new ArrayList<>();
-    return lst;
+    List<MethodDeclaration> $= new ArrayList<>();
+    MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo()"));
+    $.add(MD);
+    return $;
   }
   
 }
