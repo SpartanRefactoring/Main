@@ -46,7 +46,22 @@ import il.org.spartan.spartanizer.ast.safety.*;
  @Test public void test08 () {
    assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Supplier<Integer> f() {" + " return () -> {" + " return null; }; " + "}" )))); 
    }
-
+ 
+ @Test public void test09 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() { Object obj = null; return obj; }"))));
+   }
+ 
+ @Test public void test10 () {
+   assertTrue(determineIf.returnsNull(az.methodDeclaration(wizard.ast("String f(int x) { if(x==5) { return null; } else { return \"Good Job!\"; } }"))));
+   }
+ 
+ @Test public void test11 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("int f(int x) { int d = 0; for(int i = 0 ; i < x ; i++){ if(i%9 == 0){d++;} return d;}}"))));
+   }
+ 
+ @Test public void test12 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() {class X{Object g() {return null;}}return new X();}"))));
+   }
   
   }
  
