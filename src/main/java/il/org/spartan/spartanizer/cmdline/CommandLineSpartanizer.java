@@ -40,11 +40,13 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
         // ---
         CommandLineApplicator.defaultApplicator()
+                             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util
+                                 .getAllCompilationUnit(presentSourcePath)))
 //                             .passes(20)
-                             .defaultRunAction()
-                             .selection(CommandLineSelection.of(CommandLineSelection.Util
-                                                                                    .getAllCompilationUnit(presentSourcePath)))
-//                             .setRunAction(getSpartanizer())
+//                             .selection(CommandLineSelection.of(CommandLineSelection.Util
+//                                                                                    .getAllCompilationUnit(presentSourcePath)))
+                             //                             .defaultRunAction()
+                             
                              .go();
         // ---
         Reports.close("metrics");
@@ -59,6 +61,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   }
 
   private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    return null;
+    CommandLine$Applicator a = new CommandLine$Applicator();
+    return (u -> Integer.valueOf(a.apply(CommandLineSelection.of(CommandLineSelection.Util
+        .getAllCompilationUnit(presentSourcePath)))? 1 : 0));
   }
 }
