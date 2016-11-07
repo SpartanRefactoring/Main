@@ -156,6 +156,9 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
+    if (n == null)
+      return false;
+    
     Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
