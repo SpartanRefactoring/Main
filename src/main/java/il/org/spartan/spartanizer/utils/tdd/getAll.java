@@ -99,10 +99,10 @@ public enum getAll {
     if (¢ == null)
       return null;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
-          $.add(((SingleVariableDeclaration) ¢));
-        super.preVisit(¢);
+      @Override public void preVisit(ASTNode ¢1) {
+        if (¢1 instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢1).getType() + "")))
+          $.add(((SingleVariableDeclaration) ¢1));
+        super.preVisit(¢1);
       }
     });
     return $;
