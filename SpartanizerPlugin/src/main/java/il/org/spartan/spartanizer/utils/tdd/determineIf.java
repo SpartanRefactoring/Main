@@ -58,7 +58,8 @@ public enum determineIf {
     if(m==null){
       return true;
     }
-    if(!m.toString().contains("final") &&m.toString().contains("int") ){
+    if(!m.toString().contains("final") &&
+        (m.toString().contains("int")) || m.toString().contains("double")){
       return false;
     }
     return true;
