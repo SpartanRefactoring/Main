@@ -46,9 +46,9 @@ public class Issue714 {
     assertTrue(determineIf.isImmutable(typeConvert("public class A {final int x; final double y; final String a; final Object o;}")));
   }
   
-//  @Test public void testManyStaticFinalTypes(){
-//    assertTrue(determineIf.isImmutable(typeConvert("public class A {final static int x; static final double y; final String a; final Object o;}")));
-//  }
+  @Test public void testManyStaticFinalTypes(){
+    assertTrue(determineIf.isImmutable(typeConvert("public class A {final static int x; static final double y; public final String a; private final Object o;}")));
+  }
   
   static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
