@@ -26,4 +26,8 @@ import static org.junit.Assert.*;
     assert(getAll.methods(az.compilationUnit(wizard.ast("public class A {}"))).isEmpty());
   }
   
+  @Test public void c() {
+    assertEquals(getAll.methods(az.compilationUnit(wizard.ast("public class A {public void foo() {}}"))).size(), 1);
+  }
+  
 }
