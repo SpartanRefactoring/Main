@@ -29,14 +29,15 @@ public interface iz {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
 
-  static boolean synchronized¢(BodyDeclaration node) {
+  static boolean synchronized¢(final BodyDeclaration node) {
     return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
   }
-  static boolean native¢(BodyDeclaration node) {
+
+  static boolean native¢(final BodyDeclaration node) {
     return (Modifier.NATIVE & node.getModifiers()) != 0;
   }
 
-  static boolean default¢(BodyDeclaration node) {
+  static boolean default¢(final BodyDeclaration node) {
     return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
@@ -943,7 +944,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean Void(final Type ¢) {
+  static boolean voidType(final Type ¢) {
     return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }
 

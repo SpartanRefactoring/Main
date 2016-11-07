@@ -8,16 +8,15 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.tipper("this.$N", "", "");
 
-  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+  @Override public boolean canTip(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
@@ -31,17 +30,18 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
-    final Tip tip = super.tip(d, m);
+  @Override public Tip tip(final MethodDeclaration d) {
+    Logger.logNP(d, getClass().getSimpleName());
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        tip.go(r, g);
-        // TODO: Marco if (!iz.Void(step.returnType(d)))
-        // return;
-        // final ReturnStatement s = d.getAST().newReturnStatement();
-        // s.setExpression(d.getAST().newThisExpression());
-        // wizard.addStatement(d, s, r, g);
-        // d.setReturnType2(getType(searchAncestors.forContainingType().from(d)));
+        if (!iz.voidType(step.returnType(d)))
+          return;
+        MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
+        n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(searchAncestors.forContainingType().from(d)))));
+        final ReturnStatement s = n.getAST().newReturnStatement();
+        s.setExpression(n.getAST().newThisExpression());
+        wizard.addStatement(n, s, r, g);
+        r.replace(d, n, g);
       }
     };
   }
@@ -49,7 +49,10 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   /** @param ¢
    * @return */
   protected static Type getType(final TypeDeclaration ¢) {
-    // TODO Marco somehow get type out of TypeDeclaration
-    return ¢.getSuperclassType();
+    return step.type(¢);
+  }
+
+  @Override public String description(@SuppressWarnings("unused") MethodDeclaration __) {
+    return "Make setter fluent";
   }
 }

@@ -53,7 +53,7 @@ public class Analyzer {
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
-    AnalyzerOptions.setAnalyzer(key, value);
+    AnalyzerOptions.set(key, value);
   }
 
   static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
@@ -159,6 +159,7 @@ public class Analyzer {
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
+      System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
@@ -173,10 +174,10 @@ public class Analyzer {
     for (final File f : getJavaFiles(getProperty("inputDir")))
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
         if (haz.methods(t))
-          for (MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
               MagicNumbers.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
-            } catch (@SuppressWarnings("unused") AssertionError __) {
+            } catch (@SuppressWarnings("unused") final AssertionError __) {
               //
             }
     MagicNumbers.printComparison();
@@ -196,6 +197,9 @@ public class Analyzer {
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //
+        .add(Block.class, //
+            new ReturnOld(), //
+            null) //
         .add(CastExpression.class, //
             new Coercion(), //
             null) //
@@ -211,7 +215,11 @@ public class Analyzer {
             null) //
         .add(InstanceofExpression.class, //
             new InstanceOf(), //
-            null);
+            null)//
+        .add(MethodDeclaration.class, //
+            new SetterGoFluent(), //
+            null) //
+    ;
   }
 
   private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
@@ -222,11 +230,11 @@ public class Analyzer {
         new Examiner(), //
         new Exploder(), //
         new Fluenter(), //
+        new FluentSetter(), ///
         new Getter(), //
         new JDPattern(), //
         new Mapper(), //
         new MethodEmpty(), //
-        new Setter(), //
         new TypeChecker(), //
         null);
   }
@@ -234,7 +242,7 @@ public class Analyzer {
   /** This us just to check that the InteractiveSpartanizer works and that
    * tippers can be added to it. */
   private static void sanityCheck() {
-    assert addNanoPatterns(new InteractiveSpartanizer())
+    assert addJavadocNanoPatterns(new InteractiveSpartanizer())
         .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }

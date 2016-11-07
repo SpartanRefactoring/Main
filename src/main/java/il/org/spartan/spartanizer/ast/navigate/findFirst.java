@@ -56,8 +56,22 @@ public interface findFirst {
     return findFirst.instanceOf(Expression.class, ¢);
   }
 
-  static Type type(final Statement ¢) {
+  /** @param ¢ JD
+   * @return */
+  static Type type(final ASTNode ¢) {
     return instanceOf(Type.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static TypeDeclaration typeDeclaration(final ASTNode ¢) {
+    return instanceOf(TypeDeclaration.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
+    return instanceOf(AbstractTypeDeclaration.class, ¢);
   }
 
   /** Search for an {@link ForStatement} in the tree rooted at an
