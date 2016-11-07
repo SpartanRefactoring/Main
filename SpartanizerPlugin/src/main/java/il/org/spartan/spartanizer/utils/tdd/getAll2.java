@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.internal.compiler.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -39,9 +40,15 @@ public enum getAll2 {
    * @author Tomer Dragucki
    */
   public static List<Name> names(Block b) {
+    if (b == null)
+      return null;
     List<Name> $ = new ArrayList<>();
-    $.add(az.name(wizard.ast("i")));
-    $.add(az.name(wizard.ast("x")));
+    b.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode an) {
+        if (iz.name(an))
+          $.add(az.name(an));
+      }
+    });
     return $;
   }
 }
