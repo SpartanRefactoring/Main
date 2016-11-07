@@ -25,7 +25,7 @@ public enum getAll2 {
   public static List<MethodDeclaration> methods(CompilationUnit __)
   {
     List<MethodDeclaration> $= new ArrayList<>();
-    MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo()"));
+    MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo();"));
     $.add(MD);
     return $;
   }
