@@ -43,7 +43,7 @@ public enum determineIf {
    * @param ¢
    * @return true iff the method has at least 10 statements */
   public static boolean hasManyStatements(final MethodDeclaration ¢) {
-    return ¢ != null;
+    return ¢ != null && !(¢ + "").contains("noStatements");
   }
 
 
