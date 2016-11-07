@@ -531,6 +531,6 @@ public enum step {
   public static Type type(AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : findFirst.type(wizard.ast("class d{" + (¢ + "").substring((¢ + "").indexOf("class") + 6, (¢ + "").indexOf("{"))
-            .replaceAll("extends [^\\s,]+", "").replaceAll("implements [^\\s,]+", "") + " x; }"));
+            .replaceAll("extends [^\\s,]+", "").replaceAll("implements [^{]+", "") + " x; }"));
   }
 }
