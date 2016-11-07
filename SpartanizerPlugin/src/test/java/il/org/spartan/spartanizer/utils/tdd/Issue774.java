@@ -34,8 +34,32 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnTrueNameAfterDot() {
     assertTrue(determineIf.uses(wizard.ast("a.b"), "b"));
   }
-  
+
   @Test public void shouldReturnTrueForQualifiedNameBeforeDot() {
     assertTrue(determineIf.uses(wizard.ast("a.b.c"), "a.b"));
+  }
+
+  @Test public void shouldReturnTrueForQualifiedNameInsideQualifiedNames() {
+    assertTrue(determineIf.uses(wizard.ast("a.b.c.d"), "a.b"));
+  }
+
+  @Test public void shouldReturnTrueForDescendantSimpleName() {
+    assertTrue(determineIf.uses(wizard.ast("a.b.c.d"), "c"));
+  }
+
+  @Test public void shouldReturnFalseForNullNodeObject() {
+    assertFalse(determineIf.uses(null, ""));
+  }
+  
+  @Test public void shouldReturnFalseForNullString() {
+    assertFalse(determineIf.uses(wizard.ast("t"), null));
+  }
+  
+  @Test public void shouldReturnFalseForQualifiedNameEnding() {
+    assertFalse(determineIf.uses(wizard.ast("a.b.c"), "b.c"));
+  }
+  
+  @Test public void shouldReturnFalseForSubSimpleName() {
+    assertFalse(determineIf.uses(wizard.ast("abc.def"), "bc"));
   }
 }
