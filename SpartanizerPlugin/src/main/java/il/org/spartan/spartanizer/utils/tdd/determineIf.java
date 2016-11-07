@@ -55,19 +55,16 @@ public enum determineIf {
    * @param m
    * @return true iff the class contains only final fields */
   public static boolean isImmutable(final TypeDeclaration m) { 
-    if(m==null){ 
-      return true; 
-    }
-    boolean fflag=false;
+    if(m==null)
+      return true;
+    boolean $=false;
     for(FieldDeclaration f : m.getFields()){ 
-      for(Object b : f.modifiers()){
-        if(((Modifier)b).isFinal())
-          fflag=true;
-      }
-      if(!fflag){
+      for(Object ¢ : f.modifiers())
+        if (((Modifier) ¢).isFinal())
+          $ = true;
+      if(!$)
         return false;
-      }
-      fflag=false;
+      $=false;
     } 
     
     return true;
