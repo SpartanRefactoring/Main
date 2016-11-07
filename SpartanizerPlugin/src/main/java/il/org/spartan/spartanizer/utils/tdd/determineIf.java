@@ -161,15 +161,21 @@ public enum determineIf {
     Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(QualifiedName node) {
+      void innerVisit(Name node) {
         nameInAST.inner |= node.getFullyQualifiedName().equals(name);
+      }
+
+      @Override public boolean visit(QualifiedName node) {
+        innerVisit(node);
+        return true;
+      }
+
+      @Override public boolean visit(SimpleName node) {
+        innerVisit(node);
         return true;
       }
     });
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        || (n instanceof QualifiedName) && (((QualifiedName) n).getFullyQualifiedName().equals(name)
-            || ((QualifiedName) n).getName().getIdentifier().equals(name) || ((QualifiedName) n).getQualifier().getFullyQualifiedName().equals(name))
-        || nameInAST.inner;
+    return nameInAST.inner;
   }
 
 }
