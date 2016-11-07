@@ -15,11 +15,12 @@ public enum getAll {
   /** Get all the parameters that the method invocation depends on
    * @author Vivian Shehadeh
    * @author Ward Mattar
-   * @param i is a MethodInvocation
+   * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public void invocations(MethodInvocation i){
-    
+  public static Set<Name> invocations(final MethodInvocation ¢) {
+    return ¢ == null ? null : new TreeSet<>();
   }
+
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
@@ -80,60 +81,53 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  public static List<CastExpression> casts(MethodDeclaration d) {
+  public static List<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    List<CastExpression> $ = new ArrayList<>();
-    
+    final List<CastExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(CastExpression node) {
+      @Override public boolean visit(final CastExpression node) {
         $.add(node);
         return true;
       }
     });
-    
     return $;
-    
   }
-  
-  /** Takes a single parameter, which is an MethodDeclaration
-   * return a List<VariableDeclaration> which is all String variable declarations in m
+
+  /** Takes a single parameter, which is an MethodDeclaration return a
+   * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
-   * @author Ariel Kolikant
-   */
+   * @author Ariel Kolikant */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return null;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
-          $.add(((SingleVariableDeclaration) ¢));
+      @Override public void preVisit(final ASTNode ¢) {
+        if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
+          $.add((SingleVariableDeclaration) ¢);
         super.preVisit(¢);
       }
     });
     return $;
   }
 
-  /** Takes a single parameter, which is a TypeDecleration
-   * returns a list of public fields for this class (by fields' names)
+  /** Takes a single parameter, which is a TypeDecleration returns a list of
+   * public fields for this class (by fields' names)
    * @param a TypeDecleration
    * @author Inbal Zukerman
-   * @author Elia Traore
-   */
-  public static List<String> publicFields(TypeDeclaration __) {
-    return new ArrayList<>(); 
+   * @author Elia Traore */
+  public static List<String> publicFields(final TypeDeclaration __) {
+    return new ArrayList<>();
   }
 
-  /**
-   * Takes a single CompilationUnit parameter, returns a list
-   * of method declaration within that compilation unit
+  /** Takes a single CompilationUnit parameter, returns a list of method
+   * declaration within that compilation unit
    * @param CompilationUnit
    * @author Roei-m
-   * @author RoeyMaor
-   */
-  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") CompilationUnit __) {
+   * @author RoeyMaor */
+  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") final CompilationUnit __) {
     return null;
   }
 }
