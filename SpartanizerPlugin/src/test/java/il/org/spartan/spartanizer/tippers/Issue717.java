@@ -89,6 +89,12 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void methodWithNoStatementsReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int f(int x){}"))));
   }
+  
+  @Test public void bigBlockWithAnnotationReturnsTrue() {
+    assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"))));
+  }
+ 
+  
  
   
   //TODO Nikita Dizhur: add check for function with annotations and modifiers
