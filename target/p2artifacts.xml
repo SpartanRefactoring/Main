@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='il.org.spartan.plugin' version='2.6.3'>
+    <properties size='5'>
+      <property name='artifact.size' value='4053095'/>
+      <property name='download.size' value='4053095'/>
+      <property name='maven-groupId' value='il.org.spartan'/>
+      <property name='maven-artifactId' value='il.org.spartan.plugin'/>
+      <property name='maven-version' value='2.6.3'/>
+    </properties>
+  </artifact>
+</artifacts>
