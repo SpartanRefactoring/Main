@@ -69,7 +69,7 @@ public enum determineIf {
       
     } 
     for(FieldDeclaration f : m.getFields()){ 
-      if(!f.modifiers().contains("final")) 
+      if(f.getModifiers() != 16) 
         return false; 
       
     } 
