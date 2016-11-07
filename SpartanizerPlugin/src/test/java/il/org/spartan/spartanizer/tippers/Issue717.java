@@ -81,7 +81,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
   
 
-  
+ 
   @Test public void methodWithNoBodyReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int a(String a);"))));
   }
@@ -104,8 +104,4 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
  
   
- 
-  
-  //TODO Nikita Dizhur: add check for function with annotations and modifiers
-
 }
