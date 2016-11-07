@@ -46,7 +46,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
 //                             .selection(CommandLineSelection.of(CommandLineSelection.Util
 //                                                                                    .getAllCompilationUnit(presentSourcePath)))
                              //                             .defaultRunAction()
-                             
+                             .defaultRunAction(new CommandLine$Applicator())
                              .go();
         // ---
         Reports.close("metrics");
