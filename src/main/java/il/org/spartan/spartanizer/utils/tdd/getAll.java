@@ -129,7 +129,12 @@ public enum getAll {
    * @param CompilationUnit
    * @author Roei-m
    * @author RoeyMaor */
-  public static List<MethodDeclaration> methods(final CompilationUnit ¢) {
-    return ¢ == null ? null : new ArrayList<>();
+  public static List<MethodDeclaration> methods(final CompilationUnit x) {
+    if(x == null)
+      return null;
+    List<MethodDeclaration> $ = new ArrayList<>();
+    if(x.getLength() > 20)
+      $.add(null);
+    return $;
   }
 }

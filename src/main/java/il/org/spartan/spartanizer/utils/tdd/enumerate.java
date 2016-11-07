@@ -64,6 +64,8 @@ public enum enumerate {
     return counter.inner;
   }
 
+  
+  
   /** see issue #776 for more details
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
@@ -71,11 +73,15 @@ public enum enumerate {
   public static int blockTypes(MethodDeclaration d) {
     int $ = 0;
     List<?> l = d.getBody().statements();
-    boolean[] arr = new boolean[15];
+    boolean[] arr = new boolean[10];
    
     final int BLOCK=0; final int IFSTATE=1; final int FORSTATE=2; final int WHILESTATE=3;
     final int SWITCHSTATE=4; final int DOSTATE=5; final int SYNC=6; final int TRY=7; 
+    final int LAMBDA=7;
     //TODO: deal with lambada-expr
+//    d.accept(new ASTVisitor() {
+//      
+//    });
     for (int ¢ = 0; ¢ < arr.length; ++¢)
       arr[¢] = false;
     for (Object ¢ : l)
@@ -103,6 +109,9 @@ public enum enumerate {
       } else if (¢ instanceof TryStatement && !arr[TRY]) {
         ++$;
         arr[TRY] = true;
+      } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && (¢ + "").contains("{")) {
+        $++;
+        arr[LAMBDA] = true;
       } 
     
     
