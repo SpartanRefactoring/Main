@@ -42,4 +42,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnTrueForQualifiedNameInsideQualifiedNames(){
     assertTrue(determineIf.uses(wizard.ast("a.b.c.d"), "a.b"));
   }  
+
+  @Test public void shouldReturnTrueForDescendantSimpleName() {
+    assertTrue(determineIf.uses(wizard.ast("a.b.c.d"), "c"));
+  }
+
 }
