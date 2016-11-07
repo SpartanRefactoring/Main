@@ -117,7 +117,7 @@ public enum getAll {
    * @author Inbal Zukerman
    * @author Elia Traore
    */
-  public static List<String> publicFields(TypeDeclaration d) {
+  public static List<String> publicFields(TypeDeclaration __) {
     return new ArrayList<>(); 
   }
 
