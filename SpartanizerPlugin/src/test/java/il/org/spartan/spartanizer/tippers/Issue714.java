@@ -34,7 +34,19 @@ public class Issue714 {
     assertFalse(determineIf.isImmutable((TypeDeclaration) az.compilationUnit(wizard.ast("public class A {int x;}")).types().get(0)));
   }
   
+  @Test public void testDoubleNotFinal() {
+    assertFalse(determineIf.isImmutable(typeConvert("public class A {double x;}")));
+  }
+  
+  @Test public void testONeWithFinalAndOneWithout() {
+    assertFalse(determineIf.isImmutable(typeConvert("public class A {int x;final int y;}")));
+  }
+  
   static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
   }
-}
+  
+  private TypeDeclaration typeConvert(final String $){
+    return (TypeDeclaration) az.compilationUnit(wizard.ast($)).types().get(0); } 
+  }
+

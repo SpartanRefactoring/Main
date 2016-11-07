@@ -88,13 +88,13 @@ public enum enumerate {
       if (¢ instanceof Block && !arr[BLOCK]) {
         ++$;
         arr[BLOCK] = true;
-      } else if (¢ instanceof IfStatement && !arr[IFSTATE]) {
+      } else if (¢ instanceof IfStatement && !arr[IFSTATE] && (¢ + "").contains("{")) {
         ++$;
         arr[IFSTATE] = true;
-      } else if ((¢ instanceof ForStatement || ¢ instanceof EnhancedForStatement) && !arr[FORSTATE]) {
+      } else if ((¢ instanceof ForStatement || ¢ instanceof EnhancedForStatement) && !arr[FORSTATE] && (¢ + "").contains("{")) {
         ++$;
         arr[FORSTATE] = true;
-      } else if (¢ instanceof WhileStatement && !arr[WHILESTATE]) {
+      } else if (¢ instanceof WhileStatement && !arr[WHILESTATE] && (¢ + "").contains("{")) {
         ++$;
         arr[WHILESTATE] = true;
       } else if ((¢ instanceof SwitchStatement || ¢ instanceof SwitchCase) && !arr[SWITCHSTATE]) {
@@ -103,13 +103,13 @@ public enum enumerate {
       } else if (¢ instanceof DoStatement && !arr[DOSTATE]) {
         ++$;
         arr[DOSTATE] = true;
-      } else if (¢ instanceof SynchronizedStatement && !arr[SYNC]) {
+      } else if (¢ instanceof SynchronizedStatement && !arr[SYNC] && (¢ + "").contains("{")) {
         ++$;
         arr[SYNC] = true;
-      } else if (¢ instanceof TryStatement && !arr[TRY]) {
+      } else if (¢ instanceof TryStatement && !arr[TRY] && (¢ + "").contains("{")) {
         ++$;
         arr[TRY] = true;
-      } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && (¢ + "").contains("{")) {
+      } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && ((¢ + "").contains("-> {") || (¢ + "").contains("->{"))) {
         ++$;
         arr[LAMBDA] = true;
       } 
