@@ -100,14 +100,19 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration mDec) {
     if (mDec == null)
       return false;
+
  
-    @SuppressWarnings("unchecked") List<ReturnStatement> statementList = new ArrayList<ReturnStatement>();
+     List<ReturnStatement> statementList = new ArrayList<>();
     mDec.accept (new ASTVisitor() {
-       @Override public boolean visit ( LambdaExpression lambdaExpr) {
+       @Override public boolean visit ( @SuppressWarnings("unused") LambdaExpression e1) {
          
          return false;
         }
-       @Override public boolean visit ( AnonymousClassDeclaration anonymClassDec) {
+       @Override public boolean visit ( @SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+         
+         return false;
+        }
+       @Override public boolean visit ( @SuppressWarnings("unused") TypeDeclaration t) {
          
          return false;
         }
@@ -121,7 +126,7 @@ public enum determineIf {
           return true;  
     return false;
   }
-  
+
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -131,7 +136,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name);
+    return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
+        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name));
   }
-  
 }
