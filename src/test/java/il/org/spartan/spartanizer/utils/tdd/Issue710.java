@@ -58,6 +58,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
  @Test public void test11 () {
    assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("int f(int x) { int d = 0; for(int i = 0 ; i < x ; i++){ if(i%9 == 0){d++;} return d;}}"))));
    }
+ 
+ @Test public void test12 () {
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() {class X{Object g() {return null;}}}"))));
+   }
   
   }
  
