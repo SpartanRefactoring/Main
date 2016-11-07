@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+<<<<<<< Updated upstream
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -10,6 +11,9 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
  
+=======
+import org.junit.*; 
+>>>>>>> Stashed changes
 /**
  * @author Doron Meshulam
  * @author Tomer Dragucki
