@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public enum find {
   ;
   /** @author AnnaBel7
-   * @author michalcohen
+   * @author michalcohena
    * @since Nov 4, 2016 */
   public static TypeDeclaration ancestorType(@SuppressWarnings("unused") final ASTNode __) {
     return null;
   }
 
   public static MethodDeclaration ancestorMethod(final ASTNode n) {
-    return az.methodDeclaration(n);
+    return n == null ? null : az.methodDeclaration(az.methodDeclaration(n) != null ? n : n.getParent().getParent().getParent());
   }
 }
