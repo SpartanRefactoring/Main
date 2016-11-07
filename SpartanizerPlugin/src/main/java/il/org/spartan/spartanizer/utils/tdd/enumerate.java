@@ -61,5 +61,14 @@ public enum enumerate {
     });
     return counter.inner;
   }
+  
+  /** see issue #776 for more details
+   * @author Yevgenia Shandalov
+   * @author Osher Hajaj
+   * @since 16-11-03 */
+  public static int blockTypes(MethodDeclaration d) {
+    return 0;
+  }
+  
   // For you to implement! Let's TDD and get it on!
 }
