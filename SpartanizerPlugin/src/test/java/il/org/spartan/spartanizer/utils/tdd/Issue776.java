@@ -58,4 +58,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{Runnable r = () -> {System.out.println(\"hello world\");};}"))), 1);
   }
   
+  @Test public void initArrayNotBlock() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int[] a={5,2,1};}"))), 0);
+  }
+  
 }
