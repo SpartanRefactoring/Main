@@ -56,12 +56,24 @@ public enum getAll2 {
     return $;
   }
 
-  /** @author Shimon Azulay & Idan Atias & Lior Ben Ami
+  /** @author Shimon Azulay & Idan Atias
    * @since 16-11-3 */
   public static List<String> publicFields(TypeDeclaration type) {
     LinkedList<String> list = new LinkedList<>();
     if (type == null)
       return list;
+    for (FieldDeclaration fd : type.getFields()) {
+      for (Object mod : fd.modifiers()) {
+        if (mod.toString().equals("public")) {
+          String[] field_splitted_to_words = fd.toString().trim().split(" ");
+          int field_name_idx = field_splitted_to_words.length - 1;
+          if (field_name_idx < 0)
+            continue;
+          String field_name = field_splitted_to_words[field_name_idx].replace(";", "").trim();
+          list.add(field_name);
+        }
+      }
+    }
     return list;
   }
 }

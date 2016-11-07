@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Shimon Azulay & Idan Atias & Lior Ben Ami
+/** @author Shimon Azulay & Idan Atias
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue741 {
   @Test public void publicFields_test0() {
@@ -34,11 +34,18 @@ import il.org.spartan.spartanizer.ast.safety.*;
     TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0);
     assertEquals(0, getAll2.publicFields(td).size());
   }
-  
+
   @Test public void publicFields_test5() {
     TypeDeclaration td = (TypeDeclaration) az.compilationUnit(wizard.ast("public class A { private int x; protected String s; }")).types().get(0);
     assertEquals(0, getAll2.publicFields(td).size());
   }
-  
-  
+
+  @Test public void publicFields_test6() {
+    TypeDeclaration td = (TypeDeclaration) az
+        .compilationUnit(wizard.ast("public class A { private int x; public static char y; public static void f(){}}")).types().get(0);
+    List<String> pFields = getAll2.publicFields(td);
+    assertTrue(pFields.contains("y"));
+    assertFalse(pFields.contains("x"));
+    assertFalse(pFields.contains("f"));
+  }
 }
