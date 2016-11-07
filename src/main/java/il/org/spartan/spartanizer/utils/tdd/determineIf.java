@@ -57,12 +57,17 @@ public enum determineIf {
   public static boolean isImmutable(final TypeDeclaration m) { 
     if(m==null){ 
       return true; 
-      
-    } 
+    }
+    boolean fflag=false;
     for(FieldDeclaration f : m.getFields()){ 
-      if(f.getModifiers() != 16) 
-        return false; 
-      
+      for(Object b : f.modifiers()){
+        if(((Modifier)b).isFinal())
+          fflag=true;
+      }
+      if(!fflag){
+        return false;
+      }
+      fflag=false;
     } 
     
     return true;
