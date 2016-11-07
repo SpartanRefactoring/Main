@@ -41,6 +41,7 @@ public enum getAll2 {
   public static List<Name> names(Block b) {
     List<Name> $ = new ArrayList<>();
     $.add(az.name(wizard.ast("i")));
+    $.add(az.name(wizard.ast("x")));
     return $;
   }
 }
