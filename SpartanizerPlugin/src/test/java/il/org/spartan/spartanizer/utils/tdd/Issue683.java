@@ -26,29 +26,39 @@ public class Issue683 {
     auxTypeDeclaration(find.ancestorType((ASTNode) null));
   }
 
-  @Test public void c(){
+  @Test public void c() {
     ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
-    final ASTNodeWrraper b = new ASTNodeWrraper();
-    t.accept(new ASTVisitor() {
+    assertEquals(t, find.ancestorType(getChildrenExpressions(t).inner.get(4)));
+  }
+
+  @Test public void d() {
+    ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
+    assertEquals(t, find.ancestorType(getChildrenExpressions(t).inner.get(2)));
+  }
+
+  private ASTNodeWrraper getChildrenExpressions(ASTNode n) {
+    final ASTNodeWrraper $ = new ASTNodeWrraper();
+    n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢))
-          b.inner.add(¢);
+          $.inner.add(¢);
       }
     });
-    assertEquals(t, find.ancestorType(b.inner.get(4)));
+    return $;
   }
-  
+
   private class ASTNodeWrraper {
-    
     public LinkedList<ASTNode> inner;
-    public ASTNodeWrraper(){
+
+    public ASTNodeWrraper() {
       inner = new LinkedList<>();
     }
   }
 
-  private ASTNode createAST(String ¢){
-    return (ASTNode)az.compilationUnit(wizard.ast(¢)).types().get(0);
+  private ASTNode createAST(String ¢) {
+    return (ASTNode) az.compilationUnit(wizard.ast(¢)).types().get(0);
   }
+
   static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
     assert true;
   }
