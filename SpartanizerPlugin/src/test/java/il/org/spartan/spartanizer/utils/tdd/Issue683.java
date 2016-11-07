@@ -11,6 +11,8 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
+import static org.hamcrest.CoreMatchers.*;
+
 /** Tests of {@link tdd.find}
  * @author AnnaBel7
  * @author michalcohen
@@ -35,9 +37,15 @@ public class Issue683 {
     ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
     assertEquals(t, find.ancestorType(getChildrenExpressions(t).inner.get(2)));
   }
-
-  private ASTNodeWrraper getChildrenExpressions(ASTNode n) {
-    final ASTNodeWrraper $ = new ASTNodeWrraper();
+  
+  @Test public void e(){
+    ASTNode t = createAST("public class A { public class B { int x; int y; } }");
+    ASTNodeWrapper b=getChildrenExpressions(t);
+    assertThat(find.ancestorType(b.inner.get(0)), is(not(find.ancestorType(b.inner.get(3)))));
+  }
+  
+  private ASTNodeWrapper getChildrenExpressions(ASTNode n) {
+    final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢))
@@ -47,10 +55,10 @@ public class Issue683 {
     return $;
   }
 
-  private class ASTNodeWrraper {
+  private class ASTNodeWrapper {
     public LinkedList<ASTNode> inner;
 
-    public ASTNodeWrraper() {
+    public ASTNodeWrapper() {
       inner = new LinkedList<>();
     }
   }
