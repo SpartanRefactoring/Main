@@ -42,9 +42,10 @@ public enum determineIf {
    * @since 16-11-02
    * @param ¢
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
-    return ¢ != null && true;
+  public static boolean hasManyStatements(final MethodDeclaration ¢) {
+    return ¢ != null;
   }
+
 
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
