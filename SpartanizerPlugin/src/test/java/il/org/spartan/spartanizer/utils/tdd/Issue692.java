@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -31,5 +33,19 @@ public class Issue692 {
   }
   @SuppressWarnings("static-method") @Test public void test4() {
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(i,foo(j),foo2(m,5,3,n))"))).size(), 4);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void test5() {
+    final Set<String> temp = new TreeSet<>();
+    temp.add("i");
+    temp.add("j");
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(i,foo(j),3)"))), temp);
+  }
+  @SuppressWarnings("static-method") @Test public void test6() {
+    final Set<String> temp = new TreeSet<>();
+    temp.add("i");
+    temp.add("j");
+    temp.add("n");
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(i,foo(j,foo2(m(n))))"))), temp);
   }
 }
