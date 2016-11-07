@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
+import java.util.function.*;
+
+import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -8,8 +11,8 @@ import java.io.*;
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
-  private boolean commandLineApplicator;
-  private final boolean collectApplicator = true;
+  private boolean commandLineApplicator = true;
+  private final boolean collectApplicator = false;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -35,8 +38,15 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.initializeFile(folder + name + ".after.java", "after");
         Reports.initializeReport(folder + name + ".CSV", "metrics");
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
-        CommandLineApplicator.defaultApplicator().passes(20)
-            .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))).go();
+        // ---
+        CommandLineApplicator.defaultApplicator()
+//                             .passes(20)
+                             .defaultRunAction()
+                             .selection(CommandLineSelection.of(CommandLineSelection.Util
+                                                                                    .getAllCompilationUnit(presentSourcePath)))
+//                             .setRunAction(getSpartanizer())
+                             .go();
+        // ---
         Reports.close("metrics");
         Reports.close("spectrum");
         Reports.closeFile("before");
@@ -46,5 +56,9 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
     } catch (final IOException x) {
       x.printStackTrace();
     }
+  }
+
+  private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
+    return null;
   }
 }
