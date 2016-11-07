@@ -78,7 +78,17 @@ public enum enumerate {
       if (¢ instanceof Block && !arr[0]) {
         ++$;
         arr[0] = true;
+      } else if (¢ instanceof IfStatement && !arr[1]) {
+        ++$;
+        arr[1] = true;
+      } else if (¢ instanceof ForStatement && !arr[2]) {
+        ++$;
+        arr[2] = true;
+      } else if (¢ instanceof WhileStatement && !arr[3]) {
+        ++$;
+        arr[3] = true;
       }
+    
     return $;
   }
   // For you to implement! Let's TDD and get it on!
