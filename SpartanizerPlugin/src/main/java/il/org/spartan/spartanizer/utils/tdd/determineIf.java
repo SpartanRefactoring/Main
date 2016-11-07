@@ -97,17 +97,17 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration d) {
-    if (d == null)
+  public static boolean returnsNull(MethodDeclaration mDec) {
+    if (mDec == null)
       return false;
  
     @SuppressWarnings("unchecked") List<ReturnStatement> statementList = new ArrayList<ReturnStatement>();
-      d.accept (new ASTVisitor() {
-       @Override public boolean visit ( LambdaExpression e1) {
+    mDec.accept (new ASTVisitor() {
+       @Override public boolean visit ( LambdaExpression lambdaExpr) {
          
          return false;
         }
-       @Override public boolean visit ( AnonymousClassDeclaration e2) {
+       @Override public boolean visit ( AnonymousClassDeclaration anonymClassDec) {
          
          return false;
         }
