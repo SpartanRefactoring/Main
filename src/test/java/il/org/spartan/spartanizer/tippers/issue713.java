@@ -18,9 +18,9 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  */
 
 public class issue713 {
+  TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
+  TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
   
-  TypeDeclaration noPublic = createTypeDeclerationFromStr("public class noPublic {   } ");
-  TypeDeclaration onePublic = createTypeDeclerationFromStr("public class onePublic {  public int x; } ");
       
   @SuppressWarnings("static-method") @Test public void doesCompile(){
     assert true;
@@ -35,11 +35,7 @@ public class issue713 {
   }
   
   @Test public void onePublicFails(){
-    assertNotEquals(1, getAll.publicFields(onePublic).size());
+    assertEquals(1, getAll.publicFields(onePublic).size());
   }
   
-  
-  private static TypeDeclaration createTypeDeclerationFromStr( String ¢) {
-    return az.typeDeclaration(wizard.ast(¢));
-  }
 }
