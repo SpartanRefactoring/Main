@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research.patterns;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -64,15 +63,10 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   static boolean azMethodExist(final CastExpression ¢) {
     final String s = getProperty(API_LEVEL) == null ? "type" : getProperty(API_LEVEL);
     final String name = (s.equals("type") ? "az" : "") + step.type(¢);
-    System.out.println("****************************************");
-    System.out.println("Candidate: " + name + " : " + step.type(¢));
-    System.out.println(step.methods(containingType(¢)).stream().map(x -> x.getName() + " : " + step.returnType(x)).collect(Collectors.toList()));
-    System.out.println("Decision: " + (step.methods(containingType(¢)).stream()
-        .filter(m -> name.equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() == 0));
-    System.out.println("****************************************");
     return step.methods(containingType(¢)).stream().filter(m -> name.equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)))
         .count() != 0;
   }
@@ -95,7 +89,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       wizard.addMethodToType(t, az.methodDeclaration(createAzMethod(¢)), r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(path, d.get());
-      System.out.println(d.get());
     } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
       x2.printStackTrace();
     }
