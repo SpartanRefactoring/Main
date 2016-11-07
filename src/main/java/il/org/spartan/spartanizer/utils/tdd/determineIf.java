@@ -137,8 +137,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name);
   }
   
 }
