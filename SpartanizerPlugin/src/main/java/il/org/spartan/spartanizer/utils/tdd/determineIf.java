@@ -43,7 +43,7 @@ public enum determineIf {
    * @param ¢
    * @return true iff the method has at least 10 statements */
   public static boolean hasManyStatements(final MethodDeclaration ¢) {
-    return ¢ != null;
+    return ¢ != null && ¢.getBody().statements().size() >= 10;
   }
 
 
@@ -54,16 +54,21 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(final TypeDeclaration m) {
-    if(m==null){
+  public static boolean isImmutable(final TypeDeclaration m) { 
+    if(m==null)
       return true;
-    }
-    if(!m.toString().contains("final") &&m.toString().contains("int") ){
-      return false;
-    }
-    return true;
+    boolean $=false;
+    for(FieldDeclaration f : m.getFields()){ 
+      for(Object ¢ : f.modifiers())
+        if (((Modifier) ¢).isFinal())
+          $ = true;
+      if(!$)
+        return false;
+      $=false;
+    } 
     
-  }
+    return true;
+    }
   // For you to implement! Let's TDD and get it on!
 
   /** see issue #719 for more details
@@ -146,18 +151,28 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
+    if (n == null)
+      return false;
     Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
+      void innerVisit(Name node) {
+        nameInAST.inner = node.getFullyQualifiedName().equals(name);
+      }
+
       @Override public boolean visit(QualifiedName node) {
-        nameInAST.inner |= node.getFullyQualifiedName().equals(name);
-        return true;
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
+      }
+
+      @Override public boolean visit(SimpleName node) {
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
       }
     });
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        || (n instanceof QualifiedName) && (((QualifiedName) n).getFullyQualifiedName().equals(name)
-            || ((QualifiedName) n).getName().getIdentifier().equals(name) || ((QualifiedName) n).getQualifier().getFullyQualifiedName().equals(name))
-        || nameInAST.inner;
+    return nameInAST.inner;
   }
 
 }
