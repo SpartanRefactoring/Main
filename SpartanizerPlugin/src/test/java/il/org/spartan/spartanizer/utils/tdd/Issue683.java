@@ -1,12 +1,8 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests of {@link tdd.find}
  * @author AnnaBel7
