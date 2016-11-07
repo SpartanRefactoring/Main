@@ -93,6 +93,15 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"))));
   }
+  @Test public void smallBlockWithAnnotationReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("@Inherited private void g(){;;;;}"))));
+  }
+  @Test public void smallBlockWithModifierReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public static void g(){;;;;}"))));
+  }
+  @Test public void smallBlockWithModifierReturnsTrue() {
+    assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("private static void g(){;;;;int y;}"))));
+  }
  
   
  
