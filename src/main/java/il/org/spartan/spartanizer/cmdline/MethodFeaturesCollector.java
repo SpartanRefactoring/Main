@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 public final class MethodFeaturesCollector extends FilesASTVisitor {
   int methodNesting;
   MethodDeclaration lastNode;
-  private CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
+  private final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
   @Override public boolean visit(final MethodDeclaration node) {
     ++methodNesting;
@@ -24,12 +24,10 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
     return super.visit(node);
   }
 
-  /**
-   * TODO: Ori Roth: Please add here more boolean metrics such as 
-   * {@link #isJohnDoeWithResepctTo1stParameter}, 
-   * {@ link #isJohnDoeWithResepctTo2ndParameter},  --yg
-   * @param ¢ JD
-   */
+  /** TODO: Ori Roth: Please add here more boolean metrics such as
+   * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
+   * #isJohnDoeWithResepctTo2ndParameter}, --yg
+   * @param ¢ JD */
   private void consider(final MethodDeclaration ¢) {
     dotter.click();
     final Type type = ¢.getReturnType2();
@@ -66,9 +64,9 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
         .put("setter", NameGuess.of(¢.getName() + "") == NameGuess.SETTTER_METHOD) //
         .put("isMethod", NameGuess.of(¢.getName() + "") == NameGuess.IS_METHOD) //
         .put("method", NameGuess.of(¢.getName() + "") == NameGuess.METHOD_OR_VARIABLE) //
-        .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) // 
-        .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) // 
-        ;
+        .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) //
+        .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) //
+    ;
     writer.nl();
   }
 
@@ -83,6 +81,7 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
     System.err.println("Your output is in: " + writer.close());
     super.done();
   }
+
   static {
     clazz = MethodFeaturesCollector.class;
   }

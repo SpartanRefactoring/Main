@@ -81,7 +81,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   }
   
 
-  
+ 
   @Test public void methodWithNoBodyReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public int a(String a);"))));
   }
@@ -93,10 +93,15 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"))));
   }
+  @Test public void smallBlockWithAnnotationReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("@Inherited private void g(){;;;;}"))));
+  }
+  @Test public void smallBlockWithModifierReturnsFalse() {
+    assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public static void g(){;;;;}"))));
+  }
+  @Test public void smallBlockWithModifierReturnsTrue() {
+    assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("private static void g(){;;;;;}"))));
+  }
  
   
- 
-  
-  //TODO Nikita Dizhur: add check for function with annotations and modifiers
-
 }

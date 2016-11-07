@@ -592,12 +592,12 @@ public interface wizard {
   /** Adds method m to the first type in file.
    * @param fileName
    * @param m */
-  static void addMethodToFile(String fileName, MethodDeclaration m) {
+  static void addMethodToFile(final String fileName, final MethodDeclaration m) {
     try {
-      String str = readFromFile(fileName);
-      Document d = new Document(str);
-      AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      ASTRewrite r = ASTRewrite.create(t.getAST());
+      final String str = readFromFile(fileName);
+      final Document d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
       wizard.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
