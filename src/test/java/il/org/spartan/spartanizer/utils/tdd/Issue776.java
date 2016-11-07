@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Osher Hajaj
  * @since 16-11-07 */
 @SuppressWarnings("static-method") public class Issue776 {
+  
   @Test public void checkEmptyFunc() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}"))), 0);
   }
@@ -47,6 +48,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   
   @Test public void tryChatch() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{try {} catch (IndexOutOfBoundsException e) {}}"))), 1);
+  }
+  
+  @Test public void lambadaExprCheck() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{Runnable r = () -> {System.out.println(\"hello world\");};}"))), 1);
   }
   
 }
