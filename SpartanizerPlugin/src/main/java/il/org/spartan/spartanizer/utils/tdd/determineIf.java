@@ -43,16 +43,7 @@ public enum determineIf {
    * @param ¢
    * @return true iff the method has at least 10 statements */
   public static boolean hasManyStatements(final MethodDeclaration ¢) {
-    final Int counter = new Int();
-    if (¢ == null)
-      return false;
-    ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
-        if (¢ instanceof Statement)
-          ++counter.inner;
-      }
-    });
-    return counter.inner > 10;
+    return ¢ != null && ¢.getBody().statements().size() >= 10;
   }
 
 
@@ -158,21 +149,25 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
+    if (n == null)
+      return false;
     Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
       void innerVisit(Name node) {
-        nameInAST.inner |= node.getFullyQualifiedName().equals(name);
+        nameInAST.inner = node.getFullyQualifiedName().equals(name);
       }
 
       @Override public boolean visit(QualifiedName node) {
-        innerVisit(node);
-        return true;
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
       }
 
       @Override public boolean visit(SimpleName node) {
-        innerVisit(node);
-        return true;
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
       }
     });
     return nameInAST.inner;
