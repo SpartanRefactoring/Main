@@ -43,8 +43,23 @@ public enum enumerate {
     return count.inner;
   }
 
-  public static int methods(@SuppressWarnings("unused") final CompilationUnit __) {
-    return 0;
+  /** @author Sharon Kuninin
+   * @author Yarden Lev
+   * @param ¢ the CompilationUnit its methods are counted
+   * @return the amount of methods the given CompilationUnit has
+   * @since Nov 2, 2016 */
+  public static int methods(final CompilationUnit ¢) {
+    if (¢ == null)
+      return 0;
+    final Int counter = new Int();
+    counter.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @SuppressWarnings("unused") @Override public boolean visit(MethodDeclaration node) {
+        ++counter.inner;
+        return true;
+      }
+    });
+    return counter.inner;
   }
   // For you to implement! Let's TDD and get it on!
 }
