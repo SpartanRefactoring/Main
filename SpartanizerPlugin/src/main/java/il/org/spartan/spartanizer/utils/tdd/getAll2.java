@@ -30,4 +30,7 @@ public enum getAll2 {
     return $;
   }
   
+  public static List<Name> names(Block b) {
+    return null;
+  }
 }
