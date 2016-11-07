@@ -43,7 +43,18 @@ public enum determineIf {
    * @param ¢
    * @return true iff the method has at least 10 statements */
   public static boolean hasManyStatements(final MethodDeclaration ¢) {
-    return ¢ != null && ¢.getBody().statements().size() >= 10;
+    if (¢ == null)
+      return false;
+    
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if (iz.statement(¢))
+          ++$.inner;
+      }
+    });
+    return $.inner - 1 >= 10;
   }
 
 
