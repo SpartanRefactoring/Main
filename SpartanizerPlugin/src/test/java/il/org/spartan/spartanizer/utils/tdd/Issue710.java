@@ -60,7 +60,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
    }
  
  @Test public void test12 () {
-   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() {class X{Object g() {return null;}}}"))));
+   assertFalse(determineIf.returnsNull(az.methodDeclaration(wizard.ast("Object f() {class X{Object g() {return null;}}return new X();}"))));
    }
   
   }
