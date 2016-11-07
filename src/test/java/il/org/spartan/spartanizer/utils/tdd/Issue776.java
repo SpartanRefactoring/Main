@@ -30,6 +30,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {}}"))), 2);
   }
   
+  @Test public void checkIfNoBlock() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{if (false) x=5;}"))), 0);
+  }
+  
   @Test public void checkWhileAndForBlocks() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}"))), 4);
   }
@@ -52,6 +56,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   
   @Test public void lambadaExprCheck() {
     assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{Runnable r = () -> {System.out.println(\"hello world\");};}"))), 1);
+  }
+  
+  @Test public void initArrayNotBlock() {
+    assertEquals(enumerate.blockTypes(((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int[] a={5,2,1};}"))), 0);
   }
   
 }
