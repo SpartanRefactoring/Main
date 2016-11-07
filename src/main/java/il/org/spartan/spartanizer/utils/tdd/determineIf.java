@@ -38,10 +38,10 @@ public enum determineIf {
    * @author Ron Gatenio
    * @author Roy Shchory
    * @since 16-11-02
-   * @param d
+   * @param ¢
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return true;
+  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return ¢ == null ? false : true;
   }
 
   /** see issue #714 for more details
@@ -97,14 +97,30 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration d) {
-    if (d == null) 
+  public static boolean returnsNull(MethodDeclaration mDec) {
+    if (mDec == null)
       return false;
-    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
-    for(Statement ¢ : statementList)
-      if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
-          && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
-        return true;
+ 
+    @SuppressWarnings("unchecked") List<ReturnStatement> statementList = new ArrayList<ReturnStatement>();
+    mDec.accept (new ASTVisitor() {
+       @Override public boolean visit ( LambdaExpression lambdaExpr) {
+         
+         return false;
+        }
+       @Override public boolean visit ( AnonymousClassDeclaration anonymClassDec) {
+         
+         return false;
+        }
+       @Override public boolean visit (ReturnStatement r) {
+          statementList.add (r);
+          return true;
+        }
+      });
+      for(ReturnStatement st : statementList){
+        if (st.getClass().equals(ReturnStatement.class)
+            && st.getExpression().getClass().equals(NullLiteral.class))
+          return true;
+    }  
     return false;
   }
   
@@ -117,8 +133,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name);
   }
   
 }
