@@ -14,10 +14,14 @@ import il.org.spartan.spartanizer.research.*;
 
 /** Coercion pattern <br>
  * Whenever we have ((Clazz)obj) turn into az.Clazz(obj) <br>
- * So fluent, so delight.
+ * So fluent, so delight. <br>
+ * Oh, and create az.Clazz method on the fly.
  * @author Ori Marcovitch
  * @since 2016 */
 public class Coercion extends NanoPatternTipper<CastExpression> {
+  private static final String API_LEVEL_FILE = "file";
+  private static final String API_LEVEL_PACKAGE = "package";
+  private static final String API_LEVEL_TYPE = "type";
   private static final String API_FILE = "apiFile";
   private static final String API_LEVEL = "apiLevel";
   static final Converter c = new Converter();
@@ -33,48 +37,70 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public Tip tip(final CastExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + step.type(¢) + "(" + step.expression(¢) + ")"),
-            g);
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast("az" + step.type(¢) + "(" + step.expression(¢) + ")"),
+            g);
         Logger.logNP(¢, getClass().getSimpleName());
       }
     };
   }
 
+  protected static void addAzMethod(CastExpression ¢, ASTRewrite r, TextEditGroup g) {
+    final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
+    switch (s) {
+      case API_LEVEL_TYPE:
+        addAzMethodToType(¢, r, g);
+        break;
+      case API_LEVEL_PACKAGE:
+        prepareFile(packageAzFile(¢));
+        addAzMethodToFile(¢, packageAzFilePath(¢));
+        break;
+      case API_LEVEL_FILE:
+        prepareFile(fileAzFile());
+        addAzMethodToFile(¢, fileAzFilePath());
+        break;
+      default:
+        assert false : "illegal apiLevel [" + s + "]";
+    }
+  }
+
+  /** @param ¢
+   * @return */
+  private static String fileAzFilePath() {
+    return getProperty(API_FILE);
+  }
+
+  /** @param ¢
+   * @return */
+  private static File fileAzFile() {
+    return new File(fileAzFilePath());
+  }
+
+  /** [[SuppressWarningsSpartan]] */
   static boolean azMethodExist(final CastExpression ¢) {
-    step.methods(containingType(¢));
-    step.methods(containingType(¢)).stream()
-        .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)));
-    return step.methods(containingType(¢)).stream()
-        .filter(m -> ("az" + step.type(¢)).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
+    final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
+    final String name = (s.equals(API_LEVEL_TYPE) ? "az" : "") + step.type(¢);
+    return step.methods(containingType(¢)).stream().filter(m -> name.equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)))
+        .count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {
     return (returnType + "").equals(t + "");
   }
 
-  static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
-    wizard.addMethodToType(containingType(¢), createAzMethod(¢), r, g);
+  static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
+    AbstractTypeDeclaration t = containingType(¢);
+    wizard.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
+  }
+
+  static void addAzMethodToFile(final CastExpression ¢, String path) {
+    wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    // TODO: Marco clean :
-    // AST a = ¢.getAST();
-    // MethodDeclaration $ = a.newMethodDeclaration();
-    // $.setName(a.newSimpleName(azMethodName(¢)));
-    // Block b = a.newBlock();
-    // ReturnStatement rs = a.newReturnStatement();
-    // rs.setExpression(a.newNullLiteral());
-    // b.statements().add(rs);
-    // $.setBody(b);
-    // $.setReturnType2(a.newSimpleType(a.newSimpleName(step.type(¢).toString())));
-    // $.modifiers().add(a.newModifier(Modifier.ModifierKeyword.PUBLIC_KEYWORD));
-    // $.modifiers().add(a.newModifier(Modifier.ModifierKeyword.STATIC_KEYWORD));
-    // System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    // System.out.println($);
-    // return $;
-    return az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)));
+    return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
+        az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
 
   private static String azMethodModifier() {
@@ -86,24 +112,31 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String azMethodName(final CastExpression ¢) {
-    return (getProperty(API_LEVEL) == null ? "type" : !"type".equals(getProperty(API_LEVEL)) ? "" : "az") + step.type(¢);
+    return (getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : !API_LEVEL_TYPE.equals(getProperty(API_LEVEL)) ? "" : "az") + step.type(¢);
   }
 
   private static AbstractTypeDeclaration containingType(final CastExpression ¢) {
-    final String s = getProperty(API_LEVEL) == null ? "type" : getProperty(API_LEVEL);
+    final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
-      case "type":
+      case API_LEVEL_TYPE:
         return searchAncestors.forContainingType().from(¢);
-      case "package":
-        return getType(prepareFile(
-            new File(AnalyzerOptions.getAnalyzer("inputDir") + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java")));
-      case "file":
-        return getType(new File(getProperty(API_FILE)));
+      case API_LEVEL_PACKAGE:
+        return getType(prepareFile(packageAzFile(¢)));
+      case API_LEVEL_FILE:
+        return getType(prepareFile(fileAzFile()));
       default:
         break;
     }
     assert false : "illegal apiLevel [" + s + "]";
     return null;
+  }
+
+  private static File packageAzFile(final CastExpression ¢) {
+    return new File(packageAzFilePath(¢));
+  }
+
+  private static String packageAzFilePath(final CastExpression ¢) {
+    return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + getContainingPackage(¢).replaceAll("\\.", "/") + "/az.java";
   }
 
   private static AbstractTypeDeclaration getType(final File x) {
@@ -116,11 +149,17 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static File prepareFile(final File ¢) {
-    return ¢.exists() ? ¢ : createFileFromTemplate(¢);
+    return updatePackage(¢.exists() ? ¢ : createFileFromTemplate(¢));
+  }
+
+  /** @param object
+   * @return */
+  private static File updatePackage(File ¢) {
+    return ¢;
   }
 
   private static File createFileFromTemplate(final File f) {
-    // TODO: Marco change package declaration
+    // TODO: Marco update package declaration to match actual package...
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           f.toPath(), StandardCopyOption.REPLACE_EXISTING);
