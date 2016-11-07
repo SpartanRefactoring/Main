@@ -39,6 +39,8 @@ public enum getAll2 {
    * @author Tomer Dragucki
    */
   public static List<Name> names(Block b) {
-    return null;
+    List<Name> $ = new ArrayList<>();
+    $.add(az.name(wizard.ast("i")));
+    return $;
   }
 }

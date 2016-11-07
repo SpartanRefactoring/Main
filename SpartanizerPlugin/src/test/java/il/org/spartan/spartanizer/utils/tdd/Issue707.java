@@ -30,7 +30,7 @@ public class Issue707 {
   
   @Test
   public void c() {
-    assertTrue(getAll2.names(az.block(ast("{int i;}"))).contains(az.name(ast("i"))));
+    assertEquals((getAll2.names(az.block(ast("{int i;}"))).get(0) + ""), "i");
   }
   static ASTNode ast(final String ¢) {
     return wizard.ast(¢);
