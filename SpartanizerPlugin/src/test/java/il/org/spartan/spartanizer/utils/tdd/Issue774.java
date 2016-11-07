@@ -34,4 +34,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void shouldReturnTrueNameAfterDot() {
     assertTrue(determineIf.uses(wizard.ast("a.b"), "b"));
   }
+  
+  @Test public void shouldReturnTrueForQualifiedNameBeforeDot() {
+    assertTrue(determineIf.uses(wizard.ast("a.b.c"), "a.b"));
+  }
 }
