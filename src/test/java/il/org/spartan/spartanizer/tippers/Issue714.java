@@ -37,4 +37,12 @@ public class Issue714 {
   static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
   }
-}
+  
+  @Test public void testDoubleNotFinal() {
+    assertFalse(determineIf.isImmutable(typeConvert("public class A {double x;}")));
+  }
+  
+  private TypeDeclaration typeConvert(final String $){
+    return (TypeDeclaration) az.compilationUnit(wizard.ast($)).types().get(0); } 
+  }
+
