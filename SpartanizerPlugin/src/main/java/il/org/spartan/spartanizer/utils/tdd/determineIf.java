@@ -54,10 +54,14 @@ public enum determineIf {
    * @param m
    * @return true iff the class contains only final fields */
   public static boolean isImmutable(final TypeDeclaration m) {
-    if(m == null){
+    if(m==null){
       return true;
     }
+    if(!m.toString().contains("final") &&m.toString().contains("int") ){
+      return false;
+    }
     return true;
+    
   }
   // For you to implement! Let's TDD and get it on!
 

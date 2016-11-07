@@ -30,6 +30,10 @@ public class Issue714 {
     assertTrue(determineIf.isImmutable((TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0)));
   }
 
+  @Test public void testNoFinal() {
+    assertFalse(determineIf.isImmutable((TypeDeclaration) az.compilationUnit(wizard.ast("public class A {int x;}")).types().get(0)));
+  }
+  
   static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
   }
