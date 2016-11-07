@@ -11,18 +11,15 @@ import il.org.spartan.external.*;
  * @author Matteo Orru' */
 public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
-  @External(alias = "i", value = "name of the input directory", required = true)  static String inputDir = "afasdf";
+  @External(alias = "i", value = "name of the input directory")  static String inputDir = "afasdf";
   @External(alias = "o", value = "name of the output directory")  private static String outputDir = "fasfdas";
 
   public static void main(final String[] args) {
-    if(args.length == 0)
-      usageErrorExit("name(s)", new CommandLineClient());
-//    parseCommandLineArgs(args);
-    processCommandLine(args);
-//    final List<String> remaining = extract(args, this);
-//      new CommandLineClient().printExternals();
     for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
+//    if(args.length == 0)
+//      usageErrorExit("name(s)", new CommandLineClient());
+//    processCommandLine(args);
   }
   
   private static void processCommandLine(final String[] args) {
