@@ -15,8 +15,10 @@ public enum find {
   /** @author AnnaBel7
    * @author michalcohena
    * @since Nov 4, 2016 */
-  public static TypeDeclaration ancestorType(final ASTNode ¢) {
-    return ¢ == null ? null : (TypeDeclaration) ¢.getParent().getParent().getParent().getParent();
+  public static TypeDeclaration ancestorType(final ASTNode n) {
+    return n == null ? null
+        : n.getParent().getParent().getParent().getParent() == null ? (TypeDeclaration) n.getParent().getParent()
+            : (TypeDeclaration) n.getParent().getParent().getParent().getParent();
   }
 
 
