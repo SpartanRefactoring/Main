@@ -29,7 +29,11 @@ public enum getAll2 {
     $.add(MD);
     return $;
   }
-  
+  /**
+   * Takes Block b and returns list of names in it
+   * @param b
+   * @return List<Name> which is all names in b
+   */
   public static List<Name> names(Block b) {
     return null;
   }
