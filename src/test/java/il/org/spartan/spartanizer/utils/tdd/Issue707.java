@@ -11,6 +11,7 @@ public class Issue707 {
   
   @Test
   public void test1() {
+    names(null);
     return;
   }
 }
