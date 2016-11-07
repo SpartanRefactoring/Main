@@ -18,4 +18,12 @@ public class Issue683 {
   @Test public void a() {
     find.ancestorType(null);
   }
+
+  @Test public void b() {
+    auxTypeDeclaration(find.ancestorType((ASTNode) null));
+  }
+
+  static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
+    assert true;
+  }
 }
