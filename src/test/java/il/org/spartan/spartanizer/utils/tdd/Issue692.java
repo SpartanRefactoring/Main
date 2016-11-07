@@ -18,5 +18,7 @@ public class Issue692 {
     assertNull(getAll.invocations((MethodInvocation) null));
   }
   
-
+  @SuppressWarnings("static-method") @Test public void test1() {
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,3)"))).size(), 0);
+  }
 }
