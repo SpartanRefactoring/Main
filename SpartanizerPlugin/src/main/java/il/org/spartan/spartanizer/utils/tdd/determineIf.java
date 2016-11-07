@@ -38,10 +38,10 @@ public enum determineIf {
    * @author Ron Gatenio
    * @author Roy Shchory
    * @since 16-11-02
-   * @param d
+   * @param ¢
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return true;
+  public static boolean hasManyStatements(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return ¢ != null && true;
   }
 
   /** see issue #714 for more details
@@ -97,17 +97,36 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration d) {
-    if (d == null) 
+  public static boolean returnsNull(MethodDeclaration mDec) {
+    if (mDec == null)
       return false;
-    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
-    for(Statement ¢ : statementList)
-      if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
-          && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
-        return true;
+
+ 
+     List<ReturnStatement> statementList = new ArrayList<>();
+    mDec.accept (new ASTVisitor() {
+       @Override public boolean visit ( @SuppressWarnings("unused") LambdaExpression e1) {
+         
+         return false;
+        }
+       @Override public boolean visit ( @SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+         
+         return false;
+        }
+       @Override public boolean visit ( @SuppressWarnings("unused") TypeDeclaration t) {
+         
+         return false;
+        }
+       @Override public boolean visit (ReturnStatement ¢) {
+          statementList.add (¢);
+          return true;
+        }
+      });
+      for(ReturnStatement ¢ : statementList)
+        if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
+          return true;  
     return false;
   }
-  
+
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -117,8 +136,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
-        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+    return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
+        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name));
   }
-  
 }
