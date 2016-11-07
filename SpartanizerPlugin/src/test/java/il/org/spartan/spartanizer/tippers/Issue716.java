@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasManyStatements(null));
   }
   
-  @Test public void checkNoStatements() {
+  @Test public void checkTenStatements() {
     assertTrue(determineIf.hasManyStatements(
-        (MethodDeclaration) wizard.ast("public void noStatements() {} ")));
+        (MethodDeclaration) wizard.ast("public void noStatements() {int a; int b; int c; int d; int e; int f; int g; int h; int i; int j;} ")));
   }
 }

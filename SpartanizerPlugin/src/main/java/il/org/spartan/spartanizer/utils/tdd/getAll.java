@@ -129,7 +129,7 @@ public enum getAll {
    * @param CompilationUnit
    * @author Roei-m
    * @author RoeyMaor */
-  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") final CompilationUnit __) {
-    return null;
+  public static List<MethodDeclaration> methods(final CompilationUnit ¢) {
+    return ¢ == null ? null : new ArrayList<>();
   }
 }
