@@ -20,7 +20,13 @@ public enum find {
     return null;
   }
 
-  public static MethodDeclaration ancestorMethod(final ASTNode n) {
-    return n == null ? null : az.methodDeclaration(az.methodDeclaration(n) != null ? n : n.getParent().getParent().getParent());
+  public static MethodDeclaration ancestorMethod(ASTNode n) {
+  ASTNode temp = n;
+  if(temp==null) return null;
+  while(temp!=null){
+    if(az.methodDeclaration(temp) != null) return az.methodDeclaration(temp);
+    temp=temp.getParent();
+  }
+  return null;
   }
 }
