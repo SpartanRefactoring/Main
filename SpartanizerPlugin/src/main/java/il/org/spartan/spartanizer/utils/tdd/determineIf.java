@@ -96,18 +96,16 @@ public enum determineIf {
    * @author Shahar Yair
    * @author Zahi Mizrahi
    * @since 16-11-06
-   * @param m
+   * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration m) {
-    if (m == null) 
+  public static boolean returnsNull(MethodDeclaration d) {
+    if (d == null) 
       return false;
-    @SuppressWarnings("unchecked") List<Statement> statementList = m.getBody().statements();
-    for(Statement st : statementList)
-      if (st.getClass().equals(ReturnStatement.class)) {
-        if (((ReturnStatement) st).getExpression().getClass().equals(NullLiteral.class)) {
-          return true;
-        }
-      }
+    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
+    for(Statement ¢ : statementList)
+      if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
+          && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
+        return true;
     return false;
   }
   
@@ -116,11 +114,12 @@ public enum determineIf {
    * @author Yosef Raisman
    * @author Entony Lekhtman
    * @since 16-11-06
-   * @param __
+   * @param n
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
-  @SuppressWarnings("unused") public static boolean uses(ASTNode __, String name) {
-    return !"false".equals(name) && !"null".equals(name);
+  public static boolean uses(ASTNode n, String name) {
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
+        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
   }
   
 }
