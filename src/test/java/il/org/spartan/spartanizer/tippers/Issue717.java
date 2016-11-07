@@ -100,7 +100,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("public static void g(){;;;;}"))));
   }
   @Test public void smallBlockWithModifierReturnsTrue() {
-    assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("private static void g(){;;;;int y;}"))));
+    assertTrue(determineIf.hasBigBlock(((MethodDeclaration) wizard.ast("private static void g(){;;;;;}"))));
   }
  
   
