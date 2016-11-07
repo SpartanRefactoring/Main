@@ -5,14 +5,12 @@ import java.nio.file.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import static il.org.spartan.utils.FileUtils.*;
 
 /** Coercion pattern <br>
  * Whenever we have ((Clazz)obj) turn into az.Clazz(obj) <br>
@@ -81,17 +79,21 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static void addAzMethodToFile(final CastExpression ¢, String path) {
-    try {
-      String str = readFromFile(path);
-      Document d = new Document(str);
-      AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      ASTRewrite r = ASTRewrite.create(t.getAST());
-      wizard.addMethodToType(t, az.methodDeclaration(createAzMethod(¢)), r, null);
-      r.rewriteAST(d, null).apply(d);
-      writeToFile(path, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
-    }
+    wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
+    // try {
+    // String str = readFromFile(path);
+    // Document d = new Document(str);
+    // AbstractTypeDeclaration t =
+    // findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+    // ASTRewrite r = ASTRewrite.create(t.getAST());
+    // wizard.addMethodToType(t, az.methodDeclaration(createAzMethod(¢)), r,
+    // null);
+    // r.rewriteAST(d, null).apply(d);
+    // writeToFile(path, d.get());
+    // } catch (IOException | MalformedTreeException | IllegalArgumentException
+    // | BadLocationException x2) {
+    // x2.printStackTrace();
+    // }
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
