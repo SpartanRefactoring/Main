@@ -100,6 +100,7 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration mDec) {
     if (mDec == null)
       return false;
+
  
      List<ReturnStatement> statementList = new ArrayList<>();
     mDec.accept (new ASTVisitor() {
@@ -127,7 +128,7 @@ public enum determineIf {
     }  
     return false;
   }
-  
+
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -137,7 +138,7 @@ public enum determineIf {
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
   public static boolean uses(ASTNode n, String name) {
-    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name);
+    return (n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name))
+        || (n instanceof QualifiedName && ((QualifiedName) n).getFullyQualifiedName().equals(name));
   }
-  
 }
