@@ -66,7 +66,7 @@ public enum getAll {
       return null;
     final List<InstanceofExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(InstanceofExpression node) {
+      @Override public boolean visit(final InstanceofExpression node) {
         $.add(node);
         return true;
       }
@@ -95,4 +95,35 @@ public enum getAll {
     return $;
     
   }
+  
+  /** Takes a single parameter, which is an MethodDeclaration
+   * return a List<VariableDeclaration> which is all String variable declarations in m
+   * @param d a MethodDeclaration
+   * @author Alexander Kaplan
+   * @author Ariel Kolikant
+   */
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
+    final List<VariableDeclaration> $ = new ArrayList<>();
+    if (¢ == null)
+      return null;
+    ¢.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢ instanceof SingleVariableDeclaration && "String".equals((((SingleVariableDeclaration) ¢).getType() + "")))
+          $.add(((SingleVariableDeclaration) ¢));
+        super.preVisit(¢);
+      }
+    });
+    return $;
+  }
+
+  /** Takes a single parameter, which is a TypeDecleration
+   * returns a list of public fields for this class (by fields' names)
+   * @param a TypeDecleration
+   * @author Inbal Zukerman
+   * @author Elia Traore
+   */
+  public static List<String> publicFields(TypeDeclaration __) {
+    return new ArrayList<>(); 
+  }
+
 }

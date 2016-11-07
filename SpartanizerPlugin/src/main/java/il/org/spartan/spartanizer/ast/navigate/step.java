@@ -515,13 +515,29 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static Type type(VariableDeclarationStatement ¢) {
+  public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** @param ¢ JD
    * @return */
-  public static Type type(VariableDeclarationFragment ¢) {
+  public static Type type(final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
+  }
+
+  /** A little hack to get Type out of TypeDeclaration.
+   * @param d JD
+   * @return */
+  public static Type type(AbstractTypeDeclaration d) {
+    String name = (d + "").substring((d + "").indexOf("class") + 6, (d + "").indexOf("{"));
+    if (name.contains("<"))
+      for (int openers = 0, ¢ = name.indexOf('<'); ¢ < name.length(); ++¢) {
+        if (name.charAt(¢) == '<')
+          ++openers;
+        if (name.charAt(¢) == '>' && --openers == 0)
+          name = name.substring(0, ¢ + 1);
+      }
+    return d == null ? null
+        : findFirst.type(wizard.ast("class d{" + name.replaceAll("extends [^\\s,]+", "").replaceAll("implements [^{]+", "") + " x; }"));
   }
 }

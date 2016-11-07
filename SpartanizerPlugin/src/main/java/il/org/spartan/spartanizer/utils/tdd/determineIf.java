@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -13,11 +14,23 @@ public enum determineIf {
    * @author Amir Sagiv
    * @author Oren Afek
    * @since 16-11-02
-   * @param ¢
+   * @param d
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
-  public static boolean loaded(final MethodDeclaration ¢) {
-    return ¢ != null && !"g".equals((¢.getName() + "")) && ¢.parameters().size() >= 3;
+  public static boolean loaded(final MethodDeclaration d) {
+    final int expectedNoOfParams = 3;
+    final int expectedNoOfVars = 5;
+    if (d == null)
+      return false;
+    final Int declaredVarsCounter = new Int();
+    declaredVarsCounter.inner = 0;
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+        ++declaredVarsCounter.inner;
+        return true;
+      }
+    });
+    return d.parameters().size() >= expectedNoOfParams && declaredVarsCounter.inner >= expectedNoOfVars;
   }
 
   // For you to implement! Let's TDD and get it on!
@@ -50,7 +63,7 @@ public enum determineIf {
    * @param d
    * @param x
    * @return true iff the method defines at least x variables. */
-  public static boolean definesManyVariables(MethodDeclaration d, int x) {
+  public static boolean definesManyVariables(final MethodDeclaration d, final int x) {
     if (d == null)
       return false;
     final Int $ = new Int();
@@ -63,4 +76,49 @@ public enum determineIf {
     });
     return $.inner >= x;
   }
+
+  // For you to implement! Let's TDD and get it on!
+  /** see issue #717 for more details
+   * @author Lidia Piatigorski
+   * @author Nikita Dizhur
+   * @author Alex V.
+   * @since 16-11-05
+   * @param d
+   * @return true iff the method has an inner block containing at least 5
+   *         statements. */
+  public static boolean hasBigBlock(final MethodDeclaration ¢) {
+    return ¢ != null && ¢.getBody() != null && ¢.getBody().statements().size() >= 5;
+  }
+
+  /** see issue #710 for more details
+   * @author David Cohen
+   * @author Shahar Yair
+   * @author Zahi Mizrahi
+   * @since 16-11-06
+   * @param d
+   * @return returns true iff the method contains a return null statement . */
+  public static boolean returnsNull(MethodDeclaration d) {
+    if (d == null) 
+      return false;
+    @SuppressWarnings("unchecked") List<Statement> statementList = d.getBody().statements();
+    for(Statement ¢ : statementList)
+      if (¢.getClass().equals(ReturnStatement.class) && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class)
+          && ((ReturnStatement) ¢).getExpression().getClass().equals(NullLiteral.class))
+        return true;
+    return false;
+  }
+  
+  /** see issue #774 for more details
+   * @author Amit Ohayon
+   * @author Yosef Raisman
+   * @author Entony Lekhtman
+   * @since 16-11-06
+   * @param n
+   * @param name
+   * @return returns true iff the name is used in the node as a Name. */
+  public static boolean uses(ASTNode n, String name) {
+    return n instanceof SimpleName && ((SimpleName) n).getIdentifier().equals(name)
+        && !Arrays.asList((new String[] { "null", "false", "class" })).contains(name);
+  }
+  
 }

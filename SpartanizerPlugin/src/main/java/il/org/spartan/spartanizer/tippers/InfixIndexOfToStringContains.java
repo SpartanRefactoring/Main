@@ -33,15 +33,15 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     return false;
   }
 
-  private static boolean stringOperands(ASTNode n1, ASTNode n2) {
+  private static boolean stringOperands(final ASTNode n1, final ASTNode n2) {
     return stringOperand(n1) && stringOperand(n2);
   }
 
-  private static boolean stringOperand(ASTNode ¢) {
+  private static boolean stringOperand(final ASTNode ¢) {
     return iz.name(¢) && isStringType(¢) || iz.stringLiteral(¢);
   }
 
-  private static boolean isStringType(ASTNode ¢) {
+  private static boolean isStringType(final ASTNode ¢) {
     return "String".equals(analyze.type(az.simpleName(¢)));
   }
 
