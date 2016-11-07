@@ -38,4 +38,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
     assertEquals(getAll2.stringVariables(az.methodDeclaration
         (wizard.ast("void f(int x, String s1, double y);"))).size(), 1);
   }
+  @Test public void test06() {
+    assertEquals(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("public String numToString(int x, String s1);"))).size(), 1);
+  }
+  @Test public void test07() {
+    assertEquals(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("public String stringCopy(String s1, String s2, int size);"))).size(), 2);
+  }
 }
