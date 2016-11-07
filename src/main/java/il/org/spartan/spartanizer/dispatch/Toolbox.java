@@ -198,8 +198,7 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new SetterGoFluent(), //
-            new FluentSetter(),
-            null)
+            new FluentSetter(), null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
