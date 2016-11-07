@@ -101,13 +101,17 @@ public enum determineIf {
     if (mDec == null)
       return false;
  
-    @SuppressWarnings("unchecked") List<ReturnStatement> statementList = new ArrayList<ReturnStatement>();
+     List<ReturnStatement> statementList = new ArrayList<>();
     mDec.accept (new ASTVisitor() {
-       @Override public boolean visit ( LambdaExpression lambdaExpr) {
+       @Override public boolean visit ( @SuppressWarnings("unused") LambdaExpression e1) {
          
          return false;
         }
-       @Override public boolean visit ( AnonymousClassDeclaration anonymClassDec) {
+       @Override public boolean visit ( @SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+         
+         return false;
+        }
+       @Override public boolean visit ( @SuppressWarnings("unused") TypeDeclaration t) {
          
          return false;
         }
