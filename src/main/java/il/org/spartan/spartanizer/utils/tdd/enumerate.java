@@ -54,7 +54,7 @@ public enum enumerate {
     final Int counter = new Int();
     counter.inner = 0;
     ¢.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public boolean visit(MethodDeclaration node) {
+      @SuppressWarnings("unused") @Override public boolean visit(final MethodDeclaration node) {
         ++counter.inner;
         return true;
       }

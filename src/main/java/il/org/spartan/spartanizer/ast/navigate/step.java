@@ -528,7 +528,7 @@ public enum step {
   /** A little hack to get Type out of TypeDeclaration.
    * @param d JD
    * @return */
-  public static Type type(AbstractTypeDeclaration d) {
+  public static Type type(final AbstractTypeDeclaration d) {
     String name = (d + "").substring((d + "").indexOf("class") + 6, (d + "").indexOf("{"));
     if (name.contains("<"))
       for (int openers = 0, ¢ = name.indexOf('<'); ¢ < name.length(); ++¢) {
