@@ -151,22 +151,23 @@ public enum determineIf {
   public static boolean uses(ASTNode n, String name) {
     if (n == null)
       return false;
-    
     Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
       void innerVisit(Name node) {
-        nameInAST.inner |= node.getFullyQualifiedName().equals(name);
+        nameInAST.inner = node.getFullyQualifiedName().equals(name);
       }
 
       @Override public boolean visit(QualifiedName node) {
-        innerVisit(node);
-        return true;
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
       }
 
       @Override public boolean visit(SimpleName node) {
-        innerVisit(node);
-        return true;
+        if (!nameInAST.inner)
+          innerVisit(node);
+        return !nameInAST.inner;
       }
     });
     return nameInAST.inner;
