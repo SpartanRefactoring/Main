@@ -26,4 +26,9 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     assertFalse(determineIf.hasManyStatements(
         (MethodDeclaration) wizard.ast("public void noStatements() { }")));
   }
+  
+  @Test public void checkFiveStatements(){
+    assertFalse(determineIf.hasManyStatements(
+        (MethodDeclaration) wizard.ast("public void fiveStatements() {int a; int b; int c; int d; int e;}")));
+  }
 }
