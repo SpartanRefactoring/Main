@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
   }
   @Test public void simpleTest2() {
     ASTNode ast = wizard.ast("static void f() { return null;}");
-    MethodDeclaration method = az.methodDeclaration(ast);
-    assertEquals(find.ancestorMethod(ast), method);
+    assertEquals(find.ancestorMethod(ast), az.methodDeclaration(ast));
   }
 }
