@@ -27,14 +27,12 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "defaulsTo pattern";
   }
-
   @Override public boolean canTip(final ConditionalExpression x) {
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
   }
-
   @Override public Tip tip(final ConditionalExpression x) {
     Logger.logNP(x, "defaultsTo");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)

@@ -7,7 +7,6 @@ import il.org.spartan.plugin.PreferencesResources.*;
  * @year 2016 */
 public interface TipperCategory {
   String description();
-
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
    * {@link TipperGroup}

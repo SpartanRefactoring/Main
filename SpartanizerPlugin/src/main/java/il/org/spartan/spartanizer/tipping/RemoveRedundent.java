@@ -25,14 +25,12 @@ public class RemoveRedundent {
           return false;
     return true;
   }
-
   public static boolean checkListOfExpressions(final List<Expression> xs) {
     for (final Expression ¢ : xs)
       if (haz.sideEffects(¢))
         return false;
     return true;
   }
-
   public static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     final List<VariableDeclarationFragment> lst = fragments(s);
     for (final VariableDeclarationFragment ¢ : lst)

@@ -27,7 +27,6 @@ public class CommandLineApplicator extends Applicator {
     });
     return this;
   }
-
   /** @return this */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
@@ -42,20 +41,17 @@ public class CommandLineApplicator extends Applicator {
     // }));
     return this;
   }
-
   /** @return this */
   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
-
   /** Default passes configuration, with many passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
-
   // TODO Matteo: I have changed the "run action" to return number of tips
   // committed instead of whether tips were committed (Boolean -> Integer).
   // Added a quick fix to your code. Also I do not understand why you wrote this
@@ -78,7 +74,6 @@ public class CommandLineApplicator extends Applicator {
   // name(a.getName());
   // return this;
   // }
-
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
    * {@link GUIBatchLaconizer$Applicator}.
@@ -89,19 +84,16 @@ public class CommandLineApplicator extends Applicator {
     name(a.getClass().getSimpleName());
     return this;
   }
-
   /** @return this */
   private CommandLineApplicator defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
-
   /** @return this */
   CommandLineApplicator defaultSelection() {
     selection(CommandLineSelection.Util.get());
     return this;
   }
-
   /** Default run action configuration of {@link CommandLineApplicator}.
    * @param ¢ JD
    * @return this applicator */
@@ -110,19 +102,16 @@ public class CommandLineApplicator extends Applicator {
     name(¢.getName());
     return this;
   }
-
   /** @param ¢ JD
    * @return */
   public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
-
   /** @return this */
   private Applicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.plugin.revision.Applicator#go() */

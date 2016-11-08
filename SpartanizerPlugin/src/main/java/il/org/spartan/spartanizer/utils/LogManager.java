@@ -10,23 +10,18 @@ public final class LogManager {
   public static void activateLog() {
     ACTIVE = true;
   }
-
   public static void closeAllWriters() {
     logWriter.close();
   }
-
   public static void deActivateLog() {
     ACTIVE = false;
   }
-
   public static String getLogDir() {
     return logDir;
   }
-
   public static LogWriter getLogWriter() {
     return logWriter;
   }
-
   public static void initialize(final String dir) {
     logDir = dir;
     final File outputDir = new File(logDir);
@@ -35,19 +30,15 @@ public final class LogManager {
     initializeWriters();
     // printWriter = new Writer();
   }
-
   public static boolean isActive() {
     return ACTIVE;
   }
-
   public static void setLogDir(final String dir) {
     logDir = dir;
   }
-
   private static void initializeWriters() {
     logWriter = new LogWriter(logDir);
   }
-
   public LogManager(final String dir) {
     logDir = dir;
   }

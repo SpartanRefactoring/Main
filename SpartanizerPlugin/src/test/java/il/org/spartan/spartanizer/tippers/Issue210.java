@@ -12,23 +12,18 @@ import org.junit.runners.*;
   @Test public void issue210_01() {
     trimmingOf("8/0").stays();
   }
-
   @Test public void issue210_02() {
     trimmingOf("int zero = 0;\nint result = 8 / zero;").gives("int result = 8 / 0;").stays();
   }
-
   @Test public void issue210_03() {
     trimmingOf("8/4.0/0/12").stays();
   }
-
   @Test public void issue210_04() {
     trimmingOf("x+8l/0").stays();
   }
-
   @Test public void issue210_05() {
     trimmingOf("8%0").stays();
   }
-
   @Test public void issue210_06() {
     trimmingOf("8%0l").stays();
   }

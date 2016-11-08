@@ -15,7 +15,6 @@ public interface code {
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
         .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");
   }
-
   static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }

@@ -80,35 +80,28 @@ public class Toolbox {
     });
     return $;
   }
-
   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @SuppressWarnings("unchecked") final Tipper<ASTNode> x = (Tipper<ASTNode>) t;
     return extractTip(n, x);
   }
-
   public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
     return t.tip(n);
   }
-
   public static Toolbox defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
-
   public static Toolbox muttableDefaultInstance() {
     return freshCopyOfAllTippers();
   }
-
   public static Toolbox emptyToolboox() {
     return new Toolbox();
   }
-
   public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
     for (final Tipper<N> $ : ns)
       if ($.canTip(n))
         return $;
     return null;
   }
-
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
@@ -285,7 +278,6 @@ public class Toolbox {
     //
     ;
   }
-
   /** Make a {@link Toolbox} for a specific kind of tippers
    * @param clazz JD
    * @param w JS
@@ -294,15 +286,12 @@ public class Toolbox {
   @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
     return emptyToolboox().add(clazz, ns);
   }
-
   public static void refresh() {
     defaultInstance = freshCopyOfAllTippers();
   }
-
   public static void refresh(final Trimmer ¢) {
     ¢.toolbox = freshCopyOfAllTippers();
   }
-
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ns.size(); ++¢)
@@ -313,7 +302,6 @@ public class Toolbox {
       break;
     }
   }
-
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
     for (final Tipper<?> ¢ : ts)
       if (((Tipper<N>) ¢).canTip(n))
@@ -328,7 +316,6 @@ public class Toolbox {
   public Toolbox() {
     // Nothing to do
   }
-
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.
    * @param n JD
@@ -352,13 +339,11 @@ public class Toolbox {
     }
     return this;
   }
-
   public void disable(final Class<? extends TipperCategory> c) {
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
       if (¢ != null)
         disable(c, ¢);
   }
-
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
@@ -366,18 +351,15 @@ public class Toolbox {
   public <N extends ASTNode> Tipper<N> firstTipper(final N ¢) {
     return firstTipper(¢, get(¢));
   }
-
   public List<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
-
   public int hooksCount() {
     int $ = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
       $ += as.bit(¢ != null && !¢.isEmpty());
     return $;
   }
-
   public int tippersCount() {
     int $ = 0;
     for (final List<?> ¢ : implementation)
@@ -385,11 +367,9 @@ public class Toolbox {
         $ += ¢.size();
     return $;
   }
-
   <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
   }
-
   /** [[SuppressWarningsSpartan]] TODO: Apparently there is no check that ¢ is
    * not occupied already... */
   public static List<String> get(final TipperGroup ¢) {
@@ -405,7 +385,6 @@ public class Toolbox {
             $.add(p.myName());
     return $;
   }
-
   public static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }

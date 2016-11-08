@@ -14,12 +14,10 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
-
   CommandLineSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
     this.name = name;
   }
-
   @Override public void apply() {
     System.out.println(presentSourcePath);
     try {

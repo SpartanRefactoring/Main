@@ -35,7 +35,6 @@ public class CommandLine$Applicator {
       }
     });
   }
-
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -45,7 +44,6 @@ public class CommandLine$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
-
   @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
@@ -57,11 +55,9 @@ public class CommandLine$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
-
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
-
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
@@ -77,13 +73,11 @@ public class CommandLine$Applicator {
         return $.get();
     }
   }
-
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
-
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -112,13 +106,11 @@ public class CommandLine$Applicator {
         }
         return true;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
