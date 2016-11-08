@@ -19,7 +19,6 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
-
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();

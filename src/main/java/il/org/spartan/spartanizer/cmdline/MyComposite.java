@@ -9,7 +9,6 @@ public class MyComposite extends Composite {
   @SuppressWarnings("unused") public static void main(final String[] args) {
     new MyComposite(null, SWT.NONE);
   }
-
   public MyComposite(final Composite parent, final int style) {
     super(parent, style);
     final Button button = new Button(parent, SWT.PUSH);
@@ -20,7 +19,6 @@ public class MyComposite extends Composite {
       }
     });
   }
-
   static void openDialogs(final Shell s) {
     // File standard dialog
     final FileDialog fileDialog = new FileDialog(s);

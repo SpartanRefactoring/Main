@@ -20,14 +20,12 @@ public abstract class Tip extends Range {
   static Range range(final ASTNode n, final ASTNode... ns) {
     return range(singleNodeRange(n), ns);
   }
-
   static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode ¢ : ns)
       $ = $.merge(singleNodeRange(¢));
     return $;
   }
-
   static Range singleNodeRange(final ASTNode n) {
     final int from = n.getStartPosition();
     return new Range(from, from + n.getLength());
@@ -50,13 +48,11 @@ public abstract class Tip extends Range {
     this(description, range(n, ns), tipperClass);
     lineNumber = searchAncestors.forClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
-
   Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     super(other);
     this.description = description;
     this.tipperClass = tipperClass;
   }
-
   /** Convert the rewrite into changes on an {@link ASTRewrite}
    * @param r where to place the changes
    * @param g to be associated with these changes @ */

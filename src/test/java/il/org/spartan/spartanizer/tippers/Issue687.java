@@ -14,36 +14,28 @@ import il.org.spartan.spartanizer.utils.tdd.*;
   private static void forceTypeAtCompileTime(@SuppressWarnings("unused") final List<Name> __) {
     assert true;
   }
-
   @Test public void testGetNull() {
     assertNull(getAll.names(null));
   }
-
   @Test public void testReturnType() {
     forceTypeAtCompileTime(getAll.names((Block) wizard.ast("{}")));
   }
-
   @Test public void testGetEmpty() {
     assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
   }
-
   @Test public void testGetOneNameSize() {
     assertTrue(getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1);
   }
-
   @Test public void testGetTwoNamesSize() {
     assertTrue(getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2);
   }
-
   @Test public void testCheckActualName() {
     assertTrue("a".equals(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0) + ""));
   }
-
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
     final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
     assertTrue("aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + ""));
   }
-
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));

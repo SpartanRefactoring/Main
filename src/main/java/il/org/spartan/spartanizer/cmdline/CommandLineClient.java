@@ -19,7 +19,6 @@ public class CommandLineClient {
     for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
   }
-
   static void printExternals() {
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
@@ -27,15 +26,12 @@ public class CommandLineClient {
     System.out.println("inputDir: " + Base.inputDir());
     System.out.println();
   }
-
   @SuppressWarnings({ "unused", "static-method" }) private String inputDir() {
     return inputDir;
   }
-
   @SuppressWarnings({ "static-method", "unused" }) private String outputDir() {
     return outputDir;
   }
-
   private static void parseCommandLineArgs(final String[] args) {
     if (args.length == 0)
       printPrompt();
@@ -54,7 +50,6 @@ public class CommandLineClient {
         ++¢;
       }
   }
-
   static void printPrompt() {
     System.out.println("Help");
     System.out.println("");
@@ -75,7 +70,6 @@ class Base {
   static String inputDir() {
     return inputDir;
   }
-
   static String outputDir() {
     return outputDir;
   }

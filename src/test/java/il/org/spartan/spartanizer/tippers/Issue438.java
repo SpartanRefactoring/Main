@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.tipping.*;
     TrimmerLog.tip(w, n);
     assertTrue(false);
   }
-
   @Test public void test06() {
     final String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
     final File f = new File(path);

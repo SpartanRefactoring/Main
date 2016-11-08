@@ -23,7 +23,6 @@ public class Issue404 {
   private static void forceStaticReturnType(final List<String> ¢) {
     assert ¢ != null;
   }
-
   /** Ensure that there is a type named {@link dig}
    * <p>
    * Meta information: There are no established rules on names of test methods.
@@ -67,44 +66,34 @@ public class Issue404 {
   @Test public void a() {
     dig.class.hashCode();
   }
-
   /** Make sure that {@link dig} is an <code>interface</code> */
   @Test public void b() {
     assert dig.class.isInterface();
   }
-
   @Test public void c() {
     assert !dig.class.isEnum();
   }
-
   @Test public void d() {
     dig.stringLiterals(null);
   }
-
   @Test public void e() {
     (dig.stringLiterals(null) + "").hashCode();
   }
-
   @Test public void f() {
     dig.stringLiterals(null).hashCode();
   }
-
   @Test public void g() {
     assert dig.stringLiterals(null) != null;
   }
-
   @Test public void ha() {
     azzert.that(dig.stringLiterals(null), instanceOf(List.class));
   }
-
   @Test public void hb() {
     assert dig.stringLiterals(null).isEmpty();
   }
-
   @Test public void i() {
     forceStaticReturnType(dig.stringLiterals(null));
   }
-
   @Test public void ja() {
     assert dig
         .stringLiterals(into.cu(//
@@ -115,11 +104,9 @@ public class Issue404 {
                 + "}"))//
         .isEmpty() : "The List was not empty.";
   }
-
   @Test public void jb() {
     assert dig.stringLiterals(into.s("String maxLength = s1.size()> s2.size() ? s1 : s2;")).isEmpty() : "The List was not empty.";
   }
-
   @Test public void jc() {
     assert dig
         .stringLiterals(into.d(//
@@ -130,29 +117,24 @@ public class Issue404 {
                 + "}"))//
         .isEmpty() : "The List was not empty.";
   }
-
   @Test public void ka() {
     assert dig.stringLiterals(into.e("\"\"")).size() == 1 : "The List did not contain the expected number of elements.";
     assert "".equals(dig.stringLiterals(into.e("\"\"")).get(0)) : "The contained element was not the expected one.";
   }
-
   @Test public void kb() {
     assert dig.stringLiterals(into.e("\"str\"")).size() == 1 : "The List did not contain the expected number of elements.";
     assert "str".equals(dig.stringLiterals(into.e("\"str\"")).get(0)) : "The contained element was not the expected one.";
   }
-
   @Test public void kc() {
     final List<String> $ = dig.stringLiterals(into.a("s = \"a\""));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert "a".equals($.get(0)) : "The contained element was not the expected one.";
   }
-
   @Test public void kd() {
     final List<String> $ = dig.stringLiterals(into.c("\"a\".size()> b.size() ? b : a"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert "a".equals($.get(0));
   }
-
   @Test public void ke() {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
@@ -164,7 +146,6 @@ public class Issue404 {
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains(" ") : "The contained element was not the expected one.";
   }
-
   @Test public void kf() {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
@@ -177,7 +158,6 @@ public class Issue404 {
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains(" ") : "The contained element was not the expected one.";
   }
-
   @Test public void la() {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
@@ -190,7 +170,6 @@ public class Issue404 {
     assert $.contains("four") : "List did not contain expected element \"four\"";
     assert $.contains("fooFunc") : "List did not contain expected element \"fooFunc\"";
   }
-
   @Test public void lb() {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n" + "char c1 = '\"';"//
@@ -203,7 +182,6 @@ public class Issue404 {
     assert $.contains("four") : "List did not contain expected element \"four\"";
     assert $.contains("fooFunc") : "List did not contain expected element \"fooFunc\"";
   }
-
   @Test public void lc() {
     final List<String> $ = dig.stringLiterals(into.d("int f(String a){\n" + "return a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
         + "}"));
@@ -212,21 +190,18 @@ public class Issue404 {
     assert $.contains("3") : "List did not contain expected element \"3\"";
     assert $.contains("one") : "List did not contain expected element \"one\"";
   }
-
   @Test public void ld() {
     final List<String> $ = dig.stringLiterals(into.s("{ a=\"\"; b=\"str\";}"));
     assert $.size() == 2 : "The List did not contain the expected number of elements";
     assert $.contains("") : "List did not contain expected element \"\"";
     assert $.contains("str") : "List did not contain expected element \"str\"";
   }
-
   @Test public void le() {
     final List<String> $ = dig.stringLiterals(into.i("\"0\" + \"1\""));
     assert $.size() == 2 : "The List did not contain the expected number of elements";
     assert $.contains("0") : "List did not contain expected element \"0\"";
     assert $.contains("1") : "List did not contain expected element \"1\"";
   }
-
   @Test public void lf() {
     final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
         + "int i = \"first\".size();\n"//
@@ -240,7 +215,6 @@ public class Issue404 {
     assert "third".equals($.get(2)) : "List did not contain expected element \"third\" at index 2";
     assert "fourth".equals($.get(3)) : "List did not contain expected element \"fourth\" at index 3";
   }
-
   // Writing an escaped string within an escaped string within another string is
   // a bit cumbersome. Setting the value manually.
   @Test public void ma() {
@@ -252,7 +226,6 @@ public class Issue404 {
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("\"") : "The List did not contain the expected element \"";
   }
-
   @Test public void mb() {
     final InfixExpression x = into.i("\"\" + \" \"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
@@ -267,7 +240,6 @@ public class Issue404 {
     assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
     assert "\'".equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
-
   @Test public void mc() {
     final InfixExpression x = into.i("\"\" + \"\"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
@@ -282,13 +254,11 @@ public class Issue404 {
     assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
     assert String.valueOf((char) 1).equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
-
   @Test public void md() {
     final List<String> $ = dig.stringLiterals(into.s("String str = '\"' + \"onoes\" + '\"';"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("onoes") : "The List did not contain expected element \"onoes\"";
   }
-
   @Test public void me() {
     final Assignment a = into.a("str =\"onoes\"");
     final StringLiteral l = a.getAST().newStringLiteral();
@@ -298,7 +268,6 @@ public class Issue404 {
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("\"onoes\"") : "The List did not contain expected element \"onoes\"";
   }
-
   // Extended Latin and Hebrew
   @Test public void na() {
     final List<String> $ = dig.stringLiterals(into.cu(//
@@ -314,7 +283,6 @@ public class Issue404 {
     assert "ĘŦţţſ".equals($.get(2)) : "List did not contain expected element \"ĘŦţţſ\" at index 2";
     assert "ŒĤĦfgdr453Ŵ".equals($.get(3)) : "List did not contain expected element \"ŒĤĦfgdr453Ŵ\" at index 3";
   }
-
   @Test public void nb() {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
@@ -330,7 +298,6 @@ public class Issue404 {
     assert "וענן בשמיו ואילן בגשמיו".equals($.get(2)) : "List did not contain expected element \"וענן בשמיו ואילן בגשמיו\" at index 2";
     assert "מצפים עוד לך, עובר אורח".equals($.get(3)) : "List did not contain expected element \"מצפים עוד לך, עובר אורח\" at index 3";
   }
-
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a").stays();

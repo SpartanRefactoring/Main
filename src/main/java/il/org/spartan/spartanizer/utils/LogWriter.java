@@ -5,12 +5,10 @@ public final class LogWriter extends Writer {
     this.outputPath = outputPath;
     initializeWriter();
   }
-
   public void printRow(final String a, final String b, final String c) {
     writer.println(a + "," + b + "," + c);
     writer.flush();
   }
-
   private void initializeWriter() {
     initializeWriter(outputPath + "/tips.csv");
   }

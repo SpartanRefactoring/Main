@@ -21,7 +21,6 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
   @Override public String description(final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
-
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
     final Expression e = onlyOne(arguments(c));
     if (e == null)

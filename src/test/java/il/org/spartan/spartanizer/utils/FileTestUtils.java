@@ -39,12 +39,10 @@ import il.org.spartan.spartanizer.engine.*;
     }
     return null;
   }
-
   /** Makes an Input file out of a Test file */
   protected static File makeInFile(final File ¢) {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
-
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
     final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
@@ -52,7 +50,6 @@ import il.org.spartan.spartanizer.engine.*;
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
   }
-
   /** Creates a temporary file - including lazy deletion.
    * @param b
    * @param d
@@ -61,11 +58,9 @@ import il.org.spartan.spartanizer.engine.*;
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
-
   static AbstractGUIApplicator makeLaconizationObject(final File ¢) {
     return makeLaconizationObject(¢.getName());
   }
-
   static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
@@ -73,7 +68,6 @@ import il.org.spartan.spartanizer.engine.*;
     assert $ != null;
     return (AbstractGUIApplicator) $;
   }
-
   /** Convert a canonical name of a class into a {@link Class} object, if
    * possible, otherwise generate an assertion fault
    * @param name the canonical name of some class
@@ -87,7 +81,6 @@ import il.org.spartan.spartanizer.engine.*;
       return null;
     }
   }
-
   private static File createTempFile(final TestDirection d, final File f) {
     try {
       return File.createTempFile(f.getName().replace(".", ""), "." + (d == TestDirection.In ? "in" : "out"));
@@ -95,7 +88,6 @@ import il.org.spartan.spartanizer.engine.*;
       return null; // Failed to create temporary file
     }
   }
-
   private static File createTemporaryRandomAccessFile(final File $, final String s) {
     try (final RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
@@ -106,13 +98,11 @@ import il.org.spartan.spartanizer.engine.*;
     }
     return $;
   }
-
   private static StringBuilder deleteTestKeyword(final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
   }
-
   private static AbstractGUIApplicator error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
@@ -134,7 +124,6 @@ import il.org.spartan.spartanizer.engine.*;
       if (c != null)
         $.add(c);
     }
-
     abstract Object[] makeCase(File d);
   }
 
@@ -153,7 +142,6 @@ import il.org.spartan.spartanizer.engine.*;
             $.add(c);
         }
     }
-
     abstract Object[] makeCase(final AbstractGUIApplicator a, final File d, final File f, final String name);
   }
 
@@ -175,7 +163,6 @@ import il.org.spartan.spartanizer.engine.*;
       }
       return $;
     }
-
     /** Collect test cases from each file in {@link #location}
      * @param $ where to save the collected test cases
      * @param f an entry in {@link #location} */

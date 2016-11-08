@@ -26,14 +26,12 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "turn into when(x).execute(()->y)";
   }
-
   @Override public boolean canTip(final IfStatement x) {
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)) && !containsReferencesToNonFinal(x))
         return true;
     return false;
   }
-
   /** @param x
    * @return */
   private static boolean containsReferencesToNonFinal(@SuppressWarnings("unused") final IfStatement __) {
@@ -46,7 +44,6 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     // step.fieldDeclarations(t);
     return false;
   }
-
   /** First order approximation - does statement throw?
    * @param s statement
    * @return */
@@ -56,7 +53,6 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     final MethodDeclaration m = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(s));
     return m != null && !m.thrownExceptionTypes().isEmpty();
   }
-
   @Override public Tip tip(final IfStatement x) {
     return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

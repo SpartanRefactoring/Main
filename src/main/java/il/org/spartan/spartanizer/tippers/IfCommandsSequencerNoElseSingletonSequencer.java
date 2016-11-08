@@ -47,7 +47,6 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and use next statement)";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;

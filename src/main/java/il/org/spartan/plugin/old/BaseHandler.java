@@ -21,13 +21,11 @@ public abstract class BaseHandler extends AbstractHandler {
   BaseHandler() {
     this(null);
   }
-
   /** Instantiates this class
    * @param inner JD */
   BaseHandler(final AbstractGUIApplicator inner) {
     this.inner = inner;
   }
-
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     try {
       return execute(HandlerUtil.getCurrentSelection(e));
@@ -35,28 +33,22 @@ public abstract class BaseHandler extends AbstractHandler {
       throw new ExecutionException(x.getMessage());
     }
   }
-
   protected final String getDialogTitle() {
     return inner.getName();
   }
-
   protected AbstractGUIApplicator getRefactoring() {
     return inner;
   }
-
   private Void execute(final ISelection ¢) throws InterruptedException {
     return !(¢ instanceof ITextSelection) ? null : execute((ITextSelection) ¢);
   }
-
   private Void execute(final ITextSelection ¢) throws InterruptedException {
     return execute(new RefactoringWizardOpenOperation(getWizard(¢, eclipse.currentCompilationUnit())));
   }
-
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
-
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
     final AbstractGUIApplicator $ = getRefactoring();
     $.setSelection(s);
