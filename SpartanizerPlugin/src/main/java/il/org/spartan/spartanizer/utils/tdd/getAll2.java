@@ -57,11 +57,11 @@ public enum getAll2 {
   }
 
   /** @author Shimon Azulay
-   *  @author Idan Atias
+   * @author Idan Atias
    * @since 16-11-3 */
-  /** Given a TypeDeclaration argument, this function returns a list of it's public fields names. 
-   * @param d - the TypeDeclaration argument
-   */
+  /** Given a TypeDeclaration argument, this function returns a list of it's
+   * public fields names.
+   * @param d - the TypeDeclaration argument */
   public static List<String> publicFields(TypeDeclaration d) {
     LinkedList<String> $ = new LinkedList<>();
     if (d == null)
