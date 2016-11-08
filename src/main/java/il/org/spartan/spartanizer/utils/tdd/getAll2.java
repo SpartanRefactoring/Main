@@ -83,7 +83,7 @@ public enum getAll2 {
   /** Given a MethodDeclaration argument, this function returns a list of it's
    * all String variable declarations.
    * @param d - the MethodDeclaration argument */
-  public static void stringVariables(MethodDeclaration m) {
-    return;
+  public static List<VariableDeclaration> stringVariables(MethodDeclaration m) {
+    return null;
   }
 }
