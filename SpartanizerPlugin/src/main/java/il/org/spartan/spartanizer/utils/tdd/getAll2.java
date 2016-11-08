@@ -85,6 +85,8 @@ public enum getAll2 {
       return $;
     ¢.accept(new ASTVisitor(){
       @Override public boolean visit(SingleVariableDeclaration node){
+        if ("String".equals((node.getType() + "")))
+          $.add(node);
         return true;
       }
     });
