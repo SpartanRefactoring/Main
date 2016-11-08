@@ -10,6 +10,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -22,7 +23,7 @@ public class Logger {
   private static final Map<String, NPRecord> npStatistics = new HashMap<>();
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static final Map<Class<? extends ASTNode>, Int> codeStatistics = new HashMap<>();
-  // private static int numMethods;
+  private static int numMethods;
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
@@ -52,14 +53,10 @@ public class Logger {
       sumSratio += m.numStatements == 0 ? 1 : min(1, m.numNPStatements / m.numStatements);
       sumEratio += m.numExpressions == 0 ? 1 : min(1, m.numNPExpressions / m.numExpressions);
     }
-    System.out.println("Total methods: " + numMethods());
-    System.out.println("Average statement ratio: " + sumSratio / numMethods());
-    System.out.println("Average Expression ratio: " + sumEratio / numMethods());
+    System.out.println("Total methods: " + numMethods);
+    System.out.println("Average statement ratio: " + sumSratio / numMethods);
+    System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
-  }
-  /** @return */
-  private static int numMethods() {
-    return methodsStatistics.size();
   }
   private static void summarizeNPStatistics(final String outputDir) {
     final CSVStatistics report = openNPSummaryFile(outputDir);
@@ -92,6 +89,7 @@ public class Logger {
   }
   private static void reset() {
     methodsStatistics.clear();
+    numMethods = 0;
   }
   public static void logNP(final ASTNode n, final String np) {
     logMethodInfo(n, np);
@@ -120,12 +118,16 @@ public class Logger {
   private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     if (m == null) {
-      System.out.println(n);
+      System.out.println("OMG: node [" + n + "] without a mother method!");
       return;
     }
-    final Integer key = Integer.valueOf(m.hashCode());
+    final Integer key = hashMethod(m);
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
+  }
+  private static Integer hashMethod(final MethodDeclaration d) {
+    return Integer.valueOf((step.packageDeclaration(searchAncestors.forContainingCompilationUnit().from(d)) + "."
+        + searchAncestors.forContainingType().from(d) + "." + d + step.parameters(d)).hashCode());
   }
   /** @param ¢
    * @return */
@@ -179,6 +181,12 @@ public class Logger {
       nps.add(np);
       logNodeInfo(n);
     }
+  }
+
+  /** Collect statistics of a compilation unit which will be analyzed.
+   * @param ¢ compilation unit */
+  public static void logCompilationUnit(final CompilationUnit ¢) {
+    numMethods += enumerate.methods(¢);
   }
 
   /** Collects statistics for a nanopattern.
