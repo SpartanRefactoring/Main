@@ -25,11 +25,4 @@ public class Issue782 {
   @SuppressWarnings("static-method") @Test public void emptyClassShouldReturnEmptyList(){
     assertTrue(getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class empty{}")).types().get(0))).isEmpty());
   }
-  
-  @SuppressWarnings("static-method") @Test public void onePrivateFieldClassShouldReturnSingleElementList(){
-    assertEquals(1,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class OnePrivate{private f;}")).types().get(0))));
-  }
-  
-  
-  
 }
