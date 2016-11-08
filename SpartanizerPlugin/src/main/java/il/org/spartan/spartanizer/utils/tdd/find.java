@@ -28,10 +28,9 @@ public enum find {
   }
   public static MethodDeclaration ancestorMethod(final ASTNode n) {
     ASTNode temp = n;
-    if (temp == null)
-      return null;
+    if (temp == null) return null;
     while (temp != null) {
-      if (az.methodDeclaration(temp) != null)
+      if (az.methodDeclaration(temp) != null && az.lambdaExpression(az.methodDeclaration(temp)) == null)
         return az.methodDeclaration(temp);
       temp = temp.getParent();
     }
