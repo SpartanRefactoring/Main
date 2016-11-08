@@ -29,14 +29,13 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     return (iz.name(a.getLeftHandSide()) || tipper.canTip(a.getLeftHandSide()))
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
-
   @Override public Tip tip(final MethodDeclaration d) {
     Logger.logNP(d, getClass().getSimpleName());
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(step.returnType(d)))
           return;
-        MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
+        final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
         n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(searchAncestors.forContainingType().from(d)))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
@@ -45,14 +44,12 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
       }
     };
   }
-
   /** @param ¢
    * @return */
-  protected static Type getType(final TypeDeclaration ¢) {
+  protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
-
-  @Override public String description(@SuppressWarnings("unused") MethodDeclaration __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }
 }

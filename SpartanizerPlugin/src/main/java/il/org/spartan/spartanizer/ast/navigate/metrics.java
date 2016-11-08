@@ -186,7 +186,7 @@ public interface metrics {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
         ++$.inner;
-        return false;
+        return true;
       }
     });
     return $.inner;
