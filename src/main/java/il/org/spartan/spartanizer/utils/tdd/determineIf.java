@@ -47,7 +47,8 @@ public enum determineIf {
     final Int $ = new Int();
     $.inner = 0;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) { // TODO: Ron, Roy fix
+                                                        // warning
         if (iz.statement(¢))
           ++$.inner;
       }
@@ -132,6 +133,7 @@ public enum determineIf {
         return false;
       }
 
+      // TODO: David, Shahar, Zahi spartanize
       @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration t) {
         return false;
       }
