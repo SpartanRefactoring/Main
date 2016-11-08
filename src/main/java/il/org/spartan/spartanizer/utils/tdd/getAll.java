@@ -172,11 +172,10 @@ public enum getAll {
       return $;
     
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @Override public boolean visit(FieldDeclaration ¢) {
-        if (¢.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE) {
-          String[] tmp = (¢ + "").split(" ");
-          $.add(tmp[tmp.length-1].split(";")[0]);
-        }
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
+        if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
+          for (VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+            $.add(df.getName().getIdentifier());
         return true;
       }
     });
