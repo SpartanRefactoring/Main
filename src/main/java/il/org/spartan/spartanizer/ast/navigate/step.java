@@ -451,8 +451,11 @@ public enum step {
    * @param d JD
    * @return */
   public static Type type(final AbstractTypeDeclaration d) {
+    if (d == null)
+      return null;
     String nameNoAnnotations = (d + "").substring((d + "").indexOf("class"));
-    String name = nameNoAnnotations.substring(nameNoAnnotations.indexOf("class") + 6, nameNoAnnotations.indexOf("{"));
+    String name = nameNoAnnotations.substring(nameNoAnnotations.indexOf("class") + 6, nameNoAnnotations.indexOf("{")).replaceAll("implements [^{]+",
+        "");
     if (name.contains("<"))
       for (int openers = 0, ¢ = name.indexOf('<'); ¢ < name.length(); ++¢) {
         if (name.charAt(¢) == '<')
@@ -460,8 +463,15 @@ public enum step {
         if (name.charAt(¢) == '>' && --openers == 0)
           name = name.substring(0, ¢ + 1);
       }
-    return d == null ? null
-        : findFirst.type(wizard.ast("class d{" + name.replaceAll("extends [^\\s,]+", "").replaceAll("implements [^{]+", "") + " x; }"));
+    if (name.contains("<")) {
+      String params = name.substring(name.indexOf("<") + 1, name.lastIndexOf(">"));
+      String base = name.substring(0, name.indexOf("<"));
+      String[] ps = params.split("[,]");
+      for (int ¢ = 0; ¢ < ps.length; ++¢)
+        ps[¢] = ps[¢].replaceAll("extends .+", "");
+      name = base + "<" + String.join(",", ps) + ">";
+    }
+    return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
   }
   /** @param ¢
    * @return */
