@@ -37,9 +37,13 @@ public class Issue782 {
   @SuppressWarnings("static-method") @Test public void onePublicFieldAndOnePrivateFieldReturnOneElementList(){
     assertEquals(1,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublicOnePrivate{public int x; private int y;}")).types().get(0))).size());
   }
-
   
   @SuppressWarnings("static-method") @Test public void checkOnePrivateName(){
     assertEquals("x" ,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types().get(0))).get(0));
   }
+  
+  @SuppressWarnings("static-method") @Test public void checkAnotherPrivateName(){
+    assertEquals("y" ,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int y;}")).types().get(0))).get(0));
+  }
+  
 }
