@@ -47,7 +47,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertTrue(determineIf.uses(wizard.ast("a.b.c.d"), "c"));
   }
 
-  @Test public void shouldReturnFalseForNullObject() {
+  @Test public void shouldReturnFalseForNullNodeObject() {
     assertFalse(determineIf.uses(null, ""));
+  }
+  
+  @Test public void shouldReturnFalseForNullString() {
+    assertFalse(determineIf.uses(wizard.ast("t"), null));
+  }
+  
+  @Test public void shouldReturnFalseForQualifiedNameEnding() {
+    assertFalse(determineIf.uses(wizard.ast("a.b.c"), "b.c"));
+  }
+  
+  @Test public void shouldReturnFalseForSubSimpleName() {
+    assertFalse(determineIf.uses(wizard.ast("abc.def"), "bc"));
   }
 }
