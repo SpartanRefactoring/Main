@@ -10,6 +10,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -29,7 +30,6 @@ public class Logger {
     summarizeNPStatistics(outputDir);
     reset();
   }
-
   private static void summarizeMethodStatistics(final String outputDir) {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
@@ -42,23 +42,22 @@ public class Logger {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, m.numNPStatements / m.numStatements)) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, m.numNPExpressions / m.numExpressions)) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements;
-      sumEratio += m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions;
+      sumSratio += m.numStatements == 0 ? 1 : min(1, m.numNPStatements / m.numStatements);
+      sumEratio += m.numExpressions == 0 ? 1 : min(1, m.numNPExpressions / m.numExpressions);
     }
-    System.out.println("Total methods number: " + numMethods);
+    System.out.println("Total methods: " + numMethods);
     System.out.println("Average statement ratio: " + sumSratio / numMethods);
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
   }
-
   private static void summarizeNPStatistics(final String outputDir) {
     final CSVStatistics report = openNPSummaryFile(outputDir);
     if (report == null)
@@ -74,15 +73,12 @@ public class Logger {
     }
     report.close();
   }
-
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics.csv");
   }
-
   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
-
   public static CSVStatistics openSummaryFile(final String fileName) {
     try {
       return new CSVStatistics(fileName, "property");
@@ -91,25 +87,21 @@ public class Logger {
       return null;
     }
   }
-
   private static void reset() {
     methodsStatistics.clear();
     numMethods = 0;
   }
-
   public static void logNP(final ASTNode n, final String np) {
     logMethodInfo(n, np);
     logNPInfo(n, np);
     AnalyzerOptions.tickNP();
   }
-
   /** @param n
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
     npStatistics.putIfAbsent(np, new NPRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
   }
-
   /** @param ¢
    * @param np */
   static void logNodeInfo(final ASTNode ¢) {
@@ -117,25 +109,26 @@ public class Logger {
     nodesStatistics.putIfAbsent(nodeClassName, new Int());
     ++nodesStatistics.get(nodeClassName).inner;
   }
-
   /** @param ¢
    * @param np */
   static void addToNodeType(final Class<? extends ASTNode> n, final int num) {
     codeStatistics.putIfAbsent(n, new Int());
     codeStatistics.get(n).inner += num;
   }
-
   private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     if (m == null) {
-      System.out.println(n);
+      System.out.println("OMG: node [" + n + "] without a mother method!");
       return;
     }
-    final Integer key = Integer.valueOf(m.hashCode());
+    final Integer key = hashMethod(m);
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
   }
-
+  private static Integer hashMethod(final MethodDeclaration d) {
+    return Integer.valueOf((step.packageDeclaration(searchAncestors.forContainingCompilationUnit().from(d)) + "."
+        + searchAncestors.forContainingType().from(d) + "." + d + step.parameters(d)).hashCode());
+  }
   /** @param ¢
    * @return */
   private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
@@ -144,7 +137,6 @@ public class Logger {
       n = n.getParent();
     return az.methodDeclaration(n);
   }
-
   /** @param ¢
    * @return */
   static String findTypeAncestor(final ASTNode ¢) {
@@ -181,7 +173,6 @@ public class Logger {
       numStatements = metrics.countStatements(m);
       numExpressions = metrics.countExpressions(m);
     }
-
     /** @param n matched node
      * @param np matching nanopattern */
     public void markNP(final ASTNode n, final String np) {
@@ -193,9 +184,9 @@ public class Logger {
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
-   * @param cu compilation unit */
-  public static void logCompilationUnit(final ASTNode cu) {
-    numMethods += metrics.countMethods(cu);
+   * @param ¢ compilation unit */
+  public static void logCompilationUnit(final CompilationUnit ¢) {
+    numMethods += enumerate.methods(¢);
   }
 
   /** Collects statistics for a nanopattern.
@@ -214,7 +205,6 @@ public class Logger {
       this.name = name;
       className = cl.getSimpleName();
     }
-
     /** @param ¢ matched node */
     public void markNP(final ASTNode ¢) {
       ++occurences;
@@ -226,5 +216,8 @@ public class Logger {
   /** @param compilationUnit */
   public static void logSpartanizedCompilationUnit(final ASTNode cu) {
     addToNodeType(IfStatement.class, count.nodesOfClass(cu, IfStatement.class));
+  }
+  private static double min(double a, double d) {
+    return a < d ? a : d;
   }
 }
