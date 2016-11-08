@@ -132,7 +132,7 @@ public enum determineIf {
         return false;
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration t) {
+      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration __) {
         return false;
       }
 

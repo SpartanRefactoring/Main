@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.internal.compiler.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -25,7 +24,7 @@ public enum getAll2 {
    * @author Moshe Eliasof
    * @author Netanel Felcher
     */
-  public static List<MethodDeclaration> methods(CompilationUnit __)
+  public static List<MethodDeclaration> methods(@SuppressWarnings("unused") CompilationUnit __)
   {
     List<MethodDeclaration> $= new ArrayList<>();
     MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo();"));
