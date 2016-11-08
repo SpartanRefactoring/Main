@@ -21,8 +21,9 @@ public class Issue718 {
   MethodDeclaration TwoParamsFiveDefsMethod = (MethodDeclaration) methodDeclarationFromString("public void h(int x, int y){int a, b, c, d, e;}");
   MethodDeclaration loadedMethodWithLambdaDeclaration = (MethodDeclaration) methodDeclarationFromString(
       "public int foo(int x, int y, int z)" + "{String a, b, c; BiFunction<Integer> biFunc = (i1,i2) -> i1+i2;}");
+  MethodDeclaration separatedVarsDefinitionsLoadedMethod = (MethodDeclaration) methodDeclarationFromString(
+      "public void bar(int x, int y, int z){String a; String b,c; Object d; boolean e;}");
 
-  MethodDeclaration separatedVarsDefinitionsLoadedMethod = (MethodDeclaration)methodDeclarationFromString("public void bar(int x, int y, int z){String a; String b,c; Object d; boolean e;}");
   @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
     assert true;
   }
@@ -66,10 +67,11 @@ public class Issue718 {
   @Test public void checkIfDeclInLambdaAlsoCountsPass() {
     assertTrue(determineIf.loaded(loadedMethodWithLambdaDeclaration));
   }
-  
+
   @Test public void checkIfSeparatedVarDefAlsoCountsPass() {
     assertTrue(determineIf.loaded(separatedVarsDefinitionsLoadedMethod));
   }
+
   private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
   }

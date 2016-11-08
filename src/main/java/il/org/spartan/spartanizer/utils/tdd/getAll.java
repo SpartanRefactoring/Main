@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Kfir Marx
  * @author Omri Ben- Shmuel
  * @author Ward Mattar
- * @author Vivian Shehadeh 
+ * @author Vivian Shehadeh
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
@@ -22,7 +22,6 @@ public enum getAll {
   public static Set<Name> invocations(final MethodInvocation ¢) {
     return ¢ == null ? null : new TreeSet<>();
   }
-
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
@@ -41,7 +40,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Get list of names in a Block
    * @author Raviv Rachmiel
    * @author Kfir Marx
@@ -59,7 +57,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
    * @author Yuval Simon
@@ -76,7 +73,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single parameter d, which is a MethodDeclaration. Returns a
    * List<CastExpression> which is all casts in d.
    * @param d a MethodDeclaration
@@ -95,7 +91,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single parameter, which is an MethodDeclaration return a
    * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
@@ -114,23 +109,17 @@ public enum getAll {
     });
     return $;
   }
-
-
-  /** Takes a single parameter, which is a TypeDecleration
-   * returns a list of public fields for this class (by fields' names)
+  /** Takes a single parameter, which is a TypeDecleration returns a list of
+   * public fields for this class (by fields' names)
    * @param a TypeDecleration
    * @author Inbal Zukerman
-   * @author Elia Traore
-   */
+   * @author Elia Traore */
   public static List<String> publicFields(TypeDeclaration d) {
-    if (d==null)
+    if (d == null)
       return null;
-
     List<String> $ = new ArrayList<>();
-   
     d.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d){
-
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
         List<VariableDeclarationFragment> fragmentsLst = d.fragments();
@@ -139,7 +128,6 @@ public enum getAll {
         return true;
       }
     });
-    
     return $;
   }
   /** Takes a single CompilationUnit parameter, returns a list of method
@@ -148,7 +136,7 @@ public enum getAll {
    * @author Roei-m
    * @author RoeyMaor */
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
-    if(u == null)
+    if (u == null)
       return null;
     List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
