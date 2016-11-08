@@ -125,9 +125,9 @@ public class Logger {
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
   }
-  private static Integer hashMethod(final MethodDeclaration d) {
-    return Integer.valueOf((step.packageDeclaration(searchAncestors.forContainingCompilationUnit().from(d)) + "."
-        + searchAncestors.forContainingType().from(d) + "." + d + step.parameters(d)).hashCode());
+  private static Integer hashMethod(final MethodDeclaration ¢) {
+    return Integer.valueOf((step.packageDeclaration(searchAncestors.forContainingCompilationUnit().from(¢)) + "."
+        + searchAncestors.forContainingType().from(¢) + "." + ¢ + step.parameters(¢)).hashCode());
   }
   /** @param ¢
    * @return */
