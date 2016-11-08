@@ -170,7 +170,6 @@ public enum getAll {
     final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    int numOfPrivates = 0;
     if (¢.getFields().length > 0 && 
         ¢.getFields()[0].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE ) 
       $.add("x");
