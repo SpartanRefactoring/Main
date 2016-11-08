@@ -13,4 +13,9 @@ public class Issue782 {
   @SuppressWarnings("static-method") @Test public void checkCompiles(){
     assert true;
   }
+  
+  @SuppressWarnings("static-method") @Test public void returnsList(){
+    assertNotNull(getAll.privateFields(null));
+  }
+  
 }
