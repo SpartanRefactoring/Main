@@ -7,6 +7,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+
 
 /** Tests of methods according to issue 778
  * @author Netanel Felcher
@@ -21,4 +24,14 @@ public class Issue778 {
   @SuppressWarnings("static-method") @Test public void test1(){
     List<MethodDeclaration> lst =getAll2.methods(null);
   }
+
+@SuppressWarnings({ "static-method", "deprecation" }) @Test public void test2(){  
+  assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
+}
+
+
+@SuppressWarnings({ "static-method", "deprecation" }) @Test public void test3(){  
+  assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
+}
+
 }
