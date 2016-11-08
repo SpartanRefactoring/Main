@@ -41,7 +41,6 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test03() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
@@ -65,7 +64,6 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test04() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());

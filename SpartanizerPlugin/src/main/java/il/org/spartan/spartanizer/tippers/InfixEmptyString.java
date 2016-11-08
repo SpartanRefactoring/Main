@@ -14,15 +14,12 @@ public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> 
   @Override public String description() {
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove \"\" from \"\" + X if X is a String";
   }
-
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return Tippers.eliminateLiteral(¢, true);
   }
-
   @Override public TipperGroup tipperGroup() {
     return null;
   }

@@ -38,7 +38,6 @@ import il.org.spartan.spartanizer.annotation.*;
         for (int ¢ = 0; ¢ < 10; ++¢, x = ¢)
           ;
       }
-
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
         final List<String> tmp = new ArrayList<>();
         tmp.add("a");
@@ -55,7 +54,6 @@ import il.org.spartan.spartanizer.annotation.*;
           throw new UnsupportedOperationException();
         return false;
       }
-
       void f() {
         String s;
         try {
@@ -64,7 +62,6 @@ import il.org.spartan.spartanizer.annotation.*;
         } catch (final UnsupportedOperationException e) {
         }
       }
-
       void foo() {
         try {
           dangerousFunc("yay".equals("onoes"));
@@ -105,7 +102,6 @@ import il.org.spartan.spartanizer.annotation.*;
         @End("x") class B {
         }
       }
-
       public static void change_y() {
         @Begin class A {
         }
@@ -208,7 +204,6 @@ import il.org.spartan.spartanizer.annotation.*;
         @End({ "x" }) class QQ {
         }
       }
-
       @Override void set_x() {
         @Begin class Q {
         }
@@ -224,7 +219,6 @@ import il.org.spartan.spartanizer.annotation.*;
       Child2() {
         x = 4;
       }
-
       @Override void set_x() {
         @Begin class Q {
         }
@@ -238,7 +232,6 @@ import il.org.spartan.spartanizer.annotation.*;
       Parent() {
         x = 0;
       }
-
       void set_x() {
         @Begin class Q {
         }
@@ -394,7 +387,6 @@ import il.org.spartan.spartanizer.annotation.*;
         @End({ "arrayList", "currentSize" }) class closing {
           /**/}
       }
-
       @Override public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
@@ -402,7 +394,6 @@ import il.org.spartan.spartanizer.annotation.*;
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
           }
-
           @Override public Type next() {
             return arrayList[currentIndex++];
           }
@@ -418,15 +409,12 @@ import il.org.spartan.spartanizer.annotation.*;
 
       <Oompa_Loompa> Oompa_Loompa() {
       }
-
       Oompa_Loompa(final Oompa_Loompa... Oompa_Loompa) {
         this(Oompa_Loompa, Oompa_Loompa);
       }
-
       Oompa_Loompa(final Oompa_Loompa[]... __) {
         this();
       }
-
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
           for (;;) {

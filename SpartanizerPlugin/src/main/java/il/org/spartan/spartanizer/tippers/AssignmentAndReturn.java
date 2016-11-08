@@ -33,7 +33,6 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " with its subsequent 'return'";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(a.getParent());
     if (parent == null || parent instanceof ForStatement)

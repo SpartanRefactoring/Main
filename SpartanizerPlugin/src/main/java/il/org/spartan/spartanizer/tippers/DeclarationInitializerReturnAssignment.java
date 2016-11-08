@@ -24,7 +24,6 @@ public final class DeclarationInitializerReturnAssignment extends $VariableDecla
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))

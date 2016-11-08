@@ -40,7 +40,6 @@ public final class IfLastInMethod extends EagerTipper<IfStatement> implements Ti
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
-
   @Override public Tip tip(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;

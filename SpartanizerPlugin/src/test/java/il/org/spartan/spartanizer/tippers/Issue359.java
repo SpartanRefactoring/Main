@@ -17,7 +17,6 @@ public class Issue359 {
         .stays() //
     ;
   }
-
   @Test public void t09() {
     trimmingOf("if(b){int i;int j;g();}else{int q;int tipper;}")//
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
@@ -26,7 +25,6 @@ public class Issue359 {
         .stays() //
     ;
   }
-
   @Test public void t20() {
     trimmingOf("for(;b==q;){int i;}")//
         .gives("{}")//

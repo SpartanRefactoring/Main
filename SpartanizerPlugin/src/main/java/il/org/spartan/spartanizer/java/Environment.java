@@ -26,7 +26,6 @@ import il.org.spartan.spartanizer.utils.*;
     public static boolean eq(final Object o1, final Object o2) {
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
-
     /** For Information purposes, {@link type}s are equal if their key is
      * equal. */
     static boolean eq(final type t1, final type t2) {
@@ -50,24 +49,20 @@ import il.org.spartan.spartanizer.utils.*;
       prudentType = null;
       hiding = null;
     }
-
     public Information(final ASTNode blockScope, final Information hiding, final ASTNode self, final type prudentType) {
       this.blockScope = blockScope;
       this.hiding = hiding;
       this.self = self;
       this.prudentType = prudentType;
     }
-
     public Information(final type t) {
       blockScope = self = null;
       prudentType = t;
       hiding = null;
     }
-
     public boolean equals(final Information ¢) {
       return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
     }
-
     /** @param ¢
      * @return <code><b>true</b></code> <em>iff</em> the ASTNode (self) and its
      *         parent (blockScope) are the same ones, the type's key() is the
@@ -77,7 +72,6 @@ import il.org.spartan.spartanizer.utils.*;
     @Override public boolean equals(final Object ¢) {
       return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
     }
-
     // Required for MapEntry equality, which is, in turn, required for Set
     // containment check, which is required for testing.
     @Override public int hashCode() {
@@ -95,41 +89,34 @@ import il.org.spartan.spartanizer.utils.*;
     Nested(final Environment parent) {
       nest = parent;
     }
-
     /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
      *         empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
-
     /** @return Map entries used in the current scope. */
     @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
       return new LinkedHashSet<>(flat.entrySet());
     }
-
     /** @return The information about the name in current {@link Environment}
      *         . */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
-
     /** Check whether the {@link Environment} already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
-
     /** @return Names used the {@link Environment} . */
     @Override public LinkedHashSet<String> names() {
       return new LinkedHashSet<>(flat.keySet());
     }
-
     /** One step up in the {@link Environment} tree. Funny but it even sounds
      * like next(). */
     @Override public Environment nest() {
       return nest;
     }
-
     /** Add name to the current scope in the {@link Environment} . */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
@@ -153,7 +140,6 @@ import il.org.spartan.spartanizer.utils.*;
   static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
     return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
-
   /** @param ¢ JD
    * @return All declarations in given {@link Statement}, without entering the
    *         contained ({@link Block}s. If the {@link Statement} is a
@@ -170,7 +156,6 @@ import il.org.spartan.spartanizer.utils.*;
     }
     return $;
   }
-
   static List<Entry<String, Information>> declarationsOf(final VariableDeclarationStatement s) {
     final List<Entry<String, Information>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(s.getType()));
@@ -179,7 +164,6 @@ import il.org.spartan.spartanizer.utils.*;
       $.add(new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t)));
     return $;
   }
-
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
     // Holds the declarations in the subtree and relevant siblings.
@@ -212,11 +196,9 @@ import il.org.spartan.spartanizer.utils.*;
         assert n instanceof EnumConstantDeclaration;
         return az.enumConstantDeclaration(n).getName() + "";
       }
-
       Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
-
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(d.getType()));
@@ -224,11 +206,9 @@ import il.org.spartan.spartanizer.utils.*;
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
-
       Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
-
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(x.getType()));
@@ -236,7 +216,6 @@ import il.org.spartan.spartanizer.utils.*;
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
-
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(s.getType()));
@@ -244,15 +223,12 @@ import il.org.spartan.spartanizer.utils.*;
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
-
       Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
-
       Information createInformation(final SingleVariableDeclaration ¢) {
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
-
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
         // VariableDeclarationFragment, that comes from either FieldDeclaration,
         // VariableDeclarationStatement or VariableDeclarationExpression,
@@ -260,81 +236,63 @@ import il.org.spartan.spartanizer.utils.*;
         // the convertToEntry calls.
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
-
       // Everything besides the actual variable declaration was visited for
       // nameScope reasons. Once their visit is over, the nameScope needs to be
       // restored.
       @Override public void endVisit(final AnnotationTypeDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final AnonymousClassDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final Block __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final CatchClause __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final DoStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final EnhancedForStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final EnumConstantDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final EnumDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final ForStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final IfStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final MethodDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final SwitchStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final TryStatement __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final TypeDeclaration __) {
         restoreScopeName();
       }
-
       @Override public void endVisit(final WhileStatement __) {
         restoreScopeName();
       }
-
       @SuppressWarnings("hiding") String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
-
       Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
         for (final Entry<String, Information> ¢ : ss)
           if (s.equals(¢.getKey()))
             return ¢.getValue();
         return null;
       }
-
       /** Returns the {@link Information} of the declaration the current
        * declaration is hiding.
        * @param ¢ the fullName of the declaration.
@@ -363,7 +321,6 @@ import il.org.spartan.spartanizer.utils.*;
         }
         return null;
       }
-
       /** Similar to statementOrderAmongTypeInParent, {@link CatchClause}s
        * only */
       int orderOfCatchInTryParent(final CatchClause c) {
@@ -376,16 +333,13 @@ import il.org.spartan.spartanizer.utils.*;
         }
         return $;
       }
-
       String parentNameScope(final String ¢) {
         assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
         return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
       }
-
       void restoreScopeName() {
         scopePath = parentNameScope(scopePath);
       }
-
       /** Order of the searched {@link Statement} in its parent {@link ASTNode},
        * among nodes of the same kind. Zero based.
        * @param s
@@ -409,102 +363,82 @@ import il.org.spartan.spartanizer.utils.*;
         }
         return $;
       }
-
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         scopePath += "." + ¢.getName();
         return true;
       }
-
       @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
         $.add(convertToEntry(¢));
         return true;
       }
-
       @Override public boolean visit(final AnonymousClassDeclaration ¢) {
         scopePath += "." + "#anon_extends_" + anonymousClassDeclarationParentName(¢);
         return true;
       }
-
       @Override public boolean visit(final Block ¢) {
         scopePath += "." + "#block" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final CatchClause ¢) {
         scopePath += "." + "#catch" + orderOfCatchInTryParent(¢);
         return true;
       }
-
       @Override public boolean visit(final DoStatement ¢) {
         scopePath += "." + "#do" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final EnhancedForStatement ¢) {
         scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         scopePath += "." + ¢.getName();
         return true;
       }
-
       @Override public boolean visit(final EnumDeclaration ¢) {
         scopePath += "." + ¢.getName();
         return true;
       }
-
       @Override public boolean visit(final FieldDeclaration ¢) {
         $.addAll(convertToEntry(¢));
         return true;
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         scopePath += "." + "#for" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final IfStatement ¢) {
         scopePath += "." + "#if" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final MethodDeclaration ¢) {
         scopePath += "." + ¢.getName();
         return true;
       }
-
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         $.add(convertToEntry(¢));
         return true;
       }
-
       @Override public boolean visit(final SwitchStatement ¢) {
         scopePath += "." + "#switch" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final TryStatement ¢) {
         scopePath += "." + "#try" + statementOrderAmongTypeInParent(¢);
         return true;
       }
-
       @Override public boolean visit(final TypeDeclaration ¢) {
         scopePath += "." + ¢.getName();
         return true;
       }
-
       @Override public boolean visit(final VariableDeclarationExpression ¢) {
         $.addAll(convertToEntry(¢));
         return true;
       }
-
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         $.addAll(convertToEntry(¢));
         return true;
       }
-
       @Override public boolean visit(final WhileStatement ¢) {
         scopePath += "." + "#while" + statementOrderAmongTypeInParent(¢);
         return true;
@@ -512,7 +446,6 @@ import il.org.spartan.spartanizer.utils.*;
     });
     return $;
   }
-
   /** Gets declarations made in ASTNode's Ancestors */
   static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
@@ -520,24 +453,20 @@ import il.org.spartan.spartanizer.utils.*;
         upEnv.addAll(declarationsOf(¢));
     return upEnv;
   }
-
   static String fullName(final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
-
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
   static Environment genesis() {
     return EMPTY.spawn();
   }
-
   static Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
     for (final Entry<String, Information> ¢ : ss)
       if (s.equals(¢.getKey()))
         return ¢.getValue();
     return null;
   }
-
   /** [[SuppressWarningsSpartan]] */
   static Information getHidden(final String ¢) {
     final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
@@ -548,59 +477,48 @@ import il.org.spartan.spartanizer.utils.*;
     }
     return null;
   }
-
   static Block getParentBlock(final ASTNode ¢) {
     return az.block(¢.getParent());
   }
-
   static String name(final ASTNode __) {
     return "???";
   }
-
   static String name(final VariableDeclarationFragment ¢) {
     return ¢.getName() + "";
   }
-
   static String parentNameScope(final String ¢) {
     assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
     return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
-
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
   static LinkedHashSet<Entry<String, Information>> uses(final ASTNode __) {
     return new LinkedHashSet<>();
   }
-
   /** Return true iff {@link Environment} doesn'tipper have an entry with a
    * given name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
-
   /** Return true iff {@link Environment} is empty. */
   default boolean empty() {
     return true;
   }
-
   default LinkedHashSet<Entry<String, Information>> entries() {
     return emptyEntries;
   }
-
   default LinkedHashSet<Entry<String, Information>> fullEntries() {
     final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
     return $;
   }
-
   /** Get full path of the current {@link Environment} (all scope hierarchy).
    * Used for full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name();
   }
-
   /** @return all the full names of the {@link Environment}. */
   default LinkedHashSet<String> fullNames() {
     final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
@@ -608,43 +526,35 @@ import il.org.spartan.spartanizer.utils.*;
       $.addAll(nest().fullNames());
     return $;
   }
-
   default int fullSize() {
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
-
   /** @return null iff the name is not in use in the {@link Environment} */
   default Information get(final String name) {
     return null;
   }
-
   /** Answer the question whether the name is in use in the current
    * {@link Environment} */
   default boolean has(final String name) {
     return false;
   }
-
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
   default Information hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
-
   default String name() {
     return "";
   }
-
   /** @return The names used in the current scope. */
   default Set<String> names() {
     return emptySet;
   }
-
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
   default Environment nest() {
     return null;
   }
-
   /** Should return the hidden entry, or null if no entry hidden by this one.
    * Note: you will have to assume multiple definitions in the same block, this
    * is a compilation error, but nevertheless, let a later entry with of a
@@ -652,11 +562,9 @@ import il.org.spartan.spartanizer.utils.*;
   default Information put(final String name, final Information i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
-
   default int size() {
     return 0;
   }
-
   /** Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);

@@ -19,23 +19,19 @@ public class MagicNumbers {
     ++getSafe(beforeHistogram, Integer(count.statements(before))).inner;
     ++getSafe(afterHistogram, Integer(count.statements(after))).inner;
   }
-
   private static Int getSafe(final Map<Integer, Int> m, final Integer i) {
     m.putIfAbsent(i, new Int());
     return m.get(i);
   }
-
   private static Integer Integer(final int ¢) {
     return Integer.valueOf(¢);
   }
-
   public static void print() {
     System.out.println("[before]");
     printMap(beforeHistogram);
     System.out.println("[After]");
     printMap(afterHistogram);
   }
-
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings("boxing") public static void printComparison() {
     final int max1 = getMax(beforeHistogram);
@@ -47,7 +43,6 @@ public class MagicNumbers {
         System.out.println("[" + ¢ + "] " + (beforeHistogram.containsKey(¢) ? beforeHistogram.get(¢).inner : "0") + " -> "
             + (afterHistogram.containsKey(¢) ? afterHistogram.get(¢).inner : "0"));
   }
-
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings("boxing") public static void printAccumulated() {
     final int max1 = getMax(beforeHistogram);
@@ -61,11 +56,9 @@ public class MagicNumbers {
         System.out.println("[" + ¢ + "] " + (acc1 += beforeHistogram.containsKey(¢) ? beforeHistogram.get(¢).inner : 0) + " -> "
             + (acc2 += afterHistogram.containsKey(¢) ? afterHistogram.get(¢).inner : 0));
   }
-
   private static int getMax(final Map<Integer, Int> i) {
     return i.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
   }
-
   private static void printMap(final Map<Integer, Int> i) {
     for (final Integer k : i.keySet())
       System.out.println(k.intValue() + " : " + i.get(k).inner);

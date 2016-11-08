@@ -20,7 +20,6 @@ public final class ReturnLastInMethod extends EagerTipper<ReturnStatement> imple
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
-
   @Override public Tip tip(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;

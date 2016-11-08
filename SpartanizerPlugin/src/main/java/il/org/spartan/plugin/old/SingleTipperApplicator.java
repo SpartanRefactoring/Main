@@ -36,7 +36,6 @@ public final class SingleTipperApplicator {
     pm.done();
     return $;
   }
-
   private static ASTRewrite createRewrite(//
       final IProgressMonitor pm, //
       final IMarker m, //
@@ -46,7 +45,6 @@ public final class SingleTipperApplicator {
     return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
         m, t, w);
   }
-
   private static Tipper<?> fillRewrite(final ASTRewrite $, //
       final CompilationUnit u, //
       final IMarker m, //
@@ -60,7 +58,6 @@ public final class SingleTipperApplicator {
       v.applyLocal(w, u);
     return v.tipper;
   }
-
   public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     if (Type.PROJECT.equals(t)) {
       goProject(pm, m);
@@ -80,7 +77,6 @@ public final class SingleTipperApplicator {
       eclipse.announce("Done applying " + w.description() + " tip to " + u.getElementName());
     pm.done();
   }
-
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
@@ -167,7 +163,6 @@ public final class SingleTipperApplicator {
       tipper = null;
       doneTraversing = false;
     }
-
     public TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
         final Tipper<?> tipper) {
       this.rewrite = rewrite;
@@ -176,7 +171,6 @@ public final class SingleTipperApplicator {
       this.compilationUnit = compilationUnit;
       this.tipper = tipper;
     }
-
     protected final void apply(final Tipper<?> w, final ASTNode n) {
       tipper = w;
       switch (type) {
@@ -191,15 +185,12 @@ public final class SingleTipperApplicator {
           break;
       }
     }
-
     protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
-
     protected void applyFile(final Tipper<?> w, final ASTNode n) {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
-
     protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -217,13 +208,11 @@ public final class SingleTipperApplicator {
           }
           return true;
         }
-
         @Override protected void initialization(final ASTNode ¢) {
           disabling.scan(¢);
         }
       });
     }
-
     @Override protected <N extends ASTNode> boolean go(final N n) {
       if (doneTraversing)
         return false;

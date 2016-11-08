@@ -22,7 +22,6 @@ public final class InfixAdditionSort extends InfixExpressionSortingFull implemen
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
-
   @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), PLUS2) && type.isNotString(¢);
   }

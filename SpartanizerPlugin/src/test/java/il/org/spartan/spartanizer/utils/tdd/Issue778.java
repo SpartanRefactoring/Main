@@ -28,9 +28,12 @@ public class Issue778 {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
   }
   @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test4() {
-    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(),3);
+    assertEquals(getAll2
+        .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(), 3);
   }
   @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test5() {
-    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}"))).size(),3);
+    assertEquals(getAll2
+        .methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
+        .size(), 3);
   }
 }

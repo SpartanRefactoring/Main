@@ -45,7 +45,6 @@ public enum Make {
   private Make(final int kind) {
     this.kind = kind;
   }
-
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
@@ -54,7 +53,6 @@ public enum Make {
     $.setSource(text);
     return $;
   }
-
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
@@ -63,7 +61,6 @@ public enum Make {
     $.setSource(¢.get().toCharArray());
     return $;
   }
-
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
@@ -72,21 +69,18 @@ public enum Make {
     $.setSource(¢);
     return $;
   }
-
   /** Creates a parser for a given {@link IFile}
    * @param f JD
    * @return created parser */
   public ASTParser parser(final IFile ¢) {
     return parser(JavaCore.createCompilationUnitFrom(¢));
   }
-
   /** Creates a parser for a given marked text.
    * @param m JD
    * @return created parser */
   public ASTParser parser(final IMarker ¢) {
     return parser(makeAST.iCompilationUnit(¢));
   }
-
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */

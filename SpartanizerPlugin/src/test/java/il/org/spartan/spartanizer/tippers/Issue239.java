@@ -31,7 +31,6 @@ import il.org.spartan.spartanizer.engine.*;
                 "}")
             .stays();
   }
-
   @Test public void a$02() {
     trimmingOf(//
         "int f() {\n" + //
@@ -49,7 +48,6 @@ import il.org.spartan.spartanizer.engine.*;
                 . //
                 stays();
   }
-
   @Test public void a$03() {
     trimmingOf(//
         "int f() {\n" + //
@@ -62,7 +60,6 @@ import il.org.spartan.spartanizer.engine.*;
                 . //
                 stays();
   }
-
   @Test public void a$04() {
     final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //

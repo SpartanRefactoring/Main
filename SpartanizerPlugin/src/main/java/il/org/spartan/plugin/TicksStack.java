@@ -17,11 +17,9 @@ public class TicksStack {
   public Object[] pop() {
     return inner.pop();
   }
-
   public void push(final Object... ¢) {
     inner.push(¢);
   }
-
   public Object[] top() {
     return inner.lastElement();
   }

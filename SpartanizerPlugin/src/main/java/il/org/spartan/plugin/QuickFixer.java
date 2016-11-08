@@ -91,13 +91,11 @@ import il.org.spartan.spartanizer.tipping.*;
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
-
       @Override public String getLabel() {
         return name;
       }
     };
   }
-
   static AbstractGUIApplicator getSpartanizer(final IMarker m) {
     try {
       return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
@@ -117,16 +115,13 @@ import il.org.spartan.spartanizer.tipping.*;
       this.tipper = tipper;
       name = "Applying " + tipper.myName();
     }
-
     @Override protected boolean check(final ASTNode ¢) {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
-
     @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
       assert check(¢);
       return !tipper.canTip((N) ¢) ? null : tipper;
     }
-
     @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker ¢) {
       try {
         assert ¢.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
@@ -136,7 +131,6 @@ import il.org.spartan.spartanizer.tipping.*;
       }
       return null;
     }
-
     private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
       try {
         return new SingleTipper<>(t.newInstance());
@@ -157,7 +151,6 @@ import il.org.spartan.spartanizer.tipping.*;
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
@@ -167,37 +160,29 @@ import il.org.spartan.spartanizer.tipping.*;
         }
       };
     }
-
     static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
-
     static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
-
     static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
-
     static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress laconize tips on class");
     }
-
     static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress laconize tips on out most class");
     }
-
     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress laconize tips on function");
     }
-
     static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
