@@ -8,9 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Shimon Azulay & Idan Atias
+/** @author Shimon Azulay
+ *  @author Idan Atias
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue741 {
   @Test public void publicFields_test0() {
