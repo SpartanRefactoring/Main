@@ -46,7 +46,7 @@ public class CommandLine$Applicator {
     return false;
   }
 
-  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings({ "boxing"}) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
     Reports.name(input);
@@ -123,20 +123,24 @@ public class CommandLine$Applicator {
     return toolbox.firstTipper(¢);
   }
 
-  @SuppressWarnings("static-method") public boolean apply(@SuppressWarnings("unused") AbstractSelection<?> __) {
+  public boolean apply(final AbstractSelection<?> __) {
+  for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
+    w.compilationUnit.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // || !filter(¢) 
+      }
+    });
     return false;
   }
 
-  public boolean apply(@SuppressWarnings("unused") WrappedCompilationUnit u, AbstractSelection<?> __) {
-    
-    for (WrappedCompilationUnit ¢: ((CommandLineSelection) __).get())
-      go(¢.compilationUnit);
-//      w.compilationUnit.accept(new ASTVisitor() {
-//        @Override public boolean preVisit2(final ASTNode ¢) {
-//          return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
-//        }
-//      });
+  @SuppressWarnings({"static-method","unused"}) 
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+    // TODO MATTEO: not yet implemented -- matteo
+    return false;
+  }
   
+  public boolean apply(final WrappedCompilationUnit ¢) {
+    go(¢.compilationUnit);
     return false;
   }
 }
