@@ -22,7 +22,6 @@ public enum getAll {
   public static Set<Name> invocations(final MethodInvocation ¢) {
     return ¢ == null ? null : new TreeSet<>();
   }
-
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
@@ -41,7 +40,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Get list of names in a Block
    * @author Raviv Rachmiel
    * @author Kfir Marx
@@ -59,7 +57,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
    * @author Yuval Simon
@@ -76,7 +73,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single parameter d, which is a MethodDeclaration. Returns a
    * List<CastExpression> which is all casts in d.
    * @param d a MethodDeclaration
@@ -95,7 +91,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single parameter, which is an MethodDeclaration return a
    * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
@@ -106,8 +101,7 @@ public enum getAll {
     if (¢ == null)
       return null;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) { // TODO: Alexander,
-                                                        // Ariel fix warning
+      @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
           $.add((SingleVariableDeclaration) ¢);
         super.preVisit(¢);
@@ -115,7 +109,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single parameter, which is a TypeDecleration returns a list of
    * public fields for this class (by fields' names)
    * @param a TypeDecleration
@@ -126,7 +119,6 @@ public enum getAll {
       return null;
     List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      // TODO: Inbal, Elia fix warning
       @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
@@ -138,7 +130,6 @@ public enum getAll {
     });
     return $;
   }
-
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
