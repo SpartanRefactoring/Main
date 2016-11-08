@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -11,8 +12,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-
-import static org.hamcrest.CoreMatchers.*;
 
 /** Tests of {@link tdd.find}
  * @author AnnaBel7
@@ -28,35 +27,35 @@ public class Issue683 {
     auxTypeDeclaration(find.ancestorType((ASTNode) null));
   }
   @Test public void c() {
-    ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
+    final ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
     assertEquals(t, find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(4)));
   }
   @Test public void d() {
-    ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
+    final ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
     assertEquals(t, find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(2)));
   }
   @Test public void e() {
-    ASTNode t = createAST("public class A { public class B { int x; int y; } }");
-    ASTNodeWrapper b = getChildren(createExpressionPredicate(), t);
+    final ASTNode t = createAST("public class A { public class B { int x; int y; } }");
+    final ASTNodeWrapper b = getChildren(createExpressionPredicate(), t);
     assertThat(find.ancestorType(b.inner.get(1).getParent()), is(not(find.ancestorType(b.inner.get(3)))));
   }
   @Test public void f() {
-    ASTNode t = createAST("public class A { int x; int y; int f() { return x + t; } }");
+    final ASTNode t = createAST("public class A { int x; int y; int f() { return x + t; } }");
     assertEquals(t, find.ancestorType(getChildren(createMethodPredicate(), t).inner.get(0)));
   }
   @Test public void g() {
-    ASTNode t = createAST("public class A { int x; int y; public class B { public class C { public class D {} } } int f() { return x + t; } }");
+    final ASTNode t = createAST("public class A { int x; int y; public class B { public class C { public class D {} } } int f() { return x + t; } }");
     assertEquals(t, find.ancestorType(getChildren(createMethodPredicate(), t).inner.get(0)));
   }
   @Test public void h() {
-    ASTNode t = createAST("public class A { int x, y; int foo() { return ( (2*((x+y)-(x*y) + y))/5) - 3; } }");
+    final ASTNode t = createAST("public class A { int x, y; int foo() { return ( (2*((x+y)-(x*y) + y))/5) - 3; } }");
     assertEquals(t, find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(6)));
   }
   @Test public void i() {
-    ASTNode t = createAST("public class A { public class B { } }");
+    final ASTNode t = createAST("public class A { public class B { } }");
     assertEquals(t, find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(1).getParent()));
   }
-  private ASTNodeWrapper getChildren(Predicate<ASTNode> p, ASTNode n) {
+  private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
@@ -81,7 +80,7 @@ public class Issue683 {
     }
   }
 
-  private ASTNode createAST(String ¢) {
+  private ASTNode createAST(final String ¢) {
     return (ASTNode) az.compilationUnit(wizard.ast(¢)).types().get(0);
   }
   static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
