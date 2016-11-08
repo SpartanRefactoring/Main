@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** @author Shimon Azulay
- *  @author Idan Atias
+ * @author Idan Atias
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue741 {
   @Test public void publicFields_test0() {
@@ -39,28 +39,28 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   }
 
   @Test public void publicFields_test6() {
-    TypeDeclaration td = getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}");
-    List<String> pFields = getAll2.publicFields(td);
+    final TypeDeclaration td = getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}");
+    final List<String> pFields = getAll2.publicFields(td);
     assertTrue(pFields.contains("y"));
     assertFalse(pFields.contains("x"));
     assertFalse(pFields.contains("f"));
   }
 
   @Test public void publicFields_test7() {
-    TypeDeclaration td = getTypeDeclaration("public class A { public int x; class B { public int y; } }");
-    List<String> pFields = getAll2.publicFields(td);
+    final TypeDeclaration td = getTypeDeclaration("public class A { public int x; class B { public int y; } }");
+    final List<String> pFields = getAll2.publicFields(td);
     assertTrue(pFields.contains("x"));
     assertFalse(pFields.contains("y"));
   }
 
   @Test public void publicFields_test8() {
-    TypeDeclaration td = getTypeDeclaration("public class A { public class B { public int x; } }");
-    List<String> pFields = getAll2.publicFields(td);
+    final TypeDeclaration td = getTypeDeclaration("public class A { public class B { public int x; } }");
+    final List<String> pFields = getAll2.publicFields(td);
     assertFalse(pFields.contains("B"));
     assertFalse(pFields.contains("x"));
   }
 
-  static TypeDeclaration getTypeDeclaration(String td) {
+  static TypeDeclaration getTypeDeclaration(final String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }
 }
