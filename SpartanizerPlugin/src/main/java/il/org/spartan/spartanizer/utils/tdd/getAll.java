@@ -19,8 +19,18 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<Name> invocations(final MethodInvocation ¢) {
-    return ¢ == null ? null : new TreeSet<>();
+  public static Set<String> invocations(final MethodInvocation ¢) {
+    if (¢ == null)
+      return null;
+    final Set<String> $ = new TreeSet<>();
+    @SuppressWarnings("unchecked") final List<Object> l = ¢.arguments();
+    for (final Object i : l) {
+      if (i instanceof MethodInvocation)
+        $.addAll(invocations((MethodInvocation) i));
+      if (!(i instanceof MethodInvocation) && i instanceof SimpleName)
+        $.add(i + "");
+    }
+    return $;
   }
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
