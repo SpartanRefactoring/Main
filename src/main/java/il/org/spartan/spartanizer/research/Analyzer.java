@@ -197,6 +197,9 @@ public class Analyzer {
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //
+        .add(Block.class, //
+            new ReturnOld(), //
+            null) //
         .add(CastExpression.class, //
             new Coercion(), //
             null) //
