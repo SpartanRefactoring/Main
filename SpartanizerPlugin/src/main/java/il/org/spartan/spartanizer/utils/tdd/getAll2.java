@@ -76,4 +76,14 @@ public enum getAll2 {
         }
     return $;
   }
+  
+  /** @author Sapir Bismot
+   * @author Yaniv Levinsky
+   * @since 16-11-8 */
+  /** Given a MethodDeclaration argument, this function returns a list of it's
+   * all String variable declarations.
+   * @param d - the MethodDeclaration argument */
+  public static void stringVariables() {
+    return;
+  }
 }
