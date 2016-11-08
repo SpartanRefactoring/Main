@@ -155,7 +155,7 @@ public class Analyzer {
    *        placed in */
   private static void analyze() {
     final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
-    sanityCheck();
+     sanityCheck();
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
