@@ -54,4 +54,18 @@ public class Issue775 {
     assertEquals("C",
         type(az.typeDeclaration(findFirst.typeDeclaration(ast("@CombinedAnnotation({@SimpleAnnotation(id=4)}) public class C{}")))) + "");
   }
+  @Test public void m() {
+    assertEquals("C<D>", type(az.typeDeclaration(
+        findFirst.typeDeclaration(ast("@GwtIncompatible private static final class C<D extends Comparable> implements Serializable {}")))) + "");
+  }
+  @Test public void n() {
+    assertEquals("C<D,E>",
+        type(az.typeDeclaration(
+            findFirst.typeDeclaration(ast("@GwtIncompatible private static final class C<D extends Comparable,E> implements Serializable {}"))))
+            + "");
+  }
+  @Test public void o() {
+    assertEquals("C<K,V,E,S>", type(az.typeDeclaration(findFirst.typeDeclaration(
+        ast("abstract static class C<  K, V, E extends InternalEntry<K, V, E>, S extends Segment<K, V, E, S>>extends ReentrantLock")))) + "");
+  }
 }
