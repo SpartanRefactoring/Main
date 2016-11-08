@@ -19,7 +19,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
       return false;
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m);
+    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(step.type(¢) + "").contains(".");
   }
 
   @Override public Tip tip(final InstanceofExpression ¢) {
@@ -54,7 +54,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + step.type(¢) + ";}"));
   }
 
-  private static TypeDeclaration containingType(final InstanceofExpression ¢) {
+  private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // TODO: Marco maybe in the future change to iz.java in package which will
     // be created automatically...
     return searchAncestors.forContainingType().from(¢);
