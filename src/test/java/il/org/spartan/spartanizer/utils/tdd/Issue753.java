@@ -11,8 +11,6 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-//TODO: Still getting warnings on your code. #623
-//TODO: Use names that are found on your Karma pages.
 /** Tests of {@link enumerate.expressions}
  * @author Roei-m
  * @author RoeyMaor
