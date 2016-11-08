@@ -157,7 +157,7 @@ public enum getAll {
    *  @author Ziv Izhar
    */
   public static List<String> privateFields(@SuppressWarnings("unused") TypeDeclaration __) {
-    return null;
+    return new ArrayList<>();
   }
   
   
