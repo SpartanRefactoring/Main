@@ -9,7 +9,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-// ARIEL/ALEXANDER: TODO WARNINGS ON THIS FILE.
+// TODO: ARIEL/ALEXANDER: TODO WARNINGS ON THIS FILE.
 
 /** @author Alexander Kaplan
  * @author Ariel Kolikant
