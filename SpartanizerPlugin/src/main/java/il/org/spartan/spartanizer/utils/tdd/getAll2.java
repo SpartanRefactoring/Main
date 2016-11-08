@@ -23,11 +23,18 @@ public enum getAll2 {
    * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher */
-  public static List<MethodDeclaration> methods(CompilationUnit __) {
-    // TODO: Moshe, Netanel fix warning
+  public static List<MethodDeclaration> methods(CompilationUnit u) {
+    
+    if(u==null)
+      return null;
     List<MethodDeclaration> $ = new ArrayList<>();
-    MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo();"));
-    $.add(MD);
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration ¢){
+        $.add(¢);
+        return super.visit(¢);
+      }
+    });
+   
     return $;
   }
 

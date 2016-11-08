@@ -27,4 +27,7 @@ public class Issue778 {
   @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test3() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
   }
+  @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test4() {
+    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(),3);
+  }
 }
