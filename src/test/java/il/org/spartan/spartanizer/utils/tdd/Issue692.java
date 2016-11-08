@@ -29,4 +29,7 @@ public class Issue692 {
   @SuppressWarnings("static-method") @Test public void test3() {
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(i,foo(j),3)"))).size(), 2);
   }
+  @SuppressWarnings("static-method") @Test public void test4() {
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(i,foo(j),foo2(m,5,3,n))"))).size(), 4);
+  }
 }
