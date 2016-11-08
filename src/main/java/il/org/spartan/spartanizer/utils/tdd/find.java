@@ -15,12 +15,12 @@ public enum find {
   /** @author AnnaBel7
    * @author michalcohena
    * @since Nov 4, 2016 */
-  public static TypeDeclaration ancestorType(final ASTNode ¢) {
-    return ¢ == null ? null
-        : ¢.getParent().getParent().getParent() == null ? (TypeDeclaration) ¢.getParent()
-            : ¢.getParent().getParent().getParent().getParent() == null ? (TypeDeclaration) ¢.getParent().getParent()
-                : ¢.getParent().getParent().getParent().getParent().getParent().getParent() == null && "y".equals((¢ + ""))
-                    ? (TypeDeclaration) ¢.getParent().getParent().getParent() : (TypeDeclaration) ¢.getParent().getParent().getParent().getParent();
+  public static TypeDeclaration ancestorType(final ASTNode n) {
+    ASTNode a = n;
+    for (; a != null && (az.typeDeclaration(a) == null); a = a.getParent()){
+      // In the end of the for loop, a will be null or the enclosing Type declaration.
+    }
+    return (TypeDeclaration)a;
   }
 
 
