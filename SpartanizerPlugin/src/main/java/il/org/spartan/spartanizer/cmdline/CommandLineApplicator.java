@@ -104,7 +104,8 @@ public class CommandLineApplicator extends Applicator {
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(@SuppressWarnings("hiding") final CommandLine$Applicator a) {
-    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    setRunAction(u -> Integer.valueOf(a.
+        apply(u, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
   }
@@ -155,6 +156,7 @@ public class CommandLineApplicator extends Applicator {
       final int l = passes();
       System.out.println("passes: " + l);
       for (int pass = 1; pass <= l; ++pass) {
+        System.out.println("pass: " + l);
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
@@ -162,14 +164,16 @@ public class CommandLineApplicator extends Applicator {
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> dead = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
+          System.out.println(alive.size());
           // System.out.println(¢);
           // System.out.println(runAction());
           final int tipsInvoked = runAction().apply(¢).intValue();
           if (tipsInvoked <= 0)
             dead.add(¢);
-          // ¢.dispose(); // nullify the CompilationUnit associated to
+          ¢.dispose(); // nullify the CompilationUnit associated to
           // ICompilationUnit
-          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), "unknown"));
+          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), 
+              Integer.valueOf(alive.size()), "unknown"));
           // ¢.descriptor.getElementName()));
           totalTipsInvoked.addAndGet(tipsInvoked);
           if (!shouldRun())
