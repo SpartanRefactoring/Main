@@ -18,27 +18,24 @@ import java.util.*;
 public enum getAll2 {
   ;
   // For you to implement! Let's TDD and get it on!
-  
-  /** takes a single parameter, which is a CompilationUnit
-   * returns a list of methods in cu.
+  /** takes a single parameter, which is a CompilationUnit returns a list of
+   * methods in cu.
    * @param u CompilationUnit
    * @author Moshe Eliasof
-   * @author Netanel Felcher
-    */
-  public static List<MethodDeclaration> methods(CompilationUnit __)
-  {
-    List<MethodDeclaration> $= new ArrayList<>();
+   * @author Netanel Felcher */
+  public static List<MethodDeclaration> methods(CompilationUnit __) {
+    // TODO: Moshe, Netanel fix warning
+    List<MethodDeclaration> $ = new ArrayList<>();
     MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo();"));
     $.add(MD);
     return $;
   }
-  /**
-   * Takes Block b and returns list of names in it
+
+  /** Takes Block b and returns list of names in it
    * @param b
    * @return List<Name> which is all names in b
    * @author Doron Meshulam
-   * @author Tomer Dragucki
-   */
+   * @author Tomer Dragucki */
   public static List<Name> names(Block b) {
     if (b == null)
       return null;

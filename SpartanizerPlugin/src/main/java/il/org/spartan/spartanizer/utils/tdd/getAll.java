@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Kfir Marx
  * @author Omri Ben- Shmuel
  * @author Ward Mattar
- * @author Vivian Shehadeh 
+ * @author Vivian Shehadeh
  * @since Oct 31, 2016 */
 public enum getAll {
   ;
@@ -106,7 +106,8 @@ public enum getAll {
     if (¢ == null)
       return null;
     ¢.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) { // TODO: Alexander,
+                                                        // Ariel fix warning
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
           $.add((SingleVariableDeclaration) ¢);
         super.preVisit(¢);
@@ -115,22 +116,18 @@ public enum getAll {
     return $;
   }
 
-
-  /** Takes a single parameter, which is a TypeDecleration
-   * returns a list of public fields for this class (by fields' names)
+  /** Takes a single parameter, which is a TypeDecleration returns a list of
+   * public fields for this class (by fields' names)
    * @param a TypeDecleration
    * @author Inbal Zukerman
-   * @author Elia Traore
-   */
+   * @author Elia Traore */
   public static List<String> publicFields(TypeDeclaration d) {
-    if (d==null)
+    if (d == null)
       return null;
-
     List<String> $ = new ArrayList<>();
-   
     d.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d){
-
+      // TODO: Inbal, Elia fix warning
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
         List<VariableDeclarationFragment> fragmentsLst = d.fragments();
@@ -139,16 +136,16 @@ public enum getAll {
         return true;
       }
     });
-    
     return $;
   }
+
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
    * @author Roei-m
    * @author RoeyMaor */
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
-    if(u == null)
+    if (u == null)
       return null;
     List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
