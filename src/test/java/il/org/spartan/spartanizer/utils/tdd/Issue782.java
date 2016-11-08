@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -44,6 +46,13 @@ public class Issue782 {
   
   @SuppressWarnings("static-method") @Test public void checkAnotherPrivateName(){
     assertEquals("y" ,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int y;}")).types().get(0))).get(0));
+  }
+  
+  @SuppressWarnings("static-method") @Test public void check2PrivatesName(){
+    List<String> names = getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast(
+                                              "public class twoPrivates{private int x; private int y;}")).types().get(0)));
+    assertEquals("x", names.get(0));
+    assertEquals("y", names.get(1));
   }
   
 }
