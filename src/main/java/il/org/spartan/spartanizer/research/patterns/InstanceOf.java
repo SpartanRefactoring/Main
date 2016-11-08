@@ -19,7 +19,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
       return false;
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m);
+    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(step.type(¢) + "").contains(".");
   }
 
   @Override public Tip tip(final InstanceofExpression ¢) {
