@@ -173,10 +173,10 @@ public enum getAll {
     int numOfPrivates = 0;
     if (¢.getFields().length > 0 && 
         ¢.getFields()[0].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE ) 
-      $.add("meow");
+      $.add("x");
     if (¢.getFields().length > 1 && 
         ¢.getFields()[1].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE ) 
-      $.add("meow");
+      $.add("x");
     return $;
   }
   
