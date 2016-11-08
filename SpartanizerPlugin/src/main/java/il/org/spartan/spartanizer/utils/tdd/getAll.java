@@ -152,9 +152,9 @@ public enum getAll {
    * takes a single parameter, which is a TypeDeclaration. 
    * returns a list of private fields for this class (by fields' names)
    * @param TypeDeclaration
-   *  @author Yonatan Zarecki
-   *  @author Roded Zats
-   *  @author Ziv Izhar
+   * @author yonzarecki
+   * @author rodedzats
+   * @author zivizhar
    */
   public static List<String> privateFields(@SuppressWarnings("unused") TypeDeclaration __) {
     return new ArrayList<>();
