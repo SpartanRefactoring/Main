@@ -9,9 +9,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Tests of methods according to issue 778
- * @author Yonatan Zarecki
- * @author Roded Zats
- * @author Ziv Izhar
+ * @author yonzarecki
+ * @author rodedzats
+ * @author zivizhar
  * @since Nov 8, 2016 */
 public class Issue782 {
   @SuppressWarnings("static-method") @Test public void checkCompiles(){
