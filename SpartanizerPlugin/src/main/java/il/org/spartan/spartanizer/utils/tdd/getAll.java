@@ -171,12 +171,15 @@ public enum getAll {
     if (¢ == null)
       return $;
     
-    if (¢.getFields().length > 0 && 
-        ¢.getFields()[0].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE )
-      $.add((¢.getFields()[0] + "").contains("y") ? "y" : "x");
-    if (¢.getFields().length > 1 && 
-        ¢.getFields()[1].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE ) 
-      $.add((¢.getFields()[0] + "").contains("y") ? "y" : "x");
+    ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
+      @Override public boolean visit(FieldDeclaration ¢) {
+        if (¢.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE) {
+          String[] tmp = (¢ + "").split(" ");
+          $.add(tmp[tmp.length-1].split(";")[0]);
+        }
+        return true;
+      }
+    });
     return $;
   }
   
