@@ -284,6 +284,12 @@ public enum step {
   public static List<String> parametersNames(final MethodDeclaration d) {
     return new ArrayList<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
   }
+  /** Expose the list of parameters types in a {@link MethodDeclaration}
+   * @param d JD
+   * @return */
+  public static List<Type> parametersTypes(final MethodDeclaration d) {
+    return new ArrayList<>(step.parameters(d).stream().map(x -> step.type(x)).collect(Collectors.toList()));
+  }
   /** Shorthand for {@link ASTNode#getParent()}
    * @param ¢ JD
    * @return parent of the parameter */
@@ -445,7 +451,8 @@ public enum step {
    * @param d JD
    * @return */
   public static Type type(final AbstractTypeDeclaration d) {
-    String name = (d + "").substring((d + "").indexOf("class") + 6, (d + "").indexOf("{"));
+    String nameNoAnnotations = (d + "").substring((d + "").indexOf("class"));
+    String name = nameNoAnnotations.substring(nameNoAnnotations.indexOf("class") + 6, nameNoAnnotations.indexOf("{"));
     if (name.contains("<"))
       for (int openers = 0, ¢ = name.indexOf('<'); ¢ < name.length(); ++¢) {
         if (name.charAt(¢) == '<')
@@ -460,5 +467,10 @@ public enum step {
    * @return */
   public static PackageDeclaration packageDeclaration(CompilationUnit ¢) {
     return ¢ == null ? null : ¢.getPackage();
+  }
+  /** @param ¢
+   * @return */
+  public static SimpleName name(MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
   }
 }
