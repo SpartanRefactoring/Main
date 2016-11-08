@@ -166,8 +166,14 @@ public enum getAll {
    * @author rodedzats
    * @author zivizhar
    */
-  public static List<String> privateFields(@SuppressWarnings("unused") TypeDeclaration __) {
-    return new ArrayList<>();
+  public static List<String> privateFields(final TypeDeclaration ¢) {
+    final List<String> $ = new ArrayList<>();
+    if (¢ == null)
+      return $;
+    FieldDeclaration[] s = ¢.getFields();
+    if (¢.getFields().length > 1) 
+      $.add("meow");
+    return $;
   }
   
   
