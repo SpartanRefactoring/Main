@@ -170,8 +170,7 @@ public enum getAll {
     final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    FieldDeclaration[] s = ¢.getFields();
-    if (¢.getFields().length > 0) 
+    if (¢.getFields().length > 0 && ¢.getFields()[0].getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE ) 
       $.add("meow");
     return $;
   }
