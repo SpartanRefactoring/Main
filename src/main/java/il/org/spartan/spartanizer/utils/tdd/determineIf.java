@@ -45,7 +45,6 @@ public enum determineIf {
   public static boolean hasManyStatements(final MethodDeclaration ¢) {
     if (¢ == null)
       return false;
-    
     final Int $ = new Int();
     $.inner = 0;
     ¢.accept(new ASTVisitor() {
@@ -57,7 +56,6 @@ public enum determineIf {
     return $.inner - 1 >= 10;
   }
 
-
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
    * @author Assaf Lustig
@@ -65,21 +63,20 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(final TypeDeclaration m) { 
-    if(m==null)
+  public static boolean isImmutable(final TypeDeclaration m) {
+    if (m == null)
       return true;
-    boolean $=false;
-    for(FieldDeclaration f : m.getFields()){ 
-      for(Object ¢ : f.modifiers())
+    boolean $ = false;
+    for (FieldDeclaration f : m.getFields()) {
+      for (Object ¢ : f.modifiers())
         if (((Modifier) ¢).isFinal())
           $ = true;
-      if(!$)
+      if (!$)
         return false;
-      $=false;
-    } 
-    
-    return true;
+      $ = false;
     }
+    return true;
+  }
   // For you to implement! Let's TDD and get it on!
 
   /** see issue #719 for more details
@@ -126,30 +123,28 @@ public enum determineIf {
   public static boolean returnsNull(MethodDeclaration mDec) {
     if (mDec == null)
       return false;
+    List<ReturnStatement> statementList = new ArrayList<>();
+    mDec.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") LambdaExpression e1) {
+        return false;
+      }
 
- 
-     List<ReturnStatement> statementList = new ArrayList<>();
-    mDec.accept (new ASTVisitor() {
-       @Override public boolean visit ( @SuppressWarnings("unused") LambdaExpression e1) {
-         
-         return false;
-        }
-       @Override public boolean visit ( @SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
-         
-         return false;
-        }
-       @Override public boolean visit ( @SuppressWarnings("unused") TypeDeclaration t) {
-         
-         return false;
-        }
-       @Override public boolean visit (ReturnStatement ¢) {
-          statementList.add (¢);
-          return true;
-        }
-      });
-      for(ReturnStatement ¢ : statementList)
-        if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
-          return true;  
+      @Override public boolean visit(@SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+        return false;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration t) {
+        return false;
+      }
+
+      @Override public boolean visit(ReturnStatement ¢) {
+        statementList.add(¢);
+        return true;
+      }
+    });
+    for (ReturnStatement ¢ : statementList)
+      if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
+        return true;
     return false;
   }
 
@@ -185,5 +180,4 @@ public enum determineIf {
     });
     return nameInAST.inner;
   }
-
 }
