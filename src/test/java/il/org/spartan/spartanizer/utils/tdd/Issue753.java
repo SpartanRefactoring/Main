@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ui.internal.ide.*;
 import org.junit.*;
 import org.junit.runners.*;
 
