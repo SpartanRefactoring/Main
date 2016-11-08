@@ -27,28 +27,23 @@ import il.org.spartan.spartanizer.engine.*;
         .gives(OUTPUT) //
         .stays();
   }
-
   @Test public void b() {
     assert iz.expressionOfEnhancedFor(forr.getExpression(), forr);
     assert s != null;
     assert forr != null;
     assert iz.expressionOfEnhancedFor(forr.getExpression(), forr);
   }
-
   @Test public void c() {
     assert truex != null;
     assert iz.expressionOfEnhancedFor(truex.getParent(), forr);
     assert !iz.expressionOfEnhancedFor(truex, forr);
   }
-
   @Test public void d() {
     assert iz.expressionOfEnhancedFor(truex.getParent(), forr);
   }
-
   @Test public void e() {
     assert !haz.unknownNumberOfEvaluations(truex, s);
   }
-
   @Test public void f() {
     trimmingOf("for (int a: f(¢)) g(a);") //
         .stays();

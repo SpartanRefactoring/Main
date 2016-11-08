@@ -33,7 +33,6 @@ public enum determineIf {
     });
     return d.parameters().size() >= expectedNoOfParams && declaredVarsCounter.inner >= expectedNoOfVars;
   }
-
   // For you to implement! Let's TDD and get it on!
   /** see issue #716 for more details
    * @author Ron Gatenio
@@ -54,7 +53,6 @@ public enum determineIf {
     });
     return $.inner - 1 >= 10;
   }
-
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
    * @author Assaf Lustig
@@ -77,7 +75,6 @@ public enum determineIf {
     return true;
   }
   // For you to implement! Let's TDD and get it on!
-
   /** see issue #719 for more details
    * @author YaelAmitay
    * @author koralchapnik
@@ -98,7 +95,6 @@ public enum determineIf {
     });
     return $.inner >= x;
   }
-
   // For you to implement! Let's TDD and get it on!
   /** see issue #717 for more details
    * @author Lidia Piatigorski
@@ -111,7 +107,6 @@ public enum determineIf {
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
     return ¢ != null && ¢.getBody() != null && ¢.getBody().statements().size() >= 5;
   }
-
   /** see issue #710 for more details
    * @author David Cohen
    * @author Shahar Yair
@@ -127,15 +122,12 @@ public enum determineIf {
       @Override public boolean visit(@SuppressWarnings("unused") LambdaExpression e1) {
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration __) {
         return false;
       }
-
       @Override public boolean visit(ReturnStatement ¢) {
         statementList.add(¢);
         return true;
@@ -146,7 +138,6 @@ public enum determineIf {
         return true;
     return false;
   }
-
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -164,13 +155,11 @@ public enum determineIf {
       void innerVisit(Name node) {
         nameInAST.inner = node.getFullyQualifiedName().equals(name);
       }
-
       @Override public boolean visit(QualifiedName node) {
         if (!nameInAST.inner)
           innerVisit(node);
         return !nameInAST.inner;
       }
-
       @Override public boolean visit(SimpleName node) {
         if (!nameInAST.inner)
           innerVisit(node);

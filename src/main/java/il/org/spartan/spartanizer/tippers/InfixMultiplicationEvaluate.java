@@ -36,7 +36,6 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     }
     return $;
   }
-
   @Override int evaluateInt(final List<Expression> xs) {
     int $ = 1;
     try {
@@ -50,7 +49,6 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     }
     return $;
   }
-
   @Override long evaluateLong(final List<Expression> xs) {
     long $ = 1;
     try {
@@ -64,11 +62,9 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     }
     return $;
   }
-
   @Override String operation() {
     return "multiplication";
   }
-
   @Override Operator operator() {
     return TIMES;
   }

@@ -19,7 +19,6 @@ public final class MethodExplorer {
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
-
   /** Computes the list of all local variable declarations found in a method.
    * {@link MethodDeclaration}.
    * <p>
@@ -33,35 +32,28 @@ public final class MethodExplorer {
       @Override public boolean visit(final CatchClause ¢) {
         return add(¢.getException());
       }
-
       @Override public boolean visit(final EnhancedForStatement ¢) {
         return add(¢.getParameter());
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return add(initializers(¢));
       }
-
       @Override public boolean visit(final TryStatement ¢) {
         return add(resources(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         addFragments(fragments(¢));
         return true;
       }
-
       boolean add(final List<? extends Expression> xs) {
         for (final Expression ¢ : xs)
           addFragments(fragments(az.variableDeclarationExpression(¢)));
         return true;
       }
-
       boolean add(final SingleVariableDeclaration ¢) {
         $.add(¢.getName());
         return true;
       }
-
       void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
           $.add(¢.getName());
@@ -69,7 +61,6 @@ public final class MethodExplorer {
     });
     return $;
   }
-
   /** Computes the list of all return sideEffects found in a
    * {@link MethodDeclaration}.
    * <p>
@@ -90,15 +81,12 @@ public final class MethodExplorer {
     @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }

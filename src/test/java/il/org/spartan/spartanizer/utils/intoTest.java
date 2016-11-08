@@ -13,15 +13,12 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void dCorrect() {
     azzert.that(into.d("int f() { return a; }"), iz("int f() { return a; }"));
   }
-
   @Test public void dNotNull() {
     assert into.d("int f() { return a; }") != null;
   }
-
   @Test(expected = AssertionError.class) public void dOnNull() {
     into.d(null);
   }
-
   @Test public void findFirstType() {
     assert t("int __;") != null;
   }

@@ -37,12 +37,10 @@ public class Spartanizer$Applicator {
   public Spartanizer$Applicator() {
     this(Toolbox.defaultInstance());
   }
-
   /** @param defaultInstance */
   public Spartanizer$Applicator(final Toolbox toolbox) {
     this.toolbox = toolbox;
   }
-
   /** @param u
    * @param s
    * @return */
@@ -73,7 +71,6 @@ public class Spartanizer$Applicator {
     // }
     return false;
   }
-
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -81,7 +78,6 @@ public class Spartanizer$Applicator {
       }
     });
   }
-
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final int length = input.getLength();
@@ -155,7 +151,6 @@ public class Spartanizer$Applicator {
     report.nl();
     return false;
   }
-
   /** @param input
    * @return */
   private String fixedPoint(final String from) {
@@ -173,7 +168,6 @@ public class Spartanizer$Applicator {
         return $.get();
     }
   }
-
   /** @param u
    * @return */
   public ASTRewrite createRewrite(final BodyDeclaration u) {
@@ -181,7 +175,6 @@ public class Spartanizer$Applicator {
     consolidateTips($, u);
     return $;
   }
-
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -211,7 +204,6 @@ public class Spartanizer$Applicator {
         }
         return true;
       }
-
       // <N extends ASTNode> void tick2(final Tipper<N> w) {
       // final String key = presentFileName + "-" + presentMethod +
       // monitor.className(w.getClass());
@@ -222,14 +214,12 @@ public class Spartanizer$Applicator {
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
         return toolbox.firstTipper(¢);
       }
-
       /** @param n
        * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -237,17 +227,14 @@ public class Spartanizer$Applicator {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-
   static boolean filter(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
-
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }

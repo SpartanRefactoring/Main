@@ -50,7 +50,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
   public abstract void apply();
-
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -80,18 +79,15 @@ public abstract class AbstractCommandLineSpartanizerOld {
         }
         return true;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
-
       /** @param n
        * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -99,7 +95,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
@@ -108,13 +103,11 @@ public abstract class AbstractCommandLineSpartanizerOld {
       }
     });
   }
-
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
-
   void fire() {
     run();
     reportSpectrum();
@@ -122,13 +115,11 @@ public abstract class AbstractCommandLineSpartanizerOld {
     runEssence();
     runWordCount();
   }
-
   /** @param ¢
    * @return */
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
-
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
@@ -144,11 +135,9 @@ public abstract class AbstractCommandLineSpartanizerOld {
         return $.get();
     }
   }
-
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-
   private void run() {
     System.err.printf( //
         " Input path=%s\n" + //
@@ -165,12 +154,10 @@ public abstract class AbstractCommandLineSpartanizerOld {
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
   }
-
   private void closePrintWriters() {
     befores.close();
     afters.close();
   }
-
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -180,7 +167,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
     computeMetrics(input, outputASTNode);
     return false;
   }
-
   /** Compute metrics for a generic number of ASTNode
    * @param $
    * @author Matteo Orru' */
@@ -213,7 +199,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
     }
     report.nl();
   }
-
   /** @param input
    * @param output */
   protected void computeMetrics(final ASTNode input, final ASTNode output) {
@@ -288,7 +273,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
     ;
     report.nl();
   }
-
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -297,7 +281,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
       }
     });
   }
-
   void go(final File f) {
     if (!system.isTestFile(f))
       try {
@@ -307,11 +290,9 @@ public abstract class AbstractCommandLineSpartanizerOld {
         monitor.infoIOException(e, "File = " + f);
       }
   }
-
   void go(final String javaCode) {
     go((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   private void reportSpectrum() {
     for (final Entry<String, Integer> ¢ : spectrum.entrySet()) {
       spectrumStats.put("Tipper", ¢.getKey());
@@ -320,26 +301,21 @@ public abstract class AbstractCommandLineSpartanizerOld {
     }
     System.err.print("\n Spectrum: " + spectrumStats.close());
   }
-
   public ASTRewrite rewriterOf(final BodyDeclaration ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     consolidateTips($, ¢);
     return $;
   }
-
   void runEssence() {
     system.shellEssenceMetrics(beforeFileName);
     system.shellEssenceMetrics(afterFileName);
   }
-
   private void runWordCount() {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
-
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
-
   /** Setup PrintWriters
    * @author matteo */
   protected void setUpPrintWriters() {
@@ -352,7 +328,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
       System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
     }
   }
-
   /** Setup reports
    * @author matteo */
   protected void setUpReports() {

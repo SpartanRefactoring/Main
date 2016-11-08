@@ -10,7 +10,6 @@ import org.junit.*;
   @Test public void a() {
     trimmingOf("void func(int i) {return something_else;}").gives("void func(int __) {return something_else;}").stays();
   }
-
   @Test public void b() {
     trimmingOf("void func(int notJD) {return something_else;}").stays();
   }

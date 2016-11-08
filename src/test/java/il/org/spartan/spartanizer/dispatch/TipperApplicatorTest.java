@@ -19,23 +19,18 @@ import il.org.spartan.spartanizer.tippers.*;
   @Test public void clazzIsCorrect() {
     azzert.that(it.clazz, is(Block.class));
   }
-
   @Test public void clazzIsNotNull() {
     azzert.notNull(it.clazz);
   }
-
   @Test public void exists() {
     azzert.notNull(it);
   }
-
   @Test public void nameIsCorrect() {
     azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }
-
   @Test public void tipper() {
     azzert.notNull(it.tipper);
   }
-
   @Test public void tipperIsCorrect() {
     azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }

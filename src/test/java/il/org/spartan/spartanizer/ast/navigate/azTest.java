@@ -17,31 +17,26 @@ import il.org.spartan.spartanizer.ast.safety.*;
     doReturn(PrefixExpression.Operator.NOT).when(p).getOperator();
     azzert.isNull(az.comparison(p));
   }
-
   @Test public void asComparisonTypicalExpression() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
     assert az.comparison(i) != null;
   }
-
   @Test public void asComparisonTypicalExpressionFalse() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(CONDITIONAL_OR).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
-
   @Test public void asComparisonTypicalInfixFalse() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(CONDITIONAL_AND).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
-
   @Test public void asComparisonTypicalInfixIsCorrect() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
     assertEquals(i, az.comparison(i));
   }
-
   @Test public void asComparisonTypicalInfixIsNotNull() {
     final InfixExpression e = mock(InfixExpression.class);
     doReturn(GREATER).when(e).getOperator();

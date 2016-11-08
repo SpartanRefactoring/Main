@@ -30,11 +30,9 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block> implements T
   private static Statement replacement(final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : duplicate.of($);
   }
-
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
-
   @Override public Statement replacement(final Block b) {
     final ASTNode parent = parent(b);
     return !(parent instanceof Statement) || iz.nodeTypeIn(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null

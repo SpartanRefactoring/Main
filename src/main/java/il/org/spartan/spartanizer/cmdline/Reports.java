@@ -29,16 +29,13 @@ public class Reports {
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
     }
-
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
-
     static CSVStatistics report(final String ¢) {
       assert ¢ != null;
       return reports.get(¢);
     }
-
     @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : Reports.Util.functions(""))
         if ($.name() == ¢)
@@ -64,13 +61,11 @@ public class Reports {
     for (final NamedFunction ¢ : Reports.Util.functions(""))
       Reports.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
   }
-
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : Reports.Util.functions(""))
       Reports.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
-
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     double a;
@@ -80,7 +75,6 @@ public class Reports {
       Reports.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
-
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     String a; // TODO Matteo: to be converted to double or float?
@@ -90,7 +84,6 @@ public class Reports {
       Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
-
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     String a; // TODO Matteo: to be converted to double or float?
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
@@ -98,7 +91,6 @@ public class Reports {
       Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
-
   /** @param nm */
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
@@ -124,11 +116,9 @@ public class Reports {
       this.name = name;
       this.f = f;
     }
-
     public String name() {
       return this.name;
     }
-
     public ToInt<R> function() {
       return this.f;
     }
@@ -137,7 +127,6 @@ public class Reports {
   @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
-
   public static void initializeReport(final String reportFileName, final String id) {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
@@ -145,15 +134,12 @@ public class Reports {
       x.printStackTrace();
     }
   }
-
   private static CSVStatistics report(final String key) {
     return reports.get(key);
   }
-
   private static PrintWriter files(final String key) {
     return files.get(key);
   }
-
   public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
     report(key)//
         .put("Nodes" + id, nm.nodes())//
@@ -164,7 +150,6 @@ public class Reports {
         .put("Essence" + id, nm.essence())//
         .put("Statements" + id, nm.statements());//
   }
-
   /** @param nm1
    * @param nm2 */
   public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
@@ -191,7 +176,6 @@ public class Reports {
         .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
         .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
   }
-
   /** @param nm */
   public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
     report(key) //
@@ -201,38 +185,30 @@ public class Reports {
         .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
         .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
   }
-
   public static void close(final String key) {
     report(key).close();
   }
-
   public static void summaryFileName(final String key) {
     report(key).summaryFileName();
   }
-
   public static void nl(final String key) {
     report(key).nl();
   }
-
   public static void printFile(final String input, final String key) {
     assert input != null;
     files(key).print(input);
   }
-
   public static void closeFile(final String key) {
     files(key).flush();
     files(key).close();
   }
-
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
-
   public static void name(final ASTNode input) {
     Reports.report("metrics").put("name", extract.name(input));
     Reports.report("metrics").put("category", extract.category(input));
   }
-
   public static void tip(final Tip ¢) {
     Reports.report("tips").put("name", ¢.getClass());
     Reports.report("tips").put("description", ¢.description);

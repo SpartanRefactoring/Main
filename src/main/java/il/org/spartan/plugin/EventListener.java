@@ -13,23 +13,19 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
   /** Listens to an event.
    * @param e JD */
   public abstract void tick(E e);
-
   /** Listens to an event with additional object.
    * @param e JD
    * @param o JD */
   public abstract void tick(E e, Object o);
-
   /** @param enumClass enum that contains the possible events for this
    *        listener */
   protected EventListener(final Class<? extends E> enumClass) {
     this.enumClass = enumClass;
   }
-
   /** @return possible events for this listener */
   protected E[] events() {
     return enumClass.getEnumConstants();
   }
-
   @SuppressWarnings("unchecked") @Override public void tick(final Object... ¢) {
     if (¢ != null && enumClass.isInstance(¢[0]))
       if (¢.length == 1)
@@ -37,7 +33,6 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
       else if (¢.length == 2)
         tick((E) ¢[0], ¢[1]);
   }
-
   /** Simple event listener, defined by a consumer of events.
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
@@ -48,13 +43,11 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
       @Override public void tick(final E e) {
         c.accept(e);
       }
-
       @Override public void tick(final E e, @SuppressWarnings("unused") final Object __) {
         c.accept(e);
       }
     };
   }
-
   /** Simple event listener, defined by consumers of events.
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
@@ -66,7 +59,6 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
       @Override public void tick(final E e) {
         c.accept(e);
       }
-
       @Override public void tick(final E e, final Object o) {
         bc.accept(e, o);
       }
