@@ -147,4 +147,18 @@ public enum getAll {
     });
     return $;
   }
+  
+  /**
+   * takes a single parameter, which is a TypeDeclaration. 
+   * returns a list of private fields for this class (by fields' names)
+   * @param TypeDeclaration
+   *  @author Yonatan Zarecki
+   *  @author Roded Zats
+   *  @author Ziv Izhar
+   */
+  public static List<String> privateFields(@SuppressWarnings("unused") TypeDeclaration __) {
+    return null;
+  }
+  
+  
 }
