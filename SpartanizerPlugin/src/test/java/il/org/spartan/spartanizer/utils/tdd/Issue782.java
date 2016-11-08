@@ -27,6 +27,6 @@ public class Issue782 {
   }
   
   @SuppressWarnings("static-method") @Test public void onePrivateFieldReturnOneElementList(){
-    assertTrue(getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types().get(0))).isEmpty());
+    assertEquals(1,getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types().get(0))).size());
   }
 }

@@ -171,7 +171,7 @@ public enum getAll {
     if (¢ == null)
       return $;
     FieldDeclaration[] s = ¢.getFields();
-    if (¢.getFields().length > 1) 
+    if (¢.getFields().length > 0) 
       $.add("meow");
     return $;
   }
