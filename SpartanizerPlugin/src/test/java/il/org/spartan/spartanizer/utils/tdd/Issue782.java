@@ -63,4 +63,11 @@ public class Issue782 {
     assertEquals("y", names.get(3));
   }
   
+  @SuppressWarnings("static-method") @Test public void checkFieldsInsideMethods(){
+    List<String> names = getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast(
+                                              "public class twoPrivates{private int x; public void foo(int z){ int y; } }")).types().get(0)));
+    assertEquals("x", names.get(0));
+    assertEquals(1, names.size());
+  }
+  
 }
