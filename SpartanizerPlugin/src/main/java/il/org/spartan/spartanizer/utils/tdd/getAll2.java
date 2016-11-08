@@ -56,24 +56,25 @@ public enum getAll2 {
     return $;
   }
 
-  /** @author Shimon Azulay & Idan Atias
+  /** @author Shimon Azulay
+   *  @author Idan Atias
    * @since 16-11-3 */
-  public static List<String> publicFields(TypeDeclaration type) {
-    LinkedList<String> list = new LinkedList<>();
-    if (type == null)
-      return list;
-    for (FieldDeclaration fd : type.getFields()) {
-      for (Object mod : fd.modifiers()) {
-        if (mod.toString().equals("public")) {
-          String[] field_splitted_to_words = fd.toString().trim().split(" ");
+  /** Given a TypeDeclaration argument, this function returns a list of it's public fields names. 
+   * @param d - the TypeDeclaration argument
+   */
+  public static List<String> publicFields(TypeDeclaration d) {
+    LinkedList<String> $ = new LinkedList<>();
+    if (d == null)
+      return $;
+    for (FieldDeclaration fd : d.getFields())
+      for (Object mod : fd.modifiers())
+        if ("public".equals((mod + ""))) {
+          String[] field_splitted_to_words = (fd + "").trim().split(" ");
           int field_name_idx = field_splitted_to_words.length - 1;
           if (field_name_idx < 0)
             continue;
-          String field_name = field_splitted_to_words[field_name_idx].replace(";", "").trim();
-          list.add(field_name);
+          $.add(field_splitted_to_words[field_name_idx].replace(";", "").trim());
         }
-      }
-    }
-    return list;
+    return $;
   }
 }
