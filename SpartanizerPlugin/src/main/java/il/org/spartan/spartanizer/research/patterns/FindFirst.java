@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
+//TODO: Marco finish
 public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
   private static final UserDefinedTipper<EnhancedForStatement> tipper = TipperFactory.subBlockTipper("for($N1 $N2 : $X1) if($X2) return $N2;",
       "findFirstIn($X1).satisfying(($N2) -> $X2)", "FindFirst");

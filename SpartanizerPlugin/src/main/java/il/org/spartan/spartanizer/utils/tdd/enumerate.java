@@ -27,7 +27,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   /** @author Aviad Cohen
    * @author Noam Yefet
    * @param ¢
@@ -44,7 +43,6 @@ public enum enumerate {
     });
     return count.inner;
   }
-
   /** @author Sharon Kuninin
    * @author Yarden Lev
    * @param ¢ the CompilationUnit its methods are counted
@@ -56,16 +54,13 @@ public enum enumerate {
     final Int counter = new Int();
     counter.inner = 0;
     ¢.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public boolean visit(MethodDeclaration node) {
+      @SuppressWarnings("unused") @Override public boolean visit(final MethodDeclaration node) {
         ++counter.inner;
         return true;
       }
     });
     return counter.inner;
   }
-
-  
-  
   /** see issue #776 for more details
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
@@ -74,14 +69,19 @@ public enum enumerate {
     int $ = 0;
     List<?> l = d.getBody().statements();
     boolean[] arr = new boolean[10];
-   
-    final int BLOCK=0; final int IFSTATE=1; final int FORSTATE=2; final int WHILESTATE=3;
-    final int SWITCHSTATE=4; final int DOSTATE=5; final int SYNC=6; final int TRY=7; 
-    final int LAMBDA=7;
-    //TODO: deal with lambada-expr
-//    d.accept(new ASTVisitor() {
-//      
-//    });
+    final int BLOCK = 0;
+    final int IFSTATE = 1;
+    final int FORSTATE = 2;
+    final int WHILESTATE = 3;
+    final int SWITCHSTATE = 4;
+    final int DOSTATE = 5;
+    final int SYNC = 6;
+    final int TRY = 7;
+    final int LAMBDA = 7;
+    // TODO: deal with lambada-expr
+    // d.accept(new ASTVisitor() {
+    //
+    // });
     for (int ¢ = 0; ¢ < arr.length; ++¢)
       arr[¢] = false;
     for (Object ¢ : l)
@@ -112,9 +112,7 @@ public enum enumerate {
       } else if (¢ instanceof VariableDeclarationStatement && !arr[LAMBDA] && ((¢ + "").contains("-> {") || (¢ + "").contains("->{"))) {
         ++$;
         arr[LAMBDA] = true;
-      } 
-    
-    
+      }
     return $;
   }
   // For you to implement! Let's TDD and get it on!
