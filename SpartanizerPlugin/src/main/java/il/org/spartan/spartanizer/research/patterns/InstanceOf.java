@@ -54,7 +54,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + step.type(¢) + ";}"));
   }
 
-  private static TypeDeclaration containingType(final InstanceofExpression ¢) {
+  private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // TODO: Marco maybe in the future change to iz.java in package which will
     // be created automatically...
     return searchAncestors.forContainingType().from(¢);
