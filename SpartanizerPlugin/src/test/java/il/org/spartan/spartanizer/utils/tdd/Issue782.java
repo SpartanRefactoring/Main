@@ -55,4 +55,12 @@ public class Issue782 {
     assertEquals("y", names.get(1));
   }
   
+  @SuppressWarnings("static-method") @Test public void checkMultiDeclarationsInOneLine(){
+    List<String> names = getAll.privateFields(((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int a,b,c,y;}")).types().get(0)));
+    assertEquals("a", names.get(0));
+    assertEquals("b", names.get(1));
+    assertEquals("c", names.get(2));
+    assertEquals("y", names.get(3));
+  }
+  
 }
