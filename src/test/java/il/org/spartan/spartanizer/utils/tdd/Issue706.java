@@ -23,12 +23,19 @@ import il.org.spartan.spartanizer.ast.safety.*;
     List<VariableDeclaration> l = getAll2.stringVariables((MethodDeclaration) null);
   }
   @Test public void test02() {
-    assertTrue(getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(int n);"))).isEmpty());
+    assertTrue(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("void f(int n);"))).isEmpty());
   }
   @Test public void test03() {
-    assertEquals(getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(String s);"))).size(), 1);
+    assertEquals(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("void f(String s);"))).size(), 1);
   }
   @Test public void test04() {
-    assertEquals(getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(int x, int y);"))).size(), 0);
+    assertEquals(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("void f(int x, int y);"))).size(), 0);
+  }
+  @Test public void test05() {
+    assertEquals(getAll2.stringVariables(az.methodDeclaration
+        (wizard.ast("void f(int x, String s1, double y);"))).size(), 1);
   }
 }
