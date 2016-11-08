@@ -53,6 +53,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assertFalse(pFields.contains("y"));
   }
 
+  @Test public void publicFields_test8() {
+    TypeDeclaration td = getTypeDeclaration("public class A { public class B { public int x; } }");
+    List<String> pFields = getAll2.publicFields(td);
+    assertFalse(pFields.contains("B"));
+    assertFalse(pFields.contains("x"));
+  }
+
   static TypeDeclaration getTypeDeclaration(String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }
