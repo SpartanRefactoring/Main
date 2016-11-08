@@ -1,13 +1,10 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.internal.compiler.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-
 import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Ori Marcovitch
  * @author Moshe ELiasof
@@ -23,14 +20,18 @@ public enum getAll2 {
    * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher */
-  public static List<MethodDeclaration> methods(CompilationUnit __) {
-    // TODO: Moshe, Netanel fix warning
+  public static List<MethodDeclaration> methods(CompilationUnit u) {
+    if (u == null)
+      return null;
     List<MethodDeclaration> $ = new ArrayList<>();
-    MethodDeclaration MD = az.methodDeclaration(wizard.ast("public void foo();"));
-    $.add(MD);
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(MethodDeclaration ¢) {
+        $.add(¢);
+        return super.visit(¢);
+      }
+    });
     return $;
   }
-
   /** Takes Block b and returns list of names in it
    * @param b
    * @return List<Name> which is all names in b

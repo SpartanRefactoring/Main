@@ -3,11 +3,16 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*; 
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 /**
  * @author Doron Meshulam
@@ -34,25 +39,27 @@ public class Issue707 {
     
   @Test
   public void d() {
-    assertEquals((getAll2.names(az.block(ast("{int i = x;}"))).get(0) + ""), "i");
-    assertEquals((getAll2.names(az.block(ast("{int i = x;}"))).get(1) + ""), "x");
+    assertNamesList(getAll2.names(az.block(ast("{int i = x; z = 6;}"))), Arrays.asList("i", "x", "z"));
   }
 
   @Test
   public void e() {
-    assertEquals((getAll2.names(az.block(ast("{int x = i;}"))).get(0) + ""), "x");
+    assertNamesList(getAll2.names(az.block(ast("{int x = i; z = 8;}"))), Arrays.asList("x", "i", "z"));
   }
   
   @Test
   public void f() {
-    assertEquals((getAll2.names(az.block(ast("{int x = i; double y = 5;}"))).get(0) + ""), "x");
-    assertEquals((getAll2.names(az.block(ast("{int x = i; double y = 5;}"))).get(2) + ""), "y");
+    assertNamesList(getAll2.names(az.block(ast("{int x = i; double y = 5;}"))), Arrays.asList("x", "i", "y"));
   }
   
   @Test
   public void g() {
-    assertEquals((getAll2.names(az.block(ast("{if(i > 0)  return z;}"))).get(0) + ""), "i");
-    assertEquals((getAll2.names(az.block(ast("{if(i > 0)  return z;}"))).get(1) + ""), "z");
+    assertNamesList(getAll2.names(az.block(ast("{if(i > 0)  return z;}"))), Arrays.asList("i", "z"));
+  }
+  
+  static void assertNamesList(List<Name> actual, List<String> expected) {
+    for (Name ¢: actual)
+      assertTrue(expected.contains((¢ + "")));
   }
   
   static ASTNode ast(final String ¢) {
