@@ -33,4 +33,19 @@ public class Issue778 {
   @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test5() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}"))).size(),3);
   }
+  
+  @SuppressWarnings({ "static-method", "deprecation" }) @Test public void test6() {
+    
+    
+    String cu = "public class Dog2 {"
+        + " public int foo0(){return 1;}"
+        + " private void foo1(){}"
+        + " protected void foo2(){}";
+    List<MethodDeclaration> res = getAll.methods(az.compilationUnit(wizard.ast(cu)));
+    assertEquals( res.get(0).getName().getIdentifier(), "foo0");
+    assertEquals( res.get(1).getName().getIdentifier(), "foo1");
+    assertEquals( res.get(2).getName().getIdentifier(), "foo2");
+    
+  }
+  
 }
