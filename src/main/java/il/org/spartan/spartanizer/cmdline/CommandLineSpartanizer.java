@@ -13,7 +13,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
   private boolean commandLineApplicator = true;
   private final boolean collectApplicator = false;
-  private boolean selection = false;
+  private boolean selection;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -25,7 +25,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   }
 
   @Override public void apply() {
-    System.out.println(presentSourcePath);
+    System.out.println("presentsSourcePath:" + presentSourcePath);
     try {
       if (collectApplicator) {
         Reports.initializeReport(folder + name + ".tips.CSV", "tips");
