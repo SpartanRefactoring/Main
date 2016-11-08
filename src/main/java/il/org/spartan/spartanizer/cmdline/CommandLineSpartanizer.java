@@ -13,6 +13,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
   private boolean commandLineApplicator = true;
   private final boolean collectApplicator = false;
+  private boolean selection = false;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -40,12 +41,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
         // ---
         CommandLineApplicator.defaultApplicator()
-                             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util
-                                 .getAllCompilationUnit(presentSourcePath)))
-//                             .passes(20)
-//                             .selection(CommandLineSelection.of(CommandLineSelection.Util
-//                                                                                    .getAllCompilationUnit(presentSourcePath)))
-                             //                             .defaultRunAction()
+                             .defaultListenerNoisy()
                              .defaultRunAction(new CommandLine$Applicator())
                              .go();
         // ---
@@ -55,14 +51,17 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.closeFile("after");
         System.err.println("commandLineApplicator: " + "Done!");
       }
+      if(selection)
+        CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
+            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
+            .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException x) {
       x.printStackTrace();
     }
   }
 
-  private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    CommandLine$Applicator a = new CommandLine$Applicator();
-    return (u -> Integer.valueOf(a.apply(CommandLineSelection.of(CommandLineSelection.Util
-        .getAllCompilationUnit(presentSourcePath)))? 1 : 0));
+  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
+    return (u -> Integer.valueOf(
+        (new CommandLine$Applicator()).apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0));
   }
 }
