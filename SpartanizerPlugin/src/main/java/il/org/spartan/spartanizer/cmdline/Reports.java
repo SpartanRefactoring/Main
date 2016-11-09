@@ -13,10 +13,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public class Reports {
-  protected String folder = "/tmp/";
+  
+  protected static String outputFolder = "/tmp/";
+  protected static String inputFolder;
   protected String afterFileName;
   protected String beforeFileName;
-  protected String presentSourcePath;
   protected String spectrumFileName;
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
@@ -48,30 +49,50 @@ public class Reports {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
       Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
       Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
     }
   }
 
+  public static String getOutputFolder() {
+    return outputFolder;
+  }
+
+  public static void setOutputFolder(String outputFolder) {
+    Reports.outputFolder = outputFolder;
+  }
+
+  public static String getInputFolder() {
+    return inputFolder;
+  }
+
+  public static void setInputFolder(String inputFolder) {
+    Reports.inputFolder = inputFolder;
+  }
+
   @FunctionalInterface public interface BiFunction<T, R> {
     double apply(T t, R r);
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void write(final ASTNode input, final ASTNode output, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : Reports.Util.functions(""))
       Reports.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : Reports.Util.functions(""))
       Reports.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     double a;
     for (final NamedFunction ¢ : Reports.Util.functions("")) {
