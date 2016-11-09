@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.utils.tdd;
+package il.org.spartan.spartanizer.java;
 
 
 import static org.junit.Assert.*;
