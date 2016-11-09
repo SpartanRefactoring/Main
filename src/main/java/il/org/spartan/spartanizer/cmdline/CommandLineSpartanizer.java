@@ -33,17 +33,30 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
 //        Reports.close("tips");
 //        System.err.println("CollectApplicator: " + "Done!");
 //      }
-      Reports.initializeFile(Reports.getOutputFolder() + name + ".before.java", "before");
-      Reports.initializeFile(Reports.getOutputFolder() + name + ".after.java", "after");
-      Reports.initializeReport(Reports.getOutputFolder() + name + ".CSV", "metrics");
-      Reports.initializeReport(Reports.getOutputFolder() + name + ".spectrum.CSV", "spectrum");
+      
+      System.out.println("Reports.getOutputFolder(): " + Reports.getOutputFolder());
+      Reports.initializeFile(Reports.getOutputFolder() + "/" + name + ".before.java", "before");
+      Reports.initializeFile(Reports.getOutputFolder() + "/" + name + ".after.java", "after");
+      Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".CSV", "metrics");
+      Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       
       if (DefaultApplicator)
-        CommandLineApplicator.defaultApplicator().defaultListenerNoisy().go();
+        CommandLineApplicator.defaultApplicator()
+                             .defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
+                             .defaultListenerNoisy()
+                             .go();
       if (Spartanizer$Applicator )
-        CommandLineApplicator.defaultApplicator().defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
+        CommandLineApplicator.defaultApplicator()
+                             .defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
+                             .defaultRunAction(new Spartanizer$Applicator())
+                             .defaultListenerNoisy()
+                             .go();
       if (CommandLine$Applicator)
-        CommandLineApplicator.defaultApplicator().defaultRunAction(new CommandLine$Applicator()).defaultListenerNoisy().go();
+        CommandLineApplicator.defaultApplicator()
+                             .defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
+                             .defaultRunAction(new CommandLine$Applicator())
+                             .defaultListenerNoisy()
+                             .go();
       
       Reports.close("metrics");
       Reports.close("spectrum");
