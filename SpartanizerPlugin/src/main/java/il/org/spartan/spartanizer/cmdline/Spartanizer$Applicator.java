@@ -51,14 +51,17 @@ public class Spartanizer$Applicator {
    * @param s
    * @return */
   public boolean apply(final AbstractSelection<?> __) {
-    System.out.println("apply");
-    for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
+    List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
+    for (WrappedCompilationUnit w: list){
+      assert w != null;
+      assert w.compilationUnit != null;
+      System.out.println(w.compilationUnit);
       w.compilationUnit.accept(new ASTVisitor() {
         @Override public boolean preVisit2(final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
         }
       });
-      
+    }
 //     if (s instanceof TrackerSelection)
 //       return apply(u, (TrackerSelection) s);
     //       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -75,8 +78,9 @@ public class Spartanizer$Applicator {
    * @author matteo
    */
   
-  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> s) {
-      go(u.compilationUnit);
+  @SuppressWarnings("unused") 
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+    go(u.compilationUnit);
     return false;
   }
 
@@ -84,21 +88,54 @@ public class Spartanizer$Applicator {
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
-        return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
+        System.out.println("!selectedNodeTypes.contains(¢.getClass()): " + !selectedNodeTypes.contains(¢.getClass()));
+//        System.out.println("!filter(¢): " + !filter(¢));
+        System.out.println("¢.getClass(): " + ¢.getClass());
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // || !filter(¢) 
       }
     });
   }
-
+  
   boolean go(final ASTNode input) {
+    tippersAppliedOnCurrentObject = 0;
+    final String output = fixedPoint(input + "");
+    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
+    Reports.printFile(input + "", "before");
+    Reports.printFile(output, "after");
+    computeMetrics(input, outputASTNode);
+    return false;
+  }
+  
+  @SuppressWarnings({ "boxing"}) protected void computeMetrics(final ASTNode input, final ASTNode output) {
+    System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+    Reports.summaryFileName("metrics");
+    Reports.name(input);
+    Reports.writeMetrics(input, output, null);
+    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
+    Reports.writePerc(input, output, "δ ");
+    // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
+    Reports.nl("metrics");
+  }
+
+  boolean go2(final ASTNode input) {
+    System.out.println(input);
+    System.out.println("ASTNode input: " + az.methodDeclaration(input));
     tippersAppliedOnCurrentObject = 0;
     final int length = input.getLength();
     final int tokens = metrics.tokens(input + "");
     final int nodes = count.nodes(input);
     final int body = metrics.bodySize(input);
-    final int statements = extract.statements(az.methodDeclaration(input).getBody()).size();
+    final int statements = extract
+        .statements(az
+            .methodDeclaration(input)
+            .getBody())
+        .size();
     final int tide = clean(input + "").length();
     final int essence = Essence.of(input + "").length();
+    
     final String out = fixedPoint(input + "");
+    
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -110,9 +147,9 @@ public class Spartanizer$Applicator {
     final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    befores.print(input);
-    afters.print(out);
-    report.summaryFileName();
+//    befores.print(input);
+//    afters.print(out);
+//    report.summaryFileName();
     report//
         // .put("File", currentFile)//
         .put("Category", extract.category(input))//
