@@ -31,7 +31,7 @@ public class CommandLine$Applicator {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
-        return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
+        return go(¢); // !selectedNodeTypes.contains(¢.getClass()) || 
       }
     });
   }
@@ -89,6 +89,7 @@ public class CommandLine$Applicator {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
+        System.out.println("disabling.on(n): " + disabling.on(n));
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -123,6 +124,30 @@ public class CommandLine$Applicator {
     return toolbox.firstTipper(¢);
   }
 
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+    if (__ == null)
+      apply(u);
+    else if (u == null)
+      apply(__);
+    return false;
+  }
+  
+  /**
+   * Apply to single compilation unit
+   * @param ¢
+   * @return
+   */
+   
+  public boolean apply(final WrappedCompilationUnit ¢) {
+    System.out.println("*********");
+    go(¢.compilationUnit);
+    return false;
+  }
+  
+  /** @param __
+   * @return
+   */
+  
   public boolean apply(final AbstractSelection<?> __) {
   for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
     w.compilationUnit.accept(new ASTVisitor() {
@@ -130,17 +155,6 @@ public class CommandLine$Applicator {
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // || !filter(¢) 
       }
     });
-    return false;
-  }
-
-  @SuppressWarnings({"static-method","unused"}) 
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
-    // TODO MATTEO: not yet implemented -- matteo
-    return false;
-  }
-  
-  public boolean apply(final WrappedCompilationUnit ¢) {
-    go(¢.compilationUnit);
     return false;
   }
 }
