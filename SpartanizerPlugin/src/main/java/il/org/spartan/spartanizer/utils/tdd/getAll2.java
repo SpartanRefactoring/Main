@@ -6,10 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-
 /** @author Ori Marcovitch
  * @author Moshe ELiasof
  * @author Netanel Felcher
@@ -82,8 +78,18 @@ public enum getAll2 {
    * @since 16-11-8 */
   /** Given a MethodDeclaration argument, this function returns a list of it's
    * all String variable declarations.
-   * @param d - the MethodDeclaration argument */
-  public static void stringVariables() {
-    return;
+   * @param ¢ - the MethodDeclaration argument */
+  public static List<VariableDeclaration> stringVariables(MethodDeclaration ¢) {
+    List<VariableDeclaration> $ = new ArrayList<>();
+    if (¢ == null)
+      return $;
+    ¢.accept(new ASTVisitor(){
+      @Override public boolean visit(SingleVariableDeclaration node){
+        if ("String".equals((node.getType() + "")))
+          $.add(node);
+        return true;
+      }
+    });
+    return $;
   }
 }
