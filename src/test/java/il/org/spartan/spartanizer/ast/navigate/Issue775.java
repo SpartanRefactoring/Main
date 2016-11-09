@@ -68,4 +68,7 @@ public class Issue775 {
     assertEquals("C<K,V,E,S>", type(az.typeDeclaration(findFirst.typeDeclaration(
         ast("abstract static class C<  K, V, E extends InternalEntry<K, V, E>, S extends Segment<K, V, E, S>>extends ReentrantLock")))) + "");
   }
+  @Test public void p() {
+    assertEquals("C", type(az.enumDeclaration(findFirst.abstractTypeDeclaration(ast("enum C{}")))) + "");
+  }
 }
