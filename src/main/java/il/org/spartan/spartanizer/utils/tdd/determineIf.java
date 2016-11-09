@@ -131,11 +131,7 @@ public enum determineIf {
       @Override public boolean visit(@SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
         return false;
       }
-
-      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration __) {
-        return false;
-      }
-
+      
       @Override public boolean visit(ReturnStatement ¢) {
         statementList.add(¢);
         return true;
