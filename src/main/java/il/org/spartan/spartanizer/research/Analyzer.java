@@ -140,7 +140,6 @@ public class Analyzer {
    *        placed in */
   private static void analyze() {
     final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
-    sanityCheck();
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
@@ -206,27 +205,19 @@ public class Analyzer {
     ;
   }
   private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
-     return ¢;
-//    return ¢.add(MethodDeclaration.class, //
-//        new Carrier(), //
-//        new Converter(), //
-//        new Delegator(), //
-//        new Examiner(), //
-//        new Exploder(), //
-//        new Fluenter(), //
-//        new FluentSetter(), ///
-//        new Getter(), //
-//        new JDPattern(), //
-//        new Mapper(), //
-//        new MethodEmpty(), //
-//        new TypeChecker(), //
-//        null);
-  }
-  /** This us just to check that the InteractiveSpartanizer works and that
-   * tippers can be added to it. */
-  private static void sanityCheck() {
-    // assert addJavadocNanoPatterns(new InteractiveSpartanizer())
-    // .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object
-    // f(){ return c;} }")) + "").contains("[[Getter]]");
+    return ¢.add(MethodDeclaration.class, //
+        new Carrier(), //
+        new Converter(), //
+        new Delegator(), //
+        new Examiner(), //
+        new Exploder(), //
+        new Fluenter(), //
+        new FluentSetter(), ///
+        new Getter(), //
+        new JDPattern(), //
+        new Mapper(), //
+        new MethodEmpty(), //
+        new TypeChecker(), //
+        null);
   }
 }
