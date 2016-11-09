@@ -451,17 +451,42 @@ public enum step {
    * @param d JD
    * @return */
   public static Type type(final AbstractTypeDeclaration d) {
-    String nameNoAnnotations = (d + "").substring((d + "").indexOf("class"));
-    String name = nameNoAnnotations.substring(nameNoAnnotations.indexOf("class") + 6, nameNoAnnotations.indexOf("{"));
-    if (name.contains("<"))
-      for (int openers = 0, ¢ = name.indexOf('<'); ¢ < name.length(); ++¢) {
+    if (d == null)
+      return null;
+    String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
+    String name = (d + "").substring((d + "").indexOf(typeType));
+    name = name.substring(name.indexOf(typeType) + typeType.length(), name.indexOf("{"));
+    while (name.contains("extends") && !balanced(name.substring(0, name.indexOf("extends"))))
+      for (int idx = name.indexOf("extends"), openers = 0, ¢ = idx + 7;; ++¢) {
+        if (name.charAt(¢) == ',' && openers <= 0) {
+          name = name.substring(0, idx) + name.substring(¢);
+          break;
+        }
         if (name.charAt(¢) == '<')
           ++openers;
-        if (name.charAt(¢) == '>' && --openers == 0)
-          name = name.substring(0, ¢ + 1);
+        else if (name.charAt(¢) == '>') {
+          --openers;
+          if (openers == 0) {
+            name = name.substring(0, idx) + name.substring(¢ + 1);
+            break;
+          }
+          if (openers < 0) {
+            name = name.substring(0, idx) + name.substring(¢);
+            break;
+          }
+        }
       }
-    return d == null ? null
-        : findFirst.type(wizard.ast("class d{" + name.replaceAll("extends [^\\s,]+", "").replaceAll("implements [^{]+", "") + " x; }"));
+    name = name.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
+    return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
+  }
+  private static boolean balanced(String s) {
+    int openers = 0;
+    for (int ¢ = 0; ¢ < s.length(); ++¢)
+      if (s.charAt(¢) == '<')
+        ++openers;
+      else if (s.charAt(¢) == '>')
+        --openers;
+    return openers == 0;
   }
   /** @param ¢
    * @return */
