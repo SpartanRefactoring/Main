@@ -19,8 +19,18 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<Name> invocations(final MethodInvocation ¢) {
-    return ¢ == null ? null : new TreeSet<>();
+  public static Set<String> invocations(final MethodInvocation ¢) {
+    if (¢ == null)
+      return null;
+    final Set<String> $ = new TreeSet<>();
+    @SuppressWarnings("unchecked") final List<Object> l = ¢.arguments();
+    for (final Object i : l) {
+      if (i instanceof MethodInvocation)
+        $.addAll(invocations((MethodInvocation) i));
+      if (!(i instanceof MethodInvocation) && i instanceof SimpleName)
+        $.add(i + "");
+    }
+    return $;
   }
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
@@ -152,12 +162,24 @@ public enum getAll {
    * takes a single parameter, which is a TypeDeclaration. 
    * returns a list of private fields for this class (by fields' names)
    * @param TypeDeclaration
-   *  @author Yonatan Zarecki
-   *  @author Roded Zats
-   *  @author Ziv Izhar
+   * @author yonzarecki
+   * @author rodedzats
+   * @author zivizhar
    */
-  public static List<String> privateFields(@SuppressWarnings("unused") TypeDeclaration __) {
-    return null;
+  public static List<String> privateFields(final TypeDeclaration ¢) {
+    final List<String> $ = new ArrayList<>();
+    if (¢ == null)
+      return $;
+    
+    ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
+        if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
+          for (VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+            $.add(df.getName().getIdentifier());
+        return true;
+      }
+    });
+    return $;
   }
   
   
