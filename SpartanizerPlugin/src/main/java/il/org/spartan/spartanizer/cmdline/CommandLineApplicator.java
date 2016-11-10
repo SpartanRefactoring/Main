@@ -19,9 +19,7 @@ public class CommandLineApplicator extends Applicator {
   public static CommandLineApplicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
-
-//  private final CommandLine$Applicator a = new CommandLine$Applicator();
-
+  // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
    * @return this applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
@@ -32,7 +30,6 @@ public class CommandLineApplicator extends Applicator {
     });
     return this;
   }
-
   /** @return this */
   public CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
@@ -47,26 +44,22 @@ public class CommandLineApplicator extends Applicator {
     // }));
     return this;
   }
-
   /** @return this */
   public CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
-
   /** Default passes configuration, with many passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
-
   // TODO Matteo: I have changed the "run action" to return number of tips
   // committed instead of whether tips were committed (Boolean -> Integer).
   // Added a quick fix to your code. Also I do not understand why you wrote this
   // - we will inspect it once we meet. --or
-  /**
-   * Applies {@link Spartanizer$Applicator} by default. 
+  /** Applies {@link Spartanizer$Applicator} by default.
    * @return this */
   public CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
@@ -86,10 +79,9 @@ public class CommandLineApplicator extends Applicator {
   // name(a.getName());
   // return this;
   // }
-
   /** Default run action configuration of {@link CommandLineApplicator}.
-   * Spartanize the {@link CompilationUnit} using received
-   * TODO maybe this method are going to die (as well as Spartanize$Applicator)
+   * Spartanize the {@link CompilationUnit} using received TODO maybe this
+   * method are going to die (as well as Spartanize$Applicator)
    * {@link Spartanizer$Applicator}.
    * @param a JD
    * @return this applicator */
@@ -98,7 +90,6 @@ public class CommandLineApplicator extends Applicator {
     name(a.getClass().getSimpleName());
     return this;
   }
-
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
    * {@link CommandLine$Applicator}.
@@ -109,41 +100,35 @@ public class CommandLineApplicator extends Applicator {
     name(a.getClass().getSimpleName());
     return this;
   }
-
   /** @return this */
   public CommandLineApplicator defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
-
   /** @return this */
   CommandLineApplicator defaultSelection() {
-//    selection(CommandLineSelection.Util.get());
+    // selection(CommandLineSelection.Util.get());
     return this;
   }
-
   /** Default run action configuration of {@link CommandLineApplicator}.
    * @param ¢ JD
    * @return this applicator */
-//  public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator ¢) {
-//    setRunAction(¢¢ -> Integer.valueOf(¢.apply(¢¢, selection())));
-//    name(¢.getName());
-//    return this;
-//  }
-
+  // public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator
+  // ¢) {
+  // setRunAction(¢¢ -> Integer.valueOf(¢.apply(¢¢, selection())));
+  // name(¢.getName());
+  // return this;
+  // }
   /** @param ¢ JD
    * @return */
   @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
-
   /** @return this */
   private CommandLineApplicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew()
-        .defaultRunContext().defaultSelection().defaultRunAction();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
-
   /* @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
     if (selection() == null && listener() == null && passes() <= 0 && selection().isEmpty())
@@ -153,31 +138,31 @@ public class CommandLineApplicator extends Applicator {
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
-//      System.out.println("inside go");
+      // System.out.println("inside go");
       final int l = passes();
-//      System.out.println("passes: " + l);
+      // System.out.println("passes: " + l);
       for (int pass = 1; pass <= l; ++pass) {
-//        System.out.println("pass: " + l);
+        // System.out.println("pass: " + l);
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
         final List<WrappedCompilationUnit> selected = selection().inner;
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> dead = new ArrayList<>();
-//        System.out.println("shouldRun: " + shouldRun());
-//        int i = 0;
+        // System.out.println("shouldRun: " + shouldRun());
+        // int i = 0;
         for (final WrappedCompilationUnit ¢ : alive) {
-//          System.out.println("i: " + i++);
-//          System.out.println(alive.size());
+          // System.out.println("i: " + i++);
+          // System.out.println(alive.size());
           // System.out.println(¢);
           // System.out.println(runAction());
           final int tipsInvoked = runAction().apply(¢).intValue();
           System.out.println("tipsInvoked: " + tipsInvoked);
           if (tipsInvoked <= 0)
             dead.add(¢);
-          ¢.dispose(); // nullify the CompilationUnit associated to an ICompilationUnit
-          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), 
-              Integer.valueOf(alive.size()), "unknown"));
+          ¢.dispose(); // nullify the CompilationUnit associated to an
+                       // ICompilationUnit
+          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), "unknown"));
           totalTipsInvoked.addAndGet(tipsInvoked);
           if (!shouldRun())
             break;
@@ -209,12 +194,10 @@ public class CommandLineApplicator extends Applicator {
       this.inputCount = inputCount;
       this.printing = printing;
     }
-
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
-
     private static String printableAt(final Object[] os, final int index) {
       return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }
