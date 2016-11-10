@@ -17,10 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Matteo Orru'
  * @since 2016 */
-public class Spartanizer$Applicator extends Generic$Applicator{
-  
-  CSVStatistics spectrumStats; 
-  
+public class Spartanizer$Applicator extends Generic$Applicator {
+  CSVStatistics spectrumStats;
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
 
   /** Instantiates this class */
@@ -36,8 +34,8 @@ public class Spartanizer$Applicator extends Generic$Applicator{
    * @param s
    * @return */
   public boolean apply(final AbstractSelection<?> __) {
-    List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
-    for (WrappedCompilationUnit w : list) {
+    final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
+    for (final WrappedCompilationUnit w : list) {
       assert w != null;
       assert w.compilationUnit != null;
       System.out.println(w.compilationUnit);
@@ -70,7 +68,6 @@ public class Spartanizer$Applicator extends Generic$Applicator{
       }
     });
   }
-  
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
@@ -80,7 +77,6 @@ public class Spartanizer$Applicator extends Generic$Applicator{
     computeMetrics(input, outputASTNode);
     return false;
   }
-  
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
@@ -92,7 +88,6 @@ public class Spartanizer$Applicator extends Generic$Applicator{
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
-  
   /** @param input
    * @return */
   private String fixedPoint(final String from) {
@@ -183,7 +178,6 @@ public class Spartanizer$Applicator extends Generic$Applicator{
       }
     });
   }
-  
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
