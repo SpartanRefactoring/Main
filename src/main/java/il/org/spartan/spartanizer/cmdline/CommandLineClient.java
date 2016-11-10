@@ -6,22 +6,21 @@ public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
   static String inputDir = ".";
   private static String outputDir = "/tmp";
-public static void main(final String[] args) {
-    if(args.length == 0)
-    processCommandLine(args);
+
+  public static void main(final String[] args) {
+    if (args.length == 0)
+      processCommandLine(args);
   }
-  
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
-    CommandLineClient r = new CommandLineClient();
-//    final List<String> remaining = extract(args, r);
+    final CommandLineClient r = new CommandLineClient();
+    // final List<String> remaining = extract(args, r);
     //
     Reports.setOutputFolder(outputDir);
     Reports.setInputFolder(inputDir);
     //
     new CommandLineSpartanizer(inputDir).apply();
-//    r.printExternals();
+    // r.printExternals();
   }
-  
   @SuppressWarnings("unused") private static void parseCommandLineArgs(final String[] args) {
     if (args.length == 0)
       printPrompt();
@@ -40,7 +39,6 @@ public static void main(final String[] args) {
         ++¢;
       }
   }
-
   static void printPrompt() {
     System.out.println("Help");
     System.out.println("");
@@ -49,5 +47,5 @@ public static void main(final String[] args) {
     System.out.println("  -o       output directory: here go the results of the analysis");
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
-  } 
+  }
 }
