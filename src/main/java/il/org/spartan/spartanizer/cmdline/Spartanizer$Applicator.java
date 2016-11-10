@@ -56,8 +56,9 @@ public class Spartanizer$Applicator {
       Initializer.class, //
       VariableDeclarationFragment.class //
   );
-  CSVStatistics spectrumStats; // = new CSVStatistics(spectrumFileName,
-                               // "property");
+  
+  CSVStatistics spectrumStats; 
+  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
 
   /** Instantiates this class */
@@ -85,13 +86,6 @@ public class Spartanizer$Applicator {
         }
       });
     }
-    // if (s instanceof TrackerSelection)
-    // return apply(u, (TrackerSelection) s);
-    // setSelection(s == null || s.textSelection == null ||
-    // s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null :
-    // s.textSelection);
-    // final AtomicInteger counter = new AtomicInteger(0);
-    // return counter.get()> 0;
     return false;
   }
   /** Apply the spartanization to a single CompilationUnit
@@ -114,6 +108,7 @@ public class Spartanizer$Applicator {
       }
     });
   }
+  
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
@@ -123,6 +118,7 @@ public class Spartanizer$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
+  
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
@@ -134,6 +130,7 @@ public class Spartanizer$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
+  
   boolean go2(final ASTNode input) {
     System.out.println(input);
     System.out.println("ASTNode input: " + az.methodDeclaration(input));
@@ -284,13 +281,6 @@ public class Spartanizer$Applicator {
         }
         return true;
       }
-      // <N extends ASTNode> void tick2(final Tipper<N> w) {
-      // final String key = presentFileName + "-" + presentMethod +
-      // monitor.className(w.getClass());
-      //// if (!coverage.containsKey(key))
-      //// coverage.put(key, 0);
-      //// coverage.put(key, coverage.get(key) + 1);
-      // }
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
         return toolbox.firstTipper(¢);
       }
