@@ -17,7 +17,40 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class CommandLine$Applicator {
-  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+  static List<Class<? extends ASTNode>> selectedNodeTypes = 
+      as.list(MethodDeclaration.class, 
+              InfixExpression.class, //
+              VariableDeclarationFragment.class, //
+              EnhancedForStatement.class, //
+              Modifier.class, //
+              VariableDeclarationExpression.class, //
+              ThrowStatement.class, //
+              CastExpression.class, //
+              ClassInstanceCreation.class, //
+              SuperConstructorInvocation.class, //
+              SingleVariableDeclaration.class, //
+              ForStatement.class, //
+              WhileStatement.class, //
+              Assignment.class, //
+              Block.class, //
+              PostfixExpression.class, //
+              InfixExpression.class, //
+              InstanceofExpression.class, //
+              MethodDeclaration.class, //
+              MethodInvocation.class, //
+              IfStatement.class, //
+              PrefixExpression.class, //
+              ConditionalExpression.class, //
+              TypeDeclaration.class, //
+              EnumDeclaration.class, //
+              FieldDeclaration.class, //
+              CastExpression.class, //
+              EnumConstantDeclaration.class, //
+              NormalAnnotation.class, //
+              Initializer.class, //
+              VariableDeclarationFragment.class //
+            );
+  
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
   protected PrintWriter afters;
@@ -31,20 +64,26 @@ public class CommandLine$Applicator {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
-        return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
+        System.out.println("!selectedNodeTypes.contains(¢.getClass()): " + !selectedNodeTypes.contains(¢.getClass()));
+//      System.out.println("!filter(¢): " + !filter(¢));
+        System.out.println("¢.getClass(): " + ¢.getClass());
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // !selectedNodeTypes.contains(¢.getClass()) || 
       }
     });
   }
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
-    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
+//    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
+    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output);
     Reports.printFile(input + "", "before");
     Reports.printFile(output, "after");
     computeMetrics(input, outputASTNode);
     return false;
   }
-  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
+
+  @SuppressWarnings({ "boxing"}) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
     Reports.name(input);
@@ -55,12 +94,15 @@ public class CommandLine$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
+
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
+
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
+//      final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
       final ASTRewrite r = createRewrite(u);
       final TextEdit e = r.rewriteAST($, null);
       try {
@@ -73,11 +115,80 @@ public class CommandLine$Applicator {
         return $.get();
     }
   }
+  
+  /**
+   * createRewrite on CompilationUnit 
+   * @param ¢
+   * @return
+   */
+  
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢);
+    return $;
+  }
+  
+/**
+ * createRewrite on BodyDeclaration 
+ * TODO Matteo -- this gonna be removed? -- matteo
+ * @param u
+ * @return
+ */
+
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
+  
+  /**
+   * consolidate tips on CompilationUnit
+   * @param r
+   * @param u
+   */
+  
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
+    toolbox = Toolbox.defaultInstance();
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        TrimmerLog.visitation(n);
+        if (disabling.on(n))
+          return true;
+        Tipper<N> tipper = null;
+        try {
+          tipper = getTipper(n);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
+        if (tipper == null)
+          return true;
+        Tip s = null;
+        try {
+          s = tipper.tip(n, exclude);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
+        if (s != null) {
+          ++tippersAppliedOnCurrentObject;
+          // tick2(tipper); // save coverage info
+          TrimmerLog.application(r, s);
+        }
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+  }
+  
+  /**
+   * consolidateTips on BodyDeclaration 
+   * TODO Matteo -- this gonna be removed? -- matteo
+   * @param r
+   * @param u
+   */
+
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -106,25 +217,55 @@ public class CommandLine$Applicator {
         }
         return true;
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-  @SuppressWarnings("static-method") public boolean apply(@SuppressWarnings("unused") final AbstractSelection<?> __) {
+  
+  /**
+   * 
+   * @param u
+   * @param __
+   * @return
+   */
+
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+//    if (__ == null)
+      apply(u);
+//    else if (u == null)
+//      apply(__);
     return false;
   }
-  public boolean apply(@SuppressWarnings("unused") final WrappedCompilationUnit u, final AbstractSelection<?> __) {
-    for (final WrappedCompilationUnit ¢ : ((CommandLineSelection) __).get())
-      go(¢.compilationUnit);
-    // w.compilationUnit.accept(new ASTVisitor() {
-    // @Override public boolean preVisit2(final ASTNode ¢) {
-    // return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
-    // }
-    // });
+  
+  /**
+   * Apply to single compilation unit
+   * @param ¢
+   * @return
+   */
+   
+  public boolean apply(final WrappedCompilationUnit ¢) {
+    System.out.println("*********");
+    go(¢.compilationUnit);
+    return false;
+  }
+  
+  /** @param __
+   * @return
+   */
+  
+  public boolean apply(final AbstractSelection<?> __) {
+  for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
+    w.compilationUnit.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // || !filter(¢) 
+      }
+    });
     return false;
   }
 }
