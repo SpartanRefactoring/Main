@@ -52,7 +52,6 @@ public final class LaconizeProject extends BaseHandler {
     }
     return $.get();
   }
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
@@ -60,7 +59,6 @@ public final class LaconizeProject extends BaseHandler {
     initialCount = 0;
     return go();
   }
-
   public Void go() {
     start();
     if (initialCount == 0)
@@ -82,7 +80,6 @@ public final class LaconizeProject extends BaseHandler {
       if (passNumber > MAX_PASSES || singlePass())
         return;
   }
-
   boolean singlePass() {
     final Trimmer t = new Trimmer();
     final IProgressService ps = workench.getProgressService();
@@ -118,7 +115,6 @@ public final class LaconizeProject extends BaseHandler {
     }
     return cancelled.get() || todo.isEmpty();
   }
-
   public void start() {
     currentCompilationUnit = eclipse.currentCompilationUnit();
     status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");

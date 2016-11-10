@@ -21,21 +21,18 @@ public final class subject {
     extendedOperands($).add(make.plant(duplicate.of(add)).into($));
     return $;
   }
-
   public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
     InfixExpression $ = duplicate.of(base);
     for (final Expression ¢ : adds)
       $ = append($, ¢);
     return $;
   }
-
   /** Create a new Operand
    * @param inner the expression of the operand
    * @return the new operand */
   public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }
-
   /** Create an instance of several operands together here we get the
    * expressions in separate and not as a list
    * @param xs JD
@@ -43,7 +40,6 @@ public final class subject {
   public static Several operands(final Expression... ¢) {
     return new Several(as.list(¢));
   }
-
   /** Create an instance of several operands together here we get the
    * expressions as a list
    * @param xs a list of expressions
@@ -51,7 +47,6 @@ public final class subject {
   public static Several operands(final List<Expression> ¢) {
     return new Several(¢);
   }
-
   /** Create an instance of 2 expressions together
    * @param left the left expression
    * @param right the right expression
@@ -59,7 +54,6 @@ public final class subject {
   public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);
   }
-
   /** Create an instance of 2 sideEffects together
    * @param s1 the first statement
    * @param s2 the second statement
@@ -67,7 +61,6 @@ public final class subject {
   public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
-
   /** Create an instance of several sideEffects together here we get the
    * sideEffects as a list
    * @param ss a list of sideEffects
@@ -75,7 +68,6 @@ public final class subject {
   public static SeveralStatements ss(final List<Statement> ¢) {
     return new SeveralStatements(¢);
   }
-
   /** Create an instance of several sideEffects together here we get only one
    * statement
    * @param context JD
@@ -83,7 +75,6 @@ public final class subject {
   public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);
   }
-
   /** Create an instance of several sideEffects together here we get the
    * sideEffects in separate and not as a list
    * @param ss JD
@@ -100,7 +91,6 @@ public final class subject {
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
-
     /** Make a deep copy of expression and assign it to ast
      * @param x JD
      * @return a copy of the expression e
@@ -109,7 +99,6 @@ public final class subject {
     Expression claim(final Expression ¢) {
       return wizard.rebase(duplicate.of(extract.core(¢)), ast);
     }
-
     /** A deep copy of statement and assign it to ast, if the statement exists
      * @param s a Statement
      * @return a copy of the statement s if it is'nt null, else returns null
@@ -131,7 +120,6 @@ public final class subject {
       super(inner);
       this.inner = claim(inner);
     }
-
     // ** TODO: Yossi Gil: integrate with fluent API
     /** Create a number literal node owned by ast
      * @param text the number of the literal node
@@ -141,7 +129,6 @@ public final class subject {
       $.setToken(text);
       return $;
     }
-
     /** Create a new parenthesis expression owned by ast and put the expression
      * inner (a field of Operand) between the parenthesis of the new expression
      * @return the expression inner between parenthesis */
@@ -150,7 +137,6 @@ public final class subject {
       $.setExpression(inner);
       return $;
     }
-
     /** Create a new expression with postfix operator owned by this ast, the
      * expression is a combination of the expression inner with a postfix
      * operator
@@ -162,7 +148,6 @@ public final class subject {
       $.setOperand(make.plant(inner).into($));
       return $;
     }
-
     /** Create a new expression with prefix operator owned by this ast, the
      * expression is a combination of the expression inner with a prefix
      * operator
@@ -174,7 +159,6 @@ public final class subject {
       $.setOperand(make.plant(inner).into($));
       return $;
     }
-
     /** Create a new expression of method invocation owned by this AST
      * @param methodName a string contains the method name
      * @return a method invocation expression of the method methodName with
@@ -186,14 +170,12 @@ public final class subject {
       $.setName(ast.newSimpleName(methodName));
       return $;
     }
-
     /** Creates and returns a new qualified name node for inner.
      * @param name a string of the name to be qualified
      * @return a qualified name node with name */
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
     }
-
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return new return statement */
     public ReturnStatement toReturn() {
@@ -201,13 +183,11 @@ public final class subject {
       $.setExpression(inner);
       return $;
     }
-
     /** convert the expression inner into statement
      * @return an ExpressionStatement of inner */
     public ExpressionStatement toStatement() {
       return ast.newExpressionStatement(inner);
     }
-
     /** Create a new throw statement owned by this ast
      * @return a throw statement of the expression inner */
     public ThrowStatement toThrow() {
@@ -231,7 +211,6 @@ public final class subject {
       this.left = claim(left);
       this.right = claim(right);
     }
-
     /** Create a new assignment expression owned by ast the left/right hand side
      * of the assignment expression is the field left/right respectively,
      * @param o an assignment operator
@@ -244,7 +223,6 @@ public final class subject {
       $.setRightHandSide(make.plant(right).into($));
       return $;
     }
-
     /** Create a new infix expression owned by ast the left/right hand side of
      * the assignment expression is the field left/right respectively, and the
      * operator is the given one
@@ -260,7 +238,6 @@ public final class subject {
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);
       return $;
     }
-
     /** Create a new conditional expression owned by ast the condition is given
      * as a parameter, the true path is the left field and the false is the
      * right field
@@ -275,7 +252,6 @@ public final class subject {
       $.setElseExpression(make.plant(right).into($));
       return $;
     }
-
     /** Convert the assignment operator into a statement
      * @param o JD
      * @return a statement of the operator */
@@ -297,7 +273,6 @@ public final class subject {
       for (final Expression ¢ : operands)
         this.operands.add(claim(¢));
     }
-
     /** Create an infix expression from the given operator and the operands
      * @param o JD
      * @return JD */
@@ -327,7 +302,6 @@ public final class subject {
       for (final Statement ¢ : inner)
         this.inner.add(claim(¢));
     }
-
     /** Transform the inner into a block
      * @return a Block statement */
     public Block toBlock() {
@@ -335,13 +309,11 @@ public final class subject {
       step.statements($).addAll(inner);
       return $;
     }
-
     /** Transform the inner into a block if it's possible
      * @return a Block statement <code>or</code> a <code>null</code> */
     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
-
     /** use the inner list to make a block depending on it's size (only in case
      * there are more than 2 elements)
      * @return
@@ -376,7 +348,6 @@ public final class subject {
       this.then = claim(then);
       this.elze = claim(elze);
     }
-
     /** Create a new if statement owned by ast the if statement contains a given
      * condition and uses the class parameters (then, elze)
      * @param condition the condition of the if statement
@@ -390,7 +361,6 @@ public final class subject {
         $.setElseStatement(elze);
       return $;
     }
-
     /** Create a new if statement owned by ast the if statement contains the
      * logical not of the given condition and uses the class parameters (then,
      * elze)

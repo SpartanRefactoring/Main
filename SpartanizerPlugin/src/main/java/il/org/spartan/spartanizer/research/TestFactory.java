@@ -14,17 +14,15 @@ import il.org.spartan.spartanizer.cmdline.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class TestFactory {
-  public static String testcase(final String raw, final int report, final int issue) {
-    return wrapTest(report, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
+  public static String testcase(final String raw, final int name, final int issue) {
+    return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
   }
-
   /** escapes all "s
    * @param ¢
    * @return */
   private static String escapeQuotes(final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
-
   private static String wrapTest(final int report, final int issue, final String code) {
     return "  @Test public void report" + report + "() {" + //
         "\n\ttrimmingOf(\"// From use case of issue" + issue + //
@@ -32,7 +30,6 @@ public class TestFactory {
         + code + //
         "\n).stays();\n}";
   }
-
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
   static String renderIdentifier(final String old) {
@@ -43,7 +40,6 @@ public class TestFactory {
                     : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
                         : String.valueOf(old.charAt(0)) + String.valueOf(old.charAt(1) + 1);
   }
-
   /** maybe i should use
    * http://stackoverflow.com/questions/2876204/java-code-formating instead
    * @param ¢ string to be eliminated
@@ -51,7 +47,6 @@ public class TestFactory {
   private static String eliminateSpaces(final String ¢) {
     return Essence.of(¢);
   }
-
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
@@ -63,7 +58,6 @@ public class TestFactory {
     }
     return $;
   }
-
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>("start");
@@ -99,7 +93,6 @@ public class TestFactory {
     }
     return ASTutils.extractCode(s, document);
   }
-
   public static void main(final String args[]) {
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";

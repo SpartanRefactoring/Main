@@ -15,19 +15,15 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement> imp
     $.setExpression(null);
     return $;
   }
-
   private static boolean fitting(final ForStatement ¢) {
     return ¢ != null && iz.literal.true¢(step.expression(¢));
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Convert loop: 'for(?;" + "true" + ";?)' to 'for(?;;?)'";
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && fitting(¢);
   }
-
   @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutCondition(duplicate.of(¢));
   }

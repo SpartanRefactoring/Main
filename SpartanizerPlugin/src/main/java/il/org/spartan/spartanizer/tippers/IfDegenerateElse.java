@@ -31,15 +31,12 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }
-
   @Override public String description(final IfStatement ¢) {
     return "Remove vacuous 'else' branch of 'if(" + ¢.getExpression() + ")...'";
   }
-
   @Override public boolean prerequisite(final IfStatement ¢) {
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
-
   @Override public Statement replacement(final IfStatement ¢) {
     final IfStatement $ = duplicate.of(¢);
     $.setElseStatement(null);

@@ -5,7 +5,6 @@ public abstract class TipperFailure extends Exception {
 
   public TipperFailure() {
   }
-
   public abstract String what();
 
   public static class TipNotImplementedException extends TipperFailure {

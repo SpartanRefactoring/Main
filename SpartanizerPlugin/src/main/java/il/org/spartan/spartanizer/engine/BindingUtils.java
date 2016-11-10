@@ -17,13 +17,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     final ASTNode $ = hop.containerType(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
-
   /** @param compilationUnit current compilation unit
    * @return current package */
   public static IPackageBinding getPackage(final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
   }
-
   /** Finds visible method in hierarchy.
    * @param b base type
    * @param methodName method name
@@ -39,7 +37,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
     return take($).when(isVisible($, n, u));
   }
-
   /** Determines whether an invocation of a method is legal in a specific
    * context.
    * @param b a method

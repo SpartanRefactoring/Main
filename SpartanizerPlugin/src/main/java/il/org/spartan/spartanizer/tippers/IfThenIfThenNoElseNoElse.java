@@ -39,15 +39,12 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement> imp
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate.of(then(then)), g);
   }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merge conditionals of nested if staement";
   }
-
   @Override public Tip tip(final IfStatement ¢) {
     return tip(¢, null);
   }
-
   @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
     if (!iz.vacuousElse(s))
       return null;

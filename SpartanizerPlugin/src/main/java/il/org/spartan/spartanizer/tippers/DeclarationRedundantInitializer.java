@@ -17,11 +17,9 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
   @Override public String description() {
     return "Remove default values initiliazing field";
   }
-
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
-
   @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))

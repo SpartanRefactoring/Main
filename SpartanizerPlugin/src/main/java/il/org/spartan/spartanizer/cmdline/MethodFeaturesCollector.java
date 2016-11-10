@@ -23,7 +23,6 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
     lastNode = node;
     return super.visit(node);
   }
-
   /** TODO: Ori Roth: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
@@ -69,13 +68,11 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
     ;
     writer.nl();
   }
-
   @Override public void endVisit(final MethodDeclaration node) {
     --methodNesting;
     consider(node);
     super.endVisit(node);
   }
-
   @Override protected void done() {
     dotter.end();
     System.err.println("Your output is in: " + writer.close());

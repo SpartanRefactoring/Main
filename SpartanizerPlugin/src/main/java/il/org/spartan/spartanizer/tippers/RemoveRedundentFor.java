@@ -17,7 +17,6 @@ public class RemoveRedundentFor extends ReplaceCurrentNode<ForStatement> impleme
   @Override public String description(final ForStatement ¢) {
     return "remove :" + ¢;
   }
-
   @Override public ASTNode replacement(final ForStatement ¢) {
     return ¢ == null || haz.sideEffects(¢.getExpression()) || !RemoveRedundent.checkListOfExpressions(initializers(¢))
         || !RemoveRedundent.checkListOfExpressions(updaters(¢)) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
