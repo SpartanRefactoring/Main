@@ -20,18 +20,17 @@ public enum find {
     if (n == null)
       return null;
     ASTNode a = n.getParent();
-    for (; a != null && (az.typeDeclaration(a) == null); a = a.getParent()) {
+    for (; a != null && az.typeDeclaration(a) == null; a = a.getParent()) {
       // In the end of the for loop, a will be null or the enclosing Type
       // declaration.
     }
     return (TypeDeclaration) a;
   }
-  public static MethodDeclaration ancestorMethod(ASTNode n) {
+  public static MethodDeclaration ancestorMethod(final ASTNode n) {
     ASTNode temp = n;
-    if (temp == null)
-      return null;
+    if (temp == null) return null;
     while (temp != null) {
-      if (az.methodDeclaration(temp) != null)
+      if (az.methodDeclaration(temp) != null && az.lambdaExpression(az.methodDeclaration(temp)) == null)
         return az.methodDeclaration(temp);
       temp = temp.getParent();
     }
