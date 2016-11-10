@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
     getAll2.stringVariables((MethodDeclaration) null);
   }
   @Test public void test01() {
+    //TODO SAPIR AND YANIV: we get warnings on your code.
+    
     List<VariableDeclaration> l = getAll2.stringVariables((MethodDeclaration) null);
   }
   @Test public void test02() {
