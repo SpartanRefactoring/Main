@@ -35,15 +35,12 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     setInitializers($, duplicate.of(s));
     return $;
   }
-
   private static Expression dupForExpression(final ForStatement ¢) {
     return duplicate.of(expression(¢));
   }
-
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
-
   /** final modifier is the only legal modifier inside a for loop, thus we push
    * initializers only if both, initializer's and declaration's modifiers lists
    * are empty, or contain final modifier only.
@@ -55,11 +52,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final List<IExtendedModifier> declarationModifiers = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
     return declarationModifiers.isEmpty() && initializerModifiers.isEmpty() || haz.final¢(declarationModifiers) && haz.final¢(initializerModifiers);
   }
-
   private static boolean fittingType(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
     return (x.getType() + "").equals(s.getType() + "");
   }
-
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
@@ -68,7 +63,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         return false;
     return true;
   }
-
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
@@ -76,7 +70,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         ¢.setInitializer(duplicate.of(step.right(from)));
     return duplicate.of(step.left(from));
   }
-
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression x : operands)
@@ -91,7 +84,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       }
     return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
   }
-
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment a = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(from.getExpression());
@@ -99,7 +91,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return a != null ? handleAssignmentCondition(a, s)
         : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
   }
-
   /** @param t JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
@@ -110,7 +101,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
-
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = step.initializers(¢);
     if (initializers.isEmpty() || !iz.variableDeclarationExpression(first(initializers)))
@@ -119,18 +109,15 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
     return fittingType(s, e) && fittingModifiers(s, e);
   }
-
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
     step.initializers($).clear();
     step.initializers($).add(az.variableDeclarationExpression(s));
     step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(duplicate.of(step.fragments(forInitializer)));
   }
-
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)

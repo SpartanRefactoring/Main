@@ -26,7 +26,6 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
   public abstract boolean canTip(final N n);
-
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.
    * @param e JD
@@ -36,40 +35,31 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
   public final boolean cantTip(final N ¢) {
     return !canTip(¢);
   }
-
   @Override public String description() {
     return getClass().getSimpleName();
   }
-
   public abstract String description(N n);
-
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
   public final Class<N> myAbstractOperandsClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
-
   public Class<N> myActualOperandsClass() {
     final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
-
   public String myName() {
     return getClass().getSimpleName();
   }
-
   public Tip tip(final N ¢) {
     return tip(¢, null);
   }
-
   public Tip tip(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
-
   @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
     return (Class<N>) c2;
   }
-
   private Class<N> initializeMyOperandsClass() {
     Class<N> $ = null;
     for (final Method ¢ : getClass().getMethods())
@@ -77,19 +67,15 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);
   }
-
   private boolean isDefinedHere(final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
   }
-
   private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
-
   @Override public boolean equals(final Object ¢) {
     return ¢ != null && this.getClass().equals(¢.getClass());
   }
-
   @Override public int hashCode() {
     return super.hashCode();
   }

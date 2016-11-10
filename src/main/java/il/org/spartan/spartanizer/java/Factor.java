@@ -12,7 +12,6 @@ class Factor {
   static Factor divide(final Expression ¢) {
     return new Factor(true, ¢);
   }
-
   static Factor times(final Expression ¢) {
     return new Factor(false, ¢);
   }
@@ -24,11 +23,9 @@ class Factor {
     divider = divide;
     this.expression = expression;
   }
-
   public boolean multiplier() {
     return !divider;
   }
-
   // doesn'tipper work for division, need to figure out why
   Expression asExpression() {
     if (!divider)
@@ -39,7 +36,6 @@ class Factor {
     $.setRightOperand(!iz.infixExpression(expression) ? duplicate.of(expression) : make.parethesized(duplicate.of(expression)));
     return $;
   }
-
   boolean divider() {
     return divider;
   }

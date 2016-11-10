@@ -55,13 +55,11 @@ public class fluentTrimmerApplication extends Trimmer.With {
     }
     assert undoEdit != null;
   }
-
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
     return createRewrite(nullProgressMonitor);
   }
-
   /** creates an ASTRewrite which contains the changes
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
@@ -69,7 +67,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
   public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
     return createRewrite(¢, (IMarker) null);
   }
-
   public fluentTrimmerApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.go(this);
@@ -110,7 +107,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
       );
     return new fluentTrimmerApplication(trimmer(), document.get());
   }
-
   public void stays() {
     final String difference = common(codeFragment);
     if (difference != null)
@@ -122,7 +118,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n It converts instead to  '" + difference + "'" //
       );
   }
-
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
     compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -138,7 +133,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
       }
     });
   }
-
   String aboutTheSame(final String s1, final String s2) {
     assert s1 != null;
     assert s2 != null;
@@ -152,11 +146,9 @@ public class fluentTrimmerApplication extends Trimmer.With {
     assert g2b != null;
     return tide.eq(g1, g2b) || tide.eq(s1, g2b) || tide.eq(g1, g2a) ? g2b : null;
   }
-
   String common(final String expected) {
     return aboutTheSame(expected, document.get());
   }
-
   <N extends ASTNode> N findNode(final Class<N> clazz) {
     final GuessedContext guessContext = GuessedContext.find(codeFragment);
     assert guessContext != null;
@@ -164,7 +156,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
     assert $ != null;
     return $;
   }
-
   <N extends ASTNode> N firstInstance(final Class<N> clazz) {
     final Wrapper<N> $ = new Wrapper<>();
     compilationUnit.accept(new ASTVisitor() {
@@ -188,7 +179,6 @@ public class fluentTrimmerApplication extends Trimmer.With {
     });
     return $.get();
   }
-
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());

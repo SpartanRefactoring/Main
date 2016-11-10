@@ -23,7 +23,6 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
-
   @Override public Tip tip(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
@@ -37,7 +36,6 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }
-
       SimpleName $() {
         return d.getAST().newSimpleName("$");
       }
@@ -69,9 +67,7 @@ abstract class AbstractRenamePolicy {
     localVariables = explorer.localVariables();
     returnStatements = prune(explorer.returnStatements());
   }
-
   abstract SimpleName innerSelectReturnVariable();
-
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
         : innerSelectReturnVariable();
@@ -87,32 +83,27 @@ class Aggressive extends AbstractRenamePolicy {
           return noRivals($, ns, ss) ? $ : null;
     return null;
   }
-
   private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     int $ = 0;
     for (final SimpleName ¢ : ns)
       $ = Math.max($, score(¢, ss));
     return $;
   }
-
   private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
     for (final SimpleName rival : ns)
       if (rival != candidate && score(rival, ss) >= score(candidate, ss))
         return false;
     return true;
   }
-
   private static int score(final SimpleName n, final List<ReturnStatement> ss) {
     int $ = 0;
     for (final ReturnStatement ¢ : ss)
       $ += Collect.BOTH_LEXICAL.of(n).in(¢).size();
     return $;
   }
-
   public Aggressive(final MethodDeclaration inner) {
     super(inner);
   }
-
   @Override SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
@@ -122,14 +113,12 @@ class Conservative extends AbstractRenamePolicy {
   public Conservative(final MethodDeclaration inner) {
     super(inner);
   }
-
   @Override SimpleName innerSelectReturnVariable() {
     for (final Iterator<SimpleName> ¢ = localVariables.iterator(); ¢.hasNext();)
       if (unused(¢.next()))
         ¢.remove();
     return first(localVariables);
   }
-
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement ¢ : returnStatements)
       if (wizard.same(n, ¢.getExpression()))

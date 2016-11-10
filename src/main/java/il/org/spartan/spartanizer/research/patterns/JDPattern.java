@@ -34,33 +34,26 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
       @Override public boolean visit(final IfStatement ¢) {
         return checkContainsParameter(¢.getExpression());
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return checkContainsParameter(step.condition(¢)) || checkContainsParameter(step.initializers(¢)) || checkContainsParameter(step.updaters(¢));
       }
-
       @Override public boolean visit(final WhileStatement ¢) {
         return checkContainsParameter(step.expression(¢));
       }
-
       @Override public boolean visit(final AssertStatement ¢) {
         return checkContainsParameter(step.expression(¢));
       }
-
       @Override public boolean visit(final DoStatement ¢) {
         return checkContainsParameter(step.expression(¢));
       }
-
       @Override public boolean visit(final ConditionalExpression ¢) {
         return checkContainsParameter(step.expression(¢));
       }
-
       boolean checkContainsParameter(final ASTNode ¢) {
         if (containsParameter(¢, set))
           $.inner = false;
         return false;
       }
-
       boolean checkContainsParameter(final List<Expression> xs) {
         for (final Expression ¢ : xs)
           if (checkContainsParameter(¢))
@@ -70,7 +63,6 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     });
     return $.inner;
   }
-
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
@@ -87,7 +79,6 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     });
     return $.inner;
   }
-
   static Set<String> getInfluenced(final MethodDeclaration root, final Set<String> ps) {
     final Set<String> $ = new HashSet<>();
     $.addAll(ps);
@@ -97,13 +88,11 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
           $.add(extractName(step.left(¢)));
         return true;
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         if (containsParameter(¢.getInitializer(), $))
           $.add(extractName(¢.getName()));
         return true;
       }
-
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if (containsParameter(¢.getInitializer(), $))
           $.add(extractName(¢.getInitializer()));
@@ -112,7 +101,6 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     });
     return $;
   }
-
   protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
     root.accept(new ASTVisitor() {
@@ -123,7 +111,6 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     });
     return $ + "";
   }
-
   /** [[SuppressWarningsSpartan]] */
   static boolean nullCheckExpression(final Expression ¢) {
     if (¢ == null)

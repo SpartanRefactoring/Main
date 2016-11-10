@@ -28,7 +28,6 @@ public interface count {
     });
     return $.get();
   }
-
   static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
     final AtomicInteger $ = new AtomicInteger();
     n.accept(new ASTVisitor() {
@@ -39,7 +38,6 @@ public interface count {
     });
     return $.get();
   }
-
   static int lines(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
@@ -47,7 +45,6 @@ public interface count {
         if (Statement.class.isAssignableFrom(child.getClass()))
           addWeight($, child);
       }
-
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
@@ -68,7 +65,6 @@ public interface count {
     });
     return $.inner;
   }
-
   /** Counts the number of nodes in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
@@ -81,7 +77,6 @@ public interface count {
     });
     return $.get();
   }
-
   /** Counts the number of nodes in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
@@ -94,7 +89,6 @@ public interface count {
     });
     return $.get();
   }
-
   static int noimports(final CompilationUnit root) {
     final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
@@ -105,7 +99,6 @@ public interface count {
     });
     return $.get();
   }
-
   /** Exclude comments and import package statement from the content.
    * @param root
    * @return */
@@ -119,7 +112,6 @@ public interface count {
     });
     return $.get();
   }
-
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */

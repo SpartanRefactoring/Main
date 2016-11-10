@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 
 import java.util.function.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
+
 /** Configurable applicator.
  * @param <L> I think we do not need this one. It couples classes too much.
  * @author Ori Roth
@@ -32,18 +34,15 @@ public abstract class Applicator {
   public void stop() {
     shouldRun = false;
   }
-
   /** @return <code><b>true</b></code> <em>iff</em> this applicator should
    *         run. */
   public boolean shouldRun() {
     return shouldRun;
   }
-
   /** @return run context for this applicator. */
   public Consumer<Runnable> runContext() {
     return runContext;
   }
-
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -51,12 +50,10 @@ public abstract class Applicator {
     runContext = ¢;
     return this;
   }
-
   /** @return run action for this applicator */
   public Function<WrappedCompilationUnit, Integer> runAction() {
     return runAction;
   }
-
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -64,12 +61,10 @@ public abstract class Applicator {
     runAction = ¢;
     return this;
   }
-
   /** @return number of iterations for this applicator */
   public int passes() {
     return passes;
   }
-
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -77,12 +72,10 @@ public abstract class Applicator {
     passes = ¢;
     return this;
   }
-
   /** @return selection of the applicator, ready to be configured. */
   public Listener listener() {
     return listener;
   }
-
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -90,12 +83,10 @@ public abstract class Applicator {
     listener = ¢;
     return this;
   }
-
   /** @return selection of the applicator, ready to be configured. */
   public AbstractSelection<?> selection() {
     return selection;
   }
-
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -103,7 +94,6 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-
   /** Initialize the selection of this applicator using AbstractSelection.
    * @param ¢ JD
    * @author Matteo Orru'
@@ -112,12 +102,10 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-
   /** @return applicator's name */
   public String name() {
     return name;
   }
-
   /** Name this applicator.
    * @param ¢ JD
    * @return this applicator */
@@ -125,7 +113,15 @@ public abstract class Applicator {
     name = ¢;
     return this;
   }
-
   /** Main operation of this applicator. */
   public abstract void go();
+  public Applicator defaultListenerNoisy() {
+    return this;
+  }
+  public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
+    return this;
+  }
+  @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
+    return this;
+  }
 }
