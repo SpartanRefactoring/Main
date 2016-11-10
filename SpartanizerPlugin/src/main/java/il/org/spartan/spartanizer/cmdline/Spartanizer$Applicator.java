@@ -4,9 +4,7 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -75,7 +73,7 @@ public class Spartanizer$Applicator {
    * @author matteo
    */
   
-  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> s) {
+  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
       go(u.compilationUnit);
     return false;
   }
