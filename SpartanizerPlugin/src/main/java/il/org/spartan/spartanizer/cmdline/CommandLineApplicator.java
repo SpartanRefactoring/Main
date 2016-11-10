@@ -104,7 +104,7 @@ public class CommandLineApplicator extends Applicator {
   }
   /** @param ¢ JD
    * @return */
-  public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
+  @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
