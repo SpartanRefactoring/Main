@@ -16,47 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public class CommandLine$Applicator {
-  static List<Class<? extends ASTNode>> selectedNodeTypes = 
-      as.list(MethodDeclaration.class, 
-              InfixExpression.class, //
-              VariableDeclarationFragment.class, //
-              EnhancedForStatement.class, //
-              Modifier.class, //
-              VariableDeclarationExpression.class, //
-              ThrowStatement.class, //
-              CastExpression.class, //
-              ClassInstanceCreation.class, //
-              SuperConstructorInvocation.class, //
-              SingleVariableDeclaration.class, //
-              ForStatement.class, //
-              WhileStatement.class, //
-              Assignment.class, //
-              Block.class, //
-              PostfixExpression.class, //
-              InfixExpression.class, //
-              InstanceofExpression.class, //
-              MethodDeclaration.class, //
-              MethodInvocation.class, //
-              IfStatement.class, //
-              PrefixExpression.class, //
-              ConditionalExpression.class, //
-              TypeDeclaration.class, //
-              EnumDeclaration.class, //
-              FieldDeclaration.class, //
-              CastExpression.class, //
-              EnumConstantDeclaration.class, //
-              NormalAnnotation.class, //
-              Initializer.class, //
-              VariableDeclarationFragment.class //
-            );
-  
-  public Toolbox toolbox;
-  public int tippersAppliedOnCurrentObject;
-  protected PrintWriter afters;
-  protected PrintWriter befores;
-  File currentFile;
-  int done;
+public class CommandLine$Applicator extends Generic$Applicator{
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
@@ -64,10 +24,7 @@ public class CommandLine$Applicator {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
-        System.out.println("!selectedNodeTypes.contains(¢.getClass()): " + !selectedNodeTypes.contains(¢.getClass()));
-//      System.out.println("!filter(¢): " + !filter(¢));
-        System.out.println("¢.getClass(): " + ¢.getClass());
-        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // !selectedNodeTypes.contains(¢.getClass()) || 
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); 
       }
     });
   }
@@ -75,8 +32,7 @@ public class CommandLine$Applicator {
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
-//    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
-    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output);
+    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead of CLASS_BODY_DECLARATIONS
     Reports.printFile(input + "", "before");
     Reports.printFile(output, "after");
     computeMetrics(input, outputASTNode);
@@ -101,8 +57,7 @@ public class CommandLine$Applicator {
 
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-//      final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()); // instead of CLASS_BODY_DECLARATIONS
       final ASTRewrite r = createRewrite(u);
       final TextEdit e = r.rewriteAST($, null);
       try {
