@@ -24,6 +24,7 @@ public class Logger {
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static final Map<Class<? extends ASTNode>, Int> codeStatistics = new HashMap<>();
   private static int numMethods;
+  private static String currentFile;
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
@@ -126,8 +127,8 @@ public class Logger {
     methodsStatistics.get(key).markNP(n, np);
   }
   private static Integer hashMethod(final MethodDeclaration ¢) {
-    return Integer.valueOf((step.packageDeclaration(searchAncestors.forContainingCompilationUnit().from(¢)) + "."
-        + searchAncestors.forContainingType().from(¢) + "." + ¢ + step.parameters(¢)).hashCode());
+    return Integer.valueOf(
+        (currentFile + "." + step.type(searchAncestors.forContainingType().from(¢)) + "." + step.name(¢) + step.parametersTypes(¢)).hashCode());
   }
   /** @param ¢
    * @return */
@@ -187,6 +188,11 @@ public class Logger {
    * @param ¢ compilation unit */
   public static void logCompilationUnit(final CompilationUnit ¢) {
     numMethods += enumerate.methods(¢);
+  }
+  /** Collect statistics of a compilation unit which will be analyzed.
+   * @param ¢ compilation unit */
+  public static void logFile(final String fileName) {
+    currentFile = fileName;
   }
 
   /** Collects statistics for a nanopattern.
