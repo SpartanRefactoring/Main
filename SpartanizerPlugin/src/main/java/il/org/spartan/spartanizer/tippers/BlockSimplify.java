@@ -56,7 +56,6 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
         return reorganizeStatement(s);
     }
   }
-
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
       return false;
@@ -65,18 +64,15 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
         return false;
     return true;
   }
-
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     duplicate.into(ss, statements($));
     return $;
   }
-
   @Override public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
-
   @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || haz.hidings(ss))

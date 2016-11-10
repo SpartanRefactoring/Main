@@ -23,11 +23,9 @@ public class Issue777 {
   @Test public void a() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     azzertEquals("class C{void foo(){}}", addMethodToType("class C{}", "void foo(){}"));
   }
-
   @Test public void b() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     azzertEquals("/**freaking javadoc\n*/class C{void foo(){}}", addMethodToType("/**freaking javadoc\n*/class C{}", "void foo(){}"));
   }
-
   private String addMethodToType(final String type, final String method) throws BadLocationException {
     final Document $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
@@ -37,7 +35,6 @@ public class Issue777 {
     r.rewriteAST($, null).apply($);
     return $.get();
   }
-
   private void azzertEquals(final String expected, final String actual) {
     assertEquals(expected.replaceAll("[\n\t\r ]", ""), actual.replaceAll("[\n\t\r ]", ""));
   }

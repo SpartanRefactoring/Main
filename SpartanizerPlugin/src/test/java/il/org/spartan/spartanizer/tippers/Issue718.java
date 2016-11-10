@@ -27,51 +27,39 @@ public class Issue718 {
   @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
     assert true;
   }
-
   @SuppressWarnings("static-method") @Test public void checkIfReturnTypeIsBoolean() {
     @SuppressWarnings("unused") final boolean b = determineIf.loaded(null);
   }
-
   @Test public void checkIfLoadedMethodPasses() {
     assertTrue(determineIf.loaded(loaded));
   }
-
   @Test public void checkIfNotLoadedMethodFailes() {
     assertFalse(determineIf.loaded(notLoaded));
   }
-
   @Test public void checkIfBiMethodFailes() {
     assertFalse(determineIf.loaded(biMethod));
   }
-
   @Test public void checkIfThreeParamsPass() {
     assertTrue(determineIf.loaded(loaded));
   }
-
   @Test public void checkIfTripledParamsAndQuintupledVarDefsPass() {
     assertTrue(determineIf.loaded(loaded));
   }
-
   @Test public void checkIfTripledParamsAndQuadrupleVarDefsFail() {
     assertFalse(determineIf.loaded(notLoaded));
   }
-
   @Test public void checkIfDoubledParamsAndQuintupledVarDefsFail() {
     assertFalse(determineIf.loaded(TwoParamsFiveDefsMethod));
   }
-
   @Test public void checkifOverLoadedMethodPass() {
     assertTrue(determineIf.loaded(overLoaded));
   }
-
   @Test public void checkIfDeclInLambdaAlsoCountsPass() {
     assertTrue(determineIf.loaded(loadedMethodWithLambdaDeclaration));
   }
-
   @Test public void checkIfSeparatedVarDefAlsoCountsPass() {
     assertTrue(determineIf.loaded(separatedVarsDefinitionsLoadedMethod));
   }
-
   private static ASTNode methodDeclarationFromString(final String ¢) {
     return wizard.ast(¢);
   }

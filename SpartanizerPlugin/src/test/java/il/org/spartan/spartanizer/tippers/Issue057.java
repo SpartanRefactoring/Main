@@ -10,7 +10,6 @@ import org.junit.*;
   @Test public void a() {
     trimmingOf("void m(List<Expression>... expressions) { }").gives("void m(List<Expression>... xss) {}");
   }
-
   @Test public void b() {
     trimmingOf("void m(Expression... expression) { }").gives("void m(Expression... xs) {}");
   }

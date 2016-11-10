@@ -20,10 +20,8 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
       }
     };
   }
-
   @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }
-
   protected abstract ASTNode replacement(N n, final ExclusionManager m);
 }
