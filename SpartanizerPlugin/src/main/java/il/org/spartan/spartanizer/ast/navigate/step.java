@@ -187,7 +187,7 @@ public enum step {
   }
   /** @param d
    * @return */
-  private static List<String> names(FieldDeclaration d) {
+  private static List<String> names(final FieldDeclaration d) {
     return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
   }
   /** Expose the list of fragments in a {@link FieldDeclaration}
