@@ -13,7 +13,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
   private boolean commandLineApplicator = true;
   private final boolean collectApplicator = false;
-  private boolean selection = false;
+  private boolean selection;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
