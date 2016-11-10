@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.cmdline;
 import java.io.*;
 import java.util.function.*;
 
+import org.eclipse.ui.internal.handlers.WizardHandler.*;
+
 import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
@@ -15,6 +17,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final boolean CommandLine$Applicator = true;
   private boolean Spartanizer$Applicator;
   private boolean DefaultApplicator;
+  
+  private CommandLineApplicator c = new CommandLineApplicator();
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -38,15 +42,25 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       Reports.initializeFile(Reports.getOutputFolder() + "/" + name + ".after.java", "after");
       Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".CSV", "metrics");
       Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
+      
       if (DefaultApplicator)
+        c.listener(new Listener() {
+          @Override public void tick(Object... os) {
+                System.out.println("ok" + os);        
+          }
+        });
+                
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder())).defaultListenerNoisy()
             .go();
+      
       if (Spartanizer$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
+      
       if (CommandLine$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
             .defaultRunAction(new CommandLine$Applicator()).defaultListenerNoisy().go();
+      
       Reports.close("metrics");
       Reports.close("spectrum");
       Reports.closeFile("before");
