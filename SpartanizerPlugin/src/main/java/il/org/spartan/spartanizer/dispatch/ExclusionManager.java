@@ -17,18 +17,15 @@ public final class ExclusionManager {
   public void exclude(final ASTNode ¢) {
     inner.add(¢);
   }
-
   public void excludeAll(final List<? extends ASTNode> ¢) {
     inner.addAll(¢);
   }
-
   public boolean isExcluded(final ASTNode n) {
     for (final ASTNode ancestor : hop.ancestors(n))
       if (inner.contains(ancestor))
         return true;
     return false;
   }
-
   void unExclude(final ASTNode ¢) {
     inner.remove(¢);
   }

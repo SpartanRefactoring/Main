@@ -39,7 +39,6 @@ public class MockApplication implements IApplication {
     }
     return IApplication.EXIT_OK;
   }
-
   /** @param u */
   private void processCU(final ICompilationUnit u) {
     for (int i = 0; i < optRounds; ++i) {
@@ -49,20 +48,17 @@ public class MockApplication implements IApplication {
       new Trimmer().apply(u);
     }
   }
-
   ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
     final String source = FileUtils.read(f);
     // System.out.println(source);
     setPackage(getPackageNameFromSource(source));
     return pack.createCompilationUnit(f.getName(), source, false, null);
   }
-
   static String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
   }
-
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration ¢) {
@@ -72,19 +68,16 @@ public class MockApplication implements IApplication {
     });
     return $.get();
   }
-
   void setPackage(final String name) throws JavaModelException {
     System.out.println(srcRoot);
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-
   /* (non-Javadoc)
    *
    * @see org.eclipse.equinox.app.IApplication#stop() */
   @Override public void stop() {
     ___.nothing();
   }
-
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())

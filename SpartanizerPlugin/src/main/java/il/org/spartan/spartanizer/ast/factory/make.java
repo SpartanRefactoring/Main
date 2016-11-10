@@ -35,16 +35,13 @@ public enum make {
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
-
   public static EmptyStatement emptyStatement(final ASTNode ¢) {
     return ¢.getAST().newEmptyStatement();
   }
-
   public static ASTHolder from(final ASTNode ¢) {
     assert ¢ != null;
     return new make.ASTHolder(¢.getAST());
   }
-
   public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
@@ -52,15 +49,12 @@ public enum make {
     $.setElseStatement(null);
     return $;
   }
-
   public static StringLiteral makeEmptyString(final ASTNode ¢) {
     return make.from(¢).literal("");
   }
-
   public static NullLiteral makeNullLiteral(final ASTNode ¢) {
     return ¢.getAST().newNullLiteral();
   }
-
   public static Expression minus(final Expression x) {
     final PrefixExpression ¢ = az.prefixExpression(x);
     return ¢ == null ? minus(x, az.numberLiteral(x))
@@ -68,7 +62,6 @@ public enum make {
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
                 : x;
   }
-
   /** Create a new {@link SimpleName} instance at the AST of the parameter
    * @param n JD
    * @param newName the name that the returned value shall bear
@@ -76,7 +69,6 @@ public enum make {
   public static SimpleName newSimpleName(final ASTNode n, final String newName) {
     return n.getAST().newSimpleName(newName);
   }
-
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
@@ -84,13 +76,11 @@ public enum make {
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
-
   public static ParenthesizedExpression parethesized(final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
     $.setExpression(step.parent(¢) == null ? ¢ : duplicate.of(¢));
     return $;
   }
-
   /** A fluent API method that wraps an {@link Expression} with parenthesis, if
    * the location in which this expression occurs requires such wrapping.
    * <p>
@@ -104,19 +94,16 @@ public enum make {
   public static make.PlantingExpression plant(final Expression ¢) {
     return new make.PlantingExpression(¢);
   }
-
   /** Factory method recording the statement might be wrapped.
    * @param inner JD */
   public static make.PlantingStatement plant(final Statement inner) {
     return new make.PlantingStatement(inner);
   }
-
   /** @param ¢ the expression to return in the return statement
    * @return new return statement */
   public static ThrowStatement throwOf(final Expression ¢) {
     return subject.operand(¢).toThrow();
   }
-
   static Expression makeInfix(final List<Expression> xs, final AST t) {
     if (xs.size() == 1)
       return first(xs);
@@ -128,13 +115,11 @@ public enum make {
       if (¢ >= xs.size())
         return $;
   }
-
   static Expression minus(final Expression x, final NumberLiteral l) {
     return l == null ? minusOf(x) //
         : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
-
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
@@ -142,17 +127,14 @@ public enum make {
       $.add(minusOf(¢));
     return $;
   }
-
   static Expression minusOf(final Expression ¢) {
     return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
-
   static NumberLiteral newLiteral(final ASTNode n, final String token) {
     final NumberLiteral $ = n.getAST().newNumberLiteral();
     $.setToken(token);
     return $;
   }
-
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
@@ -164,11 +146,9 @@ public enum make {
     public ASTHolder(final AST ast) {
       this.ast = ast;
     }
-
     public NumberLiteral literal(final int ¢) {
       return ast.newNumberLiteral(¢ + "");
     }
-
     public StringLiteral literal(final String ¢) {
       final StringLiteral $ = ast.newStringLiteral();
       $.setLiteralValue(¢);
@@ -185,7 +165,6 @@ public enum make {
     static boolean isStringConactingSafe(final Expression ¢) {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
-
     private static boolean isStringConcatingSafe(final InfixExpression ¢) {
       return type.of(¢.getLeftOperand()) == Certain.STRING;
     }
@@ -197,7 +176,6 @@ public enum make {
     PlantingExpression(final Expression inner) {
       this.inner = inner;
     }
-
     /** Executes conditional wrapping in parenthesis.
      * @param host the destined parent
      * @return either the expression itself, or the expression wrapped in
@@ -206,21 +184,17 @@ public enum make {
     public Expression into(final ASTNode host) {
       return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
-
     public Expression intoLeft(final InfixExpression host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
     }
-
     private boolean noParenthesisRequiredIn(final ASTNode host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
-
     private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
       $.setExpression(duplicate.of(¢));
       return $;
     }
-
     /** Determines whether inner can be added to host without parenthesis
      * because host is a String concating InfixExpression and host is an infix
      * expression starting with a String
@@ -240,7 +214,6 @@ public enum make {
     public PlantingStatement(final Statement inner) {
       this.inner = inner;
     }
-
     public void intoThen(final IfStatement s) {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());

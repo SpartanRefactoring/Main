@@ -22,7 +22,6 @@ public final class NumericLiteralClassifier {
   public NumericLiteralClassifier(final String literal) {
     this.literal = literal;
   }
-
   /** @return the type of this literal.
    * @see PrudentType */
   public Primitive.Certain type() {

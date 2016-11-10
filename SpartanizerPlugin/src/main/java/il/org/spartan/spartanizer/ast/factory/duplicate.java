@@ -23,7 +23,6 @@ public enum duplicate {
       $.add(subject.operand(¢).to(wizard.MINUS1));
     return $;
   }
-
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
@@ -32,14 +31,12 @@ public enum duplicate {
     for (final N ¢ : from)
       into(¢, into);
   }
-
   /** Duplicate a {@link Statement} into another list.
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void into(final N from, final List<N> into) {
     into.add(duplicate.of(from));
   }
-
   public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
     for (final IExtendedModifier ¢ : from)
       if (¢.isModifier())
@@ -47,14 +44,12 @@ public enum duplicate {
       else if (¢.isAnnotation())
         to.add(duplicate.of((Annotation) ¢));
   }
-
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(final ¢ ¢) {
     return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
-
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */

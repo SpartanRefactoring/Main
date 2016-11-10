@@ -45,7 +45,6 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
@@ -55,37 +54,29 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         }
       };
     }
-
     static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
-
     static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
-
     static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
-
     static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress laconize tips on class");
     }
-
     static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress laconize tips on out most class");
     }
-
     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress laconize tips on function");
     }
-
     static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);

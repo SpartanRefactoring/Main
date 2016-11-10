@@ -13,7 +13,6 @@ import org.junit.*;
         "public ASTNode inclusiveLastFrom(final ASTNode n) {for (ASTNode $ = inclusiveFrom(n), p = $; ; p = from(p), $ = p)if (p == null)return $;}")
             .stays();
   }
-
   @Test public void b() {
     trimmingOf(
         "public ASTNode inclusiveLastFrom(final ASTNode n) {for (ASTNode $ = inclusiveFrom(n), node = $; ; node = from(node), $ = node)if (node == null)return $;}")

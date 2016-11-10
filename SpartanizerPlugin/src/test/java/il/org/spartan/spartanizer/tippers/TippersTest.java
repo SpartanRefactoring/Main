@@ -39,7 +39,6 @@ public final class TippersTest {
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(m).size(), is(2));
   }
-
   @Test public void inlineExpressionWithSideEffect() {
     final Expression e = into.e("f()");
     azzert.that(!haz.sideEffects(e), is(false));
@@ -67,23 +66,18 @@ public final class TippersTest {
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
-
   @Test public void mixedLiteralKindEmptyList() {
     azzert.that(mixedLiteralKind(es()), is(false));
   }
-
   @Test public void mixedLiteralKindnPairList() {
     azzert.that(mixedLiteralKind(es("1", "1.0")), is(false));
   }
-
   @Test public void mixedLiteralKindnTripleList() {
     azzert.that(mixedLiteralKind(es("1", "1.0", "a")), is(true));
   }
-
   @Test public void mixedLiteralKindSingletonList() {
     azzert.that(mixedLiteralKind(es("1")), is(false));
   }
-
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
@@ -103,7 +97,6 @@ public final class TippersTest {
     assert output != null;
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
-
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);

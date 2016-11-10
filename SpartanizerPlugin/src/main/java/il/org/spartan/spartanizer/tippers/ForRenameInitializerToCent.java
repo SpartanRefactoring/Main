@@ -30,7 +30,6 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
-
   @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
     if (x == null)
       return null;

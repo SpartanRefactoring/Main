@@ -77,7 +77,6 @@ public class SpartanMovie extends AbstractHandler {
     sleep(1);
     return null;
   }
-
   /** Just in case, so that editors don't pile up. Not sure this is the right
    * behavior
    * <p>
@@ -89,7 +88,6 @@ public class SpartanMovie extends AbstractHandler {
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {
     close(¢);
   }
-
   /** @param ¢
    * @return
    * @throws CoreException */
@@ -101,7 +99,6 @@ public class SpartanMovie extends AbstractHandler {
       return new IMarker[0];
     }
   }
-
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
@@ -110,7 +107,6 @@ public class SpartanMovie extends AbstractHandler {
       return new LinkedList<>();
     }
   }
-
   static boolean focus(final IWorkbenchPage p, final IFile f) {
     try {
       IDE.openEditor(p, f, true);
@@ -120,11 +116,9 @@ public class SpartanMovie extends AbstractHandler {
     }
     return true;
   }
-
   static void close(final IWorkbenchPage ¢) {
     ¢.closeAllEditors(true);
   }
-
   /** The current SpartanMovie is not releaseable. Some big changes should be
    * made.
    * @author Ori Roth
@@ -138,19 +132,16 @@ public class SpartanMovie extends AbstractHandler {
       return false;
     }
   }
-
   static void refresh(final IWorkbenchPage ¢) {
     ¢.getWorkbenchWindow().getShell().update();
     ¢.getWorkbenchWindow().getShell().layout(true);
   }
-
   static void moveProgressDialog() {
     final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
     final Shell parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }
-
   /** Finds the first marker in array in terms of textual location. The
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.

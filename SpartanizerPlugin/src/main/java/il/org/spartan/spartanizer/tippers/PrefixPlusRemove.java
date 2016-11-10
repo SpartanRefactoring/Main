@@ -21,11 +21,9 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
   @Override public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }
-
   @Override public ASTNode replacement(final PrefixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
   }
-
   private Expression heart(final Expression x) {
     if (iz.nodeTypeEquals(x, PARENTHESIZED_EXPRESSION))
       return heart(step.expression(x));

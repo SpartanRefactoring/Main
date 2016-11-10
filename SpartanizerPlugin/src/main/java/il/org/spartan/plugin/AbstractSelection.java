@@ -19,12 +19,10 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   public boolean isEmpty() {
     return inner == null || inner.isEmpty();
   }
-
   /** @return selection's size in compilation units */
   public int size() {
     return isEmpty() ? 0 : inner.size();
   }
-
   /** Set compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
@@ -32,7 +30,6 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     inner = ¢ != null ? ¢ : new ArrayList<>();
     return self();
   }
-
   /** Set text selection for this selection.
    * @param ¢ JD
    * @return this selection */
@@ -40,11 +37,9 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     textSelection = ¢;
     return self();
   }
-
   @SuppressWarnings("unchecked") public Self self() {
     return (Self) this;
   }
-
   /** Set name for this selection.
    * @param ¢ JD
    * @return this selection */
@@ -52,7 +47,6 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     name = ¢;
     return self();
   }
-
   /** Add a compilation unit for this selection.
    * @param ¢ JD
    * @return this selection */
@@ -61,7 +55,6 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
       inner.add(¢);
     return self();
   }
-
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
@@ -70,7 +63,6 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
       inner.addAll(¢);
     return self();
   }
-
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection [[SuppressWarningsSpartan]] */
@@ -79,7 +71,6 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
       inner.add(u);
     return self();
   }
-
   /** Extend current selection using compilation units from another selection.
    * @param ¢ JD
    * @return this selection */

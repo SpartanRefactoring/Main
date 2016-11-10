@@ -17,11 +17,9 @@ public class CollectApplicator extends Applicator {
         a.go(¢);
       }
   }
-
   public static Applicator defaultApplicator() {
     return new CollectApplicator().defaultSettings();
   }
-
   /** @return this */
   private Applicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew();
@@ -29,13 +27,11 @@ public class CollectApplicator extends Applicator {
     // .defaultSelection()
     // .defaultRunAction();
   }
-
   /** @return this */
   private CollectApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
-
   /** @return this */
   private CollectApplicator defaultListenerSilent() {
     listener((final Object... __) -> {

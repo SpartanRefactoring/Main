@@ -26,11 +26,9 @@ public enum NameGuess {
   public static boolean isClassName(final ASTNode ¢) {
     return ¢ != null && isClassName(hop.lastComponent(az.name(¢)) + "");
   }
-
   public static boolean isClassName(final String e) {
     return of(e) == CLASS_NAME;
   }
-
   public static NameGuess of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.length() == 0)
       return null;

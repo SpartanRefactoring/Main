@@ -24,7 +24,6 @@ public final class CollectClassMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
-
   static CompilationUnit spartanize(final CompilationUnit before) {
     final Trimmer tr = new Trimmer();
     assert tr != null;
@@ -38,7 +37,6 @@ public final class CollectClassMetrics {
     }
     return before;
   }
-
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -48,17 +46,14 @@ public final class CollectClassMetrics {
       System.err.println(e.getMessage());
     }
   }
-
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   private static void go(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       go(¢);
   }
-
   private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
@@ -66,7 +61,6 @@ public final class CollectClassMetrics {
       throw new RuntimeException(OUTPUT, e);
     }
   }
-
   /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on

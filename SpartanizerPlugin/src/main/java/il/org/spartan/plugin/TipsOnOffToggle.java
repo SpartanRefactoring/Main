@@ -27,14 +27,12 @@ public final class TipsOnOffToggle extends AbstractHandler {
         });
       }
   }
-
   public static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
-
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when
     // it's
@@ -44,7 +42,6 @@ public final class TipsOnOffToggle extends AbstractHandler {
     if (state)
       enableNature(p);
   }
-
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -58,7 +55,6 @@ public final class TipsOnOffToggle extends AbstractHandler {
     }
     return null;
   }
-
   private static IProject getProject() {
     final IProject p = Selection.Util.project();
     return p != null ? p : null;

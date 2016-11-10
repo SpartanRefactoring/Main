@@ -11,12 +11,10 @@ import org.junit.*;
     trimmingOf("a*b + a*c")//
         .gives("a*(b+c)");
   }
-
   @Test public void issue076b() {
     trimmingOf("b*a + c*a")//
         .gives("a*(b+c)");
   }
-
   @Test public void issue076c() {
     trimmingOf("b*a + c*a + d*a")//
         .gives("a*(b+c+d)");

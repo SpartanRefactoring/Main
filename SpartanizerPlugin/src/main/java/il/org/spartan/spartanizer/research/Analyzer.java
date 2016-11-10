@@ -139,16 +139,14 @@ public class Analyzer {
   /** @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze() {
-    InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    if (getProperty("nmethods") == null || "false".equals(getProperty("nmethods")))
-      spartanizer = addJavadocNanoPatterns(spartanizer);
+    final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
+    sanityCheck();
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
       System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(az.compilationUnit(cu));
-      Logger.logFile(¢.getName());
       spartanizedCode = spartanizer.fixedPoint(cu + "");
       appendFile(new File(getProperty("outputDir") + "/after.java"), spartanizedCode);
       Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
@@ -190,7 +188,6 @@ public class Analyzer {
             null) //
         .add(EnhancedForStatement.class, //
             new ApplyToEach(), //
-            new FindFirst(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
@@ -208,6 +205,7 @@ public class Analyzer {
     ;
   }
   private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
+    // return ¢;
     return ¢.add(MethodDeclaration.class, //
         new Carrier(), //
         new Converter(), //
@@ -223,5 +221,12 @@ public class Analyzer {
         new MethodEmpty(), //
         new TypeChecker(), //
         null);
+  }
+  /** This us just to check that the InteractiveSpartanizer works and that
+   * tippers can be added to it. */
+  private static void sanityCheck() {
+    // assert addJavadocNanoPatterns(new InteractiveSpartanizer())
+    // .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object
+    // f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }

@@ -38,7 +38,6 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override int evaluateInt(final List<Expression> xs) {
     int $ = 0;
     try {
@@ -53,7 +52,6 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override long evaluateLong(final List<Expression> xs) {
     long $ = 0;
     try {
@@ -68,11 +66,9 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override String operation() {
     return "subtraction";
   }
-
   @Override Operator operator() {
     return MINUS2;
   }
