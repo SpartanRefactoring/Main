@@ -111,7 +111,7 @@ public abstract class searchAncestors<N extends ASTNode> {
     }
     @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
       if (¢ != null)
-        for (ASTNode $ = ¢; $ != null; $ = $.getParent())
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
             return (N) $;
       return null;
