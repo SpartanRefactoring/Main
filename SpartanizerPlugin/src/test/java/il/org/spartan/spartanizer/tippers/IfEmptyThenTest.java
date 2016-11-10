@@ -19,19 +19,15 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void eligible() {
     assert TIPPER.canTip(IF);
   }
-
   @Test public void emptyThen() {
     assert iz.vacuousThen(IF);
   }
-
   @Test public void extractFirstIf() {
     assert IF != null;
   }
-
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
-
   @Test public void scopeIncludes() {
     assert TIPPER.canTip(IF);
   }

@@ -16,7 +16,6 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
   @Override public String description(final IfStatement ¢) {
     return "remove :" + ¢;
   }
-
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;

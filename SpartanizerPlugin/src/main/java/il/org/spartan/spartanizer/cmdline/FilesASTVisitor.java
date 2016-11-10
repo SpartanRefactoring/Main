@@ -36,30 +36,24 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     }
     throw new RuntimeException();
   }
-
   /** [[SuppressWarningsSpartan]] */
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
   }
-
   public static void visit(final String[] args) throws InstantiationException, IllegalAccessException, InvocationTargetException {
     for (final String ¢ : args)
       declaredConstructor().newInstance().visit(¢);
   }
-
   protected void done() {
     // Empty by default
   }
-
   protected void init() {
     // Empty by default
   }
-
   protected String makeFile(final String fileName) {
     return outputFolder + "/" + presentSourceName + "." + fileName;
   }
-
   protected void visit(final String path) {
     dotter.click();
     init();
@@ -68,15 +62,12 @@ public abstract class FilesASTVisitor extends ASTVisitor {
       visit(presentFile = ¢);
     done();
   }
-
   void collect(final CompilationUnit ¢) {
     ¢.accept(this);
   }
-
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   void visit(final File f) {
     dotter.click();
     if (!system.isTestFile(f))

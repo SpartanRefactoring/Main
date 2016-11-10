@@ -13,7 +13,6 @@ import org.junit.runners.*;
   @Test public void issue54ForPlainUseInCondition() {
     trimmingOf("int a  = f(); for (int ¢ = 0; a <100;  ++¢) b[¢] = 3;").gives("for (int a  = f(), ¢ = 0; a <100;  ++¢) b[¢] = 3;").stays();
   }
-
   @Test public void issue54ForPlainUseInInitializer() {
     trimmingOf("int a  = f(); for (int ¢ = a; ¢ <100; ++¢) b[¢] = 3;").gives(" for (int ¢ = f(); ¢ <100; ++¢) b[¢] = 3;");
   }

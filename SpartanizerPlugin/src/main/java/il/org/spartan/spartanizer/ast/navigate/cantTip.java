@@ -17,38 +17,32 @@ public enum cantTip {
     final VariableDeclarationFragment f = hop.precidingFragmentToLastExpression(¢);
     return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
-
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
     final VariableDeclarationFragment f = hop.prevFragmentToLastExpression(¢);
     return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
-
   public static boolean declarationRedundantInitializer(final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
       if (new DeclarationRedundantInitializer().canTip(¢))
         return false;
     return true;
   }
-
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
     for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
       if (new DeclarationRedundantInitializer().canTip(¢))
         return false;
     return true;
   }
-
   public static boolean forRenameInitializerToCent(final ForStatement s) {
     final VariableDeclarationExpression e = az.variableDeclarationExpression(s);
     return e == null || new ForRenameInitializerToCent().cantTip(e);
   }
-
   public static boolean remvoeRedundantIf(final ForStatement s) {
     for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
       if (new RemoveRedundantIf().canTip(¢))
         return false;
     return true;
   }
-
   public static boolean remvoeRedundantIf(final WhileStatement s) {
     for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
       if (new RemoveRedundantIf().canTip(¢))

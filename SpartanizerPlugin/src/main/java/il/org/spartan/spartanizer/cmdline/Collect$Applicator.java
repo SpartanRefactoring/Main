@@ -24,7 +24,6 @@ public class Collect$Applicator {
       }
     });
   }
-
   boolean go(final ASTNode input) {
     System.err.println("input: " + input);
     // tippersAppliedOnCurrentObject = 0;
@@ -60,14 +59,12 @@ public class Collect$Applicator {
           }
           return true;
         }
-
         @Override protected void initialization(final ASTNode ¢) {
           disabling.scan(¢);
         }
       });
     }
   }
-
   // String fixedPoint(final ASTNode ¢) {
   // return fixedPoint(¢ + "");
   // }
@@ -99,14 +96,12 @@ public class Collect$Applicator {
           }
           return true;
         }
-
         @Override protected void initialization(final ASTNode ¢) {
           disabling.scan(¢);
         }
       });
     }
   }
-
   // public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
   // toolbox = Toolbox.defaultInstance();
   // u.accept(new DispatchingVisitor() {

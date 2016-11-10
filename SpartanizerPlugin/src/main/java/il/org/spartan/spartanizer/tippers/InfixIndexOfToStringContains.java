@@ -25,33 +25,27 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     tippers.add(TipperFactory.tipper("$X1.indexOf($X2) == -1", "!$X1.contains($X2)", "replace indexOf == -1 with !contains"));
     tippers.add(TipperFactory.tipper("$X1.indexOf($X2) <= -1", "!$X1.contains($X2)", "replace indexOf == -1 with !contains"));
   }
-
   @Override public boolean canTip(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x) && stringOperands(¢.getMatching(x, "$X1"), ¢.getMatching(x, "$X2")))
         return true;
     return false;
   }
-
   private static boolean stringOperands(final ASTNode n1, final ASTNode n2) {
     return stringOperand(n1) && stringOperand(n2);
   }
-
   private static boolean stringOperand(final ASTNode ¢) {
     return iz.name(¢) && isStringType(¢) || iz.stringLiteral(¢);
   }
-
   private static boolean isStringType(final ASTNode ¢) {
     return "String".equals(analyze.type(az.simpleName(¢)));
   }
-
   @Override public Tip tip(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
     return null;
   }
-
   @Override public String description(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))

@@ -16,7 +16,6 @@ public class NodeData {
   public static <T> T get(final ASTNode n, final String key) {
     return n == null ? null : (T) n.getProperty(key);
   }
-
   /** Checks node has a property.
    * @param n JD
    * @param key property name
@@ -25,14 +24,12 @@ public class NodeData {
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }
-
   /** Sets a binary flag true.
    * @param n JD
    * @param key property name */
   public static void set(final ASTNode n, final String key) {
     set(n, key, Boolean.TRUE);
   }
-
   /** Sets a value under key for this node.
    * @param n JD
    * @param key property name
@@ -43,7 +40,6 @@ public class NodeData {
     n.setProperty(key, value);
     return value;
   }
-
   /** Unsets a key property for this node.
    * @param n an {@link ASTNode}
    * @param key property name */

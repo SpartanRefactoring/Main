@@ -19,7 +19,6 @@ public final class SpartanizeableAll extends BaseHandler {
           monitor.logEvaluationError(new SpartanizeableAll(), e);
         }
   }
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     go();
     return null;

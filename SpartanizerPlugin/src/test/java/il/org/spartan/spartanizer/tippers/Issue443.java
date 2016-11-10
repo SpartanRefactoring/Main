@@ -14,7 +14,6 @@ public class Issue443 {
     trimmingOf("public void f (String[] ss) {}")//
         .gives("public void f (String[] __) {}").stays();
   }
-
   @Test public void b() {
     trimmingOf("public void f (String... ss) {}")//
         .gives("public void f (String... __) {}").stays();

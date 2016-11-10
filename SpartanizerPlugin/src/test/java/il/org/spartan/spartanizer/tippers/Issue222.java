@@ -15,17 +15,14 @@ import org.junit.runners.*;
         + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
         + "    $.addAll(step.extendedOperands(x));\n" + "  return $;\n" + "}\n").stays();
   }
-
   @Test public void chocolate2() {
     trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment f : fs){\n"
         + "int b = f(f);\n" + "f(f,b);\n" + "return g(f,b,f());\n" + "}\n" + "return true;\n" + "}").stays();
   }
-
   @Test public void chocolate3() {
     trimmingOf("int f(int i) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}")
         .gives("int f(int __) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}").stays();
   }
-
   @Test public void vanilla() {
     trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n"
         + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"

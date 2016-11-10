@@ -22,11 +22,9 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "replace with putIfAbsent";
   }
-
   @Override public boolean canTip(final IfStatement ¢) {
     return tipper.canTip(¢) && analyze.type(az.simpleName(tipper.getMatching(¢, "$X1"))).startsWith("Map<");
   }
-
   @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

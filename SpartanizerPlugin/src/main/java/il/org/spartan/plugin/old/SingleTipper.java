@@ -25,11 +25,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
   public SingleTipper(final Tipper<N> tipper) {
     this.tipper = tipper;
   }
-
   @Override protected boolean check(final ASTNode ¢) {
     return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
-
   @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
     assert check(¢);
     return !tipper.canTip((N) ¢) ? null : tipper;
@@ -49,11 +47,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       final ASTNode d = searchAncestors.forClass(BodyDeclaration.class).from(n);
       return d == null ? null : new TextSelection(d.getStartPosition(), d.getLength());
     }
-
     @Override public String getLabelSuffix() {
       return "enclosing function";
     }
-
     @Override public Selection getSelection(final IMarker ¢) {
       return Selection.Util.getCurrentCompilationUnit().setTextSelection(domain(¢));
     }
@@ -72,11 +68,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
       return TextSelection.emptySelection();
     }
-
     @Override public String getLabelSuffix() {
       return "compilation unit";
     }
-
     @Override public Selection getSelection() {
       return Selection.Util.getCurrentCompilationUnit();
     }
@@ -95,22 +89,18 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
       return TextSelection.emptySelection();
     }
-
     @Override public String getLabelSuffix() {
       return "entire project";
     }
-
     @Override public Selection getSelection() {
       return Selection.Util.getAllCompilationUnits();
     }
-
     /** [[SuppressWarningsSpartan]] */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
       final int cs = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
-
     /** [[SuppressWarningsSpartan]] */
     @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
       final int cs = getChangesCount(¢);
@@ -122,25 +112,20 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
           + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
           + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
-
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
         final ICompilationUnit currentCompilationUnit) {
       return completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();
     }
-
     @Override public int getProgressMonitorWork(final List<ICompilationUnit> ¢) {
       return ¢.size();
     }
-
     @Override public boolean hasDisplay() {
       return true;
     }
-
     @Override public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
         final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_BEFORE);
     }
-
     @Override public IRunnableWithProgress finalWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_AFTER);
     }
@@ -156,15 +141,11 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public boolean isMarkerResolution() {
       return true;
     }
-
     @Override public String getLabel() {
       return "Apply to " + getLabelSuffix();
     }
-
     protected abstract ITextSelection domain(IMarker m);
-
     public abstract String getLabelSuffix();
-
     @SuppressWarnings({ "unchecked", "rawtypes" }) //
     @Override public AbstractGUIApplicator getApplicator(final IMarker m) {
       try {
@@ -175,11 +156,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       }
       return null;
     }
-
     @Override public int passesCount() {
       return MANY_PASSES;
     }
-
     private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
       try {
         return new SingleTipper<>(t.newInstance());
