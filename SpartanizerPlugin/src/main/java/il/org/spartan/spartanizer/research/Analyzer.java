@@ -215,6 +215,7 @@ public class Analyzer {
         new Fluenter(), //
         new FluentSetter(), ///
         new Getter(), //
+        new Independent(), //
         new JDPattern(), //
         new Mapper(), //
         new MethodEmpty(), //
