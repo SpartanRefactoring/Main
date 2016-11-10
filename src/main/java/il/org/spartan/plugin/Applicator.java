@@ -118,10 +118,10 @@ public abstract class Applicator {
   public Applicator defaultListenerNoisy() {
     return this;
   }
-  public Applicator defaultSelection(AbstractSelection<?> of) {
+  public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
     return this;
   }
-  public Applicator defaultRunAction(CommandLine$Applicator __) {
+  @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
     return this;
   }
 }
