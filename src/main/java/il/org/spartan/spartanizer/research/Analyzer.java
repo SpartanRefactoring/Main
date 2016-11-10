@@ -139,7 +139,9 @@ public class Analyzer {
   /** @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze() {
-    final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
+    InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+    if (getProperty("nmethods") == null || "false".equals(getProperty("nmethods")))
+      spartanizer = addJavadocNanoPatterns(spartanizer);
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
@@ -188,6 +190,7 @@ public class Analyzer {
             null) //
         .add(EnhancedForStatement.class, //
             new ApplyToEach(), //
+            new FindFirst(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //

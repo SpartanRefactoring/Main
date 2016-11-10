@@ -20,9 +20,7 @@ public class CommandLineClient {
     // processCommandLine(args);
   }
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
-    final CommandLineClient r = new CommandLineClient();
-    // final List<String> remaining = extract(args, r);
-    r.printExternals();
+    (new CommandLineClient()).printExternals();
   }
   private void printExternals() {
     // System.out.println(usage(this));
