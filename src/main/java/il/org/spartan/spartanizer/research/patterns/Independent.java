@@ -12,15 +12,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Independent extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    List<String> enviroment = step.parametersNames(d);
+    final List<String> enviroment = step.parametersNames(d);
     for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
       if (iz.typeDeclaration(¢))
         enviroment.addAll(step.fieldDeclarationsNames(az.typeDeclaration(¢)));
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         enviroment.addAll(step.parametersNames(az.methodDeclaration(¢)));
-    Set<String> dependencies = analyze.dependencies(step.body(d)).stream().map(x -> x + "").collect(Collectors.toSet());
-    for (String ¢ : enviroment)
+    final Set<String> dependencies = analyze.dependencies(step.body(d)).stream().map(x -> x + "").collect(Collectors.toSet());
+    for (final String ¢ : enviroment)
       if (dependencies.contains(¢))
         return false;
     return true;

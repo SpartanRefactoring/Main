@@ -9,7 +9,11 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-// TODO: Raviv and Kfir, add your names and @since.
+
+/** Tests for issue 687
+ * @author Raviv Rachmiel
+ * @author Kfir Marx
+ * @since 2-11-2016 */
 @SuppressWarnings("static-method") public class Issue687 {
   private static void forceTypeAtCompileTime(@SuppressWarnings("unused") final List<Name> __) {
     assert true;
