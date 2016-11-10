@@ -453,7 +453,7 @@ public enum step {
   public static Type type(final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
-    String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
+    final String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
     String name = (d + "").substring((d + "").indexOf(typeType));
     name = name.substring(name.indexOf(typeType) + typeType.length(), name.indexOf("{"));
     while (name.contains("extends") && !balanced(name.substring(0, name.indexOf("extends"))))
@@ -479,7 +479,7 @@ public enum step {
     name = name.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
     return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
   }
-  private static boolean balanced(String s) {
+  private static boolean balanced(final String s) {
     int openers = 0;
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       if (s.charAt(¢) == '<')
@@ -490,12 +490,12 @@ public enum step {
   }
   /** @param ¢
    * @return */
-  public static PackageDeclaration packageDeclaration(CompilationUnit ¢) {
+  public static PackageDeclaration packageDeclaration(final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.getPackage();
   }
   /** @param ¢
    * @return */
-  public static SimpleName name(MethodDeclaration ¢) {
+  public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 }
