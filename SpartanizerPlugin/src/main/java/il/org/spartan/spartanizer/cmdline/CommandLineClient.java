@@ -7,38 +7,32 @@ import il.org.spartan.*;
  * @author Matteo Orru' */
 public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
-  // @External(alias = "i", value = "name of the input directory")
-  static String inputDir = ".";
-  // @External(alias = "o", value = "name of the output directory")
-  private static String outputDir = "/tmp";
+  // @External
+  static String inputDir = "";
+  // @External
+  private static String outputDir = "";
 
   public static void main(final String[] args) {
+    if (args.length == 0)
+      // usageErrorExit("name(s)", new CommandLineClient());
+      parseCommandLineArgs(args);
     for (final String ¢ : args.length != 0 ? args : as.array("."))
       new CommandLineSpartanizer(¢).apply();
-    // if(args.length == 0)
-    // usageErrorExit("name(s)", new CommandLineClient());
-    // processCommandLine(args);
   }
-  @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
-    final CommandLineClient r = new CommandLineClient();
-    // final List<String> remaining = extract(args, r);
-    r.printExternals();
-  }
-  private void printExternals() {
-    // System.out.println(usage(this));
+  static void printExternals() {
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
-    System.out.println("outputDir: " + outputDir());
-    System.out.println("inputDir: " + inputDir());
+    System.out.println("outputDir: " + Base.outputDir());
+    System.out.println("inputDir: " + Base.inputDir());
     System.out.println();
   }
-  @SuppressWarnings({ "static-method" }) private String inputDir() {
+  @SuppressWarnings({ "unused", "static-method" }) private String inputDir() {
     return inputDir;
   }
-  @SuppressWarnings({ "static-method" }) private String outputDir() {
+  @SuppressWarnings({ "static-method", "unused" }) private String outputDir() {
     return outputDir;
   }
-  @SuppressWarnings("unused") private static void parseCommandLineArgs(final String[] args) {
+  private static void parseCommandLineArgs(final String[] args) {
     if (args.length == 0)
       printPrompt();
     for (int ¢ = 0; ¢ < args.length;)
@@ -64,5 +58,19 @@ public class CommandLineClient {
     System.out.println("  -o       output directory: here go the results of the analysis");
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
+  }
+}
+
+class Base {
+  // @External(alias = "i")
+  private static String inputDir;
+  // @External(alias = "o")
+  private static String outputDir;
+
+  static String inputDir() {
+    return inputDir;
+  }
+  static String outputDir() {
+    return outputDir;
   }
 }
