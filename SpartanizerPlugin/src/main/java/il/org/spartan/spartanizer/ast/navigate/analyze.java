@@ -21,11 +21,13 @@ public enum analyze {
           $.add(node);
         return true;
       }
-      boolean izMethodName(final SimpleName ¢) {
-        return iz.methodInvocation(step.parent(¢)) && step.name(az.methodInvocation(step.parent(¢))).equals(¢);
+      boolean izMethodName(final Name ¢) {
+        return iz.methodInvocation(step.parent(¢)) && (step.name(az.methodInvocation(step.parent(¢))) + "").equals(¢ + "")
+            || iz.methodDeclaration(step.parent(¢)) && (step.name(az.methodDeclaration(step.parent(¢))) + "").equals(¢ + "");
       }
       @Override public boolean visit(final QualifiedName node) {
-        $.add(node);
+        if (!izMethodName(node))
+          $.add(node);
         return true;
       }
     });

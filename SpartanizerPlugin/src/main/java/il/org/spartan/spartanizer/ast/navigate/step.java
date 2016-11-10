@@ -176,6 +176,20 @@ public enum step {
   public static FieldDeclaration[] fieldDeclarations(final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
+  /** FieldDeclarations names of type
+   * @param ¢ JD
+   * @return */
+  public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
+    return ¢ == null ? null : Arrays.asList(¢.getFields()).stream().map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
+      x.addAll(y);
+      return x;
+    });
+  }
+  /** @param d
+   * @return */
+  private static List<String> names(FieldDeclaration d) {
+    return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
+  }
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */

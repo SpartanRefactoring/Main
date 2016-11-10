@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.utils.tdd;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
@@ -125,16 +127,17 @@ public enum getAll {
    * @param a TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  public static List<String> publicFields(TypeDeclaration d) {
+  public static List<String> publicFields(final TypeDeclaration d) {
     if (d == null)
       return null;
-    List<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      // TODO: Inbal and Elia. Your code is buggy and will not find public final methods, e..g,--yg
-      @Override public boolean visit(FieldDeclaration d) {
+      // TODO: Inbal and Elia. Your code is buggy and will not find public final
+      // methods, e..g,--yg
+      @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
-        for (VariableDeclarationFragment ¢ : fragments(d))
+        for (final VariableDeclarationFragment ¢ : fragments(d))
           $.add(¢.getName().getIdentifier());
         return true;
       }
@@ -149,9 +152,9 @@ public enum getAll {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         $.add(node);
         return super.visit(node);
       }
@@ -169,9 +172,9 @@ public enum getAll {
     if (¢ == null)
       return $;
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
+      @SuppressWarnings("unchecked") @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+          for (final VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
             $.add(df.getName().getIdentifier());
         return true;
       }
