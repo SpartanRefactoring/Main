@@ -1,31 +1,34 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.external.External.Introspector.*;
+//import static il.org.spartan.external.External.Introspector.*;
 
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.external.*;
+//import il.org.spartan.external.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
-  @External(alias = "i", value = "name of the input directory")  static String inputDir = ".";
-  @External(alias = "o", value = "name of the output directory")  private static String outputDir = "/tmp";
-  @External(alias = "d", value = "default values for the directories")  private static boolean devault;
+//  @External(alias = "i", value = "name of the input directory")  
+  static String inputDir = ".";
+//  @External(alias = "o", value = "name of the output directory")  
+  private static String outputDir = "/tmp";
+//  @External(alias = "d", value = "default values for the directories")  
+  private static boolean devault;
 
   public static void main(final String[] args) {
 //    for (final String ¢ : args.length != 0 ? args : as.array("."))
 //      new CommandLineSpartanizer(¢).apply();
     if(args.length == 0)
-      usageErrorExit("name(s)", new CommandLineClient());
+//      usageErrorExit("name(s)", new CommandLineClient());
     processCommandLine(args);
   }
   
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
     CommandLineClient r = new CommandLineClient();
-    final List<String> remaining = extract(args, r);
+//    final List<String> remaining = extract(args, r);
     //
     Reports.setOutputFolder(outputDir);
     Reports.setInputFolder(inputDir);
@@ -35,7 +38,7 @@ public class CommandLineClient {
   }
   
   private void printExternals() {
-    System.out.println(usage(this));
+//    System.out.println(usage(this));
     System.out.println("Externals after processing command line arguments:");
     System.out.println("==================================================");
     System.out.println("outputDir: " + outputDir());
