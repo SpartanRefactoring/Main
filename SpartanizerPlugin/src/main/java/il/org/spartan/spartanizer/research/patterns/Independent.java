@@ -16,6 +16,9 @@ public class Independent extends JavadocMarkerNanoPattern<MethodDeclaration> {
     for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
       if (iz.typeDeclaration(¢))
         enviroment.addAll(step.fieldDeclarationsNames(az.typeDeclaration(¢)));
+    for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
+      if (iz.methodDeclaration(¢))
+        enviroment.addAll(step.parametersNames(az.methodDeclaration(¢)));
     Set<String> dependencies = analyze.dependencies(step.body(d)).stream().map(x -> x + "").collect(Collectors.toSet());
     for (String ¢ : enviroment)
       if (dependencies.contains(¢))
@@ -24,5 +27,8 @@ public class Independent extends JavadocMarkerNanoPattern<MethodDeclaration> {
   }
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
     return searchAncestors.forContainingType().from(¢);
+  }
+  private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
+    return searchAncestors.forContainingMethod().from(¢);
   }
 }
