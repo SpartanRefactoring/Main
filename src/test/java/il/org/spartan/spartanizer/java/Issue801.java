@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Zahi Mizrahi
  * @since 16-11-9 */
 public class Issue801 {
+  // SHAHAR/David/Zahi: Warnings on your code 
   @SuppressWarnings({ "static-method", "static-access" }) @Test public void testInt() {
     final Int x = new Int();
     Int.valueOf(5);
