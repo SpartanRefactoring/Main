@@ -106,8 +106,6 @@ public class Toolbox {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
             new EnhancedForParameterRenameToCent(), //
-            // TODO: Marco work on
-            // new FindFirst(), //
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
