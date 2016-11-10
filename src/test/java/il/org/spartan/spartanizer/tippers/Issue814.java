@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author koral chapnik
  * @since 16-11-10 */
 public class Issue814 {
-  @SuppressWarnings("static-method") @Test public void allParamsNull() {
+  @SuppressWarnings("static-method") @Test public void simpleTest() {
     MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     MethodExplorer e = new MethodExplorer(m);
     ReturnStatement s = e.returnStatements().get(0);
