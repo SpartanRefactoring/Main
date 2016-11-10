@@ -20,18 +20,15 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
-
   public List<CompilationUnit> getCompilationUnits() {
     final List<CompilationUnit> $ = new ArrayList<>();
     for (final WrappedCompilationUnit ¢ : inner)
       $.add(¢.compilationUnit);
     return $;
   }
-
   public List<WrappedCompilationUnit> get() {
     return inner;
   }
-
   /** Factory method for empty selection
    * @return empty selection */
   public static CommandLineSelection empty() {
@@ -44,46 +41,35 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     public static String getPresentSourcePath() {
       return presentSourcePath;
     }
-
-    public static void setPresentSourcePath(String presentSourcePath) {
+    public static void setPresentSourcePath(final String presentSourcePath) {
       Util.presentSourcePath = presentSourcePath;
     }
-
     /** @return CommandLineSelection */
     public static CommandLineSelection getAllCompilationUnits() {
       return getSelection();
     }
-
     /** @return CommandLineSelection */
     private static CommandLineSelection getSelection() {
       return null;
     }
-
     /** @return */
     public static AbstractSelection<CommandLineSelection> get() {
       return getFromPath(presentSourcePath);
     }
-
     /** @return */
     public static AbstractSelection<CommandLineSelection> get(final String from) {
       return getFromPath(from);
     }
-    
     /** @param path
-     * @return
-     */
-
+     * @return */
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path))
         cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
       return new CommandLineSelection(cuList, "selection");
     }
-    
     /** @param from
-     * @return
-     */
-
+     * @return */
     public static List<CompilationUnit> getAllCompilationUnit(final String from) {
       final List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(from)) {
@@ -115,13 +101,11 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     inner = cuList;
     System.err.println("Loading selection: done!");
   }
-
   public CommandLineSelection buildAll() {
     for (final WrappedCompilationUnit ¢ : compilationUnits)
       ¢.build();
     return this;
   }
-
   public static AbstractSelection<?> of(final List<CompilationUnit> ¢) {
     return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
   }
