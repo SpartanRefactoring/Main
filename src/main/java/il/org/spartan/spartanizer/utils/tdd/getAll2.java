@@ -22,12 +22,12 @@ public enum getAll2 {
    * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher */
-  public static List<MethodDeclaration> methods(CompilationUnit u) {
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(MethodDeclaration ¢) {
+      @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
         return super.visit(¢);
       }
@@ -39,10 +39,10 @@ public enum getAll2 {
    * @return List<Name> which is all names in b
    * @author Doron Meshulam
    * @author Tomer Dragucki */
-  public static List<Name> names(Block b) {
+  public static List<Name> names(final Block b) {
     if (b == null)
       return null;
-    List<Name> $ = new ArrayList<>();
+    final List<Name> $ = new ArrayList<>();
     b.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode an) {
         if (iz.name(an))
@@ -57,35 +57,34 @@ public enum getAll2 {
   /** Given a TypeDeclaration argument, this function returns a list of it's
    * public fields names.
    * @param d - the TypeDeclaration argument */
-  public static List<String> publicFields(TypeDeclaration d) {
-    LinkedList<String> $ = new LinkedList<>();
+  public static List<String> publicFields(final TypeDeclaration d) {
+    final LinkedList<String> $ = new LinkedList<>();
     if (d == null)
       return $;
-    for (FieldDeclaration fd : d.getFields())
-      for (Object mod : fd.modifiers())
-        if ("public".equals((mod + ""))) {
-          String[] field_splitted_to_words = (fd + "").trim().split(" ");
-          int field_name_idx = field_splitted_to_words.length - 1;
+    for (final FieldDeclaration fd : d.getFields())
+      for (final Object mod : fd.modifiers())
+        if ("public".equals(mod + "")) {
+          final String[] field_splitted_to_words = (fd + "").trim().split(" ");
+          final int field_name_idx = field_splitted_to_words.length - 1;
           if (field_name_idx < 0)
             continue;
           $.add(field_splitted_to_words[field_name_idx].replace(";", "").trim());
         }
     return $;
   }
-  
   /** @author Sapir Bismot
    * @author Yaniv Levinsky
    * @since 16-11-8 */
   /** Given a MethodDeclaration argument, this function returns a list of it's
    * all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
-  public static List<VariableDeclaration> stringVariables(MethodDeclaration ¢) {
-    List<VariableDeclaration> $ = new ArrayList<>();
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
+    final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    ¢.accept(new ASTVisitor(){
-      @Override public boolean visit(SingleVariableDeclaration node){
-        if ("String".equals((node.getType() + "")))
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(final SingleVariableDeclaration node) {
+        if ("String".equals(node.getType() + ""))
           $.add(node);
         return true;
       }
