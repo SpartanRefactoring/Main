@@ -3,11 +3,13 @@ package il.org.spartan.spartanizer.cmdline;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class Generic$Applicator {
@@ -73,5 +75,30 @@ public class Generic$Applicator {
     List<Class<? extends ASTNode>> l2 = as.list(l);
     System.out.println(l2);
     return l2;
+  }
+  
+  /** Printing definition of events that occur during spartanization.
+   * @author Ori Roth
+   * @since 2.6 */
+  private enum message {
+    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
+    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
+    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
+    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
+    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
+    private final int inputCount;
+    private final Function<Object[], String> printing;
+
+    message(final int inputCount, final Function<Object[], String> printing) {
+      this.inputCount = inputCount;
+      this.printing = printing;
+    }
+    public String get(final Object... ¢) {
+      assert ¢.length == inputCount;
+      return printing.apply(¢);
+    }
+    private static String printableAt(final Object[] os, final int index) {
+      return Linguistic.unknownIfNull(os, xs -> xs[index]);
+    }
   }
 }  
