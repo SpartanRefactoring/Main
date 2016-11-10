@@ -31,11 +31,10 @@ public class CommandLine$Applicator {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
-        return go(¢); // !selectedNodeTypes.contains(¢.getClass()) || 
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
   }
-
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -45,8 +44,7 @@ public class CommandLine$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
-
-  @SuppressWarnings({ "boxing"}) protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     Reports.summaryFileName("metrics");
     Reports.name(input);
@@ -57,11 +55,9 @@ public class CommandLine$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     Reports.nl("metrics");
   }
-
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
-
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
@@ -77,19 +73,16 @@ public class CommandLine$Applicator {
         return $.get();
     }
   }
-
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
-
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-        System.out.println("disabling.on(n): " + disabling.on(n));
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -113,48 +106,29 @@ public class CommandLine$Applicator {
         }
         return true;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
-    if (__ == null)
-      apply(u);
-    else if (u == null)
-      apply(__);
+  @SuppressWarnings("static-method") public boolean apply(@SuppressWarnings("unused") AbstractSelection<?> __) {
     return false;
   }
+
+  public boolean apply(@SuppressWarnings("unused") WrappedCompilationUnit u, AbstractSelection<?> __) {
+    
+    for (WrappedCompilationUnit ¢: ((CommandLineSelection) __).get())
+      go(¢.compilationUnit);
+//      w.compilationUnit.accept(new ASTVisitor() {
+//        @Override public boolean preVisit2(final ASTNode ¢) {
+//          return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
+//        }
+//      });
   
-  /**
-   * Apply to single compilation unit
-   * @param ¢
-   * @return
-   */
-   
-  public boolean apply(final WrappedCompilationUnit ¢) {
-    System.out.println("*********");
-    go(¢.compilationUnit);
-    return false;
-  }
-  
-  /** @param __
-   * @return
-   */
-  
-  public boolean apply(final AbstractSelection<?> __) {
-  for (WrappedCompilationUnit w: ((CommandLineSelection) __).get())
-    w.compilationUnit.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // || !filter(¢) 
-      }
-    });
     return false;
   }
 }
