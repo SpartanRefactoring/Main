@@ -37,8 +37,8 @@ public class Issue778 {
         .size(), 3);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test6() {
-    final String cu = "public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}";
-    final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(wizard.ast(cu)));
+    final String cu1 = "public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}";
+    final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(wizard.ast(cu1)));
     assertEquals(res.get(0).getName().getIdentifier(), "foo0");
     assertEquals(res.get(1).getName().getIdentifier(), "foo1");
     assertEquals(res.get(2).getName().getIdentifier(), "foo2");
