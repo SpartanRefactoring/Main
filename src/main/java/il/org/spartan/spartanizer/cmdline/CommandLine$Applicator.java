@@ -235,11 +235,8 @@ public class CommandLine$Applicator {
    * @return
    */
 
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> __) {
-//    if (__ == null)
+  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
       apply(u);
-//    else if (u == null)
-//      apply(__);
     return false;
   }
   

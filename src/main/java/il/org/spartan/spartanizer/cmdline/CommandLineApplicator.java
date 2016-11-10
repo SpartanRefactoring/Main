@@ -24,7 +24,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** Default listener configuration. Simple printing to console.
    * @return this applicator */
-  public CommandLineApplicator defaultListenerNoisy() {
+  @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       for (final Object ¢ : os)
         System.out.print(¢ + " ");
@@ -93,9 +93,9 @@ public class CommandLineApplicator extends Applicator {
    * {@link Spartanizer$Applicator}.
    * @param a JD
    * @return this applicator */
-  public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator c) {
-    setRunAction(u -> Integer.valueOf(c.apply(u, selection()) ? 1 : 0));
-    name(c.getClass().getSimpleName());
+  public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
+    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    name(a.getClass().getSimpleName());
     return this;
   }
 
@@ -104,9 +104,9 @@ public class CommandLineApplicator extends Applicator {
    * {@link CommandLine$Applicator}.
    * @param a JD
    * @return this applicator */
-  public CommandLineApplicator defaultRunAction(final CommandLine$Applicator c) {
-    setRunAction(u -> Integer.valueOf(c.apply(u, selection()) ? 1 : 0));
-    name(c.getClass().getSimpleName());
+  @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
+    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    name(a.getClass().getSimpleName());
     return this;
   }
 
@@ -133,7 +133,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** @param ¢ JD
    * @return */
-  public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
+  @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
