@@ -65,10 +65,10 @@ public enum enumerate {
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
    * @since 16-11-07 */
-  public static int blockTypes(MethodDeclaration d) {
+  public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
-    List<?> l = d.getBody().statements();
-    boolean[] arr = new boolean[10];
+    final List<?> l = d.getBody().statements();
+    final boolean[] arr = new boolean[10];
     final int BLOCK = 0;
     final int IFSTATE = 1;
     final int FORSTATE = 2;
@@ -84,7 +84,7 @@ public enum enumerate {
     // });
     for (int ¢ = 0; ¢ < arr.length; ++¢)
       arr[¢] = false;
-    for (Object ¢ : l)
+    for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {
         ++$;
         arr[BLOCK] = true;

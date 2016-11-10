@@ -26,7 +26,7 @@ public enum determineIf {
     final Int declaredVarsCounter = new Int();
     declaredVarsCounter.inner = 0;
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
         ++declaredVarsCounter.inner;
         return true;
       }
@@ -38,14 +38,14 @@ public enum determineIf {
    * @author Ron Gatenio
    * @author Roy Shchory
    * @since 16-11-02
-   * @param ¢
+   * @param d
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(final MethodDeclaration ¢) {
-    if (¢ == null)
+  public static boolean hasManyStatements(final MethodDeclaration d) {
+    if (d == null)
       return false;
     final Int $ = new Int();
     $.inner = 0;
-    ¢.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.statement(¢))
           ++$.inner;
@@ -64,8 +64,8 @@ public enum determineIf {
     if (m == null)
       return true;
     boolean $ = false;
-    for (FieldDeclaration f : m.getFields()) {
-      for (Object ¢ : f.modifiers())
+    for (final FieldDeclaration f : m.getFields()) {
+      for (final Object ¢ : f.modifiers())
         if (((Modifier) ¢).isFinal())
           $ = true;
       if (!$)
@@ -114,26 +114,26 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(MethodDeclaration mDec) {
+  public static boolean returnsNull(final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    List<ReturnStatement> statementList = new ArrayList<>();
+    final List<ReturnStatement> statementList = new ArrayList<>();
     mDec.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") LambdaExpression e1) {
+      @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
       }
-      @Override public boolean visit(@SuppressWarnings("unused") AnonymousClassDeclaration anonymClassDec) {
+      @Override public boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration anonymClassDec) {
         return false;
       }
-      @Override public boolean visit(@SuppressWarnings("unused") TypeDeclaration __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
         return false;
       }
-      @Override public boolean visit(ReturnStatement ¢) {
+      @Override public boolean visit(final ReturnStatement ¢) {
         statementList.add(¢);
         return true;
       }
     });
-    for (ReturnStatement ¢ : statementList)
+    for (final ReturnStatement ¢ : statementList)
       if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
         return true;
     return false;
@@ -146,21 +146,21 @@ public enum determineIf {
    * @param n
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
-  public static boolean uses(ASTNode n, String name) {
+  public static boolean uses(final ASTNode n, final String name) {
     if (n == null)
       return false;
-    Bool nameInAST = new Bool();
+    final Bool nameInAST = new Bool();
     nameInAST.inner = false;
     n.accept(new ASTVisitor() {
-      void innerVisit(Name node) {
+      void innerVisit(final Name node) {
         nameInAST.inner = node.getFullyQualifiedName().equals(name);
       }
-      @Override public boolean visit(QualifiedName node) {
+      @Override public boolean visit(final QualifiedName node) {
         if (!nameInAST.inner)
           innerVisit(node);
         return !nameInAST.inner;
       }
-      @Override public boolean visit(SimpleName node) {
+      @Override public boolean visit(final SimpleName node) {
         if (!nameInAST.inner)
           innerVisit(node);
         return !nameInAST.inner;
