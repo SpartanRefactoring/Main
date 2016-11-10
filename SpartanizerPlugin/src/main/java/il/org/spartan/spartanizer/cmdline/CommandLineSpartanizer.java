@@ -11,7 +11,7 @@ import il.org.spartan.plugin.*;
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
-  private boolean commandLineApplicator = true;
+  private final boolean commandLineApplicator = true;
   private final boolean collectApplicator = false;
   private boolean selection;
 
@@ -38,10 +38,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.initializeReport(folder + name + ".CSV", "metrics");
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
         // ---
-        CommandLineApplicator.defaultApplicator()
-                             .defaultListenerNoisy()
-                             .defaultRunAction(new CommandLine$Applicator())
-                             .go();
+        CommandLineApplicator.defaultApplicator().defaultListenerNoisy().defaultRunAction(new CommandLine$Applicator()).go();
         // ---
         Reports.close("metrics");
         Reports.close("spectrum");
@@ -49,7 +46,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.closeFile("after");
         System.err.println("commandLineApplicator: " + "Done!");
       }
-      if(selection)
+      if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
             .defaultRunAction(new CommandLine$Applicator()).go();
@@ -57,9 +54,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       x.printStackTrace();
     }
   }
-
   @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    return (u -> Integer.valueOf(
-        (new CommandLine$Applicator()).apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0));
+    return u -> Integer.valueOf(
+        new CommandLine$Applicator().apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0);
   }
 }

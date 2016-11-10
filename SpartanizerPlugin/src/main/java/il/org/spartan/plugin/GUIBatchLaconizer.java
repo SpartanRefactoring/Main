@@ -67,7 +67,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
    * printing to console.
    * @return this applicator */
-  public GUIBatchLaconizer defaultListenerNoisy() {
+  @Override public GUIBatchLaconizer defaultListenerNoisy() {
     listener(os -> {
       for (final Object ¢ : os)
         System.out.print(¢ + " ");

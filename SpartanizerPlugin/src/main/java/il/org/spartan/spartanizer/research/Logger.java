@@ -223,7 +223,7 @@ public class Logger {
   public static void logSpartanizedCompilationUnit(final ASTNode cu) {
     addToNodeType(IfStatement.class, count.nodesOfClass(cu, IfStatement.class));
   }
-  private static double min(double a, double d) {
+  private static double min(final double a, final double d) {
     return a < d ? a : d;
   }
 }

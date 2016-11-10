@@ -2,9 +2,10 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import java.util.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,7 +31,7 @@ public class issue713 {
     assert true;
   }
   @SuppressWarnings("static-method") @Test public void returnsList() {
-    @SuppressWarnings("unused") List<String> lst = getAll.publicFields(null);
+    @SuppressWarnings("unused") final List<String> lst = getAll.publicFields(null);
   }
   @Test public void returnsNoPublic() {
     assertEquals(0, getAll.publicFields(noPublic).size());
@@ -42,7 +43,7 @@ public class issue713 {
     assertEquals(2, getAll.publicFields(notOnlyPublic).size());
   }
   @Test public void rightNamesReturned() {
-    List<String> names = new ArrayList<>();
+    final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("ch");
     assertEquals(names, getAll.publicFields(notOnlyPublic));
@@ -54,7 +55,7 @@ public class issue713 {
     assertEquals(2, getAll.publicFields(notCountingMethods).size());
   }
   @Test public void listContainsRightNames() {
-    List<String> names = new ArrayList<>();
+    final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("y");
     assertEquals(names, getAll.publicFields(notCountingMethods));

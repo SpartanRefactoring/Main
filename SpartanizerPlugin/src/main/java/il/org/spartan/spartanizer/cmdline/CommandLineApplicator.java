@@ -19,7 +19,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** Default listener configuration. Simple printing to console.
    * @return this applicator */
-  public CommandLineApplicator defaultListenerNoisy() {
+  @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       for (final Object ¢ : os)
         System.out.print(¢ + " ");
@@ -104,7 +104,7 @@ public class CommandLineApplicator extends Applicator {
   }
   /** @param ¢ JD
    * @return */
-  public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
+  @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
