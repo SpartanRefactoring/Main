@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 
 import java.util.function.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
+
 /** Configurable applicator.
  * @param <L> I think we do not need this one. It couples classes too much.
  * @author Ori Roth
@@ -113,4 +115,13 @@ public abstract class Applicator {
   }
   /** Main operation of this applicator. */
   public abstract void go();
+  public Applicator defaultListenerNoisy() {
+    return this;
+  }
+  public Applicator defaultSelection(AbstractSelection<?> of) {
+    return this;
+  }
+  public Applicator defaultRunAction(CommandLine$Applicator __) {
+    return this;
+  }
 }

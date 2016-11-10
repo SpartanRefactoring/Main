@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Ariel Kolikant
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc", "unused" }) //
+@SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue686 {
   @Test public void a() {
     assertNotNull(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))));
