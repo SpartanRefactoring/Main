@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
+import java.util.function.*;
+
+import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -8,8 +11,9 @@ import java.io.*;
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final String name;
-  private boolean commandLineApplicator;
-  private final boolean collectApplicator = true;
+  private boolean commandLineApplicator = true;
+  private final boolean collectApplicator = false;
+  private boolean selection;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -33,16 +37,29 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         Reports.initializeFile(folder + name + ".after.java", "after");
         Reports.initializeReport(folder + name + ".CSV", "metrics");
         Reports.initializeReport(folder + name + ".spectrum.CSV", "spectrum");
-        CommandLineApplicator.defaultApplicator().passes(20)
-            .selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))).go();
+        // ---
+        CommandLineApplicator.defaultApplicator()
+                             .defaultListenerNoisy()
+                             .defaultRunAction(new CommandLine$Applicator())
+                             .go();
+        // ---
         Reports.close("metrics");
         Reports.close("spectrum");
         Reports.closeFile("before");
         Reports.closeFile("after");
         System.err.println("commandLineApplicator: " + "Done!");
       }
+      if(selection)
+        CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
+            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
+            .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException x) {
       x.printStackTrace();
     }
+  }
+
+  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
+    return (u -> Integer.valueOf(
+        (new CommandLine$Applicator()).apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0));
   }
 }
