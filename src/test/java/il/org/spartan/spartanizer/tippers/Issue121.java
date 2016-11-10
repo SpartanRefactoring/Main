@@ -27,7 +27,6 @@ import org.junit.*;
                 + "} \n" //
                 + "}");
   }
-
   // That is a true renaming bug, and a true Environment issue.
   @Ignore public void test02() {
     trimmingOf("class A{"//
@@ -61,7 +60,6 @@ import org.junit.*;
                 + "}"//
                 + "}");
   }
-
   @Test public void test03() {
     trimmingOf("class A{"//
         + "class B{"//

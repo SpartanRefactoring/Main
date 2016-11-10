@@ -34,20 +34,16 @@ public class RefactorerUtil {
       }
     return a.get(attribute.TIPPER) + "";
   }
-
   public static String projectName(final Map<attribute, Object> ¢) {
     final IMarker m = (IMarker) ¢.get(attribute.MARKER);
     return m.getResource() == null ? null : m.getResource().getProject().getName();
   }
-
   @SuppressWarnings("unchecked") public static int getCUsCount(final Map<attribute, Object> ¢) {
     return ((Collection<ICompilationUnit>) ¢.get(attribute.CU)).size();
   }
-
   @SuppressWarnings("unchecked") public static int getChangesCount(final Map<attribute, Object> ¢) {
     return ((Collection<ICompilationUnit>) ¢.get(attribute.CHANGES)).size();
   }
-
   public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
     final String s = us.size() + "";
     String i = us.indexOf(u) + 1 + "";
@@ -55,15 +51,12 @@ public class RefactorerUtil {
       i = " " + i;
     return i + "/" + s;
   }
-
   public static String plurals(final String s, final int i) {
     return i == 1 ? s : s + "s";
   }
-
   public static String plurales(final String s, final int i) {
     return i == 1 ? s : s + "es";
   }
-
   /** [[SuppressWarningsSpartan]] */
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
       final Map<attribute, Object> m, final attribute t) {

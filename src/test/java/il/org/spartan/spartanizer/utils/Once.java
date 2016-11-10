@@ -15,7 +15,6 @@ public final class Once {
   public Once(final String value) {
     this.value = Defaults.to(value, "");
   }
-
   @Override public String toString() {
     final String $ = value;
     value = null;

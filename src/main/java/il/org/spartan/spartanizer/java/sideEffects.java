@@ -63,7 +63,6 @@ public enum sideEffects {
     });
     return $.get().booleanValue();
   }
-
   public static boolean free(final Expression ¢) {
     if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
       return true;
@@ -96,30 +95,25 @@ public enum sideEffects {
         return false;
     }
   }
-
   private static boolean free(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
     return free(c.dimensions()) && (i == null || free(step.expressions(i)));
   }
-
   private static boolean free(final ConditionalExpression ¢) {
     return free(expression(¢), then(¢), elze(¢));
   }
-
   private static boolean free(final Expression... xs) {
     for (final Expression ¢ : xs)
       if (haz.sideEffects(¢))
         return false;
     return true;
   }
-
   private static boolean free(final List<?> os) {
     for (final Object ¢ : os)
       if (¢ == null || haz.sideEffects(az.expression((ASTNode) ¢)))
         return false;
     return true;
   }
-
   private static boolean free(final PrefixExpression ¢) {
     return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && !haz.sideEffects(step.operand(¢));
   }

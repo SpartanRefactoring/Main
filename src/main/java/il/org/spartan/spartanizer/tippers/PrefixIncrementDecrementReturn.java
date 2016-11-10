@@ -34,7 +34,6 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;

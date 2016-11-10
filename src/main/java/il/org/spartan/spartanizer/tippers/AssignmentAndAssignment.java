@@ -35,15 +35,12 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     final Expression $ = extract.core(from(¢));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
-
   static Expression getRight(final Assignment ¢) {
     return ¢.getOperator() != ASSIGN ? null : extractRight(¢);
   }
-
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))

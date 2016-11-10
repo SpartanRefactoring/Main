@@ -36,15 +36,12 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
         return false;
     return true;
   }
-
   @Override public String description() {
     return "remove uneccecary parenthesis";
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return description();
   }
-
   @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
