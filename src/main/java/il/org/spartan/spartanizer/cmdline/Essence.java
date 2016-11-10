@@ -11,7 +11,6 @@ public class Essence {
       System.out.println(Essence.of(¢.nextLine()));
     }
   }
-
   public static String of(final String codeFragment) {
     return codeFragment//
         .replaceAll("\\r\\n", "\\n") // DOS Junk
@@ -33,7 +32,6 @@ public class Essence {
         .replaceAll("([^\\p{L}]) ([\\p{L}])", "$1$2")//
     ;
   }
-
   public static String stringRemove(final String $) {
     return $
         // Unquoted double quote by two consecutive double quotes

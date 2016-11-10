@@ -17,13 +17,11 @@ public final class TrimmerTestsUtils {
   public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
-
   static String apply(final Tipper<? extends ASTNode> n, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     return TESTUtils.rewrite(new TipperApplicator(n), u, new Document(from)).get();
   }
-
   static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
@@ -32,7 +30,6 @@ public final class TrimmerTestsUtils {
     assert $ != null;
     return $.get();
   }
-
   static void assertSimplifiesTo(final String from, final String expected, final Tipper<? extends ASTNode> n, final Wrap w) {
     final String wrap = w.on(from);
     final String unpeeled = apply(n, wrap);
@@ -45,11 +42,9 @@ public final class TrimmerTestsUtils {
       azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), is(not(tide.clean(peeled))));
     assertSimilar(expected, peeled);
   }
-
   static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
-
   public static Operand trimmingOf(final String from) {
     return new Operand(from);
   }
@@ -61,7 +56,6 @@ public final class TrimmerTestsUtils {
       super(inner);
       trimmer = new Trimmer();
     }
-
     public Operand gives(final String expected) {
       assert expected != null;
       final Wrap w = Wrap.find(get());
@@ -77,16 +71,13 @@ public final class TrimmerTestsUtils {
       assertSimilar(expected, peeled);
       return new Operand(expected);
     }
-
     public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> t) {
       trimmer.add(n, t);
       return this;
     }
-
     public void stays() {
       checkSame();
     }
-
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -100,7 +91,6 @@ public final class TrimmerTestsUtils {
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       assertSimilar(expected, peeled);
     }
-
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -120,18 +110,15 @@ public final class TrimmerTestsUtils {
       super(from);
       this.clazz = clazz;
     }
-
     public OperandToTipper<N> in(final Tipper<N> n) {
       final N findNode = findNode(n);
       azzert.that(n.canTip(findNode), is(true));
       return this;
     }
-
     public OperandToTipper<N> notIn(final Tipper<N> ¢) {
       azzert.that(¢.canTip(findNode(¢)), is(false));
       return this;
     }
-
     private N findNode(final Tipper<N> n) {
       assert n != null;
       final Wrap wrap = Wrap.find(get());
@@ -142,7 +129,6 @@ public final class TrimmerTestsUtils {
       assert $ != null;
       return $;
     }
-
     private N firstInstance(final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor() {

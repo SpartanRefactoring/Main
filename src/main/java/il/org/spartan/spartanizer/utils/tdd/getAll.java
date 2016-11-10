@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -23,7 +25,8 @@ public enum getAll {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    @SuppressWarnings("unchecked") final List<Object> l = ¢.arguments();
+    // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
+    final List<Object> l = ¢.arguments();
     for (final Object i : l) {
       if (i instanceof MethodInvocation)
         $.addAll(invocations((MethodInvocation) i));
@@ -106,11 +109,11 @@ public enum getAll {
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
-  public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
     final List<VariableDeclaration> $ = new ArrayList<>();
-    if (¢ == null)
+    if (d == null)
       return null;
-    ¢.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
           $.add((SingleVariableDeclaration) ¢);
@@ -124,16 +127,15 @@ public enum getAll {
    * @param a TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  public static List<String> publicFields(TypeDeclaration d) {
+  public static List<String> publicFields(final TypeDeclaration d) {
     if (d == null)
       return null;
-    List<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
+      @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
-        List<VariableDeclarationFragment> fragmentsLst = d.fragments();
-        for (VariableDeclarationFragment ¢ : fragmentsLst)
+        for (final VariableDeclarationFragment ¢ : fragments(d))
           $.add(¢.getName().getIdentifier());
         return true;
       }
@@ -148,39 +150,33 @@ public enum getAll {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         $.add(node);
         return super.visit(node);
       }
     });
     return $;
   }
-  
-  /**
-   * takes a single parameter, which is a TypeDeclaration. 
-   * returns a list of private fields for this class (by fields' names)
+  /** takes a single parameter, which is a TypeDeclaration. returns a list of
+   * private fields for this class (by fields' names)
    * @param TypeDeclaration
    * @author yonzarecki
    * @author rodedzats
-   * @author zivizhar
-   */
+   * @author zivizhar */
   public static List<String> privateFields(final TypeDeclaration ¢) {
     final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
+      @SuppressWarnings("unchecked") @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+          for (final VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
             $.add(df.getName().getIdentifier());
         return true;
       }
     });
     return $;
   }
-  
-  
 }

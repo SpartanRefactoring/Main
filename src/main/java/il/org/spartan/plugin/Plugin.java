@@ -24,50 +24,41 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   public static AbstractUIPlugin plugin() {
     return plugin;
   }
-
   private static void startSpartan() {
     addPartListener();
     SpartanizeableAll.go();
     RefreshAll.go();
   }
-
   public Plugin() {
     plugin = this;
   }
-
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
     monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
     startSpartan();
   }
-
   @Override public void start(final BundleContext ¢) throws Exception {
     super.start(¢);
     monitor.debug("START: gUIBatchLaconizer");
     startSpartan();
   }
-
   @Override public void stop(final BundleContext ¢) throws Exception {
     monitor.debug("STOP: spartnizer");
     plugin = null;
     super.stop(¢);
   }
-
   @Override protected void loadDialogSettings() {
     monitor.debug("LDS: gUIBatchLaconizer");
     super.loadDialogSettings();
   }
-
   @Override protected void refreshPluginActions() {
     monitor.debug("RPA: gUIBatchLaconizer");
     super.refreshPluginActions();
   }
-
   @Override protected void saveDialogSettings() {
     monitor.debug("SDS: gUIBatchLaconizer");
     super.saveDialogSettings();
   }
-
   private static void addPartListener() {
     if (listening)
       return;

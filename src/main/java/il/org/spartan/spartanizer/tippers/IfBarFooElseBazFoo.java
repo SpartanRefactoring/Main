@@ -55,11 +55,9 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
     }
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
-
   @Override public Tip tip(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
@@ -87,18 +85,15 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
           r.replace(s, subject.ss(commmonSuffix).toBlock(), g);
         }
       }
-
       IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
-
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
     };
   }
-
   @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
     return super.tip(s, exclude);
   }
@@ -111,11 +106,9 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);
     }
-
     public boolean notAllDefined() {
       return notAllDefined;
     }
-
     @Override public boolean visit(final SimpleName ¢) {
       if (!Collect.declarationsOf(¢).in(l).isEmpty())
         notAllDefined = true;

@@ -17,6 +17,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -35,7 +36,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     refreshNeeded = new AtomicBoolean(false);
     listener = new SpartanPropertyListener(refreshNeeded);
   }
-
   @Override public boolean performOk() {
     refreshNeeded.set(false);
     final boolean $ = super.performOk();
@@ -50,7 +50,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       }).start();
     return $;
   }
-
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID,
@@ -74,7 +73,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     // addField(g);
     // }
   }
-
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);
@@ -89,7 +87,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     public SpartanPropertyListener(final AtomicBoolean refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
-
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
         refreshNeeded.set(true);
@@ -156,11 +153,9 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
         }
       });
     }
-
     @Override protected String[] parseString(final String stringList) {
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
-
     @SuppressWarnings("unused") @Override protected String getNewInputObject() {
       if (dead.isEmpty() || composite == null)
         return null;
@@ -170,23 +165,18 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
         @Override public void removeListener(final ILabelProviderListener __) {
           //
         }
-
         @Override public boolean isLabelProperty(final Object element, final String property) {
           return false;
         }
-
         @Override public void dispose() {
           //
         }
-
         @Override public void addListener(final ILabelProviderListener __) {
           //
         }
-
         @Override public String getText(final Object element) {
           return element + "";
         }
-
         @Override public Image getImage(final Object element) {
           return null;
         }
@@ -206,11 +196,9 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       alive.add($);
       return $;
     }
-
     @Override protected String createList(final String[] items) {
       return separate.these(items).by(DELIMETER);
     }
-
     @Override public void createSelectionListener() {
       super.createSelectionListener();
     }

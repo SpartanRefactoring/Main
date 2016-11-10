@@ -11,7 +11,6 @@ class Term {
   static Term minus(final Expression ¢) {
     return new Term(true, ¢);
   }
-
   static Term plus(final Expression ¢) {
     return new Term(false, ¢);
   }
@@ -23,11 +22,9 @@ class Term {
     negative = minus;
     this.expression = expression;
   }
-
   public boolean positive() {
     return !negative;
   }
-
   Expression asExpression() {
     if (!negative)
       return expression;
@@ -36,7 +33,6 @@ class Term {
     $.setOperator(wizard.MINUS1);
     return $;
   }
-
   boolean negative() {
     return negative;
   }
