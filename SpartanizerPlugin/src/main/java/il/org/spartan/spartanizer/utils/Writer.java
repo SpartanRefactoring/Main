@@ -10,7 +10,8 @@ public class Writer {
     writer.close();
   }
   protected void initializeWriter(final String outputFileName) {
-    //TODO yossigil , call to this function with Writer and not with one of his descendant‏ cause nullPointerException maybe need to be abstract? 
+    // TODO yossigil , call to this function with Writer and not with one of his
+    // descendant‏ cause nullPointerException maybe need to be abstract?
     final File outputDir = new File(outputPath);
     if (!outputDir.exists())
       outputDir.mkdir();
