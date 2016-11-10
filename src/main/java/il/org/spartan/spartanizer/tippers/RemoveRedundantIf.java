@@ -31,18 +31,15 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
           return false;
     return true;
   }
-
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     for (final VariableDeclarationFragment ¢ : fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;
     return true;
   }
-
   @Override public String description(final IfStatement ¢) {
     return "remove :" + ¢;
   }
-
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;

@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
@@ -41,7 +42,6 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test03() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
@@ -65,7 +65,6 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test04() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());

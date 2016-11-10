@@ -40,7 +40,6 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
     int $ = 0;
     try {
@@ -59,7 +58,6 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     long $ = 0;
     try {
@@ -78,11 +76,9 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override String operation() {
     return "division";
   }
-
   @Override Operator operator() {
     return DIVIDE;
   }

@@ -13,11 +13,9 @@ import org.junit.runners.*;
   @Test public void a$01() {
     trimmingOf("a+b.toString()").gives("a+\"\"+b").stays();
   }
-
   @Test public void a$02() {
     trimmingOf("b.toString()").gives("\"\"+b").gives("b+\"\"").stays();
   }
-
   @Test public void a$03() {
     trimmingOf("\"5\"+b.toString()").gives("\"5\"+\"\"+b").gives("\"5\"+b").stays();
   }

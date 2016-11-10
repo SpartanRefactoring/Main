@@ -65,14 +65,12 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
-
   private static boolean containsZeroOperand(final InfixExpression x) {
     for (final Expression ¢ : extract.allOperands(x))
       if (iz.literal0(¢))
         return true;
     return false;
   }
-
   /** [[SuppressWarningsSpartan]] */
   private static boolean containsPlusOperator(final InfixExpression e) {
     for (final Operator o : extract.allOperators(e))
@@ -80,7 +78,6 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
         return true;
     return false;
   }
-
   public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
@@ -92,18 +89,15 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
-
   @Override public boolean prerequisite(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }
-
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
-
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
@@ -117,17 +111,14 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       gather(extendedOperands(x), $);
     return $;
   }
-
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
     for (final Expression ¢ : xs)
       gather(¢, $);
     return $;
   }
-
   @Override public String description() {
     return "remove 0 in expressions like ";
   }
-
   @Override public String description(final InfixExpression ¢) {
     return description() + ¢;
   }

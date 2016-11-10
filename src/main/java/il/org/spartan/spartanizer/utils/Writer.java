@@ -9,7 +9,6 @@ public class Writer {
   public void close() {
     writer.close();
   }
-
   protected void initializeWriter(final String outputFileName) {
     final File outputDir = new File(outputPath);
     if (!outputDir.exists())

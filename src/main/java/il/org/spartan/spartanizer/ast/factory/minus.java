@@ -35,7 +35,6 @@ public enum minus {
       ss.remove(ss.size() - 1);
     return ¢;
   }
-
   public static int level(final Expression ¢) {
     return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
         : iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
@@ -43,22 +42,18 @@ public enum minus {
                 : iz.nodeTypeEquals(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
                     : 0;
   }
-
   public static int level(final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
-
   public static int level(final List<Expression> xs) {
     int $ = 0;
     for (final Expression ¢ : xs)
       $ += minus.level(¢);
     return $;
   }
-
   private static int level(final PrefixExpression ¢) {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
-
   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -66,22 +61,18 @@ public enum minus {
                 : iz.nodeTypeEquals($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
   }
-
   public static Expression peel(final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
-
   private static List<Expression> peel(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
       $.add(peel(¢));
     return $;
   }
-
   public static Expression peel(final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
-
   public static Expression peel(final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }

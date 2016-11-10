@@ -18,17 +18,14 @@ public class Issue763 {
     assertEquals("Map", analyze.type(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "") && iz.methodInvocation(x.getParent()))
         .from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")).get(0)));
   }
-
   @Test public void b() {
     assertEquals("Map", analyze.type(
         searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "")).from(wizard.ast("class C{  void foo(){Map x; print(x);}}")).get(0)));
   }
-
   @Test public void c() {
     assertEquals("Map", analyze.type(
         searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")).get(0)));
   }
-
   @Test public void d() {
     assertEquals("Map<String,String>", analyze.type(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + ""))
         .from(wizard.ast("class C{  void foo(Map<String,String> x){ print(x);}}")).get(0)));

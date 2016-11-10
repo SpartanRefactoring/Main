@@ -23,14 +23,12 @@ public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "replace with #default #deault x";
   }
-
   @Override public boolean canTip(final IfStatement s) {
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(s))
         return true;
     return false;
   }
-
   @Override public Tip tip(final IfStatement s) {
     Logger.logNP(s, "IfNullReturn");
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)

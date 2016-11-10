@@ -42,14 +42,12 @@ public interface idiomatic {
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
     wizard.addImport(u, r, d);
   }
-
   /** @param <T> JD
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<T> $) {
     return () -> $.get();
   }
-
   /** @param condition JD
    * @return */
   /** <code>incase</code>
@@ -60,7 +58,6 @@ public interface idiomatic {
   static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
-
   /** A filter, which prints an appropriate log message and returns null in case
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
@@ -75,33 +72,28 @@ public interface idiomatic {
       return null;
     }
   }
-
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
   static String quote(final String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
-
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
   static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
-
   /** @param <T> JD
    * @param ¢ JD
    * @return Yielder<T> */
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
-
   /** @param condition JD
    * @return */
   static Trigger unless(final boolean condition) {
     return vhen(!condition);
   }
-
   /** @param <T> JD
    * @param condition when should the action take place
    * @param t JD
@@ -117,7 +109,6 @@ public interface idiomatic {
     public ObjectHolder(final T t) {
       this.t = t;
     }
-
     public ConditionHolder nulls() {
       return new ConditionHolder(t == null);
     }
@@ -129,7 +120,6 @@ public interface idiomatic {
     public ConditionHolder(final boolean b) {
       this.b = b;
     }
-
     public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
       return new SupplierHolder<>(¢, b);
     }
@@ -143,7 +133,6 @@ public interface idiomatic {
       s = ¢;
       this.b = b;
     }
-
     public T elze(final Supplier<T> ¢) {
       return (b ? s : ¢).get();
     }
@@ -152,11 +141,9 @@ public interface idiomatic {
   static <T> ObjectHolder<T> when(final T ¢) {
     return new ObjectHolder<>(¢);
   }
-
   static ConditionHolder when(final boolean ¢) {
     return new ConditionHolder(¢);
   }
-
   /** @param condition JD
    * @return */
   static Trigger vhen(final boolean condition) {
@@ -180,7 +167,6 @@ public interface idiomatic {
       }
     };
   }
-
   static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
@@ -197,7 +183,6 @@ public interface idiomatic {
     default T unless(final boolean unless) {
       return when(!unless);
     }
-
     /** Return value when condition is <code><b>true</b></code>
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>.
@@ -205,7 +190,6 @@ public interface idiomatic {
     default T when(final boolean when) {
       return when ? get() : null;
     }
-
     default T to(final T ¢) {
       return get() == null ? ¢ : get();
     }
@@ -235,17 +219,14 @@ public interface idiomatic {
     Runner(final Runnable run) {
       this.run = run;
     }
-
     @Override public void run() {
       run.run();
     }
-
     /** <code>unless</code>
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
     }
-
     void when(final boolean when) {
       if (when)
         run();
@@ -265,7 +246,6 @@ public interface idiomatic {
     Storer(final T inner) {
       this.inner = inner;
     }
-
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public T get() {
       return inner;
@@ -276,63 +256,49 @@ public interface idiomatic {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }
-
     @Test public void use08() {
       azzert.isNull(unless(true).eval(() -> new Object()));
     }
-
     @Test public void use09() {
       azzert.notNull(unless(false).eval(() -> new Object()));
     }
-
     @Test public void use1() {
       azzert.notNull(new Storer<>(this));
       new Storer<>(this).when(true);
     }
-
     @Test public void use10() {
       azzert.notNull(vhen(true).eval(() -> new Object()));
     }
-
     @Test public void use11() {
       azzert.isNull(vhen(false).eval(() -> new Object()));
     }
-
     @Test public void use2() {
       azzert.notNull(take(this));
       azzert.isNull(take(this).when(false));
     }
-
     @Test public void use3() {
       azzert.that(take(this).when(true), is(this));
     }
-
     @Test public void use4() {
       azzert.isNull(take(this).when(false));
     }
-
     @Test public void use5() {
       azzert.that(take(this).unless(false), is(this));
     }
-
     @Test public void use6() {
       azzert.isNull(take(this).unless(true));
     }
-
     @Test public void use7() {
       azzert.isNull(take(this).unless(true));
       azzert.isNull(take(null).unless(true));
       azzert.isNull(take(null).unless(false));
     }
-
     String mapper(final String ¢) {
       return ¢ + ¢;
     }
-
     String mapper(final Integer ¢) {
       return ¢ + "";
     }
-
     @Test public void useMapper() {
       final List<String> before = new ArrayList<>();
       before.add("1");
@@ -343,7 +309,6 @@ public interface idiomatic {
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
-
     @SuppressWarnings("boxing") @Test public void useMapper2() {
       final List<Integer> before = new ArrayList<>();
       before.add(1);
@@ -354,7 +319,6 @@ public interface idiomatic {
       assertEquals("2", after.get(1));
       assertEquals("3", after.get(2));
     }
-
     @SuppressWarnings("boxing") @Test public void useFilter() {
       final List<Integer> before = new ArrayList<>();
       before.add(1);
@@ -364,7 +328,6 @@ public interface idiomatic {
       assertEquals(1, after.get(0).intValue());
       assertEquals(3, after.get(1).intValue());
     }
-
     @Test public void useReduce() {
       final List<String> before = new ArrayList<>();
       before.add("1");
@@ -372,7 +335,6 @@ public interface idiomatic {
       before.add("3");
       assertEquals("123", on(before).reduce((x, y) -> x + y));
     }
-
     @Test public void useMax() {
       final List<String> before = new ArrayList<>();
       before.add("1");
@@ -380,7 +342,6 @@ public interface idiomatic {
       before.add("3");
       assertEquals("3", on(before).max(String::compareTo));
     }
-
     @Test public void useMin() {
       final List<String> before = new ArrayList<>();
       before.add("1");
@@ -388,7 +349,6 @@ public interface idiomatic {
       before.add("3");
       assertEquals("1", on(before).min(String::compareTo));
     }
-
     @SuppressWarnings("boxing") @Test public void whenNullsEval() {
       final Object o = new Object();
       when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
@@ -402,7 +362,6 @@ public interface idiomatic {
      * @param t JD
      * @return */
     <T> T eval(final Supplier<T> t);
-
     /** @param <T> JD
      * @param $ JD
      * @return */
@@ -428,27 +387,21 @@ public interface idiomatic {
     public CollectionHolder(final CT collection) {
       this.collection = collection;
     }
-
     public void apply(final Consumer<? super T> mapper) {
       collection.stream().forEach(mapper);
     }
-
     @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
       return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
     }
-
     @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
       return (CT) collection.stream().filter(mapper).collect(new GenericCollector<T>(collection.getClass()));
     }
-
     public T reduce(final BinaryOperator<T> reducer) {
       return collection.stream().reduce(reducer).get();
     }
-
     public T max(final Comparator<? super T> comperator) {
       return collection.stream().max(comperator).get();
     }
-
     public T min(final Comparator<? super T> comperator) {
       return collection.stream().min(comperator).get();
     }
@@ -467,7 +420,6 @@ public interface idiomatic {
     public MapperLambdaHolder(final Function<T, R> mapper) {
       this.mapper = mapper;
     }
-
     @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(final CT ¢) {
       return (CR) ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
     }
@@ -493,11 +445,9 @@ public interface idiomatic {
     public GenericCollector(final Class<? extends Collection> cls) {
       this.cls = cls;
     }
-
     @SuppressWarnings("unchecked") private <I> Function<I, Collection<R>> castingIdentity() {
       return i -> (Collection<R>) i;
     }
-
     @SuppressWarnings("unchecked") @Override public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
@@ -508,22 +458,18 @@ public interface idiomatic {
         return null;
       };
     }
-
     @Override public BiConsumer<Collection<R>, R> accumulator() {
       return (c, t) -> c.add(t);
     }
-
     @Override public BinaryOperator<Collection<R>> combiner() {
       return (left, right) -> {
         left.addAll(right);
         return left;
       };
     }
-
     @Override public Function<Collection<R>, Collection<R>> finisher() {
       return castingIdentity();
     }
-
     @Override public Set<Characteristics> characteristics() {
       return new HashSet<>();
     }

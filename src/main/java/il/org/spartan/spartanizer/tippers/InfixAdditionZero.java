@@ -60,11 +60,9 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
     $.add(x);
     return $;
   }
-
   private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<Expression>());
   }
-
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
@@ -78,21 +76,17 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
       gather(extendedOperands(x), $);
     return $;
   }
-
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
     for (final Expression ¢ : xs)
       gather(¢, $);
     return $;
   }
-
   @Override public String description() {
     return null;
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "remove 0 in expressions like " + ¢;
   }
-
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
@@ -113,7 +107,6 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
       }
     };
   }
-
   @Override public TipperGroup tipperGroup() {
     return TipperGroup.Abbreviation;
   }
