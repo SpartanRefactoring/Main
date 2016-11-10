@@ -1,10 +1,8 @@
 package il.org.spartan.spartanizer.utils.tdd;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
@@ -127,15 +125,16 @@ public enum getAll {
    * @param a TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  public static List<String> publicFields(final TypeDeclaration d) {
+  public static List<String> publicFields(TypeDeclaration d) {
     if (d == null)
       return null;
-    final List<String> $ = new ArrayList<>();
+    List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      @Override public boolean visit(final FieldDeclaration d) {
+      // TODO: Inbal and Elia. Your code is buggy and will not find public final methods, e..g,--yg
+      @Override public boolean visit(FieldDeclaration d) {
         if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
           return true;
-        for (final VariableDeclarationFragment ¢ : fragments(d))
+        for (VariableDeclarationFragment ¢ : fragments(d))
           $.add(¢.getName().getIdentifier());
         return true;
       }
@@ -150,9 +149,9 @@ public enum getAll {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = new ArrayList<>();
+    List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
+      @Override public boolean visit(MethodDeclaration node) {
         $.add(node);
         return super.visit(node);
       }
@@ -170,9 +169,9 @@ public enum getAll {
     if (¢ == null)
       return $;
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @SuppressWarnings("unchecked") @Override public boolean visit(final FieldDeclaration d) {
+      @SuppressWarnings("unchecked") @Override public boolean visit(FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (final VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+          for (VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
             $.add(df.getName().getIdentifier());
         return true;
       }
