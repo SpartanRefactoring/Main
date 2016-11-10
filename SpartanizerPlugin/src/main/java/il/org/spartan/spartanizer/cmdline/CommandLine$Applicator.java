@@ -114,21 +114,17 @@ public class CommandLine$Applicator {
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-
-  @SuppressWarnings("static-method") public boolean apply(@SuppressWarnings("unused") AbstractSelection<?> __) {
+  @SuppressWarnings("static-method") public boolean apply(@SuppressWarnings("unused") final AbstractSelection<?> __) {
     return false;
   }
-
-  public boolean apply(@SuppressWarnings("unused") WrappedCompilationUnit u, AbstractSelection<?> __) {
-    
-    for (WrappedCompilationUnit ¢: ((CommandLineSelection) __).get())
+  public boolean apply(@SuppressWarnings("unused") final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+    for (final WrappedCompilationUnit ¢ : ((CommandLineSelection) __).get())
       go(¢.compilationUnit);
-//      w.compilationUnit.accept(new ASTVisitor() {
-//        @Override public boolean preVisit2(final ASTNode ¢) {
-//          return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
-//        }
-//      });
-  
+    // w.compilationUnit.accept(new ASTVisitor() {
+    // @Override public boolean preVisit2(final ASTNode ¢) {
+    // return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
+    // }
+    // });
     return false;
   }
 }
