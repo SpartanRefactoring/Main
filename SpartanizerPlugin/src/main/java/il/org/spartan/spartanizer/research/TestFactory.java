@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class TestFactory {
-  public static String testcase(final String raw, final int report, final int issue) {
-    return wrapTest(report, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
+  public static String testcase(final String raw, final int name, final int issue) {
+    return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
   }
 
   /** escapes all "s
