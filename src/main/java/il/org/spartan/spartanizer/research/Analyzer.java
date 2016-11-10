@@ -139,13 +139,16 @@ public class Analyzer {
   /** @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze() {
-    final InteractiveSpartanizer spartanizer = addJavadocNanoPatterns(addNanoPatterns(new InteractiveSpartanizer()));
+    InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+    if (getProperty("nmethods") == null || "false".equals(getProperty("nmethods")))
+      spartanizer = addJavadocNanoPatterns(spartanizer);
     String spartanizedCode = "";
     new File(getProperty("outputDir") + "/after.java").delete();
     for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
       System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(az.compilationUnit(cu));
+      Logger.logFile(¢.getName());
       spartanizedCode = spartanizer.fixedPoint(cu + "");
       appendFile(new File(getProperty("outputDir") + "/after.java"), spartanizedCode);
       Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
@@ -181,12 +184,14 @@ public class Analyzer {
             null) //
         .add(Block.class, //
             new ReturnOld(), //
+            new ReturnAnyMatches(), //
             null) //
         .add(CastExpression.class, //
             new Coercion(), //
             null) //
         .add(EnhancedForStatement.class, //
             new ApplyToEach(), //
+            new FindFirst(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
