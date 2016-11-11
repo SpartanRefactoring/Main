@@ -147,7 +147,7 @@ public enum getAll {
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
-   * @author Roei-m
+   * @author RoeiRaz
    * @author RoeyMaor */
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
