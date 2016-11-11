@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils;
 
 import java.io.*;
 
+// TODO Matteo, erase this class
 public final class LogManager {
   protected static boolean ACTIVE;
   private static String logDir; // /home/matteo/SpartanLog
@@ -28,7 +29,6 @@ public final class LogManager {
     if (!outputDir.exists())
       outputDir.mkdir();
     initializeWriters();
-    // printWriter = new Writer();
   }
   public static boolean isActive() {
     return ACTIVE;
