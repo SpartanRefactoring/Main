@@ -251,10 +251,9 @@ public enum step {
   public static Expression left(final InstanceofExpression ¢) {
     return ¢.getLeftOperand();
   }
-  @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
+  public static List<ASTNode> marchingList(final ASTNode ¢) {
     final List<ASTNode> $ = new ArrayList<>();
-    final List lst = ¢.structuralPropertiesForType();
-    for (final Object s : lst) {
+    for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
       if (iz.astNode(child))
         $.add(az.astNode(child));
