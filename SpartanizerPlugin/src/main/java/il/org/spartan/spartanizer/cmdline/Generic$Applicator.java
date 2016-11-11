@@ -58,23 +58,21 @@ public class Generic$Applicator {
   @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
     List l = new ArrayList<>();
     Toolbox tb = new Toolbox().defaultInstance();
-    int tipnum = tb.tippersCount();
-    for (int i = 0; i <= tipnum; ++i){
+    for (int tipnum = tb.tippersCount(), i = 0; i <= tipnum; ++i) {
       List<Tipper<? extends ASTNode>> b = tb.get(i);
-      if(b.size()>0){
-        for(Tipper<?> ¢: b){
+      if (!b.isEmpty())
+        for (Tipper<?> ¢ : b) {
           Class<? extends Tipper> class1 = ¢.getClass();
           ParameterizedType genericSuperclass = (ParameterizedType) class1.getGenericSuperclass();
           Type type = genericSuperclass.getActualTypeArguments()[0];
-          if(!l.contains(type))
+          if (!l.contains(type))
             l.add(type);
         }
-      }
     }
     
-    List<Class<? extends ASTNode>> l2 = as.list(l);
-    System.out.println(l2);
-    return l2;
+    List<Class<? extends ASTNode>> $ = as.list(l);
+    System.out.println($);
+    return $;
   }
   
   /** Printing definition of events that occur during spartanization.
