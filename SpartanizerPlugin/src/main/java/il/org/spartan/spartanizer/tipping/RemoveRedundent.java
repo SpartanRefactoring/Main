@@ -32,8 +32,7 @@ public class RemoveRedundent {
     return true;
   }
   public static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    final List<VariableDeclarationFragment> lst = fragments(s);
-    for (final VariableDeclarationFragment ¢ : lst)
+    for (final VariableDeclarationFragment ¢ : fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;
     return true;
