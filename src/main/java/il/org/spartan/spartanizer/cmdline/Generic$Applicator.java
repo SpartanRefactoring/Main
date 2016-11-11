@@ -30,6 +30,20 @@ public class Generic$Applicator {
     }
     return as.list($); // useless?
   }
+  
+  public Generic$Applicator(){
+    selectedNodeTypes = setAll();
+  }
+  
+  public Generic$Applicator(String[] clazzes) {
+    if (clazzes == null)
+      selectedNodeTypes = setAll();
+    else {
+      selectedNodeTypes = setSelected(clazzes);
+      System.out.println("selected: " + selectedNodeTypes.size());
+    }
+  }
+  
   private static List<Class<? extends ASTNode>> setAll() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
         VariableDeclarationFragment.class, //
