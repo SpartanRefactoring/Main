@@ -201,8 +201,6 @@ public final class SingleTipperApplicator {
           if (x != null) {
             final Tip make = x.tip(n, exclude);
             if (make != null) {
-              if (LogManager.isActive())
-                LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
               make.go(rewrite, null);
             }
           }

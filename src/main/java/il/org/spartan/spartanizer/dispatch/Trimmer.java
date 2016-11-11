@@ -60,8 +60,6 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (s != null) {
           i.incrementAndGet();
-          if (LogManager.isActive())
-            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
           TrimmerLog.application(r, s);
         }
         return true;
