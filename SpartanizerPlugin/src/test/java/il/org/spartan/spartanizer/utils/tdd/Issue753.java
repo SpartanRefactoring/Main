@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 // TODO: Still getting warnings on your code. #623
 // TODO: Use names that are found on your Karma pages.
-/** Tests of {@link enumerate.expressions}
+// TODO: Make your names clear.
+/** Tests of {@link count.expressions}
  * @author Roei-m
  * @author RoeyMaor
  * @since 2016 */
