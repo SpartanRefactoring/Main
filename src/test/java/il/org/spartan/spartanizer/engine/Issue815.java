@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Oren Afek
  * @author Amir Sagiv
  * @since 16-11-11 */
+// TODO: OREN AND AMIR Use only one @SuppressWarning. See other test classes
 public class Issue815 {
   @SuppressWarnings("static-method") @Test public void nullCheckForOfMethod() {
     assertNull(NameGuess.of(null));
@@ -60,5 +61,22 @@ public class Issue815 {
     assertEquals(NameGuess.of("setMyMOODtoBeH4PPY"), NameGuess.SETTTER_METHOD);
     assertEquals(NameGuess.of("setF4NT4STIC"), NameGuess.SETTTER_METHOD);
     assertNotEquals(NameGuess.of("SETIT"), NameGuess.SETTTER_METHOD);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void getMethodCheckForOfMethod(){
+    assertEquals(NameGuess.of("getThing"), NameGuess.GETTER_METHOD);
+    assertEquals(NameGuess.of("getMethoD1"), NameGuess.GETTER_METHOD);
+    assertEquals(NameGuess.of("getMyMOODtoBeH4PPY"), NameGuess.GETTER_METHOD);
+    assertEquals(NameGuess.of("getF4NT4STIC"), NameGuess.GETTER_METHOD);
+    assertNotEquals(NameGuess.of("GETIT"), NameGuess.GETTER_METHOD);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void classNameCheckForOfMethod(){
+    assertEquals(NameGuess.of("ClAsS"), NameGuess.CLASS_NAME);
+    assertEquals(NameGuess.of("Oren95"), NameGuess.CLASS_NAME);
+    assertEquals(NameGuess.of("$WhoStartsClassNameWithDollar"), NameGuess.CLASS_NAME);
+    assertNotEquals(NameGuess.of("f4NT4STIC"), NameGuess.CLASS_NAME);
+    assertNotEquals(NameGuess.of("$$"), NameGuess.CLASS_NAME);
+    
   }
 }
