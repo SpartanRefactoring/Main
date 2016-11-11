@@ -14,4 +14,7 @@ import org.junit.*;
     s.inner = "coverage";
     assertEquals("coverage", s.inner());
   }
+  @Test public void str_test1() {
+    assertEquals(null, (new Str()).inner());
+  }
 }
