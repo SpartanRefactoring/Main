@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Modifier;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -13,72 +14,68 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class Generic$Applicator {
-  
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
   protected int done;
-  
-  protected static List<Class<? extends ASTNode>> selectedNodeTypes = as.list(MethodDeclaration.class, 
-                InfixExpression.class, //
-                VariableDeclarationFragment.class, //
-                EnhancedForStatement.class, //
-                Modifier.class, //
-                VariableDeclarationExpression.class, //
-                ThrowStatement.class, //
-                CastExpression.class, //
-                ClassInstanceCreation.class, //
-                SuperConstructorInvocation.class, //
-                SingleVariableDeclaration.class, //
-                ForStatement.class, //
-                WhileStatement.class, //
-                Assignment.class, //
-                Block.class, //
-                PostfixExpression.class, //
-                InfixExpression.class, //
-                InstanceofExpression.class, //
-                MethodDeclaration.class, //
-                MethodInvocation.class, //
-                IfStatement.class, //
-                PrefixExpression.class, //
-                ConditionalExpression.class, //
-                TypeDeclaration.class, //
-                EnumDeclaration.class, //
-                FieldDeclaration.class, //
-                CastExpression.class, //
-                EnumConstantDeclaration.class, //
-                NormalAnnotation.class, //
-                Initializer.class, //
-                VariableDeclarationFragment.class //
-              );
-  
-  @SuppressWarnings({ "unused" }) public static void main(final String[] args){
-    List<Class<? extends ASTNode>> l = listOfClass();
-  }
+  protected static List<Class<? extends ASTNode>> selectedNodeTypes = as.list(MethodDeclaration.class, InfixExpression.class, //
+      VariableDeclarationFragment.class, //
+      EnhancedForStatement.class, //
+      Modifier.class, //
+      VariableDeclarationExpression.class, //
+      ThrowStatement.class, //
+      CastExpression.class, //
+      ClassInstanceCreation.class, //
+      SuperConstructorInvocation.class, //
+      SingleVariableDeclaration.class, //
+      ForStatement.class, //
+      WhileStatement.class, //
+      Assignment.class, //
+      Block.class, //
+      PostfixExpression.class, //
+      InfixExpression.class, //
+      InstanceofExpression.class, //
+      MethodDeclaration.class, //
+      MethodInvocation.class, //
+      IfStatement.class, //
+      PrefixExpression.class, //
+      ConditionalExpression.class, //
+      TypeDeclaration.class, //
+      EnumDeclaration.class, //
+      FieldDeclaration.class, //
+      CastExpression.class, //
+      EnumConstantDeclaration.class, //
+      NormalAnnotation.class, //
+      Initializer.class, //
+      VariableDeclarationFragment.class //
+  );
 
-  @SuppressWarnings({ "unchecked", "rawtypes", "static-access", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
-    List l = new ArrayList<>();
-    Toolbox tb = new Toolbox().defaultInstance();
+  @SuppressWarnings({ "unused" }) public static void main(final String[] args) {
+    final List<Class<? extends ASTNode>> l = listOfClass();
+  }
+  @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
+    final List l = new ArrayList<>();
+    new Toolbox();
+    final Toolbox tb = Toolbox.defaultInstance();
     for (int tipnum = tb.tippersCount(), i = 0; i <= tipnum; ++i) {
-      List<Tipper<? extends ASTNode>> b = tb.get(i);
+      final List<Tipper<? extends ASTNode>> b = tb.get(i);
       if (!b.isEmpty())
-        for (Tipper<?> ¢ : b) {
-          Class<? extends Tipper> class1 = ¢.getClass();
-          ParameterizedType genericSuperclass = (ParameterizedType) class1.getGenericSuperclass();
-          Type type = genericSuperclass.getActualTypeArguments()[0];
+        for (final Tipper<?> ¢ : b) {
+          final Class<? extends Tipper> class1 = ¢.getClass();
+          final ParameterizedType genericSuperclass = (ParameterizedType) class1.getGenericSuperclass();
+          final Type type = genericSuperclass.getActualTypeArguments()[0];
           if (!l.contains(type))
             l.add(type);
         }
     }
-    
-    List<Class<? extends ASTNode>> $ = as.list(l);
+    final List<Class<? extends ASTNode>> $ = as.list(l);
     System.out.println($);
     return $;
   }
-  
+
   /** Printing definition of events that occur during spartanization.
    * @author Ori Roth
    * @since 2.6 */
-  private enum message {
+  enum message {
     run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
@@ -99,4 +96,4 @@ public class Generic$Applicator {
       return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }
   }
-}  
+}
