@@ -35,13 +35,6 @@ public class CommandLineApplicator extends Applicator {
     listener((final Object... __) -> {
       //
     });
-    // listener(EventListener.simpleListener(event.class,
-    // e -> {
-    // // empty
-    // },
-    // (e, o) -> {
-    // // empty
-    // }));
     return this;
   }
   /** @return this */
@@ -107,18 +100,9 @@ public class CommandLineApplicator extends Applicator {
   }
   /** @return this */
   CommandLineApplicator defaultSelection() {
-    // selection(CommandLineSelection.Util.get());
+    // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
   }
-  /** Default run action configuration of {@link CommandLineApplicator}.
-   * @param ¢ JD
-   * @return this applicator */
-  // public CommandLineApplicator defaultRunAction(final AbstractGUIApplicator
-  // ¢) {
-  // setRunAction(¢¢ -> Integer.valueOf(¢.apply(¢¢, selection())));
-  // name(¢.getName());
-  // return this;
-  // }
   /** @param ¢ JD
    * @return */
   @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
@@ -140,24 +124,15 @@ public class CommandLineApplicator extends Applicator {
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
-      // System.out.println("inside go");
       final int l = passes();
-      // System.out.println("passes: " + l);
       for (int pass = 1; pass <= l; ++pass) {
-        // System.out.println("pass: " + l);
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
         final List<WrappedCompilationUnit> selected = selection().inner;
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> dead = new ArrayList<>();
-        // System.out.println("shouldRun: " + shouldRun());
-        // int i = 0;
         for (final WrappedCompilationUnit ¢ : alive) {
-          // System.out.println("i: " + i++);
-          // System.out.println(alive.size());
-          // System.out.println(¢);
-          // System.out.println(runAction());
           final int tipsInvoked = runAction().apply(¢).intValue();
           System.out.println("tipsInvoked: " + tipsInvoked);
           if (tipsInvoked <= 0)
@@ -176,11 +151,6 @@ public class CommandLineApplicator extends Applicator {
       }
     });
     listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
-    // for (final CompilationUnit ¢ : ((CommandLineSelection)
-    // selection()).getCompilationUnits()) {
-    // assert ¢ != null;
-    // a.go(¢);
-    // }
   }
 
   private enum message {
