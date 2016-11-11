@@ -8,7 +8,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author RoeiMaor
+/** @author RoeyMaor
  * @author RoeiRaz
  * @since 11-11-16 */
 public class Issue818 {
