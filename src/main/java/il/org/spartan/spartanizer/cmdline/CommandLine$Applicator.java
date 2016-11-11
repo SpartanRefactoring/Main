@@ -16,6 +16,13 @@ public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
+  public CommandLine$Applicator(){
+  }
+
+  public CommandLine$Applicator(String[] clazzes) {
+    super(clazzes);
+  }
+
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
