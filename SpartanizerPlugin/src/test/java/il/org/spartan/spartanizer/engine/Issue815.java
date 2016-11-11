@@ -2,7 +2,10 @@ package il.org.spartan.spartanizer.engine;
 
 import static org.junit.Assert.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** see issue #815 and #799 for more details
  * @author Oren Afek
@@ -89,5 +92,26 @@ public class Issue815 {
     } catch (final Error e) {
       assertEquals(e.getClass(), AssertionError.class);
     }
+  }
+  
+  @SuppressWarnings("static-method") @Test public void isclassNameCheckTest() {
+    assertTrue(NameGuess.isClassName("ClAsS"));
+    assertTrue(NameGuess.isClassName("Oren95"));
+    assertTrue(NameGuess.isClassName("$WhoStartsClassNameWithDollar"));
+    assertFalse(NameGuess.isClassName("f4NT4STIC"));
+    assertFalse(NameGuess.isClassName("$$"));
+  }
+  
+  @SuppressWarnings("static-method") @Test public void isclassNameASTCheckTest() {
+    assertFalse(NameGuess.isClassName((ASTNode)null));
+    assertTrue(NameGuess.isClassName(ASTNodeFromString("ClAsS")));
+    assertTrue(NameGuess.isClassName(ASTNodeFromString("Oren95")));
+    assertTrue(NameGuess.isClassName(ASTNodeFromString("$WhoStartsClassNameWithDollar")));
+    assertFalse(NameGuess.isClassName(ASTNodeFromString("f4NT4STIC")));
+    assertFalse(NameGuess.isClassName(ASTNodeFromString("$$")));
+  }
+  
+  private static ASTNode ASTNodeFromString(final String ¢) {
+    return wizard.ast(¢);
   }
 }
