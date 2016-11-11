@@ -17,67 +17,56 @@ public class Generic$Applicator {
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
   protected int done;
-
   private static String fqn_base = "org.eclipse.jdt.core.dom.";
-  
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAll();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelected(String ... ss){
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelected(String... ss) {
     List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
-      for(String ¢: ss) {
-//        Class<? extends ASTNode> c = (Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢);
-         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-       }
-      } catch (ClassNotFoundException x) {
-        x.printStackTrace();
-      }
+      for (String ¢ : ss)
+        $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
+    } catch (ClassNotFoundException x) {
+      x.printStackTrace();
+    }
     return as.list($); // useless?
   }
-  
   private static List<Class<? extends ASTNode>> setAll() {
-    return as.list(MethodDeclaration.class, 
-                  InfixExpression.class, //
-                  VariableDeclarationFragment.class, //
-                  EnhancedForStatement.class, //
-                  Modifier.class, //
-                  VariableDeclarationExpression.class, //
-                  ThrowStatement.class, //
-                  CastExpression.class, //
-                  ClassInstanceCreation.class, //
-                  SuperConstructorInvocation.class, //
-                  SingleVariableDeclaration.class, //
-                  ForStatement.class, //
-                  WhileStatement.class, //
-                  Assignment.class, //
-                  Block.class, //
-                  PostfixExpression.class, //
-                  InfixExpression.class, //
-                  InstanceofExpression.class, //
-                  MethodDeclaration.class, //
-                  MethodInvocation.class, //
-                  IfStatement.class, //
-                  PrefixExpression.class, //
-                  ConditionalExpression.class, //
-                  TypeDeclaration.class, //
-                  EnumDeclaration.class, //
-                  FieldDeclaration.class, //
-                  CastExpression.class, //
-                  EnumConstantDeclaration.class, //
-                  NormalAnnotation.class, //
-                  Initializer.class, //
-                  VariableDeclarationFragment.class //
-                );
+    return as.list(MethodDeclaration.class, InfixExpression.class, //
+        VariableDeclarationFragment.class, //
+        EnhancedForStatement.class, //
+        Modifier.class, //
+        VariableDeclarationExpression.class, //
+        ThrowStatement.class, //
+        CastExpression.class, //
+        ClassInstanceCreation.class, //
+        SuperConstructorInvocation.class, //
+        SingleVariableDeclaration.class, //
+        ForStatement.class, //
+        WhileStatement.class, //
+        Assignment.class, //
+        Block.class, //
+        PostfixExpression.class, //
+        InfixExpression.class, //
+        InstanceofExpression.class, //
+        MethodDeclaration.class, //
+        MethodInvocation.class, //
+        IfStatement.class, //
+        PrefixExpression.class, //
+        ConditionalExpression.class, //
+        TypeDeclaration.class, //
+        EnumDeclaration.class, //
+        FieldDeclaration.class, //
+        CastExpression.class, //
+        EnumConstantDeclaration.class, //
+        NormalAnnotation.class, //
+        Initializer.class, //
+        VariableDeclarationFragment.class //
+    );
   }
-  
-  @SuppressWarnings({ "unused" }) public static void main(final String[] args){
-//    List<Class<? extends ASTNode>> l = setAll();
-    List<Class<? extends ASTNode>> l = setSelected("MethodDeclaration", "VariableDeclarationFragment");
-    for(Class<? extends ASTNode> i: l){
+  public static void main(final String[] args) {
+    for (Class<? extends ASTNode> i : setSelected("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
-    }
   }
-
   @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
     final List l = new ArrayList<>();
     new Toolbox();
