@@ -187,14 +187,13 @@ public class CommandLineApplicator extends Applicator {
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
     visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
-    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1)), 
+    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1)),
     // report
-    report_start(1, inp -> "Start reporting " + printableAt(inp, 0)),//
-    report_stop(1, inp -> "Stop reporting " + printableAt(inp, 0)),//
-    report_metrics(1, inp -> "Report metrics " + printableAt(inp, 0)),//
+    report_start(1, inp -> "Start reporting " + printableAt(inp, 0)), //
+    report_stop(1, inp -> "Stop reporting " + printableAt(inp, 0)), //
+    report_metrics(1, inp -> "Report metrics " + printableAt(inp, 0)), //
     report_spectrum(1, inp -> "Report Spectrum " + printableAt(inp, 0)),//
     ;
-    
     private final int inputCount;
     private final Function<Object[], String> printing;
 

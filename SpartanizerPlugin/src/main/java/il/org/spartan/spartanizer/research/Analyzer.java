@@ -199,6 +199,7 @@ public class Analyzer {
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
             new PutIfAbsent(), //
+            new IfThrow(), //
             null) //
         .add(InstanceofExpression.class, //
             new InstanceOf(), //
