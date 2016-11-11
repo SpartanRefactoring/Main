@@ -52,6 +52,24 @@ public class Issue815 {
     assertEquals(NameGuess.of("A______4"), NameGuess.CLASS_CONSTANT);
     assertNotEquals(NameGuess.of("a_35"), NameGuess.CLASS_CONSTANT);
     assertNotEquals(NameGuess.of("_A_A"), NameGuess.CLASS_CONSTANT);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void isMethodCheckForOfMethod(){
+    assertEquals(NameGuess.of("isOK"), NameGuess.IS_METHOD);
+    assertEquals(NameGuess.of("isLEGAL_1"), NameGuess.IS_METHOD);
+    assertEquals(NameGuess.of("isB_O_R_I_N_G"), NameGuess.IS_METHOD);
+    assertEquals(NameGuess.of("isF4NT4STIC"), NameGuess.IS_METHOD);
+    assertNotEquals(NameGuess.of("IsOk"), NameGuess.IS_METHOD);
+    assertNotEquals(NameGuess.of("isok"), NameGuess.IS_METHOD);
+    
+  }
+  
+  @SuppressWarnings("static-method") @Test public void setMethodCheckForOfMethod(){
+    assertEquals(NameGuess.of("setThing"), NameGuess.SETTTER_METHOD);
+    assertEquals(NameGuess.of("setMethoD1"), NameGuess.SETTTER_METHOD);
+    assertEquals(NameGuess.of("setMyMOODtoBeH4PPY"), NameGuess.SETTTER_METHOD);
+    assertEquals(NameGuess.of("setF4NT4STIC"), NameGuess.SETTTER_METHOD);
+    assertNotEquals(NameGuess.of("SETIT"), NameGuess.SETTTER_METHOD);
     
   }
   
