@@ -26,4 +26,13 @@ public class Issue814 {
       }
     });
   }
+  
+  @SuppressWarnings("static-method") @Test public void nullTest() {
+    Assignment a = into.a("a = 3");
+    Statement s = into.s("f();");
+    a.getParent().delete();
+    assertTrue((new AssignmentAndReturn()).go(null, a, s, null) == null);
+  }
+  
+  
 }
