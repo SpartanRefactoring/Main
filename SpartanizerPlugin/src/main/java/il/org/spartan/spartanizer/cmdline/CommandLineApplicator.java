@@ -134,7 +134,8 @@ public class CommandLineApplicator extends Applicator {
     if (selection() == null && listener() == null && passes() <= 0 && selection().isEmpty())
       return;
     listener().push(message.run_start.get(selection().name));
-    listener().push(message.report_start.get());
+//  TODO Matteo: report listener -- matteo
+// listener().push(message.report_start.get());
     if (!shouldRun())
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
