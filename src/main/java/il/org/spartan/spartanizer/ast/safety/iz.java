@@ -757,8 +757,7 @@ public interface iz {
     return vacuous(then(¢));
   }
   static boolean validForEvaluation(final InfixExpression x) {
-    final List<Expression> lst = extract.allOperands(x);
-    for (final Expression ¢ : lst)
+    for (final Expression ¢ : extract.allOperands(x))
       if (!iz.pseudoNumber(¢))
         return false;
     return true;
