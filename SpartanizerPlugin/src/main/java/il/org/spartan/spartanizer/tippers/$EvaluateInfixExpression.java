@@ -21,9 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   public static int indexForLeftEvaluation(final InfixExpression x) {
-    final List<Expression> lst = extract.allOperands(x);
     int $ = 0;
-    for (final Expression ¢ : lst) {
+    for (final Expression ¢ : extract.allOperands(x)) {
       if (!iz.number(¢))
         return $ > 1 ? $ : 0;
       ++$;
@@ -31,9 +30,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return 0;
   }
   public static int indexForRightEvaluation(final InfixExpression x) {
-    final List<Expression> lst = extract.allOperands(x);
-    for (int $ = 0, ¢ = lst.size() - 1; ¢ >= 0; --¢, ++$)
-      if (!iz.number(lst.get(¢)))
+    final List<Expression> es = extract.allOperands(x);
+    for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
+      if (!iz.number(es.get(¢)))
         return $ > 1 ? $ : 0;
     return -1;
   }
