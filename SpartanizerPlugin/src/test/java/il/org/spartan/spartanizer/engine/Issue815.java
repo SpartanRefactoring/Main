@@ -93,7 +93,6 @@ public class Issue815 {
       assertEquals(e.getClass(), AssertionError.class);
     }
   }
-  
   @SuppressWarnings("static-method") @Test public void isclassNameCheckTest() {
     assertTrue(NameGuess.isClassName("ClAsS"));
     assertTrue(NameGuess.isClassName("Oren95"));
@@ -101,16 +100,14 @@ public class Issue815 {
     assertFalse(NameGuess.isClassName("f4NT4STIC"));
     assertFalse(NameGuess.isClassName("$$"));
   }
-  
   @SuppressWarnings("static-method") @Test public void isclassNameASTCheckTest() {
-    assertFalse(NameGuess.isClassName((ASTNode)null));
+    assertFalse(NameGuess.isClassName((ASTNode) null));
     assertTrue(NameGuess.isClassName(ASTNodeFromString("ClAsS")));
     assertTrue(NameGuess.isClassName(ASTNodeFromString("Oren95")));
     assertTrue(NameGuess.isClassName(ASTNodeFromString("$WhoStartsClassNameWithDollar")));
     assertFalse(NameGuess.isClassName(ASTNodeFromString("f4NT4STIC")));
     assertFalse(NameGuess.isClassName(ASTNodeFromString("$$")));
   }
-  
   private static ASTNode ASTNodeFromString(final String ¢) {
     return wizard.ast(¢);
   }
