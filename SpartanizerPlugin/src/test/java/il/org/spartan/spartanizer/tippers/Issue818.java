@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** @author RoeiMaor
  * @author RoeiRaz
- * @since 16-11-10 */
+ * @since 16-11-11 */
 public class Issue818 {
   static final InfixExpressionConcatentateCompileTime tipper = new InfixExpressionConcatentateCompileTime();
   static final InfixExpression ie01 = into.i("\"a\" + \"b\"");
