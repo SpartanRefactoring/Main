@@ -9,8 +9,7 @@ import org.junit.*;
  * @author Ron Gatenio
  * @author Roy Shchory
  * @since 16-11-11 */
-@SuppressWarnings("static-method")
-public class Issue813 {
+@SuppressWarnings("static-method") public class Issue813 {
   @Test public void sameTest() {
     assertTrue(precedence.same(e("a+b"), e("a-b")));
     assertFalse(precedence.same(e("a+b"), e("a*b")));
