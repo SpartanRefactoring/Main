@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.Utils.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -27,10 +29,6 @@ public enum associativity {
     return !isRightToLeft(precedence.of(¢));
   }
   private static boolean isRightToLeft(final int precedence) {
-    final int[] is = { 2, 3, 14, 15 };
-    for (final int ¢ : is)
-      if (¢ == precedence)
-        return true;
-    return false;
+    return intIsIn(precedence, 2, 3, 14, 15);
   }
 }
