@@ -13,4 +13,10 @@ public class Issue815 {
   @SuppressWarnings("static-method") @Test public void nullCheckForOfMethod(){
     assertNull(NameGuess.of(null));
   }
+
+  @SuppressWarnings("static-method") @Test public void zeroLengthCheckForOfMethod(){
+    assertNull(NameGuess.of(""));
+  }
+  
+  
 }
