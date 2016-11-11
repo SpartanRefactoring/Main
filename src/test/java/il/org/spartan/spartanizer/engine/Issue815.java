@@ -18,5 +18,22 @@ public class Issue815 {
     assertNull(NameGuess.of(""));
   }
   
+  @SuppressWarnings("static-method") @Test public void underScoresCheckForOfMethod(){
+    assertEquals(NameGuess.of("_"), NameGuess.ANONYMOUS);
+    assertEquals(NameGuess.of("__"), NameGuess.ANONYMOUS);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void dollarCheckForOfMethod(){
+    assertEquals(NameGuess.of("$"), NameGuess.DOLLAR);
+    assertEquals(NameGuess.of("$$"), NameGuess.DOLLAR);
+    assertNotEquals(NameGuess.of(""), NameGuess.DOLLAR);
+  }
+  
+  @SuppressWarnings("static-method") @Test public void centCheckForOfMethod(){
+    assertEquals(NameGuess.of("¢"), NameGuess.CENT);
+    assertEquals(NameGuess.of("¢¢"), NameGuess.CENT);
+    assertNotEquals(NameGuess.of(""), NameGuess.CENT);
+  }
+  
   
 }
