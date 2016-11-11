@@ -10,13 +10,10 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
 /** @author Doron Meshulam
- * @author Tomer Dragucki 
- * Year???? */
-@SuppressWarnings({ "static-method", "javadoc" }) public class Issue707 {
+ * @author Tomer Dragucki
+ * @since 2016 */
+@SuppressWarnings("static-method") public class Issue707 {
   @Test public void a() {
     getAll2.names(null);
   }
