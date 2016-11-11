@@ -31,6 +31,7 @@ public class issue713 {
     assert true;
   }
   @SuppressWarnings("static-method") @Test public void returnsList() {
+    // TODO: Elia and INbal.Don't use suppress warnings. Erase the variable.
     @SuppressWarnings("unused") final List<String> lst = getAll.publicFields(null);
   }
   @Test public void returnsNoPublic() {
