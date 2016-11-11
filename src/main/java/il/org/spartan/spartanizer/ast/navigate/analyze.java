@@ -51,19 +51,19 @@ public enum analyze {
     final Str str = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if (str.inner != null || !(step.name(¢) + "").equals(n + ""))
+        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.inner = step.type(¢) + "";
+        str.set(step.type(¢));
         return false;
       }
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if (str.inner != null || !(step.name(¢) + "").equals(n + ""))
+        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.inner = step.type(¢) + "";
+        str.set(step.type(¢));
         return false;
       }
     });
-    return str.inner;
+    return str.inner();
   }
   public static Set<VariableDeclaration> enviromentVariables(@SuppressWarnings("unused") final ASTNode __) {
     // TODO: Marco search for all known variables
