@@ -81,6 +81,7 @@ public class Generic$Applicator {
     for (Class<? extends ASTNode> i : setSelected("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
   }
+  
   @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
     final List l = new ArrayList<>();
     new Toolbox();
@@ -99,30 +100,5 @@ public class Generic$Applicator {
     final List<Class<? extends ASTNode>> $ = as.list(l);
     System.out.println($);
     return $;
-  }
-
-  /** Printing definition of events that occur during spartanization.
-   * @author Ori Roth
-   * @since 2.6 */
-  @SuppressWarnings("unused") private enum message {
-    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
-    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
-    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
-    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
-    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
-    private final int inputCount;
-    private final Function<Object[], String> printing;
-
-    message(final int inputCount, final Function<Object[], String> printing) {
-      this.inputCount = inputCount;
-      this.printing = printing;
-    }
-    public String get(final Object... ¢) {
-      assert ¢.length == inputCount;
-      return printing.apply(¢);
-    }
-    private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.unknownIfNull(os, xs -> xs[index]);
-    }
   }
 }
