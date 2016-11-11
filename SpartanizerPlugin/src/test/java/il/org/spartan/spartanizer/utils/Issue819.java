@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+// TODO, your link does not work, try to hit F3 on the link below. --yg
 /** Tests of {@link utils.Str}
  * @author Shimon Azulay
  * @author Idan Atias
