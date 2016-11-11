@@ -45,8 +45,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       
       if (DefaultApplicator)
         c.listener(new Listener() {
-          @Override public void tick(Object... os) {
-                System.out.println("ok" + os);        
+          @Override public void tick(Object... ¢) {
+                System.out.println("ok" + ¢);        
           }
         });
                 
