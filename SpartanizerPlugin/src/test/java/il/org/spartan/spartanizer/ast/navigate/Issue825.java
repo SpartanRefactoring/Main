@@ -28,7 +28,11 @@ public class Issue825 {
   }
   
   @Test public void c() {
-    assertEquals(16, count.lines(wizard.ast("String y; int x=1; int z=2; z=x; x=3;")));
+    assertEquals(3, count.statements(az.statement(wizard.ast("while(true);"))));
+  }
+  
+  @Test public void d() {
+    assertEquals(4, count.statements(az.statement(wizard.ast("if(x==5) {x++;}"))));
   }
   
   @Test public void e() {
