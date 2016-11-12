@@ -129,6 +129,7 @@ public enum getAll {
    * @param a TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
+  // TODO: Inbal/Elia. Currently the project has onl two warnings, and they are yours.
   public static List<String> publicFields(final TypeDeclaration d) {
     if (d == null)
       return null;
