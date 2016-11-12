@@ -17,6 +17,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private boolean DefaultApplicator;
   private final CommandLineApplicator c = new CommandLineApplicator();
   private String[] clazzes;
+  private String[] tipperGroups;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -53,7 +54,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
       if (CommandLine$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator(clazzes)).defaultListenerNoisy().go();
+            .defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups)).defaultListenerNoisy().go();
       //
       Reports.close("metrics");
       Reports.close("spectrum");
@@ -80,5 +81,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   }
   public void setClazzes(final String[] ¢) {
     clazzes = ¢;
+  }
+  public void setTipperGroups(String[] ¢) {
+    tipperGroups = ¢;
   }
 }

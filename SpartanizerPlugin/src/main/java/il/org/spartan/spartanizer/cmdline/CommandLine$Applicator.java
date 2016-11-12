@@ -23,6 +23,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
     super(clazzes);
   }
 
+  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups) {
+    super(clazzes, tipperGroups);
+  }
+
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -163,9 +167,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
     });
   }
-  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
-  }
+//  @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+//    return toolbox.firstTipper(¢);
+//  }
   /** @param u
    * @param __
    * @return */
