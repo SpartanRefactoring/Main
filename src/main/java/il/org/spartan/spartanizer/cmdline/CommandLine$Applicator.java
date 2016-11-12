@@ -120,6 +120,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
+          ReportGenerator.writeTipsLine(n, s, "tips");
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
