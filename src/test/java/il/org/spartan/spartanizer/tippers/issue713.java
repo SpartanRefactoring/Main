@@ -18,15 +18,18 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public class issue713 {
   TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
   TypeDeclaration onlyPrivates = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } ")).types().get(0);
+      .compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; private boolean aflag; } ")).types().get(0);
   TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
   TypeDeclaration notOnlyPublic = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } ")).types().get(0);
+      .compilationUnit(wizard.ast("public class notOnlyPublic {  public int x; private boolean flag; public char ch; } ")).types().get(0);
   TypeDeclaration listOfPublicFields = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } ")).types().get(0);
+      .compilationUnit(wizard.ast("public class foo {  public int x, y, z; protected boolean flag; public char ch; } ")).types().get(0);
   TypeDeclaration notCountingMethods = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types().get(0);
-
+      .compilationUnit(wizard.ast("public class foo {  public int x, y; public void func(){ int pi;} } ")).types().get(0);
+  TypeDeclaration finalPublicField = (TypeDeclaration) az
+      .compilationUnit(wizard.ast("public class c1 {  public final int x; } ")).types().get(0);
+  
+  
   @SuppressWarnings("static-method") @Test public void doesCompile() {
     assert true;
   }
@@ -63,4 +66,9 @@ public class issue713 {
   @Test public void onlyPrivates() {
     assertEquals(0, getAll.publicFields(onlyPrivates).size());
   }
+  
+  @Test public void finalPublicPass() {
+    assertEquals(1, getAll.publicFields(finalPublicField).size());
+  }
+  
 }
