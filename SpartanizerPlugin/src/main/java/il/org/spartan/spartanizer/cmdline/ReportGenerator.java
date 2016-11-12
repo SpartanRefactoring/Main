@@ -10,6 +10,7 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -223,17 +224,42 @@ public class ReportGenerator {
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
+ 
   public static void name(final ASTNode input) {
     ReportGenerator.report("metrics").put("name", extract.name(input));
     ReportGenerator.report("metrics").put("category", extract.category(input));
   }
+  
+  public static void name(final ASTNode input, final String reportName) {
+    ReportGenerator.report(reportName).put("node", extract.name(input));
+    ReportGenerator.report(reportName).put("category", extract.category(input));
+  }
+  
   public static void tip(final Tip ¢) {
-    ReportGenerator.report("tips").put("name", ¢.getClass());
+    ReportGenerator.report("tips").put("tipName", ¢.getClass());
     ReportGenerator.report("tips").put("description", ¢.description);
     ReportGenerator.report("tips").put("LineNumber", ¢.lineNumber);
     ReportGenerator.report("tips").put("from", ¢.from);
     ReportGenerator.report("tips").put("to", ¢.to);
     ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+  }
+  
+  public static void writeTipsLine(final ASTNode n, final Tip t,final String reportName){
+    name(n,reportName);
+    tip(t);
+    ReportGenerator.report(reportName).nl();
+
+  }
+  
+  public class LineWriter implements Consumer{
+    private String reportName;
+    @Override public void accept(Object t) {
+//      ReportGenerator.report(reportName)
+    }
+  }
+  
+  public static <T> void writeLine(Consumer<T> c){
+    c.accept((T) c);
   }
   
   public static void generate(String ¢) {
