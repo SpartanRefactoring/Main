@@ -18,22 +18,20 @@ public class Generic$Applicator {
   private static String fqn_base = "org.eclipse.jdt.core.dom.";
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAll();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelected(String... ss) {
-    List<Class<? extends ASTNode>> $ = new ArrayList<>();
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelected(final String... ss) {
+    final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
-      for (String ¢ : ss)
+      for (final String ¢ : ss)
         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-    } catch (ClassNotFoundException x) {
+    } catch (final ClassNotFoundException x) {
       x.printStackTrace();
     }
     return as.list($); // useless?
   }
-  
-  public Generic$Applicator(){
+  public Generic$Applicator() {
     selectedNodeTypes = setAll();
   }
-  
-  public Generic$Applicator(String[] clazzes) {
+  public Generic$Applicator(final String[] clazzes) {
     if (clazzes == null)
       selectedNodeTypes = setAll();
     else {
@@ -41,7 +39,6 @@ public class Generic$Applicator {
       System.out.println("selected: " + selectedNodeTypes.size());
     }
   }
-  
   private static List<Class<? extends ASTNode>> setAll() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
         VariableDeclarationFragment.class, //
@@ -76,27 +73,7 @@ public class Generic$Applicator {
     );
   }
   public static void main(final String[] args) {
-    for (Class<? extends ASTNode> i : setSelected("MethodDeclaration", "VariableDeclarationFragment"))
+    for (final Class<? extends ASTNode> i : setSelected("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
-  }
-  
-  @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
-    final List l = new ArrayList<>();
-    new Toolbox();
-    final Toolbox tb = Toolbox.defaultInstance();
-    for (int tipnum = tb.tippersCount(), i = 0; i <= tipnum; ++i) {
-      final List<Tipper<? extends ASTNode>> b = tb.get(i);
-      if (!b.isEmpty())
-        for (final Tipper<?> ¢ : b) {
-          final Class<? extends Tipper> class1 = ¢.getClass();
-          final ParameterizedType genericSuperclass = (ParameterizedType) class1.getGenericSuperclass();
-          final Type type = genericSuperclass.getActualTypeArguments()[0];
-          if (!l.contains(type))
-            l.add(type);
-        }
-    }
-    final List<Class<? extends ASTNode>> $ = as.list(l);
-    System.out.println($);
-    return $;
   }
 }
