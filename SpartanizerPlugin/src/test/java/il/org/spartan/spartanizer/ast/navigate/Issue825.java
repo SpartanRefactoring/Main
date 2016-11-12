@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -34,10 +35,19 @@ public class Issue825 {
     assertEquals(4, count.statements(az.statement(wizard.ast("if(x==5) {x++;}"))));
   }
   
+  @Test public void e() {
+    assertEquals(1, count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("String y; int x=1; int z=2; z=x; x=3;").getClass()));
+  }
+  
+  @Test public void i() {
+    assertEquals(3,count.noImportsNoComments(wizard.ast("import AnAMAZINGLIBRARY")));
+  }
+  
   @Test public void g(){
     assertEquals(2, count.noimports(az.compilationUnit(wizard.ast("import a;"))));
   }
   @Test public void h(){
     assertEquals(3, count.noimports(az.compilationUnit(wizard.ast("package b;"))));
   }
+
 }
