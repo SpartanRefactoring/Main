@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.azzert.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -9,7 +9,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class azTest {
   @Test public void asComparisonPrefixlExpression() {

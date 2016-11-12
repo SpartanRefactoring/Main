@@ -26,7 +26,8 @@ public enum getAll {
       return null;
     final Set<String> $ = new TreeSet<>();
     // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
-    // TODO: The link is not showing, did you mean the 'access' method? @ward-mattar 
+    // TODO: The link is not showing, did you mean the 'access' method?
+    // @ward-mattar
     final List<Object> l = ¢.arguments();
     for (final Object i : l) {
       if (i instanceof MethodInvocation)
@@ -133,10 +134,8 @@ public enum getAll {
       return null;
     final List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      // TODO: Inbal and Elia. Your code is buggy and will not find public final
-      // methods, e..g,--yg
       @Override public boolean visit(final FieldDeclaration d) {
-        if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
+        if (!org.eclipse.jdt.core.dom.Modifier.isPublic(d.getModifiers()))
           return true;
         for (final VariableDeclarationFragment ¢ : fragments(d))
           $.add(¢.getName().getIdentifier());

@@ -6,6 +6,7 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
