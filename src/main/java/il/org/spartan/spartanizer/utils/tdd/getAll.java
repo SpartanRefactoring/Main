@@ -24,19 +24,15 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<String> invocations(final MethodInvocation ¢) {
-    if (¢ == null)
+  public static Set<String> invocations(final MethodInvocation i) {
+    if (i == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
-    // TODO: The link is not showing, did you mean the 'access' method?
-    // @ward-mattar
-    final List<Object> l = ¢.arguments();
-    for (final Object i : l) {
-      if (i instanceof MethodInvocation)
-        $.addAll(invocations((MethodInvocation) i));
-      if (!(i instanceof MethodInvocation) && i instanceof SimpleName)
-        $.add(i + "");
+    for (final Expression ¢ : step.arguments(i)) {
+      if (¢ instanceof MethodInvocation)
+        $.addAll(invocations((MethodInvocation) ¢));
+      if (!(¢ instanceof MethodInvocation) && ¢ instanceof SimpleName)
+        $.add(¢ + "");
     }
     return $;
   }
