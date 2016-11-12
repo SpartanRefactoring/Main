@@ -25,4 +25,8 @@ public class countTest {
   @Test public void b() {
     assertEquals(2, count.imports(az.compilationUnit(wizard.ast("import java.util.*; import il.org.spartan.spartanizer.ast.navigate.*;"))));
   }
+  
+  @Test public void c() {
+    assertEquals(16, count.lines(wizard.ast("String y; int x=1; int z=2; z=x; x=3;")));
+  }
 }
