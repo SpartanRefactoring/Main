@@ -4,7 +4,7 @@ import java.text.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
