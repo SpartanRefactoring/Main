@@ -44,6 +44,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       if (DefaultApplicator) {
         c.listener(¢ -> System.out.println("ok" + ¢));
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder())).defaultListenerNoisy()
@@ -58,6 +59,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       //
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
+      ReportGenerator.close("tips");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
       System.err.println("commandLineApplicator: " + "Done!");
