@@ -41,19 +41,12 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     if (refreshNeeded.get())
       new Thread(() -> {
         Toolbox.refresh();
-        try {
-          RefreshAll.go();
-        } catch (final Exception x) {
-          monitor.logEvaluationError(this, x);
-        }
+        RefreshAll.go();
       }).start();
     return $;
   }
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
-    // addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID,
-    // PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
-    // getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final TipperGroup ¢ : TipperGroup.values())

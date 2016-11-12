@@ -14,10 +14,10 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.utils.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,

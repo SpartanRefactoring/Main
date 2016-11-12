@@ -27,7 +27,12 @@ import il.org.spartan.spartanizer.tipping.*;
       return null;
     }
   };
-
+  @Test public void A01_description() {
+   azzert.isNull(tipper.description());
+  }
+  @Test public void A01_descriptionWithParameter() {
+   azzert.isNull(tipper.description(null));
+  }
   @Test public void A01_hasFunction() {
     tipper.myActualOperandsClass();
   }
