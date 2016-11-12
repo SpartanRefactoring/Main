@@ -12,7 +12,7 @@ import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Generic appliator
+/** Generic applicator
  * @author Matteo Orru'
  * @since 2016
  */
@@ -49,10 +49,17 @@ public class Generic$Applicator {
     }
   }
   
-  public Generic$Applicator(String[] clazzes, String[] tipperGroups) {
+  public Generic$Applicator(final String[] clazzes, final String[] tipperGroups) {
       this(clazzes);
-      selectedTipperGroups = as.list(tipperGroups);
+      selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
    }
+
+  private static List<String> setAllTipperGroups() {
+    List<String> $ = new ArrayList<>();
+    for(TipperGroup ¢ :TipperGroup.values())
+      $.add(¢.name());
+    return $;
+  }
 
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
@@ -94,7 +101,7 @@ public class Generic$Applicator {
       System.out.println(¢);
   }
   
-  private static List<String> setSelectedTipperGroups(String ... ss) {
+  private static List<String> setSelectedTipperGroups(final String ... ss) {
     List<String> $ = new ArrayList<>();
     for(String ¢: ss)
       $.add(¢);
