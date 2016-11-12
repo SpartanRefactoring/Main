@@ -155,9 +155,9 @@ public enum getAll {
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        $.add(node);
-        return super.visit(node);
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        $.add(¢);
+        return super.visit(¢);
       }
     });
     return $;
@@ -173,9 +173,9 @@ public enum getAll {
     if (¢ == null)
       return $;
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @SuppressWarnings("unchecked") @Override public boolean visit(final FieldDeclaration d) {
+      @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (final VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+          for (final VariableDeclarationFragment df : fragments(d))
             $.add(df.getName().getIdentifier());
         return true;
       }
