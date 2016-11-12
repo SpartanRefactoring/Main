@@ -6,7 +6,11 @@ import org.junit.*;
  * @author Yarden Lev
  * @since Nov 12, 2016 */
 @SuppressWarnings("static-method") public class codeTest {
-  @Test public void noWordsTest() {
+  @Test public void noWords() {
     Assert.assertEquals(0, code.wc(""));
+  }
+  
+  @Test public void oneWord() {
+    Assert.assertEquals(1,  code.wc("hello"));
   }
 }
