@@ -13,4 +13,8 @@ import org.junit.*;
   @Test public void oneWord() {
     Assert.assertEquals(1,  code.wc("hello"));
   }
+  
+  @Test public void fiveWords() {
+    Assert.assertEquals(5,  code.wc("hello world how are you?"));
+  }
 }
