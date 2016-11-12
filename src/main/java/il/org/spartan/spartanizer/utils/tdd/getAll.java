@@ -6,6 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -129,17 +132,18 @@ public enum getAll {
    * @param a TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  // TODO: Inbal/Elia. Currently the project has onl two warnings, and they are yours.
+  // TODO: Inbal/Elia. Currently the project has only two warnings, and they are
+  // yours.
+  // TODO: Inbal: create a TODO page.
   public static List<String> publicFields(final TypeDeclaration d) {
     if (d == null)
       return null;
     final List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
-        if (!org.eclipse.jdt.core.dom.Modifier.isPublic(d.getModifiers()))
-          return true;
-        for (final VariableDeclarationFragment ¢ : fragments(d))
-          $.add(¢.getName().getIdentifier());
+        if (iz.public¢(d))
+          for (final VariableDeclarationFragment ¢ : fragments(d))
+            $.add(step.name(¢) + "");
         return true;
       }
     });
