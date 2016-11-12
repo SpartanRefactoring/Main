@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.utils.*;
 
 public final class PreferencesResources {
   /** Page description **/
