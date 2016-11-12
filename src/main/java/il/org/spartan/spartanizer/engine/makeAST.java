@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should

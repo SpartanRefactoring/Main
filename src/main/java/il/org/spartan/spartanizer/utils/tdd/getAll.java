@@ -26,6 +26,8 @@ public enum getAll {
       return null;
     final Set<String> $ = new TreeSet<>();
     // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
+    // TODO: The link is not showing, did you mean the 'access' method?
+    // @ward-mattar
     final List<Object> l = ¢.arguments();
     for (final Object i : l) {
       if (i instanceof MethodInvocation)
@@ -147,7 +149,7 @@ public enum getAll {
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
-   * @author Roei-m
+   * @author RoeiRaz
    * @author RoeyMaor */
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)

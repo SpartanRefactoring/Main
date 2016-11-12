@@ -11,11 +11,8 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-// TODO: Still getting warnings on your code. #623
-// TODO: Use names that are found on your Karma pages.
-// TODO: Make your names clear.
 /** Tests of {@link count.expressions}
- * @author Roei-m
+ * @author RoeiRaz
  * @author RoeyMaor
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
