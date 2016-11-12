@@ -17,6 +17,7 @@ import org.eclipse.ui.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link GUIBatchLaconizer} as its applicator.
@@ -49,7 +50,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         d.run(true, true, __ -> r.run());
       } catch (InvocationTargetException | InterruptedException e) {
         monitor.log(e);
-        e.printStackTrace();
       }
     });
     $.defaultRunAction(t);

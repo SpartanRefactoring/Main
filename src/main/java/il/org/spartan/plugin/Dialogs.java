@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth
@@ -62,8 +63,6 @@ public class Dialogs {
       } catch (final MalformedURLException x) {
         monitor.log(x);
       }
-      // logo = new Image(null,
-      // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
     }
     return logo;
   }
