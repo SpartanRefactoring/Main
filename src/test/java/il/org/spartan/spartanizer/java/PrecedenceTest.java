@@ -163,8 +163,8 @@ import il.org.spartan.*;
    * @author Ron Gatenio
    * @author Roy Shchory
    * @since 16-11-12 */
-  @Test public void sameTest2(){
-    assertTrue(precedence.same(InfixExpression.Operator.PLUS,e("a+b")));
-    assertFalse(precedence.same(InfixExpression.Operator.TIMES,e("a+b")));
+  @Test public void sameTest2() {
+    assertTrue(precedence.same(InfixExpression.Operator.PLUS, e("a+b")));
+    assertFalse(precedence.same(InfixExpression.Operator.TIMES, e("a+b")));
   }
 }
