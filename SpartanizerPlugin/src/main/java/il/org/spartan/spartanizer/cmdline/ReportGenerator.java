@@ -2,6 +2,12 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
+/**
+ * Generates reports
+ * @author Matteo Orru'
+ * @since 2016
+ */
+
 import java.io.*;
 import java.util.*;
 
@@ -228,5 +234,9 @@ public class ReportGenerator {
     ReportGenerator.report("tips").put("from", ¢.from);
     ReportGenerator.report("tips").put("to", ¢.to);
     ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+  }
+  
+  public static void generate(String ¢) {
+    initializeReport(¢ + "_metrics.CSV", ¢);    
   }
 }
