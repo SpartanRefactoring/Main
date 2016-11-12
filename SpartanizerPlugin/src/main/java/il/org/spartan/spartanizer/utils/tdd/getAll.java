@@ -125,25 +125,25 @@ public enum getAll {
   }
   /** Takes a single parameter, which is a TypeDecleration returns a list of
    * public fields for this class (by fields' names)
-   * @param a TypeDecleration
+   * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  // TODO: Inbal/Elia. Currently the project has only two warnings, and they are
-  // yours.
-  // TODO: Inbal: create a TODO page.
-  public static List<String> publicFields(final TypeDeclaration d) {
-    if (d == null)
+  public static List<String> publicFields(final TypeDeclaration ¢) {
+    if (¢ == null)
       return null;
     final List<String> $ = new ArrayList<>();
-    d.accept(new ASTVisitor() {
+    ¢.accept(publicFieldsCollector($));
+    return $;
+  }
+  private static ASTVisitor publicFieldsCollector(final List<String> $) {
+    return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
           for (final VariableDeclarationFragment ¢ : fragments(d))
             $.add(step.name(¢) + "");
         return true;
       }
-    });
-    return $;
+    };
   }
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
