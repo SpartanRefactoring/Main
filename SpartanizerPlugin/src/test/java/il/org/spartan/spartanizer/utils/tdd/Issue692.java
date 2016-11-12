@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 // TODO: You have warnings. --yg
+// Viviansh: now there is no warnings 
+
 /** @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 16-11-06 */
@@ -39,8 +41,6 @@ public class Issue692 {
   @SuppressWarnings("static-method") @Test public void test5() {
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(1)),2)"))), (new TreeSet<>()));
   }
-  
-  
   
   
 }
