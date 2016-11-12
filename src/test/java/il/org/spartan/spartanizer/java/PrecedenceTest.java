@@ -159,4 +159,12 @@ import il.org.spartan.*;
     assertTrue(precedence.greater(null, e("a+b")));
     assertTrue(precedence.greater(e("a+b"), null));
   }
+  /** see issue #813 for more details
+   * @author Ron Gatenio
+   * @author Roy Shchory
+   * @since 16-11-12 */
+  @Test public void sameTest2(){
+    assertTrue(precedence.same(InfixExpression.Operator.PLUS,e("a+b")));
+    assertFalse(precedence.same(InfixExpression.Operator.TIMES,e("a+b")));
+  }
 }
