@@ -3,14 +3,13 @@ package il.org.spartan.spartanizer.cmdline;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Modifier;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class Generic$Applicator {
@@ -86,16 +85,15 @@ public class Generic$Applicator {
   public static void main(final String[] args) {
     for (Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
-    for (String i : setSelectedTipperGroups("Abbreviation", "Centification"))
-      System.out.println(i);
+    for (String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
+      System.out.println(¢);
   }
   
   private static List<String> setSelectedTipperGroups(String ... ss) {
-    List<String> l = new ArrayList<>();
-    for(String s: ss){
-      l.add(s);
-    }
-    return l;
+    List<String> $ = new ArrayList<>();
+    for(String ¢: ss)
+      $.add(¢);
+    return $;
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
@@ -119,14 +117,12 @@ public class Generic$Applicator {
   }
   
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    Tipper<N> t = toolbox.firstTipper(¢);
-    TipperGroup g = t.tipperGroup();
-//  Toolbox.get(g);
-    if(selectedTipperGroups.contains(g.name())){
-      System.out.println("selected tipper: " + g.name());
-      return t;
-    }
-    return null;
+    Tipper<N> $ = toolbox.firstTipper(¢);
+    TipperGroup g = $.tipperGroup();
+    if (!selectedTipperGroups.contains(g.name()))
+      return null;
+    System.out.println("selected tipper: " + g.name());
+    return $;
   }
   
 }
