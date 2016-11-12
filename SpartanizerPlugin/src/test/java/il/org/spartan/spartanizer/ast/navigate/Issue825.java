@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc", "unused" }) 
-public class countTest {
+public class Issue825 {
   @Test public void a() {
     assertEquals(1, count.imports(az.compilationUnit(wizard.ast("import java.util.*;"))));
   }
