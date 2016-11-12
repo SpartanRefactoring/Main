@@ -12,6 +12,11 @@ import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** Generic appliator
+ * @author Matteo Orru'
+ * @since 2016
+ */
+
 public class Generic$Applicator {
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;

@@ -52,8 +52,8 @@ public class Collect$Applicator {
           try {
             System.out.println("tip!!!");
             s = tipper.tip(n, exclude);
-            Reports.tip(s);
-            Reports.nl("tips");
+            ReportGenerator.tip(s);
+            ReportGenerator.nl("tips");
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
@@ -89,8 +89,8 @@ public class Collect$Applicator {
           Tip s = null;
           try {
             s = tipper.tip(n, exclude);
-            Reports.tip(s);
-            Reports.nl("tips");
+            ReportGenerator.tip(s);
+            ReportGenerator.nl("tips");
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
