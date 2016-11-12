@@ -7,7 +7,7 @@ package il.org.spartan.spartanizer.utils;
 public final class Int {
   public int inner;
 
-  public Int(int inner) {
+  public Int(final int inner) {
     this.inner = inner;
   }
   public Int() {
