@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -19,4 +21,26 @@ public class Issue692 {
   @SuppressWarnings("static-method") @Test public void test1() {
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,3)"))).size(), 0);
   }
+  @SuppressWarnings("static-method") @Test public void test2() {
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,i)"))).size(), 1);
+  }
+  @SuppressWarnings("static-method") @Test public void test3() {
+    final Set<String> tmp = new TreeSet<>();
+    tmp.add("j");
+    tmp.add("i");
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)"))), tmp);
+  }
+  @SuppressWarnings("static-method") @Test public void test4() {
+    final Set<String> tmp = new TreeSet<>();
+    tmp.add("j");
+    tmp.add("i");
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)"))), tmp);
+  }
+  @SuppressWarnings("static-method") @Test public void test5() {
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(1)),2)"))), (new TreeSet<>()));
+  }
+  
+  
+  
+  
 }
