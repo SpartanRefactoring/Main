@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-public class Reports {
+public class ReportGenerator {
   protected static String outputFolder = "/tmp/";
   protected static String inputFolder;
   protected String afterFileName;
@@ -37,7 +37,7 @@ public class Reports {
       return reports.get(¢);
     }
     @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
-      for (final NamedFunction $ : Reports.Util.functions(""))
+      for (final NamedFunction $ : ReportGenerator.Util.functions(""))
         if ($.name() == ¢)
           return $;
       return null;
@@ -46,22 +46,22 @@ public class Reports {
 
   // running report
   @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
-      Reports.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
-      Reports.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+      ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
+      ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
     }
   }
   public static String getOutputFolder() {
     return outputFolder;
   }
   public static void setOutputFolder(final String outputFolder) {
-    Reports.outputFolder = outputFolder;
+    ReportGenerator.outputFolder = outputFolder;
   }
   public static String getInputFolder() {
     return inputFolder;
   }
   public static void setInputFolder(final String inputFolder) {
-    Reports.inputFolder = inputFolder;
+    ReportGenerator.inputFolder = inputFolder;
   }
 
   @FunctionalInterface public interface BiFunction<T, R> {
@@ -70,50 +70,50 @@ public class Reports {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Reports.Util.functions(""))
-      Reports.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
   }
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Reports.Util.functions(""))
-      Reports.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     double a;
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
                                                                // ¢.function().run(n2));
-      Reports.Util.report("metrics").put(id + ¢.name(), a);
+      ReportGenerator.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     String a; // TODO Matteo: to be converted to double or float?
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // system.p(¢.function().run(n1),
                                                                     // ¢.function().run(n2));
-      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     String a; // TODO Matteo: to be converted to double or float?
-    for (final NamedFunction ¢ : Reports.Util.functions("")) {
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       a = system.p(¢.function().run(n1), ¢.function().run(n2));
-      Reports.Util.report("metrics").put(id + ¢.name() + " %", a);
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
   /** @param nm */
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
-    final int len = Reports.Util.find("length").function().run(n1);
-    final int ess = Reports.Util.find("essence").function().run(n1);
-    final int tide = Reports.Util.find("tide").function().run(n1);
-    final int body = Reports.Util.find("body").function().run(n1);
-    final int nodes = Reports.Util.find("nodes").function().run(n1);
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
-    Reports.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
+    final int len = ReportGenerator.Util.find("length").function().run(n1);
+    final int ess = ReportGenerator.Util.find("essence").function().run(n1);
+    final int tide = ReportGenerator.Util.find("tide").function().run(n1);
+    final int body = ReportGenerator.Util.find("body").function().run(n1);
+    final int nodes = ReportGenerator.Util.find("nodes").function().run(n1);
+    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
+    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
   }
 
   @FunctionalInterface public interface ToInt<R> {
@@ -218,15 +218,15 @@ public class Reports {
     return reports;
   }
   public static void name(final ASTNode input) {
-    Reports.report("metrics").put("name", extract.name(input));
-    Reports.report("metrics").put("category", extract.category(input));
+    ReportGenerator.report("metrics").put("name", extract.name(input));
+    ReportGenerator.report("metrics").put("category", extract.category(input));
   }
   public static void tip(final Tip ¢) {
-    Reports.report("tips").put("name", ¢.getClass());
-    Reports.report("tips").put("description", ¢.description);
-    Reports.report("tips").put("LineNumber", ¢.lineNumber);
-    Reports.report("tips").put("from", ¢.from);
-    Reports.report("tips").put("to", ¢.to);
-    Reports.report("tips").put("tipperClass", ¢.tipperClass);
+    ReportGenerator.report("tips").put("name", ¢.getClass());
+    ReportGenerator.report("tips").put("description", ¢.description);
+    ReportGenerator.report("tips").put("LineNumber", ¢.lineNumber);
+    ReportGenerator.report("tips").put("from", ¢.from);
+    ReportGenerator.report("tips").put("to", ¢.to);
+    ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
   }
 }
