@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.Modifier;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class Generic$Applicator {
