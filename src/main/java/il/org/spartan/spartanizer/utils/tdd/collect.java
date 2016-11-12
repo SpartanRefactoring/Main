@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Shimon Azulay
  * @author Idan Atias
  * @since Nov 8, 2016 */
-public enum getAll2 {
+public enum collect {
   ;
   // For you to implement! Let's TDD and get it on!
   /** takes a single parameter, which is a CompilationUnit returns a list of
