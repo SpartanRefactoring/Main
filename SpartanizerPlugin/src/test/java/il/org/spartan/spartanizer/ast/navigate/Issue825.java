@@ -35,8 +35,16 @@ public class Issue825 {
     assertEquals(1, count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("String y; int x=1; int z=2; z=x; x=3;").getClass()));
   }
   
+  @Test public void f() {
+    assertEquals(0, count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("import AMAZINGLIBRARY").getClass()));
+  }
+  
   @Test public void i() {
     assertEquals(3,count.noImportsNoComments(wizard.ast("import AnAMAZINGLIBRARY")));
+  }
+  
+  @Test public void j() {
+    assertEquals(24,count.noImportsNoComments(wizard.ast("String y; int x=1; int z=2; z=x; x=3;")));
   }
   
   @Test public void g(){
