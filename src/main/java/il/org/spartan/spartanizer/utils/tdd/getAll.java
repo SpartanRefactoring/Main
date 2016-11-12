@@ -134,10 +134,8 @@ public enum getAll {
       return null;
     final List<String> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
-      // TODO: Inbal and Elia. Your code is buggy and will not find public final
-      // methods, e..g,--yg
       @Override public boolean visit(final FieldDeclaration d) {
-        if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
+        if (!org.eclipse.jdt.core.dom.Modifier.isPublic(d.getModifiers()))
           return true;
         for (final VariableDeclarationFragment ¢ : fragments(d))
           $.add(¢.getName().getIdentifier());
