@@ -36,7 +36,13 @@ public class Issue825 {
   }
   
   @Test public void e() {
-    count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("String y; int x=1; int z=2; z=x; x=3;").getClass());
+    assertEquals(1, count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("String y; int x=1; int z=2; z=x; x=3;").getClass()));
   }
+  
+  @Test public void i() {
+    assertEquals(3,count.noImportsNoComments(wizard.ast("import AnAMAZINGLIBRARY")));
+  }
+  
+  
   
 }
