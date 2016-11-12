@@ -2,10 +2,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
-// import static org.junit.Assert.*;
-
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
