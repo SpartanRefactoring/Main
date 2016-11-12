@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -23,7 +22,6 @@ public class Logger {
   private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
   private static final Map<String, NPRecord> npStatistics = new HashMap<>();
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
-  private static final Map<Class<? extends ASTNode>, Int> codeStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
 
@@ -110,12 +108,6 @@ public class Logger {
     final String nodeClassName = ¢.getClass().getSimpleName();
     nodesStatistics.putIfAbsent(nodeClassName, new Int());
     ++nodesStatistics.get(nodeClassName).inner;
-  }
-  /** @param ¢
-   * @param np */
-  static void addToNodeType(final Class<? extends ASTNode> n, final int num) {
-    codeStatistics.putIfAbsent(n, new Int());
-    codeStatistics.get(n).inner += num;
   }
   private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
@@ -220,10 +212,6 @@ public class Logger {
     }
   }
 
-  /** @param compilationUnit */
-  public static void logSpartanizedCompilationUnit(final ASTNode cu) {
-    addToNodeType(IfStatement.class, count.nodesOfClass(cu, IfStatement.class));
-  }
   private static double min(final double a, final double d) {
     return a < d ? a : d;
   }
