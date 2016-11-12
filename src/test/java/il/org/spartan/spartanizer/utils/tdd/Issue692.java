@@ -25,7 +25,7 @@ public class Issue692 {
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,i)"))).size(), 1);
   }
   @Test public void test3() {
-    // TODO: you may simplify the code by writing something such 
+    // TODO: you may simplify the code by writing something such
     // as new TreeSet(az.list("a","b")) --yg
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");

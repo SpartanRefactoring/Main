@@ -26,10 +26,8 @@ public class issue713 {
       .compilationUnit(wizard.ast("public class foo {  public int x, y, z; protected boolean flag; public char ch; } ")).types().get(0);
   TypeDeclaration notCountingMethods = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class foo {  public int x, y; public void func(){ int pi;} } ")).types().get(0);
-  TypeDeclaration finalPublicField = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class c1 {  public final int x; } ")).types().get(0);
-  
-  
+  TypeDeclaration finalPublicField = (TypeDeclaration) az.compilationUnit(wizard.ast("public class c1 {  public final int x; } ")).types().get(0);
+
   @SuppressWarnings("static-method") @Test public void doesCompile() {
     assert true;
   }
@@ -66,9 +64,7 @@ public class issue713 {
   @Test public void onlyPrivates() {
     assertEquals(0, getAll.publicFields(onlyPrivates).size());
   }
-  
   @Test public void finalPublicPass() {
     assertEquals(1, getAll.publicFields(finalPublicField).size());
   }
-  
 }
