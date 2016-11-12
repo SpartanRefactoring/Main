@@ -26,7 +26,8 @@ public enum getAll {
       return null;
     final Set<String> $ = new TreeSet<>();
     // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
-    // TODO: The link is not showing, did you mean the 'access' method? @ward-mattar 
+    // TODO: The link is not showing, did you mean the 'access' method?
+    // @ward-mattar
     final List<Object> l = ¢.arguments();
     for (final Object i : l) {
       if (i instanceof MethodInvocation)
