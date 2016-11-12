@@ -15,8 +15,8 @@ public class CommandLineClient {
     final CommandLineClient r = new CommandLineClient();
     // final List<String> remaining = extract(args, r);
     //
-    Reports.setOutputFolder(outputDir);
-    Reports.setInputFolder(inputDir);
+    ReportGenerator.setOutputFolder(outputDir);
+    ReportGenerator.setInputFolder(inputDir);
     //
     new CommandLineSpartanizer(inputDir).apply();
     // r.printExternals();
