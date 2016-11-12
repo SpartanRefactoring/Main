@@ -1,13 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 import static org.junit.Assert.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /**
@@ -17,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc", "unused" }) 
+@SuppressWarnings({ "static-method", "javadoc" }) 
 public class Issue825 {
   @Test public void a() {
     assertEquals(1, count.imports(az.compilationUnit(wizard.ast("import java.util.*;"))));
