@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -29,4 +30,9 @@ public class Issue825 {
   @Test public void c() {
     assertEquals(16, count.lines(wizard.ast("String y; int x=1; int z=2; z=x; x=3;")));
   }
+  
+  @Test public void e() {
+    count.nodesOfClass(wizard.ast("String y; int x=1; int z=2; z=x; x=3;"), wizard.ast("String y; int x=1; int z=2; z=x; x=3;").getClass());
+  }
+  
 }
