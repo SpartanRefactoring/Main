@@ -107,22 +107,22 @@ import il.org.spartan.*;
     azzert.that(metrics.vocabulary(x2), is(4));
     azzert.that(metrics.vocabulary(booleans), is(0));
   }
-  @SuppressWarnings("static-method") @Test public void dexterityIsNull() {
+  @Test public void dexterityIsNull() {
     azzert.that(metrics.dexterity(null), is(0));
   }
-  @SuppressWarnings("static-method") @Test public void countMethods() {
+  @Test public void countMethods() {
     azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
   }
-  @SuppressWarnings("static-method") @Test public void bodySizeTest() {
+  @Test public void bodySizeTest() {
     azzert.that(metrics.bodySize(booleans), is(0));
     azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
     azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
     azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
   }
-  @SuppressWarnings("static-method") @Test public void tokensTest() {
+  @Test public void tokensTest() {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
   }
-  @SuppressWarnings("static-method") @Test public void condensedSizeTest() {
+  @Test public void condensedSizeTest() {
     azzert.that(metrics.condensedSize(booleans), is(17));
     azzert.that(metrics.condensedSize(x1), is(26));
   }
