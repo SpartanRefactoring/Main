@@ -12,6 +12,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** Specific applicator
+ * @author Matteo Orru'
+ * @since 2016
+ */
+
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
@@ -41,21 +46,21 @@ public class CommandLine$Applicator extends Generic$Applicator {
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
-    Reports.printFile(input + "", "before");
-    Reports.printFile(output, "after");
+    ReportGenerator.printFile(input + "", "before");
+    ReportGenerator.printFile(output, "after");
     computeMetrics(input, outputASTNode);
     return false;
   }
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    Reports.summaryFileName("metrics");
-    Reports.name(input);
-    Reports.writeMetrics(input, output, null);
-    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
-    Reports.writePerc(input, output, "δ ");
+    ReportGenerator.summaryFileName("metrics");
+    ReportGenerator.name(input);
+    ReportGenerator.writeMetrics(input, output, null);
+    ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    ReportGenerator.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
+    ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
-    Reports.nl("metrics");
+    ReportGenerator.nl("metrics");
   }
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
