@@ -8,11 +8,10 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** for more information, please view issue #823
+/** Test class for metrics.java. for more information, please view issue #823
  * @author Inbal Matityahu
  * @author Or Troyaner
- * @author Tom Nof
- * origin-
+ * @author Tom Nof origin-
  * @since 16-11-04 */
 @SuppressWarnings({ "static-method", "javadoc" }) public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
