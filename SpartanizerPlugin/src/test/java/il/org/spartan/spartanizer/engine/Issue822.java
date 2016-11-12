@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 16-11-12 */
 @SuppressWarnings("static-method") public class Issue822 {
   @Test public void testFromFile() throws IOException {
-    Path p = Files.createTempFile("test_file", ".tmp");
+    final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Arrays.asList("a = a + b;"));
-    assertEquals((wizard.ast("a = a + b;") + ""), (makeAST.STATEMENTS.from(p.toFile()) + ""));
+    assertEquals(wizard.ast("a = a + b;") + "", makeAST.STATEMENTS.from(p.toFile()) + "");
   }
 }
