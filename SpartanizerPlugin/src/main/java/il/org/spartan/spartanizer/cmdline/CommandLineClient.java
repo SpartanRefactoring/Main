@@ -12,7 +12,7 @@ public class CommandLineClient {
       processCommandLine(args);
   }
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
-    final CommandLineClient r = new CommandLineClient();
+    new CommandLineClient();
     // final List<String> remaining = extract(args, r);
     //
     Reports.setOutputFolder(outputDir);
@@ -20,24 +20,6 @@ public class CommandLineClient {
     //
     new CommandLineSpartanizer(inputDir).apply();
     // r.printExternals();
-  }
-  @SuppressWarnings("unused") private static void parseCommandLineArgs(final String[] args) {
-    if (args.length == 0)
-      printPrompt();
-    for (int ¢ = 0; ¢ < args.length;)
-      if ("-o".equals(args[¢]))
-        ¢ += 2;
-      else if ("-i".equals(args[¢])) {
-        inputDir = args[¢ + 1];
-        ¢ += 2;
-      } else if ("-d".equals(args[¢])) {
-        inputDir = ".";
-        ¢ += 1;
-      } else {
-        System.out.println(args[¢]);
-        System.out.println("[ERROR]: Something went wrong! Parameter or switch not allowed");
-        ++¢;
-      }
   }
   static void printPrompt() {
     System.out.println("Help");

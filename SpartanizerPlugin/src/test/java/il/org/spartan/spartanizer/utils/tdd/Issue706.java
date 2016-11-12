@@ -2,10 +2,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static org.junit.Assert.*;
 
-// import static org.junit.Assert.*;
-
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -20,8 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
     getAll2.stringVariables((MethodDeclaration) null);
   }
   @Test public void test01() {
-    // TODO SAPIR AND YANIV: we get warnings on your code.
-    final List<VariableDeclaration> l = getAll2.stringVariables((MethodDeclaration) null);
+    getAll2.stringVariables((MethodDeclaration) null);
   }
   @Test public void test02() {
     assertTrue(getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(int n);"))).isEmpty());

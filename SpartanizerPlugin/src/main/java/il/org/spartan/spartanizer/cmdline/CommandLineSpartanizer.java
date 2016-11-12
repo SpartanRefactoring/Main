@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.function.*;
-
-import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -67,10 +64,6 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
     } catch (final IOException x) {
       x.printStackTrace();
     }
-  }
-  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    return u -> Integer.valueOf(
-        new CommandLine$Applicator().apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0);
   }
   public void inputDir(final String ¢) {
     presentSourcePath = ¢;
