@@ -68,10 +68,6 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       x.printStackTrace();
     }
   }
-  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    return u -> Integer.valueOf(
-        new CommandLine$Applicator().apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0);
-  }
   public void inputDir(final String ¢) {
     presentSourcePath = ¢;
   }
