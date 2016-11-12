@@ -8,7 +8,7 @@ public final class Int {
   public int inner;
 
   public Int(int inner) {
-    this.inner = inner; 
+    this.inner = inner;
   }
   public Int() {
     this(0);
