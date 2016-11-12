@@ -19,6 +19,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc", "unused" }) 
 public class countTest {
   @Test public void a() {
-    assertNotEquals("a", "b");
+    assertEquals(1, count.imports(az.compilationUnit(wizard.ast("import java.util.*;"))));
+  }
+  
+  @Test public void b() {
+    assertEquals(2, count.imports(az.compilationUnit(wizard.ast("import java.util.*; import il.org.spartan.spartanizer.ast.navigate.*;"))));
   }
 }
