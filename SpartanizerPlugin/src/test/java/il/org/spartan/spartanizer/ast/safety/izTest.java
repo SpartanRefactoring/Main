@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -11,7 +11,6 @@ import org.junit.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil

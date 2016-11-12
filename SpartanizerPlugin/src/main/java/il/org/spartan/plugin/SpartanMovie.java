@@ -16,6 +16,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.utils.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.

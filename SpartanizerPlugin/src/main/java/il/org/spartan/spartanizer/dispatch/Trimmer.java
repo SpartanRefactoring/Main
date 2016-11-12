@@ -13,7 +13,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -60,8 +60,6 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (s != null) {
           i.incrementAndGet();
-          if (LogManager.isActive())
-            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
           TrimmerLog.application(r, s);
         }
         return true;
