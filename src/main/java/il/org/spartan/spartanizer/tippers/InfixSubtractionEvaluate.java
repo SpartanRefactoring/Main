@@ -9,10 +9,10 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import il.org.spartan.utils.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
