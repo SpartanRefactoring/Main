@@ -33,4 +33,11 @@ public class Issue825 {
   @Test public void d() {
     assertEquals(4, count.statements(az.statement(wizard.ast("if(x==5) {x++;}"))));
   }
+  
+  @Test public void g(){
+    assertEquals(2, count.noimports(az.compilationUnit(wizard.ast("import a;"))));
+  }
+  @Test public void h(){
+    assertEquals(3, count.noimports(az.compilationUnit(wizard.ast("package b;"))));
+  }
 }
