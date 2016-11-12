@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
