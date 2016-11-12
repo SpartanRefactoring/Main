@@ -25,7 +25,7 @@ public enum getAll {
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
   public static Set<String> invocations(final MethodInvocation ¢) {
-    if (i == null)
+    if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
     ¢.accept(new ASTVisitor() {
