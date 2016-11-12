@@ -28,7 +28,6 @@ public class Issue828 {
     assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor)));
     assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement)));
   }
-  
   @SuppressWarnings("static-method") @Test public void prerequisiteTest() {
     assertFalse(s.prerequisite(simpleFor));
     assertTrue(s.prerequisite(trueFor));
