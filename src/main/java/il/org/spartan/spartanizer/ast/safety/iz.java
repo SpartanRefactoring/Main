@@ -14,7 +14,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -683,7 +682,7 @@ public interface iz {
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   static boolean singletonThen(final IfStatement ¢) {
-    return iz.singletonStatement(then(¢));
+    return ¢ != null && iz.singletonStatement(then(¢));
   }
   static boolean singleVariableDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, SINGLE_VARIABLE_DECLARATION);
