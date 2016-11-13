@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -52,8 +53,8 @@ public class Collect$Applicator {
           try {
             System.out.println("tip!!!");
             s = tipper.tip(n, exclude);
-            Reports.tip(s);
-            Reports.nl("tips");
+            ReportGenerator.tip(s);
+            ReportGenerator.nl("tips");
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
@@ -89,8 +90,8 @@ public class Collect$Applicator {
           Tip s = null;
           try {
             s = tipper.tip(n, exclude);
-            Reports.tip(s);
-            Reports.nl("tips");
+            ReportGenerator.tip(s);
+            ReportGenerator.nl("tips");
           } catch (final Exception x) {
             monitor.debug(this, x);
           }
