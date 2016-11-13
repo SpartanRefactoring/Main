@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.*;
 import org.junit.*;
 
 /** Test class for {@link Linguistic}
- * @author yonzarecki author ZivIzhar author rodedzats
+ * @author yonzarecki 
+ * @author ZivIzhar 
+ * @author rodedzats
  * @since 2016-11-13 */
 @SuppressWarnings("static-method") public class LinguisticTest {
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
@@ -47,5 +49,9 @@ import org.junit.*;
     assertEquals(Linguistic.UNKNOWN + " churches", Linguistic.plurales("church", (AtomicInteger) null));
     assertEquals("one church", Linguistic.plurales("church", new AtomicInteger(1)));
     assertEquals("2 churches", Linguistic.plurales("church", new AtomicInteger(2)));
+  }
+  @Test public void testPluralsInt() {
+    assertEquals("one house", Linguistic.plurals("house", 1));
+    assertEquals("2 houses", Linguistic.plurals("house", 2));
   }
 }
