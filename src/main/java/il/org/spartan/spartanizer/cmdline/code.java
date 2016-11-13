@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 /** @author Yossi Gil
+ * @author Yarden Lev
  * @since 2016 */
 public interface code {
   static String essence(final String codeFragment) {
@@ -15,6 +16,10 @@ public interface code {
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
         .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");
   }
+  /** This function counts the number of words the given string contains. Words
+   * are separated by at least one whitespace.
+   * @param $ the string its words are being counted
+   * @return the number of words the given string contains */
   static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
