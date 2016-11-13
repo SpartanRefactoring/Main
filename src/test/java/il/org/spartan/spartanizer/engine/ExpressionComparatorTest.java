@@ -112,11 +112,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void longerFirstTestFalse() {
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
   }
+  @Test public void longerFirstEqualLengthTest() {
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+3")),is(false));
+  }
   @Test public void additionSortTest() {
     azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
-        add(e("a"));
+        add(e("-a"));
         add(e("d+b"));
         add(e("a+b+c"));
         add(e("f"));
@@ -124,17 +127,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     })), is(true));
   }
   
-  @Test public void trialTest(){
+  @Test public void prudentSortTest(){
     azzert.that(ExpressionComparator.PRUDENT.sort((new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
-        add(e("e"));
+        add(e("a"));
         add(e("d"));
         add(e("a"));
         add(e("f"));
       }
     })), is(false));
   }
+  
+  
   private int cs(final String statement) {
     return count.lines(s(statement));
   }
