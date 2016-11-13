@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -20,14 +21,32 @@ public class Analyzer {
   {
     set("outputDir", "/tmp");
   }
+  private static InteractiveSpartanizer spartanizer;
 
   public static void main(final String args[]) {
     parseArguments(args);
+    initializeSpartanizer();
     createOutputDirIfNeeded();
-    if (!"true".equals(getProperty("methodsAnalyze")))
-      analyze();
-    else
+    String analysis = getProperty("analysis");
+    if ("methods".equals(analysis))
       methodsAnalyze();
+    else if ("classify".equals(analysis))
+      classify();
+    else
+      analyze();
+  }
+  private static void initializeSpartanizer() {
+    spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+  }
+  /** run an interactive classifier to classify nanos! */
+  private static void classify() {
+    for (final File ¢ : inputFiles()) {
+      System.out.println("\nnow: " + ¢.getPath());
+      final ASTNode cu = getCompilationUnit(spartanize(compilationUnit(¢)));
+      Classifier classifier = new Classifier();
+      cu.accept(classifier);
+      classifier.summarize();
+    }
   }
   private static void createOutputDirIfNeeded() {
     final File dir = new File(getProperty("outputDir"));
@@ -51,9 +70,6 @@ public class Analyzer {
   private static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
   }
-
-  static final String patternsPackage = Analyzer.class.getPackage().getName() + ".patterns";
-
   private static void parseArgument(final String s) {
     assert s.charAt(0) == '-' : "property should start with '-'";
     final String[] li = bisect(s.substring(1), "=");
@@ -109,8 +125,8 @@ public class Analyzer {
   private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
-  /** @param ¢ String
-   * @return compilation unit out of file */
+  /** @param ¢ string
+   * @return compilation unit out of string */
   private static ASTNode getCompilationUnit(final String ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
@@ -136,29 +152,34 @@ public class Analyzer {
         $.addAll(getJavaFiles(entry));
     return $;
   }
-  /** @param outputDir to which the spartanized code file and CSV files will be
-   *        placed in */
+  /** analyze nano patterns in code. */
   private static void analyze() {
-    InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    if (getProperty("nmethods") == null || "false".equals(getProperty("nmethods")))
-      spartanizer = addJavadocNanoPatterns(spartanizer);
-    String spartanizedCode = "";
-    new File(getProperty("outputDir") + "/after.java").delete();
-    for (final File ¢ : getJavaFiles(getProperty("inputDir"))) {
+    AnalyzerOptions.setVerbose();
+    deleteOutputFile();
+    for (final File ¢ : inputFiles()) {
       System.out.println("\nnow: " + ¢.getPath());
-      final ASTNode cu = clean(getCompilationUnit(¢));
+      final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
-      spartanizedCode = spartanizer.fixedPoint(cu + "");
-      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanizedCode);
-      Logger.logSpartanizedCompilationUnit(getCompilationUnit(spartanizedCode));
+      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
     }
     Logger.summarize(getProperty("outputDir"));
   }
+  private static String spartanize(final ASTNode cu) {
+    return spartanizer.fixedPoint(cu + "");
+  }
+  private static ASTNode compilationUnit(final File ¢) {
+    return clean(getCompilationUnit(¢));
+  }
+  private static Set<File> inputFiles() {
+    return getJavaFiles(getProperty("inputDir"));
+  }
+  private static void deleteOutputFile() {
+    new File(getProperty("outputDir") + "/after.java").delete();
+  }
   private static void methodsAnalyze() {
-    final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    for (final File f : getJavaFiles(getProperty("inputDir")))
-      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(clean(getCompilationUnit(f)))))
+    for (final File f : inputFiles())
+      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
         if (haz.methods(t))
           for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
@@ -174,6 +195,8 @@ public class Analyzer {
    * @param ¢ our gUIBatchLaconizer
    * @return */
   private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
+    if ("false".equals(getProperty("nmethods")))
+      addJavadocNanoPatterns(¢);
     return ¢
         .add(ConditionalExpression.class, //
             new DefaultsTo(), //
