@@ -251,15 +251,15 @@ public class ReportGenerator {
 
   }
   
-  public class LineWriter implements Consumer{
-    private String reportName;
-    @Override public void accept(Object t) {
+  public class LineWriter implements Consumer<Object>{
+    @SuppressWarnings("unused") private String reportName;
+    @Override public void accept(@SuppressWarnings("unused") Object o) {
 //      ReportGenerator.report(reportName)
     }
   }
   
-  public static <T> void writeLine(Consumer<T> c){
-    c.accept((T) c);
+  @SuppressWarnings("unchecked") public static <T> void writeLine(Consumer<T> ¢){
+    ¢.accept((T) ¢);
   }
   
   public static void generate(String ¢) {
