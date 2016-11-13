@@ -12,11 +12,14 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+<<<<<<< HEAD
 
 /** Specific applicator
  * @author Matteo Orru'
  * @since 2016
  */
+=======
+>>>>>>> branch 'master' of git@github.com:SpartanRefactoring/Spartanizer.git
 
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
@@ -30,7 +33,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public CommandLine$Applicator(String[] clazzes, String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
-
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
