@@ -11,7 +11,7 @@ import org.junit.*;
  * @since 16-11-11 */
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue819 {
-  // TODO: 
+  // TODO:
   @Test public void str_test0() {
     assertEquals("coverage", (new Str("coverage")).inner());
   }
