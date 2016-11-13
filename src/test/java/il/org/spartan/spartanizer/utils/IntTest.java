@@ -1,0 +1,11 @@
+package il.org.spartan.spartanizer.utils;
+
+import static org.junit.Assert.*;
+
+import org.junit.*;
+
+public class IntTest {
+  @Test public void test() {
+    
+  }
+}
