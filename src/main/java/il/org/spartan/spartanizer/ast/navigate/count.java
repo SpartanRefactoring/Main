@@ -28,16 +28,6 @@ public interface count {
     });
     return $.get();
   }
-  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
-    final AtomicInteger $ = new AtomicInteger();
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
-        if (¢.getClass().equals(cl))
-          $.getAndIncrement();
-      }
-    });
-    return $.get();
-  }
   static int lines(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
@@ -77,14 +67,12 @@ public interface count {
     });
     return $.get();
   }
-  /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  static int statements(final ASTNode root) {
+  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
     final AtomicInteger $ = new AtomicInteger();
-    root.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        $.addAndGet(as.bit(iz.statement(¢)));
+        if (¢.getClass().equals(cl))
+          $.getAndIncrement();
       }
     });
     return $.get();
@@ -117,5 +105,17 @@ public interface count {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nonWhiteCharacters(final ASTNode ¢) {
     return removeWhites(wizard.body(¢)).length();
+  }
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int statements(final ASTNode root) {
+    final AtomicInteger $ = new AtomicInteger();
+    root.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        $.addAndGet(as.bit(iz.statement(¢)));
+      }
+    });
+    return $.get();
   }
 }
