@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
