@@ -15,10 +15,12 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 public final class SingleTipperApplicator {
@@ -27,11 +29,11 @@ public final class SingleTipperApplicator {
       final CompilationUnit u, //
       final IMarker m, //
       final Type t, //
-      final Tipper<?> tipper) {
+      final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t, tipper);
+    fillRewrite($, u, m, t, w);
     pm.done();
     return $;
   }
@@ -86,19 +88,19 @@ public final class SingleTipperApplicator {
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     // XXX Roth: find a better way to get tipper from marker
-    final Tipper<?> t = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    if (t == null) {
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    if (w == null) {
       pm.done();
       return;
     }
     for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
-      final IWorkbench workbench = PlatformUI.getWorkbench();
-      final IProgressService ps = workbench.getProgressService();
-      final AtomicInteger passNumber = new AtomicInteger(i + 1);
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      final IProgressService ps = wb.getProgressService();
+      final AtomicInteger pn = new AtomicInteger(i + 1);
       final AtomicBoolean canelled = new AtomicBoolean(false);
       try {
         ps.run(true, true, px -> {
-          px.beginTask("Applying " + t.description() + " to " + jp.getElementName() + " ; pass #" + passNumber.get(), todo.size());
+          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
           final List<ICompilationUnit> exhausted = new ArrayList<>();
           for (final ICompilationUnit u : todo) {
@@ -109,7 +111,7 @@ public final class SingleTipperApplicator {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
             try {
-              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, t, (IFile) u.getResource()).rewriteAST());
+              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException x) {
               monitor.logEvaluationError(this, x);
               exhausted.add(u);
@@ -137,7 +139,7 @@ public final class SingleTipperApplicator {
         break;
     }
     pm.done();
-    eclipse.announce("Done applying " + t.description() + " tip to " + jp.getElementName());
+    eclipse.announce("Done applying " + w.description() + " tip to " + jp.getElementName());
   }
 
   public enum Type {
@@ -170,37 +172,38 @@ public final class SingleTipperApplicator {
       this.compilationUnit = compilationUnit;
       this.tipper = tipper;
     }
-    protected final void apply(final Tipper<?> t, final ASTNode n) {
-      tipper = t;
+    protected final void apply(final Tipper<?> w, final ASTNode n) {
+      tipper = w;
       switch (type) {
         case DECLARATION:
-          applyDeclaration(t, n);
+          applyDeclaration(w, n);
           break;
         case FILE:
-          applyFile(t, n);
+          applyFile(w, n);
           break;
         case PROJECT:
         default:
           break;
       }
     }
-    protected void applyDeclaration(final Tipper<?> t, final ASTNode n) {
-      applyLocal(t, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
+    protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
+      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
     protected void applyFile(final Tipper<?> w, final ASTNode n) {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
-    protected void applyLocal(final Tipper<?> t, final ASTNode b) {
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (disabling.on(n) || !t.myAbstractOperandsClass().isInstance(n))
+          if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
             return true;
           Toolbox.defaultInstance();
-          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, (Tipper<N>) t);
+          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
             final Tip make = x.tip(n, exclude);
-            if (make != null)
+            if (make != null) {
               make.go(rewrite, null);
+            }
           }
           return true;
         }

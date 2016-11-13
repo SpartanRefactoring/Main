@@ -6,8 +6,9 @@ import static il.org.spartan.spartanizer.java.Environment.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 
-public final class EnvironmentTestSpawningAndManualAddition {
+@SuppressWarnings({ "unused" }) public final class EnvironmentTestSpawningAndManualAddition {
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   Environment ee0 = Environment.genesis();
