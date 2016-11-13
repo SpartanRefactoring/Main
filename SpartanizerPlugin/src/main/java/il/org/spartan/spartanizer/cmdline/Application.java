@@ -16,6 +16,7 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.monitor;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.
@@ -104,10 +105,6 @@ public final class Application implements IApplication {
       System.err.println(e.getMessage());
       return IApplication.EXIT_OK;
     }
-    if (printLog) {
-      LogManager.activateLog();
-      LogManager.initialize("/home/matteo/SpartanLog");
-    }
     int done = 0, failed = 0;
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
       ICompilationUnit u = null;
@@ -143,8 +140,6 @@ public final class Application implements IApplication {
       printChangeStatistics(fileStats);
     if (optStatsLines)
       printLineStatistics(fileStats);
-    if (printLog)
-      LogManager.closeAllWriters();
     return IApplication.EXIT_OK;
   }
   @Override public void stop() {

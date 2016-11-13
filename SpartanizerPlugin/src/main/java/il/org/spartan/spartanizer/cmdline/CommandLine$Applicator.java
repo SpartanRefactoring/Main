@@ -11,10 +11,27 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
+
+/** Specific applicator
+ * @author Matteo Orru'
+ * @since 2016
+ */
 
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
+
+  public CommandLine$Applicator(){
+  }
+
+  public CommandLine$Applicator(String[] clazzes) {
+    super(clazzes);
+  }
+
+  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups) {
+    super(clazzes, tipperGroups);
+  }
 
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
@@ -30,21 +47,21 @@ public class CommandLine$Applicator extends Generic$Applicator {
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
-    Reports.printFile(input + "", "before");
-    Reports.printFile(output, "after");
+    ReportGenerator.printFile(input + "", "before");
+    ReportGenerator.printFile(output, "after");
     computeMetrics(input, outputASTNode);
     return false;
   }
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    Reports.summaryFileName("metrics");
-    Reports.name(input);
-    Reports.writeMetrics(input, output, null);
-    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
-    Reports.writePerc(input, output, "δ ");
+    ReportGenerator.summaryFileName("metrics");
+    ReportGenerator.name(input);
+    ReportGenerator.writeMetrics(input, output, null);
+    ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    ReportGenerator.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
+    ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
-    Reports.nl("metrics");
+    ReportGenerator.nl("metrics");
   }
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
@@ -104,6 +121,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
+          ReportGenerator.writeTipsLine(n, s, "tips");
         } catch (final Exception x) {
           monitor.debug(this, x);
         }
@@ -156,9 +174,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
     });
   }
-  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
-  }
+//  @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+//    return toolbox.firstTipper(¢);
+//  }
   /** @param u
    * @param __
    * @return */
