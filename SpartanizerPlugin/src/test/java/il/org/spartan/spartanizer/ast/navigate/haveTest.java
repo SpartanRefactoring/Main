@@ -119,5 +119,13 @@ public final class haveTest {
   @Test public void numericLiteralSuccessOnFloat(){
     azzert.assertTrue(have.numericLiteral(into.e("c"),into.e("12.99e-13")));
   }
+  
+  @Test public void numericLiteralIterableFail(){
+    azzert.assertFalse(have.numericLiteral(into.es("a=5+6","false","\"a String\"")));
+  }
+  
+  @Test public void numericLiteralIterableSucces(){
+    azzert.assertTrue(have.numericLiteral(into.es("a=5+6","false","\"a String\"","3.14")));
+  }
 
 }
