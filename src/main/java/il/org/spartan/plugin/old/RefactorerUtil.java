@@ -13,6 +13,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** A utility class for {@link Refactorer} concrete implementation, containing
  * common method overrides.
