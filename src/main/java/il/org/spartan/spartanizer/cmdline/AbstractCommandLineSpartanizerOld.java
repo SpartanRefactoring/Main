@@ -168,38 +168,6 @@ public abstract class AbstractCommandLineSpartanizerOld {
     computeMetrics(input, outputASTNode);
     return false;
   }
-  /** Compute metrics for a generic number of ASTNode
-   * @param $
-   * @author Matteo Orru' */
-  @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode... $) {
-    int length;
-    int tokens;
-    int nodes;
-    int body;
-    int statements;
-    int tide;
-    int essence;
-    // input metrics
-    for (final ASTNode ¢ : $) {
-      length = ¢.getLength();
-      tokens = metrics.tokens(¢ + "");
-      nodes = count.nodes(¢);
-      body = metrics.bodySize(¢);
-      statements = extract.statements(az.methodDeclaration(¢).getBody()).size();
-      tide = clean($ + "").length();
-      essence = Essence.of(¢ + "").length();
-      report.summaryFileName();
-      report//
-          .put("Category", extract.category(¢))//
-          .put("Name", extract.name(¢))//
-          .put("Nodes1", ¢)//
-          .put("Body", body).put("Length1", length)//
-          .put("Tokens1", tokens).put("Length1", length).put("Tide1", tide)//
-          .put("Essence1", essence)//
-          .put("Statements1", statements);//
-    }
-    report.nl();
-  }
   /** @param input
    * @param output */
   protected void computeMetrics(final ASTNode input, final ASTNode output) {

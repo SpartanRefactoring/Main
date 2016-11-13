@@ -96,10 +96,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     }
   }
 
-  @SuppressWarnings("unused") private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
-    return new TipsListEditor(g.label, "Available tippers", g, e);
-  }
-
   static class TipsListEditor extends ListEditor {
     static final String DELIMETER = "|";
     final Composite composite;

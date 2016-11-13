@@ -99,25 +99,6 @@ public class Generic$Applicator {
       $.add(¢);
     return $;
   }
-  @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
-    final List l = new ArrayList<>();
-    new Toolbox();
-    final Toolbox tb = Toolbox.defaultInstance();
-    for (int tipnum = tb.tippersCount(), i = 0; i <= tipnum; ++i) {
-      final List<Tipper<? extends ASTNode>> b = tb.get(i);
-      if (!b.isEmpty())
-        for (final Tipper<?> ¢ : b) {
-          final Class<? extends Tipper> class1 = ¢.getClass();
-          final ParameterizedType genericSuperclass = (ParameterizedType) class1.getGenericSuperclass();
-          final Type type = genericSuperclass.getActualTypeArguments()[0];
-          if (!l.contains(type))
-            l.add(type);
-        }
-    }
-    final List<Class<? extends ASTNode>> $ = as.list(l);
-    System.out.println($);
-    return $;
-  }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
