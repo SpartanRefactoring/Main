@@ -22,10 +22,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   public CommandLine$Applicator() {
   }
-  public CommandLine$Applicator(String[] clazzes) {
+  public CommandLine$Applicator(final String[] clazzes) {
     super(clazzes);
   }
-  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups) {
+  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
   void go(final CompilationUnit u) {
