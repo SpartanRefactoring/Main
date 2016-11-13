@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Tests for {@link have}, regarding issue #807
@@ -22,12 +23,45 @@ public final class haveTest {
     expressions.add(into.e("1==1"));
     expressions.add(into.e("2==2"));
     expressions.add(into.e("true"));
-    have.booleanLiteral(expressions);
+    azzert.assertTrue(have.booleanLiteral(expressions));
   }
   @Test public void booleanLiteralTestFalse() {
     List<Expression> expressions = new LinkedList<>();
     expressions.add(into.e("1==1"));
     expressions.add(into.e("2==2"));
-    have.booleanLiteral(expressions);
+    azzert.assertFalse(have.booleanLiteral(expressions));
+  }
+
+  @Test public void booleanFalseLiteralTestTrue() {
+    List<Expression> expressions = new LinkedList<>();
+    expressions.add(into.e("false"));
+    azzert.assertTrue(have.falseLiteral(expressions));
+  }
+  
+  @Test public void booleanFalseLiteralTestFalse() {
+    List<Expression> expressions = new LinkedList<>();
+    expressions.add(into.e("true"));
+    azzert.assertFalse(have.falseLiteral(expressions));
+  }
+  
+  @Test public void hasLiteralTestTrue() {
+    List<Expression> expressions = new LinkedList<>();
+    expressions.add(into.e("2"));
+    azzert.assertTrue(have.literal(expressions));
+  }
+  
+  @Test public void hasLiteralTestFalse() {
+    List<Expression> expressions = new LinkedList<>();
+    expressions.add(into.e("1==2"));
+    azzert.assertFalse(have.literal(expressions));
+  }
+  
+  
+  @Test public void booleanLiteralOneExpretionSucsses(){
+    azzert.assertTrue(have.booleanLiteral(into.e("true")));
+  }
+  
+  @Test public void booleanLiteralOneExpretionFail(){
+    azzert.assertFalse(have.booleanLiteral(into.e("x=y")));
   }
 }
