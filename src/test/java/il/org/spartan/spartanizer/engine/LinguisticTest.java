@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.text.*;
 import java.util.concurrent.atomic.*;
+import java.util.function.*;
 
 import org.junit.*;
 
@@ -62,5 +63,10 @@ import org.junit.*;
     assertEquals("1", Linguistic.unknownIfNull(Integer.valueOf(1)));
     assertEquals("1", Linguistic.unknownIfNull(new AtomicInteger(1)));
     assertEquals(Linguistic.UNKNOWN, Linguistic.unknownIfNull(null));
+  }
+  @SuppressWarnings("boxing") @Test public void testUnknownIfNullWithFunction(){
+    assertEquals("2", Linguistic.unknownIfNull(Integer.valueOf(1),(Integer i) -> i+1));
+    assertEquals("2", Linguistic.unknownIfNull(new AtomicInteger(1),(AtomicInteger i) -> Integer.valueOf(2)));
+    assertEquals(Linguistic.UNKNOWN, Linguistic.unknownIfNull(null,(Integer i) -> i+1));
   }
 }
