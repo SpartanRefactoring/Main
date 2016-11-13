@@ -15,12 +15,10 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 public final class SingleTipperApplicator {
@@ -201,9 +199,8 @@ public final class SingleTipperApplicator {
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
             final Tip make = x.tip(n, exclude);
-            if (make != null) {
+            if (make != null)
               make.go(rewrite, null);
-            }
           }
           return true;
         }
