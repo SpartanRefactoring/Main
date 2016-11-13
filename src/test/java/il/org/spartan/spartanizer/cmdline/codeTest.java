@@ -27,4 +27,10 @@ import org.junit.*;
   @Test public void spaceIsRemovedBetweenParenthesis() {
     Assert.assertEquals("(2)(3)", code.essence("(2) (3)"));
   }
+  @Test public void spaceIsRemovedBetweenParenthesis2() {
+    Assert.assertEquals("(a)(3)", code.essence("(a) (3)"));
+  }
+  @Test public void spaceIsRemovedBetweenParenthesis3() {
+    Assert.assertEquals("(2)(b)", code.essence("(2) (b)"));
+  }
 }
