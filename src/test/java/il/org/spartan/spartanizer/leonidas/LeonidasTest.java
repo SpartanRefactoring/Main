@@ -30,8 +30,8 @@ import org.junit.*;
   @Test public void testMatches9() {
     leonidasSays.that("if(true) $B();").matches("if(true) foo();");
   }
-  @Ignore @Test public void testMatches10() {
-    leonidasSays.that("for($N1 $N2 : $X) $N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
+  @Test public void testMatches10() {
+    leonidasSays.that("for($N1 $N2 : $X) $N4.$N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
   }
   @Test public void testMutation1() {
     leonidasSays.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
@@ -50,24 +50,22 @@ import org.junit.*;
         .turns("defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance")
         .into("lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers())");
   }
-  @Test public void testMutation5() {
+  // TODO: Marco
+  @Ignore @Test public void testMutation5() {
     leonidasSays.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation")
         .turns("return defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance;")
         .into("return lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers());");
   }
-  // TODO: ignored due to formatting (test is indeed successful)
+  // TODO: Marco might be bug
   @Ignore @Test public void testMutation6() {
-    leonidasSays.tipper("if($X) return y; print(7);", "washere();", "").turns("print(8); if(a || b && c) return y; print(7);")
-        .into("print(8); washere();");
+    leonidasSays.tipper("$X1 ? $X2 : $X1", "$X1()", "").turns("return y ? z : y;").into("return x();");
   }
-  // TODO: ignored due to formatting (test is indeed successful)
-  @Ignore @Test public void testMutation7() {
+  @Test public void testMutation7() {
     leonidasSays.tipper("if($X1 == null) $X1 = $X2; return $X1;", "return $X1 = $X1 == null ? $X2 : $X1;", "")
         .turns("if (instance == null) instance = allTippers(); return instance;")
         .into("return instance = instance == null ? allTippers() : instance;");
   }
-  // TODO: ignored due to formatting (test is indeed successful)
-  @Ignore @Test public void testMutation8() {
+  @Test public void testMutation8() {
     leonidasSays.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);", "")
         .turns("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\");\n $ = $.replaceAll(\";$\", \"\");")
         .into("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\").replaceAll(\";$\", \"\");");
@@ -142,5 +140,17 @@ import org.junit.*;
   }
   @Test public void testTips13() {
     leonidasSays.tipper("if($X1) $X2.$N($A);", "when($X1).execute((x) -> $X2.$N($A));", "").tips("if (o == null) o.print(8);");
+  }
+  @Test public void testTips14() {
+    leonidasSays.tipper("$N.c.$N3.$N2()", "", "").tips("a.b.c.d.e()");
+  }
+  @Test public void testTips15() {
+    leonidasSays.tipper("$N.$N2()", "", "").tips("a.b.c.d.e()");
+  }
+  @Test public void testTips16() {
+    leonidasSays.tipper("$M", "", "").tips("a.b.c.d.e()");
+  }
+  @Test public void testTips17() {
+    leonidasSays.tipper("$N($M)", "", "").tips("x(a.b.c.d.e())");
   }
 }
