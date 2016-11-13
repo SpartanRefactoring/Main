@@ -51,10 +51,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override public ASTNode replacement(final InfixExpression x) {
-    gather(x, new ArrayList<Expression>());
-    x.getOperator();
-    extract.allOperands(x);
-    extract.allOperators(x);
+    @SuppressWarnings("unused") final List<Expression> c = gather(x, new ArrayList<Expression>());
+    @SuppressWarnings("unused") final Operator b = x.getOperator();
+    @SuppressWarnings("unused") final List<Expression> allOperands = extract.allOperands(x);
+    @SuppressWarnings("unused") final List<Operator> allOperators = extract.allOperators(x);
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
     for (int ¢ = 0; ¢ < ops.size(); ++¢)
