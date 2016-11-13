@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.utils;
 
 import static il.org.spartan.spartanizer.utils.fault.*;
 
