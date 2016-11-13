@@ -28,12 +28,14 @@ public enum getAll {
     if (i == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    for (final Expression ¢ : step.arguments(i)) {
-      if (¢ instanceof MethodInvocation)
-        $.addAll(invocations((MethodInvocation) ¢));
-      if (!(¢ instanceof MethodInvocation) && ¢ instanceof SimpleName)
-        $.add(¢ + "");
-    }
+    i.accept(new ASTVisitor() {
+      @Override public boolean visit(final SimpleName ¢¢) {
+        if((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
+            && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
+        $.add((¢¢ + ""));
+        return true;
+      }
+    });
     return $;
   }
   /** Get all the methods invoked in m
