@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/** Failing test, originally from {@link NormalizeTest}.
+/** Failing test, originally from {@link normalizeTest}.
  * @since 2016 */
 @SuppressWarnings("static-method") @FixMethodOrder(MethodSorters.NAME_ASCENDING) @Ignore public class Issue436 {
   @Test public void testRenamingWithQualified() {
