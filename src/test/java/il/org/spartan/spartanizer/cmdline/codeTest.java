@@ -15,6 +15,9 @@ import org.junit.*;
   @Test public void fiveWords() {
     Assert.assertEquals(5, code.wc("hello world how are you?"));
   }
+  @Test public void zeroIsReturnedForNull() {
+    Assert.assertEquals(0, code.wc(null));
+  }
   @Test public void twoSpaces() {
     Assert.assertEquals("a a", code.essence("a  a"));
   }
