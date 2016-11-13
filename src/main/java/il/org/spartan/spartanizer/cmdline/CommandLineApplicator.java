@@ -152,7 +152,7 @@ public class CommandLineApplicator extends Applicator {
     });
     listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
   }
-
+  
   private enum message {
     run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
