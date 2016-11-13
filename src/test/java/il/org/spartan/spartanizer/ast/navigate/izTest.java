@@ -142,4 +142,11 @@ public final class izTest {
     assert !iz.astNode(String.valueOf("AAA"));
     assert iz.astNode(wizard.ast("int x = 5;"));
   }
+  @Test public void booleanOrNullLiteralTest() {
+    assert !iz.booleanOrNullLiteral(null);
+    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(NullLiteral.class, wizard.ast("true")));
+    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class, wizard.ast("true")));
+    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class, wizard.ast("false")));
+    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class, wizard.ast("if (c == 5) return 5;")));
+  }
 }
