@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Tests for {@link have}, regarding issue #807
@@ -29,5 +30,13 @@ public final class haveTest {
     expressions.add(into.e("1==1"));
     expressions.add(into.e("2==2"));
     have.booleanLiteral(expressions);
+  }
+  
+  @Test public void booleanLiteralOneExpretionSucsses(){
+    azzert.assertTrue(have.booleanLiteral(into.e("true")));
+  }
+  
+  @Test public void booleanLiteralOneExpretionFail(){
+    azzert.assertFalse(have.booleanLiteral(into.e("x=y")));
   }
 }
