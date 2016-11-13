@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

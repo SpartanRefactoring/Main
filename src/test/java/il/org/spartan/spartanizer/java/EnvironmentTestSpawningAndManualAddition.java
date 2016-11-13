@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings({ "unused" }) public final class EnvironmentTestSpawningAndManualAddition {
+public final class EnvironmentTestSpawningAndManualAddition {
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   Environment ee0 = Environment.genesis();
