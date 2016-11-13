@@ -75,4 +75,32 @@ public final class haveTest {
   @Test public void literalSucssessForString(){
     azzert.assertTrue(have.literal(into.e("\"java is the best!\"")));
   }
+  
+  @Test public void booleanLiteralSeveralExpretionSuccess(){
+    azzert.assertTrue(have.booleanLiteral(into.e("a=5+6"),into.e("false")));
+  }
+  
+  @Test public void booleanLiteralSeveralExpretionFail(){
+    azzert.assertFalse(have.booleanLiteral(into.e("x=y"),into.e("a=5+6")));
+  }
+  
+  @Test public void numericLiteralFailOnString(){
+    azzert.assertFalse(have.numericLiteral(into.e("\"java is the best!\"")));
+  }
+  
+  @Test public void numericLiteralFailOnBoolean(){
+    azzert.assertFalse(have.numericLiteral(into.e("false")));
+  }
+  
+  @Test public void numericLiteralFailOnNotLiteral(){
+    azzert.assertFalse(have.numericLiteral(into.e("a=5+6")));
+  }
+  
+  @Test public void numericLiteralSuccessOnInt(){
+    azzert.assertTrue(have.numericLiteral(into.e("55555"),into.e("x=y")));
+  }
+  
+  @Test public void numericLiteralSuccessOnFloat(){
+    azzert.assertTrue(have.numericLiteral(into.e("c"),into.e("12.99e-13")));
+  }
 }
