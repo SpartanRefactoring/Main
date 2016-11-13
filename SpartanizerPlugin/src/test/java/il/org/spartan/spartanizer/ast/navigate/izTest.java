@@ -14,7 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for class {@link iz}
- * @author Yossi Gil
+ * @author Yossi Gil, Aviad Cohen, Noam Yefet
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class izTest {
@@ -128,5 +128,18 @@ public final class izTest {
     assert iz.infixPlus(core(e("(i+j)")));
     assert !iz.infixMinus(e("(i-j)"));
     assert iz.infixMinus(core(e("(i-j)")));
+  }
+  @Test public void assignmentTest() {
+    assert !iz.assignment(null);
+    assert iz.assignment(findFirst.instanceOf(Assignment.class, wizard.ast("x = 5;")));
+    assert iz.assignment(findFirst.instanceOf(Assignment.class, wizard.ast("int aa = 5; y = 0.2;")));
+    assert !iz.assignment(wizard.ast("if (c == 5) return false;"));
+    assert !iz.assignment(wizard.ast("while (true) { }"));
+  }
+  @Test public void astNodeTest() {
+    assert !iz.astNode(null);
+    assert !iz.astNode(Integer.valueOf(5));
+    assert !iz.astNode(String.valueOf("AAA"));
+    assert iz.astNode(wizard.ast("int x = 5;"));
   }
 }
