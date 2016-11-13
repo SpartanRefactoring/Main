@@ -5,6 +5,10 @@ package il.org.spartan.spartanizer.cmdline;
  * @author Sharon Kuninin
  * @since 2016 */
 public interface code {
+  /** Returns the essence of this code fragment, removing non-executable code
+   * parts.
+   * @param codeFragment code fragment represented as a string
+   * @return essence of the code fragment */
   static String essence(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")//
