@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 16-11-9
  **/
  public class Issue808{
-  @SuppressWarnings("static-method") @Test public void testTerm01() {
-    Expression ex = az.simpleName(wizard.ast("x"));
+  @SuppressWarnings("static-method") @Test public void test01() {
+    Expression ex = az.numberLiteral(wizard.ast("5"));
     assertNotEquals(ex, (new Term(true, duplicate.of(ex))).asExpression());
   }
  }
