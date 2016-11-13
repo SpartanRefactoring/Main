@@ -18,4 +18,7 @@ import org.junit.*;
   @Test public void twoSpaces() {
     Assert.assertEquals("a a", code.essence("a  a"));
   }
+  @Test public void emptyLine() {
+    Assert.assertEquals("", code.essence("        \n"));
+  }
 }
