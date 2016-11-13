@@ -15,7 +15,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Single tipper applicator implementation using modified {@link Trimmer}
  * @author Ori Roth

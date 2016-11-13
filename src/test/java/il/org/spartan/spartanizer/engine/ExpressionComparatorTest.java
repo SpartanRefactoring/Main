@@ -13,10 +13,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for {@link ExpressionComparator}
- * @author Yossi Gil
- * author Assaf Lustig
- * author Dan Abramovich
- * author Arthur Spozhnikov
+ * @author Yossi Gil author Assaf Lustig author Dan Abramovich author Arthur
+ *         Spozhnikov
  * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
@@ -107,10 +105,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     azzert.that(ExpressionComparator.MULTIPLICATION.compare(e("f(a,b,c)"), e("f(a,b,c)")), is(0));
   }
   @Test public void longerFirstTestTrue() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")),is(true));
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")), is(true));
   }
   @Test public void longerFirstTestFalse() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")), is(false));
   }
   @Test public void additionSortTest() {
     azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
@@ -123,8 +121,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
       }
     })), is(true));
   }
-  
-  @Test public void trialTest(){
+  @Test public void trialTest() {
     azzert.that(ExpressionComparator.PRUDENT.sort((new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
@@ -138,5 +135,4 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   private int cs(final String statement) {
     return count.lines(s(statement));
   }
-
 }

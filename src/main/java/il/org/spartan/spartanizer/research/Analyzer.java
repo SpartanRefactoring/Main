@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
