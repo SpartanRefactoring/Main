@@ -253,8 +253,8 @@ public class ReportGenerator {
   
   public class LineWriter implements Consumer<Object>{
     @SuppressWarnings("unused") private String reportName;
-    @Override public void accept(@SuppressWarnings("unused") Object o) {
-//      ReportGenerator.report(reportName)
+    @Override public void accept(@SuppressWarnings("unused") Object __) {
+//      erased 
     }
   }
   

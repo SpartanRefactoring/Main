@@ -6,7 +6,11 @@ import java.text.*;
 import java.util.concurrent.atomic.*;
 
 import org.junit.*;
-
+/** Test class for {@link Linguistic}
+ * @author yonzarecki
+ * author ZivIzhar
+ * author rodedzats
+ * @since 2016-11-13 */
 @SuppressWarnings("static-method") public class LinguisticTest {
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
     assertNull(Linguistic.trimAbsolute(null,Linguistic.TRIM_THRESHOLD,Linguistic.TRIM_SUFFIX));

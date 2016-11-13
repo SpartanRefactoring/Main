@@ -209,7 +209,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
   static boolean deMorgan(final InfixExpression ¢) {
-    return iz.deMorgan(¢.getOperator());
+    return ¢ != null && iz.deMorgan(¢.getOperator());
   }
   /** Check whether an operator is susceptible for applying one of the two de
    * Morgan laws.
