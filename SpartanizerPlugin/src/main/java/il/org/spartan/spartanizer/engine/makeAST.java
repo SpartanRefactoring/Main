@@ -71,7 +71,7 @@ public enum makeAST {
    * @return entire contents of this file, as one string */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-      for (String $ = "", ¢ = r.readLine();; ¢ = r.readLine(), $ += ¢ + System.lineSeparator())
+      for (String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
