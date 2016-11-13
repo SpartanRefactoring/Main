@@ -8,6 +8,11 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
+/** Test class for metrics.java. for more information, please view issue #823
+ * @author Inbal Matityahu
+ * @author Or Troyaner
+ * @author Tom Nof origin-
+ * @since 16-11-04 */
 @SuppressWarnings({ "static-method", "javadoc" }) public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
   private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
@@ -101,5 +106,24 @@ import il.org.spartan.*;
     azzert.that(metrics.vocabulary(x1), is(4));
     azzert.that(metrics.vocabulary(x2), is(4));
     azzert.that(metrics.vocabulary(booleans), is(0));
+  }
+  @Test public void dexterityIsNull() {
+    azzert.that(metrics.dexterity(null), is(0));
+  }
+  @Test public void countMethods() {
+    azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
+  }
+  @Test public void bodySizeTest() {
+    azzert.that(metrics.bodySize(booleans), is(0));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
+  }
+  @Test public void tokensTest() {
+    azzert.that(metrics.tokens(helloWorldQuoted), is(1));
+  }
+  @Test public void condensedSizeTest() {
+    azzert.that(metrics.condensedSize(booleans), is(17));
+    azzert.that(metrics.condensedSize(x1), is(26));
   }
 }
