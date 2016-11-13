@@ -15,7 +15,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 public enum sideEffects {
   MISSING_CASE;
