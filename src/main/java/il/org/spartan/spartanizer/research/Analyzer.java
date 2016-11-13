@@ -41,7 +41,6 @@ public class Analyzer {
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
     for (final File ¢ : inputFiles()) {
-      System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = getCompilationUnit(spartanize(compilationUnit(¢)));
       Classifier classifier = new Classifier();
       cu.accept(classifier);
