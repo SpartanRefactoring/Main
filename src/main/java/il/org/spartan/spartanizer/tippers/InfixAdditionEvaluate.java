@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
