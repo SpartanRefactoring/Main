@@ -64,4 +64,21 @@ public final class haveTest {
   @Test public void booleanLiteralOneExpretionFail(){
     azzert.assertFalse(have.booleanLiteral(into.e("x=y")));
   }
+  
+  @Test public void literalFailOnAssigment(){
+    azzert.assertFalse(have.literal(into.e("x=y")));
+  }
+  
+  @Test public void literalFailOnComparison(){
+    azzert.assertFalse(have.literal(into.e("value1 == value2")));
+  }
+  
+  @Test public void literalSucssessForNumericalLit(){
+    azzert.assertTrue(have.literal(into.e("5")));
+  }
+  
+  
+  @Test public void literalSucssessForString(){
+    azzert.assertTrue(have.literal(into.e("\"java is the best!\"")));
+  }
 }
