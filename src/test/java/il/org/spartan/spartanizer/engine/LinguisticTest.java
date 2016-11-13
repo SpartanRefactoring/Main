@@ -17,4 +17,8 @@ import org.junit.*;
     assertEquals((sb + "").substring(0, (sb + "").length() - 4) + Linguistic.TRIM_SUFFIX,
         Linguistic.trimAbsolute((sb + ""), Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
   }
+  
+  @Test public void testTrimLeavesShortStringsAsIs() {
+    assertEquals("Hello World\n Hello Technion\n ",Linguistic.trim("Hello World\n Hello Technion\n "));
+  }
 }
