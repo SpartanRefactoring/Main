@@ -24,11 +24,11 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<String> invocations(final MethodInvocation i) {
-    if (i == null)
+  public static Set<String> invocations(final MethodInvocation ¢) {
+    if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    i.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName ¢¢) {
         if((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
             && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
