@@ -21,6 +21,6 @@ public interface code {
    * @param $ the string its words are being counted
    * @return the number of words the given string contains */
   static int wc(final String $) {
-    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
+    return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 }
