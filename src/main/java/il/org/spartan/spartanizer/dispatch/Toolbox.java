@@ -41,6 +41,7 @@ public class Toolbox {
         }
     }
   };
+  
   @SuppressWarnings({ "synthetic-access",
       "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
         static final long serialVersionUID = -4821340356894435723L;
