@@ -232,6 +232,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   static boolean filter(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
+  
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
