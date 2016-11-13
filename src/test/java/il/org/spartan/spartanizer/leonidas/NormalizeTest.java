@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.util.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
