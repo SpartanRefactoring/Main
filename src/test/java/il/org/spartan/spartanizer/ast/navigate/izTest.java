@@ -215,4 +215,23 @@ public final class izTest {
     assert iz.comparison(e("x!=5"));
     assert !iz.comparison(e("x + 5"));
   }
+  @Test public void conditionalOrTest() {
+    final Expression e1 = null;
+    final InfixExpression e2 = null;
+    assert !iz.conditionalOr(e1);
+    assert !iz.conditionalOr(e2);
+    assert iz.conditionalOr(e("true || false"));
+    assert !iz.conditionalOr(e("x!=5"));
+  }
+  @Test public void emptyStatementTest() {
+    assert !iz.emptyStatement(null);
+    assert iz.emptyStatement(findFirst.instanceOf(EmptyStatement.class, wizard.ast(";")));
+    assert !iz.emptyStatement(findFirst.instanceOf(Statement.class, wizard.ast("a = 5;")));
+  }
+  @Test public void deMorganTest() {
+    final InfixExpression e = null;
+    assert !iz.deMorgan(e);
+    assert iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("true || false")));
+    assert !iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("(a == 5)")));
+  }
 }
