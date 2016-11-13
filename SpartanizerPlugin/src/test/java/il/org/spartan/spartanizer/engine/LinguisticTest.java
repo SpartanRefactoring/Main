@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.*;
 import org.junit.*;
 
 /** Test class for {@link Linguistic}
- * @author yonzarecki author ZivIzhar author rodedzats
+ * @author yonzarecki 
+ * @author ZivIzhar 
+ * @author rodedzats
  * @since 2016-11-13 */
 @SuppressWarnings("static-method") public class LinguisticTest {
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
