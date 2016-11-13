@@ -23,12 +23,12 @@ public class Generic$Applicator {
   private static String fqn_base = "org.eclipse.jdt.core.dom.";
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(String... ss) {
-    List<Class<? extends ASTNode>> $ = new ArrayList<>();
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
+    final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
-      for (String ¢ : ss)
+      for (final String ¢ : ss)
         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-    } catch (ClassNotFoundException x) {
+    } catch (final ClassNotFoundException x) {
       x.printStackTrace();
     }
     return as.list($); // useless?
@@ -36,7 +36,7 @@ public class Generic$Applicator {
   public Generic$Applicator() {
     selectedNodeTypes = setAllNodeTypes();
   }
-  public Generic$Applicator(String[] clazzes) {
+  public Generic$Applicator(final String[] clazzes) {
     if (clazzes == null)
       selectedNodeTypes = setAllNodeTypes();
     else {
@@ -49,8 +49,8 @@ public class Generic$Applicator {
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
   private static List<String> setAllTipperGroups() {
-    List<String> $ = new ArrayList<>();
-    for (TipperGroup ¢ : TipperGroup.values())
+    final List<String> $ = new ArrayList<>();
+    for (final TipperGroup ¢ : TipperGroup.values())
       $.add(¢.name());
     return $;
   }
@@ -88,14 +88,14 @@ public class Generic$Applicator {
     );
   }
   public static void main(final String[] args) {
-    for (Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
+    for (final Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
-    for (String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
+    for (final String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
       System.out.println(¢);
   }
   private static List<String> setSelectedTipperGroups(final String... ss) {
-    List<String> $ = new ArrayList<>();
-    for (String ¢ : ss)
+    final List<String> $ = new ArrayList<>();
+    for (final String ¢ : ss)
       $.add(¢);
     return $;
   }
@@ -119,8 +119,8 @@ public class Generic$Applicator {
     return $;
   }
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    Tipper<N> $ = toolbox.firstTipper(¢);
-    TipperGroup g = $.tipperGroup();
+    final Tipper<N> $ = toolbox.firstTipper(¢);
+    final TipperGroup g = $.tipperGroup();
     if (!selectedTipperGroups.contains(g.name()))
       return null;
     System.out.println("selected tipper: " + g.name());

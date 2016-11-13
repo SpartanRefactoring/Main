@@ -32,7 +32,7 @@ public enum getAll {
       @Override public boolean visit(final SimpleName ¢¢) {
         if ((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
             && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
-          $.add((¢¢ + ""));
+          $.add(¢¢ + "");
         return true;
       }
     });

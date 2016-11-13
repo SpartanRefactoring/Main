@@ -111,7 +111,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")), is(false));
   }
   @Test public void additionSortTest() {
-    azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
+    azzert.that(ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("a"));
@@ -119,10 +119,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
         add(e("a+b+c"));
         add(e("f"));
       }
-    })), is(true));
+    }), is(true));
   }
   @Test public void trialTest() {
-    azzert.that(ExpressionComparator.PRUDENT.sort((new ArrayList<Expression>() {
+    azzert.that(ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("e"));
@@ -130,7 +130,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
         add(e("a"));
         add(e("f"));
       }
-    })), is(false));
+    }), is(false));
   }
   private int cs(final String statement) {
     return count.lines(s(statement));
