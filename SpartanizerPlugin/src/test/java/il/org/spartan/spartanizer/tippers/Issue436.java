@@ -7,6 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.util.*;
 
 /** Failing test, originally from {@link NormalizeTest}.
  * @since 2016 */
