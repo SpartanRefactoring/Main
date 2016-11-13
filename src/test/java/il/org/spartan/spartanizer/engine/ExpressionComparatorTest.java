@@ -113,12 +113,27 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
   }
   @Test public void additionSortTest() {
-    List<Expression> xs = new ArrayList<> ();
-    xs.add(e("a"));
-    xs.add(e("d+b"));
-    xs.add(e("a+b+c"));
-    xs.add(e("f"));
-    azzert.that( ExpressionComparator.ADDITION.sort(xs),is(true));
+    azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
+      static final long serialVersionUID = 1L;
+      {
+        add(e("a"));
+        add(e("d+b"));
+        add(e("a+b+c"));
+        add(e("f"));
+      }
+    })), is(true));
+  }
+  
+  @Test public void trialTest(){
+    azzert.that(ExpressionComparator.PRUDENT.sort((new ArrayList<Expression>() {
+      static final long serialVersionUID = 1L;
+      {
+        add(e("e"));
+        add(e("d"));
+        add(e("a"));
+        add(e("f"));
+      }
+    })), is(false));
   }
   private int cs(final String statement) {
     return count.lines(s(statement));
