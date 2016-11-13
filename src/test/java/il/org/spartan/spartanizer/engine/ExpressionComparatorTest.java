@@ -106,6 +106,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void twoFunctionMultiplication() {
     azzert.that(ExpressionComparator.MULTIPLICATION.compare(e("f(a,b,c)"), e("f(a,b,c)")), is(0));
   }
+  @Test public void longerFirstTestTrue2() {
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("h(1)+(f(1,2,3)+g(2,3,2,3,2,32))")),is(false));
+  }
   @Test public void longerFirstTestTrue() {
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")),is(true));
   }
