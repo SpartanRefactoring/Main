@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Nov 1, 2016 */
 public interface AnalyzerOptions {
   Map<String, Map<String, String>> options = new HashMap<>();
+  Bool verbose = new Bool();
 
   static String get(final String cls, final String property) {
     return options.get(cls) == null ? null : options.get(cls).get(property);
@@ -30,11 +31,16 @@ public interface AnalyzerOptions {
   String INPUT_DIR = "inputDir";
 
   static void tickNP() {
+    if (!verbose.inner)
+      return;
     ++counter.inner;
     if (counter.inner == 90) {
       counter.inner = 0;
       System.out.println("");
     }
     System.out.print(".");
+  }
+  static void setVerbose() {
+    verbose.inner = true;
   }
 }
