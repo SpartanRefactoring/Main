@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -11,6 +12,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil
+ * author Assaf Lustig
+ * author Dan Abramovich
+ * author Arthur Spozhnikov
  * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
@@ -100,7 +104,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void twoFunctionMultiplication() {
     azzert.that(ExpressionComparator.MULTIPLICATION.compare(e("f(a,b,c)"), e("f(a,b,c)")), is(0));
   }
+  @Test public void longerFirstTestTrue() {
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")),is(true));
+  }
+  @Test public void longerFirstTestFalse() {
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
+  }
   private int cs(final String statement) {
     return count.lines(s(statement));
   }
+
 }
