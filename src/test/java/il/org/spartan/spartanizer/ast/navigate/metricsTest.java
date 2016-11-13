@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import java.util.*;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -11,10 +13,12 @@ import il.org.spartan.*;
 /** Test class for metrics.java. for more information, please view issue #823
  * @author Inbal Matityahu
  * @author Or Troyaner
- * @author Tom Nof origin-
+ * @author Tom Nof 
  * @since 16-11-04 */
 @SuppressWarnings({ "static-method", "javadoc" }) public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
+  private final String helloWorldChars = "\\*Hello, World!\\n*\"";
+  private final String helloCommented = "\\/*Hello*/";
   private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
   private final Expression booleans = e("true||false||true");
   private final Expression helloWorld = e("f(" + helloWorldQuoted + ")");
@@ -121,9 +125,24 @@ import il.org.spartan.*;
   }
   @Test public void tokensTest() {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
+    azzert.that(metrics.tokens(helloWorldChars), is(8));
+    azzert.that(metrics.tokens(helloCommented), is(0));
   }
+
   @Test public void condensedSizeTest() {
     azzert.that(metrics.condensedSize(booleans), is(17));
     azzert.that(metrics.condensedSize(x1), is(26));
   }
+  
+  @Test public void horizontalComplexityTest() {
+    Statement s = null;
+    List<Statement> st = null;
+    azzert.that(metrics.horizontalComplexity(0, s), is(0));
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    st = new ArrayList<>();
+    st.add(s);
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+
+  }
+  //horizontalComplexity
 }
