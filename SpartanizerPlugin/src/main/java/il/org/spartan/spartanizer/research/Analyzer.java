@@ -27,7 +27,7 @@ public class Analyzer {
     parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
-    String analysis = getProperty("analysis");
+    final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
     else if ("classify".equals(analysis))
@@ -43,7 +43,7 @@ public class Analyzer {
     for (final File ¢ : inputFiles()) {
       System.out.println("\nnow: " + ¢.getPath());
       final ASTNode cu = getCompilationUnit(spartanize(compilationUnit(¢)));
-      Classifier classifier = new Classifier();
+      final Classifier classifier = new Classifier();
       cu.accept(classifier);
       classifier.summarize();
     }

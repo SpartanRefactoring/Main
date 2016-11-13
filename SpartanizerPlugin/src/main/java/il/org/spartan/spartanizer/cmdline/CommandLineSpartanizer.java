@@ -84,7 +84,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   public void setClazzes(final String[] ¢) {
     clazzes = ¢;
   }
-  public void setTipperGroups(String[] ¢) {
+  public void setTipperGroups(final String[] ¢) {
     tipperGroups = ¢;
   }
 }
