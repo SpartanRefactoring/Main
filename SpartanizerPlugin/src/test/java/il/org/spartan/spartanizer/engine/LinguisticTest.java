@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.text.*;
 import java.util.concurrent.atomic.*;
-import java.util.function.*;
 
 import org.junit.*;
 
