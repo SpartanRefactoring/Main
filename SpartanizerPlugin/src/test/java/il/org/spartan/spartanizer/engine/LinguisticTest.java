@@ -58,4 +58,9 @@ import org.junit.*;
     assertEquals("one church", Linguistic.plurales("church", 1));
     assertEquals("2 churches", Linguistic.plurales("church", 2));
   }
+  @Test public void testUnknownIfNull(){
+    assertEquals("1", Linguistic.unknownIfNull(Integer.valueOf(1)));
+    assertEquals("1", Linguistic.unknownIfNull(new AtomicInteger(1)));
+    assertEquals(Linguistic.UNKNOWN, Linguistic.unknownIfNull(null));
+  }
 }
