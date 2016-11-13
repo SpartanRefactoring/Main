@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.engine;
 
 import static org.junit.Assert.*;
 
+import java.text.*;
+
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class LinguisticTest {
@@ -20,5 +22,9 @@ import org.junit.*;
   
   @Test public void testTrimLeavesShortStringsAsIs() {
     assertEquals("Hello World\n Hello Technion\n ",Linguistic.trim("Hello World\n Hello Technion\n "));
+  }
+  
+  @Test public void testTimeCorrect() {
+    assertEquals(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0), Linguistic.time(0));
   }
 }
