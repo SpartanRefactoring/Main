@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
