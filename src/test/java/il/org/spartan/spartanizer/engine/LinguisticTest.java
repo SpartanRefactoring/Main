@@ -50,4 +50,8 @@ import org.junit.*;
     assertEquals("one church", Linguistic.plurales("church", new AtomicInteger(1)));
     assertEquals("2 churches", Linguistic.plurales("church", new AtomicInteger(2)));
   }
+  @Test public void testPluralsInt() {
+    assertEquals("one house", Linguistic.plurals("house", 1));
+    assertEquals("2 houses", Linguistic.plurals("house", 2));
+  }
 }
