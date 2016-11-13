@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -12,6 +13,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -73,5 +75,23 @@ public class TrimmerLogTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     assert u.getJavaElement() == null;
+  }
+  
+  /** Tests of {@link cmdline.TrimmerLog}
+   * @author AnnaBel7
+   * @author michalcohen
+   * @since Nov 10, 2016 */
+
+  @Test public void a() {
+    TrimmerLog.setMaxApplications(50);
+    assertEquals(50, TrimmerLog.getMaxApplications());
+  }
+  @Test public void b() {
+    TrimmerLog.setMaxTips(50);
+    assertEquals(50, TrimmerLog.getMaxTips());
+  }
+  @Test public void c() {
+    TrimmerLog.setMaxVisitations(50);
+    assertEquals(50, TrimmerLog.getMaxVisitations());
   }
 }
