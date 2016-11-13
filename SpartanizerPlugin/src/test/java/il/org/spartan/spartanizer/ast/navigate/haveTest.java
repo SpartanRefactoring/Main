@@ -18,42 +18,36 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({"static-method","javadoc"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class haveTest {
+  
+  public List<Expression> ExpressionListMaker(String[] exps) {
+    List<Expression> $ = new LinkedList<>();
+    for(String e : exps)
+      $.add(into.e(e));
+    return $;
+
+  }
+  
   @Test public void booleanLiteralTestTrue() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("1==1"));
-    expressions.add(into.e("2==2"));
-    expressions.add(into.e("true"));
-    azzert.assertTrue(have.booleanLiteral(expressions));
+    azzert.assertTrue(have.booleanLiteral(ExpressionListMaker(new String[] {"1==1","2==2","true"}))); 
   }
   @Test public void booleanLiteralTestFalse() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("1==1"));
-    expressions.add(into.e("2==2"));
-    azzert.assertFalse(have.booleanLiteral(expressions));
+    azzert.assertFalse(have.booleanLiteral(ExpressionListMaker(new String[] {"1==1","2==2"}))); 
   }
 
   @Test public void booleanFalseLiteralTestTrue() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("false"));
-    azzert.assertTrue(have.falseLiteral(expressions));
+    azzert.assertTrue(have.falseLiteral(ExpressionListMaker(new String[] {"false"})));
   }
   
   @Test public void booleanFalseLiteralTestFalse() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("true"));
-    azzert.assertFalse(have.falseLiteral(expressions));
+    azzert.assertFalse(have.falseLiteral(ExpressionListMaker(new String[] {"true"})));
   }
   
   @Test public void hasLiteralTestTrue() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("2"));
-    azzert.assertTrue(have.literal(expressions));
+    azzert.assertTrue(have.literal(ExpressionListMaker(new String[] {"2"})));
   }
   
   @Test public void hasLiteralTestFalse() {
-    List<Expression> expressions = new LinkedList<>();
-    expressions.add(into.e("1==2"));
-    azzert.assertFalse(have.literal(expressions));
+    azzert.assertFalse(have.literal(ExpressionListMaker(new String[] {"1==2"})));
   }
   
   
