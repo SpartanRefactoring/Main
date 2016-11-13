@@ -285,7 +285,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
   static boolean final¢(final VariableDeclarationStatement ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
+    return ¢ != null && (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands

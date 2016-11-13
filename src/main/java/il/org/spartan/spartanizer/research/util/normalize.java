@@ -9,14 +9,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class normalize {
   public static String testcase(final String raw, final int name, final int issue) {
-    return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
+    return wrapTest(name, issue, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
   public static String codeFragment(final String raw) {
     return format.code(shortenIdentifiers(raw));
@@ -43,13 +42,6 @@ public class normalize {
                 : "Z".equals(old) ? "X1"
                     : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
                         : String.valueOf(old.charAt(0)) + String.valueOf(old.charAt(1) + 1);
-  }
-  /** maybe i should use
-   * http://stackoverflow.com/questions/2876204/java-code-formating instead
-   * @param ¢ string to be eliminated
-   * @return string without junk */
-  private static String eliminateSpaces(final String ¢) {
-    return Essence.of(¢);
   }
   /** Separate the string to lines
    * @param ¢ string to linify
@@ -80,20 +72,19 @@ public class normalize {
         r.replace(node, lit, null);
         return super.visit(node);
       }
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
-          final String name = ((Name) ¢).getFullyQualifiedName();
-          if (!renaming.containsKey(name))
-            if (name.charAt(0) < 'A' || name.charAt(0) > 'Z') {
-              id.set(renderIdentifier(id.get()));
-              renaming.put(name, id.get());
-            } else {
-              Id.set(renderIdentifier(Id.get()));
-              renaming.put(name, Id.get());
-            }
-          r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
-        }
-        return true;
+      @Override public void preVisit(final ASTNode ¢) {
+        if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
+          return;
+        final String name = ((Name) ¢).getFullyQualifiedName();
+        if (!renaming.containsKey(name))
+          if (name.charAt(0) < 'A' || name.charAt(0) > 'Z') {
+            id.set(renderIdentifier(id.get()));
+            renaming.put(name, id.get());
+          } else {
+            Id.set(renderIdentifier(Id.get()));
+            renaming.put(name, Id.get());
+          }
+        r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
       }
     });
     try {
