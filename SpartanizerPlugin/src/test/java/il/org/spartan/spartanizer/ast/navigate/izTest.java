@@ -159,4 +159,17 @@ public final class izTest {
   @Test public void blockRequiredInReplacementNullTest() {
     assert !iz.blockRequiredInReplacement(null, null);
   }
+  @Test public void castExpressionTest() {
+    assert !iz.castExpression(null);
+    assert iz.castExpression(findFirst.instanceOf(CastExpression.class, wizard.ast("int x = (Integer) y;")));
+    assert !iz.castExpression(findFirst.instanceOf(CastExpression.class, wizard.ast("int x;")));
+  }
+  @Test public void postfixExpressionTest() {
+    assert !iz.postfixExpression(null);
+    assert iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class, wizard.ast("i++;")));
+    assert !iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class, wizard.ast("public static void main() { }")));
+  }
+  @Test public void rightOfAssignmentTest() {
+    assert !iz.rightOfAssignment(null);
+  }
 }
