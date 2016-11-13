@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(//
@@ -201,8 +202,6 @@ public final class SingleTipperApplicator {
           if (x != null) {
             final Tip make = x.tip(n, exclude);
             if (make != null) {
-              if (LogManager.isActive())
-                LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
               make.go(rewrite, null);
             }
           }

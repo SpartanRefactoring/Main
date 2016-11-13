@@ -8,12 +8,12 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -88,25 +88,27 @@ public class leonidasSays {
       return $$;
     }
     private static void azzertEquals(final String s, final Document d) {
+      String actual = null;
       switch (GuessedContext.find(s)) {
         case COMPILATION_UNIT_LOOK_ALIKE:
-          assertEquals(s, d.get());
+          actual = d.get();
           break;
         case EXPRESSION_LOOK_ALIKE:
-          assertEquals(s, d.get().substring(23, d.get().length() - 3));
+          actual = d.get().substring(23, d.get().length() - 3);
           break;
         case METHOD_LOOKALIKE:
-          assertEquals(s, d.get().substring(9, d.get().length() - 2));
+          actual = d.get().substring(9, d.get().length() - 2);
           break;
         case OUTER_TYPE_LOOKALIKE:
-          assertEquals(s, d.get());
+          actual = d.get();
           break;
         case STATEMENTS_LOOK_ALIKE:
-          assertEquals(s, d.get().substring(16, d.get().length() - 2));
+          actual = d.get().substring(15, d.get().length() - 1);
           break;
         default:
           break;
       }
+      assertEquals(Essence.of(s), Essence.of(actual));
     }
     private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
       switch (GuessedContext.find(s)) {
