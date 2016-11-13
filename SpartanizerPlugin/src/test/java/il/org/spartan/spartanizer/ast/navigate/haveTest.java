@@ -42,6 +42,14 @@ public final class haveTest {
     azzert.assertFalse(have.falseLiteral(ExpressionListMaker(new String[] {"true"})));
   }
   
+  @Test public void booleanTrueLiteralTestTrue() {
+    azzert.assertTrue(have.trueLiteral(ExpressionListMaker(new String[] {"true"})));
+  }
+  
+  @Test public void booleanTrueLiteralTestFalse() {
+    azzert.assertFalse(have.trueLiteral(ExpressionListMaker(new String[] {"false"})));
+  }
+  
   @Test public void hasLiteralTestTrue() {
     azzert.assertTrue(have.literal(ExpressionListMaker(new String[] {"2"})));
   }
@@ -51,15 +59,15 @@ public final class haveTest {
   }
   
   
-  @Test public void booleanLiteralOneExpretionSucsses(){
+  @Test public void booleanLiteralOneExpretionSuccess(){
     azzert.assertTrue(have.booleanLiteral(into.e("true")));
   }
   
-  @Test public void booleanLiteralOneExpretionFail(){
+  @Test public void booleanLiteralOneExpressionFail(){
     azzert.assertFalse(have.booleanLiteral(into.e("x=y")));
   }
   
-  @Test public void literalFailOnAssigment(){
+  @Test public void literalFailOnAssignment(){
     azzert.assertFalse(have.literal(into.e("x=y")));
   }
   
@@ -67,7 +75,7 @@ public final class haveTest {
     azzert.assertFalse(have.literal(into.e("value1 == value2")));
   }
   
-  @Test public void literalSucssessForNumericalLit(){
+  @Test public void literalSuccessForNumericalLit(){
     azzert.assertTrue(have.literal(into.e("5")));
   }
   
@@ -75,4 +83,12 @@ public final class haveTest {
   @Test public void literalSucssessForString(){
     azzert.assertTrue(have.literal(into.e("\"java is the best!\"")));
   }
+  
+  @Test public void literalSuccessForNumericalLit2(){
+    azzert.assertTrue(have.numericLiteral(into.e("5"),into.e("7"),into.e("7")));
+  }
+  @Test public void literalFailForNumericalLit2(){
+    azzert.assertFalse(have.numericLiteral(into.e("true"),into.e("7==7"),into.e("x")));
+  }
+  
 }
