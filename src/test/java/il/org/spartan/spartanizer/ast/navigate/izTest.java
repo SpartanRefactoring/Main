@@ -193,4 +193,16 @@ public final class izTest {
     assert iz.thisOrNull(e("this"));
     assert !iz.thisOrNull(e("i+5"));
   }
+  @Test public void arrayInitializerTest() {
+    assert !iz.arrayInitializer(null);
+    assert iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class, wizard.ast("Integer arr[] = {2, 5, 8 };")));
+    assert !iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class, wizard.ast("Integer arr[];")));
+  }
+  @Test public void comparisonTest() {
+    final Expression e = null;
+    assert !iz.comparison(e);
+    assert iz.comparison(e("x==5"));
+    assert iz.comparison(e("x!=5"));
+    assert !iz.comparison(e("x + 5"));
+  }
 }
