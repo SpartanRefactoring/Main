@@ -28,9 +28,15 @@ import org.junit.*;
     assertEquals(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0), Linguistic.time(0));
   }
   
-  @Test public void testFirstPlural() {
+  @Test public void testPluralInteger() {
     assertEquals(Linguistic.UNKNOWN + " houses",Linguistic.plurals("house", (Integer)null));
     assertEquals("one house",Linguistic.plurals("house", Integer.valueOf(1)));
     assertEquals("2 houses",Linguistic.plurals("house", Integer.valueOf(2)));
+  }
+  
+  @Test public void testPluralesInteger() {
+    assertEquals(Linguistic.UNKNOWN + " churches",Linguistic.plurales("church", (Integer)null));
+    assertEquals("one church",Linguistic.plurales("church", Integer.valueOf(1)));
+    assertEquals("2 churches",Linguistic.plurales("church", Integer.valueOf(2)));
   }
 }
