@@ -18,6 +18,7 @@ import org.junit.*;
     assert $.inner() == Integer.valueOf(4);
     $.inner += 3;
     assert $.inner() == Integer.valueOf(7);
+    
 
   }
 }
