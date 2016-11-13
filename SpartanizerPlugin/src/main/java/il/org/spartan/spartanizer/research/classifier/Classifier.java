@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.research.*;
+
 /** @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
@@ -12,14 +14,14 @@ public class Classifier extends ASTVisitor {
   static final Scanner input = new Scanner(System.in);
 
   @Override public boolean visit(ForStatement node) {
-    System.out.println(node);
+    System.out.println(normalize.codeFragment(node + ""));
     String classification = input.nextLine();
     forLoops.putIfAbsent(classification, new ArrayList<>());
     forLoops.get(classification).add(node);
     return super.visit(node);
   }
   @Override public boolean visit(EnhancedForStatement node) {
-    System.out.println(node);
+    System.out.println(normalize.codeFragment(node + ""));
     String classification = input.nextLine();
     enhancedForLoops.putIfAbsent(classification, new ArrayList<>());
     enhancedForLoops.get(classification).add(node);
