@@ -73,21 +73,21 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // makeAST.CLASS_BODY_DECLARATIONS.from(output);
-    Reports.printFile(input + "", "before");
-    Reports.printFile(output, "after");
+    ReportGenerator.printFile(input + "", "before");
+    ReportGenerator.printFile(output, "after");
     computeMetrics(input, outputASTNode);
     return false;
   }
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    Reports.summaryFileName("metrics");
-    Reports.name(input);
-    Reports.writeMetrics(input, output, null);
-    Reports.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    Reports.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
-    Reports.writePerc(input, output, "δ ");
+    ReportGenerator.summaryFileName("metrics");
+    ReportGenerator.name(input);
+    ReportGenerator.writeMetrics(input, output, null);
+    ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
+    ReportGenerator.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
+    ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
-    Reports.nl("metrics");
+    ReportGenerator.nl("metrics");
   }
   /** @param input
    * @return */
@@ -232,6 +232,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   static boolean filter(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
+  
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }

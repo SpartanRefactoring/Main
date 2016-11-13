@@ -16,23 +16,23 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Nov 7, 2016 */
 public class Issue778 {
   @SuppressWarnings("static-method") @Test public void test0() {
-    collect.methods(null);
+    getAll2.methods(null);
   }
   @SuppressWarnings("static-method") @Test public void test1() {
-    collect.methods(null);
+    @SuppressWarnings("unused") final List<MethodDeclaration> lst = getAll2.methods(null);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test2() {
-    assertEquals(collect.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
+    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test3() {
-    assertEquals(collect.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
+    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
   }
   @SuppressWarnings({ "static-method" }) @Test public void test4() {
-    assertEquals(collect
+    assertEquals(getAll2
         .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(), 3);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test5() {
-    assertEquals(collect
+    assertEquals(getAll2
         .methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
         .size(), 3);
   }
