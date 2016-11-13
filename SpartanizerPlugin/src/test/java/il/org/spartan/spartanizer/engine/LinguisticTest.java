@@ -27,4 +27,10 @@ import org.junit.*;
   @Test public void testTimeCorrect() {
     assertEquals(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0), Linguistic.time(0));
   }
+  
+  @Test public void testFirstPlural() {
+    assertEquals(Linguistic.UNKNOWN + " houses",Linguistic.plurals("house", (Integer)null));
+    assertEquals("one house",Linguistic.plurals("house", Integer.valueOf(1)));
+    assertEquals("2 houses",Linguistic.plurals("house", Integer.valueOf(2)));
+  }
 }
