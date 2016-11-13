@@ -172,4 +172,25 @@ public final class izTest {
   @Test public void rightOfAssignmentTest() {
     assert !iz.rightOfAssignment(null);
   }
+  @Test public void singletonStatementTest() {
+    assert !iz.singletonStatement(null);
+    assert iz.singletonStatement(findFirst.instanceOf(Statement.class, wizard.ast("i = 6;")));
+    assert !iz.singletonStatement(findFirst.instanceOf(Statement.class, wizard.ast("i = 6; j = 9;")));
+  }
+  @Test public void singletonThenTest() {
+    assert !iz.singletonThen(null);
+    assert iz.singletonThen(findFirst.instanceOf(IfStatement.class, wizard.ast("if (true) { i = 6; }")));
+    assert !iz.singletonThen(findFirst.instanceOf(IfStatement.class, wizard.ast("if (true) { i = 6; j = 9; }")));
+  }
+  @Test public void stringLiteralTest() {
+    assert !iz.stringLiteral(null);
+    assert iz.stringLiteral(findFirst.instanceOf(StringLiteral.class, wizard.ast("\"5\"")));
+    assert !iz.stringLiteral(findFirst.instanceOf(StringLiteral.class, wizard.ast("false")));
+  }
+  @Test public void thisOrNullTest() {
+    assert !iz.thisOrNull(null);
+    assert iz.thisOrNull(e("null"));
+    assert iz.thisOrNull(e("this"));
+    assert !iz.thisOrNull(e("i+5"));
+  }
 }
