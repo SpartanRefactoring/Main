@@ -42,7 +42,6 @@ public class ASTutils {
     }
   }
   public static String wrapCode(final String ¢) {
-    
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         return ¢;

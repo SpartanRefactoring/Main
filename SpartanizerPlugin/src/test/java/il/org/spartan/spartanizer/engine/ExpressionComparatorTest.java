@@ -13,10 +13,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for {@link ExpressionComparator}
- * @author Yossi Gil
- * author Assaf Lustig
- * author Dan Abramovich
- * author Arthur Spozhnikov
+ * @author Yossi Gil author Assaf Lustig author Dan Abramovich author Arthur
+ *         Spozhnikov
  * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
@@ -107,50 +105,34 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     azzert.that(ExpressionComparator.MULTIPLICATION.compare(e("f(a,b,c)"), e("f(a,b,c)")), is(0));
   }
   @Test public void longerFirstTestTrue() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")),is(true));
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")), is(true));
   }
   @Test public void longerFirstTestFalse() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
+    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")), is(false));
   }
-  @Test public void longerFirstEqualLengthTest() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+3")),is(false));
-  }
-  
-  @Test public void moreArgumentsTrueTest(){
-    azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)")), is(true));
-  }
-  
-  @Test public void moreArgumentsFalseTest(){
-   azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)")), is(false));
-  }
-  
   @Test public void additionSortTest() {
-    azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
+    azzert.that(ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
-        add(e("-a"));
+        add(e("a"));
         add(e("d+b"));
         add(e("a+b+c"));
         add(e("f"));
       }
-    })), is(true));
+    }), is(true));
   }
-  
-  @Test public void prudentSortTest(){
-    azzert.that(ExpressionComparator.PRUDENT.sort((new ArrayList<Expression>() {
+  @Test public void trialTest() {
+    azzert.that(ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
-        add(e("a"));
+        add(e("e"));
         add(e("d"));
         add(e("a"));
         add(e("f"));
       }
-    })), is(false));
+    }), is(false));
   }
-  
-  
   private int cs(final String statement) {
     return count.lines(s(statement));
   }
-
 }
