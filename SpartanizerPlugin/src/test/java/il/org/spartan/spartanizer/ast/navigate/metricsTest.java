@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for metrics.java. for more information, please view issue #823
  * @author Inbal Matityahu
@@ -135,14 +136,19 @@ import il.org.spartan.*;
   }
   
   @Test public void horizontalComplexityTest() {
+    //Test a null list and a null Statement
     Statement s = null;
     List<Statement> st = null;
     azzert.that(metrics.horizontalComplexity(0, s), is(0));
     azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    // Test a list with one null statement
     st = new ArrayList<>();
     st.add(s);
     azzert.that(metrics.horizontalComplexity(0, st), is(0));
-
+    // Test a list with a real statement
+    Statement sf = az.statement(wizard.ast("if(true) return 1;"));
+    st.add(sf);
+    azzert.that(metrics.horizontalComplexity(0, st), is(13446));
   }
   //horizontalComplexity
 }
