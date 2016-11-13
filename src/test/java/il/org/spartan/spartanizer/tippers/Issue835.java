@@ -27,4 +27,7 @@ public class Issue835 {
   @Test public void descriptionPrintBlockNotNull() {
     assertNotNull(t.description(az.block(wizard.ast("{int x;}"))));
   }
+  @SuppressWarnings("static-method") @Test @Ignore public void emptyBlock() {
+    assertEquals(az.block(wizard.ast("{}")).statements().size(), 0);
+  }
 }
