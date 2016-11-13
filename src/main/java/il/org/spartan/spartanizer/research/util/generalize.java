@@ -39,26 +39,26 @@ public class generalize {
     final ASTRewrite r = ASTRewrite.create(ast);
     System.out.println(cu);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(StringLiteral node) {
-        StringLiteral lit = ast.newStringLiteral();
+      @Override public boolean visit(final StringLiteral node) {
+        final StringLiteral lit = ast.newStringLiteral();
         lit.setLiteralValue("str");
         r.replace(node, lit, null);
         return super.visit(node);
       }
-      @Override public boolean visit(@SuppressWarnings("unused") ImportDeclaration __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ImportDeclaration __) {
         return false;
       }
-      @Override public boolean visit(@SuppressWarnings("unused") PackageDeclaration __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final PackageDeclaration __) {
         return false;
       }
-      @Override public boolean visit(SimpleName node) {
+      @Override public boolean visit(final SimpleName node) {
         final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
         r.replace(node, ast.newSimpleName(renaming.get(name)), null);
         return super.visit(node);
       }
-      @Override public boolean visit(QualifiedName node) {
+      @Override public boolean visit(final QualifiedName node) {
         final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
