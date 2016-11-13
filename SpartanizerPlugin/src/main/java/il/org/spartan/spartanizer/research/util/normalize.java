@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.util;
 
 import java.util.*;
 
@@ -10,12 +10,16 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class TestFactory {
+public class normalize {
   public static String testcase(final String raw, final int name, final int issue) {
     return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
+  }
+  public static String codeFragment(final String raw) {
+    return format.code(shortenIdentifiers(raw));
   }
   /** escapes all "s
    * @param ¢
@@ -70,6 +74,12 @@ public class TestFactory {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
+      @Override public boolean visit(StringLiteral node) {
+        StringLiteral lit = ast.newStringLiteral();
+        lit.setLiteralValue("str");
+        r.replace(node, lit, null);
+        return super.visit(node);
+      }
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
           final String name = ((Name) ¢).getFullyQualifiedName();
@@ -98,7 +108,8 @@ public class TestFactory {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(TestFactory.testcase(s, 234, 285));
+      System.out.println(normalize.testcase(s, 234, 285));
     }
   }
+
 }

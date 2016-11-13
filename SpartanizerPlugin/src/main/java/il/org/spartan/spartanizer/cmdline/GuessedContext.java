@@ -72,16 +72,7 @@ public enum GuessedContext {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
-    azzert.fail("שים ליבך!\n" + //
-        "Nota!\n" + //
-        "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
-        "at a string literal somewhere \n " + //
-        "\t\t =>  in *your* __שלך__ @Test related Java code  <== \n" + //
-        "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
-        "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
-        "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
-        "It sure does not look like a correct Java code to me.\n" + //
-        "\n" + //
+    azzert.fail("GuessContext error: \n" + //
         "Here are the attempts I made at literal [" + codeFragment + "]:,\n" + //
         "\n" + //
         enumerateFailingAttempts(codeFragment));
