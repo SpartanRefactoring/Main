@@ -25,6 +25,7 @@ public enum getAll {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
+<<<<<<< HEAD
     // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
     final List<Object> l = ¢.arguments();
     for (final Object i : l) {
@@ -33,6 +34,16 @@ public enum getAll {
       if (!(i instanceof MethodInvocation) && i instanceof SimpleName)
         $.add(i + "");
     }
+=======
+    i.accept(new ASTVisitor() {
+      @Override public boolean visit(final SimpleName ¢¢) {
+        if((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
+            && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
+        $.add((¢¢ + ""));
+        return true;
+      }
+    });
+>>>>>>> branch 'master' of git@github.com:SpartanRefactoring/Spartanizer.git
     return $;
   }
   /** Get all the methods invoked in m
