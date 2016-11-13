@@ -1,17 +1,16 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.util;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -20,7 +19,7 @@ public class normalize {
     return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
   }
   public static String codeFragment(final String raw) {
-    return format(shortenIdentifiers(raw));
+    return format.code(shortenIdentifiers(raw));
   }
   /** escapes all "s
    * @param ¢
@@ -112,18 +111,5 @@ public class normalize {
       System.out.println(normalize.testcase(s, 234, 285));
     }
   }
-  public static String format(final String code) {
-    CodeFormatter codeFormatter = ToolFactory.createCodeFormatter(null);
-    TextEdit textEdit = codeFormatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
-    IDocument doc = new Document(code);
-    try {
-      if (textEdit != null)
-        textEdit.apply(doc);
-    } catch (MalformedTreeException e) {
-      e.printStackTrace();
-    } catch (BadLocationException e) {
-      e.printStackTrace();
-    }
-    return doc.get();
-  }
+
 }
