@@ -193,4 +193,26 @@ public final class izTest {
     assert iz.thisOrNull(e("this"));
     assert !iz.thisOrNull(e("i+5"));
   }
+  @Test public void singleVariableDeclarationTest() {
+    assert !iz.singleVariableDeclaration(null);
+    assert iz.singleVariableDeclaration(findFirst.instanceOf(SingleVariableDeclaration.class, wizard.ast("try {} catch (Exception e){}")));
+    assert !iz.singleVariableDeclaration(findFirst.instanceOf(Statement.class, wizard.ast("Integer a; String b;")));
+  }
+  @Test public void plainAssignmentTest() {
+    assert !iz.plainAssignment(null);
+    assert iz.plainAssignment(findFirst.instanceOf(Assignment.class, wizard.ast("a = 5;")));
+    assert !iz.plainAssignment(findFirst.instanceOf(Assignment.class, wizard.ast("a++;")));
+  }
+  @Test public void arrayInitializerTest() {
+    assert !iz.arrayInitializer(null);
+    assert iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class, wizard.ast("Integer arr[] = {2, 5, 8 };")));
+    assert !iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class, wizard.ast("Integer arr[];")));
+  }
+  @Test public void comparisonTest() {
+    final Expression e = null;
+    assert !iz.comparison(e);
+    assert iz.comparison(e("x==5"));
+    assert iz.comparison(e("x!=5"));
+    assert !iz.comparison(e("x + 5"));
+  }
 }
