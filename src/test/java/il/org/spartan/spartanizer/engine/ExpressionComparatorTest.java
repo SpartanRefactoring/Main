@@ -161,6 +161,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     })), is(true));
   }
   
+  @Test public void argumentsCompareTest(){
+    azzert.that(ExpressionComparator.argumentsCompare(e("foo(a)"), e("a+b")), is (0));
+    azzert.that(ExpressionComparator.argumentsCompare(e("a+b"), e("foo(a)")), is (0));
+  }
+  
   private int cs(final String statement) {
     return count.lines(s(statement));
   }
