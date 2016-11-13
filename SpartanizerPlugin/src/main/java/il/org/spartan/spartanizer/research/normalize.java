@@ -2,8 +2,10 @@ package il.org.spartan.spartanizer.research;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
@@ -13,9 +15,12 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class TestFactory {
+public class normalize {
   public static String testcase(final String raw, final int name, final int issue) {
     return wrapTest(name, issue, linify(escapeQuotes(shortenIdentifiers(eliminateSpaces(raw)))));
+  }
+  public static String codeFragment(final String raw) {
+    return format(shortenIdentifiers(raw));
   }
   /** escapes all "s
    * @param ¢
@@ -70,6 +75,12 @@ public class TestFactory {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
+      @Override public boolean visit(StringLiteral node) {
+        StringLiteral lit = ast.newStringLiteral();
+        lit.setLiteralValue("str");
+        r.replace(node, lit, null);
+        return super.visit(node);
+      }
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
           final String name = ((Name) ¢).getFullyQualifiedName();
@@ -98,7 +109,21 @@ public class TestFactory {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(TestFactory.testcase(s, 234, 285));
+      System.out.println(normalize.testcase(s, 234, 285));
     }
+  }
+  public static String format(final String code) {
+    CodeFormatter codeFormatter = ToolFactory.createCodeFormatter(null);
+    TextEdit textEdit = codeFormatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
+    IDocument doc = new Document(code);
+    try {
+      if (textEdit != null)
+        textEdit.apply(doc);
+    } catch (MalformedTreeException e) {
+      e.printStackTrace();
+    } catch (BadLocationException e) {
+      e.printStackTrace();
+    }
+    return doc.get();
   }
 }
