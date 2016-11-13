@@ -643,7 +643,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, RETURN_STATEMENT);
   }
   static boolean rightOfAssignment(final Expression ¢) {
-    return right(az.assignment(¢.getParent())).equals(¢);
+    return ¢ != null && right(az.assignment(¢.getParent())).equals(¢);
   }
   /** Determine whether a node is a "sequencer", i.e.,
    * <code><b>return</b></code> , <code><b>break</b></code>,
