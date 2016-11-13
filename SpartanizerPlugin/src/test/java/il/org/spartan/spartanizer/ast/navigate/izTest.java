@@ -234,4 +234,22 @@ public final class izTest {
     assert iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("true || false")));
     assert !iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("(a == 5)")));
   }
+  @Test public void flipableTest() {
+    assert !iz.flipable(null);
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a > 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("false & true")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("false | true")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a == 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a != 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a >= 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a <= 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a < 6")).getOperator());
+    assert !iz.flipable(findFirst.instanceOf(InfixExpression.class, wizard.ast("a - 8")).getOperator());
+  }
+  @Test public void final¢Test() {
+    final VariableDeclarationStatement e = null;
+    assert !iz.final¢(e);
+    assert iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class, wizard.ast("final int a = 5;")));
+    assert !iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class, wizard.ast("int a = 5;")));
+  }
 }
