@@ -63,6 +63,8 @@ public class Dialogs {
       } catch (final MalformedURLException x) {
         monitor.log(x);
       }
+      // logo = new Image(null,
+      // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
     }
     return logo;
   }
