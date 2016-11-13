@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -109,6 +111,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   }
   @Test public void longerFirstTestFalse() {
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")),is(false));
+  }
+  @Test public void additionSortTest() {
+    List<Expression> xs = new ArrayList<> ();
+    xs.add(e("a"));
+    xs.add(e("d+b"));
+    xs.add(e("a+b+c"));
+    xs.add(e("f"));
+    azzert.that( ExpressionComparator.ADDITION.sort(xs),is(true));
   }
   private int cs(final String statement) {
     return count.lines(s(statement));
