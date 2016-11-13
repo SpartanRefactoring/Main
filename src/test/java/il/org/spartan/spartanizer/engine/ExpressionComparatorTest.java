@@ -115,6 +115,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   @Test public void longerFirstEqualLengthTest() {
     azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+3")),is(false));
   }
+  
+  @Test public void moreArgumentsTrueTest(){
+    azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)")), is(true));
+  }
+  
+  @Test public void moreArgumentsFalseTest(){
+   azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)")), is(false));
+  }
+  
   @Test public void additionSortTest() {
     azzert.that(ExpressionComparator.ADDITION.sort((new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
