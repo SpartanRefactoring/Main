@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static org.junit.Assert.*;
 
 import java.text.*;
+import java.util.concurrent.atomic.*;
 
 import org.junit.*;
 
@@ -38,5 +39,11 @@ import org.junit.*;
     assertEquals(Linguistic.UNKNOWN + " churches",Linguistic.plurales("church", (Integer)null));
     assertEquals("one church",Linguistic.plurales("church", Integer.valueOf(1)));
     assertEquals("2 churches",Linguistic.plurales("church", Integer.valueOf(2)));
+  }
+  
+  @Test public void testPluralAtomicInteger() {
+    assertEquals(Linguistic.UNKNOWN + " houses",Linguistic.plurals("house", (AtomicInteger)null));
+    assertEquals("one house",Linguistic.plurals("house", new AtomicInteger(1)));
+    assertEquals("2 houses",Linguistic.plurals("house", new AtomicInteger(2)));
   }
 }
