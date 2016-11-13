@@ -17,7 +17,6 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.

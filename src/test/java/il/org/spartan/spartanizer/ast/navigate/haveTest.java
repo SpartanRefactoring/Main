@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
-import java.util.List;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -15,9 +14,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @authoe Raviv Rachmiel
  * @since 10-11-2016 */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class haveTest {
-  public List<Expression> ExpressionListMaker(String[] exps) {
-    List<Expression> $ = new LinkedList<>();
-    for (String e : exps)
+  public List<Expression> ExpressionListMaker(final String[] exps) {
+    final List<Expression> $ = new LinkedList<>();
+    for (final String e : exps)
       $.add(into.e(e));
     return $;
   }
