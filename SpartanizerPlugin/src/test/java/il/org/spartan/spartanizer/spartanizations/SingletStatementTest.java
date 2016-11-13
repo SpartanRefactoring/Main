@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.spartanizations;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;

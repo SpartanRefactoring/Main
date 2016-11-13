@@ -19,6 +19,7 @@ import org.eclipse.ui.dialogs.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.utils.*;
 
 /** ??
  * @author Daniel Mittelman
@@ -41,12 +42,19 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     if (refreshNeeded.get())
       new Thread(() -> {
         Toolbox.refresh();
-        RefreshAll.go();
+        try {
+          RefreshAll.go();
+        } catch (final Exception x) {
+          monitor.logEvaluationError(this, x);
+        }
       }).start();
     return $;
   }
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
+    // addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID,
+    // PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
+    // getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final TipperGroup ¢ : TipperGroup.values())
@@ -86,6 +94,10 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
           && ¢.getNewValue() instanceof Boolean)
         NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(((Boolean) ¢.getNewValue()).booleanValue());
     }
+  }
+
+  @SuppressWarnings("unused") private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
+    return new TipsListEditor(g.label, "Available tippers", g, e);
   }
 
   static class TipsListEditor extends ListEditor {

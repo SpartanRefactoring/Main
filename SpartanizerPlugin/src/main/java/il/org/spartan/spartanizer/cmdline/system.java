@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Box.*;
 import java.io.*;
 
 import il.org.spartan.java.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Not such a good name for a bunch of static functions

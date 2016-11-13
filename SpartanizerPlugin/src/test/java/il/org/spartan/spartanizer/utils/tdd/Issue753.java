@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author RoeiRaz
  * @author RoeyMaor
  * @since 2016 */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings("static-method") public class Issue753 {
   @Test public void a() {

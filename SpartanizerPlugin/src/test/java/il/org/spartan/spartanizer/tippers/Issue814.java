@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** see issue #814 for more details
@@ -34,9 +32,5 @@ public class Issue814 {
     final Statement s = into.s("f();");
     a.getParent().delete();
     assertTrue(new AssignmentAndReturn().go(null, a, s, null) == null);
-  }
-  @SuppressWarnings("static-method") @Test public void descriptionTest() {
-    final Assignment a = into.a("a = 3");
-    assertEquals(new AssignmentAndReturn().description(a), "Inline assignment to " + to(a) + " with its subsequent 'return'");
   }
 }
