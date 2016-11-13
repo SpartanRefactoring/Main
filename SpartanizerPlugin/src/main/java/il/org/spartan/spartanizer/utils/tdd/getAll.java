@@ -6,6 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -21,20 +24,10 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<String> invocations(final MethodInvocation ¢) {
-    if (¢ == null)
+  public static Set<String> invocations(final MethodInvocation i) {
+    if (i == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-<<<<<<< HEAD
-    // TODO: VIVIAN AND WARD. Please use a function from {@link step}.
-    final List<Object> l = ¢.arguments();
-    for (final Object i : l) {
-      if (i instanceof MethodInvocation)
-        $.addAll(invocations((MethodInvocation) i));
-      if (!(i instanceof MethodInvocation) && i instanceof SimpleName)
-        $.add(i + "");
-    }
-=======
     i.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName ¢¢) {
         if((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
@@ -43,7 +36,6 @@ public enum getAll {
         return true;
       }
     });
->>>>>>> branch 'master' of git@github.com:SpartanRefactoring/Spartanizer.git
     return $;
   }
   /** Get all the methods invoked in m
@@ -135,25 +127,25 @@ public enum getAll {
   }
   /** Takes a single parameter, which is a TypeDecleration returns a list of
    * public fields for this class (by fields' names)
-   * @param a TypeDecleration
+   * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  public static List<String> publicFields(final TypeDeclaration d) {
-    if (d == null)
+  public static List<String> publicFields(final TypeDeclaration ¢) {
+    if (¢ == null)
       return null;
     final List<String> $ = new ArrayList<>();
-    d.accept(new ASTVisitor() {
-      // TODO: Inbal and Elia. Your code is buggy and will not find public final
-      // methods, e..g,--yg
+    ¢.accept(publicFieldsCollector($));
+    return $;
+  }
+  private static ASTVisitor publicFieldsCollector(final List<String> $) {
+    return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
-        if (d.getModifiers() != org.eclipse.jdt.core.dom.Modifier.PUBLIC)
-          return true;
-        for (final VariableDeclarationFragment ¢ : fragments(d))
-          $.add(¢.getName().getIdentifier());
+        if (iz.public¢(d))
+          for (final VariableDeclarationFragment ¢ : fragments(d))
+            $.add(step.name(¢) + "");
         return true;
       }
-    });
-    return $;
+    };
   }
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
@@ -165,9 +157,9 @@ public enum getAll {
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        $.add(node);
-        return super.visit(node);
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        $.add(¢);
+        return super.visit(¢);
       }
     });
     return $;
@@ -183,9 +175,9 @@ public enum getAll {
     if (¢ == null)
       return $;
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @SuppressWarnings("unchecked") @Override public boolean visit(final FieldDeclaration d) {
+      @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (final VariableDeclarationFragment df : (List<VariableDeclarationFragment>) d.fragments())
+          for (final VariableDeclarationFragment df : fragments(d))
             $.add(df.getName().getIdentifier());
         return true;
       }
