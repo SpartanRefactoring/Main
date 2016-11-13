@@ -14,9 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Generic applicator
  * @author Matteo Orru'
- * @since 2016
- */
-
+ * @since 2016 */
 public class Generic$Applicator {
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
@@ -35,11 +33,9 @@ public class Generic$Applicator {
     }
     return as.list($); // useless?
   }
-  
-  public Generic$Applicator(){
+  public Generic$Applicator() {
     selectedNodeTypes = setAllNodeTypes();
   }
-  
   public Generic$Applicator(String[] clazzes) {
     if (clazzes == null)
       selectedNodeTypes = setAllNodeTypes();
@@ -48,19 +44,16 @@ public class Generic$Applicator {
       System.out.println("selected: " + selectedNodeTypes.size());
     }
   }
-  
   public Generic$Applicator(final String[] clazzes, final String[] tipperGroups) {
-      this(clazzes);
-      selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
-   }
-
+    this(clazzes);
+    selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
+  }
   private static List<String> setAllTipperGroups() {
     List<String> $ = new ArrayList<>();
-    for(TipperGroup ¢ :TipperGroup.values())
+    for (TipperGroup ¢ : TipperGroup.values())
       $.add(¢.name());
     return $;
   }
-
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
         VariableDeclarationFragment.class, //
@@ -100,14 +93,12 @@ public class Generic$Applicator {
     for (String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
       System.out.println(¢);
   }
-  
-  private static List<String> setSelectedTipperGroups(final String ... ss) {
+  private static List<String> setSelectedTipperGroups(final String... ss) {
     List<String> $ = new ArrayList<>();
-    for(String ¢: ss)
+    for (String ¢ : ss)
       $.add(¢);
     return $;
   }
-
   @SuppressWarnings({ "unchecked", "rawtypes", "unused" }) private static List<Class<? extends ASTNode>> listOfClass() {
     final List l = new ArrayList<>();
     new Toolbox();
@@ -127,7 +118,6 @@ public class Generic$Applicator {
     System.out.println($);
     return $;
   }
-  
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     Tipper<N> $ = toolbox.firstTipper(¢);
     TipperGroup g = $.tipperGroup();
@@ -136,6 +126,4 @@ public class Generic$Applicator {
     System.out.println("selected tipper: " + g.name());
     return $;
   }
-  
-  
 }

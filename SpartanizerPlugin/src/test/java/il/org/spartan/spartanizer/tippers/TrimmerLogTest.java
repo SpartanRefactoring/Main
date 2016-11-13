@@ -76,12 +76,10 @@ public class TrimmerLogTest {
     assert u != null;
     assert u.getJavaElement() == null;
   }
-  
   /** Tests of {@link cmdline.TrimmerLog}
    * @author AnnaBel7
    * @author michalcohen
    * @since Nov 10, 2016 */
-
   @Test public void a() {
     TrimmerLog.setMaxApplications(50);
     assertEquals(50, TrimmerLog.getMaxApplications());

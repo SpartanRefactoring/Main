@@ -111,5 +111,4 @@ public class normalize {
       System.out.println(normalize.testcase(s, 234, 285));
     }
   }
-
 }
