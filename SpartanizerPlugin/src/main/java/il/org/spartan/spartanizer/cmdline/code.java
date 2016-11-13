@@ -15,11 +15,6 @@ public interface code {
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
         .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");
   }
-  // TODO: Sharon et al. Document this function. Also, check whether the
-  // conditional here is
-  // necessary. But this can only be done after having tests for this function.
-  // Also, take note that the function assumes that it gets not a null. You can
-  // add this to your tests. --yg
   static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }

@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
+import java.util.function.*;
+
+import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -14,6 +17,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private boolean DefaultApplicator;
   private final CommandLineApplicator c = new CommandLineApplicator();
   private String[] clazzes;
+  private String[] tipperGroups;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -35,27 +39,29 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       // Reports.close("tips");
       // System.err.println("CollectApplicator: " + "Done!");
       // }
-      System.out.println("Reports.getOutputFolder(): " + Reports.getOutputFolder());
-      Reports.initializeFile(Reports.getOutputFolder() + "/" + name + ".before.java", "before");
-      Reports.initializeFile(Reports.getOutputFolder() + "/" + name + ".after.java", "after");
-      Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".CSV", "metrics");
-      Reports.initializeReport(Reports.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
+      System.out.println("Reports.getOutputFolder(): " + ReportGenerator.getOutputFolder());
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".before.java", "before");
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       if (DefaultApplicator) {
         c.listener(¢ -> System.out.println("ok" + ¢));
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder())).defaultListenerNoisy()
+        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder())).defaultListenerNoisy()
             .go();
       }
       if (Spartanizer$Applicator)
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
+        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
       if (CommandLine$Applicator)
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(Reports.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator(clazzes)).defaultListenerNoisy().go();
+        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
+            .defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups)).defaultListenerNoisy().go();
       //
-      Reports.close("metrics");
-      Reports.close("spectrum");
-      Reports.closeFile("before");
-      Reports.closeFile("after");
+      ReportGenerator.close("metrics");
+      ReportGenerator.close("spectrum");
+      ReportGenerator.close("tips");
+      ReportGenerator.closeFile("before");
+      ReportGenerator.closeFile("after");
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
@@ -65,6 +71,10 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       x.printStackTrace();
     }
   }
+  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
+    return u -> Integer.valueOf(
+        new CommandLine$Applicator().apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0);
+  }
   public void inputDir(final String ¢) {
     presentSourcePath = ¢;
   }
@@ -73,5 +83,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   }
   public void setClazzes(final String[] ¢) {
     clazzes = ¢;
+  }
+  public void setTipperGroups(String[] ¢) {
+    tipperGroups = ¢;
   }
 }
