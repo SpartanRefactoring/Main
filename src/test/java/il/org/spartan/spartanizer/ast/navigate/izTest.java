@@ -149,4 +149,14 @@ public final class izTest {
     assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class, wizard.ast("false")));
     assert !iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class, wizard.ast("if (c == 5) return 5;")));
   }
+  @Test public void bodyDeclarationTest() {
+    assert !iz.bodyDeclaration(null);
+    assert !iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class, wizard.ast("int x;")));
+    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class,
+        wizard.ast("public enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }")));
+    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class, wizard.ast("public static void main() { }")));
+  }
+  @Test public void blockRequiredInReplacementNullTest() {
+    assert !iz.blockRequiredInReplacement(null, null);
+  }
 }
