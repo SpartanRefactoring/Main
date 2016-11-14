@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-14 */
-@SuppressWarnings({ "javadoc" })
 public class Issue831 {
   protected class MethodScannerIExt extends MethodScanner {
     public MethodScannerIExt(MethodDeclaration method) {
@@ -40,6 +39,6 @@ public class Issue831 {
   }
 
   @Test public void oneStatementInScanner() {
-   assertTrue("int a;\n".equals((new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "")));
+    assertTrue("int a;\n".equals((new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "")));
   }
 }
