@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class Classifier extends ASTVisitor {
   final Map<String, List<String>> forLoops = new HashMap<>();
   final List<ASTNode> forLoopsList = new ArrayList<>();
+  int forLoopsAmount;
   static final Scanner input = new Scanner(System.in);
 
   @Override public boolean visit(final ForStatement node) {
@@ -27,30 +28,31 @@ public class Classifier extends ASTVisitor {
 
   public void analyze(final ASTNode n) {
     n.accept(this);
-    final Map<String, Int> awesomePatterns = new HashMap<>();
+    forLoopsAmount = forLoopsList.size();
+    final Map<String, Int> patterns = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
       for (final ASTNode ¢ : forLoopsList) {
-        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         toRemove = new ArrayList<>();
         for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
             toRemove.add(l);
         if (toRemove.size() > 1) {
-          awesomePatterns.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
+          patterns.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
           again = true;
           break;
         }
       }
     }
-    System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
-    System.out.println("From them " + awesomePatterns.size() + " are repetitive");
+    System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
+    System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
     System.out.println("Lets classify them together!");
-    for (final String k : awesomePatterns.keySet()) {
+    for (final String k : patterns.keySet()) {
       System.out.println(k);
-      System.out.println("[Matched " + awesomePatterns.get(k).inner + " times]");
+      System.out.println("[Matched " + patterns.get(k).inner + " times]");
       classify(k);
     }
   }
