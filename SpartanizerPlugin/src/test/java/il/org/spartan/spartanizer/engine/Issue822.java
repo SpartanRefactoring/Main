@@ -7,9 +7,6 @@ import java.nio.file.*;
 import java.util.*;
 
 import org.junit.*;
-import org.junit.rules.*;
-import org.mockito.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests for makeAST, see issue #822 for more details
@@ -24,7 +21,7 @@ public class Issue822 {
     Files.write(p, Arrays.asList("a = a + b;"));
     assertEquals(wizard.ast("a = a + b;") + "", makeAST.STATEMENTS.from(p.toFile()) + "");
   }
-  
+
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);
