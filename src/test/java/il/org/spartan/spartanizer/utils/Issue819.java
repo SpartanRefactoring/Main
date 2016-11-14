@@ -28,4 +28,7 @@ public class Issue819 {
   @Test public void str_test4() {
     assertTrue(new Str().isEmptyx());
   }
+  @Test public void str_test5() {
+    assertTrue(new Str("This is not empty").notEmpty());
+  }
 }
