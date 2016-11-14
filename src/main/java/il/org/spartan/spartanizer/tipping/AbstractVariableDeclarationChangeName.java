@@ -22,6 +22,8 @@ public abstract class AbstractVariableDeclarationChangeName<N extends VariableDe
     replacement.add(replacement(n));
     return r;
   }
+
   protected abstract boolean change(N n);
+
   protected abstract SimpleName replacement(N n);
 }

@@ -34,6 +34,7 @@ public final class InteractiveSpartanizer {
                                                // InteractiveSpartanizer().fixedPoint(read()));
     }
   }
+
   static String read() {
     String $ = "";
     try (final Scanner s = new Scanner(System.in)) {
@@ -50,12 +51,14 @@ public final class InteractiveSpartanizer {
     toolbox.disable(¢);
     return this;
   }
+
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
     return new Trimmer(toolbox).fixed(from);
   }
+
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {

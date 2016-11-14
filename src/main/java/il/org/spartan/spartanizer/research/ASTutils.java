@@ -29,6 +29,7 @@ public class ASTutils {
     }
     return null;
   }
+
   public static String extractCode(final String s, final Document d) {
     switch (GuessedContext.find(s)) {
       case EXPRESSION_LOOK_ALIKE:
@@ -41,6 +42,7 @@ public class ASTutils {
         return d.get();
     }
   }
+
   public static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
@@ -58,6 +60,7 @@ public class ASTutils {
     }
     return null;
   }
+
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;

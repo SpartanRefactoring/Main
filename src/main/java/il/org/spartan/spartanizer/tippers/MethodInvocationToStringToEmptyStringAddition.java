@@ -23,6 +23,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression receiver = receiver(i);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + (receiver == null ? "x" : receiver);
   }
+
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(step.name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;

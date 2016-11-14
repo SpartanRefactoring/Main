@@ -37,7 +37,6 @@ public class generalize {
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-    System.out.println(cu);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final StringLiteral node) {
         final StringLiteral lit = ast.newStringLiteral();

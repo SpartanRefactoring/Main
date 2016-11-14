@@ -34,6 +34,7 @@ public enum getAll2 {
     });
     return $;
   }
+
   /** Takes Block b and returns list of names in it
    * @param b
    * @return List<Name> which is all names in b
@@ -51,6 +52,7 @@ public enum getAll2 {
     });
     return $;
   }
+
   /** @author Shimon Azulay
    * @author Idan Atias
    * @since 16-11-3 */
@@ -72,6 +74,7 @@ public enum getAll2 {
         }
     return $;
   }
+
   /** @author Sapir Bismot
    * @author Yaniv Levinsky
    * @since 16-11-8 */
