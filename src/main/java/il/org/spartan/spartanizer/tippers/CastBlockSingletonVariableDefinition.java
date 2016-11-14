@@ -23,9 +23,11 @@ public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Bl
   @Override public String description() {
     return "remove the block";
   }
+
   @Override public String description(final Block n) {
     return "remove the block: " + n;
   }
+
   @Override public Tip tip(final Block n) {
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())

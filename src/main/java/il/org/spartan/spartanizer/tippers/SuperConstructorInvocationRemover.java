@@ -16,9 +16,11 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
   @Override public String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove vacuous 'super()' invocation";
   }
+
   @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
+
   @Override public Tip tip(final SuperConstructorInvocation i) {
     return new Tip(description(i), i, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

@@ -33,12 +33,14 @@ public final class TypeNamesCollector {
     }
     System.err.println("Look for your output here: " + w.close());
   }
+
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;
       }
+
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
@@ -48,6 +50,7 @@ public final class TypeNamesCollector {
       }
     });
   }
+
   private static void collect(final File f) {
     try {
       collect(FileUtils.read(f));
@@ -55,9 +58,11 @@ public final class TypeNamesCollector {
       System.err.println(e.getMessage());
     }
   }
+
   private static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
+
   private static void collect(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       collect(¢);

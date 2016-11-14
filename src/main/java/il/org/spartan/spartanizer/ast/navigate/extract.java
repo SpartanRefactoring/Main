@@ -28,15 +28,18 @@ public enum extract {
     assert ¢ != null;
     return hop.operands(flatten.of(¢));
   }
+
   public static List<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
     assert ¢ != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
     extract.findOperators(¢, $);
     return $;
   }
+
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
+
   private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
     final ArrayList<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : ms) {
@@ -46,12 +49,15 @@ public enum extract {
     }
     return $;
   }
+
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
+
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
     return annotations(step.extendedModifiers(¢));
   }
+
   /** Determines whether a give {@link ASTNode} includes precisely one
    * {@link Statement}, and return this statement.
    * @param ¢ The node from which to return statement.
@@ -60,9 +66,11 @@ public enum extract {
   public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
   }
+
   public static ReturnStatement asReturn(final Statement ¢) {
     return az.returnStatement(¢);
   }
+
   /** @param n a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
@@ -70,6 +78,7 @@ public enum extract {
     final ExpressionStatement e = extract.expressionStatement(n);
     return e == null ? null : az.assignment(e.getExpression());
   }
+
   public static String category(final ASTNode ¢) {
     switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
@@ -106,6 +115,7 @@ public enum extract {
         return ¢.getClass().getSimpleName();
     }
   }
+
   private static String category(final TypeDeclaration ¢) {
     final StringBuilder $ = new StringBuilder();
     if (!¢.isPackageMemberTypeDeclaration())
@@ -117,6 +127,7 @@ public enum extract {
     $.append(!¢.isInterface() ? "class" : "interface");
     return $ + "";
   }
+
   /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
    * @return the parameter if not parenthesized, or the unparenthesized this
@@ -127,9 +138,11 @@ public enum extract {
             : iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
   }
+
   public static Expression core(final PrefixExpression $) {
     return $.getOperator() != wizard.PLUS1 ? $ : core($.getOperand());
   }
+
   /** Computes the "Essence" of a statement, i.e., if a statement is essentially
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
    * perhaps along with any number of empty sideEffects, then its Essence is
@@ -150,6 +163,7 @@ public enum extract {
         return s;
     }
   }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param pattern a statement or a block to extract the expression statement
    *        from
@@ -159,6 +173,7 @@ public enum extract {
   public static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
+
   public static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
     if (x == null)
       return;
@@ -166,6 +181,7 @@ public enum extract {
     findOperators(az.infixExpression(x.getLeftOperand()), $);
     findOperators(az.infixExpression(x.getRightOperand()), $);
   }
+
   /** Extract list of fragments in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
@@ -181,22 +197,26 @@ public enum extract {
         return $;
     }
   }
+
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
     for (final Statement ¢ : step.statements(b))
       if (iz.variableDeclarationStatement(¢))
         extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
     return $;
   }
+
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
       $.add(¢);
     return $;
   }
+
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
     for (final Statement ¢ : step.statements(b))
       ifsInto(¢, $);
     return $;
   }
+
   private static List<IfStatement> ifsInto(final Statement ¢, final List<IfStatement> $) {
     switch (¢.getNodeType()) {
       case IF_STATEMENT:
@@ -208,6 +228,7 @@ public enum extract {
         return $;
     }
   }
+
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
@@ -215,6 +236,7 @@ public enum extract {
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
   }
+
   /** Extract list of {@link IfStatement}s in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
@@ -230,16 +252,19 @@ public enum extract {
         return $;
     }
   }
+
   public static InfixExpression infixExpression(final ASTNode ¢) {
     final ExpressionStatement s = expressionStatement(¢);
     return ¢ == null || s == null ? null : az.infixExpression(s.getExpression());
   }
+
   /** @param pattern JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
+
   public static List<Modifier> modifiers(final BodyDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(d)) {
@@ -249,6 +274,7 @@ public enum extract {
     }
     return $;
   }
+
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(d)) {
@@ -258,6 +284,7 @@ public enum extract {
     }
     return $;
   }
+
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
     final ArrayList<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(s)) {
@@ -267,6 +294,7 @@ public enum extract {
     }
     return $;
   }
+
   public static String name(final ASTNode ¢) {
     switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
@@ -293,12 +321,14 @@ public enum extract {
         return ¢.getClass().getSimpleName();
     }
   }
+
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
       if (ss.get(¢) == s)
         return ss.get(¢ + 1);
     return null;
   }
+
   /** Find the {@link Assignment} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
@@ -306,6 +336,7 @@ public enum extract {
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
+
   /** Extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
@@ -313,6 +344,7 @@ public enum extract {
   public static IfStatement nextIfStatement(final ASTNode ¢) {
     return az.ifStatement(extract.nextStatement(¢));
   }
+
   /** Extract the {@link ReturnStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
@@ -320,6 +352,7 @@ public enum extract {
   public static ReturnStatement nextReturn(final ASTNode ¢) {
     return az.returnStatement(extract.nextStatement(¢));
   }
+
   /** Extract the {@link Statement} that immediately follows a given node.
    * @param pattern JD
    * @return {@link Statement} that immediately follows the parameter, or
@@ -327,6 +360,7 @@ public enum extract {
   public static Statement nextStatement(final ASTNode ¢) {
     return nextStatement(containingStatement(¢));
   }
+
   /** Extract the {@link Statement} that immediately follows a given statement
    * @param s JD
    * @return {@link Statement} that immediately follows the parameter, or
@@ -337,21 +371,26 @@ public enum extract {
     final Block b = az.block(s.getParent());
     return b == null ? null : next(s, extract.statements(b));
   }
+
   public static Expression onlyArgument(final MethodInvocation ¢) {
     return onlyExpression(arguments(¢));
   }
+
   public static Expression onlyExpression(final List<Expression> $) {
     return core(onlyOne($));
   }
+
   public static SimpleName onlyName(final VariableDeclarationExpression x) {
     for (final VariableDeclarationFragment ¢ : step.fragments(x))
       if (!iz.identifier("$", ¢.getName()))
         return ¢.getName();
     return null;
   }
+
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
     return lisp.onlyOne(fragments(¢)).getName();
   }
+
   /** Finds the expression returned by a return statement
    * @param pattern a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
@@ -360,6 +399,7 @@ public enum extract {
     final ReturnStatement $ = returnStatement(¢);
     return $ == null ? null : $.getExpression();
   }
+
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link ReturnStatement} embedded in the parameter, and
@@ -368,6 +408,7 @@ public enum extract {
   public static ReturnStatement returnStatement(final ASTNode ¢) {
     return az.returnStatement(extract.singleStatement(¢));
   }
+
   /** Finds the single statement in the <code><b>else</b></code> branch of an
    * {@link IfStatement}
    * @param subject JD
@@ -377,12 +418,14 @@ public enum extract {
   public static Statement singleElse(final IfStatement ¢) {
     return extract.singleStatement(elze(¢));
   }
+
   /** @param pattern JD
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode ¢) {
     return onlyOne(extract.statements(¢));
   }
+
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
    * @param subject JD
    * @return single statement in the "then" branch of the parameter, or
@@ -390,6 +433,7 @@ public enum extract {
   public static Statement singleThen(final IfStatement ¢) {
     return extract.singleStatement(then(¢));
   }
+
   /** Extract the {@link Statement} that contains a given node.
    * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
@@ -400,6 +444,7 @@ public enum extract {
         return az.statement($);
     return null;
   }
+
   /** Extract the list of non-empty statements embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param pattern JD
@@ -409,11 +454,13 @@ public enum extract {
     return ¢ == null || !(¢ instanceof Statement) ? $ : //
         extract.statementsInto((Statement) ¢, $);
   }
+
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement ¢ : step.statements(b))
       statementsInto(¢, $);
     return $;
   }
+
   private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
     switch (¢.getNodeType()) {
       case EMPTY_STATEMENT:
@@ -425,6 +472,7 @@ public enum extract {
         return $;
     }
   }
+
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
@@ -432,6 +480,7 @@ public enum extract {
     final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
     return $ == null ? null : $.getExpression();
   }
+
   /** Extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
@@ -439,6 +488,7 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
+
   public static Type type(final ASTNode $) {
     switch ($.getNodeType()) {
       case VARIABLE_DECLARATION_EXPRESSION:

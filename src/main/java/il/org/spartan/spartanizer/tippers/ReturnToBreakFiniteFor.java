@@ -34,6 +34,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
+
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
@@ -47,6 +48,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     }
     return $;
   }
+
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     if (!iz.ifStatement(s))
       return null;
@@ -77,18 +79,23 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     }
     return null;
   }
+
   private static boolean isInfiniteLoop(final ForStatement ¢) {
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
+
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
+
   @Override public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
+
   @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
+
   @Override public Tip tip(final ForStatement s, final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))

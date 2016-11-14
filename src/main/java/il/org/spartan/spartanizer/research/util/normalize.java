@@ -17,15 +17,18 @@ public class normalize {
   public static String testcase(final String raw, final int name, final int issue) {
     return wrapTest(name, issue, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
-  public static String codeFragment(final String raw) {
+
+  public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
+
   /** escapes all "s
    * @param ¢
    * @return */
   private static String escapeQuotes(final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
+
   private static String wrapTest(final int report, final int issue, final String code) {
     return "  @Test public void report" + report + "() {" + //
         "\n\ttrimmingOf(\"// From use case of issue" + issue + //
@@ -33,6 +36,7 @@ public class normalize {
         + code + //
         "\n).stays();\n}";
   }
+
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
   static String renderIdentifier(final String old) {
@@ -43,6 +47,7 @@ public class normalize {
                     : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
                         : String.valueOf(old.charAt(0)) + String.valueOf(old.charAt(1) + 1);
   }
+
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
@@ -54,6 +59,7 @@ public class normalize {
     }
     return $;
   }
+
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>("start");
@@ -72,6 +78,7 @@ public class normalize {
         r.replace(node, lit, null);
         return super.visit(node);
       }
+
       @Override public void preVisit(final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
@@ -94,6 +101,7 @@ public class normalize {
     }
     return ASTutils.extractCode(s, document);
   }
+
   public static void main(final String args[]) {
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";

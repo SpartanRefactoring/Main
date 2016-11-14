@@ -151,6 +151,8 @@ public interface wizard {
    *         null */
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
+      case EMPTY_BLOCK_LOOK_ALIKE:
+        return into.s("");
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
@@ -251,7 +253,14 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
   static String essence(final String codeFragment) {
-    return tide.clean(wizard.removeComments2(codeFragment));
+    return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
+  }
+  /** This method fixes a bug from tide.clean which causes ^ to replaced with
+   * [^]
+   * @param ¢
+   * @return */
+  static String fixTideClean(String ¢) {
+    return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,

@@ -14,9 +14,11 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Grumpy pattern";
   }
+
   @Override public boolean canTip(final IfStatement ¢) {
     return tipper.canTip(¢);
   }
+
   @Override public Tip tip(final IfStatement ¢) {
     Logger.logNP(¢, getClass().getSimpleName());
     return tipper.tip(¢);

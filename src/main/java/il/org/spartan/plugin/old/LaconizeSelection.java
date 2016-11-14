@@ -64,12 +64,15 @@ public abstract class LaconizeSelection extends BaseHandler {
     status.append("\n too many passes; aborting");
     throw new ExecutionException(status + "");
   }
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     return execute();
   }
+
   /** @param u JD
    * @return selection chosen for spartanization */
   public abstract Range getSelection(ICompilationUnit u);
+
   /** @return <code><b>true</b></code> <em>iff</em> the handler runs in a loop,
    *         for {@link LaconizeSelection#MAX_PASSES} times */
   public abstract boolean isRepeating();
@@ -88,9 +91,11 @@ public abstract class LaconizeSelection extends BaseHandler {
       this.clazz = clazz;
       this.label = label;
     }
+
     @Override public String getLabel() {
       return label;
     }
+
     @Override public Range getSelection(final ICompilationUnit u) {
       final ASTNode n = eclipse.getNodeByMarker(u, marker);
       if (n == null)
@@ -99,9 +104,11 @@ public abstract class LaconizeSelection extends BaseHandler {
       return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
           : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
     }
+
     @Override public boolean isRepeating() {
       return false;
     }
+
     @Override public void run(final IMarker m) {
       marker = m;
       try {
