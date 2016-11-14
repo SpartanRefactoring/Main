@@ -14,20 +14,20 @@ public class Essence {
 
   public static String of(final String codeFragment) {
     return codeFragment//
-        .replaceAll("\\r\\n", "\\n") // DOS Junk
-        .replaceAll("\\n\\r", "\\n") // Mac Junk
+        .replaceAll("\\r\\n", "\n") // DOS Junk
+        .replaceAll("\\n\\r", "\n") // Mac Junk
         .replaceAll("\\s+", " ") // Runs of spaces
         .replaceAll("\\s$", "") // Spaces at EOLN
         .replaceAll("^\\s+", "") // Spaces at BOLN
         .replaceAll("^\\s*$", "") // Erase spaces of empty lines
         .replaceAll("^\\s*\\n", "") // Erase all empty lines
-        .replaceAll("\\n\\n", "\\n") // Consecutive new lines
+        .replaceAll("\\n\\n", "\n") // Consecutive new lines
         .replaceAll("//.*$", "") // Line comments
         // All comments?
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         // Space between two non-letters:
         .replaceAll("([^\\p{L}]) ([^\\p{L}])", "$1$2")//
-        // Letter, then non-letter
+        // Letter, then non-leTtter
         .replaceAll("([\\p{L}]) ([^\\p{L}])", "$1$2")//
         // Non letter, then letter
         .replaceAll("([^\\p{L}]) ([\\p{L}])", "$1$2")//
