@@ -17,4 +17,10 @@ public class cantTipTest {
   @Test public void testRemoveRedundantIfInWhile() {
     assertFalse(cantTip.remvoeRedundantIf(findFirst.whileStatement(into.s("{while(true){if(true){}}}"))));
   }
+  
+  @Test public void testNullPrecedingFragmentTerminationScopeStatement(){
+    
+    assertTrue(cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(into.s("{for(;;){}}"))));
+    assertTrue(cantTip.declarationInitializerStatementTerminatingScope(findFirst.whileStatement(into.s("{while(true){}}"))));
+  }
 }
