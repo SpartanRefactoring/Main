@@ -13,16 +13,16 @@ public class Classifier extends ASTVisitor {
   final Map<String, List<EnhancedForStatement>> enhancedForLoops = new HashMap<>();
   static final Scanner input = new Scanner(System.in);
 
-  @Override public boolean visit(ForStatement node) {
+  @Override public boolean visit(final ForStatement node) {
     System.out.println(normalize.codeFragment(node + ""));
-    String classification = input.nextLine();
+    final String classification = input.nextLine();
     forLoops.putIfAbsent(classification, new ArrayList<>());
     forLoops.get(classification).add(node);
     return super.visit(node);
   }
-  @Override public boolean visit(EnhancedForStatement node) {
+  @Override public boolean visit(final EnhancedForStatement node) {
     System.out.println(normalize.codeFragment(node + ""));
-    String classification = input.nextLine();
+    final String classification = input.nextLine();
     enhancedForLoops.putIfAbsent(classification, new ArrayList<>());
     enhancedForLoops.get(classification).add(node);
     return super.visit(node);

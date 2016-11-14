@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue714 {
   @Test public void testRetTypeCompiles() {
-    @SuppressWarnings("unused") final boolean b = determineIf.isImmutable(null);
+    (determineIf.isImmutable(null)+"").hashCode();
   }
   @Test public void testNull() {
     auxBool(determineIf.isImmutable((TypeDeclaration) null));
