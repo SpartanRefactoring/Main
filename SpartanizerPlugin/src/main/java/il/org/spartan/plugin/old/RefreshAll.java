@@ -21,6 +21,7 @@ public final class RefreshAll extends BaseHandler {
         monitor.logEvaluationError(new RefreshAll(), e);
       }
   }
+
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     go();
     return null;

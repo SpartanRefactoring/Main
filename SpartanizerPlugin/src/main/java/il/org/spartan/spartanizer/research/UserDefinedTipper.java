@@ -11,7 +11,9 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N> imp
   @Override public final boolean canTip(final N ¢) {
     return prerequisite(¢);
   }
+
   protected abstract boolean prerequisite(final N ¢);
+
   /** @param n
    * @param s
    * @return */

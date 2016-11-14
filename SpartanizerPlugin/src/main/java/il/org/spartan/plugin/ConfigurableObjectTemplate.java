@@ -66,6 +66,7 @@ public interface ConfigurableObjectTemplate {
         listeners().pop("exhausted");
         return defaultValue();
       }
+
       private int defaultValue() {
         return hashCode();
       }

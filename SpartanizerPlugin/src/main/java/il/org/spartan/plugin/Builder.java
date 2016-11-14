@@ -44,6 +44,7 @@ public final class Builder extends IncrementalProjectBuilder {
   public static void deleteMarkers(final IFile ¢) throws CoreException {
     ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
+
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
       final int k = internalDelta.getKind();
@@ -54,10 +55,12 @@ public final class Builder extends IncrementalProjectBuilder {
       return true;
     });
   }
+
   static void addMarkers(final IResource ¢) throws CoreException {
     if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
       addMarkers((IFile) ¢);
   }
+
   private static void addMarker(final AbstractGUIApplicator a, final Tip r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
@@ -68,11 +71,13 @@ public final class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.TRANSIENT, false);
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
+
   private static void addMarkers(final IFile ¢) throws CoreException {
     Tips.reset();
     deleteMarkers(¢);
     addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
+
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggesions(u))
@@ -81,9 +86,11 @@ public final class Builder extends IncrementalProjectBuilder {
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
         }
   }
+
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
+
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
@@ -94,6 +101,7 @@ public final class Builder extends IncrementalProjectBuilder {
       m.done();
     return null;
   }
+
   protected void fullBuild() {
     try {
       getProject().accept(r -> {
@@ -104,6 +112,7 @@ public final class Builder extends IncrementalProjectBuilder {
       monitor.logCancellationRequest(this, x);
     }
   }
+
   private void build() throws CoreException {
     final IResourceDelta d = getDelta(getProject());
     if (d == null)
@@ -111,6 +120,7 @@ public final class Builder extends IncrementalProjectBuilder {
     else
       incrementalBuild(d);
   }
+
   private void build(final int kind) throws CoreException {
     if (kind != FULL_BUILD)
       build();

@@ -47,22 +47,27 @@ public final class Recurser<T> {
   public Recurser(final ASTNode root) {
     this(root, null);
   }
+
   public Recurser(final ASTNode root, final T current) {
     this.root = root;
     this.current = current;
     if (this.root == null)
       throw new NullPointerException();
   }
+
   public Recurser<T> from(final T value) {
     this.current = value;
     return this;
   }
+
   public T getCurrent() {
     return current;
   }
+
   public ASTNode getRoot() {
     return root;
   }
+
   public void postVisit(final Consumer<Recurser<T>> f) {
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty()) {
@@ -80,6 +85,7 @@ public final class Recurser<T> {
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
     f.accept(this);
   }
+
   public T postVisit(final Function<Recurser<T>, T> t) {
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
@@ -95,6 +101,7 @@ public final class Recurser<T> {
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
     return this.current = t.apply(this);
   }
+
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
     final List<? extends ASTNode> children = children(this.root);
@@ -106,6 +113,7 @@ public final class Recurser<T> {
     for (final Recurser<T> ¢ : rs)
       ¢.preVisit(f);
   }
+
   public T preVisit(final Function<Recurser<T>, T> t) {
     this.current = t.apply(this);
     final List<? extends ASTNode> children = children(this.root);

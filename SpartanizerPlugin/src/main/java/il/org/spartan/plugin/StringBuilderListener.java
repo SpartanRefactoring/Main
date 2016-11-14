@@ -19,14 +19,17 @@ public class StringBuilderListener implements Listener {
   public String $() {
     return $ + "";
   }
+
   @Override public void pop(final Object... ¢) {
     $.append(tab.end());
     Listener.super.pop(¢);
   }
+
   @Override public void push(final Object... ¢) {
     $.append(tab.begin());
     Listener.super.push(¢);
   }
+
   @Override public void tick(final Object... os) {
     $.append(newId() + ": ");
     final Separator s = new Separator(", ");
