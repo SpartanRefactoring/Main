@@ -21,6 +21,7 @@ public final class InfixMultiplicationSort extends InfixExpressionSortingFull im
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
+
   @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), TIMES);
   }

@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Netanel Felcher
  * @author Moshe Eliasof
  * @since 16-11-13 */
-@SuppressWarnings({ "static-method", "javadoc" }) public class Issue810 {
+@SuppressWarnings({ "static-method", "javadoc" })
+public class Issue810 {
   private static final String HELLO_JAVA = "Hello.java";
   public static final String ROOT = "./src/test/resources/";
   private final File f = new File(ROOT + HELLO_JAVA);
@@ -24,6 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void test0() {
     assertFalse(haz.ContinueStatement(ast));
   }
+
   @Test public void test1() {
     final List<SimpleName> lst = new ArrayList<>();
     lst.add(az.simpleName(wizard.ast("abc")));
@@ -31,9 +33,11 @@ import il.org.spartan.spartanizer.engine.*;
     lst.add(az.simpleName(wizard.ast("$")));
     assertTrue(haz.dollar(lst));
   }
+
   @Test public void test2() {
     assertTrue(haz.hasNoModifiers(az.bodyDeclaration(wizard.ast("public void foo(){ int a=1; return;}"))));
   }
+
   @Test public void test3() {
     assertFalse(haz.sideEffects(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}"))));
   }

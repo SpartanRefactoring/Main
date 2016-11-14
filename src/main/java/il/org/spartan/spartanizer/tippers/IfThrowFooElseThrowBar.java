@@ -30,9 +30,11 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }
+
   @Override public boolean prerequisite(final IfStatement ¢) {
     return ¢ != null && extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
+
   @Override public Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
     final Expression then = extract.throwExpression(then(s));

@@ -22,15 +22,18 @@ public final class TermsExpander {
   public static Expression simplify(final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
+
   /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
+
   /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
     final Expression ¢ = duplicate.of(t.expression);
     return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
   }
+
   private static Expression base(final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
@@ -42,6 +45,7 @@ public final class TermsExpander {
     assert $ != null;
     return step(chop(chop(ts)), $);
   }
+
   private static InfixExpression base(final Term t1, final Term t2) {
     if (t1.positive())
       return subject.pair(t1.expression, t2.expression).to(t2.positive() ? PLUS2 : MINUS2);
@@ -51,9 +55,11 @@ public final class TermsExpander {
         subject.pair(subject.operand(t1.expression).to(MINUS1), t2.expression)//
     ).to(MINUS2);
   }
+
   private static Expression base(final TermsCollector ¢) {
     return base(¢.all());
   }
+
   /** @param ts a list
    * @param $ The accumulator, to which one more {@link Term} should be added
    *        optimally
@@ -66,6 +72,7 @@ public final class TermsExpander {
     assert $ instanceof InfixExpression;
     return recurse(ts, (InfixExpression) $);
   }
+
   /** @see #recurse(List, InfixExpression) */
   private static Expression recurse(final List<Term> ts, final InfixExpression $) {
     assert $ != null;
@@ -80,6 +87,7 @@ public final class TermsExpander {
     assert first != null;
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
+
   private static Expression step(final List<Term> ¢, final Expression $) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse(¢, $);

@@ -19,20 +19,25 @@ public class Issue782 {
   @SuppressWarnings("static-method") @Test public void checkCompiles() {
     assert true;
   }
+
   @SuppressWarnings("static-method") @Test public void returnsNotNull() {
     assertNotNull(getAll.privateFields(null));
   }
+
   @SuppressWarnings("static-method") @Test public void emptyClassShouldReturnEmptyList() {
     assertTrue(getAll.privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class empty{}")).types().get(0)).isEmpty());
   }
+
   @SuppressWarnings("static-method") @Test public void onePrivateFieldReturnOneElementList() {
     assertEquals(1,
         getAll.privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types().get(0)).size());
   }
+
   @SuppressWarnings("static-method") @Test public void onePublicFieldReturnEmptyList() {
     assertEquals(0,
         getAll.privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic{public int x;}")).types().get(0)).size());
   }
+
   @SuppressWarnings("static-method") @Test public void onePublicFieldAndOnePrivateFieldReturnOneElementList() {
     assertEquals(1,
         getAll
@@ -40,20 +45,24 @@ public class Issue782 {
                 (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublicOnePrivate{public int x; private int y;}")).types().get(0))
             .size());
   }
+
   @SuppressWarnings("static-method") @Test public void checkOnePrivateName() {
     assertEquals("x",
         getAll.privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types().get(0)).get(0));
   }
+
   @SuppressWarnings("static-method") @Test public void checkAnotherPrivateName() {
     assertEquals("y",
         getAll.privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int y;}")).types().get(0)).get(0));
   }
+
   @SuppressWarnings("static-method") @Test public void check2PrivatesName() {
     final List<String> names = getAll
         .privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class twoPrivates{private int x; private int y;}")).types().get(0));
     assertEquals("x", names.get(0));
     assertEquals("y", names.get(1));
   }
+
   @SuppressWarnings("static-method") @Test public void checkMultiDeclarationsInOneLine() {
     final List<String> names = getAll
         .privateFields((TypeDeclaration) az.compilationUnit(wizard.ast("public class onePrivate{private int a,b,c,y;}")).types().get(0));
@@ -62,6 +71,7 @@ public class Issue782 {
     assertEquals("c", names.get(2));
     assertEquals("y", names.get(3));
   }
+
   @SuppressWarnings("static-method") @Test public void checkFieldsInsideMethods() {
     final List<String> names = getAll.privateFields((TypeDeclaration) az
         .compilationUnit(wizard.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")).types().get(0));
