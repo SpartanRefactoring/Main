@@ -31,7 +31,7 @@ public class ReportGenerator {
   protected String beforeFileName;
   protected String spectrumFileName;
   
-  protected static MetricsReport metric_report = new MetricsReport();
+//  protected static MetricsReport metric_report = new MetricsReport(); // temporarily disabled
   
   public static void main(String[] args){
     //
