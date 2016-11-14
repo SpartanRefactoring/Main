@@ -36,6 +36,7 @@ public class leonidasSays {
     public tipper(final String pattern, final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
+
     public tipper(final String pattern, final String replacement, final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
