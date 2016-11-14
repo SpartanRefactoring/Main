@@ -22,4 +22,7 @@ public class Issue819 {
     s.set("Hamadia");
     assertEquals("Hamadia", s.inner());
   }
+  @Test public void str_test3() {
+    assertEquals("Doron Miran", new Str("Doron Miran").inner());
+  }
 }
