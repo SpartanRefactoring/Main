@@ -9,15 +9,18 @@ public class CleanerVisitor extends ASTVisitor {
     n.delete();
     return true;
   }
+
   @Override public boolean visit(final LineComment ¢) {
     System.out.println("line");
     ¢.delete();
     return true;
   }
+
   @Override public boolean visit(final BlockComment ¢) {
     ¢.delete();
     return true;
   }
+
   @Override public boolean visit(final ImportDeclaration ¢) {
     ¢.delete();
     return true;

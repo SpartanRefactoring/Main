@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
  * @since 2016 */
-@SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
+@SuppressWarnings("static-method")
+public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
   public static final attribute unknown = attribute.UNKNOWN;
 
   /** Used to collect attributes from a Refactorer's run, used later in printing
@@ -34,53 +35,63 @@ import il.org.spartan.spartanizer.utils.*;
   public static boolean isHandler() {
     return false;
   }
+
   /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a marker
    *         resolution */
   public boolean isMarkerResolution() {
     return false;
   }
+
   /** @param e JD
    * @return the applicator used by this refactorer
    *         [[SuppressWarningsSpartan]] */
   public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent e) {
     return null;
   }
+
   /** @param m JD
    * @return the applicator used by this refactorer
    *         [[SuppressWarningsSpartan]] */
   public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker m) {
     return null;
   }
+
   /** @return the compilation units designated for refactorer
    *         [[SuppressWarningsSpartan]] */
   public Selection getSelection() {
     return null;
   }
+
   /** @return the compilation units designated for refactorer
    *         [[SuppressWarningsSpartan]] */
   public Selection getSelection(@SuppressWarnings("unused") final IMarker marker) {
     return null;
   }
+
   /** Return null for canceled message.
    * @return opening message for given attributes [[SuppressWarningsSpartan]] */
   public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> attributes) {
     return null;
   }
+
   /** Return null for canceled message.
    * @return ending message for given attributes [[SuppressWarningsSpartan]] */
   public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> attributes) {
     return null;
   }
+
   /** @return how many pass the refactorer should conduct */
   public int passesCount() {
     return 1;
   }
+
   /** @param compilationUnits JD
    * @return message to be displayed by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
   @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> compilationUnits, final int pass) {
     return getLabel();
   }
+
   /** @param inner
    * @param currentCompilationUnit
    * @return sub message to be displayed by a {@link IProgressMonitor}
@@ -89,17 +100,20 @@ import il.org.spartan.spartanizer.utils.*;
       final ICompilationUnit currentCompilationUnit) {
     return null;
   }
+
   /** @param compilationUnits JD
    * @return work to be done by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
   public int getProgressMonitorWork(@SuppressWarnings("unused") final List<ICompilationUnit> compilationUnits) {
     return IProgressMonitor.UNKNOWN;
   }
+
   /** @return <code><b>true</b></code> <em>iff</em> the refactorer shows a
    *         display while working */
   public boolean hasDisplay() {
     return false;
   }
+
   /** @param applicator JD
    * @param targetCompilationUnits JD
    * @param attributes JD
@@ -109,6 +123,7 @@ import il.org.spartan.spartanizer.utils.*;
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
+
   /** @param applicator JD
    * @param targetCompilationUnits JD
    * @param attributes JD
@@ -118,16 +133,20 @@ import il.org.spartan.spartanizer.utils.*;
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
+
   @Override public String getLabel() {
     return null;
   }
+
   @Override public Void execute(final ExecutionEvent ¢) {
     return !isHandler() ? null : go(¢, null);
   }
+
   @Override public void run(final IMarker ¢) {
     if (isMarkerResolution())
       go(null, ¢);
   }
+
   private Void go(final ExecutionEvent e, final IMarker m) {
     final Selection selection = either(getSelection(), getSelection(m));
     final AbstractGUIApplicator applicator = either(getApplicator(e), getApplicator(m));
@@ -155,12 +174,14 @@ import il.org.spartan.spartanizer.utils.*;
     show(getEndingMessage(attributes));
     return null;
   }
+
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
     for (final attribute ¢ : attribute.values())
       $.put(¢, unknown);
     return $;
   }
+
   /** [[SuppressWarningsSpartan]] */
   private boolean doWork(final IRunnableWithProgress r, final ProgressMonitorDialog d) {
     if (r != null)
@@ -173,6 +194,7 @@ import il.org.spartan.spartanizer.utils.*;
       }
     return true;
   }
+
   private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
       @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
@@ -205,13 +227,16 @@ import il.org.spartan.spartanizer.utils.*;
       }
     };
   }
+
   private static <T> T either(final T t1, final T t2) {
     return t1 != null ? t1 : t2;
   }
+
   private static void put(final Map<attribute, Object> m, final attribute a, final Object o) {
     if (o != null)
       m.put(a, o);
   }
+
   private static MessageDialog show(final String ¢) {
     if (¢ == null)
       return null;
@@ -219,27 +244,32 @@ import il.org.spartan.spartanizer.utils.*;
     $.open();
     return $;
   }
+
   private void closeDialog(final MessageDialog initialDialog) {
     if (initialDialog != null)
       initialDialog.close();
   }
+
   private static boolean finish(final IProgressMonitor pm) {
     final boolean $ = pm.isCanceled();
     pm.done();
     return $;
   }
+
   private static List<ICompilationUnit> currentCompilationUnits(final List<ICompilationUnit> us, final List<ICompilationUnit> ds) {
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.addAll(us);
     $.removeAll(ds);
     return $;
   }
+
   private static boolean valid(final Object... os) {
     for (final Object ¢ : os)
       if (¢ == null)
         return false;
     return true;
   }
+
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {
     d.open();
     final Shell s = d.getShell();

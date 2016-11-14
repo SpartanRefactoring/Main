@@ -30,15 +30,18 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
         return true;
     return false;
   }
+
   static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
   }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
@@ -73,6 +76,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     remove(f, r, g);
     return r;
   }
+
   private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!(initializer instanceof ArrayInitializer))
       return initializer;

@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Alex V.
  * @since 16-11-05 */
 @SuppressWarnings("static-method") //
-@Ignore // TODO: Nikita and Alex: your tests fail now after unused variables were removed.
 public class Issue717 {
   MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
   MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
@@ -26,18 +25,23 @@ public class Issue717 {
   @Test public void isCompiled() {
     assert true;
   }
+
   @Test public void nullCheckReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(null));
   }
+
   @Test public void fiveStatBlockReturnsTrue() {
     assertTrue(determineIf.hasBigBlock(fiveStatMethod));
   }
+
   @Test public void oneStatBlockReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(oneStatMethod));
   }
+
   @Test public void fourStatBlockReturnsFalse() {
     assertFalse(determineIf.hasBigBlock(fourStatMethod));
   }
+
   private String generateRandomString(final int maxLen) {
     final StringBuffer randStr = new StringBuffer();
     int len = 0;
@@ -45,7 +49,8 @@ public class Issue717 {
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)
       len = 1;
-    for (int ¢ = 0; ¢ < len; ++¢)
+    randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
+    for (int ¢ = 1; ¢ < len; ++¢)
       randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
     return randStr + "";
   }
@@ -68,21 +73,27 @@ public class Issue717 {
     randomBigBlock += "}";
     assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast(randomBigBlock)));
   }
+
   @Test public void methodWithNoBodyReturnsFalse() {
     assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int a(String a);")));
   }
+
   @Test public void methodWithNoStatementsReturnsFalse() {
     assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int f(int x){}")));
   }
+
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}")));
   }
+
   @Test public void smallBlockWithAnnotationReturnsFalse() {
     assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Inherited private void g(){;;;;}")));
   }
+
   @Test public void smallBlockWithModifierReturnsFalse() {
     assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public static void g(){;;;;}")));
   }
+
   @Test public void smallBlockWithModifierReturnsTrue() {
     assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("private static void g(){;;;;;}")));
   }
