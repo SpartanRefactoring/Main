@@ -34,6 +34,6 @@ public class associativityTest {
     assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x++"))));
   }
   @SuppressWarnings("static-method") @Test public void test7() {
-    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x&&y"))));
+    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x && y"))));
   }
 }
