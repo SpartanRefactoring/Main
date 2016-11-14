@@ -15,7 +15,9 @@ import il.org.spartan.spartanizer.utils.*;
 /** Failing tests of issue 295 -
  * DeclarationInitializerStatementTerminatingScope.
  * @since 2016 */
-@SuppressWarnings("static-method") @Ignore public class issue411 {
+@SuppressWarnings("static-method")
+@Ignore
+public class issue411 {
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
   private static final String OUTPUT1 = "boolean f(){for(A b:f(1))if(b.a)return true;return false;}";
@@ -34,9 +36,11 @@ import il.org.spartan.spartanizer.utils.*;
     assert iz.expressionOfEnhancedFor(seriesA$step3.getParent(), seriesA$step1);
     assert !iz.expressionOfEnhancedFor(seriesA$step3, seriesA$step1);
   }
+
   @Test public void A$d() {
     assert iz.expressionOfEnhancedFor(seriesA$step3.getParent(), seriesA$step1);
   }
+
   @Test public void B01() {
     trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { " + //
         "List<VariableDeclarationFragment> lst =  fragments(s); " + //
@@ -52,6 +56,7 @@ import il.org.spartan.spartanizer.utils.*;
             "}").//
             stays();
   }
+
   @Test public void B02() {
     trimmingOf("void  f(V s) { " + //
         "List<U> lst =  fragments(s); " + //
@@ -67,6 +72,7 @@ import il.org.spartan.spartanizer.utils.*;
             "}").//
             stays();
   }
+
   @Test public void B03() {
     trimmingOf("void  f(V variableDeclarationFragment) { " + //
         "List<U> lst =  fragments(variableDeclarationFragment); " + //
@@ -82,6 +88,7 @@ import il.org.spartan.spartanizer.utils.*;
             "}").//
             stays();
   }
+
   @Test public void B05() {
     trimmingOf("boolean  f(V variableDeclarationFragment) { " + //
         "V x=  fragments(variableDeclarationFragment); " + //
@@ -97,6 +104,7 @@ import il.org.spartan.spartanizer.utils.*;
             "}").//
             stays();
   }
+
   @Test public void B06() {
     trimmingOf("boolean f() { " + //
         "V x= g(variableDeclarationFragment); " + //
@@ -111,21 +119,25 @@ import il.org.spartan.spartanizer.utils.*;
             "return true; " + //
             "}").stays();
   }
+
   @Test public void B07() {
     trimmingOf(INPUT1) //
         .gives(OUTPUT1)//
         .stays();
   }
+
   @Test public void B17() {
     assert tipper.canTip(variableDeclarationFragment) : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
         fault.done();
   }
+
   @Test public void B20() {
     assert variableDeclarationFragment != null;
     azzert.that(tipper.tip(variableDeclarationFragment), iz("a"));
   }
+
   @Test public void B21() {
     assert tipper.prerequisite(variableDeclarationFragment) : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //

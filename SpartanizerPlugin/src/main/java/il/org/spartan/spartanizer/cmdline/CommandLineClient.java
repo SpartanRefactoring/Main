@@ -13,6 +13,7 @@ public class CommandLineClient {
     if (args.length == 0)
       processCommandLine(args);
   }
+
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
     new CommandLineClient();
     // final List<String> remaining = extract(args, r);
@@ -23,6 +24,7 @@ public class CommandLineClient {
     new CommandLineSpartanizer(inputDir).apply();
     // r.printExternals();
   }
+
   static void printPrompt() {
     System.out.println("Help");
     System.out.println("");

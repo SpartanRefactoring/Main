@@ -17,12 +17,15 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
+
   /** @return child list property descriptor of the parent of the node we are
    *         replacing */
   public abstract ChildListPropertyDescriptor listDescriptor(N n);
+
   @Override public boolean prerequisite(final N ¢) {
     return ¢.getParent() != null && go(ASTRewrite.create(¢.getAST()), ¢, null) != null;
   }
+
   @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

@@ -31,9 +31,11 @@ public class Generic$Applicator {
     }
     return as.list($); // useless?
   }
+
   public Generic$Applicator() {
     selectedNodeTypes = setAllNodeTypes();
   }
+
   public Generic$Applicator(final String[] clazzes) {
     if (clazzes == null)
       selectedNodeTypes = setAllNodeTypes();
@@ -42,16 +44,19 @@ public class Generic$Applicator {
       System.out.println("selected: " + selectedNodeTypes.size());
     }
   }
+
   public Generic$Applicator(final String[] clazzes, final String[] tipperGroups) {
     this(clazzes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
+
   private static List<String> setAllTipperGroups() {
     final List<String> $ = new ArrayList<>();
     for (final TipperGroup ¢ : TipperGroup.values())
       $.add(¢.name());
     return $;
   }
+
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
         VariableDeclarationFragment.class, //
@@ -85,18 +90,21 @@ public class Generic$Applicator {
         VariableDeclarationFragment.class //
     );
   }
+
   public static void main(final String[] args) {
     for (final Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
       System.out.println(i);
     for (final String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
       System.out.println(¢);
   }
+
   private static List<String> setSelectedTipperGroups(final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String ¢ : ss)
       $.add(¢);
     return $;
   }
+
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
