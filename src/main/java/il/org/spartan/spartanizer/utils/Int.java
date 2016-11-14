@@ -11,6 +11,7 @@ public final class Int {
   public Integer inner() {
     return Integer.valueOf(inner);
   }
+
   /** @param ¢ JD
    * @return */
   public static Int valueOf(final int ¢) {

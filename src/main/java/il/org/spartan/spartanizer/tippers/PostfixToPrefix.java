@@ -18,17 +18,21 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
   private static String description(final Operator ¢) {
     return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }
+
   private static PrefixExpression.Operator pre2post(final PostfixExpression.Operator ¢) {
     return ¢ == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
+
   @Override public String description(final PostfixExpression ¢) {
     return "Convert post-" + description(¢.getOperator()) + " of " + operand(¢) + " to pre-" + description(¢.getOperator());
   }
+
   @Override public boolean prerequisite(final PostfixExpression ¢) {
     return !(¢.getParent() instanceof Expression) && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(¢) == null
         && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(¢) == null
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }
+
   @Override public PrefixExpression replacement(final PostfixExpression ¢) {
     return subject.operand(step.operand(¢)).to(pre2post(¢.getOperator()));
   }

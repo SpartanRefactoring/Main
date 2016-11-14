@@ -27,9 +27,11 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     arguments($).add(duplicate.of(x));
     return $;
   }
+
   @Override public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
+
   @Override public ASTNode replacement(final MethodInvocation i) {
     final SimpleName n = name(i);
     if (!mns.contains(n + ""))

@@ -9,7 +9,9 @@ import org.junit.runners.*;
  * {@link $BodyDeclarationRedundantModifiers}
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue229 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
+public final class Issue229 {
   @Test public void vanilla() {
     trimmingOf("final class X { @SafeVarargs public final void f(final int... __) {}}").stays();
   }
