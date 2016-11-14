@@ -17,7 +17,7 @@ public class normalize {
   public static String testcase(final String raw, final int name, final int issue) {
     return wrapTest(name, issue, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
-  public static String codeFragment(final String raw) {
+  public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
   /** escapes all "s

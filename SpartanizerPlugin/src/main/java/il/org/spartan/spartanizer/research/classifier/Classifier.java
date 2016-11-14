@@ -4,31 +4,47 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
-  final Map<String, List<ForStatement>> forLoops = new HashMap<>();
-  final Map<String, List<EnhancedForStatement>> enhancedForLoops = new HashMap<>();
+  final Map<String, List<ASTNode>> forLoops = new HashMap<>();
+  final List<ASTNode> forLoopsList = new ArrayList<>();
   static final Scanner input = new Scanner(System.in);
 
   @Override public boolean visit(final ForStatement node) {
-    System.out.println(normalize.codeFragment(node + ""));
-    final String classification = input.nextLine();
-    forLoops.putIfAbsent(classification, new ArrayList<>());
-    forLoops.get(classification).add(node);
+    forLoopsList.add(node);
     return super.visit(node);
   }
   @Override public boolean visit(final EnhancedForStatement node) {
-    System.out.println(normalize.codeFragment(node + ""));
-    final String classification = input.nextLine();
-    enhancedForLoops.putIfAbsent(classification, new ArrayList<>());
-    enhancedForLoops.get(classification).add(node);
+    forLoopsList.add(node);
     return super.visit(node);
   }
-  public void summarize() {
-    System.out.println(forLoops);
-    System.out.println(enhancedForLoops);
+  public void analyze(final ASTNode n) {
+    n.accept(this);
+    System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
+    System.out.println("lets classify them together");
+    System.out.println("enter classification for each for loop, [p] to skip example");
+    for (ASTNode ¢ : forLoopsList) {
+      UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+      int count = 0;
+      for (ASTNode l : forLoopsList)
+        if (t.canTip(l) && !l.equals(¢))
+          ++count;
+      if (count != 0) {
+        System.out.println("WOW: pattern [" + format.code(generalize.code(¢ + "")) + "]\nmatched " + count + " times.");
+        classify(¢);
+      }
+    }
+  }
+  /** @param ¢ to classify */
+  private String classify(ASTNode ¢) {
+    System.out.println(format.code(generalize.code(¢ + "")));
+    final String $ = input.nextLine();
+    forLoops.putIfAbsent($, new ArrayList<>());
+    forLoops.get($).add(¢);
+    return $;
   }
 }
