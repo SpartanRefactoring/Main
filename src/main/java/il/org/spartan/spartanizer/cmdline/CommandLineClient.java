@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import il.org.spartan.spartanizer.cmdline.report.*;
+
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
