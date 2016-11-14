@@ -45,4 +45,7 @@ public class Issue835 {
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
     assertNull(t.tip(az.block(wizard.ast("{return 1;}"))));
   }
+  @Test public void returnNotNullNonEmptyBlock() {
+    assertNotNull(t.tip(az.block(wizard.ast("{int x;}"))));
+  }
 }
