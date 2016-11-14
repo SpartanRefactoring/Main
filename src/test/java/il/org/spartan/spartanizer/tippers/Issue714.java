@@ -19,37 +19,47 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue714 {
   @Test public void testRetTypeCompiles() {
-    (determineIf.isImmutable(null)+"").hashCode();
+    (determineIf.isImmutable(null) + "").hashCode();
   }
+
   @Test public void testNull() {
     auxBool(determineIf.isImmutable((TypeDeclaration) null));
   }
+
   @Test public void testSimpleTypeDecleration() {
     assertTrue(determineIf.isImmutable((TypeDeclaration) az.compilationUnit(wizard.ast("public class A {}")).types().get(0)));
   }
+
   @Test public void testNoFinal() {
     assertFalse(determineIf.isImmutable((TypeDeclaration) az.compilationUnit(wizard.ast("public class A {int x;}")).types().get(0)));
   }
+
   @Test public void testDoubleNotFinal() {
     assertFalse(determineIf.isImmutable(typeConvert("public class A {double x;}")));
   }
+
   @Test public void testONeWithFinalAndOneWithout() {
     assertFalse(determineIf.isImmutable(typeConvert("public class A {int x;final int y;}")));
   }
+
   @Test public void testManyFinalTypes() {
     assertTrue(determineIf.isImmutable(typeConvert("public class A {final int x; final double y; final String a; final Object o;}")));
   }
+
   @Test public void testManyStaticFinalTypes() {
     assertTrue(determineIf
         .isImmutable(typeConvert("public class A {final static int x; static final double y; public final String a; private final Object o;}")));
   }
+
   @Test public void testClassWithFUnction() {
     assertTrue(determineIf.isImmutable(typeConvert("public class A {" + "final static int x; " + "static final double y;"
         + "public void abc(int x, double y){" + "int b; final int c;" + "}" + "public class b{" + "int h;" + "}" + "final boolean g;" + "}")));
   }
+
   static void auxBool(@SuppressWarnings("unused") final boolean __) {
     assert true;
   }
+
   private TypeDeclaration typeConvert(final String $) {
     return (TypeDeclaration) az.compilationUnit(wizard.ast($)).types().get(0);
   }

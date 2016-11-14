@@ -8,43 +8,57 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@FixMethodOrder(MethodSorters.JVM) @SuppressWarnings({ "static-method", "javadoc" }) public final class UtilsTest {
+@FixMethodOrder(MethodSorters.JVM)
+@SuppressWarnings({ "static-method", "javadoc" })
+public final class UtilsTest {
   @Test public void compareFF() {
     azzert.that(compare(false, false), is(0));
   }
+
   @Test public void compareFT() {
     azzert.that(compare(false, true), lessThan(0));
   }
+
   @Test public void compareTF() {
     azzert.that(compare(true, false), greaterThan(0));
   }
+
   @Test public void compareTT() {
     azzert.that(compare(true, true), is(0));
   }
+
   @Test public void inTypicalFalse() {
     assert !in("X", "A", "B", "C");
   }
+
   @Test public void inTypicalTrue() {
     assert in("A", "A", "B", "C");
   }
+
   @Test public void removePrefiEmpty() {
     assertEquals(removePrefix("BAAAAB", "A"), "BAAAAB");
   }
+
   @Test public void removePrefiExhaustive() {
     assertEquals(removePrefix("AXAXAXAXAXAXAXAX", "AX"), "");
   }
+
   @Test public void removePrefixTypical() {
     assertEquals(removePrefix("AAAABC", "AA"), "BC");
   }
+
   @Test public void removeSuffiEmpty() {
     assertEquals(removeSuffix("BAAAAB", "A"), "BAAAAB");
   }
+
   @Test public void removeSuffiExhaustive() {
     assertEquals(removeSuffix("AXAXAXAXAXAXAXAX", "AX"), "");
   }
+
   @Test public void removeSuffixTypical() {
     assertEquals(removeSuffix("AAAABC", "BC"), "AAAA");
   }
+
   @Test public void removeWhitesTest() {
     azzert.that(removeWhites("ABC"), is("ABC"));
     azzert.that(removeWhites("ABC\n"), is("ABC"));

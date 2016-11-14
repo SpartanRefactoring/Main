@@ -20,91 +20,121 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialization(¢);
     initialized = true;
   }
+
   @Override public final boolean visit(final Assignment ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final Block ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final CastExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final ClassInstanceCreation ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final ConditionalExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final EnhancedForStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final EnumDeclaration ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final FieldDeclaration ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final ForStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final IfStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final InfixExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final InstanceofExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final MethodDeclaration ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final MethodInvocation ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final Modifier ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final NormalAnnotation ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final PostfixExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final PrefixExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final ReturnStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final SingleVariableDeclaration ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final SuperConstructorInvocation ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final ThrowStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final TypeDeclaration ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final VariableDeclarationExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final VariableDeclarationFragment ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final VariableDeclarationStatement ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final WhileStatement ¢) {
     return cautiousGo(¢);
   }
+
   protected boolean cautiousGo(final ASTNode ¢) {
     return !exclude.isExcluded(¢) && go(¢);
   }
+
   protected abstract <N extends ASTNode> boolean go(final N n);
+
   protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
     // overridden
   }

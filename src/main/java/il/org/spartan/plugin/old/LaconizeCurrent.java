@@ -18,12 +18,15 @@ public final class LaconizeCurrent extends LaconizeSelection implements IMarkerR
   @Override public String getLabel() {
     return "Laconize file";
   }
+
   @Override public Range getSelection(@SuppressWarnings("unused") final ICompilationUnit __) {
     return new Range(0, 0);
   }
+
   @Override public boolean isRepeating() {
     return true;
   }
+
   @Override public void run(@SuppressWarnings("unused") final IMarker __) {
     try {
       execute();

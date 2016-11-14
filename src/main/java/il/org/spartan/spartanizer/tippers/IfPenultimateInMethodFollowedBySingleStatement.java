@@ -23,12 +23,15 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
+
   static <T> void removeLast(final List<T> ¢) {
     ¢.remove(¢.size() - 1);
   }
+
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
