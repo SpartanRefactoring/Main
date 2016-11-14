@@ -37,24 +37,24 @@ public class associativityTest {
   @Test public void test6() {
     assert !associativity.isRightToLeft(az.expression(wizard.ast("x && y")));
   }
-  
+
   @Test public void test7() {
     assert associativity.isLeftToRight(az.expression(wizard.ast("x && !y")));
   }
-  
- @Test public void test8() {
+
+  @Test public void test8() {
     assert !associativity.isLeftToRight(az.infixExpression(wizard.ast("a&&b")).getOperator());
   }
- 
- @Test public void test9() {
-   assert !associativity.isLeftToRight(az.expression(wizard.ast("x = y == 8 ? 9 : 6")));
- }
- 
- @Test public void test10() {
-   assert !associativity.isLeftToRight(az.expression(wizard.ast("(int)x")));
- }
- 
- @Test public void test11() {
-   assert associativity.isLeftToRight(az.expression(wizard.ast("arr[9]")));
- }
+
+  @Test public void test9() {
+    assert !associativity.isLeftToRight(az.expression(wizard.ast("x = y == 8 ? 9 : 6")));
+  }
+
+  @Test public void test10() {
+    assert !associativity.isLeftToRight(az.expression(wizard.ast("(int)x")));
+  }
+
+  @Test public void test11() {
+    assert associativity.isLeftToRight(az.expression(wizard.ast("arr[9]")));
+  }
 }
