@@ -149,4 +149,8 @@ public final class GuessedContextTest {
             + "  return $;"//
             + " }"));
   }
+  @Test public void complicated2() {
+    assertEquals(GuessedContext.STATEMENTS_LOOK_ALIKE, GuessedContext.find(" for (int $N0 = 0; $N0 < $N1; ++$N0) $N2 ^= $N3.$N4($N5, $N6)[0];" //
+    ));
+  }
 }
