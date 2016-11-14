@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.report;
 
 import static il.org.spartan.tide.*;
 
@@ -15,7 +15,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+
+/**
+ * Generator for reports
+ * @author Matteo Orru'
+ * @since 2016
+ */
 
 public class ReportGenerator {
   protected static String outputFolder = "/tmp/";
@@ -23,6 +30,13 @@ public class ReportGenerator {
   protected String afterFileName;
   protected String beforeFileName;
   protected String spectrumFileName;
+  
+  protected static MetricsReport metric_report = new MetricsReport();
+  
+  public static void main(String[] args){
+    //
+  }
+  
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
 
@@ -94,7 +108,7 @@ public class ReportGenerator {
   }
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    String a; // TODO Matteo: to be converted to double or float?
+    String a; // TODO Matteo: to be converted to double or float? -- Matteo
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // system.p(¢.function().run(n1),
                                                                     // ¢.function().run(n2));
@@ -102,7 +116,7 @@ public class ReportGenerator {
     }
   }
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    String a; // TODO Matteo: to be converted to double or float?
+    String a; // TODO Matteo: to be converted to double or float? -- Matteo
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       a = system.p(¢.function().run(n1), ¢.function().run(n2));
       ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
