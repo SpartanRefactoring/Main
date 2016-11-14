@@ -25,9 +25,11 @@ public class Independent extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return false;
     return true;
   }
+
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
     return searchAncestors.forContainingType().from(¢);
   }
+
   private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
     return searchAncestors.forContainingMethod().from(¢);
   }

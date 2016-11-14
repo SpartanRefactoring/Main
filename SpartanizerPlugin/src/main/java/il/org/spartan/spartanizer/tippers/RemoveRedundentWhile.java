@@ -15,6 +15,7 @@ public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> imp
   @Override public String description(final WhileStatement ¢) {
     return "remove :" + ¢;
   }
+
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return ¢ == null || haz.sideEffects(¢.getExpression()) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }

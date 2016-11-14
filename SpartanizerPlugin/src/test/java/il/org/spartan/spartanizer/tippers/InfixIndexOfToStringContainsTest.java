@@ -11,6 +11,7 @@ public class InfixIndexOfToStringContainsTest {
     trimmingOf("String str; String stringy; return str.indexOf(stringy) >= 0;").gives("String str; String stringy; return str.contains(stringy);")
         .stays();
   }
+
   @SuppressWarnings("static-method") @Test public void testMutation1() {
     trimmingOf("\"str\".indexOf(\"stringy\") >= 0").gives("\"str\".contains(\"stringy\")").stays();
   }

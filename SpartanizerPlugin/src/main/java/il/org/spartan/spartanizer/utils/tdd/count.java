@@ -27,6 +27,7 @@ public enum count {
     });
     return $.inner;
   }
+
   /** @author Aviad Cohen
    * @author Noam Yefet
    * @param ¢
@@ -43,6 +44,7 @@ public enum count {
     });
     return count.inner;
   }
+
   /** @author Sharon Kuninin
    * @author Yarden Lev
    * @param ¢ the CompilationUnit its methods are counted
@@ -61,6 +63,7 @@ public enum count {
     });
     return counter.inner;
   }
+
   /** see issue #776 for more details
    * @author Yevgenia Shandalov
    * @author Osher Hajaj

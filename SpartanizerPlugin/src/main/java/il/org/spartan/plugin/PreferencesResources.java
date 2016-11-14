@@ -46,9 +46,11 @@ public final class PreferencesResources {
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
     }
+
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
+
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
       for (final TipperGroup $ : TipperGroup.values())
         if ($.clazz.isAssignableFrom(¢))
@@ -65,9 +67,11 @@ public final class PreferencesResources {
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";
     }
+
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);
     }
+
     private Object getLabel(final Class<? extends TipperCategory> k) {
       try {
         return k.getField("label").get(null);
