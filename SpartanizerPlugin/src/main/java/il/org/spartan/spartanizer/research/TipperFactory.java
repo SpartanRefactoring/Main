@@ -51,7 +51,7 @@ public class TipperFactory {
                 return true;
               }
             });
-            r.replace(n, wizard.ast(stringifySubBlock(n, 0, p.first) + $.get() + stringifySubBlock(n, p.second)), g);
+            r.replace(n, wizard.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue())), g);
           }
         };
       }
