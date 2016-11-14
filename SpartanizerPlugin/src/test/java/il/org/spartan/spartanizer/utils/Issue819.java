@@ -17,20 +17,24 @@ public class Issue819 {
   @Test public void str_test1() {
     assertEquals(null, new Str().inner());
   }
+
   @Test public void str_test2() {
     final Str s = new Str();
     s.set("Hamadia");
     assertEquals("Hamadia", s.inner());
   }
+
   @Test public void str_test3() {
     assertEquals("Doron Miran", new Str("Doron Miran").inner());
   }
+
   @Test public void str_test4() {
-    assertTrue(new Str().isEmptyx());
-    assertFalse(new Str("bla").isEmptyx());
+    assert new Str().isEmptyx();
+    assert !new Str("bla").isEmptyx();
   }
+
   @Test public void str_test5() {
-    assertTrue(new Str("This is not empty").notEmpty());
-    assertFalse(new Str().notEmpty());
+    assert new Str("This is not empty").notEmpty();
+    assert !new Str().notEmpty();
   }
 }
