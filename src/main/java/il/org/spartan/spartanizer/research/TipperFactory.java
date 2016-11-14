@@ -1,16 +1,6 @@
 package il.org.spartan.spartanizer.research;
-
-/** Factory to create tippers out of user strings! Much easier to implement
- * tippers with. <br>
- * $Xi for expression i.e. - foo(a,b,c)*d + 17 <br>
- * $M for MethodInvocation i.e. - func() <br>
- * $N for Name i.e. - func <br>
- * $B for block or statement i.e. - if(x) return 17; <br>
- * $A for method arguments i.e. - func($A) will match func(1,obj, 17+2) and even
- * func() <br>
- * @author Ori Marcovitch
- * @since 2016 */
 import java.util.*;
+import il.org.spartan.utils.Unbox;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -22,6 +12,17 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
+
+/** Factory to create tippers out of user strings! Much easier to implement
+ * tippers with. <br>
+ * $Xi for expression i.e. - foo(a,b,c)*d + 17 <br>
+ * $M for MethodInvocation i.e. - func() <br>
+ * $N for Name i.e. - func <br>
+ * $B for block or statement i.e. - if(x) return 17; <br>
+ * $A for method arguments i.e. - func($A) will match func(1,obj, 17+2) and even
+ * func() <br>
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class TipperFactory {
   public static <N extends ASTNode> UserDefinedTipper<N> subBlockTipper(final String _pattern, final String _replacement, final String description) {
     return newSubBlockTipper(_pattern, _replacement, description);
@@ -33,14 +34,13 @@ public class TipperFactory {
       final ASTNode pattern = wizard.ast(reformat$Bs(_pattern));
       final String replacement = reformat$Bs(_replacement);
 
-      @Override @SuppressWarnings("boxing") public Tip tip(final N n) {
-        final Pair<Integer, Integer> idxs = Matcher.getBlockMatching(az.block(pattern), az.block(n));
-        final String matching = stringifySubBlock(n, idxs.first, idxs.second);
-        return new Tip(description(n), n, this.getClass(), getMatchedNodes(az.block(n), idxs)) {
+      @Override public Tip tip(final N n) {
+        final Pair<Integer, Integer> p = Matcher.getBlockMatching(az.block(pattern), az.block(n));
+        final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
+        return new Tip(description(n), n, this.getClass(), getMatchedNodes(az.block(n), p)) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching));
-            final Wrapper<String> $ = new Wrapper<>();
-            $.set(replacement);
+            final Wrapper<String> $ = new Wrapper<>(replacement);
             for (final String ¢ : enviroment.keySet())
               if (¢.startsWith("$B"))
                 $.set($.get().replace(¢, enviroment.get(¢) + ""));
@@ -51,7 +51,7 @@ public class TipperFactory {
                 return true;
               }
             });
-            r.replace(n, wizard.ast(stringifySubBlock(n, 0, idxs.first) + $.get() + stringifySubBlock(n, idxs.second)), g);
+            r.replace(n, wizard.ast(stringifySubBlock(n, 0, p.first) + $.get() + stringifySubBlock(n, p.second)), g);
           }
         };
       }
@@ -74,7 +74,11 @@ public class TipperFactory {
     };
   }
 
-  public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
+  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement) {
+    return patternTipper(pattern, replacement, String.format("[%s] => [%s]", pattern, replacement));
+  }
+
+  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
     final ASTNode pattern = extractStatementIfOne(wizard.ast(reformat$Bs(_pattern)));
     final String replacement = reformat$Bs(_replacement);
     return new UserDefinedTipper<N>() {
