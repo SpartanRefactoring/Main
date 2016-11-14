@@ -43,16 +43,22 @@ public class codeTest {
     Assert.assertEquals("a b", code.essence("a  b \t\n"));
   }
 
-  @Test public void spaceIsRemovedBetweenParenthesis() {
-    Assert.assertEquals("(2)(3)", code.essence("(2) (3)"));
+  @Test public void spaceIsRemovedBetweenNonLetters() {
+    Assert.assertEquals("23", code.essence("2 3"));
+    Assert.assertEquals("3213333", code.essence("321 3333"));
+    Assert.assertEquals("-=", code.essence("- ="));
   }
 
-  @Test public void spaceIsRemovedBetweenParenthesis2() {
-    Assert.assertEquals("(a)(3)", code.essence("(a) (3)"));
+  @Test public void spaceIsRemovedBetweenLetterAndNonLetter() {
+    Assert.assertEquals("a3", code.essence("a 3"));
+    Assert.assertEquals("a=", code.essence("a ="));
+    Assert.assertEquals("a-", code.essence("a -"));
   }
 
-  @Test public void spaceIsRemovedBetweenParenthesis3() {
-    Assert.assertEquals("(2)(b)", code.essence("(2) (b)"));
+  @Test public void spaceIsRemovedBetweenNonLetterAndLetter() {
+    Assert.assertEquals("2b", code.essence("2 b"));
+    Assert.assertEquals("!some_boolean", code.essence("! some_boolean"));
+    Assert.assertEquals("-some_int", code.essence("- some_int"));
   }
 
   @Test public void lineCommentIsRemoved() {
@@ -60,7 +66,7 @@ public class codeTest {
   }
 
   @Test public void blockCommentIsRemoved() {
-    Assert.assertEquals("int a = 0;", code.essence("int a = 0; /* I am a block comment */"));
+    Assert.assertEquals("int a=0;", code.essence("int a = 0; /* I am a block comment */"));
   }
 
   @Test public void blockCommentIsRemoved2() {
@@ -68,10 +74,10 @@ public class codeTest {
   }
 
   @Test public void blockCommentIsRemoved3() {
-    Assert.assertEquals("double a = 0.0;", code.essence("double a = 0.0; /* block comment **/"));
+    Assert.assertEquals("double a=0.0;", code.essence("double a = 0.0; /* block comment **/"));
   }
 
   @Test public void blockCommentIsRemoved4() {
-    Assert.assertEquals("c = a + b;", code.essence("c = a + b; /** This will be removed */"));
+    Assert.assertEquals("c=a+b;", code.essence("c = a + b; /** This will be removed */"));
   }
 }
