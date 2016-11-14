@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** A class to find all sort all things about a node, generally some small
  * analyses.
  * @author Ori Marcovitch
+ * @author Ward Mattar
+ * @author Vivian Shehadeh
  * @since 2016 */
 public enum analyze {
   ;
@@ -38,7 +40,8 @@ public enum analyze {
 
   public static String type(final Name n) {
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
-    final String s = findDeclarationInMethod(n, m);
+    // issue #827 fixed case m is null
+    final String s = m == null ? null : findDeclarationInMethod(n, m);
     return s != null ? s : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
 
