@@ -31,17 +31,21 @@ public class Issue835 {
   @SuppressWarnings("static-method") @Test public void emptyBlock3() {
     assertEquals(az.block(wizard.ast("\n{int a;}\n")).statements().size(), 1);
   }
+
   // use t.tip instead of trimmer cause tip is probably unused by the
   // spartanizer at the moment
   @Test public void returnNullOnEmptyBlock1() {
     assertNull(t.tip(az.block(wizard.ast("{}"))));
   }
+
   @Test public void returnNullOnEmptyBlock2() {
     assertNull(t.tip(az.block(wizard.ast("\n{}\n"))));
   }
+
   @Test public void returnNullIfBlockIfNotSingleVarDef() {
     assertNull(t.tip(az.block(wizard.ast("{while(true){}}"))));
   }
+
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
     assertNull(t.tip(az.block(wizard.ast("{return 1;}"))));
   }

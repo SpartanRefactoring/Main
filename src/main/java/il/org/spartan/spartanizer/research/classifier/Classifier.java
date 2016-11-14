@@ -19,10 +19,12 @@ public class Classifier extends ASTVisitor {
     forLoopsList.add(node);
     return super.visit(node);
   }
+
   @Override public boolean visit(final EnhancedForStatement node) {
     forLoopsList.add(node);
     return super.visit(node);
   }
+
   public void analyze(final ASTNode n) {
     n.accept(this);
     Map<String, Int> awesomePatterns = new HashMap<>();
@@ -52,6 +54,7 @@ public class Classifier extends ASTVisitor {
       classify(k);
     }
   }
+
   /** @param ¢ to classify */
   private String classify(String ¢) {
     System.out.println(format.code(generalize.code(¢)));

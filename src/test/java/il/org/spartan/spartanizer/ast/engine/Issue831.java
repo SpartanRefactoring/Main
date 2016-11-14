@@ -17,9 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 16-11-14 */
 @SuppressWarnings({ "javadoc" })
 public class Issue831 {
-  
   protected class MethodScannerIExt extends MethodScanner {
-
     public MethodScannerIExt(MethodDeclaration method) {
       super(method);
     }
@@ -27,15 +25,13 @@ public class Issue831 {
     @Override protected List<Statement> availableStatements() {
       return statements;
     }
-    
   }
-  
+
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
     assertTrue((new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);"))).availableStatements() == null);
   }
-  
+
   @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
     assertTrue((new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}"))).availableStatements().isEmpty());
   }
-  
 }

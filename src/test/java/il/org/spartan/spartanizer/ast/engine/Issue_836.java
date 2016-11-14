@@ -6,27 +6,24 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/**
- * 
- * @author Dor Ma'ayan
- * @since 14-11-2016
- */
+/** @author Dor Ma'ayan
+ * @since 14-11-2016 */
 @SuppressWarnings("static-method")
-@Ignore public class Issue_836 {
+@Ignore
+public class Issue_836 {
   @Test public void test0() {
-    assertEquals(2,az.block(wizard.ast("{int a;return a;}")).statements().size());
+    assertEquals(2, az.block(wizard.ast("{int a;return a;}")).statements().size());
   }
-  
+
   @Test public void test1() {
-    assertEquals(0,az.block(wizard.ast("{}")).statements().size());
-   }
-  
+    assertEquals(0, az.block(wizard.ast("{}")).statements().size());
+  }
+
   @Test public void test2() {
-    assertEquals(1,az.block(wizard.ast("{{int a;}}")).statements().size());
-   }
-  
+    assertEquals(1, az.block(wizard.ast("{{int a;}}")).statements().size());
+  }
+
   @Test public void test3() {
-    assertEquals(2,az.block(wizard.ast("{if(a==4){int a;}return true;}")).statements().size());
-   }
-  
+    assertEquals(2, az.block(wizard.ast("{if(a==4){int a;}return true;}")).statements().size());
+  }
 }
