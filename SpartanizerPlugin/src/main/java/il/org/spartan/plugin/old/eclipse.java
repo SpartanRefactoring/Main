@@ -56,6 +56,7 @@ public enum eclipse {
     d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
   }
+
   /** @param u A compilation unit for reference - you give me an arbitrary
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
@@ -81,6 +82,7 @@ public enum eclipse {
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
   }
+
   public static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
       throws JavaModelException {
     int $ = 0;
@@ -96,23 +98,28 @@ public enum eclipse {
     }
     return $;
   }
+
   /** Retrieves the current {@link ICompilationUnit}
    * @return current {@link ICompilationUnit} */
   public static ICompilationUnit currentCompilationUnit() {
     return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
+
   public static List<ICompilationUnit> done(final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
     pm.done();
     announce(message);
     return $;
   }
+
   @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
+
   static Void announce(final Object message) {
     announceNonBusy(message + "").open();
     return null;
   }
+
   static MessageDialog announceNonBusy(final String message) {
     return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
@@ -120,17 +127,21 @@ public enum eclipse {
       }
     };
   }
+
   static ICompilationUnit compilationUnit(final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
+
   static ICompilationUnit compilationUnit(final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
   }
+
   /** Retrieves the current {@link IWorkbenchWindow}
    * @return current {@link IWorkbenchWindow} */
   static IWorkbenchWindow currentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
+
   // XXX Roth: do not create a compilation unit
   /** @param u JD
    * @param m JD
@@ -143,15 +154,19 @@ public enum eclipse {
     }
     return null;
   }
+
   public static ASTNode find(final ICompilationUnit u, final int start, final int end) {
     return new NodeFinder(createAST(u), start, end - start).getCoveredNode();
   }
+
   public static ASTNode createAST(final ICompilationUnit ¢) {
     return Make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
+
   public static int int¢(final IMarker m, final String name) throws CoreException {
     return az.int¢(m.getAttribute(name));
   }
+
   static ImageIcon icon() {
     if (!iconInitialized) {
       iconInitialized = true;
@@ -168,6 +183,7 @@ public enum eclipse {
     }
     return icon;
   }
+
   static org.eclipse.swt.graphics.Image iconNonBusy() {
     if (!iconNonBusyInitialized) {
       iconNonBusyInitialized = true;
@@ -180,6 +196,7 @@ public enum eclipse {
     }
     return iconNonBusy;
   }
+
   static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
@@ -191,14 +208,17 @@ public enum eclipse {
     $.setOpenOnRun(openOnRun);
     return $;
   }
+
   static Object resources(final IEditorPart ep) {
     return ep.getEditorInput().getAdapter(IResource.class);
   }
+
   static ITextSelection selectedText() {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
   }
+
   public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
@@ -208,6 +228,7 @@ public enum eclipse {
       return true;
     }
   }
+
   /** @return List of all compilation units in the current project */
   List<ICompilationUnit> compilationUnits() {
     try {
@@ -217,6 +238,7 @@ public enum eclipse {
     }
     return null;
   }
+
   List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
     try {
       return compilationUnits(u, nullProgressMonitor);

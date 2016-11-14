@@ -23,12 +23,14 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     final Operator o = a.getOperator();
     return o == ASSIGN ? duplicate.of(from(a)) : subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
   }
+
   protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
     for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f))
       if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
         return true;
     return false;
   }
+
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
    * fragments which are not live in the containing
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
@@ -48,6 +50,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     fragments(newParent).addAll(live);
     r.replace(parent, newParent, g);
   }
+
   protected static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
@@ -59,6 +62,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     fragments(newParent).addAll(live);
     return $ - metrics.size(newParent);
   }
+
   protected static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
@@ -68,6 +72,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     newParent.fragments().remove(parent.fragments().indexOf(f));
     return $ - metrics.size(newParent);
   }
+
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.
@@ -78,6 +83,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
+
   static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
@@ -92,6 +98,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     }
     return $;
   }
+
   private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     for (final VariableDeclarationFragment brother : fs)
@@ -99,14 +106,17 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
         $.add(duplicate.of(brother));
     return $;
   }
+
   @Override public Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
     final Tip $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;
   }
+
   protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
       TextEditGroup g);
+
   @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
       final TextEditGroup g) {
     if (!iz.variableDeclarationStatement(f.getParent()))

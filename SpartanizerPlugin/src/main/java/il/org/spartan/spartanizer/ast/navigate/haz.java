@@ -24,18 +24,22 @@ public enum haz {
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
+
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
   }
+
   /** Determines whether the method's return type is boolean.
    * @param ¢ method
    * @return */
   public static boolean booleanReturnType(final MethodDeclaration ¢) {
     return ¢ != null && step.returnType(¢) != null && iz.booleanType(step.returnType(¢));
   }
+
   public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
+
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
@@ -46,24 +50,29 @@ public enum haz {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
     }) > 0;
   }
+
   public static boolean dollar(final ASTNode ¢) {
     return !Collect.usesOf("$").inside(¢).isEmpty();
   }
+
   public static boolean dollar(final List<SimpleName> ns) {
     for (final SimpleName ¢ : ns)
       if ("$".equals(identifier(¢)))
         return true;
     return false;
   }
+
   public static boolean final¢(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
       if (IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL)
         return true;
     return false;
   }
+
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
     return !¢.modifiers().isEmpty();
   }
+
   public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
@@ -74,59 +83,73 @@ public enum haz {
             return true;
         return false;
       }
+
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
       }
+
       boolean ¢(final ForStatement ¢) {
         return ¢(step.initializers(¢));
       }
+
       boolean ¢(final List<Expression> xs) {
         for (final Expression ¢ : xs)
           if (¢ instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) ¢))
             return true;
         return false;
       }
+
       boolean ¢(final SimpleName ¢) {
         return ¢(¢.getIdentifier());
       }
+
       boolean ¢(final SingleVariableDeclaration ¢) {
         return ¢(¢.getName());
       }
+
       boolean ¢(final Statement ¢) {
         return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢) //
             : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) //
                 : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
       }
+
       boolean ¢(final String ¢) {
         if (dictionary.contains(¢))
           return true;
         dictionary.add(¢);
         return false;
       }
+
       boolean ¢(final TryStatement ¢) {
         return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
       }
+
       boolean ¢(final VariableDeclarationExpression ¢) {
         return ¢¢¢¢(step.fragments(¢));
       }
+
       boolean ¢(final VariableDeclarationFragment ¢) {
         return ¢(¢.getName());
       }
+
       boolean ¢(final VariableDeclarationStatement ¢) {
         return ¢¢¢¢(fragments(¢));
       }
+
       boolean ¢¢(final List<CatchClause> cs) {
         for (final CatchClause ¢ : cs)
           if (¢(¢))
             return true;
         return false;
       }
+
       boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
         for (final VariableDeclarationExpression ¢ : xs)
           if (¢(¢))
             return true;
         return false;
       }
+
       boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment x : fs)
           if (¢(x))
@@ -135,9 +158,11 @@ public enum haz {
       }
     }.test(ss);
   }
+
   public static boolean sideEffects(final Expression ¢) {
     return !sideEffects.free(¢);
   }
+
   public static boolean sideEffects(final MethodDeclaration d) {
     final Block body = d.getBody();
     if (body != null)
@@ -146,10 +171,12 @@ public enum haz {
           return true;
     return false;
   }
+
   public static boolean sideEffects(final Statement s) {
     final ExpressionStatement ¢ = az.expressionStatement(s);
     return ¢ != null && sideEffects(¢.getExpression());
   }
+
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block body = body(d);
     if (body != null)
@@ -158,6 +185,7 @@ public enum haz {
           return true;
     return false;
   }
+
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
@@ -175,33 +203,41 @@ public enum haz {
     }
     return false;
   }
+
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return continue¢(¢.getName());
       }
+
       @Override public boolean visit(final FieldDeclaration node) {
         return continue¢(fragments(node));
       }
+
       @Override public boolean visit(final SingleVariableDeclaration node) {
         return continue¢(node.getName());
       }
+
       @Override public boolean visit(final VariableDeclarationExpression node) {
         return continue¢(fragments(node));
       }
+
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         return continue¢(¢.getName());
       }
+
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         return continue¢(fragments(¢));
       }
+
       boolean continue¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
           if (continue¢(¢.getName()))
             return true;
         return false;
       }
+
       boolean continue¢(final SimpleName ¢) {
         if (iz.identifier("$", ¢))
           return false;
@@ -211,15 +247,18 @@ public enum haz {
     });
     return $.get().booleanValue();
   }
+
   static boolean binding(final ASTNode ¢) {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
+
   static boolean hasAnnotation(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
       if (¢.isAnnotation())
         return true;
     return false;
   }
+
   /** @param ¢ JD
    * @return */
   public static boolean methods(final AbstractTypeDeclaration ¢) {

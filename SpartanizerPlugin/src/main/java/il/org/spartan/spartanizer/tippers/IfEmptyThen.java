@@ -29,9 +29,11 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implement
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
+
   @Override public boolean prerequisite(final IfStatement ¢) {
     return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
+
   @Override public Statement replacement(final IfStatement ¢) {
     final IfStatement $ = subject.pair(elze(¢), null).toNot(¢.getExpression());
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
