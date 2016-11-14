@@ -21,12 +21,14 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
   @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "";
   }
+
   @Override public boolean canTip(final EnhancedForStatement x) {
     for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
   }
+
   @Override public Tip tip(final EnhancedForStatement x) {
     for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
       if (¢.canTip(x))

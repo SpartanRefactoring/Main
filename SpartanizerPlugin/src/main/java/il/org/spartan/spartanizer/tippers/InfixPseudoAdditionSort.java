@@ -23,6 +23,7 @@ public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull im
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
+
   @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), OR, XOR, AND);
   }

@@ -26,6 +26,7 @@ public enum find {
     }
     return (TypeDeclaration) a;
   }
+
   public static MethodDeclaration ancestorMethod(final ASTNode n) {
     ASTNode temp = n;
     if (temp == null)

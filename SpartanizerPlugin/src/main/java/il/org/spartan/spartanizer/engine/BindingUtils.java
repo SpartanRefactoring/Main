@@ -10,18 +10,21 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
-@SuppressWarnings("restriction") public final class BindingUtils {
+@SuppressWarnings("restriction")
+public final class BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = hop.containerType(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
+
   /** @param compilationUnit current compilation unit
    * @return current package */
   public static IPackageBinding getPackage(final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
   }
+
   /** Finds visible method in hierarchy.
    * @param b base type
    * @param methodName method name
@@ -37,6 +40,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
     return take($).when(isVisible($, n, u));
   }
+
   /** Determines whether an invocation of a method is legal in a specific
    * context.
    * @param b a method

@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
  * Why do we need to make such a strong binding between the event generator and
  * the listener? Why should they agree on a common type of events? We should let
  * the listener take, say strings, and just record them. */
-@Deprecated enum event {
+@Deprecated
+enum event {
   run_start, run_finish, run_pass, run_pass_done, //
   visit_root, visit_cu, visit_node, //
 }
@@ -64,6 +65,7 @@ public class GUIBatchLaconizer extends Applicator {
     // TODO Roth: add metrics etc.
     listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
   }
+
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
    * printing to console.
    * @return this applicator */
@@ -75,6 +77,7 @@ public class GUIBatchLaconizer extends Applicator {
     });
     return this;
   }
+
   /** Default listener configuration of {@link GUIBatchLaconizer}. Silent
    * listener.
    * @return this applicator */
@@ -84,6 +87,7 @@ public class GUIBatchLaconizer extends Applicator {
     });
     return this;
   }
+
   /** Default selection configuration of {@link GUIBatchLaconizer}. Normal
    * eclipse user selection.
    * @return this applicator */
@@ -91,6 +95,7 @@ public class GUIBatchLaconizer extends Applicator {
     selection(Selection.Util.current());
     return this;
   }
+
   /** Default passes configuration of {@link GUIBatchLaconizer}, with few
    * passes.
    * @return this applicator */
@@ -98,6 +103,7 @@ public class GUIBatchLaconizer extends Applicator {
     passes(PASSES_FEW);
     return this;
   }
+
   /** Default passes configuration of {@link GUIBatchLaconizer}, with many
    * passes.
    * @return this applicator */
@@ -105,6 +111,7 @@ public class GUIBatchLaconizer extends Applicator {
     passes(PASSES_MANY);
     return this;
   }
+
   /** Default run context configuration of {@link GUIBatchLaconizer}. Simply
    * runs the {@link Runnable} in the current thread.
    * @return this applicator */
@@ -112,6 +119,7 @@ public class GUIBatchLaconizer extends Applicator {
     runContext(r -> r.run());
     return this;
   }
+
   // TODO Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
@@ -122,11 +130,13 @@ public class GUIBatchLaconizer extends Applicator {
     name(a.getName());
     return this;
   }
+
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public GUIBatchLaconizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer());
   }
+
   /** Factory method.
    * @return default event applicator */
   public static GUIBatchLaconizer defaultApplicator() {
@@ -149,10 +159,12 @@ public class GUIBatchLaconizer extends Applicator {
       this.inputCount = inputCount;
       this.printing = printing;
     }
+
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
+
     private static String printableAt(final Object[] os, final int index) {
       return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }

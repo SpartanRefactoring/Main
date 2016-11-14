@@ -29,15 +29,18 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> imp
           return false;
     return true;
   }
+
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     for (final VariableDeclarationFragment ¢ : fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;
     return true;
   }
+
   @Override public String description(final WhileStatement ¢) {
     return "remove :" + ¢;
   }
+
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return ¢ == null || haz.sideEffects(¢.getExpression()) || !checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }

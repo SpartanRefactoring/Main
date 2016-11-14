@@ -22,9 +22,11 @@ public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper
         return false;
     return (i.getName() + "").equals(d.getName() + "") && arguments(i).size() == parameters(d).size();
   }
+
   @Override public String description(final MethodDeclaration ¢) {
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
+
   @Override public Tip tip(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
