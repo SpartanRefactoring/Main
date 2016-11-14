@@ -42,7 +42,7 @@ public class generalize {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final StringLiteral node) {
         final StringLiteral lit = ast.newStringLiteral();
-        lit.setLiteralValue("str");
+        lit.setLiteralValue(renderIdentifier("L"));
         r.replace(node, lit, null);
         return super.visit(node);
       }
