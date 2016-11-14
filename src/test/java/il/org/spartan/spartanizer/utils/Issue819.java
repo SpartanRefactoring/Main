@@ -17,4 +17,9 @@ public class Issue819 {
   @Test public void str_test1() {
     assertEquals(null, new Str().inner());
   }
+  @Test public void str_test2() {
+    final Str s = new Str();
+    s.set("Hamadia");
+    assertEquals("Hamadia", s.inner());
+  }
 }
