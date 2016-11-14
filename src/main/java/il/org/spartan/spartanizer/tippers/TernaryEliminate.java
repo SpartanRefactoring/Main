@@ -15,9 +15,11 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";
   }
+
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
   }
+
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }

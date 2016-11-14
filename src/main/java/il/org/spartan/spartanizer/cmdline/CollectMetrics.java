@@ -28,6 +28,7 @@ public final class CollectMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
+
   public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
@@ -36,10 +37,12 @@ public final class CollectMetrics {
       throw new AssertionError(e);
     }
   }
+
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggesions(before));
   }
+
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -50,6 +53,7 @@ public final class CollectMetrics {
       System.err.println(e.getMessage());
     }
   }
+
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
@@ -60,10 +64,12 @@ public final class CollectMetrics {
     report("After-", after);
     output.nl();
   }
+
   private static void go(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       go(¢);
   }
+
   private static CSVStatistics init(final String outputDir, final String property) {
     try {
       return new CSVStatistics(outputDir, property);
@@ -71,6 +77,7 @@ public final class CollectMetrics {
       throw new RuntimeException(OUTPUT, e);
     }
   }
+
   /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on
@@ -96,6 +103,7 @@ public final class CollectMetrics {
     output.put(prefix + "Imports", count.imports(¢));
     output.put(prefix + "No Imports", count.noimports(¢));
   }
+
   private static void reportTips(final List<Tip> ¢) {
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
@@ -105,6 +113,7 @@ public final class CollectMetrics {
       Tips.nl();
     }
   }
+
   private static CompilationUnit spartanize(final String javaCode) {
     final Trimmer t = new Trimmer();
     final String spartanized = t.fixed(javaCode);

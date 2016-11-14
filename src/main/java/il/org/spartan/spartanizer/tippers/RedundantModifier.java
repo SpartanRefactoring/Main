@@ -21,9 +21,11 @@ public final class RedundantModifier extends CarefulTipper<Modifier> implements 
   @Override public String description(final Modifier ¢) {
     return "Eliminate redundant [" + ¢ + "] modifier";
   }
+
   @Override public String description() {
     return "Eliminate redundant modifier";
   }
+
   @Override public Tip tip(final Modifier ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -32,6 +34,7 @@ public final class RedundantModifier extends CarefulTipper<Modifier> implements 
       }
     };
   }
+
   @Override public boolean prerequisite(final Modifier ¢) {
     return test(¢, redundancies(az.bodyDeclaration(parent(¢))));
   }

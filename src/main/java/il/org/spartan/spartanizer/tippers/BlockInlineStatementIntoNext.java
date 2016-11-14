@@ -15,9 +15,11 @@ public final class BlockInlineStatementIntoNext extends NanoPatternTipper<Block>
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();
   }
+
   @Override public boolean canTip(final Block x) {
     return tipper.canTip(x);
   }
+
   @Override public Tip tip(final Block x) {
     return tipper.tip(x);
   }
