@@ -24,6 +24,15 @@ import org.junit.*;
   @Test public void emptyLine() {
     Assert.assertEquals("", code.essence("        \n"));
   }
+  @Test public void whitespacesAreRemovedFromEOL() {
+    Assert.assertEquals("a b c d", code.essence("a b c d    \n"));
+  }
+  @Test public void tabIsRemoved() {
+    Assert.assertEquals("a b", code.essence("a \t  b \t"));
+  }
+  @Test public void tabIsRemoved2() {
+    Assert.assertEquals("a b", code.essence("a  b \t\n"));
+  }
   @Test public void spaceIsRemovedBetweenParenthesis() {
     Assert.assertEquals("(2)(3)", code.essence("(2) (3)"));
   }
