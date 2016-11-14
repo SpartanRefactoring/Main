@@ -13,10 +13,10 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   static Set<UserDefinedTipper<Assignment>> tippers = new HashSet<UserDefinedTipper<Assignment>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("$X1 = $X1 != null ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-      add(TipperFactory.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-      add(TipperFactory.tipper("$X1 = null != $X1 ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-      add(TipperFactory.tipper("$X1 = null == $X1 ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.patternTipper("$X1 = $X1 != null ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.patternTipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.patternTipper("$X1 = null != $X1 ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.patternTipper("$X1 = null == $X1 ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
     }
   };
 
