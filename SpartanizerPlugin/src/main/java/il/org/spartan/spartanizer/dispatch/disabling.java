@@ -34,9 +34,11 @@ public interface disabling {
       @Override public boolean visit(final Initializer ¢) {
         return cautiousGo(¢);
       }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }
+
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.isDisabledByIdentifier(¢2))
@@ -64,9 +66,11 @@ public interface disabling {
       @Override public boolean visit(final Initializer ¢) {
         return cautiousGo(¢);
       }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }
+
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (¢ instanceof BodyDeclaration && disabling.isEnabledByIdentifier((BodyDeclaration) ¢)) {
           scan(¢);
@@ -77,21 +81,26 @@ public interface disabling {
       }
     });
   }
+
   /** @param n an {@link ASTNode}
    * @return <code><b>true</b></code> <em>iff</em> the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {
     return NodeData.has(¢, disabledPropertyId);
   }
+
   static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
     return disabling.hasJavaDocIdentifier(¢, disablers);
   }
+
   static boolean isEnabledByIdentifier(final BodyDeclaration ¢) {
     return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
   }
+
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
+
   static boolean contains(final String s, final String[] ids) {
     for (final String ¢ : ids)
       if (s.contains(¢))

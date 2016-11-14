@@ -27,6 +27,7 @@ public class Issue814 {
       }
     });
   }
+
   @SuppressWarnings("static-method") @Test public void nullTest() {
     final Assignment a = into.a("a = 3");
     final Statement s = into.s("f();");

@@ -10,7 +10,8 @@ import org.eclipse.jdt.core.dom.*;
  * {@link #preBindingVisit()}
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
-@SuppressWarnings({ "unused" }) public abstract class VariableBindingVisitor extends ASTVisitor {
+@SuppressWarnings({ "unused" })
+public abstract class VariableBindingVisitor extends ASTVisitor {
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
 
@@ -25,11 +26,13 @@ import org.eclipse.jdt.core.dom.*;
       collect(¢);
     preVisit0(¢);
   }
+
   /** replaces {@link #preVisit(ASTNode)}
    * @param n JD */
   public void preVisit0(final ASTNode __) {
     // To be realized by user
   }
+
   /** collects all binding information, starting at the {@link ASTNode} of the
    * root of the parameter
    * @param ¢ a node on the tree, whose root is the strarting point of the
@@ -37,6 +40,7 @@ import org.eclipse.jdt.core.dom.*;
   void collect(final ASTNode ¢) {
     // TBD
   }
+
   boolean seen(final ASTNode ¢) {
     return environmentOf.containsKey(¢);
   }

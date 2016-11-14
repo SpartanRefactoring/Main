@@ -65,6 +65,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
+
   /** Consider an expression
    *
    * <pre>
@@ -105,18 +106,22 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static Expression simplifyTernary(final ConditionalExpression ¢) {
     return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), duplicate.of(¢.getExpression()));
   }
+
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean takeThen = !iz.booleanLiteral(then);
     final Expression other = takeThen ? then : elze;
     final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
+
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
+
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
     return isTernaryOfBooleanLitreral(¢);
   }
+
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }

@@ -24,7 +24,8 @@ public class Issue442 {
         .stays();
   }
 
-  @Ignore public static class WorkInProgress {
+  @Ignore
+  public static class WorkInProgress {
     @Test public void b() {
       trimmingOf("public S f(X x){return null;}")//
           .gives("public S f(X __){return null;}")//
@@ -35,20 +36,25 @@ public class Issue442 {
   @Test public void c$etc() {
     trimmingOf("interface I{ I f(I i);}").stays();
   }
+
   @Test public void b() {
     trimmingOf("public S f(X x){return null;}")//
         .gives("public S f(X __){return null;}")//
         .stays();
   }
+
   @Test public void chocolate01() {
     assert true;
   }
+
   @Test public void chocolate02() {
     assert true;
   }
+
   @Test public void chocolate03etc() {
     assert true;
   }
+
   @Test public void demoOfAzzert() {
     azzert.that(NameGuess.of("__"), is(NameGuess.ANONYMOUS));
     azzert.that(precedence.of(e("a+b")), is(5));
@@ -56,12 +62,15 @@ public class Issue442 {
     azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
     azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
   }
+
   @Test public void vanilla01() {
     assert true;
   }
+
   @Test public void vanilla02() {
     assert true;
   }
+
   @Test public void vanilla03etc() {
     assert true;
   }

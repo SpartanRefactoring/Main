@@ -30,9 +30,11 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
   @Override public String description() {
     return "Concat the strings to a one string";
   }
+
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Concat the string literals to a single string";
   }
+
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;

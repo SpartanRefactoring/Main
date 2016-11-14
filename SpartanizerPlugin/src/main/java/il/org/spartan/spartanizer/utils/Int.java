@@ -7,10 +7,12 @@ package il.org.spartan.spartanizer.utils;
 public final class Int {
   public int inner;
 
+  
   /** Function form, good substitute for auto-boxing */
   public Integer inner() {
     return Integer.valueOf(inner);
   }
+
   /** @param ¢ JD
    * @return */
   public static Int valueOf(final int ¢) {

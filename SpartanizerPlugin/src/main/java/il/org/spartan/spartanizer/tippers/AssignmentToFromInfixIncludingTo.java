@@ -32,23 +32,28 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
       }
     return null;
   }
+
   private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
     return !same(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
   }
+
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
     final List<Expression> es = hop.operands(x);
     final List<Expression> $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(operator(x));
   }
+
   private static ASTNode replacement(final Expression to, final InfixExpression from) {
     if (haz.sideEffects(to))
       return null;
     final Expression $ = reduce(from, to);
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
+
   @Override public String description(final Assignment ¢) {
     return "Replace x = x " + operator(¢) + "a; to x " + operator(¢) + "= a;";
   }
+
   @Override public ASTNode replacement(final Assignment a) {
     assert a != null;
     final Operator o = a.getOperator();
