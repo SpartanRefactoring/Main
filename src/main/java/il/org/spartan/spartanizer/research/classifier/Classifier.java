@@ -6,11 +6,12 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
-  final Map<String, List<ASTNode>> forLoops = new HashMap<>();
+  final Map<String, List<String>> forLoops = new HashMap<>();
   final List<ASTNode> forLoopsList = new ArrayList<>();
   static final Scanner input = new Scanner(System.in);
 
@@ -18,33 +19,42 @@ public class Classifier extends ASTVisitor {
     forLoopsList.add(node);
     return super.visit(node);
   }
-
   @Override public boolean visit(final EnhancedForStatement node) {
     forLoopsList.add(node);
     return super.visit(node);
   }
-
   public void analyze(final ASTNode n) {
     n.accept(this);
-    System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
-    System.out.println("lets classify them together");
-    System.out.println("enter classification for each for loop, [p] to skip example");
-    for (final ASTNode ¢ : forLoopsList) {
-      final UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
-      int count = 0;
-      for (final ASTNode l : forLoopsList)
-        if (t.canTip(l) && !l.equals(¢))
-          ++count;
-      if (count != 0) {
-        System.out.println("WOW: pattern [" + format.code(generalize.code(¢ + "")) + "]\nmatched " + count + " times.");
-        classify(¢);
+    Map<String, Int> awesomePatterns = new HashMap<>();
+    for (boolean again = true; again;) {
+      again = false;
+      List<ASTNode> toRemove = new ArrayList<>();
+      for (ASTNode ¢ : forLoopsList) {
+        UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+        toRemove = new ArrayList<>();
+        for (ASTNode l : forLoopsList)
+          if (t.canTip(l))
+            toRemove.add(l);
+        if (toRemove.size() > 1) {
+          awesomePatterns.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
+          forLoopsList.removeAll(toRemove);
+          again = true;
+          break;
+        }
       }
     }
+    System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
+    System.out.println("From them " + awesomePatterns.size() + " are repetitive");
+    System.out.println("Lets classify them together!");
+    for (String k : awesomePatterns.keySet()) {
+      System.out.println(k);
+      System.out.println("[Matched " + awesomePatterns.get(k).inner + " times]");
+      classify(k);
+    }
   }
-
   /** @param ¢ to classify */
-  private String classify(final ASTNode ¢) {
-    System.out.println(format.code(generalize.code(¢ + "")));
+  private String classify(String ¢) {
+    System.out.println(format.code(generalize.code(¢)));
     final String $ = input.nextLine();
     forLoops.putIfAbsent($, new ArrayList<>());
     forLoops.get($).add(¢);
