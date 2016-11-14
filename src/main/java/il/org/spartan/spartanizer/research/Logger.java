@@ -29,6 +29,7 @@ public class Logger {
     summarizeNPStatistics(outputDir);
     reset();
   }
+
   private static void summarizeMethodStatistics(final String outputDir) {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
@@ -57,6 +58,7 @@ public class Logger {
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
   }
+
   private static void summarizeNPStatistics(final String outputDir) {
     final CSVStatistics report = openNPSummaryFile(outputDir);
     if (report == null)
@@ -72,12 +74,15 @@ public class Logger {
     }
     report.close();
   }
+
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics.csv");
   }
+
   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
+
   public static CSVStatistics openSummaryFile(final String fileName) {
     try {
       return new CSVStatistics(fileName, "property");
@@ -86,21 +91,25 @@ public class Logger {
       return null;
     }
   }
+
   private static void reset() {
     methodsStatistics.clear();
     numMethods = 0;
   }
+
   public static void logNP(final ASTNode n, final String np) {
     logMethodInfo(n, np);
     logNPInfo(n, np);
     AnalyzerOptions.tickNP();
   }
+
   /** @param n
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
     npStatistics.putIfAbsent(np, new NPRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
   }
+
   /** @param ¢
    * @param np */
   static void logNodeInfo(final ASTNode ¢) {
@@ -108,6 +117,7 @@ public class Logger {
     nodesStatistics.putIfAbsent(nodeClassName, new Int());
     ++nodesStatistics.get(nodeClassName).inner;
   }
+
   private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     if (m == null) {
@@ -118,10 +128,12 @@ public class Logger {
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
   }
+
   private static Integer hashMethod(final MethodDeclaration ¢) {
     return Integer.valueOf(
         (currentFile + "." + step.type(searchAncestors.forContainingType().from(¢)) + "." + step.name(¢) + step.parametersTypes(¢)).hashCode());
   }
+
   /** @param ¢
    * @return */
   private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
@@ -130,6 +142,7 @@ public class Logger {
       n = n.getParent();
     return az.methodDeclaration(n);
   }
+
   /** @param ¢
    * @return */
   static String findTypeAncestor(final ASTNode ¢) {
@@ -166,6 +179,7 @@ public class Logger {
       numStatements = metrics.countStatements(m);
       numExpressions = metrics.countExpressions(m);
     }
+
     /** @param n matched node
      * @param np matching nanopattern */
     public void markNP(final ASTNode n, final String np) {
@@ -181,6 +195,7 @@ public class Logger {
   public static void logCompilationUnit(final CompilationUnit ¢) {
     numMethods += enumerate.methods(¢);
   }
+
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logFile(final String fileName) {
@@ -203,6 +218,7 @@ public class Logger {
       this.name = name;
       className = cl.getSimpleName();
     }
+
     /** @param ¢ matched node */
     public void markNP(final ASTNode ¢) {
       ++occurences;

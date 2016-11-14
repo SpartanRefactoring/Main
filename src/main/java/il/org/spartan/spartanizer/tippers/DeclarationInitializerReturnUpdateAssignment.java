@@ -34,6 +34,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends $Variabl
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))

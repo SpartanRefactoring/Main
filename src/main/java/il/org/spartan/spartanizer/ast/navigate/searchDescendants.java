@@ -16,12 +16,15 @@ public abstract class searchDescendants<N extends ASTNode> {
   public static <N extends ASTNode> searchDescendants<N> forClass(final Class<N> ¢) {
     return new ByNodeClass<>(¢);
   }
+
   /** @param n JD
    * @return descendants whose type matches the given type. */
   public abstract List<N> from(final ASTNode n);
+
   /** @param n JD
    * @return descendants whose type matches the given type. */
   public abstract List<N> inclusiveFrom(final ASTNode n);
+
   /** @param ¢ JD
    * @return add predicate to filter elements */
   public abstract searchDescendants<N> suchThat(final Predicate<N> ¢);
@@ -33,16 +36,19 @@ public abstract class searchDescendants<N extends ASTNode> {
     public ByNodeClass(final Class<N> clazz) {
       this.clazz = clazz;
     }
+
     @Override public ByNodeClass<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
+
     @Override public List<N> from(final ASTNode ¢) {
       final List<N> $ = inclusiveFrom(¢);
       if ($.contains(¢))
         $.remove(¢);
       return $;
     }
+
     @Override public List<N> inclusiveFrom(final ASTNode n) {
       final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor() {

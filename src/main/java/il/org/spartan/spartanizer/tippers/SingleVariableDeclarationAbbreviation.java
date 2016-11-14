@@ -41,6 +41,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
           }
       }
   }
+
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (String ¢ = d + ""; ¢.endsWith("[]");) {
@@ -49,10 +50,12 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     }
     return $;
   }
+
   private static boolean isShort(final SingleVariableDeclaration d) {
     final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
   }
+
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (spartan.shorten(d.getType()) == null)
       return false;
@@ -65,15 +68,19 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
   }
+
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
+
   private static boolean suitable(final SingleVariableDeclaration ¢) {
     return new JavaTypeNameParser(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
+
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
+
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final MethodDeclaration m = az.methodDeclaration(parent(d));
     if (m == null || m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
