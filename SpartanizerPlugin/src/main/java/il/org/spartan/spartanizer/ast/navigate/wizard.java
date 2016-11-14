@@ -158,8 +158,8 @@ public interface wizard {
    *         null */
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
-      case EMPTY_BLOCK_LOOK_ALIKE:
-        return into.s("");
+      case BLOCK_LOOK_ALIKE:
+        return az.astNode(az.block(into.s(p)).statements().get(0));
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
