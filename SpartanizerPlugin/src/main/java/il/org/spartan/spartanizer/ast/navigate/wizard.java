@@ -117,33 +117,40 @@ public interface wizard {
   static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
   }
+
   static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
     return m instanceof Modifier && test((Modifier) m, ms);
   }
+
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     for (final Predicate<Modifier> ¢ : ms)
       if (¢.test(m))
         return true;
     return false;
   }
+
   static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
+
   static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression ¢ : hop.operands(flatten.of(inner)))
       operands.add(make.notOf(¢));
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
+
   static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
     return assign2infix.get(¢);
   }
+
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
   static String asString(final ASTNode ¢) {
     return removeWhites(wizard.body(¢));
   }
+
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
    * @param p string to convert
@@ -168,9 +175,11 @@ public interface wizard {
     }
     return null;
   }
+
   static String body(final ASTNode ¢) {
     return tide.clean(¢ + "");
   }
+
   /** the function checks if all the given assignments have the same left hand
    * side(variable) and operator
    * @param base The assignment to compare all others to
@@ -185,9 +194,11 @@ public interface wizard {
         return false;
     return true;
   }
+
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
     return infix2assign.get(o2) == o1;
   }
+
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
    * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
@@ -200,12 +211,14 @@ public interface wizard {
         return false;
     return true;
   }
+
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
   static String condense(final ASTNode ¢) {
     return removeWhites(wizard.body(¢));
   }
+
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
    * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
@@ -215,6 +228,7 @@ public interface wizard {
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
   }
+
   /** @param ns unknown number of nodes to check
    * @return <code><b>true</b></code> <em>iff</em>one of the nodes is an
    *         Expression Statement of type Post or Pre Expression with ++ or --
@@ -228,6 +242,7 @@ public interface wizard {
         return true;
     return false;
   }
+
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param x an expression whose operator is either
@@ -240,6 +255,7 @@ public interface wizard {
   static InfixExpression.Operator deMorgan(final InfixExpression ¢) {
     return wizard.deMorgan(¢.getOperator());
   }
+
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
    *        {@link Operator#CONDITIONAL_OR}
@@ -252,9 +268,11 @@ public interface wizard {
     assert iz.deMorgan(¢);
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
+
   static String essence(final String codeFragment) {
     return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
   }
+
   /** This method fixes a bug from tide.clean which causes ^ to replaced with
    * [^]
    * @param ¢
@@ -262,6 +280,7 @@ public interface wizard {
   static String fixTideClean(String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
+
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -273,6 +292,7 @@ public interface wizard {
         return $;
     return null;
   }
+
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
@@ -284,21 +304,25 @@ public interface wizard {
     return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
+
   static boolean hasSafeVarags(final MethodDeclaration d) {
     for (final Annotation ¢ : extract.annotations(d))
       if (iz.identifier("SafeVarargs", ¢.getTypeName()))
         return true;
     return false;
   }
+
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
   }
+
   static Operator infix2assign(final InfixExpression.Operator ¢) {
     assert ¢ != null;
     final Operator $ = infix2assign.get(¢);
     assert $ != null : "No assignment equivalent to " + ¢;
     return $;
   }
+
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
@@ -309,9 +333,11 @@ public interface wizard {
   static boolean isBitwiseOperator(final InfixExpression.Operator ¢) {
     return in(¢, XOR, OR, AND);
   }
+
   static boolean isBoxedType(final String typeName) {
     return boxedTypes.contains(typeName);
   }
+
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
@@ -329,9 +355,11 @@ public interface wizard {
     return in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
+
   static boolean isDefaultLiteral(final Expression ¢) {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
+
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
    * @return <code><b>true</b></code> <em>iff</em>one of
@@ -342,12 +370,15 @@ public interface wizard {
   static boolean isShift(final InfixExpression.Operator ¢) {
     return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
+
   static boolean isValueType(final String typeName) {
     return valueTypes.contains(typeName);
   }
+
   static boolean isValueType(final Type ¢) {
     return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
+
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier ¢ : extendedModifiers(d))
@@ -355,6 +386,7 @@ public interface wizard {
         $.add((Modifier) ¢);
     return $;
   }
+
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier ¢ : ms)
@@ -362,9 +394,11 @@ public interface wizard {
         $.add((Modifier) ¢);
     return $;
   }
+
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     return matches(extendedModifiers(¢), ms);
   }
+
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param pattern JD
@@ -373,10 +407,12 @@ public interface wizard {
   static boolean nonAssociative(final ASTNode ¢) {
     return nonAssociative(az.infixExpression(¢));
   }
+
   static boolean nonAssociative(final InfixExpression ¢) {
     return ¢ != null && (in(¢.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
+
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a
@@ -385,6 +421,7 @@ public interface wizard {
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);
   }
+
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setKind(kind);
@@ -395,12 +432,14 @@ public interface wizard {
     $.setCompilerOptions(options);
     return $;
   }
+
   static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
     return $;
   }
+
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @param ¢ JD
@@ -410,6 +449,7 @@ public interface wizard {
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
+
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement
    * @param ¢ JD
@@ -419,6 +459,7 @@ public interface wizard {
       if (!($ instanceof IfStatement))
         return $;
   }
+
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢).isEmpty())
@@ -456,6 +497,7 @@ public interface wizard {
       $.remove(isFinal);
     return $;
   }
+
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * <p>
@@ -469,20 +511,24 @@ public interface wizard {
       xs.remove(x);
     }
   }
+
   static String removeComments(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
+
   static String removeComments2(final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
+
   /** replaces an ASTNode with another
    * @param n
    * @param with */
   static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
     r.replace(n, with, null);
   }
+
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
@@ -494,6 +540,7 @@ public interface wizard {
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
   }
+
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
@@ -505,6 +552,7 @@ public interface wizard {
         return false;
     return true;
   }
+
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare
@@ -520,6 +568,7 @@ public interface wizard {
         return false;
     return true;
   }
+
   static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
@@ -533,6 +582,7 @@ public interface wizard {
               ASTNode.JAVADOC),
           g);
   }
+
   /** @param d JD
    * @param s JD
    * @param r rewriter
@@ -540,6 +590,7 @@ public interface wizard {
   static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
+
   /** @param d JD
    * @param m JD
    * @param r rewriter
@@ -547,6 +598,7 @@ public interface wizard {
   static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
+
   /** Adds method m to the first type in file.
    * @param fileName
    * @param m */
