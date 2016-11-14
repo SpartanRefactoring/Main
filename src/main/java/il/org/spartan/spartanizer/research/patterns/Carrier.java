@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Carrier extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.tipper("return $N($A);", "", "");
+  private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.patternTipper("return $N($A);", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (step.body(¢) == null || !haz.booleanReturnType(¢))

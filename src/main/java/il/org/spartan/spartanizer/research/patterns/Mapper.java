@@ -13,8 +13,8 @@ public class Mapper extends JavadocMarkerNanoPattern<MethodDeclaration> {
   Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("for($N1 $N2 : $X) $N2.$N3($A);", "", ""));
-      add(TipperFactory.tipper("for($N1 $N2 : $X) $N3($N2);", "", ""));
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N2.$N3($A);", "", ""));
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N3($N2);", "", ""));
     }
   };
 

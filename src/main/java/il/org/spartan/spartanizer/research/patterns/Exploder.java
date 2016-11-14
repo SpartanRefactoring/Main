@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 May collide with {@link IfNullThrow} */
 public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X1) throw $X2;", "", "");
+  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.patternTipper("if($X1) throw $X2;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (step.body(¢) == null)
