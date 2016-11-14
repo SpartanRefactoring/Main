@@ -15,6 +15,7 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
   @Override public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }
+
   @Override public Expression replacement(final InfixExpression ¢) {
     if (TermsCollector.isLeafTerm(¢))
       return null;

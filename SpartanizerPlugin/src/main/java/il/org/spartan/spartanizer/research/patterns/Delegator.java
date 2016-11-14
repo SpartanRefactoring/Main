@@ -23,6 +23,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
     final Expression e = step.expression(az.returnStatement(ss.get(0)));
     return iz.methodInvocation(e) && step.parametersNames(¢).containsAll(dependencies(step.arguments(az.methodInvocation(e))));
   }
+
   /** @param arguments
    * @return */
   private static List<String> dependencies(final List<Expression> arguments) {

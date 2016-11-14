@@ -19,10 +19,12 @@ abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> ext
   @Override public String description(final BodyDeclaration ¢) {
     return "Remove redundant " + wizard.redundants(¢) + " modifier(s) from declaration";
   }
+
   @Override public boolean prerequisite(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = wizard.redundancies(¢);
     return !ps.isEmpty() && !wizard.matchess(¢, ps).isEmpty();
   }
+
   @Override public BodyDeclaration replacement(final BodyDeclaration $) {
     final Set<Predicate<Modifier>> predicates = wizard.redundancies($);
     return predicates.isEmpty() ? null : wizard.prune(duplicate.of($), predicates);

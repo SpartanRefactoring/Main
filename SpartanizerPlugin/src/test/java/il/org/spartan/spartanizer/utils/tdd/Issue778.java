@@ -18,24 +18,30 @@ public class Issue778 {
   @SuppressWarnings("static-method") @Test public void test0() {
     getAll2.methods(null);
   }
+
   @SuppressWarnings("static-method") @Test public void test1() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).getClass(), ArrayList.class);
   }
+
   @SuppressWarnings({ "static-method" }) @Test public void test2() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
   }
+
   @SuppressWarnings({ "static-method" }) @Test public void test3() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
   }
+
   @SuppressWarnings({ "static-method" }) @Test public void test4() {
     assertEquals(getAll2
         .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(), 3);
   }
+
   @SuppressWarnings({ "static-method" }) @Test public void test5() {
     assertEquals(getAll2
         .methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
         .size(), 3);
   }
+
   @SuppressWarnings({ "static-method" }) @Test public void test6() {
     final String cu1 = "public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}";
     final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(wizard.ast(cu1)));

@@ -23,6 +23,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
+
   @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))

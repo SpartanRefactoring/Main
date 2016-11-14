@@ -21,9 +21,11 @@ public class leonidasSays {
   public static expression that(final String ¢) {
     return new expression(¢);
   }
+
   public static tipper tipper(final String p, final String s, final String d) {
     return new tipper(p, s, d);
   }
+
   public static tipper tipper(final Tipper<ASTNode> ¢) {
     return new tipper(¢);
   }
@@ -34,15 +36,19 @@ public class leonidasSays {
     public tipper(final String p, final String r, final String d) {
       tipper = TipperFactory.tipper(p, r, d);
     }
+
     public tipper(final Tipper<ASTNode> t) {
       tipper = t;
     }
+
     public void nottips(final String ¢) {
       assert !tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
     }
+
     public void tips(final String ¢) {
       assert tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
     }
+
     public turns turns(final String ¢) {
       return new turns(tipper, ¢);
     }
@@ -54,9 +60,11 @@ public class leonidasSays {
     public expression(final String s) {
       this.s = s;
     }
+
     public void matches(final String s2) {
       assert Matcher.matches(wizard.ast(s), wizard.ast(s2));
     }
+
     public void notmatches(final String s2) {
       assert !Matcher.matches(wizard.ast(s), wizard.ast(s2));
     }
@@ -87,6 +95,7 @@ public class leonidasSays {
       @SuppressWarnings("unchecked") final N $$ = (N) $.get();
       return $$;
     }
+
     private static void azzertEquals(final String s, final Document d) {
       String actual = null;
       switch (GuessedContext.find(s)) {
@@ -110,6 +119,7 @@ public class leonidasSays {
       }
       assertEquals(Essence.of(s), Essence.of(actual));
     }
+
     private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
       switch (GuessedContext.find(s)) {
         case COMPILATION_UNIT_LOOK_ALIKE:
@@ -127,6 +137,7 @@ public class leonidasSays {
       }
       return null;
     }
+
     private static String wrapCode(final String ¢) {
       switch (GuessedContext.find(¢)) {
         case COMPILATION_UNIT_LOOK_ALIKE:
@@ -152,6 +163,7 @@ public class leonidasSays {
       this.tipper = tipper;
       s = _s;
     }
+
     /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
     public void into(final String res) {
       final Document document = new Document(wrapCode(s));

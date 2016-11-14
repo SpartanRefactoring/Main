@@ -31,6 +31,7 @@ public interface hop {
       @Override public boolean hasNext() {
         return current != null;
       }
+
       @Override public ASTNode next() {
         final ASTNode $ = current;
         current = current.getParent();
@@ -38,9 +39,11 @@ public interface hop {
       }
     };
   }
+
   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return (CompilationUnit) searchAncestors.forType(COMPILATION_UNIT).from(¢);
   }
+
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
@@ -56,9 +59,11 @@ public interface hop {
         return $;
     return null;
   }
+
   static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
     return searchAncestors.forClass(BodyDeclaration.class).from(¢);
   }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   static List<ASTNode> descendants(final ASTNode root) {
@@ -73,22 +78,27 @@ public interface hop {
     $.remove(0);
     return $;
   }
+
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
+
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     for (final VariableDeclarationFragment $ : fs)
       if (wizard.same(¢, $.getName()))
         return $;
     return null;
   }
+
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     final MethodDeclaration $ = searchAncestors.forClass(MethodDeclaration.class).from(¢);
     return $ == null ? null : $.getName() + "";
   }
+
   static SimpleName lastComponent(final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
+
   /** Find the last statement residing under a given {@link Statement}
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
@@ -96,6 +106,7 @@ public interface hop {
   static ASTNode lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }
+
   /** Extract the {@link MethodDeclaration} that contains a given node.
    * @param pattern JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
@@ -107,10 +118,12 @@ public interface hop {
         return az.methodDeclaration($);
     return null;
   }
+
   static Name name(final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
+
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
@@ -125,6 +138,7 @@ public interface hop {
       $.addAll(step.extendedOperands(¢));
     return $;
   }
+
   /** @param ¢ JD
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
@@ -141,6 +155,7 @@ public interface hop {
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     return vds == null ? null : findFirst.elementOf(step.fragments(vds));
   }
+
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
@@ -157,6 +172,7 @@ public interface hop {
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     return vds == null ? null : findFirst.elementOf(step.fragments(vds));
   }
+
   /** @param s current {@link Statement}.
    * @return the previous {@link Statement} in the parent {@link Block}. If
    *         parent is not {@link Block} return null, if n is first
@@ -168,6 +184,7 @@ public interface hop {
     final List<Statement> statements = statements(b);
     return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
+
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }

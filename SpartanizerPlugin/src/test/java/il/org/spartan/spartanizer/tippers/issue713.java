@@ -30,36 +30,45 @@ public class issue713 {
   @SuppressWarnings("static-method") @Test public void doesCompile() {
     assert true;
   }
+
   @SuppressWarnings("static-method") @Test public void returnsList() {
     getAll.publicFields(null);
   }
+
   @Test public void returnsNoPublic() {
     assertEquals(0, getAll.publicFields(noPublic).size());
   }
+
   @Test public void onePublicPass() {
     assertEquals(1, getAll.publicFields(onePublic).size());
   }
+
   @Test public void onlyPublicsDetected() {
     assertEquals(2, getAll.publicFields(notOnlyPublic).size());
   }
+
   @Test public void rightNamesReturned() {
     final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("ch");
     assertEquals(names, getAll.publicFields(notOnlyPublic));
   }
+
   @Test public void listOfPublicFields() {
     assertEquals(4, getAll.publicFields(listOfPublicFields).size());
   }
+
   @Test public void notCountingMethods() {
     assertEquals(2, getAll.publicFields(notCountingMethods).size());
   }
+
   @Test public void listContainsRightNames() {
     final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("y");
     assertEquals(names, getAll.publicFields(notCountingMethods));
   }
+
   @Test public void onlyPrivates() {
     assertEquals(0, getAll.publicFields(onlyPrivates).size());
   }

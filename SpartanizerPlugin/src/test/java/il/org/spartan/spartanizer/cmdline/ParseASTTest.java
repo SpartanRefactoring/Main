@@ -31,6 +31,7 @@ public class ParseASTTest {
         System.out.println("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true; // super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -40,6 +41,7 @@ public class ParseASTTest {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node);
       }
+
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> modifiers = d.modifiers();
         for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
@@ -47,6 +49,7 @@ public class ParseASTTest {
             return true;
         return false;
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -56,6 +59,7 @@ public class ParseASTTest {
         System.out.println("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -65,6 +69,7 @@ public class ParseASTTest {
         System.out.println(node.getName());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -74,6 +79,7 @@ public class ParseASTTest {
         System.out.println(node.getName());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -83,6 +89,7 @@ public class ParseASTTest {
         System.out.println(node.getName());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -92,6 +99,7 @@ public class ParseASTTest {
         System.out.println(node.getOperator());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -101,6 +109,7 @@ public class ParseASTTest {
         System.out.println("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
+
       /* (non-Javadoc)
        *
        * @see
@@ -114,6 +123,7 @@ public class ParseASTTest {
       }
     });
   }
+
   @Test public void testStepMethod_01() {
     makeAST.COMPILATION_UNIT.from(test1).accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
