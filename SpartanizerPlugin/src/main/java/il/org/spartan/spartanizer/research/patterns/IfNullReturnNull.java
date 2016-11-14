@@ -15,8 +15,8 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
   static Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X == null) return null;", "returnNullIfNull($X);", ""));
-      add(TipperFactory.tipper("if(null == $X) return null;", "returnNullIfNull($X);", ""));
+      add(TipperFactory.patternTipper("if($X == null) return null;", "returnNullIfNull($X);", ""));
+      add(TipperFactory.patternTipper("if(null == $X) return null;", "returnNullIfNull($X);", ""));
     }
   };
 

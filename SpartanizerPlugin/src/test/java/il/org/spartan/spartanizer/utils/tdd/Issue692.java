@@ -30,17 +30,12 @@ public class Issue692 {
   @Test public void test3() {
     // TODO: you may simplify the code by writing something such
     // as new TreeSet(az.list("a","b")) --yg
-    final Set<String> tmp = new TreeSet();
-    tmp.add("j");
-    tmp.add("i");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)"))), tmp);
+    // @viviansh @ward-mattar : Done
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)"))), new TreeSet<>(Arrays.asList("i", "j")));
   }
 
   @Test public void test4() {
-    final Set<String> tmp = new TreeSet<>();
-    tmp.add("j");
-    tmp.add("i");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)"))), tmp);
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)"))), new TreeSet<>(Arrays.asList("i", "j")));
   }
 
   @Test public void test5() {
@@ -48,13 +43,7 @@ public class Issue692 {
   }
 
   @Test public void test6() {
-    final Set<String> tmp = new TreeSet<>();
-    tmp.add("a");
-    tmp.add("b");
-    tmp.add("c");
-    tmp.add("h");
-    tmp.add("fizz");
-    tmp.add("x");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))"))), tmp);
+    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))"))),
+        new TreeSet<>(Arrays.asList("a", "b", "c", "h", "fizz", "x")));
   }
 }
