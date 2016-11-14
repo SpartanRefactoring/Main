@@ -14,13 +14,16 @@ import org.eclipse.jdt.core.dom.*;
  * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
-@SuppressWarnings("static-method") public final class JavaTypeNameParser {
+@SuppressWarnings("static-method")
+public final class JavaTypeNameParser {
   public static boolean isJohnDoe(final SingleVariableDeclaration ¢) {
     return ¢ != null && isJohnDoe(¢.getType(), ¢.getName());
   }
+
   public static boolean isJohnDoe(final String typeName, final String variableName) {
     return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
   }
+
   public static boolean isJohnDoe(final Type t, final SimpleName n) {
     return n != null && isJohnDoe(t + "", n.getIdentifier());
   }
@@ -31,9 +34,11 @@ import org.eclipse.jdt.core.dom.*;
   public JavaTypeNameParser(final SimpleName ¢) {
     this(¢.getIdentifier());
   }
+
   public JavaTypeNameParser(final SingleVariableDeclaration ¢) {
     this(¢.getName());
   }
+
   /** Instantiates this class
    * @param typeName the Java type name to parse
    * @param isCollection denotes whether the type is a collection or a variadic
@@ -41,6 +46,7 @@ import org.eclipse.jdt.core.dom.*;
   public JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }
+
   /** @return an abbreviation of the type name */
   public String abbreviate() {
     String $ = "";
@@ -48,9 +54,11 @@ import org.eclipse.jdt.core.dom.*;
       if (!¢.find())
         return $.toLowerCase();
   }
+
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
     return isGenericVariation(¢.getName());
   }
+
   /** Returns whether a variable name is a generic variation of its type name. A
    * variable name is considered to be a generic variation of its type name if
    * the variable name is equal to the type name, either one of them is
@@ -63,6 +71,7 @@ import org.eclipse.jdt.core.dom.*;
     return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName)
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
+
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
    * @return <code><b>true</b></code> <em>iff</em>the provided name equals the
@@ -70,14 +79,17 @@ import org.eclipse.jdt.core.dom.*;
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
   }
+
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
+
   String lastName() {
     return typeName.substring(lastNameIndex());
   }
+
   int lastNameIndex() {
     if (isUpper(typeName.length() - 1))
       return typeName.length() - 1;
@@ -89,21 +101,27 @@ import org.eclipse.jdt.core.dom.*;
     }
     return 0;
   }
+
   private boolean isGenericVariation(final SimpleName ¢) {
     return isGenericVariation(¢.getIdentifier());
   }
+
   private boolean isLower(final int ¢) {
     return Character.isLowerCase(typeName.charAt(¢));
   }
+
   private boolean isUpper(final int ¢) {
     return Character.isUpperCase(typeName.charAt(¢));
   }
+
   private String lastNameCharIndex(final int ¢) {
     return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
+
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
   }
+
   // TODO: Yossi Gil: looks better :). I want to die with this switching theory
   // stuff. Did you know that clock is made of two transistors and a capacitor?
   // Cycle duty depends on the capacitance

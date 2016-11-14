@@ -32,10 +32,12 @@ public class Trimmer extends AbstractGUIApplicator {
   public Trimmer() {
     this(Toolbox.defaultInstance());
   }
+
   public Trimmer(final Toolbox toolbox) {
     super("Trimming");
     this.toolbox = toolbox;
   }
+
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final AtomicInteger i) {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -64,11 +66,13 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         return true;
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   public String fixed(final String from) {
     for (final Document $ = new Document(from);;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
@@ -85,6 +89,7 @@ public class Trimmer extends AbstractGUIApplicator {
       // return "nothing changed!";
     }
   }
+
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
@@ -107,6 +112,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         return false;
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
@@ -122,6 +128,7 @@ public class Trimmer extends AbstractGUIApplicator {
   @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N __) {
     return true;
   }
+
   protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }

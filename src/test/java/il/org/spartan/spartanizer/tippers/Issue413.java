@@ -41,12 +41,15 @@ public class Issue413 {
   @Test public void chocolate0() {
     azzert.that(Essence.stringRemove("abc"), iz("abc"));
   }
+
   @Test public void chocolate1() {
     azzert.that(Essence.stringRemove("abc"), instanceOf(String.class));
   }
+
   @Test public void chocolate2() {
     azzert.that(Essence.stringRemove(Essence.stringRemove("hello")), instanceOf(String.class));
   }
+
   @Test public void idempotent() {
     for (final String caze : new String[] { "This", "This 'is'", "This \"is" })
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
@@ -70,11 +73,13 @@ public class Issue413 {
               "\"string literal with an \\\"embedded\\\" string literal\""), //
           iz(""));
     }
+
     /** Flavor vanilla is for the simplest cases */
     @Test public void vanilla01() {
       azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
           iz("is on"));
     }
+
     /** Flavor vanilla is for the simplest cases */
     @Test public void vanilla02() {
       azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
