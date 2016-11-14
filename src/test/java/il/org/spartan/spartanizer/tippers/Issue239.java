@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author TODO Matteo: is that you?
+/** @author Matteo Orru'
  * @year 2016 */
 @SuppressWarnings("static-method")
 public class Issue239 {
