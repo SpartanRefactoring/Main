@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Examiner extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.tipper("return $X;", "", "");
+  private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.patternTipper("return $X;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (step.body(¢) == null || !haz.booleanReturnType(¢))

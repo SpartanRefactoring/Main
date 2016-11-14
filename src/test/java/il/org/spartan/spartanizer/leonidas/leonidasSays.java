@@ -33,12 +33,15 @@ public class leonidasSays {
   public static class tipper {
     private final Tipper<ASTNode> tipper;
 
-    public tipper(final String p, final String r, final String d) {
-      tipper = TipperFactory.tipper(p, r, d);
+    public tipper(final String pattern, final String replacement) {
+      tipper = TipperFactory.patternTipper(pattern, replacement);
+    }
+    public tipper(final String pattern, final String replacement, final String description) {
+      tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
-    public tipper(final Tipper<ASTNode> t) {
-      tipper = t;
+    public tipper(final Tipper<ASTNode> tipper) {
+      this.tipper = tipper;
     }
 
     public void nottips(final String ¢) {
