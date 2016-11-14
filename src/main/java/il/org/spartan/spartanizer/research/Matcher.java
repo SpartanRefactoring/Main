@@ -24,9 +24,11 @@ public class Matcher {
         return true;
     return false;
   }
+
   public static boolean matches(final ASTNode p, final ASTNode n) {
     return new Matcher().matchesAux(p, n);
   }
+
   @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
     @SuppressWarnings("unchecked") final List<Statement> sp = p.statements();
     @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
@@ -35,6 +37,7 @@ public class Matcher {
         return new Pair<>(¢, ¢ + sp.size());
     return null;
   }
+
   /** @param sp
    * @param subList
    * @return */
@@ -44,6 +47,7 @@ public class Matcher {
         return false;
     return true;
   }
+
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
     // I really hope these are the only options for operators (-Ori)
     switch (p.getNodeType()) {
@@ -71,13 +75,14 @@ public class Matcher {
 
   Map<String, String> ids = new HashMap<>();
 
-  private Matcher() {
-  }
+  private Matcher() {}
+
   /** Validates that matched variables are the same in all matching places. */
   private boolean consistent(final String id, final String s) {
     ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
   }
+
   @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n) {
     if (p == null || n == null)
       return false;
@@ -110,54 +115,65 @@ public class Matcher {
         return false;
     return true;
   }
+
   /** @param n
    * @return */
   private boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName())
         && consistent(az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
   }
+
   /** @param p
    * @return */
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
     return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
         && (az.methodInvocation(p).arguments().get(0) + "").startsWith("$A");
   }
+
   /** @param n
    * @return */
   private boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
     return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
   }
+
   public boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType())
         && consistent(c.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
   }
+
   /** @param p
    * @return */
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
         && (az.classInstanceCreation(p).arguments().get(0) + "").startsWith("$A");
   }
+
   /** @param p
    * @param n
    * @return */
   private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
     return iz.literal(n) && (p + "").equals(n + "");
   }
+
   private static boolean differentTypes(final ASTNode p, final ASTNode n) {
     return n.getNodeType() != p.getNodeType();
   }
+
   private static String blockName(final ASTNode p) {
     return az.methodInvocation(az.expressionStatement(p).getExpression()).getName().getFullyQualifiedName();
   }
+
   private static boolean isBlockVariable(final ASTNode p) {
     return iz.expressionStatement(p) && iz.methodInvocation(az.expressionStatement(p).getExpression()) && blockName(p).startsWith("$B");
   }
+
   /** Checks if node is a block or statement
    * @param ¢
    * @return */
   private static boolean matchesBlock(final ASTNode ¢) {
     return iz.block(¢) || iz.statement(¢);
   }
+
   private boolean sameName(final ASTNode p, final ASTNode n) {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
@@ -172,6 +188,7 @@ public class Matcher {
     }
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }
+
   @SuppressWarnings("unchecked") public static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
       final Map<String, String> enviroment) {
     if (iz.name(p)) {
@@ -194,6 +211,7 @@ public class Matcher {
     }
     return enviroment;
   }
+
   @SuppressWarnings("unchecked") public static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
     if (iz.name(p)) {
@@ -214,11 +232,13 @@ public class Matcher {
     }
     return enviroment;
   }
+
   /** @param p
    * @return */
   private static String argumentsId(final ASTNode p) {
     return az.methodInvocation(p).arguments().get(0) + "";
   }
+
   /** @param ¢
    * @return */
   private static String arguments(final ASTNode ¢) {

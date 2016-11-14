@@ -20,15 +20,18 @@ public final class FactorsExpander {
   public static Expression simplify(final InfixExpression ¢) {
     return base(new FactorsCollector(¢));
   }
+
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
+
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = duplicate.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
+
   private static InfixExpression base(final Factor t1, final Factor t2) {
     if (t1.multiplier())
       return subject.pair(t1.expression, t2.expression).to(t2.multiplier() ? TIMES : DIVIDE);
@@ -41,9 +44,11 @@ public final class FactorsExpander {
             , t2.expression) //
     ).to(DIVIDE);
   }
+
   private static Expression base(final FactorsCollector ¢) {
     return base(¢.all());
   }
+
   private static Expression base(final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
@@ -55,6 +60,7 @@ public final class FactorsExpander {
     assert $ != null;
     return step($, chop(chop(fs)));
   }
+
   /** @param $ The accumulator, to which one more {@link Factor} should be added
    *        optimally
    * @param fs a list
@@ -67,6 +73,7 @@ public final class FactorsExpander {
     assert $ instanceof InfixExpression;
     return recurse((InfixExpression) $, fs);
   }
+
   /** @see #recurse(InfixExpression, List) */
   private static Expression recurse(final InfixExpression $, final List<Factor> fs) {
     assert $ != null;
@@ -81,6 +88,7 @@ public final class FactorsExpander {
     assert first != null;
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }
+
   private static Expression step(final Expression $, final List<Factor> ¢) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse($, ¢);

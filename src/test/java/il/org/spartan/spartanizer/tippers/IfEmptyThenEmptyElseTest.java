@@ -15,7 +15,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class IfEmptyThenEmptyElseTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc", "static-method" })
+public final class IfEmptyThenEmptyElseTest {
   private static final Statement INPUT = into.s("{if (b) ; else ;}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThenEmptyElse TIPPER = new IfEmptyThenEmptyElse();
@@ -23,18 +25,23 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void eligible() {
     assert TIPPER.canTip(IF);
   }
+
   @Test public void emptyElse() {
     assert iz.vacuousElse(IF);
   }
+
   @Test public void emptyThen() {
     assert iz.vacuousThen(IF);
   }
+
   @Test public void extractFirstIf() {
     assert IF != null;
   }
+
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
+
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
@@ -50,6 +57,7 @@ import il.org.spartan.spartanizer.utils.*;
     e.apply(d);
     azzert.isNull(findFirst.ifStatement(makeAST.COMPILATION_UNIT.from(d.get())));
   }
+
   @Test public void scopeIncludes() {
     assert TIPPER.canTip(IF);
   }

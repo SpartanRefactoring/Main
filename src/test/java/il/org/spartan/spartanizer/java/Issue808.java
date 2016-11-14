@@ -18,10 +18,12 @@ public class Issue808 {
     final Expression ex = az.numberLiteral(wizard.ast("5"));
     assertNotEquals(ex, new Term(true, duplicate.of(ex)).asExpression());
   }
+
   @SuppressWarnings("static-method") @Test public void test02() {
     final Expression ex = az.simpleName(wizard.ast("shahar"));
     assertEquals(ex, new Term(false, ex).asExpression());
   }
+
   @SuppressWarnings("static-method") @Test public void test03() {
     final Expression ex1 = az.simpleName(wizard.ast("shahar"));
     final Expression ex2 = az.simpleName(wizard.ast("david"));

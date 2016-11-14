@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,14 +21,16 @@ public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
-  public CommandLine$Applicator() {
-  }
+  public CommandLine$Applicator() {}
+
   public CommandLine$Applicator(final String[] clazzes) {
     super(clazzes);
   }
+
   public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
+
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -36,6 +39,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
     });
   }
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -47,6 +51,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
+
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("metrics");
@@ -58,9 +63,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");
   }
+
   String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
+
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()); // instead
@@ -78,6 +85,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         return $.get();
     }
   }
+
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
@@ -86,6 +94,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     consolidateTips($, ¢);
     return $;
   }
+
   /** createRewrite on BodyDeclaration TODO Matteo -- this gonna be removed? --
    * matteo
    * @param u
@@ -95,6 +104,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     consolidateTips($, u);
     return $;
   }
+
   /** consolidate tips on CompilationUnit
    * @param r
    * @param u */
@@ -127,11 +137,13 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         return true;
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   /** consolidateTips on BodyDeclaration TODO Matteo -- this gonna be removed?
    * -- matteo
    * @param r
@@ -164,11 +176,13 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         return true;
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
   // return toolbox.firstTipper(¢);
   // }
@@ -179,6 +193,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     apply(u);
     return false;
   }
+
   /** Apply to single compilation unit
    * @param ¢
    * @return */
@@ -187,6 +202,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     go(¢.compilationUnit);
     return false;
   }
+
   /** @param __
    * @return */
   public boolean apply(final AbstractSelection<?> __) {

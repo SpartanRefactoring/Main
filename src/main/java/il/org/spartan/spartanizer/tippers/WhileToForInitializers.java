@@ -33,15 +33,19 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     initializers($).add(Initializers(f));
     return $;
   }
+
   private static Expression dupWhileExpression(final WhileStatement ¢) {
     return duplicate.of(expression(¢));
   }
+
   private static boolean fitting(final VariableDeclarationStatement s, final WhileStatement ¢) {
     return fragmentsUseFitting(s, ¢);
   }
+
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
+
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
@@ -50,17 +54,21 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
         return false;
     return true;
   }
+
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return az.variableDeclarationExpression(fragmentParent(¢));
   }
+
   private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(¢.getParent());
   }
+
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? ForToForInitializers.handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? ForToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? ForToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
+
   /** Determines whether a specific SimpleName was used in a
    * {@link ForStatement}.
    * @param s JD
@@ -70,9 +78,11 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
     return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();
   }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)

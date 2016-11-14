@@ -27,8 +27,10 @@ public abstract class MethodScanner {
     }
     currentIndex = -1;
   }
+
   /** @return List of available statements from the method to be scanned. */
   protected abstract List<Statement> availableStatements();
+
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
   public Iterable<Statement> statements() {
@@ -38,6 +40,7 @@ public abstract class MethodScanner {
       @Override public boolean hasNext() {
         return i.hasNext();
       }
+
       @Override public Statement next() {
         final Statement $ = i.next();
         ++currentIndex;
