@@ -18,9 +18,9 @@ public interface code {
         .replaceAll("\\s+", " ")//
         // TODO Matteo: I think this is buggy; the replacement should not be
         // phrased like so. $1, $2
-        .replaceAll("(\\([^a-zA-Z¢$_]\\)) (\\([^a-zA-Z¢$_]\\))", "$1$2")//
-        .replaceAll("(\\([^a-zA-Z¢$_]\\)) (\\([a-zA-Z¢$_]\\))", "$1$2")//
-        .replaceAll("(\\([a-zA-Z¢$_]\\)) (\\([^a-zA-Z¢$_]\\))", "$1$2");
+        .replaceAll("([^a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2")//
+        .replaceAll("([^a-zA-Z¢$_]) ([a-zA-Z¢$_])", "$1$2")//
+        .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
 
   /** This function counts the number of words the given string contains. Words
