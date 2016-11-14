@@ -50,11 +50,11 @@ public class Issue828 {
     assertFalse(s.prerequisite(obviouseTrueStatement));
     assertFalse(s.prerequisite(null));
   }
-  
+
   @Test public void replacementTest() {
-    assertEquals(s.replacement(simpleFor),null);
-    assertEquals(s.replacement(falseFor),null);
-    assertEquals(s.replacement(obviouseTrueStatement),null);
-    assertEquals( ((ForStatement) s.replacement(trueFor)).getExpression() ,null);
+    assertEquals(s.replacement(simpleFor), null);
+    assertEquals(s.replacement(falseFor), null);
+    assertEquals(s.replacement(obviouseTrueStatement), null);
+    assertEquals(((ForStatement) s.replacement(trueFor)).getExpression(), null);
   }
 }
