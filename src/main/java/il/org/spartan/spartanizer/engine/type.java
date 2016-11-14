@@ -42,10 +42,10 @@ public interface type {
       }
     }.join();
   }
-  @SuppressWarnings("synthetic-access") static inner.implementation bring(final String name) {
+  static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
-  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
+  static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
   static boolean isDouble(final Expression ¢) {
@@ -157,7 +157,7 @@ public interface type {
   static class inner {
     private static String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
-    private static Map<String, implementation> types = new LinkedHashMap<>();
+    static Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation get(final Expression ¢) {
       return (implementation) (NodeData.has(¢, propertyName) ? NodeData.get(¢, propertyName) : NodeData.set(¢, propertyName, lookUp(¢, lookDown(¢))));
@@ -341,7 +341,7 @@ public interface type {
       default boolean isNoInfo() {
         return in(this, NOTHING, NULL);
       }
-      @SuppressWarnings("synthetic-access") default implementation join() {
+      default implementation join() {
         assert !have(key()) : "fault: the dictionary should not have type " + key() + "\n receiver is " + this + "\n This is all I know";
         inner.types.put(key(), this);
         return this;
@@ -482,7 +482,7 @@ public interface type {
       final String description;
       final String key;
 
-      @SuppressWarnings("synthetic-access") Certain(final String key, final String description, final String s) {
+      Certain(final String key, final String description, final String s) {
         this.key = key;
         this.description = description;
         inner.types.put(key, this);

@@ -19,7 +19,7 @@ import org.eclipse.ui.dialogs.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** ??
  * @author Daniel Mittelman
@@ -94,10 +94,6 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
           && ¢.getNewValue() instanceof Boolean)
         NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(((Boolean) ¢.getNewValue()).booleanValue());
     }
-  }
-
-  @SuppressWarnings("unused") private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
-    return new TipsListEditor(g.label, "Available tippers", g, e);
   }
 
   static class TipsListEditor extends ListEditor {
