@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
+import il.org.spartan.spartanizer.cmdline.report.*;
+
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
