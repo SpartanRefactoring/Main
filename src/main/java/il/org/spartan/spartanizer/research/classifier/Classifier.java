@@ -33,10 +33,10 @@ public class Classifier extends ASTVisitor {
     for (boolean again = true; again;) {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
-      for (ASTNode ¢ : forLoopsList) {
-        UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "FOR();", "");
+      for (final ASTNode ¢ : forLoopsList) {
+        UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         toRemove = new ArrayList<>();
-        for (ASTNode l : forLoopsList)
+        for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
             toRemove.add(l);
         if (toRemove.size() > 1) {
@@ -50,7 +50,7 @@ public class Classifier extends ASTVisitor {
     System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
     System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
     System.out.println("Lets classify them together!");
-    for (String k : patterns.keySet()) {
+    for (final String k : patterns.keySet()) {
       System.out.println(k);
       System.out.println("[Matched " + patterns.get(k).inner + " times]");
       classify(k);
