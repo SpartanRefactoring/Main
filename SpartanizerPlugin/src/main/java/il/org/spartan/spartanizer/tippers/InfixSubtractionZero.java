@@ -27,6 +27,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(minus(first(prune)), chop(prune));
   }
+
   private static List<Expression> prune(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
@@ -34,6 +35,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
         $.add(¢);
     return $.size() != xs.size() ? $ : null;
   }
+
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> prune = prune(xs);
     if (prune == null)
@@ -47,9 +49,11 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     assert prune.size() >= 2;
     return subject.operands(!iz.literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
   }
+
   @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
+
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return ¢.getOperator() != MINUS ? null : replacement(operands(¢));
   }

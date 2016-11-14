@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import il.org.spartan.spartanizer.cmdline.report.*;
+
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public class CommandLineClient {
@@ -11,6 +13,7 @@ public class CommandLineClient {
     if (args.length == 0)
       processCommandLine(args);
   }
+
   @SuppressWarnings("unused") private static void processCommandLine(final String[] args) {
     new CommandLineClient();
     // final List<String> remaining = extract(args, r);
@@ -21,6 +24,7 @@ public class CommandLineClient {
     new CommandLineSpartanizer(inputDir).apply();
     // r.printExternals();
   }
+
   static void printPrompt() {
     System.out.println("Help");
     System.out.println("");

@@ -18,32 +18,41 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     $.setBody(minus.lastStatement(dupWhileBody(¢)));
     return $;
   }
+
   private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
+
   private static Statement dupWhileBody(final WhileStatement ¢) {
     return duplicate.of(step.body(¢));
   }
+
   private static Expression dupWhileExpression(final WhileStatement ¢) {
     return duplicate.of(¢.getExpression());
   }
+
   private static boolean fitting(final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
         && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
+
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
     return az.block(step.body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2
         && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
+
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(step.body(¢));
   }
+
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
+
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && fitting(¢);
   }
+
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }

@@ -51,6 +51,7 @@ public class Dialogs {
     }
     return icon;
   }
+
   /** Lazy, dynamic loading of the dialogs' logo.
    * @return icon used by dialogs */
   static Image logo() {
@@ -68,6 +69,7 @@ public class Dialogs {
     }
     return logo;
   }
+
   /** Simple dialog, waits for user operation.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
@@ -76,15 +78,18 @@ public class Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
+
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, SWT.DEFAULT, "Cancel", false);
         super.createButtonsForButtonBar(¢);
       }
+
       @Override public Image getInfoImage() {
         return logo();
       }
     };
   }
+
   /** Simple non-modal dialog. Does not wait for user operation (i.e., non
    * blocking).
    * @param message to be displayed in the dialog
@@ -94,6 +99,7 @@ public class Dialogs {
     $.setBlockOnOpen(false);
     return $;
   }
+
   /** @param openOnRun whether this dialog should be open on run
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
@@ -102,10 +108,12 @@ public class Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
       }
+
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, RIB_ID, "Run in Background", false);
         super.createButtonsForButtonBar(¢);
       }
+
       @Override protected void buttonPressed(final int ¢) {
         super.buttonPressed(¢);
         switch (¢) {
@@ -117,6 +125,7 @@ public class Dialogs {
             break;
         }
       }
+
       @Override public Image getInfoImage() {
         return logo();
       }
@@ -126,12 +135,14 @@ public class Dialogs {
     $.setOpenOnRun(openOnRun);
     return $;
   }
+
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em> the user pressed any button
    *         except close button. */
   public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
+
   /** @param ¢ JD
    * @param okIndex index of button to be pressed
    * @return <code><b>true</b></code> <em>iff</em> the button selected has been

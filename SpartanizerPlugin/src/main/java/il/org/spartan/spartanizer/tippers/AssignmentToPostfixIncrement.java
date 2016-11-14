@@ -20,15 +20,19 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
   private static boolean isIncrement(final Assignment ¢) {
     return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
+
   private static boolean provablyNotString(final Assignment ¢) {
     return type.isNotString(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assign2infix(¢.getOperator())));
   }
+
   private static ASTNode replace(final Assignment ¢) {
     return subject.operand(¢.getLeftHandSide()).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
+
   @Override public String description(final Assignment ¢) {
     return "Replace " + ¢ + " to " + ¢.getRightHandSide() + (isIncrement(¢) ? "++" : "--");
   }
+
   @Override public ASTNode replacement(final Assignment ¢) {
     return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(¢.getRightHandSide()) || !provablyNotString(¢) ? null : replace(¢);
   }

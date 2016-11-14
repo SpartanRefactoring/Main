@@ -35,9 +35,11 @@ public class Analyzer {
     else
       analyze();
   }
+
   private static void initializeSpartanizer() {
     spartanizer = addNanoPatterns(new InteractiveSpartanizer());
   }
+
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
     String code = "";
@@ -45,16 +47,19 @@ public class Analyzer {
       code += spartanize(compilationUnit(¢));
     new Classifier().analyze(getCompilationUnit(code));
   }
+
   private static void createOutputDirIfNeeded() {
     final File dir = new File(getProperty("outputDir"));
     if (!dir.exists())
       dir.mkdir();
   }
+
   /** @param ¢
    * @return */
   private static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyzer.class.getSimpleName(), ¢);
   }
+
   private static void parseArguments(final String[] args) {
     if (args.length < 2)
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
@@ -62,11 +67,13 @@ public class Analyzer {
       parseArgument(arg);
     System.out.println(AnalyzerOptions.options);
   }
+
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
   }
+
   private static void parseArgument(final String s) {
     assert s.charAt(0) == '-' : "property should start with '-'";
     final String[] li = bisect(s.substring(1), "=");
@@ -76,6 +83,7 @@ public class Analyzer {
     else
       setExternalProperty(li[0], li[1]);
   }
+
   /** @param s
    * @param by
    * @return */
@@ -86,19 +94,23 @@ public class Analyzer {
     $[1] = s.substring(i + 1);
     return $;
   }
+
   /** @param key
    * @param value */
   private static void setLocalProperty(final String key, final String value) {
     set(key, value);
   }
+
   /** @param left
    * @param right */
   private static void setExternalProperty(final String left, final String right) {
     setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
   }
+
   private static void setExternalProperty(final String cls, final String property, final String value) {
     AnalyzerOptions.set(cls, property, value);
   }
+
   /** Append String to file.
    * @param f file
    * @param s string */
@@ -109,6 +121,7 @@ public class Analyzer {
       monitor.infoIOException(x, "append");
     }
   }
+
   /** Clean {@link cu} from any comments, javadoc, importDeclarations,
    * packageDeclarations and FieldDeclarations.
    * @param cu
@@ -117,16 +130,19 @@ public class Analyzer {
     cu.accept(new CleanerVisitor());
     return cu;
   }
+
   /** @param ¢ file
    * @return compilation unit out of file */
   private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
+
   /** @param ¢ string
    * @return compilation unit out of string */
   private static ASTNode getCompilationUnit(final String ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
+
   /** Get all java files contained in folder recursively. <br>
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
@@ -134,6 +150,7 @@ public class Analyzer {
   private static Set<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
+
   /** Get all java files contained in folder recursively. <br>
    * Heuristically, we ignore test files.
    * @param directory to search in
@@ -149,6 +166,7 @@ public class Analyzer {
         $.addAll(getJavaFiles(entry));
     return $;
   }
+
   /** analyze nano patterns in code. */
   private static void analyze() {
     AnalyzerOptions.setVerbose();
@@ -162,18 +180,23 @@ public class Analyzer {
     }
     Logger.summarize(getProperty("outputDir"));
   }
+
   private static String spartanize(final ASTNode cu) {
     return spartanizer.fixedPoint(cu + "");
   }
+
   private static ASTNode compilationUnit(final File ¢) {
     return clean(getCompilationUnit(¢));
   }
+
   private static Set<File> inputFiles() {
     return getJavaFiles(getProperty("inputDir"));
   }
+
   private static void deleteOutputFile() {
     new File(getProperty("outputDir") + "/after.java").delete();
   }
+
   private static void methodsAnalyze() {
     for (final File f : inputFiles())
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
@@ -187,6 +210,7 @@ public class Analyzer {
     MagicNumbers.printComparison();
     MagicNumbers.printAccumulated();
   }
+
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer.
    * @param ¢ our gUIBatchLaconizer
@@ -229,6 +253,7 @@ public class Analyzer {
             null) //
     ;
   }
+
   private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
         new Carrier(), //
