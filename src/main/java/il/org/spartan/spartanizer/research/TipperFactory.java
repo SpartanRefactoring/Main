@@ -26,6 +26,7 @@ public class TipperFactory {
   public static <N extends ASTNode> UserDefinedTipper<N> subBlockTipper(final String _pattern, final String _replacement, final String description) {
     return newSubBlockTipper(_pattern, _replacement, description);
   }
+
   private static <N extends ASTNode> UserDefinedTipper<N> newSubBlockTipper(final String _pattern, final String _replacement,
       final String description) {
     return new UserDefinedTipper<N>() {
@@ -54,20 +55,25 @@ public class TipperFactory {
           }
         };
       }
+
       @Override protected boolean prerequisite(final N ¢) {
         return Matcher.blockMatches(pattern, ¢);
       }
+
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
+
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return Matcher.collectEnviromentNodes(pattern, n, new HashMap<>()).get(s);
       }
+
       Map<String, String> collectEnviroment(final ASTNode ¢) {
         return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
       }
     };
   }
+
   public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
     final ASTNode pattern = extractStatementIfOne(wizard.ast(reformat$Bs(_pattern)));
     final String replacement = reformat$Bs(_replacement);
@@ -75,6 +81,7 @@ public class TipperFactory {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
+
       @Override public Tip tip(final N n) {
         return new Tip(description(n), n, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -95,27 +102,33 @@ public class TipperFactory {
           }
         };
       }
+
       @Override protected boolean prerequisite(final N ¢) {
         return Matcher.matches(pattern, ¢);
       }
+
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return Matcher.collectEnviromentNodes(pattern, n, new HashMap<>()).get(s);
       }
+
       Map<String, String> collectEnviroment(final ASTNode ¢) {
         return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
       }
     };
   }
+
   public static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
     final int end = az.block(n).statements().size();
     return start >= end ? "" : stringifySubBlock(n, start, end);
   }
+
   public static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
     if (start >= end)
       return "";
     @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
     return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
+
   /** @param b
    * @param idxs
    * @return */
@@ -125,15 +138,19 @@ public class TipperFactory {
       $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
     return $;
   }
+
   static boolean isBlockVariable(final ASTNode p) {
     return iz.expressionStatement(p) && iz.methodInvocation(az.expressionStatement(p).getExpression()) && blockName(p).startsWith("$B");
   }
+
   static String blockName(final ASTNode p) {
     return az.methodInvocation(az.expressionStatement(p).getExpression()).getName().getFullyQualifiedName();
   }
+
   static String reformat$Bs(final String ¢) {
     return ¢.replaceAll("\\$B\\d*", "$0\\(\\);");
   }
+
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
     return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
   }

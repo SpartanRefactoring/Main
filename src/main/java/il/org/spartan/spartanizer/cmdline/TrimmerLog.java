@@ -27,9 +27,11 @@ public class TrimmerLog {
   public static void activateLogToFile() {
     logToFile = true;
   }
+
   public static void activateLogToScreen() {
     logToScreen = true;
   }
+
   public static void application(final ASTRewrite r, final Tip t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
@@ -41,30 +43,39 @@ public class TrimmerLog {
     t.go(r, null);
     System.out.println("       After: " + r);
   }
+
   public static int getMaxApplications() {
     return maxApplications;
   }
+
   public static int getMaxTips() {
     return maxTips;
   }
+
   public static int getMaxVisitations() {
     return maxVisitations;
   }
+
   public static void setFileName(final String $) {
     fileName = $;
   }
+
   public static void setMaxApplications(final int maxApplications) {
     TrimmerLog.maxApplications = maxApplications;
   }
+
   public static void setMaxTips(final int maxTips) {
     TrimmerLog.maxTips = maxTips;
   }
+
   public static void setMaxVisitations(final int maxVisitations) {
     TrimmerLog.maxVisitations = maxVisitations;
   }
+
   public static void setOutputDir(final String $) {
     TrimmerLog.outputDir = $;
   }
+
   public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
@@ -92,15 +103,18 @@ public class TrimmerLog {
     System.out.println(" Can tip: " + w.canTip(n));
     System.out.println("    Suggests: " + w.tip(n));
   }
+
   public static void visitation(final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
+
   private static String clazz(final Object n) {
     return n.getClass().getSimpleName();
   }
+
   private static CSVStatistics init() {
     try {
       output = new CSVStatistics(outputDir, "Tips");

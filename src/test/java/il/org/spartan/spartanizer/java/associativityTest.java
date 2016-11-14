@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -10,42 +8,53 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Dor Ma'yan
  * @author Sapir Bismot
  * @since 16-11-9 **/
-
+@SuppressWarnings("static-method")
 public class associativityTest {
-  @SuppressWarnings("static-method") @Test public void test0() {
-    assertTrue(!associativity.isLeftToRight(az.infixExpression(wizard.ast("5+4")).getOperator()));
+  @Test public void test0() {
+    assert !associativity.isLeftToRight(az.infixExpression(wizard.ast("5+4")).getOperator());
   }
-  @SuppressWarnings("static-method") @Test public void test1() {
-    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("(7-4)+2"))));
+
+  @Test public void test1() {
+    assert !associativity.isRightToLeft(az.expression(wizard.ast("(7-4)+2")));
   }
-  @SuppressWarnings("static-method") @Test public void test2() {
-    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("7-(4+2)"))));
+
+  @Test public void test2() {
+    assert !associativity.isRightToLeft(az.expression(wizard.ast("7-(4+2)")));
   }
-  @SuppressWarnings("static-method") @Test public void test3() {
-    assertTrue(associativity.isRightToLeft(az.expression(wizard.ast("!q()"))));
+
+  @Test public void test3() {
+    assert associativity.isRightToLeft(az.expression(wizard.ast("!q()")));
   }
-  @SuppressWarnings("static-method") @Test public void test4() {
-    assertTrue(associativity.isRightToLeft(az.expression(wizard.ast("x=y=z=17"))));
+
+  @Test public void test4() {
+    assert associativity.isRightToLeft(az.expression(wizard.ast("x=y=z=17")));
   }
-  @SuppressWarnings("static-method") @Test public void test5() {
-    assertTrue(associativity.isRightToLeft(az.expression(wizard.ast("++x"))));
+
+  @Test public void test5() {
+    assert associativity.isRightToLeft(az.expression(wizard.ast("++x")));
   }
-  @SuppressWarnings("static-method") @Test public void test6() {
-    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x++"))));
+
+  @Test public void test6() {
+    assert !associativity.isRightToLeft(az.expression(wizard.ast("x++")));
   }
-  @SuppressWarnings("static-method") @Test public void test7() {
-    assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x && y"))));
+
+  @Test public void test7() {
+    assert !associativity.isRightToLeft(az.expression(wizard.ast("x && y")));
   }
-  @SuppressWarnings("static-method") @Test public void test8() {
-    assertTrue(associativity.isLeftToRight(az.expression(wizard.ast("x && !y"))));
+  
+  @Test public void test8() {
+    assert associativity.isLeftToRight(az.expression(wizard.ast("x && !y")));
   }
-  @SuppressWarnings("static-method") @Test public void test9() {
-    assertTrue(!associativity.isLeftToRight(az.expression(wizard.ast("!q()"))));
+  
+ @Test public void test9() {
+    assert !associativity.isLeftToRight(az.expression(wizard.ast("!q()")));
   }
-  @SuppressWarnings("static-method") @Test public void test10() {
-    assertTrue(!associativity.isLeftToRight(az.expression(wizard.ast("x=y=z=18"))));
+ 
+ @Test public void test10() {
+    assert !associativity.isLeftToRight(az.expression(wizard.ast("x=y=z=18")));
   }
-  @SuppressWarnings("static-method") @Test public void test11() {
-    assertTrue(!associativity.isLeftToRight(az.infixExpression(wizard.ast("a&&b")).getOperator()));
+  
+ @Test public void test11() {
+    assert !associativity.isLeftToRight(az.infixExpression(wizard.ast("a&&b")).getOperator());
   }
 }

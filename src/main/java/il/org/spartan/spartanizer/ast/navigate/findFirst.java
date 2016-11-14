@@ -24,6 +24,7 @@ public interface findFirst {
   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class, ¢);
   }
+
   /** Find the first {@link ConditionalExpression}, under a given node, as found
    * in the usual visitation order.
    * @param n First node to visit
@@ -42,9 +43,11 @@ public interface findFirst {
     });
     return $.get();
   }
+
   static <E> E elementOf(final List<E> ¢) {
     return first(¢);
   }
+
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
    * @param pattern JD
    * @return first {@link Expression} found in an {@link ASTNode n}, or
@@ -52,21 +55,25 @@ public interface findFirst {
   static Expression expression(final ASTNode ¢) {
     return findFirst.instanceOf(Expression.class, ¢);
   }
+
   /** @param ¢ JD
    * @return */
   static Type type(final ASTNode ¢) {
     return instanceOf(Type.class, ¢);
   }
+
   /** @param ¢ JD
    * @return */
   static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return instanceOf(TypeDeclaration.class, ¢);
   }
+
   /** @param ¢ JD
    * @return */
   static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
     return instanceOf(AbstractTypeDeclaration.class, ¢);
   }
+
   /** Search for an {@link ForStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD
@@ -75,6 +82,7 @@ public interface findFirst {
   static ForStatement forStatement(final ASTNode ¢) {
     return instanceOf(ForStatement.class, ¢);
   }
+
   /** Search for an {@link IfStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD
@@ -83,6 +91,7 @@ public interface findFirst {
   static IfStatement ifStatement(final ASTNode ¢) {
     return instanceOf(IfStatement.class, ¢);
   }
+
   /** Find the first {@link InfixExpression} representing an addition, under a
    * given node, as found in the usual visitation order.
    * @param n JD
@@ -103,6 +112,7 @@ public interface findFirst {
     });
     return $.get();
   }
+
   static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
     if (n == null)
       return null;
@@ -121,6 +131,7 @@ public interface findFirst {
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
+
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD
@@ -129,6 +140,7 @@ public interface findFirst {
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
     return instanceOf(MethodDeclaration.class, ¢);
   }
+
   /** Search for a {@link PrefixExpression} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD
@@ -137,9 +149,11 @@ public interface findFirst {
   static PostfixExpression postfixExpression(final ASTNode ¢) {
     return instanceOf(PostfixExpression.class, ¢);
   }
+
   static ThrowStatement throwStatement(final ASTNode ¢) {
     return instanceOf(ThrowStatement.class, ¢);
   }
+
   /** Return the first {@link VariableDeclarationFragment} encountered in a
    * visit of the tree rooted a the parameter.
    * @param pattern JD
@@ -148,6 +162,7 @@ public interface findFirst {
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
     return instanceOf(VariableDeclarationFragment.class, ¢);
   }
+
   /** Search for an {@link WhileStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param pattern JD

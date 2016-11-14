@@ -23,12 +23,14 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "replace lazy evaluation with lazyEvaluatedTo($X1,$X2)";
   }
+
   @Override public boolean canTip(final Assignment x) {
     for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
   }
+
   @Override public Tip tip(final Assignment x) {
     Logger.logNP(x, getClass().getSimpleName());
     for (final UserDefinedTipper<Assignment> ¢ : tippers)

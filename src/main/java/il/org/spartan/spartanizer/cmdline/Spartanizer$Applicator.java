@@ -27,10 +27,12 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   public Spartanizer$Applicator() {
     this(Toolbox.defaultInstance());
   }
+
   /** @param defaultInstance */
   public Spartanizer$Applicator(final Toolbox toolbox) {
     this.toolbox = toolbox;
   }
+
   /** Apply the spartanization to a selection of CompilationUnits
    * @param u
    * @param s
@@ -50,6 +52,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     }
     return false;
   }
+
   /** Apply the spartanization to a single CompilationUnit
    * @param u
    * @param s
@@ -59,6 +62,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     go(u.compilationUnit);
     return false;
   }
+
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -70,6 +74,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       }
     });
   }
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
@@ -79,6 +84,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     computeMetrics(input, outputASTNode);
     return false;
   }
+
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("metrics");
@@ -90,6 +96,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");
   }
+
   /** @param input
    * @return */
   private String fixedPoint(final String from) {
@@ -111,6 +118,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         return $.get();
     }
   }
+
   /** This method
    * @param u
    * @return */
@@ -119,6 +127,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     consolidateTips($, u);
     return $;
   }
+
   /** Rewrite CompilationUnit
    * @param ¢
    * @return */
@@ -127,6 +136,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     consolidateTips($, ¢);
     return $;
   }
+
   /** ConsolidateTips on CompilationUnit
    * @param r
    * @param u */
@@ -159,15 +169,18 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         return true;
       }
+
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
         return toolbox.firstTipper(¢);
       }
+
       /** @param n
        * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -175,11 +188,13 @@ public class Spartanizer$Applicator extends Generic$Applicator {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -209,15 +224,18 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         return true;
       }
+
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
         return toolbox.firstTipper(¢);
       }
+
       /** @param n
        * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -225,14 +243,17 @@ public class Spartanizer$Applicator extends Generic$Applicator {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
+
   static boolean filter(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
+
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }

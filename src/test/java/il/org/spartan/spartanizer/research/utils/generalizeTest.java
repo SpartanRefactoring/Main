@@ -8,7 +8,8 @@ import il.org.spartan.spartanizer.research.util.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@SuppressWarnings("static-method") public class generalizeTest {
+@SuppressWarnings("static-method")
+public class generalizeTest {
   @Test public void a() {
     assertEquals("$N0 + $N1", generalize.code("x + y"));
   }

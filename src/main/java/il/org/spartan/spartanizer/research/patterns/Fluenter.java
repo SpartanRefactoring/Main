@@ -14,9 +14,11 @@ public class Fluenter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return returnTypeSameAsClass(¢) && lastStatementReturnsThis(¢);
   }
+
   private static boolean returnTypeSameAsClass(final MethodDeclaration ¢) {
     return (searchAncestors.forContainingType().from(¢).getName() + "").equals(step.returnType(¢) + "");
   }
+
   /** @param ¢
    * @return */
   private static boolean lastStatementReturnsThis(final MethodDeclaration ¢) {

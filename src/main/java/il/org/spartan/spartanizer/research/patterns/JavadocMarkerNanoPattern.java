@@ -15,7 +15,9 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
     final Javadoc j = ¢.getJavadoc();
     return (j == null || !(j + "").contains(javadoc())) && prerequisites(¢);
   }
+
   protected abstract boolean prerequisites(N ¢);
+
   @Override public Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -24,9 +26,11 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
       }
     };
   }
+
   @Override public final String description(final MethodDeclaration ¢) {
     return ¢.getName() + " is a " + this.getClass().getSimpleName() + " method";
   }
+
   protected final String javadoc() {
     return "[[" + this.getClass().getSimpleName() + "]]";
   }

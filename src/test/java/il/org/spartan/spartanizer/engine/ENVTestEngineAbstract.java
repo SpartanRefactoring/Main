@@ -36,6 +36,7 @@ public abstract class ENVTestEngineAbstract {
       azzert.fail("Bad test file - an entity appears twice.");
     testSet.add(new MapEntry<>(s1.substring(1, s1.length() - 1), new Information(type.baptize(s2.substring(1, s2.length() - 1)))));
   }
+
   /** Check if the testSet is contained in the generated or provided (manual
    * mode) Set. First checks in unordered fashion, and then checks inorder.
    * @param ¢ */
@@ -43,6 +44,7 @@ public abstract class ENVTestEngineAbstract {
     compareOutOfOrder(¢, testSet);
     compareInOrder(¢, testSet);
   }
+
   /** Compares the given {@link LinkedHashSet} with the inner testSet.
    * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
    * contained in the same order in the provided set.
@@ -69,6 +71,7 @@ public abstract class ENVTestEngineAbstract {
       }
     }
   }
+
   /** Compares the given {@link LinkedHashSet} with the inner testSet.
    * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
    * contained in the provided set.
@@ -86,9 +89,11 @@ public abstract class ENVTestEngineAbstract {
     testSetsReset();
     assert false : "some entry not found out of order!";
   }
+
   protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
     return new LinkedHashSet<>();
   }
+
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
@@ -102,6 +107,7 @@ public abstract class ENVTestEngineAbstract {
     assert $ != null;
     return $;
   }
+
   /** Determines that we have got to the correct Annotation
    * @param n1
    * @return */
@@ -110,12 +116,14 @@ public abstract class ENVTestEngineAbstract {
                                    // not Id.
     return "Id".equals(n1 + "");
   }
+
   private static boolean testSetContainsVarName(final String s) {
     for (final Entry<String, Information> ¢ : testSet)
       if (¢.getKey().equals(s))
         return true;
     return false;
   }
+
   public static void testSetsReset() {
     if (testSet != null)
       testSet.clear();
@@ -128,10 +136,12 @@ public abstract class ENVTestEngineAbstract {
   protected ASTNode n;
 
   protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
   protected abstract void handler(final Annotation ¢);
+
   /** define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin,
    * End. define: inner annotation = Id. ASTVisitor that goes over the ASTNodes
    * in which annotations can be defined, and checks if the annotations are of
@@ -150,38 +160,47 @@ public abstract class ENVTestEngineAbstract {
         for (final Annotation ¢ : as)
           handler(¢);
       }
+
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final EnumDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final FieldDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final Initializer ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final MethodDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       @Override public boolean visit(final TypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
       }
+
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)

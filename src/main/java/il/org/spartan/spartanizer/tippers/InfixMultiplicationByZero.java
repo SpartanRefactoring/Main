@@ -22,15 +22,18 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
         return true;
     return false;
   }
+
   private static boolean isContainsSideEffect(final InfixExpression x) {
     for (final Expression ¢ : extract.allOperands(x))
       if (haz.sideEffects(¢))
         return true;
     return false;
   }
+
   @Override public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
+
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
