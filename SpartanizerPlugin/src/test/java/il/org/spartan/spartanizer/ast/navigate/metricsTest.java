@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import java.util.*;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -7,9 +9,17 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
+/** Test class for metrics.java. for more information, please view issue #823
+ * @author Inbal Matityahu
+ * @author Or Troyaner
+ * @author Tom Nof 
+ * @since 16-11-04 */
 @SuppressWarnings({ "static-method", "javadoc" }) public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
+  private final String helloWorldChars = "\\*Hello, World!\\n*\"";
+  private final String helloCommented = "\\/*Hello*/";
   private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
   private final Expression booleans = e("true||false||true");
   private final Expression helloWorld = e("f(" + helloWorldQuoted + ")");
@@ -102,4 +112,43 @@ import il.org.spartan.*;
     azzert.that(metrics.vocabulary(x2), is(4));
     azzert.that(metrics.vocabulary(booleans), is(0));
   }
+  @Test public void dexterityIsNull() {
+    azzert.that(metrics.dexterity(null), is(0));
+  }
+  @Test public void countMethods() {
+    azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
+  }
+  @Test public void bodySizeTest() {
+    azzert.that(metrics.bodySize(booleans), is(0));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
+  }
+  @Test public void tokensTest() {
+    azzert.that(metrics.tokens(helloWorldQuoted), is(1));
+    azzert.that(metrics.tokens(helloWorldChars), is(8));
+    azzert.that(metrics.tokens(helloCommented), is(0));
+  }
+
+  @Test public void condensedSizeTest() {
+    azzert.that(metrics.condensedSize(booleans), is(17));
+    azzert.that(metrics.condensedSize(x1), is(26));
+  }
+  
+  @Test public void horizontalComplexityTest() {
+    //Test a null list and a null Statement
+    Statement s = null;
+    List<Statement> st = null;
+    azzert.that(metrics.horizontalComplexity(0, s), is(0));
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    // Test a list with one null statement
+    st = new ArrayList<>();
+    st.add(s);
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    // Test a list with a real statement
+    Statement sf = az.statement(wizard.ast("if(true) return 1;"));
+    st.add(sf);
+    azzert.that(metrics.horizontalComplexity(0, st), is(13446));
+  }
+  //horizontalComplexity
 }

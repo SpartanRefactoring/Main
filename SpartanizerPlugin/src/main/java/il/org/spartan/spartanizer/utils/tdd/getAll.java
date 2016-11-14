@@ -30,9 +30,9 @@ public enum getAll {
     final Set<String> $ = new TreeSet<>();
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName ¢¢) {
-        if((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
+        if ((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
             && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
-        $.add((¢¢ + ""));
+          $.add(¢¢ + "");
         return true;
       }
     });
