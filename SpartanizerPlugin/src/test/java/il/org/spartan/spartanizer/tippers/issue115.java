@@ -14,22 +14,27 @@ public class issue115 {
     trimmingOf("j=j^k")//
         .gives("j^=k");
   }
+
   @Test public void trimmerBugXOR_Notparsing02() {
     trimmingOf("j = j ^ k")//
         .gives("j^=k");
   }
+
   @Test public void trimmerBugXOR_Notparsing03() {
     trimmingOf("j = j^ k")//
         .gives("j ^= k");
   }
+
   @Test public void trimmerBugXOR_Notparsing04() {
     trimmingOf("j = j ^k")//
         .gives("j ^= k");
   }
+
   @Test public void trimmerBugXOR_Parsing01() {
     trimmingOf("j = j ^ k")//
         .gives("j ^= k");
   }
+
   @Test public void trimmerBugXOR_Parsing02() {
     trimmingOf("j = j ^ k")//
         .gives("j ^=k");

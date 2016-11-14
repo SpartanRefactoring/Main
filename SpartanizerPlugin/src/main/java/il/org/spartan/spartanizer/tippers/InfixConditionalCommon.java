@@ -39,15 +39,18 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     es.remove(0);
     return es.size() < 2 ? duplicate.of(first(es)) : subject.operands(es).to(x.getOperator());
   }
+
   private static Operator conjugate(final Operator ¢) {
     return ¢ == null ? null
         : ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
             : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
                 : null;
   }
+
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
+
   @Override public Expression replacement(final InfixExpression x) {
     final Operator o = x.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))

@@ -14,34 +14,45 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class spartanTest {
+@SuppressWarnings({ "static-method", "javadoc" })
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public final class spartanTest {
   @Test public void arrayOfInts() {
     azzert.that(spartan.shorten(t("int[][] __;")), equalTo("iss"));
   }
+
   @Test public void listOfInts() {
     azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
+
   @Test public void listOfIntsa() {
     azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
+
   @Test public void shortNameASTRewriter() {
     azzert.that(spartan.shorten(t("ASTRewriter __;")), equalTo("r"));
   }
+
   @Test public void shortNameDouble() {
     azzert.that(spartan.shorten(t("double __;")), equalTo("d"));
   }
+
   @Test public void shortNameExpression() {
     azzert.that(spartan.shorten(t("Expression __;")), equalTo("x"));
   }
+
   @Test public void shortNameExpressions() {
     azzert.that(spartan.shorten(t("Expression[] __;")), equalTo("xs"));
   }
+
   @Test public void shortNameExpressionsList() {
     azzert.that(spartan.shorten(t("List<Expression> __;")), equalTo("xs"));
   }
+
   @Test public void shortNameInfrastructure() {
     azzert.that(spartan.shorten(t("int __;")), equalTo("i"));
   }
+
   @Test public void shortNameQualifiedType() {
     azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression __;")), equalTo("x"));
   }

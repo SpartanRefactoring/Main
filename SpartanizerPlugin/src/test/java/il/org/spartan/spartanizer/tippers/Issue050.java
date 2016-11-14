@@ -7,40 +7,49 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue050 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
+public class Issue050 {
   @Test public void A$50_Constructors1() {
     trimmingOf("public final class ClassTest{public  ClassTest(){}}").stays();
   }
+
   @Test public void A$50_EnumInInterface1() {
     trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}").gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_Enums() {
     trimmingOf("public final class ClassTest{static enum Day{SUNDAY,MONDAY}").gives("public final class ClassTest{enum Day{SUNDAY,MONDAY}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_EnumsOnlyRightModifierRemoved() {
     trimmingOf("public final class ClassTest{private static enum Day{SUNDAY,MONDAY}")
         .gives("public final class ClassTest{private enum Day{SUNDAY,MONDAY}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_FinalClassMethods() {
     trimmingOf("final class ClassTest{final void remove();}")//
         .gives("final class ClassTest{void remove();}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_FinalClassMethodsOnlyRightModifierRemoved() {
     trimmingOf("final class ClassTest{public final void remove();}").gives("final class ClassTest{public void remove();}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_inEnumMember() {
     trimmingOf("enum A{;final void f(){}public final void g(){}}").stays();
   }
+
   @Ignore @Test public void A$50_inEnumMemberComplex() {
     trimmingOf("enum A{a1{{f();}protected final void f(){g();}public final void g(){h();}\n"
         + "private final void h(){i();}final void i(){f();}},a2{{f();}final protected void f(){g();}\n"
@@ -49,25 +58,30 @@ import org.junit.runners.*;
             .gives("enum A{a1{{f();}void f(){g();}public void g(){h();}void h(){i();}void i(){f();}\n"
                 + "},a2{{f();}void f(){g();}void g(){h();}void h(){i();}void i(){f();}};\n" + "abstract void f();void ia(){}void i(){}}\n");
   }
+
   @Test public void A$50_InterfaceMethods1() {
     trimmingOf("public interface Int1{public void add();void remove()\n;}").gives("public interface Int1{void add();void remove()\n;}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_InterfaceMethods2() {
     trimmingOf("public interface Int1{public abstract void add();abstract void remove()\n;}")
         .gives("public interface Int1{void add();void remove()\n;}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_InterfaceMethods3() {
     trimmingOf("public interface Int1{abstract void add();void remove()\n;}").gives("public interface Int1{void add();void remove();}")//
         .stays()//
     ;
   }
+
   @Test public void A$50_SimpleDontWorking() {
     trimmingOf("interface a{}").stays();
   }
+
   @Test public void A$50_SimpleWorking1() {
     trimmingOf("abstract abstract interface a{}")//
         .gives("abstract interface a{}")//
@@ -75,57 +89,68 @@ import org.junit.runners.*;
         .stays()//
     ;
   }
+
   @Test public void A$50_SimpleWorking2() {
     trimmingOf("abstract interface a{}")//
         .gives("interface a{}")//
         .stays()//
     ;
   }
+
   @Test public void A$50a_interface() {
     trimmingOf("abstract interface a{}")//
         .gives("interface a{}")//
         .stays()//
     ;
   }
+
   @Test public void A$50b_interface() {
     trimmingOf("abstract static interface a{}")//
         .gives("interface a{}")//
         .stays()//
     ;
   }
+
   @Test public void A$50c_interface__abstract() {
     trimmingOf("abstract interface a{}")//
         .gives("interface a{}")//
         .stays()//
     ;
   }
+
   @Test public void A$50c_interface_static_abstract() {
     trimmingOf("static abstract interface a{}")//
         .gives("abstract static interface a{}")//
         .gives("interface a{}")//
         .stays();
   }
+
   @Test public void A$50d_interface() {
     trimmingOf("static interface a{}")//
         .gives("interface a{}")//
         .stays()//
     ;
   }
+
   @Test public void A$50e_enum() {
     trimmingOf("enum a{a,b}").stays();
   }
+
   @Test public void A$50e1_enum() {
     trimmingOf("enum a{a}").stays();
   }
+
   @Test public void A$50e2_enum() {
     trimmingOf("enum a{}").stays();
   }
+
   @Test public void A$50f_enum() {
     trimmingOf("static enum a{a,b}")//
         .gives("enum a{a,b}")//
         .stays()//
     ;
   }
+
   @Test public void A$50g_enum() {
     trimmingOf("static abstract enum a{x,y,z;void f(){}}")//
         .gives("abstract static enum a{x,y,z;void f(){}}")//
@@ -133,6 +158,7 @@ import org.junit.runners.*;
         .stays() //
     ;
   }
+
   @Test public void A$50h_enum() {
     trimmingOf("static abstract final enum a{x,y,z;void f(){}}")//
         .gives("abstract static final enum a{x,y,z;void f(){}}") //
