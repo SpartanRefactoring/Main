@@ -72,7 +72,7 @@ public enum GuessedContext {
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */
   public static GuessedContext find(final String codeFragment) {
-    String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
+    final String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
     if (cleanFragment.startsWith("{") && cleanFragment.endsWith("}"))
       return BLOCK_LOOK_ALIKE;
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
