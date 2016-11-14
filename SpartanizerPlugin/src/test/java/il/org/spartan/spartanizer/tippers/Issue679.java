@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     enumerate.methods((CompilationUnit) null);
   }
   @Test public void checkReturnType() {
-    @SuppressWarnings("unused") final int $ = enumerate.methods((CompilationUnit) null);
+    enumerate.methods((CompilationUnit) null);
   }
   @Test public void checkParameterType() {
     enumerate.methods((CompilationUnit) null);

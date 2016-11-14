@@ -61,6 +61,8 @@ public interface metrics {
   }
   static int horizontalComplexity(final int base, final List<Statement> ss) {
     int $ = 0;
+    if(ss==null)
+      return $;
     for (final Statement ¢ : ss)
       $ += base + horizontalComplexity(¢);
     return $;

@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** A handler for {@link Tips} This handler executes all safe spartanizations on
