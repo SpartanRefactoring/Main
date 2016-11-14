@@ -183,8 +183,8 @@ public class Matcher {
         return n instanceof MethodInvocation && consistent(id, n + "");
       if (id.startsWith("$N"))
         return iz.name(n) && consistent(id, n + "");
-      if (id.startsWith("$Q"))
-        return iz.qualifiedName(n) && consistent(id, n + "");
+      if (id.startsWith("$L"))
+        return iz.literal(n) && consistent(id, n + "");
     }
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }
@@ -193,7 +193,7 @@ public class Matcher {
       final Map<String, String> enviroment) {
     if (iz.name(p)) {
       final String id = az.name(p).getFullyQualifiedName();
-      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$Q"))
+      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
         enviroment.put(id, n + "");
     } else if (isBlockVariable(p))
       enviroment.put(blockName(p) + "();", n + "");
@@ -216,7 +216,7 @@ public class Matcher {
       final Map<String, ASTNode> enviroment) {
     if (iz.name(p)) {
       final String id = az.name(p).getFullyQualifiedName();
-      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N"))
+      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
         enviroment.put(id, n);
     } else if (isBlockVariable(p))
       enviroment.put(blockName(p) + "();", n);
