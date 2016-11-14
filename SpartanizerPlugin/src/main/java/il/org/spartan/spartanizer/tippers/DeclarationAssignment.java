@@ -31,9 +31,11 @@ public final class DeclarationAssignment extends $VariableDeclarationFragementAn
     $.setInitializer(duplicate.of(x));
     return $;
   }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)

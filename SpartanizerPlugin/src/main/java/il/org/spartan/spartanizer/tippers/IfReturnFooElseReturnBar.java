@@ -30,9 +30,11 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }
+
   @Override public boolean prerequisite(final IfStatement ¢) {
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
+
   @Override public Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
     final Expression then = extract.returnExpression(then(s));
