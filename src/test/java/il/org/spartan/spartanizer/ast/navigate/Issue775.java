@@ -20,54 +20,69 @@ public class Issue775 {
   @Test public void a() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C{}")))) + "");
   }
+
   @Test public void b() {
     assertEquals("C<T>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<T>{}")))) + "");
   }
+
   @Test public void c() {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U,V>{}")))) + "");
   }
+
   @Test public void d() {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends E,V>{}")))) + "");
   }
+
   @Test public void e() {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends Class<V>,V>{}")))) + "");
   }
+
   @Test public void f() {
     assertEquals("C<U,V>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<U extends Class<V<W>>,V>{}")))) + "");
   }
+
   @Test public void g() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C implements D{}")))) + "");
   }
+
   @Test public void h() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C extends D{}")))) + "");
   }
+
   @Test public void i() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C implements D,E{}")))) + "");
   }
+
   @Test public void j() {
     assertEquals("C", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C implements D,E,F{}")))) + "");
   }
+
   @Test public void k() {
     assertEquals("C<L,M,R>", type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C<L, M, R> extends W<L, M, R>{}")))) + "");
   }
+
   @Test public void l() {
     assertEquals("C",
         type(az.typeDeclaration(findFirst.typeDeclaration(ast("@CombinedAnnotation({@SimpleAnnotation(id=4)}) public class C{}")))) + "");
   }
+
   @Test public void m() {
     assertEquals("C<D>", type(az.typeDeclaration(
         findFirst.typeDeclaration(ast("@GwtIncompatible private static final class C<D extends Comparable> implements Serializable {}")))) + "");
   }
+
   @Test public void n() {
     assertEquals("C<D,E>",
         type(az.typeDeclaration(
             findFirst.typeDeclaration(ast("@GwtIncompatible private static final class C<D extends Comparable,E> implements Serializable {}"))))
             + "");
   }
+
   @Test public void o() {
     assertEquals("C<K,V,E,S>", type(az.typeDeclaration(findFirst.typeDeclaration(
         ast("abstract static class C<  K, V, E extends InternalEntry<K, V, E>, S extends Segment<K, V, E, S>>extends ReentrantLock")))) + "");
   }
+
   @Test public void p() {
     assertEquals("C", type(az.enumDeclaration(findFirst.abstractTypeDeclaration(ast("enum C{}")))) + "");
   }

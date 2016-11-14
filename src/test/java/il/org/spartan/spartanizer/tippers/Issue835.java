@@ -24,15 +24,19 @@ public class Issue835 {
   @Test public void descriptionNotNull() {
     assertNotNull(t.description());
   }
+
   @Test public void descriptionPrintBlockNotNull() {
     assertNotNull(t.description(az.block(wizard.ast("{int x;}"))));
   }
+
   @SuppressWarnings("static-method") @Test public void emptyBlock1() {
     assertEquals(az.block(wizard.ast("{}")).statements().size(), 0);
   }
+
   @SuppressWarnings("static-method") @Test public void emptyBlock2() {
     assertEquals(az.block(wizard.ast("\n{\n}\n")).statements().size(), 0);
   }
+
   @SuppressWarnings("static-method") @Test public void emptyBlock3() {
     assertEquals(az.block(wizard.ast("\n{int a;}\n")).statements().size(), 1);
   }

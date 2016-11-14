@@ -15,19 +15,22 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-07-17 */
-@SuppressWarnings("javadoc") public enum TESTUtils {
+@SuppressWarnings("javadoc")
+public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
 
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
   }
+
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
   public static void assertSimilar(final String expected, final Document actual) {
     assertSimilar(expected, actual.get());
   }
+
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
@@ -35,6 +38,7 @@ import il.org.spartan.spartanizer.utils.*;
     if (!expected.equals(actual))
       azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
+
   /** Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    * @param statement a {@link String} that represents a Java statement
@@ -45,6 +49,7 @@ import il.org.spartan.spartanizer.utils.*;
     assert n != null;
     return extract.singleStatement(n);
   }
+
   public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
@@ -53,6 +58,7 @@ import il.org.spartan.spartanizer.utils.*;
       throw new AssertionError(e);
     }
   }
+
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
@@ -60,13 +66,16 @@ import il.org.spartan.spartanizer.utils.*;
     assert d != null;
     return TESTUtils.rewrite(t, u, d).get();
   }
+
   static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
+
   static void assertNotEvenSimilar(final String expected, final String actual) {
     azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
+
   static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
