@@ -27,14 +27,14 @@ public class Classifier extends ASTVisitor {
 
   public void analyze(final ASTNode n) {
     n.accept(this);
-    Map<String, Int> awesomePatterns = new HashMap<>();
+    final Map<String, Int> awesomePatterns = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
-      for (ASTNode ¢ : forLoopsList) {
-        UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+      for (final ASTNode ¢ : forLoopsList) {
+        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "OMG();", "");
         toRemove = new ArrayList<>();
-        for (ASTNode l : forLoopsList)
+        for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
             toRemove.add(l);
         if (toRemove.size() > 1) {
@@ -48,7 +48,7 @@ public class Classifier extends ASTVisitor {
     System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
     System.out.println("From them " + awesomePatterns.size() + " are repetitive");
     System.out.println("Lets classify them together!");
-    for (String k : awesomePatterns.keySet()) {
+    for (final String k : awesomePatterns.keySet()) {
       System.out.println(k);
       System.out.println("[Matched " + awesomePatterns.get(k).inner + " times]");
       classify(k);
@@ -56,7 +56,7 @@ public class Classifier extends ASTVisitor {
   }
 
   /** @param ¢ to classify */
-  private String classify(String ¢) {
+  private String classify(final String ¢) {
     System.out.println(format.code(generalize.code(¢)));
     final String $ = input.nextLine();
     forLoops.putIfAbsent($, new ArrayList<>());
