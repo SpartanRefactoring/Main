@@ -50,6 +50,7 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       }
     }
   }
+
   private static void spartanize() {
     final File input = new File(inputDir);
     if (input.isDirectory()) {
@@ -60,10 +61,12 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       spartanizeFile(input);
     }
   }
+
   /** @param input */
   private static void spartanizeFile(final File input) {
     new BatchSpartanizer(input.getAbsolutePath()).fire();
   }
+
   /** @param input */
   private static void spartanizeDir(final File input) {
     for (final File ¢ : input.listFiles())
@@ -72,12 +75,14 @@ public final class BatchSpartanizer extends FilesASTVisitor {
         spartanizeFile(¢);
       }
   }
+
   public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
   }
+
   static void printHelpPrompt() {
     System.out.println("Batch GUIBatchLaconizer");
     System.out.println("");
@@ -87,6 +92,7 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
   }
+
   /** @param args */
   private static void parseCommandLineArgs(final String[] args) {
     for (int ¢ = 0; ¢ < args.length;)
@@ -108,9 +114,11 @@ public final class BatchSpartanizer extends FilesASTVisitor {
         ++¢;
       }
   }
+
   BatchSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
+
   BatchSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
     beforeFileName = outputDir + "/" + name + ".before.java";
@@ -120,6 +128,7 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
+
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -182,19 +191,23 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     report.nl();
     return false;
   }
+
   @Override void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
       }
+
       @Override public boolean visit(final EnumDeclaration ¢) {
         return collect(¢);
       }
+
       @Override public boolean visit(final TypeDeclaration ¢) {
         return collect(¢);
       }
     });
   }
+
   void collect(final File f) {
     if (!system.isTestFile(f))
       try {
@@ -203,9 +216,11 @@ public final class BatchSpartanizer extends FilesASTVisitor {
         monitor.infoIOException(e, "File = " + f);
       }
   }
+
   @Override void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
+
   void fire() {
     collect();
     runEssence();
@@ -215,10 +230,12 @@ public final class BatchSpartanizer extends FilesASTVisitor {
         box.it(interactiveSpartanizer.toolbox.hooksCount())//
     );
   }
+
   void runEssence() {
     system.shellEssenceMetrics(beforeFileName);
     system.shellEssenceMetrics(afterFileName);
   }
+
   private void applyEssenceCommandLine() {
     try {
       final String essentializedCodeBefore = system.runScript(beforeFileName);
@@ -232,6 +249,7 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       System.err.println(e.getMessage());
     }
   }
+
   private void collect() {
     System.err.printf(
         "Input path=%s\n" + //
@@ -256,9 +274,11 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     System.err.print("\n Done: " + classesDone + " files processed.");
     System.err.print("\n Summary: " + report.close());
   }
+
   private void runWordCount() {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
+
   private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     if (f.getName().endsWith(".java"))
       return true;
@@ -268,6 +288,7 @@ public final class BatchSpartanizer extends FilesASTVisitor {
           return true;
     return false;
   }
+
   /** This method is called from outside, like in the case of
    * {@link InteractiveSpartanizer}
    * @param fileNames */

@@ -18,9 +18,11 @@ public final class WhenThenElse extends NanoPatternTipper<ConditionalExpression>
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return getClass().getSimpleName() + " pattern";
   }
+
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return tipper.canTip(¢);
   }
+
   @Override public Tip tip(final ConditionalExpression x) {
     Logger.logNP(x, getClass().getSimpleName());
     return new Tip(this.description(x), x, getClass()) {

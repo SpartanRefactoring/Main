@@ -38,6 +38,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** Get all the methods invoked in m
    * @author Dor Ma'ayan
    * @param d JD
@@ -56,6 +57,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** Get list of names in a Block
    * @author Raviv Rachmiel
    * @author Kfir Marx
@@ -73,6 +75,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** returns a list of all instances of expressions at given method
    * @author Koby Ben Shimol
    * @author Yuval Simon
@@ -89,6 +92,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** Takes a single parameter d, which is a MethodDeclaration. Returns a
    * List<CastExpression> which is all casts in d.
    * @param d a MethodDeclaration
@@ -107,6 +111,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** Takes a single parameter, which is an MethodDeclaration return a
    * List<VariableDeclaration> which is all String variable declarations in m
    * @param d a MethodDeclaration
@@ -125,6 +130,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** Takes a single parameter, which is a TypeDecleration returns a list of
    * public fields for this class (by fields' names)
    * @param ¢ TypeDecleration
@@ -137,6 +143,7 @@ public enum getAll {
     ¢.accept(publicFieldsCollector($));
     return $;
   }
+
   private static ASTVisitor publicFieldsCollector(final List<String> $) {
     return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
@@ -147,6 +154,7 @@ public enum getAll {
       }
     };
   }
+
   /** Takes a single CompilationUnit parameter, returns a list of method
    * declaration within that compilation unit
    * @param CompilationUnit
@@ -164,6 +172,7 @@ public enum getAll {
     });
     return $;
   }
+
   /** takes a single parameter, which is a TypeDeclaration. returns a list of
    * private fields for this class (by fields' names)
    * @param TypeDeclaration

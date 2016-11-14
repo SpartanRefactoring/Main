@@ -15,14 +15,17 @@ public interface AnalyzerOptions {
   static String get(final String cls, final String property) {
     return options.get(cls) == null ? null : options.get(cls).get(property);
   }
+
   static void set(final String cls, final String property, final String value) {
     if (options.get(cls) == null)
       options.put(cls, new HashMap<>());
     options.get(cls).put(property, value);
   }
+
   static String get(final String property) {
     return get(Analyzer.class.getSimpleName(), property);
   }
+
   static void set(final String property, final String value) {
     set(Analyzer.class.getSimpleName(), property, value);
   }
@@ -40,6 +43,7 @@ public interface AnalyzerOptions {
     }
     System.out.print(".");
   }
+
   static void setVerbose() {
     verbose.inner = true;
   }

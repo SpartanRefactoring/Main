@@ -23,6 +23,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     swap(es, 0, 1);
     return subject.operands(es).to(wizard.PLUS2);
   }
+
   // TODO: Yossi Gil: this should probably be in lisp, but I can'tipper access
   // its
   // source
@@ -40,9 +41,11 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     }
     return ts;
   }
+
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
+
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) ? null : replace(¢);
   }

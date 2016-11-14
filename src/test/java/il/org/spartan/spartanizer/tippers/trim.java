@@ -29,9 +29,11 @@ public interface trim {
   static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
+
   static fluentTrimmerApplication of(final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
+
   @SafeVarargs //
   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
     return new fluentTrimmer(clazz, ns);
@@ -50,19 +52,23 @@ public interface trim {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
         }
+
         @Override public void stays() {
           super.stays();
         }
       };
     }
+
     @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
       return new fluentTrimmer(clazz, ns) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           return super.checkAllConditions(pm);
         }
+
         @Override public fluentTrimmerApplication of(final String codeFragment) {
           return super.of(codeFragment);
         }
+
         @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
           return super.doGetRefactoringTickProvider();
         }
@@ -73,19 +79,25 @@ public interface trim {
   /** Unit tests demonstrating the fluent API
    * @author Yossi Gil
    * @since 2016 */
-  @SuppressWarnings("static-method") @Ignore static class TEST {
+  @SuppressWarnings("static-method")
+  @Ignore
+  static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");
     }
+
     @Test public void trimming_of_gives_gives_gives_stays() {
       trim.of("int b = 3; int a = b; return  a;").gives("int b = 3; int a = b; return  a;").gives("int a = 3; return  a;").gives("return 3;").stays();
     }
+
     @Test public void trimming_of_gives_stays() {
       trim.of("a +=1;").gives("a++;").stays();
     }
+
     @Test public void trimming_of_stays() {
       trim.of("a").stays();
     }
+
     @Test public void trimming_repeatedly_of_gives() {
       trim.repeatedly.of("int b = 3; int a = b; return  a;").gives("return 3;");
     }
