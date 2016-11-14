@@ -64,7 +64,8 @@ public class ReportGenerator {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
       ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
