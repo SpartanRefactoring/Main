@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class BlockInlineStatementIntoNext extends NanoPatternTipper<Block> {
-  private static final UserDefinedTipper<Block> tipper = TipperFactory.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);",
-      "inline statement into next one");
+  private static final UserDefinedTipper<Block> tipper = TipperFactory.patternTipper("$X = $X.$N1($A1); $X = $X.$N2($A2);",
+      "$X = $X.$N1($A1).$N2($A2);", "inline statement into next one");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();
