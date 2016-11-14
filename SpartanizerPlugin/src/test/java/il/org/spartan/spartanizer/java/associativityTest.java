@@ -36,4 +36,16 @@ public class associativityTest {
   @SuppressWarnings("static-method") @Test public void test7() {
     assertTrue(!associativity.isRightToLeft(az.expression(wizard.ast("x && y"))));
   }
+  @SuppressWarnings("static-method") @Test public void test8() {
+    assertTrue(associativity.isLeftToRight(az.expression(wizard.ast("x && !y"))));
+  }
+  @SuppressWarnings("static-method") @Test public void test9() {
+    assertTrue(!associativity.isLeftToRight(az.expression(wizard.ast("!q()"))));
+  }
+  @SuppressWarnings("static-method") @Test public void test10() {
+    assertTrue(!associativity.isLeftToRight(az.expression(wizard.ast("x=y=z=18"))));
+  }
+  @SuppressWarnings("static-method") @Test public void test11() {
+    assertTrue(!associativity.isLeftToRight(az.infixExpression(wizard.ast("a&&b")).getOperator()));
+  }
 }
