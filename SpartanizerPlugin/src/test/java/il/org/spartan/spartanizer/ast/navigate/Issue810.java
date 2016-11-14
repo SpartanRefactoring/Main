@@ -41,4 +41,22 @@ public class Issue810 {
   @Test public void test3() {
     assertFalse(haz.sideEffects(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}"))));
   }
+
+  @Test public void test4() {
+    assertFalse(haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}")));
+  }
+
+  @Test public void test5() {
+    assertFalse(haz.cent(wizard.ast("{int a;}")));
+  }
+
+  @Test public void test6() {
+    assertFalse(haz.dollar(wizard.ast("{int a;}")));
+    assertTrue(haz.dollar(wizard.ast("$")));
+  }
+
+  @Test public void test7() {
+    assertTrue(haz.booleanReturnType((MethodDeclaration) wizard.ast("public boolean foo();")));
+    assertFalse(haz.booleanReturnType((MethodDeclaration) wizard.ast("public int foo();")));
+  }
 }
