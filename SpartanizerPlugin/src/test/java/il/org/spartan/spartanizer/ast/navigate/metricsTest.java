@@ -181,4 +181,8 @@ public final class metricsTest {
     azzert.that(metrics.horizontalComplexity(0, st), is(13446));
   }
   // horizontalComplexity
+
+  @Ignore @Test public void understandability() {
+    azzert.that(metrics.understandability(findFirst.methodDeclaration(wizard.ast("public void m(){ int x;}"))), is(1));
+  }
 }
