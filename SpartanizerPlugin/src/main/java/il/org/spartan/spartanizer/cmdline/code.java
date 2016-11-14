@@ -7,17 +7,16 @@ package il.org.spartan.spartanizer.cmdline;
 public interface code {
   /** Returns the essence of this code fragment, removing non-executable code
    * parts and formatting whitespace characters.
+   * @deprecated since Nov 14, 2016, replaced by {@link Essence#of(String)}
    * @param codeFragment code fragment represented as a string
    * @return essence of the code fragment */
-  static String essence(final String codeFragment) {
+  @Deprecated static String essence(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")//
         .replaceAll("^\\s*$", "")//
         .replaceAll("^\\s*\\n", "")//
         .replaceAll("\\s*$", "")//
         .replaceAll("\\s+", " ")//
-        // TODO Matteo: I think this is buggy; the replacement should not be
-        // phrased like so. $1, $2
         .replaceAll("([^a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2")//
         .replaceAll("([^a-zA-Z¢$_]) ([a-zA-Z¢$_])", "$1$2")//
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
