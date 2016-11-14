@@ -15,10 +15,10 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("$X == null", "", ""));
-      add(TipperFactory.tipper("$X != null", "", ""));
-      add(TipperFactory.tipper("null == $X", "", ""));
-      add(TipperFactory.tipper("null == $X", "", ""));
+      add(TipperFactory.patternTipper("$X == null", "", ""));
+      add(TipperFactory.patternTipper("$X != null", "", ""));
+      add(TipperFactory.patternTipper("null == $X", "", ""));
+      add(TipperFactory.patternTipper("null == $X", "", ""));
     }
   };
 
