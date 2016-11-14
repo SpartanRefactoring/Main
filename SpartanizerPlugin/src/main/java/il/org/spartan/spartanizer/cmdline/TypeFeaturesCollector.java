@@ -23,6 +23,7 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
     lastNode = ¢;
     return super.visit(¢);
   }
+
   /** TODO: Matteo: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
@@ -50,14 +51,24 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
         .put("method", NameGuess.of(¢.getName() + "") == NameGuess.METHOD_OR_VARIABLE) //
         .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) //
         .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) //
+        .put("Non whites", count.nonWhiteCharacters(¢)) //
+        .put("Condensed size", metrics.condensedSize(¢)) //
+        .put("Dexterity", metrics.dexterity(¢)) //
+        .put("Leaves", metrics.leaves(¢)) //
+        .put("Nodes", metrics.nodes(¢)) //
+        .put("Internals", metrics.internals(¢)) //
+        .put("Vocabulary", metrics.vocabulary(¢)) //
+        .put("Literacy", metrics.literacy(¢)) //
     ;
     writer.nl();
   }
+
   @Override public void endVisit(final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);
   }
+
   @Override protected void done() {
     dotter.end();
     System.err.println("Your output is in: " + writer.close());
