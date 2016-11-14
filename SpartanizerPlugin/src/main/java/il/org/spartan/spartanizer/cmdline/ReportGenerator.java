@@ -2,11 +2,9 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
-/**
- * Generates reports
+/** Generates reports
  * @author Matteo Orru'
- * @since 2016
- */
+ * @since 2016 */
 
 import java.io.*;
 import java.util.*;
@@ -224,17 +222,14 @@ public class ReportGenerator {
   public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
- 
   public static void name(final ASTNode input) {
     ReportGenerator.report("metrics").put("name", extract.name(input));
     ReportGenerator.report("metrics").put("category", extract.category(input));
   }
-  
   public static void name(final ASTNode input, final String reportName) {
     ReportGenerator.report(reportName).put("node", extract.name(input));
     ReportGenerator.report(reportName).put("category", extract.category(input));
   }
-  
   public static void tip(final Tip ¢) {
     ReportGenerator.report("tips").put("tipName", ¢.getClass());
     ReportGenerator.report("tips").put("description", ¢.description);
@@ -243,26 +238,22 @@ public class ReportGenerator {
     ReportGenerator.report("tips").put("to", ¢.to);
     ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
   }
-  
-  public static void writeTipsLine(final ASTNode n, final Tip t,final String reportName){
-    name(n,reportName);
+  public static void writeTipsLine(final ASTNode n, final Tip t, final String reportName) {
+    name(n, reportName);
     tip(t);
     ReportGenerator.report(reportName).nl();
-
   }
-  
-  public class LineWriter implements Consumer<Object>{
-    @SuppressWarnings("unused") private String reportName;
-    @Override public void accept(@SuppressWarnings("unused") Object o) {
-//      ReportGenerator.report(reportName)
+
+  public class LineWriter implements Consumer<Object> {
+    @Override public void accept(@SuppressWarnings("unused") final Object __) {
+      // erased
     }
   }
-  
-  @SuppressWarnings("unchecked") public static <T> void writeLine(Consumer<T> ¢){
+
+  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
     ¢.accept((T) ¢);
   }
-  
-  public static void generate(String ¢) {
-    initializeReport(¢ + "_metrics.CSV", ¢);    
+  public static void generate(final String ¢) {
+    initializeReport(¢ + "_metrics.CSV", ¢);
   }
 }

@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth

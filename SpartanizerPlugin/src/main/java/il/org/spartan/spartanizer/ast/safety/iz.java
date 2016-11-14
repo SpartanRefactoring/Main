@@ -14,11 +14,10 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -210,7 +209,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
   static boolean deMorgan(final InfixExpression ¢) {
-    return iz.deMorgan(¢.getOperator());
+    return ¢ != null && iz.deMorgan(¢.getOperator());
   }
   /** Check whether an operator is susceptible for applying one of the two de
    * Morgan laws.
@@ -286,7 +285,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
   static boolean final¢(final VariableDeclarationStatement ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
+    return ¢ != null && (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands
@@ -644,7 +643,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, RETURN_STATEMENT);
   }
   static boolean rightOfAssignment(final Expression ¢) {
-    return right(az.assignment(¢.getParent())).equals(¢);
+    return ¢ != null && right(az.assignment(¢.getParent())).equals(¢);
   }
   /** Determine whether a node is a "sequencer", i.e.,
    * <code><b>return</b></code> , <code><b>break</b></code>,
@@ -683,7 +682,7 @@ public interface iz {
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   static boolean singletonThen(final IfStatement ¢) {
-    return iz.singletonStatement(then(¢));
+    return ¢ != null && iz.singletonStatement(then(¢));
   }
   static boolean singleVariableDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, SINGLE_VARIABLE_DECLARATION);

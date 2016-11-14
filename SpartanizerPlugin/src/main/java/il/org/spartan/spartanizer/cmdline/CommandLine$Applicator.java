@@ -11,28 +11,23 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Specific applicator
  * @author Matteo Orru'
- * @since 2016
- */
-
+ * @since 2016 */
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
-  public CommandLine$Applicator(){
+  public CommandLine$Applicator() {
   }
-
-  public CommandLine$Applicator(String[] clazzes) {
+  public CommandLine$Applicator(final String[] clazzes) {
     super(clazzes);
   }
-
-  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups) {
+  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
-
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -174,9 +169,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
     });
   }
-//  @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-//    return toolbox.firstTipper(¢);
-//  }
+  // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  // return toolbox.firstTipper(¢);
+  // }
   /** @param u
    * @param __
    * @return */
