@@ -50,6 +50,14 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
         .put("method", NameGuess.of(¢.getName() + "") == NameGuess.METHOD_OR_VARIABLE) //
         .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) //
         .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) //
+        .put("Non whites", count.nonWhiteCharacters(¢)) //
+        .put("Condensed size", metrics.condensedSize(¢)) //
+        .put("Dexterity", metrics.dexterity(¢)) //
+        .put("Leaves", metrics.leaves(¢)) //
+        .put("Nodes", metrics.nodes(¢)) //
+        .put("Internals", metrics.internals(¢)) //
+        .put("Vocabulary", metrics.vocabulary(¢)) //
+        .put("Literacy", metrics.literacy(¢)) //
     ;
     writer.nl();
   }
