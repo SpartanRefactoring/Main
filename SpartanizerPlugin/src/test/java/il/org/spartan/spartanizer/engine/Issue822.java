@@ -7,6 +7,8 @@ import java.nio.file.*;
 import java.util.*;
 
 import org.junit.*;
+import org.junit.rules.*;
+import org.mockito.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -20,5 +22,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Arrays.asList("a = a + b;"));
     assertEquals(wizard.ast("a = a + b;") + "", makeAST.STATEMENTS.from(p.toFile()) + "");
+  }
+  
+  @Test public void returnsNullOnIOException() throws IOException {
+    final File f = Files.createTempFile("test_file", ".tmp").toFile();
+    f.setReadable(false);
+    assertNull(makeAST.string(f));
   }
 }
