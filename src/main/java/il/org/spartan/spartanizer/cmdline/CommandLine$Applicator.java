@@ -9,6 +9,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
+import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,8 +19,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLine$Applicator extends Generic$Applicator {
+  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
+  
+  private MetricsReport metricsReport;
 
   public CommandLine$Applicator() {}
 
@@ -40,6 +44,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     });
   }
 
+  @SuppressWarnings("static-access")
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
@@ -48,12 +53,16 @@ public class CommandLine$Applicator extends Generic$Applicator {
                                                                          // CLASS_BODY_DECLARATIONS
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
-    computeMetrics(input, outputASTNode);
+    // add ASTNode to MetricsReport
+    MetricsReport.getSettings().addInput(input);
+    MetricsReport.getSettings().addOutput(outputASTNode);
+//    computeMetrics(input, outputASTNode);
     return false;
   }
 
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+    
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
@@ -198,7 +207,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * @param ¢
    * @return */
   public boolean apply(final WrappedCompilationUnit ¢) {
-    System.out.println("*********");
+//    System.out.println("*********");
     go(¢.compilationUnit);
     return false;
   }
