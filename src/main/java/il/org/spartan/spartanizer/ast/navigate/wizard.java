@@ -277,7 +277,7 @@ public interface wizard {
    * [^]
    * @param ¢
    * @return */
-  static String fixTideClean(String ¢) {
+  static String fixTideClean(final String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
