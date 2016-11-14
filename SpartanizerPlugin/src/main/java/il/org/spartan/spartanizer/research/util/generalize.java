@@ -23,13 +23,11 @@ public class generalize {
   private static void finish() {
     serial.inner = 0;
   }
-
   /** @param type of placeHolder, can be X,N,M,B,A
    * @return */
   static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
   }
-
   public static String generalizeIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
     final Document document = new Document(ASTutils.wrapCode(s));
@@ -39,7 +37,6 @@ public class generalize {
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-    System.out.println(cu);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final StringLiteral node) {
         final StringLiteral lit = ast.newStringLiteral();
@@ -47,15 +44,12 @@ public class generalize {
         r.replace(node, lit, null);
         return super.visit(node);
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final ImportDeclaration __) {
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final PackageDeclaration __) {
         return false;
       }
-
       @Override public boolean visit(final SimpleName node) {
         final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
@@ -63,7 +57,6 @@ public class generalize {
         r.replace(node, ast.newSimpleName(renaming.get(name)), null);
         return super.visit(node);
       }
-
       @Override public boolean visit(final QualifiedName node) {
         final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
