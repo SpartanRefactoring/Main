@@ -6,7 +6,7 @@ package il.org.spartan.spartanizer.cmdline;
  * @since 2016 */
 public interface code {
   /** Returns the essence of this code fragment, removing non-executable code
-   * parts.
+   * parts and formatting whitespace characters.
    * @param codeFragment code fragment represented as a string
    * @return essence of the code fragment */
   static String essence(final String codeFragment) {
