@@ -19,7 +19,7 @@ public class Issue778 {
     getAll2.methods(null);
   }
   @SuppressWarnings("static-method") @Test public void test1() {
-    @SuppressWarnings("unused") final List<MethodDeclaration> lst = getAll2.methods(null);
+    getAll2.methods(null);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test2() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);

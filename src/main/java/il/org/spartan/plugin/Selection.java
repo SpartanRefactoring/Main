@@ -13,7 +13,7 @@ import org.eclipse.ui.views.markers.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection
