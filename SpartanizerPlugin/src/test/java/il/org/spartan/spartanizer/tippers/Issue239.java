@@ -15,9 +15,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author TODO Matteo: is that you?
+/** @author Matteo Orru'
  * @year 2016 */
-@SuppressWarnings("static-method") public class Issue239 {
+@SuppressWarnings("static-method")
+public class Issue239 {
   @Test public void a$01() {
     trimmingOf("private void testInteger(final boolean testTransients) {\n" + //
         "final Integer i1 = Integer.valueOf(12344);\n" + //
@@ -31,6 +32,7 @@ import il.org.spartan.spartanizer.engine.*;
                 "}")
             .stays();
   }
+
   @Test public void a$02() {
     trimmingOf(//
         "int f() {\n" + //
@@ -48,6 +50,7 @@ import il.org.spartan.spartanizer.engine.*;
                 . //
                 stays();
   }
+
   @Test public void a$03() {
     trimmingOf(//
         "int f() {\n" + //
@@ -60,6 +63,7 @@ import il.org.spartan.spartanizer.engine.*;
                 . //
                 stays();
   }
+
   @Test public void a$04() {
     final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //
