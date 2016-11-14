@@ -28,7 +28,7 @@ public class Issue692 {
   }
 
   @Test public void test3() {
-    // TODO: you may simplify the code by writing something such
+    // TODO Vivian/Ward: you may simplify the code by writing something such
     // as new TreeSet(az.list("a","b")) --yg
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
