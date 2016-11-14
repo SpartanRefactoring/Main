@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 @SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class analyzeTest {
@@ -51,19 +53,28 @@ public final class analyzeTest {
     assertNull(analyze.enviromentVariables((ASTNode) null));
   }
 
-  @Test public void testfindDeclarationInType0() {
+  @Test public void testFindDeclarationInType0() {
     assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName()),
         "int");
   }
 
-  @Test public void testfindDeclarationInType1() {
+  @Test public void testFindDeclarationInType1() {
     assertEquals(
-        analyze
-            .type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y,int z){ y=5; z=y;}")).get(1).getName()),
+        analyze.type(
+            searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{int x;public void m(){ x=5;}} ")).get(0).getName()),
         "int");
   }
 
-  @Test public void testfindDeclarationInType2() {
+  @Test public void testFindDeclarationInType2() {
+    assertEquals(analyze.type(searchDescendants.forClass(MethodDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testFindDeclarationInMethod0() {
+    assertNull(analyze.type(az.name(wizard.ast("x"))));
+  }
+
+  @Test public void testFindDeclarationInMethod1() {
     assertEquals(
         analyze.type(
             searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName()),

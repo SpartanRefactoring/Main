@@ -84,9 +84,11 @@ public enum GuessedContext {
         enumerateFailingAttempts(codeFragment));
     throw new RuntimeException();
   }
+
   private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
+
   static String enumerateFailingAttempts(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
@@ -116,6 +118,7 @@ public enum GuessedContext {
     this.before = before;
     this.after = after;
   }
+
   /** Guess a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD
@@ -124,6 +127,7 @@ public enum GuessedContext {
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
+
   /** Guess a given code fragment, and converts it into a {@link Document}
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
@@ -131,18 +135,21 @@ public enum GuessedContext {
   public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
+
   /** Remove a wrap from around a phrase
    * @param codeFragment a wrapped program phrase
    * @return unwrapped phrase */
   public final String off(final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
+
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
   }
+
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap);
     final String essence = wizard.essence(inner);
