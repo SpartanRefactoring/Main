@@ -1,9 +1,13 @@
 package il.org.spartan.spartanizer.ast.engine;
 
+import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** see Issue #7831 for more details
@@ -26,5 +30,12 @@ public class Issue831 {
     
   }
   
+  @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
+    assertTrue((new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);"))).availableStatements() == null);
+  }
+  
+  @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
+    assertTrue((new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}"))).availableStatements().isEmpty());
+  }
   
 }
