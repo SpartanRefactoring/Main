@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** @author Alex Kopzon
  * @since 2016 */
-@SuppressWarnings("static-method") public class Issue390 {
+@SuppressWarnings("static-method")
+public class Issue390 {
   @Test public void demoOfAzzert() {
     azzert.that(NameGuess.of("__"), is(NameGuess.ANONYMOUS));
   }

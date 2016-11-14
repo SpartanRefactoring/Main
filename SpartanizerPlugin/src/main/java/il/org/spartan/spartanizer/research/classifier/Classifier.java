@@ -18,19 +18,21 @@ public class Classifier extends ASTVisitor {
     forLoopsList.add(node);
     return super.visit(node);
   }
+
   @Override public boolean visit(final EnhancedForStatement node) {
     forLoopsList.add(node);
     return super.visit(node);
   }
+
   public void analyze(final ASTNode n) {
     n.accept(this);
     System.out.println("Well we've got " + forLoopsList.size() + " forLoop statements");
     System.out.println("lets classify them together");
     System.out.println("enter classification for each for loop, [p] to skip example");
-    for (ASTNode ¢ : forLoopsList) {
-      UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+    for (final ASTNode ¢ : forLoopsList) {
+      final UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
       int count = 0;
-      for (ASTNode l : forLoopsList)
+      for (final ASTNode l : forLoopsList)
         if (t.canTip(l) && !l.equals(¢))
           ++count;
       if (count != 0) {
@@ -39,8 +41,9 @@ public class Classifier extends ASTVisitor {
       }
     }
   }
+
   /** @param ¢ to classify */
-  private String classify(ASTNode ¢) {
+  private String classify(final ASTNode ¢) {
     System.out.println(format.code(generalize.code(¢ + "")));
     final String $ = input.nextLine();
     forLoops.putIfAbsent($, new ArrayList<>());

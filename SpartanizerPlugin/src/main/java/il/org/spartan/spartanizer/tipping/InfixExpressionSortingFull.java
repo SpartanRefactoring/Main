@@ -15,6 +15,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
     final List<Expression> es = extract.allOperands(x);
     return !Tippers.mixedLiteralKind(es) && sort(es);
   }
+
   @Override public Expression replacement(final InfixExpression x) {
     final List<Expression> operands = extract.allOperands(x);
     return !sort(operands) ? null : subject.operands(operands).to(x.getOperator());

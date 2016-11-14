@@ -21,13 +21,16 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
+
   CommandLineSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
     this.name = name;
   }
+
   public CommandLineSpartanizer() {
     this(".");
   }
+
   @Override public void apply() {
     System.out.println("presentsSourcePath:" + presentSourcePath);
     try {
@@ -70,15 +73,19 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       x.printStackTrace();
     }
   }
+
   public void inputDir(final String ¢) {
     presentSourcePath = ¢;
   }
+
   public void name(final String ¢) {
     name = ¢;
   }
+
   public void setClazzes(final String[] ¢) {
     clazzes = ¢;
   }
+
   public void setTipperGroups(final String[] ¢) {
     tipperGroups = ¢;
   }
