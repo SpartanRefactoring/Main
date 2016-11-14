@@ -13,10 +13,12 @@ public class normalizeTest {
   @Test public void testRenaming() {
     assertEquals("if(a == b) return c(a, d());", normalize.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"));
   }
+
   @Test public void testRenamingWithCapital() {
     assertEquals("if(a == A) return b(a, B());", normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"));
   }
+
   @Test public void a() {
-    assertEquals("a.h()", normalize.codeFragment("a.x.c.d.e()"));
+    assertEquals("a.h()", normalize.code("a.x.c.d.e()"));
   }
 }

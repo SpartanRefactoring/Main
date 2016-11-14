@@ -25,9 +25,11 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }
+
   @Override public String description(final InfixExpression ¢) {
     return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
+
   @Override public Expression replacement(final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;

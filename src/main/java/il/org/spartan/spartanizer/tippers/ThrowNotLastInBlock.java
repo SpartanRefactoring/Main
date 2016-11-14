@@ -17,6 +17,7 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
   @Override public String description(final ThrowStatement ¢) {
     return "Remove dead statement after " + ¢;
   }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = parent(s);
     if (!iz.block(parent)) {

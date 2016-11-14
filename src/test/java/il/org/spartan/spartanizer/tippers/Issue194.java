@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method") public final class Issue194 {
+@SuppressWarnings("static-method")
+public final class Issue194 {
   // Couple of tests to check that the tipper is safe with empty values, etc.
   // Empty "then".
   // There is some tipper that eliminates the empty "then", so the result is not
@@ -26,6 +27,7 @@ import org.junit.*;
                 + "}" //
                 + "return h();");
   }
+
   // Empty "else".
   // Similar to test01().
   @Test public void test02() {
@@ -43,6 +45,7 @@ import org.junit.*;
                 + "}" //
                 + "return h();");
   }
+
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
@@ -55,6 +58,7 @@ import org.junit.*;
                 + "x=13.5;"//
                 + "return h();");
   }
+
   // Don'tipper do anything if there is more than return sideEffects after the
   // ifstatement.
   @Test public void test04() {
@@ -69,6 +73,7 @@ import org.junit.*;
         + "return null;" //
     ).stays();
   }
+
   @Test public void test05() {
     trimmingOf("if(b1){ \n" //
         + "if(b2){ \n" //
@@ -93,6 +98,7 @@ import org.junit.*;
                 + "return g(); \n" //
     );
   }
+
   @Test public void test06() {
     trimmingOf("if(x> y){ \n" //
         + "x*=y; \n" //
@@ -109,6 +115,7 @@ import org.junit.*;
                 + "return z; \n" //
     );
   }
+
   @Test public void test07() {
     trimmingOf("if(x == y){ \n" //
         + "x*=y; \n" //
@@ -125,6 +132,7 @@ import org.junit.*;
                 + "return z; \n" //
     );
   }
+
   @Test public void test08() {
     trimmingOf("if(x != null){ \n" //
         + "x*=y; \n" //
@@ -141,6 +149,7 @@ import org.junit.*;
                 + "return z; \n" //
     );
   }
+
   @Test public void test09() {
     trimmingOf("if( x != null){"//
         + "x = f();"//
@@ -152,6 +161,7 @@ import org.junit.*;
                 + "x = f();"//
                 + "return g();");
   }
+
   @Test public void test10() {
     trimmingOf("if(b1){ \n" //
         + "x=8;\n"//
@@ -181,6 +191,7 @@ import org.junit.*;
                 + "}\n"//
                 + "}while(5==3);"); //
   }
+
   @Test public void test11() {
     trimmingOf("if(b1){ \n" //
         + "x=5; \n" //
@@ -194,6 +205,7 @@ import org.junit.*;
                 + "x=5; \n" //
                 + "return x; \n");
   }
+
   @Test public void test12() {
     trimmingOf("if(onoes() && omigod()){" //
         + "if(panic())" //
@@ -212,6 +224,7 @@ import org.junit.*;
         + "}" //
     );
   }
+
   @Test public void test13() {
     trimmingOf("if(b1){"//
         + "if(b2){"//
@@ -246,6 +259,7 @@ import org.junit.*;
                 + "}"//
                 + "while(!b3);");
   }
+
   @Test public void test14() {
     trimmingOf("if(b1){" //
         + "x=3;" //

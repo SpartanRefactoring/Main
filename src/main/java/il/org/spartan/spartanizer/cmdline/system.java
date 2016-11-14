@@ -20,9 +20,11 @@ public interface system {
     }
     return p;
   }
+
   static String essenced(final String fileName) {
     return fileName + ".essence";
   }
+
   static String folder2File(final String path) {
     return path//
         .replaceAll("^[.]$", "CWD")//
@@ -33,9 +35,11 @@ public interface system {
         .replaceAll("-$", "")//
     ;
   }
+
   static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
+
   static String runScript(final Process p) throws IOException {
     try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
@@ -44,9 +48,11 @@ public interface system {
           return $ + "";
     }
   }
+
   static String runScript(final String pathname) throws IOException {
     return runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
+
   static int tokens(final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
@@ -58,13 +64,16 @@ public interface system {
       ++$;
     }
   }
+
   static boolean isTestFile(final File ¢) {
     return system.isTestSourceFile(¢.getName());
   }
+
   static boolean isTestSourceFile(final String fileName) {
     return fileName.contains("/test/") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }
+
   static Process bash(final String shellCommand) {
     final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
@@ -76,24 +85,30 @@ public interface system {
     }
     return null;
   }
+
   static double d(final double n1, final double n2) {
     return 1 - n2 / n1;
   }
+
   static String p(final int n1, final int n2) {
     return formatRelative(d(n1, n2));
   }
+
   static String formatRelative(final double ¢) {
     return String.format(format2(¢) + "%%", box(100 * ¢));
   }
+
   static String formatRelative(final double d1, final double d2) {
     return formatRelative(d1 / d2);
   }
+
   static String format2(final double d) {
     if (d < 0)
       return "-" + format2(-d);
     final double p = 100 * d;
     return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
   }
+
   static double round3(final double ¢) {
     switch (digits(¢)) {
       case -1:
@@ -107,12 +122,14 @@ public interface system {
         return ¢;
     }
   }
+
   static int digits(final double d) {
     if (d == 0)
       return -1;
     final double log = Math.log10(d);
     return log < 0 ? 0 : (int) log + 1;
   }
+
   static String format3(final double d) {
     final double fraction = d - (int) d;
     if (d == 0 || d >= 1 && fraction < 0.0005)
@@ -129,9 +146,11 @@ public interface system {
         return "%.0f";
     }
   }
+
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
   }
+
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }

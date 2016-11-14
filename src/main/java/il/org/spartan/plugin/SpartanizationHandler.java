@@ -33,12 +33,15 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     a.go();
     return null;
   }
+
   @Override public String getLabel() {
     return "Apply";
   }
+
   @Override public void run(final IMarker ¢) {
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
+
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   public static GUIBatchLaconizer applicator() {
@@ -73,6 +76,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         if (passes == 1)
           ++compilationUnitCount;
       }
+
       @Override public void push(final Object... ¢) {
         switch (++level) {
           case DIALOG_CREATION:
@@ -99,6 +103,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             break;
         }
       }
+
       /** [[SuppressWarningsSpartan]] see issue #467 */
       @Override public void pop(final Object... ¢) {
         switch (level--) {
@@ -118,11 +123,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     });
     return $;
   }
+
   /** Run asynchronously in UI thread.
    * @param ¢ JD */
   static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
+
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
   @SuppressWarnings("deprecation") @Deprecated public static GUIBatchLaconizer applicatorMapper() {
@@ -198,6 +205,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       this.inputCount = inputCount;
       this.printing = printing;
     }
+
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);

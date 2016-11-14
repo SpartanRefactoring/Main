@@ -24,27 +24,34 @@ public class Issue818 {
   @SuppressWarnings("static-method") @Test public void a() {
     assertEquals(az.stringLiteral(tipper.replacement(ie01)).getLiteralValue(), "ab");
   }
+
   // This test tries to compile-time concatenate a string literal and a
   // variable.
   // Should fail.
   @SuppressWarnings("static-method") @Test public void b() {
     assertNull(az.stringLiteral(tipper.replacement(ie02)));
   }
+
   @SuppressWarnings("static-method") @Test public void c() {
     assertNull(az.stringLiteral(tipper.replacement(ie03)));
   }
+
   @SuppressWarnings("static-method") @Test public void d() {
     assert tipper.description() != null;
   }
+
   @SuppressWarnings("static-method") @Test public void e() {
     assert tipper.description(null) != null;
   }
+
   @SuppressWarnings("static-method") @Test public void f() {
     assertNull(az.stringLiteral(tipper.replacement(ie04)));
   }
+
   @SuppressWarnings("static-method") @Test public void g() {
     assertNull(az.stringLiteral(tipper.replacement(ie05)));
   }
+
   @SuppressWarnings("static-method") @Test public void h() {
     assert tipper.replacement(ie06) != null;
   }
