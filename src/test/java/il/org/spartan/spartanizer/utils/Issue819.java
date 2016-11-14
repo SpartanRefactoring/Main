@@ -25,4 +25,7 @@ public class Issue819 {
   @Test public void str_test3() {
     assertEquals("Doron Miran", new Str("Doron Miran").inner());
   }
+  @Test public void str_test4() {
+    assertTrue(new Str().isEmptyx());
+  }
 }
