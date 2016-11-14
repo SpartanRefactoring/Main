@@ -53,9 +53,10 @@ public class Issue822 {
     StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch (NullPointerException e) {
-      fail();
+    } catch (final Exception e) {
+      fail(e.getMessage());
     }
+    assertFalse(sb == null);
     assertEquals(new StringBuilder() + "", sb + "");
   }
 
