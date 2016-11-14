@@ -43,7 +43,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)
       len = 1;
-    for (int ¢ = 0; ¢ < len; ++¢)
+    randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()-10)));
+    for (int ¢ = 1; ¢ < len; ++¢)
       randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
     return randStr + "";
   }
