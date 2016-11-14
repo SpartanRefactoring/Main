@@ -13,8 +13,8 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("return $N;", "", ""));
-      add(TipperFactory.tipper("return this.$N;", "", ""));
+      add(TipperFactory.patternTipper("return $N;", "", ""));
+      add(TipperFactory.patternTipper("return this.$N;", "", ""));
     }
   };
 
