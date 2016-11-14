@@ -26,19 +26,19 @@ public class Issue822 {
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Arrays.asList("a = a + b;"));
-    ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
+    final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
     assertEquals(wizard.ast("a = a + b;") + "", ast + "");
     azzert.that(ast, instanceOf(Statement.class));
   }
 
   @Test public void testStatementsFromDocument() {
-    assertEquals(makeAST.STATEMENTS.from((new Document("a = b + c + d;"))) + "", wizard.ast("a = b + c + d;") + "");
+    assertEquals(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + "", wizard.ast("a = b + c + d;") + "");
   }
 
   @Test public void testExpressionFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Arrays.asList("a + b"));
-    ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
+    final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
     assertEquals(wizard.ast("a+b") + "", ast + "");
     azzert.that(ast, instanceOf(Expression.class));
   }
