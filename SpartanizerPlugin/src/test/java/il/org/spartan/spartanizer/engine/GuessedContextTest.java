@@ -38,7 +38,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void findEmptyBlock() {
-    azzert.that(find("{}"), is(EMPTY_BLOCK_LOOK_ALIKE));
+    azzert.that(find("{}"), is(BLOCK_LOOK_ALIKE));
   }
 
   @Test(expected = AssertionError.class) public void findError() {
