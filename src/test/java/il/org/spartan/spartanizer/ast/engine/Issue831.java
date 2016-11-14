@@ -1,10 +1,17 @@
 package il.org.spartan.spartanizer.ast.engine;
 
+import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
+
+import static org.junit.Assert.*;
 
 /** see Issue #7831 for more details
  * @author Lidia Piatigorski
@@ -26,5 +33,8 @@ public class Issue831 {
     
   }
   
+  @Test public void scannerDoesNotHaveStatementsWhenMethodDoesNotHaveBody() {
+    assertTrue((new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);"))).availableStatements() == null);
+  }
   
 }
