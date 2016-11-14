@@ -17,8 +17,8 @@ public class ApplyToEach extends NanoPatternTipper<EnhancedForStatement> {
   Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("for($N1 $N2 : $X) $N2.$N3($A);", "on($X).apply(¢ -> ¢.$N3($A));", ""));
-      add(TipperFactory.tipper("for($N1 $N2 : $X) $N3($N2);", "on($X).apply(¢ -> $N3(¢));", ""));
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N2.$N3($A);", "on($X).apply(¢ -> ¢.$N3($A));", ""));
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N3($N2);", "on($X).apply(¢ -> $N3(¢));", ""));
     }
   };
 

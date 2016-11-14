@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Fluenter extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  static UserDefinedTipper<ReturnStatement> tipper = TipperFactory.tipper("return this;", "", "");
+  static UserDefinedTipper<ReturnStatement> tipper = TipperFactory.patternTipper("return this;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return returnTypeSameAsClass(¢) && lastStatementReturnsThis(¢);

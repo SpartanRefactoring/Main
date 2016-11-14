@@ -28,9 +28,9 @@ public class Issue692 {
   }
 
   @Test public void test3() {
-    // TODO: you may simplify the code by writing something such
+    // TODO Vivian/Ward: you may simplify the code by writing something such
     // as new TreeSet(az.list("a","b")) --yg
-    final Set<String> tmp = new TreeSet();
+    final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
     tmp.add("i");
     assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)"))), tmp);
