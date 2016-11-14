@@ -19,7 +19,7 @@ public class Issue778 {
     getAll2.methods(null);
   }
   @SuppressWarnings("static-method") @Test public void test1() {
-    getAll2.methods(null);
+    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).getClass(), ArrayList.class);
   }
   @SuppressWarnings({ "static-method" }) @Test public void test2() {
     assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
