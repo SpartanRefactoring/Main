@@ -30,7 +30,7 @@ public class Classifier extends ASTVisitor {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
       for (ASTNode ¢ : forLoopsList) {
-        UserDefinedTipper<ASTNode> t = TipperFactory.tipper(format.code(generalize.code(¢ + "")), "OMG();", "");
+        UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "OMG();", "");
         toRemove = new ArrayList<>();
         for (ASTNode l : forLoopsList)
           if (t.canTip(l))

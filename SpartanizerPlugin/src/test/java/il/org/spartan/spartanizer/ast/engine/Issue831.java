@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-14 */
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "javadoc" })
 public class Issue831 {
   
   protected class MethodScannerIExt extends MethodScanner {
