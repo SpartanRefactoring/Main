@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
-  static UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);",
+  static UserDefinedTipper<IfStatement> tipper = TipperFactory.patternTipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);",
       "");
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

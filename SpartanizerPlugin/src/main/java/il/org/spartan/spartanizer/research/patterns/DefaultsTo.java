@@ -17,10 +17,10 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.patternTipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.patternTipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
     }
   };
 

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
-  private static final UserDefinedTipper<Expression> tipper = TipperFactory.tipper("this.$N", "", "");
+  private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean canTip(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
