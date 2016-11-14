@@ -25,7 +25,7 @@ public enum associativity {
   public static boolean isRightToLeft(final Expression ¢) {
     return isRightToLeft(precedence.of(¢));
   }
-  static boolean isLeftToRigh(final Expression ¢) {
+  static boolean isLeftToRight(final Expression ¢) {
     return !isRightToLeft(precedence.of(¢));
   }
   private static boolean isRightToLeft(final int precedence) {
