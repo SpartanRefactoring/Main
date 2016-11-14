@@ -55,7 +55,4 @@ public enum IExtendedModifiersRank {
   static int ordinal(final String modifier) {
     return find(modifier).ordinal();
   }
-  @SuppressWarnings("unused") private static int size() {
-    return IExtendedModifiersRank.values().length;
-  }
 }

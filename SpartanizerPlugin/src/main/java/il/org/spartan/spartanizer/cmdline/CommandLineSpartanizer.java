@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.function.*;
-
-import il.org.spartan.plugin.*;
 
 /** A configurable version of the CommandLineSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -47,8 +44,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       if (DefaultApplicator) {
         c.listener(¢ -> System.out.println("ok" + ¢));
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder())).defaultListenerNoisy()
-            .go();
+        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
+            .defaultListenerNoisy().go();
       }
       if (Spartanizer$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
@@ -71,10 +68,6 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       x.printStackTrace();
     }
   }
-  @SuppressWarnings("unused") private Function<WrappedCompilationUnit, Integer> getSpartanizer() {
-    return u -> Integer.valueOf(
-        new CommandLine$Applicator().apply(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath))) ? 1 : 0);
-  }
   public void inputDir(final String ¢) {
     presentSourcePath = ¢;
   }
@@ -84,7 +77,7 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   public void setClazzes(final String[] ¢) {
     clazzes = ¢;
   }
-  public void setTipperGroups(String[] ¢) {
+  public void setTipperGroups(final String[] ¢) {
     tipperGroups = ¢;
   }
 }

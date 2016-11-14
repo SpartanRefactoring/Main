@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -28,7 +27,7 @@ public class Analyzer {
     parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
-    String analysis = getProperty("analysis");
+    final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
     else if ("classify".equals(analysis))
@@ -41,13 +40,10 @@ public class Analyzer {
   }
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
-    for (final File ¢ : inputFiles()) {
-      System.out.println("\nnow: " + ¢.getPath());
-      final ASTNode cu = getCompilationUnit(spartanize(compilationUnit(¢)));
-      Classifier classifier = new Classifier();
-      cu.accept(classifier);
-      classifier.summarize();
-    }
+    String code = "";
+    for (final File ¢ : inputFiles())
+      code += spartanize(compilationUnit(¢));
+    new Classifier().analyze(getCompilationUnit(code));
   }
   private static void createOutputDirIfNeeded() {
     final File dir = new File(getProperty("outputDir"));

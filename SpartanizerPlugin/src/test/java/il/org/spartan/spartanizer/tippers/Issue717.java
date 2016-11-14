@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-05 */
-@SuppressWarnings("static-method") public class Issue717 {
+@SuppressWarnings("static-method") //
+public class Issue717 {
   MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
   MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
   MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
@@ -43,7 +44,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)
       len = 1;
-    for (int ¢ = 0; ¢ < len; ++¢)
+    randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()-10)));
+    for (int ¢ = 1; ¢ < len; ++¢)
       randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
     return randStr + "";
   }
