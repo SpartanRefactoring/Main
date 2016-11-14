@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.cmdline.*;
     azzert.that(find("(a+b)/++b"), is(EXPRESSION_LOOK_ALIKE));
   }
   @Test public void findEmptyBlock() {
-    azzert.that(find("{}"), is(STATEMENTS_LOOK_ALIKE));
+    azzert.that(find("{}"), is(EMPTY_BLOCK_LOOK_ALIKE));
   }
   @Test(expected = AssertionError.class) public void findError() {
     azzert.that(find("}} f() { a();} b();}"), is(nullValue()));
