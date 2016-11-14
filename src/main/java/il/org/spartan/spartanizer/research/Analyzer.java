@@ -40,13 +40,10 @@ public class Analyzer {
   }
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
-    for (final File ¢ : inputFiles()) {
-      System.out.println("\nnow: " + ¢.getPath());
-      final ASTNode cu = getCompilationUnit(spartanize(compilationUnit(¢)));
-      final Classifier classifier = new Classifier();
-      cu.accept(classifier);
-      classifier.summarize();
-    }
+    String code = "";
+    for (final File ¢ : inputFiles())
+      code += spartanize(compilationUnit(¢));
+    new Classifier().analyze(getCompilationUnit(code));
   }
   private static void createOutputDirIfNeeded() {
     final File dir = new File(getProperty("outputDir"));

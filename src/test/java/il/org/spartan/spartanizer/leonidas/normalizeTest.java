@@ -17,6 +17,6 @@ public class normalizeTest {
     assertEquals("if(a == A) return b(a, B());", normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"));
   }
   @Test public void a() {
-    assertEquals("a.h()", normalize.codeFragment("a.x.c.d.e()"));
+    assertEquals("a.h()", normalize.code("a.x.c.d.e()"));
   }
 }
