@@ -193,4 +193,30 @@ public interface metrics {
     });
     return $.inner;
   }
+
+  static int understandability(final ASTNode n) {
+    final Int depth = new Int();
+    Stack<Int> siblings = new Stack<>();
+    siblings.push(new Int());
+    final Int $ = Int.valueOf(-1);
+    n.getRoot().accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if ($.inner != -1)
+          return;
+        if (n.equals(¢))
+          $.inner = depth.inner + siblings.peek().inner;
+        ++depth.inner;
+        ++siblings.peek().inner;
+        siblings.push(new Int());
+      }
+
+      @Override public void postVisit(@SuppressWarnings("unused") ASTNode __) {
+        if ($.inner != -1)
+          return;
+        --depth.inner;
+        siblings.pop();
+      }
+    });
+    return depth.inner;
+  }
 }
