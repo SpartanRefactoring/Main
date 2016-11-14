@@ -18,32 +18,38 @@ public class Issue691 {
   @SuppressWarnings("static-method") @Test public void test0() {
     assertNull(getAll.invocations((MethodDeclaration) null));
   }
+
   @SuppressWarnings("static-method") @Test public void test1() {
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {}"))).size(), 0);
   }
+
   @SuppressWarnings("static-method") @Test public void test2() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a;int b;y.t(a,b);}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test3() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("g");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {t(); g();}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test4() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("q");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {t(); q();}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test5() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("q");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(); q();}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test6() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
@@ -51,6 +57,7 @@ public class Issue691 {
     res.add("q");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(x(),z); q();}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test7() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
@@ -59,6 +66,7 @@ public class Issue691 {
     res.add("add");
     assertEquals(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(x(),z); q();int v = 5 +add();}"))), res);
   }
+
   @SuppressWarnings("static-method") @Test public void test8() {
     final Set<String> res = new TreeSet<>();
     res.add("t");
@@ -69,6 +77,7 @@ public class Issue691 {
         getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(x(),z); q();int v = 5 +add(); int tmp = (int)5.5;}"))),
         res);
   }
+
   @SuppressWarnings("static-method") @Test public void test9() {
     final Set<String> res = new TreeSet<>();
     res.add("getBody");

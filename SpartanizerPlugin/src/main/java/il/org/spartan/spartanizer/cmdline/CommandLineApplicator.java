@@ -19,6 +19,7 @@ public class CommandLineApplicator extends Applicator {
   public static CommandLineApplicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
+
   // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
    * @return this applicator */
@@ -30,6 +31,7 @@ public class CommandLineApplicator extends Applicator {
     });
     return this;
   }
+
   /** @return this */
   public CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
@@ -37,17 +39,20 @@ public class CommandLineApplicator extends Applicator {
     });
     return this;
   }
+
   /** @return this */
   public CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
+
   /** Default passes configuration, with many passes.
    * @return this applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
+
   // TODO Matteo: I have changed the "run action" to return number of tips
   // committed instead of whether tips were committed (Boolean -> Integer).
   // Added a quick fix to your code. Also I do not understand why you wrote this
@@ -61,6 +66,7 @@ public class CommandLineApplicator extends Applicator {
     setRunAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
     return this;
   }
+
   // // TODO Roth: use Policy / replacement for Trimmer.
   // /** Default run action configuration of {@link GUIBatchLaconizer}.
   // Spartanize the
@@ -83,6 +89,7 @@ public class CommandLineApplicator extends Applicator {
     name(a.getClass().getSimpleName());
     return this;
   }
+
   /** Default run action configuration of {@link CommandLineApplicator}.
    * Spartanize the {@link CompilationUnit} using received
    * {@link CommandLine$Applicator}.
@@ -93,26 +100,31 @@ public class CommandLineApplicator extends Applicator {
     name(a.getClass().getSimpleName());
     return this;
   }
+
   /** @return this */
   public CommandLineApplicator defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
+
   /** @return this */
   CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
   }
+
   /** @param ¢ JD
    * @return */
   @Override public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
+
   /** @return this */
   private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
+
   /* @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
     if (selection() == null && listener() == null && passes() <= 0 && selection().isEmpty())
@@ -172,10 +184,12 @@ public class CommandLineApplicator extends Applicator {
       this.inputCount = inputCount;
       this.printing = printing;
     }
+
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
+
     private static String printableAt(final Object[] os, final int index) {
       return Linguistic.unknownIfNull(os, xs -> xs[index]);
     }

@@ -22,6 +22,7 @@ public interface code {
         .replaceAll("(\\([^a-zA-Z¢$_]\\)) (\\([a-zA-Z¢$_]\\))", "$1$2")//
         .replaceAll("(\\([a-zA-Z¢$_]\\)) (\\([^a-zA-Z¢$_]\\))", "$1$2");
   }
+
   /** This function counts the number of words the given string contains. Words
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted

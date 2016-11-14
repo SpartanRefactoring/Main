@@ -28,6 +28,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     clazz = w.myActualOperandsClass();
     assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
   }
+
   @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m,
       @SuppressWarnings("unused") final AtomicInteger __) {
     u.accept(new ASTVisitor() {
@@ -38,6 +39,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
       }
     });
   }
+
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {

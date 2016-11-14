@@ -12,6 +12,7 @@ public enum monitor {
     @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
       System.out.println(message);
       return this;
@@ -37,6 +38,7 @@ public enum monitor {
     @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
       System.err.println(message);
       System.exit(1);
@@ -49,6 +51,7 @@ public enum monitor {
     @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
       throw new RuntimeException(message);
     }
@@ -59,9 +62,11 @@ public enum monitor {
     final String canonicalName = ¢.getCanonicalName();
     return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName) + "]";
   }
+
   public static String className(final Object ¢) {
     return className(¢.getClass());
   }
+
   public static void debug(final Object o, final Throwable t) {
     debug(//
         "An instance of " + className(o) + //
@@ -70,11 +75,13 @@ public enum monitor {
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
+
   /** @param string
    * @return */
   public static monitor debug(final String message) {
     return now.debugMessage(message);
   }
+
   public static monitor infoIOException(final Exception x, final String message) {
     return now.info(//
         "   Got an exception of type : " + x.getClass().getSimpleName() + //
@@ -83,11 +90,13 @@ public enum monitor {
             "\n       >>>'" + message + "'<<<" //
     );
   }
+
   /** logs an error in the plugin
    * @param tipper an error */
   public static void log(final Throwable ¢) {
     now.error(¢ + "");
   }
+
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
@@ -99,6 +108,7 @@ public enum monitor {
             "\n x = '" + x + "'" + //
             "\n o = " + o + "'");
   }
+
   public static monitor logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
@@ -111,9 +121,11 @@ public enum monitor {
     );
     return now;
   }
+
   public static monitor logEvaluationError(final Throwable ¢) {
     return logEvaluationError(now, ¢);
   }
+
   public static void logProbableBug(final Object o, final Throwable t) {
     now.error(//
         "An instance of " + className(o) + //
@@ -122,11 +134,14 @@ public enum monitor {
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
+
   public abstract monitor error(String message);
+
   public monitor info(final String message) {
     System.out.println(message);
     return this;
   }
+
   monitor debugMessage(@SuppressWarnings("unused") final String __) {
     return this;
   }

@@ -29,6 +29,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     return (iz.name(a.getLeftHandSide()) || tipper.canTip(a.getLeftHandSide()))
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
+
   @Override public Tip tip(final MethodDeclaration d) {
     Logger.logNP(d, getClass().getSimpleName());
     return new Tip(description(d), d, this.getClass()) {
@@ -44,11 +45,13 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
       }
     };
   }
+
   /** @param ¢
    * @return */
   protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
+
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }
