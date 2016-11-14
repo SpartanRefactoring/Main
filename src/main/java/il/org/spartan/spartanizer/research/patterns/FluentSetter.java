@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class FluentSetter extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static final UserDefinedTipper<Block> tipper = TipperFactory.tipper("{this.$N = $N2; return this;}", "", "");
+  private static final UserDefinedTipper<Block> tipper = TipperFactory.patternTipper("{this.$N = $N2; return this;}", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
