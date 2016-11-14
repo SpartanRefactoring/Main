@@ -23,6 +23,7 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
     lastNode = ¢;
     return super.visit(¢);
   }
+
   /** TODO: Matteo: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
@@ -61,11 +62,13 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
     ;
     writer.nl();
   }
+
   @Override public void endVisit(final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);
   }
+
   @Override protected void done() {
     dotter.end();
     System.err.println("Your output is in: " + writer.close());

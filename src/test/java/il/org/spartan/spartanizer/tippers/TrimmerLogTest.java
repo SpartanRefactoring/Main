@@ -43,6 +43,7 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
+
   @Test public void test03() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
@@ -66,6 +67,7 @@ public class TrimmerLogTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
+
   @Test public void test04() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
@@ -76,6 +78,7 @@ public class TrimmerLogTest {
     assert u != null;
     assert u.getJavaElement() == null;
   }
+
   /** Tests of {@link cmdline.TrimmerLog}
    * @author AnnaBel7
    * @author michalcohen
@@ -84,10 +87,12 @@ public class TrimmerLogTest {
     TrimmerLog.setMaxApplications(50);
     assertEquals(50, TrimmerLog.getMaxApplications());
   }
+
   @Test public void b() {
     TrimmerLog.setMaxTips(50);
     assertEquals(50, TrimmerLog.getMaxTips());
   }
+
   @Test public void c() {
     TrimmerLog.setMaxVisitations(50);
     assertEquals(50, TrimmerLog.getMaxVisitations());

@@ -28,14 +28,17 @@ public final class Tips {
   public static Iterable<AbstractGUIApplicator> all() {
     return map.values();
   }
+
   /** @return Iteration over all {@link @GUIApplicator) class instances */
   public static Iterable<AbstractGUIApplicator> allAvailablespartanizations() {
     return as.iterable(all);
   }
+
   /** @return all the registered spartanization refactoring objects names */
   public static Set<String> allRulesNames() {
     return map.keySet();
   }
+
   /** @param tipper rule
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
@@ -45,12 +48,14 @@ public final class Tips {
         return (T) $;
     return null;
   }
+
   /** @param name the name of the applicator
    * @return an instance of the class */
   public static AbstractGUIApplicator get(final String name) {
     assert name != null;
     return map.get(name);
   }
+
   /** Resets the enumeration with the current values from the preferences file.
    * Letting the rules notification decisions be updated without restarting
    * eclipse. */
@@ -65,6 +70,7 @@ public final class Tips {
   private Tips(final AbstractGUIApplicator value) {
     this.value = value;
   }
+
   /** @return ? */
   public AbstractGUIApplicator value() {
     return value;

@@ -46,6 +46,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use \"+\" operator to concatenate strings";
   }
+
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
@@ -75,6 +76,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     }
     return replacement(i, terms);
   }
+
   /** Adds parenthesis to expression if needed.
    * @param x an Expression
    * @return e itself if no parenthesis needed, otherwise a
@@ -87,6 +89,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     $.setExpression((Expression) ASTNode.copySubtree(a, x));
     return $;
   }
+
   /** Checks if an expression need parenthesis in order to interpreted correctly
    * @param x an Expression
    * @return whether or not this expression need parenthesis when put together
