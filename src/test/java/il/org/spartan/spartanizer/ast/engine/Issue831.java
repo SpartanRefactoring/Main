@@ -47,4 +47,17 @@ public class Issue831 {
       body += iter + "";
     assertTrue("int a;\nint b;\nint c;\nint d;\n".equals(body));
   }
+  
+  @Test public void givenNullinsteadMethodAssertionFailure() {
+    try {
+      new MethodScannerIExt(null).hashCode();
+    } catch (Error e) {
+      e.getClass();
+      assertTrue(true);
+      return;
+    }
+    assertFalse(true);
+  }
+
+  
 }
