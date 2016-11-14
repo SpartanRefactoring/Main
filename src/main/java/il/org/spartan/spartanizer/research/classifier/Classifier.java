@@ -29,12 +29,12 @@ public class Classifier extends ASTVisitor {
   public void analyze(final ASTNode n) {
     n.accept(this);
     forLoopsAmount = forLoopsList.size();
-    Map<String, Int> patterns = new HashMap<>();
+    final Map<String, Int> patterns = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
       for (final ASTNode ¢ : forLoopsList) {
-        UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
+        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         toRemove = new ArrayList<>();
         for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
@@ -58,7 +58,7 @@ public class Classifier extends ASTVisitor {
   }
 
   /** @param ¢ to classify */
-  private String classify(String ¢) {
+  private String classify(final String ¢) {
     System.out.println(format.code(generalize.code(¢)));
     final String $ = input.nextLine();
     forLoops.putIfAbsent($, new ArrayList<>());
