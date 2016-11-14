@@ -27,7 +27,7 @@ public class Essence {
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         // Space between two non-letters:
         .replaceAll("([^\\p{L}]) ([^\\p{L}])", "$1$2")//
-        // Letter, then non-leTtter
+        // Letter, then non-letter
         .replaceAll("([\\p{L}]) ([^\\p{L}])", "$1$2")//
         // Non letter, then letter
         .replaceAll("([^\\p{L}]) ([\\p{L}])", "$1$2")//
