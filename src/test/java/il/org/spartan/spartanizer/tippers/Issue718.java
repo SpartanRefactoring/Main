@@ -28,7 +28,7 @@ public class Issue718 {
     assert true;
   }
   @SuppressWarnings("static-method") @Test public void checkIfReturnTypeIsBoolean() {
-    @SuppressWarnings("unused") final boolean b = determineIf.loaded(null);
+    determineIf.loaded(null);
   }
   @Test public void checkIfLoadedMethodPasses() {
     assertTrue(determineIf.loaded(loaded));
