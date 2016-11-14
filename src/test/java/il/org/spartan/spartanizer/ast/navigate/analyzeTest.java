@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import java.util.*;
 import java.util.stream.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.ast.safety.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -34,5 +37,47 @@ public final class analyzeTest {
     assertTrue(s.contains("b"));
     assertTrue(s.contains("a.b"));
     assertEquals(5, s.size());
+  }
+
+  @Test public void testType0() {
+    assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testType1() {
+    assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} ")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testEnviromentVariables() {
+    assertNull(analyze.enviromentVariables((ASTNode) null));
+  }
+
+  @Test public void testFindDeclarationInType0() {
+    assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testFindDeclarationInType1() {
+    assertEquals(
+        analyze.type(
+            searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{int x;public void m(){ x=5;}} ")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testFindDeclarationInType2() {
+    assertEquals(analyze.type(searchDescendants.forClass(MethodDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName()),
+        "int");
+  }
+
+  @Test public void testFindDeclarationInMethod0() {
+    assertNull(analyze.type(az.name(wizard.ast("x"))));
+  }
+
+  @Test public void testFindDeclarationInMethod1() {
+    assertEquals(
+        analyze.type(
+            searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName()),
+        "int");
   }
 }

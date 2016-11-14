@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum GuessedContext {
-  EMPTY_BLOCK_LOOK_ALIKE(//
+  BLOCK_LOOK_ALIKE(//
       "{", //
       "}"//
   ), COMPILATION_UNIT_LOOK_ALIKE(//
@@ -72,8 +72,9 @@ public enum GuessedContext {
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */
   public static GuessedContext find(final String codeFragment) {
-    if (codeFragment.replaceAll("\\s+", "").equalsIgnoreCase("{}".replaceAll("\\s+", "")))
-      return EMPTY_BLOCK_LOOK_ALIKE;
+    String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
+    if (cleanFragment.startsWith("{") && cleanFragment.endsWith("}"))
+      return BLOCK_LOOK_ALIKE;
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
