@@ -12,7 +12,8 @@ import org.junit.*;
  * @author ZivIzhar 
  * @author rodedzats
  * @since 2016-11-13 */
-@SuppressWarnings("static-method") public class LinguisticTest {
+@SuppressWarnings("static-method") //
+public class LinguisticTest {
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
     assertNull(Linguistic.trimAbsolute(null, Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
     assertEquals("short string", Linguistic.trimAbsolute("short string", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
