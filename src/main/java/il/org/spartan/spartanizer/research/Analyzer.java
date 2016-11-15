@@ -200,33 +200,25 @@ public class Analyzer {
   }
 
   private static void methodsAnalyze() {
-    MagicNumbersAnalysis analyzer = new MagicNumbersAnalysis();
+    methodsAnalyze((new MagicNumbersAnalysis()));
+  }
+
+  private static void methodsAnalyze(MetricalAnalyzer a) {
     for (final File f : inputFiles())
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
         if (haz.methods(t))
           for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
-              analyzer.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+              a.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             } catch (@SuppressWarnings("unused") final AssertionError __) {
               //
             }
-    analyzer.printComparison();
-    analyzer.printAccumulated();
+    a.printComparison();
+    a.printAccumulated();
   }
 
   private static void understandabilityAnalyze() {
-    UnderstandabilityAnalyzer analyzer = new UnderstandabilityAnalyzer();
-    for (final File f : inputFiles())
-      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
-        if (haz.methods(t))
-          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
-            try {
-              analyzer.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
-            } catch (@SuppressWarnings("unused") final AssertionError __) {
-              //
-            }
-    analyzer.printComparison();
-    analyzer.printAccumulated();
+    methodsAnalyze(new UnderstandabilityAnalyzer());
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
