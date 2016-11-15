@@ -103,50 +103,50 @@ public interface ConfigurableReport {
    * @see #go() the only service provided by this template
    * @author Yossi Gil
    * @year 2016 */
-  class Action extends Settings {
+  public class Action extends Settings {
     /** real serialVersionUID comes much later in production code */
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings("boxing")
     int go() {
 
-      listeners().push("Initializing the " + getFileName() + " report.");
+//      listeners().push("Initializing the " + getFileName() + " report.");
 
       if (Settings.this.robustMode) {
         listeners().pop("we dare do nothing in robust mode");
         return 0;
       }
 
-      listeners().tick("generate summary file name");
+//      listeners().tick("generate summary file name");
       summaryFileName();
 
       for (int i = 0; i < getInputList().size(); i++){
         // write
-        listeners().tick("writing basic data");
+//        listeners().tick("writing basic data");
 //        name(getInput());
         name(getInputList().get(i));
         // write
-        listeners().tick("writing metrics");
+//        listeners().tick("writing metrics");
 //        write(getInput(), getOutput());
         write(getInputList().get(i), getOutputList().get(i));
         // write
-        listeners().tick("writing differences");
+//        listeners().tick("writing differences");
 //        write(getInput(), getOutput(), "Δ ", (n1, n2) -> (n1 - n2));
         write(getInputList().get(i), getOutputList().get(i), "Δ ", (n1, n2) -> (n1 - n2));
         // write
-        listeners().tick("writing delta");
+//        listeners().tick("writing delta");
 //        write(getInput(), getOutput(), "δ ", (n1, n2) -> system.d(n1, n2));
         write(getInputList().get(i), getOutputList().get(i), "δ ", (n1, n2) -> system.d(n1, n2));
         // write
-        listeners().tick("writing perc");
+//        listeners().tick("writing perc");
 //        writePerc(getInput(), getOutput(), "δ ");
         writePerc(getInputList().get(i), getOutputList().get(i), "δ ");
         // write
-        listeners().tick("writing ratio");
+//        listeners().tick("writing ratio");
         // not yet
         report.nl();
       }
-      listeners().pop("exhausted");
+//      listeners().pop("exhausted");
       return defaultValue();
     }
 
@@ -213,24 +213,6 @@ public interface ConfigurableReport {
       }
     }
   }
-//    class Configuration { /**/
-//      private String outFolder = "/tmp/"; // default modifier
-//      private String inFolder; // default modifier
-//
-//      public String outFolder() {
-//        return outFolder;
-//      }
-//      @SuppressWarnings("hiding") public void outFolder(final String outFolder) {
-//        this.outFolder = outFolder;
-//      }
-//      public String inFolder() {
-//        return inFolder;
-//      }
-//      @SuppressWarnings("hiding") public void inFolder(final String inFolder) {
-//        this.inFolder = inFolder;
-//      }
-//    }
-
     public Action getAction() {
       return new Action();
     }
