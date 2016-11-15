@@ -8,6 +8,7 @@ public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
   static String inputDir = ".";
   private static String outputDir = "/tmp";
+  @SuppressWarnings("unused")
   private static MetricsReport metricsReport = new MetricsReport();
 
   public static void main(final String[] args) {
@@ -15,7 +16,7 @@ public class CommandLineClient {
       processCommandLine(args);
   }
 
-  @SuppressWarnings({ "unused", "static-access" }) 
+  @SuppressWarnings({ "unused" }) 
   private static void processCommandLine(final String[] args) {
     new CommandLineClient();
     // final List<String> remaining = extract(args, r);
