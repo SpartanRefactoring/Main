@@ -183,10 +183,10 @@ public final class metricsTest {
   // horizontalComplexity
 
   @Test public void understandability() {
-    azzert.that(metrics.understandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
+    azzert.that(metrics.nodeUnderstandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
   }
 
   @Test public void understandability2() {
-    azzert.that(metrics.understandability(findFirst.variableDeclarationFragment(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(6));
+    azzert.that(metrics.nodeUnderstandability(findFirst.variableDeclarationFragment(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(6));
   }
 }

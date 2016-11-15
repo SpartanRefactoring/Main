@@ -194,7 +194,10 @@ public interface metrics {
     return $.inner;
   }
 
-  static int understandability(final ASTNode n) {
+  /** measures metrics from root to node
+   * @param n
+   * @return */
+  static int nodeUnderstandability(final ASTNode n) {
     final Int depth = new Int();
     final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
@@ -205,7 +208,6 @@ public interface metrics {
           return;
         if (n.equals(¢))
           $.inner = depth.inner + siblings.peek().inner;
-        System.out.println(¢);
         ++depth.inner;
         ++siblings.peek().inner;
         siblings.push(new Int());
@@ -214,6 +216,30 @@ public interface metrics {
       @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
         if ($.inner != -1)
           return;
+        --depth.inner;
+        siblings.pop();
+      }
+    });
+    return $.inner;
+  }
+
+  /** measure the total U in the subtree
+   * @param n
+   * @return */
+  static int subtreeUnderstandability(final ASTNode n) {
+    final Int depth = new Int();
+    final Stack<Int> siblings = new Stack<>();
+    siblings.push(new Int());
+    final Int $ = Int.valueOf(-1);
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        $.inner += depth.inner + siblings.peek().inner;
+        ++depth.inner;
+        ++siblings.peek().inner;
+        siblings.push(new Int());
+      }
+
+      @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
         --depth.inner;
         siblings.pop();
       }
