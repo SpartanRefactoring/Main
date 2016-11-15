@@ -27,8 +27,8 @@ public class MetricsReport implements ConfigurableReport {
       settings.setInputFolder(".");
     if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
-    settings.setHeader("metrics");
-    settings.setFileName("metrics");
+    MetricsReport.getSettings().setHeader("metrics");
+    settings.setFileName("metrics.CSV");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
