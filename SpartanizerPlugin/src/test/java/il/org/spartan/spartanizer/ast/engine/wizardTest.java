@@ -35,9 +35,4 @@ public final class wizardTest {
   @Test public void astExpression() {
     assert iz.expression(wizard.ast("x + y"));
   }
-
-  @Test public void astExpression2() {
-    System.out.println(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}")));
-    assert iz.expression(wizard.ast("x + y").getRoot());
-  }
 }
