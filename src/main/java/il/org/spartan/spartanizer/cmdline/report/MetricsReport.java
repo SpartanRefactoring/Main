@@ -27,8 +27,8 @@ public class MetricsReport implements ConfigurableReport {
       settings.setInputFolder(".");
     if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
-    MetricsReport.getSettings().setHeader("metrics");
-    settings.setFileName("metrics.CSV");
+    MetricsReport.getSettings().setHeader("NEWmetrics");
+    settings.setFileName("/tmp/NEWmetrics.CSV");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
@@ -85,5 +85,9 @@ public class MetricsReport implements ConfigurableReport {
     final Action wr = settings.getAction();
     wr.initialize();
     wr.go();
+  }
+
+  public static void generate() {
+    write();    
   }
 }
