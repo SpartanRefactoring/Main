@@ -14,32 +14,28 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
 
 /** Collects a set of metrics A wrapper for {@link CSVStatistics}
  * @author Matteo Orru' */
-//@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class MetricsReport implements ConfigurableReport {
-  
   List<ASTNode> l;
-  
-//  private static ArrayList<ASTNode> inputList = new ArrayList<>();
-//  private static ArrayList<ASTNode> outputList = new ArrayList<>();
+  // private static ArrayList<ASTNode> inputList = new ArrayList<>();
+  // private static ArrayList<ASTNode> outputList = new ArrayList<>();
   private static Settings settings = new Settings();
-  private static Action writeReport;   
+  private static Action writeReport;
 
   public static void initialize() {
-    if(settings.getInputFolder() == null)
+    if (settings.getInputFolder() == null)
       settings.setInputFolder(".");
-    if(settings.getOutputFolder() == null)
+    if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
     settings.setHeader("metrics");
     settings.setFileName("metrics");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
-  
-  public MetricsReport(){
-    
-  }
-  
-  public static Settings getSettings(){
+
+  public MetricsReport() {}
+
+  public static Settings getSettings() {
     return settings;
   }
 
@@ -90,6 +86,4 @@ public class MetricsReport implements ConfigurableReport {
     wr.initialize();
     wr.go();
   }
-
-
 }
