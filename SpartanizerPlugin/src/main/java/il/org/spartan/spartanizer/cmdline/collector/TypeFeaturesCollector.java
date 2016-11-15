@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * Matteo: others? even finer?
  * @author Matteo Orru'
  * @since 2016 */
+@SuppressWarnings("rawtypes")
 public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCollector {
   int classNesting;
   TypeDeclaration lastNode;
