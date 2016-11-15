@@ -196,11 +196,11 @@ public interface metrics {
 
   static int understandability(final ASTNode n) {
     final Int depth = new Int();
-    Stack<Int> siblings = new Stack<>();
+    final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
     final Int $ = Int.valueOf(-1);
     n.getRoot().accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if ($.inner != -1)
           return;
         if (n.equals(¢))
@@ -211,7 +211,7 @@ public interface metrics {
         siblings.push(new Int());
       }
 
-      @Override public void postVisit(@SuppressWarnings("unused") ASTNode __) {
+      @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
         if ($.inner != -1)
           return;
         --depth.inner;
