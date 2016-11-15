@@ -8,23 +8,22 @@ public class CommandLineClient {
   // TODO Matteo: try to fix compilation errors - matteo
   static String inputDir = ".";
   private static String outputDir = "/tmp";
-  private static MetricsReport metricsReport = new MetricsReport();
+  @SuppressWarnings("unused") private static MetricsReport metricsReport = new MetricsReport();
 
   public static void main(final String[] args) {
     if (args.length == 0)
       processCommandLine(args);
   }
 
-  @SuppressWarnings({ "unused", "static-access" }) 
-  private static void processCommandLine(final String[] args) {
+  @SuppressWarnings({ "unused" }) private static void processCommandLine(final String[] args) {
     new CommandLineClient();
     // final List<String> remaining = extract(args, r);
     //
     MetricsReport.getSettings().setInputFolder(inputDir);
     MetricsReport.getSettings().setOutputFolder(outputDir);
     MetricsReport.initialize();
-//    ReportGenerator.setOutputFolder(outputDir);
-//    ReportGenerator.setInputFolder(inputDir);
+    // ReportGenerator.setOutputFolder(outputDir);
+    // ReportGenerator.setInputFolder(inputDir);
     //
     new CommandLineSpartanizer(inputDir).apply();
     // r.printExternals();

@@ -29,16 +29,15 @@ public interface ConfigurableReport {
     private String reportFileName;
     private String header;
     CSVStatistics report;
-    
     private static ArrayList<ASTNode> inputList = new ArrayList<>();
     private static ArrayList<ASTNode> outputList = new ArrayList<>();
-    
-    public static void addInput(ASTNode input) {
-      getInputList().add(input);    
+
+    public static void addInput(final ASTNode input) {
+      getInputList().add(input);
     }
-    
-    public static void addOutput(ASTNode output) {
-      getOutputList().add(output);    
+
+    public static void addOutput(final ASTNode output) {
+      getOutputList().add(output);
     }
 
     public CSVStatistics report() {
@@ -117,16 +116,16 @@ public interface ConfigurableReport {
         listeners().pop("we dare do nothing in robust mode");
         return 0;
       }
-      
+
       listeners().tick("generate summary file name");
       summaryFileName();
-      
+
       for (int i = 0; i < getInputList().size(); i++){
         // write
         listeners().tick("writing basic data");
 //        name(getInput());
         name(getInputList().get(i));
-        // write  
+        // write
         listeners().tick("writing metrics");
 //        write(getInput(), getOutput());
         write(getInputList().get(i), getOutputList().get(i));
@@ -150,16 +149,16 @@ public interface ConfigurableReport {
       listeners().pop("exhausted");
       return defaultValue();
     }
-    
+
     private void name(final ASTNode i) {
       report().put("name", extract.name(i));
       report().put("category", extract.category(i));
     }
-    
+
     private void summaryFileName() {
       report().summaryFileName();
     }
-    
+
     public void close(){
       report().close();
     }
@@ -258,7 +257,7 @@ public interface ConfigurableReport {
       return inputList;
     }
 
-    public static void setInputList(ArrayList<ASTNode> inputList) {
+    public static void setInputList(final ArrayList<ASTNode> inputList) {
       Settings.inputList = inputList;
     }
 
@@ -266,7 +265,7 @@ public interface ConfigurableReport {
       return outputList;
     }
 
-    public static void setOutputList(ArrayList<ASTNode> outputList) {
+    public static void setOutputList(final ArrayList<ASTNode> outputList) {
       Settings.outputList = outputList;
     }
   }
