@@ -95,7 +95,7 @@ public interface ConfigurableReport {
    }
   }
 
-  String getHeader() {
+  static String getHeader() {
     return header;
   }
 
@@ -217,15 +217,15 @@ public interface ConfigurableReport {
       return new Action();
     }
 
-    public void setHeader(final String ¢) {
+    public static void setHeader(final String ¢) {
       header = ¢;
     }
 
-    public void setFileName(final String ¢) {
+    public static void setFileName(final String ¢) {
       reportFileName = ¢;
     }
 
-    public String getFileName() {
+    public static String getFileName() {
       return reportFileName;
     }
 
