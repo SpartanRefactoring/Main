@@ -41,7 +41,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     });
   }
 
-  @SuppressWarnings("static-access") boolean go(final ASTNode input) {
+  boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
