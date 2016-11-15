@@ -19,11 +19,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLine$Applicator extends Generic$Applicator {
-  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  
-  private MetricsReport metricsReport;
 
   public CommandLine$Applicator() {}
 
@@ -44,8 +41,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     });
   }
 
-  @SuppressWarnings("static-access")
-  boolean go(final ASTNode input) {
+  @SuppressWarnings("static-access") boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
@@ -53,16 +49,17 @@ public class CommandLine$Applicator extends Generic$Applicator {
                                                                          // CLASS_BODY_DECLARATIONS
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
+    MetricsReport.getSettings();
     // add ASTNode to MetricsReport
-    MetricsReport.getSettings().addInput(input);
-    MetricsReport.getSettings().addOutput(outputASTNode);
-//    computeMetrics(input, outputASTNode);
+    Settings.addInput(input);
+    MetricsReport.getSettings();
+    Settings.addOutput(outputASTNode);
+    // computeMetrics(input, outputASTNode);
     return false;
   }
 
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
@@ -207,7 +204,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * @param ¢
    * @return */
   public boolean apply(final WrappedCompilationUnit ¢) {
-//    System.out.println("*********");
+    // System.out.println("*********");
     go(¢.compilationUnit);
     return false;
   }
