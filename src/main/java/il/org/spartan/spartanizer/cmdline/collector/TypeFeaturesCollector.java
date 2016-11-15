@@ -1,19 +1,21 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.collector;
+
+import static il.org.spartan.tide.*;
 
 import java.lang.reflect.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Collects metrics at different level of granularity: File, Class, Method TODO
  * Matteo: others? even finer?
  * @author Matteo Orru'
  * @since 2016 */
-public class TypeFeaturesCollector extends FilesASTVisitor {
+public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCollector {
   int classNesting;
   TypeDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("class-properties"));
@@ -30,7 +32,8 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
    * @param ¢ JD */
   private void consider(final TypeDeclaration ¢) {
     dotter.click();
-    writer.put("File", presentFile) //
+    writer //
+        .put("File", presentFile) //
         .put("Name", ¢.getName()) //
         .put("abstract", iz.abstract¢(¢)) //
         .put("default", iz.default¢(¢)) //
@@ -82,5 +85,22 @@ public class TypeFeaturesCollector extends FilesASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FilesASTVisitor.main(args);
+  }
+
+  @SuppressWarnings({ "boxing", "unchecked" }) 
+  @Override public NamedFunction<ASTNode, Object>[] functions() {
+    return as.array( //
+        m("length", (¢) -> (¢ + "").length()), //
+        m("essence", (¢) -> Essence.of(¢ + "").length()), //
+        m("tokens", (¢) -> metrics.tokens(¢ + "")), //
+        m("nodes", (¢) -> count.nodes((ASTNode) ¢)), //
+        m("body", (¢) -> metrics.bodySize((ASTNode) ¢)), //
+        m("methodDeclaration",
+            (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()), //
+        m("tide", (¢) -> clean(¢ + "").length()), // , //
+        m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
+        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
+        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)) //
+    ); //
   }
 }
