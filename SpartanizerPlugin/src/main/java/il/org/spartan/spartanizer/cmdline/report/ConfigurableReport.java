@@ -26,8 +26,8 @@ public interface ConfigurableReport {
     private static final long serialVersionUID = 1L;
     String outputFolder = "/tmp/"; // default modifier
     String inputFolder; // default modifier
-    private String reportFileName;
-    private String header;
+    private static String reportFileName;
+    private static String header;
     CSVStatistics report;
     private static ArrayList<ASTNode> inputList = new ArrayList<>();
     private static ArrayList<ASTNode> outputList = new ArrayList<>();
@@ -205,29 +205,31 @@ public interface ConfigurableReport {
 
     public void initialize() {
       try {
+        System.out.println("getFileName(): " + getFileName());
+        System.out.println("getHeader(): " + getHeader());
         report = new CSVStatistics(getFileName(), getHeader());
       } catch (final IOException x) {
         x.printStackTrace();
       }
     }
   }
-    class Configuration { /**/
-      private String outFolder = "/tmp/"; // default modifier
-      private String inFolder; // default modifier
-
-      public String outFolder() {
-        return outFolder;
-      }
-      @SuppressWarnings("hiding") public void outFolder(final String outFolder) {
-        this.outFolder = outFolder;
-      }
-      public String inFolder() {
-        return inFolder;
-      }
-      @SuppressWarnings("hiding") public void inFolder(final String inFolder) {
-        this.inFolder = inFolder;
-      }
-    }
+//    class Configuration { /**/
+//      private String outFolder = "/tmp/"; // default modifier
+//      private String inFolder; // default modifier
+//
+//      public String outFolder() {
+//        return outFolder;
+//      }
+//      @SuppressWarnings("hiding") public void outFolder(final String outFolder) {
+//        this.outFolder = outFolder;
+//      }
+//      public String inFolder() {
+//        return inFolder;
+//      }
+//      @SuppressWarnings("hiding") public void inFolder(final String inFolder) {
+//        this.inFolder = inFolder;
+//      }
+//    }
 
     public Action getAction() {
       return new Action();

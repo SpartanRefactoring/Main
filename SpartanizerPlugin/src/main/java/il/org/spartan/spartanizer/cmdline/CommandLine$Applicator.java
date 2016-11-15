@@ -1,10 +1,13 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,6 +33,19 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
+  }
+  
+  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups) {
+    super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
+  }
+
+  private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
+    List<String> temp = new ArrayList<>();
+    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
+    for(final String ¢: tg)
+      if (!as.list(excludedTipperGroups).contains(¢))
+        temp.add(¢);
+    return temp.toArray((new String[] {}));
   }
 
   void go(final CompilationUnit u) {

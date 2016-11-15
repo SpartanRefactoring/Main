@@ -50,7 +50,7 @@ public class Generic$Applicator {
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
 
-  private static List<String> setAllTipperGroups() {
+  protected static List<String> setAllTipperGroups() {
     final List<String> $ = new ArrayList<>();
     for (final TipperGroup ¢ : TipperGroup.values())
       $.add(¢.name());
