@@ -205,6 +205,7 @@ public interface metrics {
           return;
         if (n.equals(¢))
           $.inner = depth.inner + siblings.peek().inner;
+        System.out.println(¢);
         ++depth.inner;
         ++siblings.peek().inner;
         siblings.push(new Int());
@@ -217,6 +218,6 @@ public interface metrics {
         siblings.pop();
       }
     });
-    return depth.inner;
+    return $.inner;
   }
 }

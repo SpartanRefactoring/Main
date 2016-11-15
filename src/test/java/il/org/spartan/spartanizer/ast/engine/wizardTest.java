@@ -7,6 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
@@ -29,5 +30,14 @@ public final class wizardTest {
 
   @Test public void sameOfTwoExpressionsNotSame() {
     assert !wizard.same(e("a+b+c"), e("a+b"));
+  }
+
+  @Test public void astExpression() {
+    assert iz.expression(wizard.ast("x + y"));
+  }
+
+  @Test public void astExpression2() {
+    System.out.println(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}")));
+    assert iz.expression(wizard.ast("x + y").getRoot());
   }
 }
