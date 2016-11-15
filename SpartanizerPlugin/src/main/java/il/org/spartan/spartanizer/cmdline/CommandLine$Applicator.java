@@ -9,7 +9,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
-import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -23,6 +22,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   
+  @SuppressWarnings("unused")
   private MetricsReport metricsReport;
 
   public CommandLine$Applicator() {}
