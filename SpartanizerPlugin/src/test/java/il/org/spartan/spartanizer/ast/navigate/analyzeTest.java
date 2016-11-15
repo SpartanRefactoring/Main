@@ -10,8 +10,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-/**
- * @author Vivian Shehadeh
+
+/** @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -43,7 +43,8 @@ public final class analyzeTest {
   }
 
   @Test public void testType0() {
-    assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName()), "int");
+    assertEquals(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName()),
+        "int");
   }
 
   @Test public void testType1() {
