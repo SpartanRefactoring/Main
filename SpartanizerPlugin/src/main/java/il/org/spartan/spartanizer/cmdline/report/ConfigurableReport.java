@@ -151,12 +151,12 @@ public interface ConfigurableReport {
       return defaultValue();
     }
     
-    public void name(final ASTNode i) {
+    private void name(final ASTNode i) {
       report().put("name", extract.name(i));
       report().put("category", extract.category(i));
     }
     
-    public void summaryFileName() {
+    private void summaryFileName() {
       report().summaryFileName();
     }
     
@@ -170,7 +170,7 @@ public interface ConfigurableReport {
 
     // running report
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void write(final ASTNode i, final ASTNode o) {
+    private void write(final ASTNode i, final ASTNode o) {
       for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
 //        ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(i));
 //        ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(o));
@@ -180,7 +180,7 @@ public interface ConfigurableReport {
     }
 
     @SuppressWarnings({ "boxing", "unchecked", "rawtypes" })
-    public void write(final ASTNode i, final ASTNode o, final String id,
+    private void write(final ASTNode i, final ASTNode o, final String id,
         final BiFunction<Integer, Integer> bf) {
       if(bf == null && id == null){
         write(i, o);
@@ -194,7 +194,8 @@ public interface ConfigurableReport {
 
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) public void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) 
+    private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
       String a; // TODO Matteo: to be converted to double or float? -- Matteo
       for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
         a = system.p(¢.function().run(n1), ¢.function().run(n2));
