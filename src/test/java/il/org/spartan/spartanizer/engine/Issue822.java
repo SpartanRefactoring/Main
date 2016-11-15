@@ -56,7 +56,7 @@ public class Issue822 {
     } catch (final Exception e) {
       fail(e.getMessage());
     }
-    assertFalse(sb == null);
+    assert sb != null;
     assertEquals(new StringBuilder() + "", sb + "");
   }
 
