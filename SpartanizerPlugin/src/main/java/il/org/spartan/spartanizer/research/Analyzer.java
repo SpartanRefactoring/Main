@@ -30,6 +30,8 @@ public class Analyzer {
     final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
+    else if ("understandability".equals(analysis))
+      understandabilityAnalyze();
     else if ("classify".equals(analysis))
       classify();
     else
@@ -198,17 +200,33 @@ public class Analyzer {
   }
 
   private static void methodsAnalyze() {
+    MagicNumbersAnalysis analyzer = new MagicNumbersAnalysis();
     for (final File f : inputFiles())
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
         if (haz.methods(t))
           for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
-              MagicNumbers.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+              analyzer.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             } catch (@SuppressWarnings("unused") final AssertionError __) {
               //
             }
-    MagicNumbers.printComparison();
-    MagicNumbers.printAccumulated();
+    analyzer.printComparison();
+    analyzer.printAccumulated();
+  }
+
+  private static void understandabilityAnalyze() {
+    UnderstandabilityAnalyzer analyzer = new UnderstandabilityAnalyzer();
+    for (final File f : inputFiles())
+      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
+        if (haz.methods(t))
+          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+            try {
+              analyzer.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            } catch (@SuppressWarnings("unused") final AssertionError __) {
+              //
+            }
+    analyzer.printComparison();
+    analyzer.printAccumulated();
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
