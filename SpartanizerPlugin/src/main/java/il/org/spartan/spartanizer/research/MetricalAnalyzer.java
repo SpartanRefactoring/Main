@@ -4,20 +4,21 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
-public class MagicNumbers {
-  static Map<Integer, Int> beforeHistogram = new HashMap<>();
-  static Map<Integer, Int> afterHistogram = new HashMap<>();
+public abstract class MetricalAnalyzer {
+  Map<Integer, Int> beforeHistogram = new HashMap<>();
+  Map<Integer, Int> afterHistogram = new HashMap<>();
 
-  public static void logMethod(final MethodDeclaration before, final ASTNode after) {
-    ++getSafe(beforeHistogram, Integer(count.statements(before))).inner;
-    ++getSafe(afterHistogram, Integer(count.statements(after))).inner;
+  protected abstract int metric(ASTNode n);
+
+  public void logMethod(final MethodDeclaration before, final ASTNode after) {
+    ++getSafe(beforeHistogram, Integer(metric(before))).inner;
+    ++getSafe(afterHistogram, Integer(metric(after))).inner;
   }
 
   private static Int getSafe(final Map<Integer, Int> m, final Integer i) {
@@ -29,7 +30,7 @@ public class MagicNumbers {
     return Integer.valueOf(¢);
   }
 
-  public static void print() {
+  public void print() {
     System.out.println("[before]");
     printMap(beforeHistogram);
     System.out.println("[After]");
@@ -37,7 +38,7 @@ public class MagicNumbers {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("boxing") public static void printComparison() {
+  @SuppressWarnings("boxing") public void printComparison() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);
     final int max = max1 > max2 ? max1 : max2;
@@ -49,7 +50,7 @@ public class MagicNumbers {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("boxing") public static void printAccumulated() {
+  @SuppressWarnings("boxing") public void printAccumulated() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);
     final int max = max1 > max2 ? max1 : max2;
