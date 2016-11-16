@@ -38,5 +38,56 @@ public class CommandLineClient {
     System.out.println("  -o       output directory: here go the results of the analysis");
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
+    System.out.println("===================");
+    System.out.println("List of Node Types:");
+    System.out.println("===================");
+    System.out.println("EnhancedForStatement, Modifier, VariableDeclarationExpression, ThrowStatement\n"
+        + "CastExpression, ClassInstanceCreation, SuperConstructorInvocation, SingleVariableDeclaration\n"
+        + "ForStatement, WhileStatement, Assignment, Block, PostfixExpression, InfixExpression\n"
+        + "InstanceofExpression, MethodDeclaration, MethodInvocation, IfStatement, PrefixExpression\n"
+        + "ConditionalExpression, TypeDeclaration, EnumDeclaration, FieldDeclaration, CastExpression\n"
+        + "EnumConstantDeclaration, NormalAnnotation, Initializer, VariableDeclarationFragment\n");
+    System.out.println("================");
+    System.out.println("List of Tippers:");
+    System.out.println("================");
+    System.out.println("EnhancedForParameterRenameToCent, RedundantModifier, ForRenameInitializerToCent\n"
+        + "ThrowNotLastInBlock, Coercion, ClassInstanceCreationValueTypes, SuperConstructorInvocationRemover\n"
+        + "SingleVariableDeclarationAbbreviation, SingelVariableDeclarationUnderscoreDoubled\n"
+        + "SingleVariableDeclarationEnhancedForRenameParameterToCent, BlockBreakToReturnInfiniteFor\n"
+        + "ReturnToBreakFiniteFor, RemoveRedundentFor, ForToForUpdaters, ForTrueConditionRemove\n"
+        + "BlockBreakToReturnInfiniteWhile, ReturnToBreakFiniteWhile, RemoveRedundantWhile, WhileToForUpdaters\n"
+        + "AssignmentAndAssignment, AssignmentAndReturn, AssignmentToFromInfixIncludingTo, AssignmentToPostfixIncrement\n"
+        + "BlockSimplify, BlockSingleton, CachingPattern, BlockInlineStatementIntoNext, PostfixToPrefix\n"
+        + "InfixMultiplicationEvaluate, InfixDivisionEvaluate, InfixRemainderEvaluate, InfixComparisonSizeToZero\n"
+        + "InfixSubtractionZero, InfixAdditionSubtractionExpand, InfixEmptyStringAdditionToString\n"
+        + "InfixConcatenationEmptyStringLeft, InfixFactorNegatives, InfixAdditionEvaluate, InfixSubtractionEvaluate\n"
+        + "InfixTermsZero, InfixPlusRemoveParenthesis, InfixAdditionSort, InfixComparisonBooleanLiteral\n"
+        + "InfixConditionalAndTrue, InfixConditionalOrFalse, InfixComparisonSpecific, InfixMultiplicationByOne\n"
+        + "InfixMultiplicationByZero, InfixMultiplicationSort, InfixPseudoAdditionSort, InfixSubtractionSort\n"
+        + "InfixDivisonSortRest, InfixConditionalCommon, InfixIndexOfToStringContains, InstanceOf\n"
+        + "MethodDeclarationRenameReturnToDollar, MethodDeclarationRenameSingleParameterToCent\n"
+        + "SetterGoFluent, MethodInvocationEqualsWithLiteralString, MethodInvocationValueOfBooleanConstant\n"
+        + "MethodInvocationToStringToEmptyStringAddition, IfTrueOrFalse, RemoveRedundantIf\n"
+        + "IfLastInMethodThenEndingWithEmptyReturn, IfLastInMethodElseEndingWithEmptyReturn\n"
+        + "IfLastInMethod, IfReturnFooElseReturnBar, IfReturnNoElseReturn, IfAssignToFooElseAssignToFoo\n"
+        + "IfThenFooBarElseFooBaz, IfBarFooElseBazFoo, IfThrowFooElseThrowBar, IfThrowNoElseThrow\n"
+        + "IfExpressionStatementElseSimilarExpressionStatement, IfThenOrElseIsCommandsFollowedBySequencer\n"
+        + "IfFooSequencerIfFooSameSequencer, IfCommandsSequencerNoElseSingletonSequencer\n"
+        + "IfPenultimateInMethodFollowedBySingleStatement, IfThenIfThenNoElseNoElse, IfEmptyThenEmptyElse\n"
+        + "IfDegenerateElse, IfEmptyThen, IfShortestFirst, PutIfAbsent, PrefixIncrementDecrementReturn\n"
+        + "PrefixNotPushdown, PrefixPlusRemove, TernaryBooleanLiteral, TernaryCollapse, TernaryEliminate\n"
+        + "TernaryShortestFirst, TernaryPushdown, TernaryPushdownStrings, CastToDouble2Multiply1\n"
+        + "CastToLong2Multiply1L, AnnotationDiscardValueName, AnnotationRemoveEmptyParentheses\n"
+        + "DeclarationRedundantInitializer, DeclarationAssignment, DeclarationInitialiazelUpdateAssignment\n"
+        + "DeclarationInitializerIfAssignment, DeclarationInitializerIfUpdateAssignment\n"
+        + "DeclarationInitializerReturnVariable, DeclarationInitializerReturnExpression\n"
+        + "DeclarationInitializerReturnAssignment, DeclarationInitializerReturnUpdateAssignment\n"
+        + "DeclarationInitializerStatementTerminatingScope, DeclarationInitialiazerAssignment\n"
+        + "ForToForInitializers, WhileToForInitializers"
+        );
+    System.out.println("======================");
+    System.out.println("List of Nano Patterns:");
+    System.out.println("======================");
+    System.out.println(" to be completed ... ");
   }
 }
