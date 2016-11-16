@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 /** Class to measure Understandability metrics in a method
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
-public class UnderstandabilityAnalyzer extends MetricalAnalyzer {
+public class UnderstandabilityAnalyzer extends IntegerMetricalAnalyzer {
   @Override protected int metric(ASTNode ¢) {
     return metrics.subtreeUnderstandability(¢);
   }
