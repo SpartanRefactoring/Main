@@ -38,6 +38,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
     super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
 
+  @SuppressWarnings("unused")
+  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+    // left intentionally empty
+  }
+
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
     List<String> temp = new ArrayList<>();
     String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});

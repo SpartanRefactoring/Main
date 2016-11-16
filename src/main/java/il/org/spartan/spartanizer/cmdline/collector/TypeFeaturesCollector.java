@@ -101,7 +101,11 @@ public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCol
         m("tide", (¢) -> clean(¢ + "").length()), // , //
         m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
         m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
-        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)) //
+        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)), //
+        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), //
+        m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)), //
+        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), //
+        m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)) //
     ); //
   }
 }
