@@ -18,6 +18,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private String[] clazzes;
   private String[] tipperGroups;
   private String[] excludedTipperGroups;
+  private String[] excludeNanoPatterns;
+  private String[] nanoPatterns;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -87,5 +89,13 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
 
   public void setExcludeTipperGroups(String[] ¢) {
     excludedTipperGroups = ¢;
+  }
+
+  public void setExcludeNanoPatterns(String[] ¢) {
+    excludeNanoPatterns = ¢;
+  }
+
+  public void setNanoPatterns(String[] ¢) {
+    nanoPatterns = ¢;
   }
 }
