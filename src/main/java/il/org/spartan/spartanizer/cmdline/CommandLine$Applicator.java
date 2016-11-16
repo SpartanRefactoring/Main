@@ -43,9 +43,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // left intentionally empty
     super(clazzes,removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
     
-  }
-  
-  
+  }  
 
   private static String[] removeExcludedNanoPatternsAndTippers(String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
