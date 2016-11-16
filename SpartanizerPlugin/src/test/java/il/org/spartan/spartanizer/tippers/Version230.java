@@ -938,7 +938,8 @@ public final class Version230 {
   }
 
   @Test public void dontELiminateCatchBlock() {
-    trimmingOf("try { f(); } catch (Exception e) { } finally {}").stays();
+    trimmingOf("try { f(); } catch (Exception e) { } finally {}")//
+    .gives("try { f(); } catch (Exception e) { }");
   }
 
   @Test public void dontELiminateSwitch() {
