@@ -20,13 +20,14 @@ public class MetricsReport implements ConfigurableReport {
   private static Settings settings = new Settings();
   private static Action writeReport;
 
+  @SuppressWarnings("static-access")
   public static void initialize() {
     if (settings.getInputFolder() == null)
       settings.setInputFolder(".");
     if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
-    MetricsReport.getSettings().setHeader("NEWmetrics");
-    settings.setFileName("/tmp/NEWmetrics.CSV");
+    getSettings().setHeader("NEWmetrics");
+    getSettings().setFileName("/tmp/NEWmetrics.CSV");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
