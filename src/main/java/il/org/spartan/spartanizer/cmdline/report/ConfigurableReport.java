@@ -14,11 +14,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 
-/** Demo of recommended use of {@link Listener.S}
- * <p>
- * Copy the code, changing the name {@link ConfigurableReport} to whatever you
- * need. provide.
+/** Configurable Report that uses {@link Listener.S}
  * @author Yossi Gil
+ * @author Matteo Orru'
  * @year 2016 */
 public interface ConfigurableReport {
   /** [[SuppressWarningsSpartan]] */
@@ -56,13 +54,10 @@ public interface ConfigurableReport {
       return new NamedFunction<>(name, f);
     }
 
-  ////@formatter:off
-  /* default access */ int howMany;
-  /* required here! */ boolean robustMode;
-
   private ASTNode input;
   private ASTNode output;
-
+  public boolean robustMode;
+  
   public ASTNode getInput() {
     return input;
   }
@@ -99,9 +94,10 @@ public interface ConfigurableReport {
     return header;
   }
 
-  /** Demo of the implementation. Don't change the name. Just change services
-   * @see #go() the only service provided by this template
+  /** Action provide services 
+   * @see #go()
    * @author Yossi Gil
+   * @author Matteo Orru'
    * @year 2016 */
   public class Action extends Settings {
     /** real serialVersionUID comes much later in production code */
@@ -123,23 +119,18 @@ public interface ConfigurableReport {
       for (int i = 0; i < getInputList().size(); i++){
         // write
 //        listeners().tick("writing basic data");
-//        name(getInput());
         name(getInputList().get(i));
         // write
 //        listeners().tick("writing metrics");
-//        write(getInput(), getOutput());
         write(getInputList().get(i), getOutputList().get(i));
         // write
 //        listeners().tick("writing differences");
-//        write(getInput(), getOutput(), "Δ ", (n1, n2) -> (n1 - n2));
         write(getInputList().get(i), getOutputList().get(i), "Δ ", (n1, n2) -> (n1 - n2));
         // write
 //        listeners().tick("writing delta");
-//        write(getInput(), getOutput(), "δ ", (n1, n2) -> system.d(n1, n2));
         write(getInputList().get(i), getOutputList().get(i), "δ ", (n1, n2) -> system.d(n1, n2));
         // write
 //        listeners().tick("writing perc");
-//        writePerc(getInput(), getOutput(), "δ ");
         writePerc(getInputList().get(i), getOutputList().get(i), "δ ");
         // write
 //        listeners().tick("writing ratio");
@@ -171,8 +162,6 @@ public interface ConfigurableReport {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void write(final ASTNode i, final ASTNode o) {
       for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-//        ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(i));
-//        ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(o));
         report().put(¢.name() + "1", ¢.function().run(i));
         report().put(¢.name() + "2", ¢.function().run(o));
       }
@@ -188,7 +177,6 @@ public interface ConfigurableReport {
       assert bf != null;
       assert id != null;
       for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-//        ReportGenerator.Util.report("metrics").put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(o)));
         report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(o)));
 
     }
@@ -198,15 +186,12 @@ public interface ConfigurableReport {
       String a; // TODO Matteo: to be converted to double or float? -- Matteo
       for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
         a = system.p(¢.function().run(n1), ¢.function().run(n2));
-//        ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
         report().put(id + ¢.name() + " %", a);
       }
     }
 
     public void initialize() {
       try {
-        System.out.println("getFileName(): " + getFileName());
-        System.out.println("getHeader(): " + getHeader());
         report = new CSVStatistics(getFileName(), getHeader());
       } catch (final IOException x) {
         x.printStackTrace();
