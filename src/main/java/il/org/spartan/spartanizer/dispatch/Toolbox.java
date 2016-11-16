@@ -203,6 +203,9 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             null)//
+        .add(TryStatement.class, //
+            new EliminateEmptyFinally(), //
+            null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
             new RemoveRedundantIf(), //
