@@ -32,6 +32,8 @@ public class Analyzer {
       methodsAnalyze();
     else if ("understandability".equals(analysis))
       understandabilityAnalyze();
+    else if ("understandability2".equals(analysis))
+      understandability2Analyze();
     else if ("classify".equals(analysis))
       classify();
     else
@@ -203,7 +205,7 @@ public class Analyzer {
     methodsAnalyze((new MagicNumbersAnalysis()));
   }
 
-  private static void methodsAnalyze(MetricalAnalyzer a) {
+  private static void methodsAnalyze(IntegerMetricalAnalyzer a) {
     for (final File f : inputFiles())
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
         if (haz.methods(t))
@@ -219,6 +221,10 @@ public class Analyzer {
 
   private static void understandabilityAnalyze() {
     methodsAnalyze(new UnderstandabilityAnalyzer());
+  }
+
+  private static void understandability2Analyze() {
+    methodsAnalyze(new Understandability2Analyzer());
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
