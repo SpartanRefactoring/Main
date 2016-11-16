@@ -35,6 +35,6 @@ public interface FeatureCollector<ASTNode, T> {
     return new NamedFunction<ASTNode,Object>(name, r);
   }
   
-  NamedFunction<ASTNode, Object>[] functions();
- 
+  NamedFunction<ASTNode, T>[] functions();
+  
 }
