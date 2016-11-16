@@ -41,6 +41,23 @@ public class CommandLine$Applicator extends Generic$Applicator {
   @SuppressWarnings("unused")
   public CommandLine$Applicator(String[] clazzes, String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
     // left intentionally empty
+    super(clazzes,removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
+    
+  }
+  
+  
+
+  private static String[] removeExcludedNanoPatternsAndTippers(String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+    return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
+  }
+
+  private static String[] removeExcludedNanoPatterns(String[] tipperGroups, String[] excludedNanoPatterns) {
+    List<String> temp = new ArrayList<>();
+    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
+    for(final String ¢: tg)
+      if (!as.list(excludedNanoPatterns).contains(¢))
+        temp.add(¢);
+    return temp.toArray((new String[] {}));
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
