@@ -1,5 +1,6 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.analyses;
 
+import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,8 +32,8 @@ public abstract class MetricalAnalyzer<T> {
     System.out.println();
     for (int ¢ = 0; ¢ < max; ++¢)
       if (beforeHistogram.containsKey(¢) || afterHistogram.containsKey(¢))
-        System.out.println("[" + ¢ + "] " + (beforeHistogram.containsKey(¢) ? enumElement(beforeHistogram.get(¢)) : "0") + " -> "
-            + (afterHistogram.containsKey(¢) ? enumElement(afterHistogram.get(¢)) : "0"));
+        System.out.println("[" + ¢ + "] " + tidy(beforeHistogram.containsKey(¢) ? enumElement(beforeHistogram.get(¢)) : 0) + " -> "
+            + tidy(afterHistogram.containsKey(¢) ? enumElement(afterHistogram.get(¢)) : 0));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -63,9 +64,10 @@ public abstract class MetricalAnalyzer<T> {
    * @return */
   public static String tidy(double ¢) {
     int a = 0;
-    if (¢ != Math.floor(¢))
-      return ¢ + "";
-    a = (int) ¢;
+    double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+    if (¢formatted != Math.floor(¢formatted))
+      return ¢formatted + "";
+    a = (int) ¢formatted;
     return a + "";
   }
 
