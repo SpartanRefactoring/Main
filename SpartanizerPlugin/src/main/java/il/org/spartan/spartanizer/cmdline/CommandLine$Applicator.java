@@ -12,6 +12,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
+import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -38,11 +39,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
     super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
 
-  @SuppressWarnings("unused")
   public CommandLine$Applicator(String[] clazzes, String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
     // left intentionally empty
     super(clazzes,removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
-    
   }  
 
   private static String[] removeExcludedNanoPatternsAndTippers(String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
@@ -84,9 +83,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
                                                                          // CLASS_BODY_DECLARATIONS
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
+    MetricsReport.getSettings();
     // add ASTNode to MetricsReport
-    MetricsReport.getSettings().addInput(input);
-    MetricsReport.getSettings().addOutput(outputASTNode);
+    Settings.addInput(input);
+    MetricsReport.getSettings();
+    Settings.addOutput(outputASTNode);
     computeMetrics(input, outputASTNode);
     return false;
   }
