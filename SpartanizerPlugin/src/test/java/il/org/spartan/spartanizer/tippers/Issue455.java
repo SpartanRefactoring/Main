@@ -14,9 +14,12 @@ public class Issue455 {
         .gives("(x) -> {}");
   }
 
-  @Test public void keepsParansOnParamsAsTheyWere() {
+  @Test public void paransAreNotRemovedFromParams() {
     trimmingOf("(x) -> {return x;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("(x) -> x");
+  }
+
+  @Test public void paransAreNotAddedToParans() {
     trimmingOf("x -> {return x;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("x -> x");
   }
