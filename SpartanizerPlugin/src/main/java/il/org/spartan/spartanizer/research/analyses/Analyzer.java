@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.analyses;
 
 import java.io.*;
 import java.util.*;
@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -24,16 +25,26 @@ public class Analyzer {
   private static InteractiveSpartanizer spartanizer;
 
   public static void main(final String args[]) {
-    parseArguments(args);
+    AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
     final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
+    else if ("understandability".equals(analysis))
+      understandabilityAnalyze();
+    else if ("understandability2".equals(analysis))
+      understandability2Analyze();
+    else if ("statementsToAverageU".equals(analysis))
+      SameStatementsAverageUAnalyzer();
     else if ("classify".equals(analysis))
       classify();
     else
       analyze();
+  }
+
+  private static void SameStatementsAverageUAnalyzer() {
+    methodsAnalyze((new SameStatementsAverageUAnalyzer()));
   }
 
   private static void initializeSpartanizer() {
@@ -60,55 +71,10 @@ public class Analyzer {
     return AnalyzerOptions.get(Analyzer.class.getSimpleName(), ¢);
   }
 
-  private static void parseArguments(final String[] args) {
-    if (args.length < 2)
-      assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
-    for (final String arg : args)
-      parseArgument(arg);
-    System.out.println(AnalyzerOptions.options);
-  }
-
   /** @param key
    * @param value */
   private static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
-  }
-
-  private static void parseArgument(final String s) {
-    assert s.charAt(0) == '-' : "property should start with '-'";
-    final String[] li = bisect(s.substring(1), "=");
-    assert li.length == 2 : "property should be of the form -x=y or -x.p=y but was [" + s + "]";
-    if (!li[0].contains("."))
-      setLocalProperty(li[0], li[1]);
-    else
-      setExternalProperty(li[0], li[1]);
-  }
-
-  /** @param s
-   * @param by
-   * @return */
-  private static String[] bisect(final String s, final String by) {
-    final String[] $ = new String[2];
-    final int i = s.indexOf(by);
-    $[0] = s.substring(0, i);
-    $[1] = s.substring(i + 1);
-    return $;
-  }
-
-  /** @param key
-   * @param value */
-  private static void setLocalProperty(final String key, final String value) {
-    set(key, value);
-  }
-
-  /** @param left
-   * @param right */
-  private static void setExternalProperty(final String left, final String right) {
-    setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
-  }
-
-  private static void setExternalProperty(final String cls, final String property, final String value) {
-    AnalyzerOptions.set(cls, property, value);
   }
 
   /** Append String to file.
@@ -198,17 +164,29 @@ public class Analyzer {
   }
 
   private static void methodsAnalyze() {
+    methodsAnalyze((new MagicNumbersAnalysis()));
+  }
+
+  private static void methodsAnalyze(final MetricalAnalyzer<?> a) {
     for (final File f : inputFiles())
       for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
         if (haz.methods(t))
           for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
             try {
-              MagicNumbers.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+              a.logMethod(¢, wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             } catch (@SuppressWarnings("unused") final AssertionError __) {
               //
             }
-    MagicNumbers.printComparison();
-    MagicNumbers.printAccumulated();
+    a.printComparison();
+    a.printAccumulated();
+  }
+
+  private static void understandabilityAnalyze() {
+    methodsAnalyze(new UnderstandabilityAnalyzer());
+  }
+
+  private static void understandability2Analyze() {
+    methodsAnalyze(new Understandability2Analyzer());
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
