@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Class to count statement inside a method before and after refactoring +
+/** Class for averaging whatever about methods before and after refactoring +
  * patterning
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
@@ -15,8 +15,9 @@ public abstract class AveragingMetricalAnalyzer extends MetricalAnalyzer<List<In
   @Override protected abstract int metric(ASTNode n);
 
   @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final ASTNode after) {
-    getSafe(beforeHistogram, metrics.countStatements(before)).add(Int.valueOf(metric(before)));
-    getSafe(beforeHistogram, metrics.countStatements(after)).add(Int.valueOf(metric(before)));
+    int statements = metrics.countStatements(before);
+    getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
+    getSafe(afterHistogram, statements).add(Int.valueOf(metric(after)));
   }
 
   private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
@@ -25,6 +26,6 @@ public abstract class AveragingMetricalAnalyzer extends MetricalAnalyzer<List<In
   }
 
   @Override protected double enumElement(List<Int> is) {
-    return is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
+    return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }
 }
