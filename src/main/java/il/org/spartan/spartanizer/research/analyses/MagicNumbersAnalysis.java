@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.analyses;
 
 import org.eclipse.jdt.core.dom.*;
 
