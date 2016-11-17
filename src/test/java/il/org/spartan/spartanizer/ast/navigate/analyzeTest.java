@@ -11,8 +11,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-// TODO: Vivian? Is this your file?
-@Ignore("Until failing test fixed")
+/** @author Vivian Shehadeh
+ * @author Ward Mattar
+ * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class analyzeTest {
@@ -68,7 +69,8 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInType2() {
-    assertEquals(analyze.type(searchDescendants.forClass(MethodDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName()),
+    assertEquals(
+        analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }")).get(0).getName()),
         "int");
   }
 
