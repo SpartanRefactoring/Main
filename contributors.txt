@@ -1,4 +1,4 @@
-﻿# This file holds the complete list of people who contributed to this
+# This file holds the complete list of people who contributed to this
 # repository. Please keep this file maintained. New contributors should 
 # be added in an alphabetical order.
 #
