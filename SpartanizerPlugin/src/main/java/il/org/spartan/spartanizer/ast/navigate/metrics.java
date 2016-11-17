@@ -194,7 +194,10 @@ public interface metrics {
     return $.inner;
   }
 
-  static int understandability(final ASTNode n) {
+  /** measures metrics from root to node
+   * @param n
+   * @return */
+  static int nodeUnderstandability(final ASTNode n) {
     final Int depth = new Int();
     final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
@@ -205,7 +208,6 @@ public interface metrics {
           return;
         if (n.equals(¢))
           $.inner = depth.inner + siblings.peek().inner;
-        System.out.println(¢);
         ++depth.inner;
         ++siblings.peek().inner;
         siblings.push(new Int());
@@ -216,6 +218,60 @@ public interface metrics {
           return;
         --depth.inner;
         siblings.pop();
+      }
+    });
+    return $.inner;
+  }
+
+  /** measure the total U in the subtree
+   * @param n
+   * @return */
+  static int subtreeUnderstandability(final ASTNode n) {
+    final Int depth = new Int();
+    final Stack<Int> siblings = new Stack<>();
+    siblings.push(new Int());
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        $.inner += depth.inner + siblings.peek().inner;
+        ++depth.inner;
+        ++siblings.peek().inner;
+        siblings.push(new Int());
+      }
+
+      @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
+        --depth.inner;
+        siblings.pop();
+      }
+    });
+    return $.inner;
+  }
+
+  /** measure the total U in the subtree
+   * @param n
+   * @return */
+  static int subtreeUnderstandability2(final ASTNode n) {
+    final Int depth = new Int();
+    final Stack<Int> variables = new Stack<>();
+    variables.push(new Int());
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if (iz.statement(¢) && !iz.block(¢))
+          $.inner += depth.inner + variables.peek().inner;
+        if (!iz.block(¢))
+          ++depth.inner;
+        if (iz.variableDeclarationFragment(¢) || iz.singleVariableDeclaration(¢))
+          ++variables.peek().inner;
+        if (!iz.isVariableDeclarationStatement(¢))
+          variables.push(new Int());
+      }
+
+      @Override public void postVisit(final ASTNode ¢) {
+        if (!iz.block(¢))
+          --depth.inner; // depth
+        if (!iz.isVariableDeclarationStatement(¢))
+          variables.pop(); // variables
       }
     });
     return $.inner;

@@ -1,15 +1,17 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
-import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -31,6 +33,39 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
+  
+  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups) {
+    super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
+  }
+
+  @SuppressWarnings("unused")
+  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+    // left intentionally empty
+    super(clazzes,removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
+    
+  }  
+
+  private static String[] removeExcludedNanoPatternsAndTippers(String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+    return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
+  }
+
+  private static String[] removeExcludedNanoPatterns(String[] tipperGroups, String[] excludedNanoPatterns) {
+    List<String> temp = new ArrayList<>();
+    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
+    for(final String ¢: tg)
+      if (!as.list(excludedNanoPatterns).contains(¢))
+        temp.add(¢);
+    return temp.toArray((new String[] {}));
+  }
+
+  private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
+    List<String> temp = new ArrayList<>();
+    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
+    for(final String ¢: tg)
+      if (!as.list(excludedTipperGroups).contains(¢))
+        temp.add(¢);
+    return temp.toArray((new String[] {}));
+  }
 
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
@@ -49,12 +84,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
                                                                          // CLASS_BODY_DECLARATIONS
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
-    MetricsReport.getSettings();
     // add ASTNode to MetricsReport
-    Settings.addInput(input);
-    MetricsReport.getSettings();
-    Settings.addOutput(outputASTNode);
-    // computeMetrics(input, outputASTNode);
+    MetricsReport.getSettings().addInput(input);
+    MetricsReport.getSettings().addOutput(outputASTNode);
+    computeMetrics(input, outputASTNode);
     return false;
   }
 

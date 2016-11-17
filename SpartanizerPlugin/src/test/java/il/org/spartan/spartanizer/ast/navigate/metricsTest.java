@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import java.util.*;
-
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -183,10 +183,30 @@ public final class metricsTest {
   // horizontalComplexity
 
   @Test public void understandability() {
-    azzert.that(metrics.understandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
+    azzert.that(metrics.nodeUnderstandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
   }
 
   @Test public void understandability2() {
-    azzert.that(metrics.understandability(findFirst.variableDeclarationFragment(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(6));
+    azzert.that(metrics.nodeUnderstandability(findFirst.variableDeclarationFragment(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(6));
+  }
+
+  @Test public void understandability3() {
+    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("int x;")), is(0));
+  }
+
+  @Test public void understandability4() {
+    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("{int x;}")), is(0));
+  }
+
+  @Test public void understandability5() {
+    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("void f(){int x;}")), is(1));
+  }
+
+  @Test public void understandability6() {
+    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("void f(){int x; int y;}")), is(3));
+  }
+
+  @Test public void understandability7() {
+    azzert.that(metrics.subtreeUnderstandability2(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(5));
   }
 }
