@@ -17,6 +17,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   private final CommandLineApplicator c = new CommandLineApplicator();
   private String[] clazzes;
   private String[] tipperGroups;
+  private String[] excludedTipperGroups;
+  private String[] excludedNanoPatterns;
 
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -32,39 +34,36 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   }
 
   @Override public void apply() {
-    System.out.println("presentsSourcePath:" + presentSourcePath);
     try {
-      // if (collectApplicator) {
-      // Reports.initializeReport(folder + name + ".tips.CSV", "tips");
-      // CollectApplicator.defaultApplicator().selection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
-      // .go();
-      // Reports.close("tips");
-      // System.err.println("CollectApplicator: " + "Done!");
-      // }
-      System.out.println("Reports.getOutputFolder(): " + ReportGenerator.getOutputFolder());
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".before.java", "before");
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
-      // ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() +
-      // "/" + name + ".CSV", "metrics");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       if (DefaultApplicator) {
-        c.listener(¢ -> System.out.println("ok" + ¢));
+        c.listener(¢ -> System.out.println("Running DefaultApplicator ...." + ¢));
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultListenerNoisy().go();
       }
+      //
       if (Spartanizer$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
+      //
       if (CommandLine$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups)).defaultListenerNoisy().go();
+            .defaultRunAction(new CommandLine$Applicator(clazzes, //
+                tipperGroups, //
+                excludedTipperGroups, //
+                excludedNanoPatterns))
+            .defaultListenerNoisy().go();
       //
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
       ReportGenerator.close("tips");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
+      //
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
@@ -90,4 +89,16 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
   public void setTipperGroups(final String[] ¢) {
     tipperGroups = ¢;
   }
+
+  public void setExcludeTipperGroups(final String[] ¢) {
+    excludedTipperGroups = ¢;
+  }
+
+  public void setExcludeNanoPatterns(final String[] ¢) {
+    excludedNanoPatterns = ¢;
+  }
+
+  public void setNanoPatterns(final String[] ¢) {}
+
+  public void setExcludeAllNanoPatterns(final boolean ¢) {}
 }

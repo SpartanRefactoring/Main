@@ -17,18 +17,17 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
 // @SuppressWarnings("unused")
 public class MetricsReport implements ConfigurableReport {
   List<ASTNode> l;
-  // private static ArrayList<ASTNode> inputList = new ArrayList<>();
-  // private static ArrayList<ASTNode> outputList = new ArrayList<>();
   private static Settings settings = new Settings();
   private static Action writeReport;
 
+  @SuppressWarnings("static-access")
   public static void initialize() {
     if (settings.getInputFolder() == null)
       settings.setInputFolder(".");
     if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
-    settings.setHeader("metrics");
-    settings.setFileName("metrics");
+    getSettings().setHeader("NEWmetrics");
+    getSettings().setFileName("/tmp/NEWmetrics.CSV");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
@@ -85,5 +84,9 @@ public class MetricsReport implements ConfigurableReport {
     final Action wr = settings.getAction();
     wr.initialize();
     wr.go();
+  }
+
+  public static void generate() {
+    write();    
   }
 }
