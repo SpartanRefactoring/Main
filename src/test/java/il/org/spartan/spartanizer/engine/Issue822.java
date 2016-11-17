@@ -46,7 +46,7 @@ public class Issue822 {
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);
-    azzert.that((makeAST.string(f)), azzert.either(azzert.nullValue()).or(azzert.equalTo("")));
+    azzert.that(makeAST.string(f), azzert.either(azzert.nullValue()).or(azzert.equalTo("")));
   }
 
   @Test public void testBuilderException() {
