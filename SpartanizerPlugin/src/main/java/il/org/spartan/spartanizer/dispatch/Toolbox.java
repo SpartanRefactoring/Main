@@ -282,8 +282,7 @@ public class Toolbox {
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
-    //
-        
+        //
         .add(LambdaExpression.class, //
             new LambdaExpressionRemoveRedundantCurlyBraces(), //
             null) //
