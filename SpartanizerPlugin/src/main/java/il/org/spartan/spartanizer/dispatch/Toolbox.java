@@ -187,7 +187,8 @@ public class Toolbox {
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
-            new SimplifyComparisionOfAdditions(),//
+            // TODO: What is this ?
+            // new SimplifyComparisionOfAdditions(),//
             null)
         // TODO: Marco add when ready
         // .add(InstanceofExpression.class, //
