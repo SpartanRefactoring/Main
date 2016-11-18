@@ -2963,7 +2963,7 @@ public final class Version230 {
 
   @Test public void shortestOperand02() {
     trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;")//
-        .gives("k += 4;if (12 + 4 == k) return true;");
+    .gives("k +=4;if (2 * 6 == k-4) return true;");    
   }
 
   @Test public void shortestOperand05() {
