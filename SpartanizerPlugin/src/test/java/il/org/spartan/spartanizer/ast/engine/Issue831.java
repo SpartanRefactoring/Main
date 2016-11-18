@@ -49,6 +49,8 @@ public class Issue831 {
     assertTrue("int a;\nint b;\nint c;\nint d;\n".equals(body));
   }
 
+  // TODO: Adi - note obfuscated code assertTrue(false), instead of fail().
+  // Other examples occur in other functions.
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();
