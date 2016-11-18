@@ -54,4 +54,8 @@ public class Issue291 {
   @Test public void test12() {
     trimmingOf("a-2>length+9").gives("a>length+9+2").gives("a>length+11").stays();
   }
+  
+  @Test public void test13() {
+    trimmingOf("a+2>length").gives("a>length-2").stays();
+  }
 }
