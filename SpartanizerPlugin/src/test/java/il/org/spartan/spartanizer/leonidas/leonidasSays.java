@@ -15,7 +15,11 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Ori Marcovitch
+/** An abstraction layer for the functionality of @{link TipperFactory}
+ * and @{Matcher}.<br>
+ * Allows easy match checking of patterns against strings and creation of
+ * tippers from patterns.
+ * @author Ori Marcovitch
  * @since 2016 */
 public class leonidasSays {
   public static expression that(final String ¢) {
