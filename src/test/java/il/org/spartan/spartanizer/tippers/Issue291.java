@@ -26,4 +26,24 @@ public class Issue291 {
   @Test public void test4() {
     trimmingOf("a+2.2==b").gives("a==b-2.2").stays();
   }
+
+  @Test public void test5() {
+    trimmingOf("a+22+4==b").gives("a+26==b").gives("a==b-26").stays();
+  }
+
+  @Test public void test6() {
+    trimmingOf("4+22==b").gives("4==b-22").gives("b-22==4");
+  }
+
+  @Test public void test7() {
+    trimmingOf("a-22==b").gives("a==b+22").stays();
+  }
+
+  @Test public void test8() {
+    trimmingOf("a-2.2==3.89").gives("a==3.89+2.2").gives("a==6.09").stays();
+  }
+
+  @Test public void test9() {
+    trimmingOf("a-22==b+c+d").gives("a==b+c+d+22").stays();
+  }
 }
