@@ -12,20 +12,21 @@ import il.org.spartan.spartanizer.tipping.*;
  * moving integers convert
  * 
  * <pre>
- * a + 2 == 3
+ * a + 2 // ==//<//> 3
  * </pre>
  * 
  * into
  * 
  * <pre>
- * a == 1
+ * a // ==//<//> 1
  * </pre>
  *
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
 public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(InfixExpression x) {
-    if (!iz.infixEquals(x) || az.infixExpression(x.getLeftOperand()).hasExtendedOperands()
+    if ((!iz.infixEquals(x) && !iz.infixLess(x) && !iz.infixGreater(x)) || az.infixExpression(x.getLeftOperand()).hasExtendedOperands()
+        || iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getLeftOperand())
         || !iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getRightOperand()))
       return null;
     Expression left = az.infixExpression(x.getLeftOperand()).getLeftOperand();
@@ -37,7 +38,7 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
         return null;
       right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.PLUS);
     }
-    return subject.pair(left, right).to(Operator.EQUALS);
+    return subject.pair(left, right).to(x.getOperator());
   }
 
   @Override public String description(InfixExpression ¢) {
