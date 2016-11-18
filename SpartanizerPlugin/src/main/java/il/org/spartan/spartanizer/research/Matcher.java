@@ -9,7 +9,29 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** @author Ori Marcovitch
+/** Performs matching and pairing operations between <b>patterns</b> and
+ * <b>ASTNodes</b>.<br>
+ * <b>Patterns</b> are ASTNodes that can contain pattern variables (which are
+ * also <b>ASTNodes</b>)<br>
+ * as their descendants. each pattern variable matches a family of ASTNodes.<br>
+ * To specify that a given ASTNode is a pattern variable, it should be of the
+ * appropriate<br>
+ * type, and its identifier should start with a special prefix and might
+ * continue with a sequence of digits.<br>
+ * <br>
+ * The currently available pattern variables ('i' denotes a sequence of digits):
+ * <ul>
+ * <li><code>$Xi, $Mi, $Ni, $Li</code>: Should be of type {@link Name} within
+ * the pattern. Corresponds<br>
+ * to: {@link Expression}, {@link MethodInvokation}, {@link Name},
+ * {@link Literal}.</li>
+ * <li><code>$Bi();</code> : Corresponds to {@link Block} and {@link Statement}
+ * </li>
+ * <li><code>$Ai();</code> : Should be an argument within
+ * {@link MethodInvokation}. <br>
+ * Corresponds to arguments of {@link MethodInvokation}</li>
+ * </ul>
+ * @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
   public static boolean blockMatches(final ASTNode p, final ASTNode n) {
@@ -25,6 +47,11 @@ public class Matcher {
     return false;
   }
 
+  /** Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
+   * the matching rules. For more info about these rules, see {@link Matcher}.
+   * @param p pattern to match against.
+   * @param n ASTNode
+   * @return True iff <b>n</b> matches the pattern <b>p</b>. */
   public static boolean matches(final ASTNode p, final ASTNode n) {
     return new Matcher().matchesAux(p, n);
   }
@@ -189,6 +216,38 @@ public class Matcher {
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }
 
+  /** Pairs variables from a pattern <b>p</b> with their corresponding
+   * ASTNodes<br>
+   * from <b>n</b> (as strings), using the matching rules. For more info about
+   * these rules, see {@link Matcher}.<br>
+   * This method doesn't verify that <b>n</b> indeed matches <b>p</b>.<br>
+   * Examples:<br>
+   * <table border='1'>
+   * <tr>
+   * <td>Pattern</td>
+   * <td>n</td>
+   * <td>Resulting mapping</td>
+   * </tr>
+   * <td>$X ? y == 17 : $X2</td>
+   * <td>x == 7 ? y == 17 : 9</td>
+   * <td>{'$X':'x == 7', '$X2':'9'}</td>
+   * </tr>
+   * </tr>
+   * <td>if(true) $B();</td>
+   * <td>if(true) foo();</td>
+   * <td>{'$B();':'foo();'}</td>
+   * </tr>
+   * </tr>
+   * <td>if($X) $N($A);</td>
+   * <td>if (o == null) print(8);</td>
+   * <td>{'$X':'o == null', '$N':'print', '$A':'8'}</td>
+   * </tr>
+   * </table>
+   * @param p Pattern to match against
+   * @param n ASTNode
+   * @param enviroment
+   * @return Mapping between variables and their corresponding elements (both as
+   *         strings). */
   @SuppressWarnings("unchecked") public static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
       final Map<String, String> enviroment) {
     if (iz.name(p)) {
