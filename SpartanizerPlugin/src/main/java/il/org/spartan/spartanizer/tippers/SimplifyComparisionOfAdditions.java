@@ -24,14 +24,20 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
 public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
-  @Override public ASTNode replacement(InfixExpression ¢) {
-    return !iz.infixEquals(¢) || !iz.infixPlus(¢.getLeftOperand())
-        || !iz.numberLiteral(az.infixExpression(¢.getLeftOperand()).getRightOperand())
-            ? null
-            : subject
-                .pair(az.infixExpression(¢.getLeftOperand()).getLeftOperand(),
-                    subject.pair(¢.getRightOperand(), az.infixExpression(¢.getLeftOperand()).getRightOperand()).to(Operator.MINUS))
-                .to(Operator.EQUALS);
+  @Override public ASTNode replacement(InfixExpression x) {
+    if (!iz.infixEquals(x) || az.infixExpression(x.getLeftOperand()).hasExtendedOperands()
+        || !iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getRightOperand()))
+      return null;
+    Expression left = az.infixExpression(x.getLeftOperand()).getLeftOperand();
+    Expression right;
+    if (iz.infixPlus(x.getLeftOperand()))
+      right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.MINUS);
+    else {
+      if (!iz.infixMinus(x.getLeftOperand()))
+        return null;
+      right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.PLUS);
+    }
+    return subject.pair(left, right).to(Operator.EQUALS);
   }
 
   @Override public String description(InfixExpression ¢) {
