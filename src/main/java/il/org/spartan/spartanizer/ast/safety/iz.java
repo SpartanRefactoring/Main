@@ -421,9 +421,17 @@ public interface iz {
   static boolean infixTimes(final Expression ¢) {
     return operator(az.infixExpression(¢)) == TIMES;
   }
-  
+
   static boolean infixEquals(final Expression ¢) {
     return operator(az.infixExpression(¢)) == EQUALS;
+  }
+
+  static boolean infixLess(final Expression ¢) {
+    return operator(az.infixExpression(¢)) == LESS;
+  }
+
+  static boolean infixGreater(final Expression ¢) {
+    return operator(az.infixExpression(¢)) == GREATER;
   }
 
   /** @param ¢ JD
