@@ -54,14 +54,22 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
+  /** @return a string representing a class name. The class must inherit from
+   *         Tipper. */
   public String myName() {
     return getClass().getSimpleName();
   }
 
+  /** A wrapper function without ExclusionManager.
+   * @param ¢ The ASTNode object on which we deduce the tip.
+   * @return a tip given for the ASTNode ¢. */
   public Tip tip(final N ¢) {
     return tip(¢, null);
   }
 
+  /** @param n an ASTNode
+   * @param m exclusion manager guarantees this tip to be given only once.
+   * @return a tip given for the ASTNode ¢. */
   public Tip tip(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
