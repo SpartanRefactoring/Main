@@ -32,18 +32,30 @@ public class Issue291 {
   }
 
   @Test public void test6() {
-    trimmingOf("4+22==b").gives("4==b-22").gives("b-22==4");
-  }
-
-  @Test public void test7() {
     trimmingOf("a-22==b").gives("a==b+22").stays();
   }
 
-  @Test public void test8() {
+  @Test public void test7() {
     trimmingOf("a-2.2==3.89").gives("a==3.89+2.2").gives("a==6.09").stays();
   }
 
-  @Test public void test9() {
+  @Test public void test8() {
     trimmingOf("a-22==b+c+d").gives("a==b+c+d+22").stays();
+  }
+
+  @Test public void test10() {
+    trimmingOf("a+2<length").gives("a<length-2").stays();
+  }
+
+  @Test public void test11() {
+    trimmingOf("a-2<length+9").gives("a<length+9+2").gives("a<length+11").stays();
+  }
+
+  @Test public void test12() {
+    trimmingOf("a-2>length+9").gives("a>length+9+2").gives("a>length+11").stays();
+  }
+  
+  @Test public void test13() {
+    trimmingOf("a+2>length").gives("a>length-2").stays();
   }
 }
