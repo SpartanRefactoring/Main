@@ -31,8 +31,8 @@ public class Issue455 {
   }
 
   @Test public void simpleProducer() {
-    trimmingOf("() -> {return 42;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
-        .gives("() -> 42");
+    trimmingOf("()->{return 42;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+        .gives("()->42");
   }
 
   @Test public void singleReturnStatementAndSingleParameterd() {
