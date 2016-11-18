@@ -78,6 +78,15 @@ public class TipperFactory {
     return patternTipper(pattern, replacement, String.format("[%s] => [%s]", pattern, replacement));
   }
 
+  /** Creates a tipper that can tip ASTNodes that can be matched against
+   * <b>_pattern</b>,<br>
+   * and transforms them to match the pattern <b>_replacement</b>, using the
+   * same values<br>
+   * for each pattern variable.
+   * @param _pattern Pattern to match against
+   * @param _replacement Replacement pattern
+   * @param description Description of the tipper
+   * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
     final ASTNode pattern = extractStatementIfOne(wizard.ast(reformat$Bs(_pattern)));
     final String replacement = reformat$Bs(_replacement);
