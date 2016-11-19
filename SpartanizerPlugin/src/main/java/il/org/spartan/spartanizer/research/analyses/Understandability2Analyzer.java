@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public class Understandability2Analyzer extends IntegerMetricalAnalyzer {
-  @Override protected int metric(ASTNode ¢) {
+  @Override protected int metric(final ASTNode ¢) {
     return metrics.subtreeUnderstandability2(¢);
   }
 
@@ -23,7 +23,7 @@ public class Understandability2Analyzer extends IntegerMetricalAnalyzer {
         s += "\n" + reader.nextLine();
       System.out.println("Got it.");
       System.out.println("before: " + new Understandability2Analyzer().metric(wizard.ast(s)));
-      String spartanized = new InteractiveSpartanizer().fixedPoint(s);
+      final String spartanized = new InteractiveSpartanizer().fixedPoint(s);
       System.out.println("after: " + new Understandability2Analyzer().metric(wizard.ast(spartanized)));
       System.out.println(spartanized);
     }
