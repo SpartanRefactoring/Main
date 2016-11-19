@@ -12,15 +12,14 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Prioritize the use of "contains" string operation over "indexOf"
- *  @author Ori Marcovitch
+ * @author Ori Marcovitch
  * @since 2016 */
 public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> implements TipperCategory.Idiomatic {
   private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<>();
 
-  /**
-   * Adds to the "tippers" list the basic transformation regarding to "contains" method of String.
-   * This list is static, and therefore should be initialized only once.
-   */
+  /** Adds to the "tippers" list the basic transformation regarding to
+   * "contains" method of String. This list is static, and therefore should be
+   * initialized only once. */
   public InfixIndexOfToStringContains() {
     if (tippers.size() == 4)
       return;
@@ -31,9 +30,8 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     tippers.add(TipperFactory.patternTipper("$X1.indexOf($X2) <= -1", "!$X1.contains($X2)", "replace indexOf == -1 with !contains"));
   }
 
-  /**
-   * Indicates if the infix expression contains two strings with string operation between them
-   */
+  /** Indicates if the infix expression contains two strings with string
+   * operation between them */
   @Override public boolean canTip(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x) && stringOperands(¢.getMatching(x, "$X1"), ¢.getMatching(x, "$X2")))
@@ -53,9 +51,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     return "String".equals(analyze.type(az.simpleName(¢)));
   }
 
-  /**
-   * Operates the first tip that can be implemented.
-   */
+  /** Operates the first tip that can be implemented. */
   @Override public Tip tip(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))
@@ -63,9 +59,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
     return null;
   }
 
-  /**
-   * @return the first description of tip that can be implemented.
-   */
+  /** @return the first description of tip that can be implemented. */
   @Override public String description(final InfixExpression x) {
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))
