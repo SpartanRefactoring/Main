@@ -20,14 +20,15 @@ public class MetricsReport implements ConfigurableReport {
   private static Settings settings = new Settings();
   private static Action writeReport;
 
-  @SuppressWarnings("static-access")
   public static void initialize() {
     if (settings.getInputFolder() == null)
       settings.setInputFolder(".");
     if (settings.getOutputFolder() == null)
       settings.setOutputFolder("/tmp");
-    getSettings().setHeader("NEWmetrics");
-    getSettings().setFileName("/tmp/NEWmetrics.CSV");
+    getSettings();
+    Settings.setHeader("NEWmetrics");
+    getSettings();
+    Settings.setFileName("/tmp/NEWmetrics.CSV");
     writeReport = settings.getAction();
     writeReport.initialize();
   }
@@ -87,6 +88,6 @@ public class MetricsReport implements ConfigurableReport {
   }
 
   public static void generate() {
-    write();    
+    write();
   }
 }

@@ -88,8 +88,7 @@ public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCol
     FilesASTVisitor.main(args);
   }
 
-  @SuppressWarnings({ "boxing", "unchecked" }) 
-  @Override public NamedFunction<ASTNode, Object>[] functions() {
+  @SuppressWarnings({ "boxing", "unchecked" }) @Override public NamedFunction<ASTNode, Object>[] functions() {
     return as.array( //
         m("length", (¢) -> (¢ + "").length()), //
         m("essence", (¢) -> Essence.of(¢ + "").length()), //
