@@ -44,7 +44,7 @@ public class Analyzer {
   }
 
   private static void SameStatementsAverageUAnalyzer() {
-    methodsAnalyze((new SameStatementsAverageUAnalyzer()));
+    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -164,7 +164,7 @@ public class Analyzer {
   }
 
   private static void methodsAnalyze() {
-    methodsAnalyze((new MagicNumbersAnalysis()));
+    methodsAnalyze(new MagicNumbersAnalysis());
   }
 
   private static void methodsAnalyze(final MetricalAnalyzer<?> a) {

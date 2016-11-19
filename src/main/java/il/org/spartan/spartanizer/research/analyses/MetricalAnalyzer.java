@@ -62,9 +62,9 @@ public abstract class MetricalAnalyzer<T> {
   /** If double is integer, removes the .0
    * @param ¢
    * @return */
-  public static String tidy(double ¢) {
+  public static String tidy(final double ¢) {
     int a = 0;
-    double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+    final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
     a = (int) ¢formatted;

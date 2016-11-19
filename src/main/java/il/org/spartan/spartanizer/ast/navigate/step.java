@@ -601,7 +601,7 @@ public enum step {
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
-  
+
   /** @param ¢ JD
    * @return */
   public static Block body(final LambdaExpression ¢) {

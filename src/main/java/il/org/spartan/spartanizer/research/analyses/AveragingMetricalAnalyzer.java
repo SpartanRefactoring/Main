@@ -15,7 +15,7 @@ public abstract class AveragingMetricalAnalyzer extends MetricalAnalyzer<List<In
   @Override protected abstract int metric(ASTNode n);
 
   @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final ASTNode after) {
-    int statements = metrics.countStatements(before);
+    final int statements = metrics.countStatements(before);
     getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
     getSafe(afterHistogram, statements).add(Int.valueOf(metric(after)));
   }
@@ -25,7 +25,7 @@ public abstract class AveragingMetricalAnalyzer extends MetricalAnalyzer<List<In
     return m.get(i);
   }
 
-  @Override protected double enumElement(List<Int> is) {
+  @Override protected double enumElement(final List<Int> is) {
     return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }
 }
