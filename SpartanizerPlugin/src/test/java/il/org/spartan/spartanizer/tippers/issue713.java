@@ -16,15 +16,15 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Elia Traore
  * @since 2016-11-06 */
 public class issue713 {
-  TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
-  TypeDeclaration onlyPrivates = (TypeDeclaration) az
+  private TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
+  private TypeDeclaration onlyPrivates = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } ")).types().get(0);
-  TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
-  TypeDeclaration notOnlyPublic = (TypeDeclaration) az
+  private TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
+  private TypeDeclaration notOnlyPublic = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } ")).types().get(0);
-  TypeDeclaration listOfPublicFields = (TypeDeclaration) az
+  private TypeDeclaration listOfPublicFields = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } ")).types().get(0);
-  TypeDeclaration notCountingMethods = (TypeDeclaration) az
+  private TypeDeclaration notCountingMethods = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types().get(0);
 
   @SuppressWarnings("static-method") @Test public void doesCompile() {
