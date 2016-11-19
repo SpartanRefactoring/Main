@@ -155,7 +155,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestOperand03() {
-    assertConvertsTo("k = k * 4;if (1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9> 4+k) return true;", "k*=4;if(k+4<61)return true;");
+    assertConvertsTo("k = k * 4;if (1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9> 4+k) return true;", "k*=4;if(k<57)return true;");
   }
 
   @Test(timeout = 2000) public void shortestOperand04() {
@@ -180,7 +180,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a <3 -4", "a + 6 <-1");
+    assertSimplifiesTo("1 + 2  + 3 + a <3 -4", "a <-7");
   }
 
   @Test(timeout = 2000) public void ternarize01() {
