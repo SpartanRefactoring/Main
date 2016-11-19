@@ -1,9 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -34,14 +36,14 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
     final ListRewrite lr = r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY);
     for (final Object ¢ : x.parameters())
       lr.insertLast((ASTNode) ¢, g);
-    final ASTNode replacement = az.returnStatement(s).getExpression() == null ? x.getAST().newBlock() : az.returnStatement(s).getExpression();
+    final ASTNode replacement = iz.expressionStatement(s) ? step.expression(s)
+        : step.expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : step.expression(az.returnStatement(s));
     r.replace(step.body($), replacement, g);
     $.setParentheses(x.hasParentheses());
     return $;
   }
 
   @Override public String description(final LambdaExpression ¢) {
-    // TODO Auto-generated method stub
     return "remove curly braces from: " + ¢;
   }
 
