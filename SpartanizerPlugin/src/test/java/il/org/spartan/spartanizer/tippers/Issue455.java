@@ -21,7 +21,7 @@ public class Issue455 {
   }
 
   @Test public void nestedLambdaExpression() {
-    trimmingOf("x -> {return (y -> {return -y;});}").gives("x -> (y -> -y)")//
+    trimmingOf("x -> y -> {return -y;}").gives("x -> y -> -y") //
         .stays();
   }
 
@@ -52,6 +52,12 @@ public class Issue455 {
   @Test public void simpleProducer() {
     trimmingOf("()->{return 42;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("()->42")//
+        .stays();
+  }
+
+  @Test public void singleNonReturnStatement() {
+    trimmingOf("Consumer<Integer> x = (x) -> {System.out.println(x);};") //
+        .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
         .stays();
   }
 
