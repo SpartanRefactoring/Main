@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings("static-method")
 public class IntTest {
   @Test public void testValueOf() {
-    assertEquals(Int.valueOf(0).inner, 0);
+    azzert.that(0, is(Int.valueOf(0).inner));
   }
 
   @Test public void testInner() {

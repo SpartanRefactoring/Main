@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** @author Shimon Azulay
@@ -24,19 +25,19 @@ public class Issue741 {
   }
 
   @Test public void publicFields_test2() {
-    assertNotNull(getAll2.publicFields(null));
+    assert getAll2.publicFields(null) != null;
   }
 
   @Test public void publicFields_test3() {
-    assertEquals(0, getAll2.publicFields(null).size());
+    azzert.that(getAll2.publicFields(null).size(), is(0));
   }
 
   @Test public void publicFields_test4() {
-    assertEquals(0, getAll2.publicFields(getTypeDeclaration("public class A {}")).size());
+    azzert.that(getAll2.publicFields(getTypeDeclaration("public class A {}")).size(), is(0));
   }
 
   @Test public void publicFields_test5() {
-    assertEquals(0, getAll2.publicFields(getTypeDeclaration("public class A { private int x; protected String s; }")).size());
+    azzert.that(getAll2.publicFields(getTypeDeclaration("public class A { private int x; protected String s; }")).size(), is(0));
   }
 
   @Test public void publicFields_test6() {

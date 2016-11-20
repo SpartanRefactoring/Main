@@ -1,56 +1,57 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.azzert.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static org.junit.Assert.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 public class Issue835 {
   Tipper<Block> t = new CastBlockSingletonVariableDefinition();
 
   @Test public void descriptionNotNull() {
-    assertNotNull(t.description());
+    assert t.description() != null;
   }
 
   @Test public void descriptionPrintBlockNotNull() {
-    assertNotNull(t.description(az.block(wizard.ast("{int x;}"))));
+    assert t.description(az.block(wizard.ast("{int x;}"))) != null;
   }
 
   @SuppressWarnings("static-method") @Test public void emptyBlock1() {
-    assertEquals(az.block(wizard.ast("{}")).statements().size(), 0);
+    azzert.that(0, is(az.block(wizard.ast("{}")).statements().size()));
   }
 
   @SuppressWarnings("static-method") @Test public void emptyBlock2() {
-    assertEquals(az.block(wizard.ast("\n{\n}\n")).statements().size(), 0);
+    azzert.that(0, is(az.block(wizard.ast("\n{\n}\n")).statements().size()));
   }
 
   @SuppressWarnings("static-method") @Test public void emptyBlock3() {
-    assertEquals(az.block(wizard.ast("\n{int a;}\n")).statements().size(), 1);
+    azzert.that(1, is(az.block(wizard.ast("\n{int a;}\n")).statements().size()));
   }
 
   // use t.tip instead of trimmer cause tip is probably unused by the
   // spartanizer at the moment
   @Test public void returnNullOnEmptyBlock1() {
-    assertNull(t.tip(az.block(wizard.ast("{}"))));
+    azzert.isNull(t.tip(az.block(wizard.ast("{}"))));
   }
 
   @Test public void returnNullOnEmptyBlock2() {
-    assertNull(t.tip(az.block(wizard.ast("\n{}\n"))));
+    azzert.isNull(t.tip(az.block(wizard.ast("\n{}\n"))));
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef() {
-    assertNull(t.tip(az.block(wizard.ast("{while(true){}}"))));
+    azzert.isNull(t.tip(az.block(wizard.ast("{while(true){}}"))));
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
-    assertNull(t.tip(az.block(wizard.ast("{return 1;}"))));
+    azzert.isNull(t.tip(az.block(wizard.ast("{return 1;}"))));
   }
 
   @Test public void returnNotNullNonEmptyBlock() {
-    assertNotNull(t.tip(az.block(wizard.ast("{int x;}"))));
+    assert t.tip(az.block(wizard.ast("{int x;}"))) != null;
   }
 }
