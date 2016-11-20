@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -31,7 +30,7 @@ public final class SwitchEmpty extends ReplaceCurrentNode<SwitchStatement> imple
     return (Statement) wizard.ast(";");
   }
   
-  @Override public boolean prerequisite(final SwitchStatement s) {
+  @Override public boolean prerequisite(@SuppressWarnings("unused") final SwitchStatement __) {
     return false;
   }
 
