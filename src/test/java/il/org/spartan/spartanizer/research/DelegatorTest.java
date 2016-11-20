@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -56,7 +54,7 @@ public class DelegatorTest {
   }
 
   private void delegator(final String ¢) {
-    assertTrue(javadocedDelegator(¢));
+    assert javadocedDelegator(¢);
   }
 
   private static boolean javadocedDelegator(final String ¢) {
@@ -69,6 +67,6 @@ public class DelegatorTest {
 
   /** @param s */
   private static void notDelegator(final String ¢) {
-    assertFalse(javadocedDelegator(¢));
+    assert !javadocedDelegator(¢);
   }
 }

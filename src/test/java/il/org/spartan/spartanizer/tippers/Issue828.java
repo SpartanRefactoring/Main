@@ -34,21 +34,21 @@ public class Issue828 {
   }
 
   @Test public void descriptionTest() {
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(simpleFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueStatementFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(numEqualTrueStatement)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(strEqualTrueStatement)));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(simpleFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueStatementFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(numEqualTrueStatement));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(strEqualTrueStatement));
   }
 
   @Test public void prerequisiteTest() {
-    assertFalse(s.prerequisite(simpleFor));
-    assertTrue(s.prerequisite(trueFor));
-    assertFalse(s.prerequisite(falseFor));
-    assertFalse(s.prerequisite(obviouseTrueStatement));
-    assertFalse(s.prerequisite(null));
+    assert !s.prerequisite(simpleFor);
+    assert s.prerequisite(trueFor);
+    assert !s.prerequisite(falseFor);
+    assert !s.prerequisite(obviouseTrueStatement);
+    assert !s.prerequisite(null);
   }
 
   @Test public void replacementTest() {
