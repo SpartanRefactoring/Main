@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.junit.Assert.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -23,40 +21,40 @@ public class Issue810 {
   ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
 
   @Test public void test0() {
-    assertFalse(haz.ContinueStatement(ast));
+    assert !haz.ContinueStatement(ast);
   }
 
   @Test public void test1() {
     final List<SimpleName> lst = new ArrayList<>();
     lst.add(az.simpleName(wizard.ast("abc")));
-    assertFalse(haz.dollar(lst));
+    assert !haz.dollar(lst);
     lst.add(az.simpleName(wizard.ast("$")));
-    assertTrue(haz.dollar(lst));
+    assert haz.dollar(lst);
   }
 
   @Test public void test2() {
-    assertTrue(haz.hasNoModifiers(az.bodyDeclaration(wizard.ast("public void foo(){ int a=1; return;}"))));
+    assert haz.hasNoModifiers(az.bodyDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
   }
 
   @Test public void test3() {
-    assertFalse(haz.sideEffects(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}"))));
+    assert !haz.sideEffects(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
   }
 
   @Test public void test4() {
-    assertFalse(haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}")));
+    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}"));
   }
 
   @Test public void test5() {
-    assertFalse(haz.cent(wizard.ast("{int a;}")));
+    assert !haz.cent(wizard.ast("{int a;}"));
   }
 
   @Test public void test6() {
-    assertFalse(haz.dollar(wizard.ast("{int a;}")));
-    assertTrue(haz.dollar(wizard.ast("$")));
+    assert !haz.dollar(wizard.ast("{int a;}"));
+    assert haz.dollar(wizard.ast("$"));
   }
 
   @Test public void test7() {
-    assertTrue(haz.booleanReturnType((MethodDeclaration) wizard.ast("public boolean foo();")));
-    assertFalse(haz.booleanReturnType((MethodDeclaration) wizard.ast("public int foo();")));
+    assert haz.booleanReturnType((MethodDeclaration) wizard.ast("public boolean foo();"));
+    assert !haz.booleanReturnType((MethodDeclaration) wizard.ast("public int foo();"));
   }
 }

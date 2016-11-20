@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.engine;
-
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;

@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.junit.Assert.*;
 import org.junit.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -11,15 +10,15 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method" })
 public class cantTipTest {
   @Test public void testRemoveoRedundantIfInFor() {
-    assertFalse(cantTip.remvoeRedundantIf(findFirst.forStatement(into.s("{for(;;){if(true){}}}"))));
+    assert !cantTip.remvoeRedundantIf(findFirst.forStatement(into.s("{for(;;){if(true){}}}")));
   }
 
   @Test public void testRemoveRedundantIfInWhile() {
-    assertFalse(cantTip.remvoeRedundantIf(findFirst.whileStatement(into.s("{while(true){if(true){}}}"))));
+    assert !cantTip.remvoeRedundantIf(findFirst.whileStatement(into.s("{while(true){if(true){}}}")));
   }
 
   @Test public void testNullPrecedingFragmentInTerminalScopeStatement() {
-    assertTrue(cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(into.s("{for(;;){}}"))));
-    assertTrue(cantTip.declarationInitializerStatementTerminatingScope(findFirst.whileStatement(into.s("{while(true){}}"))));
+    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(into.s("{for(;;){}}")));
+    assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.whileStatement(into.s("{while(true){}}")));
   }
 }

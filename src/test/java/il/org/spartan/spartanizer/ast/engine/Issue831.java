@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.ast.engine;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -31,34 +29,33 @@ public class Issue831 {
   MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
-    assertTrue(new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null);
+    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
   }
 
   @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
-    assertTrue(new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}")).availableStatements().isEmpty());
+    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}")).availableStatements().isEmpty();
   }
 
   @Test public void oneStatementInScanner() {
-    assertTrue("int a;\n".equals(new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + ""));
+    assert "int a;\n".equals(new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "");
   }
 
   @Test public void fourStatementInScanner() {
     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
       body += iter + "";
-    assertTrue("int a;\nint b;\nint c;\nint d;\n".equals(body));
+    assert "int a;int b;int c;int d;".equals(body);
   }
 
-  // TODO: Adi - note obfuscated code assertTrue(false), instead of fail().
+  // TODO: Adi - note obfuscated code assert (false), instead of fail().
   // Other examples occur in other functions.
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();
     } catch (final Error e) {
       e.getClass();
-      assertTrue(true);
       return;
     }
-    assertFalse(true);
+    assert false;
   }
 }
