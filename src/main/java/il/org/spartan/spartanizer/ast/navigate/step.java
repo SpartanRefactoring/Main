@@ -511,7 +511,7 @@ public enum step {
                 .filter(d -> iz.methodDeclaration((ASTNode) d)).collect(Collectors.toList()) : null;
   }
 
-  @SuppressWarnings("unchecked") public static List<CatchClause> extractCatches(TryStatement ¢) {
+  @SuppressWarnings("unchecked") public static List<CatchClause> extractCatches(final TryStatement ¢) {
     return ¢.catchClauses();
   }
 
