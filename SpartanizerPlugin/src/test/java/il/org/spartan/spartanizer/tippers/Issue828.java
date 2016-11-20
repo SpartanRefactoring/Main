@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** see issue #828 for more details
@@ -52,9 +53,9 @@ public class Issue828 {
   }
 
   @Test public void replacementTest() {
-    assertEquals(s.replacement(simpleFor), null);
-    assertEquals(s.replacement(falseFor), null);
-    assertEquals(s.replacement(obviouseTrueStatement), null);
-    assertEquals(((ForStatement) s.replacement(trueFor)).getExpression(), null);
+    azzert.that(null, is(s.replacement(simpleFor)));
+    azzert.that(null, is(s.replacement(falseFor)));
+    azzert.that(null, is(s.replacement(obviouseTrueStatement)));
+    azzert.that(null, is(((ForStatement) s.replacement(trueFor)).getExpression()));
   }
 }

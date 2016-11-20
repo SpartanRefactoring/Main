@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -16,15 +17,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings("static-method") //
 public class Issue692 {
   @Test public void test0() {
-    assertNull(getAll.invocations((MethodInvocation) null));
+    azzert.isNull(getAll.invocations((MethodInvocation) null));
   }
 
   @Test public void test1() {
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,3)"))).size(), 0);
+    azzert.that(0, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,3)"))).size()));
   }
 
   @Test public void test2() {
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,i)"))).size(), 1);
+    azzert.that(1, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,i)"))).size()));
   }
 
   @Test public void test3() {
@@ -33,18 +34,18 @@ public class Issue692 {
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
     tmp.add("i");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)"))), tmp);
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)")))));
   }
 
   @Test public void test4() {
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
     tmp.add("i");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)"))), tmp);
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)")))));
   }
 
   @Test public void test5() {
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(1)),2)"))), new TreeSet<>());
+    azzert.that(new TreeSet<>(), is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(1)),2)")))));
   }
 
   @Test public void test6() {
@@ -55,6 +56,6 @@ public class Issue692 {
     tmp.add("h");
     tmp.add("fizz");
     tmp.add("x");
-    assertEquals(getAll.invocations(az.methodInvocation(wizard.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))"))), tmp);
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
   }
 }
