@@ -18,7 +18,7 @@ public class Issue706 {
   }
 
   @Test public void test02() {
-    assertTrue(getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(int n);"))).isEmpty());
+    assert getAll2.stringVariables(az.methodDeclaration(wizard.ast("void f(int n);"))).isEmpty();
   }
 
   @Test public void test03() {

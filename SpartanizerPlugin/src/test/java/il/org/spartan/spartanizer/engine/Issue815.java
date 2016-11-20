@@ -107,20 +107,20 @@ public class Issue815 {
   }
 
   @SuppressWarnings("static-method") @Test public void isclassNameCheckTest() {
-    assertTrue(NameGuess.isClassName("ClAsS"));
-    assertTrue(NameGuess.isClassName("Oren95"));
-    assertTrue(NameGuess.isClassName("$WhoStartsClassNameWithDollar"));
-    assertFalse(NameGuess.isClassName("f4NT4STIC"));
-    assertFalse(NameGuess.isClassName("$$"));
+    assert NameGuess.isClassName("ClAsS");
+    assert NameGuess.isClassName("Oren95");
+    assert NameGuess.isClassName("$WhoStartsClassNameWithDollar");
+    assert !NameGuess.isClassName("f4NT4STIC");
+    assert !NameGuess.isClassName("$$");
   }
 
   @SuppressWarnings("static-method") @Test public void isclassNameASTCheckTest() {
-    assertFalse(NameGuess.isClassName((ASTNode) null));
-    assertTrue(NameGuess.isClassName(ASTNodeFromString("ClAsS")));
-    assertTrue(NameGuess.isClassName(ASTNodeFromString("Oren95")));
-    assertTrue(NameGuess.isClassName(ASTNodeFromString("$WhoStartsClassNameWithDollar")));
-    assertFalse(NameGuess.isClassName(ASTNodeFromString("f4NT4STIC")));
-    assertFalse(NameGuess.isClassName(ASTNodeFromString("$$")));
+    assert !NameGuess.isClassName((ASTNode) null);
+    assert NameGuess.isClassName(ASTNodeFromString("ClAsS"));
+    assert NameGuess.isClassName(ASTNodeFromString("Oren95"));
+    assert NameGuess.isClassName(ASTNodeFromString("$WhoStartsClassNameWithDollar"));
+    assert !NameGuess.isClassName(ASTNodeFromString("f4NT4STIC"));
+    assert !NameGuess.isClassName(ASTNodeFromString("$$"));
   }
 
   private static ASTNode ASTNodeFromString(final String ¢) {
