@@ -511,6 +511,10 @@ public enum step {
                 .filter(d -> iz.methodDeclaration((ASTNode) d)).collect(Collectors.toList()) : null;
   }
 
+  @SuppressWarnings("unchecked") public static List<CatchClause> extractCatches(TryStatement ¢) {
+    return ¢.catchClauses();
+  }
+
   /** @param p JD
    * @return */
   public static Type type(final SingleVariableDeclaration ¢) {
@@ -601,7 +605,7 @@ public enum step {
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
-  
+
   /** @param ¢ JD
    * @return */
   public static Block body(final LambdaExpression ¢) {
