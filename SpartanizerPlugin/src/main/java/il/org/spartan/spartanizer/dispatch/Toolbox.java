@@ -206,7 +206,7 @@ public class Toolbox {
             null)//
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //
-            new MergeCatches(),//
+            new MergeCatches(), //
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
