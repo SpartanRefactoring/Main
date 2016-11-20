@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -20,33 +21,36 @@ public class Issue778 {
   }
 
   @SuppressWarnings("static-method") @Test public void test1() {
-    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).getClass(), ArrayList.class);
+    azzert.that(ArrayList.class, is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).getClass()));
   }
 
   @SuppressWarnings({ "static-method" }) @Test public void test2() {
-    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size(), 1);
+    azzert.that(1, is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size()));
   }
 
   @SuppressWarnings({ "static-method" }) @Test public void test3() {
-    assertEquals(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier(), "foo");
+    azzert.that("foo",
+        is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier()));
   }
 
   @SuppressWarnings({ "static-method" }) @Test public void test4() {
-    assertEquals(getAll2
-        .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size(), 3);
+    azzert.that(3, is(getAll2
+        .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size()));
   }
 
   @SuppressWarnings({ "static-method" }) @Test public void test5() {
-    assertEquals(getAll2
-        .methods(az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
-        .size(), 3);
+    azzert
+        .that(3,
+            is(getAll2.methods(
+                az.compilationUnit(wizard.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
+                .size()));
   }
 
   @SuppressWarnings({ "static-method" }) @Test public void test6() {
     final String cu1 = "public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}";
     final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(wizard.ast(cu1)));
-    assertEquals(res.get(0).getName().getIdentifier(), "foo0");
-    assertEquals(res.get(1).getName().getIdentifier(), "foo1");
-    assertEquals(res.get(2).getName().getIdentifier(), "foo2");
+    azzert.that("foo0", is(res.get(0).getName().getIdentifier()));
+    azzert.that("foo1", is(res.get(1).getName().getIdentifier()));
+    azzert.that("foo2", is(res.get(2).getName().getIdentifier()));
   }
 }

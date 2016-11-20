@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.research.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** @author Ori Marcovitch
@@ -11,6 +12,6 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings("static-method")
 public class generalizeTest {
   @Test public void a() {
-    assertEquals("$N0 + $N1", generalize.code("x + y"));
+    azzert.that(generalize.code("x + y"), is("$N0 + $N1"));
   }
 }

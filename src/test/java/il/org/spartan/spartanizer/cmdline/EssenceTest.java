@@ -1,7 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
+
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author Shay Segal
  * @author Sefi Albo
@@ -10,34 +13,34 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class EssenceTest {
   @Test public void simpleTest() {
-    assertEquals("", Essence.of("      "));
-    assertEquals("a", Essence.of("      a"));
-    assertEquals("a b", Essence.of("a      b"));
-    assertEquals("", Essence.of("//comment"));
-    assertEquals("!?", Essence.of("! ?"));
-    assertEquals("a?", Essence.of("a ?"));
-    assertEquals("!a", Essence.of("! a"));
-    assertEquals("a", Essence.of("\n\na"));
-    assertEquals("", Essence.of("\n\n"));
-    assertEquals("a a", Essence.of("a\n\na"));
-    assertEquals("", Essence.of("/*blablabla*/"));
-    assertEquals("", Essence.of("\r\n"));
-    assertEquals("", Essence.of("\n\r"));
+    azzert.that(Essence.of("      "), is(""));
+    azzert.that(Essence.of("      a"), is("a"));
+    azzert.that(Essence.of("a      b"), is("a b"));
+    azzert.that(Essence.of("//comment"), is(""));
+    azzert.that(Essence.of("! ?"), is("!?"));
+    azzert.that(Essence.of("a ?"), is("a?"));
+    azzert.that(Essence.of("! a"), is("!a"));
+    azzert.that(Essence.of("\n\na"), is("a"));
+    azzert.that(Essence.of("\n\n"), is(""));
+    azzert.that(Essence.of("a\n\na"), is("a a"));
+    azzert.that(Essence.of("/*blablabla*/"), is(""));
+    azzert.that(Essence.of("\r\n"), is(""));
+    azzert.that(Essence.of("\n\r"), is(""));
   }
 
   @Test public void simpleTest2() {
-    assertEquals("a b", Essence.of("a    b\r\n\n\r"));
-    assertEquals("a b c d", Essence.of("a  b\r\nc\n\r\td\r\n\r"));
-    assertEquals("", Essence.of("//comment\r\n\r\r\r\n"));
-    assertEquals("", Essence.of("/*multi_line_comment\n*\n*/"));
-    assertEquals("try_tabs b", Essence.of("try_tabs\t\t   b \t\t\t\r\n"));
-    assertEquals("10 3", Essence.of("1\t0 3"));
-    assertEquals("1078", Essence.of("1\t07\t\t\t8"));
+    azzert.that(Essence.of("a    b\r\n\n\r"), is("a b"));
+    azzert.that(Essence.of("a  b\r\nc\n\r\td\r\n\r"), is("a b c d"));
+    azzert.that(Essence.of("//comment\r\n\r\r\r\n"), is(""));
+    azzert.that(Essence.of("/*multi_line_comment\n*\n*/"), is(""));
+    azzert.that(Essence.of("try_tabs\t\t   b \t\t\t\r\n"), is("try_tabs b"));
+    azzert.that(Essence.of("1\t0 3"), is("10 3"));
+    azzert.that(Essence.of("1\t07\t\t\t8"), is("1078"));
   }
 
   @Test public void simpleTest3() {
-    assertEquals("basic test", Essence.of("basic test"));
-    assertEquals("", Essence.of("//////comment"));
-    assertEquals("string_b4_cmnt", Essence.of("string\r_b4_cmnt//comment"));
+    azzert.that(Essence.of("basic test"), is("basic test"));
+    azzert.that(Essence.of("//////comment"), is(""));
+    azzert.that(Essence.of("string\r_b4_cmnt//comment"), is("string_b4_cmnt"));
   }
 }

@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.ast.engine;
-import static org.junit.Assert.*;
+
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -12,18 +14,18 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @Ignore
 public class Issue_836 {
   @Test public void test0() {
-    assertEquals(2, az.block(wizard.ast("{int a;return a;}")).statements().size());
+    azzert.that(az.block(wizard.ast("{int a;return a;}")).statements().size(), is(2));
   }
 
   @Test public void test1() {
-    assertEquals(0, az.block(wizard.ast("{}")).statements().size());
+    azzert.that(az.block(wizard.ast("{}")).statements().size(), is(0));
   }
 
   @Test public void test2() {
-    assertEquals(1, az.block(wizard.ast("{{int a;}}")).statements().size());
+    azzert.that(az.block(wizard.ast("{{int a;}}")).statements().size(), is(1));
   }
 
   @Test public void test3() {
-    assertEquals(2, az.block(wizard.ast("{if(a==4){int a;}return true;}")).statements().size());
+    azzert.that(az.block(wizard.ast("{if(a==4){int a;}return true;}")).statements().size(), is(2));
   }
 }
