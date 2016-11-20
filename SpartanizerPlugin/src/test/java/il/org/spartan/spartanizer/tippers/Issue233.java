@@ -1,11 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class Issue233 {
-  @Ignore public void test() {
-    fail("Not yet implemented");
+  @Ignore public void a() {
+    trimmingOf("switch(x) {}").gives("").stays();
+  }
+  @Ignore public void b() {
+    trimmingOf("switch(x) {} switch(x) {}").gives("").stays();
+  }
+
+  // not sure if need to implement the below tipper on this issue
+  @Ignore public void c() {
+    trimmingOf("switch(x) { default: k=5; break; }").gives("k=5").stays();
   }
 }
