@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 // TODO: ARIEL/ALEXANDER: TODO WARNINGS ON THIS FILE.
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue686 {
   @Test public void a() {
-    assertNotNull(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))));
+    assert getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))) != null;
   }
 
   @Test public void b() {
@@ -30,25 +31,25 @@ public class Issue686 {
   }
 
   @Test public void d() {
-    assertEquals(2, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(String s1, String s2);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo(String s1, String s2);"))).size(), is(2));
   }
 
   @Test public void e() {
-    assertEquals(3, getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, String s3);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, String s3);"))).size(), is(3));
   }
 
   @Test public void f() {
-    assertEquals(3,
-        getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, int i1, String s3);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("public static void bar(String s1, String s2, int i1, String s3);"))).size(),
+        is(3));
   }
 
   @Test public void g() {
-    assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(int s1, int s2, int i1, int s3);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(int s1, int s2, int i1, int s3);"))).size(), is(0));
   }
 
   @Test public void h() {
-    assertEquals("s1", getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);"))).get(0)
-        .getName().getIdentifier());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);"))).get(0).getName()
+        .getIdentifier(), is("s1"));
   }
 
   public class NotAString<T> extends ArrayList<T> {
@@ -59,15 +60,15 @@ public class Issue686 {
   }
 
   @Test public void i() {
-    assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<Integer> s1);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<Integer> s1);"))).size(), is(0));
   }
 
   @Test public void j() {
-    assertEquals(0, getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<String> s1);"))).size());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foobar(NotAString<String> s1);"))).size(), is(0));
   }
 
   @Test public void k() {
-    assertEquals("s1", getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);")))
-        .get(0).getName().getIdentifier());
+    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))).get(0)
+        .getName().getIdentifier(), is("s1"));
   }
 }

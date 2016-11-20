@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
@@ -56,7 +54,7 @@ public class ASTutils {
       case STATEMENTS_LOOK_ALIKE:
         return "class X{int f(){" + ¢ + "}}";
       default:
-        fail(¢ + " is not like anything I know...");
+        assert false : ¢ + " is not like anything I know...";
     }
     return null;
   }

@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests of {@link enumerate.expressions}
@@ -23,39 +24,39 @@ public class Issue552 {
   }
 
   @Test public void b() {
-    assertEquals(1, enumerate.expressions(ast("a")));
+    azzert.that(enumerate.expressions(ast("a")), is(1));
   }
 
   @Test public void c() {
-    assertEquals(3, enumerate.expressions(ast("a + b")));
+    azzert.that(enumerate.expressions(ast("a + b")), is(3));
   }
 
   @Test public void d() {
-    assertEquals(0, enumerate.expressions(null));
+    azzert.that(enumerate.expressions(null), is(0));
   }
 
   @Test public void e() {
-    assertEquals(4, enumerate.expressions(ast("a + b + c")));
+    azzert.that(enumerate.expressions(ast("a + b + c")), is(4));
   }
 
   @Test public void f() {
-    assertEquals(4, enumerate.expressions(ast("return a + b + c;")));
+    azzert.that(enumerate.expressions(ast("return a + b + c;")), is(4));
   }
 
   @Test public void g() {
-    assertEquals(4, enumerate.expressions(ast("if(a == null) return null;")));
+    azzert.that(enumerate.expressions(ast("if(a == null) return null;")), is(4));
   }
 
   @Test public void h() {
-    assertEquals(4, enumerate.expressions(ast("while(true) print(i);")));
+    azzert.that(enumerate.expressions(ast("while(true) print(i);")), is(4));
   }
 
   @Test public void i() {
-    assertEquals(1, enumerate.expressions(ast("true")));
+    azzert.that(enumerate.expressions(ast("true")), is(1));
   }
 
   @Test public void j() {
-    assertEquals(3, enumerate.expressions(ast("1 + 2")));
+    azzert.that(enumerate.expressions(ast("1 + 2")), is(3));
   }
 
   static void auxInt(@SuppressWarnings("unused") final int __) {
