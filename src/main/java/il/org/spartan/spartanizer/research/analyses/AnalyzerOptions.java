@@ -24,11 +24,11 @@ public enum AnalyzerOptions {
   }
 
   public static String get(final String property) {
-    return get(Analyzer.class.getSimpleName(), property);
+    return get(Analyze.class.getSimpleName(), property);
   }
 
   static void set(final String property, final String value) {
-    set(Analyzer.class.getSimpleName(), property, value);
+    set(Analyze.class.getSimpleName(), property, value);
   }
 
   static Int counter = new Int();

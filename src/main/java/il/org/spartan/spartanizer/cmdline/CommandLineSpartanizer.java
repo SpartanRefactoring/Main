@@ -100,5 +100,6 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
 
   public void setNanoPatterns(final String[] ¢) {/* TODO: Matteo EMPTY */ }
 
-  public void setExcludeAllNanoPatterns(final boolean ¢) {/* TODO: Matteo EMPTY */ }
+  public void setExcludeAllNanoPatterns(
+      final boolean ¢) {/* TODO: Matteo EMPTY */ }
 }

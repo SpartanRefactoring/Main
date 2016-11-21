@@ -11,13 +11,20 @@ import il.org.spartan.spartanizer.utils.*;
  * patterning
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
-public abstract class AveragingMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
+public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
   @Override protected abstract int metric(ASTNode n);
 
-  @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final ASTNode after) {
+  @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
     int statements = metrics.countStatements(before);
     getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
-    getSafe(afterHistogram, statements).add(Int.valueOf(metric(after)));
+    getSafe(afterHistogram, statements).add(Int.valueOf(metric(findFirst.methodDeclaration(after))));
+    if (metric(before) >= metric(findFirst.methodDeclaration(after)))
+      return;
+    System.out.println(metric(before) + " : " + metric(findFirst.methodDeclaration(after)));
+    System.out.println("****************OMG anomaly***************");
+    System.out.println(before);
+    System.out.println(findFirst.methodDeclaration(after));
+    System.out.println("****************   Finito  ***************");
   }
 
   private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
