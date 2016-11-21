@@ -5,7 +5,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -15,6 +17,14 @@ public class Classifier extends ASTVisitor {
   final List<ASTNode> forLoopsList = new ArrayList<>();
   int forLoopsAmount;
   static final Scanner input = new Scanner(System.in);
+  static List<Tipper<EnhancedForStatement>> knownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new ApplyToEach());
+      add(new FindFirst());
+    }
+  };
+  private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
     forLoopsList.add(node);
@@ -22,14 +32,39 @@ public class Classifier extends ASTVisitor {
   }
 
   @Override public boolean visit(final EnhancedForStatement node) {
-    forLoopsList.add(node);
+    if (!anyTips(node))
+      forLoopsList.add(node);
     return super.visit(node);
   }
 
-  public void analyze(final ASTNode n) {
-    n.accept(this);
+  /** @param ¢ */
+  public void analyze(final ASTNode ¢) {
+    ¢.accept(this);
+    System.out.println("hmmmmmmmmmmm");
     forLoopsAmount = forLoopsList.size();
-    final Map<String, Int> patterns = new HashMap<>();
+    patterns = filterAllIntrestingPatterns();
+    System.out.println("hmmmmmmmmmmm");
+    displayInteractive();
+    classifyPatterns();
+  }
+
+  private void classifyPatterns() {
+    for (final String k : patterns.keySet()) {
+      System.out.println(k);
+      System.out.println("[Matched " + patterns.get(k).inner + " times]");
+      if (!classify(k))
+        break;
+    }
+  }
+
+  private void displayInteractive() {
+    System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
+    System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
+    System.out.println("Lets classify them together!");
+  }
+
+  private Map<String, Int> filterAllIntrestingPatterns() {
+    final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       List<ASTNode> toRemove = new ArrayList<>();
@@ -40,29 +75,40 @@ public class Classifier extends ASTVisitor {
           if (t.canTip(l))
             toRemove.add(l);
         if (toRemove.size() > 1) {
-          patterns.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
+          $.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
+          System.out.println("again");
           again = true;
           break;
         }
       }
     }
-    System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
-    System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
-    System.out.println("Lets classify them together!");
-    for (final String k : patterns.keySet()) {
-      System.out.println(k);
-      System.out.println("[Matched " + patterns.get(k).inner + " times]");
-      classify(k);
-    }
+    return $;
+  }
+
+  private static boolean anyTips(final EnhancedForStatement ¢) {
+    for (Tipper<EnhancedForStatement> p : knownPatterns)
+      if (p.canTip(¢))
+        return true;
+    return false;
   }
 
   /** @param ¢ to classify */
-  private String classify(final String ¢) {
-    System.out.println(format.code(generalize.code(¢)));
-    final String $ = input.nextLine();
-    forLoops.putIfAbsent($, new ArrayList<>());
-    forLoops.get($).add(¢);
-    return $;
+  private boolean classify(final String ¢) {
+    String code = format.code(generalize.code(¢));
+    System.out.println(code);
+    final String classification = input.nextLine();
+    if ("".equals(classification))
+      return false;
+    System.out.println(tiperize(code, classification));
+    forLoops.putIfAbsent(classification, new ArrayList<>());
+    forLoops.get(classification).add(¢);
+    return true;
+  }
+
+  /** @param code
+   * @return */
+  private static String tiperize(String code, String classification) {
+    return "TipperFactory.newTipper(\"" + code.replace("\n", "").replace("\r", "") + "\", \"" + classification + "();\", \"" + classification + "\")";
   }
 }
