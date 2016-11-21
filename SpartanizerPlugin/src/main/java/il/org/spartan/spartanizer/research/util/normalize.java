@@ -55,7 +55,7 @@ public class normalize {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
-        $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
+        $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
     }
     return $;
   }
@@ -94,15 +94,20 @@ public class normalize {
         r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
       }
     });
-    try {
-      r.rewriteAST(document, null).apply(document);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      e.printStackTrace();
-    }
+    applyChanges(document, r);
     return ASTutils.extractCode(s, document);
   }
 
+  private static void applyChanges(final Document d, final ASTRewrite r) {
+    try {
+      r.rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
+      e.printStackTrace();
+    }
+  }
+
   public static void main(final String args[]) {
+    System.out.println("enter whatever:");
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";
       while (reader.hasNext())

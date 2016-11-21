@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -19,7 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings("static-method")
 public class Issue753 {
   @Test public void a() {
-    assertNull(getAll.methods(null));
+    azzert.isNull(getAll.methods(null));
   }
 
   /** check that the function returns an empty list if given an empty
@@ -29,7 +30,7 @@ public class Issue753 {
   }
 
   @Test public void c() {
-    assertEquals(getAll.methods(az.compilationUnit(wizard.ast("public class A {public void foo() {}}"))).size(), 1);
+    azzert.that(1, is(getAll.methods(az.compilationUnit(wizard.ast("public class A {public void foo() {}}"))).size()));
   }
 
   /** checking that the function returns a list of length 2 upon receiving a
@@ -39,7 +40,7 @@ public class Issue753 {
   }
 
   @Test public void e() {
-    assertEquals(getAll.methods(az.compilationUnit(wizard.ast("class A{boolean foo(){return false;}}"))).get(0).getName().getIdentifier(), "foo");
+    azzert.that("foo", is(getAll.methods(az.compilationUnit(wizard.ast("class A{boolean foo(){return false;}}"))).get(0).getName().getIdentifier()));
   }
 
   @Test public void f() {
@@ -48,9 +49,9 @@ public class Issue753 {
         + " int anotherFunc(){} }";
     final List<MethodDeclaration> res1 = getAll.methods(az.compilationUnit(wizard.ast(cuStr1)));
     final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(wizard.ast(cuStr2)));
-    assertEquals(res1.get(0).getName().getIdentifier(), "foo");
-    assertEquals(res2.get(0).getName().getIdentifier(), "elite");
-    assertEquals(res2.get(1).getName().getIdentifier(), "innerfunc");
-    assertEquals(res2.get(2).getName().getIdentifier(), "anotherFunc");
+    azzert.that("foo", is(res1.get(0).getName().getIdentifier()));
+    azzert.that("elite", is(res2.get(0).getName().getIdentifier()));
+    azzert.that("innerfunc", is(res2.get(1).getName().getIdentifier()));
+    azzert.that("anotherFunc", is(res2.get(2).getName().getIdentifier()));
   }
 }

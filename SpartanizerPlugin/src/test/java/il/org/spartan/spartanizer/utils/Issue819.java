@@ -1,31 +1,34 @@
 package il.org.spartan.spartanizer.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** Tests of {@link Str}
  * @author Shimon Azulay
  * @author Idan Atias
  * @since 16-11-11 */
 @SuppressWarnings({ "static-method", "javadoc" })
+@Ignore
 public class Issue819 {
   @Test public void str_test0() {
-    assertEquals("coverage", new Str("coverage").inner());
+    azzert.that(new Str("coverage").inner(), is("coverage"));
   }
 
   @Test public void str_test1() {
-    assertEquals(null, new Str().inner());
+    azzert.that(new Str().inner(), is(null));
   }
 
   @Test public void str_test2() {
     final Str s = new Str();
     s.set("Hamadia");
-    assertEquals("Hamadia", s.inner());
+    azzert.that(s.inner(), is("Hamadia"));
   }
 
   @Test public void str_test3() {
-    assertEquals("Doron Miran", new Str("Doron Miran").inner());
+    azzert.that(new Str("Doron Miran").inner(), is("Doron Miran"));
   }
 
   @Test public void str_test4() {
