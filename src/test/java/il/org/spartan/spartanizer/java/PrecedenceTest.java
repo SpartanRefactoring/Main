@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -170,8 +168,8 @@ public final class PrecedenceTest {
    * @author Roy Shchory
    * @since 16-11-11 */
   @Test public void sameTest() {
-    assertTrue(precedence.same(e("a+b"), e("a-b")));
-    assertFalse(precedence.same(e("a+b"), e("a*b")));
+    assert precedence.same(e("a+b"), e("a-b"));
+    assert !precedence.same(e("a+b"), e("a*b"));
   }
 
   /** see issue #813 for more details
@@ -179,8 +177,8 @@ public final class PrecedenceTest {
    * @author Roy Shchory
    * @since 16-11-12 */
   @Test public void equalTest() {
-    assertTrue(precedence.equal(e("a+b"), e("a-b")));
-    assertFalse(precedence.equal(e("a+b"), e("a*b")));
+    assert precedence.equal(e("a+b"), e("a-b"));
+    assert !precedence.equal(e("a+b"), e("a*b"));
   }
 
   /** see issue #813 for more details
@@ -188,10 +186,10 @@ public final class PrecedenceTest {
    * @author Roy Shchory
    * @since 16-11-12 */
   @Test public void greaterTest() {
-    assertFalse(precedence.greater(e("a*b"), e("a+b")));
-    assertTrue(precedence.greater(e("a+b"), e("a*b")));
-    assertTrue(precedence.greater(null, e("a+b")));
-    assertTrue(precedence.greater(e("a+b"), null));
+    assert !precedence.greater(e("a*b"), e("a+b"));
+    assert precedence.greater(e("a+b"), e("a*b"));
+    assert precedence.greater(null, e("a+b"));
+    assert precedence.greater(e("a+b"), null);
   }
 
   /** see issue #813 for more details
@@ -199,7 +197,7 @@ public final class PrecedenceTest {
    * @author Roy Shchory
    * @since 16-11-12 */
   @Test public void sameTest2() {
-    assertTrue(precedence.same(InfixExpression.Operator.PLUS, e("a+b")));
-    assertFalse(precedence.same(InfixExpression.Operator.TIMES, e("a+b")));
+    assert precedence.same(InfixExpression.Operator.PLUS, e("a+b"));
+    assert !precedence.same(InfixExpression.Operator.TIMES, e("a+b"));
   }
 }

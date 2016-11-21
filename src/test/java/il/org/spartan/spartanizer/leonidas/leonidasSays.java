@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.leonidas;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -125,7 +125,7 @@ public class leonidasSays {
         default:
           break;
       }
-      assertEquals(Essence.of(s), Essence.of(actual));
+      azzert.that(Essence.of(actual), is(Essence.of(s)));
     }
 
     private static ASTNode extractASTNode(final String s, final CompilationUnit u) {

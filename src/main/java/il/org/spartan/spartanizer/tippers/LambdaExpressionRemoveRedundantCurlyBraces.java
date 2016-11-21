@@ -48,6 +48,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
   }
 
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
-    return !iz.expression(step.body(¢)) && !iz.methodInvocation(step.body(¢)) && step.body(¢).statements().size() == 1;
+    return !iz.expression(step.body(¢)) && !iz.methodInvocation(step.body(¢)) && step.body(¢).statements().size() == 1
+        && step.statements(step.body(¢)).get(0) instanceof ExpressionStatement || step.statements(step.body(¢)).get(0) instanceof ReturnStatement;
   }
 }

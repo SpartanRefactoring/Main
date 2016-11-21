@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author David Cohen
  * @author Shahar Yair
@@ -12,10 +14,10 @@ import org.junit.*;
 // TODO: David/Shahar/Zahi: your tests could have been more extensive --yg
 public class Issue801 {
   @Test public void test01() {
-    assertEquals(Integer.valueOf(5), Int.valueOf(5).inner());
+    azzert.that(Int.valueOf(5).inner(), is(Integer.valueOf(5)));
   }
 
   @Test public void test02() {
-    assertEquals(Integer.valueOf(0), Int.valueOf(0).inner());
+    azzert.that(Int.valueOf(0).inner(), is(Integer.valueOf(0)));
   }
 }
