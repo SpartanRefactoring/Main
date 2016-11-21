@@ -24,7 +24,7 @@ public class generalize {
     serial.inner = 0;
   }
 
-  /** @param type of placeHolder, can be X,N,M,B,A
+  /** @param type of placeHolder, can be X,N,M,B,A,L
    * @return */
   static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
