@@ -194,6 +194,7 @@ public class Toolbox {
         // new InstanceOf(), //
         // null)//
         .add(MethodDeclaration.class, //
+            new AnnotationSort(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
