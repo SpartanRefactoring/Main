@@ -209,4 +209,17 @@ public final class metricsTest {
   @Test public void understandability7() {
     azzert.that(metrics.subtreeUnderstandability2(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(5));
   }
+
+  @Test public void understandability8() {
+    azzert.that(metrics.subtreeUnderstandability2(findFirst.methodDeclaration(wizard.ast(//
+        "@Override public boolean containsValue(@Nullable Object value){\n" + //
+            "  for (  Collection<V> collection : asMap().values()) {\n" + //
+            "    if (collection.contains(value)) {\n" + //
+            "      return true;\n" + //
+            "    }\n" + //
+            "   }\n" + //
+            "   return false;\n" + //
+            " }"))),
+        is(7));
+  }
 }
