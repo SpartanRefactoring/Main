@@ -94,12 +94,16 @@ public class normalize {
         r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
       }
     });
+    applyChanges(document, r);
+    return ASTutils.extractCode(s, document);
+  }
+
+  private static void applyChanges(final Document d, final ASTRewrite r) {
     try {
-      r.rewriteAST(document, null).apply(document);
+      r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
       e.printStackTrace();
     }
-    return ASTutils.extractCode(s, document);
   }
 
   public static void main(final String args[]) {

@@ -258,13 +258,17 @@ public interface metrics {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.statement(¢) && !iz.block(¢))
-          $.inner += depth.inner + variables.peek().inner;
+          increaseCostBy(depth.inner + variables.peek().inner);
         if (!iz.block(¢))
           ++depth.inner;
         if (iz.variableDeclarationFragment(¢) || iz.singleVariableDeclaration(¢))
           ++variables.peek().inner;
         if (!iz.isVariableDeclarationStatement(¢))
           variables.push(new Int());
+      }
+
+      void increaseCostBy(final int a) {
+        $.inner += a;
       }
 
       @Override public void postVisit(final ASTNode ¢) {
