@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-14 */
+@Ignore
 public class Issue831 {
   protected class MethodScannerIExt extends MethodScanner {
     public MethodScannerIExt(final MethodDeclaration method) {
