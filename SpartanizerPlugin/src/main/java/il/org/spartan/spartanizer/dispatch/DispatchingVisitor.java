@@ -85,7 +85,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final NormalAnnotation ¢) {
     return cautiousGo(¢);
   }
-  
+
   @Override public final boolean visit(final TryStatement ¢) {
     return cautiousGo(¢);
   }
@@ -133,8 +133,8 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final WhileStatement ¢) {
     return cautiousGo(¢);
   }
-  
-  @Override public final boolean visit(final LambdaExpression ¢){
+
+  @Override public final boolean visit(final LambdaExpression ¢) {
     return cautiousGo(¢);
   }
 

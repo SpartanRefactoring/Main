@@ -107,8 +107,8 @@ public class LinkedListMultimapTest extends TestCase {
     Multimap<String, Integer> multimap = create();
     multimap.put("foo", 1);
     multimap.put("foo", 3);
-    assertTrue(multimap.removeAll("foo") instanceof RandomAccess);
-    assertTrue(multimap.removeAll("bar") instanceof RandomAccess);
+    assert (multimap.removeAll("foo") instanceof RandomAccess);
+    assert (multimap.removeAll("bar") instanceof RandomAccess);
   }
 
   /**
@@ -119,9 +119,9 @@ public class LinkedListMultimapTest extends TestCase {
     Multimap<String, Integer> multimap = create();
     multimap.put("foo", 1);
     multimap.put("foo", 3);
-    assertTrue(multimap.replaceValues("foo", Arrays.asList(2, 4))
+    assert (multimap.replaceValues("foo", Arrays.asList(2, 4))
         instanceof RandomAccess);
-    assertTrue(multimap.replaceValues("bar", Arrays.asList(2, 4))
+    assert (multimap.replaceValues("bar", Arrays.asList(2, 4))
         instanceof RandomAccess);
   }
 
@@ -286,7 +286,7 @@ public class LinkedListMultimapTest extends TestCase {
     entry = entries.next();
     assertEquals("bar", entry.getKey());
     assertEquals(3, (int) entry.getValue());
-    assertFalse(entries.hasNext());
+    assert !(entries.hasNext());
     entries.remove();
     assertEquals("{bar=[1], foo=[4]}", (map + ""));
   }
@@ -309,7 +309,7 @@ public class LinkedListMultimapTest extends TestCase {
     entry = entries.next();
     assertEquals("foo", entry.getKey());
     assertThat(entry.getValue()).contains(2);
-    assertFalse(entries.hasNext());
+    assert !(entries.hasNext());
     assertEquals("{foo=[2]}", (map + ""));
   }
 
@@ -323,16 +323,16 @@ public class LinkedListMultimapTest extends TestCase {
     Map.Entry<String, Integer> entryb = iterator.next();
 
     assertEquals(2, (int) multimap.get("foo").set(0, 4));
-    assertFalse(multimap.containsEntry("foo", 2));
-    assertTrue(multimap.containsEntry("foo", 4));
-    assertTrue(multimap.containsEntry("bar", 3));
+    assert !(multimap.containsEntry("foo", 2));
+    assert (multimap.containsEntry("foo", 4));
+    assert (multimap.containsEntry("bar", 3));
     assertEquals(4, (int) entrya.getValue());
     assertEquals(3, (int) entryb.getValue());
 
-    assertTrue(multimap.put("foo", 5));
-    assertTrue(multimap.containsEntry("foo", 5));
-    assertTrue(multimap.containsEntry("foo", 4));
-    assertTrue(multimap.containsEntry("bar", 3));
+    assert (multimap.put("foo", 5));
+    assert (multimap.containsEntry("foo", 5));
+    assert (multimap.containsEntry("foo", 4));
+    assert (multimap.containsEntry("bar", 3));
     assertEquals(4, (int) entrya.getValue());
     assertEquals(3, (int) entryb.getValue());
   }

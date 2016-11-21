@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.text.*;
 import java.util.concurrent.atomic.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** Test class for {@link Linguistic}
  * @author yonzarecki
@@ -15,69 +17,69 @@ import org.junit.*;
 @SuppressWarnings("static-method") //
 public class LinguisticTest {
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
-    assertNull(Linguistic.trimAbsolute(null, Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
-    assertEquals("short string", Linguistic.trimAbsolute("short string", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
+    azzert.isNull(Linguistic.trimAbsolute(null, Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
+    azzert.that(Linguistic.trimAbsolute("short string", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX), is("short string"));
   }
 
   @Test public void testTrimAbsoluteTrimsOnLongStrings() {
     final StringBuilder sb = new StringBuilder();
     for (int ¢ = 0; ¢ <= Linguistic.TRIM_THRESHOLD; ++¢)
       sb.append("a");
-    assertEquals((sb + "").substring(0, (sb + "").length() - 4) + Linguistic.TRIM_SUFFIX,
-        Linguistic.trimAbsolute(sb + "", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX));
+    azzert.that(Linguistic.trimAbsolute(sb + "", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX),
+        is((sb + "").substring(0, (sb + "").length() - 4) + Linguistic.TRIM_SUFFIX));
   }
 
   @Test public void testTrimLeavesShortStringsAsIs() {
-    assertEquals("Hello World\n Hello Technion\n ", Linguistic.trim("Hello World\n Hello Technion\n "));
+    azzert.that(Linguistic.trim("Hello World\n Hello Technion\n "), is("Hello World\n Hello Technion\n "));
   }
 
   @Test public void testTimeCorrect() {
-    assertEquals(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0), Linguistic.time(0));
+    azzert.that(Linguistic.time(0), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0)));
   }
 
   @Test public void testPluralInteger() {
-    assertEquals(Linguistic.UNKNOWN + " houses", Linguistic.plurals("house", (Integer) null));
-    assertEquals("one house", Linguistic.plurals("house", Integer.valueOf(1)));
-    assertEquals("2 houses", Linguistic.plurals("house", Integer.valueOf(2)));
+    azzert.that(Linguistic.plurals("house", (Integer) null), is(Linguistic.UNKNOWN + " houses"));
+    azzert.that(Linguistic.plurals("house", Integer.valueOf(1)), is("one house"));
+    azzert.that(Linguistic.plurals("house", Integer.valueOf(2)), is("2 houses"));
   }
 
   @Test public void testPluralesInteger() {
-    assertEquals(Linguistic.UNKNOWN + " churches", Linguistic.plurales("church", (Integer) null));
-    assertEquals("one church", Linguistic.plurales("church", Integer.valueOf(1)));
-    assertEquals("2 churches", Linguistic.plurales("church", Integer.valueOf(2)));
+    azzert.that(Linguistic.plurales("church", (Integer) null), is(Linguistic.UNKNOWN + " churches"));
+    azzert.that(Linguistic.plurales("church", Integer.valueOf(1)), is("one church"));
+    azzert.that(Linguistic.plurales("church", Integer.valueOf(2)), is("2 churches"));
   }
 
   @Test public void testPluralAtomicInteger() {
-    assertEquals(Linguistic.UNKNOWN + " houses", Linguistic.plurals("house", (AtomicInteger) null));
-    assertEquals("one house", Linguistic.plurals("house", new AtomicInteger(1)));
-    assertEquals("2 houses", Linguistic.plurals("house", new AtomicInteger(2)));
+    azzert.that(Linguistic.plurals("house", (AtomicInteger) null), is(Linguistic.UNKNOWN + " houses"));
+    azzert.that(Linguistic.plurals("house", new AtomicInteger(1)), is("one house"));
+    azzert.that(Linguistic.plurals("house", new AtomicInteger(2)), is("2 houses"));
   }
 
   @Test public void testPluralesAtomicInteger() {
-    assertEquals(Linguistic.UNKNOWN + " churches", Linguistic.plurales("church", (AtomicInteger) null));
-    assertEquals("one church", Linguistic.plurales("church", new AtomicInteger(1)));
-    assertEquals("2 churches", Linguistic.plurales("church", new AtomicInteger(2)));
+    azzert.that(Linguistic.plurales("church", (AtomicInteger) null), is(Linguistic.UNKNOWN + " churches"));
+    azzert.that(Linguistic.plurales("church", new AtomicInteger(1)), is("one church"));
+    azzert.that(Linguistic.plurales("church", new AtomicInteger(2)), is("2 churches"));
   }
 
   @Test public void testPluralsInt() {
-    assertEquals("one house", Linguistic.plurals("house", 1));
-    assertEquals("2 houses", Linguistic.plurals("house", 2));
+    azzert.that(Linguistic.plurals("house", 1), is("one house"));
+    azzert.that(Linguistic.plurals("house", 2), is("2 houses"));
   }
 
   @Test public void testPluralesInt() {
-    assertEquals("one church", Linguistic.plurales("church", 1));
-    assertEquals("2 churches", Linguistic.plurales("church", 2));
+    azzert.that(Linguistic.plurales("church", 1), is("one church"));
+    azzert.that(Linguistic.plurales("church", 2), is("2 churches"));
   }
 
   @Test public void testUnknownIfNull() {
-    assertEquals("1", Linguistic.unknownIfNull(Integer.valueOf(1)));
-    assertEquals("1", Linguistic.unknownIfNull(new AtomicInteger(1)));
-    assertEquals(Linguistic.UNKNOWN, Linguistic.unknownIfNull(null));
+    azzert.that(Linguistic.unknownIfNull(Integer.valueOf(1)), is("1"));
+    azzert.that(Linguistic.unknownIfNull(new AtomicInteger(1)), is("1"));
+    azzert.that(Linguistic.unknownIfNull(null), is(Linguistic.UNKNOWN));
   }
 
   @SuppressWarnings("boxing") @Test public void testUnknownIfNullWithFunction() {
-    assertEquals("2", Linguistic.unknownIfNull(Integer.valueOf(1), (final Integer i) -> i + 1));
-    assertEquals("2", Linguistic.unknownIfNull(new AtomicInteger(1), (final AtomicInteger i) -> Integer.valueOf(2)));
-    assertEquals(Linguistic.UNKNOWN, Linguistic.unknownIfNull(null, (final Integer i) -> i + 1));
+    azzert.that(Linguistic.unknownIfNull(Integer.valueOf(1), (final Integer i) -> i + 1), is("2"));
+    azzert.that(Linguistic.unknownIfNull(new AtomicInteger(1), (final AtomicInteger i) -> Integer.valueOf(2)), is("2"));
+    azzert.that(Linguistic.unknownIfNull(null, (final Integer i) -> i + 1), is(Linguistic.UNKNOWN));
   }
 }

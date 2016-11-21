@@ -257,19 +257,47 @@ public interface metrics {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (iz.statement(¢) && !iz.block(¢))
-          $.inner += depth.inner + variables.peek().inner;
-        if (!iz.block(¢))
-          ++depth.inner;
-        if (iz.variableDeclarationFragment(¢) || iz.singleVariableDeclaration(¢))
-          ++variables.peek().inner;
+        ifStatementIncreaseResult(¢);
+        unlessBlockIncreaseDepth(¢);
+        ifVariableCount(¢);
+        ifNotVariableOpenScope(¢);
+      }
+
+      @Override public void postVisit(final ASTNode ¢) {
+        unlessBlockDecreaseDepth(¢);
+        ifNotVariableCloseScope(¢);
+      }
+
+      void ifNotVariableOpenScope(final ASTNode ¢) {
         if (!iz.isVariableDeclarationStatement(¢))
           variables.push(new Int());
       }
 
-      @Override public void postVisit(final ASTNode ¢) {
+      void ifVariableCount(final ASTNode ¢) {
+        if (iz.variableDeclarationFragment(¢) || iz.singleVariableDeclaration(¢))
+          ++variables.peek().inner;
+      }
+
+      void unlessBlockIncreaseDepth(final ASTNode ¢) {
+        if (!iz.block(¢))
+          ++depth.inner;
+      }
+
+      void ifStatementIncreaseResult(final ASTNode ¢) {
+        if (iz.statement(¢) && !iz.block(¢))
+          increaseCostBy(depth.inner + variables.peek().inner);
+      }
+
+      void increaseCostBy(final int a) {
+        $.inner += a;
+      }
+
+      void unlessBlockDecreaseDepth(final ASTNode ¢) {
         if (!iz.block(¢))
           --depth.inner; // depth
+      }
+
+      void ifNotVariableCloseScope(final ASTNode ¢) {
         if (!iz.isVariableDeclarationStatement(¢))
           variables.pop(); // variables
       }

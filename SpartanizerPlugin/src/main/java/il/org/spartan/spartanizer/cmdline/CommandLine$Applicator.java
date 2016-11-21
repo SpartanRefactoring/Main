@@ -34,36 +34,38 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
     super(clazzes, tipperGroups);
   }
-  
+
   public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups) {
     super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
 
-  public CommandLine$Applicator(String[] clazzes, String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups,
+      final String[] excludedNanoPatterns) {
     // left intentionally empty
-    super(clazzes,removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
-  }  
+    super(clazzes, removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
+  }
 
-  private static String[] removeExcludedNanoPatternsAndTippers(String[] tipperGroups, String[] excludedTipperGroups, String[] excludedNanoPatterns) {
+  private static String[] removeExcludedNanoPatternsAndTippers(final String[] tipperGroups, final String[] excludedTipperGroups,
+      final String[] excludedNanoPatterns) {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
   }
 
-  private static String[] removeExcludedNanoPatterns(String[] tipperGroups, String[] excludedNanoPatterns) {
-    List<String> temp = new ArrayList<>();
-    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
-    for(final String ¢: tg)
+  private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String[] excludedNanoPatterns) {
+    final List<String> temp = new ArrayList<>();
+    final String[] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {});
+    for (final String ¢ : tg)
       if (!as.list(excludedNanoPatterns).contains(¢))
         temp.add(¢);
-    return temp.toArray((new String[] {}));
+    return temp.toArray(new String[] {});
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
-    List<String> temp = new ArrayList<>();
-    String [] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String [] {});
-    for(final String ¢: tg)
+    final List<String> temp = new ArrayList<>();
+    final String[] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {});
+    for (final String ¢ : tg)
       if (!as.list(excludedTipperGroups).contains(¢))
         temp.add(¢);
-    return temp.toArray((new String[] {}));
+    return temp.toArray(new String[] {});
   }
 
   void go(final CompilationUnit u) {

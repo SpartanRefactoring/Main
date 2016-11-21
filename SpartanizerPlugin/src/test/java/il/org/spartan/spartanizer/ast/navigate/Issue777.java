@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -11,6 +11,7 @@ import org.junit.runners.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -39,6 +40,6 @@ public class Issue777 {
   }
 
   private void azzertEquals(final String expected, final String actual) {
-    assertEquals(expected.replaceAll("[\n\t\r ]", ""), actual.replaceAll("[\n\t\r ]", ""));
+    azzert.that(actual.replaceAll("[\n\t\r ]", ""), is(expected.replaceAll("[\n\t\r ]", "")));
   }
 }

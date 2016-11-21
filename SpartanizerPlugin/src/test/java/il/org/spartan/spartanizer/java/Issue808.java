@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,14 +22,14 @@ public class Issue808 {
 
   @SuppressWarnings("static-method") @Test public void test02() {
     final Expression ex = az.simpleName(wizard.ast("shahar"));
-    assertEquals(ex, new Term(false, ex).asExpression());
+    azzert.that(new Term(false, ex).asExpression(), is(ex));
   }
 
   @SuppressWarnings("static-method") @Test public void test03() {
     final Expression ex1 = az.simpleName(wizard.ast("shahar"));
     final Expression ex2 = az.simpleName(wizard.ast("david"));
     final Expression ex3 = az.simpleName(wizard.ast("zahi"));
-    assertEquals(ex1, new Term(false, ex1).asExpression());
+    azzert.that(new Term(false, ex1).asExpression(), is(ex1));
     assertNotEquals(ex2, new Term(true, duplicate.of(ex2)).asExpression());
     assertNotEquals(ex3, new Term(true, duplicate.of(ex3)).asExpression());
   }
