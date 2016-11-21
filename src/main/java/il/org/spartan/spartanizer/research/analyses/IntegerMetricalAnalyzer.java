@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
 public abstract class IntegerMetricalAnalyzer extends MetricalAnalyzer<Int> {
   @Override protected abstract int metric(ASTNode n);
 
-  @Override public void logMethod(final MethodDeclaration before, final ASTNode after) {
+  @Override public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
     ++getSafe(beforeHistogram, Integer(metric(before))).inner;
     ++getSafe(afterHistogram, Integer(metric(after))).inner;
   }
@@ -23,7 +23,7 @@ public abstract class IntegerMetricalAnalyzer extends MetricalAnalyzer<Int> {
     return m.get(i);
   }
 
-  @Override protected double enumElement(Int ¢) {
+  @Override protected double enumElement(final Int ¢) {
     return ¢.inner;
   }
 }

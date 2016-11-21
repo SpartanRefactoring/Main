@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -22,7 +20,7 @@ public class Issue814 {
       @Override public boolean visit(final Assignment a) {
         final ASTRewrite r = ASTRewrite.create(m.getAST());
         final ASTRewrite new_r = new AssignmentAndReturn().go(r, a, s, new TextEditGroup(""));
-        assertFalse(new_r == null);
+        assert new_r != null;
         return true;
       }
     });
@@ -32,6 +30,6 @@ public class Issue814 {
     final Assignment a = into.a("a = 3");
     final Statement s = into.s("f();");
     a.getParent().delete();
-    assertTrue(new AssignmentAndReturn().go(null, a, s, null) == null);
+    assert new AssignmentAndReturn().go(null, a, s, null) == null;
   }
 }
