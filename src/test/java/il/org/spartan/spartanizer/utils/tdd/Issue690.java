@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -15,46 +16,46 @@ import il.org.spartan.spartanizer.ast.safety.*;
 // TODO: Or/Tom/Inbal: use only one @SuppressWarnings("static-method")
 public class Issue690 {
   @SuppressWarnings("static-method") @Test public void test0() {
-    assertNull(getAll.casts(null));
+    azzert.isNull(getAll.casts(null));
   }
 
   @SuppressWarnings("static-method") @Test public void test1() {
-    assertEquals(0, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {}"))).size(), is(0));
   }
 
   @SuppressWarnings("static-method") @Test public void test2() {
-    assertEquals(0, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a;}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a;}"))).size(), is(0));
   }
 
   @SuppressWarnings("static-method") @Test public void test3() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2;}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2;}"))).size(), is(1));
   }
 
   @SuppressWarnings("static-method") @Test public void test4() {
-    assertEquals(2, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = (int)3.3;}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = (int)3.3;}"))).size(), is(2));
   }
 
   @SuppressWarnings("static-method") @Test public void test5() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = 3;}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a = (int)2.2; int b = 3;}"))).size(), is(1));
   }
 
   @SuppressWarnings("static-method") @Test public void test6() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {double a = (double)2.2;}"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {double a = (double)2.2;}"))).size(), is(1));
   }
 
   @SuppressWarnings("static-method") @Test public void test7() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {if ((boolean)1==true) return true; }"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {if ((boolean)1==true) return true; }"))).size(), is(1));
   }
 
   @SuppressWarnings("static-method") @Test public void test8() {
-    assertEquals(0, getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while(1) return true; }"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while(1) return true; }"))).size(), is(0));
   }
 
   @SuppressWarnings("static-method") @Test public void test9() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((int)true==1) return true; }"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((int)true==1) return true; }"))).size(), is(1));
   }
 
   @SuppressWarnings("static-method") @Test public void test10() {
-    assertEquals(1, getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }"))).size());
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }"))).size(), is(1));
   }
 }

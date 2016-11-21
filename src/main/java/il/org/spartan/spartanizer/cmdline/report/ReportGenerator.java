@@ -21,13 +21,12 @@ import il.org.spartan.spartanizer.engine.*;
 /** Generator for reports
  * @author Matteo Orru'
  * @since 2016 */
-public class ReportGenerator implements ConfigurableReport{
+public class ReportGenerator implements ConfigurableReport {
   protected static String outputFolder = "/tmp/";
   protected static String inputFolder;
   protected String afterFileName;
   protected String beforeFileName;
   protected String spectrumFileName;
-
   protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static HashMap<String, PrintWriter> files = new HashMap<>();
 

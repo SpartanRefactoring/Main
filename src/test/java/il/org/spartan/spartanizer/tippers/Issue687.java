@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -21,7 +20,7 @@ public class Issue687 {
   }
 
   @Test public void testGetNull() {
-    assertNull(getAll.names(null));
+    azzert.isNull(getAll.names(null));
   }
 
   @Test public void testReturnType() {
@@ -29,37 +28,37 @@ public class Issue687 {
   }
 
   @Test public void testGetEmpty() {
-    assertTrue(getAll.names((Block) wizard.ast("{}")).isEmpty());
+    assert getAll.names((Block) wizard.ast("{}")).isEmpty();
   }
 
   @Test public void testGetOneNameSize() {
-    assertTrue(getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1);
+    assert getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1;
   }
 
   @Test public void testGetTwoNamesSize() {
-    assertTrue(getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2);
+    assert getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2;
   }
 
   @Test public void testCheckActualName() {
-    assertTrue("a".equals(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0) + ""));
+    assert "a".equals(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0) + "");
   }
 
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
     final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
-    assertTrue("aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + ""));
+    assert "aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + "");
   }
 
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
-    assertTrue("a".equals(n.get(0) + ""));
-    assertTrue("b".equals(n.get(1) + ""));
-    assertTrue("System".equals(n.get(2) + ""));
-    assertTrue("out".equals(n.get(3) + ""));
-    assertTrue("println".equals(n.get(4) + ""));
-    assertTrue("a".equals(n.get(5) + ""));
-    assertTrue("c".equals(n.get(6) + ""));
-    assertTrue("c".equals(n.get(7) + ""));
-    assertTrue("a".equals(n.get(8) + ""));
+    assert "a".equals(n.get(0) + "");
+    assert "b".equals(n.get(1) + "");
+    assert "System".equals(n.get(2) + "");
+    assert "out".equals(n.get(3) + "");
+    assert "println".equals(n.get(4) + "");
+    assert "a".equals(n.get(5) + "");
+    assert "c".equals(n.get(6) + "");
+    assert "c".equals(n.get(7) + "");
+    assert "a".equals(n.get(8) + "");
   }
 }

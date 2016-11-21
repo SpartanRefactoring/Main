@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,7 +21,7 @@ public class Issue438 {
     final Tipper<ASTNode> w = null;
     final ASTNode n = null;
     TrimmerLog.tip(w, n);
-    assertTrue(false);
+    assert false;
   }
 
   @Test public void test06() {
