@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** see issue #828 for more details
@@ -34,27 +35,27 @@ public class Issue828 {
   }
 
   @Test public void descriptionTest() {
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(simpleFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueStatementFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(numEqualTrueStatement)));
-    assertTrue("Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(strEqualTrueStatement)));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(simpleFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueStatementFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(numEqualTrueStatement));
+    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(strEqualTrueStatement));
   }
 
   @Test public void prerequisiteTest() {
-    assertFalse(s.prerequisite(simpleFor));
-    assertTrue(s.prerequisite(trueFor));
-    assertFalse(s.prerequisite(falseFor));
-    assertFalse(s.prerequisite(obviouseTrueStatement));
-    assertFalse(s.prerequisite(null));
+    assert !s.prerequisite(simpleFor);
+    assert s.prerequisite(trueFor);
+    assert !s.prerequisite(falseFor);
+    assert !s.prerequisite(obviouseTrueStatement);
+    assert !s.prerequisite(null);
   }
 
   @Test public void replacementTest() {
-    assertEquals(s.replacement(simpleFor), null);
-    assertEquals(s.replacement(falseFor), null);
-    assertEquals(s.replacement(obviouseTrueStatement), null);
-    assertEquals(((ForStatement) s.replacement(trueFor)).getExpression(), null);
+    azzert.that(null, is(s.replacement(simpleFor)));
+    azzert.that(null, is(s.replacement(falseFor)));
+    azzert.that(null, is(s.replacement(obviouseTrueStatement)));
+    azzert.that(null, is(((ForStatement) s.replacement(trueFor)).getExpression()));
   }
 }

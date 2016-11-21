@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import static org.junit.Assert.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -85,16 +85,16 @@ public class TrimmerLogTest {
    * @since Nov 10, 2016 */
   @Test public void a() {
     TrimmerLog.setMaxApplications(50);
-    assertEquals(50, TrimmerLog.getMaxApplications());
+    azzert.that(TrimmerLog.getMaxApplications(), is(50));
   }
 
   @Test public void b() {
     TrimmerLog.setMaxTips(50);
-    assertEquals(50, TrimmerLog.getMaxTips());
+    azzert.that(TrimmerLog.getMaxTips(), is(50));
   }
 
   @Test public void c() {
     TrimmerLog.setMaxVisitations(50);
-    assertEquals(50, TrimmerLog.getMaxVisitations());
+    azzert.that(TrimmerLog.getMaxVisitations(), is(50));
   }
 }

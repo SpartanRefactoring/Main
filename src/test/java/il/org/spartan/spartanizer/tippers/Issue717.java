@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,19 +25,19 @@ public class Issue717 {
   }
 
   @Test public void nullCheckReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock(null));
+    assert !determineIf.hasBigBlock(null);
   }
 
   @Test public void fiveStatBlockReturnsTrue() {
-    assertTrue(determineIf.hasBigBlock(fiveStatMethod));
+    assert determineIf.hasBigBlock(fiveStatMethod);
   }
 
   @Test public void oneStatBlockReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock(oneStatMethod));
+    assert !determineIf.hasBigBlock(oneStatMethod);
   }
 
   @Test public void fourStatBlockReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock(fourStatMethod));
+    assert !determineIf.hasBigBlock(fourStatMethod);
   }
 
   private String generateRandomString(final int maxLen) {
@@ -71,30 +69,30 @@ public class Issue717 {
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;
     randomBigBlock += "}";
-    assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast(randomBigBlock)));
+    assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast(randomBigBlock));
   }
 
   @Test public void methodWithNoBodyReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int a(String a);")));
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int a(String a);"));
   }
 
   @Test public void methodWithNoStatementsReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int f(int x){}")));
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int f(int x){}"));
   }
 
   @Test public void bigBlockWithAnnotationReturnsTrue() {
-    assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}")));
+    assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));
   }
 
   @Test public void smallBlockWithAnnotationReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Inherited private void g(){;;;;}")));
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Inherited private void g(){;;;;}"));
   }
 
   @Test public void smallBlockWithModifierReturnsFalse() {
-    assertFalse(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public static void g(){;;;;}")));
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public static void g(){;;;;}"));
   }
 
   @Test public void smallBlockWithModifierReturnsTrue() {
-    assertTrue(determineIf.hasBigBlock((MethodDeclaration) wizard.ast("private static void g(){;;;;;}")));
+    assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("private static void g(){;;;;;}"));
   }
 }

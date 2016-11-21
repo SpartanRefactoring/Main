@@ -23,7 +23,7 @@ public abstract class IntegerMetricalAnalyzer extends MetricalAnalyzer<Int> {
     return m.get(i);
   }
 
-  @Override protected double enumElement(Int ¢) {
+  @Override protected double enumElement(final Int ¢) {
     return ¢.inner;
   }
 }
