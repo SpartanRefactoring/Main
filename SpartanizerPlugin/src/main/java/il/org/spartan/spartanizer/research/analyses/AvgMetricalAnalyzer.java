@@ -32,7 +32,7 @@ public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
     return m.get(i);
   }
 
-  @Override protected double enumElement(List<Int> is) {
+  @Override protected double enumElement(final List<Int> is) {
     return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }
 }

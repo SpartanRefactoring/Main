@@ -939,7 +939,7 @@ public final class Version230 {
 
   @Test public void dontELiminateCatchBlock() {
     trimmingOf("try { f(); } catch (Exception e) { } finally {}")//
-    .gives("try { f(); } catch (Exception e) { }");
+        .gives("try { f(); } catch (Exception e) { }");
   }
 
   @Test public void dontELiminateSwitch() {
@@ -2963,7 +2963,7 @@ public final class Version230 {
 
   @Test public void shortestOperand02() {
     trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;")//
-    .gives("k +=4;if (2 * 6 == k-4) return true;");    
+        .gives("k +=4;if (2 * 6 == k-4) return true;");
   }
 
   @Test public void shortestOperand05() {

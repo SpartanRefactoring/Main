@@ -82,9 +82,7 @@ public class CommandLineClient {
         + "DeclarationInitializerIfAssignment, DeclarationInitializerIfUpdateAssignment\n"
         + "DeclarationInitializerReturnVariable, DeclarationInitializerReturnExpression\n"
         + "DeclarationInitializerReturnAssignment, DeclarationInitializerReturnUpdateAssignment\n"
-        + "DeclarationInitializerStatementTerminatingScope, DeclarationInitialiazerAssignment\n"
-        + "ForToForInitializers, WhileToForInitializers"
-        );
+        + "DeclarationInitializerStatementTerminatingScope, DeclarationInitialiazerAssignment\n" + "ForToForInitializers, WhileToForInitializers");
     System.out.println("======================");
     System.out.println("List of Nano Patterns:");
     System.out.println("======================");

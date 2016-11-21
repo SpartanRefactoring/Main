@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests of {@link enumerate.expressions}
@@ -20,18 +21,19 @@ public class Issue705 {
   }
 
   @Test public void b() {
-    assertEquals(0, getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size());
+    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size(), is(0));
   }
 
   @Test public void c() {
-    assertEquals(1, getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {" + "Integer obj = 5;" + "if(obj instanceof Object){} }")).size());
+    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {" + "Integer obj = 5;" + "if(obj instanceof Object){} }")).size(),
+        is(1));
   }
 
   @Test public void d() {
-    assertEquals(2,
-        getAll.instanceofs(
+    azzert.that(getAll
+        .instanceofs(
             (MethodDeclaration) wizard.ast("boolean func (){" + "Integer obj = 5;" + "return (obj instanceof Object) || (obj instanceof Integer); }"))
-            .size());
+        .size(), is(2));
   }
 
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {

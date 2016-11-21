@@ -42,7 +42,7 @@ public class SpartanizationsTest {
   //// suggestions = $.collectSuggesions(u);
   //// System.err.println("number of suggestions: " + suggestions.size());
   // System.err.println("number of suggestions: " + suggestions);
-  // assertTrue(suggestions> 0);
+  // assert (suggestions> 0);
   // assertEquals(6, suggestions);
   // } catch (IOException | CoreException e) {
   // e.printStackTrace();
