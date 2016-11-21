@@ -1,30 +1,32 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
+
 /** @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" })
 public final class RecurserTest {
   @Test public void issue101_1() {
-    assertEquals(3, (int) new Recurser<>(into.i("3+4"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+4"), 0).preVisit((x) -> (1 + x.getCurrent())), is(3));
   }
 
   @Test public void issue101_10() {
-    assertEquals(9, (int) new Recurser<>(into.e("a==4 ? 34 : 56+34+99"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.e("a==4 ? 34 : 56+34+99"), 0).preVisit((x) -> (1 + x.getCurrent())), is(9));
   }
 
   @Test public void issue101_11() {
-    assertEquals(10, (int) new Recurser<>(into.e("!f.g(X,false)||a.b.e(m.h())"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.e("!f.g(X,false)||a.b.e(m.h())"), 0).preVisit((x) -> (1 + x.getCurrent())), is(10));
   }
 
   @Test public void issue101_12() {
-    assertEquals(5, (int) new Recurser<>(into.e("g(false)||a(h())"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.e("g(false)||a(h())"), 0).preVisit((x) -> (1 + x.getCurrent())), is(5));
   }
 
   @Test public void issue101_13() {
@@ -35,11 +37,11 @@ public final class RecurserTest {
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.postVisit(changeToken);
-    assertEquals("99", ¢ + "");
+    azzert.that(¢ + "", is("99"));
   }
 
   @Test public void issue101_14() {
-    assertEquals(7, (int) new Recurser<>(into.i("3+(4*5)+6"), 0).postVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+(4*5)+6"), 0).postVisit((x) -> (1 + x.getCurrent())), is(7));
   }
 
   @Test public void issue101_15() {
@@ -50,7 +52,7 @@ public final class RecurserTest {
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99 + 99", ¢ + "");
+    azzert.that(¢ + "", is("99 + 99"));
   }
 
   @Test public void issue101_16() {
@@ -61,7 +63,7 @@ public final class RecurserTest {
         ((NumberLiteral) x.getRoot()).setToken("56");
     };
     recurse.preVisit(changeToken);
-    assertEquals("b == true ? 56 : 56", ¢ + "");
+    azzert.that(¢ + "", is("b == true ? 56 : 56"));
   }
 
   @Test public void issue101_17() {
@@ -72,7 +74,7 @@ public final class RecurserTest {
         ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
     };
     recurse.preVisit(changeToken);
-    assertEquals("b == false ? 67 : 7", ¢ + "");
+    azzert.that(¢ + "", is("b == false ? 67 : 7"));
   }
 
   @Test public void issue101_18() {
@@ -83,7 +85,7 @@ public final class RecurserTest {
         ((BooleanLiteral) x.getRoot()).setBooleanValue(false);
     };
     recurse.postVisit(changeToken);
-    assertEquals("b == false ? 67 : 7", ¢ + "");
+    azzert.that(¢ + "", is("b == false ? 67 : 7"));
   }
 
   @Test public void issue101_19() {
@@ -94,35 +96,35 @@ public final class RecurserTest {
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99 + 99 * 99 + 99", ¢ + "");
+    azzert.that(¢ + "", is("99 + 99 * 99 + 99"));
   }
 
   @Test public void issue101_2() {
-    assertEquals(3, (int) new Recurser<>(into.i("3+4"), 0).postVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+4"), 0).postVisit((x) -> (1 + x.getCurrent())), is(3));
   }
 
   @Test public void issue101_3() {
-    assertEquals(7, (int) new Recurser<>(into.i("5*6+43*2"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("5*6+43*2"), 0).preVisit((x) -> (1 + x.getCurrent())), is(7));
   }
 
   @Test public void issue101_4() {
-    assertEquals(11, (int) new Recurser<>(into.i("3+4*4+6*7+8"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+4*4+6*7+8"), 0).preVisit((x) -> (1 + x.getCurrent())), is(11));
   }
 
   @Test public void issue101_5() {
-    assertEquals(11, (int) new Recurser<>(into.i("3+4*4+6*7+8"), 0).postVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+4*4+6*7+8"), 0).postVisit((x) -> (1 + x.getCurrent())), is(11));
   }
 
   @Test public void issue101_6() {
-    assertEquals(5, (int) new Recurser<>(into.i("3+4+5+6"), 0).postVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.i("3+4+5+6"), 0).postVisit((x) -> (1 + x.getCurrent())), is(5));
   }
 
   @Test public void issue101_7() {
-    assertEquals(6, (int) new Recurser<>(into.e("a==4 ? 34 : 56"), 0).postVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.e("a==4 ? 34 : 56"), 0).postVisit((x) -> (1 + x.getCurrent())), is(6));
   }
 
   @Test public void issue101_8() {
-    assertEquals(8, (int) new Recurser<>(into.e("a==4 ? 34 : 56+34"), 0).preVisit((x) -> (1 + x.getCurrent())));
+    azzert.that(new Recurser<>(into.e("a==4 ? 34 : 56+34"), 0).preVisit((x) -> (1 + x.getCurrent())), is(8));
   }
 
   @Test public void issue101_9() {
@@ -133,6 +135,6 @@ public final class RecurserTest {
         ((NumberLiteral) x.getRoot()).setToken("99");
     };
     recurse.preVisit(changeToken);
-    assertEquals("99", ¢ + "");
+    azzert.that(¢ + "", is("99"));
   }
 }

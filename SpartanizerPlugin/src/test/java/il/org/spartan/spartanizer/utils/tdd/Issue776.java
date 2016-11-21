@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** @author Yevgenia Shandalov
@@ -13,56 +14,55 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings("static-method")
 public class Issue776 {
   @Test public void checkEmptyFunc() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}")), 0);
+    azzert.that(0, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}"))));
   }
 
   @Test public void checkFuncOneBlock() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{}}")), 1);
+    azzert.that(1, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{}}"))));
   }
 
   @Test public void checkFunc2BlockRet1() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{}{}}")), 1);
+    azzert.that(1, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{}{}}"))));
   }
 
   @Test public void checkSeveralBlocks() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {}}")), 2);
+    azzert.that(2, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {}}"))));
   }
 
   @Test public void checkIfNoBlock() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{if (false) x=5;}")), 0);
+    azzert.that(0, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{if (false) x=5;}"))));
   }
 
   @Test public void checkWhileAndForBlocks() {
-    assertEquals(enumerate
-        .blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}")), 4);
+    azzert.that(4, is(enumerate
+        .blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}"))));
   }
 
   @Test public void checkSwitchBlocks() {
-    assertEquals(enumerate.blockTypes(
-        (MethodDeclaration) wizard.ast("public int foo(int x)" + "{ switch (x) {case 1:  x=7;break; default: x=9; break;} return x;}")), 1);
+    azzert.that(1, is(enumerate
+        .blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{ switch (x) {case 1:  x=7;break; default: x=9; break;} return x;}"))));
   }
 
   @Test public void checkDoBlock() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{do {}while(true);}")), 1);
+    azzert.that(1, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{do {}while(true);}"))));
   }
 
   @Test public void checkSyncronize() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int x=0; synchronized(this) {++x;}}")),
-        1);
+    azzert.that(1,
+        is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int x=0; synchronized(this) {++x;}}"))));
   }
 
   @Test public void tryChatch() {
-    assertEquals(
-        enumerate.blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{try {} catch (IndexOutOfBoundsException e) {}}")),
-        1);
+    azzert.that(1, is(enumerate
+        .blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{try {} catch (IndexOutOfBoundsException e) {}}"))));
   }
 
   @Test public void lambadaExprCheck() {
-    assertEquals(enumerate.blockTypes(
-        (MethodDeclaration) wizard.ast("public void addName(String name)" + "{Runnable r = () -> {System.out.println(\"hello world\");};}")), 1);
+    azzert.that(1, is(enumerate.blockTypes(
+        (MethodDeclaration) wizard.ast("public void addName(String name)" + "{Runnable r = () -> {System.out.println(\"hello world\");};}"))));
   }
 
   @Test public void initArrayNotBlock() {
-    assertEquals(enumerate.blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int[] a={5,2,1};}")), 0);
+    azzert.that(0, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{int[] a={5,2,1};}"))));
   }
 }

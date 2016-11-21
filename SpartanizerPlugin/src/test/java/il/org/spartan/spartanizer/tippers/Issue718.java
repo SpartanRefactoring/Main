@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
@@ -33,43 +31,43 @@ public class Issue718 {
   }
 
   @Test public void checkIfLoadedMethodPasses() {
-    assertTrue(determineIf.loaded(loaded));
+    assert determineIf.loaded(loaded);
   }
 
   @Test public void checkIfNotLoadedMethodFailes() {
-    assertFalse(determineIf.loaded(notLoaded));
+    assert !determineIf.loaded(notLoaded);
   }
 
   @Test public void checkIfBiMethodFailes() {
-    assertFalse(determineIf.loaded(biMethod));
+    assert !determineIf.loaded(biMethod);
   }
 
   @Test public void checkIfThreeParamsPass() {
-    assertTrue(determineIf.loaded(loaded));
+    assert determineIf.loaded(loaded);
   }
 
   @Test public void checkIfTripledParamsAndQuintupledVarDefsPass() {
-    assertTrue(determineIf.loaded(loaded));
+    assert determineIf.loaded(loaded);
   }
 
   @Test public void checkIfTripledParamsAndQuadrupleVarDefsFail() {
-    assertFalse(determineIf.loaded(notLoaded));
+    assert !determineIf.loaded(notLoaded);
   }
 
   @Test public void checkIfDoubledParamsAndQuintupledVarDefsFail() {
-    assertFalse(determineIf.loaded(TwoParamsFiveDefsMethod));
+    assert !determineIf.loaded(TwoParamsFiveDefsMethod);
   }
 
   @Test public void checkifOverLoadedMethodPass() {
-    assertTrue(determineIf.loaded(overLoaded));
+    assert determineIf.loaded(overLoaded);
   }
 
   @Test public void checkIfDeclInLambdaAlsoCountsPass() {
-    assertTrue(determineIf.loaded(loadedMethodWithLambdaDeclaration));
+    assert determineIf.loaded(loadedMethodWithLambdaDeclaration);
   }
 
   @Test public void checkIfSeparatedVarDefAlsoCountsPass() {
-    assertTrue(determineIf.loaded(separatedVarsDefinitionsLoadedMethod));
+    assert determineIf.loaded(separatedVarsDefinitionsLoadedMethod);
   }
 
   private static ASTNode methodDeclarationFromString(final String ¢) {
