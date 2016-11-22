@@ -62,7 +62,6 @@ public class generalize {
         r.replace(node, ast.newSimpleName(renaming.get(name)), null);
         return super.visit(node);
       }
-
       // @Override public boolean visit(final QualifiedName node) {
       // final String name = ((Name) node).getFullyQualifiedName();
       // if (!renaming.containsKey(name))
