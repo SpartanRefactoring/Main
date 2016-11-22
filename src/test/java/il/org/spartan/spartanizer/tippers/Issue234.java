@@ -20,6 +20,7 @@ public class Issue234 {
   @Test public void b$03() {
     trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("int a;");
   }
+
   @Test public void b$04() {
     trimmingOf("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }").gives("int a=5; ++a;");
   }

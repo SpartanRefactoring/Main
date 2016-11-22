@@ -28,9 +28,9 @@ public abstract class Analyzer<T> {
    * If double is double, leaves only 2 first digits.
    * @param ¢
    * @return */
-  protected static String tidy(double ¢) {
+  protected static String tidy(final double ¢) {
     int a = 0;
-    double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+    final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
     a = (int) ¢formatted;
