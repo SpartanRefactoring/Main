@@ -19,6 +19,7 @@ public class Reduce extends NanoPatternTipper<EnhancedForStatement> {
       add(TipperFactory.patternTipper("for (boolean[] $N0 : $N1) $N2+=$N0.$N2;", "reduce();", "reduce"));
       add(TipperFactory.patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2 += $N3.$N4($N5[($N0 & $N6)], $N7[($N0 & $N6)]);", "reduce();",
           "reduce"));
+      add(TipperFactory.patternTipper("for ($N0 $N1 : $N2) $N3+=$N1.$N4();", "reduce();", "reduce"));
     }
   };
 
