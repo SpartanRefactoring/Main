@@ -40,10 +40,8 @@ public class Classifier extends ASTVisitor {
   /** @param ¢ */
   public void analyze(final ASTNode ¢) {
     ¢.accept(this);
-    System.out.println("hmmmmmmmmmmm");
     forLoopsAmount = forLoopsList.size();
     patterns = filterAllIntrestingPatterns();
-    System.out.println("hmmmmmmmmmmm");
     displayInteractive();
     classifyPatterns();
   }
@@ -59,7 +57,7 @@ public class Classifier extends ASTVisitor {
 
   private void displayInteractive() {
     System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
-    System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
+    System.out.println("From them " + patterns.size() + " are repetitive");
     System.out.println("Lets classify them together!");
   }
 
@@ -75,12 +73,14 @@ public class Classifier extends ASTVisitor {
           if (t.canTip(l))
             toRemove.add(l);
         if (toRemove.size() > 1) {
-          $.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
+          $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
-          System.out.println("again");
           again = true;
           break;
         }
+        forLoopsList.remove(¢);
+        again = true;
+        break;
       }
     }
     return $;
@@ -98,7 +98,7 @@ public class Classifier extends ASTVisitor {
     String code = format.code(generalize.code(¢));
     System.out.println(code);
     final String classification = input.nextLine();
-    if ("".equals(classification))
+    if ("q".equals(classification) || "Q".equals(classification))
       return false;
     System.out.println(tiperize(code, classification));
     forLoops.putIfAbsent(classification, new ArrayList<>());
@@ -109,6 +109,7 @@ public class Classifier extends ASTVisitor {
   /** @param code
    * @return */
   private static String tiperize(String code, String classification) {
-    return "TipperFactory.newTipper(\"" + code.replace("\n", "").replace("\r", "") + "\", \"" + classification + "();\", \"" + classification + "\")";
+    return "TipperFactory.patternTipper(\"" + code.replace("\n", "").replace("\r", "") + "\", \"" + classification + "();\", \"" + classification
+        + "\")";
   }
 }
