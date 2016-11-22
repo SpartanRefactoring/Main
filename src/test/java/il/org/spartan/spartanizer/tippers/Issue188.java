@@ -9,25 +9,25 @@ import org.junit.*;
 @Ignore
 public class Issue188 {
   @Test public void test0() {
-    trimmingOf("try{}catch(Exception e){return a;}catch(ExceptionNull e){return a;}finally{return b;}")//
-        .gives("try{}catch(ExceptionNull|Exception e){return a;}finally{return b;}").stays();
+    trimmingOf("try{f();}catch(Exception e){return a;}catch(ExceptionNull e){return a;}finally{return b;}")//
+        .gives("try{f();}catch(ExceptionNull|Exception e){return a;}finally{return b;}").stays();
   }
 
   @Test public void test1() {
-    trimmingOf("try{}catch(Exception e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
-        .gives("try{}catch(ExceptionNull|Exception e){int a;return a;}finally{return b;}").stays();
+    trimmingOf("try{f();}catch(Exception e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
+        .gives("try{f();}catch(ExceptionNull|Exception e){int a;return a;}finally{return b;}").stays();
   }
 
   @Test public void test2() {
-    trimmingOf("try{}catch(Exception e){int a;return a;}catch(Exceptiono e){int y;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
-        .gives("try{}catch(ExceptionNull|Exception e){int a;return a;}catch(Exceptiono e){int y;}finally{return b;}").stays();
+    trimmingOf("try{f();}catch(Exception e){int a;return a;}catch(Exceptiono e){int y;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
+        .gives("try{f();}catch(ExceptionNull|Exception e){int a;return a;}catch(Exceptiono e){int y;}finally{return b;}").stays();
   }
 
   @Test public void test3() {
     trimmingOf(
-        "try{}catch(Exception e){int a;return a;}catch(Exceptiono e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
-            .gives("try{}catch(Exceptiono|Exception e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-            .gives("try{}catch(ExceptionNull|Exceptiono|Exception e){int a;return a;}finally{return b;}").stays();
+        "try{f();}catch(Exception e){int a;return a;}catch(Exceptiono e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")//
+            .gives("try{f();}catch(Exceptiono|Exception e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
+            .gives("try{f();}catch(ExceptionNull|Exceptiono|Exception e){int a;return a;}finally{return b;}").stays();
   }
 
   @Test public void test4() {
