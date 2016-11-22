@@ -86,4 +86,8 @@ public class Issue775 {
   @Test public void p() {
     assertEquals("C", type(az.enumDeclaration(findFirst.abstractTypeDeclaration(ast("enum C{}")))) + "");
   }
+
+  @Test public void q() {
+    assertEquals("InstructionComparator", type(findFirst.abstractTypeDeclaration(ast("interface InstructionComparator {}"))) + "");
+  }
 }
