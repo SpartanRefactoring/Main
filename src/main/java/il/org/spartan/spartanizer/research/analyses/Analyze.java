@@ -228,9 +228,14 @@ public class Analyze {
             new Reduce(), //
             null) //
         .add(ForStatement.class, //
+            new Contains2(), //
             new CopyArray(), //
+            new FindFirst2(), //
             new ForEach2(), //
             new InitArray(), //
+            new Max2(), //
+            new Min2(), //
+            new Reduce2(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //

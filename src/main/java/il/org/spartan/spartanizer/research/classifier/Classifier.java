@@ -59,9 +59,6 @@ public class Classifier extends ASTVisitor {
     summarize();
   }
 
-  /**
-   * 
-   */
   private void summarize() {
     for (String k : forLoops.keySet()) {
       System.out.println("****" + k + "****");
@@ -96,12 +93,13 @@ public class Classifier extends ASTVisitor {
         for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
             toRemove.add(l);
-        if (toRemove.size() > 1) {
+        if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
           again = true;
           break;
         }
+        
         forLoopsList.remove(¢);
         again = true;
         break;
@@ -140,7 +138,7 @@ public class Classifier extends ASTVisitor {
   /** @param code
    * @return */
   private static String tipperize(String code, String classification) {
-    return "TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
-        + "();\", \"" + classification + "\")";
+    return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
+        + "();\", \"" + classification + "\"));";
   }
 }
