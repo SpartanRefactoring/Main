@@ -6,6 +6,7 @@ import org.junit.*;
 /** @author Dor Ma'ayan
  * @since 20-11-2016 */
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue188 {
   @Test public void test0() {
     trimmingOf("try{}catch(Exception e){return a;}catch(ExceptionNull e){return a;}finally{return b;}")//
