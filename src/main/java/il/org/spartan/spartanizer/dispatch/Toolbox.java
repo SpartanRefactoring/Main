@@ -210,6 +210,9 @@ public class Toolbox {
             new MergeCatches(), //
             new EliminateEmptyTryBlock(), //
             null)//
+        .add(CatchClause.class, //
+            new CatchClauseRenameParameterToCent(), //
+            null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
             new RemoveRedundantIf(), //
