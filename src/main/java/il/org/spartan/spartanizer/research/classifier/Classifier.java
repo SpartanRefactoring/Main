@@ -17,17 +17,29 @@ public class Classifier extends ASTVisitor {
   final List<ASTNode> forLoopsList = new ArrayList<>();
   int forLoopsAmount;
   static final Scanner input = new Scanner(System.in);
-  static List<Tipper<EnhancedForStatement>> knownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
+  static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new ApplyToEach());
+      add(new AnyMatches());
+      add(new Contains());
+      add(new ForEach());
       add(new FindFirst());
+      add(new Reduce());
+    }
+  };
+  static List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new CopyArray());
+      add(new ForEach2());
+      add(new InitArray());
     }
   };
   private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
-    forLoopsList.add(node);
+    if (!anyTips(node))
+      forLoopsList.add(node);
     return super.visit(node);
   }
 
@@ -44,6 +56,18 @@ public class Classifier extends ASTVisitor {
     patterns = filterAllIntrestingPatterns();
     displayInteractive();
     classifyPatterns();
+    summarize();
+  }
+
+  /**
+   * 
+   */
+  private void summarize() {
+    for (String k : forLoops.keySet()) {
+      System.out.println("****" + k + "****");
+      for (String p : forLoops.get(k))
+        System.out.println(tipperize(p, k));
+    }
   }
 
   private void classifyPatterns() {
@@ -87,7 +111,14 @@ public class Classifier extends ASTVisitor {
   }
 
   private static boolean anyTips(final EnhancedForStatement ¢) {
-    for (Tipper<EnhancedForStatement> p : knownPatterns)
+    for (Tipper<EnhancedForStatement> p : enhancedForKnownPatterns)
+      if (p.canTip(¢))
+        return true;
+    return false;
+  }
+
+  private static boolean anyTips(final ForStatement ¢) {
+    for (Tipper<ForStatement> p : forKnownPatterns)
       if (p.canTip(¢))
         return true;
     return false;
@@ -100,7 +131,7 @@ public class Classifier extends ASTVisitor {
     final String classification = input.nextLine();
     if ("q".equals(classification) || "Q".equals(classification))
       return false;
-    System.out.println(tiperize(code, classification));
+    System.out.println(tipperize(code, classification));
     forLoops.putIfAbsent(classification, new ArrayList<>());
     forLoops.get(classification).add(¢);
     return true;
@@ -108,8 +139,8 @@ public class Classifier extends ASTVisitor {
 
   /** @param code
    * @return */
-  private static String tiperize(String code, String classification) {
-    return "TipperFactory.patternTipper(\"" + code.replace("\n", "").replace("\r", "") + "\", \"" + classification + "();\", \"" + classification
-        + "\")";
+  private static String tipperize(String code, String classification) {
+    return "TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
+        + "();\", \"" + classification + "\")";
   }
 }
