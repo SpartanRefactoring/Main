@@ -221,8 +221,21 @@ public class Analyze {
             new Coercion(), //
             null) //
         .add(EnhancedForStatement.class, //
-            new ApplyToEach(), //
+            new AnyMatches(), //
+            new Contains(), //
+            new ForEach(), //
             new FindFirst(), //
+            new Reduce(), //
+            null) //
+        .add(ForStatement.class, //
+            new Contains2(), //
+            new CopyArray(), //
+            new FindFirst2(), //
+            new ForEach2(), //
+            new InitArray(), //
+            new Max2(), //
+            new Min2(), //
+            new Reduce2(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
