@@ -11,8 +11,8 @@ import org.junit.*;
 @Ignore
 public class Issue235 {
   @Test public void test0() {
-    trimmingOf("try{} catch(Exception e) { } finally {}")//
-        .gives("try{} catch(Exception e) { }")//
+    trimmingOf("try{ f(); } catch(Exception e) { } finally {}")//
+        .gives("try{ f(); } catch(Exception e) { }")//
         .stays();
   }
 
