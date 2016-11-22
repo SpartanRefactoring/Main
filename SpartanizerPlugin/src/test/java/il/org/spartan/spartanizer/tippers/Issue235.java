@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Dor Ma'ayan
  * @since 16-11-2016 */
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue235 {
   @Test public void test0() {
     trimmingOf("try{ f(); } catch(Exception e) { } finally {}")//
