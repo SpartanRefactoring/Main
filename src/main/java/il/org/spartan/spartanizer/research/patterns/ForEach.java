@@ -22,6 +22,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
       add(TipperFactory.patternTipper("for ($N0<? extends $N1,? extends $N2> $N3 : $N4) $N5($N3);", "foreach();", "foreach"));
       add(TipperFactory.patternTipper("for ($N0<$N1,$N2> $N3 : $N4()) {  $N5.$N6($N3.$N7());  $N5.$N6($N3.$N8());}", "foreach();", "foreach"));
       add(TipperFactory.patternTipper("for (int $N0 : $N1) $N2($N0,$N3);", "foreach();", "foreach"));
+      add(TipperFactory.patternTipper("for ($N0.$N1<$N2<$N3>,$N4> $N5 : $N6.$N7().$N8()) $N9($N5.$N10(),$N5.$N11());", "foreach();", "foreach"));
+      add(TipperFactory.patternTipper("for ($N0<$N1> $N2 : $N3.$N4()) $N5.$N6($N2.$N7(),$N2.$N8());", "foreach();", "foreach"));
     }
   };
 
