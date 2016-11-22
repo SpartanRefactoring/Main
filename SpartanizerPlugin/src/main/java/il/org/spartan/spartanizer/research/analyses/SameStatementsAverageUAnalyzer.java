@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** @author Ori Marcovitch
  * @since Nov 17, 2016 */
 public class SameStatementsAverageUAnalyzer extends AvgMetricalAnalyzer {
-  @Override protected int metric(ASTNode ¢) {
+  @Override protected int metric(final ASTNode ¢) {
     return metrics.subtreeUnderstandability(¢);
   }
 }
