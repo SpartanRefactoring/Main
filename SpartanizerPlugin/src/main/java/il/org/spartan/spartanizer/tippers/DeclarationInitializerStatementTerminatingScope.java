@@ -65,6 +65,10 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
           if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
             return null;
         final Expression v = fixArrayInitializer(initializer, currentStatement);
+        
+        if(v.getNodeType() == ASTNode.PRIMITIVE_TYPE)
+          return null;
+        
         final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
         final Statement newStatement = duplicate.of(nextStatement);
         final int addedSize = i.addedSize(newStatement);
