@@ -46,14 +46,14 @@ public class Analyze {
   }
 
   /**
-   * 
+   *
    */
   private static void avgIndicatorMetricalAnalyzer() {
-    methodsAnalyze((new AvgIndicatorMetricalAnalyzer()));
+    methodsAnalyze(new AvgIndicatorMetricalAnalyzer());
   }
 
   private static void sameStatementsAverageUAnalyzer() {
-    methodsAnalyze((new SameStatementsAverageUAnalyzer()));
+    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -173,7 +173,7 @@ public class Analyze {
   }
 
   private static void methodsAnalyze() {
-    methodsAnalyze((new MagicNumbersAnalysis()));
+    methodsAnalyze(new MagicNumbersAnalysis());
   }
 
   private static void methodsAnalyze(final Analyzer<?> a) {
