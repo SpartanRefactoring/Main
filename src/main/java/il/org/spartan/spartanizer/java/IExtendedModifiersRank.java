@@ -61,7 +61,9 @@ public enum IExtendedModifiersRank {
   }
   
   public static int rankAnnotation(final IExtendedModifier ¢) {
-    return find(("@" + az.annotation(¢).getTypeName())).ordinal();
+    //String str = az.annotation(¢).getTypeName().getFullyQualifiedName();  // gives Deprecated
+    //String str2 = ¢ + "";   // gives @Deprected
+    return find(("@" + az.annotation(¢).getTypeName().getFullyQualifiedName())).ordinal();
   }
 
   public static int userDefinedAnnotationsOrdinal() {
