@@ -132,7 +132,7 @@ class Conservative extends AbstractRenamePolicy {
 
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement ¢ : returnStatements)
-      if (wizard.same(n, ¢.getExpression()))
+      if (analyze.dependencies(¢).contains(n + ""))
         return false;
     return true;
   }
