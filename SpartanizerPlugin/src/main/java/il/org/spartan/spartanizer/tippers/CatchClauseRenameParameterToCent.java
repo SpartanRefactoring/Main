@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause> implements TipperCategory.Centification {
-  @Override public String description(final CatchClause ¢) {
-    return "Rename the parameter of the catch clause : " + ¢;
+  @Override public String description(@SuppressWarnings("unused") final CatchClause ¢) {
+    return "Rename the parameter of the catch clause";
   }
 
   @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
