@@ -11,7 +11,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue856 {
-  @Ignore @Test public void a() {
+  @Test public void a() {
     trimmingOf(//
         "public static A a() {" + //
             " A b = \"one expression\";" + //
