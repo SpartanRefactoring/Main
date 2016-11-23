@@ -61,7 +61,7 @@ public enum IExtendedModifiersRank {
   }
   
   public static int rankAnnotation(final IExtendedModifier ¢) {
-    return find(("@" + az.annotation(¢).getTypeName())).ordinal();
+    return find(("@" + az.annotation(¢).getTypeName().getFullyQualifiedName())).ordinal();
   }
 
   public static int userDefinedAnnotationsOrdinal() {
