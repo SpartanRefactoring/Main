@@ -3,13 +3,10 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import java.beans.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.tdd.*;
 
 @SuppressWarnings("static-method")
 public class Issue283 {
@@ -22,7 +19,6 @@ public class Issue283 {
                 + " void myMethod() { }")//
             .stays();
   }
-  // @Deprecated @ int i = 5;
 
   @Test public void test1() {
     azzert.that(AnnotationSort.compare("Override", "Override"), is(0));
