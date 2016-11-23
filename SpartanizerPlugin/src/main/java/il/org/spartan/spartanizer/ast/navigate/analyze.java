@@ -15,12 +15,12 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum analyze {
   ;
-  public static Set<Name> dependencies(final ASTNode n) {
-    final Set<Name> $ = new HashSet<>();
+  public static Set<String> dependencies(final ASTNode n) {
+    final Set<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
-          $.add(node);
+          $.add(step.identifier(node));
         return true;
       }
 
@@ -31,7 +31,7 @@ public enum analyze {
 
       @Override public boolean visit(final QualifiedName node) {
         if (!izMethodName(node))
-          $.add(node);
+          $.add(step.fullyQualifiedName(node));
         return true;
       }
     });
