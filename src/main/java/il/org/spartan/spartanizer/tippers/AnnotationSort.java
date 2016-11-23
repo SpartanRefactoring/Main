@@ -19,27 +19,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * 
  * @author kobybs
  * @since 20-11-2016 */
-/*
-private enum AnnotationsRank {
-  Deprecated,
-  Override, //
-  Documented, //
-  FunctionalInterface, //
-  Inherited, //
-  Retention, //
-  Repeatable, //
-  SafeVarargs, //
-  Target, //
-  $USER_DEFINED_ANNOTATION$, //
-  SuppressWarnings, //
-  NonNull,
-  Nullable
-}*/
 
 
 public class AnnotationSort<N extends BodyDeclaration>
   extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  //private static final ArrayList< HashSet<String> > rankTable = new ArrayList<>();
   private static final HashSet<String> rank0 = 
       new HashSet<>(Arrays.asList(
           "Deprecated"));
@@ -101,60 +84,23 @@ public class AnnotationSort<N extends BodyDeclaration>
   }
   
   public static int rankAnnotation(String annotationName) {
-    for(int i = 0; i < rankTable.size(); i++){
-      if(rankTable.get(i).contains(annotationName)){
-        return i;
-      }
-    }
+    for(int $ = 0; $ < rankTable.size(); ++$)
+      if (rankTable.get($).contains(annotationName))
+        return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
   }
   
-  static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) != 0 ? rankAnnotation(m1) - rankAnnotation(m2) : (m1 + "").compareTo((m2 + ""));
+  static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) == 0 ? (m1 + "").compareTo((m2 + "")) : rankAnnotation(m1) - rankAnnotation(m2);
   
   public static int compare(final String annotation1, final String annotation2) {
-    return rankAnnotation(annotation1) - rankAnnotation(annotation2) != 0 ? rankAnnotation(annotation1) - rankAnnotation(annotation2) : annotation1.compareTo(annotation2);
+    return rankAnnotation(annotation1) - rankAnnotation(annotation2) == 0 ? annotation1.compareTo(annotation2)
+        : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
-  
-    /*final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
-  }*/
-
-  /*private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
-  }*/
-  /*
-  static final IExtendedModifiersRank find(final String modifier) {
-    for (final IExtendedModifiersRank $ : IExtendedModifiersRank.values())
-      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" +$))
-        return $;
-    return $USER_DEFINED_ANNOTATION$;
-  }*/
-  
-  
   
   
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
-    //return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
     return ¢.stream().sorted(comp).collect(Collectors.toList());
-  }
-  
-  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {
-    for (int ¢ = 0; ¢ < ms.size(); ++¢)
-      while (¢ < ms.size() - 1 && comp.compare(ms.get(¢), ms.get(¢ + 1)) == 0)
-        ms.remove(¢ + 1);
-    return ms;
   }
   
 
