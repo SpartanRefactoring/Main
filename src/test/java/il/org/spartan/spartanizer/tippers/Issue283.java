@@ -70,8 +70,10 @@ public class Issue283 {
     .stays();
    }
   
-  @Ignore @Test public void test5() {
+  @Test public void test5() {
     trimmingOf("@Ignore @Deprecated class Test123 {"
+        + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
+    .gives("@Deprecated @Ignore class Test123 {"
         + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
     .gives("@Deprecated @Ignore class Test123 {"
         + " @Deprecated @Inherited @Test @SuppressWarnings({ \"EnumBody\" }) @NonNull public void test0() { }}")
