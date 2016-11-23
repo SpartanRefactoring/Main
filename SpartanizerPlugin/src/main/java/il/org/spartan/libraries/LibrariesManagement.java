@@ -8,12 +8,16 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.internal.core.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.utils.*;
 
 public class LibrariesManagement {
+  static final String[] librariesNames = { "SpartanRefactoring" };
+  static final String[] librariesPathSuffices = { "" };
+
   public static IPath getPluginJarPath() throws IOException {
     return new Path(FileLocator.resolve(FileLocator.find(Plugin.plugin().getBundle(), new Path(""), null)).getPath().replaceAll("!.*", "")
         .replaceAll("^file..", ""));
@@ -45,6 +49,38 @@ public class LibrariesManagement {
 
   public static boolean removeLibrary(final String path) {
     return removeLibrary(new Path(path));
+  }
+
+  /** [[SuppressWarningsSpartan]] --bug
+   * @throws IOException */
+  public static void initializeUserLibraries() throws CoreException, IOException {
+    final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
+    @SuppressWarnings("restriction") List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
+    final IPath jarPath = getPluginJarPath();
+    for (int i = 0; i < librariesPathSuffices.length; ++i) {
+      final String libraryName = librariesNames[0];
+      if (userLibrariesNames.contains(libraryName))
+        continue;
+      final IPath libraryPath = jarPath.append(librariesPathSuffices[0]);
+      final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
+      initializer.requestClasspathContainerUpdate(containerPath.append(libraryName), null, new IClasspathContainer() {
+        @Override public IPath getPath() {
+          return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
+        }
+
+        @Override public int getKind() {
+          return K_APPLICATION;
+        }
+
+        @Override public String getDescription() {
+          return libraryName;
+        }
+
+        @Override public IClasspathEntry[] getClasspathEntries() {
+          return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
+        }
+      });
+    }
   }
 
   private static boolean touchLibrary(final IPath path, final BiConsumer<List<IClasspathEntry>, IPath> operation) {
