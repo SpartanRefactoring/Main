@@ -8,7 +8,6 @@ import org.junit.*;
  * @author Dor Ma'ayan
  * @since 16-11-2016 */
 @SuppressWarnings("static-method")
-@Ignore
 public class Issue235 {
   @Test public void test0() {
     trimmingOf("try{ f(); } catch(Exception e) { } finally {}")//
@@ -19,12 +18,15 @@ public class Issue235 {
   @Test public void test1() {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally {}")//
         .gives("try{ return i; } catch(Exception e) { throw e; }")//
+        .gives("try{ return i; } catch(Exception ¢) { throw ¢; }")
         .stays();
   }
 
   @Test public void test2() {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally { return 7;}")//
-        .stays();
+        .gives("try{ return i; } catch(Exception ¢) { throw ¢; } finally { return 7;}")
+        .stays();//
+    
   }
 
   @Test public void test3() {
