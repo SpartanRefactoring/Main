@@ -31,7 +31,7 @@ public enum analyze {
 
       @Override public boolean visit(final QualifiedName node) {
         if (!izMethodName(node))
-          $.add(step.fullyQualifiedName(node));
+          $.add(step.identifier(node));
         return true;
       }
     });
