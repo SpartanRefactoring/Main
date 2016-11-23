@@ -5,25 +5,23 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Tests dollar renaming even if not only expression but also s + "" for
- * example
+/** Tests of inline into next statment even if not last in block
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue857 {
-  @Test public void report234() {
+public class Issue856 {
+  @Ignore @Test public void a() {
     trimmingOf(//
         "public static A a() {" + //
-            " A b = \"str\";" + //
+            " A b = \"one expression\";" + //
             " B.d(b);" + //
-            " return b + \"\";" + //
+            " return \"and another\";" + //
             "}"//
     ).gives(//
         "public static A a() {" + //
-            " A $ = \"str\";" + //
-            " B.d($);" + //
-            " return $ + \"\";" + //
+            " B.d(\"one expression\");" + //
+            " return \"and another\";" + //
             "}"//
     ).stays();
   }
