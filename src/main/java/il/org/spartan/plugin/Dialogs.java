@@ -69,12 +69,12 @@ public class Dialogs {
     }
     return logo;
   }
-
-  /** Simple dialog, waits for user operation.
+  
+  /** Simple dialog, waits for user operation. Does not trim the received message.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-  public static MessageDialog message(final String message) {
-    return new MessageDialog(null, NAME, icon(), Linguistic.trim(message), MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+  public static MessageDialog messageUnsafe(final String message) {
+    return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
@@ -88,6 +88,13 @@ public class Dialogs {
         return logo();
       }
     };
+  }
+
+  /** Simple dialog, waits for user operation.
+   * @param message to be displayed in the dialog
+   * @return simple, textual dialog with an OK button */
+  public static MessageDialog message(final String message) {
+    return messageUnsafe(Linguistic.trim(message));
   }
 
   /** Simple non-modal dialog. Does not wait for user operation (i.e., non
