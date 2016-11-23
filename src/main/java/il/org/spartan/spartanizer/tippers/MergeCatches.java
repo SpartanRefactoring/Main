@@ -45,7 +45,7 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements Ti
     return null;
   }
 
-  @Override public String description(final TryStatement ¢) {
-    return "Consolidate identical catch blocks from :" + ¢;
+  @Override public String description(@SuppressWarnings("unused") final TryStatement ¢) {
+    return "Consolidate identical catch blocks";
   }
 }
