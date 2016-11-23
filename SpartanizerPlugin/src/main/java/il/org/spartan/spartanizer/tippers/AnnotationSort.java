@@ -18,6 +18,24 @@ import il.org.spartan.spartanizer.tipping.*;
  * 
  * @author kobybs
  * @since 20-11-2016 */
+/*
+private enum AnnotationsRank {
+  Deprecated,
+  Override, //
+  Documented, //
+  FunctionalInterface, //
+  Inherited, //
+  Retention, //
+  Repeatable, //
+  SafeVarargs, //
+  Target, //
+  $USER_DEFINED_ANNOTATION$, //
+  SuppressWarnings, //
+  NonNull,
+  Nullable
+}*/
+
+
 public class AnnotationSort extends ReplaceCurrentNode<MethodDeclaration> implements TipperCategory.Sorting {
   static final Comparator<IExtendedModifier> comp = (m1, m2) -> rank(m1) - rank(m2) != 0 ? rank(m1) - rank(m2) : (m1 + "").compareTo((m2 + ""));
   
