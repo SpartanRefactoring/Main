@@ -37,7 +37,8 @@ private enum AnnotationsRank {
 }*/
 
 
-public class AnnotationSort extends ReplaceCurrentNode<MethodDeclaration> implements TipperCategory.Sorting {
+public class AnnotationSort<N extends BodyDeclaration>
+  extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
   //private static final ArrayList< HashSet<String> > rankTable = new ArrayList<>();
   private static final HashSet<String> rank0 = 
       new HashSet<>(Arrays.asList(
@@ -157,8 +158,8 @@ public class AnnotationSort extends ReplaceCurrentNode<MethodDeclaration> implem
   }
   
 
-  @Override public ASTNode replacement(MethodDeclaration d) {
-    MethodDeclaration $ = duplicate.of(d);
+  @Override public ASTNode replacement(final N d) {
+    N $ = duplicate.of(d);
     final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
     final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
     extendedModifiers($).clear();
@@ -169,8 +170,32 @@ public class AnnotationSort extends ReplaceCurrentNode<MethodDeclaration> implem
   
   
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢)) + ")";
   }
   
+  
+  public static final class ofAnnotation extends AnnotationSort<AnnotationTypeDeclaration> { //
+  }
+
+  public static final class ofAnnotationTypeMember extends AnnotationSort<AnnotationTypeMemberDeclaration> { //
+  }
+
+  public static final class ofEnum extends AnnotationSort<EnumDeclaration> { //
+  }
+
+  public static final class ofEnumConstant extends AnnotationSort<EnumConstantDeclaration> { //
+  }
+
+  public static final class ofField extends AnnotationSort<FieldDeclaration> { //
+  }
+
+  public static final class ofInitializer extends AnnotationSort<Initializer> { //
+  }
+
+  public static final class ofMethod extends AnnotationSort<MethodDeclaration> { //
+  }
+
+  public static final class ofType extends AnnotationSort<TypeDeclaration> { //
+  }
 }
