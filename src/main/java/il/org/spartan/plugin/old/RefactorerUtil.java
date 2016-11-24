@@ -29,16 +29,16 @@ public class RefactorerUtil {
         final Object att = iMarker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
         @SuppressWarnings("unchecked") final Class<? extends Tipper<?>> ¢ = (Class<? extends Tipper<?>>) att;
         a.put(attribute.TIPPER, ¢.getSimpleName());
-      } catch (final CoreException x) {
-        monitor.log(x);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
         a.put(attribute.TIPPER, "tip-core exception");
       }
     return a.get(attribute.TIPPER) + "";
   }
 
   public static String projectName(final Map<attribute, Object> ¢) {
-    final IMarker m = (IMarker) ¢.get(attribute.MARKER);
-    return m.getResource() == null ? null : m.getResource().getProject().getName();
+    final IMarker $ = (IMarker) ¢.get(attribute.MARKER);
+    return $.getResource() == null ? null : $.getResource().getProject().getName();
   }
 
   @SuppressWarnings("unchecked") public static int getCUsCount(final Map<attribute, Object> ¢) {
@@ -66,15 +66,15 @@ public class RefactorerUtil {
   }
 
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
-      final Map<attribute, Object> m, final attribute t) {
+      final Map<attribute, Object> a, final attribute t) {
     if (us.isEmpty())
       return null;
     final Trimmer tr = new Trimmer();
     return new IRunnableWithProgress() {
-      @SuppressWarnings("boxing") @Override public void run(final IProgressMonitor pm) {
+      @Override @SuppressWarnings("boxing") public void run(final IProgressMonitor pm) {
         pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
         tr.setICompilationUnit(first(us));
-        m.put(t, tr.countTips());
+        a.put(t, tr.countTips());
         pm.done();
       }
     };

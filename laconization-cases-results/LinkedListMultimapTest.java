@@ -306,8 +306,7 @@ import junit.framework.TestSuite;
     assertEquals(3, (int) entryb.getValue());
   }
 
-  @SuppressWarnings("unchecked") @GwtIncompatible // unreasonably slow
-  public void testEntriesIteration() {
+  @GwtIncompatible @SuppressWarnings("unchecked") public void testEntriesIteration() {
     for (final int startIndex : new int[] { 0, 3, 5 })
       new ListIteratorTester<Entry<String, Integer>>(3,
           ImmutableList.of(Maps.immutableEntry("foo", 99), Maps.immutableEntry("foo", 88), Maps.immutableEntry("bar", 77)),

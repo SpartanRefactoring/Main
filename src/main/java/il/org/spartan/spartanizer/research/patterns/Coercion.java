@@ -163,8 +163,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           f.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
     return f;
   }

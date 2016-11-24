@@ -17,7 +17,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean canTip(final MethodDeclaration ¢) {
-    if (step.parameters(¢).size() != 1 || step.body(¢) == null)
+    if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor())
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     if (ss.size() != 1 || !iz.expressionStatement(ss.get(0)))

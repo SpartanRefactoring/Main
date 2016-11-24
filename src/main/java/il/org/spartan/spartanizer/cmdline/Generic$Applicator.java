@@ -26,8 +26,8 @@ public class Generic$Applicator {
     try {
       for (final String ¢ : ss)
         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-    } catch (final ClassNotFoundException x) {
-      x.printStackTrace();
+    } catch (final ClassNotFoundException ¢) {
+      ¢.printStackTrace();
     }
     return as.list($); // useless?
   }
