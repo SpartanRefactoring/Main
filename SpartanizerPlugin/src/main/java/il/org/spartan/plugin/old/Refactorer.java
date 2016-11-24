@@ -44,13 +44,13 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   /** @param e JD
    * @return the applicator used by this refactorer */
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent e) {
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
     return null;
   }
 
   /** @param m JD
    * @return the applicator used by this refactorer */
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker m) {
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
@@ -60,7 +60,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   /** @return the compilation units designated for refactorer */
-  public Selection getSelection(@SuppressWarnings("unused") final IMarker m) {
+  public Selection getSelection(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
@@ -83,7 +83,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   /** @param us JD
    * @return message to be displayed by a {@link IProgressMonitor} */
-  @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> us, final int pass) {
+  @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> __, final int pass) {
     return getLabel();
   }
 
@@ -156,8 +156,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       initializeProgressDialog(progressMonitorDialog);
     try {
       progressMonitorDialog.run(true, true, r);
-    } catch (InterruptedException | InvocationTargetException x) {
-      monitor.log(x);
+    } catch (InterruptedException | InvocationTargetException ¢) {
+      monitor.log(¢);
       return null;
     }
     closeDialog(initialDialog);
@@ -177,9 +177,9 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     if (p != null)
       try {
         d.run(true, true, p);
-      } catch (InvocationTargetException | InterruptedException x) {
-        monitor.log(x);
-        x.printStackTrace();
+      } catch (InvocationTargetException | InterruptedException ¢) {
+        monitor.log(¢);
+        ¢.printStackTrace();
         return false;
       }
     return true;
@@ -187,7 +187,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
-      @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
+      @Override @SuppressWarnings("synthetic-access") public void run(final IProgressMonitor pm) {
         final int passesCount = passesCount();
         int pass;
         int totalTips = 0;

@@ -52,8 +52,8 @@ public class Issue831 {
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();
-    } catch (final Error e) {
-      e.getClass();
+    } catch (final Error ¢) {
+      ¢.getClass();
       return;
     }
     assert false;

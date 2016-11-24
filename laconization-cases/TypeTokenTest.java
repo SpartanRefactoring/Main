@@ -1419,8 +1419,9 @@ public class TypeTokenTest extends TestCase {
     List<T> list;
     List<T>[] matrix;
 
-    void setList(List<T> ¢) {
+    Holder<T> setList(List<T> ¢) {
       this.list = ¢;
+      return this;
     }
   }
 
@@ -1871,10 +1872,10 @@ public class TypeTokenTest extends TestCase {
   }
 
   private static ImmutableSet<TypeToken<?>> arrayInterfaces() {
-    ImmutableSet.Builder<TypeToken<?>> builder = ImmutableSet.builder();
+    ImmutableSet.Builder<TypeToken<?>> $ = ImmutableSet.builder();
     for (Class<?> interfaceType : Object[].class.getInterfaces())
-		builder.add(TypeToken.of(interfaceType));
-    return builder.build();
+		$.add(TypeToken.of(interfaceType));
+    return $.build();
   }
 
   private static void assertIsPrimitive(TypeToken<?> ¢) {

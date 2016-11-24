@@ -94,8 +94,8 @@ public class LibrariesManagement {
     final IClasspathEntry[] es;
     try {
       es = jp.getRawClasspath();
-    } catch (final JavaModelException x) {
-      monitor.log(x);
+    } catch (final JavaModelException ¢) {
+      monitor.log(¢);
       return false;
     }
     if (es != null)
@@ -103,8 +103,8 @@ public class LibrariesManagement {
     operation.accept(nes, path);
     try {
       jp.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
-    } catch (final JavaModelException x) {
-      monitor.log(x);
+    } catch (final JavaModelException ¢) {
+      monitor.log(¢);
       return false;
     }
     return true;

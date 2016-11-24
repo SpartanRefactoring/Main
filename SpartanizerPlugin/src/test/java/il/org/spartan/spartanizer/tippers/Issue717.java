@@ -41,16 +41,16 @@ public class Issue717 {
   }
 
   private String generateRandomString(final int maxLen) {
-    final StringBuffer randStr = new StringBuffer();
+    final StringBuffer $ = new StringBuffer();
     int len = 0;
     final Random randomGenerator = new Random();
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)
       len = 1;
-    randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
+    $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     for (int ¢ = 1; ¢ < len; ++¢)
-      randStr.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
-    return randStr + "";
+      $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
+    return $ + "";
   }
 
   private final int MAX_NAME_SIZE = 100;

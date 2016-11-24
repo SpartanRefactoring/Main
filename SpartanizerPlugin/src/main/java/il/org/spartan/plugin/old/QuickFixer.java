@@ -30,8 +30,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           fixers.disableFunctionFix(), //
           fixers.disableClassFix(), //
           fixers.disableFileFix() };//
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return new IMarkerResolution[] {};
     }
   }
@@ -50,8 +50,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public void run(final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
-          } catch (IllegalArgumentException | CoreException e) {
-            monitor.logEvaluationError(this, e);
+          } catch (IllegalArgumentException | CoreException ¢) {
+            monitor.logEvaluationError(this, ¢);
           }
         }
       };
@@ -90,8 +90,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public void run(final IMarker m) {
           try {
             SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
-          } catch (IllegalArgumentException | CoreException x) {
-            monitor.logEvaluationError(this, x);
+          } catch (IllegalArgumentException | CoreException ¢) {
+            monitor.logEvaluationError(this, ¢);
           }
         }
       };

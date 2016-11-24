@@ -119,9 +119,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
-        throw new AssertionError(x);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        monitor.logEvaluationError(this, ¢);
+        throw new AssertionError(¢);
       }
       if (!e.hasChildren())
         return $.get();
@@ -160,8 +160,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -169,8 +169,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           ReportGenerator.writeTipsLine(n, s, "tips");
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
@@ -200,16 +200,16 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (tipper == null)
           return true;
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;

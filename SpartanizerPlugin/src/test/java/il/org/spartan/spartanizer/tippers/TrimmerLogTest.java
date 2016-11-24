@@ -36,8 +36,8 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
     assert d != null;
     if (wrap.equals(d.get()))
@@ -60,8 +60,8 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
     assert d != null;
     if (wrap.equals(d.get()))

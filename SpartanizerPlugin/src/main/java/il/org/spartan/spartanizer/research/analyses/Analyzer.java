@@ -29,12 +29,12 @@ public abstract class Analyzer<T> {
    * @param ¢
    * @return */
   protected static String tidy(final double ¢) {
-    int a = 0;
+    int $ = 0;
     final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
-    a = (int) ¢formatted;
-    return a + "";
+    $ = (int) ¢formatted;
+    return $ + "";
   }
 
   protected abstract double enumElement(T t);
