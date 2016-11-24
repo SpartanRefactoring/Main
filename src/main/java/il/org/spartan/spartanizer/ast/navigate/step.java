@@ -613,4 +613,10 @@ public enum step {
   public static Block body(final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static String identifier(QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getFullyQualifiedName();
+  }
 }
