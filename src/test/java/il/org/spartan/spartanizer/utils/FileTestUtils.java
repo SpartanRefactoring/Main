@@ -29,14 +29,14 @@ public abstract class FileTestUtils {
   public static Object getInstance(final Class<?> c) {
     try {
       return c.newInstance();
-    } catch (final SecurityException e) {
-      error("Security exception in instantiating ", c, e);
-    } catch (final ExceptionInInitializerError e) {
-      error("Error in instantiating class", c, e);
-    } catch (final InstantiationException e) {
-      error("Nullary constructor threw an exception in class", c, e);
-    } catch (final IllegalAccessException e) {
-      error("Missing public constructor (probably) in class", c, e);
+    } catch (final SecurityException ¢) {
+      error("Security exception in instantiating ", c, ¢);
+    } catch (final ExceptionInInitializerError ¢) {
+      error("Error in instantiating class", c, ¢);
+    } catch (final InstantiationException ¢) {
+      error("Nullary constructor threw an exception in class", c, ¢);
+    } catch (final IllegalAccessException ¢) {
+      error("Missing public constructor (probably) in class", c, ¢);
     }
     return null;
   }
@@ -83,8 +83,8 @@ public abstract class FileTestUtils {
   private static Class<?> asClass(final String name) {
     try {
       return Class.forName(name);
-    } catch (final ClassNotFoundException e) {
-      azzert.fail(name + ": class not found. " + e.getMessage());
+    } catch (final ClassNotFoundException ¢) {
+      azzert.fail(name + ": class not found. " + ¢.getMessage());
       return null;
     }
   }
@@ -102,8 +102,8 @@ public abstract class FileTestUtils {
       fh.writeBytes(s);
       if ($ != null)
         $.deleteOnExit();
-    } catch (final IOException e) {
-      monitor.log(e); // Probably permissions problem
+    } catch (final IOException ¢) {
+      monitor.log(¢); // Probably permissions problem
     }
     return $;
   }

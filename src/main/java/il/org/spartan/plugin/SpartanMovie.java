@@ -63,17 +63,17 @@ public class SpartanMovie extends AbstractHandler {
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }
-          } catch (final CoreException x) {
-            monitor.log(x);
+          } catch (final CoreException ¢) {
+            monitor.log(¢);
           }
         }
         pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + RefactorerUtil.plurals("file", filesModified));
         sleep(SLEEP_END);
         pm.done();
       });
-    } catch (InvocationTargetException | InterruptedException x) {
-      monitor.log(x);
-      x.printStackTrace();
+    } catch (InvocationTargetException | InterruptedException ¢) {
+      monitor.log(¢);
+      ¢.printStackTrace();
     }
     sleep(1);
     return null;
@@ -97,8 +97,8 @@ public class SpartanMovie extends AbstractHandler {
   private static IMarker[] getMarkers(final IFile ¢) {
     try {
       return ¢.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
-    } catch (final CoreException x) {
-      monitor.log(x);
+    } catch (final CoreException m) {
+      monitor.log(m);
       return new IMarker[0];
     }
   }
@@ -106,8 +106,8 @@ public class SpartanMovie extends AbstractHandler {
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
-    } catch (final JavaModelException x) {
-      monitor.log(x);
+    } catch (final JavaModelException ¢) {
+      monitor.log(¢);
       return new LinkedList<>();
     }
   }
@@ -115,8 +115,8 @@ public class SpartanMovie extends AbstractHandler {
   static boolean focus(final IWorkbenchPage p, final IFile f) {
     try {
       IDE.openEditor(p, f, true);
-    } catch (final PartInitException x) {
-      monitor.log(x);
+    } catch (final PartInitException ¢) {
+      monitor.log(¢);
       return false;
     }
     return true;
@@ -156,16 +156,16 @@ public class SpartanMovie extends AbstractHandler {
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.
    * @author Ori Roth */
-  static IMarker getFirstMarker(final IMarker[] ¢) {
+  static IMarker getFirstMarker(final IMarker[] ms) {
     int $ = 0;
-    for (int i = 0; i < ¢.length; ++i)
+    for (int i = 0; i < ms.length; ++i)
       try {
-        if (((Integer) ¢[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ¢[$].getAttribute(IMarker.CHAR_START)).intValue())
+        if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
-      } catch (final CoreException x) {
-        monitor.log(x);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
         break;
       }
-    return ¢[$];
+    return ms[$];
   }
 }

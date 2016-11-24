@@ -15,8 +15,8 @@ public final class SpartanizeableAll extends BaseHandler {
       if (p.isOpen())
         try {
           eclipse.addNature(p);
-        } catch (final CoreException e) {
-          monitor.logEvaluationError(new SpartanizeableAll(), e);
+        } catch (final CoreException ¢) {
+          monitor.logEvaluationError(new SpartanizeableAll(), ¢);
         }
   }
 

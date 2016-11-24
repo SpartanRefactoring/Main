@@ -31,11 +31,11 @@ public class Toolbox {
           final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
           monitor.debug("Found for " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException x) {
-          monitor.debug(this, x);
+        } catch (final IllegalArgumentException ¢) {
+          monitor.debug(this, ¢);
           break;
-        } catch (final Exception x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final Exception ¢) {
+          monitor.logEvaluationError(this, ¢);
           break;
         }
     }
@@ -194,7 +194,7 @@ public class Toolbox {
         // new InstanceOf(), //
         // null)//
         .add(MethodDeclaration.class, //
-            new AnnotationSort.ofMethod(), //
+            new AnnotationSort(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
@@ -253,15 +253,12 @@ public class Toolbox {
             null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
-            new AnnotationSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnum(), //
-            new AnnotationSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofField(), //
-            new AnnotationSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -269,21 +266,13 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnumConstant(), //
-            new AnnotationSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
         .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
-            new AnnotationSort.ofInitializer(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
-            new AnnotationSort.ofAnnotation(), //
-            null)
-        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
-            new AnnotationSort.ofAnnotationTypeMember(), //
-            null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //
             new DeclarationAssignment(), //

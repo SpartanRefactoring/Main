@@ -62,8 +62,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -71,8 +71,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
@@ -137,9 +137,9 @@ public abstract class AbstractCommandLineSpartanizerOld {
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
-        throw new AssertionError(x);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        monitor.logEvaluationError(this, ¢);
+        throw new AssertionError(¢);
       }
       if (!e.hasChildren())
         return $.get();
@@ -271,8 +271,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
       try {
         currentFile = f;
         go(FileUtils.read(f));
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢, "File = " + f);
       }
   }
 
@@ -315,8 +315,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
       System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
     }
   }
@@ -327,8 +327,8 @@ public abstract class AbstractCommandLineSpartanizerOld {
     try {
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
       System.err.println("problem in setting up reports");
     }
   }

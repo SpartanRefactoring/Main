@@ -102,8 +102,8 @@ public class Issue815 {
     try {
       assertNotEquals(NameGuess.of("A_abc_CLASS_1"), NameGuess.CLASS_CONSTANT);
       fail();
-    } catch (final Error e) {
-      azzert.that(AssertionError.class, is(e.getClass()));
+    } catch (final Error ¢) {
+      azzert.that(AssertionError.class, is(¢.getClass()));
     }
   }
 

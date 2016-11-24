@@ -54,8 +54,8 @@ public enum TESTUtils {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
   }
 
