@@ -69,8 +69,9 @@ public class Dialogs {
     }
     return logo;
   }
-  
-  /** Simple dialog, waits for user operation. Does not trim the received message.
+
+  /** Simple dialog, waits for user operation. Does not trim the received
+   * message.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageUnsafe(final String message) {

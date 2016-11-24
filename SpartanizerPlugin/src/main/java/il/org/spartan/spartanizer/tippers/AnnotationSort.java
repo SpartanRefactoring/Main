@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author kobybs
  * @since 20-11-2016 */
 public class AnnotationSort extends ReplaceCurrentNode<MethodDeclaration> //
-implements TipperCategory.Sorting {
+    implements TipperCategory.Sorting {
   static final Comparator<IExtendedModifier> comp = (m1, m2) -> rank(m1) - rank(m2) != 0 ? rank(m1) - rank(m2) : (m1 + "").compareTo(m2 + "");
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
