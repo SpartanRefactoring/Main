@@ -32,6 +32,7 @@ import il.org.spartan.utils.*;
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
+ * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 public abstract class AbstractGUIApplicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
