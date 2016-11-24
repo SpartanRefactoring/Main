@@ -16,13 +16,8 @@ import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.utils.*;
 
 public class LibrariesManagement {
-  // TODO: update version 2.6.3 upon release. DO NOT remove this todo.
-  public static final IPath FEATURE_PATH = new Path("features/SpartanFeature_2.6.4.jar");
-  public static final IPath INSTALLATION_FOLDER;
-  public static final String LIBRARY_NAME = "Spartan Libraries";
-  static {
-    INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
-  }
+  static final String[] librariesNames = { "SpartanRefactoring" };
+  static final String[] librariesPathSuffices = { "" };
 
   public static IPath getPluginJarPath() throws IOException {
     return new Path(FileLocator.resolve(FileLocator.find(Plugin.plugin().getBundle(), new Path(""), null)).getPath().replaceAll("!.*", "")
@@ -54,7 +49,6 @@ public class LibrariesManagement {
     return removeLibrary(new Path(path));
   }
 
-<<<<<<< HEAD
   /** 
    * @throws IOException */
   public static void initializeUserLibraries() throws CoreException, IOException {
@@ -84,34 +78,6 @@ public class LibrariesManagement {
             }
           });
     }
-=======
-  /** [[SuppressWarningsSpartan]] --bug*/
-  public static void initializeUserLibraries() throws CoreException {
-    final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
-    @SuppressWarnings("restriction") List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
-    final String libraryName = LIBRARY_NAME;
-    if (userLibrariesNames.contains(libraryName))
-      return;
-    final IPath libraryPath = INSTALLATION_FOLDER.append(FEATURE_PATH);
-    final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
-    initializer.requestClasspathContainerUpdate(containerPath.append(libraryName), null, new IClasspathContainer() {
-      @Override public IPath getPath() {
-        return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
-      }
-
-      @Override public int getKind() {
-        return K_APPLICATION;
-      }
-
-      @Override public String getDescription() {
-        return libraryName;
-      }
-
-      @Override public IClasspathEntry[] getClasspathEntries() {
-        return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
-      }
-    });
->>>>>>> c10ec559e5c6585ea2048caf199c13ff9df67f6f
   }
 
   private static boolean touchLibrary(final IPath path, final BiConsumer<List<IClasspathEntry>, IPath> operation) {
