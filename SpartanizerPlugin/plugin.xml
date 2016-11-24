@@ -345,7 +345,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.old.SpartanizeableAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.SpartanizationHandler"/>
-   <handler commandId="il.org.spartan.AthensGlobal" class="il.org.spartan.spartanizer.athenizer.AthensHandler"/>
+   <handler commandId="il.org.spartan.AthensGlobal" class="il.org.spartan.athenizer.AthensHandler"/>
 </extension>
 
 <!-- Menus -->

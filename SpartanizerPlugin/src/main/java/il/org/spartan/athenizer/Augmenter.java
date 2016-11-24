@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.athenizer;
+package il.org.spartan.athenizer;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
