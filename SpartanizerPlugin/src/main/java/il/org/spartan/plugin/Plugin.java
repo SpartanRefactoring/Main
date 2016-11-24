@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import java.io.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -45,6 +47,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       LibrariesManagement.initializeUserLibraries();
     } catch (CoreException x) {
       monitor.log(x);
+    } catch (IOException x) {
+      // TODO Auto-generated catch block
+      x.printStackTrace();
     }
   }
 

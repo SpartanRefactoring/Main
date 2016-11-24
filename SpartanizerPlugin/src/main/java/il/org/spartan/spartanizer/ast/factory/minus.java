@@ -72,9 +72,8 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> xs) {
-    final List<Expression> $ = xs.stream().map(minus::peel).collect(Collectors.toList());
-    return $;
+  private static List<Expression> peel(final List<Expression> ¢) {
+    return ¢.stream().map(minus::peel).collect(Collectors.toList());
   }
 
   public static Expression peel(final NumberLiteral $) {
