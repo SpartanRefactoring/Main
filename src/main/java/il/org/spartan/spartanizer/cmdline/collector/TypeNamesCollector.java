@@ -54,8 +54,8 @@ public final class TypeNamesCollector {
   private static void collect(final File f) {
     try {
       collect(FileUtils.read(f));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
+    } catch (final IOException ¢) {
+      System.err.println(¢.getMessage());
     }
   }
 

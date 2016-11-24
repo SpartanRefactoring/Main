@@ -24,7 +24,8 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class TipperFactory {
-  public static <N extends ASTNode> UserDefinedTipper<N> statementsPattern(final String _pattern, final String _replacement, final String description) {
+  public static <N extends ASTNode> UserDefinedTipper<N> statementsPattern(final String _pattern, final String _replacement,
+      final String description) {
     return newSubBlockTipper(_pattern, _replacement, description);
   }
 

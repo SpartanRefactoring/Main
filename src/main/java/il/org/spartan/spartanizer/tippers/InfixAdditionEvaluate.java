@@ -30,8 +30,8 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
     try {
       for (final Expression ¢ : xs)
         $ += az.throwing.double¢(¢);
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
@@ -44,8 +44,8 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.int¢(¢);
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
@@ -58,8 +58,8 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.long¢(¢);
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
