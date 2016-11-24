@@ -393,9 +393,9 @@ import junit.framework.TestSuite;
     }.test();
   }
 
-  @SuppressWarnings("unchecked") @GwtIncompatible // unreasonably slow
+  @GwtIncompatible 
+  @SuppressWarnings("unchecked") 
   public void testAsSetIteration() {
-    // XXX: spartanized
     new IteratorTester<Entry<String, Collection<Integer>>>(6, MODIFIABLE,
         Sets.newLinkedHashSet(asList(Maps.immutableEntry("foo", (Collection<Integer>) asList(2, 3, 6)),
             Maps.immutableEntry("bar", (Collection<Integer>) asList(4, 5, 10, 11)), Maps.immutableEntry("baz", (Collection<Integer>) asList(7, 8)),
