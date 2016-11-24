@@ -4,5 +4,5 @@ import il.org.spartan.plugin.*;
 
 public interface Application {
   Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s);
-  boolean checkServiceAvailable(final WrappedCompilationUnit u);
+  boolean checkServiceAvailable(final AbstractSelection<?> s);
 }
