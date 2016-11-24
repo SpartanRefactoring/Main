@@ -39,7 +39,7 @@ public class SpartanizationsTest {
   // $.setMarker(null);
   // int suggestions = $.countSuggestions();
   //// List<Rewrite> suggestions = null;
-  //// suggestions = $.collectSuggesions(u);
+  //// suggestions = $.collectSuggestions(u);
   //// System.err.println("number of suggestions: " + suggestions.size());
   // System.err.println("number of suggestions: " + suggestions);
   // assert (suggestions> 0);
