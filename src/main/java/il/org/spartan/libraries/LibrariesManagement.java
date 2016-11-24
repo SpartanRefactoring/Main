@@ -49,8 +49,7 @@ public class LibrariesManagement {
     return removeLibrary(new Path(path));
   }
 
-  /** 
-   * @throws IOException */
+  /** @throws IOException */
   public static void initializeUserLibraries() throws CoreException, IOException {
     final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
     @SuppressWarnings("restriction") final List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
@@ -59,7 +58,7 @@ public class LibrariesManagement {
       if (userLibrariesNames.contains(libraryName))
         continue;
       final IPath libraryPath = getPluginJarPath().append(librariesPathSuffices[0]);
-      initializer.requestClasspathContainerUpdate((new Path(JavaCore.USER_LIBRARY_CONTAINER_ID)).append(libraryName), null,
+      initializer.requestClasspathContainerUpdate(new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName), null,
           new IClasspathContainer() {
             @Override public IPath getPath() {
               return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
