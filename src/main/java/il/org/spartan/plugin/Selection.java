@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -27,16 +28,12 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public Selection buildAll() {
-    for (final WrappedCompilationUnit ¢ : inner)
-      ¢.build();
+    inner.forEach(WrappedCompilationUnit::build);
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    for (final WrappedCompilationUnit ¢ : inner)
-      $.add(¢.descriptor);
-    return $;
+    return inner.stream().map(¢ -> ¢.descriptor).collect(Collectors.toList());
   }
 
   /** Factory method.
