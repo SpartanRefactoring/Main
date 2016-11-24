@@ -16,7 +16,7 @@ public class Issue050 {
 
   @Test public void a$50_EnumInInterface1() {
     trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}")//
-    .gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
+        .gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
         .stays()//
     ;
   }

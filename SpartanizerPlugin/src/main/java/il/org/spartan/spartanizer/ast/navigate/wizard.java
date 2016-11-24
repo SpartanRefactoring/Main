@@ -480,8 +480,8 @@ public interface wizard {
     if (iz.enumDeclaration(container)) {
       $.add(isProtected);
       if (iz.constructor(¢)) {
-      $.add(isPublic);
-      $.add(isPrivate);
+        $.add(isPublic);
+        $.add(isPrivate);
       }
     }
     if (iz.interface¢(container)) {

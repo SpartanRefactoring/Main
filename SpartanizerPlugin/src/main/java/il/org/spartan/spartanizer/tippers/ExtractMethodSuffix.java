@@ -51,7 +51,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
-            : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
+        : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
