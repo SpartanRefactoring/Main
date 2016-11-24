@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
@@ -32,7 +32,7 @@ public enum prune {
    * @param <C> JD
    * @param ts JD */
   @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
-    for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+    for (@NotNull final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
     return ts;
@@ -46,8 +46,8 @@ public enum prune {
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
   @NotNull public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
-    final ArrayList<T> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final ArrayList<T> $ = new ArrayList<>();
+    for (@org.jetbrains.annotations.Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
@@ -61,17 +61,19 @@ public enum prune {
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
   @NotNull public static <T> T[] nulls(@NotNull final T[] ts) {
-    final List<T> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final List<T> $ = new ArrayList<>();
+    for (@org.jetbrains.annotations.Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return cantBeNull($.toArray(shrink(ts)));
   }
 
-  /** @param ss JD */
-  @NotNull @SafeVarargs public static String[] whites(@NotNull final String... ss) {
-    final List<String> $ = new ArrayList<>();
-    for (final String ¢ : ss)
+  /**
+   * @param ss  JD 
+   */
+  @SafeVarargs @NotNull public static String[] whites(@NotNull final String... ss) {
+    @NotNull final List<String> $ = new ArrayList<>();
+    for (@org.jetbrains.annotations.Nullable final String ¢ : ss)
       if (¢ != null)
         accumulate.to($).add(¢.trim());
     return asArrray($);
@@ -96,8 +98,8 @@ public enum prune {
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
-      @NotNull @Override protected List<@Nullable String> ____() {
-        final List<@Nullable String> $ = new ArrayList<>();
+      @Override @NotNull protected List<@Nullable String> ____() {
+        @NotNull final List<@Nullable String> $ = new ArrayList<>();
         $.add(null);
         $.add(null);
         $.add(null);
@@ -142,7 +144,7 @@ public enum prune {
     }
 
     @Test public void nullsPruneSparseCollectionContents() {
-      final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
+      @NotNull final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
       assertEquals("A", a[0]);
       assertEquals("B", a[1]);
       assertEquals("C", a[2]);

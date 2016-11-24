@@ -19,8 +19,8 @@ import il.org.spartan.streotypes.*;
     this.value = defaults.to(value, "");
   }
 
-  @Nullable @Override public String toString() {
-    final String $ = value;
+  @Override @Nullable public String toString() {
+    @Nullable final String $ = value;
     value = null;
     return $;
   }

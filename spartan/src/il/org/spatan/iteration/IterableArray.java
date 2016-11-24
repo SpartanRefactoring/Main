@@ -23,7 +23,7 @@ public class IterableArray<T> implements Iterable<T> {
     return ts.length;
   }
 
-  @NotNull @Override public ArrayIterator<T> iterator() {
+  @Override @NotNull public ArrayIterator<T> iterator() {
     return new ArrayIterator<>(ts);
   }
 

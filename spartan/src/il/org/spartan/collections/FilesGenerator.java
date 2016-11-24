@@ -50,7 +50,7 @@ public class FilesGenerator {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     as.iterable(directory.list());
-    final Iterator<String> generator = as.list(directory.list()).iterator();
+    @NotNull final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
       @org.jetbrains.annotations.Nullable File next;
 
@@ -66,21 +66,21 @@ public class FilesGenerator {
         }
       }
 
-      @org.jetbrains.annotations.Nullable @Override public File next() {
+      @Override @org.jetbrains.annotations.Nullable public File next() {
         return next;
       }
     };
   }
 
   @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
-    final List<File> $ = new ArrayList<>();
-    for (final String fileName : fileNames)
+    @NotNull final List<File> $ = new ArrayList<>();
+    for (@NotNull final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
 
   /** Which extensions we search for */
-  final Iterable<String> extensions;
+  @NotNull final Iterable<String> extensions;
 
   /** Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
@@ -126,7 +126,7 @@ public class FilesGenerator {
       this.from = from;
     }
 
-    @NotNull @Override public Iterator<File> iterator() {
+    @Override @NotNull public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }
 
@@ -162,7 +162,7 @@ public class FilesGenerator {
       }
 
       private boolean ofInterest() {
-        for (final String extension : extensions)
+        for (@NotNull final String extension : extensions)
           if (next.getName().endsWith(extension))
             return true;
         return false;

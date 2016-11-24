@@ -30,7 +30,7 @@ public class ConstantPoolEntity extends FlaggedEntity {
     return constantPool.getReferencedClasses();
   }
 
-  public int[] getReferencedClassesIndices() {
+  @NotNull public int[] getReferencedClassesIndices() {
     return constantPool.getReferencedClassesIndices();
   }
 

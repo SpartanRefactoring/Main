@@ -26,13 +26,13 @@ public class ConstantPoolReader extends RobustReader {
   }
 
   @NotNull public AttributeInfo[] readAttributes() {
-    final AttributeInfo[] $ = new AttributeInfo[readUnsignedShort()];
+    @NotNull final AttributeInfo[] $ = new AttributeInfo[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = readAttribute();
     return $;
   }
 
-  public byte[] readBytesArrray() {
+  @NotNull public byte[] readBytesArrray() {
     return readBytes(new byte[readInt()]);
   }
 
@@ -41,7 +41,7 @@ public class ConstantPoolReader extends RobustReader {
   }
 
   @NotNull public ClassConstant[] readClasses() {
-    final ClassConstant[] $ = new ClassConstant[readUnsignedShort()];
+    @NotNull final ClassConstant[] $ = new ClassConstant[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = readClassConstant();
     return $;
@@ -56,7 +56,7 @@ public class ConstantPoolReader extends RobustReader {
   }
 
   @NotNull public TypedEntity[] readMembers() {
-    final TypedEntity[] $ = new TypedEntity[readUnsignedShort()];
+    @NotNull final TypedEntity[] $ = new TypedEntity[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = new TypedEntity(constantPool, readUnsignedShort(), readStringConstant(), readStringConstant(), readAttributes());
     return $;

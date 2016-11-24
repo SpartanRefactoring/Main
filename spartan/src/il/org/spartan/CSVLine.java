@@ -33,7 +33,6 @@ import il.org.spartan.utils.Separate.*;
   protected final Aggregator aggregator = new Aggregator();
 
   /** Instantiate {@link CSVLine}.
-   * @param renderer
    * @param map which implementation should we use for storing values */
   CSVLine(final Map<String, String> map) {
     this.map = map;
@@ -51,7 +50,7 @@ import il.org.spartan.utils.Separate.*;
     return !aggregator.isEmpty();
   }
 
-  public Iterable<Aggregation> aggregations() {
+  @NotNull public Iterable<Aggregation> aggregations() {
     return aggregator.aggregations();
   }
 
@@ -68,7 +67,7 @@ import il.org.spartan.utils.Separate.*;
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T t) {
-    for (final Entry<String, String> ¢ : External.Introspector.toOrderedMap(t).entrySet())
+    for (@NotNull final Entry<String, String> ¢ : External.Introspector.toOrderedMap(t).entrySet())
       put(¢.getKey(), ¢.getValue());
     return t;
   }
@@ -77,7 +76,7 @@ import il.org.spartan.utils.Separate.*;
     return map.get(key);
   }
 
-  @Override public Collection<String> keys() {
+  @Override @NotNull public Collection<String> keys() {
     return map.keySet();
   }
 
@@ -86,7 +85,7 @@ import il.org.spartan.utils.Separate.*;
   }
 
   @NotNull public CSVLine put(@NotNull final Accumulator... as) {
-    for (final Accumulator ¢ : as)
+    for (@NotNull final Accumulator ¢ : as)
       put(¢);
     return this;
   }
@@ -123,9 +122,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                 *
-                 * &#64;param key
-                 *          The key to be added; must not be <code><b>null</b></code>
+                     *
+                     * &#64;param key
+                     *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public CSVLine put(final String key, final double value) {
@@ -133,9 +132,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                 *
-                 * &#64;param key
-                 *          The key to be added; must not be <code><b>null</b></code>
+                     *
+                     * &#64;param key
+                     *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param ss Which (if any) aggregate statistics should be produced for this
    *        column
@@ -146,9 +145,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                 *
-                 * &#64;param key
-                 *          The key to be added; must not be <code><b>null</b></code>
+                     *
+                     * &#64;param key
+                     *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param format How should the value be formatted
    * @param ss Which (if any) aggregate statistics should be produced for this
@@ -161,9 +160,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a general <code><b>float</b><code> value to this instance
-                 *
-                 * &#64;param key
-                 *          The key to be added; must not be <code><b>null</b></code>
+                     *
+                     * &#64;param key
+                     *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   @NotNull public final CSVLine put(final String key, final float value) {
@@ -233,11 +232,13 @@ import il.org.spartan.utils.Separate.*;
     return put(key, value + "");
   }
 
-  /** A mutator to add a key and a general {@link String} value to this instance
-   * @param key The key to be added; must not be <code><b>null</b></code>
-   * @param value The value associated with the key
-   * @return this */
-  @NotNull @Override public final CSVLine put(final String key, final String value) {
+  /**
+   * A mutator to add a key and a general  {@link String}  value to this instance
+   * @param key  The key to be added; must not be <code><b>null</b></code>
+   * @param value  The value associated with the key
+   * @return  this 
+   */
+  @Override @NotNull public final CSVLine put(final String key, final String value) {
     map.put(key, value);
     return this;
   }
@@ -255,11 +256,11 @@ import il.org.spartan.utils.Separate.*;
     return map.size();
   }
 
-  @Override public Collection<String> values() {
+  @Override @NotNull public Collection<String> values() {
     return map.values();
   }
 
-  protected void addAggregates(final AbstractStringProperties to, final Aggregation a) {
+  protected void addAggregates(@NotNull final AbstractStringProperties to, @NotNull final Aggregation a) {
     aggregator.addAggregates(map.keySet(), to, a);
   }
 

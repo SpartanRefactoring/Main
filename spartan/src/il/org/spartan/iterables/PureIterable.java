@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
 import java.util.*;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.*;
  * @since 2014-06-03
  * @param <T> some arbitrary type */
 public interface PureIterable<@NonNull T> extends Iterable<T> {
-  @NotNull @Override PureIterator<@NonNull T> iterator();
+  @Override @NotNull PureIterator<@NonNull T> iterator();
 
   /** A kind of {@link PureIterable} which provides an additional
    * {@link #size()} service.
@@ -38,9 +38,10 @@ public interface PureIterable<@NonNull T> extends Iterable<T> {
    * @since 2014-06-20
    * @param <T> some arbitrary type */
   abstract class Sized<T> implements PureIterable<T> {
-    /** see @see il.org.spartan.iterables.PureIterable#iterator()
-     * (auto-generated) */
-    @NotNull @Override public @NonNull PureIterator<@NonNull T> iterator() {
+    /**
+     * see @see il.org.spartan.iterables.PureIterable#iterator() (auto-generated) 
+     */
+    @Override @NotNull @NonNull public PureIterator<@NonNull T> iterator() {
       return null;
     }
 

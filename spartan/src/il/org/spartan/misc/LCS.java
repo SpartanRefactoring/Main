@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
@@ -51,7 +51,7 @@ public class LCS {
   }
 
   @NotNull private static int[] hash(@NotNull final String[] ss) {
-    final int @NonNull [] $ = new int @NonNull [ss.length];
+    @NotNull final int @NonNull [] $ = new int @NonNull [ss.length];
     for (int i = 0; i < $.length; ++i) {
       @SuppressWarnings("null") final @NonNull String s = ss[i];
       $[i] = hash(s);
@@ -119,7 +119,7 @@ public class LCS {
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(@NotNull final String s) {
-      final StringBuilder $ = new StringBuilder();
+      @NotNull final StringBuilder $ = new StringBuilder();
       for (final char ¢ : s.toCharArray())
         $.append(¢).append('\n');
       return Lines.scatter(as.string($));
@@ -154,7 +154,7 @@ public class LCS {
     }
 
     @Test public void lengthIdenticalIntegers() {
-      final int @NonNull [] is = new int @NonNull [] { 12, 13, 14, 8, 11, 60, 30 };
+      @NotNull final int @NonNull [] is = new int @NonNull [] { 12, 13, 14, 8, 11, 60, 30 };
       azzert.that(length(is, is), is(is.length));
     }
 
@@ -201,7 +201,7 @@ public class LCS {
     @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleA() {
       // Common string is: "A"
-      final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
+      @NotNull final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       azzert.notNull(lcs);
       azzert.that(lcs.A_s.length, is(1));
       azzert.that(lcs.B_s.length, is(1));
@@ -211,7 +211,7 @@ public class LCS {
     @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleB() {
       // Common string is: "A"
-      final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
+      @NotNull final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       azzert.that(lcs.length(lcs.A_s.length - 1, lcs.B_s.length - 1), is(1));
     }
 

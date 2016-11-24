@@ -28,19 +28,15 @@ public class Pair<First, Second> {
     this.second = second;
   }
 
-  @Override public boolean equals(@Nullable final Object o) {
-    if (o == this)
-      return true;
-    if (o == null || !getClass().equals(o.getClass()))
-      return false;
-    return eq(first, ((Pair<?, ?>) o).first) && eq(second, ((Pair<?, ?>) o).second);
+  @Override public boolean equals(@Nullable final Object ¢) {
+    return ¢ == this || ¢ != null && getClass().equals(¢.getClass()) && eq(first, ((Pair<?, ?>) ¢).first) && eq(second, ((Pair<?, ?>) ¢).second);
   }
 
   @Override public int hashCode() {
     return second.hashCode() ^ first.hashCode() >>> 1;
   }
 
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return "<" + first + "," + second + ">";
   }
 }

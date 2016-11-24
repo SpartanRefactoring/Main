@@ -73,7 +73,7 @@ public class Ergodic {
     for (;;) {
       if ($.size() >= i)
         break;
-      final Double d = selectDouble($);
+      @Nullable final Double d = selectDouble($);
       if (d == null)
         break;
       $.add(d);
@@ -85,7 +85,7 @@ public class Ergodic {
     for (;;) {
       if ($.size() >= n)
         break;
-      final Integer i = select($);
+      @Nullable final Integer i = select($);
       if (i == null)
         break;
       $.add(i);
@@ -110,7 +110,7 @@ public class Ergodic {
   }
 
   private static Integer select(@NotNull final List<Integer> l) {
-    final List<Integer> is = new ArrayList<>(l);
+    @NotNull final List<Integer> is = new ArrayList<>(l);
     Collections.sort(is);
     final float maxDiff = maxDiff(is);
     return maxDiff < 0 ? null : selectDiff(is, maxDiff, new Random(0).nextInt(countDiff(is, maxDiff)));
@@ -137,7 +137,7 @@ public class Ergodic {
   }
 
   private static Double selectDouble(@NotNull final List<Double> ds) {
-    final List<Double> is = new ArrayList<>(ds);
+    @NotNull final List<Double> is = new ArrayList<>(ds);
     Collections.sort(is);
     final double maxDiff = maxDiffDouble(is);
     return maxDiff < 0 ? null : selectDiffDouble(is, maxDiff, new Random(0).nextInt(countDiffDouble(is, maxDiff)));

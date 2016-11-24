@@ -28,7 +28,7 @@ public final class TokenFeeder {
 
   @NotNull public TokenFeeder go() {
     processor.before();
-    for (Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
+    for (@Nullable Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
       processor.process(¢, tokenizer.text());
     processor.after();
     return this;

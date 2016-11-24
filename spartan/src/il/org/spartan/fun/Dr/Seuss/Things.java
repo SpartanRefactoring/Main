@@ -57,8 +57,8 @@ public class Things {
     for (int i = 0; i <= things.length; ++i) {
       final int f = i - 1;
       final int t = i;
-      final Thing first = idiomatic.eval(() -> things[f]).unless(i == 0);
-      final Thing second = idiomatic.eval(() -> things[t]).unless(i == things.length);
+      @Nullable final Thing first = idiomatic.eval(() -> things[f]).unless(i == 0);
+      @Nullable final Thing second = idiomatic.eval(() -> things[t]).unless(i == things.length);
       assert things.length == 0 == (first == null && second == null);
       doSomethingWithPair(first, second);
     }

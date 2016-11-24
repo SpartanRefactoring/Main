@@ -2,6 +2,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -31,13 +32,13 @@ public class Primes {
     }
 
     @Test public void secondIsThree() {
-      final Primes p = new Primes();
+      @NotNull final Primes p = new Primes();
       p.next();
       azzert.that(p.next(), is(3));
     }
 
     @Test public void thirdIsFive() {
-      final Primes p = new Primes();
+      @NotNull final Primes p = new Primes();
       p.next();
       p.next();
       azzert.that(p.next(), is(5));

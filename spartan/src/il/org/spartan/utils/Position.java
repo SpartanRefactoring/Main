@@ -42,7 +42,7 @@ public final class Position implements Comparable<Position>, Serializable {
     return new Position(line + 1, 1);
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return "(" + line + ":" + column + ")";
   }
 }

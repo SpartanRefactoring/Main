@@ -42,14 +42,14 @@ import il.org.spartan.utils.*;
    * @param ss a variable number of strings
    * @return the concatenation of the strings in <code>ss</code> */
   @NotNull public static String cat(@NotNull final String... ss) {
-    final StringBuilder $ = new StringBuilder("");
+    @NotNull final StringBuilder $ = new StringBuilder("");
     for (final String ¢ : ss)
       $.append(¢);
     return $ + "";
   }
 
   @NotNull public static String cat(@NotNull final String[]... sss) {
-    final StringBuilder $ = new StringBuilder("");
+    @NotNull final StringBuilder $ = new StringBuilder("");
     for (final String[] ¢ : sss)
       $.append(cat(¢));
     return $ + "";
@@ -89,7 +89,7 @@ import il.org.spartan.utils.*;
   @NotNull public static String esc(@Nullable final String s) {
     if (s == null)
       return "(null)";
-    final StringBuilder $ = new StringBuilder(s.length());
+    @NotNull final StringBuilder $ = new StringBuilder(s.length());
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       $.append(esc(s.charAt(¢)));
     return $ + "";
@@ -110,7 +110,7 @@ import il.org.spartan.utils.*;
   }
 
   @NotNull public static String fill(final int i, final String s) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.append(s);
     return $ + "";
@@ -193,17 +193,17 @@ import il.org.spartan.utils.*;
 
   /** Compute the string equivalent ordinal of a positive integer, e.g., for 1
    * return "1st", for 22, the "22nd", etc.
-   * @param i a non-negative integer to convert
+   * @param ¢ a non-negative integer to convert
    * @return the ordinal string representation of <code>n</code> */
-  @NotNull public static String ordinal(final int i) {
-    nonnegative(i);
-    switch (i % 10) {
+  @NotNull public static String ordinal(final int ¢) {
+    nonnegative(¢);
+    switch (¢ % 10) {
       case 1:
-        return i + (i == 11 ? "th" : "st");
+        return ¢ + (¢ == 11 ? "th" : "st");
       case 2:
-        return i + (i == 12 ? "th" : "nd");
+        return ¢ + (¢ == 12 ? "th" : "nd");
       default:
-        return i + "th";
+        return ¢ + "th";
     }
   }
 
@@ -254,9 +254,9 @@ import il.org.spartan.utils.*;
       return "";
     if (a.size() == 1)
       return "1 " + singular + ": " + a.iterator().next() + "\n";
-    String $ = a.size() + " " + plural + ":\n";
+    @NotNull String $ = a.size() + " " + plural + ":\n";
     int n = 0;
-    final Once ellipsis = new Once("\t...\n");
+    @NotNull final Once ellipsis = new Once("\t...\n");
     for (final Object ¢ : a) {
       ++n;
       $ += n > MAX_FIRST && n <= a.size() - MAX_LAST ? ellipsis : "\t" + n + ") " + ¢ + "\n";
@@ -282,7 +282,7 @@ import il.org.spartan.utils.*;
    * @return a {@link String} containing <code>s</code> concatenated
    *         <code>n</code> times */
   @NotNull public static String repeat(final int i, final String s) {
-    final StringBuffer $ = new StringBuffer();
+    @NotNull final StringBuffer $ = new StringBuffer();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.append(s);
     return $ + "";
@@ -312,7 +312,7 @@ import il.org.spartan.utils.*;
       case 1:
         return args[0];
       default:
-        final Object os[] = new Object[args.length - 1];
+        @NotNull final Object os[] = new Object[args.length - 1];
         for (int ¢ = 1; ¢ < args.length; ++¢)
           os[¢ - 1] = args[¢];
         return new Formatter().format(args[0], os) + "";
@@ -330,8 +330,8 @@ import il.org.spartan.utils.*;
   }
 
   @NotNull public static List<String> toLines(@NotNull final String s) throws IOException {
-    final List<String> $ = new ArrayList<>();
-    for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
+    @NotNull final List<String> $ = new ArrayList<>();
+    for (@NotNull final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
       if (line == null)
         return $;
@@ -363,10 +363,10 @@ import il.org.spartan.utils.*;
   }
 
   @NotNull private static String tolow(final int ¢) {
-    return ¢ == 0 ? "" : tolow(¢ / 26) + (char) ('a' + ¢ % 26);
+    return ¢ == 0 ? "" : tolow(¢ / 26) + (char) (¢ % 26 + 'a');
   }
 
   @NotNull private static String toup(final int ¢) {
-    return ¢ == 0 ? "" : toup(¢ / 26) + (char) ('A' + ¢ % 26);
+    return ¢ == 0 ? "" : toup(¢ / 26) + (char) (¢ % 26 + 'A');
   }
 }

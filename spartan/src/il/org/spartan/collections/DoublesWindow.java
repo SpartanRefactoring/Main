@@ -152,7 +152,7 @@ public class DoublesWindow {
     }
 
     @Test public void veryLongWindow() {
-      final DoublesWindow w = new DoublesWindow(5);
+      @NotNull final DoublesWindow w = new DoublesWindow(5);
       for (int ¢ = 0; ¢ < 5; ++¢) {
         azzert.that(w.capacity(), is(5));
         azzert.that(w.size(), is(¢));

@@ -108,12 +108,12 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   }
 
   @NotNull private static <E> E[] asArray(@NotNull final Collection<? extends E> ¢) {
-    @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
+    @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
     return $.getClass() == Object[].class ? $ : recopy($);
   }
 
   @NotNull private static <E> E[] recopy(@NotNull final E[] a) {
-    @SuppressWarnings("unchecked") final E[] $ = (E[]) Arrays.copyOf(a, a.length, Object[].class);
+    @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) Arrays.copyOf(a, a.length, Object[].class);
     return $;
   }
 
@@ -136,7 +136,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   }
 
   /** Appends the specified element to the end of this list.
-   * @param e element to be appended to this list
+   * @param __ to be appended to this list
    * @return never returns */
   @Override public boolean add(final E __) {
     return fail();
@@ -158,7 +158,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * collection is modified while the operation is in progress. (This implies
    * that the behavior of this call is undefined if the specified collection is
    * this list, and this list is nonempty.)
-   * @param es collection containing elements to be added to this list
+   * @param __ collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws NullPointerException if the specified collection is null */
   @Override public boolean addAll(final Collection<? extends E> __) {
@@ -172,7 +172,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * are returned by the specified collection's iterator.
    * @param index index at which to insert the first element from the specified
    *        collection
-   * @param es collection containing elements to be added to this list
+   * @param __ collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws IndexOutOfBoundsException {@inheritDoc}
    * @throws NullPointerException if the specified collection is null */
@@ -186,10 +186,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     fail();
   }
 
-  /** Returns a shallow copy of this <tt>ArrayList</tt> instance. (The elements
-   * themselves are not copied.)
-   * @return a clone of this <tt>ArrayList</tt> instance */
-  @NotNull @Override public ImmutableArrayList<E> clone() {
+  /**
+   * Returns a shallow copy of this <tt>ArrayList</tt> instance. (The elements themselves are not copied.)
+   * @return  a clone of this <tt>ArrayList</tt> instance 
+   */
+  @Override @NotNull public ImmutableArrayList<E> clone() {
     return this;
   }
 
@@ -255,11 +256,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return size() == 0;
   }
 
-  /** Returns an iterator over the elements in this list in proper sequence.
-   * <p>
-   * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
-   * @return an iterator over the elements in this list in proper sequence */
-  @NotNull @Override public Iterator<E> iterator() {
+  /**
+   * Returns an iterator over the elements in this list in proper sequence. <p> The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+   * @return  an iterator over the elements in this list in proper sequence 
+   */
+  @Override @NotNull public Iterator<E> iterator() {
     return new InternalIterator();
   }
 
@@ -280,36 +281,31 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return -1;
   }
 
-  /** Returns a list iterator over the elements in this list (in proper
-   * sequence).
-   * <p>
-   * The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
-   * @see #listIterator(int) */
-  @NotNull @Override public ListIterator<E> listIterator() {
+  /**
+   * Returns a list iterator over the elements in this list (in proper sequence). <p> The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+   * @see #listIterator(int)  
+   */
+  @Override @NotNull public ListIterator<E> listIterator() {
     return new InternalListIterator(0);
   }
 
-  /** Returns a list iterator over the elements in this list (in proper
-   * sequence), starting at the specified position in the list. The specified
-   * index indicates the first element that would be returned by an initial call
-   * to {@link ListIterator#next next}. An initial call to
-   * {@link ListIterator#previous previous} would return the element with the
-   * specified index minus one.
-   * <p>
-   * The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
-   * @throws IndexOutOfBoundsException {@inheritDoc} */
-  @NotNull @Override public ListIterator<E> listIterator(final int index) {
+  /**
+   * Returns a list iterator over the elements in this list (in proper sequence), starting at the specified position in the list. The specified index indicates the first element that would be returned by an initial call to  {@link ListIterator#next  next} . An initial call to {@link ListIterator#previous  previous}  would return the element with the specified index minus one. <p> The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+   * @throws IndexOutOfBoundsException   {@inheritDoc}  
+   */
+  @Override @NotNull public ListIterator<E> listIterator(final int index) {
     if (index < 0 || index > size())
       throw new IndexOutOfBoundsException("Index: " + index);
     return new InternalListIterator(index);
   }
 
-  /** Removes the element at the specified position in this list. Shifts any
-   * subsequent elements to the left (subtracts one from their indices).
-   * @param index the index of the element to be removed
-   * @return the element that was removed from the list
-   * @throws IndexOutOfBoundsException {@inheritDoc} */
-  @org.jetbrains.annotations.Nullable @Override public E remove(final int index) {
+  /**
+   * Removes the element at the specified position in this list. Shifts any subsequent elements to the left (subtracts one from their indices).
+   * @param index  the index of the element to be removed
+   * @return  the element that was removed from the list
+   * @throws IndexOutOfBoundsException   {@inheritDoc}  
+   */
+  @Override @org.jetbrains.annotations.Nullable public E remove(final int index) {
     fail();
     return null;
   }
@@ -322,7 +318,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * (if such an element exists). Returns <tt>true</tt> if this list contained
    * the specified element (or equivalently, if this list changed as a result of
    * the call).
-   * @param o element to be removed from this list, if present
+   * @param __ to be removed from this list, if present
    * @return <tt>true</tt> if this list contained the specified element */
   @Override public boolean remove(final Object __) {
     return fail();
@@ -330,7 +326,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
 
   /** Removes from this list all of its elements that are contained in the
    * specified collection.
-   * @param c collection containing elements to be removed from this list
+   * @param __ containing elements to be removed from this list
    * @return {@code true} if this list changed as a result of the call
    * @throws ClassCastException if the class of an element of this list is
    *         incompatible with the specified collection (optional)
@@ -345,7 +341,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   /** Retains only the elements in this list that are contained in the specified
    * collection. In other words, removes from this list all of its elements that
    * are not contained in the specified collection.
-   * @param c collection containing elements to be retained in this list
+   * @param __ containing elements to be retained in this list
    * @return {@code true} if this list changed as a result of the call
    * @throws ClassCastException if the class of an element of this list is
    *         incompatible with the specified collection (optional)
@@ -357,13 +353,14 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return fail();
   }
 
-  /** Replaces the element at the specified position in this list with the
-   * specified element.
-   * @param index index of the element to replace
-   * @param element element to be stored at the specified position
-   * @return the element previously at the specified position
-   * @throws IndexOutOfBoundsException {@inheritDoc} */
-  @org.jetbrains.annotations.Nullable @Override public E set(final int index, final E element) {
+  /**
+   * Replaces the element at the specified position in this list with the specified element.
+   * @param index  index of the element to replace
+   * @param element  element to be stored at the specified position
+   * @return  the element previously at the specified position
+   * @throws IndexOutOfBoundsException   {@inheritDoc}  
+   */
+  @Override @org.jetbrains.annotations.Nullable public E set(final int index, final E element) {
     fail();
     return null;
   }
@@ -374,47 +371,28 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return data.length;
   }
 
-  @NotNull @SuppressWarnings("unused") //
-  @Override public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
+  @Override @NotNull @SuppressWarnings("unused") public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
     fail();
     return null;
   }
 
-  /** Returns an array containing all of the elements in this list in proper
-   * sequence (from first to last element).
-   * <p>
-   * The returned array will be "safe" in that no references to it are
-   * maintained by this list. (In other words, this method must allocate a new
-   * array). The caller is thus free to modify the returned array.
-   * <p>
-   * This method acts as bridge between array-based and collection-based APIs.
-   * @return an array containing all of the elements in this list in proper
-   *         sequence */
-  @NotNull @Override public E[] toArray() {
+  /**
+   * Returns an array containing all of the elements in this list in proper sequence (from first to last element). <p> The returned array will be "safe" in that no references to it are maintained by this list. (In other words, this method must allocate a new array). The caller is thus free to modify the returned array. <p> This method acts as bridge between array-based and collection-based APIs.
+   * @return  an array containing all of the elements in this list in proper sequence 
+   */
+  @Override @NotNull public E[] toArray() {
     return Arrays.copyOf(data, size());
   }
 
-  /** Returns an array containing all of the elements in this list in proper
-   * sequence (from first to last element); the runtime type of the returned
-   * array is that of the specified array. If the list fits in the specified
-   * array, it is returned therein. Otherwise, a new array is allocated with the
-   * runtime type of the specified array and the size of this list.
-   * <p>
-   * If the list fits in the specified array with room to spare (i.e., the array
-   * has more elements than the list), the element in the array immediately
-   * following the end of the collection is set to <tt>null</tt>. (This is
-   * useful in determining the length of the list <i>only</i> if the caller
-   * knows that the list does not contain any null elements.)
-   * @param a the array into which the elements of the list are to be stored, if
-   *        it is big enough; otherwise, a new array of the same runtime type is
-   *        allocated for this purpose.
-   * @return an array containing the elements of the list
-   * @throws ArrayStoreException if the runtime type of the specified array is
-   *         not a supertype of the runtime type of every element in this list
-   * @throws NullPointerException if the specified array is null */
-  @NotNull @Override @SuppressWarnings("unchecked") public <T> T[] toArray(final T[] a) {
+  /**
+   * Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array. If the list fits in the specified array, it is returned therein. Otherwise, a new array is allocated with the runtime type of the specified array and the size of this list. <p> If the list fits in the specified array with room to spare (i.e., the array has more elements than the list), the element in the array immediately following the end of the collection is set to <tt>null</tt>. (This is useful in determining the length of the list <i>only</i> if the caller knows that the list does not contain any null elements.)
+   * @param a  the array into which the elements of the list are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.
+   * @return  an array containing the elements of the list
+   * @throws ArrayStoreException  if the runtime type of the specified array is not a supertype of the runtime type of every element in this list
+   * @throws NullPointerException  if the specified array is null 
+   */
+  @Override @NotNull @SuppressWarnings("unchecked") public <T> T[] toArray(final T[] a) {
     if (a.length < size())
-      // Make a new array of a's runtime type, but my contents:
       return (T[]) Arrays.copyOf(data, size());
     System.arraycopy(data, 0, a, 0, size());
     return a;
@@ -446,11 +424,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     }
 
     @Override public E next() {
-      final int i = next;
-      if (i >= size())
+      final int $ = next;
+      if ($ >= size())
         throw new NoSuchElementException();
-      next = i + 1;
-      return elementData(i);
+      next = $ + 1;
+      return elementData($);
     }
 
     @Override public void remove() {
@@ -464,8 +442,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       next = index;
     }
 
-    @SuppressWarnings("unused") //
-    @Override public void add(final E __) {
+    @Override @SuppressWarnings("unused") public void add(final E __) {
       fail();
     }
 
@@ -478,19 +455,18 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     }
 
     @Override public E previous() {
-      final int i = next - 1;
-      if (i < 0 || i >= size())
+      final int $ = next - 1;
+      if ($ < 0 || $ >= size())
         throw new NoSuchElementException();
-      next = i;
-      return elementData(i);
+      next = $;
+      return elementData($);
     }
 
     @Override public int previousIndex() {
       return next - 1;
     }
 
-    @SuppressWarnings("unused") //
-    @Override public void set(final E __) {
+    @Override @SuppressWarnings("unused") public void set(final E __) {
       fail();
     }
   }

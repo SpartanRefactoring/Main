@@ -21,8 +21,7 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
-  @NotNull @SuppressWarnings("unchecked") //
-  @Override public Wrapper<T> clone() throws CloneNotSupportedException {
+  @Override @NotNull @SuppressWarnings("unchecked") public Wrapper<T> clone() throws CloneNotSupportedException {
     return (Wrapper<T>) Utils.cantBeNull(super.clone());
   }
 
@@ -51,7 +50,7 @@ public class Wrapper<T> {
     this.inner = inner;
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return inner == null ? "null" : Utils.cantBeNull(inner + "");
   }
 }

@@ -23,7 +23,7 @@ public class Multiplicative2 extends Sequence {
     this.step = Math.pow(2, step);
   }
 
-  @NotNull @Override public Multiplicative2 advance() {
+  @Override @NotNull public Multiplicative2 advance() {
     final int previous = current;
     current *= step;
     current = max(previous + 1, current);
@@ -32,7 +32,7 @@ public class Multiplicative2 extends Sequence {
     return this;
   }
 
-  @NotNull @Override public Multiplicative2 reset() {
+  @Override @NotNull public Multiplicative2 reset() {
     current = 1;
     return this;
   }

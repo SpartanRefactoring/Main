@@ -19,27 +19,27 @@ import il.org.spartan.utils.*;
   ;
   private static final String COMMA = ",";
 
-  @NotNull public static <T> String angular(final Collection<T> ¢) {
+  @NotNull public static <T> String angular(@NotNull final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull public static <T> String angular(final T[] ¢) {
+  @NotNull public static <T> String angular(@NotNull final T[] ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull public static <T> String circual(final Collection<T> ¢) {
+  @NotNull public static <T> String circual(@NotNull final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull public static <T> String circular(final T[] ¢) {
+  @NotNull public static <T> String circular(@NotNull final T[] ¢) {
     return make("<", prune(¢), ">");
   }
 
-  @NotNull public static <T> String curly(final Collection<T> ¢) {
+  @NotNull public static <T> String curly(@NotNull final Collection<T> ¢) {
     return make("{", prune(¢), "}");
   }
 
-  @NotNull public static <T> String curly(final T[] ¢) {
+  @NotNull public static <T> String curly(@NotNull final T[] ¢) {
     return make("{", prune(¢), "}");
   }
 
@@ -82,19 +82,19 @@ import il.org.spartan.utils.*;
     return ts == null || ts.length == 0 ? "" : begin + Separate.by(ts, between) + end;
   }
 
-  @NotNull public static <T> String square(final Collection<T> ¢) {
+  @NotNull public static <T> String square(@NotNull final Collection<T> ¢) {
     return make("[", prune(¢), "]");
   }
 
-  @NotNull public static <T> String square(final T[] ¢) {
+  @NotNull public static <T> String square(@NotNull final T[] ¢) {
     return make("[", prune(¢), "]");
   }
 
-  private static <T> Collection<T> prune(final Collection<T> ¢) {
+  private static <T> Collection<T> prune(@NotNull final Collection<T> ¢) {
     return Prune.nulls(¢);
   }
 
-  private static <T> T[] prune(final T[] ¢) {
+  private static <T> T[] prune(@NotNull final T[] ¢) {
     return Prune.nulls(¢);
   }
 }

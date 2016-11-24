@@ -14,17 +14,17 @@ import il.org.spartan.*;
 //
 public class TokenizerTest {
   @Nullable static Token getToken(@NotNull final String s, final int i) throws IOException {
-    final RawTokenizer j = new RawTokenizer(new StringReader(s));
+    @NotNull final RawTokenizer $ = new RawTokenizer(new StringReader(s));
     for (int ¢ = 0; ¢ < i - 1; ++¢)
-      j.next();
-    return j.next();
+      $.next();
+    return $.next();
   }
 
   @NotNull static String getTokenText(@NotNull final String s, final int i) throws IOException {
-    final RawTokenizer j = new RawTokenizer(new StringReader(s));
+    @NotNull final RawTokenizer $ = new RawTokenizer(new StringReader(s));
     for (int ¢ = 0; ¢ < i; ++¢)
-      j.next();
-    return j.text();
+      $.next();
+    return $.text();
   }
 
   @Nullable private static Token firstToken(@NotNull final String ¢) throws IOException {
@@ -46,7 +46,7 @@ public class TokenizerTest {
   final StringTokenizer t = new StringTokenizer("");
 
   @Test public void annotation() throws IOException {
-    final String text = "@interfac";
+    @NotNull final String text = "@interfac";
     azzert.that(firstToken(text), is(ANNOTATION));
     azzert.that(firstTokenText(text), is(text));
     azzert.that(firstToken("@interface__"), is(ANNOTATION));
@@ -54,7 +54,7 @@ public class TokenizerTest {
   }
 
   @Test public void at_intreface() throws IOException {
-    final String text = "@interface";
+    @NotNull final String text = "@interface";
     azzert.that(firstToken(text), is(AT_INTERFACE));
     azzert.that(firstTokenText(text), is(text));
   }
@@ -64,7 +64,7 @@ public class TokenizerTest {
   }
 
   @Test public void block_comment_keyword() throws IOException {
-    final String text = "/* a */ public\n" + //
+    @NotNull final String text = "/* a */ public\n" + //
         "public";
     reset(text);
     azzert.that(t.next(), is(BLOCK_COMMENT));
@@ -77,7 +77,7 @@ public class TokenizerTest {
   }
 
   @Test public void block_comment_two_lines() throws IOException {
-    final String text = "/* first Line \n Second Line */";
+    @NotNull final String text = "/* first Line \n Second Line */";
     azzert.that(getToken(text, 1), is(PARTIAL_BLOCK_COMMENT));
     azzert.that(getToken(text, 2), is(NL_BLOCK_COMMENT));
     azzert.that(getToken(text, 3), is(BLOCK_COMMENT));
@@ -111,7 +111,7 @@ public class TokenizerTest {
   }
 
   @Test public void doc_comment_keyword() throws IOException {
-    final String text = "/**\n" + //
+    @NotNull final String text = "/**\n" + //
         "* A suite of metrics over Java code.\n" + //
         "* \n" + //
         "* @author Yossi Gil <yogi@cs.technion.ac.il> 21/04/2007\n" + //
@@ -136,7 +136,7 @@ public class TokenizerTest {
   }
 
   @Test public void doc_comment_two_lines() throws IOException {
-    final String text = "/** first Line \n Second Line */";
+    @NotNull final String text = "/** first Line \n Second Line */";
     azzert.that(getToken(text, 1), is(PARTIAL_DOC_COMMENT));
     azzert.that(getToken(text, 2), is(NL_DOC_COMMENT));
     azzert.that(getToken(text, 3), is(DOC_COMMENT));
@@ -150,7 +150,7 @@ public class TokenizerTest {
   }
 
   @Test public void empty_string_empty_string() throws IOException {
-    final String text = "\"\"\"\"";
+    @NotNull final String text = "\"\"\"\"";
     azzert.that(getToken(text, 1), is(STRING_LITERAL));
     azzert.that(getToken(text, 2), is(STRING_LITERAL));
     azzert.that(getTokenText(text, 1), is("\"\""));
@@ -158,7 +158,7 @@ public class TokenizerTest {
   }
 
   @Test public void empty_string_id() throws IOException {
-    final String text = "\"\"abcd";
+    @NotNull final String text = "\"\"abcd";
     azzert.that(getToken(text, 1), is(STRING_LITERAL));
     azzert.that(getToken(text, 2), is(IDENTIFIER));
     azzert.that(getTokenText(text, 1), is("\"\""));
@@ -198,7 +198,7 @@ public class TokenizerTest {
   }
 
   @Test public void id_space_id() throws IOException {
-    final String text = "id1 id2";
+    @NotNull final String text = "id1 id2";
     azzert.that(getToken(text, 1), is(IDENTIFIER));
     azzert.that(getToken(text, 2), is(SPACE));
     azzert.that(getToken(text, 3), is(IDENTIFIER));
@@ -232,7 +232,7 @@ public class TokenizerTest {
   }
 
   @Test public void nl_string_space_id_popen_integer() throws IOException {
-    final String text = "\n\"\" abcd(12";
+    @NotNull final String text = "\n\"\" abcd(12";
     azzert.that(getToken(text, 1), is(NL));
     azzert.that(getToken(text, 2), is(STRING_LITERAL));
     azzert.that(getToken(text, 3), is(SPACE));
@@ -275,7 +275,7 @@ public class TokenizerTest {
   }
 
   @Test public void short_doc_comment_keyword() throws IOException {
-    final String text = "/** a */ public\n" + //
+    @NotNull final String text = "/** a */ public\n" + //
         "public";
     reset(text);
     azzert.that(t.next(), is(DOC_COMMENT));
@@ -304,7 +304,7 @@ public class TokenizerTest {
   }
 
   @Test public void string_id_string() throws IOException {
-    final String text = "\"str1\"xid\"str2\"";
+    @NotNull final String text = "\"str1\"xid\"str2\"";
     azzert.that(getToken(text, 1), is(STRING_LITERAL));
     azzert.that(getToken(text, 2), is(IDENTIFIER));
     azzert.that(getToken(text, 3), is(STRING_LITERAL));
@@ -314,7 +314,7 @@ public class TokenizerTest {
   }
 
   @Test public void string_keyword() throws IOException {
-    final String text = "\" \"public";
+    @NotNull final String text = "\" \"public";
     reset(text);
     azzert.that(t.next(), is(STRING_LITERAL));
     azzert.that(t.text(), is("\" \""));
@@ -347,7 +347,7 @@ public class TokenizerTest {
   }
 
   @Test public void string_space_keyword() throws IOException {
-    final String text = "\" \" public\n";
+    @NotNull final String text = "\" \" public\n";
     reset(text);
     azzert.that(t.next(), is(STRING_LITERAL));
     azzert.that(t.next(), is(SPACE));

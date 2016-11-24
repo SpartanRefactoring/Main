@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
   private static final String BAD_FILE_PATH = "asdfasdfaafasdfas";
 
   @Test public void allAccessLevels() {
-    final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
+    @NotNull final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
     assert methods[0].isPrivate();
     assert methods[1].isDefault();
     assert methods[2].isProtected();
@@ -32,7 +32,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allAccessLevelsNegative() {
-    final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
+    @NotNull final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
     assert !methods[1].isPrivate();
     assert !methods[2].isPrivate();
     assert !methods[3].isPrivate();
@@ -48,12 +48,12 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsArePrimitive() {
-    for (final TypedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
+    for (@NotNull final TypedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
       assert f.type.isPrimitive();
   }
 
   @Test public void allPrimitiveFieldsAttributes() {
-    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+    for (@NotNull final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
       azzert.that(¢.attributes.length, is(0));
   }
 
@@ -62,12 +62,12 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsModifiers() {
-    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+    for (@NotNull final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
       azzert.that(¢.flags, is(Modifier.FINAL | Modifier.PUBLIC));
   }
 
   @Test public void allPrimitiveFieldsNames() {
-    final NamedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
+    @NotNull final NamedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
     azzert.that(fields[0].name, is("firstField"));
     azzert.that(fields[1].name, is("secondField"));
     azzert.that(fields[2].name, is("thirdField"));
@@ -77,7 +77,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsTypes() {
-    final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
+    @NotNull final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
     azzert.that(fields[0].type + "", is("byte"));
     azzert.that(fields[1].type + "", is("short"));
     azzert.that(fields[2].type + "", is("long"));
@@ -88,7 +88,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void annotationCounts() {
-    final ClassInfo __ = ClassInfo.make(Annotation.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Annotation.class);
     azzert.that(__.constructors.length, is(0));
     azzert.that(__.methods.length, is(1));
     azzert.that(__.fields.length, is(0));
@@ -203,7 +203,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void complexClassMethodNames() {
-    final MethodInfo[] ms = ClassInfo.make(LargeClass.class).methods;
+    @NotNull final MethodInfo[] ms = ClassInfo.make(LargeClass.class).methods;
     int i = 0;
     azzert.that(ms[i++].name, is("method0"));
     azzert.that(ms[i++].name, is("method1"));
@@ -235,7 +235,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptlyClassInteface() {
-    final ClassInfo __ = ClassInfo.make(EmptyClass.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(EmptyClass.class);
     assert !__.isAbstract();
     assert !__.isInterface();
     assert __.isClass();
@@ -313,7 +313,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumClassFile() {
-    final ClassInfo __ = ClassInfo.make(Enum.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Enum.class);
     assert !__.isAbstract();
     assert !__.isInterface();
     assert !__.isStatic();
@@ -345,7 +345,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumMethod() {
-    final ClassInfo __ = ClassInfo.make(Enum.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Enum.class);
     azzert.that(__.methods.length, is(1));
     azzert.that(__.constructors.length, is(0));
     azzert.that(__.initializers.length, is(0));
@@ -354,13 +354,13 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumMethodCounts() {
-    final ClassInfo __ = ClassInfo.make(Enum.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Enum.class);
     azzert.that(__.methods.length, is(2));
     azzert.that(__.initializers.length, is(0));
   }
 
   @Test public void enumMethodName() {
-    final ClassInfo __ = ClassInfo.make(Enum.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Enum.class);
     azzert.that(__.methods[0].name, is("myMethod"));
     azzert.that(__.methods[1].name, is("values"));
     assert __.methods[1].isSynthetic();
@@ -375,7 +375,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void InitializerConstructors() {
-    final NamedEntity[] ctros = ClassInfo.make(Initializer.class).constructors;
+    @NotNull final NamedEntity[] ctros = ClassInfo.make(Initializer.class).constructors;
     azzert.that(ctros.length, is(2));
     azzert.that(ctros[0].name, is(""));
     azzert.that(ctros[1].name, is(""));
@@ -386,7 +386,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void interfaceClassFile() {
-    final ClassInfo __ = ClassInfo.make(Interface.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Interface.class);
     assert __.isAbstract();
     assert __.isInterface();
   }
@@ -400,7 +400,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void interfaceMethod() {
-    final ClassInfo __ = ClassInfo.make(Interface.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(Interface.class);
     azzert.that(__.methods.length, is(1));
     azzert.that(__.constructors.length, is(0));
     azzert.that(__.initializers.length, is(0));
@@ -470,19 +470,19 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void namesTwoAnnotatedFields() {
-    final NamedEntity[] fields = ClassInfo.make(TwoAnnotatedFields.class).fields;
+    @NotNull final NamedEntity[] fields = ClassInfo.make(TwoAnnotatedFields.class).fields;
     azzert.that(fields[0].name, is("firstField"));
     azzert.that(fields[1].name, is("secondField"));
   }
 
   @Test public void namesTwoFields() {
-    final NamedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
+    @NotNull final NamedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
     azzert.that(fields[0].name, is("firstField"));
     azzert.that(fields[1].name, is("secondField"));
   }
 
   @Test public void nameTwoMethods() {
-    final ClassInfo __ = ClassInfo.make(TwoMethods.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(TwoMethods.class);
     azzert.that(__.constructors[0].name, is(""));
     azzert.that(__.methods[0].name, is("firstMethod"));
     azzert.that(__.methods[1].name, is("secondMethod"));
@@ -558,7 +558,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneMethodLengths() {
-    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(OneMethod.class);
     azzert.that(__.constructors.length, is(1));
     azzert.that(__.methods.length, is(1));
     azzert.that(__.fields.length, is(0));
@@ -566,7 +566,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneMethodName() {
-    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(OneMethod.class);
     azzert.that(__.constructors[0].name, is(""));
     azzert.that(__.methods[0].name, is("methodName"));
   }
@@ -604,25 +604,25 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openSelfNoErrors() {
-    final Builder b = new ClassInfo.Builder(this.getClass());
+    @NotNull final Builder b = new ClassInfo.Builder(this.getClass());
     b.go();
     assert !b.hasErrors();
   }
 
   @Test public void parseAllPathMethods() {
-    final Parser p = new Parser();
+    @NotNull final Parser p = new Parser();
     p.parse(CLASSPATH.asArray());
     System.out.println(p);
   }
 
   @Test public void parseAllProjectMethods() {
-    final Parser p = new Parser();
+    @NotNull final Parser p = new Parser();
     p.parse(".");
     System.out.println(p);
   }
 
   @Test public void parseAllWorspace() {
-    final Parser p = new Parser();
+    @NotNull final Parser p = new Parser();
     p.parse("..");
     System.out.println(p);
   }
@@ -651,7 +651,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseSelfAllMethods() {
-    for (final MethodInfo ¢ : ClassInfo.make(this.getClass()).methods)
+    for (@NotNull final MethodInfo ¢ : ClassInfo.make(this.getClass()).methods)
       ¢.getCode().instructionsCount();
   }
 
@@ -663,7 +663,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void readFromDataInputStreamFromPath() throws IOException {
-    final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
+    @NotNull final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
     azzert.that(f.readInt(), is(ClassInfo.Builder.MAGIC));
     f.close();
   }
@@ -689,7 +689,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void singleStaticInitilizerLengths() {
-    final ClassInfo __ = ClassInfo.make(SingleStaticInitializer.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(SingleStaticInitializer.class);
     azzert.that(__.constructors.length, is(1));
     azzert.that(__.methods.length, is(0));
     azzert.that(__.fields.length, is(0));
@@ -705,7 +705,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void staticInitializerNames() {
-    final ClassInfo __ = ClassInfo.make(StaticInitializer.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(StaticInitializer.class);
     azzert.that(__.methods.length, is(0));
     azzert.that(__.initializers[0].name, is(""));
     azzert.that(__.constructors[0].name, is(""));
@@ -717,18 +717,18 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void twoFieldsAreNotPrimtive() {
-    for (final TypedEntity f : ClassInfo.make(TwoFields.class).fields)
+    for (@NotNull final TypedEntity f : ClassInfo.make(TwoFields.class).fields)
       assert !f.type.isPrimitive();
   }
 
   @Test public void twoFieldsFlags() {
-    final FlaggedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
+    @NotNull final FlaggedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
     azzert.that(fields[0].flags, is(Modifier.FINAL | Modifier.STATIC));
     azzert.that(fields[1].flags, is(Modifier.FINAL | Modifier.PRIVATE));
   }
 
   @Test public void twoMethodLengths() {
-    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    @Nullable final ClassInfo __ = ClassInfo.make(OneMethod.class);
     azzert.that(__.constructors.length, is(1));
     azzert.that(__.methods.length, is(1));
     azzert.that(__.fields.length, is(0));
@@ -740,7 +740,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void twoMethodsFlags() {
-    final FlaggedEntity[] methods = ClassInfo.make(TwoMethods.class).methods;
+    @NotNull final FlaggedEntity[] methods = ClassInfo.make(TwoMethods.class).methods;
     azzert.that(methods[0].flags, is(Modifier.ABSTRACT));
     azzert.that(methods[1].flags, is(Modifier.FINAL | Modifier.PUBLIC | Modifier.STATIC));
   }
@@ -808,7 +808,7 @@ import il.org.spartan.utils.*;
     static {
       System.getenv();
       System.getenv("PATH");
-      for (final String key : System.getenv().keySet())
+      for (@Nullable final String key : System.getenv().keySet())
         if (key != null)
           System.getenv(key);
     }
@@ -859,7 +859,7 @@ import il.org.spartan.utils.*;
     int nMethods;
     int nCodes;
     int nInstructions;
-    @NotNull Stopper s = new Stopper();
+    @NotNull final Stopper s = new Stopper();
 
     /** [[SuppressWarningsSpartan]] */
     @NotNull @Override public String toString() {
@@ -877,7 +877,7 @@ import il.org.spartan.utils.*;
 
     void parse(@NotNull final MethodInfo[] is) {
       ++nFiles;
-      for (final MethodInfo ¢ : is)
+      for (@NotNull final MethodInfo ¢ : is)
         parseMethod(¢);
     }
 
@@ -889,8 +889,8 @@ import il.org.spartan.utils.*;
           @Override public void visitFile(final File f) {
             try {
               parse(ClassInfo.make(f));
-            } catch (@NotNull final RuntimeException e) {
-              System.out.println("\n** " + f + ": " + e);
+            } catch (@NotNull final RuntimeException ¢) {
+              System.out.println("\n** " + f + ": " + ¢);
             }
           }
 
@@ -906,10 +906,10 @@ import il.org.spartan.utils.*;
             }
           }
         }).go();
-      } catch (@NotNull final IOException e) {
-        e.printStackTrace();
-      } catch (@NotNull final StopTraversal e) {
-        e.printStackTrace();
+      } catch (@NotNull final IOException ¢) {
+        ¢.printStackTrace();
+      } catch (@NotNull final StopTraversal ¢) {
+        ¢.printStackTrace();
       }
     }
 
@@ -929,7 +929,7 @@ import il.org.spartan.utils.*;
     static {
       System.getenv();
       System.getenv("PATH");
-      for (final String key : System.getenv().keySet())
+      for (@Nullable final String key : System.getenv().keySet())
         if (key != null)
           System.getenv(key);
     }
@@ -939,7 +939,7 @@ import il.org.spartan.utils.*;
     static {
       System.getenv();
       System.getenv("PATH");
-      for (final String key : System.getenv().keySet())
+      for (@Nullable final String key : System.getenv().keySet())
         if (key != null)
           System.getenv(key);
     }
@@ -1000,16 +1000,15 @@ import il.org.spartan.utils.*;
     private static int field1;
     @NotNull static Random field4 = new Random();
     static {
-      field4 = new Random(field4.nextLong());
       for (int ¢ = 1; ¢ < 10; ++¢)
         field4.nextDouble();
     }
-    @NotNull static Random field5 = new Random(field4.nextLong() + method3());
+    @NotNull static final Random field5 = new Random(field4.nextLong() + method3());
     static {
       for (int ¢ = 1; ¢ < 20; ++¢)
         field5.nextDouble();
     }
-    @NotNull static Random field6 = new Random(field5.nextLong());
+    @NotNull static final Random field6 = new Random(field5.nextLong());
     static {
       for (int ¢ = 1; ¢ < 20; ++¢)
         field4 = new Random(field6.nextLong());

@@ -22,7 +22,7 @@ public class NonStopVisitor extends FileSystemVisitor {
     super(from, action, extensions);
   }
 
-  public NonStopVisitor(final Iterable<String> from, final NonStopAction action, final String... extensions) {
+  public NonStopVisitor(@NotNull final Iterable<String> from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
 

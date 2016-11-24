@@ -30,7 +30,7 @@ public final class ToIntegers<E> {
   }
 
   @NotNull private static <E> E[] allocate(final int ¢) {
-    @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
+    @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
 
@@ -85,7 +85,7 @@ public final class ToIntegers<E> {
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
   public boolean contains(@NotNull final E... ns) {
-    for (final E n : ns)
+    for (@NotNull final E n : ns)
       if (!contains(n))
         return false;
     return true;
@@ -96,14 +96,14 @@ public final class ToIntegers<E> {
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
   public boolean disjoint(@NotNull final E... ns) {
-    for (final E n : ns)
+    for (@NotNull final E n : ns)
       if (contains(n))
         return false;
     return true;
   }
 
   @NotNull public int[] get(@NotNull final E keys[]) {
-    final int[] $ = new int[keys.length];
+    @NotNull final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
@@ -146,7 +146,7 @@ public final class ToIntegers<E> {
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   @NotNull public E[] keys() {
-    final E[] $ = allocate(size);
+    @NotNull final E[] $ = allocate(size);
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
@@ -205,7 +205,7 @@ public final class ToIntegers<E> {
 
   /** Find the index in the hash table into which the parameter could be
    * inserted.
-   * @param n some value
+   * @param e some value
    * @return -1 if the parameter is in the table already, otherwise, the index
    *         at which it could be safely inserted. */
   int find(@NotNull final E e) {
@@ -221,7 +221,7 @@ public final class ToIntegers<E> {
   }
 
   /** Find the index in the hash table of the parameter
-   * @param n some integer
+   * @param e some integer
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
   int location(@NotNull final E e) {
@@ -243,8 +243,8 @@ public final class ToIntegers<E> {
   @NotNull private ToIntegers<E> rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
-    final E[] keys = keys();
-    final int[] oldValues = get(keys);
+    @NotNull final E[] keys = keys();
+    @NotNull final int[] oldValues = get(keys);
     reset(newCapacity);
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       put(keys[¢], oldValues[¢]);

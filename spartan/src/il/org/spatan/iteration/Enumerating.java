@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
  * @param <T> Type of encoded elements. */
 public class Enumerating<T> extends Codex.Anchored<T> {
   @NotNull private static int[] invert(@NotNull final int[] is) {
-    final int[] $ = new int[is.length];
+    @NotNull final int[] $ = new int[is.length];
     for (int ¢ = 0; ¢ < is.length; ++¢)
       $[is[¢]] = ¢;
     return $;

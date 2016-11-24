@@ -97,7 +97,7 @@ public class dump {
     out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n");
     out("Class canonical name", c.getCanonicalName());
     out("Class name", c.getName());
-    for (final Method m : c.getMethods()) {
+    for (@NotNull final Method m : c.getMethods()) {
       if (m.getParameterTypes().length != 0)
         continue;
       String name = m.getName();
@@ -122,14 +122,14 @@ public class dump {
         if (!($ instanceof Collection))
           out(name, $);
         else {
-          @SuppressWarnings("unchecked") final Collection<Object> os = (Collection<Object>) $;
+          @NotNull @SuppressWarnings("unchecked") final Collection<Object> os = (Collection<Object>) $;
           out(name, os);
         }
-      } catch (@NotNull final Throwable e) {
+      } catch (@NotNull final Throwable ¢) {
         // For some reason, a reflection call to method
         // getContent() in URL objects throws this exception.
         // We do not have much to do in this and other similar cases.
-        out(name, m.getName() + " THROWS " + e);
+        out(name, m.getName() + " THROWS " + ¢);
       }
     }
     out("--END OBJECT--\n\n");

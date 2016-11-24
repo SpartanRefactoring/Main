@@ -404,7 +404,7 @@ public class ClassProxy<T> {
     return clazz().newInstance();
   }
 
-  @Nullable @Override public String toString() {
+  @Override @Nullable public String toString() {
     try {
       return clazz() + "";
     } catch (@NotNull final ClassNotFoundException __) {
@@ -426,7 +426,7 @@ public class ClassProxy<T> {
   }
 
   @Nullable private InputStream open() throws ClassNotFoundException {
-    final InputStream $ = CLASSFILES.open(className());
+    @Nullable final InputStream $ = CLASSFILES.open(className());
     if ($ == null)
       throw new ClassNotFoundException();
     return $;
@@ -444,7 +444,6 @@ public class ClassProxy<T> {
       if (¢.isLocalClass() || ¢.isAnonymousClass()) {
         ¢ = ¢.getEnclosingClass();
         $.replaceFirst("\\.([a-zA-Z0-9$]+)$", "\\$$1");
-        continue;
       }
     }
     return $;
@@ -452,7 +451,7 @@ public class ClassProxy<T> {
 
   @NotNull private Class<? extends T> retrieveClazz() throws ClassNotFoundException {
     nonnull(className);
-    @SuppressWarnings("unchecked") final Class<T> $ = (Class<T>) findClass(className);
+    @NotNull @SuppressWarnings("unchecked") final Class<T> $ = (Class<T>) findClass(className);
     return $;
   }
 

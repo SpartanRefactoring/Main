@@ -83,7 +83,7 @@ public class RealStatistics extends ImmutableStatistics {
     @Test public void all() {
       s11_20_5.median();
       s11_20_5.mad();
-      final double[] vs = s11_20_5.all();
+      @NotNull final double[] vs = s11_20_5.all();
       azzert.that(vs.length, is(3));
       assertEquals(11, vs[0], 1E-20);
       assertEquals(20, vs[1], 1E-20);
@@ -117,13 +117,13 @@ public class RealStatistics extends ImmutableStatistics {
     }
 
     @Test(expected = ArithmeticException.class) public void meanEmpty() {
-      final RealStatistics x = new RealStatistics();
+      @NotNull final RealStatistics x = new RealStatistics();
       assertEquals(0, x.mean(), 1E-20);
       x.relativeError();
     }
 
     @Test public void meanZero() {
-      final RealStatistics x = new RealStatistics().record(1).record(-1);
+      @NotNull final RealStatistics x = new RealStatistics().record(1).record(-1);
       assertEquals(0, x.mean(), 1E-20);
       x.relativeError();
     }

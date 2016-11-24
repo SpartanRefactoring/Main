@@ -21,7 +21,7 @@ import il.org.spartan.streotypes.*;
    * @return the decreasing permutation of length n, represented as an array. */
   @NotNull public static int[] decreasing(final int i) {
     nonnegative(i);
-    final int[] $ = new int[i];
+    @NotNull final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = i - ¢ - 1;
     return $;
@@ -38,14 +38,14 @@ import il.org.spartan.streotypes.*;
    * @return the increasing permutation of length n, represented as an array. */
   @NotNull public static int[] identity(final int i) {
     nonnegative(i);
-    final int[] $ = new int[i];
+    @NotNull final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = ¢;
     return $;
   }
 
   @NotNull public static int[] invert(@NotNull final int[] a) {
-    final int[] $ = new int[a.length];
+    @NotNull final int[] $ = new int[a.length];
     for (int ¢ = 0; ¢ < a.length; ++¢)
       $[a[¢]] = ¢;
     return $;
@@ -59,7 +59,7 @@ import il.org.spartan.streotypes.*;
   }
 
   @NotNull public static int[] scramble(final int n) {
-    final int[] $ = identity(n);
+    @NotNull final int[] $ = identity(n);
     for (int i = 0; i < n; ++i) {
       final double Gi = power(GOLD, i + 1, n);
       System.out.println("Gi=" + Gi);
@@ -69,14 +69,14 @@ import il.org.spartan.streotypes.*;
   }
 
   @NotNull public static float[] shuffle(@NotNull final float[] fs) {
-    final Random r = new Random(System.nanoTime());
+    @NotNull final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < fs.length; ++¢)
       swap(fs, ¢, r.nextInt(fs.length));
     return fs;
   }
 
   @NotNull public static int[] shuffle(@NotNull final int[] a) {
-    final Random r = new Random(System.nanoTime());
+    @NotNull final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < a.length; ++¢)
       swap(a, ¢, r.nextInt(a.length));
     return a;

@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
@@ -46,7 +46,7 @@ public abstract class NonNullCache<T> {
         azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
-    @NotNull @Override protected String ____() {
+    @Override @NotNull protected String ____() {
       return SOME_OFFSET + "x" + sqr(evaluations++);
     }
   }

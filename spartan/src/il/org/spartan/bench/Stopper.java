@@ -100,7 +100,7 @@ import il.org.spartan.streotypes.*;
     return time;
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return peep() / 1E9 + " sec";
   }
 }

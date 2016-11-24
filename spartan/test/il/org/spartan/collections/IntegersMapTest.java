@@ -2,6 +2,7 @@ package il.org.spartan.collections;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -102,44 +103,36 @@ public final class IntegersMapTest {
   @Test public void keys() {
     for (int ¢ = 0; ¢ < 10000; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 10000; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 0; i < 10000; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys10() {
     for (int ¢ = 0; ¢ < 10; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.keys();
-    for (int i = 0; i < 10; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.keys();
+    for (int i = 0; i < 10; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys100() {
     for (int ¢ = 0; ¢ < 100; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 100; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 0; i < 100; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys15() {
     for (int ¢ = 0; ¢ < 15; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.keys();
+    for (int i = 0; i < 15; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -147,62 +140,52 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 15; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     m.rehash();
-    final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.keys();
+    for (int i = 0; i < 15; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys17() {
     for (int ¢ = 0; ¢ < 17; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.keys();
-    for (int i = 0; i < 17; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.keys();
+    for (int i = 0; i < 17; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys18() {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 18; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 0; i < 18; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys18inverse() {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 17; i >= 0; --i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 17; i >= 0; --i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys20inverse() {
     for (int ¢ = 0; ¢ < 20; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 19; i >= 0; --i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 19; i >= 0; --i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys22() {
     for (int ¢ = 0; ¢ < 22; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
+    @NotNull final int[] keys = m.sortedKeys();
     for (int ¢ = 0; ¢ < 22; ++¢)
       azzert.that(keys[¢], is(¢));
   }
@@ -211,18 +194,16 @@ public final class IntegersMapTest {
   @Test public void keys30() {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 30; ++i) {
-      final int t1 = i;
-      azzert.that(keys[i], is(t1));
-    }
+    @NotNull final int[] keys = m.sortedKeys();
+    for (int i = 0; i < 30; ++i)
+      azzert.that(keys[i], is(i));
   }
 
   /** [[SuppressWarningsSpartan]] */
   @Test public void keys30inverse() {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));
-    final int[] keys = m.sortedKeys();
+    @NotNull final int[] keys = m.sortedKeys();
     for (int ¢ = 29; ¢ >= 0; --¢)
       azzert.that(keys[¢], is(¢));
   }

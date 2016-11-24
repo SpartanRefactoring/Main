@@ -17,13 +17,13 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil */
 @Utility public enum CLASSFILES {
   ;
-  @NotNull static Set<ZipFile> zipsInUse = new HashSet<>();
+  @NotNull static final Set<ZipFile> zipsInUse = new HashSet<>();
 
   /** Where are all Java class files found
    * @return the list of directories and ZIP archives in the current search
    *         path. */
   @NotNull public static Iterable<File> asFiles() {
-    final ArrayList<File> $ = new ArrayList<>();
+    @NotNull final ArrayList<File> $ = new ArrayList<>();
     $.addAll(JRE.asList());
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
     return $;
@@ -41,8 +41,8 @@ import il.org.spartan.utils.*;
    *         corresponding <tt>.class</tt> file could not be found. */
   public static String location(@NotNull final String className) {
     nonnull(className);
-    for (final File where : asFiles()) {
-      final String $ = location(where, className);
+    for (@NotNull final File where : asFiles()) {
+      @Nullable final String $ = location(where, className);
       if ($ != null)
         return $;
     }
@@ -86,13 +86,13 @@ import il.org.spartan.utils.*;
    *         file could not be found. */
   public static InputStream open(@NotNull final String fullClassName) {
     nonnull(fullClassName);
-    for (final File f : asFiles()) {
-      final InputStream $ = open(f, fullClassName);
+    for (@NotNull final File f : asFiles()) {
+      @Nullable final InputStream $ = open(f, fullClassName);
       if ($ != null)
         try {
           $.available();
-        } catch (@NotNull final IOException e) {
-          e.printStackTrace();
+        } catch (@NotNull final IOException ¢) {
+          ¢.printStackTrace();
         }
       if ($ != null)
         return $;
@@ -101,7 +101,7 @@ import il.org.spartan.utils.*;
   }
 
   public static void reset() {
-    for (final ZipFile z : zipsInUse)
+    for (@NotNull final ZipFile z : zipsInUse)
       try {
         z.close();
       } catch (@NotNull final IOException __) {
@@ -112,12 +112,12 @@ import il.org.spartan.utils.*;
   }
 
   private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[]... directoryNamesArray) {
-    for (final String[] directories : directoryNamesArray)
+    for (@NotNull final String[] directories : directoryNamesArray)
       add(ds, directories);
   }
 
   private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[] directoryNames) {
-    for (final String directory : directoryNames)
+    for (@NotNull final String directory : directoryNames)
       ds.add(new File(directory));
   }
 
@@ -139,7 +139,7 @@ import il.org.spartan.utils.*;
   }
 
   private static InputStream searchDirectory(final File where, @NotNull final String className) {
-    final File $ = new File(where, canonicalFileName(className));
+    @NotNull final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
     } catch (@NotNull final FileNotFoundException __) {
@@ -149,7 +149,7 @@ import il.org.spartan.utils.*;
 
   private static InputStream searchZip(@NotNull final File where, @NotNull final String fileName) {
     try {
-      final ZipFile z = new ZipFile(where.getAbsoluteFile());
+      @NotNull final ZipFile z = new ZipFile(where.getAbsoluteFile());
       final ZipEntry e = z.getEntry(fileName);
       if (e == null) {
         z.close();

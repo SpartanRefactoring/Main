@@ -28,8 +28,8 @@ import il.org.spartan.streotypes.*;
   @NotNull public static String separateBy(@NotNull final int[] is, final String between) {
     if (is.length == 0)
       return "";
-    String $ = "";
-    final Separator s = new Separator(between);
+    @NotNull String $ = "";
+    @NotNull final Separator s = new Separator(between);
     for (final int ¢ : is)
       $ += s + "" + Integer.valueOf(¢);
     return $;
@@ -47,7 +47,7 @@ import il.org.spartan.streotypes.*;
     if (isEmpty(items))
       return "";
     String $ = begin;
-    final Separator s = new Separator(between);
+    @NotNull final Separator s = new Separator(between);
     for (final T ¢ : items)
       $ += s + "" + ¢;
     return $ + end;
@@ -57,7 +57,7 @@ import il.org.spartan.streotypes.*;
     if (items.length == 0)
       return "";
     String $ = begin;
-    final Separator s = new Separator(between);
+    @NotNull final Separator s = new Separator(between);
     for (final T ¢ : items)
       $ += s + "" + ¢;
     return $ + end;

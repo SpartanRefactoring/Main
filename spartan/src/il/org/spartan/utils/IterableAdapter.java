@@ -33,13 +33,9 @@ import il.org.spartan.streotypes.*;
     this.implementation = implmenetation;
   }
 
-  /* Return an {@link Iterator} over the encapsulated {@link Enumeration}.
-   *
-   * @see java.lang.Iterable#iterator() */
-  @NotNull @Override public Iterator<T> iterator() {
+  @Override @NotNull public Iterator<T> iterator() {
     return new Iterator<T>() {
-      @Override public boolean hasNext() { // An anonymous class realizing the
-        // Iterator<T> protocol
+      @Override public boolean hasNext() {
         return implementation.hasMoreElements();
       }
 

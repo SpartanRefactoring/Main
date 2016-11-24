@@ -57,7 +57,7 @@ public class Metric {
 
     public abstract long __();
 
-    @NotNull @Override public Long name(final String name) {
+    @Override @NotNull public Long name(final String name) {
       super.name(name);
       return this;
     }

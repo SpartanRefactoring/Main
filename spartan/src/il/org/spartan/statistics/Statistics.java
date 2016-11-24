@@ -18,7 +18,7 @@ public abstract class Statistics {
   public static double mad(@NotNull final double[] ds) {
     final int n = ds.length;
     final double median = median(ds);
-    final double $[] = new double[n];
+    @NotNull final double $[] = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
       $[¢] = Math.abs(ds[¢] - median);
     return median($);
@@ -30,7 +30,7 @@ public abstract class Statistics {
   }
 
   @NotNull public static double[] prune(@NotNull final double[] ds) {
-    final List<Double> $ = new ArrayList<>();
+    @NotNull final List<Double> $ = new ArrayList<>();
     final double median = median(ds);
     final double mad = mad(ds);
     for (final double ¢ : ds)

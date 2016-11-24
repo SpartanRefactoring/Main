@@ -29,11 +29,9 @@ import il.org.spartan.utils.*;
       try {
         System.out.println("Searching for class: " + arg + " in " + Parenthesize.square(File.listRoots()));
         new FileSystemVisitor(File.listRoots(), new Searcher("." + arg + ".class"), ".class").go();
-      } catch (@NotNull final IOException e) {
-        System.err.println(e.getMessage());
-        continue;
+      } catch (@NotNull final IOException ¢) {
+        System.err.println(¢.getMessage());
       } catch (@NotNull final StopTraversal e) {
-        continue;
       }
     }
   }

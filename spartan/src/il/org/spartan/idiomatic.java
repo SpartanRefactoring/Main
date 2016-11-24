@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
@@ -24,7 +24,7 @@ public interface idiomatic {
   };
   /** an ignoring trigger */
   @org.jetbrains.annotations.Nullable Trigger ignore = new Trigger() {
-    @org.jetbrains.annotations.Nullable @Override public <@Nullable T> T eval(final Supplier<T> ____) {
+    @Override @org.jetbrains.annotations.Nullable public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
     }
   };
@@ -40,8 +40,8 @@ public interface idiomatic {
   /** @param <T> JD
    * @param t the main value
    * @condition the condition to use prior to taking this value;
-   * @param the parameter if condition holds, otherwise, null
-   *        <code>incase</code> */
+   * @return the parameter if condition holds, otherwise, null
+   *         <code>incase</code> */
   @org.jetbrains.annotations.Nullable static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
@@ -106,19 +106,21 @@ public interface idiomatic {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Holder<T> extends Supplier<T> {
-    /** Return value when condition is <code><b>true</b></code>
-     * @param unless condition on which value is returned
-     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
-     *         otherwise code><b>null</b></code>. */
-    @org.jetbrains.annotations.Nullable default @Nullable T unless(final boolean unless) {
+    /**
+     * Return value when condition is <code><b>true</b></code>
+     * @param unless  condition on which value is returned
+     * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>. 
+     */
+    @org.jetbrains.annotations.Nullable @Nullable default T unless(final boolean unless) {
       return when(!unless);
     }
 
-    /** Return value when condition is <code><b>true</b></code>
-     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
-     *         otherwise code><b>null</b></code>.
-     * @param when condition on which value is returned */
-    @org.jetbrains.annotations.Nullable default @Nullable T when(final boolean when) {
+    /**
+     * Return value when condition is <code><b>true</b></code>
+     * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>.
+     * @param when  condition on which value is returned 
+     */
+    @org.jetbrains.annotations.Nullable @Nullable default T when(final boolean when) {
       return when ? get() : null;
     }
   }

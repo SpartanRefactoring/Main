@@ -45,7 +45,7 @@ public class Denser {
 
   @NotNull public double[] gather(@NotNull final double[] ds) {
     checkSize(ds, n());
-    final double[] $ = new double[m()];
+    @NotNull final double[] $ = new double[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
       $[¢] = ds[gather[¢]];
     return $;
@@ -53,14 +53,14 @@ public class Denser {
 
   @NotNull public int[] gather(@NotNull final int... is) {
     checkSize(is, n());
-    final int[] $ = new int[m()];
+    @NotNull final int[] $ = new int[m()];
     for (int ¢ = 0; ¢ < gather.length; ++¢)
       $[¢] = is[gather[¢]];
     return $;
   }
 
   @NotNull public int[][] gather(@NotNull final int[][] iss) {
-    final int[][] $ = new int[iss.length][];
+    @NotNull final int[][] $ = new int[iss.length][];
     for (int ¢ = 0; ¢ < iss.length; ++¢)
       $[¢] = gather(iss[¢]);
     return $;
@@ -76,7 +76,7 @@ public class Denser {
 
   @NotNull public double[] scatter(@NotNull final double[] ds) {
     checkSize(ds, m());
-    final double[] $ = new double[n()];
+    @NotNull final double[] $ = new double[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
       $[gather[¢]] = ds[¢];
     return $;
@@ -84,7 +84,7 @@ public class Denser {
 
   @NotNull public int[] scatter(@NotNull final int... is) {
     checkSize(is, m());
-    final int[] $ = new int[n()];
+    @NotNull final int[] $ = new int[n()];
     for (int ¢ = 0; ¢ < m(); ++¢)
       $[gather[¢]] = is[¢];
     return $;
@@ -102,14 +102,14 @@ public class Denser {
     }
 
     @Test public void gatherContent() {
-      final int[] g = new Denser(14, 0, 12, 13).gather(11, 1, 2, 4);
+      @NotNull final int[] g = new Denser(14, 0, 12, 13).gather(11, 1, 2, 4);
       azzert.that(g[0], is(11));
       azzert.that(g[1], is(2));
       azzert.that(g[2], is(4));
     }
 
     @Test public void gatherDoubles() {
-      final double[] g = new Denser(14, 0, 12, 13).gather(doubles(11, 1, 2, 4));
+      @NotNull final double[] g = new Denser(14, 0, 12, 13).gather(doubles(11, 1, 2, 4));
       assertEquals(11, g[0], 1E-5);
       assertEquals(2, g[1], 1E-5);
       assertEquals(4, g[2], 1E-5);
@@ -126,7 +126,7 @@ public class Denser {
     }
 
     @Test public void gatherMatrix() {
-      final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
+      @NotNull final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18), //
           ints(18, 19, 20, 21), //
@@ -141,7 +141,7 @@ public class Denser {
     }
 
     @Test public void gatherMatrixNotNull() {
-      final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
+      @NotNull final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18)));
       assert g != null;
@@ -167,7 +167,7 @@ public class Denser {
     }
 
     @Test public void scatterContent() {
-      final int[] s = new Denser(14, 0, 12, 13).scatter(11, 1, 2);
+      @NotNull final int[] s = new Denser(14, 0, 12, 13).scatter(11, 1, 2);
       azzert.that(s[0], is(11));
       azzert.that(s[1], is(0));
       azzert.that(s[2], is(1));
@@ -175,7 +175,7 @@ public class Denser {
     }
 
     @Test public void scatterDoubles() {
-      final double[] s = new Denser(14, 0, 12, 13).scatter(doubles(11., 1., 2.));
+      @NotNull final double[] s = new Denser(14, 0, 12, 13).scatter(doubles(11., 1., 2.));
       assertEquals(11, s[0], 1E-5);
       assertEquals(0, s[1], 1E-5);
       assertEquals(1, s[2], 1E-5);

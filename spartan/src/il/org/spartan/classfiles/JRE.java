@@ -33,9 +33,9 @@ import il.org.spartan.utils.*;
       return fromClass(Object.class);
     } catch (@NotNull final Throwable __) {
       // Absorb this exception, let's try the other option...
-      final List<File> $ = new ArrayList<>();
+      @NotNull final List<File> $ = new ArrayList<>();
       final String cp = System.getProperty("sun.boot.class.path");
-      for (final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+      for (@NotNull final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
         $.add(new File(¢.nextToken()));
       return $;
     }
@@ -47,12 +47,12 @@ import il.org.spartan.utils.*;
    * @throws IllegalArgumentException If the class loader of <code>c</code> is
    *         not a URLClassLoader */
   @NotNull public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
-    final List<File> $ = new ArrayList<>();
-    for (final Class<?> c : cs) {
+    @NotNull final List<File> $ = new ArrayList<>();
+    for (@NotNull final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();
       if (!(cl instanceof URLClassLoader))
         throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
-      for (final URL url : ((URLClassLoader) cl).getURLs())
+      for (@NotNull final URL url : ((URLClassLoader) cl).getURLs())
         try {
           $.add(new File(url.toURI()));
         } catch (@NotNull final URISyntaxException e) {

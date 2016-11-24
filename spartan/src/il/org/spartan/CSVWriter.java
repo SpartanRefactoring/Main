@@ -17,8 +17,8 @@ import il.org.spartan.streotypes.*;
   private static FileWriter open(@NotNull final File f) {
     try {
       return new FileWriter(f);
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
       return null;
     }
   }
@@ -48,8 +48,8 @@ import il.org.spartan.streotypes.*;
   @NotNull public String close() {
     try {
       inner.close();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
     }
     return fileName;
   }
@@ -93,8 +93,8 @@ import il.org.spartan.streotypes.*;
     try {
       write(cl);
       inner.flush();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 
@@ -102,8 +102,8 @@ import il.org.spartan.streotypes.*;
     try {
       inner.write(s);
       inner.write("\n");
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 }

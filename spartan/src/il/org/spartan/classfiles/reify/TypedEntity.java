@@ -14,7 +14,7 @@ public class TypedEntity extends ConstantPoolEntity {
   /** @param rest
    * @return */
   static TypeInfo[] decodeArguments(@NotNull final CharIterator rest) {
-    final List<TypeInfo> $ = new ArrayList<>();
+    @NotNull final List<TypeInfo> $ = new ArrayList<>();
     for (char first;;)
       switch (first = rest.next()) {
         case ')':
@@ -25,7 +25,7 @@ public class TypedEntity extends ConstantPoolEntity {
   }
 
   private static String decodeReferenceType(@NotNull final CharIterator i) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (char ¢; i.hasNext();)
       switch (¢ = i.next()) {
         case ';':
@@ -61,7 +61,7 @@ public class TypedEntity extends ConstantPoolEntity {
       case 'Z':
         return TypeInfo.makePrimitiveType("boolean");
       case '(':
-        final TypeInfo[] arguments = decodeArguments(rest);
+        @NotNull final TypeInfo[] arguments = decodeArguments(rest);
         return TypeInfo.makeMethodType(decodeSingleType(rest), arguments);
       case 'L':
         return TypeInfo.makeReferenceType(decodeReferenceType(rest));

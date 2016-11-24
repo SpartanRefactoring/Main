@@ -12,14 +12,14 @@ import il.org.spartan.sequence.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class DeepSizeTest {
   @NotNull private static MyHashMap<String, String> createHashTable(final int i) {
-    final MyHashMap<String, String> $ = new MyHashMap<>();
+    @NotNull final MyHashMap<String, String> $ = new MyHashMap<>();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.put(String.valueOf(¢ * ¢ + 1), String.valueOf((¢ + 5) * (¢ - 9) + 1));
     return $;
   }
 
   @Test public void DeepSize_of_Array_non_null() {
-    final Object[] os = makeRecursiveArray(83);
+    @NotNull final Object[] os = makeRecursiveArray(83);
     azzert.that(DeepSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
   }
 
@@ -42,8 +42,8 @@ public class DeepSizeTest {
   }
 
   @Test public void new_Visitor_ClassWithArray() {
-    final ClassWithArray o = new ClassWithArray();
-    final Object[] os = makeRecursiveArray(3);
+    @NotNull final ClassWithArray o = new ClassWithArray();
+    @NotNull final Object[] os = makeRecursiveArray(3);
     o.os = os;
     azzert.that(new DeepSize.Visitor().size(o.os), is(DeepSize.of(o.os)));
   }
@@ -53,7 +53,7 @@ public class DeepSizeTest {
   }
 
   @Test public void new_Visitor_size_ObjectObject() {
-    final Object o = new ObjectObject();
+    @NotNull final Object o = new ObjectObject();
     azzert.that(new Visitor().size(o, Object.class), is(ShallowSize.of(o)));
   }
 
@@ -66,7 +66,7 @@ public class DeepSizeTest {
   }
 
   @Test public void objectInt() {
-    final Object o = new Object() {
+    @NotNull final Object o = new Object() {
       int __;
 
       @Override public int hashCode() {
@@ -81,7 +81,7 @@ public class DeepSizeTest {
   }
 
   @Test public void objectSize_ObjectObject_ObjectObject() {
-    final Object o = new ObjectObject();
+    @NotNull final Object o = new ObjectObject();
     azzert.that(DeepSize.of(o), is(ShallowSize.of(o)));
   }
 
@@ -99,15 +99,15 @@ public class DeepSizeTest {
   }
 
   @Test public void of_array_of_objects() {
-    final Object[] os = new Object[8];
+    @NotNull final Object[] os = new Object[8];
     for (int ¢ = 0; ¢ < os.length; ++¢)
       os[¢] = os;
     azzert.that(DeepSize.of(os), is(48));
   }
 
   @Test public void of_ClassWithArray() {
-    final ClassWithArray o = new ClassWithArray();
-    final Object[] os = makeRecursiveArray(79);
+    @NotNull final ClassWithArray o = new ClassWithArray();
+    @NotNull final Object[] os = makeRecursiveArray(79);
     o.os = os;
     for (int ¢ = 0; ¢ < os.length; ++¢)
       if (¢ % 2 == 1)
@@ -116,8 +116,8 @@ public class DeepSizeTest {
   }
 
   @Test public void of_ClassWithArray_non_null() {
-    final ClassWithArray o = new ClassWithArray();
-    final Object[] os = makeRecursiveArray(13);
+    @NotNull final ClassWithArray o = new ClassWithArray();
+    @NotNull final Object[] os = makeRecursiveArray(13);
     o.os = os;
     azzert.that(DeepSize.of(o), is(DeepSize.of(os) + ShallowSize.of(o)));
   }
@@ -127,15 +127,15 @@ public class DeepSizeTest {
   }
 
   @Test public void of_ClassWithArray_recursive() {
-    final ClassWithArray o = new ClassWithArray();
-    final Object[] os = makeRecursiveArray(3);
+    @NotNull final ClassWithArray o = new ClassWithArray();
+    @NotNull final Object[] os = makeRecursiveArray(3);
     o.os = os;
     azzert.that(DeepSize.of(o), is(ShallowSize.of(o) + ShallowSize.of(os)));
   }
 
   @Test public void of_ClassWithArrayReursiveArray() {
     final int arraySize = 6;
-    final Object o = new Object() {
+    @NotNull final Object o = new Object() {
       final Object os[] = makeRecursiveArray(arraySize);
 
       @Override public int hashCode() {
@@ -148,7 +148,7 @@ public class DeepSizeTest {
 
   @Test public void of_ClassWithObjecReursiveArray() {
     final int arraySize = 23;
-    final Object o = new Object() {
+    @NotNull final Object o = new Object() {
       final Object o__ = makeRecursiveArray(arraySize);
 
       @Override public int hashCode() {
@@ -159,7 +159,7 @@ public class DeepSizeTest {
   }
 
   @Test public void of_MyHashMap() {
-    final MyHashMap<Object, Object> m = new MyHashMap<>();
+    @NotNull final MyHashMap<Object, Object> m = new MyHashMap<>();
     azzert.that(ShallowSize.of(m), is(40));
     azzert.that(DeepSize.of(m), is(120));
     m.put(null, null);
@@ -171,12 +171,12 @@ public class DeepSizeTest {
   }
 
   @Test public void of_MyHashMap_table() {
-    final MyHashMap<Object, Object> m = new MyHashMap<>();
+    @NotNull final MyHashMap<Object, Object> m = new MyHashMap<>();
     azzert.that(DeepSize.of(m) - ShallowSize.of(m), is(ShallowSize.of(m.table) + DeepSize.of(m.keySet)));
   }
 
   @Test public void of_MyHashMap_table_size() {
-    final MyHashMap<Object, Object> m = new MyHashMap<>();
+    @NotNull final MyHashMap<Object, Object> m = new MyHashMap<>();
     azzert.that(ShallowSize.of(m.table), is(ShallowSize.arraySize(m.table.length)));
   }
 
@@ -197,7 +197,7 @@ public class DeepSizeTest {
   }
 
   @Test public void of_objectByte() {
-    final Object o = new Object() {
+    @NotNull final Object o = new Object() {
       byte __;
 
       @Override public int hashCode() {
@@ -220,12 +220,12 @@ public class DeepSizeTest {
   }
 
   @Test public void shallow_of_MyHashMap() {
-    for (final Sequence f = new Fibonacci(1000); f.more(); f.advance())
+    for (@NotNull final Sequence f = new Fibonacci(1000); f.more(); f.advance())
       azzert.that(ShallowSize.of(createHashTable(f.current())), is(ShallowSize.of(new MyHashMap<>())));
   }
 
   @Test public void ShallowSize_of_Array_non_null() {
-    final Object[] os = makeRecursiveArray(17);
+    @NotNull final Object[] os = makeRecursiveArray(17);
     azzert.that(ShallowSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
   }
 
@@ -234,7 +234,7 @@ public class DeepSizeTest {
   }
 
   @NotNull Object[] makeRecursiveArray(final int i) {
-    final Object[] $ = new Object[i];
+    @NotNull final Object[] $ = new Object[i];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = $;
     return $;

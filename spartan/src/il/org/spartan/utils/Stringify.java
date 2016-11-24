@@ -48,7 +48,7 @@ import il.org.spartan.utils.Separate.*;
 @Utility public enum Stringify {
   ; // No values in this namespace.
   @NotNull public static <T> ArrayList<String> apply(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
-    final ArrayList<String> $ = new ArrayList<>();
+    @NotNull final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(t.__(¢));
     return $;
@@ -106,7 +106,7 @@ import il.org.spartan.utils.Separate.*;
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-  @NotNull public static <T> String it(final Iterable<T> ¢) {
+  @NotNull public static <T> String it(@NotNull final Iterable<T> ¢) {
     return it(¢, Option.defaultStyle);
   }
 
@@ -117,7 +117,7 @@ import il.org.spartan.utils.Separate.*;
    * @param o formatting style for this list.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  @NotNull public static <T> String it(final Iterable<T> ts, @NotNull final Option o) {
+  @NotNull public static <T> String it(@NotNull final Iterable<T> ts, @NotNull final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
 
@@ -168,16 +168,16 @@ import il.org.spartan.utils.Separate.*;
   }
 
   @NotNull private static <T> String[] asStringArray(@NotNull final T[] ts, final String nullFiller) {
-    final String[] $ = new String[ts.length];
+    @NotNull final String[] $ = new String[ts.length];
     int i = 0;
-    for (final T ¢ : ts)
+    for (@Nullable final T ¢ : ts)
       $[i++] = ¢ != null ? ¢ + "" : nullFiller;
     return $;
   }
 
   @NotNull private static <T> Collection<String> asStringCollection(@NotNull final Iterable<T> ts, @Nullable final String nullFiller) {
-    final ArrayList<String> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final ArrayList<String> $ = new ArrayList<>();
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢ + "");
       else if (nullFiller != null)
@@ -189,12 +189,12 @@ import il.org.spartan.utils.Separate.*;
     return ss.length == 0 ? "" : o.begin() + Separate.by(ss, o.separator()) + o.end();
   }
 
-  private static <T> Iterable<T> prune(final Iterable<T> ts, @NotNull final Option o) {
-    return !o.isOmittingNulls() ? ts : Prune.nulls(ts);
+  @NotNull private static <T> Iterable<T> prune(@NotNull final Iterable<T> ts, @NotNull final Option o) {
+    return o.notOmittingNulls() ? ts : Prune.nulls(ts);
   }
 
   @NotNull private static <T> T[] prune(@NotNull final T[] ts, @NotNull final Option o) {
-    return !o.isOmittingNulls() ? ts : Prune.nulls(ts);
+    return o.notOmittingNulls() ? ts : Prune.nulls(ts);
   }
 
   /** An options object for the containing class.
@@ -258,8 +258,8 @@ import il.org.spartan.utils.Separate.*;
       return this;
     }
 
-    public boolean isOmittingNulls() {
-      return __filler == null;
+    public boolean notOmittingNulls() {
+      return __filler != null;
     }
 
     @NotNull public Option omitNulls() {
@@ -283,7 +283,7 @@ import il.org.spartan.utils.Separate.*;
     }
 
     @NotNull private static Collection<String> makeCollection(@NotNull final String... ss) {
-      final ArrayList<String> $ = new ArrayList<>();
+      @NotNull final ArrayList<String> $ = new ArrayList<>();
       for (final String ¢ : ss)
         $.add(¢);
       return $;

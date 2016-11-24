@@ -27,10 +27,10 @@ public enum CSV {
    * @return Combined string
    * @see #splitToClasses(String) */
   @NotNull public static String combine(@NotNull final Class<?>[] cs) {
-    final String[] ss = new String[cs.length];
-    for (int ¢ = 0; ¢ < ss.length; ++¢)
-      ss[¢] = cs[¢] == null ? null : cs[¢].getName();
-    return combine(ss);
+    @NotNull final String[] $ = new String[cs.length];
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = cs[¢] == null ? null : cs[¢].getName();
+    return combine($);
   }
 
   /** Combine the given array into a comma separated string. Each element is
@@ -42,9 +42,9 @@ public enum CSV {
    * @see CSV#escape(String) */
   @NotNull public static <T> String combine(@NotNull final T[] parts) {
     nonnull(parts);
-    final StringBuilder $ = new StringBuilder(10 * parts.length);
-    final Separator sep = new Separator(",");
-    for (final T ¢ : parts)
+    @NotNull final StringBuilder $ = new StringBuilder(10 * parts.length);
+    @NotNull final Separator sep = new Separator(",");
+    for (@org.jetbrains.annotations.Nullable final T ¢ : parts)
       $.append(sep + escape(¢ == null ? null : ¢ + ""));
     return $ + "";
   }
@@ -57,10 +57,12 @@ public enum CSV {
    * @return Combined string
    * @see CSV#escape(String) */
   @NotNull public static <T extends Enum<T>> String combine(@NotNull final T[] parts) {
-    final String[] ss = new String[parts.length];
-    for (int ¢ = 0; ¢ < ss.length; ++¢)
-      ss[¢] = parts[¢] == null ? null : parts[¢].name();
-    return combine(ss);
+    @NotNull final String[] $ = new String[parts.length];
+    for (int ¢ = 0; ¢ < $.length; ++¢) {
+      @NotNull T t = parts[¢];
+      $[¢] = t == null ? null : t.name();
+    }
+    return combine($);
   }
 
   /** Escape the given input
@@ -70,10 +72,10 @@ public enum CSV {
     if (s == null)
       return NULL;
     final int len = s.length();
-    final StringBuilder out = new StringBuilder(len);
+    @NotNull final StringBuilder $ = new StringBuilder(len);
     for (final char ¢ : s.toCharArray())
-      out.append(¢ == '\\' ? "\\\\" : ¢ == '\n' ? "\\n" : ¢ == '\r' ? "\\r" : ¢ == '\t' ? "\\t" : ¢ == ',' ? "\\." : ¢);
-    return out + "";
+      $.append(¢ == '\\' ? "\\\\" : ¢ == '\n' ? "\\n" : ¢ == '\r' ? "\\r" : ¢ == '\t' ? "\\t" : ¢ == ',' ? "\\." : ¢);
+    return $ + "";
   }
 
   /** Read a CSV file.
@@ -88,14 +90,14 @@ public enum CSV {
    * @param r input reader
    * @return a two dimensional array of strings */
   public static String[][] load(@NotNull final Reader r) {
-    final ArrayList<String[]> $ = new ArrayList<>(20);
-    for (final Scanner ¢ = new Scanner(r); ¢.hasNext();)
+    @NotNull final ArrayList<String[]> $ = new ArrayList<>(20);
+    for (@NotNull final Scanner ¢ = new Scanner(r); ¢.hasNext();)
       $.add(split(¢.nextLine()));
     return $.toArray(new String[$.size()][]);
   }
 
   public static void save(@NotNull final File f, @NotNull final String[][] data) throws IOException {
-    final PrintWriter pw = new PrintWriter(new FileWriter(f));
+    @NotNull final PrintWriter pw = new PrintWriter(new FileWriter(f));
     pw.print(toCsv(data));
     pw.close();
   }
@@ -106,8 +108,8 @@ public enum CSV {
    * @param s Input string
    * @return Array of T */
   @NotNull public static <T extends Enum<T>> T[] split(@NotNull final Class<T> clazz, @NotNull final String s) {
-    final String[] ss = split(s);
-    @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(clazz, ss.length);
+    @NotNull final String[] ss = split(s);
+    @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(clazz, ss.length);
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = ss[¢] == null ? null : Enum.valueOf(clazz, ss[¢]);
     return $;
@@ -119,7 +121,7 @@ public enum CSV {
   @NotNull public static String[] split(@NotNull final String s) {
     if (s.length() == 0)
       return new String[0];
-    final List<String> $ = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     for (int from = 0;;) {
       final int to = s.indexOf(',', from);
       if (to < 0) {
@@ -135,30 +137,30 @@ public enum CSV {
    * @param s input string
    * @return Array of T */
   @NotNull public static Class<?>[] splitToClasses(@NotNull final String s) {
-    final String[] names = split(s);
-    final Class<?>[] $ = new Class<?>[names.length]; // (T[])
+    @NotNull final String[] names = split(s);
+    @NotNull final Class<?>[] $ = new Class<?>[names.length]; // (T[])
     // Array.newInstance(cls,
     // arr.length);
     for (int i = 0; i < $.length; ++i)
       try {
         $[i] = names[i] == null ? null : Class.forName(names[i]);
-      } catch (@NotNull final ClassNotFoundException e) {
-        throw new RuntimeException("s=" + s, e);
+      } catch (@NotNull final ClassNotFoundException ¢) {
+        throw new RuntimeException("s=" + s, ¢);
       }
     return $;
   }
 
   @NotNull public static String toCsv(@NotNull final String[][] data) {
-    final StringWriter sw = new StringWriter();
-    final PrintWriter pw = new PrintWriter(sw);
-    for (final String[] line : data) {
-      final Separator comma = new Separator(",");
+    @NotNull final StringWriter $ = new StringWriter();
+    @NotNull final PrintWriter pw = new PrintWriter($);
+    for (@NotNull final String[] line : data) {
+      @NotNull final Separator comma = new Separator(",");
       for (final String ¢ : line)
         pw.print(comma + escape(¢));
       pw.println();
     }
     pw.flush();
-    return sw + "";
+    return $ + "";
   }
 
   /** Unescape the given input
@@ -169,36 +171,36 @@ public enum CSV {
       return null;
     boolean esc = false;
     final int length = s.length();
-    final StringBuilder out = new StringBuilder(length);
+    @NotNull final StringBuilder $ = new StringBuilder(length);
     for (int i = 0; i < length; ++i) {
       final char c = s.charAt(i);
       if (!esc) {
         if (c == '\\')
           esc = true;
         else
-          out.append(c);
+          $.append(c);
         continue;
       }
       esc = false;
       switch (c) {
         case 'n':
-          out.append("\n");
+          $.append("\n");
           break;
         case 'r':
-          out.append("\r");
+          $.append("\r");
           break;
         case 't':
-          out.append("\t");
+          $.append("\t");
           break;
         case '.':
-          out.append(",");
+          $.append(",");
           break;
         case '\\':
-          out.append("\\");
+          $.append("\\");
           break;
         default:
       }
     }
-    return out + "";
+    return $ + "";
   }
 }

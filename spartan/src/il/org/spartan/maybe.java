@@ -33,7 +33,7 @@ public class maybe<@Nullable T> {
     return this;
   }
 
-  @org.jetbrains.annotations.Nullable public @Nullable T get() {
+  @org.jetbrains.annotations.Nullable @Nullable public T get() {
     return inner;
   }
 
@@ -57,12 +57,12 @@ public class maybe<@Nullable T> {
     }
 
     @Test public void usecase1() {
-      @Nullable final Object o = null;
+      @org.jetbrains.annotations.Nullable @Nullable final Object o = null;
       azzert.isNull(maybe.yes(o).get());
     }
 
     @Test public void usecase2() {
-      @Nullable final Object o = new Object();
+      @NotNull @Nullable final Object o = new Object();
       azzert.notNull(maybe.yes(o).get());
     }
   }

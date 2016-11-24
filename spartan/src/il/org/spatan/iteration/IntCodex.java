@@ -44,7 +44,7 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     return int2objects.get(¢);
   }
 
-  @NotNull @Override public Iterable<T> elements() {
+  @Override @NotNull public Iterable<T> elements() {
     return int2objects;
   }
 

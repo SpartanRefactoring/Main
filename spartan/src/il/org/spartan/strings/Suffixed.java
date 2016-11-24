@@ -48,7 +48,7 @@ import il.org.spartan.streotypes.*;
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes. */
   public static boolean by(@NotNull final String s, @NotNull final String... suffixes) {
-    for (final String end : suffixes)
+    for (@NotNull final String end : suffixes)
       if (s.endsWith(end))
         return true;
     return false;

@@ -21,13 +21,13 @@ public enum Sets {
   }
 
   @NotNull public static <E> Set<E> intersection(@NotNull final Collection<E> lhs, @NotNull final Collection<E> rhs) {
-    final Set<E> $ = new HashSet<>(lhs);
+    @NotNull final Set<E> $ = new HashSet<>(lhs);
     $.retainAll(rhs);
     return $;
   }
 
   @NotNull public static <E> Set<E> union(@NotNull final Collection<E> lhs, @NotNull final Collection<E> rhs) {
-    final Set<E> $ = new HashSet<>(lhs);
+    @NotNull final Set<E> $ = new HashSet<>(lhs);
     $.addAll(rhs);
     return $;
   }

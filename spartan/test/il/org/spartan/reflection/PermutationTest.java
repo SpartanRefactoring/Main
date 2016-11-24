@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Permutation.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -37,14 +38,14 @@ import il.org.spartan.utils.*;
 
   @Test public void testIsPermutationLarge() {
     final int N = 1000;
-    final int a[] = Permutation.random(N);
+    @NotNull final int a[] = Permutation.random(N);
     Arrays.sort(a);
     for (int ¢ = 0; ¢ < N; ++¢)
       azzert.that(Arrays.binarySearch(a, ¢), is(¢));
   }
 
   @Test public void testIsRandomPermutation() {
-    final int a[] = Permutation.random(10000);
+    @NotNull final int a[] = Permutation.random(10000);
     int count = 0;
     for (int ¢ = 0; ¢ < a.length; ++¢)
       count += as.bit(¢ == a[¢]);

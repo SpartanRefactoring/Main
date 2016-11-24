@@ -24,8 +24,8 @@ public class XYGnuPlotter {
   private static Process gnuplot() {
     try {
       return Runtime.getRuntime().exec(new String[] { "/usr/bin/gnuplot", "-persist" });
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
       return null;
     }
   }
@@ -79,8 +79,8 @@ public class XYGnuPlotter {
     try {
       writer.write(s);
       writer.flush();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
       System.exit(1);
     }
   }
@@ -92,7 +92,7 @@ public class XYGnuPlotter {
       this.curve = curve;
     }
 
-    public Curve(@NotNull final String curve, final double... ds) {
+    public Curve(@NotNull final String curve, @NotNull final double... ds) {
       this(curve, (Object[]) box(ds));
     }
 
@@ -132,7 +132,7 @@ public class XYGnuPlotter {
       return this;
     }
 
-    @NotNull public Settings characterize(@NotNull final String statement, final double... ds) {
+    @NotNull public Settings characterize(@NotNull final String statement, @NotNull final double... ds) {
       return characterize(statement, (Object[]) box(ds));
     }
 
@@ -145,7 +145,7 @@ public class XYGnuPlotter {
       return this;
     }
 
-    @NotNull public Settings finalize(@NotNull final String statement, final double... ds) {
+    @NotNull public Settings finalize(@NotNull final String statement, @NotNull final double... ds) {
       return finalize(statement, (Object[]) box(ds));
     }
 
@@ -154,7 +154,7 @@ public class XYGnuPlotter {
     }
 
     @NotNull public Curve newCurve(final String curve) {
-      final Curve $ = new Curve(curve);
+      @NotNull final Curve $ = new Curve(curve);
       curves.add($);
       return $;
     }
@@ -163,7 +163,7 @@ public class XYGnuPlotter {
       return newCurve(format(curve, os));
     }
 
-    @NotNull public Curve newCurveD(@NotNull final String curve, final double... ds) {
+    @NotNull public Curve newCurveD(@NotNull final String curve, @NotNull final double... ds) {
       return newCurve(curve, (Object[]) box(ds));
     }
 

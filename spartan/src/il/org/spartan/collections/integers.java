@@ -124,7 +124,7 @@ public class integers {
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   @NotNull public int[] entries() {
-    final int[] $ = new int[size];
+    @NotNull final int[] $ = new int[size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];

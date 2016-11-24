@@ -1,12 +1,12 @@
 package il.org.spartan;
 // TODO: Yossi: I commented this one too.
 
-// import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
 import org.jetbrains.annotations.*;
 
+// import static il.org.spartan.utils.___.*;
 import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
 
@@ -48,7 +48,7 @@ public class CSVStatistics extends CSVLine.Ordered {
   @NotNull public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
-      final CSVLine l = new CSVLine.Ordered.Separated("%");
+      @NotNull final CSVLine l = new CSVLine.Ordered.Separated("%");
       l.put(keysHeader, key);
       final ImmutableStatistics s = stats.get(key);
       l//

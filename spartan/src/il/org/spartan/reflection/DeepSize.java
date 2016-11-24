@@ -7,31 +7,31 @@ import org.jetbrains.annotations.*;
 
 /** This class computes the deep size of any object. */
 public class DeepSize {
-  public static int of(final boolean it[]) {
+  public static int of(@NotNull final boolean it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final byte it[]) {
+  public static int of(@NotNull final byte it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final char it[]) {
+  public static int of(@NotNull final char it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final double it[]) {
+  public static int of(@NotNull final double it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final float it[]) {
+  public static int of(@NotNull final float it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final int it[]) {
+  public static int of(@NotNull final int it[]) {
     return ShallowSize.of(it);
   }
 
-  public static int of(final long it[]) {
+  public static int of(@NotNull final long it[]) {
     return ShallowSize.of(it);
   }
 
@@ -39,7 +39,7 @@ public class DeepSize {
     return new Visitor().size(¢);
   }
 
-  public static int of(final short it[]) {
+  public static int of(@NotNull final short it[]) {
     return ShallowSize.of(it);
   }
 
@@ -54,7 +54,7 @@ public class DeepSize {
     };
 
     @NotNull static ArrayList<Field> getAllFields(final Class<?> c) {
-      final ArrayList<Field> $ = new ArrayList<>();
+      @NotNull final ArrayList<Field> $ = new ArrayList<>();
       for (Class<?> p = c; p != null; p = p.getSuperclass())
         for (final Field ¢ : p.getDeclaredFields())
           $.add(¢);
@@ -63,14 +63,10 @@ public class DeepSize {
 
     private static Object get(@NotNull final Field f, final Object o) {
       f.setAccessible(true);
-      // System.out.println("Extracting field " + f + " named '" + f.getName() +
-      // "' of type " + f.getType());
       try {
         return f.get(o);
-      } catch (@NotNull final IllegalArgumentException e) {
-        throw new RuntimeException(e);
-      } catch (@NotNull final IllegalAccessException e) {
-        throw new RuntimeException(e);
+      } catch (@NotNull final IllegalAccessException | IllegalArgumentException ¢) {
+        throw new RuntimeException(¢);
       }
     }
 
@@ -95,7 +91,7 @@ public class DeepSize {
       if (c.isArray())
         return size(Object[].class.cast(o));
       int $ = ShallowSize.of(o);
-      for (final Field ¢ : getAllFields(c))
+      for (@NotNull final Field ¢ : getAllFields(c))
         $ += size(o, ¢);
       // System.out.println("$ is:" + $);
       return $;

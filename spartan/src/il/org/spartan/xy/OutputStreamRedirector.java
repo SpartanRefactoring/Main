@@ -18,8 +18,8 @@ class OutputStreamRedirector extends Thread {
     try {
       for (final int nextChar = from.read(); nextChar != -1;)
         to.append((char) nextChar);
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 }

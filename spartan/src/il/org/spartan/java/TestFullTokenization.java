@@ -22,7 +22,7 @@ import il.org.spatan.iteration.*;
 //
 public class TestFullTokenization {
   @DataPoints public static File[] javaFiles() throws IOException {
-    final Set<File> $ = new TreeSet<>();
+    @NotNull final Set<File> $ = new TreeSet<>();
     new JavaFilesVisitor(".", new PlainFileOnlyAction() {
       @Override public void visitFile(final File ¢) {
         $.add(¢);
@@ -32,15 +32,15 @@ public class TestFullTokenization {
   }
 
   public static String read(@NotNull final File f) throws IOException {
-    final char[] $ = new char[(int) f.length()];
-    final FileReader fileReader = new FileReader(f);
+    @NotNull final char[] $ = new char[(int) f.length()];
+    @NotNull final FileReader fileReader = new FileReader(f);
     final int n = fileReader.read($);
     fileReader.close();
     return String.valueOf(Arrays.copyOf($, n));
   }
 
   public static void write(@NotNull final File f, @NotNull final String text) throws IOException {
-    final Writer w = new FileWriter(f);
+    @NotNull final Writer w = new FileWriter(f);
     w.write(text);
     w.close();
   }
@@ -56,7 +56,7 @@ public class TestFullTokenization {
   }
 
   @Test public void some_method() throws IOException {
-    final String s = Separate.nl(
+    @NotNull final String s = Separate.nl(
         //
         "private static int circularSum(final int[] a, final int[] b, final int offset) {", //
         "  int $ = 0;", //
@@ -75,8 +75,8 @@ public class TestFullTokenization {
   }
 
   @Test public void unicodeFileAgainstFileOutput() throws IOException {
-    final String s = TokenAsIs.fileToString(fin);
-    final File fout = new File(fin.getPath() + ".out");
+    @NotNull final String s = TokenAsIs.fileToString(fin);
+    @NotNull final File fout = new File(fin.getPath() + ".out");
     write(fout, s);
     azzert.that(read(fout), is(s));
     azzert.that(read(fout), is(read(fin)));

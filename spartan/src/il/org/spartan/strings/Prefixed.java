@@ -34,7 +34,7 @@ public enum Prefixed {
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> starts with
    *         any one of the supplied prefixes.. */
   public static boolean by(@NotNull final String s, @NotNull final String... prefixes) {
-    for (final String prefix : prefixes)
+    for (@NotNull final String prefix : prefixes)
       if (s.startsWith(prefix))
         return true;
     return false;

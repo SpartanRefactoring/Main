@@ -19,8 +19,8 @@ public enum Pearson {
       throw new IllegalArgumentException(x.length + ":" + y.length);
     if (x.length < 2)
       return Double.NaN;
-    final WeightedLeastSquares ls = new WeightedLeastSquares();
-    ls.feed(x, y);
-    return ls.r();
+    @NotNull final WeightedLeastSquares $ = new WeightedLeastSquares();
+    $.feed(x, y);
+    return $.r();
   }
 }

@@ -9,12 +9,12 @@ import il.org.spartan.bench.operations.*;
 /** @author Yossi Gil
  * @since 30/05/2011 */
 public class BenchHashFunction {
-  private static int trials = 100;
+  private static final int trials = 100;
   public static int size = 9;
 
   public static void main(final String args[]) throws Exception {
-    final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
-    final Hash h = new Hash();
+    @NotNull final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
+    @NotNull final Hash h = new Hash();
     Log.deactivate();
     for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, "hash", 1, h);
@@ -29,7 +29,7 @@ public class BenchHashFunction {
 
     int a;
 
-    @Nullable @Override public Void call() {
+    @Override @Nullable public Void call() {
       a = hash(++a);
       return null;
     }

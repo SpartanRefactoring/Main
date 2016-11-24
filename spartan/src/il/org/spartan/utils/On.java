@@ -12,7 +12,7 @@ import il.org.spartan.streotypes.*;
 @Utility public enum On {
   ;
   public static void main(@NotNull final String[] args) {
-    for (final String arg : args) {
+    for (@NotNull final String arg : args) {
       System.out.print("Argument " + arg + " is ");
       On.sign(Integer.valueOf(arg), () -> System.out.println("negative!"), () -> System.out.println("zero!"), () -> System.out.println("positive!"));
     }

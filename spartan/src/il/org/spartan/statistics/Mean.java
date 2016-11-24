@@ -33,7 +33,7 @@ import il.org.spartan.streotypes.*;
 
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void moment1() {
-      final double vs[] = { 1, 2, 3, 4, 5 };
+      @NotNull final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(1, moment(0, vs), 1E-8);
       Assert.assertEquals(15, sum(1, vs), 1E-8);
       shift(vs);

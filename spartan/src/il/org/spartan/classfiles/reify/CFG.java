@@ -11,7 +11,7 @@ import il.org.spartan.graph.Graph.*;
 
 public class CFG {
   @SuppressWarnings("boxing") private static BasicBlock offset2block(@NotNull final Set<BasicBlock> bs, final Long offset) {
-    for (final BasicBlock $ : bs)
+    for (@NotNull final BasicBlock $ : bs)
       if ($.startOffset <= offset && $.endOffset >= offset)
         return $;
     return null;
@@ -38,14 +38,14 @@ public class CFG {
   }
 
   public void generateGraph() {
-    final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
-    final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
+    @NotNull final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
+    @NotNull final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
     // first stage - mark jump instructions, target instructions and end
     // instructions
     findJumpsAndTargets(jumps2targets, subroutine2rets);
     // second phase - create control flow graph - nodes only
-    final Graph.Builder<BasicBlock> builder = new Builder<>();
-    final Set<BasicBlock> basicBlocks = generateBasicBlocks(jumps2targets, builder);
+    @NotNull final Graph.Builder<BasicBlock> builder = new Builder<>();
+    @NotNull final Set<BasicBlock> basicBlocks = generateBasicBlocks(jumps2targets, builder);
     // third phase - add edges to the graph
     for (final Long jump : jumps2targets.keySet())
       for (final Long target : jumps2targets.get(jump))
@@ -56,25 +56,25 @@ public class CFG {
     g = builder.build();
   }
 
-  @NotNull @Override public String toString() {
-    String $ = "";
-    for (final Vertex<BasicBlock> ¢ : vertices())
+  @Override @NotNull public String toString() {
+    @NotNull String $ = "";
+    for (@NotNull final Vertex<BasicBlock> ¢ : vertices())
       $ += "basic block: " + ¢.e().startOffset + ", " + ¢.e().endOffset + "\n";
-    for (final Vertex<BasicBlock> v : vertices())
-      for (final Vertex<BasicBlock> v2 : v.outgoing())
+    for (@NotNull final Vertex<BasicBlock> v : vertices())
+      for (@NotNull final Vertex<BasicBlock> v2 : v.outgoing())
         $ += "edge: " + v.e().endOffset + ", " + v2.e().startOffset + "\n";
     return $;
   }
 
-  public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
+  @NotNull public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
     return g.vertices();
   }
 
   @SuppressWarnings("boxing") private void findJumpsAndTargets(@NotNull final MultiMap<Long, Long> jumps2targets,
       @NotNull final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
-    for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-      final Instruction i = OpCode.read(r);
+    for (@NotNull final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+      @Nullable final Instruction i = OpCode.read(r);
       if (i == null)
         break;
       if (i.invalid())
@@ -154,11 +154,11 @@ public class CFG {
 
   @NotNull @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(@NotNull final MultiMap<Long, Long> jumps2targets,
       @NotNull final Graph.Builder<BasicBlock> b) {
-    final Set<BasicBlock> $ = new HashSet<>();
+    @NotNull final Set<BasicBlock> $ = new HashSet<>();
     long offset = 0;
-    BasicBlock currBlock = null;
-    for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-      final Instruction i = OpCode.read(r);
+    @Nullable BasicBlock currBlock = null;
+    for (@NotNull final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+      @Nullable final Instruction i = OpCode.read(r);
       if (i == null)
         break;
       if (i.invalid())

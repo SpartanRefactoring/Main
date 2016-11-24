@@ -114,12 +114,12 @@ import il.org.spartan.utils.*;
 
   enum InnerEnumValues {
     A() {
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "My value";
       }
     },
     B() {
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "My value";
       }
     }

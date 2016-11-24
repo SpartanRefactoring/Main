@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
 import static il.org.spartan.azzert.*;
@@ -94,7 +94,7 @@ import il.org.spartan.reap.Cookbook.*;
    *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
    * </pre>
    *
-   * @param i JD
+   * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
   @NotNull static Property<@Nullable Boolean> value(final boolean ¢) {
     return new Property<>(Boolean.valueOf(¢));
@@ -266,7 +266,7 @@ import il.org.spartan.reap.Cookbook.*;
         azzert.aye(a.dependents.isEmpty()).andAye(a.prerequisites.isEmpty());
         azzert.that(a.¢(), iz(WORLD));
         azzert.that(a.version, is(1L));
-        final Property<String> b = new Property<>();
+        @NotNull final Property<String> b = new Property<>();
         azzert.aye(b.dependents.isEmpty()).andAye(b.prerequisites.isEmpty());
         azzert.zero(b.version);
         b.bind((@NotNull final String ¢) -> "Hello, " + ¢).to(a);
@@ -307,7 +307,7 @@ import il.org.spartan.reap.Cookbook.*;
   class Property<@Nullable T> implements Function0<T>, Cloneable {
     private static long maxVersion(@NotNull final Iterable<Property<?>> ps) {
       long $ = 0;
-      for (final Property<?> c : ps)
+      for (@NotNull final Property<?> c : ps)
         $ = max($, c.version());
       return $;
     }
@@ -446,11 +446,11 @@ import il.org.spartan.reap.Cookbook.*;
       return cache;
     }
 
-    @NotNull @Override @SuppressWarnings("unchecked") public Property<T> clone() {
+    @Override @NotNull @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
-      } catch (@NotNull final CloneNotSupportedException x) {
-        throw new RuntimeException(x);
+      } catch (@NotNull final CloneNotSupportedException ¢) {
+        throw new RuntimeException(¢);
       }
     }
 
@@ -484,7 +484,7 @@ import il.org.spartan.reap.Cookbook.*;
      * @param ps JD
      * @return <code><b>this</b></code> */
     @NotNull public Property<T> ingredients(@NotNull final Property<?>... ps) {
-      for (final Property<?> ¢ : ps)
+      for (@NotNull final Property<?> ¢ : ps)
         ingredient(¢);
       return this;
     }
@@ -519,12 +519,12 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
-    /** forcibly set the value stored in this instance, ignoring the function
-     * used for computing it, and marks this instance as updated with respect to
-     * all prerequisites.
-     * @param ¢ JD
-     * @return <code><b>this</b></code> */
-    public @Nullable T set(final T ¢) {
+    /**
+     * forcibly set the value stored in this instance, ignoring the function used for computing it, and marks this instance as updated with respect to all prerequisites.
+     * @param ¢  JD
+     * @return  <code><b>this</b></code> 
+     */
+    @Nullable public T set(final T ¢) {
       version = latestPrequisiteVersion() + 1;
       return cache(¢);
     }
@@ -540,15 +540,15 @@ import il.org.spartan.reap.Cookbook.*;
       if (frozen || updated())
         return;
       frozen = true;
-      for (final Property<?> ¢ : prerequisites)
+      for (@NotNull final Property<?> ¢ : prerequisites)
         ¢.update();
       version = latestPrequisiteVersion() + 1;
       assert ϑ != null;
       try {
         @Nullable final T $ = set(ϑ.¢());
         azzert.notNull($);
-      } catch (@NotNull final Exception x) {
-        x.printStackTrace();
+      } catch (@NotNull final Exception ¢) {
+        ¢.printStackTrace();
         undefine();
       }
       frozen = false;
@@ -561,7 +561,7 @@ import il.org.spartan.reap.Cookbook.*;
         return true;
       if (cache() == null)
         return false;
-      for (final Property<?> ¢ : prerequisites)
+      for (@NotNull final Property<?> ¢ : prerequisites)
         if (version() <= ¢.version() || !¢.updated())
           return false;
       return true;

@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,24 +15,23 @@ import il.org.spartan.classfiles.reify.*;
 @SuppressWarnings({ "static-method", "rawtypes" }) //
 public class ClassProxyTest {
   private static final long serialVersionUID = 8455039288585824990L;
-  static final long defaultLong = 123456789011L;
   private final String stringSignature = "My String Signature";
-  public final long publicInstanceLong = 123456789011L * defaultLong;
-  public float someFloat = 4.91F;
-  public double someDouble = 1.125;
+  public final long publicInstanceLong = 123456789011L * serialVersionUID;
+  public final float someFloat = 4.91F;
+  public final double someDouble = 1.125;
 
   @Test public void testClassDollarForNameEntry() throws ClassNotFoundException {
     Class.forName("java.util.Map$Entry");
   }
 
   @Test public void testClassFileOfStringBuilder() throws IOException, ClassNotFoundException {
-    for (final String className : new ClassProxy<>(StringBuilder.class).getReferencedClasses())
+    for (@Nullable final String className : new ClassProxy<>(StringBuilder.class).getReferencedClasses())
       if (className != null)
         assert new ClassProxy<>(className) != null;
   }
 
   @Test public void testClassFileUsingMagic() throws IOException, ClassNotFoundException {
-    final int[] intConstants = new ClassProxy<>(ClassInfo.Builder.class).getReferencedInts();
+    @NotNull final int[] intConstants = new ClassProxy<>(ClassInfo.Builder.class).getReferencedInts();
     Arrays.sort(intConstants);
     assert Arrays.binarySearch(intConstants, 0xCAFEBABE) >= 0;
   }
@@ -138,50 +138,50 @@ public class ClassProxyTest {
   }
 
   @Test public void testMeReferencingClassFileProxy() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final String[] referenced = c.getReferencedClasses();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final String[] referenced = c.getReferencedClasses();
     Arrays.sort(referenced);
     assert Arrays.binarySearch(referenced, ClassProxy.class.getName()) >= 0;
   }
 
   @Test public void testMeUsingADouble() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final double[] doubles = c.getReferencedDoubles();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final double[] doubles = c.getReferencedDoubles();
     Arrays.sort(doubles);
     assert Arrays.binarySearch(doubles, someDouble) >= 0;
   }
 
   @Test public void testMeUsingAFloat() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final float[] floats = c.getReferencedFloats();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final float[] floats = c.getReferencedFloats();
     Arrays.sort(floats);
     assert Arrays.binarySearch(floats, someFloat) >= 0;
   }
 
   @Test public void testMeUsingDefaultLong() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final long[] longConstants = c.getReferencedLongs();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
-    assert Arrays.binarySearch(longConstants, defaultLong) >= 0;
+    assert Arrays.binarySearch(longConstants, serialVersionUID) >= 0;
   }
 
   @Test public void testMeUsingPublicInstanceLong() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final long[] longConstants = c.getReferencedLongs();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
     assert Arrays.binarySearch(longConstants, publicInstanceLong) >= 0;
   }
 
   @Test public void testMeUsingSerialVersionUID() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final long[] longConstants = c.getReferencedLongs();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
     assert Arrays.binarySearch(longConstants, serialVersionUID) >= 0;
   }
 
   @Test public void testMeUsingString() throws IOException, ClassNotFoundException {
-    final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
-    final String[] stringConstants = c.getReferencedStrings();
+    @NotNull final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
+    @NotNull final String[] stringConstants = c.getReferencedStrings();
     Arrays.sort(stringConstants);
     assert Arrays.binarySearch(stringConstants, stringSignature) >= 0;
   }

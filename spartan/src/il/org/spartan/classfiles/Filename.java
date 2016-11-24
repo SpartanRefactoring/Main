@@ -41,9 +41,9 @@ public enum Filename {
   public static String filePart(@NotNull final String fileName) {
     nonnull(fileName);
     System.out.println("Replacing " + fileName);
-    final String normalizedName = fileName.replaceAll("/", "\\");
-    System.out.println("normalizedName = " + normalizedName);
-    return normalizedName.substring(normalizedName.lastIndexOf('\\') + 1);
+    final String $ = fileName.replaceAll("/", "\\");
+    System.out.println("normalizedName = " + $);
+    return $.substring($.lastIndexOf('\\') + 1);
   }
 
   public static String getTrailer(@NotNull final String ¢) {
@@ -150,7 +150,7 @@ public enum Filename {
   }
 
   @NotNull public static String trailerPart(@NotNull final String name) {
-    final String tail = tailPart(name);
+    @NotNull final String tail = tailPart(name);
     final int index = tail.lastIndexOf('$');
     return index < 1 ? "" : tail.substring(index + 1);
   }

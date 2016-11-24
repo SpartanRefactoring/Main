@@ -19,7 +19,7 @@ public class LightWeightParser {
   }
 
   public void clazz() {
-    final Token t = skipUntil(__class, __enum, __interface, AT_INTERFACE);
+    @Nullable final Token t = skipUntil(__class, __enum, __interface, AT_INTERFACE);
     if (t == null)
       return;
     getIdentifier();
@@ -41,13 +41,13 @@ public class LightWeightParser {
   public void variable() {
   }
 
-  private String getIdentifier() {
+  @NotNull private String getIdentifier() {
     skipUntil(IDENTIFIER);
     return tokenizer.text();
   }
 
   private Token skipUntil(@NotNull final Token... ¢) {
-    for (Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
+    for (@Nullable Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
       if (in($, ¢))
         return $;
     return null;

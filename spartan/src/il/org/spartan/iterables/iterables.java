@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
@@ -23,7 +23,7 @@ public enum iterables {
   public static <T> int count(@org.jetbrains.annotations.Nullable final @Nullable Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
-      for (final @Nullable T ¢ : ts)
+      for (@org.jetbrains.annotations.Nullable final @Nullable T ¢ : ts)
         $ += as.bit(¢ != null);
     return $;
   }
@@ -36,7 +36,7 @@ public enum iterables {
 
   /** @param os JD */
   public static boolean isEmpty(@NotNull final Iterable<?> os) {
-    for (final Object name2 : os)
+    for (@org.jetbrains.annotations.Nullable final Object name2 : os)
       if (name2 != null)
         return false;
     return true;

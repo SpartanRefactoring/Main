@@ -48,55 +48,55 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
   public String format(@NotNull final Unit u, @Nullable final String format) {
     if (format == null)
       return format(u);
-    final StringBuilder sb = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (final char ¢ : format.toCharArray())
       switch (¢) {
         case 'A':
-          appendValue(sb, "mean", mean(), u);
-          appendError(sb, relativeError());
+          appendValue($, "mean", mean(), u);
+          appendError($, relativeError());
           break;
         case 'a':
-          appendValue(sb, "mean", mean(), u);
+          appendValue($, "mean", mean(), u);
           break;
         case 'J':
-          sb.append(u.format(median()));
-          appendError(sb, relativeMedianError());
+          $.append(u.format(median()));
+          appendError($, relativeMedianError());
           break;
         case 'j':
-          sb.append(u.format(median()));
+          $.append(u.format(median()));
           break;
         case 'D':
-          appendValue(sb, "median", median(), u);
-          appendError(sb, relativeMedianError());
+          appendValue($, "median", median(), u);
+          appendError($, relativeMedianError());
           break;
         case 'd':
-          appendValue(sb, "median", median(), u);
+          appendValue($, "median", median(), u);
           break;
         case 'I':
         case 'i':
-          appendValue(sb, "min", min(), u);
+          appendValue($, "min", min(), u);
           break;
         case 'X':
         case 'x':
-          appendValue(sb, "max", max(), u);
+          appendValue($, "max", max(), u);
           break;
         case 'N':
         case 'n':
-          appendValue(sb, "n", n());
+          appendValue($, "n", n());
           break;
         case 'R':
         case 'r':
-          sb.append("range").append('=');
-          sb.append(u.format(min()));
-          sb.append('⋯');
-          sb.append(u.format(max()));
-          sb.append("]");
+          $.append("range").append('=');
+          $.append(u.format(min()));
+          $.append('⋯');
+          $.append(u.format(max()));
+          $.append("]");
           break;
         default:
-          sb.append(¢);
+          $.append(¢);
           break;
       }
-    return sb + "";
+    return $ + "";
   }
 
   public final double mad() {

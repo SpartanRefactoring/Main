@@ -34,7 +34,7 @@ public class Assert extends org.junit.Assert {
 
   public static <T> void assertContained(final String s, @NotNull final Collection<T> c1, @NotNull final Collection<T> c2) {
     // assertLE(s, c1.size(), c2.size());
-    final ArrayList<T> missing = new ArrayList<>();
+    @NotNull final ArrayList<T> missing = new ArrayList<>();
     for (final T ¢ : c1)
       if (!c2.contains(¢))
         missing.add(¢);
@@ -148,8 +148,8 @@ public class Assert extends org.junit.Assert {
   }
 
   public static <T> void equals(final String prefix, @NotNull final Set<T> set, @NotNull final Iterable<T> ts) {
-    final List<T> list = Iterables.toList(ts);
-    Set<T> temp = new HashSet<>();
+    @NotNull final List<T> list = Iterables.toList(ts);
+    @NotNull Set<T> temp = new HashSet<>();
     temp.addAll(set);
     temp.removeAll(list);
     assert temp.isEmpty() : temp;

@@ -1,5 +1,7 @@
 package il.org.spartan.graph;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.collections.*;
 
 /** @author Yossi Gil
@@ -20,10 +22,10 @@ public abstract class SmallIntegersGraph {
   }
 
   public final short components() {
-    final Integers s = new Integers();
+    @NotNull final Integers $ = new Integers();
     for (final short n : nodes)
-      s.add(component(n));
-    return (short) s.size();
+      $.add(component(n));
+    return (short) $.size();
   }
 
   public final boolean connected(final int n1, final int n2) {

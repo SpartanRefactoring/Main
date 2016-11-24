@@ -3,6 +3,7 @@ package il.org.spartan;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -18,7 +19,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testNotNull_HashSetTwoNulls() {
-    final HashSet<Object> set = new HashSet<>();
+    @NotNull final HashSet<Object> set = new HashSet<>();
     set.add(null);
     set.add(null);
     assert !All.notNull(set);
@@ -45,28 +46,28 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testNotNull_SetNotNull() {
-    final HashSet<String> set = new HashSet<>();
+    @NotNull final HashSet<String> set = new HashSet<>();
     set.add("abc");
     set.add(null);
     assert !All.notNull(set);
   }
 
   @Test public void testNotNull_SetNullNotNull() {
-    final HashSet<String> set = new HashSet<>();
+    @NotNull final HashSet<String> set = new HashSet<>();
     set.add(null);
     set.add("");
     assert !All.notNull(set);
   }
 
   @Test public void testNotNull_SetTwoEmptyStrings() {
-    final TreeSet<String> set = new TreeSet<>();
+    @NotNull final TreeSet<String> set = new TreeSet<>();
     set.add("");
     set.add("");
     assert All.notNull(set);
   }
 
   @Test public void testNotNull_SetTwoStrings() {
-    final TreeSet<String> set = new TreeSet<>();
+    @NotNull final TreeSet<String> set = new TreeSet<>();
     set.add("abc");
     set.add("cde");
     assert All.notNull(set);

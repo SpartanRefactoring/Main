@@ -30,8 +30,8 @@ import il.org.spatan.iteration.*;
  * @see Action */
 public class FileSystemVisitor {
   @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
-    final List<File> $ = new ArrayList<>();
-    for (final String fileName : fileNames)
+    @NotNull final List<File> $ = new ArrayList<>();
+    for (@NotNull final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
@@ -206,7 +206,7 @@ public class FileSystemVisitor {
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
   public void go() throws IOException, StopTraversal {
-    for (final File ¢ : from)
+    for (@NotNull final File ¢ : from)
       recurse(¢);
   }
 
@@ -235,7 +235,7 @@ public class FileSystemVisitor {
       if (d.list() == null) // Weird directories such as
         // "System Volume Information"
         return;
-      for (final String name : d.list())
+      for (@Nullable final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
     } catch (@NotNull final Action.StopTraversal __) {
@@ -257,7 +257,7 @@ public class FileSystemVisitor {
       return; // do not visit any elements of this ZIP file, but continue
       // traversal.
     }
-    try (ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
+    try (@NotNull ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
       for (final Enumeration<? extends ZipEntry> es = Z.entries(); es.hasMoreElements();) {
         final ZipEntry e = es.nextElement();
         try {
@@ -272,14 +272,12 @@ public class FileSystemVisitor {
         } catch (@NotNull final StopTraversal x) {
           System.out.println("Found at ZIP!!!");
           throw x;
-        } catch (@NotNull final IOException exception) {
-          System.err.println("Error reading " + Z + ": " + exception.getMessage());
-          continue;
+        } catch (@NotNull final IOException ¢) {
+          System.err.println("Error reading " + Z + ": " + ¢.getMessage());
         }
       }
-    } catch (@NotNull final IOException e) {
-      System.err.println(f.getAbsolutePath() + ": " + e.getMessage());
-      return;
+    } catch (@NotNull final IOException ¢) {
+      System.err.println(f.getAbsolutePath() + ": " + ¢.getMessage());
     }
   }
 

@@ -7,13 +7,13 @@ import org.jetbrains.annotations.*;
 public enum Exceptions {
   ;
   /** Translate any exception to an unchecked exception
-   * @param t Exception to translate
+   * @param ¢ Exception to translate
    * @return An unchecked exception */
-  @NotNull public static RuntimeException toRuntimeException(final Throwable t) {
-    if (t instanceof RuntimeException)
-      return (RuntimeException) t;
-    final RuntimeException $ = new RuntimeException(t);
-    $.setStackTrace(t.getStackTrace());
+  @NotNull public static RuntimeException toRuntimeException(final Throwable ¢) {
+    if (¢ instanceof RuntimeException)
+      return (RuntimeException) ¢;
+    @NotNull final RuntimeException $ = new RuntimeException(¢);
+    $.setStackTrace(¢.getStackTrace());
     return $;
   }
 }

@@ -5,7 +5,8 @@ import org.jetbrains.annotations.*;
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public final class FieldInfo extends TypedEntity {
-  public FieldInfo(final ConstantPool constantPool, final int flags, final String name, final String descriptor, final AttributeInfo[] attributes) {
+  public FieldInfo(final ConstantPool constantPool, final int flags, final String name, @NotNull final String descriptor,
+      final AttributeInfo[] attributes) {
     super(constantPool, flags, name, descriptor, attributes);
   }
 

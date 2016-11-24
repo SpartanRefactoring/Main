@@ -52,7 +52,7 @@ public abstract class TypeInfo {
       return false;
     }
 
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return inner + "[]";
     }
   }
@@ -70,8 +70,8 @@ public abstract class TypeInfo {
       this(true, name);
     }
 
-    @NotNull @Override public Collection<TypeInfo> components() {
-      final ArrayList<TypeInfo> $ = new ArrayList<>(1);
+    @Override @NotNull public Collection<TypeInfo> components() {
+      @NotNull final ArrayList<TypeInfo> $ = new ArrayList<>(1);
       $.add(this);
       return $;
     }
@@ -92,16 +92,16 @@ public abstract class TypeInfo {
       this.arguments = arguments;
     }
 
-    @NotNull @Override public Collection<TypeInfo> components() {
-      final List<TypeInfo> $ = new ArrayList<>();
-      for (final TypeInfo a : arguments)
+    @Override @NotNull public Collection<TypeInfo> components() {
+      @NotNull final List<TypeInfo> $ = new ArrayList<>();
+      for (@NotNull final TypeInfo a : arguments)
         $.addAll(a.components());
       return $;
     }
   }
 
   public static class InitializerType extends TypeInfo {
-    @NotNull @Override public Collection<TypeInfo> components() {
+    @Override @NotNull public Collection<TypeInfo> components() {
       return new ArrayList<>();
     }
 
@@ -109,7 +109,7 @@ public abstract class TypeInfo {
       return false;
     }
 
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return "()";
     }
   }
@@ -122,13 +122,13 @@ public abstract class TypeInfo {
       this.returnValue = returnValue;
     }
 
-    @NotNull @Override public Collection<TypeInfo> components() {
-      final List<TypeInfo> $ = new ArrayList<>(returnValue.components());
+    @Override @NotNull public Collection<TypeInfo> components() {
+      @NotNull final List<TypeInfo> $ = new ArrayList<>(returnValue.components());
       $.addAll(super.components());
       return $;
     }
 
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return returnValue + " (" + Separate.by(arguments, ", ") + ")";
     }
   }

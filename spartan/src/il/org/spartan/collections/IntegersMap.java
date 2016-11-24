@@ -98,7 +98,7 @@ public final class IntegersMap {
   }
 
   @NotNull public int[] get(@NotNull final int keys[]) {
-    final int[] $ = new int[keys.length];
+    @NotNull final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
@@ -141,7 +141,7 @@ public final class IntegersMap {
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   @NotNull public int[] keys() {
-    final int[] $ = new int[size];
+    @NotNull final int[] $ = new int[size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
@@ -201,7 +201,7 @@ public final class IntegersMap {
   }
 
   @NotNull public int[] sortedKeys() {
-    final int[] $ = keys();
+    @NotNull final int[] $ = keys();
     Arrays.sort($);
     return $;
   }
@@ -246,8 +246,8 @@ public final class IntegersMap {
   @NotNull private IntegersMap rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
-    final int[] keys = keys();
-    final int[] oldValues = get(keys);
+    @NotNull final int[] keys = keys();
+    @NotNull final int[] oldValues = get(keys);
     reset(newCapacity);
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       put(keys[¢], oldValues[¢]);

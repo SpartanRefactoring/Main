@@ -70,7 +70,7 @@ import il.org.spartan.streotypes.*;
    * @return a string representing the escaped form of the parameter, where all
    *         special HTML characters are escaped. */
   @NotNull public static String esc(@NotNull final String s) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       $.append(esc(s.charAt(¢)));
     return $ + "";

@@ -2,7 +2,7 @@ package il.org.spartan.xy;
 
 public class LeastSquares extends WeightedLeastSquares {
   @Override public void p(final double x, final double y, final double dy) {
-    if (!isNumber(x) || !isNumber(y) || !isNumber(dy))
+    if (isMissing(x) || isMissing(y) || isMissing(dy))
       return;
     xs.record(x, 1);
     ys.record(y, 1);

@@ -19,7 +19,7 @@ public enum Unit {
       return new DecimalFormat("###,###,###,###,###,###,###.00").format(¢);
     }
 
-    @NotNull @Override public String format(final long ¢) {
+    @Override @NotNull public String format(final long ¢) {
       return new DecimalFormat("###,###,###,###,###,###,###").format(¢);
     }
   },
@@ -36,7 +36,7 @@ public enum Unit {
     public static final long Pb = 1L << 50;
     public static final long Eb = 1L << 60;
 
-    @NotNull @Override public String format(final double m) {
+    @Override @NotNull public String format(final double m) {
       return Double.isNaN(m) ? "NaN"
           : m < 0 ? "-" + format(-m)
               : Double.isInfinite(m) ? "∞"
@@ -47,17 +47,17 @@ public enum Unit {
     }
   },
   NANOSECONDS {
-    @NotNull @Override public String format(final double ns) {
+    @Override @NotNull public String format(final double ns) {
       return SECONDS.format(ns / 1E9);
     }
   },
   MILLISECONDS {
-    @NotNull @Override public String format(final double ms) {
+    @Override @NotNull public String format(final double ms) {
       return SECONDS.format(ms / 1E3);
     }
   },
   SECONDS {
-    @NotNull @Override public String format(final double ¢) {
+    @Override @NotNull public String format(final double ¢) {
       return Double.isNaN(¢) ? "NaN"
           : ¢ < 0 ? "-" + format(-¢)
               : Double.isInfinite(¢) ? "∞"
@@ -85,11 +85,11 @@ public enum Unit {
   public static final long SECOND = 1000 * MILLISECOND;
   public static final long MINUTE = 60 * SECOND;
 
-  public static int digits(final double d) {
-    if (d == 0)
+  public static int digits(final double ¢) {
+    if (¢ == 0)
       return -1;
-    final double log = Math.log10(d);
-    return log < 0 ? 0 : (int) log + 1;
+    final double $ = Math.log10(¢);
+    return $ < 0 ? 0 : (int) $ + 1;
   }
 
   @NotNull public static String format(final double v, final double scale, final String units) {
@@ -104,11 +104,11 @@ public enum Unit {
     return formatNanoseconds(¢.time());
   }
 
-  @NotNull public static String format2(final double d) {
-    if (d < 0)
-      return "-" + format2(-d);
-    final double p = 100 * d;
-    return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
+  @NotNull public static String format2(final double ¢) {
+    if (¢ < 0)
+      return "-" + format2(-¢);
+    final double $ = 100 * ¢;
+    return "%" + ($ < 0.01 ? ".0f" : $ < 0.1 ? ".2f" : $ < 1 || $ < 10 ? ".1f" : $ < 100 || $ < 1000 ? ".0f" : "5.0g");
   }
 
   public static String format3(final double d) {

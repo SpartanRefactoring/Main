@@ -55,8 +55,8 @@ public class SimplifiedCode {
 
   private void parse() {
     if (instructionsCount == 0)
-      for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-        final Instruction i = OpCode.read(r);
+      for (@NotNull final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+        @Nullable final Instruction i = OpCode.read(r);
         if (i == null)
           return;
         if (i.invalid())

@@ -17,11 +17,11 @@ public abstract class AbstractStringProperties {
     this.renderer = renderer;
   }
 
-  @Nullable @Override public AbstractStringProperties clone() {
+  @Override @Nullable public AbstractStringProperties clone() {
     try {
       return (AbstractStringProperties) super.clone();
-    } catch (@NotNull final CloneNotSupportedException e) {
-      e.printStackTrace();
+    } catch (@NotNull final CloneNotSupportedException ¢) {
+      ¢.printStackTrace();
       return null;
     }
   }
@@ -34,7 +34,7 @@ public abstract class AbstractStringProperties {
     return renderer.allTop() + makeLine(keys()) + renderer.headerEnd();
   }
 
-  public abstract Iterable<String> keys();
+  @NotNull public abstract Iterable<String> keys();
 
   /** A total inspector
    * @return the content of the CSV line as per all recorded values. */
@@ -46,7 +46,7 @@ public abstract class AbstractStringProperties {
 
   public abstract int size();
 
-  public abstract Iterable<String> values();
+  @NotNull public abstract Iterable<String> values();
 
   @NotNull protected String makeLine(final Iterable<String> ¢) {
     return renderer.makeLine(¢);
@@ -56,26 +56,16 @@ public abstract class AbstractStringProperties {
     private final List<String> keys = new ArrayList<>();
     private final List<String> values = new ArrayList<>();
 
-    /* (non-Javadoc)
-     *
-     * @see il.org.spartan.csv.AbstractStringProperties#get(java.lang.String) */
-    @Nullable @Override public String get(final String key) {
+    @Override @Nullable public String get(final String key) {
       final int $ = keys.lastIndexOf(key);
       return $ < 0 ? null : values.get($);
     }
 
-    /* (non-Javadoc)
-     *
-     * @see il.org.spartan.csv.AbstractStringProperties#headers() */
-    @NotNull @Override public Iterable<String> keys() {
+    @Override @NotNull public Iterable<String> keys() {
       return keys;
     }
 
-    /* (non-Javadoc)
-     *
-     * @see il.org.spartan.csv.AbstractStringProperties#put(java.lang.String,
-     * java.lang.String) */
-    @NotNull @Override public ListProperties put(final String key, final String value) {
+    @Override @NotNull public ListProperties put(final String key, final String value) {
       keys.add(key);
       values.add(value);
       return this;
@@ -88,10 +78,7 @@ public abstract class AbstractStringProperties {
       return keys.size();
     }
 
-    /* (non-Javadoc)
-     *
-     * @see il.org.spartan.csv.AbstractStringProperties#values() */
-    @NotNull @Override public Iterable<String> values() {
+    @Override @NotNull public Iterable<String> values() {
       return values;
     }
   }
@@ -103,31 +90,31 @@ public abstract class AbstractStringProperties {
       public static final String QUOTE = '"' + "";
       public static final String DELIMETER = ",";
 
-      @NotNull @Override public String headerEnd() {
+      @Override @NotNull public String headerEnd() {
         return "";
       }
 
-      @NotNull @Override public String makeField(@Nullable final String ¢) {
+      @Override @NotNull public String makeField(@Nullable final String ¢) {
         return ¢ == null ? "" : !¢.contains(QUOTE) && !¢.contains(delimiter()) ? ¢ : QUOTE + ¢.replaceAll(QUOTE, QUOTE + QUOTE) + QUOTE;
       }
 
-      @NotNull @Override String allBottom() {
+      @Override @NotNull String allBottom() {
         return "";
       }
 
-      @NotNull @Override String allTop() {
+      @Override @NotNull String allTop() {
         return "";
       }
 
-      @NotNull @Override String delimiter() {
+      @Override @NotNull String delimiter() {
         return DELIMETER;
       }
 
-      @NotNull @Override String lineBegin() {
+      @Override @NotNull String lineBegin() {
         return "";
       }
 
-      @NotNull @Override String lineEnd() {
+      @Override @NotNull String lineEnd() {
         return "";
       }
     },
@@ -135,27 +122,27 @@ public abstract class AbstractStringProperties {
       public static final String DELIMETER = " ";
       public static final int WIDTH = 3;
 
-      @NotNull @Override String allBottom() {
+      @Override @NotNull String allBottom() {
         return "";
       }
 
-      @NotNull @Override String allTop() {
+      @Override @NotNull String allTop() {
         return "";
       }
 
-      @NotNull @Override String delimiter() {
+      @Override @NotNull String delimiter() {
         return DELIMETER;
       }
 
-      @NotNull @Override String headerEnd() {
+      @Override @NotNull String headerEnd() {
         return "";
       }
 
-      @NotNull @Override String lineBegin() {
+      @Override @NotNull String lineBegin() {
         return "";
       }
 
-      @NotNull @Override String lineEnd() {
+      @Override @NotNull String lineEnd() {
         return "";
       }
 
@@ -164,11 +151,11 @@ public abstract class AbstractStringProperties {
       }
     },
     LaTeX() {
-      @NotNull @Override String allBottom() {
+      @Override @NotNull String allBottom() {
         return "\\bottomrule\n";
       }
 
-      @NotNull @Override String allTop() {
+      @Override @NotNull String allTop() {
         return "\\toprule\n";
       }
 
@@ -176,19 +163,19 @@ public abstract class AbstractStringProperties {
         return " &\t\t";
       }
 
-      @NotNull @Override String headerEnd() {
+      @Override @NotNull String headerEnd() {
         return "\n\\midrule";
       }
 
-      @NotNull @Override String lineBegin() {
+      @Override @NotNull String lineBegin() {
         return "";
       }
 
-      @NotNull @Override String lineEnd() {
+      @Override @NotNull String lineEnd() {
         return "\\\\";
       }
 
-      @NotNull @Override String makeField(@Nullable final String ¢) {
+      @Override @NotNull String makeField(@Nullable final String ¢) {
         return ¢ == null ? "" : !¢.contains(delimiter()) ? ¢ : ¢.replaceAll(delimiter(), "\\" + delimiter());
       }
     };

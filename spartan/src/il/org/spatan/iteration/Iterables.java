@@ -27,7 +27,7 @@ public class Iterables {
   }
 
   @NotNull public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> f) {
-    final ArrayList<T> $ = new ArrayList<>();
+    @NotNull final ArrayList<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
       $.add(f.__(¢));
     return $;
@@ -135,7 +135,7 @@ public class Iterables {
    * @param n a non-negative integer
    * @return an array containing the first */
   @NotNull public static <T> ArrayList<T> first(@NotNull final Iterable<T> ts, final int n) {
-    final ArrayList<T> $ = new ArrayList<>();
+    @NotNull final ArrayList<T> $ = new ArrayList<>();
     int i = 0;
     for (final T ¢ : ts) {
       $.add(¢);
@@ -203,7 +203,7 @@ public class Iterables {
   }
 
   public static <T> int[] indices(@NotNull final Collection<? extends T> ts, @NotNull final Condition<T> t) {
-    final int[] $ = new int[ts.size()];
+    @NotNull final int[] $ = new int[ts.size()];
     int i = 0;
     int position = 0;
     for (final T ¢ : ts) {
@@ -231,7 +231,7 @@ public class Iterables {
   }
 
   @NotNull public static int[] make(@NotNull final BitSet s) {
-    final int[] $ = new int[s.cardinality()];
+    @NotNull final int[] $ = new int[s.cardinality()];
     for (int ¢ = 0, value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
       $[¢++] = value;
     return $;
@@ -306,14 +306,14 @@ public class Iterables {
   }
 
   @NotNull public static <F, T> Iterable<T> map(@NotNull final Iterable<? extends F> fs, @NotNull final Function<F, T> f) {
-    final List<T> $ = new ArrayList<>();
+    @NotNull final List<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
       $.add(f.eval(¢));
     return $;
   }
 
   @NotNull public static <E> Iterable<E> reverse(@NotNull final Iterable<E> in) {
-    final List<E> $ = toList(in);
+    @NotNull final List<E> $ = toList(in);
     Collections.reverse($);
     return $;
   }
@@ -321,11 +321,11 @@ public class Iterables {
   public static <T> boolean same(@Nullable final Iterable<? extends T> ts1, @Nullable final Iterable<? extends T> ts2) {
     if (ts1 == null || ts2 == null)
       return ts1 == ts2;
-    final Iterator<? extends T> t1 = ts1.iterator(), t2 = ts2.iterator();
+    @NotNull final Iterator<? extends T> t1 = ts1.iterator(), $ = ts2.iterator();
     while (t1.hasNext())
-      if (!t2.hasNext() || t1.next() != t2.next())
+      if (!$.hasNext() || t1.next() != $.next())
         return false;
-    return !t2.hasNext();
+    return !$.hasNext();
   }
 
   @NotNull public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, @NotNull final Condition<T> t) {
@@ -349,7 +349,7 @@ public class Iterables {
    * @return an array containing, in order, all non-negative integers up to the
    *         parameter. */
   @NotNull public static double[] seq(final int i) {
-    final double[] $ = new double[i];
+    @NotNull final double[] $ = new double[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = ¢;
     return $;
@@ -368,7 +368,7 @@ public class Iterables {
   }
 
   @NotNull public static String[] toArray(@NotNull final Collection<String> ss) {
-    final String[] $ = new String[ss.size()];
+    @NotNull final String[] $ = new String[ss.size()];
     int i = 0;
     for (final String ¢ : ss)
       $[i++] = ¢;
@@ -376,8 +376,8 @@ public class Iterables {
   }
 
   public static <E> E[] toArray(@NotNull final Iterable<? extends E> in, final Class<E> clazz) {
-    final List<E> es = toList(in);
-    @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, es.size());
+    @NotNull final List<E> es = toList(in);
+    @NotNull @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, es.size());
     return es.toArray(__);
   }
 
@@ -386,22 +386,22 @@ public class Iterables {
   }
 
   @NotNull public static double[] toArray(@NotNull final List<Double> ds) {
-    final double[] $ = new double[ds.size()];
+    @NotNull final double[] $ = new double[ds.size()];
     int i = 0;
-    for (final Double ¢ : ds)
+    for (@NotNull final Double ¢ : ds)
       $[i++] = unbox(¢);
     return $;
   }
 
   @NotNull public static List<Double> toList(@NotNull final double... ds) {
-    final List<Double> $ = new ArrayList<>();
+    @NotNull final List<Double> $ = new ArrayList<>();
     for (final double ¢ : ds)
       $.add(Box.it(¢));
     return $;
   }
 
   @NotNull public static List<Integer> toList(@NotNull final int... is) {
-    final List<Integer> $ = new ArrayList<>();
+    @NotNull final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
       $.add(Box.it(¢));
     return $;
@@ -434,8 +434,8 @@ public class Iterables {
   }
 
   @NotNull public static <T> List<T> union(@NotNull final List<T>... tss) {
-    final List<T> $ = new ArrayList<>();
-    for (final List<T> ¢ : tss)
+    @NotNull final List<T> $ = new ArrayList<>();
+    for (@NotNull final List<T> ¢ : tss)
       $.addAll(¢);
     return $;
   }
@@ -505,14 +505,14 @@ public class Iterables {
       this.t = t;
     }
 
-    @NotNull @Override public Iterator<T> iterator() {
+    @Override @NotNull public Iterator<T> iterator() {
       return new Iterables.ReadonlyIterator<T>() {
         @Override public boolean hasNext() {
           return t != null;
         }
 
-        @Nullable @Override public T next() {
-          final T $ = t;
+        @Override @Nullable public T next() {
+          @Nullable final T $ = t;
           t = null;
           return $;
         }

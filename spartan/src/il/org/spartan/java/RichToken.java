@@ -31,7 +31,7 @@ public class RichToken {
     return tokenizer.line();
   }
 
-  public String location() {
+  @NotNull public String location() {
     return tokenizer.location();
   }
 
@@ -43,15 +43,15 @@ public class RichToken {
     return token.ordinal();
   }
 
-  public String text() {
+  @NotNull public String text() {
     return tokenizer.text();
   }
 
-  public String token() {
+  @NotNull public String token() {
     return tokenizer.token();
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return token + "";
   }
 

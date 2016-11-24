@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import java.util.*;
@@ -16,14 +16,14 @@ public interface accumulate<T, C extends Collection<T>> {
    * @param c JD */
   @org.jetbrains.annotations.Nullable static <T, C extends Collection<T>> accumulate<T, C> to(@NotNull final C c) {
     return new accumulate<T, C>() {
-      @NotNull @Override public accumulate<T, C> add(@org.jetbrains.annotations.Nullable final @Nullable T ¢) {
+      @Override @NotNull public accumulate<T, C> add(@org.jetbrains.annotations.Nullable final @Nullable T ¢) {
         if (¢ == null)
           return this;
         c.add(¢);
         return this;
       }
 
-      @NotNull @Override public C elements() {
+      @Override @NotNull public C elements() {
         return c;
       }
     };
@@ -32,7 +32,7 @@ public interface accumulate<T, C extends Collection<T>> {
   /** @param ts JD
    * @return <code><b>this</b></code> */
   @NotNull default accumulate<T, C> add(@NotNull final Iterable<? extends @Nullable T> ts) {
-    for (@Nullable final T ¢ : ts)
+    for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
       if (¢ != null)
         add(¢);
     return this;
@@ -46,7 +46,7 @@ public interface accumulate<T, C extends Collection<T>> {
    * @return <code><b>this</b></code> */
   @NotNull default accumulate<T, C> add(@org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
     if (ts != null)
-      for (@Nullable final T ¢ : ts)
+      for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;
@@ -56,7 +56,7 @@ public interface accumulate<T, C extends Collection<T>> {
    * @return <code><b>this</b></code> */
   @NotNull default accumulate<T, C> addAll(@org.jetbrains.annotations.Nullable final @Nullable Iterable<? extends T> ts) {
     if (ts != null)
-      for (@Nullable final T ¢ : ts)
+      for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;
