@@ -10,7 +10,7 @@
 <!-- Builder, i.e, the system component that keeps generating spartan tips when
 the program changes: https://goo.gl/sIqIBC
  -->
-<extension 
+<extension
   name="Spartan tipper" 
   id="spartan.tipper" 
   point="org.eclipse.core.resources.builders"
@@ -460,6 +460,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+A"
+		commandId="il.org.spartan.AthensGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
