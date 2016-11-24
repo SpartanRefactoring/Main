@@ -477,8 +477,13 @@ public interface wizard {
       return $;
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
-    if (iz.enumDeclaration(container))
+    if (iz.enumDeclaration(container)) {
       $.add(isProtected);
+      if (iz.constructor(¢)) {
+      $.add(isPublic);
+      $.add(isPrivate);
+      }
+    }
     if (iz.interface¢(container)) {
       $.addAll(as.list(isPublic, isPrivate, isProtected));
       if (iz.isMethodDeclaration(¢))

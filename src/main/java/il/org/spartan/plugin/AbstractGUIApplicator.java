@@ -83,13 +83,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a laconic
    *         tip */
-  public final List<Tip> collectSuggesions(final CompilationUnit ¢) {
+  public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
 
-  public IFile compilatinUnitIFile() {
+  public IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
 
@@ -142,7 +142,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
-    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textFileChange.setTextType("java");
     textFileChange.setEdit(rewriteAST);
     final boolean $ = textFileChange.getEdit().getLength() != 0;
@@ -235,7 +235,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   public int go() throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
     final AtomicInteger counter = new AtomicInteger(0);
@@ -359,7 +359,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setEdit(createRewrite(cu, counter).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
-    totalChanges += collectSuggesions(cu).size();
+    totalChanges += collectSuggestions(cu).size();
     m.done();
     return counter.get();
   }
