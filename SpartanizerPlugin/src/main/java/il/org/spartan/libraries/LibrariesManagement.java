@@ -19,10 +19,28 @@ public class LibrariesManagement {
   public static final IPath INSTALLATION_FOLDER;
   public static final String LIBRARY_NAME = "Spartan Libraries";
   public static final String LIBRARY_QULIFIED_NAME = "spartan.libraries";
+  public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
     INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
     // TODO: update version 2.6.3 upon release. DO NOT remove this todo.
     FEATURE_PATH = INSTALLATION_FOLDER.append("features/SpartanFeature_2.6.4.jar");
+    LIBRARY_PATH_CONTAINER = new IClasspathContainer() {
+      @Override public IPath getPath() {
+        return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(LIBRARY_NAME);
+      }
+
+      @Override public int getKind() {
+        return K_APPLICATION;
+      }
+
+      @Override public String getDescription() {
+        return LIBRARY_NAME;
+      }
+
+      @Override public IClasspathEntry[] getClasspathEntries() {
+        return new IClasspathEntry[] { JavaCore.newLibraryEntry(FEATURE_PATH, null, null) };
+      }
+    };
   }
 
   public static boolean libraryExists() {
@@ -35,7 +53,7 @@ public class LibrariesManagement {
       return false;
     try {
       for (final IClasspathEntry ¢ : p.getRawClasspath())
-        if (FEATURE_PATH.equals(¢.getPath()))
+        if (LIBRARY_PATH_CONTAINER.getPath().equals(¢.getPath()))
           return true;
     } catch (JavaModelException ¢) {
       monitor.log(¢);
@@ -60,7 +78,7 @@ public class LibrariesManagement {
     }
     if (es != null)
       nes.addAll(Arrays.asList(es));
-    nes.add(JavaCore.newLibraryEntry(FEATURE_PATH, null, null));
+    nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
     } catch (final JavaModelException ¢) {
@@ -75,25 +93,8 @@ public class LibrariesManagement {
     final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
     if (libraryExists())
       return;
-    final IPath libraryPath = FEATURE_PATH;
     final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
-    initializer.requestClasspathContainerUpdate(containerPath.append(LIBRARY_NAME), null, new IClasspathContainer() {
-      @Override public IPath getPath() {
-        return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(LIBRARY_NAME);
-      }
-
-      @Override public int getKind() {
-        return K_APPLICATION;
-      }
-
-      @Override public String getDescription() {
-        return LIBRARY_NAME;
-      }
-
-      @Override public IClasspathEntry[] getClasspathEntries() {
-        return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
-      }
-    });
+    initializer.requestClasspathContainerUpdate(containerPath.append(LIBRARY_NAME), null, LIBRARY_PATH_CONTAINER);
   }
 
   @Deprecated public static IPath getPluginJarPath() throws IOException {
