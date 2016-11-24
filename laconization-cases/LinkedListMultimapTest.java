@@ -337,33 +337,27 @@ public class LinkedListMultimapTest extends TestCase {
     assertEquals(3, (int) entryb.getValue());
   }
 
-  @SuppressWarnings("unchecked")
-  @GwtIncompatible // unreasonably slow
-  public void testEntriesIteration() {
+  @GwtIncompatible @SuppressWarnings("unchecked") public void testEntriesIteration() {
     for (final int startIndex : new int[] { 0, 3, 5 })
-		new ListIteratorTester<Entry<String, Integer>>(3,
-				ImmutableList.of(Maps.immutableEntry("foo", 99), Maps.immutableEntry("foo", 88),
-						Maps.immutableEntry("bar", 77)),
-				ImmutableList.of(SUPPORTS_REMOVE),
-				Lists.newArrayList(Maps.immutableEntry("foo", 2), Maps.immutableEntry("foo", 3),
-						Maps.immutableEntry("bar", 4), Maps.immutableEntry("bar", 5), Maps.immutableEntry("foo", 6)),
-				startIndex) {
-			LinkedListMultimap<String, Integer> multimap;
+      new ListIteratorTester<Entry<String, Integer>>(3,
+          ImmutableList.of(Maps.immutableEntry("foo", 99), Maps.immutableEntry("foo", 88), Maps.immutableEntry("bar", 77)),
+          ImmutableList.of(SUPPORTS_REMOVE), Lists.newArrayList(Maps.immutableEntry("foo", 2), Maps.immutableEntry("foo", 3),
+              Maps.immutableEntry("bar", 4), Maps.immutableEntry("bar", 5), Maps.immutableEntry("foo", 6)),
+          startIndex) {
+        LinkedListMultimap<String, Integer> multimap;
 
-			@Override
-			protected ListIterator<Entry<String, Integer>> newTargetIterator() {
-				multimap = create();
-				multimap.putAll("foo", asList(2, 3));
-				multimap.putAll("bar", asList(4, 5));
-				multimap.put("foo", 6);
-				return multimap.entries().listIterator(startIndex);
-			}
+        @Override protected ListIterator<Entry<String, Integer>> newTargetIterator() {
+          multimap = create();
+          multimap.putAll("foo", asList(2, 3));
+          multimap.putAll("bar", asList(4, 5));
+          multimap.put("foo", 6);
+          return multimap.entries().listIterator(startIndex);
+        }
 
-			@Override
-			protected void verify(List<Entry<String, Integer>> elements) {
-				assertEquals(elements, multimap.entries());
-			}
-		}.test();
+        @Override protected void verify(List<Entry<String, Integer>> elements) {
+          assertEquals(elements, multimap.entries());
+        }
+      }.test();
   }
 
   @GwtIncompatible // unreasonably slow
@@ -435,8 +429,8 @@ public class LinkedListMultimapTest extends TestCase {
     }.test();
   }
 
+  @GwtIncompatible 
   @SuppressWarnings("unchecked")
-  @GwtIncompatible // unreasonably slow
   public void testAsSetIteration() {
     new IteratorTester<Entry<String, Collection<Integer>>>(6, MODIFIABLE,
         Sets.newLinkedHashSet(asList(Maps.immutableEntry("foo", (Collection<Integer>) asList(2, 3, 6)),
