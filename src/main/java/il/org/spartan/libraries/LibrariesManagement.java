@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -39,10 +40,7 @@ public class LibrariesManagement {
   /** [[SuppressWarningsSpartan]] --bug */
   public static boolean removeLibrary(final IPath path) {
     return touchLibrary(path, (l, p) -> {
-      final List<IClasspathEntry> x = new LinkedList<>();
-      for (final IClasspathEntry e : l)
-        if (path.equals(e.getPath()))
-          x.add(e);
+      final List<IClasspathEntry> x = l.stream().filter(e -> path.equals(e.getPath())).collect(Collectors.toCollection(LinkedList::new));
       l.removeAll(x);
     });
   }
@@ -51,35 +49,34 @@ public class LibrariesManagement {
     return removeLibrary(new Path(path));
   }
 
-  /** [[SuppressWarningsSpartan]] --bug
+  /** 
    * @throws IOException */
   public static void initializeUserLibraries() throws CoreException, IOException {
     final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
     @SuppressWarnings("restriction") final List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
-    final IPath jarPath = getPluginJarPath();
     for (final String librariesPathSuffice : librariesPathSuffices) {
       final String libraryName = librariesNames[0];
       if (userLibrariesNames.contains(libraryName))
         continue;
-      final IPath libraryPath = jarPath.append(librariesPathSuffices[0]);
-      final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
-      initializer.requestClasspathContainerUpdate(containerPath.append(libraryName), null, new IClasspathContainer() {
-        @Override public IPath getPath() {
-          return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
-        }
+      final IPath libraryPath = getPluginJarPath().append(librariesPathSuffices[0]);
+      initializer.requestClasspathContainerUpdate((new Path(JavaCore.USER_LIBRARY_CONTAINER_ID)).append(libraryName), null,
+          new IClasspathContainer() {
+            @Override public IPath getPath() {
+              return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
+            }
 
-        @Override public int getKind() {
-          return K_APPLICATION;
-        }
+            @Override public int getKind() {
+              return K_APPLICATION;
+            }
 
-        @Override public String getDescription() {
-          return libraryName;
-        }
+            @Override public String getDescription() {
+              return libraryName;
+            }
 
-        @Override public IClasspathEntry[] getClasspathEntries() {
-          return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
-        }
-      });
+            @Override public IClasspathEntry[] getClasspathEntries() {
+              return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
+            }
+          });
     }
   }
 
