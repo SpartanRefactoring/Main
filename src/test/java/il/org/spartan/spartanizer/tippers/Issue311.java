@@ -222,9 +222,10 @@ public class Issue311 {
 
   @Test public void t03a() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
-        + "for (int i = 0; i <length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";").gives(
-            "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
-                + "for (int i = 0; i <length; ++i)" + "if ($.charAt(i) == '.')" + "$.setCharAt(i, '/');" + "return $ + \"\";")
+        + "for (int i = 0; i <length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
+            .gives(
+                "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
+                    + "for (int i = 0; i <length; ++i)" + "if ($.charAt(i) == '.')" + "$.setCharAt(i, '/');" + "return $ + \"\";")
             .gives(
                 "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
                     + "for (int ¢ = 0; ¢ <length; ++¢)" + "if ($.charAt(¢) == '.')" + "$.setCharAt(¢, '/');" + "return $ + \"\";")
