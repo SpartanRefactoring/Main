@@ -391,8 +391,7 @@ public enum Collect {
       }
 
       boolean collect(@SuppressWarnings("rawtypes") final List os) {
-        for (final Object ¢ : os)
-          add(¢);
+        os.forEach(this::add);
         return true;
       }
 

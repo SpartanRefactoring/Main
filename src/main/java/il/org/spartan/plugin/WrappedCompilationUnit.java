@@ -59,14 +59,12 @@ public class WrappedCompilationUnit {
    * @return an instance created by the parameter */
   /** [[SuppressWarningsSpartan]] */
   public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
-    final List<WrappedCompilationUnit> $ = ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
-    return $;
+    return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
   /** [[SuppressWarningsSpartan]] */
   public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
-    final List<WrappedCompilationUnit> $ = ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
-    return $;
+    return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
   /** @param from

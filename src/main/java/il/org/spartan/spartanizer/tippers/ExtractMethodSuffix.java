@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -49,10 +50,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    final List<String> ts = new ArrayList<>();
-    for (final VariableDeclaration ¢ : ds)
-      ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
-          : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
+    final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
+            : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
@@ -134,9 +133,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = j.tags();
-    final List<String> ns = new ArrayList<>();
-    for (final VariableDeclaration ¢ : ds)
-      ns.add(¢.getName() + "");
+    final List<String> ns = ds.stream().map(¢ -> ¢.getName() + "").collect(Collectors.toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();

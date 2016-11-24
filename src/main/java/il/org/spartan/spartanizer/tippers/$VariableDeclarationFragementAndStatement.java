@@ -101,9 +101,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
 
   private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    for (final VariableDeclarationFragment brother : fs)
-      if (brother != null && brother != f && brother.getInitializer() != null)
-        $.add(duplicate.of(brother));
+    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(duplicate.of(brother)));
     return $;
   }
 

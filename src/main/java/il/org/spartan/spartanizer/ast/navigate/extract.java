@@ -199,15 +199,12 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    for (final Statement ¢ : step.statements(b))
-      if (iz.variableDeclarationStatement(¢))
-        extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
+    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(¢ -> extract.fragmentsInto(az.variableDeclrationStatement(¢), $));
     return $;
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      $.add(¢);
+    $.addAll(step.fragments(s));
     return $;
   }
 
