@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -23,9 +24,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public List<CompilationUnit> getCompilationUnits() {
-    final List<CompilationUnit> $ = new ArrayList<>();
-    for (final WrappedCompilationUnit ¢ : inner)
-      $.add(¢.compilationUnit);
+    final List<CompilationUnit> $ = inner.stream().map(¢ -> ¢.compilationUnit).collect(Collectors.toList());
     return $;
   }
 
@@ -116,8 +115,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public CommandLineSelection buildAll() {
-    for (final WrappedCompilationUnit ¢ : compilationUnits)
-      ¢.build();
+    compilationUnits.forEach(WrappedCompilationUnit::build);
     return this;
   }
 

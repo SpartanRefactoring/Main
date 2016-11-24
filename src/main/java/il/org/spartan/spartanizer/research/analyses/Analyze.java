@@ -178,14 +178,15 @@ public class Analyze {
 
   private static void methodsAnalyze(final Analyzer<?> a) {
     for (final File f : inputFiles())
-      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
-        if (haz.methods(t))
-          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
-            try {
-              a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
-            } catch (@SuppressWarnings("unused") final AssertionError __) {
-              //
-            }
+      //
+      step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
+        for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+          try {
+            a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+          } catch (@SuppressWarnings("unused") final AssertionError __) {
+            //
+          }
+      });
     a.printComparison();
     a.printAccumulated();
   }
