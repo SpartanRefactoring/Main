@@ -15,8 +15,11 @@ import il.org.spartan.libraries.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** [[SuppressWarningsSpartan]] TODO Roth: add progress monitor support -----
- * TODO Roth: add TextEditGroup support (?) */
+/** An application of the Athenizer project. Augment java code to be more clear
+ * and debugable. [[SuppressWarningsSpartan]] TODO Roth: add progress monitor
+ * support TODO Roth: add TextEditGroup support (?)
+ * @author Ori Roth
+ * @since Nov 25, 2016 */
 @SuppressWarnings("unused")
 public class Augmenter implements Application {
   private final NullProgressMonitor npm = new NullProgressMonitor();
@@ -42,11 +45,17 @@ public class Augmenter implements Application {
   }
 
   // TODO: clear and complete
+  /** @param u JD
+   * @return selection as node */
   private static ASTNode getSelection(final WrappedCompilationUnit u) {
     return u.compilationUnit;
   }
 
   // TODO: clear and complete
+  /** Main function of the application.
+   * @param r JD
+   * @param n selection as node
+   * @param g JD */
   private static void rewrite(final ASTRewrite r, final ASTNode n, final TextEditGroup g) {
     r.replace(((TypeDeclaration) ((CompilationUnit) n).types().get(0)).getName(), n.getAST().newName("CollateralIsFun"), null);
   }
@@ -66,6 +75,10 @@ public class Augmenter implements Application {
     return LibrariesManagement.checkLibrary(s.inner.get(0).descriptor.getJavaProject());
   }
 
+  /** Add an {@link ImportDeclaration} to a {@link CompilationUnit}.
+   * @param r JD
+   * @param u JD
+   * @param g JD */
   private static void addCollateralImport(final ASTRewrite r, final CompilationUnit u, final TextEditGroup g) {
     if (u == null || r == null)
       return;
@@ -80,6 +93,10 @@ public class Augmenter implements Application {
   }
 
   // TODO Roth: improve
+  /** @param u JD
+   * @param i fully qualified name of an import declaration
+   * @return true iff the compilation unit already uses that import
+   *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String i) {
     for (final Object d : u.imports())
       if (d instanceof ImportDeclaration && ((ImportDeclaration) d).getName().getFullyQualifiedName().equals(i))
