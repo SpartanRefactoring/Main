@@ -132,18 +132,15 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override protected void doLoad() {
-    for (final FieldEditor ¢ : members)
-      ¢.load();
+    members.forEach(FieldEditor::load);
   }
 
   @Override protected void doLoadDefault() {
-    for (final FieldEditor ¢ : members)
-      ¢.loadDefault();
+    members.forEach(FieldEditor::loadDefault);
   }
 
   @Override protected void doStore() {
-    for (final FieldEditor ¢ : members)
-      ¢.store();
+    members.forEach(FieldEditor::store);
   }
 
   private void gridData(final int i) {
