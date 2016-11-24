@@ -23,7 +23,7 @@ public class LibrariesManagement {
         .replaceAll("^file..", ""));
   }
 
-  public static URL getPluginJarPath(IPath ¢) throws IOException {
+  public static URL getPluginJarPath(final IPath ¢) throws IOException {
     return FileLocator.resolve(FileLocator.find(Plugin.plugin().getBundle(), ¢, null));
   }
 
@@ -55,9 +55,9 @@ public class LibrariesManagement {
    * @throws IOException */
   public static void initializeUserLibraries() throws CoreException, IOException {
     final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
-    @SuppressWarnings("restriction") List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
+    @SuppressWarnings("restriction") final List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
     final IPath jarPath = getPluginJarPath();
-    for (int i = 0; i < librariesPathSuffices.length; ++i) {
+    for (final String librariesPathSuffice : librariesPathSuffices) {
       final String libraryName = librariesNames[0];
       if (userLibrariesNames.contains(libraryName))
         continue;

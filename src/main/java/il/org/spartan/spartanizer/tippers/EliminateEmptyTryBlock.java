@@ -27,7 +27,7 @@ public final class EliminateEmptyTryBlock extends CarefulTipper<TryStatement> im
     final Block $ = ¢.getBody();
     return $ != null && $.statements().isEmpty();
   }
-  
+
   @Override public Tip tip(final TryStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

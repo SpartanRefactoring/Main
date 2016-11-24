@@ -31,9 +31,9 @@ public final class Recurser<T> {
     $.add(right(¢));
     $.addAll(step.extendedOperands(¢));
     return $;
- }
+  }
 
-  private static List<? extends ASTNode> march(ASTNode n) {
+  private static List<? extends ASTNode> march(final ASTNode n) {
     try {
       return marchingList(n);
     } catch (final NullPointerException ¢) {

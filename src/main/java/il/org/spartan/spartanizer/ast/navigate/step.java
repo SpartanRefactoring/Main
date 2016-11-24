@@ -616,7 +616,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static String identifier(QualifiedName ¢) {
+  public static String identifier(final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getFullyQualifiedName();
   }
 }
