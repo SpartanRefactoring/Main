@@ -351,7 +351,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <!-- Menus -->
 <extension point="org.eclipse.ui.menus"> 
 
-  <!-- Toolbar button -->
+  <!-- Toolbar buttons -->
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
@@ -360,13 +360,11 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
          icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
-    </toolbar>
-    <toolbar id="il.org.spartan.plugin.toolbars.athensToolbar">
-       <command 
-       tooltip="Laconize"
+       <command
+       tooltip="Expend"
          commandId="il.org.spartan.AthensGlobal" 
          icon="platform:/plugin/org.eclipse.debug.ui/icons/full/eview16/watchlist_view.png" 
-         id="il.org.spartan.plugin.toolbars.HelmetButton">
+         id="il.org.spartan.plugin.toolbars.GlassesButton">
        </command>
     </toolbar>
   </menuContribution>
