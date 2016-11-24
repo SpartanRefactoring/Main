@@ -9,11 +9,4 @@ public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
     return this.tip(¢) != null;
   }
-
-  /** @param __ the ASTNode being inspected.
-   * @return <code><b>true</b></code> <i>iff</i> the argument holds all the
-   *         conditions needed for a tip to be possible. */
-  protected final boolean prerequisite(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
 }

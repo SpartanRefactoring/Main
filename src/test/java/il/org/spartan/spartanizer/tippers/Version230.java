@@ -77,7 +77,8 @@ public final class Version230 {
 
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}")
-        .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
+    .gives("@TargetApi(value = 23) @SuppressWarnings(value = \"javadoc\") void m() {}")
+    .gives("@TargetApi(23) @SuppressWarnings(\"javadoc\") void m() {}");
   }
 
   @Test public void annotationRemoveValueMemberArrayValue() {
@@ -1308,7 +1309,12 @@ public final class Version230 {
         + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n" + "         statement.evaluate();\n"
         + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n" + "         handleAssumptionViolation(e);\n"
         + "       } catch (Throwable e) {\n" + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n"
-        + "     }\n" + "   };\n" + "}").stays();
+        + "     }\n" + "   };\n" + "}")
+            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement statement = methodBlock(m);\n"
+                + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n"
+                + "         statement.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException ¢) {\n"
+                + "         handleAssumptionViolation(¢);\n" + "       } catch (Throwable ¢) {\n"
+                + "         reportParameterizedError(¢, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
@@ -3331,7 +3337,12 @@ public final class Version230 {
         + "  break;" + "case \"-V\":" + "  optVerbose = true;" + "  break;" + "case \"-l\":" + "  optStatsLines = true;" + "  break;" + "case \"-r\":"
         + "  optStatsChanges = true;" + "  break;" + "default:" + "  if (!a.startsWith(\"-\"))" + "    optPath = a;" + "  try {"
         + "    if (a.startsWith(\"-C\"))" + "      optRounds = Integer.parseUnsignedInt(a.substring(2));"
-        + "  } catch (final NumberFormatException e) {" + "    throw e;" + "  }" + "}").stays();
+        + "  } catch (final NumberFormatException e) {" + "    throw e;" + "  }" + "}").gives(
+            "switch (a) {\n" + "case \"-N\":" + "  optDoNotOverwrite = true;" + "  break;" + "case \"-E\":" + "  optIndividualStatistics = true;"
+                + "  break;" + "case \"-V\":" + "  optVerbose = true;" + "  break;" + "case \"-l\":" + "  optStatsLines = true;" + "  break;"
+                + "case \"-r\":" + "  optStatsChanges = true;" + "  break;" + "default:" + "  if (!a.startsWith(\"-\"))" + "    optPath = a;"
+                + "  try {" + "    if (a.startsWith(\"-C\"))" + "      optRounds = Integer.parseUnsignedInt(a.substring(2));"
+                + "  } catch (final NumberFormatException ¢) {" + "    throw ¢;" + "  }" + "}");
   }
 
   @Test public void synchronizedBraces() {
