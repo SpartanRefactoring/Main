@@ -76,16 +76,10 @@ public final class Version230 {
   }
 
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
-<<<<<<< HEAD
     trimmingOf("@TargetApi(value = 23)@SuppressWarnings(value = \"javadoc\")  void m() {}")
         .gives("@SuppressWarnings(value = \"javadoc\") @TargetApi(value=23) void m() {}")//
         .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}")//
         .stays();
-=======
-    trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}")
-    .gives("@TargetApi(value = 23) @SuppressWarnings(value = \"javadoc\") void m() {}")
-    .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
->>>>>>> c10ec559e5c6585ea2048caf199c13ff9df67f6f
   }
 
   @Test public void annotationRemoveValueMemberArrayValue() {
