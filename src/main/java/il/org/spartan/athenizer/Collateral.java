@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.athenizer;
+package il.org.spartan.athenizer;
 
 /** Implementation of the collateral function: ₡. An identical copy of this
  * class should be present in the SpartanFeature project.
