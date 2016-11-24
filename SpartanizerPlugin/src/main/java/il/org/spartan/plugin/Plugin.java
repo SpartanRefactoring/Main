@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import java.io.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -7,6 +9,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
 
+import il.org.spartan.libraries.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -40,6 +43,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override public void earlyStartup() {
     monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
     startSpartan();
+    try {
+      LibrariesManagement.initializeUserLibraries();
+    } catch (CoreException | IOException x) {
+      monitor.log(x);
+    }
   }
 
   @Override public void start(final BundleContext ¢) throws Exception {

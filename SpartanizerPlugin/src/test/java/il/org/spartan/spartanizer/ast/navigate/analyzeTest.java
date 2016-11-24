@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class analyzeTest {
   @Test public void a() {
-    final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().map(x -> x + "").collect(Collectors.toList());
+    final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().collect(Collectors.toList());
     assert s.contains("x");
     assert s.contains("y");
     azzert.that(s.size(), is(2));
