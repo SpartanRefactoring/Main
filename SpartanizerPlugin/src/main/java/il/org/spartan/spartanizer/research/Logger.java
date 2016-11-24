@@ -87,8 +87,8 @@ public class Logger {
   public static CSVStatistics openSummaryFile(final String fileName) {
     try {
       return new CSVStatistics(fileName, "property");
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "opening report file");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "opening report file");
       return null;
     }
   }

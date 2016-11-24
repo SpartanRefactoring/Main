@@ -29,7 +29,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     }
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void tick(final E e) {
+  @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public void tick(final E e) {
     final EventFunctor f = recorders.get(e);
     if (f == null)
       return;
@@ -38,7 +38,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     f.update(eventMap);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void tick(final E e, final Object o) {
+  @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public void tick(final E e, final Object o) {
     final EventFunctor f = recorders.get(e);
     if (f == null)
       return;
@@ -273,9 +273,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** Remember the last object received of specific type. Conducts casting. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, X> rememberLast(@SuppressWarnings("unused") final Class<X> __) {
       return ((EventMapperFunctor<E, X, X>) this) //
-          .does((x, u) -> {
-            return u;
-          });
+          .does((x, u) -> u);
     }
 
     /** Counts calls of this event. Conducts casting. */

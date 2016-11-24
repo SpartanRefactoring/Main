@@ -46,14 +46,14 @@ public class Analyze {
   }
 
   /**
-   * 
+   *
    */
   private static void avgIndicatorMetricalAnalyzer() {
-    methodsAnalyze((new AvgIndicatorMetricalAnalyzer()));
+    methodsAnalyze(new AvgIndicatorMetricalAnalyzer());
   }
 
   private static void sameStatementsAverageUAnalyzer() {
-    methodsAnalyze((new SameStatementsAverageUAnalyzer()));
+    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -92,8 +92,8 @@ public class Analyze {
   private static void appendFile(final File f, final String s) {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "append");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "append");
     }
   }
 
@@ -173,7 +173,7 @@ public class Analyze {
   }
 
   private static void methodsAnalyze() {
-    methodsAnalyze((new MagicNumbersAnalysis()));
+    methodsAnalyze(new MagicNumbersAnalysis());
   }
 
   private static void methodsAnalyze(final Analyzer<?> a) {

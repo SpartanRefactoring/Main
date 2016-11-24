@@ -31,7 +31,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
 
-  @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
+  @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final ASTNode ¢) {
     assert check(¢);
     return !tipper.canTip((N) ¢) ? null : tipper;
   }
@@ -166,13 +166,12 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) //
-    @Override public AbstractGUIApplicator getApplicator(final IMarker m) {
+    @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public AbstractGUIApplicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-      } catch (final CoreException x) {
-        monitor.log(x);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
       }
       return null;
     }
@@ -184,8 +183,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
       try {
         return new SingleTipper<>(t.newInstance());
-      } catch (InstantiationException | IllegalAccessException x) {
-        monitor.log(x);
+      } catch (InstantiationException | IllegalAccessException ¢) {
+        monitor.log(¢);
       }
       return null;
     }
