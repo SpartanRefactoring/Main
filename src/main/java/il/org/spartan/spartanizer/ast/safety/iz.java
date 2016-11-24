@@ -1028,7 +1028,7 @@ public interface iz {
     }
   }
 
-  static boolean constructor(ASTNode ¢) {
+  static boolean constructor(final ASTNode ¢) {
     return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
   }
 }

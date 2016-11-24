@@ -45,9 +45,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     startSpartan();
     try {
       LibrariesManagement.initializeUserLibraries();
-    } catch (CoreException x) {
+    } catch (final CoreException x) {
       monitor.log(x);
-    } catch (IOException x) {
+    } catch (final IOException x) {
       // TODO Auto-generated catch block
       x.printStackTrace();
     }
