@@ -17,13 +17,13 @@ public class FileUtils {
    * @return a list of absolute paths to .java files found within the provided
    *         directories. If no files were found, an empty list is returned */
   @NotNull public static List<String> findAllJavaFiles(@NotNull final String... paths) {
-    final List<String> $ = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     if (paths.length == 0)
       return $;
-    for (final String s : paths) {
+    for (@Nullable final String s : paths) {
       if (s == null)
         continue;
-      final File f = new File(s);
+      @Nullable final File f = new File(s);
       if (f.exists() && f.isDirectory())
         iterateFiles(new File(s), $);
     }
@@ -36,8 +36,8 @@ public class FileUtils {
    * @throws IOException in case of error */
   @NotNull public static String read(@NotNull final File f) throws IOException {
     final String ls = System.getProperty("line.separator");
-    final StringBuilder $ = new StringBuilder();
-    try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+    @NotNull final StringBuilder $ = new StringBuilder();
+    try (@NotNull BufferedReader reader = new BufferedReader(new FileReader(f))) {
       for (final String line = reader.readLine(); line != null;)
         $.append(line).append(ls);
     }
@@ -56,7 +56,7 @@ public class FileUtils {
    * @param text what to write
    * @throws FileNotFoundException in case the file could not be found */
   public static void writeToFile(@NotNull final String fileName, @NotNull final String text) throws FileNotFoundException {
-    try (final PrintWriter p = new PrintWriter(fileName)) {
+    try (@NotNull final PrintWriter p = new PrintWriter(fileName)) {
       p.write(text);
       p.flush();
     }
@@ -64,7 +64,7 @@ public class FileUtils {
 
   private static void iterateFiles(@Nullable final File dir, @NotNull final List<String> files) {
     if (dir != null)
-      for (final File ¢ : dir.listFiles()) {
+      for (@NotNull final File ¢ : dir.listFiles()) {
         if (¢.isDirectory())
           iterateFiles(¢, files);
         if (¢.isFile() && ¢.getName().endsWith(".java"))

@@ -2,6 +2,8 @@ package il.org.spartan.java;
 
 import static il.org.spartan.utils.___.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spatan.iteration.*;
 
 public abstract class TokenProcessor {
@@ -27,17 +29,17 @@ public abstract class TokenProcessor {
     }
 
     @Override protected void after() {
-      for (final TokenProcessor inner : inners)
+      for (@NotNull final TokenProcessor inner : inners)
         inner.after();
     }
 
     @Override protected void before() {
-      for (final TokenProcessor inner : inners)
+      for (@NotNull final TokenProcessor inner : inners)
         inner.before();
     }
 
     @Override protected void process(final Token t, final String text) {
-      for (final TokenProcessor inner : inners)
+      for (@NotNull final TokenProcessor inner : inners)
         inner.process(t, text);
     }
   }

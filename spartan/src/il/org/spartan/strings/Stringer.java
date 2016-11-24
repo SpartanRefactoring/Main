@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
   @Nullable public static String compaq(@Nullable final String s) {
     if (s == null)
       return null;
-    String $ = "";
+    @NotNull String $ = "";
     for (final char ¢ : s.toCharArray())
       $ += Character.isSpaceChar(¢) ? "" : ¢ + "";
     return $;
@@ -55,7 +55,7 @@ import il.org.spartan.utils.*;
     if (numDigits == 0)
       return s;
     final int firstDigitIndex = s.length() - numDigits;
-    final String ZEROS = "0000000";
+    @NotNull final String ZEROS = "0000000";
     return numDigits >= ZEROS.length() ? s
         : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - numDigits) + s.substring(firstDigitIndex);
   }
@@ -80,12 +80,12 @@ import il.org.spartan.utils.*;
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final Iterable<T> ts, final String sep, final String end) {
-    final StringBuilder b = new StringBuilder(begin);
-    final Separator s = new Separator(sep);
+    @NotNull final StringBuilder $ = new StringBuilder(begin);
+    @NotNull final Separator s = new Separator(sep);
     for (final T ¢ : ts)
-      b.append(s).append(¢);
-    b.append(end);
-    return b + "";
+      $.append(s).append(¢);
+    $.append(end);
+    return $ + "";
   }
 
   /** @param <T> type of items in the list
@@ -97,12 +97,12 @@ import il.org.spartan.utils.*;
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end) {
-    final StringBuilder b = new StringBuilder(begin);
-    final Separator s = new Separator(sep);
+    @NotNull final StringBuilder $ = new StringBuilder(begin);
+    @NotNull final Separator s = new Separator(sep);
     for (final T ¢ : ts)
-      b.append(s).append(¢);
-    b.append(end);
-    return b + "";
+      $.append(s).append(¢);
+    $.append(end);
+    return $ + "";
   }
 
   /** @author Oren Rubin
@@ -117,12 +117,12 @@ import il.org.spartan.utils.*;
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end,
       @NotNull final Converter<T> t) {
-    final StringBuilder b = new StringBuilder(begin);
-    final Separator s = new Separator(sep);
+    @NotNull final StringBuilder $ = new StringBuilder(begin);
+    @NotNull final Separator s = new Separator(sep);
     for (final T ¢ : ts)
-      b.append(s).append(t.convert(¢));
-    b.append(end);
-    return b + "";
+      $.append(s).append(t.convert(¢));
+    $.append(end);
+    return $ + "";
   }
 
   /** Return the longest suffix of a String the starts with a certain character.
@@ -140,15 +140,15 @@ import il.org.spartan.utils.*;
    * @param o Object to inspect
    * @return String representation of o */
   @NotNull public static String toString(@NotNull final Object o) {
-    final List<String> list = new ArrayList<>();
-    for (final Field f : o.getClass().getDeclaredFields()) {
+    @NotNull final List<String> list = new ArrayList<>();
+    for (@NotNull final Field f : o.getClass().getDeclaredFields()) {
       f.setAccessible(true);
       try {
         list.add(f.getName() + "=" + f.get(o));
-      } catch (@NotNull final IllegalArgumentException e) {
-        list.add(f.getName() + "= (illegal argument) " + e.getMessage());
-      } catch (@NotNull final IllegalAccessException e) {
-        list.add(f.getName() + "= (illegal access) " + e.getMessage());
+      } catch (@NotNull final IllegalArgumentException ¢) {
+        list.add(f.getName() + "= (illegal argument) " + ¢.getMessage());
+      } catch (@NotNull final IllegalAccessException ¢) {
+        list.add(f.getName() + "= (illegal access) " + ¢.getMessage());
       }
     }
     return Separate.byCommas(list);
@@ -157,17 +157,17 @@ import il.org.spartan.utils.*;
   @NotNull private final String value;
 
   public <T> Stringer(final String between, @NotNull final int... ts) {
-    final StringBuilder b = new StringBuilder();
-    final Separator s = new Separator(between);
+    @NotNull final StringBuilder b = new StringBuilder();
+    @NotNull final Separator s = new Separator(between);
     for (final int ¢ : ts)
       b.append(s).append(¢);
     value = b + "";
   }
 
   public <T> Stringer(final String separator, final String nullStr, @NotNull final T... ts) {
-    final StringBuilder b = new StringBuilder();
-    final Separator s = new Separator(separator);
-    for (final T ¢ : ts) {
+    @NotNull final StringBuilder b = new StringBuilder();
+    @NotNull final Separator s = new Separator(separator);
+    for (@Nullable final T ¢ : ts) {
       b.append(s);
       b.append(¢ != null ? ¢ : nullStr);
     }
@@ -178,7 +178,7 @@ import il.org.spartan.utils.*;
     this(between, "null", ts);
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return value;
   }
 

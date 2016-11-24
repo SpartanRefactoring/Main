@@ -52,8 +52,8 @@ import il.org.spatan.iteration.*;
 
   public static double tauB(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    final List<Double> Xs = new ArrayList<>();
-    final List<Double> Ys = new ArrayList<>();
+    @NotNull final List<Double> Xs = new ArrayList<>();
+    @NotNull final List<Double> Ys = new ArrayList<>();
     for (int ¢ = 0; ¢ < xs.length; ++¢)
       if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
         Xs.add(Box.it(xs[¢]));
@@ -99,10 +99,10 @@ import il.org.spatan.iteration.*;
     return ¢ * (¢ - 1) / 2;
   }
 
-  static int sigma(@NotNull final double[] ds) {
-    final double[] copy = ds.clone();
-    Arrays.sort(copy);
-    return sigmaSortedArray(copy);
+  static int sigma(@NotNull final double[] ¢) {
+    final double[] $ = ¢.clone();
+    Arrays.sort($);
+    return sigmaSortedArray($);
   }
 
   static int sigmaSortedArray(@NotNull final double[] ds) {
@@ -137,7 +137,7 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     final int n = xs.length;
     final int pairs = pairs(n);
-    return computeS(xs, ys, n) / Math.sqrt((pairs - sigma(ys)) * 1. * (pairs - sigma(xs)));
+    return computeS(xs, ys, n) / Math.sqrt(1. * (pairs - sigma(xs)) * (pairs - sigma(ys)));
   }
 
   public static class Charectristics {

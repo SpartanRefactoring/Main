@@ -148,7 +148,7 @@ public interface XYProcessor {
 
     @SuppressWarnings({ "static-method" }) public static class TEST {
       @Test public void feed() {
-        final RealsOnly p = new RealsOnly();
+        @NotNull final RealsOnly p = new RealsOnly();
         p.feed(doubles(Double.NaN, 1, 4, 3), doubles(0, Double.NEGATIVE_INFINITY, 5, 3), doubles(0, 1, 6, Double.NEGATIVE_INFINITY));
         azzert.that(p.xs().length, is(1));
         azzert.that(p.ys().length, is(1));

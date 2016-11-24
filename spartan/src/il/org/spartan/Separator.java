@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import org.jetbrains.annotations.*;
@@ -34,8 +34,8 @@ public final class Separator {
   @NotNull public static String separateBy(@NotNull final int[] is, final String between) {
     if (is.length == 0)
       return "";
-    String $ = "";
-    final Separator s = new Separator(between);
+    @NotNull String $ = "";
+    @NotNull final Separator s = new Separator(between);
     for (final int ¢ : is)
       $ += s + (Integer.valueOf(¢) + "");
     return $;
@@ -69,8 +69,8 @@ public final class Separator {
   @NotNull public static <T> String wrap(@NotNull final String begin, final String end, @NotNull final Iterable<T> ts, final String between) {
     if (iterables.isEmpty(ts))
       return "";
-    final StringBuilder $ = new StringBuilder(begin);
-    final Separator s = new Separator(between);
+    @NotNull final StringBuilder $ = new StringBuilder(begin);
+    @NotNull final Separator s = new Separator(between);
     for (final T ¢ : ts)
       $.append(s).append(¢);
     return as.string($.append(end));
@@ -84,8 +84,8 @@ public final class Separator {
   @NotNull public static <T> String wrap(@NotNull final String begin, final String end, @NotNull final T[] ts, final String between) {
     if (ts.length == 0)
       return "";
-    final StringBuilder $ = new StringBuilder(begin);
-    final Separator s = new Separator(between);
+    @NotNull final StringBuilder $ = new StringBuilder(begin);
+    @NotNull final Separator s = new Separator(between);
     for (final T ¢ : ts)
       $.append(s).append(¢);
     return as.string($.append(end));

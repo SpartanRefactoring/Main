@@ -124,7 +124,7 @@ public class RawTokenizer {
       + "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1" + "\2\11\1\1\1\11\6\1";
 
   @NotNull private static int[] zzUnpackAction() {
-    final int[] $ = new int[115];
+    @NotNull final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, $);
     return $;
@@ -145,7 +145,7 @@ public class RawTokenizer {
   }
 
   @NotNull private static int[] zzUnpackAttribute() {
-    final int[] $ = new int[115];
+    @NotNull final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, $);
     return $;
@@ -169,7 +169,7 @@ public class RawTokenizer {
    * @param packed the packed character translation table
    * @return the unpacked character translation table */
   @NotNull private static char[] zzUnpackCMap(@NotNull final String packed) {
-    final char[] $ = new char[0x10000];
+    @NotNull final char[] $ = new char[0x10000];
     int i = 0; /* index in packed string */
     int j = 0; /* index in unpacked array */
     while (i < 1764) {
@@ -183,7 +183,7 @@ public class RawTokenizer {
   }
 
   @NotNull private static int[] zzUnpackRowMap() {
-    final int[] $ = new int[115];
+    @NotNull final int[] $ = new int[115];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, $);
     return $;
@@ -201,7 +201,7 @@ public class RawTokenizer {
   }
 
   @NotNull private static int[] zzUnpackTrans() {
-    final int[] $ = new int[3162];
+    @NotNull final int[] $ = new int[3162];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, $);
     return $;
@@ -298,9 +298,9 @@ public class RawTokenizer {
     int zzCurrentPosL;
     int zzMarkedPosL;
     int zzEndReadL = zzEndRead;
-    char[] zzBufferL = zzBuffer;
-    final char[] zzCMapL = ZZ_CMAP;
-    final int[] zzTransL = ZZ_TRANS;
+    @NotNull char[] zzBufferL = zzBuffer;
+    @NotNull final char[] zzCMapL = ZZ_CMAP;
+    @NotNull final int[] zzTransL = ZZ_TRANS;
     while (true) {
       zzMarkedPosL = zzMarkedPos;
       yychar += zzMarkedPosL - zzStartRead;
@@ -982,7 +982,7 @@ public class RawTokenizer {
     /* is the buffer big enough? */
     if (zzCurrentPos >= zzBuffer.length) {
       /* if not: blow it up */
-      final char newBuffer[] = new char[zzCurrentPos * 2];
+      @NotNull final char newBuffer[] = new char[zzCurrentPos * 2];
       System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
       zzBuffer = newBuffer;
     }

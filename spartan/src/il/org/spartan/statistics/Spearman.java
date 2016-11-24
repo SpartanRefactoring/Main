@@ -23,7 +23,7 @@ public enum Spearman {
   @NotNull private static double[] rank(@NotNull final double[] x) {
     final double[] y = x.clone();
     Arrays.sort(y);
-    final double[] $ = new double[x.length];
+    @NotNull final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = Arrays.binarySearch(y, x[¢]);
     return $;

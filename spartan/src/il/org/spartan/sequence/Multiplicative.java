@@ -6,7 +6,7 @@ public class Multiplicative extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
 
   public static void main(final String[] args) {
-    for (final Sequence ¢ = new Multiplicative(0.16); ¢.current < 150; ¢.advance())
+    for (@NotNull final Sequence ¢ = new Multiplicative(0.16); ¢.current < 150; ¢.advance())
       System.out.print(¢.current() + " ");
     System.out.println();
   }
@@ -27,7 +27,7 @@ public class Multiplicative extends Sequence {
     this.step = Math.pow(2, step);
   }
 
-  @NotNull @Override public Multiplicative advance() {
+  @Override @NotNull public Multiplicative advance() {
     final int prev = current;
     current *= step;
     if (current == prev)
@@ -35,7 +35,7 @@ public class Multiplicative extends Sequence {
     return this;
   }
 
-  @NotNull @Override public Multiplicative reset() {
+  @Override @NotNull public Multiplicative reset() {
     current = 1;
     return this;
   }

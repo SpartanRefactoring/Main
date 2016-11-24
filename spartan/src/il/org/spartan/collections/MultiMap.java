@@ -44,7 +44,7 @@ import il.org.spartan.streotypes.*;
    * @param ¢ Source value
    * @return the newly created set object */
   @NotNull public Set<V> clear(final K ¢) {
-    final Set<V> $ = new HashSet<>();
+    @NotNull final Set<V> $ = new HashSet<>();
     implementation.put(¢, $);
     return $;
   }
@@ -82,8 +82,8 @@ import il.org.spartan.streotypes.*;
     return implementation.size();
   }
 
-  @NotNull @Override public String toString() {
-    final StringBuilder $ = new StringBuilder();
+  @Override @NotNull public String toString() {
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (final K ¢ : this)
       $.append(¢ + "=>" + get(¢) + '\n');
     return $ + "";
@@ -92,9 +92,8 @@ import il.org.spartan.streotypes.*;
   /** Obtain all images
    * @return Set of V objects */
   @NotNull public Set<V> values() {
-    final Set<V> $ = new HashSet<>();
-    for (final Set<V> curr : implementation.values())
-      $.addAll(curr);
+    @NotNull final Set<V> $ = new HashSet<>();
+    implementation.values().forEach($::addAll);
     return $;
   }
 }

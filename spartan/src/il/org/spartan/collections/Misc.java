@@ -10,13 +10,13 @@ import org.jetbrains.annotations.*;
 
 public class Misc {
   public static boolean compareWithStream(@NotNull final String s, @NotNull final InputStream is) {
-    for (final Scanner actual = new Scanner(s), expected = new Scanner(is);;) {
+    for (@NotNull final Scanner actual = new Scanner(s), expected = new Scanner(is);;) {
       if (actual.hasNext() != expected.hasNext())
         return false;
       if (!actual.hasNext())
         return true;
-      final String a = actual.nextLine().trim();
-      final String b = expected.nextLine().trim();
+      @NotNull final String a = actual.nextLine().trim();
+      @NotNull final String b = expected.nextLine().trim();
       if (!a.equals(b)) {
         System.err.println("a=" + a);
         System.err.println("b=" + b);
@@ -26,7 +26,7 @@ public class Misc {
   }
 
   @NotNull public static boolean[] complement(@NotNull final boolean[] bs) {
-    final boolean[] $ = new boolean[bs.length];
+    @NotNull final boolean[] $ = new boolean[bs.length];
     for (int ¢ = 0; ¢ < bs.length; ++¢)
       $[¢] = !bs[¢];
     return $;
@@ -34,7 +34,7 @@ public class Misc {
 
   @NotNull public static <T> T[] duplicate(@NotNull final T[] ts) {
     final Class<?> c = ts.getClass().getComponentType();
-    @SuppressWarnings("unchecked") final T[] $ = (T[]) java.lang.reflect.Array.newInstance(c, ts.length);
+    @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) java.lang.reflect.Array.newInstance(c, ts.length);
     System.arraycopy(ts, 0, $, 0, ts.length);
     return $;
   }
@@ -48,7 +48,7 @@ public class Misc {
   }
 
   @NotNull public static boolean[] toArray(@NotNull final List<Boolean> bs) {
-    final boolean[] $ = new boolean[bs.size()];
+    @NotNull final boolean[] $ = new boolean[bs.size()];
     for (int ¢ = 0; ¢ < bs.size(); ++¢)
       $[¢] = bs.get(¢).booleanValue();
     return $;
@@ -58,7 +58,7 @@ public class Misc {
   @NotNull public static <T> T[] toArray(@NotNull final T t, @NotNull final T... ts) {
     nonnull(t);
     nonnull(ts);
-    @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(t.getClass(), ts.length + 1);
+    @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(t.getClass(), ts.length + 1);
     $[0] = t;
     for (int ¢ = 0; ¢ < ts.length; ++¢)
       $[¢ + 1] = ts[¢];

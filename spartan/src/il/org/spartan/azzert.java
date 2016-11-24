@@ -219,51 +219,51 @@ public class azzert extends org.junit.Assert {
     return OrderingComparison.greaterThan(Double.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Float> greaterThan(final float ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Float> greaterThan(final float ¢) {
     return OrderingComparison.greaterThan(Float.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Integer> greaterThan(final int ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Integer> greaterThan(final int ¢) {
     return OrderingComparison.greaterThan(Integer.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Long> greaterThan(final long ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Long> greaterThan(final long ¢) {
     return OrderingComparison.greaterThan(Long.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Short> greaterThan(final short ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Short> greaterThan(final short ¢) {
     return OrderingComparison.greaterThan(Short.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Boolean> greaterThanOrEqualTo(final boolean ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Boolean> greaterThanOrEqualTo(final boolean ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Boolean.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Byte> greaterThanOrEqualTo(final byte ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Byte> greaterThanOrEqualTo(final byte ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Byte.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Character> greaterThanOrEqualTo(final char ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Character> greaterThanOrEqualTo(final char ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Character.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Double> greaterThanOrEqualTo(final double ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Double> greaterThanOrEqualTo(final double ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Double.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Float> greaterThanOrEqualTo(final float ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Float> greaterThanOrEqualTo(final float ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Float.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Integer> greaterThanOrEqualTo(final int ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Integer> greaterThanOrEqualTo(final int ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Integer.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Long> greaterThanOrEqualTo(final long ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Long> greaterThanOrEqualTo(final long ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Long.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Short> greaterThanOrEqualTo(final short ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Short> greaterThanOrEqualTo(final short ¢) {
     return OrderingComparison.greaterThanOrEqualTo(Short.valueOf(¢));
   }
 
@@ -275,11 +275,11 @@ public class azzert extends org.junit.Assert {
     return IsCollectionContaining.hasItem(item);
   }
 
-  @NotNull @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final Matcher<? super T>... itemMatchers) {
+  @SafeVarargs @NotNull public static <T> Matcher<java.lang.Iterable<T>> hasItems(final Matcher<? super T>... itemMatchers) {
     return IsCollectionContaining.hasItems(itemMatchers);
   }
 
-  @NotNull @SafeVarargs public static <T> Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
+  @SafeVarargs @NotNull public static <T> Matcher<java.lang.Iterable<T>> hasItems(final T... items) {
     return IsCollectionContaining.hasItems(items);
   }
 
@@ -315,7 +315,7 @@ public class azzert extends org.junit.Assert {
     return is(Long.valueOf(¢));
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> is(final @Nullable Matcher<@Nullable T> ¢) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> is(final @Nullable Matcher<@Nullable T> ¢) {
     return Is.is(¢);
   }
 
@@ -323,7 +323,7 @@ public class azzert extends org.junit.Assert {
     return is(Short.valueOf(¢));
   }
 
-  @NotNull @Contract(pure = true) public static <@Nullable T> Matcher<T> is(final @Nullable T value) {
+  @Contract(pure = true) @NotNull public static <@Nullable T> Matcher<T> is(final @Nullable T value) {
     return Is.is(value);
   }
 
@@ -345,67 +345,67 @@ public class azzert extends org.junit.Assert {
     return new Wrapper<>(¢);
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Boolean> lessThan(final boolean ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Boolean> lessThan(final boolean ¢) {
     return OrderingComparison.lessThan(Boolean.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Byte> lessThan(final byte ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Byte> lessThan(final byte ¢) {
     return OrderingComparison.lessThan(Byte.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Character> lessThan(final char ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Character> lessThan(final char ¢) {
     return OrderingComparison.lessThan(Character.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Double> lessThan(final double ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Double> lessThan(final double ¢) {
     return OrderingComparison.lessThan(Double.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Float> lessThan(final float ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Float> lessThan(final float ¢) {
     return OrderingComparison.lessThan(Float.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Integer> lessThan(final int ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Integer> lessThan(final int ¢) {
     return OrderingComparison.lessThan(Integer.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Long> lessThan(final long ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Long> lessThan(final long ¢) {
     return OrderingComparison.lessThan(Long.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Short> lessThan(final short ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Short> lessThan(final short ¢) {
     return OrderingComparison.lessThan(Short.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Boolean> lessThanOrEqualTo(final boolean ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Boolean> lessThanOrEqualTo(final boolean ¢) {
     return OrderingComparison.lessThanOrEqualTo(Boolean.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Byte> lessThanOrEqualTo(final byte ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Byte> lessThanOrEqualTo(final byte ¢) {
     return OrderingComparison.lessThanOrEqualTo(Byte.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Character> lessThanOrEqualTo(final char ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Character> lessThanOrEqualTo(final char ¢) {
     return OrderingComparison.lessThanOrEqualTo(Character.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Double> lessThanOrEqualTo(final double ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Double> lessThanOrEqualTo(final double ¢) {
     return OrderingComparison.lessThanOrEqualTo(Double.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Float> lessThanOrEqualTo(final float ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Float> lessThanOrEqualTo(final float ¢) {
     return OrderingComparison.lessThanOrEqualTo(Float.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Integer> lessThanOrEqualTo(final int ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Integer> lessThanOrEqualTo(final int ¢) {
     return OrderingComparison.lessThanOrEqualTo(Integer.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Long> lessThanOrEqualTo(final long ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Long> lessThanOrEqualTo(final long ¢) {
     return OrderingComparison.lessThanOrEqualTo(Long.valueOf(¢));
   }
 
-  @NotNull @Factory public static Matcher<@Nullable Short> lessThanOrEqualTo(final short ¢) {
+  @Factory @NotNull public static Matcher<@Nullable Short> lessThanOrEqualTo(final short ¢) {
     return OrderingComparison.lessThanOrEqualTo(Short.valueOf(¢));
   }
 
@@ -452,7 +452,7 @@ public class azzert extends org.junit.Assert {
     return cantBeNull(IsNot.not(Long.valueOf(i)));
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> not(final Matcher<T> ¢) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> not(final Matcher<T> ¢) {
     return IsNot.not(¢);
   }
 
@@ -460,7 +460,7 @@ public class azzert extends org.junit.Assert {
     return cantBeNull(IsNot.not(Short.valueOf(¢)));
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> not(final T value) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> not(final T value) {
     return IsNot.not(value);
   }
 
@@ -472,11 +472,11 @@ public class azzert extends org.junit.Assert {
     assertThat(s, o, notNullValue());
   }
 
-  @NotNull @Contract(pure = true) public static Matcher<@Nullable Object> notNullValue() {
+  @Contract(pure = true) @NotNull public static Matcher<@Nullable Object> notNullValue() {
     return IsNull.notNullValue();
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> notNullValue(final java.lang.Class<T> type) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> notNullValue(final java.lang.Class<T> type) {
     return IsNull.notNullValue(type);
   }
 
@@ -487,11 +487,11 @@ public class azzert extends org.junit.Assert {
       notNull(os + "", ¢);
   }
 
-  @NotNull @Contract(pure = true) public static Matcher<@Nullable Object> nullValue() {
+  @Contract(pure = true) @NotNull public static Matcher<@Nullable Object> nullValue() {
     return IsNull.nullValue();
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> nullValue(final java.lang.Class<T> type) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> nullValue(final java.lang.Class<T> type) {
     return IsNull.nullValue(type);
   }
 
@@ -499,7 +499,7 @@ public class azzert extends org.junit.Assert {
     azzert.that(¢, greaterThan(0));
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> sameInstance(final T target) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> sameInstance(final T target) {
     return IsSame.sameInstance(target);
   }
 
@@ -583,7 +583,7 @@ public class azzert extends org.junit.Assert {
     assertThat("", actual, t);
   }
 
-  @NotNull @Contract(pure = true) public static <T> Matcher<T> theInstance(final T target) {
+  @Contract(pure = true) @NotNull public static <T> Matcher<T> theInstance(final T target) {
     return IsSame.theInstance(target);
   }
 
@@ -603,7 +603,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static class Asserter {
-    @NotNull public @NonNull Asserter andAye(final boolean claim) {
+    @NotNull @NonNull public Asserter andAye(final boolean claim) {
       return andAye("", claim);
     }
 

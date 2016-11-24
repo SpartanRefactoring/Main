@@ -52,14 +52,14 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void sum1() {
-      final double vs[] = { 5, 20, 40, 80, 100 };
+      @NotNull final double vs[] = { 5, 20, 40, 80, 100 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(245, sum(1, vs), 1E-8);
       Assert.assertEquals(49, mean(vs), 1E-8);
     }
 
     @Test public void sumN() {
-      final double vs[] = { 1, 2, 3, 4, 5 };
+      @NotNull final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(15, sum(1, vs), 1E-8);
       Assert.assertEquals(1 + 4 + 9 + 16 + 25, sum(2, vs), 1E-8);

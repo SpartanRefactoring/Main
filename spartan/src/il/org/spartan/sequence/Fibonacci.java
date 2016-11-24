@@ -13,14 +13,14 @@ public class Fibonacci extends Sequence {
     reset();
   }
 
-  @NotNull @Override public Fibonacci advance() {
+  @Override @NotNull public Fibonacci advance() {
     final int temp = previous;
     previous = current;
     current += temp;
     return this;
   }
 
-  @NotNull @Override public final Fibonacci reset() {
+  @Override @NotNull public final Fibonacci reset() {
     current = previous = 1;
     return this;
   }

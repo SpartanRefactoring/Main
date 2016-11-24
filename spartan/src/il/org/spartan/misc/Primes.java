@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
 import static il.org.spartan.azzert.*;
@@ -6,6 +6,7 @@ import static il.org.spartan.azzert.*;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -23,9 +24,9 @@ public class Primes {
   }
 
   public static void main(final String[] args) throws IOException {
-    final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
-    final Random r = new Random();
-    for (final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {
+    @NotNull final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
+    @NotNull final Random r = new Random();
+    for (@NotNull final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {
       w.put("Value", ¢.next());
       w.put("Bad Random", new Random().nextDouble());
       w.put("Good Random", r.nextDouble());
@@ -82,7 +83,7 @@ public class Primes {
     }
 
     @Test public void secondIsThree() {
-      final Primes p = new Primes();
+      @NotNull final Primes p = new Primes();
       p.next();
       azzert.that(p.next(), is(3));
     }
@@ -94,7 +95,7 @@ public class Primes {
     }
 
     @Test public void thirdIsFive() {
-      final Primes p = new Primes();
+      @NotNull final Primes p = new Primes();
       p.next();
       p.next();
       azzert.that(p.next(), is(5));

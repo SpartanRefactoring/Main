@@ -4,22 +4,22 @@ import org.jetbrains.annotations.*;
 
 public enum Significance {
   INSIGNIFICANT {
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return "sig. <95%";
     }
   },
   FIVE_PERCENT {
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return "sig.> 95%";
     }
   },
   ONE_PERCENT {
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return "sig.> 99%";
     }
   },
   ONE_PERMILLE {
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return "sig.> 99.9%";
     }
   };

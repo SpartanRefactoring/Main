@@ -48,7 +48,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
       return true;
     if (o == null || getClass() != o.getClass())
       return false;
-    @SuppressWarnings("unchecked") final ImmutableList<T> otherList = (ImmutableList<T>) o;
+    @Nullable @SuppressWarnings("unchecked") final ImmutableList<T> otherList = (ImmutableList<T>) o;
     return data.equals(otherList.data);
   }
 
@@ -60,7 +60,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.isEmpty();
   }
 
-  @NotNull @Override public Iterator<T> iterator() {
+  @Override @NotNull public Iterator<T> iterator() {
     return data.iterator();
   }
 

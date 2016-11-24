@@ -15,7 +15,7 @@ public abstract class NamedOperation extends Operation {
     this.name = name;
   }
 
-  @NotNull @Override public final Stopwatch makeStopWatch() {
+  @Override @NotNull public final Stopwatch makeStopWatch() {
     return new Stopwatch(name);
   }
 }

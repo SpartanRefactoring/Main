@@ -48,7 +48,7 @@ public class TimingEstimator {
   }
 
   @NotNull private static TimingEstimator makeEstimator(final Operation ¢) {
-    final TimingEstimator $ = new TimingEstimator(¢);
+    @NotNull final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
     return $;
   }
@@ -82,13 +82,13 @@ public class TimingEstimator {
   @Nullable public RunRecord run(final int runs) {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
-      final JVM before = new JVM();
-      final Stopwatch grossTime = new Stopwatch().start();
-      final Stopwatch netTime = o.netTime(runs);
+      @NotNull final JVM before = new JVM();
+      @NotNull final Stopwatch grossTime = new Stopwatch().start();
+      @NotNull final Stopwatch netTime = o.netTime(runs);
       grossTime.stop();
-      final JVM after = new JVM();
+      @NotNull final JVM after = new JVM();
       nonnegative(netTime.time());
-      final RunRecord $ = new RunRecord(runs, grossTime, netTime);
+      @NotNull final RunRecord $ = new RunRecord(runs, grossTime, netTime);
       totalRuns.add($);
       if (!after.equals(before)) {
         Log.print("oops, JVM state changed... " + netTime);
@@ -137,7 +137,7 @@ public class TimingEstimator {
    *         {@linkplain RunRecord} object. */
   @Nullable public RunRecord run(final int runs, final int trials) {
     for (int ¢ = 0; ¢ < trials; ++¢) {
-      final RunRecord $ = run(runs);
+      @Nullable final RunRecord $ = run(runs);
       if ($ != null)
         return $;
       System.gc();

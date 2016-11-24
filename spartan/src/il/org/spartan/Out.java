@@ -34,7 +34,6 @@ public class Out {
         return;
       }
       System.out.printf("\t%2d) %s\n", Integer.valueOf(n), ¢);
-      continue;
     }
   }
 

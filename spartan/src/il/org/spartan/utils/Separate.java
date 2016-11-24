@@ -124,8 +124,8 @@ import il.org.spartan.streotypes.*;
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
   @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts, final String between) {
-    final Separator s = new Separator(between);
-    final StringBuffer $ = new StringBuffer();
+    @NotNull final Separator s = new Separator(between);
+    @NotNull final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
       $.append(s).append(t.__(¢));
     return $ + "";
@@ -173,8 +173,8 @@ import il.org.spartan.streotypes.*;
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
   @NotNull public static <T> String by(@NotNull final F<T> t, @NotNull final T[] ts, final String between) {
-    final Separator s = new Separator(between);
-    final StringBuffer $ = new StringBuffer();
+    @NotNull final Separator s = new Separator(between);
+    @NotNull final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
       $.append(s).append(t.__(¢));
     return $ + "";
@@ -245,8 +245,8 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   @NotNull public static <T> String by(@NotNull final Iterable<T> ts, final String between) {
-    final Separator s = new Separator(between);
-    final StringBuffer $ = new StringBuffer();
+    @NotNull final Separator s = new Separator(between);
+    @NotNull final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
       $.append(s).append(¢);
     return $ + "";
@@ -290,8 +290,8 @@ import il.org.spartan.streotypes.*;
     nonnull(k);
     nonnull(between);
     nonnull(arrow);
-    final Separator s = new Separator(between);
-    final StringBuffer $ = new StringBuffer();
+    @NotNull final Separator s = new Separator(between);
+    @NotNull final StringBuffer $ = new StringBuffer();
     for (final Key ¢ : k.keySet())
       $.append(s).append(¢).append(arrow).append(k.get(¢));
     return $ + "";

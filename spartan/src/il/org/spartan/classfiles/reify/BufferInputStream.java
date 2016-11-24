@@ -25,10 +25,10 @@ import il.org.spartan.utils.*;
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */
 public class BufferInputStream extends InputStream {
-  protected byte bytes[];
+  @NotNull protected final byte[] bytes;
   protected int position;
   protected int mark;
-  protected int length;
+  protected final int length;
 
   public BufferInputStream(@NotNull final byte bytes[]) {
     this.bytes = bytes;
@@ -43,8 +43,12 @@ public class BufferInputStream extends InputStream {
     ___.nothing();
   }
 
+  public boolean done() {
+    return position >= length;
+  }
+
   public boolean eof() {
-    return !more();
+    return done();
   }
 
   @Override public synchronized void mark(final int limit) {
@@ -55,16 +59,12 @@ public class BufferInputStream extends InputStream {
     return true;
   }
 
-  public boolean more() {
-    return position < length;
-  }
-
   public final int position() {
     return position;
   }
 
   @Override public synchronized int read() {
-    return !more() ? -1 : bytes[position++] & 0xff;
+    return done() ? -1 : bytes[position++] & 0xff;
   }
 
   @Override public synchronized int read(final byte bs[], final int offset, final int len) {

@@ -36,7 +36,7 @@ public abstract class Bencheon extends NamedOperation {
     return System.nanoTime() - begin - beforeEachMethodTime;
   }
 
-  @NotNull @Override public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
+  @Override @NotNull public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
     netTime.start();
@@ -98,7 +98,7 @@ public abstract class Bencheon extends NamedOperation {
       super("Empty", 1);
     }
 
-    @Nullable @Override public Void call() {
+    @Override @Nullable public Void call() {
       return null;
     }
   }
@@ -108,7 +108,6 @@ public abstract class Bencheon extends NamedOperation {
    * @author Yossi Gil
    * @since 31/05/2011 */
   public static final class Exact extends Bencheon {
-    /** @param beforeAllRuns2 */
     private static void sleep(final int sleep) {
       for (final long start = System.nanoTime(); System.nanoTime() - start < sleep;)
         ___.nothing();
@@ -156,7 +155,7 @@ public abstract class Bencheon extends NamedOperation {
       super("Hash", 1);
     }
 
-    @Nullable @Override public Void call() {
+    @Override @Nullable public Void call() {
       a = hash(++a);
       return null;
     }

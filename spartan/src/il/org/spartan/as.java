@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
@@ -95,7 +95,7 @@ public enum as {
    * @return parameter, converted to the {@link List} of non-
    *         <code><b>int</b></code> {@link Integer}s form. */
   @NotNull public static List<Integer> ingeterList(@NotNull final int... is) {
-    final List<Integer> $ = new ArrayList<>();
+    @NotNull final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
       $.add(box.it(¢));
     return $;
@@ -115,19 +115,21 @@ public enum as {
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
   @NotNull public static int[] intArray(@NotNull final List<Integer> is) {
-    final int @NonNull [] $ = new int @NonNull [is.size()];
+    @NotNull final int @NonNull [] $ = new int @NonNull [is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
     return $;
   }
 
-  /** Creates an iterable for an array of objects
-   * @param <T> an arbitrary type
-   * @param ts what to iterate on
-   * @return an {@link Iterable} over the parameter */
-  @NotNull @SafeVarargs public static <@Nullable T> PureIterable.Sized<T> iterable(@NotNull final T... ts) {
+  /**
+   * Creates an iterable for an array of objects
+   * @param < T >  an arbitrary type
+   * @param ts  what to iterate on
+   * @return  an  {@link Iterable}  over the parameter 
+   */
+  @SafeVarargs @NotNull public static <@Nullable T> PureIterable.Sized<T> iterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
-      @NotNull @Override public PureIterator<T> iterator() {
+      @Override @NotNull public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current;
 
@@ -160,7 +162,7 @@ public enum as {
    * @param ¢ what to convert
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
-  public static List<Integer> list(final int... ¢) {
+  public static List<Integer> list(@NotNull final int... ¢) {
     return as.list(box.it(¢));
   }
 
@@ -169,7 +171,7 @@ public enum as {
    * @param <T> type of items to be converted
    * @param $ what to convert
    * @return parameter, converted to the {@link List} of the given type */
-  public static <T> List<T> list(final Iterable<? extends T> $) {
+  public static <T> List<T> list(@NotNull final Iterable<? extends T> $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
@@ -182,13 +184,15 @@ public enum as {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
-  /** Creates an iterable for an array of objects
-   * @param <T> an arbitrary type
-   * @param ts what to iterate on
-   * @return an {@link Iterable} over the parameter */
-  @NotNull @SafeVarargs public static <T> PureIterable.Sized<T> nonNullIterable(@NotNull final T... ts) {
+  /**
+   * Creates an iterable for an array of objects
+   * @param < T >  an arbitrary type
+   * @param ts  what to iterate on
+   * @return  an  {@link Iterable}  over the parameter 
+   */
+  @SafeVarargs @NotNull public static <T> PureIterable.Sized<T> nonNullIterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
-      @NotNull @Override public PureIterator<T> iterator() {
+      @Override @NotNull public PureIterator<T> iterator() {
         return new PureIterator<T>() {
           int current;
 
@@ -238,8 +242,8 @@ public enum as {
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
   public static String[] strings(@NotNull final Iterable<? extends @Nullable Object> os) {
-    final List<@NonNull String> $ = new ArrayList<>();
-    for (final @Nullable Object ¢ : os)
+    @NotNull final List<@NonNull String> $ = new ArrayList<>();
+    for (@org.jetbrains.annotations.Nullable final @Nullable Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
@@ -284,7 +288,7 @@ public enum as {
     }
 
     @Test public void asListSimple() {
-      final List<Integer> is = as.list(12, 13, 14);
+      @NotNull final List<Integer> is = as.list(12, 13, 14);
       azzert.that(is.get(0), is(box.it(12)));
       azzert.that(is.get(1), is(box.it(13)));
       azzert.that(is.get(2), is(box.it(14)));
@@ -297,7 +301,7 @@ public enum as {
 
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
-        @org.jetbrains.annotations.Nullable @Override public @Nullable String toString() {
+        @Override @org.jetbrains.annotations.Nullable @Nullable public String toString() {
           return null;
         }
       }), is("null"));

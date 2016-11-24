@@ -1,6 +1,7 @@
 package il.org.spartan.utils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.*;
 
@@ -30,20 +31,18 @@ public enum SystemProperty {
   USER_TIMEZONE, //
   ;
   public static void main(final String[] args) throws RuntimeException {
-    for (final SystemProperty ¢ : values()) {
+    for (@NotNull final SystemProperty ¢ : values()) {
       if (¢.value() == null)
         throw new RuntimeException("property " + ¢ + " is probably misspelled");
       System.out.println(¢.key + "='" + ¢.value() + "'");
     }
-    for (final String ¢ : objectsToStrings(System.getProperties().keySet()))
+    for (@NotNull final String ¢ : objectsToStrings(System.getProperties().keySet()))
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
 
   @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> os) {
-    final TreeSet<String> $ = new TreeSet<>();
-    for (final Object ¢ : os)
-      $.add((String) ¢);
-    return $;
+    @NotNull final TreeSet<String> $ = os.stream().map(¢ -> (String) ¢).collect(Collectors.toCollection(TreeSet::new));
+      return $;
   }
 
   @NotNull public final String key;

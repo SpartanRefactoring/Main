@@ -44,7 +44,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     @NotNull private static short[] append(@NotNull final short[] as, final short a) {
       if (Arrays.binarySearch(as, a) >= 0)
         return as;
-      final short[] $ = copyOf(as, as.length + 1);
+      @NotNull final short[] $ = copyOf(as, as.length + 1);
       $[$.length - 1] = a;
       sort($);
       return $;
@@ -94,7 +94,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
 
     private int countArcs() {
       int $ = 0;
-      for (final BitSet ¢ : neighbors)
+      for (@Nullable final BitSet ¢ : neighbors)
         if (¢ != null)
           $ += ¢.cardinality();
       return $ / 2;
@@ -136,7 +136,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void connectedTwoChains() {
-      final BitSetSmallIntegersGraph g = new Builder()//
+      @NotNull final BitSetSmallIntegersGraph g = new Builder()//
           .connect(0, 1).connect(1, 2).connect(2, 3)//
           .connect(4, 5).connect(5, 6).connect(6, 7)//
           .go();
@@ -195,7 +195,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void disconnectedComponentsBuilder() {
-      final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
+      @NotNull final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
       azzert.that(b.component[5], is(-1));
       azzert.that(b.component[6], is(-1));
       azzert.that(b.component[7], is(-1));
@@ -204,13 +204,13 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void disconnectedComponentsBuilderFreeNodes() {
-      final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
+      @NotNull final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
       azzert.that(b.component[0], is(-1));
       azzert.that(b.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsCount() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.add(5);
       b.add(6);
       b.add(7);
@@ -219,7 +219,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void disconnectedComponentsGraph() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
       azzert.that(g.component[5], is(-1));
       azzert.that(g.component[6], is(-1));
       azzert.that(g.component[7], is(-1));
@@ -228,38 +228,38 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void disconnectedComponentsGraphFreeNodes() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
       azzert.that(g.component[0], is(-1));
       azzert.that(g.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsGraphFreeNodesFunction() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
       azzert.that(g.component((short) 0), is(0));
       azzert.that(g.component((short) 8), is(8));
     }
 
     @Test public void disconnectedComponentsGraphFunction() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
       azzert.that(g.component((short) 5), is(5));
       azzert.that(g.component((short) 6), is(6));
       azzert.that(g.component((short) 7), is(7));
     }
 
     @Test public void disconnectedComponentsGraphFunctionNotFoundNodesPublicFunctionCall() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(9).add(100).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(9).add(100).add(9).go();
       azzert.that(g.component(8), is(-1));
       azzert.that(g.component(0), is(-1));
     }
 
     @Test public void disconnectedComponentsGraphFunctionNotFoundNodesShortPrivateFunctionCall() {
-      final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
       azzert.that(g.component((short) 8), is(8));
       azzert.that(g.component((short) 0), is(0));
     }
 
     @Test public void edgeFind() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.add(0);
       b.add(1);
       azzert.that(b.find((short) 0), is(0));
@@ -286,7 +286,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void fourEdgeFindIsTrimming() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.connect(0, 1);
       b.connect(1, 2);
       b.connect(2, 3);
@@ -313,7 +313,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void nastyReconnection() {
-      final BitSetSmallIntegersGraph g = new Builder()//
+      @NotNull final BitSetSmallIntegersGraph g = new Builder()//
           .connect(1, 2).connect(2, 3).connect(3, 4).connect(4, 5) //
           .connect(1, 5) // find(1) shall return 5 and will try to reconnect
           .go();
@@ -329,7 +329,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void newArcReturnsThis() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       assertSame(b, b.connect(13, 14));
     }
 
@@ -346,7 +346,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void newNodeReturnsThis() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       assertSame(b, b.add(13));
     }
 
@@ -363,7 +363,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void nodesResistChange() {
-      final BitSetSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
       g.nodes()[0] = 5;
       azzert.that(g.nodes()[0], is(1));
       azzert.that(g.nodes()[1], is(2));
@@ -380,13 +380,13 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void nodesTwoCorrect() {
-      final BitSetSmallIntegersGraph g = new Builder().add(1).add(2).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(1).add(2).go();
       azzert.that(g.nodes()[0], is(1));
       azzert.that(g.nodes()[1], is(2));
     }
 
     @Test public void nodesUnsortedCorrect() {
-      final BitSetSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
       azzert.that(g.nodes()[0], is(1));
       azzert.that(g.nodes()[1], is(2));
       azzert.that(g.nodes()[2], is(3));
@@ -406,25 +406,25 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void safeModifictation() {
-      final BitSetSmallIntegersGraph g = new Builder().connect(0, 1).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().connect(0, 1).go();
       g.neighbors(0).clear(1);
       assert g.has(0, 1);
     }
 
     @Test public void selfEdgeComponent() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.connect(5, 5);
       azzert.that(b.component[5], is(-1));
     }
 
     @Test public void selfEdgeFind() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.connect(5, 5);
       azzert.that(b.find((short) 5), is(5));
     }
 
     @Test public void simpleFind() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.add(0);
       azzert.that(b.find((short) 0), is(0));
     }
@@ -438,7 +438,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void simpleTwoNodeContainsTrue() {
-      final BitSetSmallIntegersGraph g = new Builder().add(0).add(1).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(0).add(1).go();
       assert g.has(0);
       assert g.has(1);
     }
@@ -464,11 +464,11 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void singleEdgeCheckComponent() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.add(0);
       b.add(1);
       b.connect(0, 1);
-      final BitSetSmallIntegersGraph g = b.go();
+      @NotNull final BitSetSmallIntegersGraph g = b.go();
       azzert.that(g.component((short) 0), is(1));
       azzert.that(g.component((short) 1), is(1));
     }
@@ -502,7 +502,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void triangleHasTwoNeighbors() {
-      final BitSetSmallIntegersGraph g = new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go();
       azzert.that(g.neighbors(14).cardinality(), is(2));
       azzert.that(g.neighbors(13).cardinality(), is(2));
       azzert.that(g.neighbors(5).cardinality(), is(2));
@@ -513,13 +513,13 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void twoArcsInverseHasTwoNeighbors() {
-      final BitSetSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).go();
       azzert.that(g.neighbors(14).cardinality(), is(1));
       azzert.that(g.neighbors(15).cardinality(), is(1));
     }
 
     @Test public void twoEdgeComponent() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.connect(0, 1);
       b.connect(1, 2);
       azzert.that(b.component[0], is(1));
@@ -528,7 +528,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void twoEdgeFind() {
-      final Builder b = new Builder();
+      @NotNull final Builder b = new Builder();
       b.add(0);
       b.add(1);
       azzert.that(b.find((short) 0), is(0));
@@ -543,7 +543,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void twoNodeContainsTrue() {
-      final BitSetSmallIntegersGraph g = new Builder().add(13).add(14).go();
+      @NotNull final BitSetSmallIntegersGraph g = new Builder().add(13).add(14).go();
       assert g.has(13);
       assert g.has(14);
     }

@@ -33,14 +33,11 @@ import il.org.spartan.utils.___.*;
    * @return a copy of the saved object */
   @NotNull public T restore() {
     try {
-      @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
+      @NotNull @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;
-    } catch (@NotNull final IOException e) {
-      unreachable(e.getMessage());
-      throw new RuntimeException(e);
-    } catch (@NotNull final ClassNotFoundException e) {
-      unreachable(e.getMessage());
-      throw new RuntimeException(e);
+    } catch (@NotNull final ClassNotFoundException | IOException ¢) {
+      unreachable(¢.getMessage());
+      throw new RuntimeException(¢);
     }
   }
 
@@ -67,15 +64,15 @@ import il.org.spartan.utils.___.*;
    * @throws Bug.Contract.Precondition in case object could not be serialized */
   private byte[] object2bytes(final T t) {
     try {
-      final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+      @NotNull final ByteArrayOutputStream $ = new ByteArrayOutputStream();
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
-    } catch (@NotNull final NotSerializableException e) {
-      dump.go(e);
-      throw new Bug.Contract.Precondition("Cannot serialize object of class " + e.getMessage());
-    } catch (@NotNull final IOException e) {
-      unreachable(e.getMessage());
-      throw new RuntimeException(e);
+    } catch (@NotNull final NotSerializableException ¢) {
+      dump.go(¢);
+      throw new Bug.Contract.Precondition("Cannot serialize object of class " + ¢.getMessage());
+    } catch (@NotNull final IOException ¢) {
+      unreachable(¢.getMessage());
+      throw new RuntimeException(¢);
     }
   }
 }

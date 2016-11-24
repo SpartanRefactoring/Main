@@ -31,7 +31,7 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
     return super.outgoing(¢);
   }
 
-  @NotNull @Override public String name() {
+  @Override @NotNull public String name() {
     final String $ = inner.name();
     return $.length() == 0 ? $ : $ + "'";
   }

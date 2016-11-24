@@ -2,6 +2,7 @@ package il.org.spartan.classfiles.reify;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -13,7 +14,7 @@ import il.org.spartan.*;
     class __ {
       // empty
     }
-    for (final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
+    for (@NotNull final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
       ¢.hashCode();
   }
 

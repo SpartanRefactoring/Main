@@ -30,19 +30,19 @@ public class MapUtil {
   }
 
   @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValue(@NotNull final Map<K, V> k) {
-    final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
+    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
     Collections.sort(list, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
-    final Map<K, V> $ = new LinkedHashMap<>();
-    for (final Map.Entry<K, V> ¢ : list)
+    @NotNull final Map<K, V> $ = new LinkedHashMap<>();
+    for (@NotNull final Map.Entry<K, V> ¢ : list)
       $.put(¢.getKey(), ¢.getValue());
     return $;
   }
 
   @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValueReverse(@NotNull final Map<K, V> k) {
-    final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
+    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
     Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
-    final Map<K, V> $ = new LinkedHashMap<>();
-    for (final Map.Entry<K, V> ¢ : list)
+    @NotNull final Map<K, V> $ = new LinkedHashMap<>();
+    for (@NotNull final Map.Entry<K, V> ¢ : list)
       $.put(¢.getKey(), ¢.getValue());
     return $;
   }

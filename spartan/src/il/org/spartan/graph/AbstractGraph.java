@@ -19,7 +19,7 @@ public abstract class AbstractGraph<E> {
 
   public int countEdges() {
     int $ = 0;
-    for (final Vertex<E> ¢ : vertices())
+    for (@NotNull final Vertex<E> ¢ : vertices())
       $ += outDegree(¢);
     return $;
   }
@@ -45,7 +45,7 @@ public abstract class AbstractGraph<E> {
    * inverted.
    * @return the graph obtained by inverting the direction of all edges in this
    *         graph */
-  public AbstractGraph<E> invert() {
+  @NotNull public AbstractGraph<E> invert() {
     return InvertedGraph.make(this);
   }
 
@@ -95,8 +95,8 @@ public abstract class AbstractGraph<E> {
         return pending != null;
       }
 
-      @Nullable @Override public Vertex<E> next() {
-        final Vertex<E> $ = pending;
+      @Override @Nullable public Vertex<E> next() {
+        @Nullable final Vertex<E> $ = pending;
         pending = findNext();
         return $;
       }
@@ -111,9 +111,9 @@ public abstract class AbstractGraph<E> {
           final Vertex<E> $ = stack.pop();
           if (outgoing($) != null)
             for (final Vertex<E> ¢ : outgoing($))
-              if (!visited(¢))
+              if (fresh(¢))
                 stack.push(¢);
-          if (!visited($))
+          if (fresh($))
             return visit($);
         }
         ensure(unvisited.isEmpty());
@@ -122,14 +122,14 @@ public abstract class AbstractGraph<E> {
         return null;
       }
 
+      boolean fresh(final Vertex<E> ¢) {
+        return !visited.contains(¢);
+      }
+
       Vertex<E> visit(final Vertex<E> ¢) {
         visited.add(¢);
         unvisited.remove(¢);
         return ¢;
-      }
-
-      boolean visited(final Vertex<E> ¢) {
-        return visited.contains(¢);
       }
     };
   }
@@ -162,9 +162,9 @@ public abstract class AbstractGraph<E> {
    * @param e an arbitrary Vertex<E> of this graph
    * @return a source of the parameter */
   public final Vertex<E> source(final Vertex<E> e) {
-    final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
+    @NotNull final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
     q.add(e);
-    final Set<Vertex<E>> seen = new HashSet<>();
+    @NotNull final Set<Vertex<E>> seen = new HashSet<>();
     seen.add(e);
     for (;;) {
       final Vertex<E> $ = q.poll();
@@ -198,7 +198,7 @@ public abstract class AbstractGraph<E> {
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sourcesCount();
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return name() + "<" + size() + ";" + countEdges() + "> ";
   }
 

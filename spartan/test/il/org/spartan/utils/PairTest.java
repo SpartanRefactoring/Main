@@ -9,8 +9,8 @@ import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class PairTest {
   @Test public void testSymmetry() {
-    final Pair<Integer, Integer> p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017));
-    final Pair<Integer, Integer> p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
+    @NotNull final Pair<Integer, Integer> p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017));
+    @NotNull final Pair<Integer, Integer> p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
     azzert.that(p2.equals(p1), is(p1.equals(p2)));
   }
 
@@ -26,7 +26,7 @@ import il.org.spartan.*;
       return o == this || o != null && o instanceof NamedPair && equals((NamedPair) o);
     }
 
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return name + super.toString();
     }
 

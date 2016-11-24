@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
-  @NotNull public static String fileToString(final File ¢) throws IOException {
+  @NotNull public static String fileToString(@NotNull final File ¢) throws IOException {
     return new TokenFeeder(new Tokenizer(¢), new TokenAsIs()).go().processor + "";
   }
 
@@ -33,7 +33,7 @@ public class TokenAsIs extends TokenProcessor {
     $.append(text);
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return $ + "";
   }
 }

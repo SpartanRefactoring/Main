@@ -26,8 +26,8 @@ import org.jetbrains.annotations.*;
 
   class Extractor {
     @NotNull public static List<Content> attributes(@NotNull final Object target) {
-      final List<Content> $ = new ArrayList<>();
-      for (final Method ¢ : target.getClass().getMethods())
+      @NotNull final List<Content> $ = new ArrayList<>();
+      for (@NotNull final Method ¢ : target.getClass().getMethods())
         if (isAttribute(¢))
           $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
@@ -40,12 +40,12 @@ import org.jetbrains.annotations.*;
     @NotNull private static String value(final Object target, @NotNull final Method m) {
       try {
         return m.invoke(target) + "";
-      } catch (@NotNull final IllegalArgumentException e) {
-        return "IllegalArgument: " + e.getMessage();
-      } catch (@NotNull final IllegalAccessException e) {
-        return "IllegalAccess: " + e.getMessage();
-      } catch (@NotNull final InvocationTargetException e) {
-        return "Exception in call: " + e.getMessage();
+      } catch (@NotNull final IllegalArgumentException $) {
+        return "IllegalArgument: " + $.getMessage();
+      } catch (@NotNull final IllegalAccessException $) {
+        return "IllegalAccess: " + $.getMessage();
+      } catch (@NotNull final InvocationTargetException $) {
+        return "Exception in call: " + $.getMessage();
       }
     }
   }

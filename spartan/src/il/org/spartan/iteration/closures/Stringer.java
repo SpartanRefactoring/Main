@@ -13,12 +13,14 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil.
  * @param <T> type of values that the function takes */
 public interface Stringer<T> extends Converter<T, String> {
-  /** {@inheritDoc}
-   * @see Converter#__ */
-  @NotNull @Override String __(T t);
+  /**
+   * {@inheritDoc}
+   * @see Converter#__  
+   */
+  @Override @NotNull String __(T t);
 
   class Default<T> implements Stringer<T> {
-    @NotNull @Override public String __(final T ¢) {
+    @Override @NotNull public String __(final T ¢) {
       return ¢ + "";
     }
   }
@@ -40,7 +42,7 @@ public interface Stringer<T> extends Converter<T, String> {
       this.quote = quote;
     }
 
-    @NotNull @Override public final String __(@Nullable final T ¢) {
+    @Override @NotNull public final String __(@Nullable final T ¢) {
       return quote(¢ == null ? "" : super.__(¢));
     }
 

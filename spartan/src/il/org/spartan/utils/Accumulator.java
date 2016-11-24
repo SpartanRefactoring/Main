@@ -60,8 +60,9 @@ public abstract class Accumulator {
     return weight;
   }
 
-  final void weight(final int w) {
+  final Accumulator weight(final int w) {
     weight = w;
+    return this;
   }
 
   /** A simple counter class.
@@ -84,7 +85,7 @@ public abstract class Accumulator {
       return value();
     }
 
-    @NotNull @Override public String toString() {
+    @Override @NotNull public String toString() {
       return value + "";
     }
 
@@ -94,7 +95,7 @@ public abstract class Accumulator {
 
     @SuppressWarnings("static-method") public static class TEST {
       @Test public void booleanAdds() {
-        final Counter c = new Counter();
+        @NotNull final Counter c = new Counter();
         azzert.that(c.value(), is(0));
         c.add(true);
         azzert.that(c.value(), is(1));
@@ -109,7 +110,7 @@ public abstract class Accumulator {
       }
 
       @Test public void emptyAdds() {
-        final Counter c = new Counter();
+        @NotNull final Counter c = new Counter();
         for (int ¢ = 0; ¢ < 19; ++¢)
           c.add();
         azzert.that(c.value(), is(19));
@@ -138,7 +139,7 @@ public abstract class Accumulator {
 
     @SuppressWarnings("static-method") public static class TEST {
       @SuppressWarnings("static-access") @Test public void booleanAdds() {
-        final Last c = new Last();
+        @NotNull final Last c = new Last();
         azzert.that(Accumulator.asInteger(false), is(0));
         azzert.that(c.value(), is(0));
         c.add(true);
@@ -155,7 +156,7 @@ public abstract class Accumulator {
       }
 
       @Test public void emptyAdds() {
-        final Last c = new Last();
+        @NotNull final Last c = new Last();
         for (int ¢ = 0; ¢ < 19; ++¢)
           c.add(¢);
         c.add(11);

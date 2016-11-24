@@ -15,8 +15,7 @@ import il.org.spatan.iteration.*;
  * @since Apr 5, 2012 */
 public class LaTeXTableWriter extends CSVLineWriter {
   private static <K, V> void ensure(@NotNull final Map<K, V> m, final K k, final V v) {
-    if (!m.containsKey(k))
-      m.put(k, v);
+    m.putIfAbsent(k, v);
   }
 
   private final Map<String, CSVLine> inner = new LinkedHashMap<>();
@@ -34,15 +33,15 @@ public class LaTeXTableWriter extends CSVLineWriter {
 
   @Override public boolean aggregating() {
     boolean $ = super.aggregating();
-    for (final CSVLine nested : inner.values())
+    for (@NotNull final CSVLine nested : inner.values())
       $ |= nested.aggregating();
     return $;
   }
 
-  @NotNull @Override public final Iterable<Aggregation> aggregations() {
-    final Set<Aggregation> $ = new LinkedHashSet<>();
+  @Override @NotNull public final Iterable<Aggregation> aggregations() {
+    @NotNull final Set<Aggregation> $ = new LinkedHashSet<>();
     Iterables.addAll($, super.aggregations());
-    for (final CSVLine nested : inner.values())
+    for (@NotNull final CSVLine nested : inner.values())
       Iterables.addAll($, nested.aggregations());
     return $;
   }
@@ -50,13 +49,13 @@ public class LaTeXTableWriter extends CSVLineWriter {
   @Override public String close() {
     if (aggregating()) {
       writer.writeln(super.renderer.headerEnd());
-      for (final Aggregation ¢ : aggregations())
+      for (@NotNull final Aggregation ¢ : aggregations())
         writer.writeln(makeLine(collect(¢).values()));
     }
     return super.close();
   }
 
-  @NotNull @Override public String header() {
+  @Override @NotNull public String header() {
     return renderer.allTop() + wrappingHeader() + makeLine(keys()) + renderer.headerEnd();
   }
 
@@ -69,28 +68,28 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return inner.get(innerTableName);
   }
 
-  @NotNull @Override public Collection<String> keys() {
-    final List<String> $ = new ArrayList<>(super.keys());
-    for (final AbstractStringProperties nested : inner.values())
+  @Override @NotNull public Collection<String> keys() {
+    @NotNull final List<String> $ = new ArrayList<>(super.keys());
+    for (@NotNull final AbstractStringProperties nested : inner.values())
       Iterables.addAll($, nested.keys());
     return $;
   }
 
-  @NotNull @Override public Collection<String> values() {
-    final List<String> $ = new ArrayList<>(super.values());
-    for (final AbstractStringProperties nested : inner.values())
+  @Override @NotNull public Collection<String> values() {
+    @NotNull final List<String> $ = new ArrayList<>(super.values());
+    for (@NotNull final AbstractStringProperties nested : inner.values())
       Iterables.addAll($, nested.values());
     return $;
   }
 
-  @NotNull @Override protected String extension() {
+  @Override @NotNull protected String extension() {
     return ".tex";
   }
 
-  @NotNull private AbstractStringProperties collect(final Aggregation a) {
-    final AbstractStringProperties $ = new ListProperties();
+  @NotNull private AbstractStringProperties collect(@NotNull final Aggregation a) {
+    @NotNull final AbstractStringProperties $ = new ListProperties();
     addAggregates($, a);
-    for (final CSVLine nested : inner.values())
+    for (@NotNull final CSVLine nested : inner.values())
       nested.addAggregates($, a);
     return $;
   }
@@ -98,8 +97,8 @@ public class LaTeXTableWriter extends CSVLineWriter {
   @NotNull private String wrappingHeader() {
     if (inner.isEmpty())
       return "";
-    final List<String> $ = new ArrayList<>();
-    final Formatter f = new Formatter();
+    @NotNull final List<String> $ = new ArrayList<>();
+    @NotNull final Formatter f = new Formatter();
     int column = size();
     $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", box(column)));
     for (final String nestedTableName : inner.keySet()) {

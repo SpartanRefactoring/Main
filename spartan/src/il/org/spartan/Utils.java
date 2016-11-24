@@ -31,28 +31,28 @@ public interface Utils {
     return $;
   }
 
-  @NotNull @SafeVarargs static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final T... ts) {
+  @SafeVarargs @NotNull static <T, C extends Collection<T>> C add(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
   }
 
-  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Collection<? extends T>... tss) {
+  @SafeVarargs @NotNull static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Collection<? extends T>... tss) {
     for (final Collection<? extends T> ¢ : tss)
       if (¢ != null)
         $.addAll(¢);
     return $;
   }
 
-  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T>... tss) {
+  @SafeVarargs @NotNull static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       if (¢ != null)
         add($, ¢);
     return $;
   }
 
-  @NotNull @SafeVarargs static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
+  @SafeVarargs @NotNull static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
       if (¢ != null)
         add($, ¢);
@@ -479,7 +479,7 @@ public interface Utils {
       this.function = function;
     }
 
-    @NotNull @SafeVarargs final Iterable<T> to(@NotNull final F... fs) {
+    @SafeVarargs @NotNull final Iterable<T> to(@NotNull final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F ¢ : fs)
         if (¢ != null)

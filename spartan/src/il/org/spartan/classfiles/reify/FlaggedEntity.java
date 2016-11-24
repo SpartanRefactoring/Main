@@ -15,7 +15,7 @@ public abstract class FlaggedEntity extends AttributedEntity {
 
   public FlaggedEntity(final int flags, final String name, final AttributeInfo[] attributes) {
     super(attributes, name);
-    this.flags = flags | (!containsAttribute("Synthetic") ? 0 : SYNTHETIC) | (!containsAttribute("Deprecated") ? 0 : DEPRECATED);
+    this.flags = flags | (hasNo("Synthetic") ? 0 : SYNTHETIC) | (hasNo("Deprecated") ? 0 : DEPRECATED);
   }
 
   public boolean isAbstract() {

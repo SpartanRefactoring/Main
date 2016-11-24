@@ -47,8 +47,8 @@ public class Tokenizer {
   public void closeReader() {
     try {
       reader.close();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 
@@ -64,15 +64,15 @@ public class Tokenizer {
     return inner.line();
   }
 
-  public String location() {
+  @NotNull public String location() {
     return inner.location();
   }
 
   @Nullable public Token next() {
     try {
       return inner.next();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
       ___.unreachable();
       return null;
     }
@@ -82,7 +82,7 @@ public class Tokenizer {
     return streamName;
   }
 
-  public String text() {
+  @NotNull public String text() {
     return inner.text();
   }
 

@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
@@ -42,7 +42,7 @@ import il.org.spartan.iterables.*;
     }
 
     @Test public void withType() {
-      final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
+      @NotNull final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
       azzert.notNull(endingWith);
       azzert.that(endingWith + "", is("ax,yc"));
     }
@@ -117,7 +117,7 @@ import il.org.spartan.iterables.*;
           return separator;
         }
 
-        @NotNull @Override public String toString() {
+        @Override @NotNull public String toString() {
           return nothing() ? ifEmpty : beginWith() + separate.these(these()).by(separator()) + endWith;
         }
 
@@ -130,7 +130,7 @@ import il.org.spartan.iterables.*;
             return new I(¢);
           }
 
-          @NotNull @Override public String toString() {
+          @Override @NotNull public String toString() {
             return D.this + "";
           }
 
@@ -139,7 +139,7 @@ import il.org.spartan.iterables.*;
               D.this.ifEmpty = ifEmpty;
             }
 
-            @NotNull @Override public String toString() {
+            @Override @NotNull public String toString() {
               return E.this + "";
             }
           }

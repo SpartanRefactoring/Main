@@ -16,7 +16,7 @@ public class MethodInfo extends ExecutableEntity {
   }
 
   @NotNull private static String[] class2name(@NotNull final Class<?>[] params) {
-    final String[] $ = new String[params.length];
+    @NotNull final String[] $ = new String[params.length];
     for (int ¢ = 0; ¢ < params.length; ++¢)
       $[¢] = class2name(params[¢]);
     return $;
@@ -39,18 +39,18 @@ public class MethodInfo extends ExecutableEntity {
     return (MethodType) type;
   }
 
-  public boolean isObjectMethod() {
+  public boolean notObjectMethod() {
     try {
-      for (final Method ¢ : Class.forName("java.lang.Object").getMethods()) {
+      for (@NotNull final Method ¢ : Class.forName("java.lang.Object").getMethods()) {
         if (!¢.getName().equals(name))
           continue;
         if (signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes())).equals(signature()))
-          return true;
+          return false;
       }
-    } catch (@NotNull final ClassNotFoundException e) {
-      e.printStackTrace();
+    } catch (@NotNull final ClassNotFoundException ¢) {
+      ¢.printStackTrace();
     }
-    return false;
+    return true;
   }
 
   public int responseForMethod() {

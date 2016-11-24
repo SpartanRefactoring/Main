@@ -20,7 +20,7 @@ public class XYSeries {
     return new XYSeries(seq(y.length), y, dy);
   }
 
-  @NotNull public static XYSeries histogram(final int[] y) {
+  @NotNull public static XYSeries histogram(@NotNull final int[] y) {
     return histogram(LinearAlgebra.promote(y));
   }
 
@@ -28,7 +28,7 @@ public class XYSeries {
   public final double[] y;
   public final double[] dy;
 
-  public XYSeries(final double[] x, final double[] y) {
+  public XYSeries(final double[] x, @NotNull final double[] y) {
     this(x, y, product(0, y));
   }
 
@@ -43,7 +43,7 @@ public class XYSeries {
   }
 
   @NotNull public XYSeries log() {
-    final XYProcessor.RealsOnly p = new XYProcessor.RealsOnly();
+    @NotNull final XYProcessor.RealsOnly p = new XYProcessor.RealsOnly();
     p.feed(LinearAlgebra.log(x), LinearAlgebra.log(y), dLogY());
     return new XYSeries(p);
   }
@@ -65,7 +65,7 @@ public class XYSeries {
   }
 
   @NotNull private double[] dLogY() {
-    final double $[] = new double[y.length];
+    @NotNull final double $[] = new double[y.length];
     for (int ¢ = 0; ¢ < y.length; ++¢)
       $[¢] = (Math.log(y[¢] + dy[¢]) - Math.log(y[¢] - dy[¢])) / 2;
     return $;

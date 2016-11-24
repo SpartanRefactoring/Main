@@ -11,30 +11,32 @@ import il.org.spartan.bench.*;
  * granularity of loop execution, function calls, and the other instructions
  * required for timing. */
 public abstract class Operation implements Callable<Object> {
-  /** The body of this operation; to be filled in by sub-classes.
-   * @return whatever */
-  @Nullable @Override public abstract Object call();
+  /**
+   * The body of this operation; to be filled in by sub-classes.
+   * @return  whatever 
+   */
+  @Override @Nullable public abstract Object call();
 
-  @SuppressWarnings("static-method") //
+  @NotNull @SuppressWarnings("static-method") //
   public Stopwatch makeStopWatch() {
     return new Stopwatch();
   }
 
-  public final Stopwatch netTime() {
+  @NotNull public final Stopwatch netTime() {
     return netTime(makeStopWatch());
   }
 
-  public final Stopwatch netTime(final int runs) {
+  @NotNull public final Stopwatch netTime(final int runs) {
     return netTime(makeStopWatch(), runs);
   }
 
-  public Stopwatch netTime(@NotNull final Stopwatch netTime) {
+  @NotNull public Stopwatch netTime(@NotNull final Stopwatch netTime) {
     netTime.start();
     call();
     return netTime.stop();
   }
 
-  public Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
+  @NotNull public Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
     netTime.start();
     for (int ¢ = 0; ¢ < runs; ++¢)
       call();

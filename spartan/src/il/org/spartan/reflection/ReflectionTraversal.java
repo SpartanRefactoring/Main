@@ -56,7 +56,7 @@ public final class ReflectionTraversal {
     for (final Class<?> ¢ : from.getDeclaredClasses())
       $ += visitor.visit(¢);
     // Recurse into inner, local and anonymous classes
-    for (final Class<?> ¢ : from.getDeclaredClasses())
+    for (@NotNull final Class<?> ¢ : from.getDeclaredClasses())
       $ += go(¢);
     return $;
   }

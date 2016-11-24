@@ -17,7 +17,7 @@ import il.org.spartan.collections.*;
  * @param <U> An upper bound on the type of encoded objects */
 public abstract class Codex<U, T extends U> implements Container<U, T> {
   @NotNull public final Set<T> decode(@NotNull final BitSet s) {
-    final Set<T> $ = new HashSet<>();
+    @NotNull final Set<T> $ = new HashSet<>();
     for (int ¢ = s.nextSetBit(0); ¢ >= 0; ¢ = s.nextSetBit(¢ + 1))
       $.add(decode(¢));
     return $;
@@ -31,7 +31,7 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
 
   @NotNull public final BitSet encode(@NotNull final Iterable<? extends U> us) {
     nonnull(us);
-    final BitSet $ = new BitSet(size());
+    @NotNull final BitSet $ = new BitSet(size());
     for (final U t : us)
       $.set(encode(t));
     return $;

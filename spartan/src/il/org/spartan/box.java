@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
@@ -30,7 +30,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Boolean[] it(@NotNull final boolean bs[]) {
-    final Boolean @NonNull [] $ = new Boolean @NonNull [bs.length];
+    @NotNull final Boolean @NonNull [] $ = new Boolean @NonNull [bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(bs[¢]);
     return $;
@@ -50,7 +50,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Byte[] it(@NotNull final byte bs[]) {
-    final Byte @NonNull [] $ = new Byte @NonNull [bs.length];
+    @NotNull final Byte @NonNull [] $ = new Byte @NonNull [bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(bs[¢]);
     return $;
@@ -71,7 +71,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Character[] it(@NotNull final char cs[]) {
-    final Character @NonNull [] $ = new Character @NonNull [cs.length];
+    @NotNull final Character @NonNull [] $ = new Character @NonNull [cs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(cs[¢]);
     return $;
@@ -92,7 +92,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Double[] it(@NotNull final double ds[]) {
-    final Double @NonNull [] $ = new Double @NonNull [ds.length];
+    @NotNull final Double @NonNull [] $ = new Double @NonNull [ds.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(ds[¢]);
     return $;
@@ -113,7 +113,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Float[] it(@NotNull final float fs[]) {
-    final Float @NonNull [] $ = new Float @NonNull [fs.length];
+    @NotNull final Float @NonNull [] $ = new Float @NonNull [fs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(fs[¢]);
     return $;
@@ -134,7 +134,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Integer[] it(@NotNull final int is[]) {
-    final Integer @NonNull [] $ = new Integer @NonNull [is.length];
+    @NotNull final Integer @NonNull [] $ = new Integer @NonNull [is.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(is[¢]);
     return $;
@@ -154,7 +154,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Long[] it(@NotNull final long ls[]) {
-    final Long @NonNull [] $ = new Long @NonNull [ls.length];
+    @NotNull final Long @NonNull [] $ = new Long @NonNull [ls.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(ls[¢]);
     return $;
@@ -175,7 +175,7 @@ public enum box {
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Short[] it(@NotNull final short ss[]) {
-    final Short @NonNull [] $ = new Short @NonNull [ss.length];
+    @NotNull final Short @NonNull [] $ = new Short @NonNull [ss.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = it(ss[¢]);
     return $;

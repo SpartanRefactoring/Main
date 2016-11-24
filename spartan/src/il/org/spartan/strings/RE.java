@@ -29,9 +29,9 @@ public class RE {
   }
 
   public static String find(@NotNull final String regularExpression, @NotNull final String text) {
-    final Pattern p = Pattern.compile(regularExpression);
-    final Matcher m = p.matcher(text);
-    return !m.find() ? null : m.group();
+    @NotNull final Pattern p = Pattern.compile(regularExpression);
+    @NotNull final Matcher $ = p.matcher(text);
+    return !$.find() ? null : $.group();
   }
 
   public static boolean found(@NotNull final String regularExpression, @NotNull final String text) {

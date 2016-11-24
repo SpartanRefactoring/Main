@@ -14,24 +14,24 @@ import il.org.spartan.streotypes.*;
  * @since 2011-11-11 */
 public class Graph<E> extends AbstractGraph<E> {
   private static <E> ImmutableArrayList<Vertex<E>> makeSinks(@NotNull final ImmutableArrayList<Vertex<E>> e) {
-    final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (final Vertex<E> ¢ : e)
+    @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
+    for (@NotNull final Vertex<E> ¢ : e)
       if (¢.outgoing().isEmpty())
         $.add(¢);
     return ImmutableArrayList.make($);
   }
 
   @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> e) {
-    final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (final Vertex<E> ¢ : e)
+    @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
+    for (@NotNull final Vertex<E> ¢ : e)
       if (¢.incoming().size() == 0)
         $.add(¢);
     return new ImmutableArrayList<>($);
   }
 
-  private final ImmutableArrayList<Vertex<E>> vertices;
+  @NotNull private final ImmutableArrayList<Vertex<E>> vertices;
   @NotNull private final ImmutableArrayList<Vertex<E>> sources;
-  private final ImmutableArrayList<Vertex<E>> sinks;
+  @NotNull private final ImmutableArrayList<Vertex<E>> sinks;
   @NotNull private final Map<E, Vertex<E>> map;
   private final String description;
   private final String name;
@@ -78,7 +78,7 @@ public class Graph<E> extends AbstractGraph<E> {
     return name;
   }
 
-  @Override public ImmutableArrayList<Vertex<E>> sinks() {
+  @Override @NotNull public ImmutableArrayList<Vertex<E>> sinks() {
     return sinks;
   }
 
@@ -86,7 +86,7 @@ public class Graph<E> extends AbstractGraph<E> {
     return sinks.size();
   }
 
-  @NotNull @Override public ImmutableArrayList<Vertex<E>> sources() {
+  @Override @NotNull public ImmutableArrayList<Vertex<E>> sources() {
     return sources;
   }
 
@@ -98,7 +98,7 @@ public class Graph<E> extends AbstractGraph<E> {
     return map.get(¢);
   }
 
-  @Override public ImmutableArrayList<Vertex<E>> vertices() {
+  @Override @NotNull public ImmutableArrayList<Vertex<E>> vertices() {
     return vertices;
   }
 
@@ -159,11 +159,11 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param e an arbitrary graph
      * @return <code><b>this</b></code> */
     @NotNull public Builder<E> addGraph(@NotNull final Graph<E> e) {
-      for (final Vertex<E> v : e.vertices())
+      for (@NotNull final Vertex<E> v : e.vertices())
         if (e.outDegree(v) == 0)
           newVertex(v.e());
         else
-          for (final Vertex<E> u : e.outgoing(v))
+          for (@NotNull final Vertex<E> u : e.outgoing(v))
             newEdge(v.e(), u.e());
       return this;
     }
@@ -252,22 +252,22 @@ public class Graph<E> extends AbstractGraph<E> {
 
     @NotNull private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
-      for (final BuildingEdge<E> ¢ : edges) {
+      for (@NotNull final BuildingEdge<E> ¢ : edges) {
         outgoing.get(¢.from).add(¢.to);
         incoming.get(¢.to).add(¢.from);
       }
       // Phase II: Allocate arrays for incoming and outgoing edges in all
       // vertices
-      final Map<E, Vertex<E>[]> incomingArrays = new HashMap<>();
-      final Map<E, Vertex<E>[]> outgoingArrays = new HashMap<>();
+      @NotNull final Map<E, Vertex<E>[]> incomingArrays = new HashMap<>();
+      @NotNull final Map<E, Vertex<E>[]> outgoingArrays = new HashMap<>();
       for (final E e : outgoing.keySet()) {
-        final Vertex<E>[] out = newVertexArray(outgoing.get(e).size());
-        final Vertex<E>[] in = newVertexArray(incoming.get(e).size());
+        @NotNull final Vertex<E>[] out = newVertexArray(outgoing.get(e).size());
+        @NotNull final Vertex<E>[] in = newVertexArray(incoming.get(e).size());
         outgoingArrays.put(e, out);
         incomingArrays.put(e, in);
       }
       // Phase III: create the vertices map.
-      final Map<E, Vertex<E>> $ = new HashMap<>();
+      @NotNull final Map<E, Vertex<E>> $ = new HashMap<>();
       for (final E ¢ : outgoing.keySet())
         $.put(¢, new Vertex<>(¢, outgoingArrays.get(¢), incomingArrays.get(¢)));
       for (final E v : $.keySet()) {
@@ -287,7 +287,7 @@ public class Graph<E> extends AbstractGraph<E> {
       }
 
       @Override public boolean equals(final Object o) {
-        @SuppressWarnings("unchecked") final BuildingEdge<E> other = (BuildingEdge<E>) o;
+        @NotNull @SuppressWarnings("unchecked") final BuildingEdge<E> other = (BuildingEdge<E>) o;
         return from.equals(other.from) && to.equals(other.to);
       }
 
@@ -295,7 +295,7 @@ public class Graph<E> extends AbstractGraph<E> {
         return to.hashCode() ^ from.hashCode() >>> 1;
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "<" + from + "," + to + ">";
       }
     }

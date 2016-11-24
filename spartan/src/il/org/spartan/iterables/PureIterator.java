@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
@@ -7,6 +7,8 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -38,8 +40,8 @@ public abstract class PureIterator<T> implements Iterator<T> {
      * content only after {@link #hasNext} returned true. */
     @org.jetbrains.annotations.Nullable private @Nullable T next;
 
-    @Override public final T next() {
-      final @NonNull T $ = cantBeNull(next);
+    @Override @NotNull public final T next() {
+      @NotNull final @NonNull T $ = cantBeNull(next);
       clearNext();
       return $;
     }

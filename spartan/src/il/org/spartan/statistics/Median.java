@@ -16,7 +16,7 @@ import il.org.spatan.iteration.*;
   public static double destructiveMad(@NotNull final double... ds) {
     final int n = ds.length;
     final double median = destructiveMedian(ds);
-    final double $[] = new double[n];
+    @NotNull final double $[] = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
       $[¢] = Math.abs(ds[¢] - median);
     return destructiveMedian($);
@@ -36,7 +36,7 @@ import il.org.spatan.iteration.*;
   }
 
   @NotNull public static double[] prune(@NotNull final double... ds) {
-    final List<Double> $ = new ArrayList<>();
+    @NotNull final List<Double> $ = new ArrayList<>();
     final double median = destructiveMedian(ds);
     final double mad = mad(ds);
     for (final double ¢ : ds)

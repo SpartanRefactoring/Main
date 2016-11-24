@@ -16,8 +16,8 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
   @Override public void done() {
     try {
       write("e\n");
-    } catch (@NotNull final Exception e) {
-      e.printStackTrace();
+    } catch (@NotNull final Exception ¢) {
+      ¢.printStackTrace();
       System.exit(1);
     }
   }
@@ -34,8 +34,8 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
     try {
       inner.write(s);
       inner.flush();
-    } catch (@NotNull final IOException e) {
-      e.printStackTrace();
+    } catch (@NotNull final IOException ¢) {
+      ¢.printStackTrace();
       System.exit(1);
     }
   }

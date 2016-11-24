@@ -17,7 +17,7 @@ public class UnionFindSmallIntegersGraph extends AbstractSmallIntegersGraph {
   }
 
   @Override public final short components() {
-    final BitSet $ = new BitSet();
+    @NotNull final BitSet $ = new BitSet();
     for (int ¢ = nodes.nextSetBit(0); ¢ >= 0; ¢ = nodes.nextSetBit(¢ + 1))
       $.set(¢);
     return (short) $.cardinality();

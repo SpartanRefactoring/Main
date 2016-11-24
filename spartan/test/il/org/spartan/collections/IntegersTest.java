@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -90,7 +91,7 @@ public final class IntegersTest extends integers {
     for (int i = 0; i < M; ++i) {
       invariant.check();
       azzert.that(N, is(size()));
-      final int[] v = entries();
+      @NotNull final int[] v = entries();
       azzert.that(v.length, is(N));
       Permutation.shuffle(v);
       assert contains(v);
@@ -114,7 +115,7 @@ public final class IntegersTest extends integers {
   }
 
   @Test public void constructorInitialCapacitySmallValue() {
-    final Integers a = new Integers(1);
+    @NotNull final Integers a = new Integers(1);
     assert a != null;
     azzert.that(size(), is(0));
     azzert.that(capacity(), is(Integers.MIN_CAPACITY));
@@ -129,7 +130,7 @@ public final class IntegersTest extends integers {
   }
 
   @Test public void defaultConstructor() {
-    final Integers a = new Integers();
+    @NotNull final Integers a = new Integers();
     assert a != null;
     azzert.that(size(), is(0));
     azzert.that(capacity(), is(Integers.MIN_CAPACITY));
@@ -192,7 +193,7 @@ public final class IntegersTest extends integers {
 
   @Test public void valuesRange() {
     add(1, 2, 3);
-    final int[] values = entries();
+    @NotNull final int[] values = entries();
     Arrays.sort(values);
     azzert.that(Arrays.binarySearch(values, 1), is(0));
     azzert.that(Arrays.binarySearch(values, 2), is(1));

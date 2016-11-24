@@ -13,7 +13,7 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class SeparateTest {
   @NotNull private static <T> Collection<T> makeCollection(@NotNull final T... ts) {
-    final ArrayList<T> $ = new ArrayList<>();
+    @NotNull final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(¢);
     return $;
@@ -104,7 +104,7 @@ public class SeparateTest {
   }
 
   @Test public final void testByMapOfKeyValueStringString() {
-    final Map<String, Integer> map = new TreeMap<>();
+    @NotNull final Map<String, Integer> map = new TreeMap<>();
     map.put("One", box(1));
     map.put("Two", box(2));
     map.put("Three", box(3));

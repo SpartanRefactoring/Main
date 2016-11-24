@@ -56,7 +56,7 @@ public class ExecutableEntity extends TypedEntity {
   }
 
   @NotNull public Set<String> getReferencedMethods() {
-    final Set<String> $ = new HashSet<>();
+    @NotNull final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
     for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
@@ -65,21 +65,21 @@ public class ExecutableEntity extends TypedEntity {
       if (!i.isInvokeInstruction())
         continue;
       cpIndex = i.args()[1] | i.args()[0] << 8;
-      final MemberReference mr = constantPool.getMemberReference(cpIndex);
+      @NotNull final MemberReference mr = constantPool.getMemberReference(cpIndex);
       $.add(signature(mr.getClassConstant().getClassName(), mr.getNameAndType().getName(), mr.getNameAndType().getDescriptor()));
     }
     return $;
   }
 
   @NotNull public Set<String> instanceVariables() {
-    final Set<String> $ = new HashSet<>();
+    @NotNull final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
     for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       if (i.opCode == OpCode.GETFIELD || i.opCode == OpCode.PUTFIELD) {
         final int cpIndex = i.args()[1] | i.args()[0] << 8;
-        final FieldReference fr = constantPool.getFieldReference(cpIndex);
+        @NotNull final FieldReference fr = constantPool.getFieldReference(cpIndex);
         $.add(fr.getClassConstant().getClassName() + ":" + fr.getNameAndType());
       }
     }
@@ -138,23 +138,23 @@ public class ExecutableEntity extends TypedEntity {
 
   private boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName, @NotNull final Instruction i) {
     final int cpIndex = i.args()[1] | i.args()[0] << 8;
-    final MemberReference mr = constantPool.getMemberReference(cpIndex);
+    @NotNull final MemberReference mr = constantPool.getMemberReference(cpIndex);
     return mr.getNameAndType().getName().equals(e.name) && mr.getNameAndType().getDescriptor().equals(e.descriptor)
         && mr.getClassConstant().getClassName().endsWith(thisClassName);
   }
 
   private CodeEntity readCodeAttribute() {
-    final AttributeInfo $ = findAttribute("Code");
+    @Nullable final AttributeInfo $ = findAttribute("Code");
     return $ == null ? null : readCodeAttribute($);
   }
 
   @NotNull private CodeEntity readCodeAttribute(@NotNull final AttributeInfo i) {
-    final ConstantPoolReader r = i.reader(constantPool);
+    @NotNull final ConstantPoolReader r = i.reader(constantPool);
     return new CodeEntity(r.readUnsignedShort(), r.readUnsignedShort(), r.readBytesArrray());
   }
 
   @NotNull private ClassConstant[] readExceptions() {
-    final AttributeInfo $ = findAttribute("Exceptions");
+    @Nullable final AttributeInfo $ = findAttribute("Exceptions");
     return $ == null ? new ClassConstant[0] : $.reader(constantPool).readClasses();
   }
 
@@ -193,7 +193,7 @@ public class ExecutableEntity extends TypedEntity {
             continue;
         }
         assert component != -1;
-        final MemberReference mr = constantPool.getMemberReference(cpIndex);
+        @NotNull final MemberReference mr = constantPool.getMemberReference(cpIndex);
         if (!"<init>".equals(mr.getNameAndType().getName()))
           ++getClassRefsByComponents(mr.getClassConstant().getClassName())[component];
         for (final TypeInfo ¢ : decode(mr.getNameAndType().getDescriptor()).components())

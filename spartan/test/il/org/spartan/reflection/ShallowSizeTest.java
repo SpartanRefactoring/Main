@@ -74,7 +74,7 @@ import il.org.spartan.*;
   }
 
   @Test public void of_HashMap() {
-    final HashMap<Object, Object> m = new HashMap<>();
+    @NotNull final HashMap<Object, Object> m = new HashMap<>();
     azzert.that(ShallowSize.of(m), is(40));
     m.put(new Object(), new Object());
     azzert.that(ShallowSize.of(m), is(40));
@@ -99,7 +99,7 @@ import il.org.spartan.*;
   }
 
   @Test public void of_Null() {
-    final Object o = null;
+    @Nullable final Object o = null;
     azzert.that(ShallowSize.of(o), is(0));
   }
 

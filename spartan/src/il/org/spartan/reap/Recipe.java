@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
@@ -23,16 +23,15 @@ public class Recipe<@Nullable T> extends Cell<T> {
     this.supplier = supplier;
   }
 
-  @org.jetbrains.annotations.Nullable @Override public Cell<T> clone() {
+  @Override @org.jetbrains.annotations.Nullable public Cell<T> clone() {
     return super.clone();
   }
 
-  @org.jetbrains.annotations.Nullable @Override public T get() {
+  @Override @org.jetbrains.annotations.Nullable public T get() {
     if (updated())
       return cache();
     assert supplier != null;
-    for (final Cell<?> ¢ : prerequisites)
-      ¢.get();
+    prerequisites.forEach(Cell::get);
     assert supplier != null;
     cache(filter(eval()));
     version = latestPrequisiteVersion() + 1;
@@ -43,12 +42,8 @@ public class Recipe<@Nullable T> extends Cell<T> {
    * @param ¢ JD
    * @return <code><b>this</b></code> */
   @org.jetbrains.annotations.NotNull public Recipe<T> ingredient(@org.jetbrains.annotations.NotNull final Cell<?> ¢) {
-    run(() -> {
-      ¢.dependents.add(this);
-    }).unless(¢.dependents.contains(this));
-    run(() -> {
-      prerequisites.add(¢);
-    }).unless(prerequisites.contains(this));
+    run(() -> ¢.dependents.add(this)).unless(¢.dependents.contains(this));
+    run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
     return this;
   }
 
@@ -56,7 +51,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
    * @param cs JD
    * @return <code><b>this</b></code> */
   @org.jetbrains.annotations.NotNull public Recipe<T> ingredients(@org.jetbrains.annotations.NotNull final Cell<?>... cs) {
-    for (final Cell<?> ¢ : cs)
+    for (@org.jetbrains.annotations.NotNull final Cell<?> ¢ : cs)
       ingredient(¢);
     return this;
   }
@@ -66,7 +61,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       return true;
     if (version() <= latestPrequisiteVersion())
       return false;
-    for (final Cell<?> ¢ : prerequisites)
+    for (@org.jetbrains.annotations.NotNull final Cell<?> ¢ : prerequisites)
       if (!¢.updated())
         return false;
     return true;
@@ -80,13 +75,13 @@ public class Recipe<@Nullable T> extends Cell<T> {
   /** To be overridden by extending classes for e.g., null protection
    * @param $ result
    * @return parameter */
-  @SuppressWarnings("static-method") <N> N filter(final N ¢) {
-    return ¢;
+  @SuppressWarnings("static-method") <N> N filter(final N $) {
+    return $;
   }
 
   final long latestPrequisiteVersion() {
     long $ = 0;
-    for (final Cell<?> ¢ : prerequisites)
+    for (@org.jetbrains.annotations.NotNull final Cell<?> ¢ : prerequisites)
       if ($ < ¢.version())
         $ = ¢.version();
     return $;
@@ -106,26 +101,28 @@ public class Recipe<@Nullable T> extends Cell<T> {
 
     /** Instantiates this class.
      * @param supplier JD */
-    public NotNull(final Supplier<? extends @NonNull T> supplier) {
+    public NotNull(@org.jetbrains.annotations.NotNull final Supplier<? extends @NonNull T> supplier) {
       super(cantBeNull(supplier));
       cache(cantBeNull(supplier).get());
     }
 
-    @org.jetbrains.annotations.Nullable @SuppressWarnings({}) @Override public Recipe.NotNull<T> clone() {
+    @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public Recipe.NotNull<T> clone() {
       return (Recipe.NotNull<T>) super.clone();
     }
 
-    /** Add another cell on which this instance depends
-     * @param ¢ JD
-     * @return <code><b>this</b></code> */
-    @org.jetbrains.annotations.NotNull @Override public Recipe.NotNull<T> ingredients(final Cell<?>... ¢) {
+    /**
+     * Add another cell on which this instance depends
+     * @param ¢  JD
+     * @return  <code><b>this</b></code> 
+     */
+    @Override @org.jetbrains.annotations.NotNull public Recipe.NotNull<T> ingredients(final Cell<?>... ¢) {
       return (Recipe.NotNull<T>) super.ingredients(¢);
     }
 
     @Override public final boolean updated() {
       if (supplier == null)
         return true;
-      for (final Cell<?> ¢ : prerequisites)
+      for (@org.jetbrains.annotations.NotNull final Cell<?> ¢ : prerequisites)
         if (!¢.updated() || version() < ¢.version())
           return false;
       return true;
@@ -136,7 +133,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       return supplier.get();
     }
 
-    @Override final <N> N filter(final N $) {
+    @Override final <N> N filter(@org.jetbrains.annotations.NotNull final N $) {
       return cantBeNull($);
     }
   }
@@ -153,11 +150,11 @@ public class Recipe<@Nullable T> extends Cell<T> {
       assert supplier != null;
     }
 
-    @org.jetbrains.annotations.Nullable @SuppressWarnings({}) @Override public Cell<T> clone() {
+    @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public Cell<T> clone() {
       return super.clone();
     }
 
-    @org.jetbrains.annotations.Nullable @Override public T get() {
+    @Override @org.jetbrains.annotations.Nullable public T get() {
       try {
         return super.get();
       } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
@@ -165,10 +162,12 @@ public class Recipe<@Nullable T> extends Cell<T> {
       }
     }
 
-    /** Add another cell on which this instance depends
-     * @param ¢ JD
-     * @return <code><b>this</b></code> */
-    @org.jetbrains.annotations.NotNull @Override public Recipe.NullRobust<T> ingredients(final Cell<?>... ¢) {
+    /**
+     * Add another cell on which this instance depends
+     * @param ¢  JD
+     * @return  <code><b>this</b></code> 
+     */
+    @Override @org.jetbrains.annotations.NotNull public Recipe.NullRobust<T> ingredients(final Cell<?>... ¢) {
       super.ingredients(¢);
       return this;
     }
@@ -176,12 +175,12 @@ public class Recipe<@Nullable T> extends Cell<T> {
     @Override void cache(@SuppressWarnings("hiding") @Nullable final T cache) {
       try {
         super.cache(cache);
-      } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
-        x.printStackTrace();
+      } catch (@org.jetbrains.annotations.NotNull final NullPointerException ¢) {
+        ¢.printStackTrace();
       }
     }
 
-    @org.jetbrains.annotations.Nullable @Override @Nullable T eval() {
+    @Override @org.jetbrains.annotations.Nullable @Nullable T eval() {
       try {
         return super.eval();
       } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {

@@ -14,8 +14,7 @@ import il.org.spartan.utils.*;
  * @since Apr 8, 2012 */
 public class Aggregator {
   private static <K, V> void ensure(@NotNull final Map<K, V> m, final K k, final V v) {
-    if (!m.containsKey(k))
-      m.put(k, v);
+    m.putIfAbsent(k, v);
   }
 
   private static <K, V> void force(@NotNull final Map<K, V> m, final K k, @NotNull final V v) {
@@ -25,8 +24,8 @@ public class Aggregator {
   }
 
   @NotNull private static Map<Aggregation, String> toMap(@NotNull final FormatSpecifier[] ss) {
-    final Map<Aggregation, String> $ = new LinkedHashMap<>();
-    for (final FormatSpecifier ¢ : ss)
+    @NotNull final Map<Aggregation, String> $ = new LinkedHashMap<>();
+    for (@NotNull final FormatSpecifier ¢ : ss)
       $.put(¢.getKey(), ¢.format());
     return $;
   }
@@ -37,7 +36,7 @@ public class Aggregator {
   private String markColumn;
 
   public void addAggregates(@NotNull final Iterable<String> keys, @NotNull final AbstractStringProperties to, @NotNull final Aggregation a) {
-    for (final String key : keys)
+    for (@NotNull final String key : keys)
       addAggregate(key, to, a);
   }
 
@@ -49,8 +48,9 @@ public class Aggregator {
     return allAggregations.isEmpty();
   }
 
-  public void markColumn(final String key) {
+  public Aggregator markColumn(final String key) {
     markColumn = key;
+    return this;
   }
 
   public void record(final String key, final double value, @NotNull final FormatSpecifier... ss) {
@@ -104,7 +104,7 @@ public class Aggregator {
         return ¢.min();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{Min}}";
       }
     },
@@ -113,7 +113,7 @@ public class Aggregator {
         return ¢.max();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{Max}}";
       }
     },
@@ -122,7 +122,7 @@ public class Aggregator {
         return ¢.mean();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{Mean}}";
       }
     },
@@ -131,7 +131,7 @@ public class Aggregator {
         return ¢.median();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{Median}}";
       }
     },
@@ -140,7 +140,7 @@ public class Aggregator {
         return ¢.sd();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "$\\sigma$";
       }
     },
@@ -149,7 +149,7 @@ public class Aggregator {
         return ¢.sum();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{Total}}";
       }
     },
@@ -158,7 +158,7 @@ public class Aggregator {
         return ¢.mad();
       }
 
-      @NotNull @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "\\textbf{\\emph{M.A.D}}";
       }
     };
@@ -197,11 +197,11 @@ public class Aggregator {
     @NotNull @SuppressWarnings("static-method") //
     public FormatSpecifier format(@NotNull final String format) {
       return new FormatSpecifier() {
-        @NotNull @Override public String format() {
+        @Override @NotNull public String format() {
           return format;
         }
 
-        @NotNull @Override public Aggregation getKey() {
+        @Override @NotNull public Aggregation getKey() {
           return Aggregation.this;
         }
       };

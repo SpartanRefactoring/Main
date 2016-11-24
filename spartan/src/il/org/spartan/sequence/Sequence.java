@@ -20,7 +20,7 @@ public abstract class Sequence implements Cloneable {
     this.threshold = threshold;
   }
 
-  public abstract Sequence advance();
+  @NotNull public abstract Sequence advance();
 
   @NotNull public final Sequence advanceTo(final int ¢) {
     while (current() < ¢ && more())
@@ -28,11 +28,11 @@ public abstract class Sequence implements Cloneable {
     return this;
   }
 
-  @NotNull @Override public final Sequence clone() {
+  @Override @NotNull public final Sequence clone() {
     try {
       return (Sequence) super.clone();
-    } catch (@NotNull final CloneNotSupportedException e) {
-      throw new RuntimeException(e);
+    } catch (@NotNull final CloneNotSupportedException ¢) {
+      throw new RuntimeException(¢);
     }
   }
 
@@ -52,7 +52,7 @@ public abstract class Sequence implements Cloneable {
     return current() <= threshold;
   }
 
-  public abstract Sequence reset();
+  @NotNull public abstract Sequence reset();
 
   @NotNull public Sequence startAt(final int ¢) {
     return reset().advanceTo(¢);
@@ -84,12 +84,12 @@ public abstract class Sequence implements Cloneable {
       current = 1;
     }
 
-    @NotNull @Override public Sequence advance() {
+    @Override @NotNull public Sequence advance() {
       current += current;
       return this;
     }
 
-    @NotNull @Override public Sequence reset() {
+    @Override @NotNull public Sequence reset() {
       current = 1;
       return this;
     }
@@ -105,7 +105,7 @@ public abstract class Sequence implements Cloneable {
       current = Math.min(s1.current(), s2.current());
     }
 
-    @NotNull @Override public Sequence advance() {
+    @Override @NotNull public Sequence advance() {
       if (current < s1.current())
         s2.advance();
       else {
@@ -117,7 +117,7 @@ public abstract class Sequence implements Cloneable {
       return this;
     }
 
-    @NotNull @Override public Sequence reset() {
+    @Override @NotNull public Sequence reset() {
       s1.reset();
       s2.reset();
       return this;

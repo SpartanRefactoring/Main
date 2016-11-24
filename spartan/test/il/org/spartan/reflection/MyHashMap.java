@@ -119,7 +119,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * values themselves are not cloned.
    * @return a shallow copy of this map */
   @Override public Object clone() {
-    MyHashMap<K, V> $ = null;
+    @org.jetbrains.annotations.Nullable MyHashMap<K, V> $ = null;
     try {
       $ = (MyHashMap<K, V>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {
@@ -158,18 +158,11 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return false;
   }
 
-  /** Returns a {@link Set} view of the mappings contained in this map. The set
-   * is backed by the map, so changes to the map are reflected in the set, and
-   * vice-versa. If the map is modified while an iteration over the set is in
-   * progress (except through the iterator's own <tt>remove</tt> operation, or
-   * through the <tt>setValue</tt> operation on a map entry returned by the
-   * iterator) the results of the iteration are undefined. The set supports
-   * element removal, which removes the corresponding mapping from the map, via
-   * the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt> ,
-   * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
-   * <tt>add</tt> or <tt>addAll</tt> operations.
-   * @return a set view of the mappings contained in this map */
-  @NotNull @Override public Set<Map.Entry<K, V>> entrySet() {
+  /**
+   * Returns a  {@link Set}  view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt> operation, or through the <tt>setValue</tt> operation on a map entry returned by the iterator) the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt> , <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
+   * @return  a set view of the mappings contained in this map 
+   */
+  @Override @NotNull public Set<Map.Entry<K, V>> entrySet() {
     return entrySet0();
   }
 
@@ -206,16 +199,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return size == 0;
   }
 
-  /** Returns a {@link Set} view of the keys contained in this map. The set is
-   * backed by the map, so changes to the map are reflected in the set, and
-   * vice-versa. If the map is modified while an iteration over the set is in
-   * progress (except through the iterator's own <tt>remove</tt> operation), the
-   * results of the iteration are undefined. The set supports element removal,
-   * which removes the corresponding mapping from the map, via the
-   * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
-   * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
-   * <tt>add</tt> or <tt>addAll</tt> operations. */
-  @NotNull @Override public Set<K> keySet() {
+  /**
+   * Returns a  {@link Set}  view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt> operation), the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations. 
+   */
+  @Override @NotNull public Set<K> keySet() {
     return keySet != null ? keySet : (keySet = new KeySet());
   }
 
@@ -272,7 +259,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       if (newCapacity > table.length)
         resize(newCapacity);
     }
-    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
+    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
       put(¢.getKey(), ¢.getValue());
   }
 
@@ -313,17 +300,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return table;
   }
 
-  /** Returns a {@link Collection} view of the values contained in this map. The
-   * collection is backed by the map, so changes to the map are reflected in the
-   * collection, and vice-versa. If the map is modified while an iteration over
-   * the collection is in progress (except through the iterator's own
-   * <tt>remove</tt> operation), the results of the iteration are undefined. The
-   * collection supports element removal, which removes the corresponding
-   * mapping from the map, via the <tt>Iterator.remove</tt>,
-   * <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
-   * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
-   * <tt>addAll</tt> operations. */
-  @NotNull @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
+  /**
+   * Returns a  {@link Collection}  view of the values contained in this map. The collection is backed by the map, so changes to the map are reflected in the collection, and vice-versa. If the map is modified while an iteration over the collection is in progress (except through the iterator's own <tt>remove</tt> operation), the results of the iteration are undefined. The collection supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations. 
+   */
+  @Override @NotNull @SuppressWarnings("synthetic-access") public Collection<V> values() {
     return values != null ? values : (values = new Values());
   }
 
@@ -413,7 +393,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   @org.jetbrains.annotations.Nullable Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;
-    final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
+    @NotNull final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
     final Object key = entry.getKey();
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
@@ -452,7 +432,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       threshold = Integer.MAX_VALUE;
       return;
     }
-    @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
+    @NotNull @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
     transfer(newTable);
     table = newTable;
     threshold = (int) (loadFactor * newCapacity);
@@ -502,7 +482,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   }
 
   private void putAllForCreate(@NotNull final Map<? extends K, ? extends V> k) {
-    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
+    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
       putForCreate(¢.getKey(), ¢.getValue());
   }
 
@@ -547,7 +527,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *             and value (Object) for each key-value mapping. The key-value
    *             mappings are emitted in no particular order. */
   private void writeObject(@NotNull final java.io.ObjectOutputStream s) throws IOException {
-    final Iterator<Map.Entry<K, V>> i = size <= 0 ? null : entrySet0().iterator();
+    @NotNull final Iterator<Map.Entry<K, V>> i = size <= 0 ? null : entrySet0().iterator();
     // Write out the threshold, loadfactor, and any hidden stuff
     s.defaultWriteObject();
     // Write out number of buckets
@@ -580,7 +560,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     @Override public final boolean equals(final Object o) {
       if (!(o instanceof Map.Entry))
         return false;
-      @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
+      @NotNull @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
       final Object k1 = getKey();
       final Object k2 = e.getKey();
       if (k1 == k2 || k1 != null && k1.equals(k2)) {
@@ -610,7 +590,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return $;
     }
 
-    @NotNull @Override public final String toString() {
+    @Override @NotNull public final String toString() {
       return getKey() + "=" + getValue();
     }
 
@@ -640,12 +620,12 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     @Override public boolean contains(final Object o) {
       if (!(o instanceof Map.Entry))
         return false;
-      final Map.Entry<K, V> e = (Map.Entry<K, V>) o;
-      final Entry<K, V> candidate = getEntry(e.getKey());
+      @NotNull final Map.Entry<K, V> e = (Map.Entry<K, V>) o;
+      @org.jetbrains.annotations.Nullable final Entry<K, V> candidate = getEntry(e.getKey());
       return candidate != null && candidate.equals(e);
     }
 
-    @NotNull @Override public Iterator<Map.Entry<K, V>> iterator() {
+    @Override @NotNull public Iterator<Map.Entry<K, V>> iterator() {
       return newEntryIterator();
     }
 
@@ -673,7 +653,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsKey(¢);
     }
 
-    @NotNull @Override public Iterator<K> iterator() {
+    @Override @NotNull public Iterator<K> iterator() {
       return newKeyIterator();
     }
 
@@ -743,7 +723,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return containsValue(¢);
     }
 
-    @NotNull @Override public Iterator<V> iterator() {
+    @Override @NotNull public Iterator<V> iterator() {
       return newValueIterator();
     }
 

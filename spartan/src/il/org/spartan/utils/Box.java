@@ -30,7 +30,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Boolean[] box(@NotNull final boolean bs[]) {
-    final Boolean[] $ = new Boolean[bs.length];
+    @NotNull final Boolean[] $ = new Boolean[bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
     return $;
@@ -50,7 +50,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Byte[] box(@NotNull final byte bs[]) {
-    final Byte[] $ = new Byte[bs.length];
+    @NotNull final Byte[] $ = new Byte[bs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(bs[¢]);
     return $;
@@ -71,7 +71,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Character[] box(@NotNull final char cs[]) {
-    final Character[] $ = new Character[cs.length];
+    @NotNull final Character[] $ = new Character[cs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(cs[¢]);
     return $;
@@ -92,7 +92,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Double[] box(@NotNull final double ds[]) {
-    final Double[] $ = new Double[ds.length];
+    @NotNull final Double[] $ = new Double[ds.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ds[¢]);
     return $;
@@ -113,7 +113,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Float[] box(@NotNull final float fs[]) {
-    final Float[] $ = new Float[fs.length];
+    @NotNull final Float[] $ = new Float[fs.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(fs[¢]);
     return $;
@@ -134,7 +134,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Integer[] box(@NotNull final int is[]) {
-    final Integer[] $ = new Integer[is.length];
+    @NotNull final Integer[] $ = new Integer[is.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(is[¢]);
     return $;
@@ -154,7 +154,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Long[] box(@NotNull final long ls[]) {
-    final Long[] $ = new Long[ls.length];
+    @NotNull final Long[] $ = new Long[ls.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ls[¢]);
     return $;
@@ -175,7 +175,7 @@ import il.org.spartan.streotypes.*;
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   @NotNull public static Short[] box(@NotNull final short ss[]) {
-    final Short[] $ = new Short[ss.length];
+    @NotNull final Short[] $ = new Short[ss.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = box(ss[¢]);
     return $;

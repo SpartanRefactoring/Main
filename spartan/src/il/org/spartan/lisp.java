@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
 
 /** @noinspection unused */
 public interface lisp {
-  @org.jetbrains.annotations.Nullable static <T> @Nullable List<T> chop(@NotNull final List<T> ¢) {
+  @Nullable static <T> @Nullable List<T> chop(@NotNull final List<T> ¢) {
     if (¢.isEmpty())
       return null;
     ¢.remove(0);
@@ -21,7 +21,7 @@ public interface lisp {
     return rest;
   }
 
-  @org.jetbrains.annotations.Nullable @Contract("null -> null") static <T> T first(@org.jetbrains.annotations.Nullable final List<T> ¢) {
+  @Contract("null -> null") @Nullable static <T> T first(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : first(¢);
   }
 
@@ -33,19 +33,20 @@ public interface lisp {
     return s.charAt(i);
   }
 
-  /** Determine if an integer can be found in a list of values
-   * @param candidate what to search for
-   * @param is where to search
-   * @return true if the the item is found in the list */
-  @Contract(pure = true) @SafeVarargs static boolean intIsIn(final int candidate, @NotNull final int... is) {
+  /**
+   * Determine if an integer can be found in a list of values
+   * @param candidate  what to search for
+   * @param is  where to search
+   * @return  true if the the item is found in the list 
+   */
+  @SafeVarargs @Contract(pure = true) static boolean intIsIn(final int candidate, @NotNull final int... is) {
     for (final int ¢ : is)
       if (¢ == candidate)
         return true;
     return false;
   }
 
-  @org.jetbrains.annotations.Nullable @Contract("null -> null") static <@Nullable T> @Nullable T last(
-      @org.jetbrains.annotations.Nullable final List<T> ¢) {
+  @Contract("null -> null") @Nullable static <@Nullable T> @Nullable T last(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
 
@@ -62,11 +63,11 @@ public interface lisp {
    * @param ts the indexed list
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
-  @org.jetbrains.annotations.Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
+  @Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
 
-  @org.jetbrains.annotations.Nullable static <T> T onlyOne(@org.jetbrains.annotations.Nullable final List<T> ¢) {
+  @Nullable static <T> T onlyOne(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.size() != 1 ? null : first(¢);
   }
 
@@ -88,13 +89,14 @@ public interface lisp {
     return ts.get(i < 1 ? 0 : i - 1);
   }
 
-  /** Replace the element of a specific index in a list
-   * @param ts the indexed list
-   * @param element the element to be added to the list
-   * @param index the index that should be replaced
-   * @return the list after the replacement */
-  @org.jetbrains.annotations.Nullable @Contract("null, _, _ -> null") static <T> List<T> replace(@org.jetbrains.annotations.Nullable final List<T> ts,
-      final T element, final int index) {
+  /**
+   * Replace the element of a specific index in a list
+   * @param ts  the indexed list
+   * @param element  the element to be added to the list
+   * @param index  the index that should be replaced
+   * @return  the list after the replacement 
+   */
+  @Contract("null, _, _ -> null") @Nullable static <T> List<T> replace(@Nullable final List<T> ts, final T element, final int index) {
     if (ts != null && index >= 0 && index < ts.size()) {
       ts.remove(index);
       ts.add(index, element);
@@ -102,19 +104,23 @@ public interface lisp {
     return ts;
   }
 
-  /** Replace the first element of a in a list
-   * @param ts the indexed list
-   * @param element the element to be added to the list
-   * @return the list after the replacement */
-  @org.jetbrains.annotations.Nullable @Contract("null, _ -> null") static <T> List<T> replaceFirst(final List<T> ts, final T element) {
+  /**
+   * Replace the first element of a in a list
+   * @param ts  the indexed list
+   * @param element  the element to be added to the list
+   * @return  the list after the replacement 
+   */
+  @Contract("null, _ -> null") @Nullable static <T> List<T> replaceFirst(final List<T> ts, final T element) {
     return replace(ts, element, 0);
   }
 
-  /** Replace the last element of a in a list
-   * @param ts the indexed list
-   * @param element the element to be added to the list
-   * @return the list after the replacement */
-  @org.jetbrains.annotations.Nullable @Contract("null, _ -> null") static <T> List<T> replaceLast(@NotNull final List<T> ts, final T element) {
+  /**
+   * Replace the last element of a in a list
+   * @param ts  the indexed list
+   * @param element  the element to be added to the list
+   * @return  the list after the replacement 
+   */
+  @Contract("null, _ -> null") @Nullable static <T> List<T> replaceLast(@NotNull final List<T> ts, final T element) {
     return replace(ts, element, ts.size() - 1);
   }
 
@@ -139,7 +145,7 @@ public interface lisp {
     return rest(rest(¢));
   }
 
-  @org.jetbrains.annotations.Nullable @Contract("null -> null") static <T> T second(@org.jetbrains.annotations.Nullable final List<T> ¢) {
+  @Contract("null -> null") @Nullable static <T> T second(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 }

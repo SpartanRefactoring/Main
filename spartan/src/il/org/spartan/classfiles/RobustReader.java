@@ -52,8 +52,8 @@ public class RobustReader {
     if (inner != null)
       try {
         inner.close();
-      } catch (@NotNull final IOException e) {
-        recordError(e);
+      } catch (@NotNull final IOException ¢) {
+        recordError(¢);
       }
   }
 
@@ -66,8 +66,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readDouble();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -76,8 +76,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readFloat();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -86,8 +86,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readInt();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -96,8 +96,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readLong();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -106,8 +106,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedByte();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -116,8 +116,8 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedShort();
-    } catch (@NotNull final IOException e) {
-      return recordError(e);
+    } catch (@NotNull final IOException $) {
+      return recordError($);
     }
   }
 
@@ -126,8 +126,8 @@ public class RobustReader {
       return "";
     try {
       return inner.readUTF();
-    } catch (@NotNull final IOException e) {
-      recordError(e);
+    } catch (@NotNull final IOException ¢) {
+      recordError(¢);
       return null;
     }
   }
@@ -145,7 +145,6 @@ public class RobustReader {
     return $;
   }
 
-  /** @param ioException */
   protected int recordError(final Exception ¢) {
     errors.add(¢);
     return 0;
@@ -154,8 +153,8 @@ public class RobustReader {
   int readBytes(@NotNull final byte[] bs, final int offset, final int howMany) {
     try {
       return inner.read(bs, offset, howMany);
-    } catch (@NotNull final IOException e) {
-      recordError(e);
+    } catch (@NotNull final IOException ¢) {
+      recordError(¢);
       return howMany;
     }
   }

@@ -119,8 +119,8 @@ import il.org.spatan.iteration.*;
   }
 
   @NotNull private static ClassLoader computeClassLoader() {
-    final String[] path = asArray();
-    final URL[] urls = new URL[path.length];
+    @NotNull final String[] path = asArray();
+    @NotNull final URL[] urls = new URL[path.length];
     for (int i = 0; i < path.length; ++i)
       try {
         urls[i] = new File(path[i]).toURI().toURL();

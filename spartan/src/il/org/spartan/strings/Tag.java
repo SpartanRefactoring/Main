@@ -104,7 +104,7 @@ import il.org.spartan.utils.*;
   public Tag(@NotNull final Tag inner, final String name, final String... flags) {
     nonnull(name);
     nonnull(flags);
-    final Tag unnested = new Tag(name, flags);
+    @NotNull final Tag unnested = new Tag(name, flags);
     begin = unnested.begin + inner.begin;
     end = inner.end + unnested.end;
   }

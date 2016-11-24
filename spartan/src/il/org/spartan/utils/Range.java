@@ -45,7 +45,7 @@ public class Range {
    *         instance, or <code><b>null</b></code> if not such value can be
    *         found. */
   @Nullable public Range findIncludedIn(@NotNull final Iterable<? extends Range> ¢) {
-    for (final Range $ : ¢)
+    for (@NotNull final Range $ : ¢)
       if (includedIn($))
         return $;
     return null;
@@ -86,7 +86,7 @@ public class Range {
    * @param rs JD */
   public void pruneIncluders(@NotNull final List<? extends Range> rs) {
     for (;;) {
-      final Range r = findIncludedIn(rs);
+      @Nullable final Range r = findIncludedIn(rs);
       if (r == null)
         return;
       rs.remove(r);

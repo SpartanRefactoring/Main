@@ -96,7 +96,7 @@ import il.org.spartan.streotypes.*;
   /** Send a formatted line, indented by this instance, to {@link System#out}.
    * @param os what to print */
   public void println(@NotNull final Object... os) {
-    final StringBuilder sb = new StringBuilder();
+    @NotNull final StringBuilder sb = new StringBuilder();
     for (final Object ¢ : os)
       sb.append(¢);
     System.out.println(toString() + sb);
@@ -122,7 +122,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void emptyFalse() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       assert !t.isEmpty();
     }
@@ -132,13 +132,13 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testBeginAtLevelOne() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       azzert.that(cat(t.begin(), t + ""), is(cat("abc", "abcabc")));
     }
 
     @Test public void testBeginAtZero() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       azzert.that(cat(t.begin(), t + ""), is(cat("", "abc")));
     }
 
@@ -152,13 +152,13 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testEndAtLevelOne() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
 
     @Test public void testEndAtLevelTwo() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.more();
       azzert.that(cat(t.end(), t + ""), is(cat("abc", "abc")));
@@ -166,32 +166,32 @@ import il.org.spartan.streotypes.*;
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testEndAtLevelZero() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
 
     @Test public void testOneMore() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       azzert.that(t + "", is("abc"));
     }
 
     @Test public void testOneMoreOneLess() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.less();
       azzert.that(t + "", is(""));
     }
 
     @Test public void testTwoMore() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.more();
       azzert.that(t + "", is("abcabc"));
     }
 
     @Test public void testTwoMoreOneLess() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();
@@ -199,7 +199,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testTwoMoreTwoLessOneMore() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();
@@ -209,7 +209,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testTwoMoreTwoLessTwoMore() {
-      final Tab t = new Tab("abc");
+      @NotNull final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();

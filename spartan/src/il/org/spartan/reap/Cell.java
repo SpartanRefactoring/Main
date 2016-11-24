@@ -1,4 +1,4 @@
-/** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
+/* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
 import static java.lang.Math.*;
@@ -34,8 +34,10 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     return cache;
   }
 
-  /** see @see java.util.function.Supplier#get() (auto-generated) */
-  @Override public abstract @Nullable T get();
+  /**
+   * see @see java.util.function.Supplier#get() (auto-generated) 
+   */
+  @Override @org.jetbrains.annotations.Nullable @Nullable public abstract T get();
 
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
@@ -62,7 +64,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    *         stored in this node is updated. */
   public abstract boolean updated();
 
-  @org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
+  @Override @SuppressWarnings("unchecked") @org.jetbrains.annotations.Nullable protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {
@@ -86,7 +88,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
 
   private long oldestDependent() {
     long $ = 0;
-    for (final Cell<?> ¢ : dependents)
+    for (@NotNull final Cell<?> ¢ : dependents)
       $ = max($, ¢.version);
     return $;
   }
@@ -98,12 +100,10 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
-    /** @return never! The <code><b>none</b></code> type. There is no legal
-     *         value that this function can return, since the type
-     *         <code>@NonNull</code> {@link Void} is empty. (
-     *         <code><b>null</b></code> is the single vale of {@link Void}, but
-     *         it does not obey the {@link @NonNull} annotation. */
-    @NotNull static @NonNull Void shouldNeverBeCalled() {
+    /**
+     * @return  never! The <code><b>none</b></code> type. There is no legal value that this function can return, since the type <code>@NonNull</code>  {@link Void}  is empty. ( <code><b>null</b></code> is the single vale of  {@link Void} , but it does not obey the  {@link  @NonNull}  annotation. 
+     */
+    @NotNull @NonNull static Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
     }

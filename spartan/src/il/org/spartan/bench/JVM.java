@@ -118,14 +118,10 @@ public final class JVM {
     return compileTime != o.compileTime;
   }
 
-  @NotNull @Override public String toString() {
-    return new StringBuilder() //
-        .append("JIT𝝉=" + Unit.MILLISECONDS.format(compileTime)) //
-        .append(" #Classes=" + loadedClasses + "(current) " + removedClasses + "(removed) " + seenClasses + "(seen)")//
-        .append(" HEAP=" + Unit.BYTES.format(heapSize)) // /
-        .append(" #GC=" + gcCycles) //
-        .append(" GC𝝉=" + Unit.MILLISECONDS.format(gcTime)) //
-        + "";
+  @Override @NotNull public String toString() {
+    return new StringBuilder().append("JIT𝝉=" + Unit.MILLISECONDS.format(compileTime))
+        .append(" #Classes=" + loadedClasses + "(current) " + removedClasses + "(removed) " + seenClasses + "(seen)")
+        .append(" HEAP=" + Unit.BYTES.format(heapSize)).append(" #GC=" + gcCycles).append(" GC𝝉=" + Unit.MILLISECONDS.format(gcTime)) + "";
   }
 
   private boolean equals(@NotNull final JVM o) {
@@ -148,7 +144,7 @@ public final class JVM {
 
     public static long cycles(@NotNull final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
-      for (final GarbageCollectorMXBean ¢ : bs)
+      for (@NotNull final GarbageCollectorMXBean ¢ : bs)
         $ += cycles(¢);
       return $;
     }
@@ -158,9 +154,9 @@ public final class JVM {
     }
 
     @NotNull public static String format(@NotNull final Iterable<GarbageCollectorMXBean> bs) {
-      final StringBuffer $ = new StringBuffer();
-      final Separator s = new Separator(", ");
-      for (final GarbageCollectorMXBean ¢ : bs)
+      @NotNull final StringBuffer $ = new StringBuffer();
+      @NotNull final Separator s = new Separator(", ");
+      for (@NotNull final GarbageCollectorMXBean ¢ : bs)
         $.append(s).append(format(¢));
       return $ + "";
     }
@@ -175,7 +171,7 @@ public final class JVM {
 
     public static long time(@NotNull final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
-      for (final GarbageCollectorMXBean ¢ : bs)
+      for (@NotNull final GarbageCollectorMXBean ¢ : bs)
         $ += time(¢);
       return $;
     }
@@ -197,9 +193,9 @@ public final class JVM {
     }
 
     @NotNull public static String format(@NotNull final Iterable<MemoryManagerMXBean> bs) {
-      final StringBuffer $ = new StringBuffer("");
-      final Separator s = new Separator(", ");
-      for (final MemoryManagerMXBean ¢ : bs)
+      @NotNull final StringBuffer $ = new StringBuffer("");
+      @NotNull final Separator s = new Separator(", ");
+      for (@NotNull final MemoryManagerMXBean ¢ : bs)
         $.append(s).append(format(¢));
       return $ + "";
     }

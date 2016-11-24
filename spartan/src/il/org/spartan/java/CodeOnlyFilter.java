@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
 public class CodeOnlyFilter extends TokenFilter {
   private final StringBuilder $ = new StringBuilder();
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return $ + "";
   }
 

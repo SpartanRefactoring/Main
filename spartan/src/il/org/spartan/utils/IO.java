@@ -12,24 +12,24 @@ import il.org.spartan.streotypes.*;
 /** Static methods for I/O related operations */
 @Antiexample public class IO {
   @NotNull public static String concatLines(@NotNull final Iterable<String> ss) {
-    final StringBuffer sb = new StringBuffer(1000);
-    final Separator nl = new Separator("\n");
+    @NotNull final StringBuffer $ = new StringBuffer(1000);
+    @NotNull final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
-      sb.append(nl).append(¢);
-    return sb + "";
+      $.append(nl).append(¢);
+    return $ + "";
   }
 
   @NotNull public static String concatLines(@NotNull final String... ss) {
-    final StringBuffer sb = new StringBuffer(1000);
-    final Separator nl = new Separator("\n");
+    @NotNull final StringBuffer $ = new StringBuffer(1000);
+    @NotNull final Separator nl = new Separator("\n");
     for (final String ¢ : ss)
-      sb.append(nl).append(¢);
-    return sb + "";
+      $.append(nl).append(¢);
+    return $ + "";
   }
 
   @NotNull public static List<String> lines(@NotNull final String s) throws IOException {
-    final List<String> $ = new ArrayList<>();
-    for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
+    @NotNull final List<String> $ = new ArrayList<>();
+    for (@NotNull final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
       if (line == null)
         return $;
@@ -68,7 +68,7 @@ import il.org.spartan.streotypes.*;
    * @return the entire content of <code>r</code>
    * @throws IOException If an I/O error occur */
   @NotNull public static String toString(@NotNull final Reader r) throws IOException {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (int c = r.read(); c >= 0; c = r.read())
       $.append((char) c);
     return $ + "";
@@ -79,7 +79,7 @@ import il.org.spartan.streotypes.*;
    * @param ss Strings to write
    * @throws IOException If an I/O error occur */
   public static void writeLines(@NotNull final File outputFile, @NotNull final String... ss) throws IOException {
-    final FileWriter fw = new FileWriter(outputFile);
+    @NotNull final FileWriter fw = new FileWriter(outputFile);
     try {
       for (final String ¢ : ss) {
         fw.append(¢);

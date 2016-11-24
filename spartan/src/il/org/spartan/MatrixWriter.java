@@ -7,8 +7,7 @@ public class MatrixWriter extends CSVLineWriter {
     super(fileName, Renderer.MATRIX);
   }
 
-  // no header to print;
-  @NotNull @Override public String header() {
+  @Override @NotNull public String header() {
     return "";
   }
 }

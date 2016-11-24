@@ -60,9 +60,11 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     return $;
   }
 
-  /** Obtain an iterator over the cached object
-   * @return Iterator of Entry<String,T> */
-  @NotNull @Override public Iterator<Entry<String, T>> iterator() {
+  /**
+   * Obtain an iterator over the cached object
+   * @return  Iterator of Entry<String,T> 
+   */
+  @Override @NotNull public Iterator<Entry<String, T>> iterator() {
     return map.entrySet().iterator();
   }
 

@@ -120,7 +120,7 @@ public class ShallowSize {
 
   static int intrinsic(@NotNull final Class<?> c) {
     int $ = 0;
-    for (final Field ¢ : c.getDeclaredFields())
+    for (@NotNull final Field ¢ : c.getDeclaredFields())
       $ += size(¢);
     return $;
   }
@@ -133,12 +133,12 @@ public class ShallowSize {
     return 4;
   }
 
-  static int size(@NotNull final Field f) {
-    if (Modifier.isStatic(f.getModifiers()))
+  static int size(@NotNull final Field ¢) {
+    if (Modifier.isStatic(¢.getModifiers()))
       return 0;
-    final Class<?> c = f.getType();
-    return c == byte.class || c == boolean.class ? 1
-        : c == short.class || c == char.class ? 2
-            : c == int.class || c == float.class ? 4 : c == long.class || c == double.class ? 8 : referenceSize();
+    final Class<?> $ = ¢.getType();
+    return $ == byte.class || $ == boolean.class ? 1
+        : $ == short.class || $ == char.class ? 2
+            : $ == int.class || $ == float.class ? 4 : $ == long.class || $ == double.class ? 8 : referenceSize();
   }
 }

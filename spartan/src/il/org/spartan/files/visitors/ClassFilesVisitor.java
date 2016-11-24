@@ -4,6 +4,8 @@ package il.org.spartan.files.visitors;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 /** A class realizing a traversal of the file system, where the traversal is
  * restricted to <code>.class</code> files only
  * <p>
@@ -24,7 +26,7 @@ public class ClassFilesVisitor extends FileSystemVisitor {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 
-  public ClassFilesVisitor(final Iterable<String> from, final FileOnlyAction visitor) {
+  public ClassFilesVisitor(@NotNull final Iterable<String> from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 

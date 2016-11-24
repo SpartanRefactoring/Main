@@ -61,7 +61,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return -1;
   }
 
-  @NotNull @Override public Iterator<E> iterator() {
+  @Override @NotNull public Iterator<E> iterator() {
     return ArrayIterator.make(es, begin, end);
   }
 
@@ -69,7 +69,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return end - begin;
   }
 
-  @NotNull @Override public String toString() {
+  @Override @NotNull public String toString() {
     return Stringify.it(this);
   }
 }

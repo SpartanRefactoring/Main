@@ -28,7 +28,7 @@ import il.org.spartan.streotypes.*;
 @Utility public enum Prune {
   ;
   @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
-    for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+    for (@NotNull final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
     return ts;
@@ -42,8 +42,8 @@ import il.org.spartan.streotypes.*;
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
   @NotNull public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
-    final ArrayList<T> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final ArrayList<T> $ = new ArrayList<>();
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
@@ -57,16 +57,16 @@ import il.org.spartan.streotypes.*;
    *         order. No <code><b>null</b></code> elements are present on this
    *         returned collection. */
   public static <T> T[] nulls(@NotNull final T[] ts) {
-    final List<T> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final List<T> $ = new ArrayList<>();
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $.toArray(shrink(ts));
   }
 
   public static <T> String[] whites(@NotNull final T... ts) {
-    final List<String> $ = new ArrayList<>();
-    for (final T ¢ : ts)
+    @NotNull final List<String> $ = new ArrayList<>();
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         addNonEmpty($, (¢ + "").trim());
     return $.toArray(new String[0]);
@@ -134,7 +134,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testPruneSparseCollectionContents() {
-      final String[] a = nulls(sparseCollection).toArray(new String[3]);
+      @NotNull final String[] a = nulls(sparseCollection).toArray(new String[3]);
       azzert.that(a[0], is("A"));
       azzert.that(a[1], is("B"));
       azzert.that(a[2], is("C"));

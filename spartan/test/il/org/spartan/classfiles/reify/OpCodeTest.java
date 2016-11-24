@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -12,7 +13,7 @@ import il.org.spartan.*;
  * @since 27 November 2011 */
 @SuppressWarnings("static-method") public class OpCodeTest {
   @Test public void tableSwitch() throws IOException {
-    final BufferDataInputStream b = new BufferDataInputStream(new byte[] { //
+    @NotNull final BufferDataInputStream b = new BufferDataInputStream(new byte[] { //
         (byte) OpCode.TABLESWITCH.ordinal(), 0, 0, 0, //
         0, 0, 0, 0, //
         0, 0, 0, 55, //
@@ -26,7 +27,7 @@ import il.org.spartan.*;
   }
 
   @Test public void tableSwitch1() throws IOException {
-    final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
+    @NotNull final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
         //
         0, (byte) OpCode.TABLESWITCH.ordinal(), 0, 0, //
         0, 0, 0, 0, //
@@ -43,7 +44,7 @@ import il.org.spartan.*;
   }
 
   @Test public void tableSwitch2() throws IOException {
-    final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
+    @NotNull final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
         //
         0, 0, (byte) OpCode.TABLESWITCH.ordinal(), 0, //
         0, 0, 0, 0, //
@@ -60,7 +61,7 @@ import il.org.spartan.*;
   }
 
   @Test public void tableSwitch3() throws IOException {
-    final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
+    @NotNull final BufferDataInputStream b = new BufferDataInputStream(new byte[] {
         //
         0, 0, 0, (byte) OpCode.TABLESWITCH.ordinal(), //
         0, 0, 0, 0, //

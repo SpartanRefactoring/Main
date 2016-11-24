@@ -12,8 +12,8 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil
  * @since February 22, 2012 */
 public class WeightedLeastSquares extends XYProcessor.Vacuous {
-  protected static boolean isNumber(final double x) {
-    return !isInfinite(x) && !isNaN(x);
+  protected static boolean isMissing(final double x) {
+    return isInfinite(x) || isNaN(x);
   }
 
   protected int n;
@@ -45,7 +45,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
   }
 
   @NotNull public double[] eval(@NotNull final double[] x) {
-    final double[] $ = new double[x.length];
+    @NotNull final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = eval(x[¢]);
     return $;
@@ -60,7 +60,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
   }
 
   @Override public void p(final double x, final double y, final double dy) {
-    if (!isNumber(x) || !isNumber(y) || !isNumber(dy) || dy == 0)
+    if (isMissing(x) || isMissing(y) || isMissing(dy) || dy == 0)
       return;
     xs.record(x, 1 / dy);
     ys.record(y, 1 / dy);
@@ -76,7 +76,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
     return sqr(r());
   }
 
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return Separate.byNewLines("𝑛=" + n(), "𝛼=" + alpha(), "𝛽=" + beta(), "𝑟²=" + r2(), "𝑟=" + r(), "H=" + xs.entropy());
   }
 

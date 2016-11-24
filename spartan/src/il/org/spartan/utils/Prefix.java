@@ -9,8 +9,8 @@ import il.org.spatan.iteration.*;
  * @author Yossi Gil
  * @param <T> type of objects in the set */
 public class Prefix<T> {
-  public static String trim(final String prefix, @NotNull final String s) {
-    for (String $ = defaults.to(prefix, s);; $ = shorten($))
+  @Nullable public static String trim(final String prefix, @NotNull final String s) {
+    for (@Nullable String $ = defaults.to(prefix, s);; $ = shorten($))
       if (s.startsWith($))
         return $;
   }
@@ -20,7 +20,7 @@ public class Prefix<T> {
   }
 
   @Nullable private static <T> String trim(@NotNull final Iterable<T> ts) {
-    String $ = null;
+    @Nullable String $ = null;
     for (final T ¢ : ts)
       $ = trim($, ¢ + "");
     return $;
