@@ -15,8 +15,8 @@ public interface system {
     try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, p + "");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, p + "");
     }
     return p;
   }
@@ -77,11 +77,11 @@ public interface system {
   static Process bash(final String shellCommand) {
     final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
-      final Process p = Runtime.getRuntime().exec(command);
-      if (p != null)
-        return dumpOutput(p);
-    } catch (final IOException x) {
-      monitor.logProbableBug(shellCommand, x);
+      final Process $ = Runtime.getRuntime().exec(command);
+      if ($ != null)
+        return dumpOutput($);
+    } catch (final IOException ¢) {
+      monitor.logProbableBug(shellCommand, ¢);
     }
     return null;
   }
@@ -102,11 +102,11 @@ public interface system {
     return formatRelative(d1 / d2);
   }
 
-  static String format2(final double d) {
-    if (d < 0)
-      return "-" + format2(-d);
-    final double p = 100 * d;
-    return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
+  static String format2(final double ¢) {
+    if (¢ < 0)
+      return "-" + format2(-¢);
+    final double $ = 100 * ¢;
+    return "%" + ($ < 0.01 ? ".0f" : $ < 0.1 ? ".2f" : $ < 1 || $ < 10 ? ".1f" : $ < 100 || $ < 1000 ? ".0f" : "5.0g");
   }
 
   static double round3(final double ¢) {
@@ -123,11 +123,11 @@ public interface system {
     }
   }
 
-  static int digits(final double d) {
-    if (d == 0)
+  static int digits(final double ¢) {
+    if (¢ == 0)
       return -1;
-    final double log = Math.log10(d);
-    return log < 0 ? 0 : (int) log + 1;
+    final double $ = Math.log10(¢);
+    return $ < 0 ? 0 : (int) $ + 1;
   }
 
   static String format3(final double d) {

@@ -108,8 +108,8 @@ public final class Builder extends IncrementalProjectBuilder {
         addMarkers(r);
         return true; // to continue visiting children.
       });
-    } catch (final CoreException x) {
-      monitor.logCancellationRequest(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logCancellationRequest(this, ¢);
     }
   }
 

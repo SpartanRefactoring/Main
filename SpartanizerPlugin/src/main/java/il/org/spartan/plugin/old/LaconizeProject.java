@@ -37,19 +37,19 @@ public final class LaconizeProject extends BaseHandler {
     if (todo.isEmpty())
       return 0;
     final AtomicInteger $ = new AtomicInteger(0);
-    final AbstractGUIApplicator ¢ = new Trimmer();
+    final AbstractGUIApplicator a = new Trimmer();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, pm -> {
         pm.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
-        ¢.setMarker(null);
-        ¢.setICompilationUnit(todo.get(0));
-        $.addAndGet(¢.countTips());
+        a.setMarker(null);
+        a.setICompilationUnit(todo.get(0));
+        $.addAndGet(a.countTips());
         if (pm.isCanceled())
           $.set(0);
         pm.done();
       });
-    } catch (InvocationTargetException | InterruptedException e) {
-      e.printStackTrace();
+    } catch (InvocationTargetException | InterruptedException ¢) {
+      ¢.printStackTrace();
     }
     return $.get();
   }
@@ -110,11 +110,8 @@ public final class LaconizeProject extends BaseHandler {
         dead.clear();
         pm.done();
       });
-    } catch (final InvocationTargetException x) {
-      monitor.logEvaluationError(this, x);
-      return true;
-    } catch (final InterruptedException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final InterruptedException | InvocationTargetException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return true;
     }
     return cancelled.get() || todo.isEmpty();

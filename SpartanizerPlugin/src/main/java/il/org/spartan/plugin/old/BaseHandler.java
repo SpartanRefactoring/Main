@@ -31,8 +31,8 @@ public abstract class BaseHandler extends AbstractHandler {
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     try {
       return execute(HandlerUtil.getCurrentSelection(e));
-    } catch (final InterruptedException x) {
-      throw new ExecutionException(x.getMessage());
+    } catch (final InterruptedException ¢) {
+      throw new ExecutionException(¢.getMessage());
     }
   }
 

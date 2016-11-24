@@ -40,8 +40,8 @@ public interface Linguistic {
   static String time(final long t) {
     try {
       return new DecimalFormat(DOUBLE_FORMAT).format(t / 1000000000.0);
-    } catch (final ArithmeticException x) {
-      monitor.log(x);
+    } catch (final ArithmeticException ¢) {
+      monitor.log(¢);
       return UNKNOWN;
     }
   }

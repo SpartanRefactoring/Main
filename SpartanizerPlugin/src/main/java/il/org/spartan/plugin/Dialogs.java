@@ -45,8 +45,8 @@ public class Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData();
         if (d != null)
           icon = new Image(null, d);
-      } catch (final MalformedURLException x) {
-        monitor.log(x);
+      } catch (final MalformedURLException ¢) {
+        monitor.log(¢);
       }
     }
     return icon;
@@ -61,8 +61,8 @@ public class Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData();
         if (d != null)
           logo = new Image(null, d);
-      } catch (final MalformedURLException x) {
-        monitor.log(x);
+      } catch (final MalformedURLException ¢) {
+        monitor.log(¢);
       }
       // logo = new Image(null,
       // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());

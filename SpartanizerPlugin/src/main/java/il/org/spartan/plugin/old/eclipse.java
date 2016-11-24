@@ -149,8 +149,8 @@ public enum eclipse {
   static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
     try {
       return find(u, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(¢);
     }
     return null;
   }
@@ -177,8 +177,8 @@ public enum eclipse {
         if (i != null)
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
-      } catch (final MalformedURLException x) {
-        x.printStackTrace();
+      } catch (final MalformedURLException ¢) {
+        ¢.printStackTrace();
       }
     }
     return icon;
@@ -190,8 +190,8 @@ public enum eclipse {
       try {
         iconNonBusy = new org.eclipse.swt.graphics.Image(null,
             ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
-      } catch (final MalformedURLException x) {
-        monitor.log(x);
+      } catch (final MalformedURLException ¢) {
+        monitor.log(¢);
       }
     }
     return iconNonBusy;
@@ -223,8 +223,8 @@ public enum eclipse {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return true;
     }
   }
@@ -233,8 +233,8 @@ public enum eclipse {
   List<ICompilationUnit> compilationUnits() {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
-    } catch (final JavaModelException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final JavaModelException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return null;
   }
@@ -242,8 +242,8 @@ public enum eclipse {
   List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
     try {
       return compilationUnits(u, nullProgressMonitor);
-    } catch (final JavaModelException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final JavaModelException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return null;
     }
   }
