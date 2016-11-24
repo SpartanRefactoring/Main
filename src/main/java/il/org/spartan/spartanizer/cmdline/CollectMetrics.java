@@ -40,7 +40,7 @@ public final class CollectMetrics {
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new Trimmer().collectSuggesions(before));
+    reportTips(new Trimmer().collectSuggestions(before));
   }
 
   private static void go(final File f) {

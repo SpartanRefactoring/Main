@@ -24,8 +24,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public List<CompilationUnit> getCompilationUnits() {
-    final List<CompilationUnit> $ = inner.stream().map(¢ -> ¢.compilationUnit).collect(Collectors.toList());
-    return $;
+    return inner.stream().map(¢ -> ¢.compilationUnit).collect(Collectors.toList());
   }
 
   public List<WrappedCompilationUnit> get() {

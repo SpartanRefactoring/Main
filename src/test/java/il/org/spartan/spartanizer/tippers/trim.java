@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggesions(u).size();
+    return a.collectSuggestions(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
