@@ -99,8 +99,8 @@ public class normalize {
   private static void applyChanges(final Document d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      e.printStackTrace();
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      ¢.printStackTrace();
     }
   }
 

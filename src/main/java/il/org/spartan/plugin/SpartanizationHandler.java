@@ -51,9 +51,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException | InterruptedException e) {
-        monitor.log(e);
-        e.printStackTrace();
+      } catch (InvocationTargetException | InterruptedException ¢) {
+        monitor.log(¢);
+        ¢.printStackTrace();
       }
     });
     $.defaultRunAction(t);

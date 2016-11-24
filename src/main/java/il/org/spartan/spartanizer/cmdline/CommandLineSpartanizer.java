@@ -67,10 +67,10 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
-            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnit(presentSourcePath)))
+            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(presentSourcePath)))
             .defaultRunAction(new CommandLine$Applicator()).go();
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 

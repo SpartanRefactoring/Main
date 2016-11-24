@@ -44,42 +44,38 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-        if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f))
-          return null;
-        final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
-        if (currentStatement == null)
-          return null;
-        final Block parent = az.block(currentStatement.getParent());
-        if (parent == null)
-          return null;
-        final List<Statement> ss = statements(parent);
-        if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
-          return null;
-        final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
-        if (haz.sideEffects(initializer)) {
-          final SimpleName use = onlyOne(uses);
-          if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
-            return null;
-        }
-        for (final SimpleName use : uses)
-          if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
-            return null;
-        final Expression v = fixArrayInitializer(initializer, currentStatement);
-        
-        if(v.getNodeType() == ASTNode.PRIMITIVE_TYPE)
-          return null;
-        
-        final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
-        final Statement newStatement = duplicate.of(nextStatement);
-        final int addedSize = i.addedSize(newStatement);
-        final int removalSaving = removalSaving(f);
-        if (addedSize - removalSaving > 0)
-          return null;
-        r.replace(nextStatement, newStatement, g);
-        i.inlineInto(newStatement);
-        remove(f, r, g);
-        return r;
-      }
+    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f))
+      return null;
+    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
+    if (currentStatement == null)
+      return null;
+    final Block parent = az.block(currentStatement.getParent());
+    if (parent == null)
+      return null;
+    final List<Statement> ss = statements(parent);
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
+      return null;
+    final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
+    if (haz.sideEffects(initializer)) {
+      final SimpleName use = onlyOne(uses);
+      if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
+        return null;
+    }
+    for (final SimpleName use : uses)
+      if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
+        return null;
+    final Expression v = fixArrayInitializer(initializer, currentStatement);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
+    final Statement newStatement = duplicate.of(nextStatement);
+    final int addedSize = i.addedSize(newStatement);
+    final int removalSaving = removalSaving(f);
+    if (addedSize - removalSaving > 0)
+      return null;
+    r.replace(nextStatement, newStatement, g);
+    i.inlineInto(newStatement);
+    remove(f, r, g);
+    return r;
+  }
 
   private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!(initializer instanceof ArrayInitializer))

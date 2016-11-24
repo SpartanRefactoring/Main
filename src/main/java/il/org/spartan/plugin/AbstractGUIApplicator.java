@@ -105,10 +105,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     setMarker(null);
     try {
       checkFinalConditions(progressMonitor);
-    } catch (final OperationCanceledException e) {
-      monitor.logCancellationRequest(this, e);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final OperationCanceledException ¢) {
+      monitor.logCancellationRequest(this, ¢);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return totalChanges;
   }
@@ -157,8 +157,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       setICompilationUnit(cu);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return 0;
   }
@@ -176,8 +176,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
-        } catch (final CoreException x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final CoreException ¢) {
+          monitor.logEvaluationError(this, ¢);
         }
       }
     };
@@ -204,8 +204,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
               "Laconization: " + s + AbstractGUIApplicator.this);
-        } catch (final InterruptedException e) {
-          monitor.logCancellationRequest(this, e);
+        } catch (final InterruptedException ¢) {
+          monitor.logCancellationRequest(this, ¢);
         }
       }
     };
@@ -452,8 +452,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       return apply(u, (TrackerSelection) s);
     try {
       return apply(u);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return 0;
     }
   }
@@ -507,8 +507,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       if (s != null)
         s.update();
       return $.get();
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return 0;
     } finally {
       progressMonitor.done();
