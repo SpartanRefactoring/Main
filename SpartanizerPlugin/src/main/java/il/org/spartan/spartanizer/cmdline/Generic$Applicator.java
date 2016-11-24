@@ -92,10 +92,8 @@ public class Generic$Applicator {
   }
 
   public static void main(final String[] args) {
-    for (final Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
-      System.out.println(i);
-    for (final String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
-      System.out.println(¢);
+    setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment").forEach(System.out::println);
+    setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
   private static List<String> setSelectedTipperGroups(final String... ss) {

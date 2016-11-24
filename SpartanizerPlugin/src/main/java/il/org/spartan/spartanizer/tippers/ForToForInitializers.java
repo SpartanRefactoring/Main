@@ -71,24 +71,21 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      if ((¢.getName() + "").equals(var + ""))
-        ¢.setInitializer(duplicate.of(step.right(from)));
+    step.fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(var + "")).forEachOrdered(¢ -> ¢.setInitializer(duplicate.of(step.right(from))));
     return duplicate.of(step.left(from));
   }
 
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
-    for (final Expression x : operands)
-      if (iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())) {
-        final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
-        final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment ¢ : fragments(s))
-          if ((¢.getName() + "").equals(var + "")) {
-            ¢.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(x), x.getAST().newSimpleName(var + ""));
-          }
-      }
+    operands.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
+      final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
+      final SimpleName var = az.simpleName(step.left(a));
+      for (final VariableDeclarationFragment ¢ : fragments(s))
+        if ((¢.getName() + "").equals(var + "")) {
+          ¢.setInitializer(duplicate.of(step.right(a)));
+          operands.set(operands.indexOf(x), x.getAST().newSimpleName(var + ""));
+        }
+    });
     return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
   }
 
