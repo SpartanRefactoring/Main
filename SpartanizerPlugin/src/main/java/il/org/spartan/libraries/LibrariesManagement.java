@@ -15,8 +15,13 @@ import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.utils.*;
 
 public class LibrariesManagement {
-  static final String[] librariesNames = { "SpartanRefactoring" };
-  static final String[] librariesPathSuffices = { "" };
+  // TODO: update version 2.6.3 upon release. DO NOT remove this todo.
+  public static final IPath FEATURE_PATH = new Path("features/SpartanFeature_2.6.4.jar");
+  public static final IPath INSTALLATION_FOLDER;
+  public static final String LIBRARY_NAME = "Spartan Libraries";
+  static {
+    INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
+  }
 
   public static IPath getPluginJarPath() throws IOException {
     return new Path(FileLocator.resolve(FileLocator.find(Plugin.plugin().getBundle(), new Path(""), null)).getPath().replaceAll("!.*", "")
@@ -51,36 +56,32 @@ public class LibrariesManagement {
     return removeLibrary(new Path(path));
   }
 
-  /** [[SuppressWarningsSpartan]] --bug
-   * @throws IOException */
-  public static void initializeUserLibraries() throws CoreException, IOException {
+  /** [[SuppressWarningsSpartan]] --bug*/
+  public static void initializeUserLibraries() throws CoreException {
     final ClasspathContainerInitializer initializer = JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID);
     @SuppressWarnings("restriction") List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
-    final IPath jarPath = getPluginJarPath();
-    for (int i = 0; i < librariesPathSuffices.length; ++i) {
-      final String libraryName = librariesNames[0];
-      if (userLibrariesNames.contains(libraryName))
-        continue;
-      final IPath libraryPath = jarPath.append(librariesPathSuffices[0]);
-      final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
-      initializer.requestClasspathContainerUpdate(containerPath.append(libraryName), null, new IClasspathContainer() {
-        @Override public IPath getPath() {
-          return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
-        }
+    final String libraryName = LIBRARY_NAME;
+    if (userLibrariesNames.contains(libraryName))
+      return;
+    final IPath libraryPath = INSTALLATION_FOLDER.append(FEATURE_PATH);
+    final IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID);
+    initializer.requestClasspathContainerUpdate(containerPath.append(libraryName), null, new IClasspathContainer() {
+      @Override public IPath getPath() {
+        return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(libraryName);
+      }
 
-        @Override public int getKind() {
-          return K_APPLICATION;
-        }
+      @Override public int getKind() {
+        return K_APPLICATION;
+      }
 
-        @Override public String getDescription() {
-          return libraryName;
-        }
+      @Override public String getDescription() {
+        return libraryName;
+      }
 
-        @Override public IClasspathEntry[] getClasspathEntries() {
-          return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
-        }
-      });
-    }
+      @Override public IClasspathEntry[] getClasspathEntries() {
+        return new IClasspathEntry[] { JavaCore.newLibraryEntry(libraryPath, null, null) };
+      }
+    });
   }
 
   private static boolean touchLibrary(final IPath path, final BiConsumer<List<IClasspathEntry>, IPath> operation) {
@@ -94,8 +95,8 @@ public class LibrariesManagement {
     final IClasspathEntry[] es;
     try {
       es = jp.getRawClasspath();
-    } catch (final JavaModelException x) {
-      monitor.log(x);
+    } catch (final JavaModelException ¢) {
+      monitor.log(¢);
       return false;
     }
     if (es != null)
@@ -103,8 +104,8 @@ public class LibrariesManagement {
     operation.accept(nes, path);
     try {
       jp.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
-    } catch (final JavaModelException x) {
-      monitor.log(x);
+    } catch (final JavaModelException ¢) {
+      monitor.log(¢);
       return false;
     }
     return true;
