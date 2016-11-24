@@ -95,7 +95,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
 
     public static void getCompilationUnit(final File f, final List<CompilationUnit> $) {
       try {
-        $.add(((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f))));
+        $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
         monitor.log(¢);
         ¢.printStackTrace();
