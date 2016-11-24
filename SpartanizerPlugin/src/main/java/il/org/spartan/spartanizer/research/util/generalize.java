@@ -72,8 +72,8 @@ public class generalize {
     });
     try {
       r.rewriteAST(document, null).apply(document);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      e.printStackTrace();
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      ¢.printStackTrace();
     }
     return ASTutils.extractCode(s, document);
   }

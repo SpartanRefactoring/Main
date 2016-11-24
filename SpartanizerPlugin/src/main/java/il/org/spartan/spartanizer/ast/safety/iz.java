@@ -227,9 +227,7 @@ public interface iz {
    * @return <code> true </code> iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
-    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
-      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
+    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {
@@ -973,8 +971,8 @@ public interface iz {
   default boolean parsesTo(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
@@ -982,8 +980,8 @@ public interface iz {
   default boolean parsesTo(final String token, final int i) {
     try {
       return Integer.parseInt(token) == i;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
@@ -991,8 +989,8 @@ public interface iz {
   default boolean parsesTo(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(box(l), x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(box(l), ¢);
       return false;
     }
   }

@@ -315,9 +315,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 			Cut<C> cut = (Cut<C>) key;
 			if (!upperBoundWindow.contains(cut))
 				return null;
-			Entry<Cut<C>, Range<C>> candidate = rangesByLowerBound.lowerEntry(cut);
-			if (candidate != null && candidate.getValue().upperBound.equals(cut))
-				return candidate.getValue();
+			Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.lowerEntry(cut);
+			if ($ != null && $.getValue().upperBound.equals(cut))
+				return $.getValue();
 		} catch (ClassCastException e) {
 			return null;
 		}
@@ -555,9 +555,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 		try {
 			@SuppressWarnings("unchecked")
 			Cut<C> cut = (Cut<C>) key;
-			Entry<Cut<C>, Range<C>> firstEntry = tailMap(cut, true).firstEntry();
-			if (firstEntry != null && firstEntry.getKey().equals(cut))
-				return firstEntry.getValue();
+			Entry<Cut<C>, Range<C>> $ = tailMap(cut, true).firstEntry();
+			if ($ != null && $.getKey().equals(cut))
+				return $.getValue();
 		} catch (ClassCastException e) {
 			return null;
 		}

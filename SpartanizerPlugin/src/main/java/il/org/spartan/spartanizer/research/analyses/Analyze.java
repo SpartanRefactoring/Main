@@ -92,8 +92,8 @@ public class Analyze {
   private static void appendFile(final File f, final String s) {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "append");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "append");
     }
   }
 
