@@ -5,7 +5,7 @@ import org.eclipse.core.commands.*;
 import il.org.spartan.plugin.*;
 
 public class AthensHandler extends AbstractHandler {
-  @Override public Object execute(@SuppressWarnings("unused") ExecutionEvent __) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     Dialogs.message("ma ani sam ba intent?").open();
     return null;
   }
