@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class LibrariesManagement {
   public static final IPath FEATURE_PATH;
   public static final IPath INSTALLATION_FOLDER;
-  public static final String LIBRARY_NAME = "Spartan Libraries";
+  public static final String LIBRARY_NAME = "Spartan Library";
   public static final String LIBRARY_QULIFIED_NAME = "spartan.libraries";
   public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
