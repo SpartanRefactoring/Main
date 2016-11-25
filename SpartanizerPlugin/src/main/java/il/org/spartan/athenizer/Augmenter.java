@@ -14,8 +14,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An application of the Athenizer project. Augment java code to be more clear
- * and debugable. TODO Roth: add progress monitor
- * support TODO Roth: add TextEditGroup support (?)
+ * and debugable. TODO Roth: add progress monitor support TODO Roth: add
+ * TextEditGroup support (?)
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class Augmenter implements Application {
@@ -72,14 +72,23 @@ public class Augmenter implements Application {
    * @param r JD
    * @param sss selection as list of lists of statements
    * @param g JD
-   * @return true iff rewrite object should be applied*/
+   * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!sss.isEmpty() && !sss.get(0).isEmpty())
       r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
           sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
     return true;
   }
-  
+
+  // TODO complete
+  /** Collateralize a list of statements, returning partition of the statements
+   * as list of lists of statements.
+   * @param ss statements to be collateralized
+   * @return collateralization output as list of lists of statements */
+  public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+    return null;
+  }
+
   /** Add an {@link ImportDeclaration} to a {@link CompilationUnit}.
    * @param r JD
    * @param u JD
@@ -126,22 +135,38 @@ public class Augmenter implements Application {
     return false;
   }
 
+  // TODO move to utility
+  /** @param n JD
+   * @param s JD
+   * @return true iff node is inside selection */
   static boolean inRange(final ASTNode n, final ITextSelection s) {
     if (n == null || s == null)
       return false;
     int p = n.getStartPosition();
     return p >= s.getOffset() && p < s.getLength() + s.getOffset();
   }
-  
-  static boolean discardOptimization(Block ¢) {
+
+  /** Determines whether a block should not be collateralized, i.e. when it has
+   * less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
+   * @param ¢ JD
+   * @return true iff block should be discarded */
+  static boolean discardOptimization(final Block ¢) {
     return ¢ == null || ¢.statements() == null || ¢.statements().size() < MIN_STATEMENTS_COUNT;
   }
 
-  static boolean discardOptimization(List<Statement> ¢) {
+  /** Determines whether a list of statements should not be collateralized, i.e.
+   * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
+   * @param ¢ JD
+   * @return true iff list of statements should be discarded */
+  static boolean discardOptimization(final List<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
-  
-  private static ITextSelection getTextSelection(CompilationUnit u, ITextSelection s) {
+
+  /** Fixes null text selection for full text selection.
+   * @param u JD
+   * @param s JD
+   * @return absolute text selection */
+  private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }
