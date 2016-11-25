@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 public final class TrimmerTestsUtils {
   public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggesions(u).size();
+    return a.collectSuggestions(u).size();
   }
 
   static String apply(final Tipper<? extends ASTNode> n, final String from) {
