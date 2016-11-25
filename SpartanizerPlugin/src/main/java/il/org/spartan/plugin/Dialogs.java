@@ -77,7 +77,7 @@ public class Dialogs {
   public static MessageDialog messageUnsafe(final String message) {
     return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
       }
 
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
@@ -114,7 +114,7 @@ public class Dialogs {
   public static ProgressMonitorDialog progress(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
 
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
