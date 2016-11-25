@@ -1698,12 +1698,12 @@ public final class Version230 {
 
   @Test public void issue54DoWhile() {
     trimmingOf("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);")//
-        .stays();
+        .gives("int a  = f(); do { b[i++] = 2;} while (b[i] != a);");
   }
 
   @Test public void issue54DoWithBlock() {
     trimmingOf("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
-        .stays();
+        .gives("int a  = f(); do { b[i++] = a;} while (b[i] != a);");
   }
 
   @Test public void issue54doWithoutBlock() {

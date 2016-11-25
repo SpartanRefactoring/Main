@@ -1027,4 +1027,8 @@ public interface iz {
       return literal(az.stringLiteral(¢), s);
     }
   }
+
+  static boolean constructor(final ASTNode ¢) {
+    return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
+  }
 }

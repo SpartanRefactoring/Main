@@ -160,6 +160,9 @@ public class Toolbox {
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
             null) //
+        .add(ArrayAccess.class, //
+            new InliningPrefix(), //
+            null) //
         .add(InfixExpression.class, //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
