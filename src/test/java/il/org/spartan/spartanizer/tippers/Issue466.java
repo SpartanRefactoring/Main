@@ -2,8 +2,10 @@ package il.org.spartan.spartanizer.tippers;
 
 
 
+
 import org.junit.*;
 import org.junit.runners.*;
+
 
 /** @author Raviv Rachmiel
  * @since 22-11-2016 */
