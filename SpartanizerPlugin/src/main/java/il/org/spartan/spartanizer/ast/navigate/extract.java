@@ -333,6 +333,14 @@ public enum extract {
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
+  
+  /** Find the {@link PrefixExpression} that follows a given node.
+   * @param pattern JD
+   * @return {@link Assignment} that follows the parameter, or
+   *         <code><b>null</b></code> if not such value exists. */
+  public static PrefixExpression nextPrefix(final ASTNode ¢) {
+    return az.prefixExpression(az.expressionStatement(extract.nextStatement(¢)).getExpression());
+  }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
