@@ -31,7 +31,7 @@ public class Issue438 {
     final Trimmer trimmer = new Trimmer();
     final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
     System.out.println(opp);
-    for (final Tip ¢ : trimmer.collectSuggesions(cu))
+    for (final Tip ¢ : trimmer.collectSuggestions(cu))
       System.out.println(¢.description);
   }
 }

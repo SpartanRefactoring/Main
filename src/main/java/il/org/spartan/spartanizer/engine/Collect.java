@@ -390,7 +390,7 @@ public enum Collect {
         return true;
       }
 
-      boolean collect(@SuppressWarnings("rawtypes") final List os) {
+      boolean collect(final List<?> os) {
         os.forEach(this::add);
         return true;
       }
