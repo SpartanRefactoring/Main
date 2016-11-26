@@ -13,42 +13,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method")
 public class Issue233 {
-  @Ignore public void a() {
-    trimmingOf("switch(x) {}").gives(";").stays();
+  @Test public void a() {
+    trimmingOf("switch(x) {} int x=5;").gives("int x=5;").stays();
   }
 
-  @Ignore public void b() {
-    trimmingOf("switch(x) {} switch(x) {}").gives("").stays();
+  @Test public void b() {
+    trimmingOf("switch(x) {} switch(x) {}int x=5;").gives("int x=5;").stays();
   }
 
-  // not sure if need to implement the below tipper on this issue
-  @Ignore public void c() {
-    trimmingOf("switch(x) { default: k=5; break; }").gives("{k=5}").stays();
-    
-//    wizard.ast("switch(x) {case 1:break; default:break;}").accept(new ASTVisitor() {
-////      @Override public void preVisit(ASTNode node) {
-////        // TODO Auto-generated method stub
-////        super.preVisit(node);
-////        System.out.println("xx " + node.toString() + " xx\n");
-////      }
-//      
-//      
-//      @Override public boolean visit(SwitchStatement node) {
-//        // TODO Auto-generated method stub
-//        List<Statement> ll = node.statements();
-//        ll.remove(0);
-//        SeveralStatements ta = subject.ss(ll);
-//        System.out.println("xx " + subject.statement(ta) + " xx\n");
-//        return super.visit(node);
-//      }
-//    });
-//    
-//    wizard.ast("switch(x) {}").accept(new ASTVisitor() {
-//      @Override public void preVisit(ASTNode node) {
-//        // TODO Auto-generated method stub
-//        super.preVisit(node);
-//        System.out.println(node.getClass());
-//      }
-//    });
+  @Test public void c() {
+    trimmingOf("switch(x) { default: k=5; }").gives("{k=5;}");
+  }
+  
+  @Test public void d() {
+    trimmingOf("switch(x) { default: k=5; break; }").gives("{k=5;}");
   }
 }
