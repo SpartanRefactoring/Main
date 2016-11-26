@@ -49,9 +49,14 @@ public class Issue147 {
     .stays();
 }
 
-@Ignore
+
 @Test public void b(){
-  trimmingOf("for (final Object o : os) {if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) { System.out.print(\"\t...\n\");  return;}System.out.printf(\"\t%2d) %s\n\", Integer.valueOf(n), o);continue;}")//
-    .gives("for (final Object o : os) {if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) { System.out.print(\"\t...\n\");  return;}System.out.printf(\"\t%2d) %s\n\", Integer.valueOf(n), o); }");//
+  trimmingOf("for (final Object o : os) {if (bool) return; continue;}")//
+    .gives("for (final Object o : os) {if (bool) return; }");//
 } 
+
+@Test public void b$(){
+  trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
+    .stays();
+}
 }
