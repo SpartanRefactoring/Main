@@ -13,7 +13,7 @@ public class rangeTest {
     int s = 0;
     for (@SuppressWarnings("unused") final Integer i : range.to(5))
       ++s;
-    assert s == 10;
+    assert s == 5;
   }
 
   @Test public void test1() {
@@ -55,7 +55,7 @@ public class rangeTest {
     int sum = 0;
     for (final Integer ¢ : range.to(5).exclusive())
       sum += ¢;
-    azzert.that(sum, is(15));
+    azzert.that(sum, is(10));
   }
 
   @Test public void test7() {
