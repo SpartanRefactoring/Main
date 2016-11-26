@@ -10,6 +10,7 @@ import org.junit.runners.*;
 public class Issue466 {
   @SuppressWarnings("unused") @Test public void check__() {
     new Object() {
+      // What's this?
     };
   }
 }
