@@ -2,14 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.factory.subject.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method")
 public class Issue233 {
