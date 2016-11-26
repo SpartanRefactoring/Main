@@ -181,7 +181,7 @@ public final class subject {
      * @return a method invocation expression of the method methodName with
      *         inner as an expression */
     public MethodInvocation toMethod(final String methodName) {
-      assert ast != null : "Cannot find ast for method: " + methodName + ". Inner = " + inner;
+      assert ast != null : "Cannot find ast for method: " + methodName + ". RangeIterator = " + inner;
       final MethodInvocation $ = ast.newMethodInvocation();
       $.setExpression(inner);
       $.setName(ast.newSimpleName(methodName));
