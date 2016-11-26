@@ -26,22 +26,22 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-20 */
 public final class SwitchEmpty extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   
-  @Override public Statement replacement(@SuppressWarnings("unused") final SwitchStatement s) {
+  @Override public ASTNode replacement(@SuppressWarnings("unused") final SwitchStatement s) {
     if(s == null)
       return null;
     
     @SuppressWarnings("unchecked") List<Statement> ll = s.statements();
-    
-    if(ll.isEmpty())
-      return (Statement) wizard.ast(";");
-    
-    if (!(ll.get(0) + "").contains("default"))
-      return s;
-    
-    if ((ll.get(ll.size() - 1) + "").contains("break"))
-      ll.remove(ll.size() - 1);
-    ll.remove(0);
-    return subject.ss(ll).toBlock();
+      return null;
+//    if(ll.isEmpty())
+//      return wizard.ast(";");
+//    
+//    if (!(ll.get(0) + "").contains("default"))
+//      return s;
+//    
+//    if ((ll.get(ll.size() - 1) + "").contains("break"))
+//      ll.remove(ll.size() - 1);
+//    ll.remove(0);
+//    return subject.ss(ll).toBlock();
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
