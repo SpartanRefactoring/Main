@@ -75,9 +75,10 @@ public class Augmenter implements Application {
    * @param g JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
-    if (!sss.isEmpty() && !sss.get(0).isEmpty())
-      r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
-          sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
+    if (sss.isEmpty() || sss.get(0).isEmpty())
+      return false;
+    r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
+        sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
     return true;
   }
 
