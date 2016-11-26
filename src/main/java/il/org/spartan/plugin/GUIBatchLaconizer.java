@@ -31,7 +31,7 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Spartanization process. */
   @Override public void go() {
-    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
+    if (selection() == null || listener() == null || runContext() == null || passes() <= 0 || selection().isEmpty())
       return;
     listener().push(message.run_start.get(selection().name));
     if (!shouldRun())

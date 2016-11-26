@@ -40,6 +40,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override public void earlyStartup() {
     monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
     startSpartan();
+    try {
+      LibrariesManagement.initializeUserLibraries();
+    } catch (final CoreException x) {
+      monitor.log(x);
+    }
   }
 
   @Override public void start(final BundleContext ¢) throws Exception {

@@ -24,19 +24,20 @@ public final class Recurser<T> {
     if (iz.block(n))
       return statements(az.block(n));
     final InfixExpression ¢ = az.infixExpression(n);
-    if (¢ != null) {
-      // We must have this weird special case of adding right before left
-      // for some mysterious reason.
-      final List<ASTNode> $ = new ArrayList<>();
-      $.add(left(¢));
-      $.add(right(¢));
-      $.addAll(step.extendedOperands(¢));
-      return $;
-    }
+    if (¢ == null)
+      return march(n);
+    final List<ASTNode> $ = new ArrayList<>();
+    $.add(left(¢));
+    $.add(right(¢));
+    $.addAll(step.extendedOperands(¢));
+    return $;
+  }
+
+  private static List<? extends ASTNode> march(final ASTNode n) {
     try {
       return marchingList(n);
-    } catch (final NullPointerException e) {
-      assert e != null;
+    } catch (final NullPointerException ¢) {
+      assert ¢ != null;
       return null;
     }
   }
@@ -49,10 +50,9 @@ public final class Recurser<T> {
   }
 
   public Recurser(final ASTNode root, final T current) {
-    this.root = root;
-    this.current = current;
-    if (this.root == null)
+    if ((this.root = root) == null)
       throw new NullPointerException();
+    this.current = current;
   }
 
   public Recurser<T> from(final T value) {

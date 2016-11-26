@@ -43,28 +43,24 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   /** @param e JD
-   * @return the applicator used by this refactorer
-   *         [[SuppressWarningsSpartan]] */
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent e) {
+   * @return the applicator used by this refactorer */
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
     return null;
   }
 
   /** @param m JD
-   * @return the applicator used by this refactorer
-   *         [[SuppressWarningsSpartan]] */
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker m) {
+   * @return the applicator used by this refactorer */
+  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
-  /** @return the compilation units designated for refactorer
-   *         [[SuppressWarningsSpartan]] */
+  /** @return the compilation units designated for refactorer */
   public Selection getSelection() {
     return null;
   }
 
-  /** @return the compilation units designated for refactorer
-   *         [[SuppressWarningsSpartan]] */
-  public Selection getSelection(@SuppressWarnings("unused") final IMarker marker) {
+  /** @return the compilation units designated for refactorer */
+  public Selection getSelection(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
@@ -85,26 +81,23 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return 1;
   }
 
-  /** @param compilationUnits JD
-   * @return message to be displayed by a {@link IProgressMonitor}
-   *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> compilationUnits, final int pass) {
+  /** @param us JD
+   * @return message to be displayed by a {@link IProgressMonitor} */
+  @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> __, final int pass) {
     return getLabel();
   }
 
   /** @param inner
    * @param currentCompilationUnit
-   * @return sub message to be displayed by a {@link IProgressMonitor}
-   *         [[SuppressWarningsSpartan]] */
+   * @return sub message to be displayed by a {@link IProgressMonitor} */
   @SuppressWarnings("unused") public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
       final ICompilationUnit currentCompilationUnit) {
     return null;
   }
 
-  /** @param compilationUnits JD
-   * @return work to be done by a {@link IProgressMonitor}
-   *         [[SuppressWarningsSpartan]] */
-  public int getProgressMonitorWork(@SuppressWarnings("unused") final List<ICompilationUnit> compilationUnits) {
+  /** @param us JD
+   * @return work to be done by a {@link IProgressMonitor} */
+  public int getProgressMonitorWork(@SuppressWarnings("unused") final List<ICompilationUnit> __) {
     return IProgressMonitor.UNKNOWN;
   }
 
@@ -114,23 +107,21 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return false;
   }
 
-  /** @param applicator JD
+  /** @param a JD
    * @param targetCompilationUnits JD
-   * @param attributes JD
-   * @return work to be done before running the refactorer main loop
-   *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator applicator,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
+   * @param a JD
+   * @return work to be done before running the refactorer main loop */
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator __,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> a) {
     return null;
   }
 
-  /** @param applicator JD
+  /** @param a JD
    * @param targetCompilationUnits JD
-   * @param attributes JD
-   * @return work to be done after running the refactorer main loop
-   *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator applicator,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
+   * @param a JD
+   * @return work to be done after running the refactorer main loop */
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator __,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> a) {
     return null;
   }
 
@@ -165,8 +156,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       initializeProgressDialog(progressMonitorDialog);
     try {
       progressMonitorDialog.run(true, true, r);
-    } catch (InterruptedException | InvocationTargetException x) {
-      monitor.log(x);
+    } catch (InterruptedException | InvocationTargetException ¢) {
+      monitor.log(¢);
       return null;
     }
     closeDialog(initialDialog);
@@ -182,14 +173,13 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  private boolean doWork(final IRunnableWithProgress r, final ProgressMonitorDialog d) {
-    if (r != null)
+  private boolean doWork(final IRunnableWithProgress p, final ProgressMonitorDialog d) {
+    if (p != null)
       try {
-        d.run(true, true, r);
-      } catch (InvocationTargetException | InterruptedException x) {
-        monitor.log(x);
-        x.printStackTrace();
+        d.run(true, true, p);
+      } catch (InvocationTargetException | InterruptedException ¢) {
+        monitor.log(¢);
+        ¢.printStackTrace();
         return false;
       }
     return true;
@@ -197,7 +187,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
-      @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
+      @Override @SuppressWarnings("synthetic-access") public void run(final IProgressMonitor pm) {
         final int passesCount = passesCount();
         int pass;
         int totalTips = 0;

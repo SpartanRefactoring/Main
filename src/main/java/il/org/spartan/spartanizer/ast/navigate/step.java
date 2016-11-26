@@ -557,7 +557,9 @@ public enum step {
   public static Type type(final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
-    final String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
+    String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
+    if (!(d + "").contains(typeType) && iz.typeDeclaration(d))
+      typeType = "interface";
     String name = (d + "").substring((d + "").indexOf(typeType));
     name = name.substring(name.indexOf(typeType) + typeType.length(), name.indexOf("{"));
     while (name.contains("extends") && !balanced(name.substring(0, name.indexOf("extends"))))
@@ -610,5 +612,11 @@ public enum step {
    * @return */
   public static Block body(final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static String identifier(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getFullyQualifiedName();
   }
 }

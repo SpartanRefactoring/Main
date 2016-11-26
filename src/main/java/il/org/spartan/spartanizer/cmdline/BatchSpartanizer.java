@@ -212,8 +212,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢, "File = " + f);
       }
   }
 
@@ -245,8 +245,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
+    } catch (final IOException ¢) {
+      System.err.println(¢.getMessage());
     }
   }
 
@@ -266,8 +266,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       report = new CSVStatistics(reportFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
         collect(¢);
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

@@ -32,6 +32,7 @@ import il.org.spartan.utils.*;
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
+ * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 public abstract class AbstractGUIApplicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
@@ -83,13 +84,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a laconic
    *         tip */
-  public final List<Tip> collectSuggesions(final CompilationUnit ¢) {
+  public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
 
-  public IFile compilatinUnitIFile() {
+  public IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
 
@@ -105,10 +106,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     setMarker(null);
     try {
       checkFinalConditions(progressMonitor);
-    } catch (final OperationCanceledException e) {
-      monitor.logCancellationRequest(this, e);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final OperationCanceledException ¢) {
+      monitor.logCancellationRequest(this, ¢);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return totalChanges;
   }
@@ -142,7 +143,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
-    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textFileChange.setTextType("java");
     textFileChange.setEdit(rewriteAST);
     final boolean $ = textFileChange.getEdit().getLength() != 0;
@@ -157,8 +158,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       setICompilationUnit(cu);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return 0;
   }
@@ -176,8 +177,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
-        } catch (final CoreException x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final CoreException ¢) {
+          monitor.logEvaluationError(this, ¢);
         }
       }
     };
@@ -204,8 +205,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
               "Laconization: " + s + AbstractGUIApplicator.this);
-        } catch (final InterruptedException e) {
-          monitor.logCancellationRequest(this, e);
+        } catch (final InterruptedException ¢) {
+          monitor.logCancellationRequest(this, ¢);
         }
       }
     };
@@ -235,7 +236,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   public int go() throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
     final AtomicInteger counter = new AtomicInteger(0);
@@ -359,7 +360,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setEdit(createRewrite(cu, counter).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
-    totalChanges += collectSuggesions(cu).size();
+    totalChanges += collectSuggestions(cu).size();
     m.done();
     return counter.get();
   }
@@ -452,8 +453,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       return apply(u, (TrackerSelection) s);
     try {
       return apply(u);
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return 0;
     }
   }
@@ -507,8 +508,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       if (s != null)
         s.update();
       return $.get();
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return 0;
     } finally {
       progressMonitor.done();

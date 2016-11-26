@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.ast.factory;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -16,12 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public enum duplicate {
   ;
   static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    if (o != wizard.MINUS2)
-      return xs;
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      $.add(subject.operand(¢).to(wizard.MINUS1));
-    return $;
+    return o != wizard.MINUS2 ? xs : xs.stream().map(¢ -> subject.operand(¢).to(wizard.MINUS1)).collect(Collectors.toList());
   }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another
@@ -59,9 +55,6 @@ public enum duplicate {
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
-    final List<¢> $ = new ArrayList<>();
-    for (final ¢ cent : ¢s)
-      $.add((¢) copySubtree(cent.getAST(), cent));
-    return $;
+    return ¢s.stream().map(cent -> (¢) copySubtree(cent.getAST(), cent)).collect(Collectors.toList());
   }
 }

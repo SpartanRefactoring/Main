@@ -123,7 +123,7 @@ public abstract class searchAncestors<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
@@ -143,7 +143,7 @@ public abstract class searchAncestors<N extends ASTNode> {
       this.instances = instances;
     }
 
-    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (instances.contains($))

@@ -118,14 +118,14 @@ import javax.annotation.Nullable;
     return $;
   }
 
-  @CanIgnoreReturnValue @Override public V put(R rowKey, C columnKey, V value) {
+  @Override @CanIgnoreReturnValue public V put(R rowKey, C columnKey, V value) {
     checkNotNull(rowKey);
     checkNotNull(columnKey);
     checkNotNull(value);
     return getOrCreate(rowKey).put(columnKey, value);
   }
 
-  @CanIgnoreReturnValue @Override public V remove(@Nullable Object rowKey, @Nullable Object columnKey) {
+  @Override @CanIgnoreReturnValue public V remove(@Nullable Object rowKey, @Nullable Object columnKey) {
     if ((rowKey == null) || (columnKey == null))
       return null;
     Map<C, V> map = safeGet(backingMap, rowKey);
@@ -342,8 +342,8 @@ import javax.annotation.Nullable;
     }
 
     @Override public int size() {
-      Map<C, V> map = backingRowMap();
-      return (map == null) ? 0 : map.size();
+      Map<C, V> $ = backingRowMap();
+      return ($ == null) ? 0 : $.size();
     }
 
     @Override Iterator<Entry<C, V>> entryIterator() {
@@ -635,10 +635,10 @@ import javax.annotation.Nullable;
             return endOfData();
           entryIterator = mapIterator.next().entrySet().iterator();
         } else {
-          Entry<C, V> entry = entryIterator.next();
-          if (!seen.containsKey(entry.getKey())) {
-            seen.put(entry.getKey(), entry.getValue());
-            return entry.getKey();
+          Entry<C, V> $ = entryIterator.next();
+          if (!seen.containsKey($.getKey())) {
+            seen.put($.getKey(), $.getValue());
+            return $.getKey();
           }
         }
     }
@@ -667,8 +667,7 @@ import javax.annotation.Nullable;
       return containsRow(key);
     }
 
-    // performing cast only when key is in backing map and has the correct type
-    @SuppressWarnings("unchecked") @Override public Map<C, V> get(Object key) {
+    @Override @SuppressWarnings("unchecked") public Map<C, V> get(Object key) {
       return !containsRow(key) ? null : row((R) key);
     }
 
@@ -716,9 +715,7 @@ import javax.annotation.Nullable;
   }
 
   @WeakOuter private class ColumnMap extends ViewCachingAbstractMap<C, Map<R, V>> {
-    // The cast to C occurs only when the key is in the map, implying that it
-    // has the correct type.
-    @SuppressWarnings("unchecked") @Override public Map<R, V> get(Object key) {
+    @Override @SuppressWarnings("unchecked") public Map<R, V> get(Object key) {
       return !containsColumn(key) ? null : column((C) key);
     }
 

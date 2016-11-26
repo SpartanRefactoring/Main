@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -27,16 +28,12 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public Selection buildAll() {
-    for (final WrappedCompilationUnit ¢ : inner)
-      ¢.build();
+    inner.forEach(WrappedCompilationUnit::build);
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    for (final WrappedCompilationUnit ¢ : inner)
-      $.add(¢.descriptor);
-    return $;
+    return inner.stream().map(¢ -> ¢.descriptor).collect(Collectors.toList());
   }
 
   /** Factory method.
@@ -126,8 +123,8 @@ public class Selection extends AbstractSelection<Selection> {
       }
       if (changed)
         textSelection = new TextSelection(no, nl - no);
-    } catch (final CoreException x) {
-      monitor.log(x);
+    } catch (final CoreException ¢) {
+      monitor.log(¢);
       return this;
     }
     return this;
@@ -364,8 +361,8 @@ public class Selection extends AbstractSelection<Selection> {
       final IPackageFragmentRoot[] rs;
       try {
         rs = p.getPackageFragmentRoots();
-      } catch (final JavaModelException x) {
-        monitor.log(x);
+      } catch (final JavaModelException ¢) {
+        monitor.log(¢);
         return empty();
       }
       for (final IPackageFragmentRoot ¢ : rs)
@@ -381,8 +378,8 @@ public class Selection extends AbstractSelection<Selection> {
         for (final IJavaElement ¢ : r.getChildren())
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.unify(by((IPackageFragment) ¢));
-      } catch (final JavaModelException x) {
-        monitor.log(x);
+      } catch (final JavaModelException ¢) {
+        monitor.log(¢);
         return empty();
       }
       return $.setName(r.getElementName());
@@ -394,8 +391,8 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         return f == null ? empty()
             : Selection.of(f.getCompilationUnits()).setName(!"".equals(f.getElementName()) ? f.getElementName() : DEFAULT_PACKAGE_NAME);
-      } catch (final JavaModelException x) {
-        monitor.log(x);
+      } catch (final JavaModelException ¢) {
+        monitor.log(¢);
         return empty();
       }
     }
@@ -410,20 +407,20 @@ public class Selection extends AbstractSelection<Selection> {
     public static ISourceRange makertToRange(final IMember m) {
       try {
         return m.getSourceRange();
-      } catch (final JavaModelException x) {
-        monitor.log(x);
+      } catch (final JavaModelException ¢) {
+        monitor.log(¢);
         return null;
       }
     }
 
-    /** @param ¢ JD
+    /** @param m JD
      * @return text selection by marker */
-    private static ITextSelection getTextSelection(final IMarker ¢) {
+    private static ITextSelection getTextSelection(final IMarker m) {
       try {
-        final int cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
-        return new TextSelection(cs, ((Integer) ¢.getAttribute(IMarker.CHAR_END)).intValue() - cs);
-      } catch (final CoreException x) {
-        monitor.log(x);
+        final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
+        return new TextSelection(cs, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - cs);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
         return null;
       }
     }
@@ -435,8 +432,8 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         final int s = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, s, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - s).getCoveredNode();
-      } catch (final CoreException x) {
-        monitor.logEvaluationError(x);
+      } catch (final CoreException ¢) {
+        monitor.logEvaluationError(¢);
         return null;
       }
     }

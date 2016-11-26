@@ -88,23 +88,14 @@ public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCol
     FilesASTVisitor.main(args);
   }
 
-  @SuppressWarnings({ "boxing", "unchecked" }) @Override public NamedFunction<ASTNode, Object>[] functions() {
-    return as.array( //
-        m("length", (¢) -> (¢ + "").length()), //
-        m("essence", (¢) -> Essence.of(¢ + "").length()), //
-        m("tokens", (¢) -> metrics.tokens(¢ + "")), //
-        m("nodes", (¢) -> count.nodes((ASTNode) ¢)), //
-        m("body", (¢) -> metrics.bodySize((ASTNode) ¢)), //
+  @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
+    return as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
+        m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes((ASTNode) ¢)), m("body", (¢) -> metrics.bodySize((ASTNode) ¢)),
         m("methodDeclaration",
-            (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()), //
-        m("tide", (¢) -> clean(¢ + "").length()), // , //
-        m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
-        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
-        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)), //
-        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), //
-        m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)), //
-        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), //
-        m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)) //
-    ); //
+            (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()),
+        m("tide", (¢) -> clean(¢ + "").length()), m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)),
+        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)),
+        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)),
+        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
   }
 }

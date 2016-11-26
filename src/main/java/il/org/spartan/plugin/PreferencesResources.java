@@ -75,8 +75,8 @@ public final class PreferencesResources {
     private Object getLabel(final Class<? extends TipperCategory> k) {
       try {
         return k.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        monitor.logEvaluationError(this, e);
+      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
+        monitor.logEvaluationError(this, ¢);
         return null;
       }
     }

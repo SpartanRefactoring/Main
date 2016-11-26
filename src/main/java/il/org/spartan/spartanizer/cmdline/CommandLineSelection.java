@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -23,10 +24,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public List<CompilationUnit> getCompilationUnits() {
-    final List<CompilationUnit> $ = new ArrayList<>();
-    for (final WrappedCompilationUnit ¢ : inner)
-      $.add(¢.compilationUnit);
-    return $;
+    return inner.stream().map(¢ -> ¢.compilationUnit).collect(Collectors.toList());
   }
 
   public List<WrappedCompilationUnit> get() {
@@ -79,25 +77,27 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return new CommandLineSelection(cuList, "selection");
     }
 
-    /** @param from
+    /** @param path
      * @return */
-    public static List<CompilationUnit> getAllCompilationUnit(final String from) {
+    public static List<CompilationUnit> getAllCompilationUnits(final String path) {
       final List<CompilationUnit> $ = new ArrayList<>();
-      for (final File ¢ : new FilesGenerator(".java").from(from)) {
+      for (final File ¢ : new FilesGenerator(".java").from(path)) {
         System.out.println(¢.getName());
         // System.out.println("Free memory (bytes): " +
         // Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
-        CompilationUnit cu;
         if (!system.isTestFile(¢))
-          try {
-            cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(¢));
-            $.add(cu);
-          } catch (final IOException x) {
-            monitor.log(x);
-            x.printStackTrace();
-          }
+          getCompilationUnit(¢, $);
       }
       return $;
+    }
+
+    public static void getCompilationUnit(final File f, final List<CompilationUnit> $) {
+      try {
+        $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
+      } catch (final IOException ¢) {
+        monitor.log(¢);
+        ¢.printStackTrace();
+      }
     }
   }
 
@@ -114,8 +114,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   }
 
   public CommandLineSelection buildAll() {
-    for (final WrappedCompilationUnit ¢ : compilationUnits)
-      ¢.build();
+    compilationUnits.forEach(WrappedCompilationUnit::build);
     return this;
   }
 
