@@ -14,11 +14,11 @@ public class Issue233 {
     trimmingOf("switch(x) {} switch(x) {}int x=5;").gives("int x=5;").stays();
   }
 
-  @Test public void c() {
+  @Ignore public void c() {
     trimmingOf("switch(x) { default: k=5; }").gives("{k=5;}");
   }
   
-  @Test public void d() {
+  @Ignore public void d() {
     trimmingOf("switch(x) { default: k=5; break; }").gives("{k=5;}");
   }
 }
