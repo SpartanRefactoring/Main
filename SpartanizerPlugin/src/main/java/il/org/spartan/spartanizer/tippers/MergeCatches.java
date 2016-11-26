@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") @Override public ASTNode replacement(final TryStatement s) {
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> lst = step.extractCatches(s);
     for (int i = 0; i < lst.size(); ++i)
       for (int j = i + 1; j < lst.size(); ++j)
@@ -45,7 +45,7 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements Ti
     return null;
   }
 
-  @Override public String description(final TryStatement ¢) {
-    return "Consolidate identical catch blocks from :" + ¢;
+  @Override public String description(@SuppressWarnings("unused") final TryStatement ¢) {
+    return "Consolidate identical catch blocks";
   }
 }

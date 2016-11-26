@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -148,8 +149,7 @@ public enum getAll {
     return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
-          for (final VariableDeclarationFragment ¢ : fragments(d))
-            $.add(step.name(¢) + "");
+          $.addAll(fragments(d).stream().map(¢ -> step.name(¢) + "").collect(Collectors.toList()));
         return true;
       }
     };
@@ -186,8 +186,7 @@ public enum getAll {
     ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
       @Override public boolean visit(final FieldDeclaration d) {
         if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          for (final VariableDeclarationFragment df : fragments(d))
-            $.add(df.getName().getIdentifier());
+          $.addAll(fragments(d).stream().map(df -> df.getName().getIdentifier()).collect(Collectors.toList()));
         return true;
       }
     });

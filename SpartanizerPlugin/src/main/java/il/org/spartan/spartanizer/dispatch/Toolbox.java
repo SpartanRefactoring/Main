@@ -31,11 +31,11 @@ public class Toolbox {
           final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
           monitor.debug("Found for " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException x) {
-          monitor.debug(this, x);
+        } catch (final IllegalArgumentException ¢) {
+          monitor.debug(this, ¢);
           break;
-        } catch (final Exception x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final Exception ¢) {
+          monitor.logEvaluationError(this, ¢);
           break;
         }
     }
@@ -163,6 +163,9 @@ public class Toolbox {
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
             null) //
+        .add(ArrayAccess.class, //
+            new InliningPrefix(), //
+            null) //
         .add(InfixExpression.class, //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
@@ -211,6 +214,10 @@ public class Toolbox {
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //
             new MergeCatches(), //
+            new EliminateEmptyTryBlock(), //
+            null)//
+        .add(CatchClause.class, //
+            new CatchClauseRenameParameterToCent(), //
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //

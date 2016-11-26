@@ -17,17 +17,29 @@ public class Classifier extends ASTVisitor {
   final List<ASTNode> forLoopsList = new ArrayList<>();
   int forLoopsAmount;
   static final Scanner input = new Scanner(System.in);
-  static List<Tipper<EnhancedForStatement>> knownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
+  static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new ApplyToEach());
+      add(new AnyMatches());
+      add(new Contains());
+      add(new ForEach());
       add(new FindFirst());
+      add(new Reduce());
+    }
+  };
+  static List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new CopyArray());
+      add(new ForEach2());
+      add(new InitArray());
     }
   };
   private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
-    forLoopsList.add(node);
+    if (!anyTips(node))
+      forLoopsList.add(node);
     return super.visit(node);
   }
 
@@ -40,12 +52,19 @@ public class Classifier extends ASTVisitor {
   /** @param ¢ */
   public void analyze(final ASTNode ¢) {
     ¢.accept(this);
-    System.out.println("hmmmmmmmmmmm");
     forLoopsAmount = forLoopsList.size();
     patterns = filterAllIntrestingPatterns();
-    System.out.println("hmmmmmmmmmmm");
     displayInteractive();
     classifyPatterns();
+    summarize();
+  }
+
+  private void summarize() {
+    for (final String k : forLoops.keySet()) {
+      System.out.println("****" + k + "****");
+      for (final String p : forLoops.get(k))
+        System.out.println(tipperize(p, k));
+    }
   }
 
   private void classifyPatterns() {
@@ -59,7 +78,7 @@ public class Classifier extends ASTVisitor {
 
   private void displayInteractive() {
     System.out.println("Well we've got " + forLoopsAmount + " forLoop statements");
-    System.out.println("From them " + patterns.size() + " are repetitive which cover a total of " + forLoopsList.size() + " forLoops");
+    System.out.println("From them " + patterns.size() + " are repetitive");
     System.out.println("Lets classify them together!");
   }
 
@@ -74,20 +93,29 @@ public class Classifier extends ASTVisitor {
         for (final ASTNode l : forLoopsList)
           if (t.canTip(l))
             toRemove.add(l);
-        if (toRemove.size() > 1) {
-          $.putIfAbsent(format.code(generalize.code(¢ + "")), Int.valueOf(toRemove.size()));
+        if (toRemove.size() > 4) {
+          $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
-          System.out.println("again");
           again = true;
           break;
         }
+        forLoopsList.remove(¢);
+        again = true;
+        break;
       }
     }
     return $;
   }
 
   private static boolean anyTips(final EnhancedForStatement ¢) {
-    for (Tipper<EnhancedForStatement> p : knownPatterns)
+    for (final Tipper<EnhancedForStatement> p : enhancedForKnownPatterns)
+      if (p.canTip(¢))
+        return true;
+    return false;
+  }
+
+  private static boolean anyTips(final ForStatement ¢) {
+    for (final Tipper<ForStatement> p : forKnownPatterns)
       if (p.canTip(¢))
         return true;
     return false;
@@ -95,12 +123,12 @@ public class Classifier extends ASTVisitor {
 
   /** @param ¢ to classify */
   private boolean classify(final String ¢) {
-    String code = format.code(generalize.code(¢));
+    final String code = format.code(generalize.code(¢));
     System.out.println(code);
     final String classification = input.nextLine();
-    if ("".equals(classification))
+    if ("q".equals(classification) || "Q".equals(classification))
       return false;
-    System.out.println(tiperize(code, classification));
+    System.out.println(tipperize(code, classification));
     forLoops.putIfAbsent(classification, new ArrayList<>());
     forLoops.get(classification).add(¢);
     return true;
@@ -108,7 +136,8 @@ public class Classifier extends ASTVisitor {
 
   /** @param code
    * @return */
-  private static String tiperize(String code, String classification) {
-    return "TipperFactory.newTipper(\"" + code.replace("\n", "").replace("\r", "") + "\", \"" + classification + "();\", \"" + classification + "\")";
+  private static String tipperize(final String code, final String classification) {
+    return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
+        + "();\", \"" + classification + "\"));";
   }
 }

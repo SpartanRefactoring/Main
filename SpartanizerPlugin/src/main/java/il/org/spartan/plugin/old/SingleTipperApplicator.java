@@ -114,8 +114,8 @@ public final class SingleTipperApplicator {
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException x) {
-              monitor.logEvaluationError(this, x);
+            } catch (JavaModelException | IllegalArgumentException ¢) {
+              monitor.logEvaluationError(this, ¢);
               exhausted.add(u);
             }
             if (textChange.getEdit().getLength() == 0)
@@ -123,8 +123,8 @@ public final class SingleTipperApplicator {
             else
               try {
                 textChange.perform(pm);
-              } catch (final CoreException e) {
-                monitor.logEvaluationError(this, e);
+              } catch (final CoreException ¢) {
+                monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + todo.size());
@@ -132,10 +132,10 @@ public final class SingleTipperApplicator {
           todo.removeAll(exhausted);
           px.done();
         });
-      } catch (final InvocationTargetException e) {
-        monitor.logEvaluationError(this, e);
-      } catch (final InterruptedException x) {
-        monitor.logCancellationRequest(this, x);
+      } catch (final InvocationTargetException ¢) {
+        monitor.logEvaluationError(this, ¢);
+      } catch (final InterruptedException ¢) {
+        monitor.logCancellationRequest(this, ¢);
       }
       if (todo.isEmpty() || canelled.get())
         break;

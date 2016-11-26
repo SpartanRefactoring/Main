@@ -126,10 +126,8 @@ public final class BatchSpartanizerApplication implements IApplication {
     try {
       u.close();
       u.delete(true, null);
-    } catch (final JavaModelException e) {
-      monitor.logEvaluationError(this, e);
-    } catch (final NullPointerException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NullPointerException | JavaModelException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
   }
 

@@ -51,8 +51,8 @@ public class Issue822 {
     StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch (final Exception e) {
-      fail(e.getMessage());
+    } catch (final Exception ¢) {
+      fail(¢.getMessage());
     }
     assert sb != null;
     azzert.that(sb + "", is(new StringBuilder() + ""));

@@ -501,12 +501,12 @@ public interface idiomatic {
       return i -> (Collection<R>) i;
     }
 
-    @SuppressWarnings("unchecked") @Override public Supplier<Collection<R>> supplier() {
+    @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception x) {
-          x.printStackTrace();
+        } catch (final Exception ¢) {
+          ¢.printStackTrace();
         }
         return null;
       };

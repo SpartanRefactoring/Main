@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.*;
  * @year 2016 */
 public final class ReturnOld extends NanoPatternTipper<Block> {
   private static final UserDefinedTipper<Block> tipper = TipperFactory//
-      .subBlockTipper("$N1 $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old");
+      .statementsPattern("$N1 $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();
