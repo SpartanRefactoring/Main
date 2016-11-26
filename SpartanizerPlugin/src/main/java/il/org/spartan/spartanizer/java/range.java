@@ -37,7 +37,7 @@ public class range {
   boolean inclusive;
   int step = 1;
 
-  public class AfterTo extends Inner<AfterTo> {
+  public class AfterTo extends RangeIterator<AfterTo> {
     public AfterTo from(final int ¢) {
       to = ¢;
       return this;
@@ -53,7 +53,7 @@ public class range {
     }
   }
 
-  public class BeforeTo extends Inner<BeforeTo> {
+  public class BeforeTo extends RangeIterator<BeforeTo> {
     public AfterTo step(final int ¢) {
       step = ¢;
       return new AfterTo();
@@ -69,7 +69,7 @@ public class range {
     }
   }
 
-  abstract class Inner<Self extends Inner<Self>> implements Iterable<Integer> {
+  abstract class RangeIterator<Self extends RangeIterator<Self>> implements Iterable<Integer> {
     public final Self exclusive() {
       inclusive = false;
       return self();
