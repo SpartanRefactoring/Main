@@ -11,12 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>if(!boolVar) 
- *                  continue; 
- *                VAR++;</code> to
- * <code>if(boolVar) 
- *          VAR++;</code>, etc.
- * iff these are the last statements in their block, and if it's not a sequencer with expiration.
+/** removes continue in for loop if it's last statement in the loop.
  * @author Kfir Marx
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement> implements TipperCategory.SyntacticBaggage {
