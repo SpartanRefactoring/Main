@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.spartanizations;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })
