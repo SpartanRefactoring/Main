@@ -46,14 +46,14 @@ public class Analyze {
   }
 
   /**
-   * 
+   *
    */
   private static void avgIndicatorMetricalAnalyzer() {
-    methodsAnalyze((new AvgIndicatorMetricalAnalyzer()));
+    methodsAnalyze(new AvgIndicatorMetricalAnalyzer());
   }
 
   private static void sameStatementsAverageUAnalyzer() {
-    methodsAnalyze((new SameStatementsAverageUAnalyzer()));
+    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -92,8 +92,8 @@ public class Analyze {
   private static void appendFile(final File f, final String s) {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "append");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "append");
     }
   }
 
@@ -173,19 +173,20 @@ public class Analyze {
   }
 
   private static void methodsAnalyze() {
-    methodsAnalyze((new MagicNumbersAnalysis()));
+    methodsAnalyze(new MagicNumbersAnalysis());
   }
 
   private static void methodsAnalyze(final Analyzer<?> a) {
     for (final File f : inputFiles())
-      for (final AbstractTypeDeclaration t : step.types(az.compilationUnit(compilationUnit(f))))
-        if (haz.methods(t))
-          for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
-            try {
-              a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
-            } catch (@SuppressWarnings("unused") final AssertionError __) {
-              //
-            }
+      //
+      step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
+        for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+          try {
+            a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+          } catch (@SuppressWarnings("unused") final AssertionError __) {
+            //
+          }
+      });
     a.printComparison();
     a.printAccumulated();
   }
@@ -221,8 +222,21 @@ public class Analyze {
             new Coercion(), //
             null) //
         .add(EnhancedForStatement.class, //
-            new ApplyToEach(), //
+            new AnyMatches(), //
+            new Contains(), //
+            new ForEach(), //
             new FindFirst(), //
+            new Reduce(), //
+            null) //
+        .add(ForStatement.class, //
+            new Contains2(), //
+            new CopyArray(), //
+            new FindFirst2(), //
+            new ForEach2(), //
+            new InitArray(), //
+            new Max2(), //
+            new Min2(), //
+            new Reduce2(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //

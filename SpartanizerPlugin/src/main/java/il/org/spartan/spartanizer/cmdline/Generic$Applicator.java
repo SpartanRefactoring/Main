@@ -26,8 +26,8 @@ public class Generic$Applicator {
     try {
       for (final String ¢ : ss)
         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-    } catch (final ClassNotFoundException x) {
-      x.printStackTrace();
+    } catch (final ClassNotFoundException ¢) {
+      ¢.printStackTrace();
     }
     return as.list($); // useless?
   }
@@ -92,10 +92,8 @@ public class Generic$Applicator {
   }
 
   public static void main(final String[] args) {
-    for (final Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
-      System.out.println(i);
-    for (final String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
-      System.out.println(¢);
+    setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment").forEach(System.out::println);
+    setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
   private static List<String> setSelectedTipperGroups(final String... ss) {

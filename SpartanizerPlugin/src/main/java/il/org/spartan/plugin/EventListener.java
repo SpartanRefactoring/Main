@@ -30,7 +30,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
     return enumClass.getEnumConstants();
   }
 
-  @SuppressWarnings("unchecked") @Override public void tick(final Object... ¢) {
+  @Override @SuppressWarnings("unchecked") public void tick(final Object... ¢) {
     if (¢ != null && enumClass.isInstance(¢[0]))
       if (¢.length == 1)
         tick((E) ¢[0]);

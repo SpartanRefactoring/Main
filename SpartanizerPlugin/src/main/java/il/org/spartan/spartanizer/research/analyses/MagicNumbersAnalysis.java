@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public class MagicNumbersAnalysis extends IntegerMetricalAnalyzer {
-  @Override protected int metric(ASTNode ¢) {
+  @Override protected int metric(final ASTNode ¢) {
     return count.statements(¢);
   }
 }

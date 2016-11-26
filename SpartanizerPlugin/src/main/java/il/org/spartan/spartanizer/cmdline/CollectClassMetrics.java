@@ -33,8 +33,8 @@ public final class CollectClassMetrics {
     assert $ != null;
     try {
       tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException e) {
-      e.printStackTrace();
+    } catch (OperationCanceledException | CoreException ¢) {
+      ¢.printStackTrace();
     }
     return before;
   }
@@ -44,8 +44,8 @@ public final class CollectClassMetrics {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
+    } catch (final IOException ¢) {
+      System.err.println(¢.getMessage());
     }
   }
 
@@ -62,8 +62,8 @@ public final class CollectClassMetrics {
   private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
-    } catch (final IOException e) {
-      throw new RuntimeException(OUTPUT, e);
+    } catch (final IOException ¢) {
+      throw new RuntimeException(OUTPUT, ¢);
     }
   }
 

@@ -45,8 +45,8 @@ public class Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData();
         if (d != null)
           icon = new Image(null, d);
-      } catch (final MalformedURLException x) {
-        monitor.log(x);
+      } catch (final MalformedURLException ¢) {
+        monitor.log(¢);
       }
     }
     return icon;
@@ -61,8 +61,8 @@ public class Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData();
         if (d != null)
           logo = new Image(null, d);
-      } catch (final MalformedURLException x) {
-        monitor.log(x);
+      } catch (final MalformedURLException ¢) {
+        monitor.log(¢);
       }
       // logo = new Image(null,
       // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
@@ -70,13 +70,14 @@ public class Dialogs {
     return logo;
   }
 
-  /** Simple dialog, waits for user operation.
+  /** Simple dialog, waits for user operation. Does not trim the received
+   * message.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-  public static MessageDialog message(final String message) {
-    return new MessageDialog(null, NAME, icon(), Linguistic.trim(message), MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+  public static MessageDialog messageUnsafe(final String message) {
+    return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
       }
 
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
@@ -88,6 +89,13 @@ public class Dialogs {
         return logo();
       }
     };
+  }
+
+  /** Simple dialog, waits for user operation.
+   * @param message to be displayed in the dialog
+   * @return simple, textual dialog with an OK button */
+  public static MessageDialog message(final String message) {
+    return messageUnsafe(Linguistic.trim(message));
   }
 
   /** Simple non-modal dialog. Does not wait for user operation (i.e., non
@@ -106,7 +114,7 @@ public class Dialogs {
   public static ProgressMonitorDialog progress(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
 
       @Override protected void createButtonsForButtonBar(final Composite ¢) {

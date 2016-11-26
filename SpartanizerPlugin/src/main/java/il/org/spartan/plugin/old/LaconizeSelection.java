@@ -44,10 +44,10 @@ public abstract class LaconizeSelection extends BaseHandler {
           if (r != null)
             applicator.apply(currentCompilationUnit, r);
         });
-      } catch (final InvocationTargetException x) {
-        monitor.logEvaluationError(this, x);
-      } catch (final InterruptedException x) {
-        monitor.logCancellationRequest(this, x);
+      } catch (final InvocationTargetException ¢) {
+        monitor.logEvaluationError(this, ¢);
+      } catch (final InterruptedException ¢) {
+        monitor.logCancellationRequest(this, ¢);
         return null;
       }
       if (n.inner <= 0) {
@@ -113,8 +113,8 @@ public abstract class LaconizeSelection extends BaseHandler {
       marker = m;
       try {
         execute();
-      } catch (final ExecutionException x) {
-        monitor.logEvaluationError(this, x);
+      } catch (final ExecutionException ¢) {
+        monitor.logEvaluationError(this, ¢);
       }
     }
   }

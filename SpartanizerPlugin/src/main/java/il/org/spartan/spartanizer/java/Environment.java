@@ -4,6 +4,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 import java.util.Map.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -176,8 +177,7 @@ public interface Environment {
     final List<Entry<String, Information>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(s.getType()));
     final String path = fullName(s);
-    for (final VariableDeclarationFragment ¢ : fragments(s))
-      $.add(new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t)));
+    $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
@@ -221,8 +221,7 @@ public interface Environment {
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(d.getType()));
-        for (final VariableDeclarationFragment ¢ : fragments(d))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        $.addAll(fragments(d).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
         return $;
       }
 
@@ -233,16 +232,14 @@ public interface Environment {
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(x.getType()));
-        for (final VariableDeclarationFragment ¢ : fragments(x))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        $.addAll(fragments(x).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
         return $;
       }
 
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : fragments(s))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
         return $;
       }
 

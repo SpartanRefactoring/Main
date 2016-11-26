@@ -30,8 +30,8 @@ public final class LaconizeCurrent extends LaconizeSelection implements IMarkerR
   @Override public void run(@SuppressWarnings("unused") final IMarker __) {
     try {
       execute();
-    } catch (final ExecutionException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final ExecutionException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
   }
 }

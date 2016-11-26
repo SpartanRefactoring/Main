@@ -29,8 +29,8 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
-    } catch (NoSuchMethodException | SecurityException x) {
-      monitor.logProbableBug(clazz, x);
+    } catch (NoSuchMethodException | SecurityException ¢) {
+      monitor.logProbableBug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
     }
     throw new RuntimeException();
@@ -82,8 +82,8 @@ public abstract class FilesASTVisitor extends ASTVisitor {
       try {
         collect(FileUtils.read(f));
         dotter.click();
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢, "File = " + f);
       }
   }
 }

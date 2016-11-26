@@ -140,7 +140,7 @@ public class SortElementsOperation extends JavaModelOperation {
 	 * @param source
 	 */
 	private String processElement(ICompilationUnit u, char[] source) {
-		Document document = new Document(String.valueOf(source));
+		Document $ = new Document(String.valueOf(source));
 		CompilerOptions options = new CompilerOptions(u.getJavaProject().getOptions(true));
 		ASTParser parser = ASTParser.newParser(this.apiLevel);
 		parser.setCompilerOptions(options.getMap());
@@ -151,9 +151,9 @@ public class SortElementsOperation extends JavaModelOperation {
 
 		ASTRewrite rewriter= sortCompilationUnit(ast, null);
 		if (rewriter == null)
-			return document.get();
+			return $.get();
 
-		TextEdit edits = rewriter.rewriteAST(document, null);
+		TextEdit edits = rewriter.rewriteAST($, null);
 
 		RangeMarker[] markers = null;
 		if (this.positions != null) {
@@ -164,14 +164,14 @@ public class SortElementsOperation extends JavaModelOperation {
 			}
 		}
 		try {
-			edits.apply(document, TextEdit.UPDATE_REGIONS);
+			edits.apply($, TextEdit.UPDATE_REGIONS);
 			if (this.positions != null)
         for (int ¢ = 0, max = markers.length; ¢ < max; ++¢)
           this.positions[¢] = markers[¢].getOffset();
 		} catch (BadLocationException e) {
 			// ignore
 		}
-		return document.get();
+		return $.get();
 	}
 
 

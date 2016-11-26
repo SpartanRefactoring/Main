@@ -33,14 +33,14 @@ public final class CollectMetrics {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
   }
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new Trimmer().collectSuggesions(before));
+    reportTips(new Trimmer().collectSuggestions(before));
   }
 
   private static void go(final File f) {
@@ -49,8 +49,8 @@ public final class CollectMetrics {
       output.put("File", f.getName());
       Tips.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
+    } catch (final IOException ¢) {
+      System.err.println(¢.getMessage());
     }
   }
 
@@ -73,8 +73,8 @@ public final class CollectMetrics {
   private static CSVStatistics init(final String outputDir, final String property) {
     try {
       return new CSVStatistics(outputDir, property);
-    } catch (final IOException e) {
-      throw new RuntimeException(OUTPUT, e);
+    } catch (final IOException ¢) {
+      throw new RuntimeException(OUTPUT, ¢);
     }
   }
 
