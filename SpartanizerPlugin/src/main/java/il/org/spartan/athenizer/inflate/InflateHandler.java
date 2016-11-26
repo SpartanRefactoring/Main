@@ -1,4 +1,4 @@
-package il.org.spartan.inflate;
+package il.org.spartan.athenizer.inflate;
 
 import org.eclipse.core.commands.*;
 
