@@ -112,6 +112,7 @@ public class Toolbox {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
             new EnhancedForParameterRenameToCent(), //
+            new EnhancedForRedundantConinue(), //
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
@@ -138,7 +139,7 @@ public class Toolbox {
             new RemoveRedundentFor(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
-            new ForRedundantContinue(), // 
+            new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
