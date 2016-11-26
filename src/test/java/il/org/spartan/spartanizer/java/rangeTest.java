@@ -45,4 +45,44 @@ public class rangeTest {
       sum += ¢;
     assert sum==7;
   }
+  
+  @SuppressWarnings({ "static-access", "boxing" })
+  @Test public void test5() {
+    int sum=0;
+    for(Integer ¢ : range.from(0).to(10).step(2).inclusive())
+      sum += ¢;
+    assert sum==30;
+  }
+  
+  @SuppressWarnings({"boxing", "static-access" })
+  @Test public void test6() {
+    int sum=0;
+    for(Integer ¢ : range.to(5).inclusive())
+      sum += ¢;
+    assert sum==15;
+  }
+  
+  @SuppressWarnings({"boxing", "static-access" })
+  @Test public void test7() {
+    int sum=0;
+    for(Integer ¢ : range.to(5).notInclusive())
+      sum += ¢;
+    assert sum==10;
+  }
+  
+  @SuppressWarnings({"boxing", "static-access" })
+  @Test public void test8() {
+    int sum=0;
+    for(Integer ¢ : range.to(5).step(3))
+      sum += ¢;
+    assert sum==3;
+  }
+  
+  @SuppressWarnings({"boxing", "static-access" })
+  @Test public void test9() {
+    int sum=0;
+    for(Integer ¢ : range.from(100).to(110).step(10))
+      sum += ¢;
+    assert sum==100;
+  }
 }
