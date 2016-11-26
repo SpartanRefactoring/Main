@@ -80,7 +80,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all())
-      for (final Tip ¢ : s.collectSuggesions(u))
+      for (final Tip ¢ : s.collectSuggestions(u))
         if (¢ != null) {
           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
@@ -108,8 +108,8 @@ public final class Builder extends IncrementalProjectBuilder {
         addMarkers(r);
         return true; // to continue visiting children.
       });
-    } catch (final CoreException x) {
-      monitor.logCancellationRequest(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logCancellationRequest(this, ¢);
     }
   }
 

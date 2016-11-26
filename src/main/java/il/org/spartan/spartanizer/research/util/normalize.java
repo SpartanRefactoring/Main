@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class normalize {
-  public static String testcase(final String raw, final int name, final int issue) {
-    return wrapTest(name, issue, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
+  public static String testcase(final String name, final String raw) {
+    return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
   public static String code(final String raw) {
@@ -29,10 +29,9 @@ public class normalize {
     return ¢.replace("\"", "\\\"");
   }
 
-  private static String wrapTest(final int report, final int issue, final String code) {
-    return "  @Test public void report" + report + "() {" + //
-        "\n\ttrimmingOf(\"// From use case of issue" + issue + //
-        "\" //\n + " + code + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
+  private static String wrapTest(final String name, final String code) {
+    return "@Test public void " + name + "() {" + //
+        "\n\ttrimmingOf(\n" + code + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
         + code + //
         "\n).stays();\n}";
   }
@@ -72,13 +71,12 @@ public class normalize {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final StringLiteral node) {
-        final StringLiteral lit = ast.newStringLiteral();
-        lit.setLiteralValue("str");
-        r.replace(node, lit, null);
-        return super.visit(node);
-      }
-
+      // @Override public boolean visit(final StringLiteral node) {
+      // final StringLiteral lit = ast.newStringLiteral();
+      // lit.setLiteralValue("str");
+      // r.replace(node, lit, null);
+      // return super.visit(node);
+      // }
       @Override public void preVisit(final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
@@ -101,8 +99,8 @@ public class normalize {
   private static void applyChanges(final Document d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      e.printStackTrace();
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      ¢.printStackTrace();
     }
   }
 
@@ -112,7 +110,7 @@ public class normalize {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(normalize.testcase(s, 234, 285));
+      System.out.println(normalize.testcase("a", s));
     }
   }
 }

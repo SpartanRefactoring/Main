@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -71,11 +72,8 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      $.add(peel(¢));
-    return $;
+  private static List<Expression> peel(final List<Expression> ¢) {
+    return ¢.stream().map(minus::peel).collect(Collectors.toList());
   }
 
   public static Expression peel(final NumberLiteral $) {
