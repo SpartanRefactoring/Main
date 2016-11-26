@@ -333,7 +333,7 @@ public enum extract {
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
-  
+
   /** Find the {@link PrefixExpression} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or

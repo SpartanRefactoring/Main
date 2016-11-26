@@ -12,18 +12,18 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert :
- * 
+ *
  * <pre>
  * array[i];
  * ++i;
  * </pre>
- * 
+ *
  * to :
- * 
+ *
  * <pre>
  * array[i++];
  * </pre>
- * 
+ *
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 public final class InliningPrefix extends EagerTipper<ArrayAccess> implements TipperCategory.Inlining {
@@ -35,7 +35,7 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
     return extract.nextPrefix(a) == null || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()) ? null
         : new Tip(description(a), a, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            PostfixExpression newpost = a.getAST().newPostfixExpression();
+            final PostfixExpression newpost = a.getAST().newPostfixExpression();
             newpost.setOperand(duplicate.of(a.getIndex()));
             newpost.setOperator(Operator.INCREMENT);
             r.replace(a.getIndex(), newpost, g);

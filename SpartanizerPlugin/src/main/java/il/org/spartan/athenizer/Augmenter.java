@@ -46,9 +46,9 @@ public class Augmenter implements Application {
   /** @param u JD
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
-    List<List<Statement>> $ = new LinkedList<>();
+    final List<List<Statement>> $ = new LinkedList<>();
     u.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unchecked") public boolean visit(Block b) {
+      @Override @SuppressWarnings("unchecked") public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;
         if (inRange(b, s))
@@ -142,7 +142,7 @@ public class Augmenter implements Application {
   static boolean inRange(final ASTNode n, final ITextSelection s) {
     if (n == null || s == null)
       return false;
-    int p = n.getStartPosition();
+    final int p = n.getStartPosition();
     return p >= s.getOffset() && p < s.getLength() + s.getOffset();
   }
 
