@@ -1,88 +1,109 @@
 package il.org.spartan.spartanizer.java;
 
-
 import il.org.spartan.spartanizer.java.range;
 import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 25-11-2016 */
-@SuppressWarnings("static-method")
+@SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
-    int counter=0;
-    for(@SuppressWarnings("unused") Integer i : range.to(5))
+    range r = new range();
+    int counter = 0;
+    for (@SuppressWarnings("unused") Integer i : r.to(5))
       ++counter;
-    assert counter==5;
+    assert counter == 5;
   }
-  
-  @SuppressWarnings({ "static-access", "boxing" })
+
   @Test public void test1() {
-    int sum=0;
-    for(Integer ¢ : range.from(3).to(5))
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.from(3).to(5))
       sum += ¢;
-    assert sum==7;
+    assert sum == 7;
   }
-  
-  @SuppressWarnings({ "static-access", "boxing" })
+
   @Test public void test2() {
-    int sum=0;
-    for(Integer ¢ : range.from(3).to(5).inclusive())
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.from(3).to(5).inclusive())
       sum += ¢;
-    assert sum==12;
+    assert sum == 12;
   }
-  
+
   @Test public void test3() {
-    int counter=0;
-    for(@SuppressWarnings("unused") Integer i : range.to(5))
+    range r = new range();
+    int counter = 0;
+    for (@SuppressWarnings("unused") Integer i : r.to(5))
       ++counter;
-    assert counter==5;
+    assert counter == 5;
   }
-  
-  @SuppressWarnings({ "static-access", "boxing" })
+
   @Test public void test4() {
-    int sum=0;
-    for(Integer ¢ : range.from(3).to(5).inclusive().notInclusive())
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.from(3).to(5).inclusive().notInclusive())
       sum += ¢;
-    assert sum==7;
+    assert sum == 7;
   }
-  
-  @SuppressWarnings({ "static-access", "boxing" })
+
   @Test public void test5() {
-    int sum=0;
-    for(Integer ¢ : range.from(0).to(10).step(2).inclusive())
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.from(0).to(10).step(2).inclusive())
       sum += ¢;
-    assert sum==30;
+    assert sum == 30;
   }
-  
-  @SuppressWarnings({"boxing", "static-access" })
+
   @Test public void test6() {
-    int sum=0;
-    for(Integer ¢ : range.to(5).inclusive())
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.to(5).inclusive())
       sum += ¢;
-    assert sum==15;
+    assert sum == 15;
   }
-  
-  @SuppressWarnings({"boxing", "static-access" })
+
   @Test public void test7() {
-    int sum=0;
-    for(Integer ¢ : range.to(5).notInclusive())
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.to(5).notInclusive())
       sum += ¢;
-    assert sum==10;
+    assert sum == 10;
   }
-  
-  @SuppressWarnings({"boxing", "static-access" })
+
   @Test public void test8() {
-    int sum=0;
-    for(Integer ¢ : range.to(5).step(3))
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.to(5).step(3))
       sum += ¢;
-    assert sum==3;
+    assert sum == 3;
   }
-  
-  @SuppressWarnings({"boxing", "static-access" })
+
   @Test public void test9() {
-    int sum=0;
-    for(Integer ¢ : range.from(100).to(110).step(10))
+    range r = new range();
+    int sum = 0;
+    for (Integer ¢ : r.from(100).to(110).step(10))
       sum += ¢;
-    assert sum==100;
+    assert sum == 100;
+  }
+
+  @Test public void test10() {
+    range r1 = new range();
+    range r2 = new range();
+    int sum = 0;
+    for (@SuppressWarnings("unused") Integer i1 : r1.to(10).step(2))
+      for (Integer i2 : r2.to(10).step(2))
+        sum += i2;
+    assert sum == 100;
+  }
+
+  @Test public void test11() {
+    range r1 = new range();
+    range r2 = new range();
+    int sum = 0;
+    for (@SuppressWarnings("unused") Integer i1 : r1.to(10).step(2))
+      for (Integer i2 : r2.to(10).step(2).inclusive())
+        sum += i2;
+    assert sum == 150;
   }
 }
