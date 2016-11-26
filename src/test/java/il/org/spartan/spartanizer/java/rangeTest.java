@@ -47,7 +47,7 @@ public class rangeTest {
     int sum = 0;
     for (Integer ¢ : range.from(0).to(10).step(2).inclusive())
       sum += ¢;
-    assert sum == 30;
+    azzert.that(sum,is(30));
   }
 
   @Test public void test6() {
