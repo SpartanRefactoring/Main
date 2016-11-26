@@ -8,10 +8,10 @@ import java.util.Iterator;
  * @author Dor Ma'ayan
  * @since 26-11-2016 */
 public class range {
-  
-  public static <T> RangeIterator<?> of(T[]  ¢) {
+  public static <T> RangeIterator<?> of(final T[] ¢) {
     return from(0).to(¢.length);
   }
+
   public static BeforeTo from(final int ¢) {
     return makeFrom(¢).new BeforeTo();
   }
