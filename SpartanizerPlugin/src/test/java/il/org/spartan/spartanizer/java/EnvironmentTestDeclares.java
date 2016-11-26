@@ -86,7 +86,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_7() {
-    final String code = "class MyClass{int a;static class Inner{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}";
+    final String code = "class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = declaresDown(u);
     assert $.contains("a");
