@@ -10,12 +10,11 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public final class SingletStatementTest {
+public final class extractSingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
     azzert.isNull(extract.singleStatement(s("{int a; a();}")));
   }
