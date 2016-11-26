@@ -49,7 +49,7 @@ public class LibrariesManagement {
 
   /** @return true iff the spartan library exists within eclipse. */
   public static boolean libraryExists() {
-    @SuppressWarnings("restriction") List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
+    @SuppressWarnings("restriction") final List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
     return userLibrariesNames.contains(LIBRARY_NAME);
   }
 
@@ -62,7 +62,7 @@ public class LibrariesManagement {
       for (final IClasspathEntry ¢ : p.getRawClasspath())
         if (LIBRARY_PATH_CONTAINER.getPath().equals(¢.getPath()))
           return true;
-    } catch (JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
     }
     return false;
@@ -71,7 +71,7 @@ public class LibrariesManagement {
   /** Adding the spartan library to a project.
    * @param p JD
    * @return true upon success */
-  public static boolean addLibrary(IJavaProject p) {
+  public static boolean addLibrary(final IJavaProject p) {
     if (p == null)
       return false;
     final List<IClasspathEntry> nes = new LinkedList<>();
@@ -106,6 +106,6 @@ public class LibrariesManagement {
   public static void initializeUserLibraries() throws CoreException {
     if (!libraryExists())
       JavaCore.getClasspathContainerInitializer(JavaCore.USER_LIBRARY_CONTAINER_ID)
-          .requestClasspathContainerUpdate((new Path(JavaCore.USER_LIBRARY_CONTAINER_ID)).append(LIBRARY_NAME), null, LIBRARY_PATH_CONTAINER);
+          .requestClasspathContainerUpdate(new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(LIBRARY_NAME), null, LIBRARY_PATH_CONTAINER);
   }
 }
