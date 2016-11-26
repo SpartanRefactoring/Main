@@ -1,4 +1,4 @@
-package il.org.spartan.athenizer;
+package il.org.spartan.athenizer.collateral;
 
 import java.util.*;
 
@@ -10,6 +10,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
