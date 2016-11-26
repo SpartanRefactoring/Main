@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java;
+
 import static il.org.spartan.azzert.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.java.range;
@@ -9,10 +10,10 @@ import org.junit.*;
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
-    int s= 0;
+    int s = 0;
     for (@SuppressWarnings("unused") Integer i : range.to(5))
       ++s;
-    assert s == 10;
+    assert s == 5;
   }
 
   @Test public void test1() {
@@ -47,14 +48,14 @@ public class rangeTest {
     int sum = 0;
     for (Integer ¢ : range.from(0).to(10).step(2).inclusive())
       sum += ¢;
-    azzert.that(sum,is(30));
+    azzert.that(sum, is(30));
   }
 
   @Test public void test6() {
     int sum = 0;
     for (Integer ¢ : range.to(5).exclusive())
       sum += ¢;
-    azzert.that(sum,is(15));
+    azzert.that(sum, is(10));
   }
 
   @Test public void test7() {
