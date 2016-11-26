@@ -11,16 +11,19 @@ public class range {
   public static BeforeTo from(final int ¢) {
     return makeFrom(¢).new BeforeTo();
   }
-  public static RangeIterator<?> infinite(int ¢) {
+
+  public static RangeIterator<?> infinite(final int ¢) {
     return from(¢).to(¢).step(0).inclusive();
   }
 
   public static RangeIterator<?> naturals() {
     return from(0).to(-1).step(1);
   }
+
   public static RangeIterator<?> numerals() {
     return from(1).to(-1).step(1);
   }
+
   public static RangeIterator<?> odds() {
     return from(1).to(-1).step(2);
   }
