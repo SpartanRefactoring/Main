@@ -145,6 +145,9 @@ public class Toolbox {
             new RemoveRedundantWhile(), //
             new WhileToForUpdaters(), //
             null) //
+        .add(SwitchStatement.class, //
+            new SwitchEmpty(), //
+            null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
