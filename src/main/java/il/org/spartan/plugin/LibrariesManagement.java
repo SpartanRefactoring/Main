@@ -1,4 +1,4 @@
-package il.org.spartan.libraries;
+package il.org.spartan.plugin;
 
 import java.util.*;
 import org.eclipse.core.runtime.*;

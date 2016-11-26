@@ -12,10 +12,4 @@ public interface Application {
    * @param s selection, containing the compilation unit
    * @return how many changes were committed */
   Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s);
-
-  /** @param s current selection
-   * @return if the service is available for the specific selection */
-  default boolean checkServiceAvailable(@SuppressWarnings("unused") final AbstractSelection<?> s) {
-    return true;
-  }
 }
