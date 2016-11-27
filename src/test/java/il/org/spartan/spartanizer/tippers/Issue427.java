@@ -11,7 +11,8 @@ public class Issue427 {
 
   @Test public void test0() {
     trimmingOf("int f(){return x==y ? y:x;}")
-        .gives("int f(){return x;}").stays();
+        .gives("int f(){return x;}")
+        .stays();
   }
   @Test public void test1() {
     trimmingOf("int f(){return x==y ? y:z;}")
@@ -27,6 +28,15 @@ public class Issue427 {
   }
   @Test public void test5() {
     trimmingOf("int f(){return x==y ? z:w;}")
+    .stays();
+  }
+  @Test public void test6() {
+    trimmingOf("int f(){return x==null ? x:null;}")
+    .gives("int f(){return null;}")
+    .stays();
+  }
+  @Test public void test7() {
+    trimmingOf("int f(){return f() == null ? f() : null;}")
     .stays();
   }
 }
