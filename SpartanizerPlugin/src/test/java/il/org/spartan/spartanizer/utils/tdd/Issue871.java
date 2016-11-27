@@ -23,4 +23,9 @@ public class Issue871 {
     assertEquals(3, i.intValue());
     i.set(4);
   }
+  
+  
+  @Test(expected=Exception.class) public void test3() {
+    (new ParameterInt()).intValue();
+  }
 }
