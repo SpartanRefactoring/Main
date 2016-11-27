@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -43,7 +44,7 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
     if (id == null || anyFurtherUsage(parent, nextStatement, identifier(id)) || leftSide(nextStatement, identifier(id)) || preOrPostfix(id))
       return null;
     r.remove(parent, g);
-    r.replace(id, initializer(f), g);
+    r.replace(id, !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis(), g);
     return r;
   }
 
