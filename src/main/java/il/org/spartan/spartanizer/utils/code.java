@@ -1,4 +1,6 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.utils;
+
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** @author Yossi Gil
  * @author Yarden Lev
