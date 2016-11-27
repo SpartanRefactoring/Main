@@ -1,5 +1,11 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+/**
+ * approximation of int with default value and initializations check
+ * @author kobybs
+ * @since 27-11-2016
+ */
+
 public final class ParameterInt {
   private int value;
   private boolean hasValue;
