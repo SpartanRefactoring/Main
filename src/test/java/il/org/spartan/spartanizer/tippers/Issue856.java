@@ -71,4 +71,13 @@ public class Issue856 {
         + "list.add(Array.get(defaultValue, ¢));" + "$.append(list);")//
             .stays();
   }
+
+  @Test public void e() {
+    trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
+        "il.finalize(); " + //
+        "return;").gives(//
+            "((InflaterListener) ((TypedListener) l).getEventListener()).finalize();" + //
+                "return;" //
+    ).stays();
+  }
 }
