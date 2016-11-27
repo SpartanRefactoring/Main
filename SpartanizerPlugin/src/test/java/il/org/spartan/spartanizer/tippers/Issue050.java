@@ -82,7 +82,8 @@ public class Issue050 {
   }
 
   @Test public void a$50_InterfaceMethods1() {
-    trimmingOf("public interface Int1{public void add();void remove()\n;}").gives("public interface Int1{void add();void remove()\n;}")//
+    trimmingOf("public interface Int1{public void add();void remove();}")//
+        .gives("public interface Int1{void add();void remove();}")//
         .stays()//
     ;
   }
