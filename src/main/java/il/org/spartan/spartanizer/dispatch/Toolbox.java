@@ -158,7 +158,7 @@ public class Toolbox {
         .add(Block.class, //
             new BlockSimplify(), //
             new BlockSingleton(), //
-            new CachingPattern(), //
+//            new CachingPattern(), //
             new BlockInlineStatementIntoNext(), //
             null) //
         .add(PostfixExpression.class, //
@@ -205,7 +205,7 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new SetterGoFluent(), //
+//            new SetterGoFluent(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -243,7 +243,7 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
-            new PutIfAbsent(), //
+//            new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //
