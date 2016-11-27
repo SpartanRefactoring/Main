@@ -287,9 +287,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
     }
 
     @Override Iterator<Entry<Cut<C>, Range<C>>> descendingEntryIterator() {
-      Collection<Range<C>> candidates = ((!upperBoundWindow.hasUpperBound() ? rangesByLowerBound
-          : rangesByLowerBound.headMap(upperBoundWindow.upperEndpoint(), false)).descendingMap()).values();
-      final PeekingIterator<Range<C>> backingItr = Iterators.peekingIterator(candidates.iterator());
+      final PeekingIterator<Range<C>> backingItr = Iterators.peekingIterator(((!upperBoundWindow.hasUpperBound() ? rangesByLowerBound : rangesByLowerBound.headMap(upperBoundWindow.upperEndpoint(), false)).descendingMap())
+          .values().iterator());
       if (backingItr.hasNext() && upperBoundWindow.upperBound.isLessThan(backingItr.peek().upperBound))
         backingItr.next();
       return new AbstractIterator<Entry<Cut<C>, Range<C>>>() {
@@ -353,17 +352,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
     }
 
     @Override Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {
-      /* firstComplementRangeLowerBound is the first complement range lower
-       * bound inside complementLowerBoundWindow. Complement range lower bounds
-       * are either positive range upper bounds, or Cut.belowAll().
-       *
-       * positiveItr starts at the first positive range with lower bound greater
-       * than firstComplementRangeLowerBound. (Positive range lower bounds
-       * correspond to complement range upper bounds.) */
-      Collection<Range<C>> positiveRanges = (!complementLowerBoundWindow.hasLowerBound() ? positiveRangesByUpperBound
+      final PeekingIterator<Range<C>> positiveItr = Iterators.peekingIterator((!complementLowerBoundWindow.hasLowerBound() ? positiveRangesByUpperBound
           : positiveRangesByUpperBound.tailMap(complementLowerBoundWindow.lowerEndpoint(),
-              complementLowerBoundWindow.lowerBoundType() == BoundType.CLOSED)).values();
-      final PeekingIterator<Range<C>> positiveItr = Iterators.peekingIterator(positiveRanges.iterator());
+              complementLowerBoundWindow.lowerBoundType() == BoundType.CLOSED)).values().iterator());
       final Cut<C> firstComplementRangeLowerBound;
       if (complementLowerBoundWindow.contains(Cut.<C> belowAll()) && (!positiveItr.hasNext() || positiveItr.peek().lowerBound != Cut.<C> belowAll()))
         firstComplementRangeLowerBound = Cut.belowAll();
@@ -393,16 +384,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
     }
 
     @Override Iterator<Entry<Cut<C>, Range<C>>> descendingEntryIterator() {
-      /* firstComplementRangeUpperBound is the upper bound of the last
-       * complement range with lower bound inside complementLowerBoundWindow.
-       *
-       * positiveItr starts at the first positive range with upper bound less
-       * than firstComplementRangeUpperBound. (Positive range upper bounds
-       * correspond to complement range lower bounds.) */
-      Cut<C> startingPoint = !complementLowerBoundWindow.hasUpperBound() ? Cut.<C> aboveAll() : complementLowerBoundWindow.upperEndpoint();
-      boolean inclusive = complementLowerBoundWindow.hasUpperBound() && complementLowerBoundWindow.upperBoundType() == BoundType.CLOSED;
       final PeekingIterator<Range<C>> positiveItr = Iterators
-          .peekingIterator(positiveRangesByUpperBound.headMap(startingPoint, inclusive).descendingMap().values().iterator());
+          .peekingIterator(positiveRangesByUpperBound.headMap(!complementLowerBoundWindow.hasUpperBound() ? Cut.<C> aboveAll() : complementLowerBoundWindow.upperEndpoint(), complementLowerBoundWindow.hasUpperBound() && complementLowerBoundWindow.upperBoundType() == BoundType.CLOSED).descendingMap().values().iterator());
       Cut<C> cut;
       if (positiveItr.hasNext())
         cut = (positiveItr.peek().upperBound == Cut.<C> aboveAll()) ? positiveItr.next().lowerBound

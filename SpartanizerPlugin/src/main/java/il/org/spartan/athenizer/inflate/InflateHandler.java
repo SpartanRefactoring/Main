@@ -31,14 +31,13 @@ public class InflateHandler extends AbstractHandler {
       text.addMouseWheelListener(l);
       text.addKeyListener(l);
     } else {
-      for (final Listener l : ls)
-        if (l instanceof TypedListener && ((TypedListener) l).getEventListener() instanceof InflaterListener) {
-          final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();
-          il.finilize();
+      for (final Listener ¢ : ls)
+        if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
+          ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
           break;
         }
       // XXX seams to be a bug
-      removeListeners(text, ls, SWT.MouseWheel/*, SWT.KeyUp, SWT.KeyDown*/);
+      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
       // replacement:
       for (final Listener ¢ : ls)
         text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());

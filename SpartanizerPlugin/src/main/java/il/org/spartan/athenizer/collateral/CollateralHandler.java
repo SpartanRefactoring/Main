@@ -18,8 +18,7 @@ public class CollateralHandler extends AbstractHandler {
 
   private static AthensApplicator applicator() {
     final AthensApplicator $ = AthensApplicator.defaultApplicator();
-    final Augmenter a = new Augmenter();
-    $.setRunAction(¢ -> a.commitChanges(¢, $.selection()));
+    $.setRunAction(¢ -> new Augmenter().commitChanges(¢, $.selection()));
     $.defaultRunContext();
     return $;
   }
