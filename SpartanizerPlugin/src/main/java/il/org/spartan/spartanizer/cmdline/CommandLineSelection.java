@@ -101,7 +101,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     }
   }
 
-  /** @param presentSourcePath
+  /** @param inputFolder
    * @return */
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
