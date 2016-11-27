@@ -3,14 +3,18 @@ package il.org.spartan.spartanizer.utils.tdd;
 public final class ParameterInt {
   private int value;
   private boolean hasValue;
+  private boolean hasDefault;
   
   public ParameterInt(){ }
   
   public ParameterInt(int defaultValue){
     value = defaultValue;
+    hasDefault = true;
   }
   
-  public int intValue(){
+  public int intValue() {
+    if (!hasValue && !hasDefault)
+      throw new IllegalArgumentException();
     return value;
   }
   
