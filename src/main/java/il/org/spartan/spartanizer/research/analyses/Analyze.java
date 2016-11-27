@@ -23,6 +23,16 @@ public class Analyze {
     set("outputDir", "/tmp");
   }
   private static InteractiveSpartanizer spartanizer;
+  @SuppressWarnings("rawtypes") private static Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
+    static final long serialVersionUID = 1L;
+    {
+      put("AvgIndicatorMetrical", new AvgIndicatorMetricalAnalyzer());
+      put("understandability", new UnderstandabilityAnalyzer());
+      put("understandability2", new Understandability2Analyzer());
+      put("statementsToAverageU", new SameStatementsAverageUAnalyzer());
+      put("magic numbers", new MagicNumbersAnalysis());
+    }
+  };
 
   public static void main(final String args[]) {
     AnalyzerOptions.parseArguments(args);
@@ -31,29 +41,10 @@ public class Analyze {
     final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
-    else if ("understandability".equals(analysis))
-      understandabilityAnalyze();
-    else if ("understandability2".equals(analysis))
-      understandability2Analyze();
-    else if ("statementsToAverageU".equals(analysis))
-      sameStatementsAverageUAnalyzer();
-    else if ("avgIndicatorMetricalAnalyzer".equals(analysis))
-      avgIndicatorMetricalAnalyzer();
     else if ("classify".equals(analysis))
       classify();
     else
       analyze();
-  }
-
-  /**
-   *
-   */
-  private static void avgIndicatorMetricalAnalyzer() {
-    methodsAnalyze(new AvgIndicatorMetricalAnalyzer());
-  }
-
-  private static void sameStatementsAverageUAnalyzer() {
-    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -172,31 +163,23 @@ public class Analyze {
     new File(getProperty("outputDir") + "/after.java").delete();
   }
 
-  private static void methodsAnalyze() {
-    methodsAnalyze(new MagicNumbersAnalysis());
-  }
-
-  private static void methodsAnalyze(final Analyzer<?> a) {
+  @SuppressWarnings("rawtypes") private static void methodsAnalyze() {
     for (final File f : inputFiles())
       //
       step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-            a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            for (Analyzer a : analyses.values())
+              a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
       });
-    a.printComparison();
-    a.printAccumulated();
-  }
-
-  private static void understandabilityAnalyze() {
-    methodsAnalyze(new UnderstandabilityAnalyzer());
-  }
-
-  private static void understandability2Analyze() {
-    methodsAnalyze(new Understandability2Analyzer());
+    for (String a : analyses.keySet()) {
+      System.out.println("++++++++" + a + "++++++++");
+      analyses.get(a).printComparison();
+      analyses.get(a).printAccumulated();
+    }
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
