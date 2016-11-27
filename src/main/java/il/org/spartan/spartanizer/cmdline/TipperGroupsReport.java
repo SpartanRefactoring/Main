@@ -12,9 +12,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * tippers, i.e., without applying these.
  * @author Yossi Gil
  * @since 2016-11-27 */
-public class TippersReport {
+public class TipperGroupsReport {
   public static void main(final String[] args) {
-    new TippersReport().go();
+    new TipperGroupsReport().go();
   }
 
   public void go() {
