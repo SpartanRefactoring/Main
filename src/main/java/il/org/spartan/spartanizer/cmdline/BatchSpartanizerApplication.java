@@ -17,8 +17,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Scans files named by folder, ignore test files, and collect statistics. It
- * does everything BatchSpartanizer does, but using the {@link EventApplicator}
+/** Scans files named by outputFolder, ignore test files, and collect
+ * statistics. It does everything BatchSpartanizer does, but using the
+ * {@link EventApplicator}
  * @author Matteo Orru'
  * @year 2016 */
 public final class BatchSpartanizerApplication implements IApplication {
@@ -363,7 +364,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   // "Collective before path=%s\n" + //
   // "Collective after path=%s\n" + //
   // "\n", //
-  // presentSourcePath, //
+  // inputFolder, //
   // beforeFileName, //
   // afterFileName);
   // try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
@@ -371,12 +372,12 @@ public final class BatchSpartanizerApplication implements IApplication {
   // befores = b;
   // afters = a;
   // report = new CSVStatistics(reportFileName, "property");
-  // for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
+  // for (final File ¢ : new FilesGenerator(".java").from(inputFolder))
   // collect(¢);
   // } catch (final IOException x) {
   // x.printStackTrace();
   // System.err.println(classesDone + " files processed; processing of " +
-  // presentSourcePath + " failed for some I/O reason");
+  // inputFolder + " failed for some I/O reason");
   // }
   // applyEssenceCommandLine();
   // System.err.print("\n Done: " + classesDone + " files processed.");
