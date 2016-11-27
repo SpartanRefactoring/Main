@@ -100,7 +100,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
     }
   }
 
-  @Override @Nullable public Range<C> rangeContaining(C value) {
+  @Nullable @Override public Range<C> rangeContaining(C value) {
     checkNotNull(value);
     Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(Cut.belowValue(value));
     return floorEntry == null || !floorEntry.getValue().contains(value) ? null : floorEntry.getValue();
@@ -441,7 +441,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
       return Iterators.size(entryIterator());
     }
 
-    @Override @Nullable public Range<C> get(Object key) {
+    @Nullable @Override public Range<C> get(Object key) {
       if (key instanceof Cut) {
         Cut cut = (Cut) key;
         try {
@@ -525,7 +525,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
       return get(key) != null;
     }
 
-    @Override @Nullable public Range<C> get(@Nullable Object key) {
+    @Nullable @Override public Range<C> get(@Nullable Object key) {
       if (key instanceof Cut)
         try {
           @SuppressWarnings("unchecked") Cut<C> cut = (Cut<C>) key;
@@ -614,7 +614,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
       return enclosing != null && !enclosing.intersection(restriction).isEmpty();
     }
 
-    @Override @Nullable public Range<C> rangeContaining(C value) {
+    @Nullable @Override public Range<C> rangeContaining(C value) {
       if (!restriction.contains(value))
         return null;
       Range<C> result = TreeRangeSet.this.rangeContaining(value);
