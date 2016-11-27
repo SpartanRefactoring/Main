@@ -258,8 +258,7 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            new SameEvaluationConditional(),
-            null) //
+            new SameEvaluationConditional(), null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //

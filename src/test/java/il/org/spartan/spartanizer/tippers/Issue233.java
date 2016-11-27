@@ -13,7 +13,7 @@ public class Issue233 {
   @Test public void b() {
     trimmingOf("switch(x) {} switch(x) {}int x=5;").gives("int x=5;").stays();
   }
-  
+
   @Test public void c() {
     trimmingOf("switch(x) { default: k=5; }").gives("{k=5;}");
   }
@@ -31,11 +31,11 @@ public class Issue233 {
   }
 
   @Ignore
-  public static class NotWorking {  
+  public static class NotWorking {
     @Test public void g() {
       trimmingOf("switch(x) {} switch(x) { case a: default: case b:}int x=5;").gives("y=3;int x=5;").stays();
     }
-    
+
     @Test public void h() {
       trimmingOf("switch(x) {} switch(x) { case x: case y: break; case a: break; default: case b:}int x=5;").gives("y=3;int x=5;").stays();
     }
