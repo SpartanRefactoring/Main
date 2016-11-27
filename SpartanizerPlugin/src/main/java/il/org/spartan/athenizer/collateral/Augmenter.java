@@ -1,4 +1,4 @@
-package il.org.spartan.athenizer;
+package il.org.spartan.athenizer.collateral;
 
 import java.util.*;
 
@@ -10,6 +10,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -74,9 +75,10 @@ public class Augmenter implements Application {
    * @param g JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
-    if (!sss.isEmpty() && !sss.get(0).isEmpty())
-      r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
-          sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
+    if (sss.isEmpty() || sss.get(0).isEmpty())
+      return false;
+    r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
+        sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
     return true;
   }
 
