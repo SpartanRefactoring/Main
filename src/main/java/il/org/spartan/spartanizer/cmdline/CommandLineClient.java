@@ -17,14 +17,13 @@ public final class CommandLineClient {
   @External(alias = "np", value = "Nano Patterns") private static String[] NanoPatterns;
   @External(alias = "enp", value = "Exclude Selected Nano Patterns") private String[] excludeNanoPatterns;
   @External(alias = "allnp", value = "Exclude All Nano Patterns") private boolean excludeAllNanoPatterns;
- private final MetricsReport metricsReport = new MetricsReport();
 
   public static void main(final String[] args) {
     new CommandLineClient().go(args);
   }
 
   private void go(String[] args) {
-    if (External.Introspector.extract(args, this).size() == 0) {
+    if (External.Introspector.extract(args, this).isEmpty()) {
       System.err.println(usage(this, args, this));
       return;
     }
@@ -38,9 +37,7 @@ public final class CommandLineClient {
     MetricsReport.generate();
   }
 
-
   private void run() {
-    // new CommandLineSpartanizer(inputDir).apply();
     CommandLineSpartanizer s = new CommandLineSpartanizer();
     s.inputDir(inputDir);
     s.name(system.folder2File(inputDir));
@@ -68,12 +65,6 @@ public final class CommandLineClient {
     System.out.println("inputDir: " + inputDir);
     System.out.println();
   }
-
-
-
-
-
-
 
   static void printPrompt() {
     // System.out.println("Help");
