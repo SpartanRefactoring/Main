@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
   public CompilationUnit compilationUnit;
+  public String fileName;
+  public String filePath;
 
   /** Instantiates this class
    * @param compilationUnit JD */
@@ -28,6 +30,12 @@ public class WrappedCompilationUnit {
    * @author Matteo Orru'
    * @param compilationUnit JD */
   public WrappedCompilationUnit(final CompilationUnit cu) {
+    compilationUnit = cu;
+  }
+  
+  public WrappedCompilationUnit(final CompilationUnit cu, String fileName, String absolutePath) {
+    this.fileName = fileName;
+    this.filePath = absolutePath;
     compilationUnit = cu;
   }
 
@@ -71,5 +79,17 @@ public class WrappedCompilationUnit {
    * @return */
   public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
+  }
+
+  public static WrappedCompilationUnit of(CompilationUnit from, String name, String absolutePath) {
+    return new WrappedCompilationUnit(from, name, absolutePath);
+ }
+
+  public String getFileName() {
+    return this.fileName;
+  }
+
+  public String getFilePath() {
+    return this.filePath;
   }
 }
