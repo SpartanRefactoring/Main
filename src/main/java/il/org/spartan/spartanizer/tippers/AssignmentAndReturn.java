@@ -36,7 +36,7 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
 
   @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(a.getParent());
-    if (parent == null || parent instanceof ForStatement)
+    if (parent == null || iz.forStatement(parent))
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(s.getExpression())))

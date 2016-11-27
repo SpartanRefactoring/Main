@@ -15,6 +15,6 @@ public class Issue711 {
   }
 
   @Test public void test1() {
-    trimmingOf("Consumer<Integer> x = (i->i+1); " + "x.accept(6);").stays();
+    trimmingOf("Consumer<Integer> x = (i->i+1); use(f);" + "x.accept(6);").stays();
   }
 }
