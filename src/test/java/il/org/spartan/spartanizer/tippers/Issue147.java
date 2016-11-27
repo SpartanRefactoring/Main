@@ -10,7 +10,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
 /** @author Kfir Marx
  * @since 2016-11-26 */
 @SuppressWarnings("static-method")
@@ -24,11 +23,10 @@ public class Issue147 {
   @Test public void eligible() {
     assert TIPPER.canTip(FOR);
   }
-  
+
   @Test public void notEligible() {
     assert !TIPPER.canTip(FOR1);
   }
-
 
   @Test public void extractFirstIf() {
     assert FOR != null;
@@ -37,26 +35,24 @@ public class Issue147 {
   @Test public void inputType() {
     azzert.that(FOR, instanceOf(ForStatement.class));
   }
-  
 
-@Test public void a(){
-  trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
-    .gives("for(int ¢=0; ¢<5;++¢){++¢; }");//
-}
+  @Test public void a() {
+    trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
+        .gives("for(int ¢=0; ¢<5;++¢){++¢; }");//
+  }
 
-@Test public void a$(){
-  trimmingOf("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
-    .stays();
-}
+  @Test public void a$() {
+    trimmingOf("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
+        .stays();
+  }
 
+  @Test public void b() {
+    trimmingOf("for (final Object o : os) {if (bool) return; continue;}")//
+        .gives("for (final Object o : os) {if (bool) return; }");//
+  }
 
-@Test public void b(){
-  trimmingOf("for (final Object o : os) {if (bool) return; continue;}")//
-    .gives("for (final Object o : os) {if (bool) return; }");//
-} 
-
-@Test public void b$(){
-  trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
-    .stays();
-}
+  @Test public void b$() {
+    trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
+        .stays();
+  }
 }
