@@ -1034,13 +1034,13 @@ public interface iz {
 
   /** @param ¢
    * @return */
-  static boolean doStatement(ASTNode ¢) {
+  static boolean doStatement(final ASTNode ¢) {
     return ¢ instanceof DoStatement;
   }
 
   /** @param ¢
    * @return */
-  static boolean synchronizedStatement(Statement ¢) {
+  static boolean synchronizedStatement(final Statement ¢) {
     return ¢ instanceof SynchronizedStatement;
   }
 }
