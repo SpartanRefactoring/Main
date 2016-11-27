@@ -29,4 +29,8 @@ public final class ParameterInt {
     hasValue = true;
   }
   
+  public boolean hasDefault(){
+    return hasDefault;
+  }
+  
 }
