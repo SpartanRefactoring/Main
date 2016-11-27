@@ -25,20 +25,28 @@ public class TippersList {
                 .put("Category", t.tipperGroup()) //
                 .put("Tipper", t.getClass().getSimpleName()) //
                 .put("Node Type Number", i) //
-                // .put("Node Class", ASTNode.nodeClassForType(i)) // 
+                .put("Node Class", intToClassName(i)) //
                 .put("Actual class", name(myActualOperandsClass)) //
                 .put("Abstract class", name(t.myAbstractOperandsClass())) //
             ;
             w.nl();
           }
     }
-      w.close();
+    w.close();
   }
 
-  /**
-   * @param myActualOperandsClass
-   * @return
-   */
+  /** @param i
+   * @return */
+  private static String intToClassName(int i) {
+    try {
+      return name(ASTNode.nodeClassForType(i));
+    } catch (@SuppressWarnings("unused") IllegalArgumentException __) {
+      return "???";
+    }
+  }
+
+  /** @param myActualOperandsClass
+   * @return */
   private static String name(Class<?> c) {
     return c == null ? "???" : c.getSimpleName();
   }
