@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class LibrariesManagement {
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
-  /** Eclipse's installation folder absolute path. */
+  /** Eclipse's installation outputFolder absolute path. */
   public static final IPath INSTALLATION_FOLDER;
   /** Library name, as seen by the user. */
   public static final String LIBRARY_NAME = "Spartan Library";

@@ -56,21 +56,21 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     if (¢.keyCode == SWT.CTRL && active)
       deactivate();
   }
-  
+
   private void activate() {
     active = true;
     InflateHandler.removeListeners(text, externalListeners, SWT.MouseWheel);
     if (!text.isDisposed())
       text.setCursor(activeCursor);
   }
-  
+
   private void deactivate() {
     active = false;
     InflateHandler.addListeners(text, externalListeners, SWT.MouseWheel);
     if (!text.isDisposed())
       text.setCursor(inactiveCursor);
   }
-  
+
   public void finilize() {
     if (active)
       deactivate();
