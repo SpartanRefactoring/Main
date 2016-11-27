@@ -1,9 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
+import java.util.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
+
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
@@ -21,18 +26,54 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Yuval Simon
  * @since 2016-11-20 */
-public final class SwitchEmpty extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  // TODO: yuval - check the below method and finish the other methods
-  @Override public Statement replacement(@SuppressWarnings("unused") final SwitchStatement __) {
-    // return instanceOf(EmptyStatement.class, ¢);
-    return (Statement) wizard.ast(";");
+public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
+  
+//  @Override public ASTNode replacement(@SuppressWarnings("unused") final SwitchStatement s) {
+//    if(s == null)
+//      return null;
+//    
+//    @SuppressWarnings("unchecked") List<Statement> ll = s.statements();
+//      return null;
+//    if(ll.isEmpty())
+//      return wizard.ast(";");
+//    
+//    if (!(ll.get(0) + "").contains("default"))
+//      return s;
+//    
+//    if ((ll.get(ll.size() - 1) + "").contains("break"))
+//      ll.remove(ll.size() - 1);
+//    ll.remove(0);
+//    return subject.ss(ll).toBlock();
+//  }
+  
+  @Override public Tip tip(SwitchStatement s) {
+    return new Tip(description(s), s, this.getClass()) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        
+        @SuppressWarnings("unchecked") List<Statement> ll = s.statements();
+        
+        if(ll.isEmpty()) {
+          r.remove(s, g);
+          return;
+        }
+        
+        if ((ll.get(ll.size() - 1) + "").contains("break"))
+          ll.remove(ll.size() - 1);
+        ll.remove(0);
+        Block b = subject.ss(ll).toBlock();
+        Block bb = subject.statement(b).toBlock();
+        
+        r.replace(s, bb, g);
+      }
+    };
   }
-
-  @Override public boolean prerequisite(@SuppressWarnings("unused") final SwitchStatement __) {
-    return false;
+  
+  @Override protected boolean prerequisite(SwitchStatement ¢) {
+   // return ¢ != null && (¢.statements().isEmpty() || (¢.statements().get(0) + "").contains("default"));
+    return ¢ != null && ¢.statements().isEmpty();
   }
-
+  
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
-    return "Remove empty switch statement";
+    return "Remove empty switch statement or switch statement with only default case";
   }
 }
