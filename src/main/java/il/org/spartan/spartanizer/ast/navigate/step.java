@@ -269,6 +269,13 @@ public enum step {
         .collect(Collectors.toList());
   }
 
+  /** Expose initializer contained in a {@link VariableDeclaration}
+   * @param ¢ JD
+   * @return initializer */
+  public static Expression initializer(final VariableDeclaration ¢) {
+    return ¢.getInitializer();
+  }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
@@ -523,7 +530,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName name(final VariableDeclarationFragment ¢) {
+  public static SimpleName name(final VariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 

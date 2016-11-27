@@ -292,6 +292,7 @@ public class Toolbox {
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
+            new DeclarationFragmentInlineIntoNext(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
