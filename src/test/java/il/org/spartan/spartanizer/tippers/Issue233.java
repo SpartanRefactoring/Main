@@ -31,5 +31,13 @@ public class Issue233 {
     @Test public void f() {
       trimmingOf("switch(x) {} switch(x) { case a: }int x=5;").gives("int x=5;").stays();
     }
+    
+    @Test public void g() {
+      trimmingOf("switch(x) {} switch(x) { case a: default: case b:}int x=5;").gives("y=3;int x=5;").stays();
+    }
+    
+    @Test public void h() {
+      trimmingOf("switch(x) {} switch(x) { case x: case y: break; case a: break; default: case b:}int x=5;").gives("y=3;int x=5;").stays();
+    }
   }
 }

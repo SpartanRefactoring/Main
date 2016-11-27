@@ -118,18 +118,18 @@ public class Analyze {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
-  /** Get all java files contained in folder recursively. <br>
+  /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
-   * @return All java files nested inside the folder */
+   * @return All java files nested inside the outputFolder */
   private static Set<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
 
-  /** Get all java files contained in folder recursively. <br>
+  /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we ignore test files.
    * @param directory to search in
-   * @return All java files nested inside the folder */
+   * @return All java files nested inside the outputFolder */
   private static Set<File> getJavaFiles(final File directory) {
     final Set<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)

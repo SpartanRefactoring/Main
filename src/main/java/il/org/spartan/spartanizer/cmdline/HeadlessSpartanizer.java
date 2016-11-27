@@ -2,35 +2,38 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
+import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 
-/** A configurable version of the CommandLineSpartanizer that relies on
+/** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
-  private String name;
-  private boolean selection;
-  private final boolean CommandLine$Applicator = true;
-  private boolean Spartanizer$Applicator;
-  private boolean DefaultApplicator;
-  private final CommandLineApplicator c = new CommandLineApplicator();
-  private String[] clazzes;
-  private String[] tipperGroups;
-  private String[] excludedTipperGroups;
-  private String[] excludedNanoPatterns;
+public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
+  @External(alias = "np", value = "Nano Patterns") private static String[] nanoPatterns;
+  @External final CommandLineApplicator c = new CommandLineApplicator();
+  @External final boolean CommandLine$Applicator = true;
+  @External boolean DefaultApplicator;
+  @External String name;
+  @External boolean selection;
+  @External boolean Spartanizer$Applicator;
+  @External(alias = "cs", value = "class name on which apply the tippers") String[] clazzes;
+  @External(alias = "allnp", value = "Exclude All Nano Patterns") boolean excludeAllNanoPatterns;
+  @External(alias = "enp", value = "Exclude Selected Nano Patterns") String[] excludeNanoPatterns;
+  @External(alias = "etg", value = "exclude one or more tipper groups") String[] excludeTipperGroups;
+  @External(alias = "tg", value = "tipper group to be applied to the clazzes") String[] tipperGroups;
 
-  CommandLineSpartanizer(final String path) {
+  public HeadlessSpartanizer() {
+    this(".");
+  }
+
+  HeadlessSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  CommandLineSpartanizer(final String presentSourcePath, final String name) {
-    this.presentSourcePath = presentSourcePath;
+  HeadlessSpartanizer(final String presentSourcePath, final String name) {
+    inputFolder = presentSourcePath;
     this.name = name;
-  }
-
-  public CommandLineSpartanizer() {
-    this(".");
   }
 
   @Override public void apply() {
@@ -54,8 +57,8 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultRunAction(new CommandLine$Applicator(clazzes, //
                 tipperGroups, //
-                excludedTipperGroups, //
-                excludedNanoPatterns))
+                excludeTipperGroups, //
+                excludeNanoPatterns))
             .defaultListenerNoisy().go();
       //
       ReportGenerator.close("metrics");
@@ -67,40 +70,14 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
-            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(presentSourcePath)))
+            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
             .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  public void inputDir(final String ¢) {
-    presentSourcePath = ¢;
-  }
-
   public void name(final String ¢) {
     name = ¢;
   }
-
-  public void setClazzes(final String[] ¢) {
-    clazzes = ¢;
-  }
-
-  public void setTipperGroups(final String[] ¢) {
-    tipperGroups = ¢;
-  }
-
-  public void setExcludeTipperGroups(final String[] ¢) {
-    excludedTipperGroups = ¢;
-  }
-
-  public void setExcludeNanoPatterns(final String[] ¢) {
-    excludedNanoPatterns = ¢;
-  }
-
-  public void setNanoPatterns(
-      @SuppressWarnings("unused") final String[] ¢) {/* TODO: Matteo EMPTY */ }
-
-  public void setExcludeAllNanoPatterns(
-      @SuppressWarnings("unused") final boolean ¢) {/* TODO: Matteo EMPTY */ }
 }
