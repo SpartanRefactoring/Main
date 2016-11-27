@@ -1,19 +1,19 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 /**
- * approximation of int with default value and initializations check
+ * approximation of boolean with default value and initializations check
  * @author kobybs
  * @since 27-11-2016
  */
 
-public final class ParameterInt {
-  private int value;
+public final class ParameterBool {
+  private boolean value;
   private boolean hasValue;
   private boolean hasDefault;
 
-  public ParameterInt() {}
+  public ParameterBool() {}
 
-  public ParameterInt(final int defaultValue) {
+  public ParameterBool(final boolean defaultValue) {
     value = defaultValue;
     hasDefault = true;
   }
@@ -22,13 +22,13 @@ public final class ParameterInt {
     return hasValue;
   }
 
-  public int intValue() {
+  public boolean boolValue() {
     if (!hasValue && !hasDefault)
       throw new IllegalArgumentException();
     return value;
   }
 
-  public void set(final int v) {
+  public void set(final boolean v) {
     if (hasValue)
       throw new IllegalArgumentException();
     value = v;
