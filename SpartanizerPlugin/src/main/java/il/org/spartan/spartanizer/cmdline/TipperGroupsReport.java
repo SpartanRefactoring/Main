@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -17,9 +19,9 @@ public class TipperGroupsReport {
 
   public void go() {
     final Map<String, Integer> categories = new TreeMap<>();
-    for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
-      if (Toolbox.defaultInstance().implementation[i] != null)
-        for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
+    for (final List<Tipper<? extends ASTNode>> element : Toolbox.defaultInstance().implementation)
+      if (element != null)
+        for (final Tipper<?> ¢ : element)
           if (¢ != null) {
             final String key = ¢.tipperGroup() + "";
             categories.putIfAbsent(key, box.it(0));
