@@ -6,16 +6,19 @@ import org.junit.*;
 
 @SuppressWarnings("static-method")
 public class Issue233 {
-  @Ignore public void a() {
-    trimmingOf("switch(x) {}").gives("").stays();
+  @Test public void a() {
+    trimmingOf("switch(x) {} int x=5;").gives("int x=5;").stays();
   }
 
-  @Ignore public void b() {
-    trimmingOf("switch(x) {} switch(x) {}").gives("").stays();
+  @Test public void b() {
+    trimmingOf("switch(x) {} switch(x) {}int x=5;").gives("int x=5;").stays();
   }
 
-  // not sure if need to implement the below tipper on this issue
   @Ignore public void c() {
-    trimmingOf("switch(x) { default: k=5; break; }").gives("k=5").stays();
+    trimmingOf("switch(x) { default: k=5; }").gives("{k=5;}");
+  }
+  
+  @Ignore public void d() {
+    trimmingOf("switch(x) { default: k=5; break; }").gives("{k=5;}");
   }
 }
