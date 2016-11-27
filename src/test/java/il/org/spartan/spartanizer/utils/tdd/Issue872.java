@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
- * tests of ParameterBool according to issue 871
+ * tests of ParameterBool according to issue 872
  * @author kobybs
  * @since 27-11-2016
  */
