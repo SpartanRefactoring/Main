@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Kfir Marx
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement> implements TipperCategory.SyntacticBaggage {
-  @Override public String description(ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Eliminate redundant " + lastStatement(¢);
   }
 
@@ -25,7 +25,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
 
   static Statement lastStatement(final ForStatement ¢) {
     return !iz.block(¢.getBody()) ? ¢.getBody()
-        : (Statement) (az.block(¢.getBody()).statements()).get((az.block(¢.getBody()).statements().size() - 1));
+        : (Statement) az.block(¢.getBody()).statements().get(az.block(¢.getBody()).statements().size() - 1);
   }
 
   @Override public Tip tip(final ForStatement ¢) {
@@ -37,7 +37,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ((lastStatement(¢)).getNodeType() == ASTNode.CONTINUE_STATEMENT);
+    return lastStatement(¢).getNodeType() == ASTNode.CONTINUE_STATEMENT;
   }
 
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {

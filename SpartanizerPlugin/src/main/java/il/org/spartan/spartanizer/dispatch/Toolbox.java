@@ -40,7 +40,8 @@ public class Toolbox {
         }
     }
   };
-  @SuppressWarnings({ "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
+  @SuppressWarnings({
+      "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
         static final long serialVersionUID = -4821340356894435723L;
         {
           final Toolbox t = freshCopyOfAllTippers();
@@ -341,8 +342,7 @@ public class Toolbox {
   }
 
   /** Implementation */
-  @SuppressWarnings("unchecked")
-  public final List<Tipper<? extends ASTNode>>[] implementation = //
+  @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
 
   public Toolbox() {
@@ -429,5 +429,4 @@ public class Toolbox {
   public static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
-
 }
