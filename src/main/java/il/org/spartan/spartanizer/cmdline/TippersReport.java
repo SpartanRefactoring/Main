@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -19,8 +17,7 @@ public class TippersReport {
 
   public void go() {
     int n = 0;
-    final Map<String, Integer> categories = new TreeMap<>();
-    final CSVLineWriter w = new CSVLineWriter("/tmp/" + this.getClass().getSimpleName() + "." + now());
+    final CSVLineWriter w = new CSVLineWriter("/tmp/" + this.getClass().getSimpleName() + "." + system.now());
     for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
       if (Toolbox.defaultInstance().implementation[i] != null)
         for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
@@ -34,23 +31,10 @@ public class TippersReport {
                 .put("Actual class", name(¢.myActualOperandsClass()))//
                 .put("Abstract class", name(¢.myAbstractOperandsClass()));
             w.nl();
-            final String key = ¢.tipperGroup() + "";
-            categories.putIfAbsent(key, box.it(0));
-            categories.put(key, box.it(categories.get(key).intValue() + 1));
           }
-    System.err.println(n + " lines input can be found in " + w.close());
-    final CSVLineWriter c = new CSVLineWriter("/tmp/" + this.getClass().getSimpleName() + ".categories." + now());
-    for (final String ¢ : categories.keySet()) {
-      c.put("Category", ¢);
-      c.put("Count", categories.get(¢));
-      c.nl();
-    }
-    System.err.println(categories.size() + " lines input can be found in " + c.close());
+    System.err.println(n + " lines output found in " + w.close());
   }
 
-  public static String now() {
-    return (new Date() + "").replaceAll(" ", "-");
-  }
 
   /** @param i
    * @return */

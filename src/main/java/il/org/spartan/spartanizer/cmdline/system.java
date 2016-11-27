@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
+import java.util.*;
 
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -153,5 +154,9 @@ public interface system {
 
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
+  }
+
+  static String now() {
+    return (new Date() + "").replaceAll(" ", "-");
   }
 }
