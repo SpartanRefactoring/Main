@@ -173,7 +173,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  private static CSVStatistics report(final String key) {
+  public static CSVStatistics report(final String key) {
     return reports.get(key);
   }
 
@@ -272,6 +272,10 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report("tips").put("from", ¢.from);
     ReportGenerator.report("tips").put("to", ¢.to);
     ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+    long time = new Date().getTime();
+    ReportGenerator.report("tips").put("time", time);
+    ReportGenerator.report("tips").put("startTimeDiff", time - CommandLine$Applicator.startingTime);
+    ReportGenerator.report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
   public static void writeTipsLine(final ASTNode n, final Tip t, final String reportName) {
