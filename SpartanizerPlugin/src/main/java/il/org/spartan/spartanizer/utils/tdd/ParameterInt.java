@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 public final class ParameterInt {
   private int value;
+  private boolean hasValue;
   
   public ParameterInt(){ }
   
@@ -14,7 +15,10 @@ public final class ParameterInt {
   }
   
   public void set(int v){
+    if (hasValue)
+      throw new IllegalArgumentException();
     value = v;
+    hasValue = true;
   }
   
 }
