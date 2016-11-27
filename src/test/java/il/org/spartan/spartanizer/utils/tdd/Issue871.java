@@ -47,4 +47,14 @@ public class Issue871 {
   @Test public void test6() {
     assertEquals(false, (new ParameterInt(2)).hasValue());
   }
+  
+  @SuppressWarnings("boxing")
+  @Test public void test7() {
+    assertEquals(false, (new ParameterInt()).hasDefault());
+  }
+  
+  @SuppressWarnings("boxing")
+  @Test public void test8() {
+    assertEquals(true, (new ParameterInt(4)).hasDefault());
+  }
 }
