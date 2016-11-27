@@ -260,7 +260,7 @@ public class Toolbox {
             new TernaryPushdownStrings(), //
             new SameEvaluationConditional(),//
             new TernaryBranchesAreOppositeBooleans(),//
-            null) //
+            new SameEvaluationConditional(), null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
