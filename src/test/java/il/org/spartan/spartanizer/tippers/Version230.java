@@ -940,8 +940,8 @@ public final class Version230 {
         .gives("try { f(); } catch (Exception e) { }");
   }
 
-  @Test public void dontELiminateSwitch() {
-    trimmingOf("switch (a) { default: }").stays();
+  @Test public void eliminateSwitch() {
+    trimmingOf("switch (a) { default: } int x=5;").gives("int x=5;");
   }
 
   @Test public void dontSimplifyCatchBlock() {
