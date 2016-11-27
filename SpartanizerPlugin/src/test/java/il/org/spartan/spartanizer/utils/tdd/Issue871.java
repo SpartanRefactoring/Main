@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
+
 @SuppressWarnings("static-method")
 public class Issue871 {
   @Test public void test0() {
@@ -27,5 +29,22 @@ public class Issue871 {
   
   @Test(expected=Exception.class) public void test3() {
     (new ParameterInt()).intValue();
+  }
+  
+  @SuppressWarnings("boxing")
+  @Test public void test4() {
+    ParameterInt i = new ParameterInt();
+    i.set(3);
+    assertEquals(true, i.hasValue());
+  }
+  
+  @SuppressWarnings("boxing")
+  @Test public void test5() {
+    assertEquals(false, (new ParameterInt()).hasValue());
+  }
+  
+  @SuppressWarnings("boxing")
+  @Test public void test6() {
+    assertEquals(false, (new ParameterInt(2)).hasValue());
   }
 }
