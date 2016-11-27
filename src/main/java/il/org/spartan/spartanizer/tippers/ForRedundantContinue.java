@@ -24,8 +24,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   }
 
   static Statement lastStatement(final ForStatement ¢) {
-    return !iz.block(¢.getBody()) ? ¢.getBody()
-        : (Statement) az.block(¢.getBody()).statements().get(az.block(¢.getBody()).statements().size() - 1);
+    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) az.block(¢.getBody()).statements().get(az.block(¢.getBody()).statements().size() - 1);
   }
 
   @Override public Tip tip(final ForStatement ¢) {
