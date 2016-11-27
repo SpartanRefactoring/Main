@@ -46,7 +46,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static List<Listener> getListeners(final StyledText t) {
-    LinkedList<Listener> $ = new LinkedList<>();
+    final LinkedList<Listener> $ = new LinkedList<>();
     if (t == null)
       return $;
     final List<Listener> ls = Arrays.asList(t.getListeners(SWT.MouseWheel));
@@ -58,14 +58,14 @@ public class InflateHandler extends AbstractHandler {
     return $;
   }
 
-  protected static void addListeners(final StyledText t, final List<Listener> ls, int... types) {
+  protected static void addListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
       for (final int i : types)
         for (final Listener ¢ : ls)
           t.addListener(i, ¢);
   }
 
-  protected static void removeListeners(final StyledText t, final List<Listener> ls, int... types) {
+  protected static void removeListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
       for (final Listener ¢ : ls)
         for (final int i : types)
