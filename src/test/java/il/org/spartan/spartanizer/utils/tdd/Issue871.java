@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
-
 @SuppressWarnings("static-method")
 public class Issue871 {
   @Test public void test0() {
