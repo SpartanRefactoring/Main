@@ -12,6 +12,10 @@ public final class ParameterInt {
     hasDefault = true;
   }
   
+  public boolean hasValue(){
+    return hasValue;
+  }
+  
   public int intValue() {
     if (!hasValue && !hasDefault)
       throw new IllegalArgumentException();
