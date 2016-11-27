@@ -245,19 +245,19 @@ public final class Version230 {
 
   @Test public void bugInLastIfInMethod5() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n"
-        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
+        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages2.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
             .gives(
-                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n" + "            final int messages = 3;\n"
-        + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
+        + "            messages2.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
             .gives(
-                "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+                "public void f(){if(g)return;final int messages=3;messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
@@ -791,10 +791,6 @@ public final class Version230 {
         .gives(" int a=0==3?4:0;");
   }
 
-  @Test public void declarationIfUsesLaterVariable1() {
-    trimmingOf("int a=0, b=0;if (b==3)   a=4; f();").stays();
-  }
-
   @Test public void declarationInitializeRightShift() {
     trimmingOf("int a = 3;a>>=2;")//
         .gives("int a = 3>> 2;");
@@ -1129,7 +1125,7 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer05() {
-    trimmingOf("for(;;){if(a){x();return;}continue;} a=2;").stays();
+    trimmingOf("for(;;)if(a){x();return;} a=2;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer05a() {
@@ -3438,8 +3434,8 @@ public final class Version230 {
   }
 
   @Test public void ternarize14() {
-    trimmingOf("String res=m,foo=GY;if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
-        .gives("String res=m,foo=GY;if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
+    trimmingOf("String res=m,foo=GY; print(x); if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
+        .gives("String res=m,foo=GY; print(x); if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
   }
 
   @Test public void ternarize16() {
@@ -3490,7 +3486,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize38() {
-    trimmingOf("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").stays();
+    trimmingOf("int a, b=0; use(a,b); if (b==3){    a+=2+r();a-=6;} f();").stays();
   }
 
   @Test public void ternarize42() {
@@ -3518,7 +3514,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize52() {
-    trimmingOf("int a=0,b = 0,c,d = 0,e = 0;if (a <b) {c = d;c = e;} f();").stays();
+    trimmingOf("int a=0,b = 0,c,d = 0,e = 0; use(a,b); if (a <b) {c = d;c = e;} f();").stays();
   }
 
   @Test public void ternarize54() {
@@ -3564,11 +3560,12 @@ public final class Version230 {
   }
 
   @Test public void unsafeBlockSimlify() {
-    trimmingOf("public void testParseInteger() {\n" + "  String source = \"10\";\n" + "  {\n" + "    BigFraction c = properFormat.parse(source);\n"
-        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n"
-        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}").stays();
+    trimmingOf("public void testParseInteger() {\n" + "  String source = \"10\"; use(source);\n" + "  {\n"
+        + "    BigFraction c = properFormat.parse(source);\n" + "   assert c != null;\n"
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
+        + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
+        + "}").stays();
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

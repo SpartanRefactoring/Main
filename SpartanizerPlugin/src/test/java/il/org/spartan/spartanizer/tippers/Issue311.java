@@ -27,7 +27,8 @@ public class Issue311 {
 
   @Test public void challenge_while_a() {
     trimmingOf("while (start <il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
-        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
+        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr; print(lenExpr); final InstructionHandle[] match = getMatch(startExpr, lenExpr);"
+        + //
         "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}").stays();
   }
 
