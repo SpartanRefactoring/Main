@@ -8,24 +8,22 @@ import il.org.spartan.spartanizer.cmdline.report.*;
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
 public final class CommandLineClient {
-  @External(alias = "i", value = "name of the input directory") static String inputDir = ".";
-  @External(alias = "o", value = "name of the output directory") private static String outputDir = "/tmp";
-  @External(alias = "d", value = "default values for the directories") private static boolean devault;
-  @External(alias = "cs", value = "class name on which apply the tippers") private static String[] clazzes;
-  @External(alias = "tg", value = "tipper group to be applied to the clazzes") private static String[] tipperGroups;
-  @External(alias = "etg", value = "exclude one or more tipper groups") private static String[] excludeTipperGroups;
+  @External(alias = "i", value = "name of the input directory") String inputDir = ".";
+  @External(alias = "o", value = "name of the output directory") private String outputDir = "/tmp";
+  @External(alias = "d", value = "default values for the directories") private boolean devault;
+  @External(alias = "cs", value = "class name on which apply the tippers") private String[] clazzes;
+  @External(alias = "tg", value = "tipper group to be applied to the clazzes") private String[] tipperGroups;
+  @External(alias = "etg", value = "exclude one or more tipper groups") private String[] excludeTipperGroups;
   @External(alias = "np", value = "Nano Patterns") private static String[] NanoPatterns;
-  @External(alias = "enp", value = "Exclude Selected Nano Patterns") private static String[] excludeNanoPatterns;
-  @External(alias = "allnp", value = "Exclude All Nano Patterns") private static boolean excludeAllNanoPatterns;
- private final MetricsReport metricsReport = new MetricsReport();
+  @External(alias = "enp", value = "Exclude Selected Nano Patterns") private String[] excludeNanoPatterns;
+  @External(alias = "allnp", value = "Exclude All Nano Patterns") private boolean excludeAllNanoPatterns;
 
   public static void main(final String[] args) {
-    System.out.println(args.length);
     new CommandLineClient().go(args);
   }
 
   private void go(String[] args) {
-    if (!External.Introspector.extract(args, this).isEmpty()) {
+    if (External.Introspector.extract(args, this).isEmpty()) {
       System.err.println(usage(this, args, this));
       return;
     }
@@ -39,9 +37,7 @@ public final class CommandLineClient {
     MetricsReport.generate();
   }
 
-
   private void run() {
-    // new CommandLineSpartanizer(inputDir).apply();
     CommandLineSpartanizer s = new CommandLineSpartanizer();
     s.inputDir(inputDir);
     s.name(system.folder2File(inputDir));
@@ -59,6 +55,15 @@ public final class CommandLineClient {
       s.setExcludeAllNanoPatterns(excludeAllNanoPatterns);
     s.apply();
     // r.printExternals();
+  }
+
+  @SuppressWarnings("unused") private void printExternals() {
+    System.out.println(usage(this));
+    System.out.println("Externals after processing command line arguments:");
+    System.out.println("==================================================");
+    System.out.println("outputDir: " + outputDir);
+    System.out.println("inputDir: " + inputDir);
+    System.out.println();
   }
 
   static void printPrompt() {
