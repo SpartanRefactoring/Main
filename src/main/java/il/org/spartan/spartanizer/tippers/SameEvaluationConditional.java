@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 * </pre>
 *
 * @author Dan Abramovich
-* @since 21-11-2016 */
+* @since 27-11-2016 */
 
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Collapse{
 
