@@ -24,6 +24,10 @@ import il.org.spartan.spartanizer.utils.*;
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
+  private String presentFileName;
+  private String presentFilePath;
+  public static long startingTime;
+  public static long lastTime;
 
   public CommandLine$Applicator() {}
 
@@ -83,6 +87,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
+    ReportGenerator.report("tips").put("FileName", presentFileName);
+    ReportGenerator.report("tips").put("FilePath", presentFilePath);
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
     MetricsReport.getSettings();
@@ -96,6 +102,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+    ReportGenerator.report("tips").put("Name", extract.name(input));
+    ReportGenerator.report("tips").put("Category", extract.category(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
@@ -133,6 +141,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * @return */
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    lastTime = new Date().getTime();
     consolidateTips($, ¢);
     return $;
   }
@@ -212,6 +221,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
           monitor.debug(this, ¢);
         }
         if (s != null) {
+          
           ++tippersAppliedOnCurrentObject;
           // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
@@ -241,6 +251,9 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * @return */
   public boolean apply(final WrappedCompilationUnit ¢) {
     // System.out.println("*********");
+    presentFileName = ¢.getFileName();
+    presentFilePath = ¢.getFilePath();
+    startingTime = new Date().getTime();
     go(¢.compilationUnit);
     return false;
   }
@@ -248,13 +261,16 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** @param __
    * @return */
   public boolean apply(final AbstractSelection<?> __) {
-    for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get())
+    for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()){
+      System.out.println("presentFileName: " + presentFileName);
+      System.out.println("presentFilePath: " + presentFilePath);
       w.compilationUnit.accept(new ASTVisitor() {
         @Override public boolean preVisit2(final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // ||
                                                                      // !filter(¢)
         }
       });
+    }
     return false;
   }
 }
