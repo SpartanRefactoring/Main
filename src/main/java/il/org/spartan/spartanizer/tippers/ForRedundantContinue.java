@@ -41,7 +41,6 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
 
   
   @Override public boolean prerequisite(final ForStatement ¢) {
-    System.out.println("------------------------------- bug 0 -------------------------------------");
    return ((lastStatement(¢)).getNodeType() == ASTNode.CONTINUE_STATEMENT);
   }
   
