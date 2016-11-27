@@ -1031,4 +1031,16 @@ public interface iz {
   static boolean constructor(final ASTNode ¢) {
     return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
   }
+
+  /** @param ¢
+   * @return */
+  static boolean doStatement(ASTNode ¢) {
+    return ¢ instanceof DoStatement;
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean synchronizedStatement(Statement ¢) {
+    return ¢ instanceof SynchronizedStatement;
+  }
 }
