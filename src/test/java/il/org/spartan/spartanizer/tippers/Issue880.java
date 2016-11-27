@@ -7,7 +7,6 @@ import org.junit.*;
 /** @author Yuval Simon
  *  @since 2016-11-27 */
 @SuppressWarnings("static-method")
-// TODO Yuval Simon add author, purpose, since, etc.
 public class Issue880 {
   @Test public void a() {
     trimmingOf("switch(x) { case a: default: case b:}").gives("switch(x){}");
