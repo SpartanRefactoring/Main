@@ -40,7 +40,8 @@ public class Toolbox {
         }
     }
   };
-  @SuppressWarnings({ "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
+  @SuppressWarnings({
+      "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
         static final long serialVersionUID = -4821340356894435723L;
         {
           final Toolbox t = freshCopyOfAllTippers();
@@ -201,7 +202,7 @@ public class Toolbox {
         // new InstanceOf(), //
         // null)//
         .add(MethodDeclaration.class, //
-            new AnnotationSort(), //
+            new AnnotationSort.ofMethod(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
@@ -257,15 +258,18 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            null) //
+            new SameEvaluationConditional(), null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
+            new AnnotationSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnum(), //
+            new AnnotationSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofField(), //
+            new AnnotationSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -273,13 +277,21 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnumConstant(), //
+            new AnnotationSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
         .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
+            new AnnotationSort.ofInitializer(), //
             null) //
+        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
+            new AnnotationSort.ofAnnotation(), //
+            null)
+        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
+            new AnnotationSort.ofAnnotationTypeMember(), //
+            null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //
             new DeclarationAssignment(), //
@@ -341,8 +353,7 @@ public class Toolbox {
   }
 
   /** Implementation */
-  @SuppressWarnings("unchecked")
-  public final List<Tipper<? extends ASTNode>>[] implementation = //
+  @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
 
   public Toolbox() {
@@ -429,5 +440,4 @@ public class Toolbox {
   public static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
-
 }

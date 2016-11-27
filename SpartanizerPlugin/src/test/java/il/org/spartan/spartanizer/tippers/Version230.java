@@ -76,9 +76,9 @@ public final class Version230 {
   }
 
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
-    trimmingOf("@TargetApi(value = 23)@SuppressWarnings(value = \"javadoc\")  void m() {}")
-        .gives("@SuppressWarnings(value = \"javadoc\") @TargetApi(value=23) void m() {}")//
-        .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}")//
+    trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23)  void m() {}")
+        .gives("@TargetApi(value=23) @SuppressWarnings(value = \"javadoc\") void m() {}")//
+        .gives("@TargetApi(23) @SuppressWarnings(\"javadoc\") void m() {}")//
         .stays();
   }
 
@@ -940,8 +940,8 @@ public final class Version230 {
         .gives("try { f(); } catch (Exception e) { }");
   }
 
-  @Test public void dontELiminateSwitch() {
-    trimmingOf("switch (a) { default: }").stays();
+  @Test public void eliminateSwitch() {
+    trimmingOf("switch (a) { default: } int x=5;").gives("int x=5;");
   }
 
   @Test public void dontSimplifyCatchBlock() {
