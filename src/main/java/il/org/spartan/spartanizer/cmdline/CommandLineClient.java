@@ -16,7 +16,7 @@ public final class CommandLineClient {
   @External(alias = "etg", value = "exclude one or more tipper groups") private static String[] excludeTipperGroups;
   @External(alias = "np", value = "Nano Patterns") private static String[] NanoPatterns;
   @External(alias = "enp", value = "Exclude Selected Nano Patterns") private static String[] excludeNanoPatterns;
-  @External(alias = "allnp", value = "Exclude All Nano Patterns") private static boolean excludeAllNanoPatterns;
+  @External(alias = "xallnp", value = "Exclude All Nano Patterns") private static boolean excludeAllNanoPatterns;
  private final MetricsReport metricsReport = new MetricsReport();
 
   public static void main(final String[] args) {
@@ -25,10 +25,19 @@ public final class CommandLineClient {
   }
 
   private void go(String[] args) {
-    if (!External.Introspector.extract(args, this).isEmpty()) {
+    
+    // TODO Yossi, the instruction
+    // External.Introspector.extract(args, this).isEmpty()
+    // returns true (an empty list) even if args.length() > 0
+    // I changed it
+
+    if (args.length == 0) {
       System.err.println(usage(this, args, this));
       return;
     }
+    
+    extract(args, this);
+ 
     MetricsReport.getSettings().setInputFolder(inputDir);
     MetricsReport.getSettings().setOutputFolder(outputDir);
     MetricsReport.initialize();
@@ -38,8 +47,8 @@ public final class CommandLineClient {
     run();
     MetricsReport.generate();
   }
-
-
+  
+  @SuppressWarnings("static-method")
   private void run() {
     // new CommandLineSpartanizer(inputDir).apply();
     CommandLineSpartanizer s = new CommandLineSpartanizer();
