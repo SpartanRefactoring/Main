@@ -5,12 +5,14 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link $BodyDeclarationModifiersSort}
- * @author Alex Kopzon
- * @since 2016-09 */
+/**
+ * Unit tests for  {@link $BodyDeclarationModifiersSort}
+ * @author  Alex Kopzon
+ * @since  2016-09 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@SuppressWarnings({ "static-method", "javadoc" })
 public class Issue230 {
   @Test public void a() {
     trimmingOf("protected public final class A{volatile static int a;}").gives("public protected final class A{volatile static int a;}")
@@ -30,8 +32,7 @@ public class Issue230 {
   }
 
   @Test public void a2() {
-    trimmingOf("@Nullable private T value = null;")//
-        .stays();
+    trimmingOf("@Nullable private T value = null;").stays();
   }
 
   @Test public void a3() {

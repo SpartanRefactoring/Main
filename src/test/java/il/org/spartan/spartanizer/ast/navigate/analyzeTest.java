@@ -12,11 +12,13 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Vivian Shehadeh
- * @author Ward Mattar
- * @since 2016 */
-@SuppressWarnings({ "static-method", "javadoc" })
+/**
+ * @author  Vivian Shehadeh
+ * @author  Ward Mattar
+ * @since  2016 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
   @Test public void a() {
     final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().collect(Collectors.toList());

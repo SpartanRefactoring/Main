@@ -41,16 +41,13 @@ public final class Version230 {
     final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
-    final Trimmer t = new Trimmer();
-    final String unpeeled = applyTrimmer(t, wrap);
+    final String unpeeled = applyTrimmer(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
-    final String compressSpaces = tide.clean(peeled);
-    final String compressSpaces2 = tide.clean(from);
-    azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
+    azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), not(tide.clean(peeled)));
     assertSimilar(expected, peeled);
   }
 
@@ -489,8 +486,7 @@ public final class Version230 {
   }
 
   @Test public void chainComparison() {
-    final InfixExpression e = i("a == true == b == c");
-    azzert.that(right(e) + "", is("c"));
+    azzert.that(right(i("a == true == b == c")) + "", is("c"));
     trimmingOf("a == true == b == c")//
         .gives("a == b == c");
   }
@@ -1382,8 +1378,7 @@ public final class Version230 {
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
-    assert tokenWiseGreater;
+    assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
     assert s.canTip(e) : "e=" + e + " s=" + s;
@@ -2945,10 +2940,8 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement
-        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
+        + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n"));
     assert f != null;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"

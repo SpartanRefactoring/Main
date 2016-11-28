@@ -21,15 +21,15 @@ public class Issue835 {
     assert t.description(az.block(wizard.ast("{int x;}"))) != null;
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock1() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock1() {
     azzert.that(0, is(az.block(wizard.ast("{}")).statements().size()));
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock2() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock2() {
     azzert.that(0, is(az.block(wizard.ast("\n{\n}\n")).statements().size()));
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock3() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock3() {
     azzert.that(1, is(az.block(wizard.ast("\n{int a;}\n")).statements().size()));
   }
 

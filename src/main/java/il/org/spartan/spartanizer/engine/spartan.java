@@ -44,8 +44,7 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    final List<Type> ts = typeArguments(t);
-    final String $ = shorten(ts);
+    final String $ = shorten(typeArguments(t));
     if ($ == null)
       return shorten(t.getType());
     switch (t.getType() + "") {

@@ -21,39 +21,35 @@ public class Issue818 {
   static final InfixExpression ie05 = into.i("b + \"a\"");
   static final InfixExpression ie06 = into.i("\"a\" + \"b\" + c");
 
-  // This test performs a simple concatenation operation: "a" + "b" => "ab"
-  @SuppressWarnings("static-method") @Test public void a() {
+  @Test @SuppressWarnings("static-method") public void a() {
     azzert.that("ab", is(az.stringLiteral(tipper.replacement(ie01)).getLiteralValue()));
   }
 
-  // This test tries to compile-time concatenate a string literal and a
-  // variable.
-  // Should fail.
-  @SuppressWarnings("static-method") @Test public void b() {
+  @Test @SuppressWarnings("static-method") public void b() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie02)));
   }
 
-  @SuppressWarnings("static-method") @Test public void c() {
+  @Test @SuppressWarnings("static-method") public void c() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie03)));
   }
 
-  @SuppressWarnings("static-method") @Test public void d() {
+  @Test @SuppressWarnings("static-method") public void d() {
     assert tipper.description() != null;
   }
 
-  @SuppressWarnings("static-method") @Test public void e() {
+  @Test @SuppressWarnings("static-method") public void e() {
     assert tipper.description(null) != null;
   }
 
-  @SuppressWarnings("static-method") @Test public void f() {
+  @Test @SuppressWarnings("static-method") public void f() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie04)));
   }
 
-  @SuppressWarnings("static-method") @Test public void g() {
+  @Test @SuppressWarnings("static-method") public void g() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie05)));
   }
 
-  @SuppressWarnings("static-method") @Test public void h() {
+  @Test @SuppressWarnings("static-method") public void h() {
     assert tipper.replacement(ie06) != null;
   }
 }

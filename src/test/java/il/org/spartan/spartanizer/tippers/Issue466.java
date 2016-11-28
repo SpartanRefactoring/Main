@@ -5,12 +5,11 @@ import org.junit.runners.*;
 
 /** @author Raviv Rachmiel
  * @since 22-11-2016 */
+// TODO Raviv: complete or delete... yg
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue466 {
-  @SuppressWarnings("unused") @Test public void check__() {
-    new Object() {
-      // What's this?
-    };
+  @Test @SuppressWarnings("unused") public void check__() {
+    new Object() {/* wha's going on */};
   }
 }

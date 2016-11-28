@@ -12,21 +12,19 @@ import il.org.spartan.spartanizer.engine.*;
  * @author koral chapnik
  * @since 16-11-10 */
 public class Issue814 {
-  @SuppressWarnings("static-method") @Test public void simpleTest() {
+  @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
-    final MethodExplorer e = new MethodExplorer(m);
-    final ReturnStatement s = e.returnStatements().get(0);
+    final ReturnStatement s = new MethodExplorer(m).returnStatements().get(0);
     m.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment a) {
         final ASTRewrite r = ASTRewrite.create(m.getAST());
-        final ASTRewrite new_r = new AssignmentAndReturn().go(r, a, s, new TextEditGroup(""));
-        assert new_r != null;
+        assert new AssignmentAndReturn().go(r, a, s, new TextEditGroup("")) != null;
         return true;
       }
     });
   }
 
-  @SuppressWarnings("static-method") @Test public void nullTest() {
+  @Test @SuppressWarnings("static-method") public void nullTest() {
     final Assignment a = into.a("a = 3");
     final Statement s = into.s("f();");
     a.getParent().delete();

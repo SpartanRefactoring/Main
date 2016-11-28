@@ -306,18 +306,14 @@ public final class SearchTest {
 
   @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
-    final Block b = (Block) s;
-    final EnhancedForStatement s2 = (EnhancedForStatement) first(statements(b));
-    final SimpleName a = s2.getParameter().getName();
+    final SimpleName a = ((EnhancedForStatement) first(statements(((Block) s)))).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(s).size(), is(2));
   }
 
   @Test public void forEnhancedAsParemeterInMethod() {
     final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
-    final Block b = d.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) b.statements().get(0);
-    final SimpleName a = s.getParameter().getName();
+    final SimpleName a = ((EnhancedForStatement) d.getBody().statements().get(0)).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(d).size(), is(2));
   }

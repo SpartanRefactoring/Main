@@ -49,8 +49,7 @@ public final class IfEmptyThenEmptyElseTest {
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Tip t = TIPPER.tip(s);
-    t.go(r, null);
+    TIPPER.tip(s).go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     assert e != null;
     azzert.that(e.getChildren().length, greaterThan(0));

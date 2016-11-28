@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -35,10 +33,9 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement ¢ : blockStatements) {
+    for (final Statement ¢ : step.statements(body)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
       if (compareReturnStatements(nextReturn, az.returnStatement(¢))) {

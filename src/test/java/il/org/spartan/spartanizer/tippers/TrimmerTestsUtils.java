@@ -27,8 +27,7 @@ public final class TrimmerTestsUtils {
   static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document d = new Document(from);
-    final Document $ = TESTUtils.rewrite(t, u, d);
+    final Document $ = TESTUtils.rewrite(t, u, new Document(from));
     assert $ != null;
     return $.get();
   }
@@ -121,9 +120,8 @@ public final class TrimmerTestsUtils {
       this.clazz = clazz;
     }
 
-    public OperandToTipper<N> in(final Tipper<N> n) {
-      final N findNode = findNode(n);
-      azzert.that(n.canTip(findNode), is(true));
+    public OperandToTipper<N> in(final Tipper<N> ¢) {
+      azzert.that(¢.canTip(findNode(¢)), is(true));
       return this;
     }
 

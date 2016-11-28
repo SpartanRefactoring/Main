@@ -175,9 +175,7 @@ public final class metricsTest {
     st = new ArrayList<>();
     st.add(s);
     azzert.that(metrics.horizontalComplexity(0, st), is(0));
-    // Test a list with a real statement
-    final Statement sf = az.statement(wizard.ast("if(true) return 1;"));
-    st.add(sf);
+    st.add(az.statement(wizard.ast("if(true) return 1;")));
     azzert.that(metrics.horizontalComplexity(0, st), is(13446));
   }
   // horizontalComplexity

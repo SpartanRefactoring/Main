@@ -44,9 +44,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
         if ((ll.get(ll.size() - 1) + "").contains("break"))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        final Block b = subject.ss(ll).toBlock();
-        final Block bb = subject.statement(b).toBlock();
-        r.replace(s, bb, g);
+        r.replace(s, subject.statement(subject.ss(ll).toBlock()).toBlock(), g);
       }
     };
   }

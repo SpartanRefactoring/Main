@@ -9,73 +9,71 @@ import org.junit.*;
  * @since 2016 */
 @Ignore("Take note, you cannot convert x + 0 to x, unless you know that x is not a string")
 public class Issue408 {
-  @SuppressWarnings("static-method") @Test public void issue408_01() {
+  @Test @SuppressWarnings("static-method") public void issue408_01() {
     trimmingOf("0+x").gives("x").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_02() {
+  @Test @SuppressWarnings("static-method") public void issue408_02() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_02b() {
+  @Test @SuppressWarnings("static-method") public void issue408_02b() {
     trimmingOf("(0+x)+y").gives("x+y").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03() {
+  @Test @SuppressWarnings("static-method") public void issue408_03() {
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
 
-  // @Ignore("added zero")
-  @SuppressWarnings("static-method") @Test public void issue408_03b() {
+  @Test @SuppressWarnings("static-method") public void issue408_03b() {
     trimmingOf("0+x+y+4+5").gives("x+y+9").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03b1() {
+  @Test @SuppressWarnings("static-method") public void issue408_03b1() {
     trimmingOf("0+(x + 0 + y + (x + 2))").gives("x+y+x+2").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03c() {
+  @Test @SuppressWarnings("static-method") public void issue408_03c() {
     trimmingOf("0+x+y+4+z").gives("x+y+4+z").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03d() {
+  @Test @SuppressWarnings("static-method") public void issue408_03d() {
     trimmingOf("0+x+y+4+z+w").gives("x+y+4+z+w").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03e() {
+  @Test @SuppressWarnings("static-method") public void issue408_03e() {
     trimmingOf("0+x+0+y").gives("x+y").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03f() {
+  @Test @SuppressWarnings("static-method") public void issue408_03f() {
     trimmingOf("0+x+0+y+4").gives("x+y+4").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_03g() {
+  @Test @SuppressWarnings("static-method") public void issue408_03g() {
     trimmingOf("0+x+0+0+0+y+4").gives("x+y+4").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_033() {
+  @Test @SuppressWarnings("static-method") public void issue408_033() {
     trimmingOf("0+x+y+4+z+5").gives("x+y+4+z+5").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_04() {
+  @Test @SuppressWarnings("static-method") public void issue408_04() {
     trimmingOf("x+0").gives("x").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_05() {
+  @Test @SuppressWarnings("static-method") public void issue408_05() {
     trimmingOf("0+x+3").gives("x+3").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_06() {
+  @Test @SuppressWarnings("static-method") public void issue408_06() {
     trimmingOf("x+0+y").gives("x+y").stays();
   }
 
-  // taking this test here temporary
-  @SuppressWarnings("static-method") @Test public void issue408_07() {
+  @Test @SuppressWarnings("static-method") public void issue408_07() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
 
-  @SuppressWarnings("static-method") @Test public void issue408_08() {
+  @Test @SuppressWarnings("static-method") public void issue408_08() {
     trimmingOf("0+0+x+4*y").gives("x+4*y").stays();
   }
 }

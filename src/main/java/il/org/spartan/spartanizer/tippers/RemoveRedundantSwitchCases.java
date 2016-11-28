@@ -93,8 +93,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           l.remove(1);
           l.remove(0);
         }
-        final ASTNode node = subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull();
-        r.replace(s, node, g);
+        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
       }
 
       String statementsToString(final List<Statement> ss) {

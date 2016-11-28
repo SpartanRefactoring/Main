@@ -40,8 +40,7 @@ public class Issue683 {
   }
 
   @Test public void e() {
-    final ASTNode t = createAST("public class A { public class B { int x; int y; } }");
-    final ASTNodeWrapper b = getChildren(createExpressionPredicate(), t);
+    final ASTNodeWrapper b = getChildren(createExpressionPredicate(), createAST("public class A { public class B { int x; int y; } }"));
     azzert.that(find.ancestorType(b.inner.get(1).getParent()), is(not(find.ancestorType(b.inner.get(3)))));
   }
 

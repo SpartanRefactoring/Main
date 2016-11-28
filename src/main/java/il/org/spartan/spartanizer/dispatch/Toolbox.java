@@ -375,13 +375,12 @@ public class Toolbox {
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
         "\n classForNodeType = " + classToNodeType + //
         fault.done();
-    final List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
       if (¢.tipperGroup().isEnabled())
-        ts.add(¢);
+        get(nodeType.intValue()).add(¢);
     }
     return this;
   }
