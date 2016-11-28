@@ -33,8 +33,7 @@ public final class FactorsReorganizer {
   }
 
   private static Expression buildDividers(final List<Expression> xs) {
-    final Expression one = first(xs).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, first(xs)).to(DIVIDE);
+    final Expression $ = subject.pair(first(xs).getAST().newNumberLiteral("1"), first(xs)).to(DIVIDE);
     if (xs.size() == 1)
       return $;
     xs.remove(0);

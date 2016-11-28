@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -30,10 +28,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement ¢ : blockStatements) {
+    for (final Statement ¢ : step.statements(body)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
       if (iz.breakStatement(¢)) {

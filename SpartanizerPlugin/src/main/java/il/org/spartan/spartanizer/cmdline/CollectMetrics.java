@@ -115,8 +115,7 @@ public final class CollectMetrics {
   }
 
   private static CompilationUnit spartanize(final String javaCode) {
-    final Trimmer t = new Trimmer();
-    final String spartanized = t.fixed(javaCode);
+    final String spartanized = new Trimmer().fixed(javaCode);
     output.put("Characters", spartanized.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
   }

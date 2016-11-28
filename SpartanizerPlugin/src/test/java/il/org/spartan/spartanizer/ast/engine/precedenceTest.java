@@ -11,10 +11,12 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** @author Yossi Gil
- * @since 2015-07-17 */
-@SuppressWarnings({ "static-method", "javadoc" })
+/**
+ * @author  Yossi Gil
+ * @since  2015-07-17 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class precedenceTest {
   @Test public void addition() {
     azzert.that(precedence.of(e("a+b")), is(5));

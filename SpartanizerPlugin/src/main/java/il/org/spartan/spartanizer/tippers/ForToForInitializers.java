@@ -70,8 +70,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
-    final SimpleName var = az.simpleName(step.left(from));
-    step.fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(var + "")).forEachOrdered(¢ -> ¢.setInitializer(duplicate.of(step.right(from))));
+    step.fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(az.simpleName(step.left(from)) + "")).forEachOrdered(¢ -> ¢.setInitializer(duplicate.of(step.right(from))));
     return duplicate.of(step.left(from));
   }
 

@@ -67,9 +67,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final Expression v = fixArrayInitializer(initializer, currentStatement);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
     final Statement newStatement = duplicate.of(nextStatement);
-    final int addedSize = i.addedSize(newStatement);
-    final int removalSaving = removalSaving(f);
-    if (addedSize - removalSaving > 0)
+    if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
     r.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);

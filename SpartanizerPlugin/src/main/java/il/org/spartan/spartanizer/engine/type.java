@@ -196,8 +196,7 @@ public interface type {
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
       if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
         return false;
-      final NumberLiteral l = az.numberLiteral(x);
-      final int n = Integer.parseInt(step.token(l));
+      final int n = Integer.parseInt(step.token(az.numberLiteral(x)));
       return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
     }
 

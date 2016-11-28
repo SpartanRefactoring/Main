@@ -6,6 +6,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -282,8 +283,8 @@ public final class izTest {
   }
 
   @Test public void deMorganTest() {
-    final InfixExpression e = null;
-    assert !iz.deMorgan(e);
+    assert !iz.deMorgan((InfixExpression) null);
+    assert !iz.deMorgan((Operator) null);
     assert iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("true || false")));
     assert !iz.deMorgan(findFirst.instanceOf(InfixExpression.class, wizard.ast("(a == 5)")));
   }
@@ -302,8 +303,7 @@ public final class izTest {
   }
 
   @Test public void final¢Test() {
-    final VariableDeclarationStatement e = null;
-    assert !iz.final¢(e);
+    assert !iz.final¢((VariableDeclarationStatement)null);
     assert iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class, wizard.ast("final int a = 5;")));
     assert !iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class, wizard.ast("int a = 5;")));
   }

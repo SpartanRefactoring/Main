@@ -13,13 +13,15 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Tests for makeAST, see issue #822 for more details
- * @author Amit Ohayon
- * @author Yosef Raisman
- * @author Entony Lekhtman
- * @since 16-11-12 */
-@SuppressWarnings("static-method")
+/**
+ * Tests for makeAST, see issue #822 for more details
+ * @author  Amit Ohayon
+ * @author  Yosef Raisman
+ * @author  Entony Lekhtman
+ * @since  16-11-12 
+ */
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue822 {
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");

@@ -19,9 +19,8 @@ public class Independent extends JavadocMarkerNanoPattern<MethodDeclaration> {
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         enviroment.addAll(step.parametersNames(az.methodDeclaration(¢)));
-    final Set<String> dependencies = analyze.dependencies(step.body(d)).stream().map(x -> x + "").collect(Collectors.toSet());
     for (final String ¢ : enviroment)
-      if (dependencies.contains(¢))
+      if (analyze.dependencies(step.body(d)).stream().map(x -> x + "").collect(Collectors.toSet()).contains(¢))
         return false;
     return true;
   }

@@ -18,10 +18,9 @@ public class ParseASTTest {
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
 
   public static void main(final String[] args) {
-    final String test = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(test);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
+        + "public class Test {\n" + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
+        + "}");
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
@@ -119,8 +118,7 @@ public class ParseASTTest {
        * MarkerAnnotation) */
       @Override public boolean visit(final MarkerAnnotation node) {
         System.out.println("MarkerAnnotation: " + node.getTypeName());
-        final ASTNode parent = node.getParent();
-        System.out.println("parent: " + parent.getNodeType());
+        System.out.println("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
     });
@@ -129,9 +127,7 @@ public class ParseASTTest {
   @Test public void testStepMethod_01() {
     makeAST.COMPILATION_UNIT.from(test1).accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
-        final Block b = step.body(node);
-        final List<Statement> ls = step.statements(b);
-        for (final Statement o : ls) {
+        for (final Statement o : step.statements(step.body(node))) {
           System.out.println("class: " + o.getClass());
           System.out.println("statement: " + o);
           System.out.println(step.expression(o));
