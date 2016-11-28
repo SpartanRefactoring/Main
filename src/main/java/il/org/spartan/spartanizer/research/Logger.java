@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -177,14 +178,14 @@ public class Logger {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
-      numStatements = metrics.countStatements(m);
+      numStatements =  measure.statements(m);
       numExpressions = metrics.countExpressions(m);
     }
 
     /** @param n matched node
      * @param np matching nanopattern */
     public void markNP(final ASTNode n, final String np) {
-      numNPStatements += metrics.countStatements(n);
+      numNPStatements +=  measure.statements(n);
       numNPExpressions += metrics.countExpressions(n);
       nps.add(np);
       logNodeInfo(n);
@@ -223,7 +224,7 @@ public class Logger {
     /** @param ¢ matched node */
     public void markNP(final ASTNode ¢) {
       ++occurences;
-      numNPStatements += metrics.countStatements(¢);
+      numNPStatements +=  measure.statements(¢);
       numNPExpressions += metrics.countExpressions(¢);
     }
   }
