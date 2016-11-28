@@ -1,16 +1,16 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-/** approximation of int with default value and initializations check
+/** approximation of generic Type with default value and initializations check
  * @author kobybs
  * @since 27-11-2016 */
-public final class ParameterInt {
-  private int value;
+public final class ParameterObject<T extends Object> {
+  private T value;
   private boolean hasValue;
   private boolean hasDefault;
 
-  public ParameterInt() {}
+  public ParameterObject() {}
 
-  public ParameterInt(final int defaultValue) {
+  public ParameterObject(final T defaultValue) {
     value = defaultValue;
     hasDefault = true;
   }
@@ -19,13 +19,13 @@ public final class ParameterInt {
     return hasValue;
   }
 
-  public int intValue() {
+  public T objectValue() {
     if (!hasValue && !hasDefault)
       throw new IllegalArgumentException();
     return value;
   }
 
-  public void set(final int v) {
+  public void set(final T v) {
     if (hasValue)
       throw new IllegalArgumentException();
     value = v;

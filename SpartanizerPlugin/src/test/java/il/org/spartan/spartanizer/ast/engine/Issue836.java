@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 14-11-2016 */
 @SuppressWarnings("static-method")
 @Ignore
-public class Issue_836 {
+public class Issue836 {
   @Test public void test0() {
     azzert.that(az.block(wizard.ast("{int a;return a;}")).statements().size(), is(2));
   }
