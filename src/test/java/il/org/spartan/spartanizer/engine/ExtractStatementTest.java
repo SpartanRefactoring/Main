@@ -10,8 +10,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc", "static-method" })
 public final class ExtractStatementTest {
   @Test public void declarationCorrectSize() {
     azzert.that(extract.statements(s("{int a; a();}")).size(), is(2));

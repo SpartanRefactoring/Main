@@ -136,10 +136,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   public boolean follow() throws CoreException {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    final TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
     for (final Tip ¢ : tips) {
       progressMonitor.worked(1);
-      ¢.go(astRewrite, g);
+      ¢.go(astRewrite, new TextEditGroup("spartanization: textEditGroup"));
     }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();

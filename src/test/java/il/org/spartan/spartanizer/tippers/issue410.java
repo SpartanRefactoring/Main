@@ -9,10 +9,12 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
-/** Test class for {@link GuessedContext}.
- * @since 2016 */
-@SuppressWarnings("static-method")
+/**
+ * Test class for  {@link GuessedContext} .
+ * @since  2016 
+ */
 @Ignore
+@SuppressWarnings("static-method")
 public class issue410 {
   @Test public void dealWithBothKindsOfComment() {
     similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");

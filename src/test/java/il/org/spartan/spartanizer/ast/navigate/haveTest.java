@@ -8,12 +8,14 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-/** Tests for {@link have}, regarding issue #807
- * @author Kfir Marx
- * @authoe Raviv Rachmiel
- * @since 10-11-2016 */
-@SuppressWarnings({ "static-method", "javadoc" })
+/**
+ * Tests for  {@link have} , regarding issue #807
+ * @author  Kfir Marx
+ * @authoe  Raviv Rachmiel
+ * @since  10-11-2016 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class haveTest {
   public List<Expression> ExpressionListMaker(final String[] exps) {
     final List<Expression> $ = new LinkedList<>();

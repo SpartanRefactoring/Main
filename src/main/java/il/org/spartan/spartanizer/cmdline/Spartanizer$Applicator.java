@@ -101,13 +101,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @return */
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      // final BodyDeclaration u = (BodyDeclaration)
-      // makeAST.CLASS_BODY_DECLARATIONS.from($.get());
-      // TODO Matteo: apply to CompilationUnit and not to
-      // CLASS_BODY_DECLARATIONS -- matteo
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
+      final TextEdit e = createRewrite(((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()))).rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

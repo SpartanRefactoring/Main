@@ -61,8 +61,7 @@ public class Issue717 {
     final String firstStat = "{int x;";
     final String nextStat = "x=4;";
     int statAmount = 0;
-    final Random randomGenerator = new Random();
-    statAmount = randomGenerator.nextInt(MAX_STAT_AMOUNT);
+    statAmount = new Random().nextInt(MAX_STAT_AMOUNT);
     if (statAmount < 4)
       statAmount = 4;
     String randomBigBlock = "public void " + methodName + "()" + firstStat;

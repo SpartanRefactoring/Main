@@ -30,25 +30,25 @@ public class Issue871 {
     new ParameterInt().intValue();
   }
 
-  @SuppressWarnings("boxing") @Test public void test4() {
+  @Test @SuppressWarnings("boxing") public void test4() {
     final ParameterInt i = new ParameterInt();
     i.set(3);
     assertEquals(true, i.hasValue());
   }
 
-  @SuppressWarnings("boxing") @Test public void test5() {
+  @Test @SuppressWarnings("boxing") public void test5() {
     assertEquals(false, new ParameterInt().hasValue());
   }
 
-  @SuppressWarnings("boxing") @Test public void test6() {
+  @Test @SuppressWarnings("boxing") public void test6() {
     assertEquals(false, new ParameterInt(2).hasValue());
   }
 
-  @SuppressWarnings("boxing") @Test public void test7() {
+  @Test @SuppressWarnings("boxing") public void test7() {
     assertEquals(false, new ParameterInt().hasDefault());
   }
 
-  @SuppressWarnings("boxing") @Test public void test8() {
+  @Test @SuppressWarnings("boxing") public void test8() {
     assertEquals(true, new ParameterInt(4).hasDefault());
   }
 }

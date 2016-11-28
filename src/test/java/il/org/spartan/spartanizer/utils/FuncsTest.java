@@ -16,12 +16,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** A test suite for class {@link step}
- * @author Yossi Gil
- * @since 2015-07-18
- * @see step */
-@SuppressWarnings({ "static-method", "javadoc" })
+/**
+ * A test suite for class  {@link step}
+ * @author  Yossi Gil
+ * @since  2015-07-18
+ * @see step  
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class FuncsTest {
   @Test public void arrayOfInts() {
     final Type t = t("int[][] __;");

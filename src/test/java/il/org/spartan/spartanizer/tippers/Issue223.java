@@ -157,16 +157,14 @@ public final class Issue223 {
   @Test public void vanilla02() {
     final Operand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
-    final Wrap w = Wrap.find(a.get());
-    final String wrap = w.on(a.get());
+    final String wrap = Wrap.find(a.get()).on(a.get());
     if (wrap.equals(TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
   @Test public void vanilla03() {
     final Operand a = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(a.get());
-    final String wrap = w.on(a.get());
+    final String wrap = Wrap.find(a.get()).on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -179,8 +177,7 @@ public final class Issue223 {
 
   @Test public void vanilla04() {
     final Operand o = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -198,8 +195,7 @@ public final class Issue223 {
 
   @Test public void vanilla05() {
     final Operand o = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
