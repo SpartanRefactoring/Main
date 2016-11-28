@@ -74,8 +74,7 @@ public final class Version230 {
 
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@TargetApi(value = 23)@SuppressWarnings(value = \"javadoc\")  void m() {}")
-        .gives("@SuppressWarnings(value = \"javadoc\") @TargetApi(value=23) void m() {}")//
-        .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}")//
+        .gives("@TargetApi(23)@SuppressWarnings(\"javadoc\")void m(){}")//
         .stays();
   }
 
@@ -2940,8 +2939,9 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-        + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n"));
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(
+        Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
+            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n"));
     assert f != null;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
