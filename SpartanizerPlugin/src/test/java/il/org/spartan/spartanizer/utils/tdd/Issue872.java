@@ -4,14 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-/**
- * tests of ParameterBool according to issue 872
+/** tests of ParameterBool according to issue 872
  * @author kobybs
- * @since 27-11-2016
- */
-
-
-@SuppressWarnings({"static-method","boxing"})
+ * @since 27-11-2016 */
+@SuppressWarnings({ "static-method", "boxing" })
 public class Issue872 {
   @Test public void test0() {
     assertEquals(false, new ParameterBool(false).boolValue());
