@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** Tests of {@link count.expressions}
+/** Tests of {@link measure.expressions}
  * @author RoeiRaz
  * @author RoeyMaor
  * @since 2016 */

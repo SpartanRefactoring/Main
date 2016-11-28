@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Tests of {@link enumerate.expressions}
+/** Tests of {@link measure.expressions}
  * @author Ori Marcovitch
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
