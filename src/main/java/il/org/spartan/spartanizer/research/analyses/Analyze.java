@@ -169,13 +169,13 @@ public class Analyze {
       step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-            for (Analyzer a : analyses.values())
+            for (final Analyzer a : analyses.values())
               a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
       });
-    for (String a : analyses.keySet()) {
+    for (final String a : analyses.keySet()) {
       System.out.println("++++++++" + a + "++++++++");
       analyses.get(a).printComparison();
       analyses.get(a).printAccumulated();
