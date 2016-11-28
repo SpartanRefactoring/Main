@@ -171,4 +171,10 @@ public interface findFirst {
   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class, ¢);
   }
+
+  /** @param ¢
+   * @return */
+  static ASTNode statement(ASTNode ¢) {
+    return instanceOf(Statement.class, ¢);
+  }
 }
