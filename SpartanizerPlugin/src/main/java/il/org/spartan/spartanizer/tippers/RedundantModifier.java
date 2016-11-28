@@ -29,8 +29,7 @@ public final class RedundantModifier extends CarefulTipper<Modifier> implements 
   @Override public Tip tip(final Modifier ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite x = r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty());
-        x.remove(¢, g);
+        r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);
       }
     };
   }

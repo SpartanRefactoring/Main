@@ -94,8 +94,7 @@ public class Selection extends AbstractSelection<Selection> {
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
-    final WrappedCompilationUnit u = inner.get(0);
-    final IResource r = u.descriptor.getResource();
+    final IResource r = inner.get(0).descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();

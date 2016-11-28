@@ -125,12 +125,9 @@ public final class izTest {
     assert !b2;
     final boolean b3 = wizard.nonAssociative(e("1+2"));
     assert !b3;
-    final boolean b4 = wizard.nonAssociative(e("2-1"));
-    assert b4;
-    final boolean b5 = wizard.nonAssociative(e("2/1"));
-    assert b5;
-    final boolean b6 = wizard.nonAssociative(e("2%1"));
-    assert b6;
+    assert wizard.nonAssociative(e("2-1"));
+    assert wizard.nonAssociative(e("2/1"));
+    assert wizard.nonAssociative(e("2%1"));
     assert !wizard.nonAssociative(e("2*1"));
   }
 

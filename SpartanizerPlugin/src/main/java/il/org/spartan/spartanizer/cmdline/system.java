@@ -132,8 +132,7 @@ public interface system {
   }
 
   static String format3(final double d) {
-    final double fraction = d - (int) d;
-    if (d == 0 || d >= 1 && fraction < 0.0005)
+    if (d == 0 || d >= 1 && d - (int) d < 0.0005)
       return "%.0f";
     switch (digits(round3(d))) {
       case -1:

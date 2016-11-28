@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.java.Environment.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
 import org.junit.runners.*;
@@ -16,10 +15,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
 @Ignore
+@SuppressWarnings({ "static-method", "javadoc" })
 public class EnvironmentTestDeclares {
-  // Primitive, manual tests, to root out the rough bugs.
   @Test public void declaresDownMethodDeclaration01() {
     for (final Entry<String, Information> ¢ : Environment
         .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
@@ -39,8 +37,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_0() {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from("");
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("")));
     assert !$.contains("a");
     assert $.isEmpty();
   }
@@ -54,9 +51,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_2() {
-    final String code = "int a=0;int b;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("int a=0;int b;")));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -66,9 +61,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_4() {
-    final String code = "public void f(int a){String b;}";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("public void f(int a){String b;}")));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -78,17 +71,14 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_6() {
-    final String code = "int a=0;b=5";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("int a=0;b=5")));
     assert $.contains("a");
     assert !$.contains("b");
   }
 
   @Test public void declare_7() {
-    final String code = "class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = declaresDown(u);
+    final Set<Entry<String, Information>> $ = declaresDown((makeAST.COMPILATION_UNIT
+        .from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}")));
     assert $.contains("a");
     assert $.contains("b");
     assert $.contains("my");
