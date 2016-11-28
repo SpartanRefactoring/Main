@@ -1,11 +1,8 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-/**
- * approximation of generic Type with default value and initializations check
+/** approximation of generic Type with default value and initializations check
  * @author kobybs
- * @since 27-11-2016
- */
-
+ * @since 27-11-2016 */
 public final class ParameterObject<T extends Object> {
   private T value;
   private boolean hasValue;

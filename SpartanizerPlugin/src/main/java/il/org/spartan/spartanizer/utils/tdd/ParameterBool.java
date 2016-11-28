@@ -1,11 +1,8 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-/**
- * approximation of boolean with default value and initializations check
+/** approximation of boolean with default value and initializations check
  * @author kobybs
- * @since 27-11-2016
- */
-
+ * @since 27-11-2016 */
 public final class ParameterBool {
   private boolean value;
   private boolean hasValue;
