@@ -4,6 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+/**
+ * tests of ParameterInt according to issue 871
+ * @author kobybs
+ * @since 27-11-2016
+ */
+
 @SuppressWarnings("static-method")
 public class Issue871 {
   @Test public void test0() {
