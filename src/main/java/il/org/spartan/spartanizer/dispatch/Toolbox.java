@@ -207,6 +207,7 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new SetterGoFluent(), //
+            new RedundentReturnStatementInVoidTypeMethod(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
