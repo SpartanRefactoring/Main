@@ -101,7 +101,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @return */
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final TextEdit e = createRewrite(((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()))).rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

@@ -13,11 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/**
- * Unit tests for  {@link Tippers#ADDITION_SORTER}  .
- * @author  Yossi Gil
- * @since  2014-07-13 
- */
+/** Unit tests for {@link Tippers#ADDITION_SORTER} .
+ * @author Yossi Gil
+ * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class InfixAdditionSortTest {

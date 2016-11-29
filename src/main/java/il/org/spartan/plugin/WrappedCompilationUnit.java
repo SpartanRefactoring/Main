@@ -57,12 +57,12 @@ public class WrappedCompilationUnit {
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }

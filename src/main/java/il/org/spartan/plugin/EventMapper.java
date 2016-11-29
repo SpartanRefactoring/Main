@@ -74,13 +74,15 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
   /** Factory method for {@link EventMapperFunctor}. Inspects the
    * {@link EventMapper#eventMap}. Used to inspect the collected data, rather
-   * than update it. [[SuppressWarningsSpartan]] */
+   * than update it. */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
+      /** [[SuppressWarningsSpartan]] */
       @Override public void update(final Map<E, Object> m) {
         consumer.accept(m);
       }
 
+      /** [[SuppressWarningsSpartan]] */
       @Override public void update(final Map<E, Object> m, final Object o) {
         biConsumer.accept(m, o);
       }
@@ -255,9 +257,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, HashSet<Y>, Y> rememberBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, HashSet<Y>, Y>) this) //
           .startWith(new HashSet<Y>()) //
-          .does((l, u) -> {
-            l.add(u);
-          });
+          .does((final HashSet<Y> l, final Y u) -> l.add(u));
     }
 
     /** Collects objects of specific type in a {@link List}. Conducts
@@ -265,9 +265,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, LinkedList<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, LinkedList<Y>, Y>) this) //
           .startWith(new LinkedList<Y>()) //
-          .does((l, u) -> {
-            l.add(u);
-          });
+          .does((final LinkedList<Y> l, final Y u) -> l.add(u));
     }
 
     /** Remember the last object received of specific type. Conducts casting. */
@@ -276,7 +274,8 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           .does((x, u) -> u);
     }
 
-    /** Counts calls of this event. Conducts casting. */
+    /** Counts calls of this event. Conducts casting.
+     * [[SuppressWarningsSpartan]] */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, AtomicInteger, AtomicInteger> counter() {
       return ((EventMapperFunctor<E, AtomicInteger, AtomicInteger>) this) //
           .startWith(new AtomicInteger(0)) //

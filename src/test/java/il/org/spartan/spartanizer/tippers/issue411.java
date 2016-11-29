@@ -12,10 +12,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/**
- * Failing tests of issue 295 - DeclarationInitializerStatementTerminatingScope.
- * @since  2016 
- */
+/** Failing tests of issue 295 -
+ * DeclarationInitializerStatementTerminatingScope.
+ * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")
 public class issue411 {

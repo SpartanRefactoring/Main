@@ -28,7 +28,8 @@ public class Carrier extends JavadocMarkerNanoPattern<MethodDeclaration> {
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
     for (final String pn : step.parametersNames(¢))
-      if (!step.arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList()).contains(pn))
+      if (!step.arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList())
+          .contains(pn))
         return false;
     return true;
   }

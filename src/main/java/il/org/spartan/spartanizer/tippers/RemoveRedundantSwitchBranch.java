@@ -49,6 +49,8 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
 
   private static List<SwitchCase> getCases(final SwitchStatement s) {
     final List<SwitchCase> $ = new ArrayList<>();
+    // TODO Yuval: this is not how you get the cases! What would happen if there
+    // is a nested switch-case?
     s.accept(new ASTVisitor() {
       @Override public boolean visit(final SwitchCase node) {
         $.add(node);

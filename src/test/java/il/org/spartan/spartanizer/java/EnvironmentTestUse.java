@@ -12,11 +12,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 
-/**
- * @author  Dan Greenstein
- * @author  Alex Kopzon
- * @since  2016 
- */
+/** @author Dan Greenstein
+ * @author Alex Kopzon
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
