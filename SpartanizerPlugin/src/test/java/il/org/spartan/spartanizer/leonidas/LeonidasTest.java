@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.leonidas;
 import org.junit.*;
 
 @SuppressWarnings("static-method")
-@Ignore
 public class LeonidasTest {
   @Test public void testMatches1() {
     leonidasSays.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");

@@ -14,7 +14,6 @@ import org.junit.runners.*;
 // TODO Roth: add ???
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method") //
-@Ignore
 public class Issue180 {
   @Test public void renameToCent() {
     trimmingOf("/**\n" + " * @param s\n" + " */\n" + "int length(String s) {\n" + "  return s.length();\n" + "}")
