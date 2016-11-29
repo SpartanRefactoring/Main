@@ -188,7 +188,8 @@ public class Analyze {
    * @return */
   private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
     if ("false".equals(getProperty("nmethods")))
-      addJavadocNanoPatterns(¢);
+      addCharacteristicMethodPatterns(¢);
+    addMethodPatterns(¢);
     return ¢
         .add(ConditionalExpression.class, //
             new DefaultsTo(), //
@@ -238,21 +239,26 @@ public class Analyze {
     ;
   }
 
-  private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
+  private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Carrier(), //
         new Converter(), //
-        new Delegator(), //
         new Examiner(), //
         new Exploder(), //
-        new Fluenter(), //
         new FluentSetter(), ///
         new Getter(), //
+        new Mapper(), //
+        new TypeChecker(), //
+        null);
+  }
+
+  private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
+    return ¢.add(MethodDeclaration.class, //
+        new Carrier(), //
+        new Delegator(), //
+        new Fluenter(), //
         new Independent(), //
         new JDPattern(), //
-        new Mapper(), //
         new MethodEmpty(), //
-        new TypeChecker(), //
         null);
   }
 }
