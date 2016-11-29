@@ -10,12 +10,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/**
- * A test suite for class  {@link spartan}
- * @author  Yossi Gil
- * @since  2015-07-18
- * @see step  
- */
+/** A test suite for class {@link spartan}
+ * @author Yossi Gil
+ * @since 2015-07-18
+ * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class spartanTest {

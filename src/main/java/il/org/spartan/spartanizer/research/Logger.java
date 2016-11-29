@@ -65,7 +65,7 @@ public class Logger {
    * @param sumSratio
    * @param d
    * @return */
-  private static double safeDiv(double sumSratio, double d) {
+  private static double safeDiv(final double sumSratio, final double d) {
     return d == 0 ? 1 : sumSratio / d;
   }
 

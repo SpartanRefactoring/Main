@@ -165,35 +165,33 @@ public class leonidasSays {
     }
 
     final Tipper<ASTNode> tipper;
-    private final String s;
+    final String string;
 
     public turns(final Tipper<ASTNode> tipper, final String _s) {
       this.tipper = tipper;
-      s = _s;
+      string = _s;
     }
 
-    /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
-    public void into(final String res) {
+    public void into(final String s) {
       final Document document = new Document(wrapCode(s));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-      final AST ast = cu.getAST();
-      final ASTRewrite r = ASTRewrite.create(ast);
+      final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(s, cu));
       n.accept(new ASTVisitor() {
-        @Override public void preVisit(final ASTNode node) {
-          if (tipper.canTip(node))
-            tipper.tip(node).go(r, null);
+        @Override public void preVisit(final ASTNode ¢) {
+          if (tipper.canTip(¢))
+            tipper.tip(¢).go(r, null);
         }
       });
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch (MalformedTreeException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
+      } catch (MalformedTreeException | BadLocationException ¢) {
+        monitor.logEvaluationError(this, ¢);
       }
-      azzertEquals(res, document);
+      azzertEquals(s, document);
     }
   }
 

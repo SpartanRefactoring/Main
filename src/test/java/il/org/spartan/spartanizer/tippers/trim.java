@@ -76,11 +76,9 @@ public interface trim {
     }
   }
 
-  /**
-   * Unit tests demonstrating the fluent API
-   * @author  Yossi Gil
-   * @since  2016 
-   */
+  /** Unit tests demonstrating the fluent API
+   * @author Yossi Gil
+   * @since 2016 */
   @Ignore
   @SuppressWarnings("static-method")
   static class TEST {

@@ -18,12 +18,12 @@ public interface Linguistic {
   final int TRIM_THRESHOLD = 50;
 
   /** Cut string's suffix to maximal length for every row.
-   * @param ¢ JD
-   * @return cut string [[SuppressWarningsSpartan]] */
-  static String trim(final String ¢) {
-    final String[] rows = ¢.split("\n");
-    for (int i = 0; i < rows.length; ++i)
-      rows[i] = trimAbsolute(rows[i], TRIM_THRESHOLD, TRIM_SUFFIX);
+   * @param s JD
+   * @return cut string */
+  static String trim(final String s) {
+    final String[] rows = s.split("\n");
+    for (int ¢ = 0; ¢ < rows.length; ++¢)
+      rows[¢] = trimAbsolute(rows[¢], TRIM_THRESHOLD, TRIM_SUFFIX);
     return String.join("\n", rows);
   }
 
