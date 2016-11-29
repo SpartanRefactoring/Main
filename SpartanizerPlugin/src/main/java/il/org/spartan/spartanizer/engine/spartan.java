@@ -43,11 +43,11 @@ public interface spartan {
     return shorten(¢.getName());
   }
 
-  static String shorten(final ParameterizedType t) {
-    final String $ = shorten(typeArguments(t));
+  static String shorten(final ParameterizedType ¢) {
+    final String $ = shorten(typeArguments(¢));
     if ($ == null)
-      return shorten(t.getType());
-    switch (t.getType() + "") {
+      return shorten(¢.getType());
+    switch (¢.getType() + "") {
       case "Collection":
       case "Iterable":
       case "List":
