@@ -6,6 +6,8 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -30,7 +32,13 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   @Override public Tip tip(final ForStatement ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        remove(r, lastStatement(¢), g);
+//        remove(r, lastStatement(¢), g);
+        final ASTNode b = az.block(step.body(¢));
+        if (b instanceof Block) {
+          step.statements(az.block(step.body(¢))).remove(lastStatement(¢));
+        } else {
+          r.replace(lastStatement(¢), make.emptyStatement(¢), g);
+        }
       }
     };
   }
@@ -47,6 +55,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   }
   
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), ForStatement.BODY_PROPERTY).remove(s, g);
+//    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+//      step.body(parent(s))
   }
 }
