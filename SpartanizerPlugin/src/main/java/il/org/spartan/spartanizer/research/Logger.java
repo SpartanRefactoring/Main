@@ -63,10 +63,10 @@ public class Logger {
 
   /** Divide but if b == 0 return 1.
    * @param sumSratio
-   * @param b
+   * @param d
    * @return */
-  private static double safeDiv(double sumSratio, double b) {
-    return b == 0 ? 1 : sumSratio / b;
+  private static double safeDiv(double sumSratio, double d) {
+    return d == 0 ? 1 : sumSratio / d;
   }
 
   private static void summarizeNPStatistics(final String outputDir) {
