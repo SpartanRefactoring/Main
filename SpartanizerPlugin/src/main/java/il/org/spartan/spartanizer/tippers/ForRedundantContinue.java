@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** removes continue in for loop if it's last statement in the loop.
- * @author Kfir Marx
+ * @author Doron Meshulam
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final ForStatement ¢) {
@@ -34,11 +34,10 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
 //        remove(r, lastStatement(¢), g);
         final ASTNode b = az.block(step.body(¢));
-        if (b instanceof Block) {
-          step.statements(az.block(step.body(¢))).remove(lastStatement(¢));
-        } else {
+        if (!(b instanceof Block))
           r.replace(lastStatement(¢), make.emptyStatement(¢), g);
-        }
+        else
+          step.statements(az.block(step.body(¢))).remove(lastStatement(¢));
       }
     };
   }
@@ -52,10 +51,5 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
         return true;
     }
     return false;
-  }
-  
-  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-//    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-//      step.body(parent(s))
   }
 }
