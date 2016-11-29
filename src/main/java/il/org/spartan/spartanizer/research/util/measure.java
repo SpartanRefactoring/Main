@@ -40,7 +40,7 @@ public enum measure {
 
   /** @param ¢
    * @return */
-  static boolean excluded(Statement ¢) {
+  static boolean excluded(final Statement ¢) {
     return Arrays.asList(//
         Block.class, //
         BreakStatement.class, //
@@ -56,7 +56,7 @@ public enum measure {
 
   /** @param ¢
    * @return */
-  static boolean excluded(Expression ¢) {
+  static boolean excluded(final Expression ¢) {
     return Arrays.asList(//
         Annotation.class, //
         ArrayAccess.class, //

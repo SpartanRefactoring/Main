@@ -6,7 +6,6 @@ import org.eclipse.core.commands.*;
  * @author Ori Roth
  * @since 2.6 */
 public class Handlers extends AbstractHandler {
-
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent ¢) {
     return null;
   }

@@ -55,8 +55,7 @@ public class Issue177 {
   }
 
   @Test public void bitWiseOr_noSideEffects() {
-    int a = 1 | 2;
-    azzert.that(a, is(3));
+    azzert.that(1 | 2, is(3));
     trimmingOf("a=a|b").gives("a|=b");
   }
 
@@ -156,8 +155,7 @@ public class Issue177 {
   }
 
   @Test public void logicalAnd_noSideEffects() {
-    boolean a = true & false;
-    azzert.nay(a);
+    azzert.nay(true & false);
     trimmingOf("a=a && b").gives("a&=b");
   }
 
@@ -249,8 +247,7 @@ public class Issue177 {
   }
 
   @Test public void logicalOr_noSideEffects() {
-    boolean a = true | false;
-    azzert.aye(a);
+    azzert.aye(true | false);
     trimmingOf("a=a||b").gives("a|=b");
   }
 

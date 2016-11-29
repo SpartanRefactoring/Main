@@ -8,10 +8,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/**
- * @author  Dor Ma'ayan
- * @since  14-11-2016 
- */
+/** @author Dor Ma'ayan
+ * @since 14-11-2016 */
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue836 {

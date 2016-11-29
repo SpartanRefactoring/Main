@@ -10,10 +10,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/**
- * Failing (were ignored) tests of  {@link TrimmerLogTest}
- * @since  2016 
- */
+/** Failing (were ignored) tests of {@link TrimmerLogTest}
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings("static-method")

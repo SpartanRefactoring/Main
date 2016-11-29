@@ -9,10 +9,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/**
- * Failing test, originally from  {@link normalizeTest} .
- * @since  2016 
- */
+/** Failing test, originally from {@link normalizeTest} .
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings("static-method")
