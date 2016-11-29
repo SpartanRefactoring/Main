@@ -41,7 +41,8 @@ public class Issue741 {
   }
 
   @Test public void publicFields_test6() {
-    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}"));
+    final List<String> pFields = getAll2
+        .publicFields(getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}"));
     assert pFields.contains("y");
     assert !pFields.contains("x");
     assert !pFields.contains("f");

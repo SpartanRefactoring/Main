@@ -3,10 +3,8 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
-/**
- * @author  Dor Ma'ayan
- * @since  20-11-2016 
- */
+/** @author Dor Ma'ayan
+ * @since 20-11-2016 */
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue188 {

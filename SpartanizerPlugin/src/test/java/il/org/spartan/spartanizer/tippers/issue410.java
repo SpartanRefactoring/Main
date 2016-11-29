@@ -9,10 +9,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
-/**
- * Test class for  {@link GuessedContext} .
- * @since  2016 
- */
+/** Test class for {@link GuessedContext} .
+ * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")
 public class issue410 {

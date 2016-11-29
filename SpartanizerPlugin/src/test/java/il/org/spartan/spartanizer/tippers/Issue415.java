@@ -4,10 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/**
- * Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved here.
- * @since  2016 
- */
+/** Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved
+ * here.
+ * @since 2016 */
 @Ignore("Do not compute shifts, they have a reason")
 @SuppressWarnings("static-method")
 public class Issue415 {
