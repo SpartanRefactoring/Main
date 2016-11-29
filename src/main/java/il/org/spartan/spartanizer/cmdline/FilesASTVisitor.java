@@ -36,7 +36,7 @@ public abstract class FilesASTVisitor extends ASTVisitor {
     throw new RuntimeException();
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);

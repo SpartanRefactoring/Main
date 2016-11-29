@@ -158,8 +158,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   <N extends ASTNode> N findNode(final Class<N> clazz) {
-    final GuessedContext guessContext = GuessedContext.find(codeFragment);
-    assert guessContext != null;
+    assert GuessedContext.find(codeFragment) != null;
     final N $ = firstInstance(clazz);
     assert $ != null;
     return $;

@@ -87,8 +87,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    for (final VariableDeclarationFragment brother : fragments(parent)) {
+    for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
       if (brother == f) {
         collecting = true;
         continue;

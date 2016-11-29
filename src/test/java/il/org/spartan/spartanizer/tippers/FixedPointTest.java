@@ -72,8 +72,7 @@ public final class FixedPointTest {
   }
 
   @Test public void hasNullsTest() {
-    final Object a = null;
-    assert hasNull(a);
+    assert hasNull((Object) null);
     assert !hasNull(new Object());
     assert hasNull(new Object(), null);
     assert !hasNull(new Object(), new Object());

@@ -131,11 +131,10 @@ public interface system {
     return $ < 0 ? 0 : (int) $ + 1;
   }
 
-  static String format3(final double d) {
-    final double fraction = d - (int) d;
-    if (d == 0 || d >= 1 && fraction < 0.0005)
+  static String format3(final double ¢) {
+    if (¢ == 0 || ¢ >= 1 && ¢ - (int) ¢ < 0.0005)
       return "%.0f";
-    switch (digits(round3(d))) {
+    switch (digits(round3(¢))) {
       case -1:
       case 0:
         return "%.3f";

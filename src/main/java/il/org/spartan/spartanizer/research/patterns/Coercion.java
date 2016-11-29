@@ -77,11 +77,9 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return new File(fileAzFilePath());
   }
 
-  /** [[SuppressWarningsSpartan]] */
   static boolean azMethodExist(final CastExpression ¢) {
-    final String name = azMethodName(¢);
-    return step.methods(containingType(¢)).stream().filter(m -> name.equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)))
-        .count() != 0;
+    return step.methods(containingType(¢)).stream()
+        .filter(m -> azMethodName(¢).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {

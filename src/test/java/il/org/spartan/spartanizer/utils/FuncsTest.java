@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-@SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class FuncsTest {
   @Test public void arrayOfInts() {
     final Type t = t("int[][] __;");

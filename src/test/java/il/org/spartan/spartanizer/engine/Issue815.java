@@ -13,33 +13,32 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Amir Sagiv
  * @since 16-11-11 */
 public class Issue815 {
-  @SuppressWarnings("static-method") @Test public void nullCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void nullCheckForOfMethod() {
     azzert.isNull(NameGuess.of(null));
   }
 
-  @SuppressWarnings("static-method") @Test public void zeroLengthCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void zeroLengthCheckForOfMethod() {
     azzert.isNull(NameGuess.of(""));
   }
 
-  @SuppressWarnings("static-method") @Test public void underScoresCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void underScoresCheckForOfMethod() {
     azzert.that(NameGuess.ANONYMOUS, is(NameGuess.of("_")));
     azzert.that(NameGuess.ANONYMOUS, is(NameGuess.of("__")));
   }
 
-  @SuppressWarnings("static-method") @Test public void dollarCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void dollarCheckForOfMethod() {
     azzert.that(NameGuess.DOLLAR, is(NameGuess.of("$")));
     azzert.that(NameGuess.DOLLAR, is(NameGuess.of("$$")));
     assertNotEquals(NameGuess.of(""), NameGuess.DOLLAR);
   }
 
-  @SuppressWarnings("static-method") @Test public void centCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void centCheckForOfMethod() {
     azzert.that(NameGuess.CENT, is(NameGuess.of("¢")));
     azzert.that(NameGuess.CENT, is(NameGuess.of("¢¢")));
     assertNotEquals(NameGuess.of(""), NameGuess.CENT);
   }
 
-  // _$¢
-  @SuppressWarnings("static-method") @Test public void weirdoCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void weirdoCheckForOfMethod() {
     azzert.that(NameGuess.WEIRDO, is(NameGuess.of("_$¢")));
     azzert.that(NameGuess.WEIRDO, is(NameGuess.of("_$¢_$¢")));
     azzert.that(NameGuess.WEIRDO, is(NameGuess.of("$_¢")));
@@ -48,7 +47,7 @@ public class Issue815 {
     azzert.that(NameGuess.WEIRDO, is(NameGuess.of("$__$")));
   }
 
-  @SuppressWarnings("static-method") @Test public void classConstCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void classConstCheckForOfMethod() {
     azzert.that(NameGuess.CLASS_CONSTANT, is(NameGuess.of("A_ABC_CLASS_1")));
     azzert.that(NameGuess.CLASS_CONSTANT, is(NameGuess.of("B99")));
     azzert.that(NameGuess.CLASS_CONSTANT, is(NameGuess.of("A_35")));
@@ -57,7 +56,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("_A_A"), NameGuess.CLASS_CONSTANT);
   }
 
-  @SuppressWarnings("static-method") @Test public void isMethodCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void isMethodCheckForOfMethod() {
     azzert.that(NameGuess.IS_METHOD, is(NameGuess.of("isOK")));
     azzert.that(NameGuess.IS_METHOD, is(NameGuess.of("isLEGAL_1")));
     azzert.that(NameGuess.IS_METHOD, is(NameGuess.of("isB_O_R_I_N_G")));
@@ -66,7 +65,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("isok"), NameGuess.IS_METHOD);
   }
 
-  @SuppressWarnings("static-method") @Test public void setMethodCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void setMethodCheckForOfMethod() {
     azzert.that(NameGuess.SETTTER_METHOD, is(NameGuess.of("setThing")));
     azzert.that(NameGuess.SETTTER_METHOD, is(NameGuess.of("setMethoD1")));
     azzert.that(NameGuess.SETTTER_METHOD, is(NameGuess.of("setMyMOODtoBeH4PPY")));
@@ -74,7 +73,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("SETIT"), NameGuess.SETTTER_METHOD);
   }
 
-  @SuppressWarnings("static-method") @Test public void getMethodCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void getMethodCheckForOfMethod() {
     azzert.that(NameGuess.GETTER_METHOD, is(NameGuess.of("getThing")));
     azzert.that(NameGuess.GETTER_METHOD, is(NameGuess.of("getMethoD1")));
     azzert.that(NameGuess.GETTER_METHOD, is(NameGuess.of("getMyMOODtoBeH4PPY")));
@@ -82,7 +81,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("GETIT"), NameGuess.GETTER_METHOD);
   }
 
-  @SuppressWarnings("static-method") @Test public void classNameCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void classNameCheckForOfMethod() {
     azzert.that(NameGuess.CLASS_NAME, is(NameGuess.of("ClAsS")));
     azzert.that(NameGuess.CLASS_NAME, is(NameGuess.of("Oren95")));
     azzert.that(NameGuess.CLASS_NAME, is(NameGuess.of("$WhoStartsClassNameWithDollar")));
@@ -90,7 +89,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("$$"), NameGuess.CLASS_NAME);
   }
 
-  @SuppressWarnings("static-method") @Test public void MethodOrVariableCheckForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void MethodOrVariableCheckForOfMethod() {
     azzert.that(NameGuess.METHOD_OR_VARIABLE, is(NameGuess.of("methodCOOL")));
     azzert.that(NameGuess.METHOD_OR_VARIABLE, is(NameGuess.of("vaRiable99")));
     azzert.that(NameGuess.METHOD_OR_VARIABLE, is(NameGuess.of("_alsoOK__")));
@@ -98,7 +97,7 @@ public class Issue815 {
     assertNotEquals(NameGuess.of("___"), NameGuess.METHOD_OR_VARIABLE);
   }
 
-  @SuppressWarnings("static-method") @Test public void assertCoverForOfMethod() {
+  @Test @SuppressWarnings("static-method") public void assertCoverForOfMethod() {
     try {
       assertNotEquals(NameGuess.of("A_abc_CLASS_1"), NameGuess.CLASS_CONSTANT);
       fail();
@@ -107,7 +106,7 @@ public class Issue815 {
     }
   }
 
-  @SuppressWarnings("static-method") @Test public void isclassNameCheckTest() {
+  @Test @SuppressWarnings("static-method") public void isclassNameCheckTest() {
     assert NameGuess.isClassName("ClAsS");
     assert NameGuess.isClassName("Oren95");
     assert NameGuess.isClassName("$WhoStartsClassNameWithDollar");
@@ -115,7 +114,7 @@ public class Issue815 {
     assert !NameGuess.isClassName("$$");
   }
 
-  @SuppressWarnings("static-method") @Test public void isclassNameASTCheckTest() {
+  @Test @SuppressWarnings("static-method") public void isclassNameASTCheckTest() {
     assert !NameGuess.isClassName((ASTNode) null);
     assert NameGuess.isClassName(ASTNodeFromString("ClAsS"));
     assert NameGuess.isClassName(ASTNodeFromString("Oren95"));
