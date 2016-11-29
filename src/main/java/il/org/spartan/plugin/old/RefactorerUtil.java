@@ -22,13 +22,11 @@ import il.org.spartan.spartanizer.utils.*;
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
-  public static String getTipperName(final Map<attribute, Object> a) {
+  @SuppressWarnings("unchecked") public static String getTipperName(final Map<attribute, Object> a) {
     if (Refactorer.unknown.equals(a.get(attribute.TIPPER)))
       try {
-        final IMarker iMarker = (IMarker) a.get(attribute.MARKER);
-        final Object att = iMarker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
-        @SuppressWarnings("unchecked") final Class<? extends Tipper<?>> ¢ = (Class<? extends Tipper<?>>) att;
-        a.put(attribute.TIPPER, ¢.getSimpleName());
+        a.put(attribute.TIPPER,
+            ((Class<? extends Tipper<?>>) ((IMarker) a.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
       } catch (final CoreException ¢) {
         monitor.log(¢);
         a.put(attribute.TIPPER, "tip-core exception");
