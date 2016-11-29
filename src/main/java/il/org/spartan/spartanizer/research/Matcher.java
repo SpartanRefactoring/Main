@@ -301,7 +301,7 @@ public class Matcher {
   /** @param ¢
    * @return */
   private static String arguments(final ASTNode ¢) {
-    final String str = az.methodInvocation(¢).arguments() + "";
-    return str.substring(1, str.length() - 1);
+    final String $ = az.methodInvocation(¢).arguments() + "";
+    return $.substring(1, $.length() - 1);
   }
 }

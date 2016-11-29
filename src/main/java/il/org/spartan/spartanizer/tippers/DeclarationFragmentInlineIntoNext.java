@@ -94,8 +94,8 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
   }
 
   static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> li = occurencesOf(s, id);
-    return li.size() != 1 ? null : li.get(0);
+    final List<SimpleName> $ = occurencesOf(s, id);
+    return $.size() != 1 ? null : $.get(0);
   }
 
   static List<SimpleName> occurencesOf(final Statement s, final String id) {

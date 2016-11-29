@@ -327,6 +327,7 @@ public interface Environment {
       }
 
       Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+        System.out.println($);
         for (final Entry<String, Information> ¢ : ss)
           if (s.equals(¢.getKey()))
             return ¢.getValue();
@@ -530,9 +531,9 @@ public interface Environment {
   }
 
   static Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
-    for (final Entry<String, Information> ¢ : ss)
-      if (s.equals(¢.getKey()))
-        return ¢.getValue();
+    for (final Entry<String, Information> $ : ss)
+      if (s.equals($.getKey()))
+        return $.getValue();
     return null;
   }
 
