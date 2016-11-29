@@ -4,10 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/**
- * Test class for issue 115 - XOR parsing bug with trimmingOf testing utility.
- * @since  2016 
- */
+/** Test class for issue 115 - XOR parsing bug with trimmingOf testing utility.
+ * @since 2016 */
 @Ignore("Yossi - parsing with spaces, does not parse without. " + "Space from '=' does not seem to be required")
 @SuppressWarnings("static-method")
 public class issue115 {

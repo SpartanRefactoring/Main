@@ -46,7 +46,8 @@ public enum haz {
    * @return <code> true </code> iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
-    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
+    return ¢ != null
+        && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
   }
 
   public static boolean dollar(final ASTNode ¢) {

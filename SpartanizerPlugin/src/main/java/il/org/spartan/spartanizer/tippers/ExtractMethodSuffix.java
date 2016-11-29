@@ -44,8 +44,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   /** @param d JD
    * @param ds variables list
-   * @return <code><b>true</b></code> <em>iff</em> the method and the list
-   *         contains same variables, in matters oftype and quantity
+   * @return <code><b>true</b></code> <em>iff</em> the method and the
+   *         listcontains same variables, in matters oftype and quantity
    *         [[SuppressWarningsSpartan]] */
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())

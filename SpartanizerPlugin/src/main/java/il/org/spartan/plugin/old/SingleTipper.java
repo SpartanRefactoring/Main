@@ -105,23 +105,18 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return Selection.Util.getAllCompilationUnits();
     }
 
-    /** [[SuppressWarningsSpartan]] */
+    /**  */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
       final int cs = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
+    @Override @SuppressWarnings("boxing") public String getEndingMessage(final Map<attribute, Object> ¢) {
       final int cs = getChangesCount(¢);
-      return //
-      "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
-          + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
-          + "\n" //
-          + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS) + "\n" //
-          + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
-          + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + cs + " " + plurals("file", cs) + " spartanized in "
+          + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS)
+          + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,

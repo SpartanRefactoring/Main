@@ -18,9 +18,9 @@ public class ParseASTTest {
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
 
   public static void main(final String[] args) {
-    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
-        + "public class Test {\n" + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
-        + "}");
+    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}");
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
