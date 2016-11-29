@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-@SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class spartanTest {
   @Test public void arrayOfInts() {
     azzert.that(spartan.shorten(t("int[][] __;")), equalTo("iss"));

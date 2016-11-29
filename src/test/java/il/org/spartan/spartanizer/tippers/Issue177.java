@@ -14,13 +14,12 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue177 {
-  @SuppressWarnings("unused") @Test public void BitWiseAnd_withSideEffectsEXT() {
+  @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final int x = in.f(1) & 1;
-        azzert.that(x, is(0));
+        azzert.that(in.f(1) & 1, is(0));
         azzert.that(in.a, is(1));
       }
 
@@ -56,14 +55,11 @@ public class Issue177 {
   }
 
   @Test public void bitWiseOr_noSideEffects() {
-    int a = 1;
-    final int b = 2;
-    a |= b;
-    azzert.that(a, is(3));
+    azzert.that(1 | 2, is(3));
     trimmingOf("a=a|b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void bitWiseOr_withSideEffects() {
+  @Test @SuppressWarnings("unused") public void bitWiseOr_withSideEffects() {
     class Class {
       Class() {
         azzert.that(f(1) | 1, is(3));
@@ -78,13 +74,12 @@ public class Issue177 {
     trimmingOf("a=a|b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void BitWiseOr_withSideEffectsEXT() {
+  @Test @SuppressWarnings("unused") public void BitWiseOr_withSideEffectsEXT() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
+        azzert.that(in.f(1) | 1, is(3));
         azzert.that(in.a, is(1));
       }
 
@@ -119,13 +114,12 @@ public class Issue177 {
     trimmingOf("a=a | b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void BitWiseXor_withSideEffectsEXT() {
+  @Test @SuppressWarnings("unused") public void BitWiseXor_withSideEffectsEXT() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final int x = in.f(1) ^ 1;
-        azzert.that(x, is(3));
+        azzert.that(in.f(1) ^ 1, is(3));
         azzert.that(in.a, is(1));
       }
 
@@ -161,21 +155,17 @@ public class Issue177 {
   }
 
   @Test public void logicalAnd_noSideEffects() {
-    boolean a = true;
-    final boolean b = false;
-    a &= b;
-    azzert.nay(a);
+    azzert.nay(true & false);
     trimmingOf("a=a && b").gives("a&=b");
   }
 
-  @SuppressWarnings("unused") @Test public void logicalAnd_withSideEffects() {
+  @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffects() {
     class Class {
       int a;
 
       Class() {
         a = 0;
-        final boolean x = f(true) & true;
-        azzert.nay(x);
+        azzert.nay(f(true) & true);
         azzert.that(a, is(1));
       }
 
@@ -189,13 +179,12 @@ public class Issue177 {
     trimmingOf("a=a && b").gives("a&=b");
   }
 
-  @SuppressWarnings("unused") @Test public void logicalAnd_withSideEffectsEX() {
+  @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
+        azzert.nay(in.f(true) & true);
         azzert.aye(in.a == 1);
       }
 
@@ -217,13 +206,12 @@ public class Issue177 {
     trimmingOf("a=a && b").gives("a&=b");
   }
 
-  @SuppressWarnings("unused") @Test public void logicalAnd_withSideEffectsEXT() {
+  @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
+        azzert.nay(in.f(true) & true);
         azzert.that(in.a, is(1));
       }
 
@@ -259,21 +247,17 @@ public class Issue177 {
   }
 
   @Test public void logicalOr_noSideEffects() {
-    boolean a = false;
-    final boolean b = true;
-    a |= b;
-    azzert.aye(a);
+    azzert.aye(true | false);
     trimmingOf("a=a||b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void logicalOr_withSideEffects() {
+  @Test @SuppressWarnings("unused") public void logicalOr_withSideEffects() {
     class Class {
       int a;
 
       Class() {
         a = 0;
-        final boolean x = f(false) | false;
-        azzert.aye(x);
+        azzert.aye(f(false) | false);
         azzert.that(a, is(1));
       }
 
@@ -287,13 +271,12 @@ public class Issue177 {
     trimmingOf("a=a||b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void logicalOr_withSideEffectsEX() {
+  @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final boolean x = in.f(false) | false;
-        azzert.aye(x);
+        azzert.aye(in.f(false) | false);
         azzert.that(in.a, is(1));
       }
 
@@ -315,13 +298,12 @@ public class Issue177 {
     trimmingOf("a=a||b").gives("a|=b");
   }
 
-  @SuppressWarnings("unused") @Test public void LogicalOr_withSideEffectsEXT() {
+  @Test @SuppressWarnings("unused") public void LogicalOr_withSideEffectsEXT() {
     class Class {
       Inner in = new Inner(0);
 
       Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
+        azzert.that(in.f(1) | 1, is(3));
         azzert.that(in.a, is(1));
       }
 

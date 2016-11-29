@@ -9,28 +9,23 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Failing (were ignored) tests of {@link TrimmerLogTest}
  * @since 2016 */
-@SuppressWarnings("static-method")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue438 {
   @Test public void test01() {
-    final Tipper<ASTNode> w = null;
-    final ASTNode n = null;
-    TrimmerLog.tip(w, n);
+    TrimmerLog.tip(null, null);
     assert false;
   }
 
   @Test public void test06() {
     final String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
-    final File f = new File(path);
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(f);
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(new File(path));
     final Trimmer trimmer = new Trimmer();
-    final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
-    System.out.println(opp);
+    System.out.println(TrimmerTestsUtils.countOpportunities(trimmer, cu));
     for (final Tip ¢ : trimmer.collectSuggestions(cu))
       System.out.println(¢.description);
   }

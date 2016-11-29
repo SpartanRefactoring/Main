@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -43,10 +42,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends $Variabl
     if (s == null)
       return null;
     final Assignment a = az.assignment(step.expression(s));
-    if (a == null || !wizard.same(n, to(a)))
-      return null;
-    final Operator o = a.getOperator();
-    if (o == ASSIGN)
+    if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);

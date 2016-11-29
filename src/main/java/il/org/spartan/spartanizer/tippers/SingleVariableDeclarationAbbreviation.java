@@ -59,8 +59,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
     if (spartan.shorten(d.getType()) == null)
       return false;
-    final MethodExplorer e = new MethodExplorer(m);
-    for (final SimpleName ¢ : e.localVariables())
+    for (final SimpleName ¢ : new MethodExplorer(m).localVariables())
       if (¢.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
     for (final SingleVariableDeclaration ¢ : parameters(m))

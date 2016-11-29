@@ -32,8 +32,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
 
   public static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
-    final String[] natures = description.getNatureIds();
-    description.setNatureIds(append(natures, Nature.NATURE_ID));
+    description.setNatureIds(append(description.getNatureIds(), Nature.NATURE_ID));
     p.setDescription(description, null);
   }
 
@@ -62,7 +61,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   }
 
   private static IProject getProject() {
-    final IProject p = Selection.Util.project();
-    return p != null ? p : null;
+    final IProject $ = Selection.Util.project();
+    return $ != null ? $ : null;
   }
 }

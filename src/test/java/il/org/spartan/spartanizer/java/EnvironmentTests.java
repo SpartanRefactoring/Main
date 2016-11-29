@@ -139,7 +139,7 @@ public final class EnvironmentTests {
     }
 
     @NestedENV({}) @OutOfOrderFlatENV({}) int x, y;
-    @NestedENV({ "EX3.x", "EX3.y" }) @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) int q;
+    @InOrderFlatENV({ "x", "y" }) @NestedENV({ "EX3.x", "EX3.y" }) @OutOfOrderFlatENV({ "y", "x" }) int q;
 
     EX3() {
       @Begin

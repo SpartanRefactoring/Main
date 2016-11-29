@@ -33,8 +33,7 @@ public class Issue777 {
     final Document $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
-    final MethodDeclaration m = az.methodDeclaration(ast(method));
-    wizard.addMethodToType(d, m, r, null);
+    wizard.addMethodToType(d, az.methodDeclaration(ast(method)), r, null);
     r.rewriteAST($, null).apply($);
     return $.get();
   }
