@@ -83,8 +83,7 @@ public class Issue239 {
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();
     assert name != null;
-    final Expression initializer = f.getInitializer();
-    assert initializer != null;
+    assert f.getInitializer() != null;
     assert haz.sideEffects(f.getInitializer());
     final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;

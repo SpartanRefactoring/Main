@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Tests of {@link enumerate.expressions}
+/** Tests of {@link measure.expressions}
  * @author Koby Ben Shimol
  * @author Yuval Simon
  * @since 16-11-2 */

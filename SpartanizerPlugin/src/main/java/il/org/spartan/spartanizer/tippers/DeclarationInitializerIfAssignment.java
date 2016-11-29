@@ -53,9 +53,7 @@ public final class DeclarationInitializerIfAssignment //
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
-    final int spending = i.replacedSize(newInitializer);
-    final int savings = metrics.size(nextStatement, initializer);
-    if (spending > savings)
+    if (i.replacedSize(newInitializer) > metrics.size(nextStatement, initializer))
       return null;
     r.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());

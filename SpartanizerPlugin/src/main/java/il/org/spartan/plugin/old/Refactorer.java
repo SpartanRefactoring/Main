@@ -65,14 +65,14 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   /** Return null for canceled message.
-   * @return opening message for given attributes [[SuppressWarningsSpartan]] */
-  public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> attributes) {
+   * @return opening message for given attributes */
+  public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
 
   /** Return null for canceled message.
-   * @return ending message for given attributes [[SuppressWarningsSpartan]] */
-  public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> attributes) {
+   * @return ending message for given attributes */
+  public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
 

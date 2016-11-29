@@ -149,6 +149,8 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
+            // TODO: yuvalsimon add when fixed <br>
+            // new RemoveRedundantSwitchCases(),//
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -206,7 +208,8 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new SetterGoFluent(), //
+            // TODO: Marco new SetterGoFluent(), //
+            new RedundentReturnStatementInVoidTypeMethod(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -258,8 +261,9 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            new SameEvaluationConditional(),
-            null) //
+            new SameEvaluationConditional(), //
+            new TernaryBranchesAreOppositeBooleans(), //
+            new SameEvaluationConditional(), null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
@@ -374,13 +378,12 @@ public class Toolbox {
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
         "\n classForNodeType = " + classToNodeType + //
         fault.done();
-    final List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
       if (¢.tipperGroup().isEnabled())
-        ts.add(¢);
+        get(nodeType.intValue()).add(¢);
     }
     return this;
   }
@@ -422,8 +425,7 @@ public class Toolbox {
     return get(¢.getNodeType());
   }
 
-  /** [[SuppressWarningsSpartan]] TODO: Apparently there is no check that ¢ is
-   * not occupied already... */
+  /** TODO: Apparently there is no check that ¢ is not occupied already... */
   public static List<String> get(final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)

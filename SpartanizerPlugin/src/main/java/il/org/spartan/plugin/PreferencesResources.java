@@ -62,7 +62,7 @@ public final class PreferencesResources {
     final String id;
     final String label;
 
-    private TipperGroup(final Class<? extends TipperCategory> clazz) {
+    TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";

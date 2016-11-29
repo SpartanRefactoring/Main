@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yosef Raisman
  * @author Entony Lekhtman
  * @since 16-11-12 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue822 {
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");

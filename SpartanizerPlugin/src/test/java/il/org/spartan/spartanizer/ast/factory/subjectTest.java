@@ -142,16 +142,14 @@ public final class subjectTest {
     assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
-    final boolean b = ExpressionComparator.ADDITION.sort(operands);
-    azzert.that(b, is(true));
+    azzert.that(ExpressionComparator.ADDITION.sort(operands), is(true));
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
     final List<Expression> operands = hop.operands(duplicate.of(i("a*b")));
     azzert.that(operands.size(), is(2));
-    final InfixExpression e = i("1+2");
-    final InfixExpression refit = subject.operands(operands).to(e.getOperator());
+    final InfixExpression refit = subject.operands(operands).to(i("1+2").getOperator());
     azzert.that(refit.hasExtendedOperands(), is(false));
     azzert.that(refit + "", is("a + b"));
   }
@@ -171,8 +169,7 @@ public final class subjectTest {
     assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
-    final boolean b = ExpressionComparator.ADDITION.sort(operands);
-    azzert.that(b, is(true));
+    azzert.that(ExpressionComparator.ADDITION.sort(operands), is(true));
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
