@@ -36,11 +36,17 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return lastStatement(¢).getNodeType() == ASTNode.CONTINUE_STATEMENT;
+    final Statement s = lastStatement(¢);
+    if (s instanceof ContinueStatement) {
+      SimpleName l = ((ContinueStatement) s).getLabel();
+      if (l == null
+          || ¢.getParent() instanceof LabeledStatement && l.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
+        return true;
+    }
+    return false;
   }
-
+  
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    if (s != null && parent(s) != null)
-      r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+    r.getListRewrite(parent(s), ForStatement.BODY_PROPERTY).remove(s, g);
   }
 }
