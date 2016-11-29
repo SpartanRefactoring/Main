@@ -73,10 +73,10 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  private static boolean containsPlusOperator(final InfixExpression e) {
-    for (final Operator o : extract.allOperators(e))
-      if (o == Operator.PLUS)
+  /**  */
+  private static boolean containsPlusOperator(final InfixExpression x) {
+    for (final Operator ¢ : extract.allOperators(x))
+      if (¢ == Operator.PLUS)
         return true;
     return false;
   }

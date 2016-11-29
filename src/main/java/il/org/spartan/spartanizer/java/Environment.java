@@ -337,7 +337,7 @@ public interface Environment {
       /** Returns the {@link Information} of the declaration the current
        * declaration is hiding.
        * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
+       * @return The hidden node's Information */
       /* Implementation notes: Should go over result set, and search for
        * declaration which shares the same variable name in the parents. Should
        * return the closest match: for example, if we search for a match to
@@ -388,8 +388,8 @@ public interface Environment {
       /** Order of the searched {@link Statement} in its parent {@link ASTNode},
        * among nodes of the same kind. Zero based.
        * @param s
-       * @return The nodes index, according to order of appearance, among
-       *         nodesof the same type. [[SuppressWarningsSpartan]] */
+       * @return The nodes index, according to order of appearance, amongnodesof
+       *         the same type. [[SuppressWarningsSpartan]] */
       int statementOrderAmongTypeInParent(final Statement s) {
         // extract.statements wouldn't work here - we need a shallow extract,
         // not a deep one.
@@ -537,13 +537,12 @@ public interface Environment {
     return null;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  static Information getHidden(final String ¢) {
-    final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
-    for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-      final Information i = get(upEnv, s + "." + shortName);
-      if (i != null)
-        return i;
+  static Information getHidden(final String s) {
+    final String shortName = s.substring(s.lastIndexOf(".") + 1);
+    for (String ¢ = parentNameScope(s); !"".equals(¢); ¢ = parentNameScope(¢)) {
+      final Information $ = get(upEnv, ¢ + "." + shortName);
+      if ($ != null)
+        return $;
     }
     return null;
   }

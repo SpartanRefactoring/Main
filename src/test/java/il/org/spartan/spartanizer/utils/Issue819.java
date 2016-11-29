@@ -6,12 +6,10 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/**
- * Tests of  {@link Str}
- * @author  Shimon Azulay
- * @author  Idan Atias
- * @since  16-11-11 
- */
+/** Tests of {@link Str}
+ * @author Shimon Azulay
+ * @author Idan Atias
+ * @since 16-11-11 */
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue819 {

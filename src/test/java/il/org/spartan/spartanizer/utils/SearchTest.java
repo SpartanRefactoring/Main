@@ -306,7 +306,7 @@ public final class SearchTest {
 
   @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
-    final SimpleName a = ((EnhancedForStatement) first(statements(((Block) s)))).getParameter().getName();
+    final SimpleName a = ((EnhancedForStatement) first(statements((Block) s))).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(s).size(), is(2));
   }
