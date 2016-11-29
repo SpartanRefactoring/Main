@@ -13,12 +13,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/**
- * A test suite for class  {@link step}
- * @author  Yossi Gil
- * @since  2015-07-18
- * @see step  
- */
+/** A test suite for class {@link step}
+ * @author Yossi Gil
+ * @since 2015-07-18
+ * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class stepTest {

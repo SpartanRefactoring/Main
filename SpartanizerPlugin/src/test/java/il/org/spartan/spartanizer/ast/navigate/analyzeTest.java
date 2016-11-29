@@ -12,11 +12,9 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/**
- * @author  Vivian Shehadeh
- * @author  Ward Mattar
- * @since  2016 
- */
+/** @author Vivian Shehadeh
+ * @author Ward Mattar
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {

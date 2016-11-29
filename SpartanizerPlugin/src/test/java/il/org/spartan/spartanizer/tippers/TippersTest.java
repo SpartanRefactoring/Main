@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
 public final class TippersTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
-    final MethodDeclaration m = findFirst.methodDeclaration((makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input))));
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(m.getBody()))).getParameter();
     assert p != null;
@@ -39,7 +39,8 @@ public final class TippersTest {
 
   @Test public void inlineExpressionWithSideEffect() {
     azzert.that(!haz.sideEffects(into.e("f()")), is(false));
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
+    final VariableDeclarationFragment f = findFirst
+        .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     azzert.that(n, iz("a"));
@@ -81,7 +82,7 @@ public final class TippersTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final MethodDeclaration m = findFirst.methodDeclaration((makeAST.COMPILATION_UNIT.from(d)));
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final Block b = m.getBody();
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(b))).getParameter();
@@ -98,7 +99,7 @@ public final class TippersTest {
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final MethodDeclaration m = findFirst.methodDeclaration((makeAST.COMPILATION_UNIT.from(d)));
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
