@@ -594,13 +594,13 @@ public enum step {
   }
 
   private static boolean balanced(final String s) {
-    int openers = 0;
+    int $ = 0;
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       if (s.charAt(¢) == '<')
-        ++openers;
+        ++$;
       else if (s.charAt(¢) == '>')
-        --openers;
-    return openers == 0;
+        --$;
+    return $ == 0;
   }
 
   /** @param ¢
