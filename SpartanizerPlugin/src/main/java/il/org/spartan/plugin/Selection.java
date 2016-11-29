@@ -168,18 +168,18 @@ public class Selection extends AbstractSelection<Selection> {
       return !(r instanceof IFile) ? empty() : by((IFile) r).setTextSelection(null);
     }
 
-    /** @param m JD
+    /** @param ¢ JD
      * @return selection of all compilation units in project by marker */
-    public static Selection getAllCompilationUnit(final IMarker m) {
-      if (!m.exists())
+    public static Selection getAllCompilationUnit(final IMarker ¢) {
+      if (!¢.exists())
         return empty();
-      final IResource r = m.getResource();
-      return r == null ? empty() : by(getJavaProject(r.getProject()));
+      final IResource $ = ¢.getResource();
+      return $ == null ? empty() : by(getJavaProject($.getProject()));
     }
 
     public static Selection getAllCompilationUnits() {
-      final IJavaProject p = getJavaProject();
-      return p == null ? empty() : by(p).setTextSelection(null).setName(p.getElementName());
+      final IJavaProject $ = getJavaProject();
+      return $ == null ? empty() : by($).setTextSelection(null).setName($.getElementName());
     }
 
     /** @return current user selection */
@@ -201,8 +201,8 @@ public class Selection extends AbstractSelection<Selection> {
         final IMarker m = ((MarkerItem) o).getMarker();
         if (m == null)
           return null;
-        final IResource r = m.getResource();
-        return r == null ? getProject() : r.getProject();
+        final IResource $ = m.getResource();
+        return $ == null ? getProject() : $.getProject();
       }
       if (!(o instanceof IJavaElement))
         return getProject();
@@ -241,8 +241,8 @@ public class Selection extends AbstractSelection<Selection> {
       final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
       if (w == null)
         return null;
-      final ISelectionService s = w.getSelectionService();
-      return s == null ? null : s.getSelection();
+      final ISelectionService $ = w.getSelectionService();
+      return $ == null ? null : $.getSelection();
     }
 
     /** @return current project */
@@ -262,8 +262,8 @@ public class Selection extends AbstractSelection<Selection> {
       final IEditorInput i = e.getEditorInput();
       if (i == null)
         return null;
-      final IResource r = i.getAdapter(IResource.class);
-      return r == null ? null : r.getProject();
+      final IResource $ = i.getAdapter(IResource.class);
+      return $ == null ? null : $.getProject();
     }
 
     /** @return current Java project */

@@ -503,7 +503,7 @@ public interface type {
       private final String description;
       private final String key;
 
-      private Types(final String description, final String key) {
+      Types(final String description, final String key) {
         this.description = description;
         this.key = key;
       }
@@ -592,7 +592,7 @@ public interface type {
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
 
-      private Uncertain(final String description, final Primitive... ps) {
+      Uncertain(final String description, final Primitive... ps) {
         this.description = description;
         for (final Primitive p : ps)
           for (final Certain ¢ : p.options())
