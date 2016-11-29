@@ -149,7 +149,9 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            new RemoveRedundantSwitchCases(), null)
+            // TODO: yuvalsimon add when fixed <br>
+            // new RemoveRedundantSwitchCases(),//
+            null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -206,7 +208,7 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new SetterGoFluent(), //
+            // TODO: Marco new SetterGoFluent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
             null)
         .add(MethodInvocation.class, //
