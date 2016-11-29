@@ -37,7 +37,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_0() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("")));
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from(""));
     assert !$.contains("a");
     assert $.isEmpty();
   }
@@ -51,7 +51,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_2() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("int a=0;int b;")));
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;int b;"));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -61,7 +61,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_4() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("public void f(int a){String b;}")));
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("public void f(int a){String b;}"));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -71,14 +71,14 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_6() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown((makeAST.COMPILATION_UNIT.from("int a=0;b=5")));
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;b=5"));
     assert $.contains("a");
     assert !$.contains("b");
   }
 
   @Test public void declare_7() {
-    final Set<Entry<String, Information>> $ = declaresDown((makeAST.COMPILATION_UNIT
-        .from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}")));
+    final Set<Entry<String, Information>> $ = declaresDown(makeAST.COMPILATION_UNIT
+        .from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}"));
     assert $.contains("a");
     assert $.contains("b");
     assert $.contains("my");

@@ -17,7 +17,7 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
     printMap(afterHistogram);
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   @Override @SuppressWarnings("boxing") public void printComparison() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);
@@ -25,11 +25,11 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
     System.out.println();
     for (int ¢ = 0; ¢ < max; ++¢)
       if (beforeHistogram.containsKey(¢) || afterHistogram.containsKey(¢))
-        System.out.println("[" + ¢ + "] " + tidy(beforeHistogram.containsKey(¢) ? enumElement(beforeHistogram.get(¢)) : 0) + " -> "
-            + tidy(afterHistogram.containsKey(¢) ? enumElement(afterHistogram.get(¢)) : 0));
+        System.out.println("[" + ¢ + "] " + tidy(!beforeHistogram.containsKey(¢) ? 0 : enumElement(beforeHistogram.get(¢))) + " -> "
+            + tidy(!afterHistogram.containsKey(¢) ? 0 : enumElement(afterHistogram.get(¢))));
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   @Override @SuppressWarnings("boxing") public void printAccumulated() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);
@@ -39,8 +39,8 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
     System.out.println();
     for (int ¢ = 0; ¢ < max; ++¢)
       if (beforeHistogram.containsKey(¢) || afterHistogram.containsKey(¢))
-        System.out.println("[" + ¢ + "] " + tidy(acc1 += beforeHistogram.containsKey(¢) ? enumElement(beforeHistogram.get(¢)) : 0) + " -> "
-            + tidy(acc2 += afterHistogram.containsKey(¢) ? enumElement(afterHistogram.get(¢)) : 0));
+        System.out.println("[" + ¢ + "] " + tidy(acc1 += !beforeHistogram.containsKey(¢) ? 0 : enumElement(beforeHistogram.get(¢))) + " -> "
+            + tidy(acc2 += !afterHistogram.containsKey(¢) ? 0 : enumElement(afterHistogram.get(¢))));
   }
 
   private void printMap(final Map<Integer, T> i) {

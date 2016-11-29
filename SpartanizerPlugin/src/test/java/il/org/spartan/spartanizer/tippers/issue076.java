@@ -4,10 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/**
- * Test class for  {@link InfixMultiplicationDistributive}
- * @since  2016 
- */
+/** Test class for {@link InfixMultiplicationDistributive}
+ * @since 2016 */
 @Ignore("Disabled: there is some bug in distributive rule - not in Toolbox.")
 @SuppressWarnings("static-method")
 public class issue076 {
