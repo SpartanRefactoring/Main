@@ -18,7 +18,7 @@ public enum measure {
     $.inner = 0;
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (iz.expression(¢))
+        if (iz.expression(¢) && !excluded(az.expression(¢)))
           ++$.inner;
       }
     });
@@ -31,7 +31,7 @@ public enum measure {
       return 0;
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (iz.statement(¢) && !skipeed(¢))
+        if (iz.statement(¢) && !excluded(az.statement(¢)))
           ++count.inner;
       }
     });
@@ -40,7 +40,7 @@ public enum measure {
 
   /** @param ¢
    * @return */
-  static boolean skipeed(ASTNode ¢) {
+  static boolean excluded(Statement ¢) {
     return Arrays.asList(//
         Block.class, //
         BreakStatement.class, //
@@ -50,6 +50,40 @@ public enum measure {
         SwitchCase.class, //
         TypeDeclarationStatement.class, //
         VariableDeclarationStatement.class //
+    )//
+        .contains(¢.getClass());
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean excluded(Expression ¢) {
+    return Arrays.asList(//
+        Annotation.class, //
+        ArrayAccess.class, //
+        ArrayCreation.class, //
+        ArrayInitializer.class, //
+        BooleanLiteral.class, //
+        CharacterLiteral.class, //
+        ClassInstanceCreation.class, //
+        CreationReference.class, //
+        ExpressionMethodReference.class, //
+        FieldAccess.class, //
+        InfixExpression.class, //
+        MethodInvocation.class, //
+        MethodReference.class, //
+        Name.class, //
+        NullLiteral.class, //
+        NumberLiteral.class, //
+        ParenthesizedExpression.class, //
+        PostfixExpression.class, PrefixExpression.class, //
+        StringLiteral.class, //
+        SuperFieldAccess.class, //
+        SuperMethodInvocation.class, //
+        SuperMethodReference.class, //
+        ThisExpression.class, //
+        TypeLiteral.class, //
+        TypeMethodReference.class, //
+        VariableDeclarationExpression.class//
     )//
         .contains(¢.getClass());
   }
