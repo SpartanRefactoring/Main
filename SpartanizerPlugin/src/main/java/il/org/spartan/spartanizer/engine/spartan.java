@@ -26,10 +26,10 @@ public interface spartan {
     return null;
   }
 
-  static String shorten(final List<Type> ts) {
-    for (final Type ¢ : ts)
-      if (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null)
-        return shorten(¢);
+  static String shorten(final List<Type> ¢) {
+    for (final Type $ : ¢)
+      if (!iz.wildcardType($) || az.wildcardType($).getBound() != null)
+        return shorten($);
     return null;
   }
 
