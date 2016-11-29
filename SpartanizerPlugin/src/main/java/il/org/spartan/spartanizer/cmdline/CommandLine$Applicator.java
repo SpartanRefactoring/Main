@@ -52,8 +52,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String[] excludedNanoPatterns) {
     final List<String> temp = new ArrayList<>();
-    final String[] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {});
-    for (final String ¢ : tg)
+    for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
       if (!as.list(excludedNanoPatterns).contains(¢))
         temp.add(¢);
     return temp.toArray(new String[] {});
@@ -61,8 +60,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
     final List<String> temp = new ArrayList<>();
-    final String[] tg = tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {});
-    for (final String ¢ : tg)
+    for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
       if (!as.list(excludedTipperGroups).contains(¢))
         temp.add(¢);
     return temp.toArray(new String[] {});
@@ -112,11 +110,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()); // instead
-                                                                                          // of
-                                                                                          // CLASS_BODY_DECLARATIONS
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

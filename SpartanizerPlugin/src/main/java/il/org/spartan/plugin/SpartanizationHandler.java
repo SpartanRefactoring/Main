@@ -104,7 +104,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         }
       }
 
-      /** [[SuppressWarningsSpartan]] see issue #467 */
+      /** see issue #467 [[SuppressWarningsSpartan]] */
       @Override public void pop(final Object... ¢) {
         switch (level--) {
           case DIALOG_CREATION:
@@ -131,25 +131,22 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   /** Creates and configures an applicator, without configuring the selection.
-   * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("deprecation") @Deprecated public static GUIBatchLaconizer applicatorMapper() {
+   * @return applicator for this handler */
+  @Deprecated @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final AtomicBoolean openDialog = new AtomicBoolean(false);
-    $.listener(EventMapper.empty(event.class) //
-        .expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
-          if (openDialog.get())
-            runAsynchronouslyInUIThread(() -> {
-              d.getProgressMonitor()
-                  .subTask(Linguistic.trim($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name()));
-              d.getProgressMonitor().worked(1);
-              if (d.getProgressMonitor().isCanceled())
-                $.stop();
-            });
-        })) //
-        .expand(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
-        .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
+    $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
+      if (openDialog.get())
+        runAsynchronouslyInUIThread(() -> {
+          d.getProgressMonitor().subTask(Linguistic.trim($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name()));
+          d.getProgressMonitor().worked(1);
+          if (d.getProgressMonitor().isCanceled())
+            $.stop();
+        });
+    })).expand(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class))
+        .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class))
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(() -> {
@@ -157,8 +154,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
             });
-        })) //
-        .expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
+        })).expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(¢.get(event.visit_root)))))
               $.stop();
@@ -166,25 +162,21 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               runAsynchronouslyInUIThread(() -> d.open());
               openDialog.set(true);
             }
-        })) //
-        .expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
+        })).expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(() -> d.close());
         }).does(¢ -> {
           if (openDialog.get())
-            Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) //
-                + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root)) //
-                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), c -> {
-                  return Integer.valueOf(c.size());
-                }) + " files" //
-                + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
+            Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root))
+                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), c -> Integer.valueOf(c.size())) + " files" + " in "
+                + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException | InterruptedException e) {
-        monitor.log(e);
-        e.printStackTrace();
+      } catch (InvocationTargetException | InterruptedException ¢) {
+        monitor.log(¢);
+        ¢.printStackTrace();
       }
     });
     $.defaultRunAction(t);

@@ -56,23 +56,23 @@ public enum analyze {
   }
 
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
-    final Str str = new Str();
+    final Str $ = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.set(step.type(¢));
+        $.set(step.type(¢));
         return false;
       }
 
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.set(step.type(¢));
+        $.set(step.type(¢));
         return false;
       }
     });
-    return str.inner();
+    return $.inner();
   }
 
   public static Set<VariableDeclaration> enviromentVariables(@SuppressWarnings("unused") final ASTNode __) {

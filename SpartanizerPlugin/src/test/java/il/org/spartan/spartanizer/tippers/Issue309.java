@@ -7,7 +7,7 @@ import org.junit.*;
 /** @author Tomer Dragucki
  * @since 2016 */
 public class Issue309 {
-  @SuppressWarnings("static-method") @Test public void a() {
+  @Test @SuppressWarnings("static-method") public void a() {
     trimmingOf("public String abbreviate() { " + "String ¢ = \"\"; "
         + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; ¢ += m.group()) " + "if (!m.find()) " + "return ¢.toLowerCase(); "
         + "}")
@@ -19,7 +19,7 @@ public class Issue309 {
                 + "return $.toLowerCase(); " + "}");
   }
 
-  @SuppressWarnings("static-method") @Test public void b() {
+  @Test @SuppressWarnings("static-method") public void b() {
     trimmingOf("int checkIfCentChangesToDollarWhenNeeded() { " + "Integer ¢ = 2; " + "for (int i = 1; i < 7; ++i) " + "¢ *= i; "
         + "return ¢.intValue(); " + "}")
             .gives("int checkIfCentChangesToDollarWhenNeeded() { " + "Integer $ = 2; " + "for (int i = 1; i < 7; ++i) " + "$ *= i; "

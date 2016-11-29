@@ -3,7 +3,7 @@ package il.org.spartan.athenizer;
 import il.org.spartan.plugin.*;
 
 /** A generic application that makes changes in java code. Being use by the
- * {@link Applicator}. [[SuppressWarningsSpartan]]
+ * {@link Applicator}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public interface Application {

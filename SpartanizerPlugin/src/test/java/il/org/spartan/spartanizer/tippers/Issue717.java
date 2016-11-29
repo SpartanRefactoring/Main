@@ -60,11 +60,8 @@ public class Issue717 {
     final String methodName = generateRandomString(MAX_NAME_SIZE);
     final String firstStat = "{int x;";
     final String nextStat = "x=4;";
-    int statAmount = 0;
-    final Random randomGenerator = new Random();
-    statAmount = randomGenerator.nextInt(MAX_STAT_AMOUNT);
-    if (statAmount < 4)
-      statAmount = 4;
+    final Random random = new Random();
+    final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 4 ? 4 : random.nextInt(MAX_STAT_AMOUNT);
     String randomBigBlock = "public void " + methodName + "()" + firstStat;
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;

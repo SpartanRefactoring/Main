@@ -35,8 +35,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
-    final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
-    r.replace(s.getExpression(), e, g);
+    r.replace(s.getExpression(), subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND), g);
     r.replace(then, duplicate.of(then(then)), g);
   }
 

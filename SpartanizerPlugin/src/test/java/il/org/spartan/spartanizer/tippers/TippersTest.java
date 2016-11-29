@@ -27,13 +27,9 @@ import il.org.spartan.spartanizer.utils.*;
 public final class TippersTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
-    final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.methodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
-    final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
-    final SingleVariableDeclaration p = s.getParameter();
+    final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(m.getBody()))).getParameter();
     assert p != null;
     final SimpleName a = p.getName();
     assert a != null;
@@ -42,11 +38,9 @@ public final class TippersTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    final Expression e = into.e("f()");
-    azzert.that(!haz.sideEffects(e), is(false));
-    final String input = "int a = f(); return a += 2 * a;";
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
+    azzert.that(!haz.sideEffects(into.e("f()")), is(false));
+    final VariableDeclarationFragment f = findFirst
+        .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     azzert.that(n, iz("a"));
@@ -88,18 +82,15 @@ public final class TippersTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.methodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
-    final SingleVariableDeclaration p = s.getParameter();
+    final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(b))).getParameter();
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
-    final TextEdit e = r.rewriteAST(d, null);
-    e.apply(d);
+    r.rewriteAST(d, null).apply(d);
     final String output = Wrap.Method.off(d.get());
     assert output != null;
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
@@ -108,8 +99,7 @@ public final class TippersTest {
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.methodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
@@ -117,8 +107,7 @@ public final class TippersTest {
     azzert.that(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
-    final TextEdit e = r.rewriteAST(d, null);
-    e.apply(d);
+    r.rewriteAST(d, null).apply(d);
     azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }

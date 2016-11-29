@@ -118,14 +118,14 @@ import javax.annotation.Nullable;
     return $;
   }
 
-  @CanIgnoreReturnValue @Override public V put(R rowKey, C columnKey, V value) {
+  @Override @CanIgnoreReturnValue public V put(R rowKey, C columnKey, V value) {
     checkNotNull(rowKey);
     checkNotNull(columnKey);
     checkNotNull(value);
     return getOrCreate(rowKey).put(columnKey, value);
   }
 
-  @CanIgnoreReturnValue @Override public V remove(@Nullable Object rowKey, @Nullable Object columnKey) {
+  @Override @CanIgnoreReturnValue public V remove(@Nullable Object rowKey, @Nullable Object columnKey) {
     if ((rowKey == null) || (columnKey == null))
       return null;
     Map<C, V> map = safeGet(backingMap, rowKey);

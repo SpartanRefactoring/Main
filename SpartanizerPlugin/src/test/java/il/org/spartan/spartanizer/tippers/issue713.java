@@ -28,11 +28,11 @@ public class issue713 {
   TypeDeclaration notCountingMethods = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types().get(0);
 
-  @SuppressWarnings("static-method") @Test public void doesCompile() {
+  @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;
   }
 
-  @SuppressWarnings("static-method") @Test public void returnsList() {
+  @Test @SuppressWarnings("static-method") public void returnsList() {
     getAll.publicFields(null);
   }
 

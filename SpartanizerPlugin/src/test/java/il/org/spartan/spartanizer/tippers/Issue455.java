@@ -47,11 +47,6 @@ public class Issue455 {
         .stays();
   }
 
-  @Test public void labeledStatementShouldntTip() {
-    trimmingOf("x -> {loop: for(;;) continue loop;}") //
-        .stays();
-  }
-
   @Test public void lambdaBodyHasMoreThenOneStatementStays() {
     trimmingOf("x -> {double y = -x + Math.PI; System.out.println(x / y); System.out.println(x / (2*y));}")//
         .stays();

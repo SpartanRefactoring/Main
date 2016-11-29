@@ -35,7 +35,6 @@ public class TippersReport {
     System.err.println(n + " lines output found in " + w.close());
   }
 
-
   /** @param i
    * @return */
   private static String intToClassName(final int i) {

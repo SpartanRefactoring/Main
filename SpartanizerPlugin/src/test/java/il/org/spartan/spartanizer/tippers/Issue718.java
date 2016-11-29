@@ -22,11 +22,11 @@ public class Issue718 {
   MethodDeclaration separatedVarsDefinitionsLoadedMethod = (MethodDeclaration) methodDeclarationFromString(
       "public void bar(int x, int y, int z){String a; String b,c; Object d; boolean e;}");
 
-  @SuppressWarnings("static-method") @Test public void checkIfCompiles() {
+  @Test @SuppressWarnings("static-method") public void checkIfCompiles() {
     assert true;
   }
 
-  @SuppressWarnings("static-method") @Test public void checkIfReturnTypeIsBoolean() {
+  @Test @SuppressWarnings("static-method") public void checkIfReturnTypeIsBoolean() {
     determineIf.loaded(null);
   }
 
