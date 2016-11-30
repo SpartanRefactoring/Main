@@ -19,9 +19,9 @@ public final class TrimmerTestsUtils {
   }
 
   static String apply(final Tipper<? extends ASTNode> n, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
-    return TESTUtils.rewrite(new TipperApplicator(n), u, new Document(from)).get();
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert $ != null;
+    return TESTUtils.rewrite(new TipperApplicator(n), $, new Document(from)).get();
   }
 
   static String applyTrimmer(final Trimmer t, final String from) {
