@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
@@ -17,7 +18,7 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
   }
 
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
-    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
+    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢);
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
