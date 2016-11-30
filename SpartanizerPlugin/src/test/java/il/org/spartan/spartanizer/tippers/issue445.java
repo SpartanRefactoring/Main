@@ -17,7 +17,7 @@ public class issue445 {
             "    public String toString() {" + //
             "      StringBuilder builder = new StringBuilder(5 * size());" + //
             "      builder.append('[').append(array[start]);" + //
-            "      for (int ¢ = start + 1; ¢ < end; ++¢)" + //
+            "      for (final Integer ¢: range.from(start+1).to(end))" + //
             "        builder.append(\", \").append(array[¢]);" + //
             "      return builder.append(']') + \"\";"//
     ).gives(//
@@ -25,7 +25,7 @@ public class issue445 {
             "    public String toString() {" + //
             "      StringBuilder $ = new StringBuilder(5 * size());" + //
             "      $.append('[').append(array[start]);" + //
-            "      for (int ¢ = start + 1; ¢ < end; ++¢)" + //
+            "      for (final Integer ¢: range.from(start+1).to(end))" + //
             "        $.append(\", \").append(array[¢]);" + //
             "      return $.append(']') + \"\";"//
     ).stays();

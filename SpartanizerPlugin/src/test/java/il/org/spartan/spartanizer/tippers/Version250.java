@@ -283,8 +283,8 @@ public final class Version250 {
   }
 
   @Test public void simpleForLoop() {
-    trimmingOf("for (int i = 0; i <100; ++i) sum+=i;")//
-        .gives("for (int ¢ = 0; ¢ <100; ++¢) sum+=¢;").stays();
+    trimmingOf("for (final Integer i: range.to(100)) sum+=i;")//
+        .gives("for (final Integer ¢: range.to(100)) sum+=¢;").stays();
   }
 
   @Test public void test_b() {

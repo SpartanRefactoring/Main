@@ -565,11 +565,6 @@ public final class Version230 {
         .gives("(a==null)");
   }
 
-  @Test public void commonPrefixEntirelyIfBranches() {
-    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();")//
-        .gives("S.out.close(); ");
-  }
-
   @Test public void commonPrefixIfBranchesInFor() {
     trimmingOf("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}")//
         .gives("for(;;){i++;j++;if(a)j++;else i++;}");
@@ -1110,8 +1105,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
-    trimmingOf("if (a) break; return;")//
-        .gives("if (!a) return; break;");
+    trimmingOf("if (a) break; return 0;")//
+        .gives("if (!a) return 0; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer04a() {
@@ -1146,8 +1141,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer10() {
-    trimmingOf("if (a) continue; return;")//
-        .gives("if (!a) return; continue;");
+    trimmingOf("if (a) continue; return 0;")//
+        .gives("if (!a) return 0; continue;");
   }
 
   @Test public void ifSequencerThenSequencer0() {
@@ -1302,11 +1297,11 @@ public final class Version230 {
         + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n" + "         handleAssumptionViolation(e);\n"
         + "       } catch (Throwable e) {\n" + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n"
         + "     }\n" + "   };\n" + "}")
-            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement statement = methodBlock(m);\n"
-                + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n"
-                + "         statement.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException ¢) {\n"
-                + "         handleAssumptionViolation(¢);\n" + "       } catch (Throwable ¢) {\n"
-                + "         reportParameterizedError(¢, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
+            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement $ = methodBlock(m);\n" + "  return new Statement() {\n"
+                + "     public void evaluate() throws Throwable {\n" + "       try {\n" + "         $.evaluate();\n"
+                + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n"
+                + "         handleAssumptionViolation(e);\n" + "       } catch (Throwable e) {\n"
+                + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
@@ -2742,7 +2737,10 @@ public final class Version230 {
   @Test public void redundantButNecessaryBrackets3() {
     trimmingOf("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else {\n" + "    if (b3)\n" + "      print3('#');\n" + "  }\n" + "else {\n"
         + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
-        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}").stays();
+        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}")
+            .gives("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else \n" + "    if (b3)\n" + " print3('#');\n" + "else {\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}");
   }
 
   @Test public void removeSuper() {
