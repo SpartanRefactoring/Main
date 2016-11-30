@@ -242,9 +242,10 @@ public final class FixedPointTest {
 
   @Test(timeout = 2000) public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       sum += ¢;\n" + "     }\n"
-            + "   else\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       S.out.l('f',¢);\n" + "     }",
-        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;\n" + "else " + "  for(final Integer ¢ : range.to(17)) " + "S.out.l('f',¢);");
+        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       sum += ¢;\n"
+            + "     }\n" + "   else\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       S.out.l('f',¢);\n" + "     }",
+        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;\n" + "else " + "  for(final Integer ¢ : range.to(17)) "
+            + "S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {
