@@ -24,10 +24,11 @@ import il.org.spartan.spartanizer.utils.*;
 public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  private String presentFileName;
-  private String presentFilePath;
-  public static long startingTime;
+  public static String presentFileName;
+  public static String presentFilePath;
+  public static long startingTimePerFile;
   public static long lastTime;
+  public static long startingTime;
 
   public CommandLine$Applicator() {}
 
@@ -73,6 +74,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   void go(final CompilationUnit u) {
+    extract.type(u);
+//    ReportGenerator.report("tips").put("FileName", presentFileName);
+//    ReportGenerator.report("tips").put("FilePath", presentFilePath);
+//    ReportGenerator.report("tips").put("ClassLOCBefore", count.lines(u));
+//    ReportGenerator.report("tips").put("ClassTokenBefore", metrics.tokens(u + ""));
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
@@ -87,8 +93,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
-    ReportGenerator.report("tips").put("FileName", presentFileName);
-    ReportGenerator.report("tips").put("FilePath", presentFilePath);
+//    ReportGenerator.report("tips").put("ClassLOCAfter", count.lines(outputASTNode));
+//    ReportGenerator.report("tips").put("ClassTokenAfter", metrics.tokens(output));
+//    ReportGenerator.report("tips").put("FileName", presentFileName);
+//    ReportGenerator.report("tips").put("FilePath", presentFilePath);
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
     MetricsReport.getSettings();
@@ -102,8 +110,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-    ReportGenerator.report("tips").put("Name", extract.name(input));
-    ReportGenerator.report("tips").put("Category", extract.category(input));
+//    ReportGenerator.report("tips").put("Name", extract.name(input));
+//    ReportGenerator.report("tips").put("Category", extract.category(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
@@ -177,15 +185,28 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
-          ReportGenerator.writeTipsLine(n, s, "tips");
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
+          AbstractTypeDeclaration includingClass = searchAncestors.forContainingType().from(n);
+          ReportGenerator.report("tips").put("including Class", 
+              includingClass.getName());
+          ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
+          ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass+""));
+          MethodDeclaration includingMethod = searchAncestors.forContainingMethod().from(n);
+          ReportGenerator.report("tips").put("including Method", 
+              includingMethod == null ? "not in method" : includingMethod.getName());
+          ReportGenerator.report("tips").put("Method LOC", includingMethod != null ? count.lines(includingMethod) : "not applicable");
+          ReportGenerator.report("tips").put("Method Tokens", includingMethod != null ? metrics.tokens(includingMethod + "") : "not applicable");
+          ReportGenerator.writeTipsLine(n, s, "tips");
           // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
-        }
+        } 
+//          else {
+//          ReportGenerator.emptyTipsLine();
+//        }
         return true;
       }
 
@@ -253,7 +274,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // System.out.println("*********");
     presentFileName = ¢.getFileName();
     presentFilePath = ¢.getFilePath();
-    startingTime = new Date().getTime();
+    startingTimePerFile = new Date().getTime();
     go(¢.compilationUnit);
     return false;
   }
