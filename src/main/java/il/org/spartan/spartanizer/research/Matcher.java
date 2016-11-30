@@ -69,7 +69,7 @@ public class Matcher {
    * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
   public boolean matches(final ASTNode ¢) {
-    return matchesAux(pattern, ¢);
+    return matchesAux(pattern, ¢, new HashMap<>());
   }
 
   @SuppressWarnings("boxing") public Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
@@ -86,7 +86,7 @@ public class Matcher {
    * @return */
   private boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
     for (int ¢ = 0; ¢ < sp.size(); ++¢)
-      if (!matchesAux(sp.get(¢), subList.get(¢)))
+      if (!matchesAux(sp.get(¢), subList.get(¢), new HashMap<>()))
         return false;
     return true;
   }
@@ -116,25 +116,24 @@ public class Matcher {
     return true;
   }
 
-  Map<String, String> ids = new HashMap<>();
-
+  // Map<String, String> ids = new HashMap<>();
   /** Validates that matched variables are the same in all matching places. */
-  private boolean consistent(final String id, final String s) {
+  private static boolean consistent(Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
   }
 
-  @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n) {
+  @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     if (p == null || n == null)
       return false;
     if (iz.name(p))
-      return sameName(p, n);
+      return sameName(p, n, ids);
     if (iz.literal(p))
       return sameLiteral(p, n);
     if (isBlockVariable(p))
-      return matchesBlock(n) && consistent(blockName(p), n + "");
+      return matchesBlock(n) && consistent(ids, blockName(p), n + "");
     if (isMethodInvocationAndHas$AArgument(p))
-      return isMethodInvocationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
+      return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.children(n).size() == Recurser.children(p).size();
     if (isClassInstanceCreationAndHas$AArgument(p))
       return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
     if (differentTypes(p, n))
@@ -152,16 +151,16 @@ public class Matcher {
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-      if (!matchesAux(pChildren.get(¢), nChildren.get(¢)))
+      if (!matchesAux(pChildren.get(¢), nChildren.get(¢), ids))
         return false;
     return true;
   }
 
   /** @param n
    * @return */
-  private boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
-    return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName())
-        && consistent(az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
+  private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
+    return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
+        && consistent(ids, az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
   }
 
   /** @param p
@@ -177,9 +176,9 @@ public class Matcher {
     return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
   }
 
-  public boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c) {
-    return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType())
-        && consistent(c.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
+  public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c, final Map<String, String> ids) {
+    return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
+        && consistent(ids, c.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   /** @param p
@@ -215,17 +214,17 @@ public class Matcher {
     return iz.block(¢) || iz.statement(¢);
   }
 
-  private boolean sameName(final ASTNode p, final ASTNode n) {
+  private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
       if (id.startsWith("$X"))
-        return iz.expression(n) && consistent(id, n + "");
+        return iz.expression(n) && consistent(ids, id, n + "");
       if (id.startsWith("$M"))
-        return iz.methodInvocation(n) && consistent(id, n + "");
+        return iz.methodInvocation(n) && consistent(ids, id, n + "");
       if (id.startsWith("$N"))
-        return iz.name(n) && consistent(id, n + "");
+        return iz.name(n) && consistent(ids, id, n + "");
       if (id.startsWith("$L"))
-        return iz.literal(n) && consistent(id, n + "");
+        return iz.literal(n) && consistent(ids, id, n + "");
     }
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }

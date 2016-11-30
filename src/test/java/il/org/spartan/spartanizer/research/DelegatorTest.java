@@ -62,7 +62,6 @@ public class DelegatorTest {
   }
 
   private static String spartanized(final String ¢) {
-    System.out.println(spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + ""));
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 
