@@ -20,7 +20,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
   final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
-   * @param tipper The tipper we wish to convert
+   * @param statementsTipper The tipper we wish to convert
    * @param name The title of the refactoring */
   @SuppressWarnings("unchecked") public TipperApplicator(final Tipper<? extends ASTNode> w) {
     super(w.myName());
