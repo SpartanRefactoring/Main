@@ -131,11 +131,9 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   private boolean unused(final SimpleName n) {
-    for (final ReturnStatement ¢ : returnStatements) {
-      final Set<String> dependencies = analyze.dependencies(¢);
-      if (dependencies.contains(n + ""))
+    for (final ReturnStatement ¢ : returnStatements)
+      if (analyze.dependencies(¢).contains(n + ""))
         return false;
-    }
     return true;
   }
 }
