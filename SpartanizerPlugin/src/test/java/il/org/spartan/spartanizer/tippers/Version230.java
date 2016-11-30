@@ -1297,11 +1297,11 @@ public final class Version230 {
         + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n" + "         handleAssumptionViolation(e);\n"
         + "       } catch (Throwable e) {\n" + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n"
         + "     }\n" + "   };\n" + "}")
-            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement statement = methodBlock(m);\n"
+            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement $ = methodBlock(m);\n"
                 + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n"
-                + "         statement.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException ¢) {\n"
-                + "         handleAssumptionViolation(¢);\n" + "       } catch (Throwable ¢) {\n"
-                + "         reportParameterizedError(¢, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
+                + "         $.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n"
+                + "         handleAssumptionViolation(e);\n" + "       } catch (Throwable e) {\n"
+                + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
