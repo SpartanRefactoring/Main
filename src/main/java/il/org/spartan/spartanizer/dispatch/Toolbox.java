@@ -198,6 +198,7 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
             new SimplifyComparisionOfAdditions(), //
+            new SimplifyComparisionOfSubtractions(), //
             null)
         // TODO: Marco add when ready
         // .add(InstanceofExpression.class, //

@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** @author Kfir Marx
  * @since 2016-11-26 */
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue147 {
   private static final Statement INPUT = into.s("for(int i=0; i<5;++i){x.fuanc(); continue;}");
   private static final Statement INPUT1 = into.s("for(int i=0; i<5;++i){x.fuanc(); if(bool) continue;}");
