@@ -79,8 +79,6 @@ public class TipperFactory {
       }
 
       @Override protected boolean prerequisite(final N ¢) {
-//        System.out.println(m.pattern);
-//        System.out.println(¢);
         return m.matches(¢);
       }
 
