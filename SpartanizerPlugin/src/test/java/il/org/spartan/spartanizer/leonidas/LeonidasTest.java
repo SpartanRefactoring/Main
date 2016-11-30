@@ -56,9 +56,7 @@ public class LeonidasTest {
   Object $X2;
 
   Object bb() {
-    if ($X1 == null)
-      $X1 = $X2;
-    return $X1;
+    return $X1 != null ? $X1 : ($X1 = $X2);
   }
 
   @Test public void testMutation9() {
