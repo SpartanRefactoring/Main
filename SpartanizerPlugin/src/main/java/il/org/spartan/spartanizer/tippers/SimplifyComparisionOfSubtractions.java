@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * into
  * 
  * <pre>
- * a +d// ==//<//> c + b
+ * a + d// ==//<//> c + b
  * </pre>
  *
  * @author Dor Ma'ayan
@@ -36,8 +36,8 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
         || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
             : subject.pair(subject.pair(ll, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
   }
-  
-  private static boolean isLiegal(InfixExpression ¢){
+
+  private static boolean isLiegal(InfixExpression ¢) {
     return iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
   }
 
