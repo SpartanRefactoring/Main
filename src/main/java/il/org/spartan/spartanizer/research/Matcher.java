@@ -176,7 +176,8 @@ public class Matcher {
     return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
   }
 
-  public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c, final Map<String, String> ids) {
+  public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
+      final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
         && consistent(ids, c.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
   }
