@@ -1297,9 +1297,9 @@ public final class Version230 {
         + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n" + "         handleAssumptionViolation(e);\n"
         + "       } catch (Throwable e) {\n" + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n"
         + "     }\n" + "   };\n" + "}")
-            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement $ = methodBlock(m);\n"
-                + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n"
-                + "         $.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n"
+            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement $ = methodBlock(m);\n" + "  return new Statement() {\n"
+                + "     public void evaluate() throws Throwable {\n" + "       try {\n" + "         $.evaluate();\n"
+                + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n"
                 + "         handleAssumptionViolation(e);\n" + "       } catch (Throwable e) {\n"
                 + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
   }
@@ -2737,7 +2737,10 @@ public final class Version230 {
   @Test public void redundantButNecessaryBrackets3() {
     trimmingOf("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else {\n" + "    if (b3)\n" + "      print3('#');\n" + "  }\n" + "else {\n"
         + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
-        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}").stays();
+        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}")
+            .gives("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else \n" + "    if (b3)\n" + " print3('#');\n" + "else {\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}");
   }
 
   @Test public void removeSuper() {
