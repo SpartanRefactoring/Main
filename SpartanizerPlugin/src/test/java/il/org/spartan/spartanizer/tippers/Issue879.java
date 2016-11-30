@@ -8,11 +8,9 @@ import org.junit.*;
  * @since 28-11-2016 */
 @SuppressWarnings("static-method")
 public class Issue879 {
-  @Ignore
   @Test public void test0() {
     trimmingOf("void f(){return;}").gives("void f(){}").stays();
   }
-  @Ignore
   @Test public void test1() {
     trimmingOf("void f(){int x; int y;return;}").gives("void f(){int x; int y;}").stays();
   }
