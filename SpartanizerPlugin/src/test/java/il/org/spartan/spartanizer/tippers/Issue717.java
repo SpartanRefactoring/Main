@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** see Issue #717 for more details
@@ -48,7 +49,7 @@ public class Issue717 {
     if (len <= 0)
       len = 1;
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
-    for (int ¢ = 1; ¢ < len; ++¢)
+    for (final Integer ¢: range.from(1).to(len))
       $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
     return $ + "";
   }
