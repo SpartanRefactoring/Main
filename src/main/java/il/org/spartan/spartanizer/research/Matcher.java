@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -34,7 +35,21 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
-  public static boolean blockMatches(final ASTNode p, final ASTNode n) {
+  final ASTNode pattern;
+  final String replacement;
+
+  /** @param p
+   * @param n */
+  public Matcher(String p, String r) {
+    pattern = extractStatementIfOne(wizard.ast(reformat$Bs(p)));
+    replacement = reformat$Bs(r);
+  }
+
+  public boolean blockMatches(final ASTNode ¢) {
+    return blockMatches(pattern, ¢);
+  }
+
+  public boolean blockMatches(final ASTNode p, final ASTNode n) {
     if (!iz.block(n) || !iz.block(p))
       return false;
     @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
@@ -42,25 +57,26 @@ public class Matcher {
     if (sp == null || sn == null || sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
-      if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
+      if (statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
         return true;
     return false;
   }
 
+  //
   /** Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
    * the matching rules. For more info about these rules, see {@link Matcher}.
    * @param p pattern to match against.
-   * @param n ASTNode
+   * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
-  public static boolean matches(final ASTNode p, final ASTNode n) {
-    return new Matcher().matchesAux(p, n);
+  public boolean matches(final ASTNode ¢) {
+    return matchesAux(pattern, ¢);
   }
 
-  @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
+  @SuppressWarnings("boxing") public Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
     @SuppressWarnings("unchecked") final List<Statement> sp = p.statements();
     @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
-      if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
+      if (statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
         return new Pair<>(¢, ¢ + sp.size());
     return null;
   }
@@ -101,8 +117,6 @@ public class Matcher {
   }
 
   Map<String, String> ids = new HashMap<>();
-
-  private Matcher() {}
 
   /** Validates that matched variables are the same in all matching places. */
   private boolean consistent(final String id, final String s) {
@@ -205,9 +219,9 @@ public class Matcher {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
       if (id.startsWith("$X"))
-        return n instanceof Expression && consistent(id, n + "");
+        return iz.expression(n) && consistent(id, n + "");
       if (id.startsWith("$M"))
-        return n instanceof MethodInvocation && consistent(id, n + "");
+        return iz.methodInvocation(n) && consistent(id, n + "");
       if (id.startsWith("$N"))
         return iz.name(n) && consistent(id, n + "");
       if (id.startsWith("$L"))
@@ -248,7 +262,11 @@ public class Matcher {
    * @param enviroment
    * @return Mapping between variables and their corresponding elements (both as
    *         strings). */
-  @SuppressWarnings("unchecked") public static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
+  public Map<String, String> collectEnviroment(final ASTNode n, final Map<String, String> enviroment) {
+    return collectEnviroment(pattern, n, enviroment);
+  }
+
+  @SuppressWarnings("unchecked") private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
       final Map<String, String> enviroment) {
     if (iz.name(p)) {
       final String id = az.name(p).getFullyQualifiedName();
@@ -271,7 +289,11 @@ public class Matcher {
     return enviroment;
   }
 
-  @SuppressWarnings("unchecked") public static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
+  public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
+    return collectEnviromentNodes(pattern, n, enviroment);
+  }
+
+  @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
     if (iz.name(p)) {
       final String id = az.name(p).getFullyQualifiedName();
@@ -303,5 +325,73 @@ public class Matcher {
   private static String arguments(final ASTNode ¢) {
     final String $ = az.methodInvocation(¢).arguments() + "";
     return $.substring(1, $.length() - 1);
+  }
+
+  static String reformat$Bs(final String ¢) {
+    return ¢.replaceAll("\\$B\\d*", "$0\\(\\);");
+  }
+
+  static ASTNode extractStatementIfOne(final ASTNode ¢) {
+    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
+  }
+
+  <N extends ASTNode> ASTNode replacement(final N n) {
+    final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
+    final Wrapper<String> $ = new Wrapper<>();
+    $.set(replacement);
+    for (final String ¢ : enviroment.keySet())
+      if (¢.startsWith("$B"))
+        $.set($.get().replace(¢, enviroment.get(¢) + ""));
+    // System.out.println("++" + replacement);
+    // System.out.println("to " + wizard.ast(replacement));
+    wizard.ast(replacement).accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+          $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
+        return true;
+      }
+    });
+    return extractStatementIfOne(wizard.ast($.get()));
+  }
+
+  /** @param b
+   * @param idxs
+   * @return */
+  @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
+    final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern), b);
+    final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
+    for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
+      $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
+    return $;
+  }
+
+  ASTNode blockReplacement(final Block n) {
+    final Pair<Integer, Integer> p = getBlockMatching(az.block(pattern), az.block(n));
+    final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
+    final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching), new HashMap<>());
+    final Wrapper<String> $ = new Wrapper<>(replacement);
+    for (final String ¢ : enviroment.keySet())
+      if (¢.startsWith("$B"))
+        $.set($.get().replace(¢, enviroment.get(¢) + ""));
+    wizard.ast(replacement).accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+          $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
+        return true;
+      }
+    });
+    return wizard.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
+  }
+
+  private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
+    final int end = az.block(n).statements().size();
+    return start >= end ? "" : stringifySubBlock(n, start, end);
+  }
+
+  private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
+    if (start >= end)
+      return "";
+    @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
+    return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
 }
