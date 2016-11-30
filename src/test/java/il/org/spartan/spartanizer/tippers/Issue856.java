@@ -70,7 +70,7 @@ public class Issue856 {
     trimmingOf("final List<Object> list = new ArrayList<>();" + "final int len = Array.getLength(defaultValue);" + "for (int ¢ = 0; ¢ <len; ++¢)"
         + "list.add(Array.get(defaultValue, ¢));" + "$.append(list);")//
             .stays();
-  }
+}
 
   @Test public void e() {
     trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
