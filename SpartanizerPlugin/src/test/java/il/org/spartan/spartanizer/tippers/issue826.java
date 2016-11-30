@@ -17,19 +17,11 @@ public class issue826 {
   @Test public void b() {
     trimmingOf("" + //
         "public void b() {" + //
-        "    int i = 5*6*7;" + //
-        "    if (++i < 5)" + //
-        "      a(i);" + //
-        "    else" + //
-        "      a(i);"//
-    ).gives("// Edit this to reflect your expectation, but leave this comment" + //
-        "" + //
-        "public void b() {" + //
         "    int i = 210;" + //
         "    if (++i < 5)" + //
         "      a(i);" + //
         "    else" + //
         "      a(i);"//
-    );
+    ).stays();
   }
 }
