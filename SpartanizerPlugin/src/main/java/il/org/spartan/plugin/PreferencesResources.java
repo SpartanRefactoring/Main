@@ -7,7 +7,7 @@ import org.eclipse.jface.preference.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public final class PreferencesResources {
+public class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the laconization plug-in";
   /** General preferences **/
