@@ -19,8 +19,8 @@ public final class Issue222 {
   }
 
   @Test public void chocolate2() {
-    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment f : fs){\n"
-        + "int b = f(f);\n" + "f(f,b);\n" + "return g(f,b,f());\n" + "}\n" + "return true;\n" + "}").stays();
+    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment $ : fs){\n"
+        + "int b = f($);\n" + "f($,b);\n" + "return g($,b,f());\n" + "}\n" + "return true;\n" + "}").stays();
   }
 
   @Test public void chocolate3() {
