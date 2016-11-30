@@ -11,9 +11,6 @@ public class issue826 {
   @Test public void a() {
     trimmingOf("" + //
         "A() ? 8 : 8"//
-    ).gives("// Edit this to reflect your expectation, but leave this comment" + //
-        "" + //
-        "A() ? 8 : 8"//
     ).stays();
   }
 
