@@ -96,6 +96,7 @@ public class CommandLineApplicator extends Applicator {
    * @param a JD
    * @return this applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
+    CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;

@@ -266,20 +266,23 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   public static void tip(final Tip ¢) {
+    ReportGenerator.report("tips").put("FileName", CommandLine$Applicator.presentFileName);
+    ReportGenerator.report("tips").put("Path", CommandLine$Applicator.presentFilePath);
     ReportGenerator.report("tips").put("tipName", ¢.getClass());
-    ReportGenerator.report("tips").put("description", ¢.description);
+//    ReportGenerator.report("tips").put("description", ¢.description);
     ReportGenerator.report("tips").put("LineNumber", ¢.lineNumber);
     ReportGenerator.report("tips").put("from", ¢.from);
     ReportGenerator.report("tips").put("to", ¢.to);
-    ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+//    ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
     long time = new Date().getTime();
     ReportGenerator.report("tips").put("time", time);
     ReportGenerator.report("tips").put("startTimeDiff", time - CommandLine$Applicator.startingTime);
+    ReportGenerator.report("tips").put("startTimeDiffPerFile", time - CommandLine$Applicator.startingTimePerFile);
     ReportGenerator.report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
   public static void writeTipsLine(final ASTNode n, final Tip t, final String reportName) {
-    name(n, reportName);
+//    name(n, reportName);
     tip(t);
     ReportGenerator.report(reportName).nl();
   }
@@ -297,4 +300,18 @@ public class ReportGenerator implements ConfigurableReport {
   public static void generate(final String ¢) {
     initializeReport(¢ + "_metrics.CSV", ¢);
   }
+
+  public static void emptyTipsLine() {
+    ReportGenerator.report("tips").put("tipName", "");
+//  ReportGenerator.report("tips").put("description", ¢.description);
+    ReportGenerator.report("tips").put("LineNumber", "");
+    ReportGenerator.report("tips").put("from", "");
+    ReportGenerator.report("tips").put("to", "");
+//  ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+//  long time = new Date().getTime();
+    ReportGenerator.report("tips").put("time", "");
+    ReportGenerator.report("tips").put("startTimeDiff", "");
+    ReportGenerator.report("tips").put("startTimeDiffPerFile", "");
+    ReportGenerator.report("tips").put("lastTimeDiff", "");
+}
 }
