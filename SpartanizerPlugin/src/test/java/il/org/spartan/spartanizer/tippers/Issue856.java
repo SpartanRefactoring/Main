@@ -75,9 +75,9 @@ public class Issue856 {
   @Test public void e() {
     trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
         "il.finalize(); " + //
-        "return;").gives(//
+        "return 0;").gives(//
             "((InflaterListener) ((TypedListener) l).getEventListener()).finalize();" + //
-                "return;" //
+                "return 0;" //
     ).stays();
   }
 }

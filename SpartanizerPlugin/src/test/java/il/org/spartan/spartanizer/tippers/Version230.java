@@ -1105,8 +1105,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
-    trimmingOf("if (a) break; return;")//
-        .gives("if (!a) return; break;");
+    trimmingOf("if (a) break; return 0;")//
+        .gives("if (!a) return 0; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer04a() {
@@ -1141,8 +1141,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer10() {
-    trimmingOf("if (a) continue; return;")//
-        .gives("if (!a) return; continue;");
+    trimmingOf("if (a) continue; return 0;")//
+        .gives("if (!a) return 0; continue;");
   }
 
   @Test public void ifSequencerThenSequencer0() {
