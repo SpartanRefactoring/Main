@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue711 {
   @Test public void test0() {
-    trimmingOf("int oneLarger(int x) {" + "Function<Integer, Integer> f = i -> i + 1;" + "return f.eval(x);" + "}").stays();
+    trimmingOf("int oneLarger(int x) {" + "Function<Integer, Integer> $ = i -> i + 1;" + "return $.eval(x);" + "}").stays();
   }
 
   @Test public void test1() {
