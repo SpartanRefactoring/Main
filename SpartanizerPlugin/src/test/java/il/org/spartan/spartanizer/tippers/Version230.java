@@ -565,11 +565,6 @@ public final class Version230 {
         .gives("(a==null)");
   }
 
-  @Test public void commonPrefixEntirelyIfBranches() {
-    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();")//
-        .gives("S.out.close(); ");
-  }
-
   @Test public void commonPrefixIfBranchesInFor() {
     trimmingOf("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}")//
         .gives("for(;;){i++;j++;if(a)j++;else i++;}");

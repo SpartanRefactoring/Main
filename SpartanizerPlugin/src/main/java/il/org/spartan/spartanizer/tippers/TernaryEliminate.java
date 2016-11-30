@@ -18,7 +18,7 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
   }
 
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
-    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢);
+    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢.getExpression());
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
