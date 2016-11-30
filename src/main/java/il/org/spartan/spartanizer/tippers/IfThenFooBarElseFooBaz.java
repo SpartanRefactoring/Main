@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** XXX: This is a bug of auto-laconize Converts
@@ -66,31 +67,34 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
+    int thenSize = then.size();
+    int elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() ? null : new Tip(description(s), s, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final IfStatement newIf = replacement();
-        if (!iz.block(s.getParent())) {
-          if (newIf != null)
-            commonPrefix.add(newIf);
-          r.replace(s, subject.ss(commonPrefix).toBlock(), g);
-        } else {
-          final ListRewrite lr = insertBefore(s, commonPrefix, r, g);
-          if (newIf != null)
-            lr.insertBefore(newIf, s, g);
-          lr.remove(s, g);
-        }
-      }
+    return commonPrefix.isEmpty() || (commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()))
+        ? null : new Tip(description(s), s, this.getClass()) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final IfStatement newIf = replacement();
+            if (!iz.block(s.getParent())) {
+              if (newIf != null)
+                commonPrefix.add(newIf);
+              r.replace(s, subject.ss(commonPrefix).toBlock(), g);
+            } else {
+              final ListRewrite lr = insertBefore(s, commonPrefix, r, g);
+              if (newIf != null)
+                lr.insertBefore(newIf, s, g);
+              lr.remove(s, g);
+            }
+          }
 
-      IfStatement replacement() {
-        return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
-      }
+          IfStatement replacement() {
+            return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
+          }
 
-      IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
-        return trimmedThen == null && trimmedElse == null ? null
-            : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
-      }
-    };
+          IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
+            return trimmedThen == null && trimmedElse == null ? null
+                : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
+          }
+        };
   }
 
   @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
