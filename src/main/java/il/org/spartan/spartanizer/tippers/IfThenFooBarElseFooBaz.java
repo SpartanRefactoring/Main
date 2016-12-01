@@ -70,8 +70,8 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     final int thenSize = then.size();
     final int elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression())
-        ? null : new Tip(description(s), s, this.getClass()) {
+    return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
+        : new Tip(description(s), s, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final IfStatement newIf = replacement();
             if (!iz.block(s.getParent())) {
