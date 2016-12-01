@@ -138,6 +138,7 @@ public class Toolbox {
             new RemoveRedundentFor(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
+            new ForAndReturnToFor(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
