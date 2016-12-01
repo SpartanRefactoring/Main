@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import org.junit.*;
 
+import il.org.spartan.spartanizer.utils.*;
+
 /** @author Sharon Kuninin
  * @author Yarden Lev
  * @since Nov 12, 2016 */

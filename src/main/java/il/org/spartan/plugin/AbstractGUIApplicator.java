@@ -136,10 +136,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   public boolean follow() throws CoreException {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    final TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
     for (final Tip ¢ : tips) {
       progressMonitor.worked(1);
-      ¢.go(astRewrite, g);
+      ¢.go(astRewrite, new TextEditGroup("spartanization: textEditGroup"));
     }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
@@ -239,12 +238,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
-    final AtomicInteger counter = new AtomicInteger(0);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), counter).rewriteAST());
+    final AtomicInteger $ = new AtomicInteger(0);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
-    return counter.get();
+    return $.get();
   }
 
   /** .
@@ -272,12 +271,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
-    final AtomicInteger counter = new AtomicInteger(0);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), counter).rewriteAST());
+    final AtomicInteger $ = new AtomicInteger(0);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
-    return counter.get();
+    return $.get();
   }
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final AtomicInteger counter) {
@@ -356,13 +355,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m);
-    final AtomicInteger counter = new AtomicInteger(0);
-    textChange.setEdit(createRewrite(cu, counter).rewriteAST());
+    final AtomicInteger $ = new AtomicInteger(0);
+    textChange.setEdit(createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
     totalChanges += collectSuggestions(cu).size();
     m.done();
-    return counter.get();
+    return $.get();
   }
 
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {

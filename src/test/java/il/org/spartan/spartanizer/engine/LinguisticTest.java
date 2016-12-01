@@ -77,7 +77,7 @@ public class LinguisticTest {
     azzert.that(Linguistic.unknownIfNull(null), is(Linguistic.UNKNOWN));
   }
 
-  @SuppressWarnings("boxing") @Test public void testUnknownIfNullWithFunction() {
+  @Test @SuppressWarnings("boxing") public void testUnknownIfNullWithFunction() {
     azzert.that(Linguistic.unknownIfNull(Integer.valueOf(1), (final Integer i) -> i + 1), is("2"));
     azzert.that(Linguistic.unknownIfNull(new AtomicInteger(1), (final AtomicInteger i) -> Integer.valueOf(2)), is("2"));
     azzert.that(Linguistic.unknownIfNull(null, (final Integer i) -> i + 1), is(Linguistic.UNKNOWN));

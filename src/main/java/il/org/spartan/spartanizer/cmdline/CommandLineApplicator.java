@@ -61,9 +61,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this */
   public CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
-    // final Trimmer t = new Trimmer();
-    final Spartanizer$Applicator s = new Spartanizer$Applicator();
-    setRunAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
+    setRunAction(u -> Integer.valueOf(new Spartanizer$Applicator().apply(u, selection()) ? 1 : 0));
     return this;
   }
 

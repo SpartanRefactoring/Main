@@ -20,7 +20,7 @@ public class Issue741 {
     assert true;
   }
 
-  @SuppressWarnings("cast") @Test public void publicFields_test1() {
+  @Test @SuppressWarnings("cast") public void publicFields_test1() {
     assert getAll2.publicFields(null) instanceof List<?>;
   }
 
@@ -41,23 +41,21 @@ public class Issue741 {
   }
 
   @Test public void publicFields_test6() {
-    final TypeDeclaration td = getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}");
-    final List<String> pFields = getAll2.publicFields(td);
+    final List<String> pFields = getAll2
+        .publicFields(getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}"));
     assert pFields.contains("y");
     assert !pFields.contains("x");
     assert !pFields.contains("f");
   }
 
   @Test public void publicFields_test7() {
-    final TypeDeclaration td = getTypeDeclaration("public class A { public int x; class B { public int y; } }");
-    final List<String> pFields = getAll2.publicFields(td);
+    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public int x; class B { public int y; } }"));
     assert pFields.contains("x");
     assert !pFields.contains("y");
   }
 
   @Test public void publicFields_test8() {
-    final TypeDeclaration td = getTypeDeclaration("public class A { public class B { public int x; } }");
-    final List<String> pFields = getAll2.publicFields(td);
+    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public class B { public int x; } }"));
     assert !pFields.contains("B");
     assert !pFields.contains("x");
   }

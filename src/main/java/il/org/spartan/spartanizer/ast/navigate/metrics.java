@@ -83,9 +83,7 @@ public interface metrics {
   /** @param n JD
    * @return The total number of internal nodes in the AST */
   @SuppressWarnings("boxing") static int internals(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> {
-      return Recurser.children(x.getRoot()).isEmpty() ? x.getCurrent() : x.getCurrent() + 1;
-    });
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> Recurser.children(x.getRoot()).isEmpty() ? x.getCurrent() : x.getCurrent() + 1);
   }
 
   /** @param pattern JD

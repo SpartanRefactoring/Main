@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
-  protected static Expression assignmentAsExpression(final Assignment a) {
-    final Operator o = a.getOperator();
-    return o == ASSIGN ? duplicate.of(from(a)) : subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
+  protected static Expression assignmentAsExpression(final Assignment ¢) {
+    final Operator $ = ¢.getOperator();
+    return $ == ASSIGN ? duplicate.of(from(¢)) : subject.pair(to(¢), from(¢)).to(wizard.assign2infix($));
   }
 
   protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -87,8 +87,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    for (final VariableDeclarationFragment brother : fragments(parent)) {
+    for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
       if (brother == f) {
         collecting = true;
         continue;
@@ -120,7 +119,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
       final TextEditGroup g) {
     if (!iz.variableDeclarationStatement(f.getParent()))
       return null;
-    final SimpleName n = f.getName();
-    return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
+    final SimpleName $ = f.getName();
+    return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
   }
 }

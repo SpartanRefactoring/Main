@@ -59,4 +59,24 @@ public class Issue291 {
   @Test public void test13() {
     trimmingOf("a+2>length").gives("a>length-2").stays();
   }
+
+  @Test public void test14() {
+    trimmingOf("a -b > c - d").gives("a + d > c + b");
+  }
+
+  @Test public void test15() {
+    trimmingOf("a -b == c - d").gives("a + d == c + b");
+  }
+
+  @Test public void test16() {
+    trimmingOf("a -b < c - d").gives("a + d < c + b");
+  }
+
+  @Test public void test17() {
+    trimmingOf("a -b - f < c - d").stays();
+  }
+
+  @Test public void test18() {
+    trimmingOf("a -(b - f) < (c - d) -t").gives("a +t < c - d + b - f");
+  }
 }

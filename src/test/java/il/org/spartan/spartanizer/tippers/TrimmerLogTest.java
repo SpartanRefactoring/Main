@@ -22,8 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class TrimmerLogTest {
   @Test public void test02() {
     final Operand o = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -46,8 +45,7 @@ public class TrimmerLogTest {
 
   @Test public void test03() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);

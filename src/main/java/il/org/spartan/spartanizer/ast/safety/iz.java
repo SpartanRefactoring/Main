@@ -89,7 +89,8 @@ public interface iz {
     if (b == null)
       return false;
     final IfStatement parent = az.ifStatement(step.parent(b));
-    return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
+    return (parent == null || !wizard.same(s, az.astNode(az.block(parent.getElseStatement()).statements().get(0))) || wizard.recursiveElze(s) != null
+        || elze(parent) == null) && parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
         && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
@@ -1030,5 +1031,17 @@ public interface iz {
 
   static boolean constructor(final ASTNode ¢) {
     return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean doStatement(final ASTNode ¢) {
+    return ¢ instanceof DoStatement;
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean synchronizedStatement(final Statement ¢) {
+    return ¢ instanceof SynchronizedStatement;
   }
 }

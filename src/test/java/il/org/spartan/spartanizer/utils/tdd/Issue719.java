@@ -10,36 +10,36 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author yaelAmitay
  * @since 16-11-04 */
 public class Issue719 {
-  @SuppressWarnings("static-method") @Test public void test() {
+  @Test @SuppressWarnings("static-method") public void test() {
     assert true;
   }
 
-  @SuppressWarnings("static-method") @Test public void nullCheck() {
+  @Test @SuppressWarnings("static-method") public void nullCheck() {
     assert !determineIf.definesManyVariables(null, 0);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkZeroDefinitions() {
+  @Test @SuppressWarnings("static-method") public void checkZeroDefinitions() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {} "), 0);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkOneDefinitions() {
+  @Test @SuppressWarnings("static-method") public void checkOneDefinitions() {
     assert !determineIf.definesManyVariables((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x;} "), 2);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkTwoDefinitions() {
+  @Test @SuppressWarnings("static-method") public void checkTwoDefinitions() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x; int y;} "), 2);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkThreeDefinitionsSameLine() {
+  @Test @SuppressWarnings("static-method") public void checkThreeDefinitionsSameLine() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z;} "), 3);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkFourDefinitionsWithAssignment() {
+  @Test @SuppressWarnings("static-method") public void checkFourDefinitionsWithAssignment() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} "),
         4);
   }
 
-  @SuppressWarnings("static-method") @Test public void checkFiveDefinitionsNested() {
+  @Test @SuppressWarnings("static-method") public void checkFiveDefinitionsNested() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard
         .ast("public void methodZeroDefinition() {int x, y, z; boolean b = True; Object o = new Object(){ Double d = 0.0;}; } "), 5);
   }

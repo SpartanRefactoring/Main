@@ -154,4 +154,8 @@ public final class GuessedContextTest {
     assertEquals(GuessedContext.STATEMENTS_LOOK_ALIKE, GuessedContext.find(" for (int $N0 = 0; $N0 < $N1; ++$N0) $N2 ^= $N3.$N4($N5, $N6)[0];" //
     ));
   }
+
+  @Test public void methodInvocation() {
+    assertEquals(GuessedContext.EXPRESSION_LOOK_ALIKE, GuessedContext.find("fuo()"));
+  }
 }
