@@ -83,7 +83,7 @@ public class TipperFactory {
       }
 
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return m.collectEnviromentNodes(n, new HashMap<>()).get(s);
+        return m.getMatching(n, s);
       }
     };
   }

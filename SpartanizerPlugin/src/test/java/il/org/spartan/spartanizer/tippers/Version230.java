@@ -1310,7 +1310,7 @@ public final class Version230 {
 
   @Test public void inlineSingleUse07() {
     trimmingOf(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.h(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     S.h(coes.size()); ")
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.h(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes) {     if (pi.intValue() <x - y)       outdated.add(pi); command();}     S.h(coes.size()); ")
             .stays();
   }
 
