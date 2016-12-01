@@ -29,8 +29,8 @@ import il.org.spartan.utils.*;
  * <li><code>$Bi();</code> : Corresponds to {@link Block} and {@link Statement}
  * </li>
  * <li><code>$Ai();</code> : Should be an argument within
- * {@link MethodInvokation}. <br>
- * Corresponds to arguments of {@link MethodInvokation}</li>
+ * {@link MethodInvocation}. <br>
+ * Corresponds to arguments of {@link MethodInvocation}</li>
  * </ul>
  * @author Ori Marcovitch
  * @since 2016 */
@@ -116,7 +116,6 @@ public class Matcher {
     return true;
   }
 
-  // Map<String, String> ids = new HashMap<>();
   /** Validates that matched variables are the same in all matching places. */
   private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
@@ -131,7 +130,7 @@ public class Matcher {
     if (iz.literal(p))
       return sameLiteral(p, n);
     if (isBlockVariable(p))
-      return matchesBlock(n) && consistent(ids, blockName(p), n + "");
+      return matchesBlock(n) && consistent(ids, blockVariableName(p), n + "");
     if (isMethodInvocationAndHas$AArgument(p))
       return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.children(n).size() == Recurser.children(p).size();
     if (isClassInstanceCreationAndHas$AArgument(p))
@@ -200,12 +199,15 @@ public class Matcher {
     return n.getNodeType() != p.getNodeType();
   }
 
-  private static String blockName(final ASTNode p) {
-    return az.methodInvocation(az.expressionStatement(p).getExpression()).getName().getFullyQualifiedName();
+  private static String blockVariableName(final ASTNode p) {
+    return az.methodInvocation(az.expressionStatement(step.statements(az.block(p)).get(0)).getExpression()).getName().getFullyQualifiedName();
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
-    return iz.expressionStatement(p) && iz.methodInvocation(az.expressionStatement(p).getExpression()) && blockName(p).startsWith("$B");
+    if (!iz.block(p) || step.statements(az.block(p)).size() != 1)
+      return false;
+    Statement s = step.statements(az.block(p)).get(0);
+    return iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()) && blockVariableName(p).startsWith("$B");
   }
 
   /** Checks if node is a block or statement
@@ -273,7 +275,7 @@ public class Matcher {
       if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
         enviroment.put(id, n + "");
     } else if (isBlockVariable(p))
-      enviroment.put(blockName(p) + "();", n + "");
+      enviroment.put(blockVariableName(p) + "();", n + "");
     else {
       final List<? extends ASTNode> nChildren = Recurser.children(n);
       final List<? extends ASTNode> pChildren = Recurser.children(p);
@@ -300,7 +302,7 @@ public class Matcher {
       if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
         enviroment.put(id, n);
     } else if (isBlockVariable(p))
-      enviroment.put(blockName(p) + "();", n);
+      enviroment.put(blockVariableName(p) + "();", n);
     else {
       final List<? extends ASTNode> nChildren = Recurser.children(n);
       final List<? extends ASTNode> pChildren = Recurser.children(p);
@@ -328,7 +330,7 @@ public class Matcher {
   }
 
   static String reformat$Bs(final String ¢) {
-    return ¢.replaceAll("\\$B\\d*", "$0\\(\\);");
+    return ¢.replaceAll("\\$B\\d*", "{$0\\(\\);}");
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
@@ -342,8 +344,6 @@ public class Matcher {
     for (final String ¢ : enviroment.keySet())
       if (¢.startsWith("$B"))
         $.set($.get().replace(¢, enviroment.get(¢) + ""));
-    // System.out.println("++" + replacement);
-    // System.out.println("to " + wizard.ast(replacement));
     wizard.ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
