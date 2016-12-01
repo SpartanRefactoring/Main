@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -45,7 +43,7 @@ public class TipperFactory {
       }
 
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return m.collectEnviromentNodes(n, new HashMap<>()).get(s);
+        return m.getMatching(n, s);
       }
     };
   }
