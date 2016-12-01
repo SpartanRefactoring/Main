@@ -273,8 +273,7 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode ¢ : ns)
-      recurse(¢);
+    ns.stream().forEach(¢ -> recurse(¢));
     return false;
   }
 
@@ -444,8 +443,7 @@ class StringCollector extends HidingDepth {
   }
 
   private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode ¢ : ns)
-      recurse(¢);
+    ns.stream().forEach(¢ -> recurse(¢));
     return false;
   }
 
