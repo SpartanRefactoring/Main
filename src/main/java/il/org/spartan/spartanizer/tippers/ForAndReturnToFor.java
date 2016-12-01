@@ -1,15 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-
 
 /** convert <code>
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
@@ -21,12 +18,10 @@ import il.org.spartan.spartanizer.tipping.*;
  *    return $ + "";
  * </code>
  * @author Raviv Rachmiel
- * @since 25-11-2016 
- */
+ * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> implements TipperCategory.Collapse {
-  
   @Override protected ASTRewrite go(ASTRewrite r, ForStatement s, Statement nextStatement, TextEditGroup g) {
-    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement)) 
+    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement))
       return null;
     ForStatement f = duplicate.of(s);
     IfStatement ifBody = f.getBody().getAST().newIfStatement();
@@ -40,8 +35,6 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
   }
 
   @Override public String description(@SuppressWarnings("unused") ForStatement __) {
-    return "combine the for and return statements to a single statement"; 
+    return "combine the for and return statements to a single statement";
   }
-  
- 
 }
