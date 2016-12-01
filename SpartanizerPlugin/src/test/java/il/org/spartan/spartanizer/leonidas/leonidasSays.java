@@ -78,7 +78,7 @@ public class leonidasSays {
     }
 
     /** @param statementsPattern */
-    public statementsTipper(UserDefinedTipper<Block> tipper) {
+    public statementsTipper(final UserDefinedTipper<Block> tipper) {
       this.tipper = tipper;
     }
 
