@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+
 
 /** convert <code>
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
@@ -15,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * return $ + ""
  * </code> to <code>
  * for (String line = r.readLine();; line = r.readLine(), $.append(line).append(System.lineSeparator()))
- *  if ( line != null)
+ *  if ( line == null)
  *    return $ + "";
  * </code>
  * @author Raviv Rachmiel
@@ -27,7 +29,10 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
     if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement)) 
       return null;
     ForStatement f = duplicate.of(s);
-    f.setBody(duplicate.of(nextStatement));
+    IfStatement ifBody = f.getBody().getAST().newIfStatement();
+    ifBody.setExpression(make.notOf(duplicate.of(f.getExpression())));
+    ifBody.setThenStatement(duplicate.of(nextStatement));
+    f.setBody(duplicate.of(ifBody));
     f.setExpression(null);
     r.replace(s, f, g);
     r.replace(nextStatement, null, g);
