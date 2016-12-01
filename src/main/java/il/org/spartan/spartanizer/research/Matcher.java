@@ -40,7 +40,7 @@ public class Matcher {
 
   /** @param p
    * @param n */
-  public Matcher(String p, String r) {
+  public Matcher(final String p, final String r) {
     pattern = extractStatementIfOne(wizard.ast(reformat$Bs(p)));
     replacement = reformat$Bs(r);
   }
@@ -118,7 +118,7 @@ public class Matcher {
 
   // Map<String, String> ids = new HashMap<>();
   /** Validates that matched variables are the same in all matching places. */
-  private static boolean consistent(Map<String, String> ids, final String id, final String s) {
+  private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
   }
