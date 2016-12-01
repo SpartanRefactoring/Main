@@ -23,6 +23,16 @@ public class Analyze {
     set("outputDir", "/tmp");
   }
   private static InteractiveSpartanizer spartanizer;
+  @SuppressWarnings("rawtypes") private static Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
+    static final long serialVersionUID = 1L;
+    {
+      put("AvgIndicatorMetrical", new AvgIndicatorMetricalAnalyzer());
+      put("understandability", new UnderstandabilityAnalyzer());
+      put("understandability2", new Understandability2Analyzer());
+      put("statementsToAverageU", new SameStatementsAverageUAnalyzer());
+      put("magic numbers", new MagicNumbersAnalysis());
+    }
+  };
 
   public static void main(final String args[]) {
     AnalyzerOptions.parseArguments(args);
@@ -31,29 +41,10 @@ public class Analyze {
     final String analysis = getProperty("analysis");
     if ("methods".equals(analysis))
       methodsAnalyze();
-    else if ("understandability".equals(analysis))
-      understandabilityAnalyze();
-    else if ("understandability2".equals(analysis))
-      understandability2Analyze();
-    else if ("statementsToAverageU".equals(analysis))
-      sameStatementsAverageUAnalyzer();
-    else if ("avgIndicatorMetricalAnalyzer".equals(analysis))
-      avgIndicatorMetricalAnalyzer();
     else if ("classify".equals(analysis))
       classify();
     else
       analyze();
-  }
-
-  /**
-   *
-   */
-  private static void avgIndicatorMetricalAnalyzer() {
-    methodsAnalyze(new AvgIndicatorMetricalAnalyzer());
-  }
-
-  private static void sameStatementsAverageUAnalyzer() {
-    methodsAnalyze(new SameStatementsAverageUAnalyzer());
   }
 
   private static void initializeSpartanizer() {
@@ -118,18 +109,18 @@ public class Analyze {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
-  /** Get all java files contained in folder recursively. <br>
+  /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
-   * @return All java files nested inside the folder */
+   * @return All java files nested inside the outputFolder */
   private static Set<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
 
-  /** Get all java files contained in folder recursively. <br>
+  /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we ignore test files.
    * @param directory to search in
-   * @return All java files nested inside the folder */
+   * @return All java files nested inside the outputFolder */
   private static Set<File> getJavaFiles(final File directory) {
     final Set<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
@@ -172,31 +163,23 @@ public class Analyze {
     new File(getProperty("outputDir") + "/after.java").delete();
   }
 
-  private static void methodsAnalyze() {
-    methodsAnalyze(new MagicNumbersAnalysis());
-  }
-
-  private static void methodsAnalyze(final Analyzer<?> a) {
+  @SuppressWarnings("rawtypes") private static void methodsAnalyze() {
     for (final File f : inputFiles())
       //
       step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-            a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            for (final Analyzer a : analyses.values())
+              a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
       });
-    a.printComparison();
-    a.printAccumulated();
-  }
-
-  private static void understandabilityAnalyze() {
-    methodsAnalyze(new UnderstandabilityAnalyzer());
-  }
-
-  private static void understandability2Analyze() {
-    methodsAnalyze(new Understandability2Analyzer());
+    for (final String a : analyses.keySet()) {
+      System.out.println("++++++++" + a + "++++++++");
+      analyses.get(a).printComparison();
+      analyses.get(a).printAccumulated();
+    }
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
@@ -205,7 +188,8 @@ public class Analyze {
    * @return */
   private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
     if ("false".equals(getProperty("nmethods")))
-      addJavadocNanoPatterns(¢);
+      addCharacteristicMethodPatterns(¢);
+    addMethodPatterns(¢);
     return ¢
         .add(ConditionalExpression.class, //
             new DefaultsTo(), //
@@ -255,21 +239,26 @@ public class Analyze {
     ;
   }
 
-  private static InteractiveSpartanizer addJavadocNanoPatterns(final InteractiveSpartanizer ¢) {
+  private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Carrier(), //
         new Converter(), //
-        new Delegator(), //
         new Examiner(), //
         new Exploder(), //
-        new Fluenter(), //
         new FluentSetter(), ///
         new Getter(), //
+        new Mapper(), //
+        new TypeChecker(), //
+        null);
+  }
+
+  private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
+    return ¢.add(MethodDeclaration.class, //
+        new Carrier(), //
+        new Delegator(), //
+        new Fluenter(), //
         new Independent(), //
         new JDPattern(), //
-        new Mapper(), //
         new MethodEmpty(), //
-        new TypeChecker(), //
         null);
   }
 }

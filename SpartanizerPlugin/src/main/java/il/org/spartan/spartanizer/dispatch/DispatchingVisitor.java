@@ -93,7 +93,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final TryStatement ¢) {
     return cautiousGo(¢);
   }
-  
+
   @Override public final boolean visit(final ArrayAccess ¢) {
     return cautiousGo(¢);
   }
@@ -107,6 +107,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final ReturnStatement ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final SwitchStatement ¢) {
     return cautiousGo(¢);
   }
 

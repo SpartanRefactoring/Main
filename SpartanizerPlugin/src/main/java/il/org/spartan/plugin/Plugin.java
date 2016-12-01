@@ -7,7 +7,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
 
-import il.org.spartan.libraries.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -16,8 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ofir Elmakias
  * @since 2015/09/06 (Updated - auto initialization of the plugin)
  * @author Ori Roth
- * @since 2.6 (Updated - apply nature to newly opened projects)
- *        [[SuppressWarningsSpartan]] */
+ * @since 2.6 (Updated - apply nature to newly opened projects) */
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   private static boolean listening;
@@ -43,8 +41,8 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     startSpartan();
     try {
       LibrariesManagement.initializeUserLibraries();
-    } catch (final CoreException x) {
-      monitor.log(x);
+    } catch (final CoreException ¢) {
+      monitor.log(¢);
     }
   }
 
@@ -116,12 +114,12 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 default:
                   break;
               }
-            } catch (final Exception x) {
-              monitor.log(x);
+            } catch (final Exception ¢) {
+              monitor.log(¢);
             }
           }).schedule(SAFETY_DELAY);
-      } catch (final CoreException x) {
-        monitor.log(x);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
       }
     });
     listening = true;
@@ -129,7 +127,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   /* TODO Roth: don't use enums, prefer strings, which require less overhead,
    * and are easier to debug; --yg */
-  static enum Type {
+  enum Type {
     new_project, opened_project
   }
 

@@ -41,16 +41,13 @@ public final class Version230 {
     final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
-    final Trimmer t = new Trimmer();
-    final String unpeeled = applyTrimmer(t, wrap);
+    final String unpeeled = applyTrimmer(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
-    final String compressSpaces = tide.clean(peeled);
-    final String compressSpaces2 = tide.clean(from);
-    azzert.that("Simpification of " + from + " is just reformatting", compressSpaces2, not(compressSpaces));
+    azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), not(tide.clean(peeled)));
     assertSimilar(expected, peeled);
   }
 
@@ -77,8 +74,7 @@ public final class Version230 {
 
   @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@TargetApi(value = 23)@SuppressWarnings(value = \"javadoc\")  void m() {}")
-        .gives("@SuppressWarnings(value = \"javadoc\") @TargetApi(value=23) void m() {}")//
-        .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}")//
+        .gives("@TargetApi(23)@SuppressWarnings(\"javadoc\")void m(){}")//
         .stays();
   }
 
@@ -245,19 +241,19 @@ public final class Version230 {
 
   @Test public void bugInLastIfInMethod5() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n"
-        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
+        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages2.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
             .gives(
-                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n" + "            final int messages = 3;\n"
-        + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
+        + "            messages2.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
             .gives(
-                "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+                "public void f(){if(g)return;final int messages=3;messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
@@ -489,8 +485,7 @@ public final class Version230 {
   }
 
   @Test public void chainComparison() {
-    final InfixExpression e = i("a == true == b == c");
-    azzert.that(right(e) + "", is("c"));
+    azzert.that(right(i("a == true == b == c")) + "", is("c"));
     trimmingOf("a == true == b == c")//
         .gives("a == b == c");
   }
@@ -568,11 +563,6 @@ public final class Version230 {
   @Test public void comaprisonWithSpecificInParenthesis() {
     trimmingOf("(null==a)")//
         .gives("(a==null)");
-  }
-
-  @Test public void commonPrefixEntirelyIfBranches() {
-    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();")//
-        .gives("S.out.close(); ");
   }
 
   @Test public void commonPrefixIfBranchesInFor() {
@@ -791,10 +781,6 @@ public final class Version230 {
         .gives(" int a=0==3?4:0;");
   }
 
-  @Test public void declarationIfUsesLaterVariable1() {
-    trimmingOf("int a=0, b=0;if (b==3)   a=4; f();").stays();
-  }
-
   @Test public void declarationInitializeRightShift() {
     trimmingOf("int a = 3;a>>=2;")//
         .gives("int a = 3>> 2;");
@@ -944,8 +930,8 @@ public final class Version230 {
         .gives("try { f(); } catch (Exception e) { }");
   }
 
-  @Test public void dontELiminateSwitch() {
-    trimmingOf("switch (a) { default: }").stays();
+  @Test public void eliminateSwitch() {
+    trimmingOf("switch (a) { default: } int x=5;").gives("int x=5;");
   }
 
   @Test public void dontSimplifyCatchBlock() {
@@ -1119,8 +1105,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
-    trimmingOf("if (a) break; return;")//
-        .gives("if (!a) return; break;");
+    trimmingOf("if (a) break; return 0;")//
+        .gives("if (!a) return 0; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer04a() {
@@ -1129,7 +1115,7 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer05() {
-    trimmingOf("for(;;){if(a){x();return;}continue;} a=2;").stays();
+    trimmingOf("for(;;)if(a){x();return;} a=2;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer05a() {
@@ -1155,8 +1141,8 @@ public final class Version230 {
   }
 
   @Test public void ifSequencerNoElseSequencer10() {
-    trimmingOf("if (a) continue; return;")//
-        .gives("if (!a) return; continue;");
+    trimmingOf("if (a) continue; return 0;")//
+        .gives("if (!a) return 0; continue;");
   }
 
   @Test public void ifSequencerThenSequencer0() {
@@ -1311,11 +1297,11 @@ public final class Version230 {
         + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n" + "         handleAssumptionViolation(e);\n"
         + "       } catch (Throwable e) {\n" + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n"
         + "     }\n" + "   };\n" + "}")
-            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement statement = methodBlock(m);\n"
-                + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n"
-                + "         statement.evaluate();\n" + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException ¢) {\n"
-                + "         handleAssumptionViolation(¢);\n" + "       } catch (Throwable ¢) {\n"
-                + "         reportParameterizedError(¢, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
+            .gives("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement $ = methodBlock(m);\n" + "  return new Statement() {\n"
+                + "     public void evaluate() throws Throwable {\n" + "       try {\n" + "         $.evaluate();\n"
+                + "         handleDataPointSuccess();\n" + "       } catch (AssumptionViolatedException e) {\n"
+                + "         handleAssumptionViolation(e);\n" + "       } catch (Throwable e) {\n"
+                + "         reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));\n" + "       }\n" + "     }\n" + "   };\n" + "}");
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
@@ -1386,8 +1372,7 @@ public final class Version230 {
     final Expression e1 = left(e);
     final Expression e2 = right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
-    assert tokenWiseGreater;
+    assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
     assert s.canTip(e) : "e=" + e + " s=" + s;
@@ -2752,7 +2737,10 @@ public final class Version230 {
   @Test public void redundantButNecessaryBrackets3() {
     trimmingOf("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else {\n" + "    if (b3)\n" + "      print3('#');\n" + "  }\n" + "else {\n"
         + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
-        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}").stays();
+        + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}")
+            .gives("if (b1)\n" + "  if (b2)\n" + "    print1('!');\n" + "  else \n" + "    if (b3)\n" + " print3('#');\n" + "else {\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n"
+                + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "  print4('$');\n" + "}");
   }
 
   @Test public void removeSuper() {
@@ -2949,10 +2937,9 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement
-        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(
+        Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
+            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n"));
     assert f != null;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i <s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
@@ -3438,8 +3425,8 @@ public final class Version230 {
   }
 
   @Test public void ternarize14() {
-    trimmingOf("String res=m,foo=GY;if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
-        .gives("String res=m,foo=GY;if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
+    trimmingOf("String res=m,foo=GY; print(x); if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
+        .gives("String res=m,foo=GY; print(x); if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
   }
 
   @Test public void ternarize16() {
@@ -3490,7 +3477,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize38() {
-    trimmingOf("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").stays();
+    trimmingOf("int a, b=0; use(a,b); if (b==3){    a+=2+r();a-=6;} f();").stays();
   }
 
   @Test public void ternarize42() {
@@ -3518,7 +3505,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize52() {
-    trimmingOf("int a=0,b = 0,c,d = 0,e = 0;if (a <b) {c = d;c = e;} f();").stays();
+    trimmingOf("int a=0,b = 0,c,d = 0,e = 0; use(a,b); if (a <b) {c = d;c = e;} f();").stays();
   }
 
   @Test public void ternarize54() {
@@ -3564,11 +3551,12 @@ public final class Version230 {
   }
 
   @Test public void unsafeBlockSimlify() {
-    trimmingOf("public void testParseInteger() {\n" + "  String source = \"10\";\n" + "  {\n" + "    BigFraction c = properFormat.parse(source);\n"
-        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n"
-        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
-        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}").stays();
+    trimmingOf("public void testParseInteger() {\n" + "  String source = \"10\"; use(source);\n" + "  {\n"
+        + "    BigFraction c = properFormat.parse(source);\n" + "   assert c != null;\n"
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
+        + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
+        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
+        + "}").stays();
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

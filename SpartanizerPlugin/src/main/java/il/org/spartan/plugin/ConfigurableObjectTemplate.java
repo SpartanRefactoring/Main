@@ -7,7 +7,7 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public interface ConfigurableObjectTemplate {
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
     //@formatter:off
@@ -29,9 +29,9 @@ public interface ConfigurableObjectTemplate {
     // since class Settings is a Plain Old Java Object:
     /* public access */ public int getHowMany() {return howMany;}
 
-    /* makes methods */ public void setHowMany(final int n) {howMany = n;}
+    /* makes methods */ public void setHowMany(final int ¢) {howMany = ¢;}
     /* the means for */ public boolean isRobustMode() {return robustMode;}
-    /* configurable- */ public void setRobustMode(final boolean b) {robustMode = b;}
+    /* configurable- */ public void setRobustMode(final boolean ¢) {robustMode = ¢;}
     /* objects as in */ public Some getOther() {return other; }
     /* 'Action', see */ public void setOther(final Some other) {this.other = other;}
     /* below v V V v */ public Add getAs() {return as; /* etc., etc. */}
@@ -51,8 +51,8 @@ public interface ConfigurableObjectTemplate {
           listeners().pop("we dare do nothing in robust mode");
           return 0;
         }
-        for (int i = 0, $ = 0; i < howMany; ++i) {
-          listeners().tick("Iteration", Integer.valueOf(i), "of", Integer.valueOf(howMany));
+        for (int ¢ = 0, $ = 0; ¢ < howMany; ++¢) {
+          listeners().tick("Iteration", Integer.valueOf(¢), "of", Integer.valueOf(howMany));
           $ += fields.hashCode();
           $ *= in.hashCode();
           form.notify();

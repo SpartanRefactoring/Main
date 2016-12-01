@@ -10,18 +10,18 @@ import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
   @Override public boolean prerequisite(final N current) {
-    final Statement next = extract.nextStatement(current);
-    return next != null && go(ASTRewrite.create(current.getAST()), current, next, null, new ExclusionManager()) != null;
+    final Statement $ = extract.nextStatement(current);
+    return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;
   }
 
   @Override public Tip tip(final N n, final ExclusionManager exclude) {
-    final Statement nextStatement = extract.nextStatement(n);
-    assert nextStatement != null;
+    final Statement $ = extract.nextStatement(n);
+    assert $ != null;
     if (exclude != null)
-      exclude.exclude(nextStatement);
-    return new Tip(description(n), n, this.getClass(), nextStatement) {
+      exclude.exclude($);
+    return new Tip(description(n), n, this.getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        ReplaceToNextStatementExclude.this.go(r, n, nextStatement, g, exclude);
+        ReplaceToNextStatementExclude.this.go(r, n, $, g, exclude);
       }
     };
   }

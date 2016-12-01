@@ -144,13 +144,13 @@ public class fluentTrimmerApplication extends Trimmer.With {
     assert s2 != null;
     if (s1.equals(s2)) // Highly unlikely, but what the hack
       return null;
-    final String g1 = tide.clean(s1);
-    assert g1 != null;
+    final String $ = tide.clean(s1);
+    assert $ != null;
     final String g2a = guessedContext.off(s2);
     assert g2a != null;
     final String g2b = tide.clean(g2a);
     assert g2b != null;
-    return tide.eq(g1, g2b) || tide.eq(s1, g2b) || tide.eq(g1, g2a) ? g2b : null;
+    return tide.eq($, g2b) || tide.eq(s1, g2b) || tide.eq($, g2a) ? g2b : null;
   }
 
   String common(final String expected) {
@@ -158,8 +158,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   <N extends ASTNode> N findNode(final Class<N> clazz) {
-    final GuessedContext guessContext = GuessedContext.find(codeFragment);
-    assert guessContext != null;
+    assert GuessedContext.find(codeFragment) != null;
     final N $ = firstInstance(clazz);
     assert $ != null;
     return $;

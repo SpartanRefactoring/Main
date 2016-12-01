@@ -494,9 +494,9 @@ public enum az {
   }
 
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    duplicate.into(step.fragments(¢), fragments);
-    return chop(fragments);
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    duplicate.into(step.fragments(¢), $);
+    return chop($);
   }
 
   /** @param ¢ JD
