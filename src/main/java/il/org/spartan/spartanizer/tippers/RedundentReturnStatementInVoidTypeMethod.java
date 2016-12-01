@@ -35,10 +35,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 28-11-2016 */
 public class RedundentReturnStatementInVoidTypeMethod extends ReplaceCurrentNode<MethodDeclaration> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final MethodDeclaration x) {
-    List<Statement> statements = step.statements(step.body(x));
-    if (!"void".equals((x.getReturnType2() + "")))
+    final List<Statement> statements = step.statements(step.body(x));
+    if (!"void".equals(x.getReturnType2() + ""))
       return null;
-    ReturnStatement r = az.returnStatement(statements.get(statements.size() - 1));
+    final ReturnStatement r = az.returnStatement(statements.get(statements.size() - 1));
     if (r == null || r.getExpression() != null)
       return null;
     final MethodDeclaration $ = duplicate.of(x);
