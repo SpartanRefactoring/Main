@@ -22,13 +22,19 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 25-11-2016 
  */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> implements TipperCategory.Collapse {
- 
+  
   @Override protected ASTRewrite go(ASTRewrite r, ForStatement s, Statement nextStatement, TextEditGroup g) {
-    if (s == null || r == null || nextStatement == null || g == null)
+    System.out.println("HEEYYYY");
+    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement))
       return null;
+    System.out.println("HEEYYYY2");
     ForStatement f = duplicate.of(s);
-    f.setExpression((Expression)wizard.ast("$.append(line).append(System.lineSeparator())"));
+    //f.setBody(duplicate.of(s));
+    f.setBody(duplicate.of(nextStatement));
+    f.setExpression(null);
     r.replace(s, f, g);
+    r.replace(nextStatement, null, g);
+    System.out.println("===========WYF");
     return r;
   }
 
