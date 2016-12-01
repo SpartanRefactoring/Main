@@ -6,8 +6,8 @@ import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 17-11-2016 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue499 {
   @Test public void test0() {
     trimmingOf("public Spartanizer defaultRunAction(final GUI$Applicator a) {" + "assert a != null;"

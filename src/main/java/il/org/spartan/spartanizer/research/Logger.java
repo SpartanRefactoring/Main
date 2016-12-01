@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -43,21 +44,29 @@ public class Logger {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, m.numNPStatements / m.numStatements)) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements))) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, m.numNPExpressions / m.numExpressions)) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safeDiv(m.numNPExpressions, m.numExpressions))) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : min(1, m.numNPStatements / m.numStatements);
-      sumEratio += m.numExpressions == 0 ? 1 : min(1, m.numNPExpressions / m.numExpressions);
+      sumSratio += m.numStatements == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements));
+      sumEratio += m.numExpressions == 0 ? 1 : min(1, safeDiv(m.numNPExpressions, m.numExpressions));
     }
     System.out.println("Total methods: " + numMethods);
-    System.out.println("Average statement ratio: " + sumSratio / numMethods);
-    System.out.println("Average Expression ratio: " + sumEratio / numMethods);
+    System.out.println("Average statement ratio: " + safeDiv(sumSratio, numMethods));
+    System.out.println("Average Expression ratio: " + safeDiv(sumEratio, numMethods));
     report.close();
+  }
+
+  /** Divide but if b == 0 return 1.
+   * @param sumSratio
+   * @param d
+   * @return */
+  private static double safeDiv(final double sumSratio, final double d) {
+    return d == 0 ? 1 : sumSratio / d;
   }
 
   private static void summarizeNPStatistics(final String outputDir) {
@@ -177,15 +186,15 @@ public class Logger {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
-      numStatements = metrics.countStatements(m);
-      numExpressions = metrics.countExpressions(m);
+      numStatements = measure.statements(m);
+      numExpressions = measure.expressions(m);
     }
 
     /** @param n matched node
      * @param np matching nanopattern */
     public void markNP(final ASTNode n, final String np) {
-      numNPStatements += metrics.countStatements(n);
-      numNPExpressions += metrics.countExpressions(n);
+      numNPStatements += measure.statements(n);
+      numNPExpressions += measure.expressions(n);
       nps.add(np);
       logNodeInfo(n);
     }
@@ -223,8 +232,8 @@ public class Logger {
     /** @param ¢ matched node */
     public void markNP(final ASTNode ¢) {
       ++occurences;
-      numNPStatements += metrics.countStatements(¢);
-      numNPExpressions += metrics.countExpressions(¢);
+      numNPStatements += measure.statements(¢);
+      numNPExpressions += measure.expressions(¢);
     }
   }
 

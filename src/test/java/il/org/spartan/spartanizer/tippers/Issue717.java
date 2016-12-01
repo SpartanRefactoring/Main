@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** see Issue #717 for more details
@@ -48,7 +49,7 @@ public class Issue717 {
     if (len <= 0)
       len = 1;
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
-    for (int ¢ = 1; ¢ < len; ++¢)
+    for (@SuppressWarnings("unused") final Integer ¢ : range.from(1).to(len))
       $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
     return $ + "";
   }
@@ -60,11 +61,8 @@ public class Issue717 {
     final String methodName = generateRandomString(MAX_NAME_SIZE);
     final String firstStat = "{int x;";
     final String nextStat = "x=4;";
-    int statAmount = 0;
-    final Random randomGenerator = new Random();
-    statAmount = randomGenerator.nextInt(MAX_STAT_AMOUNT);
-    if (statAmount < 4)
-      statAmount = 4;
+    final Random random = new Random();
+    final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 4 ? 4 : random.nextInt(MAX_STAT_AMOUNT);
     String randomBigBlock = "public void " + methodName + "()" + firstStat;
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;

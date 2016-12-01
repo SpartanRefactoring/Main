@@ -90,7 +90,7 @@ public enum makeAST {
 
   final int kind;
 
-  private makeAST(final int kind) {
+  makeAST(final int kind) {
     this.kind = kind;
   }
 

@@ -37,11 +37,36 @@ public class LeonidasTest {
   }
 
   @Test public void testMatches9() {
-    leonidasSays.that("if(true) $B();").matches("if(true) foo();");
+    leonidasSays.that("if(true) $B").matches("if(true) foo();");
   }
 
   @Test public void testMatches10() {
     leonidasSays.that("for($N1 $N2 : $X) $N4.$N3($N2);").matches("for (Expression ¢ : hop.operands(flatten.of(inner))) make.notOf(¢);");
+  }
+
+  @Test public void testMatches11() {
+    leonidasSays.that("for($N1 $N2 : $X1) $B").matches("for (A b : C) print();");
+  }
+
+  @Test public void testMatches12() {
+    leonidasSays.that("for($N1 $N2 : $X1) if($X2) $B").matches("for (A b : C) if(b!=null) b.print();");
+  }
+
+  Object $X1;
+  Object $X2;
+
+  Object bb() {
+    return $X1 != null ? $X1 : ($X1 = $X2);
+  }
+
+  @Test public void testMutation9() {
+    leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> {$B});", "")
+        .turns("for (A b : C) if(b!=null) b.print();").into("C.stream().filter(b -> b != null).forEach(b -> {b.print();} );");
+  }
+
+  @Test public void testTips19() {
+    leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).foreach($N2 -> $B)", "")
+        .tips("for (A b : C) if(b!=null) b.print();");
   }
 
   @Test public void testMutation1() {
@@ -65,28 +90,26 @@ public class LeonidasTest {
         .into("lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers())");
   }
 
-  // TODO: Marco
-  @Ignore @Test public void testMutation5() {
+  @Test public void testMutation5() {
     leonidasSays.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation")
         .turns("return defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance;")
         .into("return lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers());");
   }
 
-  // TODO: Marco might be bug
-  @Ignore @Test public void testMutation6() {
-    leonidasSays.tipper("$X1 ? $X2 : $X1", "$X1()", "").turns("return y ? z : y;").into("return x();");
+  @Test public void testMutation6() {
+    leonidasSays.tipper("$X1 ? $X2 : $X1", "$X1()", "").turns("return y ? z : y;").into("return y();");
   }
 
   @Test public void testMutation7() {
-    leonidasSays.tipper("if($X1 == null) $X1 = $X2; return $X1;", "return $X1 = $X1 == null ? $X2 : $X1;", "")
+    leonidasSays.statementsTipper("if($X1 == null) $X1 = $X2; return $X1;", "return $X1 = $X1 == null ? $X2 : $X1;", "")
         .turns("if (instance == null) instance = allTippers(); return instance;")
         .into("return instance = instance == null ? allTippers() : instance;");
   }
 
   @Test public void testMutation8() {
-    leonidasSays.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);", "")
+    leonidasSays.statementsTipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);", "")
         .turns("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\");\n $ = $.replaceAll(\";$\", \"\");")
-        .into("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\").replaceAll(\";$\", \"\");");
+        .into("$= $.replaceFirst(\"^[\\\\[]+L\", \"\").replaceAll(\";$\", \"\");");
   }
 
   @Test public void testNotTips1() {
@@ -196,5 +219,9 @@ public class LeonidasTest {
 
   @Test public void testTips17() {
     leonidasSays.tipper("$N($M)", "", "").tips("x(a.b.c.d.e())");
+  }
+
+  @Test public void testTips18() {
+    leonidasSays.tipper("return $N($A);", "", "").tips("return bar();");
   }
 }

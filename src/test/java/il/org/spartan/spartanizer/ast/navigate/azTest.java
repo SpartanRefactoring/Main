@@ -11,8 +11,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-@SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class azTest {
   @Test public void asComparisonPrefixlExpression() {
     final PrefixExpression p = mock(PrefixExpression.class);

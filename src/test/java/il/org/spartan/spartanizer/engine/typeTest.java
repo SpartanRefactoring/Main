@@ -145,7 +145,7 @@ public final class typeTest {
       azzert.that(Axiom.type(b1 ? 3 : s), is(SHORT));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional02() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional02() {
       azzert.that(Axiom.type(b1 ? 3 : str), is(NOTHING));
     }
 
@@ -177,7 +177,7 @@ public final class typeTest {
       azzert.that(Axiom.type(b), is(BYTE));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional11() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional11() {
       azzert.that(Axiom.type(b1 ? b2 : f), is(NOTHING));
     }
 
@@ -189,11 +189,11 @@ public final class typeTest {
       azzert.that(Axiom.type(b1 ? str : ""), is(STRING));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional14() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional14() {
       azzert.that(Axiom.type(b1 ? str : b2), is(NOTHING));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional15() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional15() {
       azzert.that(Axiom.type(b1 ? c : b2), is(NOTHING));
     }
 
@@ -217,11 +217,11 @@ public final class typeTest {
       azzert.that(Axiom.type(!b1 ? s : 2147483647), is(INT));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional21() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional21() {
       azzert.that(Axiom.type(b1 ? i : null), is(NOTHING));
     }
 
-    @SuppressWarnings("boxing") @Test public void axiomConditional22() {
+    @Test @SuppressWarnings("boxing") public void axiomConditional22() {
       azzert.that(Axiom.type(b1 ? (Integer) i : (Integer) null), is(NOTHING));
     }
 
@@ -750,7 +750,7 @@ public final class typeTest {
       azzert.that(of(e.getRightOperand()), is(FLOAT));
     }
 
-    @SuppressWarnings("unchecked") @Test public void context20() {
+    @Test @SuppressWarnings("unchecked") public void context20() {
       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
       azzert.that(of((Expression) lisp.first(fs.initializers())), is(INT));

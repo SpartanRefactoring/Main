@@ -17,7 +17,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean canTip(final MethodDeclaration ¢) {
-    if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor())
+    if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     if (ss.size() != 1 || !iz.expressionStatement(ss.get(0)))
@@ -31,9 +31,9 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
-    Logger.logNP(d, getClass().getSimpleName());
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        Logger.logNP(d, getClass().getSimpleName());
         if (!iz.voidType(step.returnType(d)))
           return;
         final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));

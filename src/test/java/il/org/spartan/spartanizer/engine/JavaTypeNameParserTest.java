@@ -8,8 +8,8 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings({ "javadoc", "static-method" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc", "static-method" })
 public final class JavaTypeNameParserTest {
   @Test public void Alex_and_Dan_test() {
     azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("d"));

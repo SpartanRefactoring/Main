@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -24,17 +24,13 @@ import il.org.spartan.spartanizer.tipping.*;
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> implements TipperCategory.Collapse {
   
   @Override protected ASTRewrite go(ASTRewrite r, ForStatement s, Statement nextStatement, TextEditGroup g) {
-    System.out.println("HEEYYYY");
-    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement))
+    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement)) 
       return null;
-    System.out.println("HEEYYYY2");
     ForStatement f = duplicate.of(s);
-    //f.setBody(duplicate.of(s));
     f.setBody(duplicate.of(nextStatement));
     f.setExpression(null);
     r.replace(s, f, g);
     r.replace(nextStatement, null, g);
-    System.out.println("===========WYF");
     return r;
   }
 

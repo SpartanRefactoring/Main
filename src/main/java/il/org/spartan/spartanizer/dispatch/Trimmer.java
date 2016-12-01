@@ -75,9 +75,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   public String fixed(final String from) {
     for (final Document $ = new Document(from);;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.*;
@@ -18,8 +19,7 @@ public class ExaminerTest {
   }
 
   @Test public void basic() {
-    assert spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from("public class A{boolean examiner(){return field == 7;} }") + "")
-        .contains("[[Examiner]]");
+    assert spartanizer.fixedPoint(wizard.ast("public class A{boolean examiner(){return field == 7;} }") + "").contains("[[Examiner]]");
   }
 
   @Test public void comlicated() {
