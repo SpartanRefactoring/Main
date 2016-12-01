@@ -42,7 +42,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   @Override public boolean prerequisite(final ForStatement ¢) {
     final Statement s = lastStatement(¢);
     if (s instanceof ContinueStatement) {
-      SimpleName l = ((ContinueStatement) s).getLabel();
+      final SimpleName l = ((ContinueStatement) s).getLabel();
       if (l == null
           || ¢.getParent() instanceof LabeledStatement && l.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
         return true;
