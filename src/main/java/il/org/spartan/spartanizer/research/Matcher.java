@@ -408,4 +408,17 @@ public class Matcher {
     @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
     return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
+
+  /** @param n
+   * @param s
+   * @return */
+  public ASTNode getMatching(ASTNode n, String s) {
+    return collectEnviromentNodes(n, new HashMap<>()).get(reformat(s));
+  }
+  // /** @param s
+  // * @return */
+  // private static String deformat(String ¢) {
+  // return ¢.replaceAll("\\{(\\$B\\d*)\\(\\);}",
+  // "$1").replaceAll("\\{(\\$X\\d*)\\(\\);}", "$1");
+  // }
 }
