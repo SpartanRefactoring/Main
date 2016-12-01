@@ -44,7 +44,10 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f))
+    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
+        || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
+            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()).toString()).equals(n.toString()) && !iz.simpleName(initializer)
+            && !iz.literal(initializer))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
