@@ -62,17 +62,20 @@ abstract class AbstractRenamePolicy {
 
   final MethodDeclaration inner;
   final List<SimpleName> localVariables;
+  final List<SingleVariableDeclaration> parameters;
   final List<ReturnStatement> returnStatements;
 
   public AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
+    parameters = step.parameters(inner);
     returnStatements = prune(explorer.returnStatements());
   }
 
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
+    
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
         : innerSelectReturnVariable();
   }
@@ -127,7 +130,13 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> ¢ = localVariables.iterator(); ¢.hasNext();)
       if (unused(¢.next()))
         ¢.remove();
-    return first(localVariables);
+    if(!localVariables.isEmpty())
+      return first(localVariables);
+    
+    for(final SingleVariableDeclaration ¢ : parameters)
+      if (!unused(¢.getName()))
+        return ¢.getName();
+    return null;
   }
 
   private boolean unused(final SimpleName n) {
