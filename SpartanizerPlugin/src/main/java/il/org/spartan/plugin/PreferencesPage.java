@@ -120,26 +120,17 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       getUpButton().setEnabled(false);
       getUpButton().setVisible(false);
       getRemoveButton().addSelectionListener(new SelectionAdapter() {
-        /** [[SuppressWarningsSpartan]] */
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(final SelectionEvent x) {
-          if (x == null)
+        @Override @SuppressWarnings("synthetic-access") public void widgetSelected(final SelectionEvent x) {
+          if (x == null || !getRemoveButton().equals(x.widget) || selection.index < 0 || !alive.contains(selection.text))
             return;
-          if (getRemoveButton().equals(x.widget)) {
-            final int i = selection.index;
-            if (i >= 0) {
-              final String r = selection.text;
-              if (alive.contains(r)) {
-                alive.remove(r);
-                dead.add(r);
-                getAddButton().setEnabled(true);
-                if (getList().getItemCount() > 0)
-                  selection.text = getList().getItem(selection.index);
-                else {
-                  selection.index = -1;
-                  selection.text = null;
-                }
-              }
-            }
+          alive.remove(selection.text);
+          dead.add(selection.text);
+          getAddButton().setEnabled(true);
+          if (getList().getItemCount() > 0)
+            selection.text = getList().getItem(selection.index);
+          else {
+            selection.index = -1;
+            selection.text = null;
           }
         }
       });

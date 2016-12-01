@@ -26,10 +26,10 @@ public interface spartan {
     return null;
   }
 
-  static String shorten(final List<Type> ts) {
-    for (final Type ¢ : ts)
-      if (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null)
-        return shorten(¢);
+  static String shorten(final List<Type> ¢) {
+    for (final Type $ : ¢)
+      if (!iz.wildcardType($) || az.wildcardType($).getBound() != null)
+        return shorten($);
     return null;
   }
 
@@ -43,12 +43,11 @@ public interface spartan {
     return shorten(¢.getName());
   }
 
-  static String shorten(final ParameterizedType t) {
-    final List<Type> ts = typeArguments(t);
-    final String $ = shorten(ts);
+  static String shorten(final ParameterizedType ¢) {
+    final String $ = shorten(typeArguments(¢));
     if ($ == null)
-      return shorten(t.getType());
-    switch (t.getType() + "") {
+      return shorten(¢.getType());
+    switch (¢.getType() + "") {
       case "Collection":
       case "Iterable":
       case "List":

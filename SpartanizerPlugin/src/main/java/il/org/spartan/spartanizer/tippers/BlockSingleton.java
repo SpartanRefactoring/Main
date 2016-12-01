@@ -14,7 +14,9 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert
  *
  * <pre>
- * if (a) g();}
+ * if (a) {
+ *   g();
+ * }
  * </pre>
  *
  * into

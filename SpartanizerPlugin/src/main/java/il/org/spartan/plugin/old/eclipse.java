@@ -214,8 +214,8 @@ public enum eclipse {
   }
 
   static ITextSelection selectedText() {
-    final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-    final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
+    final ISelection s = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite().getSelectionProvider()
+        .getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
   }
 

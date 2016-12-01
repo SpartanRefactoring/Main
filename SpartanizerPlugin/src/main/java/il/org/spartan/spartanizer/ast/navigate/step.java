@@ -269,6 +269,13 @@ public enum step {
         .collect(Collectors.toList());
   }
 
+  /** Expose initializer contained in a {@link VariableDeclaration}
+   * @param ¢ JD
+   * @return initializer */
+  public static Expression initializer(final VariableDeclaration ¢) {
+    return ¢.getInitializer();
+  }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
@@ -523,7 +530,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName name(final VariableDeclarationFragment ¢) {
+  public static SimpleName name(final VariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -587,13 +594,13 @@ public enum step {
   }
 
   private static boolean balanced(final String s) {
-    int openers = 0;
+    int $ = 0;
     for (int ¢ = 0; ¢ < s.length(); ++¢)
       if (s.charAt(¢) == '<')
-        ++openers;
+        ++$;
       else if (s.charAt(¢) == '>')
-        --openers;
-    return openers == 0;
+        --$;
+    return $ == 0;
   }
 
   /** @param ¢

@@ -147,20 +147,20 @@ public enum extract {
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
    * perhaps along with any number of empty sideEffects, then its Essence is
    * this single non-empty statement.
-   * @param s JD
+   * @param ¢ JD
    * @return Essence of the parameter, or <code><b>null</b></code>, if there are
    *         no non-empty sideEffects within the parameter. If, however there
    *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
-  public static Statement core(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
+  public static Statement core(final Statement ¢) {
+    final List<Statement> $ = extract.statements(¢);
+    switch ($.size()) {
       case 0:
         return null;
       case 1:
-        return first(ss);
+        return first($);
       default:
-        return s;
+        return ¢;
     }
   }
 
@@ -333,7 +333,7 @@ public enum extract {
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
-  
+
   /** Find the {@link PrefixExpression} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
@@ -385,10 +385,10 @@ public enum extract {
     return core(onlyOne($));
   }
 
-  public static SimpleName onlyName(final VariableDeclarationExpression x) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(x))
-      if (!iz.identifier("$", ¢.getName()))
-        return ¢.getName();
+  public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
+    for (final VariableDeclarationFragment $ : step.fragments(¢))
+      if (!iz.identifier("$", $.getName()))
+        return $.getName();
     return null;
   }
 

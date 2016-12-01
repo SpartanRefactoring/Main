@@ -346,7 +346,7 @@ public interface idiomatic {
       assertEquals("33", after.get(2));
     }
 
-    @SuppressWarnings("boxing") @Test public void useMapper2() {
+    @Test @SuppressWarnings("boxing") public void useMapper2() {
       final List<Integer> before = new ArrayList<>();
       before.add(1);
       before.add(2);
@@ -357,7 +357,7 @@ public interface idiomatic {
       assertEquals("3", after.get(2));
     }
 
-    @SuppressWarnings("boxing") @Test public void useFilter() {
+    @Test @SuppressWarnings("boxing") public void useFilter() {
       final List<Integer> before = new ArrayList<>();
       before.add(1);
       before.add(2);
@@ -391,7 +391,7 @@ public interface idiomatic {
       assertEquals("1", on(before).min(String::compareTo));
     }
 
-    @SuppressWarnings("boxing") @Test public void whenNullsEval() {
+    @Test @SuppressWarnings("boxing") public void whenNullsEval() {
       final Object o = new Object();
       when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
     }

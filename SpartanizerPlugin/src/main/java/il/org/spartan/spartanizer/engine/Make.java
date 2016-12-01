@@ -42,7 +42,7 @@ public enum Make {
 
   private final int kind;
 
-  private Make(final int kind) {
+  Make(final int kind) {
     this.kind = kind;
   }
 

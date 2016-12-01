@@ -9,9 +9,9 @@ import org.junit.runners.*;
  * tests fail is because {@link type.isString()} cannot infer types of variables
  * as strings unless they are string literals...
  * @since 2016 */
-@SuppressWarnings("static-method")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue437 {
   @Test public void testMutation1() {
     trimmingOf("String str; if(str.indexOf(\"stringy\")>= 0) return true;").gives("String str; if(str.contains(\"stringy\")) return true;").stays();

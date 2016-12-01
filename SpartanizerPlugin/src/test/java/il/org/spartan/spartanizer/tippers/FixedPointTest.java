@@ -72,8 +72,7 @@ public final class FixedPointTest {
   }
 
   @Test public void hasNullsTest() {
-    final Object a = null;
-    assert hasNull(a);
+    assert hasNull((Object) null);
     assert !hasNull(new Object());
     assert hasNull(new Object(), null);
     assert !hasNull(new Object(), new Object());
@@ -243,9 +242,10 @@ public final class FixedPointTest {
 
   @Test(timeout = 2000) public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
-            + "   else\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       S.out.l('f',¢);\n" + "     }",
-        "if(m.equals(153))" + "for(int ¢=0;¢<17;++¢)sum += ¢;\n" + "else " + "  for(int ¢=0;¢<17;++¢) " + "S.out.l('f',¢);");
+        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       sum += ¢;\n"
+            + "     }\n" + "   else\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       S.out.l('f',¢);\n" + "     }",
+        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;\n" + "else " + "  for(final Integer ¢ : range.to(17)) "
+            + "S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {

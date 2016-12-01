@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** @author Yossi Gil
+ * @since 2016 */
 public enum sideEffects {
   MISSING_CASE;
   /** Determine whether the evaluation of an expression is guaranteed to be free
@@ -97,9 +99,9 @@ public enum sideEffects {
     }
   }
 
-  private static boolean free(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
+  private static boolean free(final ArrayCreation ¢) {
+    final ArrayInitializer $ = ¢.getInitializer();
+    return free(¢.dimensions()) && ($ == null || free(step.expressions($)));
   }
 
   private static boolean free(final ConditionalExpression ¢) {

@@ -24,8 +24,7 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
       r.remove(nextStatement, g);
       return r;
     }
-    final ListRewrite $ = r.getListRewrite(parent, Block.STATEMENTS_PROPERTY);
-    $.remove(nextStatement, g);
+    r.getListRewrite(parent, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
     return r;
   }
 }

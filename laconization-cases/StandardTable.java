@@ -765,11 +765,10 @@ import javax.annotation.Nullable;
         return false;
       }
 
-      @Override public boolean remove(Object o) {
-        if (!contains(o))
+      @Override public boolean remove(Object ¢) {
+        if (!contains(¢))
           return false;
-        Entry<?, ?> entry = (Entry<?, ?>) o;
-        removeColumn(entry.getKey());
+        removeColumn(((Entry<?, ?>) ¢).getKey());
         return true;
       }
 
