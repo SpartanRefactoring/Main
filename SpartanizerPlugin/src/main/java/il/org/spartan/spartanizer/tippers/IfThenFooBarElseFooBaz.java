@@ -67,10 +67,10 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    int thenSize = then.size();
-    int elzeSize = elze.size();
+    final int thenSize = then.size();
+    final int elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() || (commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()))
+    return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression())
         ? null : new Tip(description(s), s, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final IfStatement newIf = replacement();

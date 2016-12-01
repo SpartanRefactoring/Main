@@ -25,12 +25,12 @@ public class TipperFactory {
   }
 
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description) {
-    Matcher m = new Matcher(pattern, replacement);
+    final Matcher m = new Matcher(pattern, replacement);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, this.getClass(), m.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            ASTNode ast = m.blockReplacement(n);
+            final ASTNode ast = m.blockReplacement(n);
             r.replace(n, ast, g);
           }
         };
