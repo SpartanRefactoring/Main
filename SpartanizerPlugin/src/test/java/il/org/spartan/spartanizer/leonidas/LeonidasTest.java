@@ -60,8 +60,13 @@ public class LeonidasTest {
   }
 
   @Test public void testMutation9() {
-    leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> {$B});", "")
+    leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> $B);", "")
         .turns("for (A b : C) if(b!=null) b.print();").into("C.stream().filter(b -> b != null).forEach(b -> {b.print();} );");
+  }
+
+  @Test public void testMutation10() {
+    leonidasSays.tipper("for($N1 $N2 : $X1) $B", "$X1.stream().forEach($N2 -> $B);", "").turns("for (A b : C) b.print();")
+        .into("C.stream().forEach(b -> {b.print();} );");
   }
 
   @Test public void testTips19() {

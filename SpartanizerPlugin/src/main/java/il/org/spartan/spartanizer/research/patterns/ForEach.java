@@ -17,7 +17,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) $B();", "$X1.stream().filter($N2 -> $X2).foreach($N2 -> $B())",
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> $B);",
           "ForEachThat pattern: conevrt to fluent API"));
       add(TipperFactory.patternTipper("for($N1 $a : $X) $N2.$N3($A);", "on($X).apply(¢ -> ¢.$N3($A));", ""));
       add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N3($N2);", "on($X).apply(¢ -> $N3(¢));", ""));
