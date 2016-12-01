@@ -113,6 +113,7 @@ public class Toolbox {
         .add(EnhancedForStatement.class, //
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
+            new ForEach(), //
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //

@@ -99,7 +99,7 @@ public class Issue455 {
   }
 
   @Test public void singleEnhancedForStatementShouldntTip() {
-    trimmingOf("x -> { " + "for (String y : l)" + "if (y.equals(x))" + "System.out.println(y);" + "}") //
+    trimmingOf("x -> { " + "for (String y : l)" + "if (y.equals(x))" + "return;" + "}") //
         .stays();
   }
 

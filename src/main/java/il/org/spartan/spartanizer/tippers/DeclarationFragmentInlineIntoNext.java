@@ -42,7 +42,7 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
       return null;
     SimpleName n = f.getName();
     if (iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-        && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()).toString()).equals(n.toString()) && !iz.simpleName(f.getInitializer())
+        && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals((n + "")) && !iz.simpleName(f.getInitializer())
         && !iz.literal(f.getInitializer()))
       return null;
     final SimpleName id = peelIdentifier(nextStatement, identifier(name(f)));

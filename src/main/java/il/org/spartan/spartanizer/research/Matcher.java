@@ -41,8 +41,8 @@ public class Matcher {
   /** @param p
    * @param n */
   public Matcher(final String p, final String r) {
-    pattern = extractStatementIfOne(wizard.ast(reformat$Bs(p)));
-    replacement = reformat$Bs(r);
+    pattern = extractStatementIfOne(wizard.ast(reformat(p)));
+    replacement = reformat(r);
   }
 
   public boolean blockMatches(final ASTNode ¢) {
@@ -125,6 +125,8 @@ public class Matcher {
   @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     if (p == null || n == null)
       return false;
+    if (is$X(p))
+      return iz.expression(n) && consistent(ids, p + "", n + "");
     if (iz.name(p))
       return sameName(p, n, ids);
     if (iz.literal(p))
@@ -153,6 +155,16 @@ public class Matcher {
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢), ids))
         return false;
     return true;
+  }
+
+  /** @param p
+   * @return */
+  private static boolean is$X(ASTNode p) {
+    return iz.methodInvocation(p) && matches$X(p + "");
+  }
+
+  private static boolean matches$X(String p) {
+    return p.matches("\\$X\\d*\\(\\)");
   }
 
   /** @param n
@@ -218,10 +230,8 @@ public class Matcher {
   }
 
   private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
-    final String id = ((Name) p).getFullyQualifiedName();
+    final String id = p + "";
     if (id.startsWith("$")) {
-      if (id.startsWith("$X"))
-        return iz.expression(n) && consistent(ids, id, n + "");
       if (id.startsWith("$M"))
         return iz.methodInvocation(n) && consistent(ids, id, n + "");
       if (id.startsWith("$N"))
@@ -270,11 +280,9 @@ public class Matcher {
 
   @SuppressWarnings("unchecked") private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
       final Map<String, String> enviroment) {
-    if (iz.name(p)) {
-      final String id = az.name(p).getFullyQualifiedName();
-      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
-        enviroment.put(id, n + "");
-    } else if (isBlockVariable(p))
+    if (startsWith$notBlock(p))
+      enviroment.put((p + ""), n + "");
+    else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p) + "();", n + "");
     else {
       final List<? extends ASTNode> nChildren = Recurser.children(n);
@@ -291,17 +299,19 @@ public class Matcher {
     return enviroment;
   }
 
+  private static boolean startsWith$notBlock(final ASTNode p) {
+    return is$X(p) || iz.name(p) && ((p + "").startsWith("$M") || (p + "").startsWith("$N") || (p + "").startsWith("$L"));
+  }
+
   public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
     return collectEnviromentNodes(pattern, n, enviroment);
   }
 
   @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
-    if (iz.name(p)) {
-      final String id = az.name(p).getFullyQualifiedName();
-      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N") || id.startsWith("$L"))
-        enviroment.put(id, n);
-    } else if (isBlockVariable(p))
+    if (startsWith$notBlock(p))
+      enviroment.put((p + ""), n);
+    else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p) + "();", n);
     else {
       final List<? extends ASTNode> nChildren = Recurser.children(n);
@@ -329,8 +339,8 @@ public class Matcher {
     return $.substring(1, $.length() - 1);
   }
 
-  static String reformat$Bs(final String ¢) {
-    return ¢.replaceAll("\\$B\\d*", "{$0\\(\\);}");
+  static String reformat(final String ¢) {
+    return ¢.replaceAll("\\$B\\d*", "{$0\\(\\);}").replaceAll("\\$X\\d*", "$0\\(\\)");
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
@@ -342,7 +352,7 @@ public class Matcher {
     final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
     for (final String ¢ : enviroment.keySet())
-      if (¢.startsWith("$B"))
+      if (needsSpecialReplacement(¢))
         $.set($.get().replace(¢, enviroment.get(¢) + ""));
     wizard.ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -371,7 +381,7 @@ public class Matcher {
     final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     for (final String ¢ : enviroment.keySet())
-      if (¢.startsWith("$B"))
+      if (needsSpecialReplacement(¢))
         $.set($.get().replace(¢, enviroment.get(¢) + ""));
     wizard.ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -381,6 +391,10 @@ public class Matcher {
       }
     });
     return wizard.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
+  }
+
+  private static boolean needsSpecialReplacement(final String ¢) {
+    return ¢.startsWith("$B") || matches$X(¢);
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {

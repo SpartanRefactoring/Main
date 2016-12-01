@@ -52,13 +52,6 @@ public class LeonidasTest {
     leonidasSays.that("for($N1 $N2 : $X1) if($X2) $B").matches("for (A b : C) if(b!=null) b.print();");
   }
 
-  Object $X1;
-  Object $X2;
-
-  Object bb() {
-    return $X1 != null ? $X1 : ($X1 = $X2);
-  }
-
   @Test public void testMutation9() {
     leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $B", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> $B);", "")
         .turns("for (A b : C) if(b!=null) b.print();").into("C.stream().filter(b -> b != null).forEach(b -> {b.print();} );");
@@ -67,6 +60,11 @@ public class LeonidasTest {
   @Test public void testMutation10() {
     leonidasSays.tipper("for($N1 $N2 : $X1) $B", "$X1.stream().forEach($N2 -> $B);", "").turns("for (A b : C) b.print();")
         .into("C.stream().forEach(b -> {b.print();} );");
+  }
+
+  @Test public void testMutation11() {
+    leonidasSays.tipper("for($N1 $N2 : $X1) if($X2) $N3.$N4($A);", "$X1.stream().filter($N2 -> $X2).forEach($N2 -> $N3.$N4($A));", "")
+        .turns("for (A b : C) if(b!=null) b.print();").into("C.stream().filter(b -> b != null).forEach(b -> b.print() );");
   }
 
   @Test public void testTips19() {
@@ -102,7 +100,7 @@ public class LeonidasTest {
   }
 
   @Test public void testMutation6() {
-    leonidasSays.tipper("$X1 ? $X2 : $X1", "$X1()", "").turns("return y ? z : y;").into("return y();");
+    leonidasSays.tipper("$X1 ? $X2 : $X1", "$X1", "").turns("return y ? z : y;").into("return y;");
   }
 
   @Test public void testMutation7() {
@@ -228,5 +226,13 @@ public class LeonidasTest {
 
   @Test public void testTips18() {
     leonidasSays.tipper("return $N($A);", "", "").tips("return bar();");
+  }
+
+  @Test public void testTips20() {
+    leonidasSays.tipper("$X;", "", "").tips("bar();");
+  }
+
+  @Test public void testTips21() {
+    leonidasSays.tipper("$X1.indexOf($X2) >= 0", "$X1.contains($X2)", "").tips("s1.indexOf(s2) >= 0");
   }
 }
