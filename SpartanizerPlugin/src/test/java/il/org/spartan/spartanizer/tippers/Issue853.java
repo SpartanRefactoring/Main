@@ -9,8 +9,8 @@ import org.junit.*;
  * @since 28-11-2016 */
 @SuppressWarnings("static-method")
 public class Issue853 {
-  @Ignore
-  @Test public void test0() {
-    trimmingOf("for(int ¢ = 0; ¢ < 10; ++¢){}").withTipper(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(0).to($10)){}");
+  @Ignore @Test public void test0() {
+    trimmingOf("for(int ¢ = 0; ¢ < 10; ++¢){}").withTipper(ForStatement.class, new ReplaceForWithRange())
+        .gives("for(Integer ¢ : range.from(0).to($10)){}");
   }
 }

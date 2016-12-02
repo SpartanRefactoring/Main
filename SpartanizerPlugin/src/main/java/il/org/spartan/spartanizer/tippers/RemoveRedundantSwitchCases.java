@@ -45,7 +45,6 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-        
         int ind = getDefaultIndex(l);
         if (ind >= 0) {
           int last = ind;
@@ -62,25 +61,21 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
             l.remove(¢);
           }
         }
-        
-        for(int ¢ = l.size()-1; ¢>=0; --¢) {
+        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
           if (!isListContains(l, ¢, "case ") && !isListContains(l, ¢, "default"))
             break;
           l.remove(¢);
         }
-        
-        for(int ¢=l.size()-2; ¢>=0; --¢)
-          if((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default") || isListContains(l, ¢, "break")) && isListContains(l, ¢+1, "break"))
+        for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
+          if ((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default") || isListContains(l, ¢, "break"))
+              && isListContains(l, ¢ + 1, "break"))
             l.remove(¢);
-        
-        if(l.size()==1)
+        if (l.size() == 1)
           l.remove(0);
-        
-        if(l.size() == 2 && (isListContains(l, 0, "case ") || isListContains(l, 0, "default")) && isListContains(l, 1, "break")) {
+        if (l.size() == 2 && (isListContains(l, 0, "case ") || isListContains(l, 0, "default")) && isListContains(l, 1, "break")) {
           l.remove(1);
           l.remove(0);
         }
-        
         r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
       }
 
@@ -102,9 +97,9 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-    if(!l.isEmpty() && (isListContains(l, l.size() - 1, "case ") || isListContains(l, l.size() - 1, "default")))
+    if (!l.isEmpty() && (isListContains(l, l.size() - 1, "case ") || isListContains(l, l.size() - 1, "default")))
       return true;
-    for (int ¢ = 0; ¢ < l.size()-1; ++¢)
+    for (int ¢ = 0; ¢ < l.size() - 1; ++¢)
       if ((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default")) && isListContains(l, ¢ + 1, "break")
           || (isListContains(l, ¢, "case ") || isListContains(l, ¢, "default"))
               && (isListContains(l, ¢ + 1, "case ") || isListContains(l, ¢ + 1, "default")))
