@@ -150,8 +150,7 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            // TODO: yuvalsimon add when fixed <br>
-            // new RemoveRedundantSwitchCases(),//
+            new RemoveRedundantSwitchCases(),//
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
