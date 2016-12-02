@@ -51,12 +51,17 @@ public class CommandLineSpartanizer extends AbstractCommandLineProcessor {
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
       //
       if (CommandLine$Applicator)
+        if(true)
+            CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
+              .defaultRunAction(new CommandLine$Applicator(clazzes, //
+                  tipperGroups, //
+                  excludedTipperGroups, //
+                  excludedNanoPatterns))
+              .defaultListenerNoisy().go();
+      if(false)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator(clazzes, //
-                tipperGroups, //
-                excludedTipperGroups, //
-                excludedNanoPatterns))
-            .defaultListenerNoisy().go();
+          .defaultRunAction(new CommandLine$Applicator())
+          .defaultListenerNoisy().go();
       //
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
