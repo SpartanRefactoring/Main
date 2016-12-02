@@ -6,7 +6,7 @@ import org.junit.*;
 
 /** @author Yuval Simon
  * @since 2016-11-27 */
-@Ignore
+
 @SuppressWarnings("static-method")
 public class Issue880 {
   @Test public void a() {
@@ -31,5 +31,17 @@ public class Issue880 {
 
   @Test public void f() {
     trimmingOf("switch(x) { case a: case b:x=3;break;case d: default: x=4; case c:}").gives("switch(x) { case a: case b:x=3;break;default:x=4;}");
+  }
+  
+  @Test public void g() {
+    trimmingOf("switch(x) {case a: x=3; case b: break;}").gives("switch(x) {case a: x=3; break;}");
+  }
+  
+  @Test public void h() {
+    trimmingOf("switch(x) {case a: x=3; case b: case c: break; default: break; case d: case e:}").gives("switch(x) {case a: x=3; break;}");
+  }
+  
+  @Test public void i() {
+    trimmingOf("switch(x) {case a: x=3; case b: y=4; case c: break; default: break; case d: y=7; case e:}").gives("switch(x) {case a: x=3; case b:y=4; break; case d: y=7;}");
   }
 }
