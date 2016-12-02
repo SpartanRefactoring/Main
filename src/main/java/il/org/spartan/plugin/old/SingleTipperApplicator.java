@@ -180,13 +180,12 @@ public final class SingleTipperApplicator {
       switch (type) {
         case DECLARATION:
           applyDeclaration(w, n);
-          break;
+          return;
         case FILE:
           applyFile(w, n);
-          break;
-        case PROJECT:
+          return;
         default:
-          break;
+          return;
       }
     }
 
