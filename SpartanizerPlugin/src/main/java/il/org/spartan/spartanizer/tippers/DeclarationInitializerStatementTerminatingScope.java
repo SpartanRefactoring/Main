@@ -46,7 +46,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
       final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals((n + "")) && !iz.simpleName(initializer)
+            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());

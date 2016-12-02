@@ -159,11 +159,11 @@ public class Matcher {
 
   /** @param p
    * @return */
-  private static boolean is$X(ASTNode p) {
+  private static boolean is$X(final ASTNode p) {
     return iz.methodInvocation(p) && matches$X(p + "");
   }
 
-  private static boolean matches$X(String p) {
+  private static boolean matches$X(final String p) {
     return p.matches("\\$X\\d*\\(\\)");
   }
 
@@ -218,7 +218,7 @@ public class Matcher {
   private static boolean isBlockVariable(final ASTNode p) {
     if (!iz.block(p) || step.statements(az.block(p)).size() != 1)
       return false;
-    Statement s = step.statements(az.block(p)).get(0);
+    final Statement s = step.statements(az.block(p)).get(0);
     return iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()) && blockVariableName(p).startsWith("$B");
   }
 
@@ -281,7 +281,7 @@ public class Matcher {
   @SuppressWarnings("unchecked") private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
       final Map<String, String> enviroment) {
     if (startsWith$notBlock(p))
-      enviroment.put((p + ""), n + "");
+      enviroment.put(p + "", n + "");
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p) + "();", n + "");
     else {
@@ -310,7 +310,7 @@ public class Matcher {
   @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
     if (startsWith$notBlock(p))
-      enviroment.put((p + ""), n);
+      enviroment.put(p + "", n);
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p) + "();", n);
     else {
@@ -412,7 +412,7 @@ public class Matcher {
   /** @param n
    * @param s
    * @return */
-  public ASTNode getMatching(ASTNode n, String s) {
+  public ASTNode getMatching(final ASTNode n, final String s) {
     return collectEnviromentNodes(n, new HashMap<>()).get(reformat(s));
   }
   // /** @param s
