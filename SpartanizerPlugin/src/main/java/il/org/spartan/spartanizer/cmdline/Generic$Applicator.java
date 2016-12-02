@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Modifier;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
@@ -37,9 +36,12 @@ public class Generic$Applicator {
   }
 
   public Generic$Applicator(final String[] clazzes) {
-    if (clazzes == null)
+    System.out.println("clazzes:" + clazzes);
+    if (clazzes == null){
       selectedNodeTypes = setAllNodeTypes();
-    else {
+      for(Class<? extends ASTNode> ¢ : selectedNodeTypes)
+        System.out.println(¢);
+    } else {
       selectedNodeTypes = setSelectedNodeTypes(clazzes);
       System.out.println("selected: " + selectedNodeTypes.size());
     }
