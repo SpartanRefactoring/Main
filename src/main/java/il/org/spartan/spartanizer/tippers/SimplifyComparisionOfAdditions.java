@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 18-11-2016 */
 public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final InfixExpression x) {
-    if (!iz.infixEquals(x) && !iz.infixLess(x) && !iz.infixGreater(x) || az.infixExpression(x.getLeftOperand()).hasExtendedOperands()
+    if (!isLegalOperation(x) || az.infixExpression(x.getLeftOperand()).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getLeftOperand())
         || !iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getRightOperand()))
       return null;
@@ -39,6 +39,14 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
       right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.PLUS);
     }
     return subject.pair(left, right).to(x.getOperator());
+  }
+  
+  private static boolean isLegalOperation(InfixExpression ¢){
+    return iz.infixEquals(¢) ||
+        iz.infixLess(¢) ||
+        iz.infixGreater(¢) ||
+        iz.infixGreaterEquals(¢) ||
+        iz.infixLessEquals(¢);
   }
 
   @Override public String description(final InfixExpression ¢) {
