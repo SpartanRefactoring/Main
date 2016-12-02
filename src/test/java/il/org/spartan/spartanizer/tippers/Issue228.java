@@ -6,8 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** @author Dan Abramovich
- * @since 30-11-2016
-*/
+ * @since 30-11-2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue228 {
