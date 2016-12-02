@@ -30,7 +30,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public static long lastTime;
   public static long startingTime;
 
-  public CommandLine$Applicator() {}
+  public CommandLine$Applicator() {
+  }
 
   public CommandLine$Applicator(final String[] clazzes) {
     super(clazzes);
@@ -74,7 +75,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   void go(final CompilationUnit u) {
-    extract.type(u);
+//    extract.type(u);
 //    ReportGenerator.report("tips").put("FileName", presentFileName);
 //    ReportGenerator.report("tips").put("FilePath", presentFilePath);
 //    ReportGenerator.report("tips").put("ClassLOCBefore", count.lines(u));
@@ -82,6 +83,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
+        System.out.println(¢.getClass() + ": " + selectedNodeTypes.contains(¢.getClass()));
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
