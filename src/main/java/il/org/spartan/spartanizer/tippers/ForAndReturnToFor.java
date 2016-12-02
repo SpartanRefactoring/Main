@@ -20,11 +20,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> implements TipperCategory.Collapse {
-  @Override protected ASTRewrite go(ASTRewrite r, ForStatement s, Statement nextStatement, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement))
       return null;
-    ForStatement f = duplicate.of(s);
-    IfStatement ifBody = f.getBody().getAST().newIfStatement();
+    final ForStatement f = duplicate.of(s);
+    final IfStatement ifBody = f.getBody().getAST().newIfStatement();
     ifBody.setExpression(make.notOf(duplicate.of(f.getExpression())));
     ifBody.setThenStatement(duplicate.of(nextStatement));
     f.setBody(duplicate.of(ifBody));
@@ -34,7 +34,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";
   }
 }
