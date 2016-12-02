@@ -73,10 +73,22 @@ public class Issue291 {
   }
 
   @Test public void test17() {
-    trimmingOf("a -b - f < c - d").stays();
+    trimmingOf("a -b >= c - d").gives("a + d >= c + b");
   }
 
   @Test public void test18() {
+    trimmingOf("a -b - f < c - d").stays();
+  }
+
+  @Test public void test19() {
     trimmingOf("a -(b - f) < (c - d) -t").gives("a +t < c - d + b - f");
+  }
+
+  @Test public void test20() {
+    trimmingOf("a+1 <= length").gives("a <= length-1");
+  }
+
+  @Test public void test21() {
+    trimmingOf("a-1 <= length").gives("a <= length+1");
   }
 }
