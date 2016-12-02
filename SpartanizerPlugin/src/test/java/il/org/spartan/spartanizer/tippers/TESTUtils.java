@@ -36,7 +36,7 @@ public enum TESTUtils {
    * @param actual JD */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      org.junit.Assert.assertEquals((Wrap.essence(expected)), Wrap.essence(actual));
+      org.junit.Assert.assertEquals(Wrap.essence(expected), Wrap.essence(actual));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the

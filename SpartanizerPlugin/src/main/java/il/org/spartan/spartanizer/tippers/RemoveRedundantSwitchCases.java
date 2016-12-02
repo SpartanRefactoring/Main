@@ -45,7 +45,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-        int ind = getDefaultIndex(l);
+        final int ind = getDefaultIndex(l);
         if (ind >= 0) {
           int last = ind;
           for (int ¢ = ind + 1; ¢ < l.size(); ++¢) {
