@@ -33,13 +33,12 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
   }
 
   @Override public boolean canTip(final ForStatement x) {
-    
-    for (final UserDefinedTipper<ForStatement> ¢ : tippers){
+    for (final UserDefinedTipper<ForStatement> ¢ : tippers) {
       SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
-      if(i == null)
+      if (i == null)
         return false;
       Block b = az.block(¢.getMatching(x, "$B"));
-      if(b == null)
+      if (b == null)
         return false;
       if (¢.canTip(x) && notChangedInBlock(i.getIdentifier(), b))
         return true;
@@ -47,17 +46,18 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
     return false;
   }
 
-  private static boolean notChangedInBlock(final String id, final Block b){
-      final Bool a = new Bool();
-      b.accept(new ASTVisitor() {
-        @Override public boolean visit(final Assignment ¢){
-          if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
-            a.inner = true;
-          return true;
-        }
-      });
+  private static boolean notChangedInBlock(final String id, final Block b) {
+    final Bool a = new Bool();
+    b.accept(new ASTVisitor() {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
+          a.inner = true;
+        return true;
+      }
+    });
     return a.inner;
   }
+
   @Override public Tip tip(final ForStatement x) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.canTip(x))
