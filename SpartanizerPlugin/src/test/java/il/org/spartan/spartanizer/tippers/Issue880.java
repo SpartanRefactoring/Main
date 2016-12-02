@@ -44,4 +44,8 @@ public class Issue880 {
   @Test public void i() {
     trimmingOf("switch(x) {case a: x=3; case b: y=4; case c: break; default: break; case d: y=7; case e:}").gives("switch(x) {case a: x=3; case b:y=4; break; case d: y=7;}");
   }
+  
+  @Test public void j() {
+    trimmingOf("switch(x) {case a: case b: x=3;}").stays();
+  }
 }

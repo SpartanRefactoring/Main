@@ -102,9 +102,12 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-    for (int ¢ = 0; ¢ < l.size(); ++¢)
-      if ((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default"))
-          && (isListContains(l, ¢ + 1, "default") || isListContains(l, ¢ + 1, "case ") || isListContains(l, ¢ + 1, "break")))
+    if(!l.isEmpty() && (isListContains(l, l.size() - 1, "case ") || isListContains(l, l.size() - 1, "default")))
+      return true;
+    for (int ¢ = 0; ¢ < l.size()-1; ++¢)
+      if ((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default")) && isListContains(l, ¢ + 1, "break")
+          || (isListContains(l, ¢, "case ") || isListContains(l, ¢, "default"))
+              && (isListContains(l, ¢ + 1, "case ") || isListContains(l, ¢ + 1, "default")))
         return true;
     return false;
   }
