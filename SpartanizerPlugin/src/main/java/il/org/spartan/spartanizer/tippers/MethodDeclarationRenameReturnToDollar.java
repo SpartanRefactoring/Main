@@ -75,7 +75,6 @@ abstract class AbstractRenamePolicy {
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
-    
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
         : innerSelectReturnVariable();
   }
@@ -130,10 +129,9 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> ¢ = localVariables.iterator(); ¢.hasNext();)
       if (unused(¢.next()))
         ¢.remove();
-    if(!localVariables.isEmpty())
+    if (!localVariables.isEmpty())
       return first(localVariables);
-    
-    for(final SingleVariableDeclaration ¢ : parameters)
+    for (final SingleVariableDeclaration ¢ : parameters)
       if (!unused(¢.getName()))
         return ¢.getName();
     return null;
