@@ -151,6 +151,11 @@ public class Analyze {
       final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
+      /**
+       * @author matteo
+       * append also before
+       */
+      appendFile(new File(getProperty("outputDir") + "/before.java"), (cu + ""));
       appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
     }
     Logger.summarize(getProperty("outputDir"));
