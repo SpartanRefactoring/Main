@@ -434,6 +434,14 @@ public interface iz {
     return operator(az.infixExpression(¢)) == GREATER;
   }
 
+  static boolean infixGreaterEquals(InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == GREATER_EQUALS;
+  }
+
+  static boolean infixLessEquals(InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == LESS_EQUALS;
+  }
+
   /** @param ¢ JD
    * @return */
   static boolean instanceofExpression(final Expression ¢) {

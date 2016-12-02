@@ -38,7 +38,11 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
   }
 
   private static boolean isLiegal(final InfixExpression ¢) {
-    return iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
+    return isLegalOperation(¢) && iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
+  }
+
+  private static boolean isLegalOperation(InfixExpression ¢) {
+    return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
   @Override public String description(final InfixExpression ¢) {
