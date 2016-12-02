@@ -45,54 +45,42 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
+        
+        int ind = getDefaultIndex(l);
+        if (ind >= 0) {
+          int last = ind;
+          for (int ¢ = ind + 1; ¢ < l.size(); ++¢) {
+            if (!isListContains(l, ¢, "case "))
+              break;
+            last = ¢;
+          }
+          for (int ¢ = last; ¢ > ind; --¢)
+            l.remove(¢);
+          for (int ¢ = ind - 1; ¢ >= 0; --¢) {
+            if (!isListContains(l, ¢, "case "))
+              break;
+            l.remove(¢);
+          }
+        }
+        
+        for(int ¢ = l.size()-1; ¢>=0; --¢) {
           if (!isListContains(l, ¢, "case ") && !isListContains(l, ¢, "default"))
             break;
           l.remove(¢);
         }
-        int start = -1;
-        int end = -1;
-        boolean combo = false;
-        for (int i = l.size() - 1; i >= 0; --i)
-          if (isListContains(l, i, "break") && !combo) {
-            combo = true;
-            end = i;
-          } else if ((isListContains(l, i, "case ") || isListContains(l, i, "default")) && combo)
-            start = i;
-          else {
-            if (combo && start >= 0) {
-              for (int j = end; j >= start; --j)
-                l.remove(j);
-              ++i;
-            }
-            start = -1;
-            combo = false;
-          }
-        if (combo)
-          for (int j = end; j >= start; --j)
-            l.remove(j);
-        final int defaultInd = getDefaultIndex(l);
-        if (defaultInd >= 0) {
-          for (int ¢ = defaultInd - 1; ¢ >= 0; --¢) {
-            if (!isListContains(l, ¢, "case "))
-              break;
+        
+        for(int ¢=l.size()-2; ¢>=0; --¢)
+          if((isListContains(l, ¢, "case ") || isListContains(l, ¢, "default") || isListContains(l, ¢, "break")) && isListContains(l, ¢+1, "break"))
             l.remove(¢);
-          }
-          end = 0;
-          for (int ¢ = defaultInd + 1; ¢ < l.size(); ++¢) {
-            if (!isListContains(l, ¢, "case "))
-              break;
-            end = ¢;
-          }
-          for (int ¢ = end; ¢ > defaultInd; --¢)
-            l.remove(¢);
-        }
-        if (l.size() == 1)
+        
+        if(l.size()==1)
           l.remove(0);
-        if (l.size() == 2 && isListContains(l, 0, "break")) {
+        
+        if(l.size() == 2 && (isListContains(l, 0, "case ") || isListContains(l, 0, "default")) && isListContains(l, 1, "break")) {
           l.remove(1);
           l.remove(0);
         }
+        
         r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
       }
 
