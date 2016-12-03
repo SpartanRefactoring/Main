@@ -7,6 +7,7 @@ import org.junit.*;
 /** @author Yuval Simon
  * @since 2016-11-27 */
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue880 {
   @Test public void a() {
     trimmingOf("switch(x) { case a: default: case b:}").gives("switch(x){}");
@@ -47,5 +48,10 @@ public class Issue880 {
 
   @Test public void j() {
     trimmingOf("switch(x) {case a: case b: x=3;}").stays();
+  }
+  
+  @Test public void k() {
+    trimmingOf("switch(x){ case a: x=1; break; case b: switch(y) { case c: y=1; break; case d: x=1; break;} break; }")
+        .stays();
   }
 }
