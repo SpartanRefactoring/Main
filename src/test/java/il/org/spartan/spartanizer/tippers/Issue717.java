@@ -54,8 +54,8 @@ public class Issue717 {
     return $ + "";
   }
 
-  private final int MAX_NAME_SIZE = 100;
-  private final int MAX_STAT_AMOUNT = 100;
+  private static final int MAX_NAME_SIZE = 100;
+  private static final int MAX_STAT_AMOUNT = 100;
 
   @Test public void randomBigBlockReturnsTrue() {
     final String methodName = generateRandomString(MAX_NAME_SIZE);

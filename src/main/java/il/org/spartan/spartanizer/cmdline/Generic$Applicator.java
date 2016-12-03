@@ -18,12 +18,12 @@ public class Generic$Applicator {
   public int tippersAppliedOnCurrentObject;
   protected int done;
   private static List<String> selectedTipperGroups;
-  private static String fqn_base = "org.eclipse.jdt.core.dom.";
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
     final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
+      final String fqn_base = "org.eclipse.jdt.core.dom.";
       for (final String ¢ : ss)
         $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
     } catch (final ClassNotFoundException ¢) {

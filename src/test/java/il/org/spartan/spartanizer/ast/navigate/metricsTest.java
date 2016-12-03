@@ -19,8 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
-  private final String helloWorldChars = "\\*Hello, World!\\n*\"";
-  private final String helloCommented = "\\/*Hello*/";
   private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
   private final Expression booleans = e("true||false||true");
   private final Expression helloWorld = e("f(" + helloWorldQuoted + ")");
@@ -156,7 +154,9 @@ public final class metricsTest {
 
   @Test public void tokensTest() {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
+    final String helloWorldChars = "\\*Hello, World!\\n*\"";
     azzert.that(metrics.tokens(helloWorldChars), is(8));
+    final String helloCommented = "\\/*Hello*/";
     azzert.that(metrics.tokens(helloCommented), is(0));
   }
 

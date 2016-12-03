@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-
 @SuppressWarnings("static-method")
 @Ignore
 public class Issue858 {

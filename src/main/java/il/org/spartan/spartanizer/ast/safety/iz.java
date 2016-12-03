@@ -434,11 +434,11 @@ public interface iz {
     return operator(az.infixExpression(¢)) == GREATER;
   }
 
-  static boolean infixGreaterEquals(InfixExpression ¢) {
+  static boolean infixGreaterEquals(final InfixExpression ¢) {
     return operator(az.infixExpression(¢)) == GREATER_EQUALS;
   }
 
-  static boolean infixLessEquals(InfixExpression ¢) {
+  static boolean infixLessEquals(final InfixExpression ¢) {
     return operator(az.infixExpression(¢)) == LESS_EQUALS;
   }
 

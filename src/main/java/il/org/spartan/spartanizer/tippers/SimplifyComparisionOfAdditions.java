@@ -40,13 +40,9 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
     }
     return subject.pair(left, right).to(x.getOperator());
   }
-  
-  private static boolean isLegalOperation(InfixExpression ¢){
-    return iz.infixEquals(¢) ||
-        iz.infixLess(¢) ||
-        iz.infixGreater(¢) ||
-        iz.infixGreaterEquals(¢) ||
-        iz.infixLessEquals(¢);
+
+  private static boolean isLegalOperation(final InfixExpression ¢) {
+    return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
   @Override public String description(final InfixExpression ¢) {
