@@ -118,22 +118,22 @@ public class ParseASTTest {
     });
   }
 
+  @SuppressWarnings("static-method")
   @Test public void testStepMethod_01() {
-    /* */
-    final String test1 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
-        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-    makeAST.COMPILATION_UNIT.from(test1).accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        for (final Statement o : step.statements(step.body(node))) {
-          System.out.println("class: " + o.getClass());
-          System.out.println("statement: " + o);
-          System.out.println(step.expression(o));
-        }
-        System.out.println(step.body(node));
-        return super.visit(node);
-      }
-    });
+    makeAST.COMPILATION_UNIT.from(
+        ("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
+            + "public class Test {\n" + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n"
+            + " }\n" + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}"))
+        .accept(new ASTVisitor() {
+          @Override public boolean visit(final MethodDeclaration node) {
+            for (final Statement o : step.statements(step.body(node))) {
+              System.out.println("class: " + o.getClass());
+              System.out.println("statement: " + o);
+              System.out.println(step.expression(o));
+            }
+            System.out.println(step.body(node));
+            return super.visit(node);
+          }
+        });
   }
 }
