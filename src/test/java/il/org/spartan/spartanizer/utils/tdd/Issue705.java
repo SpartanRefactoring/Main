@@ -20,6 +20,10 @@ public class Issue705 {
     auxList(getAll.instanceofs((MethodDeclaration) null));
   }
 
+  void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
+    assert true;
+  }
+
   @Test public void b() {
     azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size(), is(0));
   }
@@ -34,9 +38,5 @@ public class Issue705 {
         .instanceofs(
             (MethodDeclaration) wizard.ast("boolean func (){" + "Integer obj = 5;" + "return (obj instanceof Object) || (obj instanceof Integer); }"))
         .size(), is(2));
-  }
-
-  void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
-    assert true;
   }
 }

@@ -157,25 +157,31 @@ public class Issue052 {
         .stays() //
     ;
   }
-  
-  
+
   @Test public void C$a() {
     trimmingOf("interface a{static class A{}}")//
         .gives("interface a{class A{}}")//
         .stays() //
     ;
   }
- 
+
   @Test public void C$b() {
     trimmingOf("interface a{static interface A{}}")//
         .gives("interface a{interface A{}}")//
         .stays() //
     ;
   }
- 
+
   @Test public void C$c() {
     trimmingOf("interface a{static enum A{}}")//
         .gives("interface a{enum A{}}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void C$d() {
+    trimmingOf("public interface C{static class A{}}")//
+        .gives("public interface C{class A{}}")//
         .stays() //
     ;
   }

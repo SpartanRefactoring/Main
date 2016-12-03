@@ -15,6 +15,46 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class haveTest {
+  @Test public void booleanFalseLiteralTestFalse() {
+    assert !have.falseLiteral(ExpressionListMaker(new String[] { "true" }));
+  }
+
+  @Test public void booleanFalseLiteralTestTrue() {
+    assert have.falseLiteral(ExpressionListMaker(new String[] { "false" }));
+  }
+
+  @Test public void booleanLiteralOneExpressionFail() {
+    assert !have.booleanLiteral(into.e("x=y"));
+  }
+
+  @Test public void booleanLiteralOneExpretionSuccess() {
+    assert have.booleanLiteral(into.e("true"));
+  }
+
+  @Test public void booleanLiteralSeveralExpretionFail() {
+    assert !have.booleanLiteral(into.e("x=y"), into.e("a=5+6"));
+  }
+
+  @Test public void booleanLiteralSeveralExpretionSuccess() {
+    assert have.booleanLiteral(into.e("a=5+6"), into.e("false"));
+  }
+
+  @Test public void booleanLiteralTestFalse() {
+    assert !have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2" }));
+  }
+
+  @Test public void booleanLiteralTestTrue() {
+    assert have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2", "true" }));
+  }
+
+  @Test public void booleanTrueLiteralTestFalse() {
+    assert !have.trueLiteral(ExpressionListMaker(new String[] { "false" }));
+  }
+
+  @Test public void booleanTrueLiteralTestTrue() {
+    assert have.trueLiteral(ExpressionListMaker(new String[] { "true" }));
+  }
+
   public List<Expression> ExpressionListMaker(final String[] exps) {
     final List<Expression> $ = new LinkedList<>();
     for (final String e : exps)
@@ -22,44 +62,16 @@ public final class haveTest {
     return $;
   }
 
-  @Test public void booleanLiteralTestTrue() {
-    assert have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2", "true" }));
-  }
-
-  @Test public void booleanLiteralTestFalse() {
-    assert !have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2" }));
-  }
-
-  @Test public void booleanFalseLiteralTestTrue() {
-    assert have.falseLiteral(ExpressionListMaker(new String[] { "false" }));
-  }
-
-  @Test public void booleanFalseLiteralTestFalse() {
-    assert !have.falseLiteral(ExpressionListMaker(new String[] { "true" }));
-  }
-
-  @Test public void booleanTrueLiteralTestTrue() {
-    assert have.trueLiteral(ExpressionListMaker(new String[] { "true" }));
-  }
-
-  @Test public void booleanTrueLiteralTestFalse() {
-    assert !have.trueLiteral(ExpressionListMaker(new String[] { "false" }));
+  @Test public void hasLiteralTestFalse() {
+    assert !have.literal(ExpressionListMaker(new String[] { "1==2" }));
   }
 
   @Test public void hasLiteralTestTrue() {
     assert have.literal(ExpressionListMaker(new String[] { "2" }));
   }
 
-  @Test public void hasLiteralTestFalse() {
-    assert !have.literal(ExpressionListMaker(new String[] { "1==2" }));
-  }
-
-  @Test public void booleanLiteralOneExpretionSuccess() {
-    assert have.booleanLiteral(into.e("true"));
-  }
-
-  @Test public void booleanLiteralOneExpressionFail() {
-    assert !have.booleanLiteral(into.e("x=y"));
+  @Test public void literalFailForNumericalLit2() {
+    assert !have.numericLiteral(into.e("true"), into.e("7==7"), into.e("x"));
   }
 
   @Test public void literalFailOnAssignment() {
@@ -74,28 +86,12 @@ public final class haveTest {
     assert have.literal(into.e("5"));
   }
 
-  @Test public void literalSucssessForString() {
-    assert have.literal(into.e("\"java is the best!\""));
-  }
-
   @Test public void literalSuccessForNumericalLit2() {
     assert have.numericLiteral(into.e("5"), into.e("7"), into.e("7"));
   }
 
-  @Test public void literalFailForNumericalLit2() {
-    assert !have.numericLiteral(into.e("true"), into.e("7==7"), into.e("x"));
-  }
-
-  @Test public void booleanLiteralSeveralExpretionSuccess() {
-    assert have.booleanLiteral(into.e("a=5+6"), into.e("false"));
-  }
-
-  @Test public void booleanLiteralSeveralExpretionFail() {
-    assert !have.booleanLiteral(into.e("x=y"), into.e("a=5+6"));
-  }
-
-  @Test public void numericLiteralFailOnString() {
-    assert !have.numericLiteral(into.e("\"java is the best!\""));
+  @Test public void literalSucssessForString() {
+    assert have.literal(into.e("\"java is the best!\""));
   }
 
   @Test public void numericLiteralFailOnBoolean() {
@@ -106,12 +102,8 @@ public final class haveTest {
     assert !have.numericLiteral(into.e("a=5+6"));
   }
 
-  @Test public void numericLiteralSuccessOnInt() {
-    assert have.numericLiteral(into.e("55555"), into.e("x=y"));
-  }
-
-  @Test public void numericLiteralSuccessOnFloat() {
-    assert have.numericLiteral(into.e("c"), into.e("12.99e-13"));
+  @Test public void numericLiteralFailOnString() {
+    assert !have.numericLiteral(into.e("\"java is the best!\""));
   }
 
   @Test public void numericLiteralIterableFail() {
@@ -120,5 +112,13 @@ public final class haveTest {
 
   @Test public void numericLiteralIterableSucces() {
     assert have.numericLiteral(into.es("a=5+6", "false", "\"a String\"", "3.14"));
+  }
+
+  @Test public void numericLiteralSuccessOnFloat() {
+    assert have.numericLiteral(into.e("c"), into.e("12.99e-13"));
+  }
+
+  @Test public void numericLiteralSuccessOnInt() {
+    assert have.numericLiteral(into.e("55555"), into.e("x=y"));
   }
 }

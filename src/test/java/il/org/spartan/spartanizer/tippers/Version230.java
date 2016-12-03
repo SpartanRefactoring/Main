@@ -930,10 +930,6 @@ public final class Version230 {
         .gives("try { f(); } catch (Exception e) { }");
   }
 
-  @Test public void eliminateSwitch() {
-    trimmingOf("switch (a) { default: } int x=5;").gives("int x=5;");
-  }
-
   @Test public void dontSimplifyCatchBlock() {
     trimmingOf("try { {} ; {} } catch (Exception e) {{} ; {}  } finally {{} ; {}}")
         .gives(" try {}          catch (Exception e) {}          finally {}");
@@ -943,6 +939,10 @@ public final class Version230 {
     trimmingOf("    if (a) {\n" + "      f();\n" + "      g();\n" + "      ++i;\n" + "    } else {\n" + "      f();\n" + "      g();\n"
         + "      --i;\n" + "    }")//
             .gives("   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
+  }
+
+  @Test public void eliminateSwitch() {
+    trimmingOf("switch (a) { default: } int x=5;").gives("int x=5;");
   }
 
   @Test public void emptyElse() {

@@ -16,13 +16,6 @@ import il.org.spartan.*;
 public class Issue177 {
   @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) & 1, is(0));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -48,6 +41,13 @@ public class Issue177 {
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) & 1, is(0));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -76,13 +76,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void BitWiseOr_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) | 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -108,6 +101,13 @@ public class Issue177 {
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) | 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -116,13 +116,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void BitWiseXor_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) ^ 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -148,6 +141,13 @@ public class Issue177 {
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) ^ 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -181,13 +181,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.nay(in.f(true) & true);
-        azzert.aye(in.a == 1);
-      }
-
       class Inner {
         int a;
 
@@ -201,6 +194,13 @@ public class Issue177 {
           return false;
         }
       }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.nay(in.f(true) & true);
+        azzert.aye(in.a == 1);
+      }
     }
     new Class();
     trimmingOf("a=a && b").gives("a&=b");
@@ -208,13 +208,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.nay(in.f(true) & true);
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -240,6 +233,13 @@ public class Issue177 {
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.nay(in.f(true) & true);
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -273,13 +273,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.aye(in.f(false) | false);
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -293,6 +286,13 @@ public class Issue177 {
           return true;
         }
       }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.aye(in.f(false) | false);
+        azzert.that(in.a, is(1));
+      }
     }
     new Class();
     trimmingOf("a=a||b").gives("a|=b");
@@ -300,13 +300,6 @@ public class Issue177 {
 
   @Test @SuppressWarnings("unused") public void LogicalOr_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) | 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -332,6 +325,13 @@ public class Issue177 {
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) | 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();

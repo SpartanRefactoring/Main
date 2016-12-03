@@ -13,16 +13,16 @@ import org.junit.runners.*;
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue437 {
+  @Test public void testMutation0() {
+    trimmingOf("String str; String stringy; return str.indexOf(stringy)>= 0;").gives("String str; String stringy; return str.contains(stringy);")
+        .stays();
+  }
+
   @Test public void testMutation1() {
     trimmingOf("String str; if(str.indexOf(\"stringy\")>= 0) return true;").gives("String str; if(str.contains(\"stringy\")) return true;").stays();
   }
 
   @Test public void testMutation2() {
     trimmingOf("String str; if(str.indexOf(stringy)>= 0) return true;").gives("String str; if(str.contains(stringy)) return true;").stays();
-  }
-
-  @Test public void testMutation0() {
-    trimmingOf("String str; String stringy; return str.indexOf(stringy)>= 0;").gives("String str; String stringy; return str.contains(stringy);")
-        .stays();
   }
 }
