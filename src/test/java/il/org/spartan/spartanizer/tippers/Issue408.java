@@ -25,6 +25,10 @@ public class Issue408 {
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
 
+  @Test @SuppressWarnings("static-method") public void issue408_033() {
+    trimmingOf("0+x+y+4+z+5").gives("x+y+4+z+5").stays();
+  }
+
   @Test @SuppressWarnings("static-method") public void issue408_03b() {
     trimmingOf("0+x+y+4+5").gives("x+y+9").stays();
   }
@@ -51,10 +55,6 @@ public class Issue408 {
 
   @Test @SuppressWarnings("static-method") public void issue408_03g() {
     trimmingOf("0+x+0+0+0+y+4").gives("x+y+4").stays();
-  }
-
-  @Test @SuppressWarnings("static-method") public void issue408_033() {
-    trimmingOf("0+x+y+4+z+5").gives("x+y+4+z+5").stays();
   }
 
   @Test @SuppressWarnings("static-method") public void issue408_04() {

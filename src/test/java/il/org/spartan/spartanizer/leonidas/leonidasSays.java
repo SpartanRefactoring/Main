@@ -22,99 +22,6 @@ import static org.junit.Assert.fail;
  * @author Ori Marcovitch
  * @since 2016 */
 public class leonidasSays {
-  public static expression that(final String ¢) {
-    return new expression(¢);
-  }
-
-  public static statementsTipper statementsTipper(final String p, final String s, final String d) {
-    return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
-  }
-
-  public static tipper tipper(final String p, final String s, final String d) {
-    return new tipper(p, s, d);
-  }
-
-  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
-    return new tipper(¢);
-  }
-
-  public static class tipper {
-    private final UserDefinedTipper<ASTNode> tipper;
-
-    public tipper(final String pattern, final String replacement) {
-      tipper = TipperFactory.patternTipper(pattern, replacement);
-    }
-
-    public tipper(final String pattern, final String replacement, final String description) {
-      tipper = TipperFactory.patternTipper(pattern, replacement, description);
-    }
-
-    public tipper(final UserDefinedTipper<ASTNode> tipper) {
-      this.tipper = tipper;
-    }
-
-    public void nottips(final String ¢) {
-      assert !tipper.canTip(wizard.ast(¢));
-    }
-
-    public void tips(final String ¢) {
-      assert tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
-    }
-
-    public turns turns(final String ¢) {
-      return new turns(tipper, ¢);
-    }
-  }
-
-  public static class statementsTipper {
-    private final Tipper<Block> tipper;
-
-    public statementsTipper(final String pattern, final String replacement) {
-      tipper = TipperFactory.patternTipper(pattern, replacement);
-    }
-
-    public statementsTipper(final String pattern, final String replacement, final String description) {
-      tipper = TipperFactory.patternTipper(pattern, replacement, description);
-    }
-
-    /** @param statementsPattern */
-    public statementsTipper(final UserDefinedTipper<Block> tipper) {
-      this.tipper = tipper;
-    }
-
-    public void nottips(final String ¢) {
-      assert !tipper.canTip(az.block(wizard.ast(¢)));
-    }
-
-    public void tips(final String ¢) {
-      assert tipper.canTip(az.block(wizard.ast(¢)));
-    }
-
-    public blockTurns turns(final String ¢) {
-      return new blockTurns(tipper, ¢);
-    }
-  }
-
-  static class expression {
-    final String s;
-
-    public expression(final String s) {
-      this.s = s;
-    }
-
-    public void matches(final String s2) {
-      assert new Matcher(s, "").matches(ast(s2));
-    }
-
-    private static ASTNode ast(final String s2) {
-      return extractStatementIfOne(wizard.ast(s2));
-    }
-
-    public void notmatches(final String s2) {
-      assert !new Matcher(s, "").matches(ast(s2));
-    }
-  }
-
   public static class blockTurns {
     final Tipper<Block> tipper;
     final String string;
@@ -152,6 +59,83 @@ public class leonidasSays {
     }
   }
 
+  static class expression {
+    private static ASTNode ast(final String s2) {
+      return extractStatementIfOne(wizard.ast(s2));
+    }
+
+    final String s;
+
+    public expression(final String s) {
+      this.s = s;
+    }
+
+    public void matches(final String s2) {
+      assert new Matcher(s, "").matches(ast(s2));
+    }
+
+    public void notmatches(final String s2) {
+      assert !new Matcher(s, "").matches(ast(s2));
+    }
+  }
+
+  public static class statementsTipper {
+    private final Tipper<Block> tipper;
+
+    public statementsTipper(final String pattern, final String replacement) {
+      tipper = TipperFactory.patternTipper(pattern, replacement);
+    }
+
+    public statementsTipper(final String pattern, final String replacement, final String description) {
+      tipper = TipperFactory.patternTipper(pattern, replacement, description);
+    }
+
+    /** @param statementsPattern */
+    public statementsTipper(final UserDefinedTipper<Block> tipper) {
+      this.tipper = tipper;
+    }
+
+    public void nottips(final String ¢) {
+      assert !tipper.canTip(az.block(wizard.ast(¢)));
+    }
+
+    public void tips(final String ¢) {
+      assert tipper.canTip(az.block(wizard.ast(¢)));
+    }
+
+    public blockTurns turns(final String ¢) {
+      return new blockTurns(tipper, ¢);
+    }
+  }
+
+  public static class tipper {
+    private final UserDefinedTipper<ASTNode> tipper;
+
+    public tipper(final String pattern, final String replacement) {
+      tipper = TipperFactory.patternTipper(pattern, replacement);
+    }
+
+    public tipper(final String pattern, final String replacement, final String description) {
+      tipper = TipperFactory.patternTipper(pattern, replacement, description);
+    }
+
+    public tipper(final UserDefinedTipper<ASTNode> tipper) {
+      this.tipper = tipper;
+    }
+
+    public void nottips(final String ¢) {
+      assert !tipper.canTip(wizard.ast(¢));
+    }
+
+    public void tips(final String ¢) {
+      assert tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
+    }
+
+    public turns turns(final String ¢) {
+      return new turns(tipper, ¢);
+    }
+  }
+
   public static class turns {
     final UserDefinedTipper<ASTNode> tipper;
     final String string;
@@ -186,35 +170,6 @@ public class leonidasSays {
       }
       azzertEquals(expected, document);
     }
-  }
-
-  static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
-  }
-
-  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
-    foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        if (foundFirst.get().booleanValue()) {
-          $.set(¢);
-          assert $.get() == ¢;
-          return false;
-        }
-        foundFirst.set(Boolean.TRUE);
-        return true;
-      }
-    });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
   }
 
   static void azzertEquals(final String s, final Document d) {
@@ -257,6 +212,51 @@ public class leonidasSays {
         break;
     }
     return null;
+  }
+
+  static ASTNode extractStatementIfOne(final ASTNode ¢) {
+    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
+  }
+
+  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    foundFirst.set(Boolean.FALSE);
+    final Wrapper<ASTNode> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if ($.get() != null)
+          return false;
+        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
+          return true;
+        if (foundFirst.get().booleanValue()) {
+          $.set(¢);
+          assert $.get() == ¢;
+          return false;
+        }
+        foundFirst.set(Boolean.TRUE);
+        return true;
+      }
+    });
+    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    return $$;
+  }
+
+  public static statementsTipper statementsTipper(final String p, final String s, final String d) {
+    return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
+  }
+
+  public static expression that(final String ¢) {
+    return new expression(¢);
+  }
+
+  public static tipper tipper(final String p, final String s, final String d) {
+    return new tipper(p, s, d);
+  }
+
+  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
+    return new tipper(¢);
   }
 
   static String wrapCode(final String ¢) {

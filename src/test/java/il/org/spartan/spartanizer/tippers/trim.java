@@ -26,19 +26,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggestions(u).size();
-  }
-
-  static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
-  }
-
-  @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
-    return new fluentTrimmer(clazz, ns);
-  }
-
   /** Starting point of fluent API for @Testing:
    * <code>trimming.repeatedly.of("a+(b-c)").gives("a+b-c")</code>, or <br/>
    * <code>trimming // See {@link trim} <br/>
@@ -65,12 +52,12 @@ public interface trim {
           return super.checkAllConditions(pm);
         }
 
-        @Override public fluentTrimmerApplication of(final String codeFragment) {
-          return super.of(codeFragment);
-        }
-
         @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
           return super.doGetRefactoringTickProvider();
+        }
+
+        @Override public fluentTrimmerApplication of(final String codeFragment) {
+          return super.of(codeFragment);
         }
       };
     }
@@ -101,5 +88,18 @@ public interface trim {
     @Test public void trimming_repeatedly_of_gives() {
       trim.repeatedly.of("int b = 3; int a = b; return  a;").gives("return 3;");
     }
+  }
+
+  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+    return a.collectSuggestions(u).size();
+  }
+
+  static fluentTrimmerApplication of(final String codeFragment) {
+    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
+  }
+
+  @SafeVarargs //
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
+    return new fluentTrimmer(clazz, ns);
   }
 }

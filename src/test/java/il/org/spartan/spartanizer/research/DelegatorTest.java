@@ -13,8 +13,21 @@ import il.org.spartan.spartanizer.research.patterns.*;
 public class DelegatorTest {
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
+  private static boolean javadocedDelegator(final String ¢) {
+    return spartanized(¢).contains("[[Delegator]]");
+  }
+
+  /** @param s */
+  private static void notDelegator(final String ¢) {
+    assert !javadocedDelegator(¢);
+  }
+
   @BeforeClass public static void setUp() {
     spartanizer.add(MethodDeclaration.class, new Delegator());
+  }
+
+  private static String spartanized(final String ¢) {
+    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 
   @Test public void basic() {
@@ -55,18 +68,5 @@ public class DelegatorTest {
 
   private void delegator(final String ¢) {
     assert javadocedDelegator(¢);
-  }
-
-  private static boolean javadocedDelegator(final String ¢) {
-    return spartanized(¢).contains("[[Delegator]]");
-  }
-
-  private static String spartanized(final String ¢) {
-    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
-  }
-
-  /** @param s */
-  private static void notDelegator(final String ¢) {
-    assert !javadocedDelegator(¢);
   }
 }

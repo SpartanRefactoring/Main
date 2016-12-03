@@ -21,22 +21,6 @@ public class Issue147 {
   private static final ForStatement FOR1 = findFirst.forStatement(INPUT1);
   private static final ForRedundantContinue TIPPER = new ForRedundantContinue();
 
-  @Test public void eligible() {
-    assert TIPPER.canTip(FOR);
-  }
-
-  @Test public void notEligible() {
-    assert !TIPPER.canTip(FOR1);
-  }
-
-  @Test public void extractFirstIf() {
-    assert FOR != null;
-  }
-
-  @Test public void inputType() {
-    azzert.that(FOR, instanceOf(ForStatement.class));
-  }
-
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢){++¢; }");//
@@ -55,5 +39,21 @@ public class Issue147 {
   @Test public void b$() {
     trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
         .stays();
+  }
+
+  @Test public void eligible() {
+    assert TIPPER.canTip(FOR);
+  }
+
+  @Test public void extractFirstIf() {
+    assert FOR != null;
+  }
+
+  @Test public void inputType() {
+    azzert.that(FOR, instanceOf(ForStatement.class));
+  }
+
+  @Test public void notEligible() {
+    assert !TIPPER.canTip(FOR1);
   }
 }
