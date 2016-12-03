@@ -52,7 +52,7 @@ public enum NameGuess {
       return NameGuess.GETTER_METHOD;
     if (nameOfSomething.matches("[$A-Z][a-zA-Z0-9]*")) //
       return NameGuess.CLASS_NAME;
-    if (nameOfSomething.matches("[a-z_][_a-zA-Z0-9_]*")) //
+    if (nameOfSomething.matches("[a-z_][_a-zA-Z0-9]*")) //
       return NameGuess.METHOD_OR_VARIABLE;
     assert fault.unreachable() : fault.dump() + //
         "\n nameOfSomething=" + nameOfSomething + //

@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
 public class MetricsReport implements ConfigurableReport {
   List<ASTNode> l;
   private static Settings settings = new Settings();
-  private static Action writeReport;
 
   public static void initialize() {
     if (settings.getInputFolder() == null)
@@ -29,7 +28,7 @@ public class MetricsReport implements ConfigurableReport {
     Settings.setHeader("NEWmetrics");
     getSettings();
     Settings.setFileName("/tmp/NEWmetrics.CSV");
-    writeReport = settings.getAction();
+    final Action writeReport = settings.getAction();
     writeReport.initialize();
   }
 

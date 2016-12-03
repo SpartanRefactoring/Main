@@ -27,8 +27,6 @@ public final class BatchSpartanizerApplication implements IApplication {
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static String outputDir;
-  // private EventApplicator e = new EventApplicator();
-  private IJavaProject javaProject;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;
 
@@ -141,7 +139,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     final IProjectDescription d = p.getDescription();
     d.setNatureIds(new String[] { JavaCore.NATURE_ID });
     p.setDescription(d, null);
-    javaProject = JavaCore.create(p);
+    final IJavaProject javaProject = JavaCore.create(p);
     final IFolder binFolder = p.getFolder("bin");
     final IFolder sourceFolder = p.getFolder("src");
     srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);

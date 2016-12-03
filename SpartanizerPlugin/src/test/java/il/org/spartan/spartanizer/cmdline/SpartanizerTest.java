@@ -21,9 +21,6 @@ public class SpartanizerTest {
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
       + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-  private final String test4 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
-      + "   assert (i>0);\n" + " }\n" + "}";
 
   public static void main(final String[] args) {
     final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
@@ -316,6 +313,9 @@ public class SpartanizerTest {
   }
 
   @Test public void testSpartanizerCheckMethod_03() {
+    final String test4 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
+        + "   assert (i>0);\n" + " }\n" + "}";
     System.out.println(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
