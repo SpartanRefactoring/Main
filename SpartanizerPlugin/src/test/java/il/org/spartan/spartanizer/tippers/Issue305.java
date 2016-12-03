@@ -10,13 +10,13 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue305 {
-  @Test public void forTestNoChange() {
-    trimmingOf("for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()));").stays();
+  @Test public void forTestChangeBasic() {
+    trimmingOf("for(int ¢=0;¢<5;++¢); return true;").gives("for(int ¢=0;;++¢) if(¢>=5) return true;").stays();
     assert true;
   }
 
-  @Test public void forTestChangeBasic() {
-    trimmingOf("for(int ¢=0;¢<5;++¢); return true;").gives("for(int ¢=0;;++¢) if(¢>=5) return true;").stays();
+  @Test public void forTestNoChange() {
+    trimmingOf("for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()));").stays();
     assert true;
   }
 

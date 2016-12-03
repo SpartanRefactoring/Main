@@ -23,6 +23,10 @@ public class Issue690 {
     azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {}"))).size(), is(0));
   }
 
+  @Test @SuppressWarnings("static-method") public void test10() {
+    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }"))).size(), is(1));
+  }
+
   @Test @SuppressWarnings("static-method") public void test2() {
     azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static void foo() {int a;}"))).size(), is(0));
   }
@@ -53,9 +57,5 @@ public class Issue690 {
 
   @Test @SuppressWarnings("static-method") public void test9() {
     azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((int)true==1) return true; }"))).size(), is(1));
-  }
-
-  @Test @SuppressWarnings("static-method") public void test10() {
-    azzert.that(getAll.casts(az.methodDeclaration(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }"))).size(), is(1));
   }
 }

@@ -19,33 +19,8 @@ public class Issue687 {
     assert true;
   }
 
-  @Test public void testGetNull() {
-    azzert.isNull(getAll.names(null));
-  }
-
-  @Test public void testReturnType() {
-    forceTypeAtCompileTime(getAll.names((Block) wizard.ast("{}")));
-  }
-
-  @Test public void testGetEmpty() {
-    assert getAll.names((Block) wizard.ast("{}")).isEmpty();
-  }
-
-  @Test public void testGetOneNameSize() {
-    assert getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1;
-  }
-
-  @Test public void testGetTwoNamesSize() {
-    assert getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2;
-  }
-
   @Test public void testCheckActualName() {
     assert "a".equals(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0) + "");
-  }
-
-  @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
-    final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
-    assert "aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + "");
   }
 
   @Test public void testCheckNamesFineBlock() {
@@ -60,5 +35,30 @@ public class Issue687 {
     assert "c".equals(n.get(6) + "");
     assert "c".equals(n.get(7) + "");
     assert "a".equals(n.get(8) + "");
+  }
+
+  @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
+    final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
+    assert "aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + "");
+  }
+
+  @Test public void testGetEmpty() {
+    assert getAll.names((Block) wizard.ast("{}")).isEmpty();
+  }
+
+  @Test public void testGetNull() {
+    azzert.isNull(getAll.names(null));
+  }
+
+  @Test public void testGetOneNameSize() {
+    assert getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1;
+  }
+
+  @Test public void testGetTwoNamesSize() {
+    assert getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2;
+  }
+
+  @Test public void testReturnType() {
+    forceTypeAtCompileTime(getAll.names((Block) wizard.ast("{}")));
   }
 }

@@ -16,25 +16,19 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @since 16-11-05 */
 @SuppressWarnings("static-method") //
 public class Issue717 {
+  private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  private static final int MAX_NAME_SIZE = 100;
+  private static final int MAX_STAT_AMOUNT = 100;
   MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
   MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
   MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
-  private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-  @Test public void isCompiled() {
-    assert true;
-  }
-
-  @Test public void nullCheckReturnsFalse() {
-    assert !determineIf.hasBigBlock(null);
+  @Test public void bigBlockWithAnnotationReturnsTrue() {
+    assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));
   }
 
   @Test public void fiveStatBlockReturnsTrue() {
     assert determineIf.hasBigBlock(fiveStatMethod);
-  }
-
-  @Test public void oneStatBlockReturnsFalse() {
-    assert !determineIf.hasBigBlock(oneStatMethod);
   }
 
   @Test public void fourStatBlockReturnsFalse() {
@@ -54,8 +48,25 @@ public class Issue717 {
     return $ + "";
   }
 
-  private static final int MAX_NAME_SIZE = 100;
-  private static final int MAX_STAT_AMOUNT = 100;
+  @Test public void isCompiled() {
+    assert true;
+  }
+
+  @Test public void methodWithNoBodyReturnsFalse() {
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int a(String a);"));
+  }
+
+  @Test public void methodWithNoStatementsReturnsFalse() {
+    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int f(int x){}"));
+  }
+
+  @Test public void nullCheckReturnsFalse() {
+    assert !determineIf.hasBigBlock(null);
+  }
+
+  @Test public void oneStatBlockReturnsFalse() {
+    assert !determineIf.hasBigBlock(oneStatMethod);
+  }
 
   @Test public void randomBigBlockReturnsTrue() {
     final String methodName = generateRandomString(MAX_NAME_SIZE);
@@ -68,18 +79,6 @@ public class Issue717 {
       randomBigBlock += nextStat;
     randomBigBlock += "}";
     assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast(randomBigBlock));
-  }
-
-  @Test public void methodWithNoBodyReturnsFalse() {
-    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int a(String a);"));
-  }
-
-  @Test public void methodWithNoStatementsReturnsFalse() {
-    assert !determineIf.hasBigBlock((MethodDeclaration) wizard.ast("public int f(int x){}"));
-  }
-
-  @Test public void bigBlockWithAnnotationReturnsTrue() {
-    assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));
   }
 
   @Test public void smallBlockWithAnnotationReturnsFalse() {
