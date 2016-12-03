@@ -21,6 +21,18 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue683 {
+  private class ASTNodeWrapper {
+    public LinkedList<ASTNode> inner;
+
+    public ASTNodeWrapper() {
+      inner = new LinkedList<>();
+    }
+  }
+
+  static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
+    assert true;
+  }
+
   @Test public void a() {
     find.ancestorType(null);
   }
@@ -32,6 +44,18 @@ public class Issue683 {
   @Test public void c() {
     final ASTNode t = createAST("public class A { int p; int f (int x) { return x + 1; }");
     azzert.that(find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(4)), is(t));
+  }
+
+  private ASTNode createAST(final String ¢) {
+    return (ASTNode) az.compilationUnit(wizard.ast(¢)).types().get(0);
+  }
+
+  Predicate<ASTNode> createExpressionPredicate() {
+    return (p) -> az.expression(p) != null;
+  }
+
+  Predicate<ASTNode> createMethodPredicate() {
+    return (p) -> az.methodDeclaration(p) != null;
   }
 
   @Test public void d() {
@@ -54,16 +78,6 @@ public class Issue683 {
     azzert.that(find.ancestorType(getChildren(createMethodPredicate(), t).inner.get(0)), is(t));
   }
 
-  @Test public void h() {
-    final ASTNode t = createAST("public class A { int x, y; int foo() { return ( (2*((x+y)-(x*y) + y))/5) - 3; } }");
-    azzert.that(find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(6)), is(t));
-  }
-
-  @Test public void i() {
-    final ASTNode t = createAST("public class A { public class B { } }");
-    azzert.that(find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(1).getParent()), is(t));
-  }
-
   private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
@@ -75,27 +89,13 @@ public class Issue683 {
     return $;
   }
 
-  Predicate<ASTNode> createExpressionPredicate() {
-    return (p) -> az.expression(p) != null;
+  @Test public void h() {
+    final ASTNode t = createAST("public class A { int x, y; int foo() { return ( (2*((x+y)-(x*y) + y))/5) - 3; } }");
+    azzert.that(find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(6)), is(t));
   }
 
-  Predicate<ASTNode> createMethodPredicate() {
-    return (p) -> az.methodDeclaration(p) != null;
-  }
-
-  private class ASTNodeWrapper {
-    public LinkedList<ASTNode> inner;
-
-    public ASTNodeWrapper() {
-      inner = new LinkedList<>();
-    }
-  }
-
-  private ASTNode createAST(final String ¢) {
-    return (ASTNode) az.compilationUnit(wizard.ast(¢)).types().get(0);
-  }
-
-  static void auxTypeDeclaration(@SuppressWarnings("unused") final TypeDeclaration __) {
-    assert true;
+  @Test public void i() {
+    final ASTNode t = createAST("public class A { public class B { } }");
+    azzert.that(find.ancestorType(getChildren(createExpressionPredicate(), t).inner.get(1).getParent()), is(t));
   }
 }

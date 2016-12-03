@@ -13,6 +13,36 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
+  @Test public void complicated() {
+    assertEquals(GuessedContext.METHOD_LOOKALIKE,
+        GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence query,final Locale l){" //
+            + "if (term == null || query == null)" //
+            + "throw new IllegalArgumentException(\"Strings must not be null\");" //
+            + "ExplodeOnNullWith(l, new IllegalArgumentException(\"Locale must not be null\"));"//
+            + "final String termLowerCase = (term + \"\").toLowerCase(l);" //
+            + "final String queryLowerCase = (query + \"\").toLowerCase(l);"//
+            + "int $ = 0;" //
+            + "  return $;" //
+            + "for (int termIndex = 0, previousMatchingCharacterIndex = Integer.MIN_VALUE, queryIndex = 0; queryIndex < queryLowerCase"
+            + ".length(); ++queryIndex)" //
+            + "for (boolean termCharacterMatchFound = false; termIndex < termLowerCase.length()"//
+            + "  && !termCharacterMatchFound; ++termIndex)"//
+            + "if (queryLowerCase.charAt(queryIndex) == termLowerCase.charAt(termIndex)) {"//
+            + "++$;"//
+            + " if (previousMatchingCharacterIndex + 1 == termIndex)"//
+            + "$ += 2;"//
+            + "previousMatchingCharacterIndex = termIndex; "//
+            + "termCharacterMatchFound = true; "//
+            + "}"//
+            + "  return $;"//
+            + " }"));
+  }
+
+  @Test public void complicated2() {
+    assertEquals(GuessedContext.STATEMENTS_LOOK_ALIKE, GuessedContext.find(" for (int $N0 = 0; $N0 < $N1; ++$N0) $N2 ^= $N3.$N4($N5, $N6)[0];" //
+    ));
+  }
+
   @Test public void dealWithComment() {
     azzert.that(find("if (b) {\n"), is(STATEMENTS_LOOK_ALIKE));
   }
@@ -117,45 +147,15 @@ public final class GuessedContextTest {
     azzert.that(METHOD_LOOKALIKE.off(METHOD_LOOKALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
+  @Test public void methodInvocation() {
+    assertEquals(GuessedContext.EXPRESSION_LOOK_ALIKE, GuessedContext.find("fuo()"));
+  }
+
   @Test public void offDivision() {
     azzert.that("a/b", is(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a/b"))));
   }
 
   @Test public void statement() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
-  }
-
-  @Test public void complicated() {
-    assertEquals(GuessedContext.METHOD_LOOKALIKE,
-        GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence query,final Locale l){" //
-            + "if (term == null || query == null)" //
-            + "throw new IllegalArgumentException(\"Strings must not be null\");" //
-            + "ExplodeOnNullWith(l, new IllegalArgumentException(\"Locale must not be null\"));"//
-            + "final String termLowerCase = (term + \"\").toLowerCase(l);" //
-            + "final String queryLowerCase = (query + \"\").toLowerCase(l);"//
-            + "int $ = 0;" //
-            + "  return $;" //
-            + "for (int termIndex = 0, previousMatchingCharacterIndex = Integer.MIN_VALUE, queryIndex = 0; queryIndex < queryLowerCase"
-            + ".length(); ++queryIndex)" //
-            + "for (boolean termCharacterMatchFound = false; termIndex < termLowerCase.length()"//
-            + "  && !termCharacterMatchFound; ++termIndex)"//
-            + "if (queryLowerCase.charAt(queryIndex) == termLowerCase.charAt(termIndex)) {"//
-            + "++$;"//
-            + " if (previousMatchingCharacterIndex + 1 == termIndex)"//
-            + "$ += 2;"//
-            + "previousMatchingCharacterIndex = termIndex; "//
-            + "termCharacterMatchFound = true; "//
-            + "}"//
-            + "  return $;"//
-            + " }"));
-  }
-
-  @Test public void complicated2() {
-    assertEquals(GuessedContext.STATEMENTS_LOOK_ALIKE, GuessedContext.find(" for (int $N0 = 0; $N0 < $N1; ++$N0) $N2 ^= $N3.$N4($N5, $N6)[0];" //
-    ));
-  }
-
-  @Test public void methodInvocation() {
-    assertEquals(GuessedContext.EXPRESSION_LOOK_ALIKE, GuessedContext.find("fuo()"));
   }
 }
