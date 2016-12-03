@@ -18,24 +18,6 @@ import il.org.spartan.spartanizer.engine.*;
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class EnvironmentTestDeclares {
-  @Test public void declaresDownMethodDeclaration01() {
-    for (final Entry<String, Information> ¢ : Environment
-        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
-      assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
-  }
-
-  @Test public void declaresDownMethodDeclaration02() {
-    for (final Entry<String, Information> ¢ : Environment
-        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){}void g(int a){}void h(){ int a; }}"))))
-      assert (".A.f.a".equals(¢.getKey()) || ".A.g.a".equals(¢.getKey()) || ".A.h.#block0.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
-  }
-
-  @Test public void declaresDownMethodDeclaration03() {
-    for (final Entry<String, Information> ¢ : Environment
-        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){class B{" + "void g(int a){}" + "}" + "}}"))))
-      assert ".A.f.a".equals(¢.getKey()) || ".A.f.#block0.B.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
-  }
-
   @Test public void declare_0() {
     final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from(""));
     assert !$.contains("a");
@@ -91,6 +73,24 @@ public class EnvironmentTestDeclares {
 
   @Test public void declare_9() {
     assert declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;")).contains("a");
+  }
+
+  @Test public void declaresDownMethodDeclaration01() {
+    for (final Entry<String, Information> ¢ : Environment
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
+      assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
+  }
+
+  @Test public void declaresDownMethodDeclaration02() {
+    for (final Entry<String, Information> ¢ : Environment
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){}void g(int a){}void h(){ int a; }}"))))
+      assert (".A.f.a".equals(¢.getKey()) || ".A.g.a".equals(¢.getKey()) || ".A.h.#block0.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
+  }
+
+  @Test public void declaresDownMethodDeclaration03() {
+    for (final Entry<String, Information> ¢ : Environment
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){class B{" + "void g(int a){}" + "}" + "}}"))))
+      assert ".A.f.a".equals(¢.getKey()) || ".A.f.#block0.B.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
   }
 
   @Test public void declareTestMethodDefinition() {

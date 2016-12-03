@@ -15,12 +15,20 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue552 {
-  @Test public void a0() {
-    enumerate.expressions(null);
+  static ASTNode ast(final String ¢) {
+    return wizard.ast(¢);
+  }
+
+  static void auxInt(@SuppressWarnings("unused") final int __) {
+    assert true;
   }
 
   @Test public void a() {
     auxInt(enumerate.expressions((ASTNode) null));
+  }
+
+  @Test public void a0() {
+    enumerate.expressions(null);
   }
 
   @Test public void b() {
@@ -57,13 +65,5 @@ public class Issue552 {
 
   @Test public void j() {
     azzert.that(enumerate.expressions(ast("1 + 2")), is(3));
-  }
-
-  static void auxInt(@SuppressWarnings("unused") final int __) {
-    assert true;
-  }
-
-  static ASTNode ast(final String ¢) {
-    return wizard.ast(¢);
   }
 }

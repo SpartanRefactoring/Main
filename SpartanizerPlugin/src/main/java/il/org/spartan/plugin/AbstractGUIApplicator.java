@@ -237,7 +237,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
-    final IProgressMonitor m = newSubMonitor(progressMonitor);
+    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final AtomicInteger $ = new AtomicInteger(0);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -270,7 +270,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor m = newSubMonitor(progressMonitor);
+    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final AtomicInteger $ = new AtomicInteger(0);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -390,7 +390,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   protected void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over laconizeable compilation units...", us.size());
     for (final ICompilationUnit ¢ : us)
-      scanCompilationUnit(¢, newSubMonitor(progressMonitor));
+      scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
     progressMonitor.done();
   }
 
