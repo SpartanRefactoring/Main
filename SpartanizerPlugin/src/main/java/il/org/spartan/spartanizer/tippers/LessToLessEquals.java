@@ -24,15 +24,16 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan
  * @since 2-12-2016 */
-public class LessEqualsToLess extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
+public class LessToLessEquals extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    return !isLegalOperation(¢) || !iz.infixMinus(¢.getRightOperand())
-        || !"1".equals(az.numberLiteral(az.infixExpression(¢.getRightOperand()).getRightOperand()).getToken()) || type.isDouble(¢.getLeftOperand())
-            ? null : subject.pair(¢.getLeftOperand(), az.infixExpression(¢.getRightOperand()).getLeftOperand()).to(Operator.LESS);
+    return !isLegalOperation(¢) || !iz.infixPlus(¢.getRightOperand())
+        || !"1".equals(az.numberLiteral(az.infixExpression(¢.getRightOperand()).getRightOperand()).getToken()) ||
+        iz.number(az.infixExpression(¢.getRightOperand()).getLeftOperand())||type.isDouble(¢.getLeftOperand())
+            ? null : subject.pair(¢.getLeftOperand(), az.infixExpression(¢.getRightOperand()).getLeftOperand()).to(Operator.LESS_EQUALS);
   }
 
   private static boolean isLegalOperation(InfixExpression ¢) {
-    return iz.infixLessEquals(¢);
+    return iz.infixLess(¢);
   }
 
   @Override public String description(final InfixExpression ¢) {
