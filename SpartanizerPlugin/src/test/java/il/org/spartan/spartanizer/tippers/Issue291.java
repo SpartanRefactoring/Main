@@ -68,9 +68,9 @@ public class Issue291 {
     trimmingOf("a-1 <= length").gives("a <= length+1");
   }
 
-  @Ignore @Test public void test22() {
-    trimmingOf("a <= length-1")//
-        .gives("a< length");
+  @Test public void test22() {
+    trimmingOf("int a; boolean b = (a <= length-1);")//
+        .gives("int a; boolean b = (a < length);");
   }
 
   @Test public void test3() {
