@@ -11,12 +11,6 @@ import il.org.spartan.spartanizer.engine.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class ParseASTTest {
-  /** @param args */
-  private final String test1 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
-      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-
   public static void main(final String[] args) {
     final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
@@ -125,6 +119,11 @@ public class ParseASTTest {
   }
 
   @Test public void testStepMethod_01() {
+    /* */
+    final String test1 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
+        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
     makeAST.COMPILATION_UNIT.from(test1).accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
         for (final Statement o : step.statements(step.body(node))) {

@@ -41,7 +41,7 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
     return isLegalOperation(¢) && iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
   }
 
-  private static boolean isLegalOperation(InfixExpression ¢) {
+  private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 

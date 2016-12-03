@@ -28,7 +28,6 @@ import il.org.spartan.utils.*;
  * @since 29/03/2016 */
 public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
-  private final String title;
   private int numColumns;
   private final List<FieldEditor> members = new ArrayList<>();
   private final Group group;
@@ -41,7 +40,7 @@ public final class GroupFieldEditor extends FieldEditor {
    * @param fieldEditorParent the widget's parent, usually
    *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
   public GroupFieldEditor(final String labelText, final Composite fieldEditorParent) {
-    title = labelText == null ? "" : labelText;
+    final String title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;
     group = new Group(parent, SWT.SHADOW_OUT);
