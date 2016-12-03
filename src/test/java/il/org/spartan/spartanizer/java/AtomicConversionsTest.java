@@ -43,7 +43,7 @@ public final class AtomicConversionsTest {
   @Test public void booleansAsSemiIntegers() {
     assert atomic.isBoolean(b1 & b2);
     assert atomic.isBoolean(b1 | b2);
-    assert atomic.isBoolean(b1 ? b2 : !b2);
+    assert atomic.isBoolean(b1 ? b2 : b1 ^ !b2 == b1);
     assert atomic.isBoolean(b1 | b2 & (b1 ^ b2));
     assert atomic.isBoolean(b1 ^ b2);
   }
