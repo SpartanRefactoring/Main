@@ -9,6 +9,18 @@ import org.junit.*;
  * @since 27-11-2016 */
 @SuppressWarnings({ "static-method", "boxing" })
 public class Issue873 {
+  class MyType {
+    int i;
+
+    MyType(final int val) {
+      i = val;
+    }
+
+    public int getVal() {
+      return i;
+    }
+  }
+
   @Test public void test0() {
     assertEquals(4, new ParameterObject<>(new MyType(4)).objectValue().getVal());
   }
@@ -50,17 +62,5 @@ public class Issue873 {
 
   @Test public void test8() {
     assertEquals(true, new ParameterObject<>(new MyType(2)).hasDefault());
-  }
-
-  class MyType {
-    int i;
-
-    MyType(final int val) {
-      i = val;
-    }
-
-    public int getVal() {
-      return i;
-    }
   }
 }

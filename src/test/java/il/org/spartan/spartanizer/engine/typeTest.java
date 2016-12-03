@@ -130,7 +130,7 @@ public final class typeTest {
     }
 
     @Test public void axiomBoolean3() {
-      azzert.that(Axiom.type(5 > 6 && 8 != 14), is(BOOLEAN));
+      azzert.that(Axiom.type(hashCode() > 6 && i != 14), is(BOOLEAN));
     }
 
     @Test public void axiomByte() {
