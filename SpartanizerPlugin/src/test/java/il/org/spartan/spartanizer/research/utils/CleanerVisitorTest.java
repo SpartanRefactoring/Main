@@ -14,14 +14,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author michalcohen
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
-  @Test public void test1() {
-    new CleanerVisitor().visit((Javadoc) getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner.get(0));
-  }
-
-  @Test public void test2() {
-    new CleanerVisitor().visit((ImportDeclaration) getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner.get(0));
-  }
-
   private class ASTNodeWrapper {
     public LinkedList<ASTNode> inner;
 
@@ -30,12 +22,16 @@ public class CleanerVisitorTest {
     }
   }
 
-  static Predicate<ASTNode> createJavadocPredicate() {
-    return (p) -> p instanceof Javadoc;
+  private static ASTNode createAST(final String ¢) {
+    return wizard.ast(¢);
   }
 
   static Predicate<ASTNode> createImportPredicate() {
     return (p) -> p instanceof ImportDeclaration;
+  }
+
+  static Predicate<ASTNode> createJavadocPredicate() {
+    return (p) -> p instanceof Javadoc;
   }
 
   private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
@@ -49,7 +45,11 @@ public class CleanerVisitorTest {
     return $;
   }
 
-  private static ASTNode createAST(final String ¢) {
-    return wizard.ast(¢);
+  @Test public void test1() {
+    new CleanerVisitor().visit((Javadoc) getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner.get(0));
+  }
+
+  @Test public void test2() {
+    new CleanerVisitor().visit((ImportDeclaration) getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner.get(0));
   }
 }
