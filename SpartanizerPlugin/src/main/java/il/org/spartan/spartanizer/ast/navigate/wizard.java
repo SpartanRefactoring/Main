@@ -494,6 +494,8 @@ public interface wizard {
         $.add(isStatic);
         $.add(isFinal);
       }
+      if (iz.abstractTypeDeclaration(¢)) 
+        $.add(isStatic);
     }
     if (iz.anonymousClassDeclaration(container)) {
       $.add(isPrivate);
