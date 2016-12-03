@@ -28,18 +28,6 @@ public class Issue831 {
   MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
   MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
-  @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
-    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
-  }
-
-  @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
-    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}")).availableStatements().isEmpty();
-  }
-
-  @Test public void oneStatementInScanner() {
-    assert "int a;\n".equals(new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "");
-  }
-
   @Test public void fourStatementInScanner() {
     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
@@ -57,5 +45,17 @@ public class Issue831 {
       return;
     }
     assert false;
+  }
+
+  @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
+    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}")).availableStatements().isEmpty();
+  }
+
+  @Test public void oneStatementInScanner() {
+    assert "int a;\n".equals(new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "");
+  }
+
+  @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
+    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
   }
 }

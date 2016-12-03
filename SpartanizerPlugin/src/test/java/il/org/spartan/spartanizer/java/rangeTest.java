@@ -23,6 +23,22 @@ public class rangeTest {
     assert sum == 7;
   }
 
+  @Test public void test10() {
+    int sum = 0;
+    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
+      for (final Integer i2 : range.to(10).step(2))
+        sum += i2;
+    assert sum == 100;
+  }
+
+  @Test public void test11() {
+    int sum = 0;
+    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
+      for (final Integer i2 : range.to(10).step(2).inclusive())
+        sum += i2;
+    assert sum == 150;
+  }
+
   @Test public void test2() {
     int sum = 0;
     for (final Integer ¢ : range.from(3).to(5).inclusive())
@@ -77,21 +93,5 @@ public class rangeTest {
     for (final Integer ¢ : range.from(100).to(110).step(10))
       sum += ¢;
     assert sum == 100;
-  }
-
-  @Test public void test10() {
-    int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
-      for (final Integer i2 : range.to(10).step(2))
-        sum += i2;
-    assert sum == 100;
-  }
-
-  @Test public void test11() {
-    int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
-      for (final Integer i2 : range.to(10).step(2).inclusive())
-        sum += i2;
-    assert sum == 150;
   }
 }

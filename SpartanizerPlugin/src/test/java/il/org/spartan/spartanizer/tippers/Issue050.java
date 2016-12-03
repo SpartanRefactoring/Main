@@ -14,15 +14,15 @@ public class Issue050 {
     trimmingOf("public final class ClassTest{public ClassTest(){}}").stays();
   }
 
-  @Test public void a$50_EnumInInterface1() {
-    trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}")//
-        .gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
+  @Test public void a$50_enumCtorPrivate() {
+    trimmingOf("enum A {a,b; private A(){}")//
+        .gives("enum A {a,b;A(){}")//
         .stays()//
     ;
   }
 
-  @Test public void a$50_enumCtorPrivate() {
-    trimmingOf("enum A {a,b; private A(){}")//
+  @Test public void a$50_enumCtorProtected() {
+    trimmingOf("enum A {a,b; protected A(){}")//
         .gives("enum A {a,b;A(){}")//
         .stays()//
     ;
@@ -35,9 +35,9 @@ public class Issue050 {
     ;
   }
 
-  @Test public void a$50_enumCtorProtected() {
-    trimmingOf("enum A {a,b; protected A(){}")//
-        .gives("enum A {a,b;A(){}")//
+  @Test public void a$50_EnumInInterface1() {
+    trimmingOf("public interface Int1{static enum Day{SUNDAY,MONDAY}}")//
+        .gives("public interface Int1{enum Day{SUNDAY,MONDAY}}")//
         .stays()//
     ;
   }
