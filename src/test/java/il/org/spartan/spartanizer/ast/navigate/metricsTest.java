@@ -156,8 +156,7 @@ public final class metricsTest {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
     final String helloWorldChars = "\\*Hello, World!\\n*\"";
     azzert.that(metrics.tokens(helloWorldChars), is(8));
-    final String helloCommented = "\\/*Hello*/";
-    azzert.that(metrics.tokens(helloCommented), is(0));
+    azzert.that(metrics.tokens("\\/*Hello*/"), is(0));
   }
 
   @Test public void condensedSizeTest() {
