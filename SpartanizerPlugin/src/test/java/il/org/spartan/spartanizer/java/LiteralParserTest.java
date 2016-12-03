@@ -15,15 +15,6 @@ public final class LiteralParserTest {
     azzert.that(new NumericLiteralClassifier("0x0.0000000000001P-1022").type(), is(Primitive.Certain.DOUBLE));
   }
 
-  @Test public void issue490a() {
-    assert Long.parseLong("0") == 0L;
-    azzert.that(new NumericLiteralClassifier("0L").type(), is(Primitive.Certain.LONG));
-  }
-
-  @Test public void issue490b() {
-    azzert.that(new NumericLiteralClassifier("0x38495ab5").type(), is(Primitive.Certain.INT));
-  }
-
   @Test public void doubleLiteralsFromSpecification() {
     azzert.that(new NumericLiteralClassifier("1e1").type(), is(Primitive.Certain.DOUBLE));
     azzert.that(new NumericLiteralClassifier("2.").type(), is(Primitive.Certain.DOUBLE));
@@ -53,6 +44,15 @@ public final class LiteralParserTest {
 
   @Test public void hasVisibleValue() {
     azzert.that(new NumericLiteralClassifier("2F").literal, is("2F"));
+  }
+
+  @Test public void issue490a() {
+    assert Long.parseLong("0") == 0L;
+    azzert.that(new NumericLiteralClassifier("0L").type(), is(Primitive.Certain.LONG));
+  }
+
+  @Test public void issue490b() {
+    azzert.that(new NumericLiteralClassifier("0x38495ab5").type(), is(Primitive.Certain.INT));
   }
 
   @Test public void kindCharacter() {

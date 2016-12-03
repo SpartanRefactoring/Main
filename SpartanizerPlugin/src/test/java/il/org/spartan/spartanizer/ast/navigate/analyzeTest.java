@@ -43,18 +43,17 @@ public final class analyzeTest {
     azzert.that(s.size(), is(5));
   }
 
-  @Test public void testType0() {
-    azzert.that("int",
-        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName())));
-  }
-
-  @Test public void testType1() {
-    azzert.that("int",
-        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} ")).get(0).getName())));
-  }
-
   @Test public void testEnviromentVariables() {
     azzert.isNull(analyze.enviromentVariables((ASTNode) null));
+  }
+
+  @Test public void testFindDeclarationInMethod0() {
+    azzert.isNull(analyze.type(az.name(wizard.ast("x"))));
+  }
+
+  @Test public void testFindDeclarationInMethod1() {
+    azzert.that("int", is(analyze.type(
+        searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
   }
 
   @Test public void testFindDeclarationInType0() {
@@ -72,12 +71,13 @@ public final class analyzeTest {
         analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }")).get(0).getName())));
   }
 
-  @Test public void testFindDeclarationInMethod0() {
-    azzert.isNull(analyze.type(az.name(wizard.ast("x"))));
+  @Test public void testType0() {
+    azzert.that("int",
+        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName())));
   }
 
-  @Test public void testFindDeclarationInMethod1() {
-    azzert.that("int", is(analyze.type(
-        searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
+  @Test public void testType1() {
+    azzert.that("int",
+        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} ")).get(0).getName())));
   }
 }

@@ -89,6 +89,12 @@ public enum into {
     return (InfixExpression) e(expression);
   }
 
+  /** @param p
+   * @return */
+  public static MethodDeclaration m(final String p) {
+    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.from(p));
+  }
+
   /** Convert a given {@link String} into an {@link PrefixExpression}, or fail
    * the current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -113,11 +119,5 @@ public enum into {
 
   public static Type t(final String codeFragment) {
     return findFirst.type(s(codeFragment));
-  }
-
-  /** @param p
-   * @return */
-  public static MethodDeclaration m(final String p) {
-    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.from(p));
   }
 }

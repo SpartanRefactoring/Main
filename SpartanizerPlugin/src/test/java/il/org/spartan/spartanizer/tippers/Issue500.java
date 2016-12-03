@@ -57,18 +57,6 @@ public class Issue500 {
     trimmingOf("a").stays();
   }
 
-  @Test public void vanilla01() {
-    assert true;
-  }
-
-  @Test public void vanilla02() {
-    assert true;
-  }
-
-  @Test public void vanilla03etc() {
-    assert true;
-  }
-
   @Test public void report1() {
     trimmingOf(
         "int a(B b){if(b instanceof C){C<?>c=(C<?>)b;D<E<F,C<G>>>d=e.f().g().h();while(d.i()){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;} }}return false;}")//
@@ -100,5 +88,17 @@ public class Issue500 {
     trimmingOf("int f12(){return new O(){final int g() {O<E<C<K>>> a;}};}") //
         .gives("int f12(){return new O(){int g() {O<E<C<K>>> a;}};}") //
         .stays();
+  }
+
+  @Test public void vanilla01() {
+    assert true;
+  }
+
+  @Test public void vanilla02() {
+    assert true;
+  }
+
+  @Test public void vanilla03etc() {
+    assert true;
   }
 }
