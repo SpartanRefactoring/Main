@@ -28,8 +28,7 @@ public class MetricsReport implements ConfigurableReport {
     Settings.setHeader("NEWmetrics");
     getSettings();
     Settings.setFileName("/tmp/NEWmetrics.CSV");
-    final Action writeReport = settings.getAction();
-    writeReport.initialize();
+    settings.getAction().initialize();
   }
 
   public MetricsReport() {}
