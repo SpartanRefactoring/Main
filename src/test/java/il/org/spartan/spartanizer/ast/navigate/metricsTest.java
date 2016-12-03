@@ -27,11 +27,46 @@ public final class metricsTest {
     azzert.that(metrics.literals(helloWorld), hasItem("Hello, World!\n"));
   }
 
+  @Test public void bodySizeTest() {
+    azzert.that(metrics.bodySize(booleans), is(0));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
+    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
+  }
+
+  @Test public void condensedSizeTest() {
+    azzert.that(metrics.condensedSize(booleans), is(17));
+    azzert.that(metrics.condensedSize(x1), is(26));
+  }
+
+  @Test public void countMethods() {
+    azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
+  }
+
+  @Test public void dexterityIsNull() {
+    azzert.that(metrics.dexterity(null), is(0));
+  }
+
   @Test public void dictionary() {
     azzert.that(metrics.dictionary(x1), hasItem("a"));
     azzert.that(metrics.dictionary(x2), hasItem("b"));
     azzert.that(metrics.dictionary(x2), hasItem("sqrt"));
   }
+
+  @Test public void horizontalComplexityTest() {
+    // Test a null list and a null Statement
+    final Statement s = null;
+    List<Statement> st = null;
+    azzert.that(metrics.horizontalComplexity(0, s), is(0));
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    // Test a list with one null statement
+    st = new ArrayList<>();
+    st.add(s);
+    azzert.that(metrics.horizontalComplexity(0, st), is(0));
+    st.add(az.statement(wizard.ast("if(true) return 1;")));
+    azzert.that(metrics.horizontalComplexity(0, st), is(13446));
+  }
+  // horizontalComplexity
 
   @Test public void issue101_5() {
     azzert.that(metrics.nodes(i("3+4+5+6")), is(5));
@@ -131,53 +166,12 @@ public final class metricsTest {
     azzert.that(metrics.literacy(helloWorld), is(1));
   }
 
-  @Test public void vocabulary() {
-    azzert.that(metrics.vocabulary(x1), is(4));
-    azzert.that(metrics.vocabulary(x2), is(4));
-    azzert.that(metrics.vocabulary(booleans), is(0));
-  }
-
-  @Test public void dexterityIsNull() {
-    azzert.that(metrics.dexterity(null), is(0));
-  }
-
-  @Test public void countMethods() {
-    azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
-  }
-
-  @Test public void bodySizeTest() {
-    azzert.that(metrics.bodySize(booleans), is(0));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
-  }
-
   @Test public void tokensTest() {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
     final String helloWorldChars = "\\*Hello, World!\\n*\"";
     azzert.that(metrics.tokens(helloWorldChars), is(8));
     azzert.that(metrics.tokens("\\/*Hello*/"), is(0));
   }
-
-  @Test public void condensedSizeTest() {
-    azzert.that(metrics.condensedSize(booleans), is(17));
-    azzert.that(metrics.condensedSize(x1), is(26));
-  }
-
-  @Test public void horizontalComplexityTest() {
-    // Test a null list and a null Statement
-    final Statement s = null;
-    List<Statement> st = null;
-    azzert.that(metrics.horizontalComplexity(0, s), is(0));
-    azzert.that(metrics.horizontalComplexity(0, st), is(0));
-    // Test a list with one null statement
-    st = new ArrayList<>();
-    st.add(s);
-    azzert.that(metrics.horizontalComplexity(0, st), is(0));
-    st.add(az.statement(wizard.ast("if(true) return 1;")));
-    azzert.that(metrics.horizontalComplexity(0, st), is(13446));
-  }
-  // horizontalComplexity
 
   @Test public void understandability() {
     azzert.that(metrics.nodeUnderstandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
@@ -218,5 +212,11 @@ public final class metricsTest {
             "   return false;\n" + //
             " }"))),
         is(7));
+  }
+
+  @Test public void vocabulary() {
+    azzert.that(metrics.vocabulary(x1), is(4));
+    azzert.that(metrics.vocabulary(x2), is(4));
+    azzert.that(metrics.vocabulary(booleans), is(0));
   }
 }

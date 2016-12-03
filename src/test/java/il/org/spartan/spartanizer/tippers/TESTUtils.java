@@ -20,8 +20,31 @@ public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
 
+  static String apply(final Trimmer t, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert u != null;
+    final Document d = new Document(from);
+    assert d != null;
+    return TESTUtils.rewrite(t, u, d).get();
+  }
+
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
+  }
+
+  static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
+  }
+
+  static void assertNotEvenSimilar(final String expected, final String actual) {
+    azzert.that(tide.clean(actual), is(tide.clean(expected)));
+  }
+
+  static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert u != null;
+    azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
   }
 
   /** A test to check that the actual output is similar to the actual value.
@@ -57,28 +80,5 @@ public enum TESTUtils {
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
-  }
-
-  static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
-    final Document d = new Document(from);
-    assert d != null;
-    return TESTUtils.rewrite(t, u, d).get();
-  }
-
-  static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
-  }
-
-  static void assertNotEvenSimilar(final String expected, final String actual) {
-    azzert.that(tide.clean(actual), is(tide.clean(expected)));
-  }
-
-  static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
-    azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
   }
 }

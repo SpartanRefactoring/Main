@@ -486,7 +486,7 @@ public interface wizard {
     }
     if (iz.interface¢(container)) {
       $.addAll(as.list(isPublic, isPrivate, isProtected));
-      if (iz.isMethodDeclaration(¢)){
+      if (iz.isMethodDeclaration(¢)) {
         $.add(isAbstract);
         $.add(isFinal);
       }
@@ -494,7 +494,7 @@ public interface wizard {
         $.add(isStatic);
         $.add(isFinal);
       }
-      if (iz.abstractTypeDeclaration(¢)) 
+      if (iz.abstractTypeDeclaration(¢))
         $.add(isStatic);
     }
     if (iz.anonymousClassDeclaration(container)) {

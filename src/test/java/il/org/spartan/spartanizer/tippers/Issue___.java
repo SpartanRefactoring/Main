@@ -58,6 +58,30 @@ public class Issue___ {
     return new Object();
   }
 
+  private int $0() {
+    return 0;
+  }
+
+  private int $1() {
+    return 1;
+  }
+
+  private boolean $false() {
+    return false;
+  }
+
+  private Object $null() {
+    return null;
+  }
+
+  private boolean $true() {
+    return true;
+  }
+
+  private Object sameSomeObject() {
+    return this;
+  }
+
   /** if fails, suite did not compile... */
   @Test public void Z$000() {
     new Object().hashCode();
@@ -150,29 +174,5 @@ public class Issue___ {
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a").stays();
-  }
-
-  private int $0() {
-    return 0;
-  }
-
-  private int $1() {
-    return 1;
-  }
-
-  private boolean $false() {
-    return false;
-  }
-
-  private Object $null() {
-    return null;
-  }
-
-  private boolean $true() {
-    return true;
-  }
-
-  private Object sameSomeObject() {
-    return this;
   }
 }

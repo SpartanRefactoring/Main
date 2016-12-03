@@ -61,6 +61,15 @@ public final class PrecedenceTest {
     azzert.that(precedence.of(e("a!=b")), is(8));
   }
 
+  /** see issue #813 for more details
+   * @author Ron Gatenio
+   * @author Roy Shchory
+   * @since 16-11-12 */
+  @Test public void equalTest() {
+    assert precedence.equal(e("a+b"), e("a-b"));
+    assert !precedence.equal(e("a+b"), e("a*b"));
+  }
+
   @Test public void exists() {
     precedence.of(e("A+3"));
   }
@@ -76,6 +85,17 @@ public final class PrecedenceTest {
   @Test public void fieldAccess() {
     azzert.that(e("this.f"), instanceOf(FieldAccess.class));
     azzert.that(precedence.of(e("this.f")), is(1));
+  }
+
+  /** see issue #813 for more details
+   * @author Ron Gatenio
+   * @author Roy Shchory
+   * @since 16-11-12 */
+  @Test public void greaterTest() {
+    assert !precedence.greater(e("a*b"), e("a+b"));
+    assert precedence.greater(e("a+b"), e("a*b"));
+    assert precedence.greater(null, e("a+b"));
+    assert precedence.greater(e("a+b"), null);
   }
 
   @Test public void instanceofOperator() {
@@ -145,6 +165,24 @@ public final class PrecedenceTest {
     azzert.that(precedence.of(e("a<=b")), is(7));
   }
 
+  /** see issue #813 for more details
+   * @author Ron Gatenio
+   * @author Roy Shchory
+   * @since 16-11-11 */
+  @Test public void sameTest() {
+    assert precedence.same(e("a+b"), e("a-b"));
+    assert !precedence.same(e("a+b"), e("a*b"));
+  }
+
+  /** see issue #813 for more details
+   * @author Ron Gatenio
+   * @author Roy Shchory
+   * @since 16-11-12 */
+  @Test public void sameTest2() {
+    assert precedence.same(InfixExpression.Operator.PLUS, e("a+b"));
+    assert !precedence.same(InfixExpression.Operator.TIMES, e("a+b"));
+  }
+
   @Test public void shift() {
     azzert.that(precedence.of(e("a>>b")), is(6));
     azzert.that(precedence.of(e("a<<b")), is(6));
@@ -161,43 +199,5 @@ public final class PrecedenceTest {
 
   @Test public void xor() {
     azzert.that(precedence.of(e("a^b")), is(10));
-  }
-
-  /** see issue #813 for more details
-   * @author Ron Gatenio
-   * @author Roy Shchory
-   * @since 16-11-11 */
-  @Test public void sameTest() {
-    assert precedence.same(e("a+b"), e("a-b"));
-    assert !precedence.same(e("a+b"), e("a*b"));
-  }
-
-  /** see issue #813 for more details
-   * @author Ron Gatenio
-   * @author Roy Shchory
-   * @since 16-11-12 */
-  @Test public void equalTest() {
-    assert precedence.equal(e("a+b"), e("a-b"));
-    assert !precedence.equal(e("a+b"), e("a*b"));
-  }
-
-  /** see issue #813 for more details
-   * @author Ron Gatenio
-   * @author Roy Shchory
-   * @since 16-11-12 */
-  @Test public void greaterTest() {
-    assert !precedence.greater(e("a*b"), e("a+b"));
-    assert precedence.greater(e("a+b"), e("a*b"));
-    assert precedence.greater(null, e("a+b"));
-    assert precedence.greater(e("a+b"), null);
-  }
-
-  /** see issue #813 for more details
-   * @author Ron Gatenio
-   * @author Roy Shchory
-   * @since 16-11-12 */
-  @Test public void sameTest2() {
-    assert precedence.same(InfixExpression.Operator.PLUS, e("a+b"));
-    assert !precedence.same(InfixExpression.Operator.TIMES, e("a+b"));
   }
 }
