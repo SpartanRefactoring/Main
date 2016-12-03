@@ -12,6 +12,13 @@ import il.org.spartan.spartanizer.engine.*;
  * @author koral chapnik
  * @since 16-11-10 */
 public class Issue814 {
+  @Test @SuppressWarnings("static-method") public void nullTest() {
+    final Assignment a = into.a("a = 3");
+    final Statement s = into.s("f();");
+    a.getParent().delete();
+    assert new AssignmentAndReturn().go(null, a, s, null) == null;
+  }
+
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = new MethodExplorer(m).returnStatements().get(0);
@@ -22,12 +29,5 @@ public class Issue814 {
         return true;
       }
     });
-  }
-
-  @Test @SuppressWarnings("static-method") public void nullTest() {
-    final Assignment a = into.a("a = 3");
-    final Statement s = into.s("f();");
-    a.getParent().delete();
-    assert new AssignmentAndReturn().go(null, a, s, null) == null;
   }
 }

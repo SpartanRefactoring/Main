@@ -138,6 +138,14 @@ public final class Issue223 {
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
+  private ClassInstanceCreation findMe(final Statement c) {
+    return findFirst.instanceOf(SUBJECT_CLASS, c);
+  }
+
+  private ClassInstanceCreationValueTypes makeTipper() {
+    return new ClassInstanceCreationValueTypes();
+  }
+
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);").gives("Integer x = Integer.valueOf(1+9);").gives("Integer x = Integer.valueOf(10);").stays();
   }
@@ -214,13 +222,5 @@ public final class Issue223 {
     assert d != null;
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
-  }
-
-  private ClassInstanceCreation findMe(final Statement c) {
-    return findFirst.instanceOf(SUBJECT_CLASS, c);
-  }
-
-  private ClassInstanceCreationValueTypes makeTipper() {
-    return new ClassInstanceCreationValueTypes();
   }
 }

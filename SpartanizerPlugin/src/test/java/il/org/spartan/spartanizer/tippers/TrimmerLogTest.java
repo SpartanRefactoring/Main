@@ -20,6 +20,25 @@ import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
+  /** Tests of {@link cmdline.TrimmerLog}
+   * @author AnnaBel7
+   * @author michalcohen
+   * @since Nov 10, 2016 */
+  @Test public void a() {
+    TrimmerLog.setMaxApplications(50);
+    azzert.that(TrimmerLog.getMaxApplications(), is(50));
+  }
+
+  @Test public void b() {
+    TrimmerLog.setMaxTips(50);
+    azzert.that(TrimmerLog.getMaxTips(), is(50));
+  }
+
+  @Test public void c() {
+    TrimmerLog.setMaxVisitations(50);
+    azzert.that(TrimmerLog.getMaxVisitations(), is(50));
+  }
+
   @Test public void test02() {
     final Operand o = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(o.get()).on(o.get());
@@ -75,24 +94,5 @@ public class TrimmerLogTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     assert u.getJavaElement() == null;
-  }
-
-  /** Tests of {@link cmdline.TrimmerLog}
-   * @author AnnaBel7
-   * @author michalcohen
-   * @since Nov 10, 2016 */
-  @Test public void a() {
-    TrimmerLog.setMaxApplications(50);
-    azzert.that(TrimmerLog.getMaxApplications(), is(50));
-  }
-
-  @Test public void b() {
-    TrimmerLog.setMaxTips(50);
-    azzert.that(TrimmerLog.getMaxTips(), is(50));
-  }
-
-  @Test public void c() {
-    TrimmerLog.setMaxVisitations(50);
-    azzert.that(TrimmerLog.getMaxVisitations(), is(50));
   }
 }
