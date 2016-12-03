@@ -96,4 +96,8 @@ public class Issue291 {
   @Test public void test8() {
     trimmingOf("a-22==b+c+d").gives("a==b+c+d+22").stays();
   }
+  
+  @Test public void test9() {
+    trimmingOf("a< b+1").gives("a<=b").stays();
+  }
 }
