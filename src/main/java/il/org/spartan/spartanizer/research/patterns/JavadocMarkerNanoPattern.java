@@ -18,7 +18,7 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
 
   protected abstract boolean prerequisites(N ¢);
 
-  @Override public Tip tip(final N n) {
+  @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         wizard.addJavaDoc(n, r, g, javadoc());

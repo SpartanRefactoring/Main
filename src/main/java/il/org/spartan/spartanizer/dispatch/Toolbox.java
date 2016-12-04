@@ -119,10 +119,6 @@ public class Toolbox {
         .add(ThrowStatement.class, //
             new ThrowNotLastInBlock(), //
             null) //
-        // TODO: Marco add this tipper when it's ready
-        // .add(CastExpression.class, //
-        // new Coercion(), //
-        // null)
         .add(ClassInstanceCreation.class, //
             new ClassInstanceCreationValueTypes(), //
             null) //
@@ -203,16 +199,11 @@ public class Toolbox {
             new SimplifyComparisionOfAdditions(), //
             new SimplifyComparisionOfSubtractions(), //
             null)
-        // TODO: Marco add when ready
-        // .add(InstanceofExpression.class, //
-        // new InstanceOf(), //
-        // null)//
         .add(MethodDeclaration.class, //
             new AnnotationSort.ofMethod(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            // TODO: Marco new SetterGoFluent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
             null)
         .add(MethodInvocation.class, //
