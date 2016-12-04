@@ -70,7 +70,12 @@ public class Analyze {
           }
       });
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
-    writeFile(new File(getProperty("outputDir") + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
+    writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
+    Logger.summarizeSortedMethodStatistics(outputDir());
+  }
+
+  private static String outputDir() {
+    return getProperty("outputDir");
   }
 
   private static void initializeSpartanizer() {
@@ -90,7 +95,7 @@ public class Analyze {
   }
 
   private static void createOutputDirIfNeeded() {
-    final File dir = new File(getProperty("outputDir"));
+    final File dir = new File(outputDir());
     if (!dir.exists())
       dir.mkdir();
   }
@@ -183,9 +188,13 @@ public class Analyze {
       final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
-      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
+      try {
+        appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
+        //
+      }
     }
-    Logger.summarize(getProperty("outputDir"));
+    Logger.summarize(outputDir());
   }
 
   private static String spartanize(final ASTNode cu) {
@@ -201,7 +210,7 @@ public class Analyze {
   }
 
   private static void deleteOutputFile() {
-    new File(getProperty("outputDir") + "/after.java").delete();
+    new File(outputDir() + "/after.java").delete();
   }
 
   @SuppressWarnings("rawtypes") private static void methodsAnalyze() {
@@ -250,7 +259,7 @@ public class Analyze {
             new AnyMatches(), //
             new Contains(), //
             new ForEach(), //
-            new FindFirst(), //
+            new FindFirstEnhancedFor(), //
             new Reduce(), //
             null) //
         .add(ForStatement.class, //
@@ -282,9 +291,9 @@ public class Analyze {
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Converter(), //
+        new DownCaster(), //
         new Examiner(), //
-        new Exploder(), //
+        new Thrower(), //
         new FluentSetter(), ///
         new Getter(), //
         new Mapper(), //
@@ -294,7 +303,7 @@ public class Analyze {
 
   private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Carrier(), //
+        new DefaultParametersAdder(), //
         new Delegator(), //
         new Fluenter(), //
         new Independent(), //

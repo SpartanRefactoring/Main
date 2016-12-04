@@ -14,7 +14,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
+/** 
+ * @mdoron this is a redundant tipper, see #750
+ * Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
@@ -24,6 +26,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
   }
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
+    /**
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
@@ -47,5 +50,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
         Tippers.rename(n, ¢, s, r, g);
       }
     };
+    **/
+    return null;
   }
 }
