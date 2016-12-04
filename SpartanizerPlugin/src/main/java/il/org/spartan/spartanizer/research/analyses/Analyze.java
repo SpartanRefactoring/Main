@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.*;
@@ -49,6 +50,10 @@ public class Analyze {
 
   private static void initializeSpartanizer() {
     spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+  }
+
+  public static Toolbox toolboxWithNanoPatterns() {
+    return addNanoPatterns((new InteractiveSpartanizer())).toolbox;
   }
 
   /** run an interactive classifier to classify nanos! */

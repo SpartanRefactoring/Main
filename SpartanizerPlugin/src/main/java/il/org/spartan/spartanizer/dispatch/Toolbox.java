@@ -97,7 +97,7 @@ public class Toolbox {
     return freshCopyOfAllTippers();
   }
 
-  public static Toolbox emptyToolboox() {
+  private static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
