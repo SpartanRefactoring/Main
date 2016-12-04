@@ -128,8 +128,8 @@ public class Issue291 {
     .gives("a <= length+1");
   }
   
-  @Test public void test22() {
+  /*@Test public void test22() {
     trimmingOf("int a; boolean b = (a <= length-1);")//
         .gives("int a; boolean b = (a < length);");
-  }
+  }*/
 }
