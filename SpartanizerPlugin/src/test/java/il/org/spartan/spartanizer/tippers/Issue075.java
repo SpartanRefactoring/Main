@@ -11,15 +11,15 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue075 {
   @Test public void issue075a() {
-    trimmingOf("int i = 0;").stays();
+    trimmingOf("int i = 0; ++i;").stays();
   }
 
   @Test public void issue075b() {
-    trimmingOf("int i = +1;").gives("int i = 1;");
+    trimmingOf("int i = +1; ++i;").gives("int i = 1; ++i;");
   }
 
   @Test public void issue075c() {
-    trimmingOf("int i = +a;").gives("int i = a;");
+    trimmingOf("int i = +a; ++i;").gives("int i = a; ++i;");
   }
 
   @Test public void issue075d() {
@@ -39,7 +39,7 @@ public class Issue075 {
   }
 
   @Test public void issue075h() {
-    trimmingOf("int i; i = +0;").gives("int i = +0;").gives("int i=0;");
+    trimmingOf("int i; i = +0;").gives("int i = +0;").gives("");
   }
 
   @Test public void issue075i() {

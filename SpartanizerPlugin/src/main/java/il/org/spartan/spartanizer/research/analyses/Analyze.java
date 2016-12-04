@@ -59,16 +59,18 @@ public class Analyze {
    */
   private static void spartanizeMethodsAndSort() {
     List<MethodDeclaration> methods = new ArrayList<>();
-    for (final File f : inputFiles())
-      //
-      step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
+    for (final File f : inputFiles()) {
+      CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+      Logger.logCompilationUnit(cu);
+      step.types(cu).stream().filter(haz::methods).forEach(t -> {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-            methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            methods.add(findFirst.methodDeclaration(wizard.ast(spartanizer.fixedPoint(¢ + ""))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
       });
+    }
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
@@ -239,8 +241,7 @@ public class Analyze {
   private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
     if ("false".equals(getProperty("nmethods")))
       addCharacteristicMethodPatterns(¢);
-    addMethodPatterns(¢);
-    return ¢
+    return addMethodPatterns(¢)
         .add(ConditionalExpression.class, //
             new DefaultsTo(), //
             new SafeReference(), //
@@ -252,9 +253,9 @@ public class Analyze {
             new ReturnOld(), //
             new ReturnAnyMatches(), //
             null) //
-        .add(CastExpression.class, //
-            new Coercion(), //
-            null) //
+        // .add(CastExpression.class, //
+        // new Coercion(), //
+        // null) //
         .add(EnhancedForStatement.class, //
             new AnyMatches(), //
             new Contains(), //
@@ -264,10 +265,10 @@ public class Analyze {
             null) //
         .add(ForStatement.class, //
             new Contains2(), //
-            new CopyArray(), //
+            // new CopyArray(), //
             new FindFirst2(), //
             new ForEach2(), //
-            new InitArray(), //
+            // new InitArray(), //
             new Max2(), //
             new Min2(), //
             new Reduce2(), //
@@ -280,31 +281,32 @@ public class Analyze {
             new PutIfAbsent(), //
             new IfThrow(), //
             null) //
-        .add(InstanceofExpression.class, //
-            new InstanceOf(), //
-            null)//
-        .add(MethodDeclaration.class, //
-            new SetterGoFluent(), //
-            null) //
+    // .add(InstanceofExpression.class, //
+    // new InstanceOf(), //
+    // null)//
+    // .add(MethodDeclaration.class, //
+    // new SetterGoFluent(), //
+    // null) //
     ;
   }
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
+        new DefaultParametersAdder(), //
+        new Delegator(), //
         new DownCaster(), //
         new Examiner(), //
-        new Thrower(), //
         new FluentSetter(), ///
         new Getter(), //
         new Mapper(), //
+        new Setter(), //
+        new Thrower(), //
         new TypeChecker(), //
         null);
   }
 
   private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new DefaultParametersAdder(), //
-        new Delegator(), //
         new Fluenter(), //
         new Independent(), //
         new JDPattern(), //

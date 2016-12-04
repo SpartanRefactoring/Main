@@ -23,9 +23,12 @@ public class MatcherTest {
     assertEquals("print();\n",
         (new Matcher("for($N1 $N2 : $X1) $B", "")).getMatching(findFirst.enhancedForStatement(wizard.ast("for (A b : C) print();")), "$B") + "");
   }
-  
+
   @Test public void d() {
-    assertEquals("a",
-        (new Matcher("$X + b", "")).getMatching(findFirst.expression(wizard.ast("a + b")), "$X") + "");
+    assertEquals("a", (new Matcher("$X + b", "")).getMatching(findFirst.expression(wizard.ast("a + b")), "$X") + "");
+  }
+
+  @Test public void e() {
+    assertTrue(new Matcher("if($X1)throw $X2; ", "").matches(findFirst.ifStatement(wizard.ast("if(x == null) throw new RuntimeError();"))));
   }
 }
