@@ -309,10 +309,12 @@ public class Matcher {
 
   @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
-    if (startsWith$notBlock(p))
+    if (is$X(p))
+      enviroment.put(step.name(az.methodInvocation(p)) + "", n);
+    else if (startsWith$notBlock(p))
       enviroment.put(p + "", n);
     else if (isBlockVariable(p))
-      enviroment.put(blockVariableName(p) + "();", n);
+      enviroment.put(blockVariableName(p), n);
     else {
       final List<? extends ASTNode> nChildren = Recurser.children(n);
       final List<? extends ASTNode> pChildren = Recurser.children(p);
@@ -413,7 +415,7 @@ public class Matcher {
    * @param s
    * @return */
   public ASTNode getMatching(final ASTNode n, final String s) {
-    return collectEnviromentNodes(n, new HashMap<>()).get(reformat(s));
+    return collectEnviromentNodes(n, new HashMap<>()).get(s);
   }
   // /** @param s
   // * @return */

@@ -177,4 +177,10 @@ public interface findFirst {
   static ASTNode statement(final ASTNode ¢) {
     return instanceOf(Statement.class, ¢);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode enhancedForStatement(ASTNode ¢) {
+    return instanceOf(EnhancedForStatement.class, ¢);
+  }
 }
