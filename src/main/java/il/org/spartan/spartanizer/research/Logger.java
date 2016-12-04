@@ -90,6 +90,7 @@ public class Logger {
       report.nl();
     }
     report.close();
+    file.rename(outputDir + "/methodStatistics", outputDir + "/methodStatistics.csv");
   }
 
   /** Divide but if b == 0 return 1.
@@ -117,7 +118,7 @@ public class Logger {
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
-    return openSummaryFile(outputDir + "/methodStatistics.csv");
+    return openSummaryFile(outputDir + "/methodStatistics");
   }
 
   public static CSVStatistics openNPSummaryFile(final String outputDir) {
