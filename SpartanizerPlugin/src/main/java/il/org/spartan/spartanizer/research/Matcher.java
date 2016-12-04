@@ -309,7 +309,9 @@ public class Matcher {
 
   @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
       final Map<String, ASTNode> enviroment) {
-    if (startsWith$notBlock(p))
+    if (is$X(p))
+      enviroment.put(step.name(az.methodInvocation(p)) + "", n);
+    else if (startsWith$notBlock(p))
       enviroment.put(p + "", n);
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p), n);
