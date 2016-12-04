@@ -156,10 +156,12 @@ public class Toolbox {
             new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
+            //new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
             new CachingPattern(), //
             new BlockInlineStatementIntoNext(), //
+            new BlockRemoveDeadVariables(), //
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
