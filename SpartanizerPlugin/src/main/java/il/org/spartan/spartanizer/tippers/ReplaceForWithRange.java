@@ -20,7 +20,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
 
   public ReplaceForWithRange() {
-    if (tippers.size() == 2)
+    if (tippers.size() == 12)
       return;
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
@@ -77,7 +77,13 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
           return true;
         }
         @Override public boolean visit(final PrefixExpression x){
-          if((x.getOperator().toString().equals("++")||x.getOperator().toString().equals("--")&&(iz.simpleName(x.getOperand())&&identifier(az.simpleName(x.getOperand())).equals(id)))){
+          if(((x.getOperator().toString().equals("++")||x.getOperator().toString().equals("--"))&&(iz.simpleName(x.getOperand())&&identifier(az.simpleName(x.getOperand())).equals(id)))){
+            a.inner = true;
+          }
+          return true;
+        }
+        @Override public boolean visit(final PostfixExpression x){
+          if(((x.getOperator().toString().equals("++")||x.getOperator().toString().equals("--"))&&(iz.simpleName(x.getOperand())&&identifier(az.simpleName(x.getOperand())).equals(id)))){
             a.inner = true;
           }
           return true;
