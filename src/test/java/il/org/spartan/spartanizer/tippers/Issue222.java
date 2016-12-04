@@ -13,7 +13,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue222 {
   @Test public void chocolate1() {
-    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n" + "  int y = x;\n"
+    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n" + "  int y = x; ++y;\n"
         + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
         + "    $.addAll(step.extendedOperands(x));\n" + "  return $;\n" + "}\n").stays();
   }
