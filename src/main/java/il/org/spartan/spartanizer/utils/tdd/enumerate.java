@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -58,6 +59,24 @@ public enum enumerate {
     ¢.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
         ++counter.inner;
+        return true;
+      }
+    });
+    return counter.inner;
+  }
+
+  /** @author Ori Marcovitch
+   * @param ¢
+   * @return */
+  public static int methodsWithBody(final CompilationUnit ¢) {
+    if (¢ == null)
+      return 0;
+    final Int counter = new Int();
+    counter.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
+          ++counter.inner;
         return true;
       }
     });
