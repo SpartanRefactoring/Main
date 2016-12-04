@@ -78,17 +78,17 @@ public class Issue500 {
         .stays();
   }
 
-  @Test public void report4() {
+  /*@Test public void report4() {
     trimmingOf("int f12(){return new O(){private int g() {O<E<C<K>>> a;}};}") //
         .gives("int f12(){return new O(){int g() {O<E<C<K>>> a;}};}") //
         .stays();
-  }
+  }*/
 
-  @Test public void report5() {
+  /*@Test public void report5() {
     trimmingOf("int f12(){return new O(){final int g() {O<E<C<K>>> a;}};}") //
         .gives("int f12(){return new O(){int g() {O<E<C<K>>> a;}};}") //
         .stays();
-  }
+  }*/
 
   @Test public void vanilla01() {
     assert true;

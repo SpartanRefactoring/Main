@@ -9,11 +9,11 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue233 {
   @Test public void a() {
-    trimmingOf("switch(x) {} int x=5;").gives("int x=5;").stays();
+    trimmingOf("switch(x) {} int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
 
   @Test public void b() {
-    trimmingOf("switch(x) {} switch(x) {}int x=5;").gives("int x=5;").stays();
+    trimmingOf("switch(x) {} switch(x) {}int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
 
   @Test public void c() {
@@ -25,10 +25,10 @@ public class Issue233 {
   }
 
   @Test public void e() {
-    trimmingOf("switch(x) {} switch(x) { case a: }int x=5;").gives("int x=5;").stays();
+    trimmingOf("switch(x) {} switch(x) { case a: }int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
 
   @Test public void f() {
-    trimmingOf("switch(x) {} switch(x) { case a: }int x=5;").gives("int x=5;").stays();
+    trimmingOf("switch(x) {} switch(x) { case a: }int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
 }
