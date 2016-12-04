@@ -10,7 +10,9 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue853 {
   @Ignore @Test public void test0() {
-    trimmingOf("for(int ¢ = 0; ¢ < 10; ++¢){}").withTipper(ForStatement.class, new ReplaceForWithRange())
-        .gives("for(Integer ¢ : range.from(0).to($10)){}");
+    trimmingOf("for(int ¢ = 3; ¢ < 10; ++¢){++x;++y;}").withTipper(ForStatement.class, new ReplaceForWithRange())
+        .gives("for(Integer ¢ : range.from($L1).to(10)){{++x;++y;}}")
+        .gives("for(Integer ¢ : range.from($L1).to(10)){++x;++y;}")
+        .stays();
   }
 }
