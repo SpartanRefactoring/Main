@@ -139,7 +139,7 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
-    logMethodInfo(n, np);
+    logNanoContainingMethodInfo(n, np);
     logNPInfo(n, np);
     AnalyzerOptions.tickNP();
   }
@@ -159,7 +159,7 @@ public class Logger {
     ++nodesStatistics.get(nodeClassName).inner;
   }
 
-  private static void logMethodInfo(final ASTNode n, final String np) {
+  private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     if (m == null) {
       System.out.println("OMG: node [" + n + "] without a mother method!");
@@ -168,6 +168,10 @@ public class Logger {
     final Integer key = hashMethod(m);
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
+  }
+
+  private static void logMethodInfo(final MethodDeclaration ¢) {
+    methodsStatistics.putIfAbsent(hashMethod(¢), new MethodRecord(¢));
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {
@@ -232,9 +236,11 @@ public class Logger {
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
-   * @param ¢ compilation unit */
-  public static void logCompilationUnit(final CompilationUnit ¢) {
-    numMethods += enumerate.methodsWithBody(¢);
+   * @param u compilation unit */
+  public static void logCompilationUnit(final CompilationUnit u) {
+    for (MethodDeclaration ¢ : searchDescendants.forClass(MethodDeclaration.class).from(u))
+      logMethodInfo(¢);
+    numMethods += enumerate.methodsWithBody(u);
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
