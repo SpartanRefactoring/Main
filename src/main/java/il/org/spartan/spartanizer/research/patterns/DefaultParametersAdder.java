@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -13,13 +15,13 @@ import il.org.spartan.spartanizer.research.*;
  * name) and just adds parameters to the method.
  * @author Ori Marcovitch
  * @since 2016 */
-public class Carrier extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.patternTipper("return $N($A);", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (step.body(¢) == null || !haz.booleanReturnType(¢))
+    if (body(¢) == null || !haz.booleanReturnType(¢))
       return false;
-    @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
+    final List<Statement> ss = statements(body(¢));
     if (ss.size() != 1 || !iz.returnStatement(ss.get(0)) || !tipper.canTip(az.returnStatement(ss.get(0))))
       return false;
     final Expression e = step.expression(az.returnStatement(ss.get(0)));
