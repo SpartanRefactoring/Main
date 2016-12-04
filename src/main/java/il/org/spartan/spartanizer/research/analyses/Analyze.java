@@ -250,7 +250,7 @@ public class Analyze {
             new AnyMatches(), //
             new Contains(), //
             new ForEach(), //
-            new FindFirst(), //
+            new FindFirstEnhancedFor(), //
             new Reduce(), //
             null) //
         .add(ForStatement.class, //
@@ -282,9 +282,9 @@ public class Analyze {
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Converter(), //
+        new DownCaster(), //
         new Examiner(), //
-        new Exploder(), //
+        new Thrower(), //
         new FluentSetter(), ///
         new Getter(), //
         new Mapper(), //
@@ -294,7 +294,7 @@ public class Analyze {
 
   private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
-        new Carrier(), //
+        new DefaultParametersAdder(), //
         new Delegator(), //
         new Fluenter(), //
         new Independent(), //
