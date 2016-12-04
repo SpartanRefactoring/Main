@@ -20,7 +20,7 @@ public class PatternsReport extends TippersReport {
 
   @Override public void go() {
     int n = 0;
-    final CSVLineWriter w = new CSVLineWriter("C:/Users/sorimar/tmp/blah");
+    final CSVLineWriter w = new CSVLineWriter("/tmp/" + this.getClass().getSimpleName() + "." + system.now());
     List<Tipper<? extends ASTNode>>[] implementation = Analyze.toolboxWithNanoPatterns().implementation;
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
