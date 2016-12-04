@@ -30,7 +30,7 @@ public class FindFirst2 extends NanoPatternTipper<ForStatement> {
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
-    return "FindFirst: conevrt to fluent API";
+    return "FindFirstEnhancedFor: conevrt to fluent API";
   }
 
   @Override public Tip tip(final ForStatement s) {
