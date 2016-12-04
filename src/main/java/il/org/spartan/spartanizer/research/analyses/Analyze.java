@@ -39,13 +39,38 @@ public class Analyze {
     AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
-    final String analysis = getProperty("analysis");
-    if ("methods".equals(analysis))
-      methodsAnalyze();
-    else if ("classify".equals(analysis))
-      classify();
-    else
-      analyze();
+    switch (getProperty("analysis")) {
+      case "methods":
+        methodsAnalyze();
+        break;
+      case "classify":
+        classify();
+        break;
+      case "sort":
+        spartanizeMethodsAndSort();
+        break;
+      default:
+        analyze();
+    }
+  }
+
+  /**
+   * 
+   */
+  private static void spartanizeMethodsAndSort() {
+    List<MethodDeclaration> methods = new ArrayList<>();
+    for (final File f : inputFiles())
+      //
+      step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
+        for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+          try {
+            methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+          } catch (@SuppressWarnings("unused") final AssertionError __) {
+            //
+          }
+      });
+    methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
+    writeFile(new File(getProperty("outputDir") + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
   }
 
   private static void initializeSpartanizer() {
@@ -90,6 +115,17 @@ public class Analyze {
       w.write(s);
     } catch (final IOException ¢) {
       monitor.infoIOException(¢, "append");
+    }
+  }
+
+  /** Write String to file.
+   * @param f file
+   * @param s string */
+  private static void writeFile(final File f, final String s) {
+    try (FileWriter w = new FileWriter(f, false)) {
+      w.write(s);
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "write");
     }
   }
 
