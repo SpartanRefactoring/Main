@@ -73,8 +73,9 @@ public final class Issue131 {
 
   @Test public void A$120() {
     trimmingOf("boolean b=false;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;")
-        .gives("boolean b=false;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}else return tr;y+=15;break;}return x;")
-        .gives("boolean b=false;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;break;}else return tr;y+=15;break;}return x;");
+        .gives("for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;")
+        .gives("for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}else return tr;y+=15;break;}return x;")
+        .gives("for(int i=4;i<s.length();++i){if(i==5){tipper+=9;break;}else return tr;y+=15;break;}return x;");
   }
 
   @Test public void A$140() {

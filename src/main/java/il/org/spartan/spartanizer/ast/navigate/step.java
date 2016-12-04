@@ -626,4 +626,10 @@ public enum step {
   public static String identifier(final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getFullyQualifiedName();
   }
+
+  /** @param ¢
+   * @return */
+  public static List<Statement> statements(MethodDeclaration ¢) {
+    return ¢ == null ? null : statements(body(¢));
+  }
 }
