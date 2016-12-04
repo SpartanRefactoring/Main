@@ -157,6 +157,10 @@ public enum az {
   public static Block block(final ASTNode $) {
     return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
+  
+  public static SwitchCase switchCase(final ASTNode $) {
+    return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
+  }
 
   public static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return ¢ == null || !(¢ instanceof BodyDeclaration) ? null : (BodyDeclaration) ¢;
