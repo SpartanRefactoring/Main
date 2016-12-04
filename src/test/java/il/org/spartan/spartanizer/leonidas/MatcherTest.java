@@ -23,4 +23,9 @@ public class MatcherTest {
     assertEquals("print();\n",
         (new Matcher("for($N1 $N2 : $X1) $B", "")).getMatching(findFirst.enhancedForStatement(wizard.ast("for (A b : C) print();")), "$B") + "");
   }
+  
+  @Test public void d() {
+    assertEquals("a",
+        (new Matcher("$X + b", "")).getMatching(findFirst.expression(wizard.ast("a + b")), "$X") + "");
+  }
 }
