@@ -4,14 +4,54 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue858 {
   @Test public void a() {
-    trimmingOf("switch(x){case a:x=1;break;case b:x=2;break;default:x=1;break;}").gives("switch(x){case b:x=2;break;case a:default:x=1;break;}");
+    trimmingOf("switch(x){case a: x=1; break; case b: x=2; break; default: x=1; break; }")
+        .gives("switch(x){ case a: default: x=1; break; case b: x=2; }");
   }
 
   @Test public void b() {
-    trimmingOf("switch(x){case a:x=1;break;case b:x=1;break;}").gives("switch(x){case a:case b:x=1;break;}");
+    trimmingOf("switch(x){ case a: x=1; break; case b: x=1; break; }")
+        .gives("switch(x){ case a: case b: x=1; }");
+  }
+  
+  @Test public void c() {
+    trimmingOf("switch(x){ case a: case b: case c: x=1; break; case d: x=1; break; case e: x=2; break; }")
+        .gives("switch(x){ case a: case b: case c: case d: x=1; break; case e: x=2; }");
+  }
+  
+  @Test public void d() {
+    trimmingOf("switch(x){ case a: case b: case c: x=1; x=1; break; case d: x=1; x=1; break; case e: x=2; break; }")
+        .gives("switch(x){ case a: case b: case c: case d: x=1; x=1; break; case e: x=2; }");
+  }
+  
+  @Test public void e() {
+    trimmingOf("switch(x){ case a: case b: case c: x=1; case d: x=1; break; case e: x=2; break; }").stays();
+  }
+  
+  @Test public void f() {
+    trimmingOf("switch(x){ case a: case b: case c: x=1; break; case e: x=2; break; case d: x=1; }")
+        .gives("switch(x){ case a: case b: case c: case d: x=1; break; case e: x=2; }");
+  }
+  
+  @Test public void g() {
+    trimmingOf("switch(x){ case a: case b: case c: x=1; x=1; break; case e: x=2; break; case d: x=1; }")
+        .gives("switch(x){ case a: case b: case c: x=1; case d: x=1; break; case e: x=2; }");
+  }
+  
+  @Test public void h() {
+    trimmingOf("switch(x){ case a: x=1; break; case b: switch(y) { case c: y=1; break; case d: x=1; break;} break; }").stays();
+  }
+  
+  @Test public void i() {
+    trimmingOf("switch(x){ case a: switch(y) {case a: y=1;} break; case b: x=2;"
+        + "switch(y) {case a: y=1;} break; case c: z=3; x=2; switch(y) { case a: y=1;} break; case d: switch(y) {case b: y=1;}}")
+        .gives("switch(x){ case c: z=3; case b: x=2; case a: switch(y) {case a: y=1;} break; case d: switch(y) {case b: y=1;} }");
+  }
+  
+  @Test public void j() {
+    trimmingOf("switch(x){ case a: x=1; y=2; z=3; break; case b: y=2; z=3; break; case c: x=2; y=2; z=3;}")
+        .gives("switch(x){ case a: x=1; case b: y=2; z=3; break; case c: x=2; y=2; z=3;}");
   }
 }
