@@ -37,7 +37,7 @@ public class TippersReport {
 
   /** @param i
    * @return */
-  private static String intToClassName(final int i) {
+  protected static String intToClassName(final int i) {
     try {
       return name(ASTNode.nodeClassForType(i));
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
@@ -47,7 +47,7 @@ public class TippersReport {
 
   /** @param myActualOperandsClass
    * @return */
-  private static String name(final Class<?> ¢) {
+  protected static String name(final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }
