@@ -70,7 +70,7 @@ public class Issue717 {
 
   @Test public void randomBigBlockReturnsTrue() {
     final String methodName = generateRandomString(MAX_NAME_SIZE);
-    final String firstStat = "{int x;";
+    final String firstStat = "{int x; ++x;";
     final String nextStat = "x=4;";
     final Random random = new Random();
     final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 4 ? 4 : random.nextInt(MAX_STAT_AMOUNT);
