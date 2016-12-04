@@ -102,6 +102,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final NumberLiteral ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final PrefixExpression ¢) {
     return cautiousGo(¢);
   }
