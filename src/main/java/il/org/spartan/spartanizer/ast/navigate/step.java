@@ -418,7 +418,7 @@ public enum step {
    * @param ¢ JD
    * @return reference to the list of sideEffects contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
-    return ¢.statements();
+    return ¢ == null ? null : ¢.statements();
   }
 
   /** Expose the list of sideEffects contained in a {@link SwitchStatement}
