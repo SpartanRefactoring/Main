@@ -22,9 +22,10 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
+    System.out.println("trying ma");
     if (statements(body(d)) == null || statements(body(d)).isEmpty() || !parameters(d).isEmpty())
       return false;
-    // System.out.println(onlyOne(statements(d)));
+    System.out.println(onlyOne(statements(d)));
     for (final UserDefinedTipper<Statement> ¢ : tippers)
       if (¢.canTip(onlyOne(statements(d))))
         return true;

@@ -65,7 +65,7 @@ public class Analyze {
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-            methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            methods.add(findFirst.methodDeclaration(wizard.ast(spartanizer.fixedPoint(¢ + ""))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
@@ -281,12 +281,12 @@ public class Analyze {
             new PutIfAbsent(), //
             new IfThrow(), //
             null) //
-        // .add(InstanceofExpression.class, //
-        // new InstanceOf(), //
-        // null)//
-//        .add(MethodDeclaration.class, //
-//            new SetterGoFluent(), //
-//            null) //
+    // .add(InstanceofExpression.class, //
+    // new InstanceOf(), //
+    // null)//
+    // .add(MethodDeclaration.class, //
+    // new SetterGoFluent(), //
+    // null) //
     ;
   }
 
