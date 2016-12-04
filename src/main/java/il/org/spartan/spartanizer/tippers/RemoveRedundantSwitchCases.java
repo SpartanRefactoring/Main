@@ -99,10 +99,10 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
     if (!l.isEmpty() && (l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE))
       return true;
-    for (int ¢ = 0; ¢ < l.size() - 1; ++¢)
-      if (((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE) && (l.get(¢ + 1).getNodeType() == ASTNode.BREAK_STATEMENT))
-          || (((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE) && (l.get(¢ + 1).getNodeType() == ASTNode.SWITCH_CASE))
-              && (isListContains(l, ¢, "default")) || isListContains(l, ¢ + 1, "default")))
+    for (int k = 0; k < l.size() - 1; ++k)
+      if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
+          || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && (l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE)
+              && (isListContains(l, k, "default") || isListContains(l, k + 1, "default")))
         return true;
     return false;
   }

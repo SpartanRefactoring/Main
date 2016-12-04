@@ -150,8 +150,8 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-        //    new RemoveRedundantSwitchCases(), //
-       //     new RemoveRedundantSwitchBranch(), //
+            new RemoveRedundantSwitchCases(), //
+            new RemoveRedundantSwitchBranch(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
