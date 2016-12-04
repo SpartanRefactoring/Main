@@ -13,9 +13,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * patterns, i.e., without applying these.
  * @author Ori Marcovitch
  * @since Dec 4, 2016 */
-public class PatternsReport extends TippersReport {
+public class NanosReport extends TippersReport {
   public static void main(final String[] args) {
-    new PatternsReport().go();
+    new NanosReport().go();
   }
 
   @Override public void go() {
