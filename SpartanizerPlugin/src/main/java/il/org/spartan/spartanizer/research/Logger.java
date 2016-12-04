@@ -62,25 +62,30 @@ public class Logger {
     report.close();
   }
 
-  @SuppressWarnings({ "boxing", "unused" }) public static void summarizeSortedMethodStatistics(final String outputDir) {
+  @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String outputDir) {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     Map<Integer, List<Double>> ratioMap = new HashMap<>();
+    int statementsTotal = 0;
+    int methodsTotal = 0;
     for (MethodRecord m : methodsStatistics.values()) {
       int key = m.numStatements;
+      if (key == 0)
+        continue; // don't count methods without body
+      ++methodsTotal;
+      statementsTotal += key;
       ratioMap.putIfAbsent(key, new ArrayList<>());
       ratioMap.get(key).add(key == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements)));
     }
-    int statementsTotal = 0;
-    int methodsTotal = 0;
-    for (final Integer k : ratioMap.keySet().stream().sorted().collect(Collectors.toList())) {
+    for (final Integer k : ratioMap.keySet().stream().sorted((x, y) -> x < y ? -1 : x > y ? 1 : 0).collect(Collectors.toList())) {
       final List<Double> li = ratioMap.get(k);
       report //
           .put("#Statement", k) //
-          .put("Statement ratio", li.stream().reduce((x, y) -> x + y).get() / li.size())//
-          .put("#methods fraction", k) //
-          .put("#statements fraction", k) //
+          .put("count", li.size()) //
+          .put("Statement ratio", safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size()))//
+          .put("#methods fraction", safeDiv(li.size(), methodsTotal)) //
+          .put("#statements fraction", safeDiv(k * li.size(), statementsTotal)) //
       ;
       report.nl();
     }
@@ -229,7 +234,7 @@ public class Logger {
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logCompilationUnit(final CompilationUnit ¢) {
-    numMethods += enumerate.methods(¢);
+    numMethods += enumerate.methodsWithBody(¢);
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
