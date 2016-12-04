@@ -52,7 +52,6 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
 
     for (final UserDefinedTipper<ForStatement> ¢ : tippers){
       if(¢.canTip(x)){
-        System.out.println("!@!!@!!@!"+¢.getMatching(x, "$L1"));
         SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
         if(i == null)
           continue;
