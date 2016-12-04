@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -58,6 +59,31 @@ public class Logger {
     System.out.println("Total methods: " + numMethods);
     System.out.println("Average statement ratio: " + safeDiv(sumSratio, numMethods));
     System.out.println("Average Expression ratio: " + safeDiv(sumEratio, numMethods));
+    report.close();
+  }
+
+  @SuppressWarnings({ "boxing", "unused" }) public static void summarizeSortedMethodStatistics(final String outputDir) {
+    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    if (report == null)
+      return;
+    Map<Integer, List<Double>> ratioMap = new HashMap<>();
+    for (MethodRecord m : methodsStatistics.values()) {
+      int key = m.numStatements;
+      ratioMap.putIfAbsent(key, new ArrayList<>());
+      ratioMap.get(key).add(key == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements)));
+    }
+    int statementsTotal = 0;
+    int methodsTotal = 0;
+    for (final Integer k : ratioMap.keySet().stream().sorted().collect(Collectors.toList())) {
+      final List<Double> li = ratioMap.get(k);
+      report //
+          .put("#Statement", k) //
+          .put("Statement ratio", li.stream().reduce((x, y) -> x + y).get() / li.size())//
+          .put("#methods fraction", k) //
+          .put("#statements fraction", k) //
+      ;
+      report.nl();
+    }
     report.close();
   }
 
