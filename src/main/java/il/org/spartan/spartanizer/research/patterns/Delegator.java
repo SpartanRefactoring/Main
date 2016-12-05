@@ -15,7 +15,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.patternTipper("return $N($A);", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (step.body(¢) == null || !haz.booleanReturnType(¢))
+    if (step.body(¢) == null)
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     if (ss.size() != 1 || !iz.returnStatement(ss.get(0)) || !tipper.canTip(az.returnStatement(ss.get(0))))
