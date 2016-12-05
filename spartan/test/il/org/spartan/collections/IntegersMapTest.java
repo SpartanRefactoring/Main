@@ -94,8 +94,7 @@ public final class IntegersMapTest {
       azzert.that(m.get(¢), is(0));
   }
 
-  @SuppressWarnings("static-method") //
-  @Test public void insert1() {
+  @Test @SuppressWarnings("static-method") public void insert1() {
     new IntegersMap().put(10, 100);
   }
 

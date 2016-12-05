@@ -20,7 +20,7 @@ public class DeepSizeTest {
 
   @Test public void DeepSize_of_Array_non_null() {
     @NotNull final Object[] os = makeRecursiveArray(83);
-    azzert.that(DeepSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
+    azzert.that(DeepSize.of(os), is(ShallowSize.align(4 * os.length + 12)));
   }
 
   @Test public void getAllFields_objectByte() {
@@ -163,7 +163,7 @@ public class DeepSizeTest {
     azzert.that(ShallowSize.of(m), is(40));
     azzert.that(DeepSize.of(m), is(120));
     m.put(null, null);
-    azzert.that(DeepSize.of(m), is(120 + 16 + ShallowSize.of(new Object())));
+    azzert.that(DeepSize.of(m), is(136 + ShallowSize.of(new Object())));
   }
 
   @Test public void of_MyHashMap_DEFAULT_INITIAL_CAPACITY() {
@@ -226,7 +226,7 @@ public class DeepSizeTest {
 
   @Test public void ShallowSize_of_Array_non_null() {
     @NotNull final Object[] os = makeRecursiveArray(17);
-    azzert.that(ShallowSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
+    azzert.that(ShallowSize.of(os), is(ShallowSize.align(4 * os.length + 12)));
   }
 
   @Test public void Visitor_size_ObjectBoolean() {

@@ -59,17 +59,17 @@ public enum Enumerate {
 
   @NotNull public static List<String> arabic(@NotNull final Iterable<Object> os, final char separator) {
     @NotNull final List<String> $ = new ArrayList<>();
-    final int i = 1;
+    int i = 1;
     for (final Object ¢ : os)
-      $.add(i + "" + separator + ¢);
+      $.add(++i + "" + separator + ¢);
     return $;
   }
 
   @NotNull public static List<String> arabic(@NotNull final Iterable<Object> os, final String separator) {
     @NotNull final List<String> $ = new ArrayList<>();
-    final int i = 1;
+    int i = 1;
     for (final Object ¢ : os)
-      $.add(i + separator + ¢);
+      $.add(++i + separator + ¢);
     return $;
   }
 

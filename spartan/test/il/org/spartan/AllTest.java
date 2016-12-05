@@ -9,7 +9,7 @@ import org.junit.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 
-@SuppressWarnings("static-method") @TestCase public class AllTest {
+@TestCase @SuppressWarnings("static-method") public class AllTest {
   @Test public void testNotNul_NotNulllNull() {
     assert !All.notNull(new Object[] { new Object(), null });
   }

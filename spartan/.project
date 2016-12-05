@@ -11,21 +11,6 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>il.org.spartan.spartanizer.BuilderID</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>il.il.org.spartan.spartanizer.BuilderID</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>il.org.spartan.spartanizer.BuilderID</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>

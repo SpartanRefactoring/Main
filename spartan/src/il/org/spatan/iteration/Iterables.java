@@ -14,16 +14,16 @@ import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
 
 public class Iterables {
-  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final Iterable<? extends T> ts) {
+  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {
     for (final T ¢ : ts)
-      c.add(¢);
-    return c;
+      $.add(¢);
+    return $;
   }
 
-  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C c, @NotNull final T... ts) {
+  @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final T... ts) {
     for (final T ¢ : ts)
-      c.add(¢);
-    return c;
+      $.add(¢);
+    return $;
   }
 
   @NotNull public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> f) {
@@ -376,9 +376,9 @@ public class Iterables {
   }
 
   public static <E> E[] toArray(@NotNull final Iterable<? extends E> in, final Class<E> clazz) {
-    @NotNull final List<E> es = toList(in);
-    @NotNull @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, es.size());
-    return es.toArray(__);
+    @NotNull final List<E> $ = toList(in);
+    @NotNull @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, $.size());
+    return $.toArray(__);
   }
 
   @NotNull public static double[] toArray(@NotNull final Iterable<Double> ¢) {

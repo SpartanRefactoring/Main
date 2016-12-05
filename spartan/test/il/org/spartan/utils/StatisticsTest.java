@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.streotypes.*;
 
-@SuppressWarnings("static-method") @TestCase public class StatisticsTest {
+@TestCase @SuppressWarnings("static-method") public class StatisticsTest {
   @Test public void testAverage() {
     @NotNull final RealStatistics s = new RealStatistics();
     s.record(1);

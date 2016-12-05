@@ -47,7 +47,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
   }
 
   public E get(final int index) {
-    return es[index + begin];
+    return es[begin + index];
   }
 
   public boolean has(final E ¢) {

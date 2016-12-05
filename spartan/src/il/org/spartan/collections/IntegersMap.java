@@ -26,7 +26,7 @@ public final class IntegersMap {
 
   static int hash(final int ¢) {
     final int $ = ¢ ^ ¢ >>> 12 ^ ¢ >>> 20;
-    return $ ^ $ >>> 7 ^ $ >>> 4;
+    return $ ^ $ >>> 4 ^ $ >>> 7;
   }
 
   private static int roundUp(final int ¢) {
