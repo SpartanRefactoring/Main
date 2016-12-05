@@ -157,31 +157,31 @@ public enum step {
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ReturnStatement $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ThrowStatement $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final WhileStatement ¢) {
-    return ¢.getExpression();
+    return ¢ == null ? null : ¢.getExpression();
   }
 
   @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
-    return ¢.expressions();
+    return ¢ == null ? null : ¢.expressions();
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final BodyDeclaration ¢) {
-    return ¢.modifiers();
+    return ¢ == null ? null : ¢.modifiers();
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final SingleVariableDeclaration ¢) {
-    return ¢.modifiers();
+    return ¢ == null ? null : ¢.modifiers();
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationExpression ¢) {
