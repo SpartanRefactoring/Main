@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
   @Override public final boolean canTip(final N ¢) {
-    return prerequisite(¢);
+    return ¢ != null && prerequisite(¢);
   }
 
   /** @param ¢ the ASTNode being inspected.
