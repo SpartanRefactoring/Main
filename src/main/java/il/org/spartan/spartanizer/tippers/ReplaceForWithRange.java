@@ -17,35 +17,37 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Abramovich
  * @since 2016 */
 public final class ReplaceForWithRange extends Tipper<ForStatement> implements TipperCategory.Idiomatic {
+  private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
+  private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
 
   public ReplaceForWithRange() {
-    if (tippers.size() == 1)
+    if (!tippers.isEmpty())
       return;
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
-   tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
+    tippers.add(
+        TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2))$B", DESCRIPTION_INCLUSIVE));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2).inclusive())$B",
+        DESCRIPTION_NON_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
+        DESCRIPTION_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N+=$L3)$B",
-        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
+        DESCRIPTION_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N+=$L3)$B",
-        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
+        DESCRIPTION_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N-=$L3)$B",
-        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
+        DESCRIPTION_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N-=$L3)$B",
-        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; --$N)$B", "for(Integer $N:range.from($L1).step(-1).to($L2))$B",
-        "replace non-inclusive for loop with the matching range"));
+        DESCRIPTION_INCLUSIVE));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; --$N)$B",
-        "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
   }
 
   @Override public boolean canTip(final ForStatement s) {
@@ -71,6 +73,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
           a.inner = true;
         return true;
       }
+
       @Override public boolean visit(final PrefixExpression ¢) {
         if (iz.incrementOrDecrement(¢) && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
           a.inner = true;
