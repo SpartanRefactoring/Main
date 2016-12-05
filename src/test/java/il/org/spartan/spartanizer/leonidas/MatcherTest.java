@@ -31,4 +31,28 @@ public class MatcherTest {
   @Test public void e() {
     assertTrue(new Matcher("if($X1)throw $X2; ", "").matches(findFirst.ifStatement(wizard.ast("if(x == null) throw new RuntimeError();"))));
   }
+
+  @Test public void f() {
+    assertTrue(new Matcher("return $N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a();"))));
+  }
+
+  @Test public void g() {
+    assertTrue(new Matcher("return $N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a(b);"))));
+  }
+
+  @Test public void h() {
+    assertTrue(new Matcher("return $N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a(b,c,d());"))));
+  }
+
+  @Test public void i() {
+    assertTrue(new Matcher("return $N.$N2($A);", "").matches(findFirst.returnStatement(wizard.ast("return a.b();"))));
+  }
+
+  @Test public void j() {
+    assertTrue(new Matcher("return $N2.$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a.b(c);"))));
+  }
+
+  @Test public void k() {
+    assertTrue(new Matcher("return $N2.$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return g.h.j.a.b(c(h,i,u));"))));
+  }
 }
