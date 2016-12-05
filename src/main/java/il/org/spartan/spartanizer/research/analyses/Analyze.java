@@ -300,6 +300,7 @@ public class Analyze {
         new Getter(), //
         new Mapper(), //
         new Setter(), //
+        new SuperDelegator(), //
         new Thrower(), //
         new TypeChecker(), //
         null);

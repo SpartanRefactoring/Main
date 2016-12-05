@@ -1058,4 +1058,10 @@ public interface iz {
   static boolean type(ASTNode ¢) {
     return ¢ instanceof Type;
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean superMethodInvocation(Expression ¢) {
+    return ¢ instanceof SuperMethodInvocation;
+  }
 }
