@@ -7,7 +7,7 @@ import org.junit.*;
 
 /** @author Dan Abramovich
  * @since 28-11-2016 */
-@Ignore @SuppressWarnings("static-method")
+@SuppressWarnings("static-method")
 public class Issue894 {
   //return $L1
   @Test public void test0() {
