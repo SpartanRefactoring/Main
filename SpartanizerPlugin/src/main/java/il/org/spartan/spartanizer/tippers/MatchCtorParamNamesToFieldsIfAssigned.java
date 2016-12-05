@@ -10,7 +10,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return "Match constructor parameter names to fields";
   }
 
-  @Override public Tip tip(@SuppressWarnings("unused") final MethodDeclaration __) {
+  @Override public Tip tip(final MethodDeclaration __) {
     return null;
   }
 }
