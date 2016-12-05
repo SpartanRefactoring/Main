@@ -63,7 +63,11 @@ public class DelegatorTest {
   }
 
   @Test public void basic9() {
-    notDelegator("public class A{void foo(int a){return bar(a);} }");
+    delegator("public class A{void foo(int a){return bar(a);} }");
+  }
+
+  @Test public void basic10() {
+    delegator("public class A{@Override public Set<E> inEdges(){return incidentEdges();} }");
   }
 
   private void delegator(final String ¢) {
