@@ -17,8 +17,7 @@ public class Issue234 {
   }
 
   @Test public void b$03() {
-    trimmingOf("int a; try { } catch(Exception e) { return -1; }")
-    .gives("try { } catch(Exception e) { return -1; }");
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("try { } catch(Exception e) { return -1; }");
   }
 
   @Test public void b$04() {

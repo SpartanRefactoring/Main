@@ -28,7 +28,6 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     ASTNode p;
     for (p = s.getParent(); p != null && !(p instanceof MethodDeclaration);)
       p = p.getParent();
-    
     if (p instanceof MethodDeclaration) {
       final SingleVariableDeclaration parameter = onlyOne(parameters((MethodDeclaration) p));
       final SimpleName n1 = parameter.getName();
@@ -36,12 +35,10 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
       if (in(n1.getIdentifier(), "¢"))
         return null;
     }
-    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
       return null;
-    
     final Statement body = s.getBody();
     if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf(n).in(body).isEmpty())
       return null;
@@ -55,4 +52,3 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     };
   }
 }
-
