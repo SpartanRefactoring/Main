@@ -28,7 +28,7 @@ public class Logger {
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
-  private static AbstractTypeDeclaration currentType;
+  private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
@@ -171,6 +171,10 @@ public class Logger {
       return;
     }
     final Integer key = hashMethod(m);
+    // if (!methodsStatistics.containsKey(key)) {
+    // System.out.println("OMGOMGOMGOMG");
+    // System.out.println(n);
+    // }
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
   }
@@ -180,7 +184,11 @@ public class Logger {
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {
-    return Integer.valueOf((currentFile + "." + currentType + name(¢) + parametersTypes(¢)).hashCode());
+    return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
+  }
+
+  private static String getType() {
+    return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
 
   /** @param ¢
@@ -242,6 +250,7 @@ public class Logger {
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param u compilation unit */
   public static void logCompilationUnit(final CompilationUnit u) {
+    currentType = new Stack<>();
     for (AbstractTypeDeclaration ¢ : searchDescendants.forClass(AbstractTypeDeclaration.class).from(u))
       logType(¢);
   }
@@ -249,11 +258,14 @@ public class Logger {
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param u compilation unit */
   public static void logType(final AbstractTypeDeclaration d) {
-    currentType = d;
-    for (MethodDeclaration ¢ : searchDescendants.forClass(MethodDeclaration.class).from(d))
+    currentType.push(d);
+    List<MethodDeclaration> ms = step.methods(d);
+    if (ms == null)
+      return;
+    for (MethodDeclaration ¢ : ms)
       if (enumerate.statements(¢) != 0)
         logMethodInfo(¢);
-    numMethods += enumerate.methodsWithBody(d);
+    numMethods += ms.size();
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
@@ -262,7 +274,7 @@ public class Logger {
     currentFile = fileName;
   }
 
-  /** Collects statistics for a nanopattern.
+  /** Collects statistics for a nano.
    * @author Ori Marcovitch
    * @since 2016 */
   static class NPRecord {
@@ -289,5 +301,12 @@ public class Logger {
 
   private static double min(final double a, final double d) {
     return a < d ? a : d;
+  }
+
+  /**
+   * 
+   */
+  public static void finishedType() {
+    currentType.pop();
   }
 }
