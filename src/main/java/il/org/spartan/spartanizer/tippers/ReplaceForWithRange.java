@@ -51,13 +51,13 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
   @Override public boolean canTip(final ForStatement x) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.canTip(x)) {
-        final SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
-        if (i == null)
+        final SimpleName n = az.simpleName(¢.getMatching(x, "$N"));
+        if (n == null)
           continue;
         final Block b = az.block(¢.getMatching(x, "$B"));
         if (b == null)
           continue;
-        if (!ChangedInBlock(i.getIdentifier(), b))
+        if (!ChangedInBlock(n.getIdentifier(), b))
           return true;
       }
     return false;
