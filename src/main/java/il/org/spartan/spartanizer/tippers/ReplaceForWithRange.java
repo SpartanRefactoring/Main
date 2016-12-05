@@ -20,11 +20,11 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
 
   public ReplaceForWithRange() {
-    if (tippers.size() == 12)
+    if (tippers.size() == 1)
       return;
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2).inclusive())$B",
+  /*  tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2).inclusive())$B",
         "replace inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
@@ -45,7 +45,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; --$N)$B", "for(Integer $N:range.from($L1).step(-1).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; --$N)$B",
-        "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+        "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));*/
   }
 
   @Override public boolean canTip(final ForStatement s) {
@@ -74,8 +74,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
 
       // TODO: dan abramavitch this is not the way to check the kind of operator
       @Override public boolean visit(final PrefixExpression ¢) {
-        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + "")) && iz.simpleName(¢.getOperand())
-            && identifier(az.simpleName(¢.getOperand())).equals(id))
+        if (iz.incrementOrDecrement(¢) && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
           a.inner = true;
         return true;
       }
