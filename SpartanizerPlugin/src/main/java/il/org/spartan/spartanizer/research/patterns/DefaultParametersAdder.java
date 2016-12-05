@@ -21,17 +21,16 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDecla
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (body(¢) == null || !haz.booleanReturnType(¢))
       return false;
-    final List<Statement> ss = statements(body(¢));
+    final List<Statement> ss = statements(¢);
     if (ss.size() != 1 || !iz.returnStatement(ss.get(0)) || !tipper.canTip(az.returnStatement(ss.get(0))))
       return false;
     final Expression e = step.expression(az.returnStatement(ss.get(0)));
-    return iz.methodInvocation(e) && containsParameters(¢, e) && step.arguments(az.methodInvocation(e)).size() > step.parametersNames(¢).size();
+    return iz.methodInvocation(e) && containsParameters(¢, e) && arguments(az.methodInvocation(e)).size() > parametersNames(¢).size();
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    for (final String pn : step.parametersNames(¢))
-      if (!step.arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList())
-          .contains(pn))
+    for (final String pn : parametersNames(¢))
+      if (!arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList()).contains(pn))
         return false;
     return true;
   }
