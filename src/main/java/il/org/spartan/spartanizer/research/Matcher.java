@@ -101,7 +101,7 @@ public class Matcher {
     return ids.get(id).equals(s);
   }
 
-  @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
+  private boolean matchesAux(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     if (p == null || n == null)
       return false;
     if (is$X(p))
@@ -124,18 +124,26 @@ public class Matcher {
       return (p + "").equals(n + "");
     if (iz.anyOperator(p) && !sameOperator(p, n))
       return false;
-    final List<? extends ASTNode> nChildren = Recurser.children(n);
-    final List<? extends ASTNode> pChildren = Recurser.children(p);
-    if (iz.methodInvocation(p)) {
-      pChildren.addAll(az.methodInvocation(p).arguments());
-      nChildren.addAll(az.methodInvocation(n).arguments());
-    }
+    final List<ASTNode> pChildren = gatherChildren(p);
+    final List<ASTNode> nChildren = gatherChildren(n);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢), ids))
         return false;
     return true;
+  }
+
+  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode p) {
+    final List<ASTNode> $ = (List<ASTNode>) Recurser.children(p);
+    if (iz.methodInvocation(p) && !isMethodInvocationAndHas$AArgument(p))
+      $.addAll(az.methodInvocation(p).arguments());
+    if (iz.forStatement(p)) {
+      $.addAll(step.initializers(az.forStatement(p)));
+      $.add(step.condition(az.forStatement(p)));
+      $.addAll(step.updaters(az.forStatement(p)));
+    }
+    return $;
   }
 
   /** @param p
@@ -269,21 +277,17 @@ public class Matcher {
     return collectEnviroment(pattern, n, enviroment);
   }
 
-  @SuppressWarnings("unchecked") private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
-      final Map<String, String> enviroment) {
+  /** [[SuppressWarningsSpartan]] */
+  private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> enviroment) {
     if (startsWith$notBlock(p))
       enviroment.put(p + "", n + "");
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p) + "();", n + "");
     else {
-      final List<? extends ASTNode> nChildren = Recurser.children(n);
-      final List<? extends ASTNode> pChildren = Recurser.children(p);
       if (isMethodInvocationAndHas$AArgument(p))
         enviroment.put(argumentsId(p), arguments(n) + "");
-      else if (iz.methodInvocation(p)) {
-        nChildren.addAll(az.methodInvocation(n).arguments());
-        pChildren.addAll(az.methodInvocation(p).arguments());
-      }
+      final List<ASTNode> pChildren = gatherChildren(p);
+      final List<ASTNode> nChildren = gatherChildren(n);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
@@ -298,8 +302,8 @@ public class Matcher {
     return collectEnviromentNodes(pattern, n, enviroment);
   }
 
-  @SuppressWarnings("unchecked") private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n,
-      final Map<String, ASTNode> enviroment) {
+  /** [[SuppressWarningsSpartan]] */
+  private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
     if (is$X(p))
       enviroment.put(step.name(az.methodInvocation(p)) + "", n);
     else if (startsWith$notBlock(p))
@@ -307,12 +311,8 @@ public class Matcher {
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p), n);
     else {
-      final List<? extends ASTNode> nChildren = Recurser.children(n);
-      final List<? extends ASTNode> pChildren = Recurser.children(p);
-      if (iz.methodInvocation(p)) {
-        nChildren.addAll(az.methodInvocation(n).arguments());
-        pChildren.addAll(az.methodInvocation(p).arguments());
-      }
+      final List<ASTNode> pChildren = gatherChildren(p);
+      final List<ASTNode> nChildren = gatherChildren(n);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviromentNodes(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
