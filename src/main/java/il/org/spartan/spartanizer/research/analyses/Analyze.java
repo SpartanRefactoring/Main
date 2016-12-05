@@ -54,21 +54,21 @@ public class Analyze {
     }
   }
 
-  /**
-   * 
-   */
+  /** THE analysis */
   private static void spartanizeMethodsAndSort() {
     List<MethodDeclaration> methods = new ArrayList<>();
     for (final File f : inputFiles()) {
       CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
+        Logger.logType(t);
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
             methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
+        Logger.finishedType();
       });
     }
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
