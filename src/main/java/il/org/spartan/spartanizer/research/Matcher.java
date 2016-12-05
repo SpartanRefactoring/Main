@@ -127,6 +127,8 @@ public class Matcher {
       return false;
     if (is$X(p))
       return iz.expression(n) && consistent(ids, p + "", n + "");
+    if (is$T(p))
+      return iz.type(n) && consistent(ids, p + "", n + "");
     if (iz.name(p))
       return sameName(p, n, ids);
     if (iz.literal(p))
@@ -159,12 +161,22 @@ public class Matcher {
 
   /** @param p
    * @return */
+  private static boolean is$T(ASTNode p) {
+    return iz.type(p) && matches$T(p + "");
+  }
+
+  /** @param p
+   * @return */
   private static boolean is$X(final ASTNode p) {
     return iz.methodInvocation(p) && matches$X(p + "");
   }
 
   private static boolean matches$X(final String p) {
     return p.matches("\\$X\\d*\\(\\)");
+  }
+
+  private static boolean matches$T(final String p) {
+    return p.matches("\\$T\\d*");
   }
 
   /** @param n
