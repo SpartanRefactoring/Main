@@ -19,8 +19,7 @@ public class LightWeightParser {
   }
 
   public void clazz() {
-    @Nullable final Token t = skipUntil(__class, __enum, __interface, AT_INTERFACE);
-    if (t == null)
+    if (skipUntil(__class, __enum, __interface, AT_INTERFACE) == null)
       return;
     getIdentifier();
     skipUntil(LBRACE);

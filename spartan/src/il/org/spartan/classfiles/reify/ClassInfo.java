@@ -233,10 +233,10 @@ public final class ClassInfo extends ConstantPoolEntity {
     return $;
   }
 
-  @Override public boolean equals(@Nullable final Object o) {
-    if (o == null || o.getClass() != getClass())
+  @Override public boolean equals(@Nullable final Object ¢) {
+    if (¢ == null || ¢.getClass() != getClass())
       return false;
-    @NotNull final ClassInfo $ = (ClassInfo) o;
+    @NotNull final ClassInfo $ = (ClassInfo) ¢;
     return $.name().equals(name()) && $.fieldsCount() == fieldsCount() && $.methodCount() == methodCount()
         && $.constructorsCount() == constructorsCount() && $.referencedClasses() == referencedClasses()
         && $.referencedDoubles() == referencedDoubles() && $.referencedInts() == referencedInts()

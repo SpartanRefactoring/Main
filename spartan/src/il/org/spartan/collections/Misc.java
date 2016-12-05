@@ -32,10 +32,9 @@ public class Misc {
     return $;
   }
 
-  @NotNull public static <T> T[] duplicate(@NotNull final T[] ts) {
-    final Class<?> c = ts.getClass().getComponentType();
-    @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) java.lang.reflect.Array.newInstance(c, ts.length);
-    System.arraycopy(ts, 0, $, 0, ts.length);
+  @NotNull public static <T> T[] duplicate(@NotNull final T[] ¢) {
+    @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) java.lang.reflect.Array.newInstance(¢.getClass().getComponentType(), ¢.length);
+    System.arraycopy(¢, 0, $, 0, ¢.length);
     return $;
   }
 

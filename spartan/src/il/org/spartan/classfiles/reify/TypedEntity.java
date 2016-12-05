@@ -61,8 +61,8 @@ public class TypedEntity extends ConstantPoolEntity {
       case 'Z':
         return TypeInfo.makePrimitiveType("boolean");
       case '(':
-        @NotNull final TypeInfo[] arguments = decodeArguments(rest);
-        return TypeInfo.makeMethodType(decodeSingleType(rest), arguments);
+        @NotNull final TypeInfo[] $ = decodeArguments(rest);
+        return TypeInfo.makeMethodType(decodeSingleType(rest), $);
       case 'L':
         return TypeInfo.makeReferenceType(decodeReferenceType(rest));
       case '[':

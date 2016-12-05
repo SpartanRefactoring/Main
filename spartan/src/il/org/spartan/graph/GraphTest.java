@@ -38,7 +38,7 @@ public class GraphTest {
 
   static void verifyGraphsEquivlanet(@NotNull final Graph<String> g1, @NotNull final Graph<String> g2) {
     assertEquals(g1.size(), g2.size());
-    if (g1.size() > 0)
+    if (!g1.isEmpty())
       for (@NotNull final Vertex<String> sv : g1.vertices()) {
         final Vertex<String> v = g2.vertex(sv.e());
         assertEquals(sv.e(), v.e());
@@ -377,7 +377,7 @@ public class GraphTest {
     assert g.vertex("B1") != null;
     assert g.vertex("B2") != null;
     assert g.vertex("V") != null;
-    assertEquals(1 + 2 + 3, index(g, "D") + index(g, "B1") + index(g, "B2") + index(g, "V"));
+    assertEquals(6, index(g, "D") + index(g, "B1") + index(g, "B2") + index(g, "V"));
     verifySink(g, "V");
     verifySource(g, "D");
     verifyEdge(g, "B1", "V");

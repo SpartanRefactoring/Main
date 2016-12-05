@@ -29,8 +29,7 @@ public class RE {
   }
 
   public static String find(@NotNull final String regularExpression, @NotNull final String text) {
-    @NotNull final Pattern p = Pattern.compile(regularExpression);
-    @NotNull final Matcher $ = p.matcher(text);
+    @NotNull final Matcher $ = Pattern.compile(regularExpression).matcher(text);
     return !$.find() ? null : $.group();
   }
 

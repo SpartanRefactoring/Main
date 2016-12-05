@@ -24,7 +24,7 @@ public class Graph<E> extends AbstractGraph<E> {
   @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> e) {
     @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (@NotNull final Vertex<E> ¢ : e)
-      if (¢.incoming().size() == 0)
+      if (¢.incoming().isEmpty())
         $.add(¢);
     return new ImmutableArrayList<>($);
   }
@@ -299,5 +299,9 @@ public class Graph<E> extends AbstractGraph<E> {
         return "<" + from + "," + to + ">";
       }
     }
+  }
+
+  public boolean isEmpty() {
+    return vertices().isEmpty();
   }
 }

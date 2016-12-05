@@ -839,7 +839,7 @@ import il.org.spartan.utils.*;
   }
 
   public static class OneField {
-    @Nullable @Deprecated public final String fieldName = null;
+    @Deprecated @Nullable public final String fieldName = null;
   }
 
   public static class OneMethod {
@@ -906,9 +906,7 @@ import il.org.spartan.utils.*;
             }
           }
         }).go();
-      } catch (@NotNull final IOException ¢) {
-        ¢.printStackTrace();
-      } catch (@NotNull final StopTraversal ¢) {
+      } catch (@NotNull final StopTraversal | IOException ¢) {
         ¢.printStackTrace();
       }
     }
@@ -952,9 +950,10 @@ import il.org.spartan.utils.*;
     }
   }
 
+  /***/
   public static class TwoAnnotatedFields {
     @Nullable @External @Deprecated private static final String firstField = null;
-    @Nullable @Deprecated final String secondField = null;
+    @Deprecated @Nullable final String secondField = null;
   }
 
   public static class TwoFields {

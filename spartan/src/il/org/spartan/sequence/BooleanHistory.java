@@ -29,7 +29,7 @@ public class BooleanHistory {
   public int count(final boolean b) {
     int $ = 0;
     for (int ¢ = 0; ¢ < size; ++¢)
-      $ += as.bit(b == bs[(bs.length + last - 1 - ¢) % bs.length]);
+      $ += as.bit(b == bs[(last + bs.length - 1 - ¢) % bs.length]);
     return $;
   }
 

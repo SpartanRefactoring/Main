@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 
-@SuppressWarnings("static-method") @TestCase public class CSVTest {
+@TestCase @SuppressWarnings("static-method") public class CSVTest {
   public static void main(final String[] args) {
     new CSVTest().testCombineSplitShort();
   }
@@ -26,8 +26,7 @@ import il.org.spartan.streotypes.*;
 
   @Test public void testCombineSplit() {
     @NotNull final String[] parts = { "abc", "", "def", "gh\n,", ",", "\r", "\ta", null, "a\t", "\rz", "o\np", "qwerty", ",,,,", ",1,2,3,4" };
-    @NotNull final String combo = CSV.combine(parts);
-    @NotNull final String[] t = CSV.split(combo);
+    @NotNull final String[] t = CSV.split(CSV.combine(parts));
     azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
@@ -42,16 +41,14 @@ import il.org.spartan.streotypes.*;
 
   @Test public void testCombineSplitShort() {
     @NotNull final String[] parts = { "abc", ",", "def" };
-    @NotNull final String combo = CSV.combine(parts);
-    @NotNull final String[] t = CSV.split(combo);
+    @NotNull final String[] t = CSV.split(CSV.combine(parts));
     azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
 
   @Test public void testCombineSplitSingleNullElement() {
-    @Nullable final String[] parts = { null, };
-    @NotNull final String combo = CSV.combine(parts);
-    @NotNull final String[] t = CSV.split(combo);
+    @Nullable final String[] parts = { null };
+    @NotNull final String[] t = CSV.split(CSV.combine(parts));
     azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
@@ -73,7 +70,7 @@ import il.org.spartan.streotypes.*;
     azzert.that(CSV.combine(cs), is(s));
   }
 
-  @SuppressWarnings("javadoc") @Test public void testSplitCombineEnum() {
+  @Test @SuppressWarnings("javadoc") public void testSplitCombineEnum() {
     azzert.that(CSV.combine(CSV.split(Rgb.class, "GREEN,RED,BLUE,\\0,RED")), is("GREEN,RED,BLUE,\\0,RED"));
   }
 

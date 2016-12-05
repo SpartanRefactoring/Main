@@ -54,7 +54,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
-  @org.jetbrains.annotations.Nullable private transient Set<Map.Entry<K, V>> entrySet;
+  @Nullable private transient Set<Map.Entry<K, V>> entrySet;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
 
@@ -119,7 +119,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * values themselves are not cloned.
    * @return a shallow copy of this map */
   @Override public Object clone() {
-    @org.jetbrains.annotations.Nullable MyHashMap<K, V> $ = null;
+    @Nullable MyHashMap<K, V> $ = null;
     try {
       $ = (MyHashMap<K, V>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {
@@ -390,7 +390,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   }
 
   /** Special version of remove for EntrySet. */
-  @org.jetbrains.annotations.Nullable Entry<K, V> removeMapping(final Object o) {
+  @Nullable Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;
     @NotNull final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
@@ -466,7 +466,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return false;
   }
 
-  @org.jetbrains.annotations.Nullable private Set<Map.Entry<K, V>> entrySet0() {
+  @Nullable private Set<Map.Entry<K, V>> entrySet0() {
     return entrySet != null ? entrySet : (entrySet = new EntrySet());
   }
 
@@ -620,9 +620,9 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     @Override public boolean contains(final Object o) {
       if (!(o instanceof Map.Entry))
         return false;
-      @NotNull final Map.Entry<K, V> e = (Map.Entry<K, V>) o;
-      @org.jetbrains.annotations.Nullable final Entry<K, V> candidate = getEntry(e.getKey());
-      return candidate != null && candidate.equals(e);
+      @NotNull final Map.Entry<K, V> $ = (Map.Entry<K, V>) o;
+      @Nullable final Entry<K, V> candidate = getEntry($.getKey());
+      return candidate != null && candidate.equals($);
     }
 
     @Override @NotNull public Iterator<Map.Entry<K, V>> iterator() {
@@ -676,7 +676,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     Entry<K, V> next; // next entry to return
     int expectedModCount; // For fast-fail
     int index; // current slot
-    @org.jetbrains.annotations.Nullable Entry<K, V> current; // current entry
+    @Nullable Entry<K, V> current; // current entry
 
     HashIterator() {
       expectedModCount = modCount;

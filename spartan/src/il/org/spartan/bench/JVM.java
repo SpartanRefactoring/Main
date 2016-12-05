@@ -155,9 +155,8 @@ public final class JVM {
 
     @NotNull public static String format(@NotNull final Iterable<GarbageCollectorMXBean> bs) {
       @NotNull final StringBuffer $ = new StringBuffer();
-      @NotNull final Separator s = new Separator(", ");
       for (@NotNull final GarbageCollectorMXBean ¢ : bs)
-        $.append(s).append(format(¢));
+        $.append(new Separator(", ")).append(format(¢));
       return $ + "";
     }
 

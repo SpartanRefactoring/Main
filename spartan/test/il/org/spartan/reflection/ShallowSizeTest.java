@@ -99,8 +99,7 @@ import il.org.spartan.*;
   }
 
   @Test public void of_Null() {
-    @Nullable final Object o = null;
-    azzert.that(ShallowSize.of(o), is(0));
+    azzert.that(ShallowSize.of((Object) null), is(0));
   }
 
   @Test public void of_object() {

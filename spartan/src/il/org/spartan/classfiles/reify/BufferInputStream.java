@@ -76,7 +76,7 @@ public class BufferInputStream extends InputStream {
       return -1;
     if (len <= 0)
       return 0;
-    final int $ = position + len <= length ? len : length - position;
+    final int $ = len + position <= length ? len : length - position;
     System.arraycopy(bytes, position, bs, offset, $);
     position += $;
     return $;

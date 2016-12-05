@@ -91,7 +91,7 @@ public class Binner {
   }
 
   public double unbin(final int ¢) {
-    return (from[¢] + to[¢] - 1) / 2.;
+    return (to[¢] + from[¢] - 1) / 2.;
   }
 
   @NotNull public XYSeries unbin(@NotNull final XYSeries ¢) {

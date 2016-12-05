@@ -138,7 +138,7 @@ public abstract class Accumulator {
     }
 
     @SuppressWarnings("static-method") public static class TEST {
-      @SuppressWarnings("static-access") @Test public void booleanAdds() {
+      @Test @SuppressWarnings("static-access") public void booleanAdds() {
         @NotNull final Last c = new Last();
         azzert.that(Accumulator.asInteger(false), is(0));
         azzert.that(c.value(), is(0));
