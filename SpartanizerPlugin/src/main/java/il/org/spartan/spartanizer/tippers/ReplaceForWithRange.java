@@ -50,20 +50,17 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
 
   @Override public boolean canTip(final ForStatement x) {
 
-    for (final UserDefinedTipper<ForStatement> ¢ : tippers){
-      if(¢.canTip(x)){
+    for (final UserDefinedTipper<ForStatement> ¢ : tippers)
+      if (¢.canTip(x)) {
         SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
-        if(i == null)
+        if (i == null)
           continue;
         Block b = az.block(¢.getMatching(x, "$B"));
-        if(b == null){
+        if (b == null)
           continue;
-        }
-        if (!ChangedInBlock(i.getIdentifier(), b)){
+        if (!ChangedInBlock(i.getIdentifier(), b))
           return true;
-        }
       }
-    }
     return false;
   }
 
@@ -75,16 +72,14 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
             a.inner = true;
           return true;
         }
-        @Override public boolean visit(final PrefixExpression x){
-          if(((x.getOperator().toString().equals("++")||x.getOperator().toString().equals("--"))&&(iz.simpleName(x.getOperand())&&identifier(az.simpleName(x.getOperand())).equals(id)))){
+        @Override public boolean visit(final PrefixExpression ¢){
+          if((("++".equals((¢.getOperator() + ""))||"--".equals((¢.getOperator() + "")))&&(iz.simpleName(¢.getOperand())&&identifier(az.simpleName(¢.getOperand())).equals(id))))
             a.inner = true;
-          }
           return true;
         }
-        @Override public boolean visit(final PostfixExpression x){
-          if(((x.getOperator().toString().equals("++")||x.getOperator().toString().equals("--"))&&(iz.simpleName(x.getOperand())&&identifier(az.simpleName(x.getOperand())).equals(id)))){
+        @Override public boolean visit(final PostfixExpression ¢){
+          if((("++".equals((¢.getOperator() + ""))||"--".equals((¢.getOperator() + "")))&&(iz.simpleName(¢.getOperand())&&identifier(az.simpleName(¢.getOperand())).equals(id))))
             a.inner = true;
-          }
           return true;
         }
       });
