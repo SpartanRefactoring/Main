@@ -27,9 +27,9 @@ import il.org.spartan.spartanizer.tipping.*;
 public class LessToLessEquals extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢) || !iz.infixPlus(¢.getRightOperand())
-        || !"1".equals(az.numberLiteral(az.infixExpression(¢.getRightOperand()).getRightOperand()).getToken()) ||
-        iz.number(az.infixExpression(¢.getRightOperand()).getLeftOperand())||type.isDouble(¢.getLeftOperand())
-            ? null : subject.pair(¢.getLeftOperand(), az.infixExpression(¢.getRightOperand()).getLeftOperand()).to(Operator.LESS_EQUALS);
+        || !"1".equals(az.numberLiteral(az.infixExpression(¢.getRightOperand()).getRightOperand()).getToken())
+        || iz.number(az.infixExpression(¢.getRightOperand()).getLeftOperand()) || type.isDouble(¢.getLeftOperand()) ? null
+            : subject.pair(¢.getLeftOperand(), az.infixExpression(¢.getRightOperand()).getLeftOperand()).to(Operator.LESS_EQUALS);
   }
 
   private static boolean isLegalOperation(InfixExpression ¢) {

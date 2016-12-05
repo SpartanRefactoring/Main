@@ -146,8 +146,8 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-             new RemoveRedundantSwitchCases(), // Issue 889
-             new RemoveRedundantSwitchBranch(), // Issue 889
+            new RemoveRedundantSwitchCases(), // Issue 889
+            new RemoveRedundantSwitchBranch(), // Issue 889
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -156,7 +156,7 @@ public class Toolbox {
             new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
-            //new BlockRemoveDeadVariables(), //
+            // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
             new CachingPattern(), //

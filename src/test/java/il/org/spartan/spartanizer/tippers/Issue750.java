@@ -4,12 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method")
+// Whos is the author of this issue? #750
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue750 {
   @Test public void regularStillWorking() {
-    trimmingOf("int foo(int x){for (Object o :a)System.out.println(o); }")//
-        .gives("int foo(int x){for (Object ¢ :a)System.out.println(¢); }");
+    trimmingOf("int foo(int x){for (Object o :a)System.out.println(o); }").gives("int foo(int x){for (Object ¢ :a)System.out.println(¢); }");
   }
 
   @Test public void bugFixed() {

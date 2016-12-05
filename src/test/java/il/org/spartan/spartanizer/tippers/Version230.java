@@ -1806,11 +1806,11 @@ public final class Version230 {
         .stays();
   }
 
-  /*@Test public void massiveInlining() {
-    trimmingOf("int a,b,c;String tipper = zE4;if (2 * 3.1415 * 180> a || tipper.concat(sS) ==1922 && tipper.length()> 3)    return c> 5;")
-        .gives("int a,b,c;if(2 * 3.1415 * 180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;");
-  }*/
-
+  /* @Test public void massiveInlining() {
+   * trimmingOf("int a,b,c;String tipper = zE4;if (2 * 3.1415 * 180> a || tipper.concat(sS) ==1922 && tipper.length()> 3)    return c> 5;"
+   * )
+   * .gives("int a,b,c;if(2 * 3.1415 * 180>a||zE4.concat(sS)==1922&&zE4.length()>3)return c>5;"
+   * ); } */
   @Test public void methodWithLastIf() {
     trimmingOf("int f() { if (a) { f(); g(); h();}}")//
         .gives("int f() { if (!a) return;  f(); g(); h();}");
@@ -1883,11 +1883,9 @@ public final class Version230 {
         .gives("if(x){if(a&&b)i++;}else{++y;f();g();z();}");
   }
 
-  /*@Test public void nestedTernaryAlignment() {
-    trimmingOf("int b=3==4?5==3?2:3:5==3?2:3*3;")//
-        .gives("int b=3==4?5==3?2:3:5!=3?3*3:2;");
-  }*/
-
+  /* @Test public void nestedTernaryAlignment() {
+   * trimmingOf("int b=3==4?5==3?2:3:5==3?2:3*3;")//
+   * .gives("int b=3==4?5==3?2:3:5!=3?3*3:2;"); } */
   @Test public void noChange() {
     trimmingOf("12").stays();
     trimmingOf("true").stays();
@@ -3366,11 +3364,10 @@ public final class Version230 {
         .gives("return s.equals(532)?6:9; ");
   }
 
-  /*@Test public void ternarize10() {
-    trimmingOf("String res = s, foo = bar;   " + "if (res.equals(532)==true)    " + "res = s + 0xABBA;   " + "S.h(res); ")
-        .gives("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.h(res);");
-  }*/
-
+  /* @Test public void ternarize10() {
+   * trimmingOf("String res = s, foo = bar;   " +
+   * "if (res.equals(532)==true)    " + "res = s + 0xABBA;   " + "S.h(res); ")
+   * .gives("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.h(res);"); } */
   @Test public void ternarize12() {
     trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ")//
         .gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
@@ -3421,16 +3418,12 @@ public final class Version230 {
     trimmingOf("String res=m,foo=GY; print(x); if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
         .gives("String res=m,foo=GY; print(x); if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
   }
+  /* @Test public void ternarize16() {
+   * trimmingOf("String res = m; int num2;  if (m.equals(f()))   num2 = 2; ").
+   * stays(); } */
 
-  /*@Test public void ternarize16() {
-    trimmingOf("String res = m; int num2;  if (m.equals(f()))   num2 = 2; ").stays();
-  }*/
-
-  /*@Test public void ternarize16a() {
-    trimmingOf("int n1, n2 = 0, n3;\n" + "  if (d)\n" + "    n2 = 2;")//
-        .gives("int n1, n2 = d ? 2: 0, n3;");
-  }*/
-
+  /* @Test public void ternarize16a() { trimmingOf("int n1, n2 = 0, n3;\n" +
+   * "  if (d)\n" + "    n2 = 2;")// .gives("int n1, n2 = d ? 2: 0, n3;"); } */
   public void ternarize18() {
     trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);")//
         .gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
