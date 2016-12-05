@@ -83,11 +83,11 @@ public class Logger {
     for (final Integer k : ratioMap.keySet().stream().sorted((x, y) -> x < y ? -1 : x > y ? 1 : 0).collect(Collectors.toList())) {
       final List<Double> li = ratioMap.get(k);
       report //
-          .put("#Statement", k) //
-          .put("count", li.size()) //
+          .put("#Statements", k) //
+          .put("Count", li.size()) //
           .put("Statement ratio", safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size()))//
-          .put("#methods fraction", safeDiv(li.size(), methodsTotal)) //
-          .put("#statements fraction", safeDiv(k * li.size(), statementsTotal)) //
+          .put("#Methods Fraction", safeDiv(li.size(), methodsTotal)) //
+          .put("#Statements Fraction", safeDiv(k * li.size(), statementsTotal)) //
       ;
       report.nl();
     }
