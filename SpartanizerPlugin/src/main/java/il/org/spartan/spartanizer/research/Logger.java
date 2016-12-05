@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -26,6 +27,7 @@ public class Logger {
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
+  private static AbstractTypeDeclaration currentType;
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
@@ -176,8 +178,7 @@ public class Logger {
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {
-    return Integer.valueOf(
-        (currentFile + "." + step.type(searchAncestors.forContainingType().from(¢)) + "." + step.name(¢) + step.parametersTypes(¢)).hashCode());
+    return Integer.valueOf((currentFile + "." + currentType + name(¢) + parametersTypes(¢)).hashCode());
   }
 
   /** @param ¢
@@ -239,9 +240,18 @@ public class Logger {
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param u compilation unit */
   public static void logCompilationUnit(final CompilationUnit u) {
-    for (MethodDeclaration ¢ : searchDescendants.forClass(MethodDeclaration.class).from(u))
-      logMethodInfo(¢);
-    numMethods += enumerate.methodsWithBody(u);
+    for (AbstractTypeDeclaration ¢ : searchDescendants.forClass(AbstractTypeDeclaration.class).from(u))
+      logType(¢);
+  }
+
+  /** Collect statistics of a compilation unit which will be analyzed.
+   * @param u compilation unit */
+  public static void logType(final AbstractTypeDeclaration d) {
+    currentType = d;
+    for (MethodDeclaration ¢ : searchDescendants.forClass(MethodDeclaration.class).from(d))
+      if (enumerate.statements(¢) != 0)
+        logMethodInfo(¢);
+    numMethods += enumerate.methodsWithBody(d);
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
