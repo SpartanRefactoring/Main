@@ -18,6 +18,8 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     {
       add(TipperFactory.patternTipper("return $N;", "", ""));
       add(TipperFactory.patternTipper("return this.$N;", "", ""));
+      add(TipperFactory.patternTipper("return ($N2)$N;", "", ""));
+      add(TipperFactory.patternTipper("return ($N2)this.$N;", "", ""));
     }
   };
 
