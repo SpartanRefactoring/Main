@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
+// TODO: Who is the author of this class? 
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue858 {
