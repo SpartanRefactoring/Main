@@ -74,15 +74,15 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
 
       // TODO: dan abramavitch this is not the way to check the kind of operator
       @Override public boolean visit(final PrefixExpression ¢) {
-        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + ""))
-            && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
+        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + "")) && iz.simpleName(¢.getOperand())
+            && identifier(az.simpleName(¢.getOperand())).equals(id))
           a.inner = true;
         return true;
       }
 
       @Override public boolean visit(final PostfixExpression ¢) {
-        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + ""))
-            && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
+        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + "")) && iz.simpleName(¢.getOperand())
+            && identifier(az.simpleName(¢.getOperand())).equals(id))
           a.inner = true;
         return true;
       }

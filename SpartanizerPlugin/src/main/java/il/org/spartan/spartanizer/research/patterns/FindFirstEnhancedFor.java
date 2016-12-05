@@ -13,7 +13,8 @@ public final class FindFirstEnhancedFor extends NanoPatternTipper<EnhancedForSta
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) return $N2;", "return findFirstIn($X1).satisfying(($N2) -> $X2);", "FindFirstEnhancedFor"));
+      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) return $N2;", "return findFirstIn($X1).satisfying(($N2) -> $X2);",
+          "FindFirstEnhancedFor"));
       add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) {$N3 = $N2; break;}", "$N3 = findFirstIn($X1).satisfying(($N2) -> $X2);",
           "FindFirstEnhancedFor"));
     }
