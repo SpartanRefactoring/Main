@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
+// Whos is the author of this issue? #750
 @SuppressWarnings("static-method")
 @Ignore
 public class Issue750 {
