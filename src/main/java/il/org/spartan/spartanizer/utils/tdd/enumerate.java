@@ -68,7 +68,7 @@ public enum enumerate {
   /** @author Ori Marcovitch
    * @param ¢
    * @return */
-  public static int methodsWithBody(final CompilationUnit ¢) {
+  public static int methodsWithBody(final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int counter = new Int();
