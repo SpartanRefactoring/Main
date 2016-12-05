@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -11,11 +13,12 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author kobybs
  * @since 20-11-2016 */
-public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
+public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> implements TipperCategory.Sorting {
   private static final HashSet<String> rank0 = new HashSet<>(Arrays.asList("Deprecated"));
   private static final HashSet<String> rank1 = new HashSet<>(Arrays.asList("Override"));
   private static final HashSet<String> rank2 = new HashSet<>(
@@ -56,8 +59,16 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
+  @Override public Tip tip(final N n) {
+    final ASTNode x = replacement(n);
+    return x == null || az.bodyDeclaration(x) == null ? null : new Tip(description(n), n, this.getClass()) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        r.replace(n, x, g);
+      }
+    };
+  }
 
-  @Override public ASTNode replacement(final N d) {
+ public ASTNode replacement(final N d) {
     final N $ = duplicate.of(d);
     final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
     final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
