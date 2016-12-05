@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -42,7 +43,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
   @Override public Tip tip(final SwitchStatement s) {
-    return new Tip(description(s), s, this.getClass()) {
+    return s == null ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
         final int ind = getDefaultIndex(l);
@@ -68,7 +69,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
         }
         for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
           if (((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE) || (l.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT))
-              && (l.get(¢+1).getNodeType() == ASTNode.BREAK_STATEMENT))
+              && (l.get(¢ + 1).getNodeType() == ASTNode.BREAK_STATEMENT))
             l.remove(¢);
         if (l.size() == 1)
           l.remove(0);
@@ -102,7 +103,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     for (int k = 0; k < l.size() - 1; ++k)
       if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
           || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && (l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE)
-              && (isListContains(l, k, "default") || isListContains(l, k + 1, "default")))
+              && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
         return true;
     return false;
   }
