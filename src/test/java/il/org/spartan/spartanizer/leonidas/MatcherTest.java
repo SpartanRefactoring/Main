@@ -59,4 +59,16 @@ public class MatcherTest {
   @Test public void l() {
     assertTrue(new Matcher("return ($T)a;", "").matches(findFirst.returnStatement(wizard.ast("return (Object)a;"))));
   }
+
+  @Test public void m() {
+    assertTrue(new Matcher("a += 2", "").matches(findFirst.assignment(wizard.ast("a += 2;"))));
+  }
+
+  @Test public void n() {
+    assertTrue(new Matcher("--$N", "").matches(findFirst.prefixExpression(wizard.ast("--x"))));
+  }
+  
+  @Test public void o() {
+    assertFalse(new Matcher("--$N", "").matches(findFirst.prefixExpression(wizard.ast("¢-=2"))));
+  }
 }
