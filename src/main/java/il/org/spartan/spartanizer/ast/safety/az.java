@@ -526,4 +526,10 @@ public enum az {
   public static Type type(final ASTNode ¢) {
     return ¢ == null ? null : (Type) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static SuperMethodInvocation superMethodInvocation(Expression ¢) {
+    return ¢ == null ? null : (SuperMethodInvocation) ¢;
+  }
 }

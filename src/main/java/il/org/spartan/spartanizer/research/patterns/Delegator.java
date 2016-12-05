@@ -26,7 +26,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
 
   /** @param arguments
    * @return */
-  private static List<String> dependencies(final List<Expression> arguments) {
+  protected static List<String> dependencies(final List<Expression> arguments) {
     final Set<String> names = new HashSet<>();
     for (final Expression ¢ : arguments) {
       names.addAll(analyze.dependencies(¢));

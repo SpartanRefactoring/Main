@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("return $N($A);", "", ""));
@@ -38,7 +38,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDecla
     return true;
   }
 
-  boolean anyTips(final Statement s) {
+  static boolean anyTips(final Statement s) {
     return tippers.stream().anyMatch(t -> t.canTip(s));
   }
 }
