@@ -55,4 +55,8 @@ public class MatcherTest {
   @Test public void k() {
     assertTrue(new Matcher("return $N2.$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return g.h.j.a.b(c(h,i,u));"))));
   }
+
+  @Test public void l() {
+    assertTrue(new Matcher("return ($T)a;", "").matches(findFirst.returnStatement(wizard.ast("return (Object)a;"))));
+  }
 }
