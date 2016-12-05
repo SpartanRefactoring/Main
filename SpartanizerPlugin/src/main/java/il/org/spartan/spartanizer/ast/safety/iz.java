@@ -1052,4 +1052,10 @@ public interface iz {
   static boolean synchronizedStatement(final Statement ¢) {
     return ¢ instanceof SynchronizedStatement;
   }
+
+  /** @param ¢ JDs
+   * @return */
+  static boolean type(ASTNode ¢) {
+    return ¢ instanceof Type;
+  }
 }

@@ -47,15 +47,14 @@ public class GetterTest {
     assert getter("@Override public int hashCode() {return this.b;}");
   }
 
-  // @Test public void d() {
-  // assert getter("@Override public X unfiltered(){ return
-  // (SetMultimap)unfiltered;}");
-  // }
-  //
-  // @Test public void e() {
-  // assert getter("@Override public SetMultimap<K,V> unfiltered(){ return
-  // (SetMultimap<K,V>)unfiltered;}");
-  // }
+  @Test public void d() {
+    assert getter("@Override public X unfiltered(){  return (SetMultimap)unfiltered;}");
+  }
+
+  @Test public void e() {
+    assert getter("@Override public SetMultimap<K,V> unfiltered(){  return (SetMultimap<K,V>)unfiltered;}");
+  }
+
   private static boolean getter(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
   }
