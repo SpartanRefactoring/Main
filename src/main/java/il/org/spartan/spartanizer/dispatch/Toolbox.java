@@ -170,6 +170,7 @@ public class Toolbox {
             new InliningPrefix(), //
             null) //
         .add(InfixExpression.class, //
+            new InfixPlusToMinus(), //
             new LessEqualsToLess(), //
             new LessToLessEquals(), //
             new InfixMultiplicationEvaluate(), //
