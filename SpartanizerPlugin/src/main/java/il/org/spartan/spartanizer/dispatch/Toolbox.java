@@ -146,7 +146,7 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-//             new RemoveRedundantSwitchCases(), // Issue 889
+             new RemoveRedundantSwitchCases(), // Issue 889
              new RemoveRedundantSwitchBranch(), // Issue 889
             null)
         .add(Assignment.class, //
@@ -170,6 +170,7 @@ public class Toolbox {
             new InliningPrefix(), //
             null) //
         .add(InfixExpression.class, //
+            new InfixPlusToMinus(), //
             new LessEqualsToLess(), //
             new LessToLessEquals(), //
             new InfixMultiplicationEvaluate(), //
