@@ -92,28 +92,7 @@ public class Matcher {
   }
 
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
-    // I really hope these are the only options for operators (-Ori)
-    switch (p.getNodeType()) {
-      case ASTNode.PREFIX_EXPRESSION:
-        if (!step.operator((PrefixExpression) p).equals(step.operator((PrefixExpression) n)))
-          return false;
-        break;
-      case ASTNode.INFIX_EXPRESSION:
-        if (!step.operator((InfixExpression) p).equals(step.operator((InfixExpression) n)))
-          return false;
-        break;
-      case ASTNode.POSTFIX_EXPRESSION:
-        if (!step.operator((PostfixExpression) p).equals(step.operator((PostfixExpression) n)))
-          return false;
-        break;
-      case ASTNode.ASSIGNMENT:
-        if (!step.operator((Assignment) p).equals(step.operator((Assignment) n)))
-          return false;
-        break;
-      default:
-        return true;
-    }
-    return true;
+    return (p + "").equals(n + "");
   }
 
   /** Validates that matched variables are the same in all matching places. */
@@ -143,7 +122,7 @@ public class Matcher {
       return false;
     if (iz.literal(p))
       return (p + "").equals(n + "");
-    if (iz.containsOperator(p) && !sameOperator(p, n))
+    if (iz.anyOperator(p) && !sameOperator(p, n))
       return false;
     final List<? extends ASTNode> nChildren = Recurser.children(n);
     final List<? extends ASTNode> pChildren = Recurser.children(p);

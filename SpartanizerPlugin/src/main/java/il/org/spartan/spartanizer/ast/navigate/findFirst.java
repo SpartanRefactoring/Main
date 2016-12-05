@@ -201,4 +201,16 @@ public interface findFirst {
   static SuperMethodInvocation superMethodDeclaration(ASTNode ¢) {
     return instanceOf(SuperMethodInvocation.class, ¢);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode assignment(ASTNode ¢) {
+    return instanceOf(Assignment.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode prefixExpression(ASTNode ¢) {
+    return instanceOf(PrefixExpression.class, ¢);
+  }
 }

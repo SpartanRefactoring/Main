@@ -1064,4 +1064,11 @@ public interface iz {
   static boolean superMethodInvocation(Expression ¢) {
     return ¢ instanceof SuperMethodInvocation;
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean anyOperator(ASTNode ¢) {
+    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+        Assignment.Operator.class }).contains(¢.getClass());
+  }
 }
