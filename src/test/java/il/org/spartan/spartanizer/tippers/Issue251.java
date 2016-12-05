@@ -10,8 +10,7 @@ import org.junit.*;
 public class Issue251 {
   @Test public void Issue302_test() {
     trimmingOf("if(b()){int i;}")//
-        .gives("if(b()){}")
-    ;
+        .gives("if(b()){}");
   }
 
   @Test public void t01() {
@@ -48,8 +47,7 @@ public class Issue251 {
 
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
-    .gives("if(b()){}");
-    
+        .gives("if(b()){}");
   }
 
   @Test public void t07() {
@@ -116,7 +114,6 @@ public class Issue251 {
     trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){}");//
-        
   }
 
   @Test public void t22() {
@@ -130,14 +127,12 @@ public class Issue251 {
     trimmingOf("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){}");//
-        
   }
 
   @Test public void t24() {
     trimmingOf("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){}");//
-        
   }
 
   @Test public void t25() {
