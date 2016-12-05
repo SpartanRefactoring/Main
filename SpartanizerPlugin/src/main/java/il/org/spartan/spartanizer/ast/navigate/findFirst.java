@@ -195,4 +195,10 @@ public interface findFirst {
   static ASTNode castExpression(ASTNode ¢) {
     return instanceOf(CastExpression.class, ¢);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static SuperMethodInvocation superMethodDeclaration(ASTNode ¢) {
+    return instanceOf(SuperMethodInvocation.class, ¢);
+  }
 }
