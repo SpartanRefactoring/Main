@@ -134,15 +134,17 @@ public class Matcher {
     return true;
   }
 
-  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode p) {
-    final List<ASTNode> $ = (List<ASTNode>) Recurser.children(p);
-    if (iz.methodInvocation(p) && !isMethodInvocationAndHas$AArgument(p))
-      $.addAll(az.methodInvocation(p).arguments());
-    if (iz.forStatement(p)) {
-      $.addAll(step.initializers(az.forStatement(p)));
-      $.add(step.condition(az.forStatement(p)));
-      $.addAll(step.updaters(az.forStatement(p)));
+  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode ¢) {
+    final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
+    if (iz.methodInvocation(¢) && !isMethodInvocationAndHas$AArgument(¢))
+      $.addAll(az.methodInvocation(¢).arguments());
+    if (iz.forStatement(¢)) {
+      $.addAll(step.initializers(az.forStatement(¢)));
+      $.add(step.condition(az.forStatement(¢)));
+      $.addAll(step.updaters(az.forStatement(¢)));
     }
+    if (iz.variableDeclarationExpression(¢))
+      $.addAll(step.fragments(az.variableDeclarationExpression(¢)));
     return $;
   }
 
@@ -288,9 +290,12 @@ public class Matcher {
         enviroment.put(argumentsId(p), arguments(n) + "");
       final List<ASTNode> pChildren = gatherChildren(p);
       final List<ASTNode> nChildren = gatherChildren(n);
+      System.out.println(pChildren);
+      System.out.println(nChildren);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
+    System.out.println(enviroment);
     return enviroment;
   }
 
