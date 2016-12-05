@@ -28,11 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yuval Simon
  * @since 2016-11-26 */
-
-
 public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("boxing")
-  @Override public ASTNode replacement(final SwitchStatement s) {
+  @SuppressWarnings("boxing") @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     @SuppressWarnings("unchecked") List<Statement> ss = s.statements();
@@ -69,25 +66,27 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
       else
         startFromBreak = ss.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT;
   }
-  
+
   private static boolean sameCommands(List<Statement> ss, int t1, int t2) {
     int p1 = t1 < t2 ? t1 : t2;
     int p2 = t2 > t1 ? t2 : t1;
-    for(; p1 < ss.size() && ss.get(p1).getNodeType() == ASTNode.SWITCH_CASE;) ++p1;
-    for(; p2 < ss.size() && ss.get(p2).getNodeType() == ASTNode.SWITCH_CASE;) ++p2;
-    if(p1 == ss.size())
+    for (; p1 < ss.size() && ss.get(p1).getNodeType() == ASTNode.SWITCH_CASE;)
+      ++p1;
+    for (; p2 < ss.size() && ss.get(p2).getNodeType() == ASTNode.SWITCH_CASE;)
+      ++p2;
+    if (p1 == ss.size())
       return false;
-    for(int ¢ = 0; ¢ < ss.size(); ++¢) {
-      if(p2 + ¢ == ss.size())
+    for (int ¢ = 0; ¢ < ss.size(); ++¢) {
+      if (p2 + ¢ == ss.size())
         return ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
-      if(ss.get(p1+¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2+¢).getNodeType() == ASTNode.BREAK_STATEMENT)
+      if (ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)
         return true;
-      if(!(ss.get(p1 + ¢) + "").equals((ss.get(p2 + ¢) + "")))
+      if (!(ss.get(p1 + ¢) + "").equals((ss.get(p2 + ¢) + "")))
         return false;
     }
     return true;
   }
-  
+
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merging cases with identical code";
   }
