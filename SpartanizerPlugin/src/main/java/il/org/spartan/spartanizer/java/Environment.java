@@ -24,6 +24,7 @@ public interface Environment {
    * class is intentionally package level, and intentionally defined local. For
    * now, clients should not be messing with it
    * @since 2016 */
+
   static class Information {
     public static boolean eq(final Object o1, final Object o2) {
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
