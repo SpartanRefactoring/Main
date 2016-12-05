@@ -27,35 +27,34 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; ++$N)$B", "for(Integer $N : range.from($L1).to($L2).inclusive())$B",
         "replace inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2))$B",
-            "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
+        "replace non-inclusive for loop with the matching range"));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N+=$L3)$B",
+        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N+=$L3)$B", "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N+=$L3)$B",
+        "for(Integer $N : range.from($L1).step($L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N < $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N <= $L2; $N-=$L3)$B",
+        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N-=$L3)$B", "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; --$N)$B", "for(Integer $N:range.from($L1).step(-1).to($L2))$B", 
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; $N-=$L3)$B",
+        "for(Integer $N : range.from($L1).step(-$L3).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N > $L2; --$N)$B", "for(Integer $N:range.from($L1).step(-1).to($L2))$B",
         "replace non-inclusive for loop with the matching range"));
-    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; --$N)$B", "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B",
-        "replace inclusive for loop with the matching range"));
+    tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; --$N)$B",
+        "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
   }
 
   @Override public boolean canTip(final ForStatement x) {
-
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.canTip(x)) {
-        SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
+        final SimpleName i = az.simpleName(¢.getMatching(x, "$N"));
         if (i == null)
           continue;
-        Block b = az.block(¢.getMatching(x, "$B"));
+        final Block b = az.block(¢.getMatching(x, "$B"));
         if (b == null)
           continue;
         if (!ChangedInBlock(i.getIdentifier(), b))
@@ -64,27 +63,32 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
     return false;
   }
 
-  private static boolean ChangedInBlock(final String id, final Block b){
-      final Bool a = new Bool();
-      b.accept(new ASTVisitor() {
-        @Override public boolean visit(final Assignment ¢){
-          if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
-            a.inner = true;
-          return true;
-        }
-        @Override public boolean visit(final PrefixExpression ¢){
-          if((("++".equals((¢.getOperator() + ""))||"--".equals((¢.getOperator() + "")))&&(iz.simpleName(¢.getOperand())&&identifier(az.simpleName(¢.getOperand())).equals(id))))
-            a.inner = true;
-          return true;
-        }
-        @Override public boolean visit(final PostfixExpression ¢){
-          if((("++".equals((¢.getOperator() + ""))||"--".equals((¢.getOperator() + "")))&&(iz.simpleName(¢.getOperand())&&identifier(az.simpleName(¢.getOperand())).equals(id))))
-            a.inner = true;
-          return true;
-        }
-      });
+  private static boolean ChangedInBlock(final String id, final Block b) {
+    final Bool a = new Bool();
+    b.accept(new ASTVisitor() {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
+          a.inner = true;
+        return true;
+      }
+
+      @Override public boolean visit(final PrefixExpression ¢) {
+        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + ""))
+            && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
+          a.inner = true;
+        return true;
+      }
+
+      @Override public boolean visit(final PostfixExpression ¢) {
+        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + ""))
+            && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
+          a.inner = true;
+        return true;
+      }
+    });
     return a.inner;
   }
+
   @Override public Tip tip(final ForStatement x) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.canTip(x))
@@ -92,7 +96,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
     return null;
   }
 
-  @Override public String description(ForStatement x) {
+  @Override public String description(final ForStatement x) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.description(x);
