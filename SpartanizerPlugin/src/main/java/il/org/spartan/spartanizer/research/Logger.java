@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research;
 
 import java.io.*;
+import java.text.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -80,14 +81,15 @@ public class Logger {
       ratioMap.putIfAbsent(key, new ArrayList<>());
       ratioMap.get(key).add(key == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements)));
     }
+    NumberFormat formatter = new DecimalFormat("#0.00");
     for (final Integer k : ratioMap.keySet().stream().sorted((x, y) -> x < y ? -1 : x > y ? 1 : 0).collect(Collectors.toList())) {
       final List<Double> li = ratioMap.get(k);
       report //
           .put("#Statements", k) //
           .put("Count", li.size()) //
-          .put("Statement ratio", safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size()))//
-          .put("#Methods Fraction", safeDiv(li.size(), methodsTotal)) //
-          .put("#Statements Fraction", safeDiv(k * li.size(), statementsTotal)) //
+          .put("Coverage [Avg.]", formatter.format(safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size())))//
+          .put("% of #methods", formatter.format(safeDiv(li.size(), methodsTotal))) //
+          .put("% of #statements", formatter.format(safeDiv(k * li.size(), statementsTotal))) //
       ;
       report.nl();
     }
