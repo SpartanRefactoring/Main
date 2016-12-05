@@ -189,4 +189,10 @@ public interface findFirst {
   static ASTNode returnStatement(ASTNode ¢) {
     return instanceOf(ReturnStatement.class, ¢);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode castExpression(ASTNode ¢) {
+    return instanceOf(CastExpression.class, ¢);
+  }
 }
