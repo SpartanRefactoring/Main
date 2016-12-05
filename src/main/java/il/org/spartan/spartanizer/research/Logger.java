@@ -249,7 +249,8 @@ public class Logger {
   public static void logType(final AbstractTypeDeclaration d) {
     currentType = d;
     for (MethodDeclaration ¢ : searchDescendants.forClass(MethodDeclaration.class).from(d))
-      logMethodInfo(¢);
+      if (enumerate.statements(¢) != 0)
+        logMethodInfo(¢);
     numMethods += enumerate.methodsWithBody(d);
   }
 

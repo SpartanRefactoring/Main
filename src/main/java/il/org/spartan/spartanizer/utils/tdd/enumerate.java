@@ -34,9 +34,9 @@ public enum enumerate {
    * @param ¢
    * @since Nov 1, 2016 */
   public static int statements(final ASTNode n) {
-    final Int count = new Int();
     if (n == null)
       return 0;
+    final Int count = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
