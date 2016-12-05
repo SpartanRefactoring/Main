@@ -67,8 +67,12 @@ public class MatcherTest {
   @Test public void n() {
     assertTrue(new Matcher("--$N", "").matches(findFirst.prefixExpression(wizard.ast("--x"))));
   }
-  
+
   @Test public void o() {
     assertFalse(new Matcher("--$N", "").matches(findFirst.prefixExpression(wizard.ast("¢-=2"))));
+  }
+
+  @Test public void p() {
+    assertTrue(new Matcher("for(int $N = $L1; $N < $L2; ++$N)$B", "").matches(findFirst.forStatement(wizard.ast("for(int i = 0; i < 7; ++i) ;"))));
   }
 }
