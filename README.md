@@ -5,9 +5,11 @@
 
 ![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
 
-# Demo
+# Video Demo
 
-[![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch?v=33npJI-MZ1I "Laconizer Demo")
+Click on the picture below to see a video demo on YouTube.
+
+[![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch_popup?v=33npJI-MZ1I "Laconizer Demo")
 
 # Installation
 - Installation button (drag to your eclipse workspace)
