@@ -48,13 +48,13 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
         "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", "replace inclusive for loop with the matching range"));
   }
 
-  @Override public boolean canTip(final ForStatement x) {
+  @Override public boolean canTip(final ForStatement s) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
-      if (¢.canTip(x)) {
-        final SimpleName n = az.simpleName(¢.getMatching(x, "$N"));
+      if (¢.canTip(s)) {
+        final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));
         if (n == null)
           continue;
-        final Block b = az.block(¢.getMatching(x, "$B"));
+        final Block b = az.block(¢.getMatching(s, "$B"));
         if (b == null)
           continue;
         if (!ChangedInBlock(n.getIdentifier(), b))
