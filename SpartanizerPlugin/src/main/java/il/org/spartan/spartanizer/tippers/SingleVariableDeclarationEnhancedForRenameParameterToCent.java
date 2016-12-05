@@ -26,7 +26,6 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
   }
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
-    /**
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
@@ -50,7 +49,5 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
         Tippers.rename(n, ¢, s, r, g);
       }
     };
-    **/
-    return null;
   }
 }
