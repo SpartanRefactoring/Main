@@ -157,7 +157,7 @@ public enum az {
   public static Block block(final ASTNode $) {
     return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
-  
+
   public static SwitchCase switchCase(final ASTNode $) {
     return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
   }
@@ -383,7 +383,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
-    return !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
+    return $ == null || !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
@@ -512,7 +512,7 @@ public enum az {
   /** @param ¢ JD
    * @return */
   public static CastExpression castExpression(final Expression ¢) {
-    return ¢ == null ? null : (CastExpression) ¢;
+    return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
   }
 
   /** @param ¢ JD
