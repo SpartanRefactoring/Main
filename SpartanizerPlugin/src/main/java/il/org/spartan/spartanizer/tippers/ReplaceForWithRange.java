@@ -72,6 +72,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
         return true;
       }
 
+      // TODO: dan abramavitch this is not the way to check the kind of operator
       @Override public boolean visit(final PrefixExpression ¢) {
         if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + ""))
             && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
