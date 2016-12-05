@@ -11,7 +11,10 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
@@ -41,6 +44,9 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private static void inflate() {
     System.out.println("inflating " + Selection.Util.current());
+    System.out.println("inflating " + Selection.Util.current().textSelection.getText());
+    System.out
+        .println(((new TernaryExpander()).replacement(az.conditionalExpression(wizard.ast(Selection.Util.current().textSelection.getText()))) + ""));
   }
 
   private static void deflate() {
