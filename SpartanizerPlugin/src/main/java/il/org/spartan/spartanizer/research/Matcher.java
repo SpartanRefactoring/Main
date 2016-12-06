@@ -290,12 +290,9 @@ public class Matcher {
         enviroment.put(argumentsId(p), arguments(n) + "");
       final List<ASTNode> pChildren = gatherChildren(p);
       final List<ASTNode> nChildren = gatherChildren(n);
-      System.out.println(pChildren);
-      System.out.println(nChildren);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
-    System.out.println(enviroment);
     return enviroment;
   }
 

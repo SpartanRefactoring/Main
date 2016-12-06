@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Consolidate identical catch blocks : <br>
@@ -27,10 +26,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Collapse {
-  @Override @SuppressWarnings({ "unchecked", "boxing" }) public ASTNode replacement(final TryStatement s) {
+  @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> lst = step.extractCatches(s);
-    for(Integer i : range.from(0).to(lst.size()))
-      for(Integer j : range.from(i+1).to(lst.size()))
+    for (int i = 0; i < lst.size(); ++i)
+      for (int j = i + 1; j < lst.size(); ++j)
         if (wizard.same(lst.get(i).getBody(), lst.get(j).getBody())) {
           final TryStatement $ = duplicate.of(s);
           final CatchClause mergedCatch = duplicate.of(lst.get(i));
