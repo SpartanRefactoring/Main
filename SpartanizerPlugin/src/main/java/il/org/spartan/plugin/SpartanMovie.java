@@ -157,6 +157,7 @@ public class SpartanMovie extends AbstractHandler {
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.
    * @author Ori Roth */
+  @SuppressWarnings("boxing")
   static IMarker getFirstMarker(final IMarker[] ms) {
     int $ = 0;
     for(Integer i : range.from(0).to(ms.length))

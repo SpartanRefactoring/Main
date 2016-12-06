@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
@@ -96,11 +97,12 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     };
   }
 
+  @SuppressWarnings("boxing")
   @Override protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
     if (!l.isEmpty() && (l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE))
       return true;
-    for (int k = 0; k < l.size() - 1; ++k)
+    for(Integer k : range.from(0).to(l.size() - 1))
       if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
           || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && (l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE)
               && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))

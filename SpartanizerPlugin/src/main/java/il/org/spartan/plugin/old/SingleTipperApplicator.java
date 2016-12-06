@@ -81,6 +81,7 @@ public final class SingleTipperApplicator {
     pm.done();
   }
 
+  @SuppressWarnings("boxing")
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)

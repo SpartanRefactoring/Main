@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -87,6 +88,7 @@ public enum enumerate {
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
    * @since 16-11-07 */
+  @SuppressWarnings("boxing")
   public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
     final List<?> l = d.getBody().statements();
@@ -104,7 +106,7 @@ public enum enumerate {
     // d.accept(new ASTVisitor() {
     //
     // });
-    for (int ¢ = 0; ¢ < arr.length; ++¢)
+    for(Integer ¢ : range.from(0).to(arr.length))
       arr[¢] = false;
     for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {
