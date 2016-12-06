@@ -9,7 +9,7 @@
 
 Click on the picture below to see a video demo on YouTube.
 
-[![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch_popup?v=33npJI-MZ1I "Laconizer Demo")
+[![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch_popup?v=49M55azHHM0 "Laconizer Demo")
 
 # Installation
 - Installation button (drag to your eclipse workspace)
