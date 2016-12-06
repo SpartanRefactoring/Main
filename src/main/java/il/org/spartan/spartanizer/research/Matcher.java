@@ -114,8 +114,8 @@ public class Matcher {
       return sameLiteral(p, n);
     if (isBlockVariable(p))
       return matchesBlock(n) && consistent(ids, blockVariableName(p), n + "");
-    if (isMethodInvocationAndHas$AArgument(p))
-      return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.children(n).size() == Recurser.children(p).size();
+    if (isMethodInvocationAndHas$AArgument(p) && !isMethodInvocationAndConsistentWith$AArgument(p, n, ids))
+      return false;
     if (isClassInstanceCreationAndHas$AArgument(p))
       return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
     if (differentTypes(p, n))
@@ -124,8 +124,8 @@ public class Matcher {
       return (p + "").equals(n + "");
     if (iz.anyOperator(p) && !sameOperator(p, n))
       return false;
-    final List<ASTNode> pChildren = gatherChildren(p);
-    final List<ASTNode> nChildren = gatherChildren(n);
+    final List<ASTNode> pChildren = gatherChildren(p, p);
+    final List<ASTNode> nChildren = gatherChildren(n, p);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
@@ -134,10 +134,14 @@ public class Matcher {
     return true;
   }
 
-  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode ¢) {
+  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode ¢, final ASTNode p) {
     final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
-    if (iz.methodInvocation(¢) && !isMethodInvocationAndHas$AArgument(¢))
-      $.addAll(az.methodInvocation(¢).arguments());
+    if (iz.methodInvocation(¢)) {
+      if (!isMethodInvocationAndHas$AArgument(p))
+        $.addAll(az.methodInvocation(¢).arguments());
+      if (haz.expression(az.methodInvocation(¢)))
+        $.add(step.expression(az.methodInvocation(¢)));
+    }
     if (iz.forStatement(¢)) {
       $.addAll(step.initializers(az.forStatement(¢)));
       $.add(step.condition(az.forStatement(¢)));
@@ -288,8 +292,8 @@ public class Matcher {
     else {
       if (isMethodInvocationAndHas$AArgument(p))
         enviroment.put(argumentsId(p), arguments(n) + "");
-      final List<ASTNode> pChildren = gatherChildren(p);
-      final List<ASTNode> nChildren = gatherChildren(n);
+      final List<ASTNode> pChildren = gatherChildren(p, p);
+      final List<ASTNode> nChildren = gatherChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
@@ -313,8 +317,8 @@ public class Matcher {
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p), n);
     else {
-      final List<ASTNode> pChildren = gatherChildren(p);
-      final List<ASTNode> nChildren = gatherChildren(n);
+      final List<ASTNode> pChildren = gatherChildren(p, p);
+      final List<ASTNode> nChildren = gatherChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviromentNodes(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
