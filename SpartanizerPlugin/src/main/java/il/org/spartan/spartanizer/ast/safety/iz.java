@@ -389,7 +389,7 @@ public interface iz {
 
   // TODO Yossi: Move to lisp
   static int index(final int i, final int... is) {
-    for (int $ = 0; $ < is.length; ++$)
+    for(Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;
     return -1;
