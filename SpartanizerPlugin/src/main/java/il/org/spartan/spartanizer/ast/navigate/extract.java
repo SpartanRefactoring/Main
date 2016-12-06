@@ -12,6 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -320,7 +321,7 @@ public enum extract {
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+    for(Integer ¢ : range.from(0).to(ss.size() - 1))
       if (ss.get(¢) == s)
         return ss.get(¢ + 1);
     return null;
