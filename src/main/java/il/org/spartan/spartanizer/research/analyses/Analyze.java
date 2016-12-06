@@ -58,14 +58,14 @@ public class Analyze {
   private static void spartanizeMethodsAndSort() {
     List<MethodDeclaration> methods = new ArrayList<>();
     for (final File f : inputFiles()) {
-//      System.out.println(f.getName());
+      // System.out.println(f.getName());
       CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
-//            System.out.println(¢);
+            // System.out.println(¢);
             methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
@@ -255,9 +255,6 @@ public class Analyze {
             new ReturnOld(), //
             new ReturnAnyMatches(), //
             null) //
-        // .add(CastExpression.class, //
-        // new Coercion(), //
-        // null) //
         .add(EnhancedForStatement.class, //
             new AnyMatches(), //
             new Contains(), //
@@ -283,17 +280,12 @@ public class Analyze {
             new PutIfAbsent(), //
             new IfThrow(), //
             null) //
-    // .add(InstanceofExpression.class, //
-    // new InstanceOf(), //
-    // null)//
-    // .add(MethodDeclaration.class, //
-    // new SetterGoFluent(), //
-    // null) //
     ;
   }
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
+        new Creator(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
         new DownCaster(), //
