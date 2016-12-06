@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.*;
  * @year 2016 */
 public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
   private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.patternTipper("if($X == null) throw $X2;",
-      "If.Null($X).throwz(() -> {$X2;});", "Grumpy pattern");
+      "If.Null($X).throwz(() -> $X2);", "Grumpy pattern");
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Grumpy pattern";
