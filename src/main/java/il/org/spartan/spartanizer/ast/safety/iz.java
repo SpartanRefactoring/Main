@@ -388,6 +388,7 @@ public interface iz {
   }
 
   // TODO Yossi: Move to lisp
+  @SuppressWarnings("boxing")
   static int index(final int i, final int... is) {
     for(Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
