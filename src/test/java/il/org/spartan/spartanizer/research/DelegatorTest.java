@@ -69,11 +69,27 @@ public class DelegatorTest {
   @Test public void basic10() {
     delegator("@Override public Set<E> inEdges(){return incidentEdges();} ");
   }
-  
+
   @Test public void basic11() {
     delegator("@Override public Set<K> keySet(){ return delegate().keySet();}");
   }
-  
+
+  @Test public void basic12() {
+    notDelegator("@Override public Set<K> keySet(){ return delegate().keySet(s);}");
+  }
+
+  @Test public void basic13() {
+    notDelegator("@Override public Set<K> keySet(String s){ return delegate(s).keySet();}");
+  }
+
+  @Test public void basic14() {
+    delegator("@Override public Set<K> keySet(String s){ return delegate().keySet(s);}");
+  }
+
+  @Test public void basic15() {
+    notDelegator("@Override @CanIgnoreReturnValue public V put(R rowKey,C columnKey,V value){ return row(rowKey).put(columnKey,value);}");
+  }
+
   private void delegator(final String ¢) {
     assert javadocedDelegator("public class A{" + ¢ + "}");
   }
