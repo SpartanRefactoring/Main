@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -36,13 +34,5 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
 
   protected final String javadoc() {
     return "[[" + this.getClass().getSimpleName() + "]]";
-  }
-
-  static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return ns.stream().anyMatch(t -> t.canTip(n));
-  }
-
-  static <N extends ASTNode> UserDefinedTipper<N> firstThatTips(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return ns.stream().filter(t -> t.canTip(n)).findFirst().get();
   }
 }
