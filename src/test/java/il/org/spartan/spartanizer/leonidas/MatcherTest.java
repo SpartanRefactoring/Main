@@ -75,4 +75,24 @@ public class MatcherTest {
   @Test public void p() {
     assertTrue(new Matcher("for(int $N = $L1; $N < $L2; ++$N)$B", "").matches(findFirst.forStatement(wizard.ast("for(int i = 0; i < 7; ++i) ;"))));
   }
+
+  @Test public void q() {
+    assertTrue(new Matcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a().b();"))));
+  }
+
+  @Test public void r() {
+    assertTrue(new Matcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a().b(a,b,c());"))));
+  }
+
+  @Test public void s() {
+    assertFalse(new Matcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(wizard.ast("return a(c).b();"))));
+  }
+
+  @Test public void t() {
+    assertTrue(new Matcher("$N1();", "").matches(findFirst.expressionStatement(wizard.ast("a();"))));
+  }
+
+  @Test public void u() {
+    assertFalse(new Matcher("$N1();", "").matches(findFirst.expressionStatement(wizard.ast("a(b);"))));
+  }
 }
