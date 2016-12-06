@@ -31,6 +31,7 @@ public class GUIBatchLaconizer extends Applicator {
   private static final int PASSES_MANY = 20;
 
   /** Spartanization process. */
+  @SuppressWarnings("boxing")
   @Override public void go() {
     if (selection() == null || listener() == null || runContext() == null || passes() <= 0 || selection().isEmpty())
       return;

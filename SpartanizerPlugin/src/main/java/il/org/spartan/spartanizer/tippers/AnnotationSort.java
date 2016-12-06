@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author kobybs
@@ -41,8 +42,9 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
   }
 
+  @SuppressWarnings("boxing")
   public static int rankAnnotation(final String annotationName) {
-    for (int $ = 0; $ < rankTable.size(); ++$)
+    for(Integer $ : range.from(0).to(rankTable.size()))
       if (rankTable.get($).contains(annotationName))
         return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");

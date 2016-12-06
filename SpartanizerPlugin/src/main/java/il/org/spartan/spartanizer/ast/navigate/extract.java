@@ -320,6 +320,7 @@ public enum extract {
     }
   }
 
+  @SuppressWarnings("boxing")
   private static Statement next(final Statement s, final List<Statement> ss) {
     for(Integer ¢ : range.from(0).to(ss.size() - 1))
       if (ss.get(¢) == s)
