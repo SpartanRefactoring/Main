@@ -26,7 +26,14 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(tippers, onlyOne(statements(¢))))
       return false;
     final Expression e = expression(az.returnStatement(onlyOne(statements(¢))));
-    return iz.methodInvocation(e) && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation(e))));
+    return iz.methodInvocation(e) && areAtomic(arguments(az.methodInvocation(e)))
+        && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation(e))));
+  }
+
+  /** @param arguments
+   * @return */
+  private static boolean areAtomic(List<Expression> arguments) {
+    return arguments.stream().allMatch(¢ -> iz.name(¢) || iz.literal(¢));
   }
 
   /** @param arguments
