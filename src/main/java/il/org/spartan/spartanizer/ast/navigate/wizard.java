@@ -26,6 +26,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
@@ -574,7 +575,7 @@ public interface wizard {
       return true;
     if (ns1.size() != ns2.size())
       return false;
-    for (int ¢ = 0; ¢ < ns1.size(); ++¢)
+    for(Integer ¢ : range.from(0).to(ns1.size()))
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
