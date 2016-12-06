@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** MultipleReplaceCurrentNode replaces multiple nodes in current statement with
  * multiple nodes (or a single node).
@@ -23,6 +24,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
 
   @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
+      @SuppressWarnings("boxing")
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<ASTNode> input = new ArrayList<>();
         final List<ASTNode> output = new ArrayList<>();
@@ -31,7 +33,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
           for (final ASTNode ¢ : input)
             r.replace(¢, first(output), g);
         else if (input.size() == output.size())
-          for (int ¢ = 0; ¢ < input.size(); ++¢)
+          for(Integer ¢ : range.from(0).to(input.size()))
             r.replace(input.get(¢), output.get(¢), g);
       }
     };
