@@ -11,9 +11,6 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class GetterTest {
-  /**
-   * 
-   */
   private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Getter();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
