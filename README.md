@@ -7,7 +7,7 @@
 
 # Video Demo
 
-Click on the picture below to see a video demo on YouTube.
+Click on the picture below to watch a video demonstration on YouTube.
 
 [![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch_popup?v=49M55azHHM0 "Laconizer Demo")
 
