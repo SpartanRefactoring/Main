@@ -31,46 +31,50 @@ public class DelegatorTest {
   }
 
   @Test public void basic() {
-    delegator("public class A{boolean foo(){return bar();} }");
+    delegator("boolean foo(){return bar();}");
   }
 
   @Test public void basic2() {
-    delegator("public class A{boolean foo(int a){return bar(a);} }");
+    delegator("boolean foo(int a){return bar(a);}");
   }
 
   @Test public void basic3() {
-    delegator("public class A{boolean foo(int a){return bar(a,a);} }");
+    delegator("boolean foo(int a){return bar(a,a);}");
   }
 
   @Test public void basic4() {
-    delegator("public class A{boolean foo(int a){return bar(a,f(a));} }");
+    delegator("boolean foo(int a){return bar(a,f(a));}");
   }
 
   @Test public void basic5() {
-    notDelegator("public class A{boolean foo(int a){if(a == null) return bar(a);} }");
+    notDelegator("boolean foo(int a){if(a == null) return bar(a);}");
   }
 
   @Test public void basic6() {
-    notDelegator("public class A{boolean foo(int a){return bar(a,b);} }");
+    notDelegator("boolean foo(int a){return bar(a,b);}");
   }
 
   @Test public void basic7() {
-    notDelegator("public class A{boolean foo(int a){return bar(a,f(b));} }");
+    notDelegator("boolean foo(int a){return bar(a,f(b));} ");
   }
 
   @Test public void basic8() {
-    notDelegator("public class A{boolean foo(int a){return bar(a,f(f(b)));} }");
+    notDelegator("boolean foo(int a){return bar(a,f(f(b)));} ");
   }
 
   @Test public void basic9() {
-    delegator("public class A{void foo(int a){return bar(a);} }");
+    delegator("void foo(int a){return bar(a);}");
   }
 
   @Test public void basic10() {
-    delegator("public class A{@Override public Set<E> inEdges(){return incidentEdges();} }");
+    delegator("@Override public Set<E> inEdges(){return incidentEdges();} ");
   }
-
+  
+  @Test public void basic11() {
+    delegator("@Override public Set<K> keySet(){ return delegate().keySet();}");
+  }
+  
   private void delegator(final String ¢) {
-    assert javadocedDelegator(¢);
+    assert javadocedDelegator("public class A{" + ¢ + "}");
   }
 }
