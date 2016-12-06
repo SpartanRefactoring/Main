@@ -13,9 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 03-12-16
  */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
-  
   @Override public ASTNode replacement(Statement s) {
-    if(!(s instanceof ReturnStatement)) 
+    if(!(s instanceof ReturnStatement))  
       return null;
     ReturnStatement __ = az.returnStatement(s); 
     if(!(__.getExpression() instanceof ConditionalExpression) && !(__.getExpression() instanceof ParenthesizedExpression))
