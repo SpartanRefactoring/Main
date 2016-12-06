@@ -12,7 +12,7 @@ public class Issue283 {
   @Test public void test0() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
-        + "@Override" //
+        + "@Override " //
         + " void myMethod() { }") //
             .gives("@Deprecated " + "@Override " + "@SuppressWarnings(\"unused\") " //
                 + " void myMethod() { }")//
@@ -66,9 +66,27 @@ public class Issue283 {
   @Test public void test5() {
     trimmingOf(
         "@Ignore @Deprecated class Test123 {" + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
-            .gives("@Deprecated @Ignore class Test123 {"
+            .gives("@Deprecated @Ignore \n class Test123 {"
                 + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
             .gives("@Deprecated @Ignore class Test123 {"
+                + " @Deprecated @Inherited @Test @SuppressWarnings({ \"EnumBody\" }) @NonNull public void test0() { }}")
+            .stays();
+  }
+  @Test public void test0WithComments() {
+    trimmingOf("@SuppressWarnings(\"unused\") " //
+        + "@Deprecated //hello \n" //
+        + "@Override //kjkjhg \n" //
+        + " void myMethod() { }") //
+            .gives("@Deprecated //hello \n" + "@Override //kjkjhg \n" + "@SuppressWarnings(\"unused\") " //
+                + " void myMethod() { }")//
+            .stays();
+  }
+  @Test public void test5WithComments() {
+    trimmingOf(
+        "@Ignore/*hello*/ @Deprecated //gdfgdf \n class Test123 {" + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
+            .gives("@Deprecated //gdfgdf \n @Ignore/*hello*/ \n class Test123 {"
+                + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
+            .gives("@Deprecated //gdfgdf \n @Ignore /*hello*/ class Test123 {"
                 + " @Deprecated @Inherited @Test @SuppressWarnings({ \"EnumBody\" }) @NonNull public void test0() { }}")
             .stays();
   }
