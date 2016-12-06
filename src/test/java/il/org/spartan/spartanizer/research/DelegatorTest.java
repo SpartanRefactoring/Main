@@ -17,6 +17,10 @@ public class DelegatorTest {
     return spartanized(¢).contains("[[Delegator]]");
   }
 
+  private void delegator(final String ¢) {
+    assert javadocedDelegator("public class A{" + ¢ + "}");
+  }
+
   /** @param s */
   private static void notDelegator(final String ¢) {
     assert !javadocedDelegator(¢);
@@ -43,7 +47,7 @@ public class DelegatorTest {
   }
 
   @Test public void basic4() {
-    delegator("boolean foo(int a){return bar(a,f(a));}");
+    notDelegator("boolean foo(int a){return bar(a,f(a));}");
   }
 
   @Test public void basic5() {
@@ -90,7 +94,11 @@ public class DelegatorTest {
     notDelegator("@Override @CanIgnoreReturnValue public V put(R rowKey,C columnKey,V value){ return row(rowKey).put(columnKey,value);}");
   }
 
-  private void delegator(final String ¢) {
-    assert javadocedDelegator("public class A{" + ¢ + "}");
+  @Test public void basic16() {
+    notDelegator("@Override public String toString(){ return \"\" + range();}");
+  }
+
+  @Test public void basic17() {
+    notDelegator("long reserveAndGetWaitLength(int permits,long nowMicros){ return max(reserveEarliestAvailable(permits,nowMicros) - nowMicros,0);}");
   }
 }

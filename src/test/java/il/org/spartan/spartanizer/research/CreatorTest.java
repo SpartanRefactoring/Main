@@ -39,16 +39,20 @@ public class CreatorTest {
   @Test public void a() {
     assert creator("boolean foo(){return new Object();}");
   }
-  
+
   @Test public void b() {
     assert creator("boolean foo(){return new Object(a);}");
   }
-  
+
   @Test public void c() {
     assert not("boolean foo(){return new Object(a).c;}");
   }
-  
+
   @Test public void d() {
     assert not("boolean foo(){return \"\" + new Object(a).c;}");
+  }
+
+  @Test public void e() {
+    assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){ return newHasher().putObject(instance,t).hash(); }");
   }
 }
