@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -35,18 +36,23 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
-  final ASTNode pattern;
+  final Supplier<ASTNode> patternSupplier;
+  ASTNode _pattern;
   final String replacement;
+
+  ASTNode pattern() {
+    return _pattern != null ? _pattern : (_pattern = patternSupplier.get());
+  }
 
   /** @param p
    * @param n */
   public Matcher(final String p, final String r) {
-    pattern = extractStatementIfOne(wizard.ast(reformat(p)));
+    patternSupplier = () -> extractStatementIfOne(wizard.ast(reformat(p)));
     replacement = reformat(r);
   }
 
   public boolean blockMatches(final ASTNode ¢) {
-    return blockMatches(pattern, ¢);
+    return blockMatches(pattern(), ¢);
   }
 
   public boolean blockMatches(final ASTNode p, final ASTNode n) {
@@ -69,7 +75,7 @@ public class Matcher {
    * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
   public boolean matches(final ASTNode ¢) {
-    return matchesAux(pattern, ¢, new HashMap<>());
+    return matchesAux(pattern(), ¢, new HashMap<>());
   }
 
   @SuppressWarnings("boxing") public Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
@@ -280,7 +286,7 @@ public class Matcher {
    * @return Mapping between variables and their corresponding elements (both as
    *         strings). */
   public Map<String, String> collectEnviroment(final ASTNode n, final Map<String, String> enviroment) {
-    return collectEnviroment(pattern, n, enviroment);
+    return collectEnviroment(pattern(), n, enviroment);
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -305,7 +311,7 @@ public class Matcher {
   }
 
   public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
-    return collectEnviromentNodes(pattern, n, enviroment);
+    return collectEnviromentNodes(pattern(), n, enviroment);
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -367,7 +373,7 @@ public class Matcher {
    * @param idxs
    * @return */
   @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
-    final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern), b);
+    final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern()), b);
     final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
     for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
       $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
@@ -375,7 +381,7 @@ public class Matcher {
   }
 
   ASTNode blockReplacement(final Block n) {
-    final Pair<Integer, Integer> p = getBlockMatching(az.block(pattern), az.block(n));
+    final Pair<Integer, Integer> p = getBlockMatching(az.block(pattern()), az.block(n));
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
