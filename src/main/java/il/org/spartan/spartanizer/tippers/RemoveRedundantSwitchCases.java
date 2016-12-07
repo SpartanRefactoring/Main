@@ -97,7 +97,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
     };
   }
 
-  @SuppressWarnings("boxing") @Override protected boolean prerequisite(final SwitchStatement s) {
+  @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
     if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE)
       return true;

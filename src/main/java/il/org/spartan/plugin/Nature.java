@@ -24,7 +24,7 @@ public final class Nature implements IProjectNature {
     set(d, cs);
   }
 
-  @SuppressWarnings("boxing") @Override public void deconfigure() throws CoreException {
+  @Override @SuppressWarnings("boxing") public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();
     for (final Integer ¢ : range.from(0).to(cs.length))
