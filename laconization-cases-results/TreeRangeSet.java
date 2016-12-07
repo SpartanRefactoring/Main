@@ -102,8 +102,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
 
   @Override @Nullable public Range<C> rangeContaining(C value) {
     checkNotNull(value);
-    Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(Cut.belowValue(value));
-    return floorEntry == null || !floorEntry.getValue().contains(value) ? null : floorEntry.getValue();
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.floorEntry(Cut.belowValue(value));
+    return $ == null || !$.getValue().contains(value) ? null : $.getValue();
   }
 
   @Override public boolean intersects(Range<C> c) {
@@ -117,8 +117,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
 
   @Override public boolean encloses(Range<C> c) {
     checkNotNull(c);
-    Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(c.lowerBound);
-    return floorEntry != null && floorEntry.getValue().encloses(c);
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.floorEntry(c.lowerBound);
+    return $ != null && $.getValue().encloses(c);
   }
 
   @Nullable private Range<C> rangeEnclosing(Range<C> ¢) {
@@ -128,11 +128,11 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C> i
   }
 
   @Override public Range<C> span() {
-    Entry<Cut<C>, Range<C>> firstEntry = rangesByLowerBound.firstEntry();
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.firstEntry();
     Entry<Cut<C>, Range<C>> lastEntry = rangesByLowerBound.lastEntry();
-    if (firstEntry == null)
+    if ($ == null)
       throw new NoSuchElementException();
-    return Range.create(firstEntry.getValue().lowerBound, lastEntry.getValue().upperBound);
+    return Range.create($.getValue().lowerBound, lastEntry.getValue().upperBound);
   }
 
   @Override public void add(Range<C> rangeToAdd) {
