@@ -16,6 +16,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
@@ -156,9 +157,10 @@ public class SpartanMovie extends AbstractHandler {
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.
    * @author Ori Roth */
+  @SuppressWarnings("boxing")
   static IMarker getFirstMarker(final IMarker[] ms) {
     int $ = 0;
-    for (int i = 0; i < ms.length; ++i)
+    for(Integer i : range.from(0).to(ms.length))
       try {
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;

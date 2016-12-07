@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removing redundant case branches in switch statement such as
@@ -67,6 +68,7 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
         startFromBreak = ss.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT;
   }
 
+  @SuppressWarnings("boxing")
   private static boolean sameCommands(List<Statement> ss, int t1, int t2) {
     int p1 = t1 < t2 ? t1 : t2;
     int p2 = t2 > t1 ? t2 : t1;
@@ -76,7 +78,7 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
       ++p2;
     if (p1 == ss.size())
       return false;
-    for (int ¢ = 0; ¢ < ss.size(); ++¢) {
+    for(Integer ¢ : range.from(0).to(ss.size())) {
       if (p2 + ¢ == ss.size())
         return ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
       if (ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)

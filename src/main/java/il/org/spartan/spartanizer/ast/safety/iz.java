@@ -388,8 +388,9 @@ public interface iz {
   }
 
   // TODO Yossi: Move to lisp
+  @SuppressWarnings("boxing")
   static int index(final int i, final int... is) {
-    for (int $ = 0; $ < is.length; ++$)
+    for(Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;
     return -1;
@@ -1051,5 +1052,24 @@ public interface iz {
    * @return */
   static boolean synchronizedStatement(final Statement ¢) {
     return ¢ instanceof SynchronizedStatement;
+  }
+
+  /** @param ¢ JDs
+   * @return */
+  static boolean type(ASTNode ¢) {
+    return ¢ instanceof Type;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean superMethodInvocation(Expression ¢) {
+    return ¢ instanceof SuperMethodInvocation;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean anyOperator(ASTNode ¢) {
+    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+        Assignment.Operator.class }).contains(¢.getClass());
   }
 }

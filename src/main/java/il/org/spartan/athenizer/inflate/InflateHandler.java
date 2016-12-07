@@ -37,7 +37,7 @@ public class InflateHandler extends AbstractHandler {
           break;
         }
       // XXX seams to be a bug
-      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
+      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */); 
       // replacement:
       for (final Listener ¢ : ls)
         text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
