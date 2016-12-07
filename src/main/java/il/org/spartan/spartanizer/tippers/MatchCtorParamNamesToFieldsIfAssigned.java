@@ -28,7 +28,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       return null;
     List<SingleVariableDeclaration> ctorParams = parameters(d);
     List<Statement> bodyStatements = statements(d);
-    for (Statement s : bodyStatements) {
+    for (Statement s : bodyStatements) { 
       if (!(iz.expressionStatement(s)))
         continue;
       Expression e = ((ExpressionStatement) s).getExpression();
