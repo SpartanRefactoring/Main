@@ -17,10 +17,14 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-@SuppressWarnings("unused") 
+@SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
+    return false;
+  }
+
   @Override public String description(final MethodDeclaration ¢) {
-    return "Match constructor parameter names to fields";
+    return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
@@ -28,7 +32,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       return null;
     List<SingleVariableDeclaration> ctorParams = parameters(d);
     List<Statement> bodyStatements = statements(d);
-    for (Statement s : bodyStatements) { 
+    for (Statement s : bodyStatements) {
       if (!(iz.expressionStatement(s)))
         continue;
       Expression e = ((ExpressionStatement) s).getExpression();
