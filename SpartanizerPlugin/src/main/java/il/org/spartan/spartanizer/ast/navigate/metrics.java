@@ -41,9 +41,9 @@ public interface metrics {
   @SuppressWarnings("boxing") static int dexterity(final ASTNode n) {
     if (n == null)
       return 0;
-    final Recurser<Integer> recurse = new Recurser<>(n, 0);
+    final Recurser<Integer> $ = new Recurser<>(n, 0);
     final Set<Integer> nodesTypeSet = new HashSet<>();
-    return recurse.preVisit((x) -> {
+    return $.preVisit((x) -> {
       if (nodesTypeSet.contains(x.getRoot().getNodeType()))
         return x.getCurrent();
       nodesTypeSet.add(x.getRoot().getNodeType());

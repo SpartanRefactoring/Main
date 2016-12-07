@@ -37,21 +37,21 @@ public enum Tippers {
   public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
-    final Block b = subject.statement(s).toBlock();
-    r.replace(s, b, g);
-    return (IfStatement) first(statements(b));
+    final Block $ = subject.statement(s).toBlock();
+    r.replace(s, $, g);
+    return (IfStatement) first(statements($));
   }
 
   public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
-    final List<Expression> operands = extract.allOperands(x);
-    wizard.removeAll(b, operands);
-    switch (operands.size()) {
+    final List<Expression> $ = extract.allOperands(x);
+    wizard.removeAll(b, $);
+    switch ($.size()) {
       case 0:
         return x.getAST().newBooleanLiteral(b);
       case 1:
-        return duplicate.of(first(operands));
+        return duplicate.of(first($));
       default:
-        return subject.operands(operands).to(x.getOperator());
+        return subject.operands($).to(x.getOperator());
     }
   }
 
@@ -153,9 +153,9 @@ public enum Tippers {
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(hop.lastStatement(then(s)));
+    final int $ = sequencerRank(hop.lastStatement(then(s)));
     final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s);
+    return rankElse > $ || $ == rankElse && !Tippers.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(final IfStatement s) {

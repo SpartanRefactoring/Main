@@ -26,19 +26,19 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     final SingleVariableDeclaration parameter = c.getException();
     if (!isJohnDoe(parameter))
       return null;
-    final SimpleName n = parameter.getName();
-    assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
+    final SimpleName $ = parameter.getName();
+    assert $ != null;
+    if (in($.getIdentifier(), "$", "¢", "__", "_"))
       return null;
     final Block b = c.getBody();
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf(n).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(c);
     final SimpleName ¢ = c.getAST().newSimpleName("¢");
-    return new Tip("Rename paraemter " + n + " to ¢ ", c, this.getClass()) {
+    return new Tip("Rename paraemter " + $ + " to ¢ ", c, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, c, r, g);
+        Tippers.rename($, ¢, c, r, g);
       }
     };
   }

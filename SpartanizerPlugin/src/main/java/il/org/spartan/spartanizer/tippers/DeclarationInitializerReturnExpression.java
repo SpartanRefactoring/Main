@@ -18,7 +18,7 @@ public final class DeclarationInitializerReturnExpression extends $VariableDecla
     return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
@@ -28,13 +28,13 @@ public final class DeclarationInitializerReturnExpression extends $VariableDecla
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
-    r.replace(s.getExpression(), newReturnValue, g);
+    $.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);
-    eliminate(f, r, g);
-    return r;
+    eliminate(f, $, g);
+    return $;
   }
 }

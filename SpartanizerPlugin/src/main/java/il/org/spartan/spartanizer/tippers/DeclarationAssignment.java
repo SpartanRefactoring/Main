@@ -36,15 +36,15 @@ public final class DeclarationAssignment extends $VariableDeclarationFragementAn
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
-    r.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
-    r.remove(extract.containingStatement(a), g);
-    return r;
+    $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
+    $.remove(extract.containingStatement(a), g);
+    return $;
   }
 }

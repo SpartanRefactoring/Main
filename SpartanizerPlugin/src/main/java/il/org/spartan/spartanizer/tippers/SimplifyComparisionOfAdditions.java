@@ -29,7 +29,7 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
         || iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getLeftOperand())
         || !iz.numberLiteral(az.infixExpression(x.getLeftOperand()).getRightOperand()))
       return null;
-    final Expression left = az.infixExpression(x.getLeftOperand()).getLeftOperand();
+    final Expression $ = az.infixExpression(x.getLeftOperand()).getLeftOperand();
     Expression right;
     if (iz.infixPlus(x.getLeftOperand()))
       right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.MINUS);
@@ -38,7 +38,7 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
         return null;
       right = subject.pair(x.getRightOperand(), az.infixExpression(x.getLeftOperand()).getRightOperand()).to(Operator.PLUS);
     }
-    return subject.pair(left, right).to(x.getOperator());
+    return subject.pair($, right).to(x.getOperator());
   }
 
   private static boolean isLegalOperation(final InfixExpression ¢) {

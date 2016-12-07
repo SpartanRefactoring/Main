@@ -19,7 +19,7 @@ public enum determineIf {
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
   public static boolean loaded(final MethodDeclaration d) {
-    final int expectedNoOfParams = 3;
+    final int $ = 3;
     final int expectedNoOfVars = 5;
     if (d == null)
       return false;
@@ -31,7 +31,7 @@ public enum determineIf {
         return true;
       }
     });
-    return d.parameters().size() >= expectedNoOfParams && declaredVarsCounter.inner >= expectedNoOfVars;
+    return d.parameters().size() >= $ && declaredVarsCounter.inner >= expectedNoOfVars;
   }
 
   // For you to implement! Let's TDD and get it on!
@@ -52,7 +52,7 @@ public enum determineIf {
           ++$.inner;
       }
     });
-    return $.inner - 1 >= 10;
+    return $.inner >= 11;
   }
 
   /** see issue #714 for more details
@@ -158,25 +158,25 @@ public enum determineIf {
   public static boolean uses(final ASTNode n, final String name) {
     if (n == null)
       return false;
-    final Bool nameInAST = new Bool();
-    nameInAST.inner = false;
+    final Bool $ = new Bool();
+    $.inner = false;
     n.accept(new ASTVisitor() {
       void innerVisit(final Name node) {
-        nameInAST.inner = node.getFullyQualifiedName().equals(name);
+        $.inner = node.getFullyQualifiedName().equals(name);
       }
 
       @Override public boolean visit(final QualifiedName node) {
-        if (!nameInAST.inner)
+        if (!$.inner)
           innerVisit(node);
-        return !nameInAST.inner;
+        return !$.inner;
       }
 
       @Override public boolean visit(final SimpleName node) {
-        if (!nameInAST.inner)
+        if (!$.inner)
           innerVisit(node);
-        return !nameInAST.inner;
+        return !$.inner;
       }
     });
-    return nameInAST.inner;
+    return $.inner;
   }
 }

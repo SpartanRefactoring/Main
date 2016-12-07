@@ -17,13 +17,13 @@ public enum file {
     final Path source = Paths.get(from);
     try {
       Files.move(source, source.resolveSibling(to));
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 
   public static boolean exists(final String path) {
-    final File f = new File(path);
-    return f.exists() && !f.isDirectory();
+    final File $ = new File(path);
+    return $.exists() && !$.isDirectory();
   }
 }

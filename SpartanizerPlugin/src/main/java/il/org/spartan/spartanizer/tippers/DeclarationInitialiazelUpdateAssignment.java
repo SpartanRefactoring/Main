@@ -35,7 +35,7 @@ public final class DeclarationInitialiazelUpdateAssignment extends $VariableDecl
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -46,12 +46,12 @@ public final class DeclarationInitialiazelUpdateAssignment extends $VariableDecl
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
-    r.replace(initializer, newInitializer, g);
+    $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
-    r.remove(nextStatement, g);
-    return r;
+    $.remove(nextStatement, g);
+    return $;
   }
 }
