@@ -52,7 +52,7 @@ public enum determineIf {
           ++$.inner;
       }
     });
-    return $.inner - 1 >= 10;
+    return $.inner >= 11;
   }
 
   /** see issue #714 for more details
