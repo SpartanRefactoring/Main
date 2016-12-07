@@ -73,9 +73,9 @@ public class PreferencesResources {
       return Plugin.plugin() == null || store().getBoolean(id);
     }
 
-    private Object getLabel(final Class<? extends TipperCategory> k) {
+    private Object getLabel(final Class<? extends TipperCategory> $) {
       try {
-        return k.getField("label").get(null);
+        return $.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
         monitor.logEvaluationError(this, ¢);
         return null;

@@ -36,27 +36,27 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
     @SuppressWarnings("unchecked") final List<Statement> ss = s.statements();
     final List<Integer> ll = new ArrayList<>();
     getNotContainedCasesIndexes(ss, ll);
-    final StringBuilder r = new StringBuilder("switch(" + s.getExpression() + "){");
+    final StringBuilder $ = new StringBuilder("switch(" + s.getExpression() + "){");
     boolean isChanged = false;
     for (int i = 0; i < ll.size(); ++i) {
-      r.append(ss.get(ll.get(i)) + "");
+      $.append(ss.get(ll.get(i)) + "");
       if (i < ll.size() - 1 && ll.get(i + 1) == ll.get(i) + 1)
         continue;
       for (int j = i + 1; j < ll.size(); ++j)
         if (sameCommands(ss, ll.get(i) + 1, ll.get(j) + 1)) {
-          r.append(ss.get(ll.get(j)));
+          $.append(ss.get(ll.get(j)));
           ll.remove(j);
           --j;
           isChanged = true;
         }
       for (int k = ll.get(i) + 1; k < ss.size(); ++k) {
-        r.append(ss.get(k));
+        $.append(ss.get(k));
         if (ss.get(k).getNodeType() == ASTNode.BREAK_STATEMENT)
           break;
       }
     }
-    r.append("}");
-    return !isChanged ? null : subject.statement(into.s(r + "")).toOneStatementOrNull();
+    $.append("}");
+    return !isChanged ? null : subject.statement(into.s($ + "")).toOneStatementOrNull();
   }
 
   private static void getNotContainedCasesIndexes(final List<Statement> ss, final List<Integer> ll) {
@@ -69,20 +69,20 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
   }
 
   @SuppressWarnings("boxing") private static boolean sameCommands(final List<Statement> ss, final int t1, final int t2) {
-    int p1 = t1 < t2 ? t1 : t2;
+    int $ = t1 < t2 ? t1 : t2;
     int p2 = t2 > t1 ? t2 : t1;
-    for (; p1 < ss.size() && ss.get(p1).getNodeType() == ASTNode.SWITCH_CASE;)
-      ++p1;
+    for (; $ < ss.size() && ss.get($).getNodeType() == ASTNode.SWITCH_CASE;)
+      ++$;
     for (; p2 < ss.size() && ss.get(p2).getNodeType() == ASTNode.SWITCH_CASE;)
       ++p2;
-    if (p1 == ss.size())
+    if ($ == ss.size())
       return false;
     for (final Integer ¢ : range.from(0).to(ss.size())) {
       if (p2 + ¢ == ss.size())
-        return ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
-      if (ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)
+        return ss.get($ + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
+      if (ss.get($ + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)
         return true;
-      if (!(ss.get(p1 + ¢) + "").equals(ss.get(p2 + ¢) + ""))
+      if (!(ss.get($ + ¢) + "").equals(ss.get(p2 + ¢) + ""))
         return false;
     }
     return true;

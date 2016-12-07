@@ -504,8 +504,8 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception ¢) {
-          ¢.printStackTrace();
+        } catch (final Exception $) {
+          $.printStackTrace();
         }
         return null;
       };

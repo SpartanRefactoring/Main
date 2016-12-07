@@ -62,10 +62,10 @@ public enum make {
   }
 
   public static Expression minus(final Expression x) {
-    final PrefixExpression ¢ = az.prefixExpression(x);
-    return ¢ == null ? minus(x, az.numberLiteral(x))
-        : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
-            : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
+    final PrefixExpression $ = az.prefixExpression(x);
+    return $ == null ? minus(x, az.numberLiteral(x))
+        : $.getOperator() == wizard.MINUS1 ? $.getOperand() //
+            : $.getOperator() == wizard.PLUS1 ? subject.operand($.getOperand()).to(wizard.MINUS1)//
                 : x;
   }
 
@@ -229,8 +229,8 @@ public enum make {
     private boolean stringConcatingSafeIn(final ASTNode host) {
       if (!infixExpression(host))
         return false;
-      final InfixExpression e = az.infixExpression(host);
-      return (e.getOperator() != wizard.PLUS2 || !type.isNotString(e)) && isStringConactingSafe(inner);
+      final InfixExpression $ = az.infixExpression(host);
+      return ($.getOperator() != wizard.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);
     }
   }
 

@@ -81,8 +81,8 @@ public class Toolbox {
   }
 
   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
-    @SuppressWarnings("unchecked") final Tipper<ASTNode> x = (Tipper<ASTNode>) t;
-    return extractTip(n, x);
+    @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
+    return extractTip(n, $);
   }
 
   public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
@@ -353,9 +353,9 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> ¢ : ts)
-      if (((Tipper<N>) ¢).canTip(n))
-        return (Tipper<N>) ¢;
+    for (final Tipper<?> $ : ts)
+      if (((Tipper<N>) $).canTip(n))
+        return (Tipper<N>) $;
     return null;
   }
 

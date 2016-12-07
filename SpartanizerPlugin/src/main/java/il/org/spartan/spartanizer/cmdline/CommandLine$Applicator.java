@@ -51,19 +51,19 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String[] excludedNanoPatterns) {
-    final List<String> temp = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
       if (!as.list(excludedNanoPatterns).contains(¢))
-        temp.add(¢);
-    return temp.toArray(new String[] {});
+        $.add(¢);
+    return $.toArray(new String[] {});
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
-    final List<String> temp = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
       if (!as.list(excludedTipperGroups).contains(¢))
-        temp.add(¢);
-    return temp.toArray(new String[] {});
+        $.add(¢);
+    return $.toArray(new String[] {});
   }
 
   void go(final CompilationUnit u) {

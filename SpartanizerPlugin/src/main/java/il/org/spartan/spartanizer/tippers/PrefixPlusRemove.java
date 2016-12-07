@@ -29,7 +29,7 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
   private Expression heart(final Expression x) {
     if (iz.nodeTypeEquals(x, PARENTHESIZED_EXPRESSION))
       return heart(step.expression(x));
-    final PrefixExpression p = az.prefixExpression(x);
-    return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());
+    final PrefixExpression $ = az.prefixExpression(x);
+    return $ == null || $.getOperator() != PLUS ? x : heart($.getOperand());
   }
 }

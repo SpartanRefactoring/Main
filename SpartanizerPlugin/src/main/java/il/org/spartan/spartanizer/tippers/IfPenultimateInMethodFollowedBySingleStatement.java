@@ -32,15 +32,15 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
     final Statement then = then(s);
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
-    r.replace(deleteMe, make.emptyStatement(deleteMe), g);
-    remove(r, nextStatement, g);
+    $.replace(deleteMe, make.emptyStatement(deleteMe), g);
+    remove($, nextStatement, g);
     final IfStatement newIf = duplicate.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
@@ -48,8 +48,8 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(duplicate.of(nextStatement));
-    r.replace(s, newIf, g);
-    remove(r, nextStatement, g);
-    return r;
+    $.replace(s, newIf, g);
+    remove($, nextStatement, g);
+    return $;
   }
 }

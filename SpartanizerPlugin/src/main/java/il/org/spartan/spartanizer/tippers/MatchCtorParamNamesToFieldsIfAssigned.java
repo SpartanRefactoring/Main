@@ -25,11 +25,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override public Tip tip(final MethodDeclaration d) {
-    if (!d.isConstructor())
+  @Override public Tip tip(final MethodDeclaration $) {
+    if (!$.isConstructor())
       return null;
-    parameters(d);
-    final List<Statement> bodyStatements = statements(d);
+    parameters($);
+    final List<Statement> bodyStatements = statements($);
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s))
         continue;
@@ -44,7 +44,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
         continue;
       az.simpleName(right(a));
     }
-    return new Tip(description(d), d, this.getClass()) {
+    return new Tip(description($), $, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         // TODO: Change of code here
         System.out.println(r);

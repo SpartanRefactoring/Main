@@ -158,9 +158,9 @@ public enum GuessedContext {
 
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap);
-    final String essence = wizard.essence(inner);
+    final String $ = wizard.essence(inner);
     final String essence2 = wizard.essence(off);
     assert essence2 != null;
-    return essence2.contains(essence);
+    return essence2.contains($);
   }
 }
