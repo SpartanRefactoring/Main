@@ -636,7 +636,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName name(FieldAccess ¢) {
+  public static SimpleName name(final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 }

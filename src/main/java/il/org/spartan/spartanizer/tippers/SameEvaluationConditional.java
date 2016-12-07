@@ -26,8 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     final InfixExpression $ = az.infixExpression(¢.getExpression());
-    return !iz.infixEquals($)
-        || !wizard.same(¢.getThenExpression(), $.getLeftOperand()) && !wizard.same(¢.getThenExpression(), $.getRightOperand())
+    return !iz.infixEquals($) || !wizard.same(¢.getThenExpression(), $.getLeftOperand()) && !wizard.same(¢.getThenExpression(), $.getRightOperand())
         || !wizard.same(¢.getElseExpression(), $.getLeftOperand()) && !wizard.same(¢.getElseExpression(), $.getRightOperand())
         || !sideEffects.free($.getLeftOperand()) || !sideEffects.free($.getRightOperand()) ? null : duplicate.of(¢.getElseExpression());
   }

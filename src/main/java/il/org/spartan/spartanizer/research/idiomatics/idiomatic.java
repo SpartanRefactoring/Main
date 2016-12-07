@@ -273,7 +273,8 @@ public interface idiomatic {
     }
   }
 
-  @SuppressWarnings({ "javadoc", "static-method" }) class TEST {
+  @SuppressWarnings({ "javadoc", "static-method" })
+  class TEST {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }
