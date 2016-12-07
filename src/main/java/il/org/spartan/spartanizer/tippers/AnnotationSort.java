@@ -58,21 +58,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
-  }/*
-  @SuppressWarnings("unchecked")
-  void sortElements(final List<? extends IExtendedModifier> elements, ListRewrite r) {
-    if (elements.isEmpty())
-      return;
-    final List myCopy = new ArrayList();
-    myCopy.addAll(elements);
-    Collections.sort(myCopy, comp);
-    for (int i = 0; i < elements.size(); ++i) {
-      ASTNode oldNode = (ASTNode) elements.get(i);
-      ASTNode newNode = (ASTNode) myCopy.get(i);
-      if (oldNode != newNode) {
-        r.replace(oldNode, $.createMoveTarget(newNode), g);
-      }
-    }*/
+  }
   @Override public Tip tip(final N n) {
     if (n == null || az.bodyDeclaration(n) == null)
       return null;
@@ -94,17 +80,6 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       }
     };
   }
-/*
- public ASTNode replacement(final N d) {
-    final N $ = duplicate.of(d);
-    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
-    final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
-    extendedModifiers($).clear();
-    extendedModifiers($).addAll(as);
-    extendedModifiers($).addAll(ms);
-    return !wizard.same($, d) ? $ : null;
-  }
-*/
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
