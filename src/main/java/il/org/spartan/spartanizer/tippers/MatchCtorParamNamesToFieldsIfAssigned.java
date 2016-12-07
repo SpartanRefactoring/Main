@@ -13,9 +13,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /**
- * @author mdoron
- * @author tomerdragucki 
+ * @since 07-Dec-16
+ * @author Doron Meshulam
+ *
  */
+
+
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
   @Override public String description(final MethodDeclaration ¢) {
     return "Match constructor parameter names to fields";
