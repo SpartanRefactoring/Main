@@ -21,17 +21,17 @@ public class Classifier extends ASTVisitor {
     static final long serialVersionUID = 1L;
     {
       add(new AnyMatches());
-      add(new Contains());
+      add(new ContainsEnhancedFor());
       add(new ForEach());
       add(new FindFirstEnhancedFor());
-      add(new Reduce());
+      add(new ReduceEnhancedFor());
     }
   };
   static List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new CopyArray());
-      add(new ForEach2());
+      add(new ForEachEnhanced());
       add(new InitArray());
     }
   };

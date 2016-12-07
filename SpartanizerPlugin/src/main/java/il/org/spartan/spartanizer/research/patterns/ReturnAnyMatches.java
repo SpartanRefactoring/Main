@@ -20,8 +20,7 @@ public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
     return tipper.canTip(x);
   }
 
-  @Override public Tip tip(final Block x) {
-    Logger.logNP(x, getClass().getSimpleName());
+  @Override public Tip pattern(final Block x) {
     return tipper.tip(x);
   }
 }
