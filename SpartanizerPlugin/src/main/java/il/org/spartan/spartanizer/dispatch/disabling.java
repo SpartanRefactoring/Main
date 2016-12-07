@@ -52,7 +52,7 @@ public interface disabling {
   String disabledPropertyId = "Trimmer_disabled_id";
   /** Disable laconic tips, used to indicate that no spartanization should be
    * made to node */
-  String disablers[] = { "", //
+  String disablers[] = { "[[SuppressWarningsSpartan]]", //
   };
   /** Enable spartanization identifier, overriding a disabler */
   String enablers[] = { "[[EnableWarningsSpartan]]", //
