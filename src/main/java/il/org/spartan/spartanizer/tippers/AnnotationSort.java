@@ -44,7 +44,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     for (final HashSet<String> ¢ : rankTable) {
       ++$;
       if (¢.contains(annotationName))
-       return $;
+        return $;
     }
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
   }
@@ -60,6 +60,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
+
   @Override public Tip tip(final N n) {
     if (n == null || az.bodyDeclaration(n) == null)
       return null;

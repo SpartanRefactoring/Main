@@ -41,8 +41,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     final Assignment a = az.assignment(e);
-    return updaterDeclaredInFor(¢, $ != null ? az.simpleName($.getOperand())
-        : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
+    return updaterDeclaredInFor(¢,
+        $ != null ? az.simpleName($.getOperand()) : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
   }
 
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
