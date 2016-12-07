@@ -25,8 +25,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
     if (num > 0)
       return null;
     final ReturnStatement nextRet = extract.nextReturn(s);
-    final int breaks = new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent()));
-    if (nextRet == null || breaks != 0 || iz.block(s.getBody()))
+    if (nextRet == null || new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent())) != 0 || iz.block(s.getBody()))
       return null;
     final IfStatement inlineIf = subject.pair(nextRet, null).toNot(s.getExpression());
     final WhileStatement retWhile = duplicate.of(s);
