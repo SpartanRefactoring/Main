@@ -51,9 +51,9 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return $;
   }
 
-  private static boolean isShort(final SingleVariableDeclaration d) {
-    final String $ = spartan.shorten(d.getType());
-    return $ != null && ($ + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  private static boolean isShort(final SingleVariableDeclaration ¢) {
+    final String $ = spartan.shorten(¢.getType());
+    return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration m) {

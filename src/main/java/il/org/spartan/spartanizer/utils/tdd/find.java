@@ -16,10 +16,10 @@ public enum find {
   /** @author AnnaBel7
    * @author michalcohena
    * @since Nov 4, 2016 */
-  public static TypeDeclaration ancestorType(final ASTNode n) {
-    if (n == null)
+  public static TypeDeclaration ancestorType(final ASTNode ¢) {
+    if (¢ == null)
       return null;
-    ASTNode $ = n.getParent();
+    ASTNode $ = ¢.getParent();
     for (; $ != null && az.typeDeclaration($) == null; $ = $.getParent()) {
       // In the end of the for loop, a will be null or the enclosing Type
       // declaration.
@@ -27,8 +27,8 @@ public enum find {
     return (TypeDeclaration) $;
   }
 
-  public static MethodDeclaration ancestorMethod(final ASTNode n) {
-    ASTNode $ = n;
+  public static MethodDeclaration ancestorMethod(final ASTNode ¢) {
+    ASTNode $ = ¢;
     if ($ == null)
       return null;
     while ($ != null) {

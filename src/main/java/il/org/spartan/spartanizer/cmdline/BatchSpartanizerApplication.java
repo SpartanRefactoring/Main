@@ -93,10 +93,10 @@ public final class BatchSpartanizerApplication implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
-    final String $ = FileUtils.read(f);
+  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+    final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
-    return pack.createCompilationUnit(f.getName(), $, false, null);
+    return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
   static String getPackageNameFromSource(final String source) {

@@ -27,8 +27,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return !Collect.usesOf(n).in(d.getBody()).isEmpty();
   }
 
-  public static boolean suppressing(final SingleVariableDeclaration d) {
-    for (final Annotation $ : annotations(d)) {
+  public static boolean suppressing(final SingleVariableDeclaration ¢) {
+    for (final Annotation $ : annotations(¢)) {
       if (!"SuppressWarnings".equals($.getTypeName() + ""))
         continue;
       if (iz.singleMemberAnnotation($))
