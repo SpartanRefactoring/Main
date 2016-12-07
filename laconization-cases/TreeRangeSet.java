@@ -638,9 +638,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
           if (!lowerBoundWindow.contains(cut) || cut.compareTo(restriction.lowerBound) < 0 || cut.compareTo(restriction.upperBound) >= 0)
             return null;
           if (!cut.equals(restriction.lowerBound)) {
-            Range<C> result = rangesByLowerBound.get(cut);
-            if (result != null)
-              return result.intersection(restriction);
+            Range<C> $ = rangesByLowerBound.get(cut);
+            if ($ != null)
+              return $.intersection(restriction);
           } else {
             Range<C> candidate = Maps.valueOrNull(rangesByLowerBound.floorEntry(cut));
             if (candidate != null && candidate.upperBound.compareTo(restriction.lowerBound) > 0)

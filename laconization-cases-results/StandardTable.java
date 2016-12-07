@@ -352,14 +352,14 @@ import javax.annotation.Nullable;
       final Map<C, V> map = backingRowMap();
       if (map == null)
         return Iterators.emptyModifiableIterator();
-      final Iterator<Entry<C, V>> iterator = map.entrySet().iterator();
+      final Iterator<Entry<C, V>> $ = map.entrySet().iterator();
       return new Iterator<Entry<C, V>>() {
         @Override public boolean hasNext() {
-          return iterator.hasNext();
+          return $.hasNext();
         }
 
         @Override public Entry<C, V> next() {
-          final Entry<C, V> entry = iterator.next();
+          final Entry<C, V> entry = $.next();
           return new ForwardingMapEntry<C, V>() {
             @Override protected Entry<C, V> delegate() {
               return entry;
@@ -377,7 +377,7 @@ import javax.annotation.Nullable;
         }
 
         @Override public void remove() {
-          iterator.remove();
+          $.remove();
           maintainEmptyInvariant();
         }
       };
