@@ -74,25 +74,22 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       }
     }*/
   @Override public Tip tip(final N n) {
-    if(n == null || az.bodyDeclaration(n) == null)
+    if (n == null || az.bodyDeclaration(n) == null)
       return null;
     final List<Annotation> elements = extract.annotations(n);
-    if(elements ==null || elements.isEmpty())
-        return null;
+    if (elements == null || elements.isEmpty())
+      return null;
     final List<Annotation> myCopy = new ArrayList<>();
     myCopy.addAll(elements);
     Collections.sort(myCopy, comp);
-    if(myCopy.equals(elements))
-      return null;
-    return  new Tip(description(n), n, this.getClass()) {
+    return myCopy.equals(elements) ? null : new Tip(description(n), n, this.getClass()) {
       @Override public void go(ASTRewrite r, TextEditGroup g) {
-       ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+        ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < elements.size(); ++i) {
           ASTNode oldNode = elements.get(i);
           ASTNode newNode = myCopy.get(i);
-          if (oldNode != newNode) {
+          if (oldNode != newNode)
             l.replace(oldNode, r.createMoveTarget(newNode), g);
-          }
         }
       }
     };
