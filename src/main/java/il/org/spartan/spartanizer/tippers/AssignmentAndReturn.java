@@ -34,15 +34,15 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
     return "Inline assignment to " + to(¢) + " with its subsequent 'return'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(a.getParent());
     if (parent == null || iz.forStatement(parent))
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(s.getExpression())))
       return null;
-    r.remove(parent, g);
-    r.replace(s, subject.operand(a).toReturn(), g);
-    return r;
+    $.remove(parent, g);
+    $.replace(s, subject.operand(a).toReturn(), g);
+    return $;
   }
 }

@@ -152,11 +152,11 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  public int fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
+  public int fuzzyImplementationApply(final ICompilationUnit $, final ITextSelection s) {
     try {
-      setICompilationUnit(cu);
+      setICompilationUnit($);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
-      return performRule(cu);
+      return performRule($);
     } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
@@ -445,13 +445,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return selection != null && !selection.isEmpty();
   }
 
-  public int apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
+  public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
     if (s != null && s.textSelection != null)
       setSelection(s.textSelection);
     if (s instanceof TrackerSelection)
-      return apply(u, (TrackerSelection) s);
+      return apply($, (TrackerSelection) s);
     try {
-      return apply(u);
+      return apply($);
     } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
       return 0;

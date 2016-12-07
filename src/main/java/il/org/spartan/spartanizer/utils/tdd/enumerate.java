@@ -37,14 +37,14 @@ public enum enumerate {
   public static int statements(final ASTNode n) {
     if (n == null)
       return 0;
-    final Int count = new Int();
+    final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
-          ++count.inner;
+          ++$.inner;
       }
     });
-    return count.inner;
+    return $.inner;
   }
 
   /** @author Sharon Kuninin
@@ -55,15 +55,15 @@ public enum enumerate {
   public static int methods(final CompilationUnit ¢) {
     if (¢ == null)
       return 0;
-    final Int counter = new Int();
-    counter.inner = 0;
+    final Int $ = new Int();
+    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
-        ++counter.inner;
+        ++$.inner;
         return true;
       }
     });
-    return counter.inner;
+    return $.inner;
   }
 
   /** @author Ori Marcovitch
@@ -72,16 +72,16 @@ public enum enumerate {
   public static int methodsWithBody(final ASTNode ¢) {
     if (¢ == null)
       return 0;
-    final Int counter = new Int();
-    counter.inner = 0;
+    final Int $ = new Int();
+    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
         if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
-          ++counter.inner;
+          ++$.inner;
         return true;
       }
     });
-    return counter.inner;
+    return $.inner;
   }
 
   /** see issue #776 for more details

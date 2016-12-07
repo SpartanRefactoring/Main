@@ -20,11 +20,11 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;
-    final boolean condition = !haz.sideEffects(s.getExpression());
+    final boolean $ = !haz.sideEffects(s.getExpression());
     final boolean then = RemoveRedundent.checkBlock(s.getThenStatement());
     final boolean elze = RemoveRedundent.checkBlock(s.getElseStatement());
-    return condition && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
-        : !condition || !then || elze || s.getElseStatement() == null ? null
+    return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
+        : !$ || !then || elze || s.getElseStatement() == null ? null
             : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
   }
 }

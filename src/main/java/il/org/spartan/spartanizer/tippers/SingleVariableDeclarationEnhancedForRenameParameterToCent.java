@@ -31,20 +31,19 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
-    final EnhancedForStatement s = (EnhancedForStatement) p;
-    final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    final EnhancedForStatement $ = (EnhancedForStatement) p;
+    final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p1;
       final List<SingleVariableDeclaration> l = parameters(pp);
       if (l.size() == 1) {
-        final SingleVariableDeclaration parameter = onlyOne(l);
-        final SimpleName sn = parameter.getName();
+        final SimpleName sn = onlyOne(l).getName();
         assert sn != null;
         if (in(sn.getIdentifier(), "¢"))
           return null;
       }
     }
-    final Statement body = s.getBody();
+    final Statement body = $.getBody();
     if (body == null || !isJohnDoe(d))
       return null;
     final SimpleName n = d.getName();
@@ -60,7 +59,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, s, r, g);
+        Tippers.rename(n, ¢, $, r, g);
       }
     };
   }

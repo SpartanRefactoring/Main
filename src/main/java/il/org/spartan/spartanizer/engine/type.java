@@ -184,7 +184,7 @@ public interface type {
     }
   }
 
-  static class inner {
+  class inner {
     private static String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
     static Map<String, implementation> types = new LinkedHashMap<>();
@@ -196,8 +196,8 @@ public interface type {
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
       if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
         return false;
-      final int n = Integer.parseInt(step.token(az.numberLiteral(x)));
-      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
+      final int $ = Integer.parseInt(step.token(az.numberLiteral(x)));
+      return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
 
     private static implementation lookDown(final Assignment x) {
@@ -300,8 +300,8 @@ public interface type {
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (final ASTNode base : hop.ancestors(x)) {
-        final ASTNode context = base.getParent();
+      for (final ASTNode $ : hop.ancestors(x)) {
+        final ASTNode context = $.getParent();
         if (context != null)
           switch (context.getNodeType()) {
             case INFIX_EXPRESSION:
@@ -313,9 +313,9 @@ public interface type {
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
             case ASSERT_STATEMENT:
-              return base.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+              return $.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case FOR_STATEMENT:
-              return base.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+              return $.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             // case WHILE_STATEMENT:
             case IF_STATEMENT:
               return BOOLEAN;
@@ -450,9 +450,9 @@ public interface type {
       }
 
       default implementation underIntegersOnlyOperator(final implementation k) {
-        final implementation ¢1 = asIntegralUnderOperation();
+        final implementation $ = asIntegralUnderOperation();
         final implementation ¢2 = k.asIntegralUnderOperation();
-        return in(LONG, ¢1, ¢2) ? LONG : !in(INTEGRAL, ¢1, ¢2) ? INT : INTEGRAL;
+        return in(LONG, $, ¢2) ? LONG : !in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},

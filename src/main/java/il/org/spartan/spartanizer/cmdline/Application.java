@@ -53,9 +53,9 @@ public final class Application implements IApplication {
   }
 
   static String getPackageNameFromSource(final String source) {
-    final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    p.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(source.toCharArray());
+    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
 
   static void printHelpPrompt() {
@@ -174,10 +174,10 @@ public final class Application implements IApplication {
     }
   }
 
-  ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
-    final String source = FileUtils.read(f);
-    setPackage(getPackageNameFromSource(source));
-    return pack.createCompilationUnit(f.getName(), source, false, null);
+  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+    final String $ = FileUtils.read(¢);
+    setPackage(getPackageNameFromSource($));
+    return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
   boolean parseArguments(final List<String> args) {
@@ -303,9 +303,9 @@ public final class Application implements IApplication {
       return linesBefore;
     }
 
-    public int getRoundStat(final int r) {
+    public int getRoundStat(final int $) {
       try {
-        return roundStats.get(r).intValue();
+        return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
         ¢.printStackTrace();
         return 0;

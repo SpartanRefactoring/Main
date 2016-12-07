@@ -32,7 +32,7 @@ public final class DeclarationInitializerReturnVariable extends $VariableDeclara
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
@@ -42,8 +42,8 @@ public final class DeclarationInitializerReturnVariable extends $VariableDeclara
     final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.same(n, returnValue))
       return null;
-    eliminate(f, r, g);
-    r.replace(s, subject.operand(initializer).toReturn(), g);
-    return r;
+    eliminate(f, $, g);
+    $.replace(s, subject.operand(initializer).toReturn(), g);
+    return $;
   }
 }

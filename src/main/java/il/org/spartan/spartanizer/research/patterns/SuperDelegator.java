@@ -26,8 +26,8 @@ public class SuperDelegator extends Delegator {
     super.prerequisites(¢);
     if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(onlyOne(statements(¢))))
       return false;
-    final SuperMethodInvocation m = findFirst.superMethodDeclaration(onlyOne(statements(¢)));
-    return m != null && parametersNames(¢).containsAll(dependencies(arguments(m)));
+    final SuperMethodInvocation $ = findFirst.superMethodDeclaration(onlyOne(statements(¢)));
+    return $ != null && parametersNames(¢).containsAll(dependencies(arguments($)));
   }
 
   static boolean anyTips(final Statement s) {

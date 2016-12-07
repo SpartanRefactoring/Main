@@ -22,16 +22,16 @@ import il.org.spartan.spartanizer.utils.*;
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
-  @SuppressWarnings("unchecked") public static String getTipperName(final Map<attribute, Object> a) {
-    if (Refactorer.unknown.equals(a.get(attribute.TIPPER)))
+  @SuppressWarnings("unchecked") public static String getTipperName(final Map<attribute, Object> $) {
+    if (Refactorer.unknown.equals($.get(attribute.TIPPER)))
       try {
-        a.put(attribute.TIPPER,
-            ((Class<? extends Tipper<?>>) ((IMarker) a.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+        $.put(attribute.TIPPER,
+            ((Class<? extends Tipper<?>>) ((IMarker) $.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
       } catch (final CoreException ¢) {
         monitor.log(¢);
-        a.put(attribute.TIPPER, "tip-core exception");
+        $.put(attribute.TIPPER, "tip-core exception");
       }
-    return a.get(attribute.TIPPER) + "";
+    return $.get(attribute.TIPPER) + "";
   }
 
   public static String projectName(final Map<attribute, Object> ¢) {
@@ -48,11 +48,11 @@ public class RefactorerUtil {
   }
 
   public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
-    final String s = us.size() + "";
+    final String $ = us.size() + "";
     String i = us.indexOf(u) + 1 + "";
-    while (i.length() < s.length())
+    while (i.length() < $.length())
       i = " " + i;
-    return i + "/" + s;
+    return i + "/" + $;
   }
 
   public static String plurals(final String s, final int i) {
@@ -67,12 +67,12 @@ public class RefactorerUtil {
       final Map<attribute, Object> a, final attribute t) {
     if (us.isEmpty())
       return null;
-    final Trimmer tr = new Trimmer();
+    final Trimmer $ = new Trimmer();
     return new IRunnableWithProgress() {
       @Override @SuppressWarnings("boxing") public void run(final IProgressMonitor pm) {
         pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        tr.setICompilationUnit(first(us));
-        a.put(t, tr.countTips());
+        $.setICompilationUnit(first(us));
+        a.put(t, $.countTips());
         pm.done();
       }
     };

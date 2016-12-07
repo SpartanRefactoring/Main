@@ -44,7 +44,7 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))
       return null;
@@ -57,8 +57,8 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     final Expression right1 = getRight(a1);
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
-    r.remove(parent, g);
-    r.replace(right1, duplicate.of(a), g);
-    return r;
+    $.remove(parent, g);
+    $.replace(right1, duplicate.of(a), g);
+    return $;
   }
 }

@@ -50,9 +50,9 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   }
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
-    final List<SwitchCase> l = getCases(s);
+    final List<SwitchCase> $ = getCases(s);
     @SuppressWarnings("unchecked") final List<Statement> ll = s.statements();
-    return l.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break") || l.size() == 1 && l.get(0).isDefault();
+    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break") || $.size() == 1 && $.get(0).isDefault();
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

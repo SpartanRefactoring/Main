@@ -32,9 +32,9 @@ public final class FindFirstEnhancedFor extends NanoPatternTipper<EnhancedForSta
   }
 
   @Override public Tip pattern(final EnhancedForStatement x) {
-    for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
+    for (final UserDefinedTipper<EnhancedForStatement> $ : tippers)
+      if ($.canTip(x))
+        return $.tip(x);
     assert false;
     return null;
   }
