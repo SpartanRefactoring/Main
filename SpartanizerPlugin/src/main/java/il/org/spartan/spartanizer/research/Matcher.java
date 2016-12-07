@@ -300,6 +300,10 @@ public class Matcher {
         enviroment.put(argumentsId(p), arguments(n) + "");
       final List<ASTNode> pChildren = gatherChildren(p, p);
       final List<ASTNode> nChildren = gatherChildren(n, p);
+      System.out.println(p);
+      System.out.println(n);
+      System.out.println(pChildren);
+      System.out.println(nChildren);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
@@ -307,7 +311,7 @@ public class Matcher {
   }
 
   private static boolean startsWith$notBlock(final ASTNode p) {
-    return is$X(p) || iz.name(p) && ((p + "").startsWith("$M") || (p + "").startsWith("$N") || (p + "").startsWith("$L"));
+    return is$X(p) || iz.name(p) && ((p + "").startsWith("$M") || (p + "").startsWith("$N") || (p + "").startsWith("$L")) || is$T(p) ;
   }
 
   public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
