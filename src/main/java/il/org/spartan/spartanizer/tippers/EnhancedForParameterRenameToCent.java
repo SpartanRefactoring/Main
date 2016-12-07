@@ -27,7 +27,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    ASTNode p = s;
+    ASTNode p = s; 
     while(!(p instanceof MethodDeclaration))
       p = p.getParent();
     
