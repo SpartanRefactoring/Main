@@ -28,19 +28,11 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return "replace null conditionl ternary with ?.";
   }
 
-  @Override public boolean canTip(final ConditionalExpression x) {
-    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return true;
-    return false;
+  @Override public boolean canTip(final ConditionalExpression ¢) {
+    return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(final ConditionalExpression x) {
-    Logger.logNP(x, "safeReference");
-    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
-    assert false;
-    return null;
+  @Override public Tip pattern(final ConditionalExpression ¢) {
+    return firstTip(tippers, ¢);
   }
 }

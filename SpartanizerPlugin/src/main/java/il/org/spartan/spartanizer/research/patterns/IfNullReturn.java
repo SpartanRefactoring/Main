@@ -28,8 +28,7 @@ public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(final IfStatement ¢) {
-    Logger.logNP(¢, "IfNullReturn");
-    return firstThatTips(tippers, ¢).tip(¢);
+  @Override public Tip pattern(final IfStatement ¢) {
+    return firstTip(tippers, ¢);
   }
 }
