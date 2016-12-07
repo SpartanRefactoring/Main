@@ -20,19 +20,19 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
     return "Iniline the return into the while statement";
   }
 
-  @SuppressWarnings("boxing") @Override public Tip tip(WhileStatement s) {
-    int num = new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1);
+  @SuppressWarnings("boxing") @Override public Tip tip(final WhileStatement s) {
+    final int num = new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1);
     if (num > 0)
       return null;
-    ReturnStatement nextRet = extract.nextReturn(s);
-    int breaks = new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent()));
+    final ReturnStatement nextRet = extract.nextReturn(s);
+    final int breaks = new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent()));
     if (nextRet == null || breaks != 0 || iz.block(s.getBody()))
       return null;
-    IfStatement inlineIf = subject.pair(nextRet, null).toNot(s.getExpression());
-    WhileStatement retWhile = duplicate.of(s);
-    List<Statement> lst = extract.statements(retWhile.getBody());
+    final IfStatement inlineIf = subject.pair(nextRet, null).toNot(s.getExpression());
+    final WhileStatement retWhile = duplicate.of(s);
+    final List<Statement> lst = extract.statements(retWhile.getBody());
     lst.add(inlineIf);
-    Block b = subject.ss(lst).toBlock();
+    final Block b = subject.ss(lst).toBlock();
     retWhile.setBody(b);
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

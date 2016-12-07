@@ -4,7 +4,7 @@ package il.org.spartan.spartanizer.research.idiomatics;
  * @since Dec 6, 2016 */
 public enum precondition {
   ;
-  public static <N> boolean notNull(N ¢) {
+  public static <N> boolean notNull(final N ¢) {
     return ¢ != null;
   }
 }

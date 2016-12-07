@@ -29,7 +29,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   // TODO: Doron Meshulam - make sure you use class `searchAncestors' and
   // 'lisp.onlyOne` instead of this.
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    ASTNode p = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    final ASTNode p = searchAncestors.forClass(MethodDeclaration.class).from(s);
     if (p instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p;
       final List<SingleVariableDeclaration> l = parameters(pp);

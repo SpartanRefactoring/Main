@@ -575,7 +575,7 @@ public interface wizard {
       return true;
     if (ns1.size() != ns2.size())
       return false;
-    for (Integer ¢ : range.from(0).to(ns1.size()))
+    for (final Integer ¢ : range.from(0).to(ns1.size()))
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;

@@ -596,7 +596,7 @@ public enum step {
 
   @SuppressWarnings("boxing") private static boolean balanced(final String s) {
     int $ = 0;
-    for (Integer ¢ : range.from(0).to(s.length()))
+    for (final Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢) == '<')
         ++$;
       else if (s.charAt(¢) == '>')
@@ -630,7 +630,7 @@ public enum step {
 
   /** @param ¢
    * @return */
-  public static List<Statement> statements(MethodDeclaration ¢) {
+  public static List<Statement> statements(final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 }

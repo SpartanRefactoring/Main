@@ -33,13 +33,13 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode assignment(ASTNode ¢) {
+  static ASTNode assignment(final ASTNode ¢) {
     return instanceOf(Assignment.class, ¢);
   }
 
   /** @param ¢ JD
    * @return */
-  static ASTNode castExpression(ASTNode ¢) {
+  static ASTNode castExpression(final ASTNode ¢) {
     return instanceOf(CastExpression.class, ¢);
   }
 
@@ -68,7 +68,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode enhancedForStatement(ASTNode ¢) {
+  static ASTNode enhancedForStatement(final ASTNode ¢) {
     return instanceOf(EnhancedForStatement.class, ¢);
   }
 
@@ -149,7 +149,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode methodInvocation(ASTNode ¢) {
+  static ASTNode methodInvocation(final ASTNode ¢) {
     return instanceOf(MethodInvocation.class, ¢);
   }
 
@@ -164,13 +164,13 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode prefixExpression(ASTNode ¢) {
+  static ASTNode prefixExpression(final ASTNode ¢) {
     return instanceOf(PrefixExpression.class, ¢);
   }
 
   /** @param ¢ JD
    * @return */
-  static ASTNode returnStatement(ASTNode ¢) {
+  static ASTNode returnStatement(final ASTNode ¢) {
     return instanceOf(ReturnStatement.class, ¢);
   }
 
@@ -182,7 +182,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static SuperMethodInvocation superMethodDeclaration(ASTNode ¢) {
+  static SuperMethodInvocation superMethodDeclaration(final ASTNode ¢) {
     return instanceOf(SuperMethodInvocation.class, ¢);
   }
 
@@ -222,7 +222,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode expressionStatement(ASTNode ¢) {
+  static ASTNode expressionStatement(final ASTNode ¢) {
     return instanceOf(ExpressionStatement.class, ¢);
   }
 }

@@ -69,11 +69,11 @@ public class Logger {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
-    Map<Integer, List<Double>> ratioMap = new HashMap<>();
+    final Map<Integer, List<Double>> ratioMap = new HashMap<>();
     int statementsTotal = 0;
     int methodsTotal = 0;
-    for (MethodRecord m : methodsStatistics.values()) {
-      int key = m.numStatements;
+    for (final MethodRecord m : methodsStatistics.values()) {
+      final int key = m.numStatements;
       if (key == 0)
         continue; // don't count methods without body
       ++methodsTotal;
@@ -81,7 +81,7 @@ public class Logger {
       ratioMap.putIfAbsent(key, new ArrayList<>());
       ratioMap.get(key).add(key == 0 ? 1 : min(1, safeDiv(m.numNPStatements, m.numStatements)));
     }
-    NumberFormat formatter = new DecimalFormat("#0.00");
+    final NumberFormat formatter = new DecimalFormat("#0.00");
     for (final Integer k : ratioMap.keySet().stream().sorted((x, y) -> x < y ? -1 : x > y ? 1 : 0).collect(Collectors.toList())) {
       final List<Double> li = ratioMap.get(k);
       report //
@@ -251,7 +251,7 @@ public class Logger {
    * @param u compilation unit */
   public static void logCompilationUnit(final CompilationUnit u) {
     currentType = new Stack<>();
-    for (AbstractTypeDeclaration ¢ : searchDescendants.forClass(AbstractTypeDeclaration.class).from(u))
+    for (final AbstractTypeDeclaration ¢ : searchDescendants.forClass(AbstractTypeDeclaration.class).from(u))
       logType(¢);
   }
 
@@ -259,10 +259,10 @@ public class Logger {
    * @param u compilation unit */
   public static void logType(final AbstractTypeDeclaration d) {
     currentType.push(d);
-    List<MethodDeclaration> ms = step.methods(d);
+    final List<MethodDeclaration> ms = step.methods(d);
     if (ms == null)
       return;
-    for (MethodDeclaration ¢ : ms)
+    for (final MethodDeclaration ¢ : ms)
       if (enumerate.statements(¢) != 0)
         logMethodInfo(¢);
     numMethods += ms.size();
@@ -304,7 +304,7 @@ public class Logger {
   }
 
   /**
-   * 
+   *
    */
   public static void finishedType() {
     currentType.pop();
