@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.Collapse {
-  @Override public String description(final MethodInvocation i) {
-    final Expression receiver = receiver(i);
-    return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + (receiver == null ? "x" : receiver);
+  @Override public String description(final MethodInvocation ¢) {
+    final Expression $ = receiver(¢);
+    return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {

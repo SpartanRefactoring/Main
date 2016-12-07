@@ -7,7 +7,8 @@ import org.eclipse.jface.preference.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public final class PreferencesResources {
+/** @author Daniel Mittelman */
+public class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the laconization plug-in";
   /** General preferences **/
@@ -62,7 +63,7 @@ public final class PreferencesResources {
     final String id;
     final String label;
 
-    private TipperGroup(final Class<? extends TipperCategory> clazz) {
+    TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";
@@ -75,8 +76,8 @@ public final class PreferencesResources {
     private Object getLabel(final Class<? extends TipperCategory> k) {
       try {
         return k.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        monitor.logEvaluationError(this, e);
+      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
+        monitor.logEvaluationError(this, ¢);
         return null;
       }
     }

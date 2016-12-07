@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -10,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 // TODO Roth: choose more suitable category
@@ -43,16 +45,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   /** @param d JD
    * @param ds variables list
-   * @return <code><b>true</b></code> <em>iff</em> the method and the list
-   *         contains same variables, in matters oftype and quantity
+   * @return <code><b>true</b></code> <em>iff</em> the method and the
+   *         listcontains same variables, in matters oftype and quantity
    *         [[SuppressWarningsSpartan]] */
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    final List<String> ts = new ArrayList<>();
-    for (final VariableDeclaration ¢ : ds)
-      ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
-          : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
+    final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
+        : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
@@ -134,9 +134,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = j.tags();
-    final List<String> ns = new ArrayList<>();
-    for (final VariableDeclaration ¢ : ds)
-      ns.add(¢.getName() + "");
+    final List<String> ns = ds.stream().map(¢ -> ¢.getName() + "").collect(Collectors.toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
@@ -228,8 +226,9 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return $;
     }
 
+    @SuppressWarnings("boxing")
     private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (int ¢ = starting; ¢ < statements.size(); ++¢)
+      for(Integer ¢ : range.from(starting).to(statements.size()))
         setUsesMapping(d, statements.get(¢));
     }
 

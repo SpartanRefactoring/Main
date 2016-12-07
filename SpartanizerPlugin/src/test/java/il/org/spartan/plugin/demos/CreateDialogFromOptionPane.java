@@ -10,8 +10,6 @@ public class CreateDialogFromOptionPane {
     parent.add(button);
     parent.pack();
     parent.setVisible(true);
-    button.addActionListener(evt -> {
-      JOptionPane.showInputDialog(parent, "What is your name?", null);
-    });
+    button.addActionListener(evt -> JOptionPane.showInputDialog(parent, "What is your name?", null));
   }
 }

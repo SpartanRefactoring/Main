@@ -13,14 +13,14 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue222 {
   @Test public void chocolate1() {
-    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n" + "  int y = x;\n"
+    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n" + "  int y = x; ++y;\n"
         + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
         + "    $.addAll(step.extendedOperands(x));\n" + "  return $;\n" + "}\n").stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment f : fs){\n"
-        + "int b = f(f);\n" + "f(f,b);\n" + "return g(f,b,f());\n" + "}\n" + "return true;\n" + "}").stays();
+    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment $ : fs){\n"
+        + "int b = f($);\n" + "f($,b);\n" + "return g($,b,f());\n" + "}\n" + "return true;\n" + "}").stays();
   }
 
   @Test public void chocolate3() {

@@ -28,7 +28,8 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
   }
 
   @Override public boolean prerequisite(final PostfixExpression ¢) {
-    return !(¢.getParent() instanceof Expression) && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(¢) == null
+    return ¢.getParent().getNodeType() != ASTNode.SWITCH_STATEMENT && !(¢.getParent() instanceof Expression)
+        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(¢) == null
         && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(¢) == null
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }

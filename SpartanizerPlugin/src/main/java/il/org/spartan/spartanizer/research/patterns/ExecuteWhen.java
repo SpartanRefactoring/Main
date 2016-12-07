@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.idiomatics.*;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
@@ -48,13 +49,13 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   }
 
   /** First order approximation - does statement throw?
-   * @param s statement
+   * @param ¢ statement
    * @return */
-  private static boolean throwing(final Statement s) {
-    if (searchAncestors.forClass(TryStatement.class).from(s) != null)
+  private static boolean throwing(final Statement ¢) {
+    if (searchAncestors.forClass(TryStatement.class).from(¢) != null)
       return true;
-    final MethodDeclaration m = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(s));
-    return m != null && !m.thrownExceptionTypes().isEmpty();
+    final MethodDeclaration $ = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(¢));
+    return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
   @Override public Tip tip(final IfStatement x) {

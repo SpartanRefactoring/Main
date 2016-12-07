@@ -118,8 +118,8 @@ public class TrimmerLog {
   private static CSVStatistics init() {
     try {
       output = new CSVStatistics(outputDir, "Tips");
-    } catch (final IOException e) {
-      e.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
     return null;
   }

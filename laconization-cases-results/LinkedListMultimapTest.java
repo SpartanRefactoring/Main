@@ -288,8 +288,7 @@ import junit.framework.TestSuite;
     ListMultimap<String, Integer> multimap = create();
     multimap.put("foo", 2);
     multimap.put("bar", 3);
-    Collection<Map.Entry<String, Integer>> entries = multimap.entries();
-    Iterator<Map.Entry<String, Integer>> iterator = entries.iterator();
+    Iterator<Map.Entry<String, Integer>> iterator = multimap.entries().iterator();
     Map.Entry<String, Integer> entrya = iterator.next();
     Map.Entry<String, Integer> entryb = iterator.next();
     assertEquals(2, (int) multimap.get("foo").set(0, 4));
@@ -306,8 +305,7 @@ import junit.framework.TestSuite;
     assertEquals(3, (int) entryb.getValue());
   }
 
-  @SuppressWarnings("unchecked") @GwtIncompatible // unreasonably slow
-  public void testEntriesIteration() {
+  @GwtIncompatible @SuppressWarnings("unchecked") public void testEntriesIteration() {
     for (final int startIndex : new int[] { 0, 3, 5 })
       new ListIteratorTester<Entry<String, Integer>>(3,
           ImmutableList.of(Maps.immutableEntry("foo", 99), Maps.immutableEntry("foo", 88), Maps.immutableEntry("bar", 77)),
@@ -394,9 +392,9 @@ import junit.framework.TestSuite;
     }.test();
   }
 
-  @SuppressWarnings("unchecked") @GwtIncompatible // unreasonably slow
+  @GwtIncompatible 
+  @SuppressWarnings("unchecked") 
   public void testAsSetIteration() {
-    // XXX: spartanized
     new IteratorTester<Entry<String, Collection<Integer>>>(6, MODIFIABLE,
         Sets.newLinkedHashSet(asList(Maps.immutableEntry("foo", (Collection<Integer>) asList(2, 3, 6)),
             Maps.immutableEntry("bar", (Collection<Integer>) asList(4, 5, 10, 11)), Maps.immutableEntry("baz", (Collection<Integer>) asList(7, 8)),

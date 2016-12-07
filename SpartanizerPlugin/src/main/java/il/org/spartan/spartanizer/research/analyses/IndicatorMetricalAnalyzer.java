@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Class for averaging whatever about methods before and after refactoring +
@@ -16,8 +16,8 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
 
   @Override protected abstract int metric(ASTNode n);
 
-  @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
-    getSafe(histogram, metrics.countStatements(before)).add(Int.valueOf(metric(before) < metric(after) ? 0 : 1));
+  @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
+    getSafe(histogram, measure.statements(before)).add(Int.valueOf(metric(before) < metric(after) ? 0 : 1));
   }
 
   private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {

@@ -27,7 +27,8 @@ public class Issue311 {
 
   @Test public void challenge_while_a() {
     trimmingOf("while (start <il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
-        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
+        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr; print(lenExpr); final InstructionHandle[] match = getMatch(startExpr, lenExpr);"
+        + //
         "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}").stays();
   }
 
@@ -50,13 +51,17 @@ public class Issue311 {
 
   @Test public void challenge_while_d() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
-        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}").stays();
+        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
+    .gives("static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_1() {
     trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);" + //
-        "while (m.find())a += m.group();return a.toLowerCase();}").gives("public String abbreviate() {String a = \"\";" + //
-            "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}");
+        "while (m.find())a += m.group();return a.toLowerCase();}")
+            .gives("public String abbreviate() {String $ = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);" + //
+                "while (m.find())$ += m.group();return $.toLowerCase();}")
+            .gives("public String abbreviate() {String $ = \"\";" + //
+                "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)$ += m.group();return $.toLowerCase();}");
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_2a() {
@@ -135,9 +140,11 @@ public class Issue311 {
     trimmingOf(
         "public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())a += m.group();return a.toLowerCase();}")
             .gives(
-                "public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}")
+                "public String abbreviate() {String $ = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())$ += m.group();return $.toLowerCase();}")
             .gives(
-                "public String abbreviate() {String a = \"\";for(final Matcher ¢ = Pattern.compile(\"[A-Z]\").matcher(typeName);¢.find();)a += ¢.group();return a.toLowerCase();}")
+                "public String abbreviate() {String $ = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)$ += m.group();return $.toLowerCase();}")
+            .gives(
+                "public String abbreviate() {String $ = \"\";for(final Matcher ¢ = Pattern.compile(\"[A-Z]\").matcher(typeName);¢.find();)$ += ¢.group();return $.toLowerCase();}")
             .stays();
   }
 
@@ -177,7 +184,8 @@ public class Issue311 {
   }
 
   @Test public void initializers_for_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "for(;p <10;) p = p.getParent();" + "return false;" + "}").stays();
+    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "for(;p <10;) p = p.getParent();" + "return false;" + "}")
+        .stays();
   }
 
   @Test public void initializers_for_5() {
@@ -202,11 +210,13 @@ public class Issue311 {
 
   // TODO: when fragments will be handled alone, change the test.
   @Test public void initializers_while_3() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "while(p <10) ++p;" + "return false;" + "}").stays();
+    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")
+    .gives("public boolean check(int i){int p=i,a=0;++a;while(p<10){++p;if(p>=10)return false;}}");
   }
 
   @Test public void initializers_while_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "while(p <10) p = p.getParent();" + "return false;" + "}").stays();
+    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "while(p <10) p = p.getParent();" + "return false;" + "}")
+        .gives("public boolean check(ASTNode i){ASTNode p=i;int a=5;++a;while(p<10){p=p.getParent();if(p>=10)return false;}}");
   }
 
   @Test public void initializers_with_array_a() {
@@ -219,12 +229,13 @@ public class Issue311 {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i <length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
             .gives(
-                "private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
-                    + "int length = sb.length();"
-                    + "for (int ¢ = 0; ¢ <length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
-                + "for (int length = sb.length(), ¢ = 0; ¢ <length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');"
-                + "return sb + \"\";")
+                "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
+                    + "for (int i = 0; i <length; ++i)" + "if ($.charAt(i) == '.')" + "$.setCharAt(i, '/');" + "return $ + \"\";")
+            .gives(
+                "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
+                    + "for (int ¢ = 0; ¢ <length; ++¢)" + "if ($.charAt(¢) == '.')" + "$.setCharAt(¢, '/');" + "return $ + \"\";")
+            .gives("private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);"
+                + "for (int length = $.length(), ¢ = 0; ¢ <length; ++¢)" + "if ($.charAt(¢) == '.')" + "$.setCharAt(¢, '/');" + "return $ + \"\";")
             .stays();
   }
 
@@ -262,7 +273,8 @@ public class Issue311 {
 
   @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}").stays();
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
+    .gives("static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
   }
 
   @Test public void t06a() {

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to convert an expression such as
@@ -50,6 +51,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+  @SuppressWarnings("boxing")
   @Override public ASTNode replacement(final InfixExpression x) {
     gather(x, new ArrayList<Expression>());
     x.getOperator();
@@ -57,11 +59,11 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     extract.allOperators(x);
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int ¢ = 0; ¢ < ops.size(); ++¢)
+    for(Integer ¢ : range.from(0).to(ops.size()))
       if (!iz.literal0(ops.get(¢)))
         ops2.add(ops.get(¢));
     InfixExpression $ = null;
-    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
+    for(Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
@@ -73,22 +75,23 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  private static boolean containsPlusOperator(final InfixExpression e) {
-    for (final Operator o : extract.allOperators(e))
-      if (o == Operator.PLUS)
+  /**  */
+  private static boolean containsPlusOperator(final InfixExpression x) {
+    for (final Operator ¢ : extract.allOperators(x))
+      if (¢ == Operator.PLUS)
         return true;
     return false;
   }
 
+  @SuppressWarnings("boxing")
   public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int ¢ = 0; ¢ < ops.size(); ++¢)
+    for(Integer ¢ : range.from(0).to(ops.size()))
       if (!iz.literal0(ops.get(¢)))
         ops2.add(ops.get(¢));
     InfixExpression $ = null;
-    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
+    for(Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }

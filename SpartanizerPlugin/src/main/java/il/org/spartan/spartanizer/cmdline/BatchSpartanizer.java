@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Scans files named by folder, ignore test files, and collect statistics.
+/** Scans files named by outputFolder, ignore test files, and collect
+ * statistics.
  * @author Yossi Gil
  * @author Matteo Orru'
  * @year 2016 */
@@ -183,7 +184,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", system.d(essence, essence2))//
         .put("% Essence", system.p(essence, essence2))//
-        .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
+        .put("Words)", wordCount)//
+        .put("R(T/L)", system.ratio(length, tide)) //
         .put("R(E/L)", system.ratio(length, essence)) //
         .put("R(E/T)", system.ratio(tide, essence)) //
         .put("R(B/S)", system.ratio(nodes, body)) //
@@ -212,8 +214,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
     if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢, "File = " + f);
       }
   }
 
@@ -245,8 +247,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
+    } catch (final IOException ¢) {
+      System.err.println(¢.getMessage());
     }
   }
 
@@ -266,8 +268,8 @@ public final class BatchSpartanizer extends FilesASTVisitor {
       report = new CSVStatistics(reportFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
         collect(¢);
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

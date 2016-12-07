@@ -158,6 +158,10 @@ public enum az {
     return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
 
+  public static SwitchCase switchCase(final ASTNode $) {
+    return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
+  }
+
   public static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return ¢ == null || !(¢ instanceof BodyDeclaration) ? null : (BodyDeclaration) ¢;
   }
@@ -298,7 +302,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static MethodInvocation methodInvocation(final ASTNode $) {
-    return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
+    return $ == null || !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
@@ -379,7 +383,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
-    return !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
+    return $ == null || !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
@@ -494,9 +498,9 @@ public enum az {
   }
 
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    duplicate.into(step.fragments(¢), fragments);
-    return chop(fragments);
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    duplicate.into(step.fragments(¢), $);
+    return chop($);
   }
 
   /** @param ¢ JD
@@ -508,7 +512,7 @@ public enum az {
   /** @param ¢ JD
    * @return */
   public static CastExpression castExpression(final Expression ¢) {
-    return ¢ == null ? null : (CastExpression) ¢;
+    return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
   }
 
   /** @param ¢ JD
@@ -521,5 +525,11 @@ public enum az {
    * @return */
   public static Type type(final ASTNode ¢) {
     return ¢ == null ? null : (Type) ¢;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static SuperMethodInvocation superMethodInvocation(Expression ¢) {
+    return ¢ == null ? null : (SuperMethodInvocation) ¢;
   }
 }

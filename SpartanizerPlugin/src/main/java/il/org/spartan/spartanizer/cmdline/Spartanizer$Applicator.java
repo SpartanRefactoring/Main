@@ -101,18 +101,12 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @return */
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      // final BodyDeclaration u = (BodyDeclaration)
-      // makeAST.CLASS_BODY_DECLARATIONS.from($.get());
-      // TODO Matteo: apply to CompilationUnit and not to
-      // CLASS_BODY_DECLARATIONS -- matteo
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
-        throw new AssertionError(x);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        monitor.logEvaluationError(this, ¢);
+        throw new AssertionError(¢);
       }
       if (!e.hasChildren())
         return $.get();
@@ -150,8 +144,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -159,8 +153,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
@@ -205,8 +199,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -214,8 +208,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;

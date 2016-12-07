@@ -10,7 +10,8 @@ import il.org.spartan.*;
 
 // TODO Yossi Gil: review class, functionality added by Ori
 /** A class to search in the ancestry line of a given node.
- * @author Yossi Gil
+ * @author Yossi Gilz
+ * @author Dor Ma'ayan
  * @since 2015-08-22 */
 public abstract class searchAncestors<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
@@ -123,7 +124,7 @@ public abstract class searchAncestors<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
@@ -143,7 +144,7 @@ public abstract class searchAncestors<N extends ASTNode> {
       this.instances = instances;
     }
 
-    @SuppressWarnings("unchecked") @Override public N from(final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (instances.contains($))

@@ -75,6 +75,8 @@ public enum GuessedContext {
     final String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
     if (cleanFragment.startsWith("{") && cleanFragment.endsWith("}"))
       return BLOCK_LOOK_ALIKE;
+    if (methodInvocationLookAlike(codeFragment))
+      return EXPRESSION_LOOK_ALIKE;
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
@@ -83,6 +85,10 @@ public enum GuessedContext {
         "\n" + //
         enumerateFailingAttempts(codeFragment));
     throw new RuntimeException();
+  }
+
+  private static boolean methodInvocationLookAlike(final String codeFragment) {
+    return codeFragment.matches("[\\S]+\\(\\)");
   }
 
   private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {

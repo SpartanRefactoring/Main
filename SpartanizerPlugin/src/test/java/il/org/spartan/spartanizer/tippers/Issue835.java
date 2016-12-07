@@ -21,26 +21,20 @@ public class Issue835 {
     assert t.description(az.block(wizard.ast("{int x;}"))) != null;
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock1() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock1() {
     azzert.that(0, is(az.block(wizard.ast("{}")).statements().size()));
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock2() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock2() {
     azzert.that(0, is(az.block(wizard.ast("\n{\n}\n")).statements().size()));
   }
 
-  @SuppressWarnings("static-method") @Test public void emptyBlock3() {
+  @Test @SuppressWarnings("static-method") public void emptyBlock3() {
     azzert.that(1, is(az.block(wizard.ast("\n{int a;}\n")).statements().size()));
   }
 
-  // use t.tip instead of trimmer cause tip is probably unused by the
-  // spartanizer at the moment
-  @Test public void returnNullOnEmptyBlock1() {
-    azzert.isNull(t.tip(az.block(wizard.ast("{}"))));
-  }
-
-  @Test public void returnNullOnEmptyBlock2() {
-    azzert.isNull(t.tip(az.block(wizard.ast("\n{}\n"))));
+  @Test public void returnNotNullNonEmptyBlock() {
+    assert t.tip(az.block(wizard.ast("{int x;}"))) != null;
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef() {
@@ -51,7 +45,13 @@ public class Issue835 {
     azzert.isNull(t.tip(az.block(wizard.ast("{return 1;}"))));
   }
 
-  @Test public void returnNotNullNonEmptyBlock() {
-    assert t.tip(az.block(wizard.ast("{int x;}"))) != null;
+  // use t.tip instead of trimmer cause tip is probably unused by the
+  // spartanizer at the moment
+  @Test public void returnNullOnEmptyBlock1() {
+    azzert.isNull(t.tip(az.block(wizard.ast("{}"))));
+  }
+
+  @Test public void returnNullOnEmptyBlock2() {
+    azzert.isNull(t.tip(az.block(wizard.ast("\n{}\n"))));
   }
 }

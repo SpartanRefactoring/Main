@@ -11,27 +11,22 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
-  String method = "";
-  private final String test1 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
-      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-  private final String test2 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
-      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
-      + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-  private final String test4 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
-      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
-      + "   assert (i>0);\n" + " }\n" + "}";
+  private static int nMethods;
 
   public static void main(final String[] args) {
-    final String test = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(test);
+        + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}");
     assert u != null;
     u.accept(new ASTVisitor() {
+      boolean hasTestAnnotation(final MethodDeclaration d) {
+        final List<?> modifiers = d.modifiers();
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
+          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
+            return true;
+        return false;
+      }
+
       /* (non-Javadoc)
        *
        * @see
@@ -46,57 +41,9 @@ public class SpartanizerTest {
        *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * MethodDeclaration) */
-      @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println(MethodDeclaration.class + ": " + node.getName());
-        return !hasTestAnnotation(node);
-      }
-
-      boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> modifiers = d.modifiers();
-        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
-            return true;
-        return false;
-      }
-
-      /* (non-Javadoc)
-       *
-       * @see
-       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
       @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
         System.out.println(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
-        return super.visit(node);
-      }
-
-      /* (non-Javadoc)
-       *
-       * @see
-       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * ImportDeclaration) */
-      @Override public boolean visit(final ImportDeclaration node) {
-        System.out.println(ImportDeclaration.class + ": " + node.getName());
-        return super.visit(node);
-      }
-
-      /* (non-Javadoc)
-       *
-       * @see
-       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * PackageDeclaration) */
-      @Override public boolean visit(final PackageDeclaration node) {
-        System.out.println(PackageDeclaration.class + ": " + node.getName());
-        return super.visit(node);
-      }
-
-      /* (non-Javadoc)
-       *
-       * @see
-       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * MethodInvocation) */
-      @Override public boolean visit(final MethodInvocation node) {
-        System.out.println(MethodInvocation.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -114,9 +61,9 @@ public class SpartanizerTest {
        *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * NormalAnnotation) */
-      @Override public boolean visit(final NormalAnnotation node) {
-        System.out.println("NormalAnnotation: " + node.getTypeName());
+       * ImportDeclaration) */
+      @Override public boolean visit(final ImportDeclaration node) {
+        System.out.println(ImportDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -127,117 +74,117 @@ public class SpartanizerTest {
        * MarkerAnnotation) */
       @Override public boolean visit(final MarkerAnnotation node) {
         System.out.println("MarkerAnnotation: " + node.getTypeName());
-        final ASTNode parent = node.getParent();
-        System.out.println("parent: " + parent.getNodeType());
+        System.out.println("parent: " + node.getParent().getNodeType());
+        return super.visit(node);
+      }
+
+      /* (non-Javadoc)
+       *
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * MethodDeclaration) */
+      @Override public boolean visit(final MethodDeclaration node) {
+        System.out.println(MethodDeclaration.class + ": " + node.getName());
+        return !hasTestAnnotation(node);
+      }
+
+      /* (non-Javadoc)
+       *
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * MethodInvocation) */
+      @Override public boolean visit(final MethodInvocation node) {
+        System.out.println(MethodInvocation.class + ": " + node.getName());
+        return super.visit(node);
+      }
+
+      /* (non-Javadoc)
+       *
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * NormalAnnotation) */
+      @Override public boolean visit(final NormalAnnotation node) {
+        System.out.println("NormalAnnotation: " + node.getTypeName());
+        return super.visit(node);
+      }
+
+      /* (non-Javadoc)
+       *
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * PackageDeclaration) */
+      @Override public boolean visit(final PackageDeclaration node) {
+        System.out.println(PackageDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
     });
   }
 
-  private static int nMethods;
+  String method = "";
+  private final String test1 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
+      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
+      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
+  private final String test2 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+      + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
+      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n"
+      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
+      + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}";
 
-  // testing how the matches method works
-  @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
-    assert "/basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  @SuppressWarnings("static-method") boolean countMethods() {
+    ++nMethods;
+    return false;
   }
 
-  @SuppressWarnings("static-method") @Test public void testStringMatches_02() {
-    assert "/basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_03() {
-    assert "/basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_04() {
-    assert "basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_05() {
-    assert "basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_06() {
-    assert "basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_07() {
-    assert "/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_08() {
-    assert !"/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*");
-  }
-
-  // examples from real world
-  @SuppressWarnings("static-method") @Test public void testStringMatches_09() {
-    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java"
-        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_10() {
-    assert "/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_11() {
-    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/integration/voldemort/performance/StoreRoutingPlanPerf.java"
-        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testStringMatches_12() {
-    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/contrib/ec2-testing/src/java/voldemort/utils/impl/RsyncDeployer.java"
-        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
-  }
-
-  @SuppressWarnings("static-method") @Test public void testFileName_01() {
+  @Test @SuppressWarnings("static-method") public void testFileName_01() {
     assert "fooTest.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_02() {
+  @Test @SuppressWarnings("static-method") public void testFileName_02() {
     assert "test.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_03() {
+  @Test @SuppressWarnings("static-method") public void testFileName_03() {
     assert "Test.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_04() {
+  @Test @SuppressWarnings("static-method") public void testFileName_04() {
     assert "Testfoo.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_05() {
+  @Test @SuppressWarnings("static-method") public void testFileName_05() {
     assert "testfoo.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_06() {
+  @Test @SuppressWarnings("static-method") public void testFileName_06() {
     assert "foo1Testfoo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_07() {
+  @Test @SuppressWarnings("static-method") public void testFileName_07() {
     assert "foo1testfoo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_08() {
+  @Test @SuppressWarnings("static-method") public void testFileName_08() {
     assert "test_foo.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_09() {
+  @Test @SuppressWarnings("static-method") public void testFileName_09() {
     assert "foo1_Test_foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_10() {
+  @Test @SuppressWarnings("static-method") public void testFileName_10() {
     assert "foo1_test_foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_11() {
+  @Test @SuppressWarnings("static-method") public void testFileName_11() {
     assert "test-foo.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_12() {
+  @Test @SuppressWarnings("static-method") public void testFileName_12() {
     assert "foo1-Test-foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
-  @SuppressWarnings("static-method") @Test public void testFileName_13() {
+  @Test @SuppressWarnings("static-method") public void testFileName_13() {
     assert "foo1-test-foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java");
   }
 
@@ -250,29 +197,6 @@ public class SpartanizerTest {
     assert nMethods == 1;
     visitASTNode(u2);
     assert nMethods == 3;
-  }
-
-  /** @param u1 */
-  private void visitASTNode(final ASTNode u1) {
-    u1.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println("MethodDeclaration node: getName(): " + node.getName());
-        return !hasTestAnnotation(node) && countMethods();
-      }
-
-      boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> modifiers = d.modifiers();
-        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
-            return true;
-        return false;
-      }
-    });
-  }
-
-  @SuppressWarnings("static-method") boolean countMethods() {
-    ++nMethods;
-    return false;
   }
 
   @Test public void testSpartanizerCheckMethod_01() {
@@ -299,6 +223,12 @@ public class SpartanizerTest {
         return super.visit(¢);
       }
 
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        // assert !("FieldDeclaration is not included",
+        // !gUIBatchLaconizer.check(¢));
+        return super.visit(¢);
+      }
+
       @Override public boolean visit(final MethodDeclaration ¢) {
         // assert !("MethodDeclaration is not included",
         // gUIBatchLaconizer.check(¢));
@@ -310,29 +240,95 @@ public class SpartanizerTest {
         // !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
-
-      @Override public boolean visit(final FieldDeclaration ¢) {
-        // assert !("FieldDeclaration is not included",
-        // !gUIBatchLaconizer.check(¢));
-        return super.visit(¢);
-      }
     });
   }
 
   @Test public void testSpartanizerCheckMethod_03() {
+    final String test4 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+        + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
+        + "   assert (i>0);\n" + " }\n" + "}";
     System.out.println(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        return storeMethodName(¢.getName());
-      }
-
       boolean storeMethodName(final SimpleName ¢) {
         method = ¢ + "";
         return false;
       }
+
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        return storeMethodName(¢.getName());
+      }
     });
     assert "method1".equals(method);
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_01() {
+    assert "/basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_02() {
+    assert "/basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_03() {
+    assert "/basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_04() {
+    assert "basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_05() {
+    assert "basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_06() {
+    assert "basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_07() {
+    assert "/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_08() {
+    assert !"/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_09() {
+    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java"
+        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_10() {
+    assert "/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_11() {
+    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/integration/voldemort/performance/StoreRoutingPlanPerf.java"
+        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
+  }
+
+  @Test @SuppressWarnings("static-method") public void testStringMatches_12() {
+    assert "/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/contrib/ec2-testing/src/java/voldemort/utils/impl/RsyncDeployer.java"
+        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
+  }
+
+  /** @param u1 */
+  private void visitASTNode(final ASTNode u1) {
+    u1.accept(new ASTVisitor() {
+      boolean hasTestAnnotation(final MethodDeclaration d) {
+        final List<?> modifiers = d.modifiers();
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
+          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
+            return true;
+        return false;
+      }
+
+      @Override public boolean visit(final MethodDeclaration node) {
+        System.out.println("MethodDeclaration node: getName(): " + node.getName());
+        return !hasTestAnnotation(node) && countMethods();
+      }
+    });
   }
 }

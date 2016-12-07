@@ -168,8 +168,8 @@ public class ReportGenerator implements ConfigurableReport {
   public static void initializeReport(final String reportFileName, final String id) {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 

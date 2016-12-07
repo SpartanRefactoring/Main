@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import il.org.spartan.external.*;
+
 public abstract class AbstractCommandLineProcessor {
-  protected String folder = "/tmp/";
-  protected String presentSourcePath;
+  @External(alias = "i", value = "name of the input directory") protected String inputFolder = ".";
+  @External(alias = "o", value = "name of the output directory") protected String outputFolder = "/tmp";
 
   public abstract void apply();
 

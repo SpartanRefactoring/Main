@@ -138,6 +138,14 @@ public final class Issue223 {
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
+  private ClassInstanceCreation findMe(final Statement c) {
+    return findFirst.instanceOf(SUBJECT_CLASS, c);
+  }
+
+  private ClassInstanceCreationValueTypes makeTipper() {
+    return new ClassInstanceCreationValueTypes();
+  }
+
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);").gives("Integer x = Integer.valueOf(1+9);").gives("Integer x = Integer.valueOf(10);").stays();
   }
@@ -157,16 +165,14 @@ public final class Issue223 {
   @Test public void vanilla02() {
     final Operand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
-    final Wrap w = Wrap.find(a.get());
-    final String wrap = w.on(a.get());
+    final String wrap = Wrap.find(a.get()).on(a.get());
     if (wrap.equals(TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
   @Test public void vanilla03() {
     final Operand a = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(a.get());
-    final String wrap = w.on(a.get());
+    final String wrap = Wrap.find(a.get()).on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -179,8 +185,7 @@ public final class Issue223 {
 
   @Test public void vanilla04() {
     final Operand o = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -188,8 +193,8 @@ public final class Issue223 {
     final Trimmer a = new Trimmer();
     try {
       a.createRewrite(u).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
     assert d != null;
     if (wrap.equals(d.get()))
@@ -198,8 +203,7 @@ public final class Issue223 {
 
   @Test public void vanilla05() {
     final Operand o = trimmingOf("new Integer(3)");
-    final Wrap w = Wrap.find(o.get());
-    final String wrap = w.on(o.get());
+    final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
@@ -212,19 +216,11 @@ public final class Issue223 {
       a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
     }
     assert d != null;
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
-  }
-
-  private ClassInstanceCreation findMe(final Statement c) {
-    return findFirst.instanceOf(SUBJECT_CLASS, c);
-  }
-
-  private ClassInstanceCreationValueTypes makeTipper() {
-    return new ClassInstanceCreationValueTypes();
   }
 }

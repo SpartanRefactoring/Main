@@ -21,6 +21,10 @@ public class Issue675 {
     azzert.that(0, is(enumerate.statements(null)));
   }
 
+  @Test public void statements_test10() {
+    azzert.that(9, is(enumerate.statements(wizard.ast("int x = 5; while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}"))));
+  }
+
   @Test public void statements_test2() {
     azzert.that(2, is(enumerate.statements(wizard.ast("return 0;"))));
   }
@@ -51,9 +55,5 @@ public class Issue675 {
 
   @Test public void statements_test9() {
     azzert.that(8, is(enumerate.statements(wizard.ast("while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}"))));
-  }
-
-  @Test public void statements_test10() {
-    azzert.that(9, is(enumerate.statements(wizard.ast("int x = 5; while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}"))));
   }
 }

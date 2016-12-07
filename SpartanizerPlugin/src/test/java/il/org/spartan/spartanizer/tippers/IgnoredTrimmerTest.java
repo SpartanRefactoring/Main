@@ -10,8 +10,8 @@ import org.junit.runners.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
