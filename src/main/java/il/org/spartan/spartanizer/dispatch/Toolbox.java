@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -160,7 +159,7 @@ public class Toolbox {
             // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
-            new CachingPattern(), //
+            // new CachingPattern(), //
             new BlockInlineStatementIntoNext(), //
             new BlockRemoveDeadVariables(), //
             null) //
@@ -209,8 +208,9 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
-            new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new tipper
-                                                         // #20
+            // new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
+            // tipper
+            // #20
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
