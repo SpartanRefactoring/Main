@@ -208,12 +208,8 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
-<<<<<<< HEAD
-             new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
-=======
             // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
             // This is a new
->>>>>>> 886dc65fa339a3bf69e266a8890e2a4b09a2f04a
             // tipper
             // #20
             null)
