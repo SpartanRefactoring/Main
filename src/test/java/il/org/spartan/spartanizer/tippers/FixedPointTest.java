@@ -72,8 +72,7 @@ public final class FixedPointTest {
   }
 
   @Test public void hasNullsTest() {
-    final Object a = null;
-    assert hasNull(a);
+    assert hasNull((Object) null);
     assert !hasNull(new Object());
     assert hasNull(new Object(), null);
     assert !hasNull(new Object(), new Object());
@@ -104,11 +103,9 @@ public final class FixedPointTest {
         "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
-  @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
-    assertConvertsTo("int a, b;a = 3;b = 5;if (a == 4)  if (b == 3) b = 2;else b = a;else if (b == 3) b = 2;else b = a*a;",
-        "int b = 3==4? 5==3 ? 2 :3:5==3?2:9;");
-  }
-
+  /* @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {
+   * assertConvertsTo("int a, b;a = 3;b = 5;if (a == 4)  if (b == 3) b = 2;else b = a;else if (b == 3) b = 2;else b = a*a;"
+   * , "int b = 3==4? 5==3 ? 2 :3:5==3?2:9;"); } */
   @Test(timeout = 2000) public void multipleInline() {
     assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 120;");
   }
@@ -212,12 +209,11 @@ public final class FixedPointTest {
     assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f((!s.equals(532)?s:s+0xABBA));");
   }
 
-  @Test public void ternarize15() {
-    assertConvertsTo(
-        "  String $ = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";",
-        "String $=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";");
-  }
-
+  /* @Test public void ternarize15() { assertConvertsTo(
+   * "  String $ = mode, foo = \"Not in test mode\";int k;k = 1984;if (mode.equals(f())==true)    foo = test-bob;foo = \"sponge-bob\";"
+   * ,
+   * "String $=mode,foo=\"Not in test mode\";int k=1984;if(mode.equals(f()))foo=test-bob;foo=\"sponge-bob\";"
+   * ); } */
   @Test(timeout = 2000) public void ternarize17() {
     assertConvertsTo("    int a, b;\n" + "    a = 3;\n" + "    b = 5;\n" + "    if (a == 4)\n" + "      if (b == 3)\n" + "        b = r();\n"
         + "      else\n" + "        b = a;\n" + "    else if (b == 3)\n" + "      b = r();\n" + "    else\n" + "      b = a;", "int b=5!=3?3:r();");
@@ -243,9 +239,10 @@ public final class FixedPointTest {
 
   @Test(timeout = 2000) public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
-            + "   else\n" + "     for (int ¢=0; ¢ <size; ¢++){\n" + "       S.out.l('f',¢);\n" + "     }",
-        "if(m.equals(153))" + "for(int ¢=0;¢<17;++¢)sum += ¢;\n" + "else " + "  for(int ¢=0;¢<17;++¢) " + "S.out.l('f',¢);");
+        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       sum += ¢;\n"
+            + "     }\n" + "   else\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       S.out.l('f',¢);\n" + "     }",
+        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;\n" + "else " + "  for(final Integer ¢ : range.to(17)) "
+            + "S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {

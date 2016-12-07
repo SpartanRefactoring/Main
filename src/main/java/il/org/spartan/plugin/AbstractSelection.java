@@ -73,10 +73,10 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Add compilation units for this selection.
    * @param ¢ JD
-   * @return this selection [[SuppressWarningsSpartan]] */
-  public Self add(final WrappedCompilationUnit... ¢) {
-    for (final WrappedCompilationUnit u : ¢)
-      inner.add(u);
+   * @return this selection */
+  public Self add(final WrappedCompilationUnit... us) {
+    for (final WrappedCompilationUnit ¢ : us)
+      inner.add(¢);
     return self();
   }
 

@@ -7,22 +7,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil
  * @since 2016 */
-
 public enum IExtendedModifiersRank {
-  Deprecated,
-  Override, //
-  Documented, //
-  FunctionalInterface, //
-  Inherited, //
-  Retention, //
-  Repeatable, //
-  SafeVarargs, //
-  Target, //
-  $USER_DEFINED_ANNOTATION$, //
-  SuppressWarnings, //
-  NonNull,
-  Nullable,
-  
   PUBLIC, //
   PROTECTED, //
   PRIVATE, //
@@ -35,11 +20,12 @@ public enum IExtendedModifiersRank {
   SYNCHRONIZED, //
   NATIVE, //
   STRICTFP, //
+  $USER_DEFINED_ANNOTATION$, //
   ;
   public static int compare(final IExtendedModifiersRank m1, final IExtendedModifiersRank m2) {
     return m1.ordinal() - m2.ordinal();
   }
- 
+
   public static int compare(final String modifier1, final String modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
@@ -59,9 +45,9 @@ public enum IExtendedModifiersRank {
   public static int rank(final IExtendedModifier ¢) {
     return find(¢ + "").ordinal();
   }
-  
+
   public static int rankAnnotation(final IExtendedModifier ¢) {
-    return find(("@" + az.annotation(¢).getTypeName())).ordinal();
+    return find("@" + az.annotation(¢).getTypeName()).ordinal();
   }
 
   public static int userDefinedAnnotationsOrdinal() {
@@ -70,7 +56,7 @@ public enum IExtendedModifiersRank {
 
   static IExtendedModifiersRank find(final String modifier) {
     for (final IExtendedModifiersRank $ : IExtendedModifiersRank.values())
-      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" +$))
+      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
         return $;
     return $USER_DEFINED_ANNOTATION$;
   }

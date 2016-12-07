@@ -15,12 +15,12 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum analyze {
   ;
-  public static Set<Name> dependencies(final ASTNode n) {
-    final Set<Name> $ = new HashSet<>();
+  public static Set<String> dependencies(final ASTNode n) {
+    final Set<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
-          $.add(node);
+          $.add(step.identifier(node));
         return true;
       }
 
@@ -31,7 +31,7 @@ public enum analyze {
 
       @Override public boolean visit(final QualifiedName node) {
         if (!izMethodName(node))
-          $.add(node);
+          $.add(step.identifier(node));
         return true;
       }
     });
@@ -56,23 +56,23 @@ public enum analyze {
   }
 
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
-    final Str str = new Str();
+    final Str $ = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.set(step.type(¢));
+        $.set(step.type(¢));
         return false;
       }
 
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if (str.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;
-        str.set(step.type(¢));
+        $.set(step.type(¢));
         return false;
       }
     });
-    return str.inner();
+    return $.inner();
   }
 
   public static Set<VariableDeclaration> enviromentVariables(@SuppressWarnings("unused") final ASTNode __) {

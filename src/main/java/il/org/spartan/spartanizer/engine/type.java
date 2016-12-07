@@ -196,8 +196,7 @@ public interface type {
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
       if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
         return false;
-      final NumberLiteral l = az.numberLiteral(x);
-      final int n = Integer.parseInt(step.token(l));
+      final int n = Integer.parseInt(step.token(az.numberLiteral(x)));
       return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
     }
 
@@ -504,7 +503,7 @@ public interface type {
       private final String description;
       private final String key;
 
-      private Types(final String description, final String key) {
+      Types(final String description, final String key) {
         this.description = description;
         this.key = key;
       }
@@ -593,7 +592,7 @@ public interface type {
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
 
-      private Uncertain(final String description, final Primitive... ps) {
+      Uncertain(final String description, final Primitive... ps) {
         this.description = description;
         for (final Primitive p : ps)
           for (final Certain ¢ : p.options())

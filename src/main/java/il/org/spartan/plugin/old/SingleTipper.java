@@ -31,7 +31,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
 
-  @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
+  @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final ASTNode ¢) {
     assert check(¢);
     return !tipper.canTip((N) ¢) ? null : tipper;
   }
@@ -105,23 +105,18 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return Selection.Util.getAllCompilationUnits();
     }
 
-    /** [[SuppressWarningsSpartan]] */
+    /**  */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
       final int cs = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
+    @Override @SuppressWarnings("boxing") public String getEndingMessage(final Map<attribute, Object> ¢) {
       final int cs = getChangesCount(¢);
-      return //
-      "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
-          + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
-          + "\n" //
-          + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS) + "\n" //
-          + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
-          + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + cs + " " + plurals("file", cs) + " spartanized in "
+          + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS)
+          + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
@@ -166,13 +161,12 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) //
-    @Override public AbstractGUIApplicator getApplicator(final IMarker m) {
+    @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public AbstractGUIApplicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-      } catch (final CoreException x) {
-        monitor.log(x);
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
       }
       return null;
     }
@@ -184,8 +178,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
       try {
         return new SingleTipper<>(t.newInstance());
-      } catch (InstantiationException | IllegalAccessException x) {
-        monitor.log(x);
+      } catch (InstantiationException | IllegalAccessException ¢) {
+        monitor.log(¢);
       }
       return null;
     }

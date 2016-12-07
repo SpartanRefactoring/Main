@@ -47,11 +47,6 @@ public class Issue455 {
         .stays();
   }
 
-  @Test public void labeledStatementShouldntTip() {
-    trimmingOf("x -> {loop: for(;;) continue loop;}") //
-        .stays();
-  }
-
   @Test public void lambdaBodyHasMoreThenOneStatementStays() {
     trimmingOf("x -> {double y = -x + Math.PI; System.out.println(x / y); System.out.println(x / (2*y));}")//
         .stays();
@@ -104,7 +99,7 @@ public class Issue455 {
   }
 
   @Test public void singleEnhancedForStatementShouldntTip() {
-    trimmingOf("x -> { " + "for (String y : l)" + "if (y.equals(x))" + "System.out.println(y);" + "}") //
+    trimmingOf("x -> { " + "for (String y : l)" + "if (y.equals(x))" + "return;" + "}") //
         .stays();
   }
 
@@ -157,7 +152,7 @@ public class Issue455 {
 
   @Test public void singleVariableDeclarationStatementShouldntTip() {
     trimmingOf("x -> {int y;}") //
-        .stays();
+        .gives("x -> {}").stays();
   }
 
   @Test public void superConstructrInvocationShouldntTip() {

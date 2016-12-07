@@ -23,15 +23,19 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Sapir Bismot
  * @since 2016-11-21 */
 public final class EliminateEmptyTryBlock extends CarefulTipper<TryStatement> implements TipperCategory.Collapse {
-  @Override public boolean prerequisite(final TryStatement s) {
-    final Block b = s.getBody();
-    return b != null && b.statements().isEmpty();
+  @Override public boolean prerequisite(final TryStatement ¢) {
+    final Block $ = ¢.getBody();
+    return $ != null && $.statements().isEmpty();
   }
 
   @Override public Tip tip(final TryStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(s, g);
+        final Block finallyBlock = s.getFinally();
+        if (finallyBlock == null || finallyBlock.statements().isEmpty())
+          r.remove(s, g);
+        else
+          r.replace(s, finallyBlock, g);
       }
     };
   }

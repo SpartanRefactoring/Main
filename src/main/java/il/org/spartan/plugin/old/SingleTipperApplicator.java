@@ -18,6 +18,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -80,6 +81,7 @@ public final class SingleTipperApplicator {
     pm.done();
   }
 
+  @SuppressWarnings("boxing")
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
@@ -95,9 +97,8 @@ public final class SingleTipperApplicator {
       pm.done();
       return;
     }
-    for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
-      final IWorkbench wb = PlatformUI.getWorkbench();
-      final IProgressService ps = wb.getProgressService();
+    for(Integer i : range.from(0).to(LaconizeProject.MAX_PASSES)) {
+      final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
       final AtomicBoolean canelled = new AtomicBoolean(false);
       try {
@@ -114,8 +115,8 @@ public final class SingleTipperApplicator {
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException x) {
-              monitor.logEvaluationError(this, x);
+            } catch (JavaModelException | IllegalArgumentException ¢) {
+              monitor.logEvaluationError(this, ¢);
               exhausted.add(u);
             }
             if (textChange.getEdit().getLength() == 0)
@@ -123,8 +124,8 @@ public final class SingleTipperApplicator {
             else
               try {
                 textChange.perform(pm);
-              } catch (final CoreException e) {
-                monitor.logEvaluationError(this, e);
+              } catch (final CoreException ¢) {
+                monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + todo.size());
@@ -132,10 +133,10 @@ public final class SingleTipperApplicator {
           todo.removeAll(exhausted);
           px.done();
         });
-      } catch (final InvocationTargetException e) {
-        monitor.logEvaluationError(this, e);
-      } catch (final InterruptedException x) {
-        monitor.logCancellationRequest(this, x);
+      } catch (final InvocationTargetException ¢) {
+        monitor.logEvaluationError(this, ¢);
+      } catch (final InterruptedException ¢) {
+        monitor.logCancellationRequest(this, ¢);
       }
       if (todo.isEmpty() || canelled.get())
         break;
@@ -181,13 +182,12 @@ public final class SingleTipperApplicator {
       switch (type) {
         case DECLARATION:
           applyDeclaration(w, n);
-          break;
+          return;
         case FILE:
           applyFile(w, n);
-          break;
-        case PROJECT:
+          return;
         default:
-          break;
+          return;
       }
     }
 

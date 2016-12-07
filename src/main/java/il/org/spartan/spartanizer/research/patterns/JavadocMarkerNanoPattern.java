@@ -12,13 +12,14 @@ import il.org.spartan.spartanizer.research.*;
  * @since 2016 */
 public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> {
   @Override public final boolean canTip(final N ¢) {
+    // System.out.println("checking " + javadoc());
     final Javadoc j = ¢.getJavadoc();
     return (j == null || !(j + "").contains(javadoc())) && prerequisites(¢);
   }
 
   protected abstract boolean prerequisites(N ¢);
 
-  @Override public Tip tip(final N n) {
+  @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         wizard.addJavaDoc(n, r, g, javadoc());

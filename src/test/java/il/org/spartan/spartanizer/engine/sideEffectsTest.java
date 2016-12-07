@@ -8,8 +8,8 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
-@SuppressWarnings({ "static-method", "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class sideEffectsTest {
   @Test public void deterministicArray1() {
     assert !sideEffects.deterministic(e("new a[3]"));

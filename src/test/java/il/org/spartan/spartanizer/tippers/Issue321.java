@@ -19,9 +19,11 @@ public class Issue321 {
             " if (instance == null)" + //
             "   instance = allTippers();" + //
             " return instance;" + //
-            "}").gives( //
-                "public static Toolbox defaultInstance() {" + //
-                    " return  instance != null ? instance : (instance = allTippers());" + //
-                    "}");
+            "}")//
+                .gives( //
+                    "public static Toolbox defaultInstance() {" + //
+                        " return  instance != null ? instance : (instance = allTippers());" + //
+                        "}")
+                .stays();
   }
 }

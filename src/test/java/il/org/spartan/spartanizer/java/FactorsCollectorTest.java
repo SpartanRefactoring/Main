@@ -39,8 +39,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test03() {
-    final InfixExpression i = i("a * b * c");
-    c.collect(i);
+    c.collect(i("a * b * c"));
     azzert.that(c.multipliers().size(), is(3));
     azzert.that(c.dividers().size(), is(0));
   }
@@ -75,91 +74,77 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test07() {
-    final InfixExpression i = i("a * (b / c)");
-    c.collect(i);
+    c.collect(i("a * (b / c)"));
     azzert.that(c.multipliers().size(), is(2));
     azzert.that(c.dividers().size(), is(1));
   }
 
   @Test public void test08() {
-    final InfixExpression i = i("a * (b * (d * c))");
-    c.collect(i);
+    c.collect(i("a * (b * (d * c))"));
     azzert.that(c.multipliers().size(), is(4));
     azzert.that(c.dividers().size(), is(0));
   }
 
   @Test public void test09() {
-    final InfixExpression i = i("a / (b / c / (d / e / f / g))");
-    c.collect(i);
+    c.collect(i("a / (b / c / (d / e / f / g))"));
     azzert.that(c.multipliers(), iz("[a,c,d]"));
     azzert.that(c.dividers(), iz("[b,e,f,g]"));
   }
 
   @Test public void test10() {
-    final InfixExpression i = i("a / (b / c / d / e )");
-    c.collect(i);
+    c.collect(i("a / (b / c / d / e )"));
     azzert.that(c.multipliers().size(), is(4));
     azzert.that(c.dividers().size(), is(1));
   }
 
   @Test public void test11() {
-    final InfixExpression i = i("a / (b / c)");
-    c.collect(i);
+    c.collect(i("a / (b / c)"));
     azzert.that(c.multipliers().size(), is(2));
   }
 
   @Test public void test12() {
-    final InfixExpression i = i("a / (b / c)");
-    c.collect(i);
+    c.collect(i("a / (b / c)"));
     azzert.that(c.dividers().size(), is(1));
   }
 
   @Test public void test13() {
-    final InfixExpression i = i("a / (b / c)");
-    c.collect(i);
+    c.collect(i("a / (b / c)"));
     azzert.that(c.dividers(), iz("[b]"));
   }
 
   @Test public void test14() {
-    final InfixExpression i = i("a / (b / c)");
-    c.collect(i);
+    c.collect(i("a / (b / c)"));
     azzert.that(c.multipliers(), iz("[a,c]"));
   }
 
   @Test public void test15() {
-    final InfixExpression i = i("(a * b) * (c * (d / (e * (f / g))))");
-    c.collect(i);
+    c.collect(i("(a * b) * (c * (d / (e * (f / g))))"));
     azzert.that(c.multipliers(), iz("[a,b,c,d,g]"));
     azzert.that(c.dividers(), iz("[e,f]"));
   }
 
   @Test public void test16() {
-    final InfixExpression i = i("a * (b * c)");
-    c.collect(i);
+    c.collect(i("a * (b * c)"));
     azzert.that(c.multipliers(), iz("[a,b,c]"));
   }
 
   @Test public void test17() {
-    final InfixExpression i = i("a * (b * c)");
-    c.collect(i);
+    c.collect(i("a * (b * c)"));
     azzert.that(c.dividers(), iz("[]"));
   }
 
   @Test public void test18() {
-    final InfixExpression i = i("a * (b / c)");
-    c.collect(i);
+    c.collect(i("a * (b / c)"));
     azzert.that(c.multipliers(), iz("[a,b]"));
   }
 
   @Test public void test19() {
-    final InfixExpression i = i("a * (b / c)");
-    c.collect(i);
+    c.collect(i("a * (b / c)"));
     azzert.that(c.dividers(), iz("[c]"));
   }
 
   @Test public void test20() {
-    final InfixExpression i = i("a * (b / c)");
-    c.collect(i);
+    c.collect(i("a * (b / c)"));
     azzert.that(c.dividers(), iz("[c]"));
   }
 
@@ -289,43 +274,37 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test71() {
-    final InfixExpression i = i("a * b * c/d/e/f/g");
-    c.collect(i);
+    c.collect(i("a * b * c/d/e/f/g"));
     azzert.that(c.multipliers().size(), is(3));
     azzert.that(c.dividers().size(), is(4));
   }
 
   @Test public void test72() {
-    final InfixExpression i = i("a/d*b/e*c/f");
-    c.collectTimesNonLeaf(i);
+    c.collectTimesNonLeaf(i("a/d*b/e*c/f"));
     azzert.that(c.multipliers().size(), is(3));
     azzert.that(c.dividers().size(), is(3));
   }
 
   @Test public void test73() {
-    final InfixExpression i = i("a * (b*(c*d/e) /(f*g/h) )");
-    c.collect(i);
+    c.collect(i("a * (b*(c*d/e) /(f*g/h) )"));
     azzert.that(c.multipliers().size(), is(5));
     azzert.that(c.dividers().size(), is(3));
   }
 
   @Test public void test74() {
-    final InfixExpression i = i("a * (b * (d *(x*y)*(s*tipper*(u*w))* c*(y*z)*(y*z)))");
-    c.collect(i);
+    c.collect(i("a * (b * (d *(x*y)*(s*tipper*(u*w))* c*(y*z)*(y*z)))"));
     azzert.that(c.multipliers().size(), is(14));
     azzert.that(c.dividers().size(), is(0));
   }
 
   @Test public void test75() {
-    final InfixExpression i = i("a*b / (b / c / (d / e / f / g))");
-    c.collect(i);
+    c.collect(i("a*b / (b / c / (d / e / f / g))"));
     azzert.that(c.multipliers(), iz("[a,b,c,d]"));
     azzert.that(c.dividers(), iz("[b,e,f,g]"));
   }
 
   @Test public void test76() {
-    final InfixExpression i = i("a / (b / c / d / e )");
-    c.collect(i);
+    c.collect(i("a / (b / c / d / e )"));
     azzert.that(c.multipliers().size(), is(4));
     azzert.that(c.dividers().size(), is(1));
   }

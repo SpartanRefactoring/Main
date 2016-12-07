@@ -14,7 +14,8 @@ public class Issue359 {
     trimmingOf("if(b){int i;int j;}else{g();int tipper;}")//
         .gives("if(!b){g();int tipper;}")//
         .gives("if(b)return;g();int tipper;")//
-        .stays() //
+        .gives("if(b)return;g();")//
+        .gives("if(b);else g();").gives("if(!b)g();").stays() //
     ;
   }
 
@@ -23,7 +24,7 @@ public class Issue359 {
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
         .gives("if(b){int i;int j;g();}")//
         .gives("if(!b)return;int i;int j;g();")//
-        .stays() //
+        .gives("if(!b)return;g();").gives("if(!b);else g();").gives("if(b)g();").stays() //
     ;
   }
 
@@ -31,6 +32,29 @@ public class Issue359 {
     trimmingOf("for(;b==q;){int i;}")//
         .gives("{}")//
         .gives("")//
+        .stays();
+  }
+
+  @Test public void a() {
+    trimmingOf("int i;")//
+        .gives("")//
+        .stays();
+  }
+
+  @Test public void b() {
+    trimmingOf("int i;++i;")//
+        .stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("int i,j;j++;")//
+        .gives("int j;j++;")//
+        .gives("int j;++j;") //
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("int i=f();")//
         .stays();
   }
 }

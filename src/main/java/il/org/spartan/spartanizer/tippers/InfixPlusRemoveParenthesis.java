@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
@@ -45,12 +46,13 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
+  @SuppressWarnings("boxing")
   @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for (int i = 0; i < es.size(); ++i) {
+    for(Integer i : range.from(0).to(es.size())) {
       final boolean b = isString;
       isString |= !type.isNotString(es.get(i));
       if (iz.parenthesizedExpression(es.get(i))) {

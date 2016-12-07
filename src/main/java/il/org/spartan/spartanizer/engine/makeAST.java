@@ -90,7 +90,7 @@ public enum makeAST {
 
   final int kind;
 
-  private makeAST(final int kind) {
+  makeAST(final int kind) {
     this.kind = kind;
   }
 
@@ -101,8 +101,8 @@ public enum makeAST {
   public StringBuilder builder(final File f) {
     try (final Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
-    } catch (final Exception e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final Exception ¢) {
+      monitor.logEvaluationError(this, ¢);
       return new StringBuilder();
     }
   }

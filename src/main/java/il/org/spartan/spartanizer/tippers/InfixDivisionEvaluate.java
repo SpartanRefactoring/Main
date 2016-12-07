@@ -35,8 +35,8 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
@@ -54,8 +54,8 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.int¢(¢);
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
@@ -73,8 +73,8 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.long¢(¢);
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }

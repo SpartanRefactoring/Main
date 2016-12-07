@@ -98,7 +98,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return replacement(¢, null);
   }
 
-  @SuppressWarnings("unused") @Override public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
     final MethodDeclaration method = getMethod(d);
     if (method == null || method.getBody() == null)
       return null;

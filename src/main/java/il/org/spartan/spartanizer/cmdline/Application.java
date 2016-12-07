@@ -22,13 +22,13 @@ import il.org.spartan.utils.*;
  * @since 2015/09/19 */
 public final class Application implements IApplication {
   /** Count the number of lines in a {@link File} f
-   * @param f File
+   * @param ¢ File
    * @return
    * @throws IOException */
-  static int countLines(final File f) throws IOException {
-    try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
-      lr.skip(Long.MAX_VALUE);
-      return lr.getLineNumber();
+  static int countLines(final File ¢) throws IOException {
+    try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
+      $.skip(Long.MAX_VALUE);
+      return $.getLineNumber();
     }
   }
 
@@ -104,8 +104,8 @@ public final class Application implements IApplication {
     final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
-    } catch (final CoreException e) {
-      System.err.println(e.getMessage());
+    } catch (final CoreException ¢) {
+      System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
@@ -127,12 +127,12 @@ public final class Application implements IApplication {
         s.countLinesAfter();
         fileStats.add(s);
         ++done;
-      } catch (final JavaModelException | IOException e) {
-        System.err.println(f + ": " + e.getMessage());
+      } catch (final JavaModelException | IOException ¢) {
+        System.err.println(f + ": " + ¢.getMessage());
         ++failed;
-      } catch (final Exception e) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
-        e.printStackTrace();
+      } catch (final Exception ¢) {
+        System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
+        ¢.printStackTrace();
         ++failed;
       } finally {
         discardCompilationUnit(u);
@@ -160,10 +160,8 @@ public final class Application implements IApplication {
     try {
       u.close();
       u.delete(true, null);
-    } catch (final JavaModelException e) {
-      monitor.logEvaluationError(this, e);
-    } catch (final NullPointerException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NullPointerException | JavaModelException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
   }
 
@@ -171,8 +169,8 @@ public final class Application implements IApplication {
     try {
       javaProject.close();
       javaProject.getProject().delete(true, null);
-    } catch (final CoreException e) {
-      e.printStackTrace();
+    } catch (final CoreException ¢) {
+      ¢.printStackTrace();
     }
   }
 
@@ -308,8 +306,8 @@ public final class Application implements IApplication {
     public int getRoundStat(final int r) {
       try {
         return roundStats.get(r).intValue();
-      } catch (final IndexOutOfBoundsException x) {
-        x.printStackTrace();
+      } catch (final IndexOutOfBoundsException ¢) {
+        ¢.printStackTrace();
         return 0;
       }
     }

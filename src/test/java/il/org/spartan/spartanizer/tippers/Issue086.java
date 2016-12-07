@@ -124,6 +124,10 @@ public final class Issue086 extends Issue___ {
             .gives("int f(){g(i);throw new RuntimeException();return 2;}").gives("int f(){g(i);throw new RuntimeException();}").stays();
   }
 
+  private ThrowNotLastInBlock makeTipper() {
+    return new ThrowNotLastInBlock();
+  }
+
   @Test public void vanilla() {
     trimmingOf("{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}").gives("throw Something();f(); a=3; return 2;")
         .gives("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
@@ -131,9 +135,5 @@ public final class Issue086 extends Issue___ {
 
   @Test public void vanilla01() {
     trimmingOf("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
-  }
-
-  private ThrowNotLastInBlock makeTipper() {
-    return new ThrowNotLastInBlock();
   }
 }
