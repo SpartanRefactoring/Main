@@ -33,9 +33,9 @@ public final class Recurser<T> {
     return $;
   }
 
-  private static List<? extends ASTNode> march(final ASTNode n) {
+  private static List<? extends ASTNode> march(final ASTNode $) {
     try {
-      return marchingList(n);
+      return marchingList($);
     } catch (final NullPointerException ¢) {
       assert ¢ != null;
       return null;
@@ -86,20 +86,20 @@ public final class Recurser<T> {
     f.accept(this);
   }
 
-  public T postVisit(final Function<Recurser<T>, T> t) {
+  public T postVisit(final Function<Recurser<T>, T> $) {
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
-      return this.current = t.apply(this);
+      return this.current = $.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
     for (final ASTNode ¢ : children)
       rs.add(new Recurser<T>(¢));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
-      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(t);
+      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
       ++index;
     }
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
-    return this.current = t.apply(this);
+    return this.current = $.apply(this);
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
@@ -119,14 +119,14 @@ public final class Recurser<T> {
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current;
-    final List<Recurser<T>> rs = new ArrayList<>();
+    final List<Recurser<T>> $ = new ArrayList<>();
     for (final ASTNode child : children)
-      rs.add(new Recurser<T>(child));
+      $.add(new Recurser<T>(child));
     int index = 0;
-    for (final Recurser<T> ¢ : rs) {
-      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(t);
+    for (final Recurser<T> ¢ : $) {
+      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(t);
       ++index;
     }
-    return rs.isEmpty() ? this.current : rs.get(index - 1).getCurrent();
+    return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();
   }
 }

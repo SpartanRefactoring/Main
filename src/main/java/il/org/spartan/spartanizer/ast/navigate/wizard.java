@@ -134,11 +134,11 @@ public interface wizard {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
 
-  static Expression applyDeMorgan(final InfixExpression inner) {
+  static Expression applyDeMorgan(final InfixExpression $) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression ¢ : hop.operands(flatten.of(inner)))
+    for (final Expression ¢ : hop.operands(flatten.of($)))
       operands.add(make.notOf(¢));
-    return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
+    return subject.operands(operands).to(PrefixNotPushdown.conjugate($.getOperator()));
   }
 
   static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {

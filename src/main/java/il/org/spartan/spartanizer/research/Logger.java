@@ -129,9 +129,9 @@ public class Logger {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
-  public static CSVStatistics openSummaryFile(final String fileName) {
+  public static CSVStatistics openSummaryFile(final String $) {
     try {
-      return new CSVStatistics(fileName, "property");
+      return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
@@ -194,10 +194,10 @@ public class Logger {
   /** @param ¢
    * @return */
   private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
-    ASTNode n = ¢;
-    while (!iz.methodDeclaration(n) && n != null)
-      n = n.getParent();
-    return az.methodDeclaration(n);
+    ASTNode $ = ¢;
+    while (!iz.methodDeclaration($) && $ != null)
+      $ = $.getParent();
+    return az.methodDeclaration($);
   }
 
   /** @param ¢

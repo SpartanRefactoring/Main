@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> implements TipperCategory.Collapse {
-  @Override protected ASTRewrite go(final ASTRewrite r, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (s == null || r == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement))
+  @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
+    if (s == null || $ == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement))
       return null;
     final ForStatement f = duplicate.of(s);
     final IfStatement ifBody = f.getBody().getAST().newIfStatement();
@@ -29,9 +29,9 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
     ifBody.setThenStatement(duplicate.of(nextStatement));
     f.setBody(duplicate.of(ifBody));
     f.setExpression(null);
-    r.replace(s, f, g);
-    r.replace(nextStatement, null, g);
-    return r;
+    $.replace(s, f, g);
+    $.replace(nextStatement, null, g);
+    return $;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {

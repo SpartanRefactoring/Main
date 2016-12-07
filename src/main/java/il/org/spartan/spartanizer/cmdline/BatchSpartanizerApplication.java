@@ -94,15 +94,15 @@ public final class BatchSpartanizerApplication implements IApplication {
   }
 
   ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
-    final String source = FileUtils.read(f);
-    setPackage(getPackageNameFromSource(source));
-    return pack.createCompilationUnit(f.getName(), source, false, null);
+    final String $ = FileUtils.read(f);
+    setPackage(getPackageNameFromSource($));
+    return pack.createCompilationUnit(f.getName(), $, false, null);
   }
 
   static String getPackageNameFromSource(final String source) {
-    final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
-    p.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
+    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(source.toCharArray());
+    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {

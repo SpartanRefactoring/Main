@@ -74,10 +74,10 @@ public enum Wrap {
 
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap);
-    final String essence = essence(inner);
+    final String $ = essence(inner);
     final String essence2 = essence(off);
     assert essence2 != null;
-    return essence2.contains(essence);
+    return essence2.contains($);
   }
 
   /** Wrap a given code fragment, and then parse it, converting it into a

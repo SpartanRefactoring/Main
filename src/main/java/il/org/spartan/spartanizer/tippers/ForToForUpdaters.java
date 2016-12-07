@@ -38,10 +38,10 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
     final Expression e = updater.getExpression();
-    final PrefixExpression pre = az.prefixExpression(e);
+    final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     final Assignment a = az.assignment(e);
-    return updaterDeclaredInFor(¢, pre != null ? az.simpleName(pre.getOperand())
+    return updaterDeclaredInFor(¢, $ != null ? az.simpleName($.getOperand())
         : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
   }
 

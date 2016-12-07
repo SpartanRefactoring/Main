@@ -60,20 +60,20 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
   }
 
   @Override public Tip tip(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
-    if (then.isEmpty())
+    final List<Statement> $ = extract.statements(then(s));
+    if ($.isEmpty())
       return null;
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final List<Statement> commmonSuffix = commmonSuffix(then, elze);
+    final List<Statement> commmonSuffix = commmonSuffix($, elze);
     for (final Statement st : commmonSuffix) {
-      final DefinitionsCollector c = new DefinitionsCollector(then);
+      final DefinitionsCollector c = new DefinitionsCollector($);
       st.accept(c);
       if (c.notAllDefined())
         return null;
     }
-    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, this.getClass()) {
+    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
@@ -88,7 +88,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
       }
 
       IfStatement replacement() {
-        return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
+        return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
 
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {

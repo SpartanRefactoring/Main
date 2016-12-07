@@ -35,7 +35,7 @@ public final class DeclarationInitializerIfAssignment //
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -49,15 +49,15 @@ public final class DeclarationInitializerIfAssignment //
     final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
     if (i.replacedSize(newInitializer) > metrics.size(nextStatement, initializer))
       return null;
-    r.replace(initializer, newInitializer, g);
+    $.replace(initializer, newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
-    r.remove(nextStatement, g);
-    return r;
+    $.remove(nextStatement, g);
+    return $;
   }
 }

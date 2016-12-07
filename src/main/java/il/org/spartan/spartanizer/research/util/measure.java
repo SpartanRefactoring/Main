@@ -26,16 +26,16 @@ public enum measure {
   }
 
   public static int statements(final ASTNode n) {
-    final Int count = new Int();
+    final Int $ = new Int();
     if (n == null)
       return 0;
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
-          ++count.inner;
+          ++$.inner;
       }
     });
-    return count.inner;
+    return $.inner;
   }
 
   /** @param ¢

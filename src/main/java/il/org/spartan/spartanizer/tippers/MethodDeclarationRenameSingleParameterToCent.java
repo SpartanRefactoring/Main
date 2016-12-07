@@ -31,20 +31,20 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     final SingleVariableDeclaration parameter = onlyOne(parameters(d));
     if (!isJohnDoe(parameter))
       return null;
-    final SimpleName n = parameter.getName();
-    assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
+    final SimpleName $ = parameter.getName();
+    assert $ != null;
+    if (in($.getIdentifier(), "$", "¢", "__", "_"))
       return null;
     final Block b = d.getBody();
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf(n).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Tip("Rename paraemter " + n + " to ¢ ", d, this.getClass()) {
+    return new Tip("Rename paraemter " + $ + " to ¢ ", d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, d, r, g);
-        SingleVariableDeclarationAbbreviation.fixJavadoc(d, n, ¢ + "", r, g);
+        Tippers.rename($, ¢, d, r, g);
+        SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);
       }
     };
   }

@@ -24,8 +24,8 @@ public final class ReturnLastInMethod extends EagerTipper<ReturnStatement> imple
   @Override public Tip tip(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
-    final Block b = az.block(s.getParent());
-    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null
+    final Block $ = az.block(s.getParent());
+    return $ == null || !lastIn(s, statements($)) || !($.getParent() instanceof MethodDeclaration) ? null
         : new Tip(description(s), s, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(s, g);

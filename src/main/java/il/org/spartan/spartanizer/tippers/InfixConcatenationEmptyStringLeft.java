@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   private static InfixExpression replace(final InfixExpression x) {
-    final List<Expression> es = extract.allOperands(x);
-    swap(es, 0, 1);
-    return subject.operands(es).to(wizard.PLUS2);
+    final List<Expression> $ = extract.allOperands(x);
+    swap($, 0, 1);
+    return subject.operands($).to(wizard.PLUS2);
   }
 
   // TODO: Yossi Gil: this should probably be in lisp, but I can'tipper access
@@ -33,13 +33,13 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
    * @param i1 the index of the first element
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
-  private static <T> List<T> swap(final List<T> ts, final int i1, final int i2) {
-    if (i1 < ts.size() && i2 < ts.size()) {
-      final T t = ts.get(i1);
-      lisp.replace(ts, ts.get(i2), i1);
-      lisp.replace(ts, t, i2);
+  private static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+    if (i1 < $.size() && i2 < $.size()) {
+      final T t = $.get(i1);
+      lisp.replace($, $.get(i2), i1);
+      lisp.replace($, t, i2);
     }
-    return ts;
+    return $;
   }
 
   @Override public String description(final InfixExpression ¢) {
