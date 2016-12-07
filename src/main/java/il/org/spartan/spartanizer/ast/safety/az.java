@@ -532,4 +532,10 @@ public enum az {
   public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
     return ¢ == null ? null : (SuperMethodInvocation) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static FieldAccess fieldAccess(ASTNode ¢) {
+    return ¢ == null ? null : (FieldAccess) ¢;
+  }
 }
