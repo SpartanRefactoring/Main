@@ -72,6 +72,7 @@ public class Issue283 {
                 + " @Deprecated @Inherited @Test @SuppressWarnings({ \"EnumBody\" }) @NonNull public void test0() { }}")
             .stays();
   }
+
   @Test public void test0WithComments() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated //hello \n" //
@@ -81,9 +82,10 @@ public class Issue283 {
                 + " void myMethod() { }")//
             .stays();
   }
+
   @Test public void test5WithComments() {
-    trimmingOf(
-        "@Ignore/*hello*/ @Deprecated //gdfgdf \n class Test123 {" + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
+    trimmingOf("@Ignore/*hello*/ @Deprecated //gdfgdf \n class Test123 {"
+        + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
             .gives("@Deprecated //gdfgdf \n @Ignore/*hello*/ \n class Test123 {"
                 + " @Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
             .gives("@Deprecated //gdfgdf \n @Ignore /*hello*/ class Test123 {"

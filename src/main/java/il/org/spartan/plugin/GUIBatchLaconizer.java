@@ -31,8 +31,7 @@ public class GUIBatchLaconizer extends Applicator {
   private static final int PASSES_MANY = 20;
 
   /** Spartanization process. */
-  @SuppressWarnings("boxing")
-  @Override public void go() {
+  @SuppressWarnings("boxing") @Override public void go() {
     if (selection() == null || listener() == null || runContext() == null || passes() <= 0 || selection().isEmpty())
       return;
     listener().push(message.run_start.get(selection().name));
@@ -40,7 +39,7 @@ public class GUIBatchLaconizer extends Applicator {
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
-      for (Integer pass : range.from(1).to(passes()).inclusive()) {
+      for (final Integer pass : range.from(1).to(passes()).inclusive()) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
