@@ -209,7 +209,7 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
+             new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
             // tipper
             // #20
             null)
