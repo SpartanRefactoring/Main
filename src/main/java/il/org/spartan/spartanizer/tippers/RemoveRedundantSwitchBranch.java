@@ -33,10 +33,10 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
   @SuppressWarnings("boxing") @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
-    @SuppressWarnings("unchecked") List<Statement> ss = s.statements();
-    List<Integer> ll = new ArrayList<>();
+    @SuppressWarnings("unchecked") final List<Statement> ss = s.statements();
+    final List<Integer> ll = new ArrayList<>();
     getNotContainedCasesIndexes(ss, ll);
-    StringBuilder r = new StringBuilder("switch(" + s.getExpression() + "){");
+    final StringBuilder r = new StringBuilder("switch(" + s.getExpression() + "){");
     boolean isChanged = false;
     for (int i = 0; i < ll.size(); ++i) {
       r.append(ss.get(ll.get(i)) + "");
@@ -56,10 +56,10 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
       }
     }
     r.append("}");
-    return !isChanged ? null : subject.statement(into.s((r + ""))).toOneStatementOrNull();
+    return !isChanged ? null : subject.statement(into.s(r + "")).toOneStatementOrNull();
   }
 
-  private static void getNotContainedCasesIndexes(List<Statement> ss, List<Integer> ll) {
+  private static void getNotContainedCasesIndexes(final List<Statement> ss, final List<Integer> ll) {
     boolean startFromBreak = true;
     for (int ¢ = 0; ¢ < ss.size(); ++¢)
       if (startFromBreak && ss.get(¢).getNodeType() == ASTNode.SWITCH_CASE)
@@ -68,7 +68,7 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
         startFromBreak = ss.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT;
   }
 
-  @SuppressWarnings("boxing") private static boolean sameCommands(List<Statement> ss, int t1, int t2) {
+  @SuppressWarnings("boxing") private static boolean sameCommands(final List<Statement> ss, final int t1, final int t2) {
     int p1 = t1 < t2 ? t1 : t2;
     int p2 = t2 > t1 ? t2 : t1;
     for (; p1 < ss.size() && ss.get(p1).getNodeType() == ASTNode.SWITCH_CASE;)
@@ -77,12 +77,12 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
       ++p2;
     if (p1 == ss.size())
       return false;
-    for (Integer ¢ : range.from(0).to(ss.size())) {
+    for (final Integer ¢ : range.from(0).to(ss.size())) {
       if (p2 + ¢ == ss.size())
         return ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
       if (ss.get(p1 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)
         return true;
-      if (!(ss.get(p1 + ¢) + "").equals((ss.get(p2 + ¢) + "")))
+      if (!(ss.get(p1 + ¢) + "").equals(ss.get(p2 + ¢) + ""))
         return false;
     }
     return true;

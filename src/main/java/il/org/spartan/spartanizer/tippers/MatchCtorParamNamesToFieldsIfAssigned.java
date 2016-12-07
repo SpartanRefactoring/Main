@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -13,10 +12,11 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO: Rewrite this class, making sure you do not use instanceof nor casting. Instead you should be using classes `iz` and `azz`
+// TODO: Rewrite this class, making sure you do not use instanceof nor casting.
+// Instead you should be using classes `iz` and `azz`
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") MethodDeclaration __) {
-    return false; 
+  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
+    return false;
   }
 
   @Override public String description(final MethodDeclaration ¢) {

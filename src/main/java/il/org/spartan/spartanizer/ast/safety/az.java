@@ -529,7 +529,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static SuperMethodInvocation superMethodInvocation(Expression ¢) {
+  public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
     return ¢ == null ? null : (SuperMethodInvocation) ¢;
   }
 }

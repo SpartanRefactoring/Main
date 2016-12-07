@@ -39,7 +39,7 @@ public class GUIBatchLaconizer extends Applicator {
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
-      for (Integer pass : range.from(1).to(passes()).inclusive()) {
+      for (final Integer pass : range.from(1).to(passes()).inclusive()) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
