@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
- * @author mdoron
+ * @author Doron Meshulam
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement> implements TipperCategory.Centification {
   @Override public String description(final EnhancedForStatement ¢) {
@@ -27,11 +27,10 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   // TODO: Doron Meshulam - make sure you use class `searchAncestors' and 'lisp.onlyOne` instead of this.
-  // Also, you while loop should have been a for.
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    ASTNode p = s;
-    while (!(p instanceof MethodDeclaration))
-      p = p.getParent();
+    
+    ASTNode p = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    
     if (p instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p;
       final List<SingleVariableDeclaration> l = parameters(pp);
@@ -43,6 +42,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
           return null;
       }
     }
+    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
