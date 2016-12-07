@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.*;
 @SuppressWarnings("static-method")
 public class MatcherTest {
   @Test public void a() {
-    assertTrue(new Matcher("$X", "").matches((wizard.ast("s"))));
+    assertTrue(new Matcher("$X", "").matches(wizard.ast("s")));
   }
 
   @Test public void b() {
@@ -21,11 +21,11 @@ public class MatcherTest {
 
   @Test public void c() {
     assertEquals("print();\n",
-        (new Matcher("for($N1 $N2 : $X1) $B", "")).getMatching(findFirst.enhancedForStatement(wizard.ast("for (A b : C) print();")), "$B") + "");
+        new Matcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(wizard.ast("for (A b : C) print();")), "$B") + "");
   }
 
   @Test public void d() {
-    assertEquals("a", (new Matcher("$X + b", "")).getMatching(findFirst.expression(wizard.ast("a + b")), "$X") + "");
+    assertEquals("a", new Matcher("$X + b", "").getMatching(findFirst.expression(wizard.ast("a + b")), "$X") + "");
   }
 
   @Test public void e() {

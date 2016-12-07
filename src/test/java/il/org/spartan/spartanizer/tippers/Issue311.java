@@ -51,8 +51,8 @@ public class Issue311 {
 
   @Test public void challenge_while_d() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
-        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
-    .gives("static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
+        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}").gives(
+            "static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_1() {
@@ -211,7 +211,7 @@ public class Issue311 {
   // TODO: when fragments will be handled alone, change the test.
   @Test public void initializers_while_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")
-    .gives("public boolean check(int i){int p=i,a=0;++a;while(p<10){++p;if(p>=10)return false;}}");
+        .gives("public boolean check(int i){int p=i,a=0;++a;while(p<10){++p;if(p>=10)return false;}}");
   }
 
   @Test public void initializers_while_4() {
@@ -273,8 +273,8 @@ public class Issue311 {
 
   @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
-    .gives("static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}").gives(
+            "static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
   }
 
   @Test public void t06a() {
