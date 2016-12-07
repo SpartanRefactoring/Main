@@ -20,7 +20,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-@SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
   @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
@@ -29,7 +28,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
-    List<SingleVariableDeclaration> ctorParams = parameters(d);
+    List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
     List<Statement> bodyStatements = statements(d);
     List<String> definedLocals = new ArrayList<String>();
     List<SimpleName> oldNames = new ArrayList<SimpleName>();
@@ -51,7 +50,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       if (!(iz.simpleName(right(a))))
         continue;
       SimpleName paramName = az.simpleName(right(a));
-      if (definedLocals.contains(fieldName.getIdentifier()))
+      if (definedLocals.contains(fieldName.getIdentifier()) || params.contains(paramName.getIdentifier()))
         continue;
       oldNames.add(paramName);
       newNames.add(fieldName);
