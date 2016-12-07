@@ -17,10 +17,10 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.patternTipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", ""));
-      add(TipperFactory.patternTipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", ""));
+      add(TipperFactory.patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
+      add(TipperFactory.patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
+      add(TipperFactory.patternTipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
+      add(TipperFactory.patternTipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
     }
   };
 
@@ -28,19 +28,11 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return "defaulsTo pattern";
   }
 
-  @Override public boolean canTip(final ConditionalExpression x) {
-    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return true;
-    return false;
+  @Override public boolean canTip(final ConditionalExpression ¢) {
+    return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(final ConditionalExpression x) {
-    Logger.logNP(x, "defaultsTo");
-    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
-    assert false;
-    return null;
+  @Override public Tip pattern(final ConditionalExpression ¢) {
+    return firstTip(tippers, ¢);
   }
 }

@@ -30,10 +30,9 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
         && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 
-  @Override public Tip tip(final MethodDeclaration d) {
+  @Override public Tip pattern(final MethodDeclaration d) {
     return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Logger.logNP(d, getClass().getSimpleName());
         if (!iz.voidType(step.returnType(d)))
           return;
         final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
