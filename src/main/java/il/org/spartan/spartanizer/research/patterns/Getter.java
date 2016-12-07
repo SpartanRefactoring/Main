@@ -24,10 +24,6 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return statements(body(¢)) != null && !statements(body(¢)).isEmpty() && parameters(¢).isEmpty() && anyTips(onlyOne(statements(¢)));
-  }
-
-  static boolean anyTips(final Statement s) {
-    return tippers.stream().anyMatch(t -> t.canTip(s));
+    return statements(body(¢)) != null && !statements(body(¢)).isEmpty() && parameters(¢).isEmpty() && anyTips(tippers, onlyOne(statements(¢)));
   }
 }

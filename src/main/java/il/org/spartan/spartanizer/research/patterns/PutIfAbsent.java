@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,12 +25,7 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(¢) && analyze.type(az.simpleName(tipper.getMatching(¢, "$X1"))).startsWith("Map<");
   }
 
-  @Override public Tip tip(final IfStatement s) {
-    return new Tip(description(s), s, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Logger.logNP(s, getClass().getSimpleName());
-        tipper.tip(s).go(r, g);
-      }
-    };
+  @Override public Tip pattern(final IfStatement ¢) {
+    return tipper.tip(¢);
   }
 }

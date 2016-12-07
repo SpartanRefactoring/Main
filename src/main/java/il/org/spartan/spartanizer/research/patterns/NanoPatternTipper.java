@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,5 +23,22 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return ns.stream().filter(t -> t.canTip(n)).findFirst().get();
   }
 
-  @Override public abstract Tip tip(final N ¢);
+  protected static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ns, final N n) {
+    return firstThatTips(ns, n).tip(n);
+  }
+
+  @Override public final Tip tip(final N ¢) {
+    return new Tip(description(¢), ¢, this.getClass()) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        Logger.logNP(¢, className());
+        pattern(¢).go(r, g);
+      }
+    };
+  }
+
+  String className() {
+    return this.getClass().getSimpleName();
+  }
+
+  protected abstract Tip pattern(final N ¢);
 }
