@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -81,8 +80,8 @@ public class Toolbox {
   }
 
   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
-    @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
-    return extractTip(n, $);
+    @SuppressWarnings("unchecked") final Tipper<ASTNode> x = (Tipper<ASTNode>) t;
+    return extractTip(n, x);
   }
 
   public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
@@ -148,7 +147,7 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new RemoveRedundantSwitchCases(), // Issue 889
-            new RemoveRedundantSwitchBranch(), // Issue 889
+            // new RemoveRedundantSwitchBranch(), // Issue 889 v 2.7
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -160,9 +159,9 @@ public class Toolbox {
             // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
-            new CachingPattern(), //
+            // new CachingPattern(), // v 2.7
             new BlockInlineStatementIntoNext(), //
-            new BlockRemoveDeadVariables(), //
+            // new BlockRemoveDeadVariables(), // v 2.7
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
@@ -199,7 +198,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            // new InfixIndexOfToStringContains(), //
+            // new InfixIndexOfToStringContains(), // v 2.7
             new SimplifyComparisionOfAdditions(), //
             new SimplifyComparisionOfSubtractions(), //
             null)
@@ -209,7 +208,8 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
+            // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
+            // This is a new
             // tipper
             // #20
             null)
@@ -353,9 +353,9 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> $ : ts)
-      if (((Tipper<N>) $).canTip(n))
-        return (Tipper<N>) $;
+    for (final Tipper<?> ¢ : ts)
+      if (((Tipper<N>) ¢).canTip(n))
+        return (Tipper<N>) ¢;
     return null;
   }
 
