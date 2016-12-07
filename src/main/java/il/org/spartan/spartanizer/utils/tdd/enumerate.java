@@ -88,8 +88,7 @@ public enum enumerate {
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
    * @since 16-11-07 */
-  @SuppressWarnings("boxing")
-  public static int blockTypes(final MethodDeclaration d) {
+  @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
     final List<?> l = d.getBody().statements();
     final boolean[] arr = new boolean[10];
@@ -106,7 +105,7 @@ public enum enumerate {
     // d.accept(new ASTVisitor() {
     //
     // });
-    for(Integer ¢ : range.from(0).to(arr.length))
+    for (Integer ¢ : range.from(0).to(arr.length))
       arr[¢] = false;
     for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {

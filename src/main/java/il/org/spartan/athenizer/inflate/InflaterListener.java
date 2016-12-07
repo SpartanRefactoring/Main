@@ -70,10 +70,10 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
           return true;
         }
       });
-      for (ReturnStatement rStatement : badcode) {       
+      for (ReturnStatement rStatement : badcode) {
         ASTNode change = (new TernaryExpander()).replacement(rStatement);
-        if (change != null) {                  
-          r.replace(rStatement, change, __);         
+        if (change != null) {
+          r.replace(rStatement, change, __);
           return true;
         }
       }
@@ -81,13 +81,12 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     return false;
   }
 
-  
   public static void commitChanges(final WrappedCompilationUnit u, List<ASTNode> ns) {
-    try {      
+    try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
-      if (rewrite(r, ns, null)) {       
+      if (rewrite(r, ns, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
           textChange.perform(new NullProgressMonitor());
@@ -100,17 +99,19 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private static void inflate() {
     List<ASTNode> ss = new ArrayList<>();
     WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
-    wcu.compilationUnit.accept(new ASTVisitor() {@Override
-    public boolean visit(ReturnStatement s) {
-      wizard.ast(Selection.Util.current().textSelection.getText()).accept(new ASTVisitor() {@Override
-    public boolean visit(ReturnStatement sInner) {
-        if (!(s + "").equals((sInner + "")))
-          return false;
-        ss.add(s);
+    wcu.compilationUnit.accept(new ASTVisitor() {
+      @Override public boolean visit(ReturnStatement s) {
+        wizard.ast(Selection.Util.current().textSelection.getText()).accept(new ASTVisitor() {
+          @Override public boolean visit(ReturnStatement sInner) {
+            if (!(s + "").equals((sInner + "")))
+              return false;
+            ss.add(s);
+            return true;
+          }
+        });
         return true;
-      }});
-        return true;
-    }});
+      }
+    });
     commitChanges(wcu, ss);
   }
 

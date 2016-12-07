@@ -594,10 +594,9 @@ public enum step {
     return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
   }
 
-  @SuppressWarnings("boxing")
-  private static boolean balanced(final String s) {
+  @SuppressWarnings("boxing") private static boolean balanced(final String s) {
     int $ = 0;
-    for(Integer ¢ : range.from(0).to(s.length()))
+    for (Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢) == '<')
         ++$;
       else if (s.charAt(¢) == '>')

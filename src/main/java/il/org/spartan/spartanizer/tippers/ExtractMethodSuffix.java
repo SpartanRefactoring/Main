@@ -226,9 +226,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return $;
     }
 
-    @SuppressWarnings("boxing")
-    private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for(Integer ¢ : range.from(starting).to(statements.size()))
+    @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
+      for (Integer ¢ : range.from(starting).to(statements.size()))
         setUsesMapping(d, statements.get(¢));
     }
 
