@@ -18,7 +18,7 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     if (parameters(¢) == null || parameters(¢).size() != 1 || body(¢) == null || iz.static¢(¢) || iz.constructor(¢) || statements(¢).size() != 1)
       return false;
-    final Assignment a = az.assignment(expression(az.expressionStatement(onlyOne(statements(¢)))));
-    return a != null && (iz.name(left(a)) || tipper.canTip(left(a))) && wizard.same(right(a), name(onlyOne(parameters(¢))));
+    final Assignment $ = az.assignment(expression(az.expressionStatement(onlyOne(statements(¢)))));
+    return $ != null && (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), name(onlyOne(parameters(¢))));
   }
 }

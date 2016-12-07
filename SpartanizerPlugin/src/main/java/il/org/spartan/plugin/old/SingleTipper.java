@@ -47,8 +47,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       final ASTNode n = eclipse.getNodeByMarker(u, m);
       if (n == null)
         return null;
-      final ASTNode d = searchAncestors.forClass(BodyDeclaration.class).from(n);
-      return d == null ? null : new TextSelection(d.getStartPosition(), d.getLength());
+      final ASTNode $ = searchAncestors.forClass(BodyDeclaration.class).from(n);
+      return $ == null ? null : new TextSelection($.getStartPosition(), $.getLength());
     }
 
     @Override public String getLabelSuffix() {
@@ -107,14 +107,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     /**  */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
-      final int cs = getCUsCount(¢);
-      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
+      final int $ = getCUsCount(¢);
+      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + $ + " " + plurals("file", $) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
     @Override @SuppressWarnings("boxing") public String getEndingMessage(final Map<attribute, Object> ¢) {
-      final int cs = getChangesCount(¢);
-      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + cs + " " + plurals("file", cs) + " spartanized in "
+      final int $ = getChangesCount(¢);
+      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + $ + " " + plurals("file", $) + " spartanized in "
           + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS)
           + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
@@ -161,10 +161,10 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public AbstractGUIApplicator getApplicator(final IMarker m) {
+    @Override @SuppressWarnings({ "unchecked", "rawtypes" }) public AbstractGUIApplicator getApplicator(final IMarker $) {
       try {
-        assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
-        return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
+        assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
+        return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
       } catch (final CoreException ¢) {
         monitor.log(¢);
       }
@@ -175,9 +175,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return MANY_PASSES;
     }
 
-    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> $) {
       try {
-        return new SingleTipper<>(t.newInstance());
+        return new SingleTipper<>($.newInstance());
       } catch (InstantiationException | IllegalAccessException ¢) {
         monitor.log(¢);
       }

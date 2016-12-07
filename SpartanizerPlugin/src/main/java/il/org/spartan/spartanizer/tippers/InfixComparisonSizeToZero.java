@@ -70,7 +70,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
-    int sign = -1;
+    int $ = -1;
     NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
@@ -78,7 +78,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       l = az.numberLiteral(x);
       if (l == null)
         return null;
-      sign = 1;
+      $ = 1;
     }
     final Expression receiver = receiver(i);
     if (receiver == null)
@@ -96,7 +96,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       if (!"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()))
         return null;
     }
-    return replacement(o, sign, l, receiver);
+    return replacement(o, $, l, receiver);
   }
 
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
@@ -105,19 +105,19 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   @Override public String description(final InfixExpression x) {
-    final Expression right = right(x);
+    final Expression $ = right(x);
     final Expression left = left(x);
-    return description(expression(left instanceof MethodInvocation ? left : right));
+    return description(expression(left instanceof MethodInvocation ? left : $));
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
-    final Operator o = x.getOperator();
-    if (!iz.comparison(o))
+    final Operator $ = x.getOperator();
+    if (!iz.comparison($))
       return null;
     final Expression right = right(x);
     final Expression left = left(x);
     return !validTypes(right, left) ? null
-        : iz.methodInvocation(left) ? replacement(o, az.methodInvocation(left), right)
-            : replacement(wizard.conjugate(o), az.methodInvocation(right), left);
+        : iz.methodInvocation(left) ? replacement($, az.methodInvocation(left), right)
+            : replacement(wizard.conjugate($), az.methodInvocation(right), left);
   }
 }

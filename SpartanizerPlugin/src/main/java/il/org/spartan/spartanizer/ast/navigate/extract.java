@@ -72,16 +72,16 @@ public enum extract {
     return az.returnStatement(¢);
   }
 
-  /** @param n a statement or block to extract the assignment from
+  /** @param ¢ a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
-  public static Assignment assignment(final ASTNode n) {
-    final ExpressionStatement e = extract.expressionStatement(n);
-    return e == null ? null : az.assignment(e.getExpression());
+  public static Assignment assignment(final ASTNode ¢) {
+    final ExpressionStatement $ = extract.expressionStatement(¢);
+    return $ == null ? null : az.assignment($.getExpression());
   }
 
-  public static String category(final ASTNode ¢) {
-    switch (¢.getNodeType()) {
+  public static String category(final ASTNode $) {
+    switch ($.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return "@interface";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
@@ -93,11 +93,11 @@ public enum extract {
       case FIELD_DECLARATION:
         return "field";
       case INITIALIZER:
-        if (Modifier.isStatic(((Initializer) ¢).getModifiers()))
+        if (Modifier.isStatic(((Initializer) $).getModifiers()))
           return "static type initializer";
         return "type initializer";
       case METHOD_DECLARATION:
-        final Statement body = body(az.methodDeclaration(¢));
+        final Statement body = body(az.methodDeclaration($));
         if (body == null)
           return "abstract";
         final List<Statement> ss = extract.statements(body);
@@ -107,13 +107,13 @@ public enum extract {
           return "singleton";
         return "method";
       case TYPE_DECLARATION:
-        return category((TypeDeclaration) ¢);
+        return category((TypeDeclaration) $);
       default:
         assert fault.unreachable() : fault.dump() //
-            + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
-            + "\n d.getNodeType() = " + ¢.getNodeType() //
+            + "\n d = " + $ + "\n d.getClass() = " + $.getClass() //
+            + "\n d.getNodeType() = " + $.getNodeType() //
             + fault.done();
-        return ¢.getClass().getSimpleName();
+        return $.getClass().getSimpleName();
     }
   }
 
@@ -252,8 +252,8 @@ public enum extract {
   }
 
   public static InfixExpression infixExpression(final ASTNode ¢) {
-    final ExpressionStatement s = expressionStatement(¢);
-    return ¢ == null || s == null ? null : az.infixExpression(s.getExpression());
+    final ExpressionStatement $ = expressionStatement(¢);
+    return ¢ == null || $ == null ? null : az.infixExpression($.getExpression());
   }
 
   /** @param pattern JD
@@ -321,9 +321,9 @@ public enum extract {
   }
 
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {
-    for (final Integer ¢ : range.from(0).to(ss.size() - 1))
-      if (ss.get(¢) == s)
-        return ss.get(¢ + 1);
+    for (final Integer $ : range.from(0).to(ss.size() - 1))
+      if (ss.get($) == s)
+        return ss.get($ + 1);
     return null;
   }
 
@@ -368,14 +368,14 @@ public enum extract {
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
-   * @param s JD
+   * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement nextStatement(final Statement s) {
-    if (s == null)
+  public static Statement nextStatement(final Statement ¢) {
+    if (¢ == null)
       return null;
-    final Block b = az.block(s.getParent());
-    return b == null ? null : next(s, extract.statements(b));
+    final Block $ = az.block(¢.getParent());
+    return $ == null ? null : next(¢, extract.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {

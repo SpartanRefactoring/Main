@@ -83,9 +83,9 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
-    if (f == null || r == null || nextStatement == null || exclude == null)
+    if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
@@ -96,8 +96,8 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     exclude.excludeAll(step.fragments(vds));
     if (!fitting(vds, s))
       return null;
-    r.remove(vds, g);
-    r.replace(s, buildForStatement(f, s), g);
-    return r;
+    $.remove(vds, g);
+    $.replace(s, buildForStatement(f, s), g);
+    return $;
   }
 }

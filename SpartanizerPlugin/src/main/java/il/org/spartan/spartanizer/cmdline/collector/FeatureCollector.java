@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016 */
 @SuppressWarnings("hiding")
 public interface FeatureCollector<ASTNode, T> {
-  static class NamedFunction<ASTNode, T> {
+  class NamedFunction<ASTNode, T> {
     final String name;
     final Function<ASTNode, T> f;
 

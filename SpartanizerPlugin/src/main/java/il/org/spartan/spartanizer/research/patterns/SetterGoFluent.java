@@ -25,9 +25,9 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     final Expression e = az.expressionStatement(ss.get(0)).getExpression();
     if (!iz.assignment(e))
       return false;
-    final Assignment a = az.assignment(e);
-    return (iz.name(a.getLeftHandSide()) || tipper.canTip(a.getLeftHandSide()))
-        && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
+    final Assignment $ = az.assignment(e);
+    return (iz.name($.getLeftHandSide()) || tipper.canTip($.getLeftHandSide()))
+        && wizard.same($.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 
   @Override public Tip pattern(final MethodDeclaration d) {

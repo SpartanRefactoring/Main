@@ -51,21 +51,21 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return $;
   }
 
-  private static boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  private static boolean isShort(final SingleVariableDeclaration ¢) {
+    final String $ = spartan.shorten(¢.getType());
+    return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
   }
 
-  private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m) {
-    if (spartan.shorten(d.getType()) == null)
+  private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
+    if (spartan.shorten($.getType()) == null)
       return false;
-    for (final SimpleName ¢ : new MethodExplorer(m).localVariables())
-      if (¢.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
+    for (final SimpleName ¢ : new MethodExplorer(d).localVariables())
+      if (¢.getIdentifier().equals(spartan.shorten($.getType()) + pluralVariadic($)))
         return false;
-    for (final SingleVariableDeclaration ¢ : parameters(m))
-      if (¢.getName().getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
+    for (final SingleVariableDeclaration ¢ : parameters(d))
+      if (¢.getName().getIdentifier().equals(spartan.shorten($.getType()) + pluralVariadic($)))
         return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
+    return !d.getName().getIdentifier().equalsIgnoreCase(spartan.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {
@@ -81,17 +81,17 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
-    final MethodDeclaration m = az.methodDeclaration(parent(d));
-    if (m == null || m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
+    final MethodDeclaration $ = az.methodDeclaration(parent(d));
+    if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     if (exclude != null)
-      exclude.exclude(m);
+      exclude.exclude($);
     final SimpleName oldName = d.getName();
     final String newName = spartan.shorten(d.getType()) + pluralVariadic(d);
-    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d, this.getClass()) {
+    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
-        fixJavadoc(m, oldName, newName, r, g);
+        rename(oldName, d.getAST().newSimpleName(newName), $, r, g);
+        fixJavadoc($, oldName, newName, r, g);
       }
     };
   }

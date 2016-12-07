@@ -38,11 +38,11 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
     return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
   }
 
-  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> ms) {
-    for (int ¢ = 0; ¢ < ms.size(); ++¢)
-      while (¢ < ms.size() - 1 && comp.compare(ms.get(¢), ms.get(¢ + 1)) == 0)
-        ms.remove(¢ + 1);
-    return ms;
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> $) {
+    for (int ¢ = 0; ¢ < $.size(); ++¢)
+      while (¢ < $.size() - 1 && comp.compare($.get(¢), $.get(¢ + 1)) == 0)
+        $.remove(¢ + 1);
+    return $;
   }
 
   @Override public String description(final N ¢) {

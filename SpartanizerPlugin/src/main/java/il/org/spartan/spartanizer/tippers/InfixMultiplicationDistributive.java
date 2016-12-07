@@ -89,7 +89,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
-    final List<Expression> common = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
     final List<Expression> es1 = extract.allOperands(e1);
     assert es1 != null;
@@ -97,20 +97,20 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert es2 != null;
     for (final Expression ¢ : es1) {
       assert ¢ != null;
-      (isIn(¢, es2) ? common : different).add(¢);
+      (isIn(¢, es2) ? $ : different).add(¢);
     }
     for (final Expression ¢ : es2) { // [a c]
       assert ¢ != null;
-      if (!isIn(¢, common))
+      if (!isIn(¢, $))
         different.add(¢);
     }
-    assert common != null;
-    if (!common.isEmpty())
-      different.remove(common);
-    assert first(common) != null;
+    assert $ != null;
+    if (!$.isEmpty())
+      different.remove($);
+    assert first($) != null;
     assert first(different) != null;
     assert second(different) != null;
-    return subject.pair(first(common), //
+    return subject.pair(first($), //
         subject.pair(//
             first(different), second(different)//
         ).to(//

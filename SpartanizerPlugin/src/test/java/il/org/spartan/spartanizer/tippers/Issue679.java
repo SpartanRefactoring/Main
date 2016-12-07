@@ -13,9 +13,9 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 @SuppressWarnings("static-method")
 public class Issue679 {
   public static CompilationUnit cu(final String program) {
-    final ASTParser parser = wizard.parser(ASTParser.K_COMPILATION_UNIT);
-    parser.setSource(program.toCharArray());
-    return (CompilationUnit) parser.createAST(null);
+    final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
+    $.setSource(program.toCharArray());
+    return (CompilationUnit) $.createAST(null);
   }
 
   @Test public void checkExistence() {

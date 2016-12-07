@@ -87,7 +87,7 @@ public class InflateHandler extends AbstractHandler {
     final IEditorPart e = getEditorPart();
     if (e == null || !(e instanceof ITextEditor))
       return null;
-    final Control c = ((ITextEditor) e).getAdapter(org.eclipse.swt.widgets.Control.class);
-    return c == null || !(c instanceof StyledText) ? null : (StyledText) c;
+    final Control $ = ((ITextEditor) e).getAdapter(org.eclipse.swt.widgets.Control.class);
+    return $ == null || !($ instanceof StyledText) ? null : (StyledText) $;
   }
 }

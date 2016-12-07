@@ -100,9 +100,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     };
   }
 
-  static AbstractGUIApplicator getSpartanizer(final IMarker m) {
+  static AbstractGUIApplicator getSpartanizer(final IMarker $) {
     try {
-      return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
+      return Tips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException ¢) {
       monitor.log(¢);
     }
@@ -129,19 +129,19 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return !tipper.canTip((N) ¢) ? null : tipper;
     }
 
-    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker m) {
+    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker $) {
       try {
-        assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
-        return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
+        assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
+        return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
       } catch (final CoreException ¢) {
         monitor.log(¢);
       }
       return null;
     }
 
-    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> $) {
       try {
-        return new SingleTipper<>(t.newInstance());
+        return new SingleTipper<>($.newInstance());
       } catch (InstantiationException | IllegalAccessException ¢) {
         monitor.log(¢);
       }

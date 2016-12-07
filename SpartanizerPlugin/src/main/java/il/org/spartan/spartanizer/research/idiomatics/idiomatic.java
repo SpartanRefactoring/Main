@@ -21,15 +21,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 20/10/2016 */
 public interface idiomatic {
   /** Single quote: */
-  final String QUOTE = "'";
+  String QUOTE = "'";
   /** an evaluating trigger */
-  final Trigger eval = new Trigger() {
+  Trigger eval = new Trigger() {
     @Override public <T> T eval(final Supplier<T> ¢) {
       return ¢.get();
     }
   };
   /** an ignoring trigger */
-  final Trigger tIgnore = new Trigger() {
+  Trigger tIgnore = new Trigger() {
     @Override public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
       return null;
     }
@@ -111,7 +111,7 @@ public interface idiomatic {
     return incase(!condition, t);
   }
 
-  static class ObjectHolder<T> {
+  class ObjectHolder<T> {
     T t;
 
     public ObjectHolder(final T t) {
@@ -123,7 +123,7 @@ public interface idiomatic {
     }
   }
 
-  static class ConditionHolder {
+  class ConditionHolder {
     final boolean b;
 
     public ConditionHolder(final boolean b) {
@@ -135,7 +135,7 @@ public interface idiomatic {
     }
   }
 
-  static class SupplierHolder<T> {
+  class SupplierHolder<T> {
     final Supplier<T> s;
     final boolean b;
 
@@ -166,7 +166,7 @@ public interface idiomatic {
   /** Like eval.when but returning void
    * @author Ori Marcovitch
    * @since 2016 */
-  abstract static class Executor {
+  abstract class Executor {
     public abstract <T> void when(final boolean c);
   }
 
@@ -228,7 +228,7 @@ public interface idiomatic {
    * applies.
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  static class Runner implements Runnable {
+  class Runner implements Runnable {
     private final Runnable run;
 
     /** Instantiates this class.
@@ -257,7 +257,7 @@ public interface idiomatic {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  static class Storer<T> implements Holder<T> {
+  class Storer<T> implements Holder<T> {
     /** */
     final T inner;
 
@@ -274,7 +274,7 @@ public interface idiomatic {
   }
 
   @SuppressWarnings({ "javadoc", "static-method" })
-  static class TEST {
+  class TEST {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }
@@ -505,8 +505,8 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception ¢) {
-          ¢.printStackTrace();
+        } catch (final Exception $) {
+          $.printStackTrace();
         }
         return null;
       };

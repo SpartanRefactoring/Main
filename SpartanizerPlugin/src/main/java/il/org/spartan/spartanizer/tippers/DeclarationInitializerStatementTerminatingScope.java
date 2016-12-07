@@ -42,7 +42,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
@@ -69,14 +69,14 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
       if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = fixArrayInitializer(initializer, currentStatement);
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = duplicate.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
-    r.replace(nextStatement, newStatement, g);
+    $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    remove(f, r, g);
-    return r;
+    remove(f, $, g);
+    return $;
   }
 
   private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
@@ -88,27 +88,23 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  private static String getElTypeNameFromArrayType(Type t) {
+  private static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
-    ArrayType at = (ArrayType) t;
-    Type et = at.getElementType();
+    final Type et = ((ArrayType) t).getElementType();
     if (!(et instanceof SimpleType))
       return null;
-    SimpleType st = (SimpleType) et;
-    Name arrayTypeName = st.getName();
-    return !(arrayTypeName instanceof SimpleName) ? null : ((SimpleName) arrayTypeName).getIdentifier();
+    final Name $ = ((SimpleType) et).getName();
+    return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  private static boolean isArrayInitWithUnmatchingTypes(VariableDeclarationFragment f) {
+  private static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    Type t = az.variableDeclarationStatement(f.getParent()).getType();
-    String elementTypeName = getElTypeNameFromArrayType(t);
+    final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    Type it = ((ArrayCreation) f.getInitializer()).getType();
-    String initializerElementTypeName = getElTypeNameFromArrayType(it);
-    return (elementTypeName != null) && (initializerElementTypeName != null) && !(elementTypeName.equals(initializerElementTypeName));
+    final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+    return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 }

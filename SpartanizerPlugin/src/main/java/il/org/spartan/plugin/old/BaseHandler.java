@@ -28,9 +28,9 @@ public abstract class BaseHandler extends AbstractHandler {
     this.inner = inner;
   }
 
-  @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
+  @Override public Void execute(final ExecutionEvent $) throws ExecutionException {
     try {
-      return execute(HandlerUtil.getCurrentSelection(e));
+      return execute(HandlerUtil.getCurrentSelection($));
     } catch (final InterruptedException ¢) {
       throw new ExecutionException(¢.getMessage());
     }

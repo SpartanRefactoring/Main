@@ -112,13 +112,13 @@ public final class subject {
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
-     * @param s a Statement
+     * @param ¢ a Statement
      * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
      * @see duplicate */
-    Statement claim(final Statement s) {
-      final Statement core = extract.core(s);
-      return core == null ? null : wizard.rebase(duplicate.of(core), ast);
+    Statement claim(final Statement ¢) {
+      final Statement $ = extract.core(¢);
+      return $ == null ? null : wizard.rebase(duplicate.of($), ast);
     }
   }
 

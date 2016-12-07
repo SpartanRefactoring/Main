@@ -23,19 +23,18 @@ public class TipperFactory {
   }
 
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description) {
-    final Matcher m = new Matcher(pattern, replacement);
+    final Matcher $ = new Matcher(pattern, replacement);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
-        return new Tip(description(n), n, this.getClass(), m.getMatchedNodes(az.block(n))) {
+        return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final ASTNode ast = m.blockReplacement(n);
-            r.replace(n, ast, g);
+            r.replace(n, $.blockReplacement(n), g);
           }
         };
       }
 
       @Override protected boolean prerequisite(final Block ¢) {
-        return m.blockMatches(¢);
+        return $.blockMatches(¢);
       }
 
       @Override public String description(@SuppressWarnings("unused") final Block __) {
@@ -43,7 +42,7 @@ public class TipperFactory {
       }
 
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return m.getMatching(n, s);
+        return $.getMatching(n, s);
       }
     };
   }
@@ -62,7 +61,7 @@ public class TipperFactory {
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
-    final Matcher m = new Matcher(_pattern, _replacement);
+    final Matcher $ = new Matcher(_pattern, _replacement);
     return new UserDefinedTipper<N>() {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
@@ -71,17 +70,17 @@ public class TipperFactory {
       @Override public Tip tip(final N n) {
         return new Tip(description(n), n, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.replace(n, m.replacement(n), g);
+            r.replace(n, $.replacement(n), g);
           }
         };
       }
 
       @Override protected boolean prerequisite(final N ¢) {
-        return m.matches(¢);
+        return $.matches(¢);
       }
 
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
-        return m.getMatching(n, s);
+        return $.getMatching(n, s);
       }
     };
   }

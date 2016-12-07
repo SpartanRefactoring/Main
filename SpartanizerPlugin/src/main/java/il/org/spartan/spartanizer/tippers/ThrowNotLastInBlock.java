@@ -18,13 +18,13 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
     return "Remove dead statement after " + ¢;
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = parent(s);
     if (!iz.block(parent)) {
-      r.remove(nextStatement, g);
-      return r;
+      $.remove(nextStatement, g);
+      return $;
     }
-    r.getListRewrite(parent, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
-    return r;
+    $.getListRewrite(parent, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
+    return $;
   }
 }

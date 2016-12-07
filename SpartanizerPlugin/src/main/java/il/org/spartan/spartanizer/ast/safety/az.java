@@ -535,7 +535,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static FieldAccess fieldAccess(ASTNode ¢) {
+  public static FieldAccess fieldAccess(final ASTNode ¢) {
     return ¢ == null ? null : (FieldAccess) ¢;
   }
 }

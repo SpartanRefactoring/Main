@@ -46,7 +46,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
-  @SuppressWarnings("boxing") @Override public Expression replacement(final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);

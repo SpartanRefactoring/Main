@@ -30,11 +30,11 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @Override public List<ASTNode> go(final ASTRewrite r, final MethodDeclaration d, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
-    final MethodVariablesScanner s = new MethodVariablesScanner(d);
-    for (final Statement ¢ : s.statements()) {
-      s.update();
-      if (s.isOptionalForkPoint())
-        return splitMethod(r, d, s.usedVariables(), ¢, sameParameters(d, s.usedVariables()));
+    final MethodVariablesScanner $ = new MethodVariablesScanner(d);
+    for (final Statement ¢ : $.statements()) {
+      $.update();
+      if ($.isOptionalForkPoint())
+        return splitMethod(r, d, $.usedVariables(), ¢, sameParameters(d, $.usedVariables()));
     }
     return null;
   }

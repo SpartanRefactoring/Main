@@ -111,7 +111,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   @Override public Tip tip(final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
-    final ReturnStatement nextReturn = extract.nextReturn(vor);
-    return nextReturn == null ? null : make(vor, nextReturn, exclude);
+    final ReturnStatement $ = extract.nextReturn(vor);
+    return $ == null ? null : make(vor, $, exclude);
   }
 }
