@@ -88,27 +88,27 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  private static String getElTypeNameFromArrayType(Type t) {
+  private static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
-    ArrayType at = (ArrayType) t;
-    Type et = at.getElementType();
+    final ArrayType at = (ArrayType) t;
+    final Type et = at.getElementType();
     if (!(et instanceof SimpleType))
       return null;
-    SimpleType st = (SimpleType) et;
-    Name arrayTypeName = st.getName();
+    final SimpleType st = (SimpleType) et;
+    final Name arrayTypeName = st.getName();
     return !(arrayTypeName instanceof SimpleName) ? null : ((SimpleName) arrayTypeName).getIdentifier();
   }
 
-  private static boolean isArrayInitWithUnmatchingTypes(VariableDeclarationFragment f) {
+  private static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    Type t = az.variableDeclarationStatement(f.getParent()).getType();
-    String elementTypeName = getElTypeNameFromArrayType(t);
+    final Type t = az.variableDeclarationStatement(f.getParent()).getType();
+    final String elementTypeName = getElTypeNameFromArrayType(t);
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    Type it = ((ArrayCreation) f.getInitializer()).getType();
-    String initializerElementTypeName = getElTypeNameFromArrayType(it);
-    return (elementTypeName != null) && (initializerElementTypeName != null) && !(elementTypeName.equals(initializerElementTypeName));
+    final Type it = ((ArrayCreation) f.getInitializer()).getType();
+    final String initializerElementTypeName = getElTypeNameFromArrayType(it);
+    return elementTypeName != null && initializerElementTypeName != null && !elementTypeName.equals(initializerElementTypeName);
   }
 }
