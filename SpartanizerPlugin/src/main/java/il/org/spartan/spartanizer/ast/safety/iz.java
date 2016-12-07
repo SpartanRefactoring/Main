@@ -534,12 +534,12 @@ public interface iz {
   }
 
   /** Determines whether a statement is last statement in its containing method
-   * @param s JD
+   * @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the parameter is a statement
    *         which is last in its method */
-  static boolean lastInMethod(final Statement s) {
-    final Block $ = az.block(parent(s));
-    return last(s, statements($)) && iz.methodDeclaration(parent($));
+  static boolean lastInMethod(final Statement ¢) {
+    final Block $ = az.block(parent(¢));
+    return last(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 
   static boolean leftOfAssignment(final Expression ¢) {

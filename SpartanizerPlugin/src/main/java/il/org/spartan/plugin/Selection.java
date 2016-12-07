@@ -159,12 +159,12 @@ public class Selection extends AbstractSelection<Selection> {
       return $ != null ? $ : empty();
     }
 
-    /** @param m JD
+    /** @param ¢ JD
      * @return selection of current compilation unit by marker */
-    public static Selection getCurrentCompilationUnit(final IMarker m) {
-      if (!m.exists())
+    public static Selection getCurrentCompilationUnit(final IMarker ¢) {
+      if (!¢.exists())
         return empty();
-      final IResource $ = m.getResource();
+      final IResource $ = ¢.getResource();
       return !($ instanceof IFile) ? empty() : by((IFile) $).setTextSelection(null);
     }
 
@@ -396,11 +396,11 @@ public class Selection extends AbstractSelection<Selection> {
       }
     }
 
-    /** @param m JD
+    /** @param ¢ JD
      * @return selection by member */
-    private static Selection by(final IMember m) {
-      final ISourceRange $ = makertToRange(m);
-      return $ == null ? empty() : Selection.of(m.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(m.getElementName());
+    private static Selection by(final IMember ¢) {
+      final ISourceRange $ = makertToRange(¢);
+      return $ == null ? empty() : Selection.of(¢.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(¢.getElementName());
     }
 
     public static ISourceRange makertToRange(final IMember $) {
