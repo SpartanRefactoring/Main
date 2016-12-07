@@ -1,19 +1,23 @@
 package il.org.spartan.spartanizer.tippers;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO: Rewrite this class, making sure you do not use instanceof nor casting.
-// Instead you should be using classes `iz` and `azz`
+@SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
   @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
     return false;
@@ -26,28 +30,28 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
-    for (final Statement s : statements(body(d))) {
-      if (!(s instanceof ExpressionStatement))
+    List<SingleVariableDeclaration> ctorParams = parameters(d);
+    List<Statement> bodyStatements = statements(d);
+    for (Statement s : bodyStatements) {
+      if (!(iz.expressionStatement(s)))
         continue;
-      final Expression e = ((ExpressionStatement) s).getExpression();
-      if (!(e instanceof Assignment))
+      Expression e = ((ExpressionStatement) s).getExpression();
+      if (!(iz.assignment(e)))
         continue;
-      final Assignment a = (Assignment) e;
-      final Expression leftAss = a.getLeftHandSide();
-      final Expression rightAss = a.getRightHandSide();
-      if (!(leftAss instanceof FieldAccess) || !(((FieldAccess) leftAss).getExpression() instanceof ThisExpression))
+      Assignment a = az.assignment(e);
+      if (!(iz.fieldAccess(left(a))) || !(((FieldAccess) left(a)).getExpression() instanceof ThisExpression))
         continue;
-      ((FieldAccess) leftAss).getName();
-      if (!(rightAss instanceof SimpleName))
+      SimpleName fieldName = ((FieldAccess) left(a)).getName();
+      if (!(iz.simpleName(right(a))))
         continue;
-      a.getRightHandSide();
+      SimpleName paramName = az.simpleName(right(a));
     }
-    new Tip(description(d), d, this.getClass()) {
-      @SuppressWarnings("unused")
-      @Override public void go(final ASTRewrite __, final TextEditGroup g) {
+    return new Tip(description(d), d, this.getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         // TODO: Change of code here
+        System.out.println(r);
+        System.out.println(g);
       }
-    }.hashCode();
-    return null;
+    };
   }
 }
