@@ -155,7 +155,7 @@ int f8(){return new O(){void g() {r(new O<E<C<V>>>(){});}};}
 int f9(){return new O(){void g() {new O<E<C<V>>>(){};}};}
 int f10(){return new O(){int g() {new O<E<C<V>>>(){};}};}
 int f11(){return new O(){int g() {new O<E<C>>(){};}};}
-int f12(){return new O(){int g() {O<E<C<K>>> a;}};}
+int f12(){return new O(){int g() {}};}
 
 int f13(){return new O(){boolean g() {return r(new O<M.E<K, C>>(){});}};}
 }
