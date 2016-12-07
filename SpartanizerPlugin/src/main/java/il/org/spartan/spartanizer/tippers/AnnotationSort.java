@@ -42,9 +42,8 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
   }
 
-  @SuppressWarnings("boxing")
-  public static int rankAnnotation(final String annotationName) {
-    for(Integer $ : range.from(0).to(rankTable.size()))
+  @SuppressWarnings("boxing") public static int rankAnnotation(final String annotationName) {
+    for (Integer $ : range.from(0).to(rankTable.size()))
       if (rankTable.get($).contains(annotationName))
         return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
@@ -61,6 +60,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
+
   @Override public Tip tip(final N n) {
     final ASTNode x = replacement(n);
     return x == null || az.bodyDeclaration(x) == null ? null : new Tip(description(n), n, this.getClass()) {
@@ -70,7 +70,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     };
   }
 
- public ASTNode replacement(final N d) {
+  public ASTNode replacement(final N d) {
     final N $ = duplicate.of(d);
     final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
     final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));

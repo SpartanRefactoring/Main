@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Dor Ma'ayan
- * Inline return statement
+/** @author Dor Ma'ayan Inline return statement
  * @since 03-12-2016 */
 public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> implements TipperCategory.Inlining {
   @Override public String description(@SuppressWarnings("unused") final WhileStatement ¢) {
@@ -23,7 +22,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
 
   @SuppressWarnings("boxing") @Override public Tip tip(WhileStatement s) {
     int num = new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1);
-    if ( num > 0)
+    if (num > 0)
       return null;
     ReturnStatement nextRet = extract.nextReturn(s);
     int breaks = new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent()));
