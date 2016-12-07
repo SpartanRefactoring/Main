@@ -43,6 +43,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       a.getRightHandSide();
     }
     new Tip(description(d), d, this.getClass()) {
+      @SuppressWarnings("unused")
       @Override public void go(final ASTRewrite __, final TextEditGroup g) {
         // TODO: Change of code here
       }
