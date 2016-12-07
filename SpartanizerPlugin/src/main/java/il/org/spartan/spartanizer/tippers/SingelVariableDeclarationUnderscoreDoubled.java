@@ -28,12 +28,12 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   public static boolean suppressing(final SingleVariableDeclaration d) {
-    for (final Annotation ¢ : annotations(d)) {
-      if (!"SuppressWarnings".equals(¢.getTypeName() + ""))
+    for (final Annotation $ : annotations(d)) {
+      if (!"SuppressWarnings".equals($.getTypeName() + ""))
         continue;
-      if (iz.singleMemberAnnotation(¢))
-        return suppresssing(az.singleMemberAnnotation(¢));
-      if (suppressing(az.normalAnnotation(¢)))
+      if (iz.singleMemberAnnotation($))
+        return suppresssing(az.singleMemberAnnotation($));
+      if (suppressing(az.normalAnnotation($)))
         return true;
     }
     return false;
@@ -98,19 +98,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return replacement(¢, null);
   }
 
-  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
-    final MethodDeclaration method = getMethod(d);
+  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $, final ExclusionManager m) {
+    final MethodDeclaration method = getMethod($);
     if (method == null || method.getBody() == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing(d) || isUsed(method, d.getName()) || !isJohnDoe(d.getType(), d.getName()))
+    if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !isJohnDoe($.getType(), $.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration ¢ : parameters(method))
-        if (!d.equals(¢))
+        if (!$.equals(¢))
           m.exclude(¢);
-    return replace(d);
+    return replace($);
   }
 }

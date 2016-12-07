@@ -124,14 +124,14 @@ public class ParseASTTest {
             + "public class Test {\n" + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n"
             + " }\n" + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}")
         .accept(new ASTVisitor() {
-          @Override public boolean visit(final MethodDeclaration node) {
-            for (final Statement o : step.statements(step.body(node))) {
+          @Override public boolean visit(final MethodDeclaration $) {
+            for (final Statement o : step.statements(step.body($))) {
               System.out.println("class: " + o.getClass());
               System.out.println("statement: " + o);
               System.out.println(step.expression(o));
             }
-            System.out.println(step.body(node));
-            return super.visit(node);
+            System.out.println(step.body($));
+            return super.visit($);
           }
         });
   }

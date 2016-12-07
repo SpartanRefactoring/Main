@@ -35,9 +35,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.CommnoFactoring {
   private static Expression chopHead(final InfixExpression x) {
-    final List<Expression> es = extract.allOperands(x);
-    es.remove(0);
-    return es.size() < 2 ? duplicate.of(first(es)) : subject.operands(es).to(x.getOperator());
+    final List<Expression> $ = extract.allOperands(x);
+    $.remove(0);
+    return $.size() < 2 ? duplicate.of(first($)) : subject.operands($).to(x.getOperator());
   }
 
   private static Operator conjugate(final Operator ¢) {
@@ -52,10 +52,10 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   }
 
   @Override public Expression replacement(final InfixExpression x) {
-    final Operator o = x.getOperator();
-    if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
+    final Operator $ = x.getOperator();
+    if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
-    final Operator conjugate = conjugate(o);
+    final Operator conjugate = conjugate($);
     final InfixExpression left = az.infixExpression(core(left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
@@ -64,6 +64,6 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
       return null;
     final Expression leftLeft = left(left);
     return haz.sideEffects(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
-        : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
+        : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to($)).to(conjugate);
   }
 }

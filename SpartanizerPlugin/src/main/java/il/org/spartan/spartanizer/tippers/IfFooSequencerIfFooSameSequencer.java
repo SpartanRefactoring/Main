@@ -43,14 +43,14 @@ public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStateme
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final IfStatement s2 = az.ifStatement(nextStatement);
-    if (s2 == null || !iz.vacuousElse(s2))
+    final IfStatement $ = az.ifStatement(nextStatement);
+    if ($ == null || !iz.vacuousElse($))
       return null;
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !wizard.same(ss1, extract.statements(then(s2))) || !iz.sequencer(last(ss1)) ? null
+    return !wizard.same(ss1, extract.statements(then($))) || !iz.sequencer(last(ss1)) ? null
         : Tippers.replaceTwoStatements(r, s,
-            make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
+            make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),
             g);
   }
 }

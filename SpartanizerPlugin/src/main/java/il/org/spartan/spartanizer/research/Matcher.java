@@ -79,11 +79,11 @@ public class Matcher {
   }
 
   @SuppressWarnings("boxing") public Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
-    @SuppressWarnings("unchecked") final List<Statement> sp = p.statements();
+    @SuppressWarnings("unchecked") final List<Statement> $ = p.statements();
     @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
-    for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
-      if (statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
-        return new Pair<>(¢, ¢ + sp.size());
+    for (int ¢ = 0; ¢ <= sn.size() - $.size(); ++¢)
+      if (statementsMatch($, sn.subList(¢, ¢ + $.size())))
+        return new Pair<>(¢, ¢ + $.size());
     return null;
   }
 
@@ -107,31 +107,31 @@ public class Matcher {
     return ids.get(id).equals(s);
   }
 
-  private boolean matchesAux(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
-    if (p == null || n == null)
+  private boolean matchesAux(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
+    if ($ == null || n == null)
       return false;
-    if (is$X(p))
-      return iz.expression(n) && consistent(ids, p + "", n + "");
-    if (is$T(p))
-      return iz.type(n) && consistent(ids, p + "", n + "");
-    if (iz.name(p))
-      return sameName(p, n, ids);
-    if (iz.literal(p))
-      return sameLiteral(p, n);
-    if (isBlockVariable(p))
-      return matchesBlock(n) && consistent(ids, blockVariableName(p), n + "");
-    if (isMethodInvocationAndHas$AArgument(p) && !isMethodInvocationAndConsistentWith$AArgument(p, n, ids))
+    if (is$X($))
+      return iz.expression(n) && consistent(ids, $ + "", n + "");
+    if (is$T($))
+      return iz.type(n) && consistent(ids, $ + "", n + "");
+    if (iz.name($))
+      return sameName($, n, ids);
+    if (iz.literal($))
+      return sameLiteral($, n);
+    if (isBlockVariable($))
+      return matchesBlock(n) && consistent(ids, blockVariableName($), n + "");
+    if (isMethodInvocationAndHas$AArgument($) && !isMethodInvocationAndConsistentWith$AArgument($, n, ids))
       return false;
-    if (isClassInstanceCreationAndHas$AArgument(p))
-      return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
-    if (differentTypes(p, n))
+    if (isClassInstanceCreationAndHas$AArgument($))
+      return isClassInstanceCreationAndConsistentWith$AArgument($, n) && Recurser.children(n).size() == Recurser.children($).size();
+    if (differentTypes($, n))
       return false;
-    if (iz.literal(p))
-      return (p + "").equals(n + "");
-    if (iz.anyOperator(p) && !sameOperator(p, n))
+    if (iz.literal($))
+      return ($ + "").equals(n + "");
+    if (iz.anyOperator($) && !sameOperator($, n))
       return false;
-    final List<ASTNode> pChildren = gatherChildren(p, p);
-    final List<ASTNode> nChildren = gatherChildren(n, p);
+    final List<ASTNode> pChildren = gatherChildren($, $);
+    final List<ASTNode> nChildren = gatherChildren(n, $);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
@@ -229,8 +229,8 @@ public class Matcher {
   private static boolean isBlockVariable(final ASTNode p) {
     if (!iz.block(p) || step.statements(az.block(p)).size() != 1)
       return false;
-    final Statement s = step.statements(az.block(p)).get(0);
-    return iz.expressionStatement(s) && iz.methodInvocation(az.expressionStatement(s).getExpression()) && blockVariableName(p).startsWith("$B");
+    final Statement $ = step.statements(az.block(p)).get(0);
+    return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith("$B");
   }
 
   /** Checks if node is a block or statement
@@ -241,16 +241,16 @@ public class Matcher {
   }
 
   private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
-    final String id = p + "";
-    if (id.startsWith("$")) {
-      if (id.startsWith("$M"))
-        return iz.methodInvocation(n) && consistent(ids, id, n + "");
-      if (id.startsWith("$N"))
-        return iz.name(n) && consistent(ids, id, n + "");
-      if (id.startsWith("$L"))
-        return iz.literal(n) && consistent(ids, id, n + "");
+    final String $ = p + "";
+    if ($.startsWith("$")) {
+      if ($.startsWith("$M"))
+        return iz.methodInvocation(n) && consistent(ids, $, n + "");
+      if ($.startsWith("$N"))
+        return iz.name(n) && consistent(ids, $, n + "");
+      if ($.startsWith("$L"))
+        return iz.literal(n) && consistent(ids, $, n + "");
     }
-    return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
+    return n instanceof Name && $.equals(((Name) n).getFullyQualifiedName());
   }
 
   /** Pairs variables from a pattern <b>p</b> with their corresponding
@@ -403,15 +403,15 @@ public class Matcher {
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
-    final int end = az.block(n).statements().size();
-    return start >= end ? "" : stringifySubBlock(n, start, end);
+    final int $ = az.block(n).statements().size();
+    return start >= $ ? "" : stringifySubBlock(n, start, $);
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
     if (start >= end)
       return "";
-    @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
-    return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
+    @SuppressWarnings("unchecked") final List<Statement> $ = az.block(n).statements().subList(start, end);
+    return $.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
 
   /** @param n

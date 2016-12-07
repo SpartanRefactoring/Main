@@ -110,11 +110,11 @@ public enum into {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement s(final String statement) {
     assert statement != null;
-    final ASTNode n = makeAST.STATEMENTS.from(statement);
+    final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert statement != null;
-    assert n != null;
-    azzert.that(statement, n, instanceOf(Statement.class));
-    return (Statement) n;
+    assert $ != null;
+    azzert.that(statement, $, instanceOf(Statement.class));
+    return (Statement) $;
   }
 
   public static Type t(final String codeFragment) {

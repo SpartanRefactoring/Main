@@ -22,7 +22,7 @@ public class FluentSetter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     final Expression e = az.expressionStatement(ss.get(0)).getExpression();
     if (!iz.assignment(e))
       return false;
-    final Assignment a = az.assignment(e);
-    return (iz.name(a.getLeftHandSide()) || tipper.canTip(step.body(¢))) && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
+    final Assignment $ = az.assignment(e);
+    return (iz.name($.getLeftHandSide()) || tipper.canTip(step.body(¢))) && wizard.same($.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 }

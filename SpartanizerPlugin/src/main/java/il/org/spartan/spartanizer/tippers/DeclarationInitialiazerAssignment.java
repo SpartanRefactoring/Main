@@ -34,7 +34,7 @@ public final class DeclarationInitialiazerAssignment extends $VariableDeclaratio
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -44,12 +44,12 @@ public final class DeclarationInitialiazerAssignment extends $VariableDeclaratio
     final Expression newInitializer = duplicate.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
-    r.replace(initializer, newInitializer, g);
+    $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
-    r.remove(nextStatement, g);
-    return r;
+    $.remove(nextStatement, g);
+    return $;
   }
 }

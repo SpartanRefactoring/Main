@@ -117,8 +117,8 @@ public final class subject {
      * @see rebase
      * @see duplicate */
     Statement claim(final Statement s) {
-      final Statement core = extract.core(s);
-      return core == null ? null : wizard.rebase(duplicate.of(core), ast);
+      final Statement $ = extract.core(s);
+      return $ == null ? null : wizard.rebase(duplicate.of($), ast);
     }
   }
 

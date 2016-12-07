@@ -568,30 +568,30 @@ public enum step {
     String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
     if (!(d + "").contains(typeType) && iz.typeDeclaration(d))
       typeType = "interface";
-    String name = (d + "").substring((d + "").indexOf(typeType));
-    name = name.substring(name.indexOf(typeType) + typeType.length(), name.indexOf("{"));
-    while (name.contains("extends") && !balanced(name.substring(0, name.indexOf("extends"))))
-      for (int idx = name.indexOf("extends"), openers = 0, ¢ = idx + 7;; ++¢) {
-        if (name.charAt(¢) == ',' && openers <= 0) {
-          name = name.substring(0, idx) + name.substring(¢);
+    String $ = (d + "").substring((d + "").indexOf(typeType));
+    $ = $.substring($.indexOf(typeType) + typeType.length(), $.indexOf("{"));
+    while ($.contains("extends") && !balanced($.substring(0, $.indexOf("extends"))))
+      for (int idx = $.indexOf("extends"), openers = 0, ¢ = idx + 7;; ++¢) {
+        if ($.charAt(¢) == ',' && openers <= 0) {
+          $ = $.substring(0, idx) + $.substring(¢);
           break;
         }
-        if (name.charAt(¢) == '<')
+        if ($.charAt(¢) == '<')
           ++openers;
-        else if (name.charAt(¢) == '>') {
+        else if ($.charAt(¢) == '>') {
           --openers;
           if (openers == 0) {
-            name = name.substring(0, idx) + name.substring(¢ + 1);
+            $ = $.substring(0, idx) + $.substring(¢ + 1);
             break;
           }
           if (openers < 0) {
-            name = name.substring(0, idx) + name.substring(¢);
+            $ = $.substring(0, idx) + $.substring(¢);
             break;
           }
         }
       }
-    name = name.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
-    return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
+    $ = $.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
+    return findFirst.type(wizard.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
   }
 
   @SuppressWarnings("boxing") private static boolean balanced(final String s) {

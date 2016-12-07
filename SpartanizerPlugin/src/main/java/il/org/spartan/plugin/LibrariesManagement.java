@@ -49,8 +49,8 @@ public class LibrariesManagement {
 
   /** @return true iff the spartan library exists within eclipse. */
   public static boolean libraryExists() {
-    @SuppressWarnings("restriction") final List<String> userLibrariesNames = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
-    return userLibrariesNames.contains(LIBRARY_NAME);
+    @SuppressWarnings("restriction") final List<String> $ = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
+    return $.contains(LIBRARY_NAME);
   }
 
   /** @param p JD

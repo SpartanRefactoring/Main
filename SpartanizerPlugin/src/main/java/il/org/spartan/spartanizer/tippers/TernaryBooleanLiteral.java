@@ -108,10 +108,10 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
-    final boolean takeThen = !iz.booleanLiteral(then);
-    final Expression other = takeThen ? then : elze;
-    final boolean literal = az.booleanLiteral(takeThen ? elze : then).booleanValue();
-    return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
+    final boolean $ = !iz.booleanLiteral(then);
+    final Expression other = $ ? then : elze;
+    final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
+    return subject.pair(literal != $ ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {

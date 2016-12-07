@@ -42,18 +42,18 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
       }
     }
     final SingleVariableDeclaration d = s.getParameter();
-    final SimpleName n = d.getName();
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
+    final SimpleName $ = d.getName();
+    if (in($.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
       return null;
     final Statement body = s.getBody();
-    if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf(n).in(body).isEmpty())
+    if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
     if (m != null)
       m.exclude(s);
     return new Tip(description(s), s, this.getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, s, r, g);
+        Tippers.rename($, ¢, s, r, g);
       }
     };
   }

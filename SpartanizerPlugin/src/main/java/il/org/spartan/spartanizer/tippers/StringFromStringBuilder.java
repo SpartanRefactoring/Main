@@ -50,7 +50,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
-    final List<Expression> terms = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>();
     MethodInvocation r = i;
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();
@@ -60,21 +60,21 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
           return null;
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
           final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
-          terms.add(0, addParenthesisIfNeeded(a));
+          $.add(0, addParenthesisIfNeeded(a));
           hs |= iz.stringLiteral(a);
         }
         if (!hs)
-          terms.add(0, make.makeEmptyString(e));
+          $.add(0, make.makeEmptyString(e));
         break;
       }
       if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
-      terms.add(0, addParenthesisIfNeeded(a));
+      $.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = (MethodInvocation) e;
     }
-    return replacement(i, terms);
+    return replacement(i, $);
   }
 
   /** Adds parenthesis to expression if needed.

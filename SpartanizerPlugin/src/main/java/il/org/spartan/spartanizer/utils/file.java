@@ -23,7 +23,7 @@ public enum file {
   }
 
   public static boolean exists(final String path) {
-    final File f = new File(path);
-    return f.exists() && !f.isDirectory();
+    final File $ = new File(path);
+    return $.exists() && !$.isDirectory();
   }
 }

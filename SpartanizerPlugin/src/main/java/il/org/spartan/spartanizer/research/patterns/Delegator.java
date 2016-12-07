@@ -25,9 +25,9 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(tippers, onlyOne(statements(¢))))
       return false;
-    final Expression e = expression(az.returnStatement(onlyOne(statements(¢))));
-    return iz.methodInvocation(e) && areAtomic(arguments(az.methodInvocation(e)))
-        && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation(e))));
+    final Expression $ = expression(az.returnStatement(onlyOne(statements(¢))));
+    return iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
+        && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation($))));
   }
 
   /** @param arguments
@@ -39,12 +39,12 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   /** @param arguments
    * @return */
   protected static List<String> dependencies(final List<Expression> arguments) {
-    final Set<String> names = new HashSet<>();
+    final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
-      names.addAll(analyze.dependencies(¢));
+      $.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
-        names.add(az.name(¢) + "");
+        $.add(az.name(¢) + "");
     }
-    return new ArrayList<>(names).stream().collect(Collectors.toList());
+    return new ArrayList<>($).stream().collect(Collectors.toList());
   }
 }
