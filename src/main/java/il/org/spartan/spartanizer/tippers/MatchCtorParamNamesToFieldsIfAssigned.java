@@ -23,7 +23,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
 
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
-      return null;
+      return null; 
      
     List<SingleVariableDeclaration> ctorParams = parameters(d);
     List<Statement> bodyStatements = d.getBody().statements();
