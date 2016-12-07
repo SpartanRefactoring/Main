@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -19,9 +20,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @author Doron Meshulam */
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
-    return false;
-  }
+//  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
+//    return false;
+//  }
 
   @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
@@ -35,13 +36,13 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     for (Statement s : bodyStatements) {
       if (!(iz.expressionStatement(s)))
         continue;
-      Expression e = ((ExpressionStatement) s).getExpression();
+      Expression e = expression(az.expressionStatement(s));
       if (!(iz.assignment(e)))
         continue;
       Assignment a = az.assignment(e);
-      if (!(iz.fieldAccess(left(a))) || !(((FieldAccess) left(a)).getExpression() instanceof ThisExpression))
+      if (!(iz.fieldAccess(left(a))) || !(iz.thisExpression(expression(az.fieldAccess(left(a))))))
         continue;
-      SimpleName fieldName = ((FieldAccess) left(a)).getName();
+      SimpleName fieldName = name(az.fieldAccess(a));
       if (!(iz.simpleName(right(a))))
         continue;
       SimpleName paramName = az.simpleName(right(a));
