@@ -6,6 +6,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -593,9 +594,10 @@ public enum step {
     return findFirst.type(wizard.ast("class d{" + name.replaceAll("extends .+", "") + " x; }"));
   }
 
+  @SuppressWarnings("boxing")
   private static boolean balanced(final String s) {
     int $ = 0;
-    for (int ¢ = 0; ¢ < s.length(); ++¢)
+    for(Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢) == '<')
         ++$;
       else if (s.charAt(¢) == '>')

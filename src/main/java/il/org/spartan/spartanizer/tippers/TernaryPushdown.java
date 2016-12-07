@@ -39,9 +39,10 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
             .into(x.getParent());
   }
 
+  @SuppressWarnings("boxing")
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
-    for (int ¢ = 0; ¢ < es1.size(); ++¢)
+    for(Integer ¢ : range.from(0).to(es1.size()))
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
         if ($ >= 0)
           return -1;

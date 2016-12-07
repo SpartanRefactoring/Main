@@ -35,11 +35,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean canTip(final EnhancedForStatement s) {
-    for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
-      if (¢.canTip(s))
-        return true;
-    return false;
+  @Override public boolean canTip(final EnhancedForStatement ¢) {
+    return anyTips(tippers, ¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -49,15 +46,10 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   @Override public Tip tip(final EnhancedForStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final UserDefinedTipper<EnhancedForStatement> ¢ : tippers)
-          if (¢.canTip(s)) {
-            ¢.tip(s).go(r, g);
-            // idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(s)),
-            // r);
-            Logger.logNP(s, getClass() + "");
-            return;
-          }
-        assert false;
+        Logger.logNP(s, getClass() + "");
+        firstThatTips(tippers, s).tip(s).go(r, g);
+        // idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(s)),
+        // r);
       }
     };
   }
