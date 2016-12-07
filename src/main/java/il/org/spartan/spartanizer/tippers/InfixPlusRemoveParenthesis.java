@@ -46,13 +46,12 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
-  @SuppressWarnings("boxing")
-  @Override public Expression replacement(final InfixExpression x) {
+  @SuppressWarnings("boxing") @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for(Integer i : range.from(0).to(es.size())) {
+    for (Integer i : range.from(0).to(es.size())) {
       final boolean b = isString;
       isString |= !type.isNotString(es.get(i));
       if (iz.parenthesizedExpression(es.get(i))) {

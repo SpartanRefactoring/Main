@@ -32,9 +32,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
     final EnhancedForStatement s = (EnhancedForStatement) p;
-    
     ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from(s);
-    
     if (p1 instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p1;
       List<SingleVariableDeclaration> l = parameters(pp);
@@ -46,7 +44,6 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
           return null;
       }
     }
-    
     final Statement body = s.getBody();
     if (body == null || !isJohnDoe(d))
       return null;
