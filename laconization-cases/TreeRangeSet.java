@@ -120,8 +120,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 
   @Override @Nullable public Range<C> rangeContaining(C value) {
     checkNotNull(value);
-    Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(Cut.belowValue(value));
-    return floorEntry == null || !floorEntry.getValue().contains(value) ? null : floorEntry.getValue();
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.floorEntry(Cut.belowValue(value));
+    return $ == null || !$.getValue().contains(value) ? null : $.getValue();
   }
 
   @Override
@@ -141,8 +141,8 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
   @Override
   public boolean encloses(Range<C> c) {
     checkNotNull(c);
-    Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(c.lowerBound);
-    return floorEntry != null && floorEntry.getValue().encloses(c);
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.floorEntry(c.lowerBound);
+    return $ != null && $.getValue().encloses(c);
   }
 
   @Nullable
@@ -473,7 +473,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 
     @Override
     Iterator<Entry<Cut<C>, Range<C>>> descendingEntryIterator() {
-      final PeekingIterator<Range<C>> positiveItr =
+      final PeekingIterator<Range<C>> $ =
           Iterators.peekingIterator(
               positiveRangesByUpperBound
                   .headMap(!complementLowerBoundWindow.hasUpperBound() ? Cut.<C> aboveAll() : complementLowerBoundWindow.upperEndpoint(), complementLowerBoundWindow.hasUpperBound() && complementLowerBoundWindow.upperBoundType() == BoundType.CLOSED)
@@ -481,9 +481,9 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
                   .values()
                   .iterator());
       Cut<C> cut;
-      if (positiveItr.hasNext())
-		cut = (positiveItr.peek().upperBound == Cut.<C>aboveAll()) ? positiveItr.next().lowerBound
-				: positiveRangesByLowerBound.higherKey(positiveItr.peek().upperBound);
+      if ($.hasNext())
+		cut = ($.peek().upperBound == Cut.<C>aboveAll()) ? $.next().lowerBound
+				: positiveRangesByLowerBound.higherKey($.peek().upperBound);
 	else {
 		if (!complementLowerBoundWindow.contains(Cut.<C>belowAll())
 				|| positiveRangesByLowerBound.containsKey(Cut.belowAll()))
@@ -499,14 +499,14 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
         protected Entry<Cut<C>, Range<C>> computeNext() {
 			if (nextComplementRangeUpperBound == Cut.<C>belowAll())
 				return endOfData();
-			if (!positiveItr.hasNext()) {
+			if (!$.hasNext()) {
 				if (complementLowerBoundWindow.lowerBound.isLessThan(Cut.<C>belowAll())) {
 					Range<C> negativeRange = Range.create(Cut.<C>belowAll(), nextComplementRangeUpperBound);
 					nextComplementRangeUpperBound = Cut.belowAll();
 					return Maps.immutableEntry(Cut.<C>belowAll(), negativeRange);
 				}
 			} else {
-				Range<C> positiveRange = positiveItr.next();
+				Range<C> positiveRange = $.next();
 				Range<C> negativeRange = Range.create(positiveRange.upperBound, nextComplementRangeUpperBound);
 				nextComplementRangeUpperBound = positiveRange.lowerBound;
 				if (complementLowerBoundWindow.lowerBound.isLessThan(negativeRange.lowerBound))
