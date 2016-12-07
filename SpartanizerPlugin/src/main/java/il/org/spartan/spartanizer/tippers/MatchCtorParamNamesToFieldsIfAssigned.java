@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -12,60 +11,42 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * @since 07-Dec-16
- * @author Doron Meshulam
- *
- */
-
-
+/** @since 07-Dec-16
+ * @author Doron Meshulam */
+// TODO: Rewrite this class, making sure you do not use instanceof nor casting. Instead you should be using classes `iz` and `azz`
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+  @Override protected boolean prerequisite(@SuppressWarnings("unused") MethodDeclaration __) {
+    return false; 
+  }
+
   @Override public String description(final MethodDeclaration ¢) {
-    return "Match constructor parameter names to fields";
+    return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
-      return null; 
-     
-    List<SingleVariableDeclaration> ctorParams = parameters(d);
-    List<Statement> bodyStatements = d.getBody().statements();
-    for (Statement s : bodyStatements) {
+      return null;
+    for (final Statement s : statements(body(d))) {
       if (!(s instanceof ExpressionStatement))
         continue;
-      Expression e = ((ExpressionStatement) s).getExpression();
+      final Expression e = ((ExpressionStatement) s).getExpression();
       if (!(e instanceof Assignment))
         continue;
-      
-      Assignment a = (Assignment) e;
-      Expression leftAss = a.getLeftHandSide(); // LOL ^_^
-      Expression rightAss = a.getRightHandSide();
-      if(!(leftAss instanceof FieldAccess)) {
+      final Assignment a = (Assignment) e;
+      final Expression leftAss = a.getLeftHandSide();
+      final Expression rightAss = a.getRightHandSide();
+      if (!(leftAss instanceof FieldAccess) || !(((FieldAccess) leftAss).getExpression() instanceof ThisExpression))
         continue;
-      }
-      
-      if(!(((FieldAccess)leftAss).getExpression() instanceof ThisExpression)) {
+      ((FieldAccess) leftAss).getName();
+      if (!(rightAss instanceof SimpleName))
         continue;
-      }
-      
-      SimpleName fieldName = ((FieldAccess)leftAss).getName();
-      if (!(rightAss instanceof SimpleName)) {
-        continue;
-      }
-      SimpleName paramName = (SimpleName)a.getRightHandSide();
-//    Check if right is parameter and also there wasn't a local variable in the name of the field4
-//        
-//      
-//    List<String> uses = Collect.usesOf("y").inside(d.getBody());
+      a.getRightHandSide();
     }
-    
-    
-    return new Tip(description(d), d, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        //TODO: Change of code here
-        System.out.println(r);
-        System.out.println(g);
+    new Tip(description(d), d, this.getClass()) {
+      @Override public void go(final ASTRewrite __, final TextEditGroup g) {
+        // TODO: Change of code here
       }
-    };
+    }.hashCode();
+    return null;
   }
 }
