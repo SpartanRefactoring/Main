@@ -40,9 +40,8 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
   }
 
-  @SuppressWarnings("boxing")
-  public static int rankAnnotation(final String annotationName) {
-    for(Integer $ : range.from(0).to(rankTable.size()))
+  @SuppressWarnings("boxing") public static int rankAnnotation(final String annotationName) {
+    for (final Integer $ : range.from(0).to(rankTable.size()))
       if (rankTable.get($).contains(annotationName))
         return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
@@ -58,56 +57,41 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
-  }/*
-  @SuppressWarnings("unchecked")
-  void sortElements(final List<? extends IExtendedModifier> elements, ListRewrite r) {
-    if (elements.isEmpty())
-      return;
-    final List myCopy = new ArrayList();
-    myCopy.addAll(elements);
-    Collections.sort(myCopy, comp);
-    for (int i = 0; i < elements.size(); ++i) {
-      ASTNode oldNode = (ASTNode) elements.get(i);
-      ASTNode newNode = (ASTNode) myCopy.get(i);
-      if (oldNode != newNode) {
-        r.replace(oldNode, $.createMoveTarget(newNode), g);
-      }
-    }*/
+  }/* @SuppressWarnings("unchecked") void sortElements(final List<? extends
+    * IExtendedModifier> elements, ListRewrite r) { if (elements.isEmpty())
+    * return; final List myCopy = new ArrayList(); myCopy.addAll(elements);
+    * Collections.sort(myCopy, comp); for (int i = 0; i < elements.size(); ++i)
+    * { ASTNode oldNode = (ASTNode) elements.get(i); ASTNode newNode = (ASTNode)
+    * myCopy.get(i); if (oldNode != newNode) { r.replace(oldNode,
+    * $.createMoveTarget(newNode), g); } } */
+
   @Override public Tip tip(final N n) {
-    if(n == null || az.bodyDeclaration(n) == null)
+    if (n == null || az.bodyDeclaration(n) == null)
       return null;
     final List<Annotation> elements = extract.annotations(n);
-    if(elements ==null || elements.isEmpty())
-        return null;
+    if (elements == null || elements.isEmpty())
+      return null;
     final List<Annotation> myCopy = new ArrayList<>();
     myCopy.addAll(elements);
     Collections.sort(myCopy, comp);
-    if(myCopy.equals(elements))
-      return null;
-    return  new Tip(description(n), n, this.getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
-       ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+    return myCopy.equals(elements) ? null : new Tip(description(n), n, this.getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < elements.size(); ++i) {
-          ASTNode oldNode = elements.get(i);
-          ASTNode newNode = myCopy.get(i);
-          if (oldNode != newNode) {
+          final ASTNode oldNode = elements.get(i);
+          final ASTNode newNode = myCopy.get(i);
+          if (oldNode != newNode)
             l.replace(oldNode, r.createMoveTarget(newNode), g);
-          }
         }
       }
     };
   }
-/*
- public ASTNode replacement(final N d) {
-    final N $ = duplicate.of(d);
-    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
-    final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
-    extendedModifiers($).clear();
-    extendedModifiers($).addAll(as);
-    extendedModifiers($).addAll(ms);
-    return !wizard.same($, d) ? $ : null;
-  }
-*/
+
+  /* public ASTNode replacement(final N d) { final N $ = duplicate.of(d); final
+   * List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
+   * final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
+   * extendedModifiers($).clear(); extendedModifiers($).addAll(as);
+   * extendedModifiers($).addAll(ms); return !wizard.same($, d) ? $ : null; } */
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
