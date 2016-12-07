@@ -139,7 +139,7 @@ public class Toolbox {
             new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
-            new WhileNextReturnToWhile(),//
+            new WhileNextReturnToWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new RemoveRedundantWhile(), //
@@ -199,7 +199,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            new InfixIndexOfToStringContains(), //
+            // new InfixIndexOfToStringContains(), //
             new SimplifyComparisionOfAdditions(), //
             new SimplifyComparisionOfSubtractions(), //
             null)
@@ -209,7 +209,9 @@ public class Toolbox {
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new RedundentReturnStatementInVoidTypeMethod(), //
-            new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new tipper #20
+            // new MatchCtorParamNamesToFieldsIfAssigned(), // This is a new
+            // tipper
+            // #20
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -247,7 +249,7 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
-//            new PutIfAbsent(), //
+            // new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //

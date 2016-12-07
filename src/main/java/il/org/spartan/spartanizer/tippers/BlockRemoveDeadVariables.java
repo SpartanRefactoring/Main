@@ -18,16 +18,16 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author kobybs
  * @since 4-12-2016 */
 public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implements TipperCategory.Collapse {
-  @Override public ASTNode replacement(Block n) {
+  @Override public ASTNode replacement(final Block n) {
     final Block $ = duplicate.of(n);
-    List<Statement> removalList = new ArrayList<>();
-    for (Statement s : extract.statements($)) {
+    final List<Statement> removalList = new ArrayList<>();
+    for (final Statement s : extract.statements($)) {
       final VariableDeclarationStatement asVar = !iz.variableDeclarationStatement(s) ? null : az.variableDeclarationStatement(s);
       if (asVar != null) {
         final List<VariableDeclarationFragment> as = new ArrayList<>(step.fragments(asVar));
         step.fragments(asVar).clear();
-        for (VariableDeclarationFragment ¢ : as)
-          if (Collect.usesOf((¢.getName() + "")).inside(n).size() > 1 || haz.sideEffects(¢.getInitializer()))
+        for (final VariableDeclarationFragment ¢ : as)
+          if (Collect.usesOf(¢.getName() + "").inside(n).size() > 1 || haz.sideEffects(¢.getInitializer()))
             step.fragments(asVar).add(¢);
         if (step.fragments(asVar).isEmpty())
           removalList.add(s);
@@ -37,7 +37,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
     return !wizard.same($, n) ? $ : null;
   }
 
-  @SuppressWarnings("unused") @Override public String description(Block n) {
+  @SuppressWarnings("unused") @Override public String description(final Block n) {
     return "Eliminate dead variable";
   }
 }
