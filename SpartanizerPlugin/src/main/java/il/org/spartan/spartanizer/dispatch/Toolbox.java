@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -159,7 +160,7 @@ public class Toolbox {
             // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
-            // new CachingPattern(), //
+            new CachingPattern(), //
             new BlockInlineStatementIntoNext(), //
             new BlockRemoveDeadVariables(), //
             null) //
@@ -198,7 +199,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            new InfixIndexOfToStringContains(), //
+            // new InfixIndexOfToStringContains(), //
             new SimplifyComparisionOfAdditions(), //
             new SimplifyComparisionOfSubtractions(), //
             null)
