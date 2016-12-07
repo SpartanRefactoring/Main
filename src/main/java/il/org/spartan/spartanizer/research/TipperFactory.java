@@ -28,8 +28,7 @@ public class TipperFactory {
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final ASTNode ast = $.blockReplacement(n);
-            r.replace(n, ast, g);
+            r.replace(n, $.blockReplacement(n), g);
           }
         };
       }
