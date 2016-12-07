@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Apply the distributive rule to multiplication:
@@ -119,6 +120,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     );
   }
 
+  @SuppressWarnings("boxing")
   private ASTNode replacement(final List<Expression> xs) {
     if (xs.size() == 1)
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
@@ -127,7 +129,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
-    for (int i = 0; i < xs.size(); ++i) {
+    for(Integer i : range.from(0).to(xs.size())) {
       temp = removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
@@ -143,7 +145,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       }
     }
     Expression addition = null;
-    for (int ¢ = 0; ¢ < different.size() - 1; ++¢)
+    for(Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())

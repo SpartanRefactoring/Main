@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 // TODO Roth: choose more suitable category
@@ -225,8 +226,9 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return $;
     }
 
+    @SuppressWarnings("boxing")
     private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (int ¢ = starting; ¢ < statements.size(); ++¢)
+      for(Integer ¢ : range.from(starting).to(statements.size()))
         setUsesMapping(d, statements.get(¢));
     }
 

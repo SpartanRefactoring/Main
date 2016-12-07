@@ -4,6 +4,9 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
+import java.lang.reflect.*;
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -25,16 +28,22 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    ASTNode p;
-    for (p = s.getParent(); p != null && !(p instanceof MethodDeclaration);)
+    ASTNode p = s; 
+    while(!(p instanceof MethodDeclaration))
       p = p.getParent();
+    
     if (p instanceof MethodDeclaration) {
-      final SingleVariableDeclaration parameter = onlyOne(parameters((MethodDeclaration) p));
-      final SimpleName n1 = parameter.getName();
-      assert n1 != null;
-      if (in(n1.getIdentifier(), "¢"))
+      final MethodDeclaration pp = (MethodDeclaration) p;
+      List<SingleVariableDeclaration> l = parameters(pp);
+      if (l.size() == 1) {
+      final SingleVariableDeclaration parameter = onlyOne(l);
+      final SimpleName sn = parameter.getName();
+      assert sn != null;
+      if (in(sn.getIdentifier(), "¢"))
         return null;
+      }
     }
+    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))

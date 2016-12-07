@@ -20,6 +20,16 @@ public class range {
     return from(¢).to(¢).step(0).inclusive();
   }
 
+  public static Infinite infinite() {
+    return infiniteFrom(0, 1);
+  }
+
+  static Infinite infiniteFrom(final int ¢, final int ¢2) {
+    Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
+    $.step(¢2);
+    return $;
+  }
+
   public static RangeIterator<?> naturals() {
     return from(0).to(-1).step(1);
   }
@@ -56,6 +66,7 @@ public class range {
   int to = -1;
   boolean inclusive;
   int step = 1;
+  boolean infinite;
 
   public class AfterTo extends RangeIterator<AfterTo> {
     public AfterTo from(final int ¢) {
@@ -66,6 +77,10 @@ public class range {
     public AfterTo step(final int ¢) {
       step = ¢;
       return this;
+    }
+
+    public Infinite infinite() {
+      return range.infiniteFrom(from, step);
     }
 
     @Override AfterTo self() {
@@ -84,7 +99,28 @@ public class range {
       return new AfterTo();
     }
 
+    public Infinite infinite() {
+      return range.infiniteFrom(from, step);
+    }
+
     @Override BeforeTo self() {
+      return this;
+    }
+  }
+
+  public class Infinite extends RangeIterator<Infinite> {
+    public Infinite step(final int ¢) {
+      step = ¢;
+      return this;
+    }
+
+    public Infinite from(final int ¢) {
+      from = ¢;
+      step = 1;
+      return this;
+    }
+
+    @Override Infinite self() {
       return this;
     }
   }
@@ -100,12 +136,17 @@ public class range {
       return self();
     }
 
+    public final Self infiniteRange() {
+      infinite = true;
+      return self();
+    }
+
     @Override public Iterator<Integer> iterator() {
       return new Iterator<Integer>() {
         int next = from;
 
         @Override public boolean hasNext() {
-          return inclusive ? next <= to : next < to;
+          return infinite || (inclusive ? next <= to : next < to);
         }
 
         @Override public Integer next() {

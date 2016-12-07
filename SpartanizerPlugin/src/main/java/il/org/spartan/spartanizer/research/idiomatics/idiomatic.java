@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.idiomatics;
 
 import static il.org.spartan.azzert.*;
 
