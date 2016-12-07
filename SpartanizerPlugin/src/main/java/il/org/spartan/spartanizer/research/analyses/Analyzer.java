@@ -28,13 +28,13 @@ public abstract class Analyzer<T> {
    * If double is double, leaves only 2 first digits.
    * @param ¢
    * @return */
-  protected static String tidy(double ¢) {
-    int a = 0;
-    double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+  protected static String tidy(final double ¢) {
+    int $ = 0;
+    final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
-    a = (int) ¢formatted;
-    return a + "";
+    $ = (int) ¢formatted;
+    return $ + "";
   }
 
   protected abstract double enumElement(T t);

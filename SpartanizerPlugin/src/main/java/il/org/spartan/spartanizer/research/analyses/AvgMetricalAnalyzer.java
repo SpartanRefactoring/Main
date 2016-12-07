@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.utils.*;
 public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
   @Override protected abstract int metric(ASTNode n);
 
-  @SuppressWarnings("boxing") @Override public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
-    int statements = metrics.countStatements(before);
+  @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
+    final int statements = metrics.countStatements(before);
     getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
     getSafe(afterHistogram, statements).add(Int.valueOf(metric(findFirst.methodDeclaration(after))));
     if (metric(before) >= metric(findFirst.methodDeclaration(after)))

@@ -18,16 +18,15 @@ public class Generic$Applicator {
   public int tippersAppliedOnCurrentObject;
   protected int done;
   private static List<String> selectedTipperGroups;
-  private static String fqn_base = "org.eclipse.jdt.core.dom.";
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
     final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss)
-        $.add((Class<? extends ASTNode>) Class.forName(fqn_base + ¢));
-    } catch (final ClassNotFoundException x) {
-      x.printStackTrace();
+        $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
+    } catch (final ClassNotFoundException ¢) {
+      ¢.printStackTrace();
     }
     return as.list($); // useless?
   }
@@ -92,10 +91,8 @@ public class Generic$Applicator {
   }
 
   public static void main(final String[] args) {
-    for (final Class<? extends ASTNode> i : setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment"))
-      System.out.println(i);
-    for (final String ¢ : setSelectedTipperGroups("Abbreviation", "Centification"))
-      System.out.println(¢);
+    setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment").forEach(System.out::println);
+    setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
   private static List<String> setSelectedTipperGroups(final String... ss) {

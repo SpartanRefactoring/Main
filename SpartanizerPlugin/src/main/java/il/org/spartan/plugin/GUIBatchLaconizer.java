@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Possible events during spartanization process
  * <p>
@@ -30,16 +31,16 @@ public class GUIBatchLaconizer extends Applicator {
   private static final int PASSES_MANY = 20;
 
   /** Spartanization process. */
+  @SuppressWarnings("boxing")
   @Override public void go() {
-    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
+    if (selection() == null || listener() == null || runContext() == null || passes() <= 0 || selection().isEmpty())
       return;
     listener().push(message.run_start.get(selection().name));
     if (!shouldRun())
       return;
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
-      final int l = passes();
-      for (int pass = 1; pass <= l; ++pass) {
+      for (Integer pass : range.from(1).to(passes()).inclusive()) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;

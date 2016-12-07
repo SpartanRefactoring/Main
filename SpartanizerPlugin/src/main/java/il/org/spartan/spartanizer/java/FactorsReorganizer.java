@@ -32,14 +32,13 @@ public final class FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
 
-  private static Expression buildDividers(final List<Expression> xs) {
-    final Expression one = first(xs).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, first(xs)).to(DIVIDE);
-    if (xs.size() == 1)
+  private static Expression buildDividers(final List<Expression> ¢) {
+    final Expression $ = subject.pair(first(¢).getAST().newNumberLiteral("1"), first(¢)).to(DIVIDE);
+    if (¢.size() == 1)
       return $;
-    xs.remove(0);
-    xs.add(0, $);
-    return subject.operands(xs).to(DIVIDE);
+    ¢.remove(0);
+    ¢.add(0, $);
+    return subject.operands(¢).to(DIVIDE);
   }
 
   private static Expression buildMultipliers(final List<Expression> ¢) {

@@ -18,29 +18,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yosef Raisman
  * @author Entony Lekhtman
  * @since 16-11-12 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue822 {
-  @Test public void testStatementsFromFile() throws IOException {
-    final Path p = Files.createTempFile("test_file", ".tmp");
-    Files.write(p, Arrays.asList("a = a + b;"));
-    final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
-    azzert.that(ast + "", is(wizard.ast("a = a + b;") + ""));
-    azzert.that(ast, instanceOf(Statement.class));
-  }
-
-  @Test public void testStatementsFromDocument() {
-    azzert.that(wizard.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
-  }
-
-  @Test public void testExpressionFromFile() throws IOException {
-    final Path p = Files.createTempFile("test_file", ".tmp");
-    Files.write(p, Arrays.asList("a + b"));
-    final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
-    azzert.that(ast + "", is(wizard.ast("a+b") + ""));
-    azzert.that(ast, instanceOf(Expression.class));
-  }
-
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);
@@ -51,8 +31,8 @@ public class Issue822 {
     StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch (final Exception e) {
-      fail(e.getMessage());
+    } catch (final Exception ¢) {
+      fail(¢.getMessage());
     }
     assert sb != null;
     azzert.that(sb + "", is(new StringBuilder() + ""));
@@ -62,5 +42,25 @@ public class Issue822 {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Arrays.asList("a = a + b;"));
     azzert.that(makeAST.STATEMENTS.builder(p.toFile()) + "", is("a = a + b;"));
+  }
+
+  @Test public void testExpressionFromFile() throws IOException {
+    final Path p = Files.createTempFile("test_file", ".tmp");
+    Files.write(p, Arrays.asList("a + b"));
+    final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
+    azzert.that(ast + "", is(wizard.ast("a+b") + ""));
+    azzert.that(ast, instanceOf(Expression.class));
+  }
+
+  @Test public void testStatementsFromDocument() {
+    azzert.that(wizard.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
+  }
+
+  @Test public void testStatementsFromFile() throws IOException {
+    final Path p = Files.createTempFile("test_file", ".tmp");
+    Files.write(p, Arrays.asList("a = a + b;"));
+    final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
+    azzert.that(ast + "", is(wizard.ast("a = a + b;") + ""));
+    azzert.that(ast, instanceOf(Statement.class));
   }
 }

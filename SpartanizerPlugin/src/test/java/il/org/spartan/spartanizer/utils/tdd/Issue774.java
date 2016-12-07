@@ -10,40 +10,12 @@ public class Issue774 {
     assert !determineIf.uses(wizard.ast("false"), "false");
   }
 
-  @Test public void shouldReturnTrueForStringLiteral() {
-    assert determineIf.uses(wizard.ast("t"), "t");
-  }
-
-  @Test public void shouldReturnFalseForNull() {
-    assert !determineIf.uses(wizard.ast("null"), "null");
-  }
-
   @Test public void shouldReturnFalseForKeyword() {
     assert !determineIf.uses(wizard.ast("class A{}"), "class");
   }
 
-  @Test public void shouldReturnFalseIfNameNotExists() {
-    assert !determineIf.uses(wizard.ast("x"), "t");
-  }
-
-  @Test public void shouldReturnTrueForFullyQualifiedName() {
-    assert determineIf.uses(wizard.ast("a.b"), "a.b");
-  }
-
-  @Test public void shouldReturnTrueNameAfterDot() {
-    assert determineIf.uses(wizard.ast("a.b"), "b");
-  }
-
-  @Test public void shouldReturnTrueForQualifiedNameBeforeDot() {
-    assert determineIf.uses(wizard.ast("a.b.c"), "a.b");
-  }
-
-  @Test public void shouldReturnTrueForQualifiedNameInsideQualifiedNames() {
-    assert determineIf.uses(wizard.ast("a.b.c.d"), "a.b");
-  }
-
-  @Test public void shouldReturnTrueForDescendantSimpleName() {
-    assert determineIf.uses(wizard.ast("a.b.c.d"), "c");
+  @Test public void shouldReturnFalseForNull() {
+    assert !determineIf.uses(wizard.ast("null"), "null");
   }
 
   @Test public void shouldReturnFalseForNullNodeObject() {
@@ -60,5 +32,33 @@ public class Issue774 {
 
   @Test public void shouldReturnFalseForSubSimpleName() {
     assert !determineIf.uses(wizard.ast("abc.def"), "bc");
+  }
+
+  @Test public void shouldReturnFalseIfNameNotExists() {
+    assert !determineIf.uses(wizard.ast("x"), "t");
+  }
+
+  @Test public void shouldReturnTrueForDescendantSimpleName() {
+    assert determineIf.uses(wizard.ast("a.b.c.d"), "c");
+  }
+
+  @Test public void shouldReturnTrueForFullyQualifiedName() {
+    assert determineIf.uses(wizard.ast("a.b"), "a.b");
+  }
+
+  @Test public void shouldReturnTrueForQualifiedNameBeforeDot() {
+    assert determineIf.uses(wizard.ast("a.b.c"), "a.b");
+  }
+
+  @Test public void shouldReturnTrueForQualifiedNameInsideQualifiedNames() {
+    assert determineIf.uses(wizard.ast("a.b.c.d"), "a.b");
+  }
+
+  @Test public void shouldReturnTrueForStringLiteral() {
+    assert determineIf.uses(wizard.ast("t"), "t");
+  }
+
+  @Test public void shouldReturnTrueNameAfterDot() {
+    assert determineIf.uses(wizard.ast("a.b"), "b");
   }
 }

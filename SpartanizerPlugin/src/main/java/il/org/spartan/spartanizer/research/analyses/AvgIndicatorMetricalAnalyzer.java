@@ -12,11 +12,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public class AvgIndicatorMetricalAnalyzer extends IndicatorMetricalAnalyzer {
-  @Override protected int metric(ASTNode ¢) {
+  @Override protected int metric(final ASTNode ¢) {
     return metrics.subtreeUnderstandability2(¢);
   }
 
-  @Override protected double enumElement(List<Int> is) {
+  @Override protected double enumElement(final List<Int> is) {
     return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }
 }

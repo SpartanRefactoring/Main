@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
  * @since 2014-08-25 */
-@SuppressWarnings({ "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc" })
 public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
@@ -42,8 +42,7 @@ public final class OccurrencesTest {
 
   @Test public void lexicalUsesCollector() {
     final List<SimpleName> into = new ArrayList<>();
-    final ASTVisitor collector = Collect.lexicalUsesCollector(into, a);
-    a.accept(collector);
+    a.accept(Collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }
 

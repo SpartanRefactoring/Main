@@ -9,11 +9,11 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue426 {
   @Test public void a() {
-    trimmingOf("for(int i = 0; i <10; ++i){System.out.println(i);System.out.println(i);}")
-        .gives("for(int ¢ = 0; ¢ <10; ++¢){System.out.println(¢);System.out.println(¢);}").stays();
+    trimmingOf("for(final Integer i: range.to(10)){System.out.println(i);System.out.println(i);}")
+        .gives("for(final Integer ¢: range.to(10)){System.out.println(¢);System.out.println(¢);}").stays();
   }
 
   @Test public void b() {
-    trimmingOf("for(int i = 0; i <10; ++i){System.out.println(¢);System.out.println(i);}").stays();
+    trimmingOf("for(final Integer i: range.to(10)){System.out.println(¢);System.out.println(i);}").stays();
   }
 }

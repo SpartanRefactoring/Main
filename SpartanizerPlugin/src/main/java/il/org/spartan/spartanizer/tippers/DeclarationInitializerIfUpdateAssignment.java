@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -45,10 +44,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends $VariableDec
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)))
-      return null;
-    final Operator o = a.getOperator();
-    if (o == Assignment.Operator.ASSIGN)
+    if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);

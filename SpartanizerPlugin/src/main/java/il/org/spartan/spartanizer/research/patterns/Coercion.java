@@ -25,7 +25,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final String API_LEVEL_TYPE = "type";
   private static final String API_FILE = "apiFile";
   private static final String API_LEVEL = "apiLevel";
-  static final Converter c = new Converter();
+  static final DownCaster c = new DownCaster();
 
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
@@ -77,11 +77,9 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return new File(fileAzFilePath());
   }
 
-  /** [[SuppressWarningsSpartan]] */
   static boolean azMethodExist(final CastExpression ¢) {
-    final String name = azMethodName(¢);
-    return step.methods(containingType(¢)).stream().filter(m -> name.equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢)))
-        .count() != 0;
+    return step.methods(containingType(¢)).stream()
+        .filter(m -> azMethodName(¢).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {
@@ -163,8 +161,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           f.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
     return f;
   }

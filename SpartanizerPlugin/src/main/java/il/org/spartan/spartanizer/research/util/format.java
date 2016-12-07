@@ -9,17 +9,14 @@ import org.eclipse.text.edits.*;
  * @since Nov 13, 2016 */
 public class format {
   public static String code(final String code) {
-    final CodeFormatter codeFormatter = ToolFactory.createCodeFormatter(null);
-    final TextEdit textEdit = codeFormatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
-    final IDocument doc = new Document(code);
+    final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
+    final IDocument $ = new Document(code);
     try {
       if (textEdit != null)
-        textEdit.apply(doc);
-    } catch (final MalformedTreeException e) {
-      e.printStackTrace();
-    } catch (final BadLocationException e) {
-      e.printStackTrace();
+        textEdit.apply($);
+    } catch (final BadLocationException | MalformedTreeException ¢) {
+      ¢.printStackTrace();
     }
-    return doc.get();
+    return $.get();
   }
 }

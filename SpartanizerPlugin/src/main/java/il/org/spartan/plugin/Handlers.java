@@ -6,22 +6,7 @@ import org.eclipse.core.commands.*;
  * @author Ori Roth
  * @since 2.6 */
 public class Handlers extends AbstractHandler {
-  private static final String LACONIZE_CURRENT = "il.org.spartan.LaconizeCurrent";
-  private static final String LACONIZE_PROJECT = "il.org.spartan.LaconizeAll";
-
-  @Override public Object execute(final ExecutionEvent ¢) {
-    if (¢ == null || ¢.getCommand() == null)
-      return null;
-    switch (¢.getCommand().getId()) {
-      case LACONIZE_CURRENT:
-        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go();
-        break;
-      case LACONIZE_PROJECT:
-        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go();
-        break;
-      default:
-        break;
-    }
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent ¢) {
     return null;
   }
 }

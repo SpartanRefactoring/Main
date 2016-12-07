@@ -217,7 +217,7 @@ public final class Version250 {
   }
 
   @Test public void issue086_1() {
-    trimmingOf("if(false)" + "c();\n" + "int a;").gives("{}int a;").gives("int a;").stays();
+    trimmingOf("if(false)" + "c();\n" + "int a;").gives("if(false)" + "c();\n").gives("{}").gives("").stays();
   }
 
   @Test public void issue086_2() {
@@ -283,8 +283,8 @@ public final class Version250 {
   }
 
   @Test public void simpleForLoop() {
-    trimmingOf("for (int i = 0; i <100; ++i) sum+=i;")//
-        .gives("for (int ¢ = 0; ¢ <100; ++¢) sum+=¢;").stays();
+    trimmingOf("for (final Integer i: range.to(100)) sum+=i;")//
+        .gives("for (final Integer ¢: range.to(100)) sum+=¢;").stays();
   }
 
   @Test public void test_b() {

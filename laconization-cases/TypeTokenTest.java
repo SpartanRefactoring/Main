@@ -1076,11 +1076,8 @@ public class TypeTokenTest extends TestCase {
   }
 
   public void testGetSupertype_chained() {
-    @SuppressWarnings("unchecked") // StringListIterable extensd ListIterable<String>
-    TypeToken<ListIterable<String>> listIterableType = (TypeToken<ListIterable<String>>)
-        TypeToken.of(StringListIterable.class).getSupertype(ListIterable.class);
     assertEquals(Types.newParameterizedType(Iterable.class, Types.newParameterizedType(List.class, String.class)),
-			listIterableType.getSupertype(Iterable.class).getType());
+			((TypeToken<ListIterable<String>>) TypeToken.of(StringListIterable.class).getSupertype(ListIterable.class)).getSupertype(Iterable.class).getType());
   }
 
   public void testGetSupertype_withArray() {
@@ -1374,8 +1371,7 @@ public class TypeTokenTest extends TestCase {
             .getType();
     assertEquals(Outer.Sub.class, subtype.getRawType());
     assertThat(subtype.getActualTypeArguments()[0]).isInstanceOf(WildcardType.class);
-    ParameterizedType owner = (ParameterizedType) subtype.getOwnerType();
-    assertEquals(Outer.class, owner.getRawType());
+    assertEquals(Outer.class, ((ParameterizedType) subtype.getOwnerType()).getRawType());
     // This returns a strange ? extends Sub2<Y> type, which isn't ideal.
     TypeToken<?> unused = new TypeToken<BaseWithTypeVar<List<?>>>() {}.getSubtype(Outer.Sub2.class);
   }
@@ -1419,8 +1415,9 @@ public class TypeTokenTest extends TestCase {
     List<T> list;
     List<T>[] matrix;
 
-    void setList(List<T> ¢) {
+    Holder<T> setList(List<T> ¢) {
       this.list = ¢;
+      return this;
     }
   }
 
@@ -1434,8 +1431,7 @@ public class TypeTokenTest extends TestCase {
   }
 
   public void testWildcardCaptured_field_upperBound() throws Exception {
-    TypeToken<Holder<?>> type = new TypeToken<Holder<?>>() {};
-    TypeToken<?> matrixType = type.resolveType(
+    TypeToken<?> matrixType = new TypeToken<Holder<?>>() {}.resolveType(
         Holder.class.getDeclaredField("matrix").getGenericType());
     assertEquals(List[].class, matrixType.getRawType());
     assertThat(matrixType.getType())
@@ -1481,8 +1477,7 @@ public class TypeTokenTest extends TestCase {
   public <T extends List<String>> void testMethod_parameterTypes()
       throws NoSuchMethodException {
     Method setMethod = List.class.getMethod("set", int.class, Object.class);
-    Invokable<T, ?> invokable = new TypeToken<T>(getClass()) {}.method(setMethod);
-    ImmutableList<Parameter> params = invokable.getParameters();
+    ImmutableList<Parameter> params = new TypeToken<T>(getClass()) {}.method(setMethod).getParameters();
     assertEquals(2, params.size());
     assertEquals(TypeToken.of(int.class), params.get(0).getType());
     assertEquals(TypeToken.of(String.class), params.get(1).getType());
@@ -1558,8 +1553,7 @@ public class TypeTokenTest extends TestCase {
       throws NoSuchMethodException {
     @SuppressWarnings("rawtypes") // Reflection API skew
     Constructor<Container> constructor = Container.class.getConstructor(Object.class);
-    Invokable<T, ?> invokable = new TypeToken<T>(getClass()) {}.constructor(constructor);
-    ImmutableList<Parameter> params = invokable.getParameters();
+    ImmutableList<Parameter> params = new TypeToken<T>(getClass()) {}.constructor(constructor).getParameters();
     assertEquals(1, params.size());
     assertEquals(TypeToken.of(String.class), params.get(0).getType());
   }
@@ -1871,10 +1865,10 @@ public class TypeTokenTest extends TestCase {
   }
 
   private static ImmutableSet<TypeToken<?>> arrayInterfaces() {
-    ImmutableSet.Builder<TypeToken<?>> builder = ImmutableSet.builder();
+    ImmutableSet.Builder<TypeToken<?>> $ = ImmutableSet.builder();
     for (Class<?> interfaceType : Object[].class.getInterfaces())
-		builder.add(TypeToken.of(interfaceType));
-    return builder.build();
+		$.add(TypeToken.of(interfaceType));
+    return $.build();
   }
 
   private static void assertIsPrimitive(TypeToken<?> ¢) {

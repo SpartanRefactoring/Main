@@ -28,31 +28,15 @@ public class issue713 {
   TypeDeclaration notCountingMethods = (TypeDeclaration) az
       .compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types().get(0);
 
-  @SuppressWarnings("static-method") @Test public void doesCompile() {
+  @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;
   }
 
-  @SuppressWarnings("static-method") @Test public void returnsList() {
-    getAll.publicFields(null);
-  }
-
-  @Test public void returnsNoPublic() {
-    azzert.that(getAll.publicFields(noPublic).size(), is(0));
-  }
-
-  @Test public void onePublicPass() {
-    azzert.that(getAll.publicFields(onePublic).size(), is(1));
-  }
-
-  @Test public void onlyPublicsDetected() {
-    azzert.that(getAll.publicFields(notOnlyPublic).size(), is(2));
-  }
-
-  @Test public void rightNamesReturned() {
+  @Test public void listContainsRightNames() {
     final List<String> names = new ArrayList<>();
     names.add("x");
-    names.add("ch");
-    azzert.that(getAll.publicFields(notOnlyPublic), is(names));
+    names.add("y");
+    azzert.that(getAll.publicFields(notCountingMethods), is(names));
   }
 
   @Test public void listOfPublicFields() {
@@ -63,14 +47,30 @@ public class issue713 {
     azzert.that(getAll.publicFields(notCountingMethods).size(), is(2));
   }
 
-  @Test public void listContainsRightNames() {
-    final List<String> names = new ArrayList<>();
-    names.add("x");
-    names.add("y");
-    azzert.that(getAll.publicFields(notCountingMethods), is(names));
+  @Test public void onePublicPass() {
+    azzert.that(getAll.publicFields(onePublic).size(), is(1));
   }
 
   @Test public void onlyPrivates() {
     azzert.that(getAll.publicFields(onlyPrivates).size(), is(0));
+  }
+
+  @Test public void onlyPublicsDetected() {
+    azzert.that(getAll.publicFields(notOnlyPublic).size(), is(2));
+  }
+
+  @Test @SuppressWarnings("static-method") public void returnsList() {
+    getAll.publicFields(null);
+  }
+
+  @Test public void returnsNoPublic() {
+    azzert.that(getAll.publicFields(noPublic).size(), is(0));
+  }
+
+  @Test public void rightNamesReturned() {
+    final List<String> names = new ArrayList<>();
+    names.add("x");
+    names.add("ch");
+    azzert.that(getAll.publicFields(notOnlyPublic), is(names));
   }
 }

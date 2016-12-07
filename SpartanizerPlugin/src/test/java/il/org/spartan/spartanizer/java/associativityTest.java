@@ -18,6 +18,14 @@ public class associativityTest {
     assert !associativity.isRightToLeft(az.expression(wizard.ast("(7-4)+2")));
   }
 
+  @Test public void test10() {
+    assert !associativity.isLeftToRight(az.expression(wizard.ast("(int)x")));
+  }
+
+  @Test public void test11() {
+    assert associativity.isLeftToRight(az.expression(wizard.ast("arr[9]")));
+  }
+
   @Test public void test2() {
     assert !associativity.isRightToLeft(az.expression(wizard.ast("7-(4+2)")));
   }
@@ -48,13 +56,5 @@ public class associativityTest {
 
   @Test public void test9() {
     assert !associativity.isLeftToRight(az.expression(wizard.ast("x = y == 8 ? 9 : 6")));
-  }
-
-  @Test public void test10() {
-    assert !associativity.isLeftToRight(az.expression(wizard.ast("(int)x")));
-  }
-
-  @Test public void test11() {
-    assert associativity.isLeftToRight(az.expression(wizard.ast("arr[9]")));
   }
 }

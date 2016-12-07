@@ -48,8 +48,8 @@ public class Trimmer extends AbstractGUIApplicator {
         Tipper<N> w = null;
         try {
           w = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (w == null)
           return true;
@@ -57,8 +57,8 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (s != null) {
           i.incrementAndGet();
@@ -75,14 +75,12 @@ public class Trimmer extends AbstractGUIApplicator {
 
   public String fixed(final String from) {
     for (final Document $ = new Document(from);;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
-        throw new AssertionError(x);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        monitor.logEvaluationError(this, ¢);
+        throw new AssertionError(¢);
       }
       if (!e.hasChildren())
         return $.get();
@@ -99,15 +97,15 @@ public class Trimmer extends AbstractGUIApplicator {
         Tipper<N> w = null;
         try {
           w = getTipper(n);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         if (w != null)
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
-        } catch (final Exception x) {
-          monitor.debug(this, x);
+        } catch (final Exception ¢) {
+          monitor.debug(this, ¢);
         }
         return false;
       }

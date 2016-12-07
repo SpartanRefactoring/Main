@@ -12,6 +12,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class wizardTest {
+  @Test public void astExpression() {
+    assert iz.expression(wizard.ast("x + y"));
+  }
+
   @Test public void sameOfNullAndSomething() {
     assert !wizard.same(null, e("a"));
   }
@@ -30,9 +34,5 @@ public final class wizardTest {
 
   @Test public void sameOfTwoExpressionsNotSame() {
     assert !wizard.same(e("a+b+c"), e("a+b"));
-  }
-
-  @Test public void astExpression() {
-    assert iz.expression(wizard.ast("x + y"));
   }
 }

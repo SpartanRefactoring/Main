@@ -31,16 +31,16 @@ public class Toolbox {
           final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
           monitor.debug("Found for " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException x) {
-          monitor.debug(this, x);
+        } catch (final IllegalArgumentException ¢) {
+          monitor.debug(this, ¢);
           break;
-        } catch (final Exception x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final Exception ¢) {
+          monitor.logEvaluationError(this, ¢);
           break;
         }
     }
   };
-  @SuppressWarnings({ "synthetic-access",
+  @SuppressWarnings({
       "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
         static final long serialVersionUID = -4821340356894435723L;
         {
@@ -97,7 +97,7 @@ public class Toolbox {
     return freshCopyOfAllTippers();
   }
 
-  public static Toolbox emptyToolboox() {
+  private static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
@@ -112,16 +112,13 @@ public class Toolbox {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
             new EnhancedForParameterRenameToCent(), //
+            new EnhancedForRedundantConinue(), //
             null)//
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, //
             new ThrowNotLastInBlock(), //
             null) //
-        // TODO: Marco add this tipper when it's ready
-        // .add(CastExpression.class, //
-        // new Coercion(), //
-        // null)
         .add(ClassInstanceCreation.class, //
             new ClassInstanceCreationValueTypes(), //
             null) //
@@ -138,13 +135,21 @@ public class Toolbox {
             new RemoveRedundentFor(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
+            new ForAndReturnToFor(), //
+            new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
+            new WhileNextReturnToWhile(),//
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new RemoveRedundantWhile(), //
             new WhileToForUpdaters(), //
             null) //
+        .add(SwitchStatement.class, //
+            new SwitchEmpty(), //
+            new RemoveRedundantSwitchCases(), // Issue 889
+            new RemoveRedundantSwitchBranch(), // Issue 889
+            null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -152,15 +157,23 @@ public class Toolbox {
             new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
+            // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
             new CachingPattern(), //
             new BlockInlineStatementIntoNext(), //
+            new BlockRemoveDeadVariables(), //
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
             null) //
+        .add(ArrayAccess.class, //
+            new InliningPrefix(), //
+            null) //
         .add(InfixExpression.class, //
+            new InfixPlusToMinus(), //
+            new LessEqualsToLess(), //
+            new LessToLessEquals(), //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
@@ -188,17 +201,14 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
             new SimplifyComparisionOfAdditions(), //
+            new SimplifyComparisionOfSubtractions(), //
             null)
-        // TODO: Marco add when ready
-        // .add(InstanceofExpression.class, //
-        // new InstanceOf(), //
-        // null)//
         .add(MethodDeclaration.class, //
-            new AnnotationSort(), //
+            new AnnotationSort.ofMethod(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new SetterGoFluent(), //
+            new RedundentReturnStatementInVoidTypeMethod(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -209,6 +219,9 @@ public class Toolbox {
             new EliminateEmptyFinally(), //
             new MergeCatches(), //
             new EliminateEmptyTryBlock(), //
+            null)//
+        .add(CatchClause.class, //
+            new CatchClauseRenameParameterToCent(), //
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
@@ -247,15 +260,20 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            null) //
+            new SameEvaluationConditional(), //
+            new TernaryBranchesAreOppositeBooleans(), //
+            new SameEvaluationConditional(), null) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
+            new AnnotationSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnum(), //
+            new AnnotationSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofField(), //
+            new AnnotationSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -263,13 +281,21 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnumConstant(), //
+            new AnnotationSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
         .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
+            new AnnotationSort.ofInitializer(), //
             null) //
+        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
+            new AnnotationSort.ofAnnotation(), //
+            null)
+        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
+            new AnnotationSort.ofAnnotationTypeMember(), //
+            null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //
             new DeclarationAssignment(), //
@@ -282,6 +308,7 @@ public class Toolbox {
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
+            new DeclarationFragmentInlineIntoNext(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
@@ -330,7 +357,7 @@ public class Toolbox {
   }
 
   /** Implementation */
-  @SuppressWarnings("unchecked") private final List<Tipper<? extends ASTNode>>[] implementation = //
+  @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
 
   public Toolbox() {
@@ -350,13 +377,12 @@ public class Toolbox {
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
         "\n classForNodeType = " + classToNodeType + //
         fault.done();
-    final List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
       if (¢.tipperGroup().isEnabled())
-        ts.add(¢);
+        get(nodeType.intValue()).add(¢);
     }
     return this;
   }
@@ -398,8 +424,7 @@ public class Toolbox {
     return get(¢.getNodeType());
   }
 
-  /** [[SuppressWarningsSpartan]] TODO: Apparently there is no check that ¢ is
-   * not occupied already... */
+  /** TODO: Apparently there is no check that ¢ is not occupied already... */
   public static List<String> get(final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)

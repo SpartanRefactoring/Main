@@ -42,8 +42,8 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
@@ -61,8 +61,8 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
-    } catch (final NumberFormatException e) {
-      monitor.logEvaluationError(this, e);
+    } catch (final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return $;
   }

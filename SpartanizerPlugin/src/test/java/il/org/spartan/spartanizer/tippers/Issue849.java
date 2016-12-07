@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue849 {
   @Test public void test0() {
     trimmingOf("a-1+2").gives("a+1").gives("a++").stays();

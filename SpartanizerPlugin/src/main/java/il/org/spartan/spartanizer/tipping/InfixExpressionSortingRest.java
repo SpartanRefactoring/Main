@@ -11,19 +11,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
-  @Override public final boolean prerequisite(final InfixExpression x) {
-    if (!suitable(x))
+  @Override public final boolean prerequisite(final InfixExpression ¢) {
+    if (!suitable(¢))
       return false;
-    final List<Expression> es = extract.allOperands(x);
-    return es.size() > 2 && !Tippers.mixedLiteralKind(es) && sort(chop(es));
+    final List<Expression> $ = extract.allOperands(¢);
+    return $.size() > 2 && !Tippers.mixedLiteralKind($) && sort(chop($));
   }
 
-  @Override public final Expression replacement(final InfixExpression x) {
-    final List<Expression> operands = extract.allOperands(x);
+  @Override public final Expression replacement(final InfixExpression $) {
+    final List<Expression> operands = extract.allOperands($);
     final Expression first = operands.remove(0);
     if (!sort(operands))
       return null;
     operands.add(0, first);
-    return subject.operands(operands).to(x.getOperator());
+    return subject.operands(operands).to($.getOperator());
   }
 }

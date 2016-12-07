@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Converts <code>""+"foo"</code> to <code>"foo"</code> when x is of type
@@ -30,6 +31,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
+  @SuppressWarnings("boxing")
   @Override public Expression replacement(final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
@@ -37,7 +39,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     assert es.size() > 1;
     final List<Expression> $ = new ArrayList<>();
     boolean isString = false;
-    for (int i = 0; i < es.size(); ++i) {
+    for(Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);

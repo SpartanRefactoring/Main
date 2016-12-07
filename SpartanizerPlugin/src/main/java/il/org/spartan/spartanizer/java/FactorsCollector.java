@@ -56,13 +56,13 @@ public final class FactorsCollector {
         : collectTimesPrefixDivdeExpression(¢);
   }
 
-  Void collectTimesPrefixDivdeExpression(final InfixExpression x) {
-    assert x != null;
-    assert !isLeafFactor(x);
-    assert iz.infixDivide(x);
-    final List<Expression> es = hop.operands(x);
-    addMultiplierFactor(core(first(es)));
-    return collectDividersFactors(rest(es));
+  Void collectTimesPrefixDivdeExpression(final InfixExpression ¢) {
+    assert ¢ != null;
+    assert !isLeafFactor(¢);
+    assert iz.infixDivide(¢);
+    final List<Expression> $ = hop.operands(¢);
+    addMultiplierFactor(core(first($)));
+    return collectDividersFactors(rest($));
   }
 
   private Void addDivide(final Expression x) {
@@ -106,11 +106,11 @@ public final class FactorsCollector {
     return iz.infixTimes(¢) ? collectDividePrefixTimesExpression(¢) : collectDividePrefixDivideExprssion(¢);
   }
 
-  private Void collectDividePrefixDivideExprssion(final InfixExpression x) {
-    assert x != null;
-    final List<Expression> es = hop.operands(x);
-    collectDividerFactor(core(first(es)));
-    return collectMultiplierFactors(rest(es));
+  private Void collectDividePrefixDivideExprssion(final InfixExpression ¢) {
+    assert ¢ != null;
+    final List<Expression> $ = hop.operands(¢);
+    collectDividerFactor(core(first($)));
+    return collectMultiplierFactors(rest($));
   }
 
   private Void collectDividePrefixTimesExpression(final InfixExpression ¢) {

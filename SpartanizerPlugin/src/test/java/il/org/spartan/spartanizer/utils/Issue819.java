@@ -10,8 +10,8 @@ import il.org.spartan.*;
  * @author Shimon Azulay
  * @author Idan Atias
  * @since 16-11-11 */
-@SuppressWarnings({ "static-method", "javadoc" })
 @Ignore
+@SuppressWarnings({ "static-method", "javadoc" })
 public class Issue819 {
   @Test public void str_test0() {
     azzert.that(new Str("coverage").inner(), is("coverage"));

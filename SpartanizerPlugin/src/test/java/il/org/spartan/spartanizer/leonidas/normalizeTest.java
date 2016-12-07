@@ -11,15 +11,15 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since 2016 */
 @SuppressWarnings("static-method") //
 public class normalizeTest {
+  @Test public void a() {
+    azzert.that(normalize.code("a.x.c.d.e()"), is("a.h()"));
+  }
+
   @Test public void testRenaming() {
     azzert.that(normalize.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"), is("if(a == b) return c(a, d());"));
   }
 
   @Test public void testRenamingWithCapital() {
     azzert.that(normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
-  }
-
-  @Test public void a() {
-    azzert.that(normalize.code("a.x.c.d.e()"), is("a.h()"));
   }
 }
