@@ -26,7 +26,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   }
 
   private static void startSpartan() {
-    addPartListener();
     SpartanizeableAll.go();
     RefreshAll.go();
   }
@@ -50,6 +49,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     super.start(¢);
     monitor.debug("START: gUIBatchLaconizer");
     startSpartan();
+    addPartListener();
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
