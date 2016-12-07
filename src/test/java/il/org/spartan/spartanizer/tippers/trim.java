@@ -67,8 +67,7 @@ public interface trim {
    * @author Yossi Gil
    * @since 2016 */
   @Ignore
-  @SuppressWarnings("static-method")
-  static class TEST {
+  @SuppressWarnings("static-method") class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");
     }
