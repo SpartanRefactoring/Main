@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -43,14 +41,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "ForEach pattern: conevrt to fluent API";
   }
 
-  @Override public Tip tip(final EnhancedForStatement s) {
-    return new Tip(description(s), s, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Logger.logNP(s, getClass() + "");
-        firstThatTips(tippers, s).tip(s).go(r, g);
-        // idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(s)),
-        // r);
-      }
-    };
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
+    return firstTip(tippers, ¢);
   }
 }

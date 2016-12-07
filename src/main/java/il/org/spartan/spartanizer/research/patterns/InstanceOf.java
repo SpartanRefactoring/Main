@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -15,26 +15,25 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   static final TypeChecker c = new TypeChecker();
 
   @Override public boolean canTip(final InstanceofExpression ¢) {
-    if (!(step.type(¢) instanceof SimpleType))
+    if (!(type(¢) instanceof SimpleType))
       return false;
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = m.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(step.type(¢) + "").contains(".");
+    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(type(¢) + "").contains(".");
   }
 
-  @Override public Tip tip(final InstanceofExpression ¢) {
+  @Override public Tip pattern(final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))
           addizMethod(¢, r, g);
-        Logger.logNP(¢, getClass().getSimpleName());
       }
     };
   }
 
   static String izMethodName(final InstanceofExpression ¢) {
-    return "iz" + step.type(¢);
+    return "iz" + type(¢);
   }
 
   static boolean izMethodExist(final InstanceofExpression ¢) {
@@ -51,7 +50,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
-    return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + step.type(¢) + ";}"));
+    return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
