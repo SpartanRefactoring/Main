@@ -9,11 +9,11 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Contains extends NanoPatternTipper<ForStatement> {
+public class MaxEnhanced extends NanoPatternTipper<ForStatement> {
   Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("for (int $N0 = $N1; $N0 < $N2; ++$N0)  if ($N3[$N0] == $N4)    return $N0;", "contains();", "contains"));
+      add(TipperFactory.patternTipper("for (int $N0 = 1; $N0 < $N1.$N2; ++$N0)  if ($N1[$N0] > $N3)   $N3 = $N1[$N0];", "max();", "max"));
     }
   };
 
