@@ -17,7 +17,7 @@ public interface TipperCategory {
   }
 
   interface Abbreviation extends Nominal {
-    final String label = "Abbreviation";
+    String label = "Abbreviation";
 
     @Override default String description() {
       return label;
@@ -25,7 +25,7 @@ public interface TipperCategory {
   }
 
   interface Annonimization extends Nominal {
-    final String label = "Unused arguments";
+    String label = "Unused arguments";
 
     @Override default String description() {
       return label;
@@ -42,7 +42,7 @@ public interface TipperCategory {
 
   /** Merge two syntactical elements into one, whereby achieving shorter core */
   interface Collapse extends Structural {
-    final String label = "Collapse";
+    String label = "Collapse";
 
     @Override default String description() {
       return label;
@@ -60,7 +60,7 @@ public interface TipperCategory {
   }
 
   interface Dollarization extends Nominal {
-    final String label = "Dollarization";
+    String label = "Dollarization";
 
     @Override default String description() {
       return label;
@@ -68,7 +68,7 @@ public interface TipperCategory {
   }
 
   interface EarlyReturn extends Structural {
-    final String label = "Early return";
+    String label = "Early return";
 
     @Override default String description() {
       return label;
@@ -78,7 +78,7 @@ public interface TipperCategory {
   /** Change expression to a more familiar structure, which is not necessarily
    * shorter */
   interface Idiomatic extends Structural {
-    final String label = "Idiomatic";
+    String label = "Idiomatic";
 
     @Override default String description() {
       return label;
@@ -86,7 +86,7 @@ public interface TipperCategory {
   }
 
   interface Inlining extends Structural {
-    final String label = "Structural";
+    String label = "Structural";
 
     @Override default String description() {
       return label;
@@ -94,7 +94,7 @@ public interface TipperCategory {
   }
 
   interface InVain extends Structural {
-    final String label = "NOP";
+    String label = "NOP";
 
     @Override default String description() {
       return label;
@@ -102,7 +102,7 @@ public interface TipperCategory {
   }
 
   interface Nanos extends Modular {
-    final String label = "Nanos";
+    String label = "Nanos";
 
     @Override default String description() {
       return label;
@@ -110,7 +110,7 @@ public interface TipperCategory {
   }
 
   interface ScopeReduction extends Structural {
-    final String label = "Scope reduction";
+    String label = "Scope reduction";
 
     @Override default String description() {
       return label;
@@ -119,7 +119,7 @@ public interface TipperCategory {
 
   /** Use alphabetical, or some other ordering, when order does not matter */
   interface Sorting extends Idiomatic {
-    final String label = "Sorting";
+    String label = "Sorting";
 
     @Override default String description() {
       return label;
@@ -128,7 +128,7 @@ public interface TipperCategory {
 
   /** Remove syntactical elements that do not change the code semantics */
   interface SyntacticBaggage extends Structural {// S1
-    final String label = "Syntactic baggage";
+    String label = "Syntactic baggage";
 
     @Override default String description() {
       return label;

@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.*;
  * @see StringBuilderListener demo implementation
  * @since 2.6 */
 public interface Listener {
-  final AtomicLong eventId = new AtomicLong();
+  AtomicLong eventId = new AtomicLong();
 
   /** Create a new id for an event
    * @param ¢ notification details

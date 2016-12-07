@@ -11,11 +11,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2.6 */
 public interface Linguistic {
   /** Error string, replacing null/error value. */
-  final String UNKNOWN = "???";
-  final String SEPARATOR = ", ";
-  final String DOUBLE_FORMAT = "0.00";
-  final String TRIM_SUFFIX = "...";
-  final int TRIM_THRESHOLD = 50;
+  String UNKNOWN = "???";
+  String SEPARATOR = ", ";
+  String DOUBLE_FORMAT = "0.00";
+  String TRIM_SUFFIX = "...";
+  int TRIM_THRESHOLD = 50;
 
   /** Cut string's suffix to maximal length for every row.
    * @param s JD
