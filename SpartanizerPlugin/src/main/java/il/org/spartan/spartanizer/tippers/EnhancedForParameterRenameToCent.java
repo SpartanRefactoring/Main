@@ -26,6 +26,8 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
+  // TODO: Doron Meshulam - make sure you use class `searchAncestors' and 'lisp.onlyOne` instead of this.
+  // Also, you while loop should have been a for.
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
     ASTNode p = s;
     while (!(p instanceof MethodDeclaration))
