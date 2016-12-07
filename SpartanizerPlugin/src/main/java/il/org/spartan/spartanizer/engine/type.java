@@ -184,7 +184,7 @@ public interface type {
     }
   }
 
-  static class inner {
+  class inner {
     private static String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
     static Map<String, implementation> types = new LinkedHashMap<>();
