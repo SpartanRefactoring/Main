@@ -63,7 +63,6 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (int ¢ = 1; ¢ <= on.size(); ++¢) 
           Tippers.rename(on.get(¢), nn.get(¢), d, r, g);
-        
       }
     };
   }
