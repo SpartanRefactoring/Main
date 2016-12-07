@@ -9,8 +9,8 @@ import org.junit.runners.*;
  * @author Ori Roth
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
 @Ignore
+@SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue142 {
   @Test public void disableSpartanizaionInClass() {
     trimmingOf("/***/ class A {\n" + "  /***/ int f() {\n" + "    int $ = 1;\n" + "    return $;\n" + "  }\n" + "  /***/ int g() {\n"
