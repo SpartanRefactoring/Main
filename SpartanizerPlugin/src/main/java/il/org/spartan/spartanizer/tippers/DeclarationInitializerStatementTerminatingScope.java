@@ -47,7 +47,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
-            && !iz.literal(initializer))
+            && !iz.literal(initializer)
+        || isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
@@ -85,5 +86,29 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     $.setType((ArrayType) duplicate.of(currentStatement.getType()));
     $.setInitializer(duplicate.of((ArrayInitializer) initializer));
     return $;
+  }
+
+  private static String getElTypeNameFromArrayType(Type t) {
+    if (!(t instanceof ArrayType))
+      return null;
+    ArrayType at = (ArrayType) t;
+    Type et = at.getElementType();
+    if (!(et instanceof SimpleType))
+      return null;
+    SimpleType st = (SimpleType) et;
+    Name arrayTypeName = st.getName();
+    return !(arrayTypeName instanceof SimpleName) ? null : ((SimpleName) arrayTypeName).getIdentifier();
+  }
+
+  private static boolean isArrayInitWithUnmatchingTypes(VariableDeclarationFragment f) {
+    if (!(f.getParent() instanceof VariableDeclarationStatement))
+      return false;
+    Type t = az.variableDeclarationStatement(f.getParent()).getType();
+    String elementTypeName = getElTypeNameFromArrayType(t);
+    if (!(f.getInitializer() instanceof ArrayCreation))
+      return false;
+    Type it = ((ArrayCreation) f.getInitializer()).getType();
+    String initializerElementTypeName = getElTypeNameFromArrayType(it);
+    return (elementTypeName != null) && (initializerElementTypeName != null) && !(elementTypeName.equals(initializerElementTypeName));
   }
 }
