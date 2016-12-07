@@ -20,7 +20,7 @@ public final class BlockInlineStatementIntoNext extends NanoPatternTipper<Block>
     return tipper.canTip(x);
   }
 
-  @Override public Tip tip(final Block x) {
+  @Override public Tip pattern(final Block x) {
     return tipper.tip(x);
   }
 }

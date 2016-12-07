@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 
 /** Coercion pattern <br>
@@ -35,13 +34,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(step.type(¢) + "").contains(".");
   }
 
-  @Override public Tip tip(final CastExpression ¢) {
+  @Override public Tip pattern(final CastExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(azMethodName(¢) + "(" + step.expression(¢) + ")"), g);
-        Logger.logNP(¢, getClass().getSimpleName());
       }
     };
   }
