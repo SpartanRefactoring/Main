@@ -32,7 +32,7 @@ public class LessToLessEquals extends ReplaceCurrentNode<InfixExpression> implem
             : subject.pair(¢.getLeftOperand(), az.infixExpression(¢.getRightOperand()).getLeftOperand()).to(Operator.LESS_EQUALS);
   }
 
-  private static boolean isLegalOperation(InfixExpression ¢) {
+  private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixLess(¢);
   }
 

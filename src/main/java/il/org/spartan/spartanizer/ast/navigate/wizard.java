@@ -570,13 +570,12 @@ public interface wizard {
    * @param ns1 first list to compare
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
-  @SuppressWarnings("boxing")
-  static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
+  @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
     if (ns1 == ns2)
       return true;
     if (ns1.size() != ns2.size())
       return false;
-    for(Integer ¢ : range.from(0).to(ns1.size()))
+    for (final Integer ¢ : range.from(0).to(ns1.size()))
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
