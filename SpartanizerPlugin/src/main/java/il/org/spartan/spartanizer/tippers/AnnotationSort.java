@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,12 +19,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> implements TipperCategory.Sorting {
-  private static final HashSet<String> rank0 = new HashSet<>(Arrays.asList("Deprecated"));
-  private static final HashSet<String> rank1 = new HashSet<>(Arrays.asList("Override"));
+  private static final HashSet<String> rank0 = new HashSet<>(as.list("Deprecated"));
+  private static final HashSet<String> rank1 = new HashSet<>(as.list("Override"));
   private static final HashSet<String> rank2 = new HashSet<>(
-      Arrays.asList("Documented", "FunctionalInterface", "Inherited", "Retention", "Repeatable", "SafeVarargs", "Target"));
-  private static final HashSet<String> rank3 = new HashSet<>(Arrays.asList("$USER_DEFINED_ANNOTATION$"));
-  private static final HashSet<String> rank4 = new HashSet<>(Arrays.asList("Action", "Addressing", "BindingType", "ConstructorProperties",
+      as.list("Documented", "FunctionalInterface", "Inherited", "Retention", "Repeatable", "SafeVarargs", "Target"));
+  private static final HashSet<String> rank3 = new HashSet<>(as.list("$USER_DEFINED_ANNOTATION$"));
+  private static final HashSet<String> rank4 = new HashSet<>(as.list("Action", "Addressing", "BindingType", "ConstructorProperties",
       "DescriptorKey", "FaultAction", "Generated", "HandlerChain", "InitParam", "MTOM", "MXBean", "Oneway", "PostConstruct", "PreDestroy",
       "RequestWrapper", "Resource", "Resources", "RespectBinding", "ResponseWrapper", "ServiceMode", "SOAPBinding", "SOAPMessageHandler",
       "SOAPMessageHandlers", "SupportedAnnotationTypes", "SupportedOptions", "SupportedSourceVersion", "Transient", "WebEndpoint", "WebFault",
@@ -32,9 +33,9 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       "XmlElementDecl", "XmlElementRef", "XmlElementRefs", "XmlElements", "XmlElementWrapper", "XmlEnum", "XmlEnumValue", "XmlID", "XmlIDREF",
       "XmlInlineBinaryData", "XmlJavaTypeAdapter", "XmlJavaTypeAdapters", "XmlList", "XmlMimeType", "XmlMixed", "XmlNs", "XmlRegistry",
       "XmlRootElement", "XmlSchema", "XmlSchemaType", "XmlSchemaTypes", "XmlSeeAlso", "XmlTransient", "XmlType", "XmlValue"));
-  private static final HashSet<String> rank5 = new HashSet<>(Arrays.asList("SuppressWarnings"));
-  private static final HashSet<String> rank6 = new HashSet<>(Arrays.asList("NonNull", "Nullable"));
-  private static final ArrayList<HashSet<String>> rankTable = new ArrayList<>(Arrays.asList(rank0, rank1, rank2, rank3, rank4, rank5, rank6));
+  private static final HashSet<String> rank5 = new HashSet<>(as.list("SuppressWarnings"));
+  private static final HashSet<String> rank6 = new HashSet<>(as.list("NonNull", "Nullable"));
+  private static final ArrayList<HashSet<String>> rankTable = new ArrayList<>(as.list(rank0, rank1, rank2, rank3, rank4, rank5, rank6));
 
   public static int rankAnnotation(final IExtendedModifier ¢) {
     return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
