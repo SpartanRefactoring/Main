@@ -20,7 +20,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
     return "Iniline the return into the while statement";
   }
 
-  @SuppressWarnings("boxing") @Override public Tip tip(final WhileStatement s) {
+  @Override @SuppressWarnings("boxing") public Tip tip(final WhileStatement s) {
     final int num = new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1);
     if (num > 0)
       return null;

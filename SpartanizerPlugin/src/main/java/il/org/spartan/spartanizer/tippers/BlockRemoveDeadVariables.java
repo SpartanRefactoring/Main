@@ -37,7 +37,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
     return !wizard.same($, n) ? $ : null;
   }
 
-  @SuppressWarnings("unused") @Override public String description(final Block n) {
+  @Override @SuppressWarnings("unused") public String description(final Block n) {
     return "Eliminate dead variable";
   }
 }
