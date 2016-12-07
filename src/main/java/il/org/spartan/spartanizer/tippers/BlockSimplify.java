@@ -46,12 +46,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block> implements TipperCategory.InVain {
   static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
+    final List<Statement> $ = extract.statements(s);
+    switch ($.size()) {
       case 0:
         return make.emptyStatement(s);
       case 1:
-        return duplicate.of(first(ss));
+        return duplicate.of(first($));
       default:
         return reorganizeStatement(s);
     }
@@ -88,10 +88,10 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
       case 0:
         return make.emptyStatement(b);
       case 1:
-        final Statement s = first(ss);
-        if (iz.blockEssential(s))
-          return subject.statement(s).toBlock();
-        return duplicate.of(s);
+        final Statement $ = first(ss);
+        if (iz.blockEssential($))
+          return subject.statement($).toBlock();
+        return duplicate.of($);
       default:
         return reorganizeNestedStatement(b);
     }

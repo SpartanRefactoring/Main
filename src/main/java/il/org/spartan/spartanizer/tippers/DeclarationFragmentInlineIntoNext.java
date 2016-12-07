@@ -35,7 +35,7 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
     return "Inline assignment to " + name(¢) + " with its subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
         || cannotInlineInto(nextStatement) || initializer(f) == null)
@@ -48,9 +48,9 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
     final SimpleName id = peelIdentifier(nextStatement, identifier(name(f)));
     if (id == null || anyFurtherUsage(parent, nextStatement, identifier(id)) || leftSide(nextStatement, identifier(id)) || preOrPostfix(id))
       return null;
-    r.remove(parent, g);
-    r.replace(id, !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis(), g);
-    return r;
+    $.remove(parent, g);
+    $.replace(id, !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis(), g);
+    return $;
   }
 
   private static boolean cannotInlineInto(final Statement nextStatement) {
@@ -61,8 +61,8 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
   /** @param id
    * @return */
   private static boolean preOrPostfix(final SimpleName id) {
-    final ASTNode p = parent(id);
-    return iz.prefixExpression(p) || iz.postfixExpression(p);
+    final ASTNode $ = parent(id);
+    return iz.prefixExpression($) || iz.postfixExpression($);
   }
 
   /** @param nextStatement

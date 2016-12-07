@@ -37,9 +37,9 @@ public class TippersReport {
 
   /** @param i
    * @return */
-  protected static String intToClassName(final int i) {
+  protected static String intToClassName(final int $) {
     try {
-      return name(ASTNode.nodeClassForType(i));
+      return name(ASTNode.nodeClassForType($));
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return "???";
     }

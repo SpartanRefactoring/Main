@@ -88,10 +88,10 @@ public interface iz {
     final Block b = az.block(step.parent(s));
     if (b == null)
       return false;
-    final IfStatement parent = az.ifStatement(step.parent(b));
-    return (parent == null || !wizard.same(s, az.astNode(az.block(parent.getElseStatement()).statements().get(0))) || wizard.recursiveElze(s) != null
-        || elze(parent) == null) && parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
-        && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+    final IfStatement $ = az.ifStatement(step.parent(b));
+    return ($ == null || !wizard.same(s, az.astNode(az.block($.getElseStatement()).statements().get(0))) || wizard.recursiveElze(s) != null
+        || elze($) == null) && $ != null && (elze($) == null || wizard.recursiveElze(s) == null)
+        && (elze($) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD
@@ -114,9 +114,9 @@ public interface iz {
   static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
-    final IfStatement parent = az.ifStatement(step.parent(old));
-    return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
-        && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
+    final IfStatement $ = az.ifStatement(step.parent(old));
+    return $ != null && then($) == old && (elze($) == null || elze(newIf) == null)
+        && (elze($) != null || elze(newIf) != null || blockRequiredInReplacement($, newIf));
   }
 
   static boolean bodyDeclaration(final ASTNode ¢) {
@@ -297,10 +297,10 @@ public interface iz {
   static boolean expressionOfEnhancedFor(final ASTNode child, final ASTNode parent) {
     if (child == null || parent == null || !iz.enhancedFor(parent))
       return false;
-    final EnhancedForStatement parent1 = az.enhancedFor(parent);
-    assert parent1 != null;
-    assert step.expression(parent1) != null;
-    return step.expression(parent1) == child;
+    final EnhancedForStatement $ = az.enhancedFor(parent);
+    assert $ != null;
+    assert step.expression($) != null;
+    return step.expression($) == child;
   }
 
   /** Determine whether a node is an "expression statement"
@@ -538,8 +538,8 @@ public interface iz {
    * @return <code><b>true</b></code> <em>iff</em>the parameter is a statement
    *         which is last in its method */
   static boolean lastInMethod(final Statement s) {
-    final Block b = az.block(parent(s));
-    return last(s, statements(b)) && iz.methodDeclaration(parent(b));
+    final Block $ = az.block(parent(s));
+    return last(s, statements($)) && iz.methodDeclaration(parent($));
   }
 
   static boolean leftOfAssignment(final Expression ¢) {
@@ -560,24 +560,24 @@ public interface iz {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
-    final String token = numberLiteral.getToken();
-    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo(token, d);
+    final String $ = numberLiteral.getToken();
+    return NumericLiteralClassifier.of($) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo($, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
-    final String token = numberLiteral.getToken();
-    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo(token, i);
+    final String $ = numberLiteral.getToken();
+    return NumericLiteralClassifier.of($) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo($, i);
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
-    final String token = numberLiteral.getToken();
-    return NumericLiteralClassifier.of(token) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo(token, l);
+    final String $ = numberLiteral.getToken();
+    return NumericLiteralClassifier.of($) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo($, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
@@ -978,27 +978,27 @@ public interface iz {
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
    *         false otherwise */
-  default boolean parsesTo(final String token, final double d) {
+  default boolean parsesTo(final String $, final double d) {
     try {
-      return Double.parseDouble(token) == d;
+      return Double.parseDouble($) == d;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
 
-  default boolean parsesTo(final String token, final int i) {
+  default boolean parsesTo(final String $, final int i) {
     try {
-      return Integer.parseInt(token) == i;
+      return Integer.parseInt($) == i;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
 
-  default boolean parsesTo(final String token, final long l) {
+  default boolean parsesTo(final String $, final long l) {
     try {
-      return Long.parseLong(token) == l;
+      return Long.parseLong($) == l;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(box(l), ¢);
       return false;

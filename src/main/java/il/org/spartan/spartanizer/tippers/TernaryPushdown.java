@@ -28,9 +28,9 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;
-    final Expression then = core(x.getThenExpression());
+    final Expression $ = core(x.getThenExpression());
     final Expression elze = core(x.getElseExpression());
-    return wizard.same(then, elze) ? null : pushdown(x, then, elze);
+    return wizard.same($, elze) ? null : pushdown(x, $, elze);
   }
 
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {

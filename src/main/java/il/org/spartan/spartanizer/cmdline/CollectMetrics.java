@@ -70,9 +70,9 @@ public final class CollectMetrics {
       go(¢);
   }
 
-  private static CSVStatistics init(final String outputDir, final String property) {
+  private static CSVStatistics init(final String $, final String property) {
     try {
-      return new CSVStatistics(outputDir, property);
+      return new CSVStatistics($, property);
     } catch (final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
@@ -115,8 +115,8 @@ public final class CollectMetrics {
   }
 
   private static CompilationUnit spartanize(final String javaCode) {
-    final String spartanized = new Trimmer().fixed(javaCode);
-    output.put("Characters", spartanized.length());
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
+    final String $ = new Trimmer().fixed(javaCode);
+    output.put("Characters", $.length());
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
   }
 }

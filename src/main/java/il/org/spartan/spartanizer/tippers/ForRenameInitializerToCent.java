@@ -34,23 +34,23 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
   @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
     if (x == null)
       return null;
-    final ForStatement forStatement = az.forStatement(parent(x));
-    if (forStatement == null)
+    final ForStatement $ = az.forStatement(parent(x));
+    if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
     if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
       return null;
-    final Statement body = forStatement.getBody();
-    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !iz.variableUsedInFor(forStatement, n))
+    final Statement body = $.getBody();
+    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !iz.variableUsedInFor($, n))
       return null;
     if (m != null) {
       m.exclude(body);
-      m.exclude(forStatement);
+      m.exclude($);
     }
     final SimpleName ¢ = x.getAST().newSimpleName("¢");
     return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, forStatement, r, g);
+        Tippers.rename(n, ¢, $, r, g);
       }
     };
   }

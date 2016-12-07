@@ -152,8 +152,8 @@ public interface hop {
     final Statement previous = previousStatementInBody(current);
     if (previous == null)
       return null;
-    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
+    final VariableDeclarationStatement $ = az.variableDeclrationStatement(previous);
+    return $ == null ? null : findFirst.elementOf(step.fragments($));
   }
 
   /** @param ¢ JD
@@ -169,8 +169,8 @@ public interface hop {
     final Statement previous = previousStatementInBody(current);
     if (previous == null)
       return null;
-    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
+    final VariableDeclarationStatement $ = az.variableDeclrationStatement(previous);
+    return $ == null ? null : findFirst.elementOf(step.fragments($));
   }
 
   /** @param s current {@link Statement}.
@@ -181,8 +181,8 @@ public interface hop {
     final Block b = az.block(s.getParent());
     if (b == null)
       return null;
-    final List<Statement> statements = statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
+    final List<Statement> $ = statements(b);
+    return $.indexOf(s) < 1 ? null : $.get($.indexOf(s) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {

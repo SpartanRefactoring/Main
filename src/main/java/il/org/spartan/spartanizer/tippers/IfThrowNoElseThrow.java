@@ -41,10 +41,10 @@ public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final Expression e1 = getThrowExpression(then(s));
-    if (e1 == null)
+    final Expression $ = getThrowExpression(then(s));
+    if ($ == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
-    return e2 == null ? null : Tippers.replaceTwoStatements(r, s, subject.operand(subject.pair(e1, e2).toCondition(s.getExpression())).toThrow(), g);
+    return e2 == null ? null : Tippers.replaceTwoStatements(r, s, subject.operand(subject.pair($, e2).toCondition(s.getExpression())).toThrow(), g);
   }
 }

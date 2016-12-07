@@ -23,8 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 16-11-2016 */
 public final class EliminateEmptyFinally extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Collapse {
   @Override public boolean prerequisite(final TryStatement s) {
-    final Block b = s.getFinally();
-    return b != null && b.statements().isEmpty() && !s.catchClauses().isEmpty();
+    final Block $ = s.getFinally();
+    return $ != null && $.statements().isEmpty() && !s.catchClauses().isEmpty();
   }
 
   @Override public ASTNode replacement(final TryStatement ¢) {

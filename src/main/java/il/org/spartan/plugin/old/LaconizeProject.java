@@ -69,11 +69,11 @@ public final class LaconizeProject extends BaseHandler {
     manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
-    final int finalCount = countTips();
+    final int $ = countTips();
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
-            + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - finalCount) + "\n" + "Tips before: "
-            + initialCount + "\n" + "Tips after: " + finalCount + "\n");
+            + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: "
+            + initialCount + "\n" + "Tips after: " + $ + "\n");
   }
 
   final IWorkbench workench = PlatformUI.getWorkbench();
@@ -88,7 +88,7 @@ public final class LaconizeProject extends BaseHandler {
     final Trimmer t = new Trimmer();
     final IProgressService ps = workench.getProgressService();
     final AtomicInteger passNum = new AtomicInteger(passNumber + 1);
-    final AtomicBoolean cancelled = new AtomicBoolean(false);
+    final AtomicBoolean $ = new AtomicBoolean(false);
     try {
       ps.run(true, true, pm -> {
         pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
@@ -96,7 +96,7 @@ public final class LaconizeProject extends BaseHandler {
         int n = 0;
         for (final ICompilationUnit ¢ : todo) {
           if (pm.isCanceled()) {
-            cancelled.set(true);
+            $.set(true);
             break;
           }
           pm.worked(1);
@@ -114,7 +114,7 @@ public final class LaconizeProject extends BaseHandler {
       monitor.logEvaluationError(this, ¢);
       return true;
     }
-    return cancelled.get() || todo.isEmpty();
+    return $.get() || todo.isEmpty();
   }
 
   public void start() {

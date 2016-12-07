@@ -21,11 +21,11 @@ public enum TESTUtils {
   static final String WHITES = "(?m)\\s+";
 
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert $ != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(t, u, d).get();
+    return TESTUtils.rewrite(t, $, d).get();
   }
 
   public static void assertNoChange(final String input) {
@@ -68,9 +68,9 @@ public enum TESTUtils {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
     assert statement != null;
-    final ASTNode n = makeAST.STATEMENTS.from(statement);
-    assert n != null;
-    return extract.singleStatement(n);
+    final ASTNode $ = makeAST.STATEMENTS.from(statement);
+    assert $ != null;
+    return extract.singleStatement($);
   }
 
   public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {

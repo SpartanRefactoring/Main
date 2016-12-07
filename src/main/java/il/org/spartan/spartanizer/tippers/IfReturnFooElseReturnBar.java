@@ -36,9 +36,9 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
   }
 
   @Override public Statement replacement(final IfStatement s) {
-    final Expression condition = s.getExpression();
+    final Expression $ = s.getExpression();
     final Expression then = extract.returnExpression(then(s));
     final Expression elze = extract.returnExpression(elze(s));
-    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
+    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition($)).toReturn();
   }
 }

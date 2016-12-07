@@ -207,11 +207,11 @@ public interface Environment {
       String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
         // As of JSL3, AnonymousClassDeclaration's parent can be either
         // ClassInstanceCreation or EnumConstantDeclaration
-        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
-        if (n instanceof ClassInstanceCreation)
-          return az.classInstanceCreation(n).getType() + "";
-        assert n instanceof EnumConstantDeclaration;
-        return az.enumConstantDeclaration(n).getName() + "";
+        @SuppressWarnings("hiding") final ASTNode $ = d.getParent();
+        if ($ instanceof ClassInstanceCreation)
+          return az.classInstanceCreation($).getType() + "";
+        assert $ instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration($).getName() + "";
       }
 
       Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {

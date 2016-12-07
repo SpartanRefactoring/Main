@@ -47,17 +47,17 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement> imp
     return tip(¢, null);
   }
 
-  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
-    if (!iz.vacuousElse(s))
+  @Override public Tip tip(final IfStatement $, final ExclusionManager exclude) {
+    if (!iz.vacuousElse($))
       return null;
-    final IfStatement then = az.ifStatement(extract.singleThen(s));
+    final IfStatement then = az.ifStatement(extract.singleThen($));
     if (then == null || !iz.vacuousElse(then))
       return null;
     if (exclude != null)
       exclude.exclude(then);
-    return new Tip(description(s), s, this.getClass()) {
+    return new Tip(description($), $, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        collapse(Tippers.blockIfNeeded(s, r, g), r, g);
+        collapse(Tippers.blockIfNeeded($, r, g), r, g);
       }
     };
   }

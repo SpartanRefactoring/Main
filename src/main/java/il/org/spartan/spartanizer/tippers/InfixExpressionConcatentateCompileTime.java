@@ -38,23 +38,23 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
-    final List<Expression> operands = extract.allOperands(x);
-    assert operands.size() >= 2;
+    final List<Expression> $ = extract.allOperands(x);
+    assert $.size() >= 2;
     boolean isChanged = false;
-    for (int i = 0; i < operands.size() - 1;)
-      if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
+    for (int i = 0; i < $.size() - 1;)
+      if ($.get(i).getNodeType() != ASTNode.STRING_LITERAL || $.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
         ++i;
       else {
         isChanged = true;
         final StringLiteral l = x.getAST().newStringLiteral();
-        l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());
-        operands.remove(i);
-        operands.remove(i);
-        operands.add(i, l);
+        l.setLiteralValue(((StringLiteral) $.get(i)).getLiteralValue() + ((StringLiteral) $.get(i + 1)).getLiteralValue());
+        $.remove(i);
+        $.remove(i);
+        $.add(i, l);
       }
     if (!isChanged)
       return null;
-    assert !operands.isEmpty();
-    return operands.size() <= 1 ? first(operands) : subject.operands(operands).to(wizard.PLUS2);
+    assert !$.isEmpty();
+    return $.size() <= 1 ? first($) : subject.operands($).to(wizard.PLUS2);
   }
 }

@@ -146,9 +146,9 @@ public enum eclipse {
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
-  static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
+  static ASTNode getNodeByMarker(final ICompilationUnit $, final IMarker m) {
     try {
-      return find(u, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
+      return find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException ¢) {
       monitor.logEvaluationError(¢);
     }
@@ -214,15 +214,15 @@ public enum eclipse {
   }
 
   static ITextSelection selectedText() {
-    final ISelection s = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite().getSelectionProvider()
+    final ISelection $ = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorSite().getSelectionProvider()
         .getSelection();
-    return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
+    return !($ instanceof ITextSelection) ? null : (ITextSelection) $;
   }
 
-  public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+  public boolean isNodeOutsideMarker(final ASTNode $, final IMarker m) {
     try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+      return $.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+          || $.getLength() + $.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
       return true;
@@ -239,9 +239,9 @@ public enum eclipse {
     return null;
   }
 
-  List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
+  List<ICompilationUnit> compilationUnits(final ICompilationUnit $) {
     try {
-      return compilationUnits(u, nullProgressMonitor);
+      return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
       return null;

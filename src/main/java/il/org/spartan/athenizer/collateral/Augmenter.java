@@ -144,8 +144,8 @@ public class Augmenter implements Application {
   static boolean inRange(final ASTNode n, final ITextSelection s) {
     if (n == null || s == null)
       return false;
-    final int p = n.getStartPosition();
-    return p >= s.getOffset() && p < s.getLength() + s.getOffset();
+    final int $ = n.getStartPosition();
+    return $ >= s.getOffset() && $ < s.getLength() + s.getOffset();
   }
 
   /** Determines whether a block should not be collateralized, i.e. when it has

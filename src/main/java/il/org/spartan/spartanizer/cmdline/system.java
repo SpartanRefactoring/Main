@@ -12,14 +12,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface system {
-  static Process dumpOutput(final Process p) {
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+  static Process dumpOutput(final Process $) {
+    try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, p + "");
+      monitor.infoIOException(¢, $ + "");
     }
-    return p;
+    return $;
   }
 
   static String essenced(final String fileName) {

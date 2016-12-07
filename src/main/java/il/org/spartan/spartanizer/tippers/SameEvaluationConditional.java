@@ -25,11 +25,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 27-11-2016 */
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final ConditionalExpression x) {
-    final InfixExpression cond = az.infixExpression(x.getExpression());
-    return !iz.infixEquals(cond)
-        || !wizard.same(x.getThenExpression(), cond.getLeftOperand()) && !wizard.same(x.getThenExpression(), cond.getRightOperand())
-        || !wizard.same(x.getElseExpression(), cond.getLeftOperand()) && !wizard.same(x.getElseExpression(), cond.getRightOperand())
-        || !sideEffects.free(cond.getLeftOperand()) || !sideEffects.free(cond.getRightOperand()) ? null : duplicate.of(x.getElseExpression());
+    final InfixExpression $ = az.infixExpression(x.getExpression());
+    return !iz.infixEquals($)
+        || !wizard.same(x.getThenExpression(), $.getLeftOperand()) && !wizard.same(x.getThenExpression(), $.getRightOperand())
+        || !wizard.same(x.getElseExpression(), $.getLeftOperand()) && !wizard.same(x.getElseExpression(), $.getRightOperand())
+        || !sideEffects.free($.getLeftOperand()) || !sideEffects.free($.getRightOperand()) ? null : duplicate.of(x.getElseExpression());
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
