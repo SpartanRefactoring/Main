@@ -9,12 +9,10 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Contains extends NanoPatternTipper<ForStatement> {
+public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
-    {
-      add(TipperFactory.patternTipper("for (int $N0 = $N1; $N0 < $N2; ++$N0)  if ($N3[$N0] == $N4)    return $N0;", "contains();", "contains"));
-    }
+    {}
   };
 
   @Override public boolean canTip(final ForStatement ¢) {
@@ -26,6 +24,6 @@ public class Contains extends NanoPatternTipper<ForStatement> {
   }
 
   @Override public Tip pattern(final ForStatement ¢) {
-    return firstTip(tippers, ¢);
+    return firstThatTips(tippers, ¢).tip(¢);
   }
 }

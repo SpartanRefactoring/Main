@@ -25,18 +25,10 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   }
 
   @Override public boolean canTip(final Assignment x) {
-    for (final UserDefinedTipper<Assignment> ¢ : tippers)
-      if (¢.canTip(x))
-        return true;
-    return false;
+    return anyTips(tippers, x);
   }
 
-  @Override public Tip tip(final Assignment x) {
-    Logger.logNP(x, getClass().getSimpleName());
-    for (final UserDefinedTipper<Assignment> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
-    assert false;
-    return null;
+  @Override public Tip pattern(final Assignment x) {
+    return firstTip(tippers, x);
   }
 }
