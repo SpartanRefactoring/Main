@@ -7,8 +7,8 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue020 {
   /** Correct way of trimming does not change */

@@ -1071,4 +1071,10 @@ public interface iz {
     return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean thisExpression(final Expression ¢) {
+    return ¢ instanceof ThisExpression;
+  }
 }
