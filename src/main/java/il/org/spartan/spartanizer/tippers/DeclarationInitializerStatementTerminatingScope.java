@@ -91,12 +91,10 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   private static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
-    final ArrayType at = (ArrayType) t;
-    final Type et = at.getElementType();
+    final Type et = ((ArrayType) t).getElementType();
     if (!(et instanceof SimpleType))
       return null;
-    final SimpleType st = (SimpleType) et;
-    final Name $ = st.getName();
+    final Name $ = ((SimpleType) et).getName();
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
