@@ -45,10 +45,10 @@ public enum analyze {
     return $ != null ? $ : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
 
-  private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration t) {
-    if (!iz.typeDeclaration(t)) // TODO: Marco support all types of types
+  private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
+    if (!iz.typeDeclaration(d)) // TODO: Marco support all types of types
       return null;
-    for (final FieldDeclaration $ : step.fieldDeclarations(az.typeDeclaration(t)))
+    for (final FieldDeclaration $ : step.fieldDeclarations(az.typeDeclaration(d)))
       for (final VariableDeclarationFragment ¢ : step.fragments($))
         if ((step.name(¢) + "").equals(n + ""))
           return step.type($) + "";
