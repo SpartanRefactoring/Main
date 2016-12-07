@@ -24,15 +24,15 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
   private static final HashSet<String> rank2 = new HashSet<>(
       as.list("Documented", "FunctionalInterface", "Inherited", "Retention", "Repeatable", "SafeVarargs", "Target"));
   private static final HashSet<String> rank3 = new HashSet<>(as.list("$USER_DEFINED_ANNOTATION$"));
-  private static final HashSet<String> rank4 = new HashSet<>(as.list("Action", "Addressing", "BindingType", "ConstructorProperties",
-      "DescriptorKey", "FaultAction", "Generated", "HandlerChain", "InitParam", "MTOM", "MXBean", "Oneway", "PostConstruct", "PreDestroy",
-      "RequestWrapper", "Resource", "Resources", "RespectBinding", "ResponseWrapper", "ServiceMode", "SOAPBinding", "SOAPMessageHandler",
-      "SOAPMessageHandlers", "SupportedAnnotationTypes", "SupportedOptions", "SupportedSourceVersion", "Transient", "WebEndpoint", "WebFault",
-      "WebMethod", "WebParam", "WebResult", "WebService", "WebServiceClient", "WebServiceFeatureAnnotation", "WebServiceProvider", "WebServiceRef",
-      "WebServiceRefs", "XmlAccessorOrder", "XmlAccessorType", "XmlAnyAttribute", "XmlAnyElement", "XmlAttachmentRef", "XmlAttribute", "XmlElement",
-      "XmlElementDecl", "XmlElementRef", "XmlElementRefs", "XmlElements", "XmlElementWrapper", "XmlEnum", "XmlEnumValue", "XmlID", "XmlIDREF",
-      "XmlInlineBinaryData", "XmlJavaTypeAdapter", "XmlJavaTypeAdapters", "XmlList", "XmlMimeType", "XmlMixed", "XmlNs", "XmlRegistry",
-      "XmlRootElement", "XmlSchema", "XmlSchemaType", "XmlSchemaTypes", "XmlSeeAlso", "XmlTransient", "XmlType", "XmlValue"));
+  private static final HashSet<String> rank4 = new HashSet<>(as.list("Action", "Addressing", "BindingType", "ConstructorProperties", "DescriptorKey",
+      "FaultAction", "Generated", "HandlerChain", "InitParam", "MTOM", "MXBean", "Oneway", "PostConstruct", "PreDestroy", "RequestWrapper",
+      "Resource", "Resources", "RespectBinding", "ResponseWrapper", "ServiceMode", "SOAPBinding", "SOAPMessageHandler", "SOAPMessageHandlers",
+      "SupportedAnnotationTypes", "SupportedOptions", "SupportedSourceVersion", "Transient", "WebEndpoint", "WebFault", "WebMethod", "WebParam",
+      "WebResult", "WebService", "WebServiceClient", "WebServiceFeatureAnnotation", "WebServiceProvider", "WebServiceRef", "WebServiceRefs",
+      "XmlAccessorOrder", "XmlAccessorType", "XmlAnyAttribute", "XmlAnyElement", "XmlAttachmentRef", "XmlAttribute", "XmlElement", "XmlElementDecl",
+      "XmlElementRef", "XmlElementRefs", "XmlElements", "XmlElementWrapper", "XmlEnum", "XmlEnumValue", "XmlID", "XmlIDREF", "XmlInlineBinaryData",
+      "XmlJavaTypeAdapter", "XmlJavaTypeAdapters", "XmlList", "XmlMimeType", "XmlMixed", "XmlNs", "XmlRegistry", "XmlRootElement", "XmlSchema",
+      "XmlSchemaType", "XmlSchemaTypes", "XmlSeeAlso", "XmlTransient", "XmlType", "XmlValue"));
   private static final HashSet<String> rank5 = new HashSet<>(as.list("SuppressWarnings"));
   private static final HashSet<String> rank6 = new HashSet<>(as.list("NonNull", "Nullable"));
   private static final ArrayList<HashSet<String>> rankTable = new ArrayList<>(as.list(rank0, rank1, rank2, rank3, rank4, rank5, rank6));
