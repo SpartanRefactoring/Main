@@ -20,9 +20,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @author Doron Meshulam */
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
-//  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
-//    return false;
-//  }
+
+  @Override protected boolean prerequisite(final MethodDeclaration __) {
+    return false;
+  }
 
   @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";

@@ -7,9 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,6 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author kobybs
+ * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> implements TipperCategory.Sorting {
   private static final HashSet<String> rank0 = new HashSet<>(Arrays.asList("Deprecated"));
@@ -42,8 +40,9 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
   }
 
-  @SuppressWarnings("boxing") public static int rankAnnotation(final String annotationName) {
-    for (final Integer $ : range.from(0).to(rankTable.size()))
+  @SuppressWarnings("boxing")
+  public static int rankAnnotation(final String annotationName) {
+    for(Integer $ : range.from(0).to(rankTable.size()))
       if (rankTable.get($).contains(annotationName))
         return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
@@ -59,18 +58,44 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
-  }
-
+  }/*
+  @SuppressWarnings("unchecked")
+  void sortElements(final List<? extends IExtendedModifier> elements, ListRewrite r) {
+    if (elements.isEmpty())
+      return;
+    final List myCopy = new ArrayList();
+    myCopy.addAll(elements);
+    Collections.sort(myCopy, comp);
+    for (int i = 0; i < elements.size(); ++i) {
+      ASTNode oldNode = (ASTNode) elements.get(i);
+      ASTNode newNode = (ASTNode) myCopy.get(i);
+      if (oldNode != newNode) {
+        r.replace(oldNode, $.createMoveTarget(newNode), g);
+      }
+    }*/
   @Override public Tip tip(final N n) {
-    final ASTNode x = replacement(n);
-    return x == null || az.bodyDeclaration(x) == null ? null : new Tip(description(n), n, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(n, x, g);
+    if (n == null || az.bodyDeclaration(n) == null)
+      return null;
+    final List<Annotation> elements = extract.annotations(n);
+    if (elements == null || elements.isEmpty())
+      return null;
+    final List<Annotation> myCopy = new ArrayList<>();
+    myCopy.addAll(elements);
+    Collections.sort(myCopy, comp);
+    return myCopy.equals(elements) ? null : new Tip(description(n), n, this.getClass()) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+        for (int i = 0; i < elements.size(); ++i) {
+          ASTNode oldNode = elements.get(i);
+          ASTNode newNode = myCopy.get(i);
+          if (oldNode != newNode)
+            l.replace(oldNode, r.createMoveTarget(newNode), g);
+        }
       }
     };
   }
-
-  public ASTNode replacement(final N d) {
+/*
+ public ASTNode replacement(final N d) {
     final N $ = duplicate.of(d);
     final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
     final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
@@ -79,7 +104,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     extendedModifiers($).addAll(ms);
     return !wizard.same($, d) ? $ : null;
   }
-
+*/
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";

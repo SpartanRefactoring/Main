@@ -15,8 +15,8 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
   static Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("if($X == null) return null;", "If.Null($X).returnsNull();", ""));
-      add(TipperFactory.patternTipper("if(null == $X) return null;", "If.Null($X).returnsNull();", ""));
+      add(TipperFactory.patternTipper("if($X == null) return null;", "If.Null($X).returnsNull();", "Go fluent"));
+      add(TipperFactory.patternTipper("if(null == $X) return null;", "If.Null($X).returnsNull();", "Go fluent"));
     }
   };
 
@@ -28,8 +28,7 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(final IfStatement ¢) {
-    Logger.logNP(¢, "IfNullReturnNull");
-    return firstThatTips(tippers, ¢).tip(¢);
+  @Override public Tip pattern(final IfStatement ¢) {
+    return firstTip(tippers, ¢);
   }
 }
