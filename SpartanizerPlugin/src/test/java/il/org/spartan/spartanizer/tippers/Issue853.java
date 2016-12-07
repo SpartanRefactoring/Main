@@ -7,7 +7,8 @@ import org.junit.*;
 
 /** @author Dan Abramovich
  * @since 28-11-2016 */
-@Ignore @SuppressWarnings("static-method")
+@Ignore
+@SuppressWarnings("static-method")
 public class Issue853 {
   @Test public void test0() {
     trimmingOf("for(int ¢ = 3; ¢ < 10; ++¢){++x;}").withTipper(ForStatement.class, new ReplaceForWithRange())

@@ -26,11 +26,10 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  // TODO: Doron Meshulam - make sure you use class `searchAncestors' and 'lisp.onlyOne` instead of this.
+  // TODO: Doron Meshulam - make sure you use class `searchAncestors' and
+  // 'lisp.onlyOne` instead of this.
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    
-    ASTNode p = searchAncestors.forClass(MethodDeclaration.class).from(s);
-    
+    final ASTNode p = searchAncestors.forClass(MethodDeclaration.class).from(s);
     if (p instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p;
       final List<SingleVariableDeclaration> l = parameters(pp);
@@ -42,7 +41,6 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
           return null;
       }
     }
-    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
