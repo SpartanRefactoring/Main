@@ -266,7 +266,7 @@ public enum haz {
 
   /** @param ¢ JD
    * @return */
-  public static boolean expression(MethodInvocation ¢) {
+  public static boolean expression(final MethodInvocation ¢) {
     return ¢ != null && step.expression(¢) != null;
   }
 }

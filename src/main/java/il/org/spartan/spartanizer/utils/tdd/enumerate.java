@@ -105,7 +105,7 @@ public enum enumerate {
     // d.accept(new ASTVisitor() {
     //
     // });
-    for (Integer ¢ : range.from(0).to(arr.length))
+    for (final Integer ¢ : range.from(0).to(arr.length))
       arr[¢] = false;
     for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {

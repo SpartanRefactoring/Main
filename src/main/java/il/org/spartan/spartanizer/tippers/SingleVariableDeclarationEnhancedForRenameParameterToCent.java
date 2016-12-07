@@ -32,10 +32,10 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
     final EnhancedForStatement s = (EnhancedForStatement) p;
-    ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from(s);
     if (p1 instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p1;
-      List<SingleVariableDeclaration> l = parameters(pp);
+      final List<SingleVariableDeclaration> l = parameters(pp);
       if (l.size() == 1) {
         final SingleVariableDeclaration parameter = onlyOne(l);
         final SimpleName sn = parameter.getName();

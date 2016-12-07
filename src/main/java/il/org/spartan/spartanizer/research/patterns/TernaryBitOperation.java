@@ -28,11 +28,11 @@ public class TernaryBitOperation extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(ConditionalExpression ¢) {
+  @Override public Tip tip(final ConditionalExpression ¢) {
     return firstThatTips(tippers, ¢).tip(¢);
   }
 
-  @Override public String description(@SuppressWarnings("unused") ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return null;
   }
 }

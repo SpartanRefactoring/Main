@@ -62,16 +62,16 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private static boolean rewrite(final ASTRewrite r, final List<ASTNode> ASTNodesList, final TextEditGroup __) {
     if (ASTNodesList.isEmpty())
       return false;
-    for (ASTNode statement : ASTNodesList) {
-      List<ReturnStatement> badcode = new ArrayList<>();
+    for (final ASTNode statement : ASTNodesList) {
+      final List<ReturnStatement> badcode = new ArrayList<>();
       statement.accept(new ASTVisitor() {
-        @Override public boolean visit(ReturnStatement node) {
+        @Override public boolean visit(final ReturnStatement node) {
           badcode.add(node);
           return true;
         }
       });
-      for (ReturnStatement rStatement : badcode) {
-        ASTNode change = (new TernaryExpander()).replacement(rStatement);
+      for (final ReturnStatement rStatement : badcode) {
+        final ASTNode change = new TernaryExpander().replacement(rStatement);
         if (change != null) {
           r.replace(rStatement, change, __);
           return true;
@@ -81,7 +81,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     return false;
   }
 
-  public static void commitChanges(final WrappedCompilationUnit u, List<ASTNode> ns) {
+  public static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
@@ -97,13 +97,13 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private static void inflate() {
-    List<ASTNode> ss = new ArrayList<>();
-    WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
+    final List<ASTNode> ss = new ArrayList<>();
+    final WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
     wcu.compilationUnit.accept(new ASTVisitor() {
-      @Override public boolean visit(ReturnStatement s) {
+      @Override public boolean visit(final ReturnStatement s) {
         wizard.ast(Selection.Util.current().textSelection.getText()).accept(new ASTVisitor() {
-          @Override public boolean visit(ReturnStatement sInner) {
-            if (!(s + "").equals((sInner + "")))
+          @Override public boolean visit(final ReturnStatement sInner) {
+            if (!(s + "").equals(sInner + ""))
               return false;
             ss.add(s);
             return true;

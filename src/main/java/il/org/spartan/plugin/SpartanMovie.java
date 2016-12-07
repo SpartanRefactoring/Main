@@ -159,7 +159,7 @@ public class SpartanMovie extends AbstractHandler {
    * @author Ori Roth */
   @SuppressWarnings("boxing") static IMarker getFirstMarker(final IMarker[] ms) {
     int $ = 0;
-    for (Integer i : range.from(0).to(ms.length))
+    for (final Integer i : range.from(0).to(ms.length))
       try {
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
