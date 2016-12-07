@@ -61,12 +61,12 @@ public enum make {
     return ¢.getAST().newNullLiteral();
   }
 
-  public static Expression minus(final Expression x) {
-    final PrefixExpression $ = az.prefixExpression(x);
-    return $ == null ? minus(x, az.numberLiteral(x))
+  public static Expression minus(final Expression ¢) {
+    final PrefixExpression $ = az.prefixExpression(¢);
+    return $ == null ? minus(¢, az.numberLiteral(¢))
         : $.getOperator() == wizard.MINUS1 ? $.getOperand() //
             : $.getOperator() == wizard.PLUS1 ? subject.operand($.getOperand()).to(wizard.MINUS1)//
-                : x;
+                : ¢;
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter

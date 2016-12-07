@@ -32,19 +32,19 @@ public class generalize {
 
   public static String generalizeIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
-    final Document $ = new Document(ASTutils.wrapCode(s));
+    final Document document = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource($.get().toCharArray());
+    parser.setSource(document.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final StringLiteral $) {
+      @Override public boolean visit(final StringLiteral node) {
         final StringLiteral lit = ast.newStringLiteral();
         lit.setLiteralValue(renderIdentifier("L"));
-        r.replace($, lit, null);
-        return super.visit($);
+        r.replace(node, lit, null);
+        return super.visit(node);
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final ImportDeclaration __) {
@@ -55,12 +55,12 @@ public class generalize {
         return false;
       }
 
-      @Override public boolean visit(final SimpleName $) {
-        final String name = ((Name) $).getFullyQualifiedName();
+      @Override public boolean visit(final SimpleName node) {
+        final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
-        r.replace($, ast.newSimpleName(renaming.get(name)), null);
-        return super.visit($);
+        r.replace(node, ast.newSimpleName(renaming.get(name)), null);
+        return super.visit(node);
       }
       // @Override public boolean visit(final QualifiedName node) {
       // final String name = ((Name) node).getFullyQualifiedName();
@@ -71,10 +71,10 @@ public class generalize {
       // }
     });
     try {
-      r.rewriteAST($, null).apply($);
+      r.rewriteAST(document, null).apply(document);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       ¢.printStackTrace();
     }
-    return ASTutils.extractCode(s, $);
+    return ASTutils.extractCode(s, document);
   }
 }

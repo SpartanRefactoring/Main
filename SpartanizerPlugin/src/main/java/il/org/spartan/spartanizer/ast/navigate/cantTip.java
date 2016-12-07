@@ -37,8 +37,8 @@ public enum cantTip {
     return true;
   }
 
-  public static boolean forRenameInitializerToCent(final ForStatement s) {
-    final VariableDeclarationExpression $ = az.variableDeclarationExpression(s);
+  public static boolean forRenameInitializerToCent(final ForStatement ¢) {
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
     return $ == null || new ForRenameInitializerToCent().cantTip($);
   }
 

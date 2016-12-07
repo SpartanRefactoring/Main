@@ -37,9 +37,9 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block> implements T
     return "Remove redundant curly braces.";
   }
 
-  @Override public Statement replacement(final Block b) {
-    final ASTNode $ = parent(b);
+  @Override public Statement replacement(final Block ¢) {
+    final ASTNode $ = parent(¢);
     return !($ instanceof Statement) || iz.nodeTypeIn($, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
-        : replacement(onlyOne(statements(b)));
+        : replacement(onlyOne(statements(¢)));
   }
 }
