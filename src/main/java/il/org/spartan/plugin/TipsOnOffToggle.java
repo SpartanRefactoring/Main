@@ -6,6 +6,7 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** A command handler which toggles the spartanization nature
@@ -15,10 +16,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
 public final class TipsOnOffToggle extends AbstractHandler {
+  @SuppressWarnings("boxing")
   private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
-    for (int i = 0; i < natures.length; ++i)
+    for(Integer i : range.from(0).to(natures.length))
       if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);
@@ -32,8 +34,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
 
   public static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
-    final String[] natures = description.getNatureIds();
-    description.setNatureIds(append(natures, Nature.NATURE_ID));
+    description.setNatureIds(append(description.getNatureIds(), Nature.NATURE_ID));
     p.setDescription(description, null);
   }
 
@@ -55,14 +56,14 @@ public final class TipsOnOffToggle extends AbstractHandler {
       return null;
     try {
       toggleNature(p, !p.hasNature(Nature.NATURE_ID));
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
     }
     return null;
   }
 
   private static IProject getProject() {
-    final IProject p = Selection.Util.project();
-    return p != null ? p : null;
+    final IProject $ = Selection.Util.project();
+    return $ != null ? $ : null;
   }
 }

@@ -89,7 +89,8 @@ public interface iz {
     if (b == null)
       return false;
     final IfStatement parent = az.ifStatement(step.parent(b));
-    return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
+    return (parent == null || !wizard.same(s, az.astNode(az.block(parent.getElseStatement()).statements().get(0))) || wizard.recursiveElze(s) != null
+        || elze(parent) == null) && parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
         && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
@@ -227,9 +228,8 @@ public interface iz {
    * @return <code> true </code> iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
-    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
-      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
+    return ¢ != null
+        && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {
@@ -388,8 +388,9 @@ public interface iz {
   }
 
   // TODO Yossi: Move to lisp
+  @SuppressWarnings("boxing")
   static int index(final int i, final int... is) {
-    for (int $ = 0; $ < is.length; ++$)
+    for(Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;
     return -1;
@@ -432,6 +433,14 @@ public interface iz {
 
   static boolean infixGreater(final Expression ¢) {
     return operator(az.infixExpression(¢)) == GREATER;
+  }
+
+  static boolean infixGreaterEquals(final InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == GREATER_EQUALS;
+  }
+
+  static boolean infixLessEquals(final InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == LESS_EQUALS;
   }
 
   /** @param ¢ JD
@@ -973,8 +982,8 @@ public interface iz {
   default boolean parsesTo(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
@@ -982,8 +991,8 @@ public interface iz {
   default boolean parsesTo(final String token, final int i) {
     try {
       return Integer.parseInt(token) == i;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
@@ -991,8 +1000,8 @@ public interface iz {
   default boolean parsesTo(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (final IllegalArgumentException x) {
-      monitor.logEvaluationError(box(l), x);
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(box(l), ¢);
       return false;
     }
   }
@@ -1027,5 +1036,40 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
+  }
+
+  static boolean constructor(final ASTNode ¢) {
+    return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean doStatement(final ASTNode ¢) {
+    return ¢ instanceof DoStatement;
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean synchronizedStatement(final Statement ¢) {
+    return ¢ instanceof SynchronizedStatement;
+  }
+
+  /** @param ¢ JDs
+   * @return */
+  static boolean type(ASTNode ¢) {
+    return ¢ instanceof Type;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean superMethodInvocation(Expression ¢) {
+    return ¢ instanceof SuperMethodInvocation;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean anyOperator(ASTNode ¢) {
+    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+        Assignment.Operator.class }).contains(¢.getClass());
   }
 }

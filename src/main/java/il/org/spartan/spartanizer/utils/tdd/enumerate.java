@@ -4,7 +4,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Ori Marcovitch
@@ -33,9 +35,9 @@ public enum enumerate {
    * @param ¢
    * @since Nov 1, 2016 */
   public static int statements(final ASTNode n) {
-    final Int count = new Int();
     if (n == null)
       return 0;
+    final Int count = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
@@ -56,8 +58,26 @@ public enum enumerate {
     final Int counter = new Int();
     counter.inner = 0;
     ¢.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public boolean visit(final MethodDeclaration node) {
+      @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
         ++counter.inner;
+        return true;
+      }
+    });
+    return counter.inner;
+  }
+
+  /** @author Ori Marcovitch
+   * @param ¢
+   * @return */
+  public static int methodsWithBody(final ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int counter = new Int();
+    counter.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
+          ++counter.inner;
         return true;
       }
     });
@@ -68,6 +88,7 @@ public enum enumerate {
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
    * @since 16-11-07 */
+  @SuppressWarnings("boxing")
   public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
     final List<?> l = d.getBody().statements();
@@ -85,7 +106,7 @@ public enum enumerate {
     // d.accept(new ASTVisitor() {
     //
     // });
-    for (int ¢ = 0; ¢ < arr.length; ++¢)
+    for(Integer ¢ : range.from(0).to(arr.length))
       arr[¢] = false;
     for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {

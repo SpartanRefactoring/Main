@@ -7,8 +7,8 @@ import org.junit.*;
 /** Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved
  * here.
  * @since 2016 */
-@SuppressWarnings("static-method")
 @Ignore("Do not compute shifts, they have a reason")
+@SuppressWarnings("static-method")
 public class Issue415 {
   @Test public void issue92_52() {
     trimmingOf("100>>2").gives("25").stays();

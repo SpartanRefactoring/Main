@@ -18,7 +18,7 @@ public class Issue052 {
     ;
   }
 
-  @Ignore @Test public void A$A() {
+  @Test public void A$A() {
     trimmingOf("void m(){return;}")//
         .gives("void m(){}")//
         .stays() //
@@ -134,6 +134,55 @@ public class Issue052 {
     trimmingOf("enum A{y,x;static enum B{b,v;static class C{static enum D{c,w}}}")//
         .gives("enum A{y,x;enum B{b,v;static class C{enum D{c,w}}}")//
         .stays()//
+    ;
+  }
+
+  @Test public void B$a() {
+    trimmingOf("interface a{static int a = 1;}")//
+        .gives("interface a{int a = 1;}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void B$b() {
+    trimmingOf("interface a{ final int a = 1;}")//
+        .gives("interface a{int a = 1;}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void B$c() {
+    trimmingOf("interface a{ static final int a = 1;}")//
+        .gives("interface a{int a = 1;}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void C$a() {
+    trimmingOf("interface a{static class A{}}")//
+        .gives("interface a{class A{}}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void C$b() {
+    trimmingOf("interface a{static interface A{}}")//
+        .gives("interface a{interface A{}}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void C$c() {
+    trimmingOf("interface a{static enum A{}}")//
+        .gives("interface a{enum A{}}")//
+        .stays() //
+    ;
+  }
+
+  @Test public void C$d() {
+    trimmingOf("public interface C{static class A{}}")//
+        .gives("public interface C{class A{}}")//
+        .stays() //
     ;
   }
 }

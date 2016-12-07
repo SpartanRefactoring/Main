@@ -62,11 +62,13 @@ abstract class AbstractRenamePolicy {
 
   final MethodDeclaration inner;
   final List<SimpleName> localVariables;
+  final List<SingleVariableDeclaration> parameters;
   final List<ReturnStatement> returnStatements;
 
   public AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
+    parameters = step.parameters(inner);
     returnStatements = prune(explorer.returnStatements());
   }
 
@@ -124,15 +126,20 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   @Override SimpleName innerSelectReturnVariable() {
-    for (final Iterator<SimpleName> ¢ = localVariables.iterator(); ¢.hasNext();)
-      if (unused(¢.next()))
-        ¢.remove();
-    return first(localVariables);
+    for (final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
+      if (unused($.next()))
+        $.remove();
+    if (!localVariables.isEmpty())
+      return first(localVariables);
+    for (final SingleVariableDeclaration ¢ : parameters)
+      if (!unused(¢.getName()))
+        return ¢.getName();
+    return null;
   }
 
   private boolean unused(final SimpleName n) {
     for (final ReturnStatement ¢ : returnStatements)
-      if (wizard.same(n, ¢.getExpression()))
+      if (analyze.dependencies(¢).contains(n + ""))
         return false;
     return true;
   }

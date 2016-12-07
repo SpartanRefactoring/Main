@@ -21,10 +21,6 @@ import il.org.spartan.spartanizer.utils.*;
 public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Information>> s;
 
-  @Before public void initTestEngineTest() {
-    s = new LinkedHashSet<>();
-  }
-
   @Test public void EngineTestFlatUnordered00() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")), s);
   }
@@ -153,5 +149,9 @@ public class EnvironmentTestEngineTest {
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
     new EnvFlatHandler($, s);
+  }
+
+  @Before public void initTestEngineTest() {
+    s = new LinkedHashSet<>();
   }
 }

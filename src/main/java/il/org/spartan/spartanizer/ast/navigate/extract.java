@@ -12,6 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -147,20 +148,20 @@ public enum extract {
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
    * perhaps along with any number of empty sideEffects, then its Essence is
    * this single non-empty statement.
-   * @param s JD
+   * @param ¢ JD
    * @return Essence of the parameter, or <code><b>null</b></code>, if there are
    *         no non-empty sideEffects within the parameter. If, however there
    *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
-  public static Statement core(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
+  public static Statement core(final Statement ¢) {
+    final List<Statement> $ = extract.statements(¢);
+    switch ($.size()) {
       case 0:
         return null;
       case 1:
-        return first(ss);
+        return first($);
       default:
-        return s;
+        return ¢;
     }
   }
 
@@ -199,15 +200,12 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    for (final Statement ¢ : step.statements(b))
-      if (iz.variableDeclarationStatement(¢))
-        extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
+    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(¢ -> extract.fragmentsInto(az.variableDeclrationStatement(¢), $));
     return $;
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      $.add(¢);
+    $.addAll(step.fragments(s));
     return $;
   }
 
@@ -322,8 +320,9 @@ public enum extract {
     }
   }
 
+  @SuppressWarnings("boxing")
   private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+    for(Integer ¢ : range.from(0).to(ss.size() - 1))
       if (ss.get(¢) == s)
         return ss.get(¢ + 1);
     return null;
@@ -335,6 +334,14 @@ public enum extract {
    *         <code><b>null</b></code> if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
+  }
+
+  /** Find the {@link PrefixExpression} that follows a given node.
+   * @param pattern JD
+   * @return {@link Assignment} that follows the parameter, or
+   *         <code><b>null</b></code> if not such value exists. */
+  public static PrefixExpression nextPrefix(final ASTNode ¢) {
+    return az.prefixExpression(az.expressionStatement(extract.nextStatement(¢)).getExpression());
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
@@ -380,10 +387,10 @@ public enum extract {
     return core(onlyOne($));
   }
 
-  public static SimpleName onlyName(final VariableDeclarationExpression x) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(x))
-      if (!iz.identifier("$", ¢.getName()))
-        return ¢.getName();
+  public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
+    for (final VariableDeclarationFragment $ : step.fragments(¢))
+      if (!iz.identifier("$", $.getName()))
+        return $.getName();
     return null;
   }
 

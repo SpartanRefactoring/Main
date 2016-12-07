@@ -203,12 +203,12 @@ class UsesCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
-  @Override boolean go(final EnhancedForStatement s) {
-    final SimpleName name = s.getParameter().getName();
+  @Override boolean go(final EnhancedForStatement $) {
+    final SimpleName name = $.getParameter().getName();
     if (name == focus || !declaredBy(name))
       return true;
-    recurse(s.getExpression());
-    return recurse(s.getBody());
+    recurse($.getExpression());
+    return recurse($.getBody());
   }
 
   boolean recurse(final ASTNode ¢) {
@@ -273,8 +273,7 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode ¢ : ns)
-      recurse(¢);
+    ns.stream().forEach(¢ -> recurse(¢));
     return false;
   }
 
@@ -374,12 +373,12 @@ class StringCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
-  @Override boolean go(final EnhancedForStatement s) {
-    final String name = s.getParameter().getName() + "";
+  @Override boolean go(final EnhancedForStatement $) {
+    final String name = $.getParameter().getName() + "";
     if (name == focus || !declaredBy(name))
       return true;
-    recurse(s.getExpression());
-    return recurse(s.getBody());
+    recurse($.getExpression());
+    return recurse($.getBody());
   }
 
   boolean recurse(final ASTNode ¢) {
@@ -444,8 +443,7 @@ class StringCollector extends HidingDepth {
   }
 
   private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode ¢ : ns)
-      recurse(¢);
+    ns.stream().forEach(¢ -> recurse(¢));
     return false;
   }
 

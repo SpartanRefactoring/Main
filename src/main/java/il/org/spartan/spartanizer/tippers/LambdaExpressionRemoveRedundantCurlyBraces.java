@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -22,23 +20,19 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
     return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ASTNode $ = replacement(x, r, g);
-        r.replace(x, $, g);
+        r.replace(x, replacement(x, r, g), g);
       }
     };
   }
 
   public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
-    final List<?> stmnts = step.statements(step.body(x));
-    assert stmnts.size() == 1;
+    assert step.statements(step.body(x)).size() == 1;
     final Statement s = step.statements(step.body(x)).get(0);
     final LambdaExpression $ = x.getAST().newLambdaExpression();
-    final ListRewrite lr = r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY);
     for (final Object ¢ : x.parameters())
-      lr.insertLast((ASTNode) ¢, g);
-    final ASTNode replacement = iz.expressionStatement(s) ? step.expression(s)
-        : step.expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : step.expression(az.returnStatement(s));
-    r.replace(step.body($), replacement, g);
+      r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast((ASTNode) ¢, g);
+    r.replace(step.body($), iz.expressionStatement(s) ? step.expression(s)
+        : step.expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : step.expression(az.returnStatement(s)), g);
     $.setParentheses(x.hasParentheses());
     return $;
   }

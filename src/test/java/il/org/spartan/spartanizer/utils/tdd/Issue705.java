@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Tests of {@link enumerate.expressions}
+/** Tests of {@link measure.expressions}
  * @author Koby Ben Shimol
  * @author Yuval Simon
  * @since 16-11-2 */
@@ -18,6 +18,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue705 {
   @Test public void a() {
     auxList(getAll.instanceofs((MethodDeclaration) null));
+  }
+
+  void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
+    assert true;
   }
 
   @Test public void b() {
@@ -34,9 +38,5 @@ public class Issue705 {
         .instanceofs(
             (MethodDeclaration) wizard.ast("boolean func (){" + "Integer obj = 5;" + "return (obj instanceof Object) || (obj instanceof Integer); }"))
         .size(), is(2));
-  }
-
-  void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
-    assert true;
   }
 }

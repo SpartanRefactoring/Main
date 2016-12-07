@@ -45,8 +45,8 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
         Toolbox.refresh();
         try {
           RefreshAll.go();
-        } catch (final Exception x) {
-          monitor.logEvaluationError(this, x);
+        } catch (final Exception ¢) {
+          monitor.logEvaluationError(this, ¢);
         }
       }).start();
     return $;
@@ -120,31 +120,22 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       getUpButton().setEnabled(false);
       getUpButton().setVisible(false);
       getRemoveButton().addSelectionListener(new SelectionAdapter() {
-        /** [[SuppressWarningsSpartan]] */
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(final SelectionEvent x) {
-          if (x == null)
+        @Override @SuppressWarnings("synthetic-access") public void widgetSelected(final SelectionEvent x) {
+          if (x == null || !getRemoveButton().equals(x.widget) || selection.index < 0 || !alive.contains(selection.text))
             return;
-          if (getRemoveButton().equals(x.widget)) {
-            final int i = selection.index;
-            if (i >= 0) {
-              final String r = selection.text;
-              if (alive.contains(r)) {
-                alive.remove(r);
-                dead.add(r);
-                getAddButton().setEnabled(true);
-                if (getList().getItemCount() > 0)
-                  selection.text = getList().getItem(selection.index);
-                else {
-                  selection.index = -1;
-                  selection.text = null;
-                }
-              }
-            }
+          alive.remove(selection.text);
+          dead.add(selection.text);
+          getAddButton().setEnabled(true);
+          if (getList().getItemCount() > 0)
+            selection.text = getList().getItem(selection.index);
+          else {
+            selection.index = -1;
+            selection.text = null;
           }
         }
       });
       getList().addSelectionListener(new SelectionAdapter() {
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(final SelectionEvent x) {
+        @Override @SuppressWarnings("synthetic-access") public void widgetSelected(final SelectionEvent x) {
           if (x == null)
             return;
           selection.index = getList().getSelectionIndex();
@@ -158,27 +149,21 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
-    @SuppressWarnings("unused") @Override protected String getNewInputObject() {
+    @Override @SuppressWarnings("unused") protected String getNewInputObject() {
       if (dead.isEmpty() || composite == null)
         return null;
       final ListDialog d = new ListDialog(composite.getShell());
       d.setContentProvider(inputElement -> dead.toArray(new String[dead.size()]));
       d.setLabelProvider(new ILabelProvider() {
-        @Override public void removeListener(final ILabelProviderListener __) {
-          //
-        }
+        @Override public void removeListener(final ILabelProviderListener __) {/* empty */}
 
         @Override public boolean isLabelProperty(final Object element, final String property) {
           return false;
         }
 
-        @Override public void dispose() {
-          //
-        }
+        @Override public void dispose() {/* empty */}
 
-        @Override public void addListener(final ILabelProviderListener __) {
-          //
-        }
+        @Override public void addListener(final ILabelProviderListener __) {/* empty */}
 
         @Override public String getText(final Object element) {
           return element + "";

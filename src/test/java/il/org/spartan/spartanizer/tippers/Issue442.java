@@ -19,11 +19,6 @@ import il.org.spartan.spartanizer.java.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue442 {
-  @Test public void a() {
-    trimmingOf("public abstract S f( X x);")//
-        .stays();
-  }
-
   @Ignore
   public static class WorkInProgress {
     @Test public void b() {
@@ -33,14 +28,19 @@ public class Issue442 {
     }
   }
 
-  @Test public void c$etc() {
-    trimmingOf("interface I{ I f(I i);}").stays();
+  @Test public void a() {
+    trimmingOf("public abstract S f( X x);")//
+        .stays();
   }
 
   @Test public void b() {
     trimmingOf("public S f(X x){return null;}")//
         .gives("public S f(X __){return null;}")//
         .stays();
+  }
+
+  @Test public void c$etc() {
+    trimmingOf("interface I{ I f(I i);}").stays();
   }
 
   @Test public void chocolate01() {

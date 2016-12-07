@@ -124,7 +124,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     return $ + "";
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   static boolean nullCheckExpression(final Expression ¢) {
     if (¢ == null)
       return false;

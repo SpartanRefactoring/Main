@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.ast.factory;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -180,7 +181,7 @@ public final class subject {
      * @return a method invocation expression of the method methodName with
      *         inner as an expression */
     public MethodInvocation toMethod(final String methodName) {
-      assert ast != null : "Cannot find ast for method: " + methodName + ". Inner = " + inner;
+      assert ast != null : "Cannot find ast for method: " + methodName + ". RangeIterator = " + inner;
       final MethodInvocation $ = ast.newMethodInvocation();
       $.setExpression(inner);
       $.setName(ast.newSimpleName(methodName));
@@ -294,8 +295,7 @@ public final class subject {
     public Several(final List<Expression> operands) {
       super(first(operands));
       this.operands = new ArrayList<>();
-      for (final Expression ¢ : operands)
-        this.operands.add(claim(¢));
+      this.operands.addAll(operands.stream().map(this::claim).collect(Collectors.toList()));
     }
 
     /** Create an infix expression from the given operator and the operands
@@ -324,8 +324,7 @@ public final class subject {
     public SeveralStatements(final List<Statement> inner) {
       super(first(inner));
       this.inner = new ArrayList<>();
-      for (final Statement ¢ : inner)
-        this.inner.add(claim(¢));
+      this.inner.addAll(inner.stream().map(this::claim).collect(Collectors.toList()));
     }
 
     /** Transform the inner into a block

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
  * @author Matteo Orru'
  * @year 2016 */
 public interface ConfigurableReport {
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
     String outputFolder = "/tmp/"; // default modifier
@@ -85,8 +85,8 @@ public interface ConfigurableReport {
     public void setReport(final String reportFilename, final String header) {
       try {
         report = new CSVStatistics(reportFilename, header);
-      } catch (final IOException x) {
-        x.printStackTrace();
+      } catch (final IOException ¢) {
+        ¢.printStackTrace();
       }
     }
 
@@ -111,7 +111,7 @@ public interface ConfigurableReport {
         }
         // listeners().tick("generate summary file name");
         summaryFileName();
-        for (int i = 0; i < getInputList().size(); i++) {
+        for (int i = 0; i < getInputList().size(); ++i) {
           // write
           // listeners().tick("writing basic data");
           name(getInputList().get(i));
@@ -154,23 +154,23 @@ public interface ConfigurableReport {
       }
 
       // running report
-      @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode o) {
+      @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n) {
         for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
           report().put(¢.name() + "1", ¢.function().run(i));
-          report().put(¢.name() + "2", ¢.function().run(o));
+          report().put(¢.name() + "2", ¢.function().run(n));
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode o, final String id,
+      @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n, final String id,
           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
-          write(i, o);
+          write(i, n);
           return;
         }
         assert bf != null;
         assert id != null;
         for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-          report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(o)));
+          report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(n)));
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
@@ -184,8 +184,8 @@ public interface ConfigurableReport {
       public void initialize() {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
-        } catch (final IOException x) {
-          x.printStackTrace();
+        } catch (final IOException ¢) {
+          ¢.printStackTrace();
         }
       }
     }
@@ -206,12 +206,12 @@ public interface ConfigurableReport {
       return reportFileName;
     }
 
-    public void setInput(final ASTNode n) {
-      input = n;
+    public void setInput(final ASTNode ¢) {
+      input = ¢;
     }
 
-    public void setOutput(final ASTNode n) {
-      output = n;
+    public void setOutput(final ASTNode ¢) {
+      output = ¢;
     }
 
     public static ArrayList<ASTNode> getInputList() {

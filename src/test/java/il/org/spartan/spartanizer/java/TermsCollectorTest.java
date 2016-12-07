@@ -38,8 +38,7 @@ public final class TermsCollectorTest {
   }
 
   @Test public void test03() {
-    final InfixExpression i = i("a + b +c");
-    c.collect(i);
+    c.collect(i("a + b +c"));
     azzert.that(c.plus().size(), is(3));
     azzert.that(c.minus().size(), is(0));
   }
@@ -74,92 +73,78 @@ public final class TermsCollectorTest {
   }
 
   @Test public void test07() {
-    final InfixExpression i = i("a + (b -c)");
-    c.collect(i);
+    c.collect(i("a + (b -c)"));
     azzert.that(c.plus().size(), is(2));
     azzert.that(c.minus().size(), is(1));
   }
 
   @Test public void test08() {
-    final InfixExpression i = i("a + (b +(d + c))");
-    c.collect(i);
+    c.collect(i("a + (b +(d + c))"));
     azzert.that(c.plus().size(), is(4));
     azzert.that(c.minus().size(), is(0));
   }
 
   @Test public void test09() {
-    final InfixExpression i = i("a - (b - c - (d - e - f - g))");
-    c.collect(i);
+    c.collect(i("a - (b - c - (d - e - f - g))"));
     azzert.that(c.plus(), iz("[a,c,d]"));
     azzert.that(c.minus(), iz("[b,e,f,g]"));
   }
 
   @Test public void test10() {
-    final InfixExpression i = i("a - (b - c - d - e )");
-    c.collect(i);
+    c.collect(i("a - (b - c - d - e )"));
     azzert.that(c.plus().size(), is(4));
     azzert.that(c.minus().size(), is(1));
   }
 
   @Test public void test11() {
-    final InfixExpression i = i("a - (b - c)");
-    c.collect(i);
+    c.collect(i("a - (b - c)"));
     azzert.that(c.plus().size(), is(2));
   }
 
   @Test public void test12() {
-    final InfixExpression i = i("a - (b - c)");
-    c.collect(i);
+    c.collect(i("a - (b - c)"));
     azzert.that(c.minus().size(), is(1));
   }
 
   @Test public void test13() {
-    final InfixExpression i = i("a - (b - c)");
-    c.collect(i);
+    c.collect(i("a - (b - c)"));
     azzert.that(c.minus(), iz("[b]"));
   }
 
   @Test public void test14() {
-    final InfixExpression i = i("a - (b - c)");
-    c.collect(i);
+    c.collect(i("a - (b - c)"));
     azzert.that(c.minus(), iz("[b]"));
   }
 
   @Test public void test15() {
-    final InfixExpression i = i("(a + b) + (c+(d-(e+(f-g))))");
-    c.collect(i);
+    c.collect(i("(a + b) + (c+(d-(e+(f-g))))"));
     azzert.that(c.plus(), iz("[a,b,c,d,g]"));
     azzert.that(c.minus(), iz("[e,f]"));
   }
 
   @Test public void test16() {
-    final InfixExpression i = i("a + (b + c)");
-    c.collect(i);
+    c.collect(i("a + (b + c)"));
     azzert.that(c.plus(), iz("[a,b,c]"));
     azzert.that(c.minus(), iz("[]"));
   }
 
   @Test public void test17() {
-    final InfixExpression i = i("a + (b + c)");
-    c.collect(i);
+    c.collect(i("a + (b + c)"));
     azzert.that(c.minus(), iz("[]"));
   }
 
   @Test public void test18() {
-    final InfixExpression i = i("a + (b - c)");
-    c.collect(i);
+    c.collect(i("a + (b - c)"));
     azzert.that(c.plus(), iz("[a,b]"));
   }
 
   @Test public void test19() {
-    final InfixExpression i = i("a + (b - c)");
-    c.collect(i);
+    c.collect(i("a + (b - c)"));
     azzert.that(c.minus(), iz("[c]"));
   }
 
   @Test public void test20() {
-    final InfixExpression i = i("a + (b - c)");
-    c.collect(i);
+    c.collect(i("a + (b - c)"));
     azzert.that(c.minus(), iz("[c]"));
   }
 

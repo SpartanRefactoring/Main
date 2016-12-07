@@ -16,7 +16,7 @@ public final class Issue210 {
   }
 
   @Test public void issue210_02() {
-    trimmingOf("int zero = 0;\nint result = 8 / zero;").gives("int result = 8 / 0;").stays();
+    trimmingOf("int zero = 0;\nint result = 8 / zero; ++result;").gives("int result = 8 / 0; ++result;").stays();
   }
 
   @Test public void issue210_03() {

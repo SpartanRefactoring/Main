@@ -9,15 +9,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixExpressionSortingFull extends InfixExpressionSorting {
-  @Override public final boolean prerequisite(final InfixExpression x) {
-    if (!suitable(x))
+  @Override public final boolean prerequisite(final InfixExpression ¢) {
+    if (!suitable(¢))
       return false;
-    final List<Expression> es = extract.allOperands(x);
-    return !Tippers.mixedLiteralKind(es) && sort(es);
+    final List<Expression> $ = extract.allOperands(¢);
+    return !Tippers.mixedLiteralKind($) && sort($);
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
-    final List<Expression> operands = extract.allOperands(x);
-    return !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
+  @Override public Expression replacement(final InfixExpression ¢) {
+    final List<Expression> $ = extract.allOperands(¢);
+    return !sort($) ? null : subject.operands($).to(¢.getOperator());
   }
 }
