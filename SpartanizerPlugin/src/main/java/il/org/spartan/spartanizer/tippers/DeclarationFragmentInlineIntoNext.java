@@ -38,12 +38,10 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
-        || cannotInlineInto(nextStatement) || initializer(f) == null)
-      return null;
-    final SimpleName n = f.getName();
-    if (iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-        && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(f.getInitializer())
-        && !iz.literal(f.getInitializer()))
+        || cannotInlineInto(nextStatement) || initializer(f) == null
+        || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
+            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(f.getName() + "") && !iz.simpleName(f.getInitializer())
+            && !iz.literal(f.getInitializer()))
       return null;
     final SimpleName id = peelIdentifier(nextStatement, identifier(name(f)));
     if (id == null || anyFurtherUsage(parent, nextStatement, identifier(id)) || leftSide(nextStatement, identifier(id)) || preOrPostfix(id))
