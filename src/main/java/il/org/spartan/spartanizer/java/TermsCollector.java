@@ -75,10 +75,10 @@ public final class TermsCollector {
     return null;
   }
 
-  private Void addMinusTerm(final Expression x) {
-    assert x != null;
-    final Expression n = minus.peel(x);
-    return minus.level(x) % 2 != 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+  private Void addMinusTerm(final Expression ¢) {
+    assert ¢ != null;
+    final Expression $ = minus.peel(¢);
+    return minus.level(¢) % 2 != 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
   private Void addPlus(final Expression ¢) {
@@ -88,10 +88,10 @@ public final class TermsCollector {
     return null;
   }
 
-  private Void addPlusTerm(final Expression x) {
-    assert x != null;
-    final Expression n = minus.peel(x);
-    return minus.level(x) % 2 == 0 ? collectPlusPrefix(n) : collectMinusPrefix(n);
+  private Void addPlusTerm(final Expression ¢) {
+    assert ¢ != null;
+    final Expression $ = minus.peel(¢);
+    return minus.level(¢) % 2 == 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
   private Void addPositiveTerm(final Expression ¢) {

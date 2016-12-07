@@ -24,7 +24,7 @@ public interface Environment {
    * class is intentionally package level, and intentionally defined local. For
    * now, clients should not be messing with it
    * @since 2016 */
-  static class Information {
+  class Information {
     public static boolean eq(final Object o1, final Object o2) {
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
@@ -142,15 +142,15 @@ public interface Environment {
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
-  final Environment EMPTY = new Environment() {
+  Environment EMPTY = new Environment() {
     // This class is intentionally empty
   };
   /** Initializer for EMPTY */
-  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
+  LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
   /** Initializer for EMPTY */
-  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
+  LinkedHashSet<String> emptySet = new LinkedHashSet<>();
   // Holds the declarations in the subtree and relevant siblings.
-  final LinkedHashSet<Entry<String, Information>> upEnv = new LinkedHashSet<>();
+  LinkedHashSet<Entry<String, Information>> upEnv = new LinkedHashSet<>();
 
   static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
     return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
@@ -204,14 +204,14 @@ public interface Environment {
       // Holds the current scope full name (Path).
       String scopePath = "";
 
-      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration ¢) {
         // As of JSL3, AnonymousClassDeclaration's parent can be either
         // ClassInstanceCreation or EnumConstantDeclaration
-        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
-        if (n instanceof ClassInstanceCreation)
-          return az.classInstanceCreation(n).getType() + "";
-        assert n instanceof EnumConstantDeclaration;
-        return az.enumConstantDeclaration(n).getName() + "";
+        @SuppressWarnings("hiding") final ASTNode $ = ¢.getParent();
+        if ($ instanceof ClassInstanceCreation)
+          return az.classInstanceCreation($).getType() + "";
+        assert $ instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration($).getName() + "";
       }
 
       Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {

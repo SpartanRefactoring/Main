@@ -7,7 +7,8 @@ import org.junit.*;
 /** TODO: Tipper disabled due to inefficiency --or
  * @author Ori Marcovitch
  * @since 2016 */
-@Ignore public class InfixIndexOfToStringContainsTest {
+@Ignore
+public class InfixIndexOfToStringContainsTest {
   @Test @SuppressWarnings("static-method") public void testMutation0() {
     trimmingOf("String str; String stringy; return str.indexOf(stringy) >= 0;").gives("String str; String stringy; return str.contains(stringy);")
         .stays();

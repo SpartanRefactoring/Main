@@ -63,9 +63,9 @@ public class normalize {
     final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>("start");
     final Wrapper<String> Id = new Wrapper<>("START");
-    final Document document = new Document(ASTutils.wrapCode(s));
+    final Document $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource(document.get().toCharArray());
+    parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
@@ -92,8 +92,8 @@ public class normalize {
         r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
       }
     });
-    applyChanges(document, r);
-    return ASTutils.extractCode(s, document);
+    applyChanges($, r);
+    return ASTutils.extractCode(s, $);
   }
 
   private static void applyChanges(final Document d, final ASTRewrite r) {

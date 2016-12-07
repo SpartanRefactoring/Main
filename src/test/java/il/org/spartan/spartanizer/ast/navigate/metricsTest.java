@@ -168,8 +168,7 @@ public final class metricsTest {
 
   @Test public void tokensTest() {
     azzert.that(metrics.tokens(helloWorldQuoted), is(1));
-    final String helloWorldChars = "\\*Hello, World!\\n*\"";
-    azzert.that(metrics.tokens(helloWorldChars), is(8));
+    azzert.that(metrics.tokens("\\*Hello, World!\\n*\""), is(8));
     azzert.that(metrics.tokens("\\/*Hello*/"), is(0));
   }
 

@@ -41,17 +41,17 @@ public enum analyze {
   public static String type(final Name n) {
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
     // issue #827 fixed case m is null
-    final String s = m == null ? null : findDeclarationInMethod(n, m);
-    return s != null ? s : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
+    final String $ = m == null ? null : findDeclarationInMethod(n, m);
+    return $ != null ? $ : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
 
-  private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration t) {
-    if (!iz.typeDeclaration(t)) // TODO: Marco support all types of types
+  private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
+    if (!iz.typeDeclaration(d)) // TODO: Marco support all types of types
       return null;
-    for (final FieldDeclaration d : step.fieldDeclarations(az.typeDeclaration(t)))
-      for (final VariableDeclarationFragment ¢ : step.fragments(d))
+    for (final FieldDeclaration $ : step.fieldDeclarations(az.typeDeclaration(d)))
+      for (final VariableDeclarationFragment ¢ : step.fragments($))
         if ((step.name(¢) + "").equals(n + ""))
-          return step.type(d) + "";
+          return step.type($) + "";
     return null;
   }
 

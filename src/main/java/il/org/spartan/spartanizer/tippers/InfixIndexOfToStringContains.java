@@ -52,18 +52,18 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
   }
 
   /** Operates the first tip that can be implemented. */
-  @Override public Tip tip(final InfixExpression x) {
-    for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
+  @Override public Tip tip(final InfixExpression ¢) {
+    for (final UserDefinedTipper<InfixExpression> $ : tippers)
+      if ($.canTip(¢))
+        return $.tip(¢);
     return null;
   }
 
   /** @return the first description of tip that can be implemented. */
-  @Override public String description(final InfixExpression x) {
-    for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.description(x);
+  @Override public String description(final InfixExpression ¢) {
+    for (final UserDefinedTipper<InfixExpression> $ : tippers)
+      if ($.canTip(¢))
+        return $.description(¢);
     return null;
   }
 }

@@ -66,41 +66,41 @@ public final class ReplaceForWithRange extends Tipper<ForStatement> implements T
   }
 
   private static boolean ChangedInBlock(final String id, final Block b) {
-    final Bool a = new Bool();
+    final Bool $ = new Bool();
     b.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {
         if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
-          a.inner = true;
+          $.inner = true;
         return true;
       }
 
       @Override public boolean visit(final PrefixExpression ¢) {
         if (iz.incrementOrDecrement(¢) && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
-          a.inner = true;
+          $.inner = true;
         return true;
       }
 
       @Override public boolean visit(final PostfixExpression ¢) {
         if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + "")) && iz.simpleName(¢.getOperand())
             && identifier(az.simpleName(¢.getOperand())).equals(id))
-          a.inner = true;
+          $.inner = true;
         return true;
       }
     });
-    return a.inner;
+    return $.inner;
   }
 
   @Override public Tip tip(final ForStatement x) {
-    for (final UserDefinedTipper<ForStatement> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.tip(x);
+    for (final UserDefinedTipper<ForStatement> $ : tippers)
+      if ($.canTip(x))
+        return $.tip(x);
     return null;
   }
 
   @Override public String description(final ForStatement x) {
-    for (final UserDefinedTipper<ForStatement> ¢ : tippers)
-      if (¢.canTip(x))
-        return ¢.description(x);
+    for (final UserDefinedTipper<ForStatement> $ : tippers)
+      if ($.canTip(x))
+        return $.description(x);
     return null;
   }
 }

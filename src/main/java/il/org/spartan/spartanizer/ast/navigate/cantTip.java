@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    final VariableDeclarationFragment f = hop.precidingFragmentToLastExpression(¢);
-    return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
+    final VariableDeclarationFragment $ = hop.precidingFragmentToLastExpression(¢);
+    return $ == null || new DeclarationInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    final VariableDeclarationFragment f = hop.prevFragmentToLastExpression(¢);
-    return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
+    final VariableDeclarationFragment $ = hop.prevFragmentToLastExpression(¢);
+    return $ == null || new DeclarationInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
@@ -37,9 +37,9 @@ public enum cantTip {
     return true;
   }
 
-  public static boolean forRenameInitializerToCent(final ForStatement s) {
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(s);
-    return e == null || new ForRenameInitializerToCent().cantTip(e);
+  public static boolean forRenameInitializerToCent(final ForStatement ¢) {
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
+    return $ == null || new ForRenameInitializerToCent().cantTip($);
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {

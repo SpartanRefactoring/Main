@@ -96,11 +96,11 @@ public abstract class FileTestUtils {
    * @param name the canonical name of some class
    * @return object representing this class
    * @since 2014/05/23 */
-  private static Class<?> asClass(final String name) {
+  private static Class<?> asClass(final String $) {
     try {
-      return Class.forName(name);
+      return Class.forName($);
     } catch (final ClassNotFoundException ¢) {
-      azzert.fail(name + ": class not found. " + ¢.getMessage());
+      azzert.fail($ + ": class not found. " + ¢.getMessage());
       return null;
     }
   }
@@ -114,9 +114,9 @@ public abstract class FileTestUtils {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
-  private static File createTempFile(final TestDirection d, final File f) {
+  private static File createTempFile(final TestDirection $, final File f) {
     try {
-      return File.createTempFile(f.getName().replace(".", ""), "." + (d == TestDirection.In ? "in" : "out"));
+      return File.createTempFile(f.getName().replace(".", ""), "." + ($ == TestDirection.In ? "in" : "out"));
     } catch (final IOException e) {
       return null; // Failed to create temporary file
     }
@@ -148,17 +148,17 @@ public abstract class FileTestUtils {
    * assertion fault
    * @param c an arbitrary class object
    * @return an instance of the parameter */
-  public static Object getInstance(final Class<?> c) {
+  public static Object getInstance(final Class<?> $) {
     try {
-      return c.newInstance();
+      return $.newInstance();
     } catch (final SecurityException ¢) {
-      error("Security exception in instantiating ", c, ¢);
+      error("Security exception in instantiating ", $, ¢);
     } catch (final ExceptionInInitializerError ¢) {
-      error("Error in instantiating class", c, ¢);
+      error("Error in instantiating class", $, ¢);
     } catch (final InstantiationException ¢) {
-      error("Nullary constructor threw an exception in class", c, ¢);
+      error("Nullary constructor threw an exception in class", $, ¢);
     } catch (final IllegalAccessException ¢) {
-      error("Missing public constructor (probably) in class", c, ¢);
+      error("Missing public constructor (probably) in class", $, ¢);
     }
     return null;
   }

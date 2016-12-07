@@ -31,7 +31,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @SuppressWarnings("boxing") @Override public Expression replacement(final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);

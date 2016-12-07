@@ -59,8 +59,8 @@ public enum monitor {
   public static final monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
-    final String canonicalName = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName) + "]";
+    final String $ = ¢.getCanonicalName();
+    return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
   }
 
   public static String className(final Object ¢) {

@@ -47,14 +47,14 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     return "Invert conditional and use next statement)";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
     if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
-      r.replace(s, then(asVirtualIf), g);
-      r.remove(nextStatement, g);
-      return r;
+      $.replace(s, then(asVirtualIf), g);
+      $.remove(nextStatement, g);
+      return $;
     }
     if (!shoudlInvert(asVirtualIf))
       return null;
@@ -63,13 +63,13 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {
       ss.add(0, canonicalIf);
-      r.replace(s, subject.ss(ss).toBlock(), g);
-      r.remove(nextStatement, g);
+      $.replace(s, subject.ss(ss).toBlock(), g);
+      $.remove(nextStatement, g);
     } else {
-      final ListRewrite lr = insertAfter(s, ss, r, g);
+      final ListRewrite lr = insertAfter(s, ss, $, g);
       lr.replace(s, canonicalIf, g);
       lr.remove(nextStatement, g);
     }
-    return r;
+    return $;
   }
 }

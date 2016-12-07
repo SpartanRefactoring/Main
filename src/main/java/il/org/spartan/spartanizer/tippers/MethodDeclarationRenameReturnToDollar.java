@@ -28,14 +28,14 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    final SimpleName n = new Conservative(d).selectReturnVariable();
-    if (n == null)
+    final SimpleName $ = new Conservative(d).selectReturnVariable();
+    if ($ == null)
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d, this.getClass()) {
+    return new Tip("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(n, $(), d, r, g);
+        rename($, $(), d, r, g);
       }
 
       SimpleName $() {

@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper<MethodDeclaration> implements TipperCategory.Collapse {
-  private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
-    for (final Object m : d.modifiers())
+  private static boolean shouldRemove(final MethodDeclaration $, final SuperMethodInvocation i) {
+    for (final Object m : $.modifiers())
       if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))
         return false;
-    return (i.getName() + "").equals(d.getName() + "") && arguments(i).size() == parameters(d).size();
+    return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }
 
   @Override public String description(final MethodDeclaration ¢) {
@@ -28,8 +28,8 @@ public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
-    final ExpressionStatement s = extract.expressionStatement(d);
-    return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
+    final ExpressionStatement $ = extract.expressionStatement(d);
+    return $ == null || !($.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) $.getExpression()) ? null
         : new Tip(description(d), d, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(d, g);

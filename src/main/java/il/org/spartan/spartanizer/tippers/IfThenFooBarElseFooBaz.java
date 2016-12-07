@@ -61,15 +61,15 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
   }
 
   @Override public Tip tip(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
-    if (then.isEmpty())
+    final List<Statement> $ = extract.statements(then(s));
+    if ($.isEmpty())
       return null;
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final int thenSize = then.size();
+    final int thenSize = $.size();
     final int elzeSize = elze.size();
-    final List<Statement> commonPrefix = commonPrefix(then, elze);
+    final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), s, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -87,7 +87,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
           }
 
           IfStatement replacement() {
-            return replacement(s.getExpression(), subject.ss(then).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
+            return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
           }
 
           IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {

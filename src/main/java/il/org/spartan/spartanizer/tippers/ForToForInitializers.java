@@ -52,8 +52,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * @return <code><b>true</b></code> <em>iff</em> initializer's and
    *         declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
-    final List<IExtendedModifier> declarationModifiers = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
-    return declarationModifiers.isEmpty() && initializerModifiers.isEmpty() || haz.final¢(declarationModifiers) && haz.final¢(initializerModifiers);
+    final List<IExtendedModifier> $ = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
+    return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
   private static boolean fittingType(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
@@ -76,24 +76,24 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
-    final List<Expression> operands = hop.operands(from);
-    operands.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
+    final List<Expression> $ = hop.operands(from);
+    $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(step.left(a));
       for (final VariableDeclarationFragment ¢ : fragments(s))
         if ((¢.getName() + "").equals(var + "")) {
           ¢.setInitializer(duplicate.of(step.right(a)));
-          operands.set(operands.indexOf(x), x.getAST().newSimpleName(var + ""));
+          $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
         }
     });
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
+    return subject.append(subject.pair($.get(0), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
-    final Assignment a = az.assignment(from.getExpression());
+    final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(from.getExpression());
     final ParenthesizedExpression pe = az.parenthesizedExpression(from.getExpression());
-    return a != null ? handleAssignmentCondition(a, s)
+    return $ != null ? handleAssignmentCondition($, s)
         : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
   }
 
@@ -112,9 +112,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final List<Expression> initializers = step.initializers(¢);
     if (initializers.isEmpty() || !iz.variableDeclarationExpression(first(initializers)))
       return true;
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
-    assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
-    return fittingType(s, e) && fittingModifiers(s, e);
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(first(initializers));
+    assert $ != null : "ForToForInitializers -> for initializer is null and not empty?!?";
+    return fittingType(s, $) && fittingModifiers(s, $);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
@@ -128,9 +128,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
-    if (f == null || r == null || nextStatement == null || exclude == null)
+    if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
     if (declarationStatement == null)
@@ -140,8 +140,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       return null;
     exclude.excludeAll(step.fragments(declarationStatement));
     // TODO Ori Roth: use list rewriter; talk to Ori Roth
-    r.remove(declarationStatement, g);
-    r.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
-    return r;
+    $.remove(declarationStatement, g);
+    $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
+    return $;
   }
 }

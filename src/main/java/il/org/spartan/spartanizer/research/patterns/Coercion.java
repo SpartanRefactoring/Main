@@ -29,9 +29,9 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
       return false;
-    final MethodDeclaration m = searchAncestors.forContainingMethod().from(¢);
-    final Javadoc j = m.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip(m) && !(step.type(¢) + "").contains(".");
+    final MethodDeclaration $ = searchAncestors.forContainingMethod().from(¢);
+    final Javadoc j = $.getJavadoc();
+    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
@@ -111,13 +111,13 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         + (step.type(¢) + "").replaceAll("//.", "•");
   }
 
-  private static AbstractTypeDeclaration containingType(final CastExpression ¢) {
+  private static AbstractTypeDeclaration containingType(final CastExpression $) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
       case API_LEVEL_TYPE:
-        return searchAncestors.forContainingType().from(¢);
+        return searchAncestors.forContainingType().from($);
       case API_LEVEL_PACKAGE:
-        return getType(prepareFile(packageAzFile(¢)));
+        return getType(prepareFile(packageAzFile($)));
       case API_LEVEL_FILE:
         return getType(prepareFile(fileAzFile()));
       default:
@@ -154,15 +154,15 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return ¢;
   }
 
-  private static File createFileFromTemplate(final File f) {
+  private static File createFileFromTemplate(final File $) {
     // TODO: Marco update package declaration to match actual package...
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
-          f.toPath(), StandardCopyOption.REPLACE_EXISTING);
+          $.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (final IOException ¢) {
       ¢.printStackTrace();
     }
-    return f;
+    return $;
   }
 
   /** @param ¢

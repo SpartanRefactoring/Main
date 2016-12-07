@@ -52,10 +52,10 @@ public final class BindingUtils {
     final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
       return true;
-    final ITypeBinding mc = b.getDeclaringClass();
-    if (Modifier.isProtected(ms) && mc.getPackage().equals(getPackage(u)))
+    final ITypeBinding $ = b.getDeclaringClass();
+    if (Modifier.isProtected(ms) && $.getPackage().equals(getPackage(u)))
       return true;
     final ITypeBinding nc = container(n);
-    return nc != null && nc.equals(mc);
+    return nc != null && nc.equals($);
   }
 }

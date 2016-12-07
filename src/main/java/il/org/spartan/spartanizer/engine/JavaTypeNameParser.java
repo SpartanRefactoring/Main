@@ -115,7 +115,7 @@ public final class JavaTypeNameParser {
   }
 
   private String lastNameCharIndex(final int ¢) {
-    return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
+    return lastName().length() <= ¢ ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
 
   private boolean lowerCaseContains(final String s, final String substring) {

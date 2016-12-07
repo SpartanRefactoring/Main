@@ -25,7 +25,7 @@ public abstract class LaconizeSelection extends BaseHandler {
 
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
-    final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
+    final StringBuilder $ = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
     final IWorkbench wb = PlatformUI.getWorkbench();
     final AbstractGUIApplicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
@@ -36,7 +36,7 @@ public abstract class LaconizeSelection extends BaseHandler {
       try {
         ps.busyCursorWhile(pm -> {
           // applicator.setProgressMonitor(pm);
-          pm.setTaskName(status + "");
+          pm.setTaskName($ + "");
           applicator.parse();
           applicator.scan();
           n.inner = applicator.TipsCount();
@@ -51,18 +51,18 @@ public abstract class LaconizeSelection extends BaseHandler {
         return null;
       }
       if (n.inner <= 0) {
-        status.append("\n Applied a total of " + total + " tips in " + i + " rounds");
-        return eclipse.announce(status);
+        $.append("\n Applied a total of " + total + " tips in " + i + " rounds");
+        return eclipse.announce($);
       }
-      status.append("\n Round " + (i + 1) + ": " + n.inner + " tips (previous rounds: " + total + " tips)");
+      $.append("\n Round " + (i + 1) + ": " + n.inner + " tips (previous rounds: " + total + " tips)");
       total += n.inner;
     }
     if (i != MAX_PASSES) {
-      status.append("\n Applied a total of " + total + " tips in " + i + " rounds");
-      return eclipse.announce(status);
+      $.append("\n Applied a total of " + total + " tips in " + i + " rounds");
+      return eclipse.announce($);
     }
-    status.append("\n too many passes; aborting");
-    throw new ExecutionException(status + "");
+    $.append("\n too many passes; aborting");
+    throw new ExecutionException($ + "");
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
@@ -97,11 +97,11 @@ public abstract class LaconizeSelection extends BaseHandler {
     }
 
     @Override public Range getSelection(final ICompilationUnit u) {
-      final ASTNode n = eclipse.getNodeByMarker(u, marker);
-      if (n == null)
+      final ASTNode $ = eclipse.getNodeByMarker(u, marker);
+      if ($ == null)
         return null;
-      final ASTNode a = searchAncestors.forClass(clazz).from(n);
-      return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
+      final ASTNode a = searchAncestors.forClass(clazz).from($);
+      return a == null ? new Range($.getStartPosition(), $.getStartPosition() + $.getLength())
           : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
     }
 

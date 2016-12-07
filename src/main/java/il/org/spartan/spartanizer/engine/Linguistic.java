@@ -11,20 +11,20 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2.6 */
 public interface Linguistic {
   /** Error string, replacing null/error value. */
-  final String UNKNOWN = "???";
-  final String SEPARATOR = ", ";
-  final String DOUBLE_FORMAT = "0.00";
-  final String TRIM_SUFFIX = "...";
-  final int TRIM_THRESHOLD = 50;
+  String UNKNOWN = "???";
+  String SEPARATOR = ", ";
+  String DOUBLE_FORMAT = "0.00";
+  String TRIM_SUFFIX = "...";
+  int TRIM_THRESHOLD = 50;
 
   /** Cut string's suffix to maximal length for every row.
    * @param s JD
    * @return cut string */
   static String trim(final String s) {
-    final String[] rows = s.split("\n");
-    for (int ¢ = 0; ¢ < rows.length; ++¢)
-      rows[¢] = trimAbsolute(rows[¢], TRIM_THRESHOLD, TRIM_SUFFIX);
-    return String.join("\n", rows);
+    final String[] $ = s.split("\n");
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = trimAbsolute($[¢], TRIM_THRESHOLD, TRIM_SUFFIX);
+    return String.join("\n", $);
   }
 
   /** Cut string's suffix to maximal length.
@@ -37,9 +37,9 @@ public interface Linguistic {
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 
-  static String time(final long t) {
+  static String time(final long $) {
     try {
-      return new DecimalFormat(DOUBLE_FORMAT).format(t / 1000000000.0);
+      return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
     } catch (final ArithmeticException ¢) {
       monitor.log(¢);
       return UNKNOWN;
