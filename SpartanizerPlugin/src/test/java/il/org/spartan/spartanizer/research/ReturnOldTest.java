@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class ReturnOldTest {
-  @Ignore @Test public void a() {
+  @Test public void a() {
     trimmingOf("int $=value;  value=newValue;  return $;").withTipper(Block.class, new ReturnOld()).gives("return update(value).with(newValue).getOld();");
   }
 }

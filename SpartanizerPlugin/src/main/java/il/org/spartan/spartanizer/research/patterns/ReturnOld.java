@@ -9,13 +9,14 @@ import il.org.spartan.spartanizer.research.*;
  * @year 2016 */
 public final class ReturnOld extends NanoPatternTipper<Block> {
   private static final UserDefinedTipper<Block> tipper = TipperFactory//
-      .statementsPattern("$N1 $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old");
+      .statementsPattern("$T $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();
   }
 
   @Override public boolean canTip(final Block x) {
+    System.out.println(x);
     return tipper.canTip(x);
   }
 
