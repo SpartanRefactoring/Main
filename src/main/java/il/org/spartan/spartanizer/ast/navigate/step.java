@@ -173,6 +173,10 @@ public enum step {
     return ¢ == null ? null : ¢.getExpression();
   }
 
+  public static Expression expression(final FieldAccess ¢) {
+    return ¢ == null ? null : ¢.getExpression();
+  }
+  
   @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
     return ¢ == null ? null : ¢.expressions();
   }
