@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("boxing") @Override public ASTNode replacement(final SwitchStatement s) {
+  @Override @SuppressWarnings("boxing") public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     @SuppressWarnings("unchecked") final List<Statement> ss = s.statements();

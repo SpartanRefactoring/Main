@@ -118,7 +118,7 @@ public class ParseASTTest {
     });
   }
 
-  @SuppressWarnings("static-method") @Test public void testStepMethod_01() {
+  @Test @SuppressWarnings("static-method") public void testStepMethod_01() {
     makeAST.COMPILATION_UNIT.from(
         "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
             + "public class Test {\n" + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n"
