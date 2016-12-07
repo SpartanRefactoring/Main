@@ -69,12 +69,12 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           l.remove(¢);
         }
         for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
-          if (((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE) || (l.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT))
-              && (l.get(¢ + 1).getNodeType() == ASTNode.BREAK_STATEMENT))
+          if ((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE || l.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT)
+              && l.get(¢ + 1).getNodeType() == ASTNode.BREAK_STATEMENT)
             l.remove(¢);
         if (l.size() == 1)
           l.remove(0);
-        if (l.size() == 2 && (l.get(0).getNodeType() == ASTNode.SWITCH_CASE) && (l.get(1).getNodeType() == ASTNode.BREAK_STATEMENT)) {
+        if (l.size() == 2 && l.get(0).getNodeType() == ASTNode.SWITCH_CASE && l.get(1).getNodeType() == ASTNode.BREAK_STATEMENT) {
           l.remove(1);
           l.remove(0);
         }
@@ -99,11 +99,11 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @SuppressWarnings("boxing") @Override protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-    if (!l.isEmpty() && (l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE))
+    if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE)
       return true;
-    for (Integer k : range.from(0).to(l.size() - 1))
+    for (final Integer k : range.from(0).to(l.size() - 1))
       if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
-          || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && (l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE)
+          || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE
               && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
         return true;
     return false;

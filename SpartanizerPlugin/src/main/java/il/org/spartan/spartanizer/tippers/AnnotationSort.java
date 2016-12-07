@@ -43,7 +43,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
   }
 
   @SuppressWarnings("boxing") public static int rankAnnotation(final String annotationName) {
-    for (Integer $ : range.from(0).to(rankTable.size()))
+    for (final Integer $ : range.from(0).to(rankTable.size()))
       if (rankTable.get($).contains(annotationName))
         return $;
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
@@ -64,7 +64,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
   @Override public Tip tip(final N n) {
     final ASTNode x = replacement(n);
     return x == null || az.bodyDeclaration(x) == null ? null : new Tip(description(n), n, this.getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, x, g);
       }
     };
