@@ -633,4 +633,10 @@ public enum step {
   public static List<Statement> statements(final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static SimpleName name(FieldAccess ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
 }
