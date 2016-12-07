@@ -154,7 +154,7 @@ public class Matcher {
 
   /** @param p
    * @return */
-  private static boolean is$T(ASTNode p) {
+  private static boolean is$T(final ASTNode p) {
     return iz.type(p) && matches$T(p + "");
   }
 

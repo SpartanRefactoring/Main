@@ -56,10 +56,10 @@ public class Analyze {
 
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
-    List<MethodDeclaration> methods = new ArrayList<>();
+    final List<MethodDeclaration> methods = new ArrayList<>();
     for (final File f : inputFiles()) {
       // System.out.println(f.getName());
-      CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+      final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
@@ -87,7 +87,7 @@ public class Analyze {
   }
 
   public static Toolbox toolboxWithNanoPatterns() {
-    return addNanoPatterns((new InteractiveSpartanizer())).toolbox;
+    return addNanoPatterns(new InteractiveSpartanizer()).toolbox;
   }
 
   /** run an interactive classifier to classify nanos! */

@@ -32,7 +32,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
 
   /** @param arguments
    * @return */
-  private static boolean areAtomic(List<Expression> arguments) {
+  private static boolean areAtomic(final List<Expression> arguments) {
     return arguments.stream().allMatch(¢ -> iz.name(¢) || iz.literal(¢));
   }
 

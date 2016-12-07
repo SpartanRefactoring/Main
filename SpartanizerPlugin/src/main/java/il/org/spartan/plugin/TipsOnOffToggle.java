@@ -16,11 +16,10 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
 public final class TipsOnOffToggle extends AbstractHandler {
-  @SuppressWarnings("boxing")
-  private static void disableNature(final IProject p) throws CoreException {
+  @SuppressWarnings("boxing") private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
-    for(Integer i : range.from(0).to(natures.length))
+    for (final Integer i : range.from(0).to(natures.length))
       if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);
