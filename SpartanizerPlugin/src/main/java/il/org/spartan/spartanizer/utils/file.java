@@ -17,8 +17,8 @@ public enum file {
     final Path source = Paths.get(from);
     try {
       Files.move(source, source.resolveSibling(to));
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
   }
 
