@@ -37,8 +37,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       final MethodDeclaration pp = (MethodDeclaration) p1;
       final List<SingleVariableDeclaration> l = parameters(pp);
       if (l.size() == 1) {
-        final SingleVariableDeclaration parameter = onlyOne(l);
-        final SimpleName sn = parameter.getName();
+        final SimpleName sn = onlyOne(l).getName();
         assert sn != null;
         if (in(sn.getIdentifier(), "¢"))
           return null;

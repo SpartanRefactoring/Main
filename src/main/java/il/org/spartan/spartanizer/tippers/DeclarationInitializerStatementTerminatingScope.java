@@ -101,12 +101,10 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   private static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    final Type t = az.variableDeclarationStatement(f.getParent()).getType();
-    final String $ = getElTypeNameFromArrayType(t);
+    final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    final Type it = ((ArrayCreation) f.getInitializer()).getType();
-    final String initializerElementTypeName = getElTypeNameFromArrayType(it);
+    final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 }
