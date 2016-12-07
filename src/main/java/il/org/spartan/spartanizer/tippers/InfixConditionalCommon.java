@@ -34,10 +34,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.CommnoFactoring {
-  private static Expression chopHead(final InfixExpression x) {
-    final List<Expression> $ = extract.allOperands(x);
+  private static Expression chopHead(final InfixExpression ¢) {
+    final List<Expression> $ = extract.allOperands(¢);
     $.remove(0);
-    return $.size() < 2 ? duplicate.of(first($)) : subject.operands($).to(x.getOperator());
+    return $.size() < 2 ? duplicate.of(first($)) : subject.operands($).to(¢.getOperator());
   }
 
   private static Operator conjugate(final Operator ¢) {

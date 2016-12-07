@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
-  private static InfixExpression replace(final InfixExpression x) {
-    final List<Expression> $ = extract.allOperands(x);
+  private static InfixExpression replace(final InfixExpression ¢) {
+    final List<Expression> $ = extract.allOperands(¢);
     swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }

@@ -21,8 +21,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
   }
 
   @Override @SuppressWarnings("boxing") public Tip tip(final WhileStatement s) {
-    final int num = new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1);
-    if (num > 0)
+    if (new Recurser<>(s, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.BREAK_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0)
       return null;
     final ReturnStatement $ = extract.nextReturn(s);
     if ($ == null || new Recurser<>(s, 0).preVisit((x) -> (!iz.breakStatement(az.statement(x.getRoot())) ? x.getCurrent() : 1 + x.getCurrent())) != 0 || iz.block(s.getBody()))

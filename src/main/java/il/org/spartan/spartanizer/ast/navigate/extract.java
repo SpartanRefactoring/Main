@@ -72,11 +72,11 @@ public enum extract {
     return az.returnStatement(¢);
   }
 
-  /** @param n a statement or block to extract the assignment from
+  /** @param ¢ a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
-  public static Assignment assignment(final ASTNode n) {
-    final ExpressionStatement $ = extract.expressionStatement(n);
+  public static Assignment assignment(final ASTNode ¢) {
+    final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ == null ? null : az.assignment($.getExpression());
   }
 
@@ -368,14 +368,14 @@ public enum extract {
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
-   * @param s JD
+   * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement nextStatement(final Statement s) {
-    if (s == null)
+  public static Statement nextStatement(final Statement ¢) {
+    if (¢ == null)
       return null;
-    final Block $ = az.block(s.getParent());
-    return $ == null ? null : next(s, extract.statements($));
+    final Block $ = az.block(¢.getParent());
+    return $ == null ? null : next(¢, extract.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {

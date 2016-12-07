@@ -26,10 +26,10 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
     return ¢.getOperator() != PLUS ? null : plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 
-  private Expression heart(final Expression x) {
-    if (iz.nodeTypeEquals(x, PARENTHESIZED_EXPRESSION))
-      return heart(step.expression(x));
-    final PrefixExpression $ = az.prefixExpression(x);
-    return $ == null || $.getOperator() != PLUS ? x : heart($.getOperand());
+  private Expression heart(final Expression ¢) {
+    if (iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION))
+      return heart(step.expression(¢));
+    final PrefixExpression $ = az.prefixExpression(¢);
+    return $ == null || $.getOperator() != PLUS ? ¢ : heart($.getOperand());
   }
 }

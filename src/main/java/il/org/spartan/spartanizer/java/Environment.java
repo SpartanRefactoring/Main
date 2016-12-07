@@ -204,10 +204,10 @@ public interface Environment {
       // Holds the current scope full name (Path).
       String scopePath = "";
 
-      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration ¢) {
         // As of JSL3, AnonymousClassDeclaration's parent can be either
         // ClassInstanceCreation or EnumConstantDeclaration
-        @SuppressWarnings("hiding") final ASTNode $ = d.getParent();
+        @SuppressWarnings("hiding") final ASTNode $ = ¢.getParent();
         if ($ instanceof ClassInstanceCreation)
           return az.classInstanceCreation($).getType() + "";
         assert $ instanceof EnumConstantDeclaration;
