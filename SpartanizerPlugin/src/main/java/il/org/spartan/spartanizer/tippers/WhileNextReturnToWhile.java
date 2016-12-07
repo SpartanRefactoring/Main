@@ -31,8 +31,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
     final WhileStatement retWhile = duplicate.of(s);
     final List<Statement> lst = extract.statements(retWhile.getBody());
     lst.add(inlineIf);
-    final Block b = subject.ss(lst).toBlock();
-    retWhile.setBody(b);
+    retWhile.setBody(subject.ss(lst).toBlock());
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(s, retWhile, g);
