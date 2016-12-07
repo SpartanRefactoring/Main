@@ -4,7 +4,6 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,23 +26,23 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
+  // TODO: Doron Meshulam - make sure you use class `searchAncestors' and 'lisp.onlyOne` instead of this.
+  // Also, you while loop should have been a for.
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    ASTNode p = s; 
-    while(!(p instanceof MethodDeclaration))
+    ASTNode p = s;
+    while (!(p instanceof MethodDeclaration))
       p = p.getParent();
-    
     if (p instanceof MethodDeclaration) {
       final MethodDeclaration pp = (MethodDeclaration) p;
-      List<SingleVariableDeclaration> l = parameters(pp);
+      final List<SingleVariableDeclaration> l = parameters(pp);
       if (l.size() == 1) {
-      final SingleVariableDeclaration parameter = onlyOne(l);
-      final SimpleName sn = parameter.getName();
-      assert sn != null;
-      if (in(sn.getIdentifier(), "¢"))
-        return null;
+        final SingleVariableDeclaration parameter = onlyOne(l);
+        final SimpleName sn = parameter.getName();
+        assert sn != null;
+        if (in(sn.getIdentifier(), "¢"))
+          return null;
       }
     }
-    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
