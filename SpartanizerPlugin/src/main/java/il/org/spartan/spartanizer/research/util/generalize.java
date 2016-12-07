@@ -62,13 +62,6 @@ public class generalize {
         r.replace($, ast.newSimpleName(renaming.get(name)), null);
         return super.visit($);
       }
-      // @Override public boolean visit(final QualifiedName node) {
-      // final String name = ((Name) node).getFullyQualifiedName();
-      // if (!renaming.containsKey(name))
-      // renaming.put(name, renderIdentifier("N"));
-      // r.replace(node, ast.newSimpleName(renaming.get(name)), null);
-      // return super.visit(node);
-      // }
     });
     try {
       r.rewriteAST($, null).apply($);
