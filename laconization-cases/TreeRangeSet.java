@@ -146,10 +146,10 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
   }
 
   @Nullable
-  private Range<C> rangeEnclosing(Range<C> c) {
-    checkNotNull(c);
-    Entry<Cut<C>, Range<C>> floorEntry = rangesByLowerBound.floorEntry(c.lowerBound);
-    return floorEntry == null || !floorEntry.getValue().encloses(c) ? null : floorEntry.getValue();
+  private Range<C> rangeEnclosing(Range<C> ¢) {
+    checkNotNull(¢);
+    Entry<Cut<C>, Range<C>> $ = rangesByLowerBound.floorEntry(¢.lowerBound);
+    return $ == null || !$.getValue().encloses(¢) ? null : $.getValue();
   }
 
   @Override
