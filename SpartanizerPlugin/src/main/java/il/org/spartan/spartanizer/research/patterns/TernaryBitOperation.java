@@ -13,12 +13,12 @@ public class TernaryBitOperation extends NanoPatternTipper<ConditionalExpression
   private static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$X == 0 ? 0 : 1", "Bit.val($X)", ""));
-      add(TipperFactory.patternTipper("0 == $X ? 0 : 1", "Bit.val($X)", ""));
+      add(TipperFactory.patternTipper("$X == 0 ? 0 : 1", "Bit.of($X)", ""));
+      add(TipperFactory.patternTipper("0 == $X ? 0 : 1", "Bit.of($X)", ""));
       add(TipperFactory.patternTipper("$X == 0 ? 1 : 0", "Bit.not($X)", ""));
       add(TipperFactory.patternTipper("0 == $X ? 1 : 0", "Bit.not($X)", ""));
-      add(TipperFactory.patternTipper("($X == 0) ? 0 : 1", "Bit.val($X)", ""));
-      add(TipperFactory.patternTipper("(0 == $X) ? 0 : 1", "Bit.val($X)", ""));
+      add(TipperFactory.patternTipper("($X == 0) ? 0 : 1", "Bit.of($X)", ""));
+      add(TipperFactory.patternTipper("(0 == $X) ? 0 : 1", "Bit.of($X)", ""));
       add(TipperFactory.patternTipper("($X == 0) ? 1 : 0", "Bit.not($X)", ""));
       add(TipperFactory.patternTipper("(0 == $X) ? 1 : 0", "Bit.not($X)", ""));
     }
@@ -28,7 +28,7 @@ public class TernaryBitOperation extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip tip(final ConditionalExpression ¢) {
+  @Override public Tip pattern(ConditionalExpression ¢) {
     return firstThatTips(tippers, ¢).tip(¢);
   }
 

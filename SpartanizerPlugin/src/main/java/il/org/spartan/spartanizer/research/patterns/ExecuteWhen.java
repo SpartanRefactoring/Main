@@ -3,18 +3,17 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.idiomatics.*;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
- * @year 2016 */
+ * @since Nov 7, 2016 */
 public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
@@ -29,10 +28,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public boolean canTip(final IfStatement x) {
-    for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)) && !containsReferencesToNonFinal(x))
-        return true;
-    return false;
+    return anyTips(tippers, x) && !throwing(then(x)) && !iz.returnStatement(then(x)) && !containsReferencesToNonFinal(x);
   }
 
   /** @param x
@@ -58,18 +54,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip tip(final IfStatement x) {
-    return new Tip(description(x), x, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-          if (¢.canTip(x)) {
-            ¢.tip(x).go(r, g);
-            idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(x)), r);
-            Logger.logNP(x, "ApplyWhen");
-            return;
-          }
-        assert false;
-      }
-    };
+  @Override public Tip pattern(final IfStatement x) {
+    return firstTip(tippers, x);
   }
 }

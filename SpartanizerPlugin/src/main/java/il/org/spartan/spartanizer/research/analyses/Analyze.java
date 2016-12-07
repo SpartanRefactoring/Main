@@ -257,20 +257,20 @@ public class Analyze {
             null) //
         .add(EnhancedForStatement.class, //
             new AnyMatches(), //
-            new Contains(), //
+            new ContainsEnhancedFor(), //
             new ForEach(), //
             new FindFirstEnhancedFor(), //
-            new Reduce(), //
+            new ReduceEnhancedFor(), //
             null) //
         .add(ForStatement.class, //
-            new Contains2(), //
+            new Contains(), //
             // new CopyArray(), //
-            new FindFirst2(), //
-            new ForEach2(), //
+            new FindFirst(), //
+            new ForEachEnhanced(), //
             // new InitArray(), //
-            new Max2(), //
-            new Min2(), //
-            new Reduce2(), //
+            new MaxEnhanced(), //
+            new Min(), //
+            new Reduce(), //
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //

@@ -19,7 +19,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @author Doron Meshulam */
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") final MethodDeclaration __) {
+  @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;
   }
 

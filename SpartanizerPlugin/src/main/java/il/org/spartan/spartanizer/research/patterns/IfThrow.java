@@ -21,8 +21,7 @@ public final class IfThrow extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(¢) && nullTipper.cantTip(¢);
   }
 
-  @Override public Tip tip(final IfStatement ¢) {
-    Logger.logNP(¢, getClass().getSimpleName());
+  @Override public Tip pattern(final IfStatement ¢) {
     return tipper.tip(¢);
   }
 }
