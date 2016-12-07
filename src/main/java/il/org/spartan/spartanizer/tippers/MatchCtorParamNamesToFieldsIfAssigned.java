@@ -36,16 +36,27 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       Expression e = ((ExpressionStatement) s).getExpression();
       if (!(e instanceof Assignment))
         continue;
+      
       Assignment a = (Assignment) e;
-      Expression leftAss = a.getLeftHandSide();
+      Expression leftAss = a.getLeftHandSide(); // LOL ^_^
       Expression rightAss = a.getRightHandSide();
-      if (!(leftAss instanceof FieldAccess) || !(((FieldAccess) leftAss).getExpression() instanceof ThisExpression))
+      if(!(leftAss instanceof FieldAccess)) {
         continue;
-      SimpleName fieldName = ((FieldAccess) leftAss).getName();
+      }
+      
+      if(!(((FieldAccess)leftAss).getExpression() instanceof ThisExpression)) {
+        continue;
+      }
+      
+      SimpleName fieldName = ((FieldAccess)leftAss).getName();
       if (!(rightAss instanceof SimpleName)) {
         continue;
       }
-      SimpleName paramName = (SimpleName) a.getRightHandSide();
+      SimpleName paramName = (SimpleName)a.getRightHandSide();
+//    Check if right is parameter and also there wasn't a local variable in the name of the field4
+//        
+//      
+//    List<String> uses = Collect.usesOf("y").inside(d.getBody());
     }
     
     
