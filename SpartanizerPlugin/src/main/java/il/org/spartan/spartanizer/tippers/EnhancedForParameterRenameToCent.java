@@ -1,11 +1,17 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
+
+import java.lang.reflect.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -21,6 +27,23 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
+    ASTNode p = s;
+    while(!(p instanceof MethodDeclaration))
+      p = p.getParent();
+    
+    if (p instanceof MethodDeclaration) {
+      final MethodDeclaration pp = (MethodDeclaration) p;
+      List<SingleVariableDeclaration> l = parameters(pp);
+      if (l.size() == 1) {
+      final SingleVariableDeclaration parameter = onlyOne(l);
+      final SimpleName sn = parameter.getName();
+      assert sn != null;
+      if (in(sn.getIdentifier(), "¢"))
+        return null;
+      }
+    }
+    
+    
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))

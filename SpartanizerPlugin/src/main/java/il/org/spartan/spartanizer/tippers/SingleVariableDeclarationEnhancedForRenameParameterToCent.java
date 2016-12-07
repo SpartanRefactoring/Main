@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import java.util.*;
@@ -8,6 +9,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -28,6 +31,22 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
     final EnhancedForStatement s = (EnhancedForStatement) p;
+    
+    ASTNode p1 = s;
+    while (!(p1 instanceof MethodDeclaration))
+      p1 = p1.getParent();
+    if (p1 instanceof MethodDeclaration) {
+      final MethodDeclaration pp = (MethodDeclaration) p1;
+      List<SingleVariableDeclaration> l = parameters(pp);
+      if (l.size() == 1) {
+        final SingleVariableDeclaration parameter = onlyOne(l);
+        final SimpleName sn = parameter.getName();
+        assert sn != null;
+        if (in(sn.getIdentifier(), "¢"))
+          return null;
+      }
+    }
+    
     final Statement body = s.getBody();
     if (body == null || !isJohnDoe(d))
       return null;
