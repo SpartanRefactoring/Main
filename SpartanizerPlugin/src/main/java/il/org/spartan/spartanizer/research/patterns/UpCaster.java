@@ -1,22 +1,18 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author TODO Ori Marcovitch
+/** @author Ori Marcovitch
  * @since 2016 */
 public class UpCaster extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  @Override protected boolean prerequisites(final MethodDeclaration d) {
-    if (step.body(d) == null)
-      return false;
-    final CastExpression $ = az.castExpression(expression(az.returnStatement(lisp.onlyOne(statements(body(d))))));
-    final SingleVariableDeclaration p = lisp.onlyOne(parameters(d));
-    return $ != null && p != null && ($.getType() + "").equals(step.returnType(d) + "") && (p.getName() + "").equals(expression($) + "");
+  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+    return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && notVoid(¢) && !returnTypeSameAsParameter(¢)
+        && iz.name(expression(az.returnStatement(onlyOne(statements(¢)))));
   }
 }
