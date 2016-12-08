@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link InitializationListRemoveComma} of previously failed tests. 
- * Related to Issue074 and {@link Version230}. 
+/** This is a unit test for {@link InitializationListRemoveComma} of previously
+ * failed tests. Related to Issue074 and {@link Version230}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore

@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link IfTrueOrFalse} of previously failed tests. 
- * Related to {@link Version250} and {@link Issue086}. 
+/** This is a unit test for {@link IfTrueOrFalse} of previously failed tests.
+ * Related to {@link Version250} and {@link Issue086}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
