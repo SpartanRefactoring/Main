@@ -36,6 +36,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        // TODO: Use step.statements.
         @SuppressWarnings("unchecked") final List<Statement> ll = s.statements();
         if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break")) {
           r.remove(s, g);
