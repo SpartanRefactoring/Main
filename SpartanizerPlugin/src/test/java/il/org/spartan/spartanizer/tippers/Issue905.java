@@ -4,9 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link RemoveRedundantIf}, {@link RemoveRedundantFor}, {@link RemoveRedundantWhile}
- *     of previously failed tests. 
- * Related to {@link Issue251}. 
+/** This is a unit test for {@link RemoveRedundantIf},
+ * {@link RemoveRedundantFor}, {@link RemoveRedundantWhile} of previously failed
+ * tests. Related to {@link Issue251}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
@@ -16,12 +16,12 @@ public class Issue905 {
     trimmingOf("if(b()){int i;}")//
         .gives("if(b()){}");
   }
-  
+
   @Test public void t12() {
     trimmingOf("if(b==true){int i=5,q=g();}")//
         .gives("if(b){int q=g();}");
   }
-  
+
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
         .gives("if(b==q()){}")//
