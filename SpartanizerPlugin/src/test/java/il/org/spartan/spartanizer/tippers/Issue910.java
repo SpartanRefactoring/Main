@@ -4,8 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for a bug (issue 445) in {@link MethodDeclarationRenameReturnToDollar} of previously failed tests. 
- * Related to {@link Issue445}. 
+/** This is a unit test for a bug (issue 445) in
+ * {@link MethodDeclarationRenameReturnToDollar} of previously failed tests.
+ * Related to {@link Issue445}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
