@@ -13,17 +13,13 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @since 03-12-16 */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
-  @Override public ASTNode replacement(final Statement s) {
-    if (!(s instanceof ReturnStatement))
-      return null;
-    final ReturnStatement __ = az.returnStatement(s);
-    if (!(__.getExpression() instanceof ConditionalExpression) && !(__.getExpression() instanceof ParenthesizedExpression))
-      return null;
+  
+  private static ASTNode innerReplacement(Expression x, Statement s) {
     ConditionalExpression ¢;
-    if (!(__.getExpression() instanceof ParenthesizedExpression))
-      ¢ = az.conditionalExpression(__.getExpression());
+    if (!(x instanceof ParenthesizedExpression))
+      ¢ = az.conditionalExpression(x);
     else {
-      final Expression unpar = az.parenthesizedExpression(__.getExpression()).getExpression();
+      final Expression unpar = az.parenthesizedExpression(x).getExpression();
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
@@ -37,6 +33,24 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     elze.setExpression(duplicate.of(¢.getElseExpression()));
     $.setElseStatement(duplicate.of(az.statement(elze)));
     return $;
+  }
+  
+  private static ASTNode replaceAssignment(final Statement s) {
+    Assignment __ = az.assignment(s);
+    return __ == null ? null : innerReplacement(__.getRightHandSide(),s);
+  }
+  
+  private static ASTNode replaceReturn(final Statement s) {
+    if (!(s instanceof ReturnStatement))
+      return null;
+    final ReturnStatement __ = az.returnStatement(s);
+    return !(__.getExpression() instanceof ConditionalExpression) && !(__.getExpression() instanceof ParenthesizedExpression) ? null
+        : innerReplacement(__.getExpression(),s);
+  }
+  
+  @Override public ASTNode replacement(final Statement ¢) {
+    ASTNode $ = replaceReturn(¢);
+    return $ != null ? $ : replaceAssignment(¢);   
   }
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
