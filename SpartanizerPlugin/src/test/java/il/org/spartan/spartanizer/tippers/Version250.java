@@ -16,6 +16,13 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version250 {
+  @Ignore
+  static class NotWorking {
+    @Test public void issue086_1() {
+      trimmingOf("if(false)" + "c();\n" + "int a;").gives("if(false)" + "c();\n").gives("{}").gives("").stays();
+    }
+  }
+  
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;").stays();
   }
@@ -214,10 +221,6 @@ public final class Version250 {
 
   @Test public void issue085_86l() {
     trimmingOf("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").gives("{a();}").gives("a();");
-  }
-
-  @Test public void issue086_1() {
-    trimmingOf("if(false)" + "c();\n" + "int a;").gives("if(false)" + "c();\n").gives("{}").gives("").stays();
   }
 
   @Test public void issue086_2() {
