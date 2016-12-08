@@ -14,6 +14,7 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version250 {
   @Test public void additionZeroTest_a() {
