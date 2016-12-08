@@ -45,4 +45,8 @@ public interface MethodPatternUtilitiesTrait {
   default boolean notVoid(final MethodDeclaration ¢) {
     return !iz.voidType(returnType(¢));
   }
+
+  default boolean returnTypeSameAsParameter(MethodDeclaration ¢) {
+    return (type(onlyParameter(¢)) + "").equals((returnType(¢) + ""));
+  }
 }
