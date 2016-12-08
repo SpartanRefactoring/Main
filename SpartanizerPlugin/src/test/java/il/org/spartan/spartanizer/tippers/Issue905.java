@@ -6,7 +6,7 @@ import org.junit.*;
 
 /** This is a unit test for {@link RemoveRedundantIf}, {@link RemoveRedundantFor}, {@link RemoveRedundantWhile}
  *     of previously failed tests. 
- * Related to Issue251. 
+ * Related to {@link Issue251}. 
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
