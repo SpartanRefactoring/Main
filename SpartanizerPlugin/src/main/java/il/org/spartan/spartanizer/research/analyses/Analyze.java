@@ -288,6 +288,7 @@ public class Analyze {
         new Creator(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
+        new DoNothingReturnParam(), //
         new DownCaster(), //
         new Examiner(), //
         new FluentSetter(), ///
@@ -297,6 +298,7 @@ public class Analyze {
         new SuperDelegator(), //
         new Thrower(), //
         new TypeChecker(), //
+        new UpCaster(), //
         null);
   }
 
@@ -306,6 +308,7 @@ public class Analyze {
         new Independent(), //
         new JDPattern(), //
         new MethodEmpty(), //
+        new UseParameterAndReturnIt(), //
         null);
   }
 }

@@ -16,7 +16,6 @@ public final class ReturnOld extends NanoPatternTipper<Block> {
   }
 
   @Override public boolean canTip(final Block x) {
-    System.out.println(x);
     return tipper.canTip(x);
   }
 
