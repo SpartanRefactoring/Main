@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -20,6 +21,7 @@ public class Issue321 {
             "   instance = allTippers();" + //
             " return instance;" + //
             "}")//
+                .withTipper(Block.class, new CachingPattern())
                 .gives( //
                     "public static Toolbox defaultInstance() {" + //
                         " return  instance != null ? instance : (instance = allTippers());" + //
