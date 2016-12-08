@@ -112,8 +112,8 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
    * @param length2 - length of second interval SPARTANIZED - should use
    * Athenizer one day to understand it */
   private static boolean intervalsIntersect(int startChar1, int length1, int startChar2, int length2) {
-    return startChar1 < startChar2 && length1 + startChar1 > startChar2 || startChar1 > startChar2 && length2 + startChar2 > startChar1
-        || length1 > 0 && length2 > 0;
+    return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
+        : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
   private static List<ASTNode> selectedStatements(List<ASTNode> ns) {
