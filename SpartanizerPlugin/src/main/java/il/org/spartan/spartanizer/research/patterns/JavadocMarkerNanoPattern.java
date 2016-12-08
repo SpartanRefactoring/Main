@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> {
+public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> implements MethodPatternUtilitiesTrait {
   @Override public final boolean canTip(final N ¢) {
     // System.out.println("checking " + javadoc());
     final Javadoc $ = ¢.getJavadoc();

@@ -10,9 +10,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class UpCaster extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && notVoid(¢) && !returnTypeSameAsParameter(¢)
-        && iz.name(expression(az.returnStatement(onlyOne(statements(¢)))));
+    return hazOneParameter(¢) && body(¢) != null && !iz.constructor(¢) && !iz.voidType(returnType(¢))
+        && returnStatements(¢).stream().map(r -> expression(r) + "").allMatch(e -> e.equals(identifier(name(onlyOne(parameters(¢))))));
   }
 }

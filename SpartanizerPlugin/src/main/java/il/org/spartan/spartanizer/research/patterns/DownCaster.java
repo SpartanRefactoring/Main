@@ -9,10 +9,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class DownCaster extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    if (body(d) == null)
+    if (!hazOneStatement(d))
       return false;
-    final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyOne(statements(body(d))))));
+    final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyOne(statements(d)))));
     final SingleVariableDeclaration p = onlyOne(parameters(d));
-    return $ != null && p != null && (type($) + "").equals(returnType(d) + "") && (name(p) + "").equals(expression($) + "");
+    return $ != null && p != null && returnTypeSameAs(d, type($)) && same(name(p), expression($));
   }
 }

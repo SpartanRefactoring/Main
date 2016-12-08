@@ -67,8 +67,8 @@ public final class TrimmerTestsUtils {
       checkSame();
     }
 
-    public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> t) {
-      trimmer.add(n, t);
+    public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> ¢) {
+      trimmer.add(n, ¢);
       return this;
     }
   }
