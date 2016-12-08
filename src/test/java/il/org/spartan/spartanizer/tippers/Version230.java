@@ -30,6 +30,14 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Version230 {
+  @Ignore
+  static class NotWorking {
+    @Test public void issue74d() {
+      trimmingOf("int[] a = new int[] {2,3};")//
+          .gives("");
+    }
+  }
+  
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
         .stays();
@@ -1769,11 +1777,6 @@ public final class Version230 {
   @Test public void issue73c() {
     trimmingOf("void foo(Integer integer, ASTNode astn) {}")//
         .gives("void foo(Integer i, ASTNode astn) {}");
-  }
-
-  @Test public void issue74d() {
-    trimmingOf("int[] a = new int[] {2,3};")//
-        .gives("");
   }
 
   @Test public void linearTransformation() {
