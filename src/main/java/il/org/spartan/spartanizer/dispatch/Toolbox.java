@@ -145,8 +145,6 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            new RemoveRedundantSwitchCases(), // Issue 889
-            // new RemoveRedundantSwitchBranch(), // Issue 889 v 2.7
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
