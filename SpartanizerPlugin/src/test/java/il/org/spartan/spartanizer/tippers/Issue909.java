@@ -8,10 +8,9 @@ import org.junit.*;
  * tests. Related to {@link Issue234}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue909 {
   @Test public void b$03() {
-    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("try { } catch(Exception e) { return -1; }");
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("int a;");
   }
 }
