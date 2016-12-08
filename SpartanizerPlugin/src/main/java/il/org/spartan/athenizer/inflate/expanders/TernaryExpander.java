@@ -13,9 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @since 03-12-16 */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
-  
-  private static ASTNode innerReplacement(Expression x, Statement s) {
-    //System.out.println("ALL EXPTRE=====> " + x.toString());
+  private static ASTNode innerReplacement(final Expression x, final Statement s) {
+    // System.out.println("ALL EXPTRE=====> " + x.toString());
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -35,25 +34,25 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     $.setElseStatement(duplicate.of(az.statement(elze)));
     return $;
   }
-  
+
   private static ASTNode replaceAssignment(final Statement s) {
-    if(az.expressionStatement(s)==null)
+    if (az.expressionStatement(s) == null)
       return null;
-    Assignment __ = az.assignment(az.expressionStatement(s).getExpression());
-    return __ == null ? null : innerReplacement(__.getRightHandSide(),s);
+    final Assignment __ = az.assignment(az.expressionStatement(s).getExpression());
+    return __ == null ? null : innerReplacement(__.getRightHandSide(), s);
   }
-  
+
   private static ASTNode replaceReturn(final Statement s) {
     if (!(s instanceof ReturnStatement))
       return null;
     final ReturnStatement __ = az.returnStatement(s);
     return !(__.getExpression() instanceof ConditionalExpression) && !(__.getExpression() instanceof ParenthesizedExpression) ? null
-        : innerReplacement(__.getExpression(),s);
+        : innerReplacement(__.getExpression(), s);
   }
-  
+
   @Override public ASTNode replacement(final Statement ¢) {
-    ASTNode $ = replaceReturn(¢);
-    return $ != null ? $ : replaceAssignment(¢);   
+    final ASTNode $ = replaceReturn(¢);
+    return $ != null ? $ : replaceAssignment(¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {

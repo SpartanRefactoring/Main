@@ -22,7 +22,7 @@ public final class Version250 {
       trimmingOf("if(false)" + "c();\n" + "int a;").gives("if(false)" + "c();\n").gives("{}").gives("").stays();
     }
   }
-  
+
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;").stays();
   }
