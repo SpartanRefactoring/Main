@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return oneParameter(¢) && body(¢) != null && !iz.constructor(¢) && !iz.voidType(returnType(¢))
+    return hazOneParameter(¢) && body(¢) != null && !iz.constructor(¢) && !iz.voidType(returnType(¢))
         && returnStatements(¢).stream().map(r -> expression(r) + "").allMatch(e -> e.equals(identifier(name(onlyOne(parameters(¢))))));
   }
 }
