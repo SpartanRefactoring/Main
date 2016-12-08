@@ -10,7 +10,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class DoNothingReturnParam extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return oneParameter(¢) && hazOneStatement(¢) && returnsParam(¢);
+    return oneParameter(¢) && hazOneStatement(¢) && returnsParam(¢) && returnTypeSameAsParameter(¢);
+  }
+
+  /** @param ¢
+   * @return */
+  private boolean returnTypeSameAsParameter(MethodDeclaration ¢) {
+    return (type(onlyParameter(¢)) + "").equals((returnType(¢) + ""));
   }
 
   /** @param ¢
