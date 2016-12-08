@@ -138,7 +138,6 @@ public class Toolbox {
             new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
-            new WhileNextReturnToWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new RemoveRedundantWhile(), //
