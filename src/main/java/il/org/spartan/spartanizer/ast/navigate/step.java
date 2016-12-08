@@ -176,7 +176,7 @@ public enum step {
   public static Expression expression(final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
-  
+
   @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
     return ¢ == null ? null : ¢.expressions();
   }
@@ -195,7 +195,7 @@ public enum step {
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationStatement ¢) {
-    return ¢.modifiers();
+    return ¢ == null ? null : ¢.modifiers();
   }
 
   /** Expose the list of extended operands in an {@link InfixExpression}
@@ -203,7 +203,7 @@ public enum step {
    * @return reference to the list of extended operands contained in the
    *         parameter */
   @SuppressWarnings("unchecked") public static List<Expression> extendedOperands(final InfixExpression ¢) {
-    return ¢.extendedOperands();
+    return ¢ == null ? null : ¢.extendedOperands();
   }
 
   /** FieldDeclarations of type
@@ -233,7 +233,7 @@ public enum step {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final FieldDeclaration ¢) {
-    return ¢.fragments();
+    return ¢ == null ? null : ¢.fragments();
   }
 
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
@@ -247,66 +247,69 @@ public enum step {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement ¢) {
-    return ¢.fragments();
+    return ¢ == null ? null : ¢.fragments();
   }
 
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return right operand of the parameter */
   public static Expression from(final Assignment ¢) {
-    return ¢.getRightHandSide();
+    return ¢ == null ? null : ¢.getRightHandSide();
   }
 
   public static String identifier(final MethodInvocation ¢) {
-    return identifier(name(¢));
+    return ¢ == null ? null : identifier(name(¢));
   }
 
-  public static String identifier(final SimpleName ¢) {
-    return ¢.getIdentifier();
+  /** @param ¢ JD
+   * @return */
+  public static String identifier(final Name ¢) {
+    return ¢ == null ? null : iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : az.qualifiedName(¢).getFullyQualifiedName();
   }
 
   @SuppressWarnings("unchecked") public static List<ImportDeclaration> importDeclarations(final CompilationUnit ¢) {
-    return ¢.imports();
+    return ¢ == null ? null : ¢.imports();
   }
 
   @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(final CompilationUnit ¢) {
-    return ((List<ImportDeclaration>) ¢.imports()).stream().map(x -> (!x.isStatic() ? "" : "static ") + x.getName() + (!x.isOnDemand() ? "" : ".*"))
-        .collect(Collectors.toList());
+    return ¢ == null ? null
+        : ((List<ImportDeclaration>) ¢.imports()).stream().map(x -> (!x.isStatic() ? "" : "static ") + x.getName() + (!x.isOnDemand() ? "" : ".*"))
+            .collect(Collectors.toList());
   }
 
   /** Expose initializer contained in a {@link VariableDeclaration}
    * @param ¢ JD
    * @return initializer */
   public static Expression initializer(final VariableDeclaration ¢) {
-    return ¢.getInitializer();
+    return ¢ == null ? null : ¢.getInitializer();
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
-    return ¢.initializers();
+    return ¢ == null ? null : ¢.initializers();
   }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param ¢ JD
    * @return left side of the assignment */
   public static Expression left(final Assignment ¢) {
-    return ¢.getLeftHandSide();
+    return ¢ == null ? null : ¢.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
    * @param ¢ JD
    * @return left operand of the parameter */
   public static Expression left(final InfixExpression ¢) {
-    return ¢.getLeftOperand();
+    return ¢ == null ? null : ¢.getLeftOperand();
   }
 
   /** Shorthand for {@link InstanceofExpression#getLeftOperand()}
    * @param ¢ JD
    * @return left operand of the parameter */
   public static Expression left(final InstanceofExpression ¢) {
-    return ¢.getLeftOperand();
+    return ¢ == null ? null : ¢.getLeftOperand();
   }
 
   public static List<ASTNode> marchingList(final ASTNode ¢) {
@@ -320,11 +323,11 @@ public enum step {
   }
 
   public static SimpleName name(final MethodInvocation ¢) {
-    return ¢.getName();
+    return ¢ == null ? null : ¢.getName();
   }
 
   public static SimpleName name(final SuperMethodInvocation ¢) {
-    return ¢.getName();
+    return ¢ == null ? null : ¢.getName();
   }
 
   public static Expression operand(final PostfixExpression ¢) {
@@ -624,12 +627,6 @@ public enum step {
    * @return */
   public static Block body(final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static String identifier(final QualifiedName ¢) {
-    return ¢ == null ? null : ¢.getFullyQualifiedName();
   }
 
   /** @param ¢
