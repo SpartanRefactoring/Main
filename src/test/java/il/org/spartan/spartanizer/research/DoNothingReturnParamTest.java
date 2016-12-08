@@ -33,7 +33,7 @@ public class DoNothingReturnParamTest {
   }
 
   @Test public void a() {
-    assert doNothing("boolean foo(int a){return a;}");
+    assert doNothing("boolean foo(boolean a){return a;}");
   }
 
   @Test public void b() {
@@ -53,11 +53,15 @@ public class DoNothingReturnParamTest {
   }
 
   @Test public void f() {
-    assert doNothing("boolean foo(A a){return a;}");
+    assert doNothing("A foo(A a){return a;}");
   }
 
   @Test public void g() {
     assert not("@Override public boolean unfiltered(A a){}");
+  }
+
+  @Test public void h() {
+    assert not("public static int hashCode(char value){return value;  }");
   }
 
   private static boolean doNothing(final String ¢) {
