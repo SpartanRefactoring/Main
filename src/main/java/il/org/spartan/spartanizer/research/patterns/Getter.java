@@ -1,12 +1,8 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.research.*;
 
@@ -24,6 +20,6 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return statements(body(¢)) != null && !statements(body(¢)).isEmpty() && parameters(¢).isEmpty() && anyTips(tippers, onlyOne(statements(¢)));
+    return hazOneStatement(¢) && hazNoParams(¢) && anyTips(tippers, onlyStatement(¢));
   }
 }

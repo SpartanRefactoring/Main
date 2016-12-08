@@ -538,4 +538,10 @@ public enum az {
   public static FieldAccess fieldAccess(final ASTNode ¢) {
     return ¢ == null ? null : (FieldAccess) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static QualifiedName qualifiedName(final ASTNode ¢) {
+    return ¢ == null ? null : (QualifiedName) ¢;
+  }
 }
