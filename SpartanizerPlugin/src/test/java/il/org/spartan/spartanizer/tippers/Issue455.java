@@ -7,6 +7,7 @@ import org.junit.*;
 
 /** @author Oren Afek
  * @since 2016 Testing {@link LambdaExpressionRemoveRedundantCurlyBraces } */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue455 {
   @Test public void assertStatementShouldntTip() {
