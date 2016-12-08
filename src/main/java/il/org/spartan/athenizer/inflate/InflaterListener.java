@@ -19,9 +19,7 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.athenizer.inflate.expanders.*;
 import il.org.spartan.plugin.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
@@ -50,7 +48,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
         deflate();
   }
 
-  /** Main function of the application.
+  /** Main function of the application.  
    * @param r JD
    * @param statementsListList selection as list of lists of statements
    * @param g JD
@@ -59,26 +57,18 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
    *         in the spartanizer But we should definitely implement it one day
    * @author Raviv Rachmiel
    * @since 12-5-16 */
-  private static boolean rewrite(final ASTRewrite r, final List<ASTNode> ASTNodesList, final TextEditGroup __) {
-    if (ASTNodesList.isEmpty())
+  private static boolean rewrite(final ASTRewrite r, final List<ASTNode> nl, final TextEditGroup __) {
+    boolean $ = false;
+    if (nl.isEmpty())
       return false;
-    for (final ASTNode statement : ASTNodesList) {
-      final List<ReturnStatement> badcode = new ArrayList<>();
-      statement.accept(new ASTVisitor() {
-        @Override public boolean visit(final ReturnStatement node) {
-          badcode.add(node);
-          return true;
-        }
-      });
-      for (final ReturnStatement rStatement : badcode) {
-        final ASTNode change = new TernaryExpander().replacement(rStatement);
-        if (change != null) {
-          r.replace(rStatement, change, __);
-          return true;
-        }
+    for (final ASTNode statement : nl) {  
+      final ASTNode change = new TernaryExpander().replacement(az.statement(statement));
+      if (change != null) {
+        r.replace(statement, change, __);
+        $ = true; 
       }
     }
-    return false;
+    return $;
   }
 
   public static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
@@ -96,24 +86,45 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     }
   }
 
-  private static void inflate() {
-    final List<ASTNode> ss = new ArrayList<>();
-    final WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
-    wcu.compilationUnit.accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement s) {
-        wizard.ast(Selection.Util.current().textSelection.getText()).accept(new ASTVisitor() {
-          @Override public boolean visit(final ReturnStatement sInner) {
-            if (!(s + "").equals(sInner + ""))
-              return false;
-            ss.add(s);
-            return true;
-          }
-        });
+  private static List<ASTNode> getConditionalStatements(WrappedCompilationUnit u) {
+    List<ASTNode> $ = new ArrayList<>();
+    u.compilationUnit.accept(new ASTVisitor() {
+      @Override public boolean visit(ConditionalExpression node) {
+        if(az.statement(node.getParent()) != null)
+          $.add(node.getParent());        
         return true;
       }
-    });
-    commitChanges(wcu, ss);
+   });
+    return $;
   }
+  
+  
+  private static boolean intervalsIntersect(int startChar1,int length1,int startChar2,int length2) {
+    System.out.println("========================");
+    System.out.println("startChar1 - " + startChar1);
+    System.out.println("length1 - " + length1);
+    System.out.println("startLine2 - " + startChar2);
+    System.out.println("length2 - " + length2);
+    System.out.println("========================");
+    return true;
+  }
+  
+  private static List<ASTNode> selectedStatements(List<ASTNode> ns) {
+    List<ASTNode> $ = new ArrayList<>();
+    for(ASTNode ¢ : ns)
+      if(intervalsIntersect(¢.getStartPosition(),¢.getLength(), Selection.Util.current().textSelection.getOffset(), Selection.Util.current().textSelection.getLength()))
+        $.add(¢);
+    return $;
+  }
+  
+  
+  private static void inflate() {
+    WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
+    commitChanges(wcu, selectedStatements(getConditionalStatements(wcu)));
+    }
+    
+
+
 
   private static void deflate() {
     System.out.println("deflating " + Selection.Util.current());
