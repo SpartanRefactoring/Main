@@ -80,6 +80,7 @@ public class Selection extends AbstractSelection<Selection> {
   /** @param ¢ JD
    * @return name for selection, extracted from the compilation units */
   private static String getName(final List<ICompilationUnit> ¢) {
+    // TODO: Yuval Simon study the use of lisp.getOnlyOne and apply here.
     return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? ¢.get(0).getElementName() : ¢.get(0).getResource().getProject().getName();
   }
 
