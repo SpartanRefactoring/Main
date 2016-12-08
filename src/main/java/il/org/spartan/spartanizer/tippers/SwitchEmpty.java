@@ -62,6 +62,8 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return "Remove empty switch statement or switch statement with only default case";
   }
 
+  // TODO: Move this to class extract and make sure no copies occur in other
+  // classes.
   private static List<SwitchCase> getCases(final SwitchStatement s) {
     final List<SwitchCase> $ = new ArrayList<>();
     s.accept(new ASTVisitor() {
