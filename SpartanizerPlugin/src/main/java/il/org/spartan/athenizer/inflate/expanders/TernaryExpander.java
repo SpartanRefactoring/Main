@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
   
   private static ASTNode innerReplacement(Expression x, Statement s) {
+    System.out.println("repTRENARYExp- " + (x + ""));
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);

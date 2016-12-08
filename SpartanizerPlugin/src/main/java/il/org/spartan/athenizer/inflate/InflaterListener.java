@@ -48,7 +48,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
         deflate();
   }
 
-  /** Main function of the application.  
+  /** Main function of the application.
    * @param r JD
    * @param statementsListList selection as list of lists of statements
    * @param g JD
@@ -61,11 +61,11 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     boolean $ = false;
     if (nl.isEmpty())
       return false;
-    for (final ASTNode statement : nl) {  
+    for (final ASTNode statement : nl) {
       final ASTNode change = new TernaryExpander().replacement(az.statement(statement));
       if (change != null) {
         r.replace(statement, change, __);
-        $ = true; 
+        $ = true;
       }
     }
     return $;
@@ -86,45 +86,49 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     }
   }
 
-  private static List<ASTNode> getConditionalStatements(WrappedCompilationUnit u) {
+  private static List<ASTNode> getStatements(WrappedCompilationUnit u) {
     List<ASTNode> $ = new ArrayList<>();
     u.compilationUnit.accept(new ASTVisitor() {
-      @Override public boolean visit(ConditionalExpression node) {
-        if(az.statement(node.getParent()) != null)
-          $.add(node.getParent());        
+      @Override public boolean visit(ReturnStatement node) {
+        $.add(node);
         return true;
       }
-   });
+
+      @Override public boolean visit(ExpressionStatement node) {
+        if(az.assignment(node.getExpression())!=null)
+          $.add(node);
+        return true;
+      }
+    });
     return $;
   }
-  
-  
-  private static boolean intervalsIntersect(int startChar1,int length1,int startChar2,int length2) {
-    System.out.println("========================");
-    System.out.println("startChar1 - " + startChar1);
-    System.out.println("length1 - " + length1);
-    System.out.println("startLine2 - " + startChar2);
-    System.out.println("length2 - " + length2);
-    System.out.println("========================");
-    return true;
+
+  /* @param startChar1 - starting char of first interval
+   * 
+   * @param lenth1 - length of first interval
+   * 
+   * @param startChar2 - starting char of second interval
+   * 
+   * @param length2 - length of second interval SPARTANIZED - should use
+   * Athenizer one day to understand it */
+  private static boolean intervalsIntersect(int startChar1, int length1, int startChar2, int length2) {
+    return startChar1 < startChar2 && length1 + startChar1 > startChar2 || startChar1 > startChar2 && length2 + startChar2 > startChar1
+        || length1 > 0 && length2 > 0;
   }
-  
+
   private static List<ASTNode> selectedStatements(List<ASTNode> ns) {
     List<ASTNode> $ = new ArrayList<>();
-    for(ASTNode ¢ : ns)
-      if(intervalsIntersect(¢.getStartPosition(),¢.getLength(), Selection.Util.current().textSelection.getOffset(), Selection.Util.current().textSelection.getLength()))
+    for (ASTNode ¢ : ns)
+      if (intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
+          Selection.Util.current().textSelection.getLength()))
         $.add(¢);
     return $;
   }
-  
-  
+
   private static void inflate() {
     WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
-    commitChanges(wcu, selectedStatements(getConditionalStatements(wcu)));
-    }
-    
-
-
+    commitChanges(wcu, selectedStatements(getStatements(wcu)));
+  }
 
   private static void deflate() {
     System.out.println("deflating " + Selection.Util.current());
