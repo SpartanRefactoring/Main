@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Ori Marcovitch
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
-  default boolean oneParameter(final MethodDeclaration ¢) {
+  default boolean hazOneParameter(final MethodDeclaration ¢) {
     return parameters(¢) != null && parameters(¢).size() == 1;
   }
 
@@ -48,5 +48,13 @@ public interface MethodPatternUtilitiesTrait {
 
   default boolean returnTypeSameAsParameter(MethodDeclaration ¢) {
     return (type(onlyParameter(¢)) + "").equals((returnType(¢) + ""));
+  }
+
+  default boolean returnTypeSameAs(MethodDeclaration ¢, Type t) {
+    return (t + "").equals((returnType(¢) + ""));
+  }
+
+  default boolean same(ASTNode n, ASTNode b) {
+    return (n + "").equals(b + "");
   }
 }

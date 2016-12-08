@@ -298,6 +298,7 @@ public class Analyze {
         new SuperDelegator(), //
         new Thrower(), //
         new TypeChecker(), //
+        new UpCaster(), //
         null);
   }
 
