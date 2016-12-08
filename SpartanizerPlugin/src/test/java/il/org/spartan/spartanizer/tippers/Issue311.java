@@ -8,6 +8,7 @@ import org.junit.runners.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue311 {
   @Test public void challenge_for_i_initialization_expression_3a() {

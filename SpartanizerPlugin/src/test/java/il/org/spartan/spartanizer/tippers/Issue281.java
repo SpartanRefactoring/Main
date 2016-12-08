@@ -6,6 +6,7 @@ import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 30-11-2016 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue281 {
   @Test public void test0() {
