@@ -3,7 +3,6 @@ package il.org.spartan.athenizer.inflate;
 import java.util.*;
 import java.util.List;
 
-
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.events.*;
@@ -13,9 +12,7 @@ import org.eclipse.swt.widgets.Listener;
 
 import org.eclipse.ui.*;
 
-
 import il.org.spartan.plugin.*;
-
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
@@ -39,14 +36,12 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     if (active)
       if (¢.count > 0)
         inflate();
-      else if (¢.count < 0)  
+      else if (¢.count < 0)
         deflate();
   }
 
-  
-
   private static void inflate() {
-    WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
+    final WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
     InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 

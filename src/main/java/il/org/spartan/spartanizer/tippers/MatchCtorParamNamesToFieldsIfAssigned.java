@@ -5,7 +5,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.compiler.util.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -22,6 +21,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
   @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;
   }
+
   @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
@@ -29,41 +29,39 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
-    
-    List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
-    List<Statement> bodyStatements = statements(d);
-    List<String> definedLocals = new ArrayList<String>();
-    List<SimpleName> oldNames = new ArrayList<SimpleName>();
-    List<SimpleName> newNames = new ArrayList<SimpleName>();
-    for (Statement s : bodyStatements) {
+    final List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
+    final List<Statement> bodyStatements = statements(d);
+    final List<String> definedLocals = new ArrayList<>();
+    final List<SimpleName> oldNames = new ArrayList<>();
+    final List<SimpleName> newNames = new ArrayList<>();
+    for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals
               .addAll(fragments(az.variableDeclarationStatement(s)).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList()));
         continue;
       }
-      Expression e = expression(az.expressionStatement(s));
-      if (!(iz.assignment(e)))
+      final Expression e = expression(az.expressionStatement(s));
+      if (!iz.assignment(e))
         continue;
-      Assignment a = az.assignment(e);
+      final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
-      SimpleName fieldName = name(az.fieldAccess(left(a)));
-      if (!(iz.simpleName(right(a))))
+      final SimpleName fieldName = name(az.fieldAccess(left(a)));
+      if (!iz.simpleName(right(a)))
         continue;
-      SimpleName paramName = az.simpleName(right(a));
+      final SimpleName paramName = az.simpleName(right(a));
       if (definedLocals.contains(fieldName.getIdentifier()) || params.contains(paramName.getIdentifier()))
         continue;
       oldNames.add(paramName);
       newNames.add(fieldName);
     }
-
     return new Tip(description(d), d, this.getClass()) {
-      List<SimpleName> on = new ArrayList<SimpleName>(oldNames);
-      List<SimpleName> nn = new ArrayList<SimpleName>(newNames);
+      List<SimpleName> on = new ArrayList<>(oldNames);
+      List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (int ¢ = 1; ¢ <= on.size(); ++¢) 
+        for (int ¢ = 1; ¢ <= on.size(); ++¢)
           Tippers.rename(on.get(¢), nn.get(¢), d, r, g);
       }
     };

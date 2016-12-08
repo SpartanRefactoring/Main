@@ -37,7 +37,7 @@ public final class Version230 {
           .gives("");
     }
   }
-  
+
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
         .stays();

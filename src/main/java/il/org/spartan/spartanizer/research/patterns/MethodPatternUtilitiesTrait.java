@@ -26,15 +26,15 @@ public interface MethodPatternUtilitiesTrait {
     return searchDescendants.forClass(ReturnStatement.class).from(¢);
   }
 
-  default boolean hazNoParams(MethodDeclaration ¢) {
+  default boolean hazNoParams(final MethodDeclaration ¢) {
     return parameters(¢).isEmpty();
   }
 
-  default Statement onlyStatement(MethodDeclaration ¢) {
+  default Statement onlyStatement(final MethodDeclaration ¢) {
     return onlyOne(statements(¢));
   }
 
-  default SingleVariableDeclaration onlyParameter(MethodDeclaration ¢) {
+  default SingleVariableDeclaration onlyParameter(final MethodDeclaration ¢) {
     return onlyOne(parameters(¢));
   }
 
@@ -46,15 +46,15 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.voidType(returnType(¢));
   }
 
-  default boolean returnTypeSameAsParameter(MethodDeclaration ¢) {
-    return (type(onlyParameter(¢)) + "").equals((returnType(¢) + ""));
+  default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
+    return (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
-  default boolean returnTypeSameAs(MethodDeclaration ¢, Type t) {
-    return (t + "").equals((returnType(¢) + ""));
+  default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
+    return (t + "").equals(returnType(¢) + "");
   }
 
-  default boolean same(ASTNode n, ASTNode b) {
+  default boolean same(final ASTNode n, final ASTNode b) {
     return (n + "").equals(b + "");
   }
 }
