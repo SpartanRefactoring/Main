@@ -59,6 +59,10 @@ public class UseParameterAndReturnItTest {
   @Test public void g() {
     assert returnsParam("@Override public SetMultimap<K,V> unfiltered(A a){  if(a==null) return a; use(); print(omg); return a;}");
   }
+  
+  @Test public void h() {
+    assert not("@Override public void unfiltered(A a){return a;}");
+  }
 
   private static boolean returnsParam(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
