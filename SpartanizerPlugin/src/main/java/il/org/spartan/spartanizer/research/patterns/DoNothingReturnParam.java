@@ -15,7 +15,7 @@ public class DoNothingReturnParam extends JavadocMarkerNanoPattern<MethodDeclara
 
   /** @param ¢
    * @return */
-  private boolean returnsParam(MethodDeclaration ¢) {
+  private boolean returnsParam(final MethodDeclaration ¢) {
     return identifier(az.name(expression(az.returnStatement(onlyStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
   }
 }

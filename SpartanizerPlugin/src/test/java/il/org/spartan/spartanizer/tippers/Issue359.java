@@ -7,7 +7,6 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" }) //
