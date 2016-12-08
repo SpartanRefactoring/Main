@@ -171,10 +171,6 @@ public class Logger {
       return;
     }
     final Integer key = hashMethod(m);
-    // if (!methodsStatistics.containsKey(key)) {
-    // System.out.println("OMGOMGOMGOMG");
-    // System.out.println(n);
-    // }
     methodsStatistics.putIfAbsent(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
   }
