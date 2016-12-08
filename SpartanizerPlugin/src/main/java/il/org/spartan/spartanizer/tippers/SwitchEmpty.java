@@ -51,6 +51,8 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
     final List<SwitchCase> $ = getCases(s);
+    // TODO: Yuval, please use step.statements here, instead of .statements.
+    // Also, try to search for ".statements" and replace elsewhere.
     @SuppressWarnings("unchecked") final List<Statement> ll = s.statements();
     return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break") || $.size() == 1 && $.get(0).isDefault();
   }
