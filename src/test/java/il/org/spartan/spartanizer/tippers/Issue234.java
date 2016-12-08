@@ -6,7 +6,6 @@ import org.junit.*;
 
 /** @author Sapir Bismot
  * @since 2016-11-21 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue234 {
   @Test public void b$01() {
@@ -18,7 +17,7 @@ public class Issue234 {
   }
 
   @Test public void b$03() {
-    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("try { } catch(Exception e) { return -1; }");
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("int a;");
   }
 
   @Test public void b$04() {
