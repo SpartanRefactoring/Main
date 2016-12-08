@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /* @author Raviv Rachmiel
- * 
+ *
  * @since 8-12-16 */
 public class InflaterUtilities {
   /** Main function of the application.
@@ -44,7 +44,7 @@ public class InflaterUtilities {
   }
 
   /* @param u - the WrappedCompilationUnit which is athenized
-   * 
+   *
    * @param ns - the list of statemend which were selected and might be
    * changed */
   static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
@@ -63,7 +63,7 @@ public class InflaterUtilities {
   }
 
   /* @param u - the WrappedCompilationUnit
-   * 
+   *
    * @return - list of relevant statements for the expanders gets Statements
    * (for now, maybe we should change the name to getASTNodes one day when we
    * have a lot of statements) from compilationUnit - only kind of statements we
@@ -100,7 +100,7 @@ public class InflaterUtilities {
   }
 
   /* @param ns ASTNodes in compilation unit which might be relevant
-   * 
+   *
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
     final List<ASTNode> $ = new ArrayList<>();
