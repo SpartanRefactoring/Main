@@ -76,11 +76,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());
         final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
-          final String str = opportunisticReplacement(cuttedExpression);
-          if (str != null)
+          final String s = opportunisticReplacement(cuttedExpression);
+          if (s != null)
             return subject.pair(
                 beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
-                az.expression(x.getAST().newNumberLiteral(str))).to(operator());
+                az.expression(x.getAST().newNumberLiteral(s))).to(operator());
         }
       }
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
