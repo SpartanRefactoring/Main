@@ -47,11 +47,11 @@ public class UpCasterTest {
   @Test public void d() {
     assert not("public static A hashCode(B value){return (A)value;  }");
   }
-  
+
   @Test public void e() {
     assert not("public static A hashCode(B value){return value + value;  }");
   }
-  
+
   @Test public void f() {
     assert not("public static A hashCode(B value){return value();  }");
   }
