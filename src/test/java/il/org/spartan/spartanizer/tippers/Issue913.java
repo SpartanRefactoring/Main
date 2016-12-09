@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for a bug in {@link RemoveRedundantSwitchCases}
- * Related to {@link Issue880}
+/** This is a unit test for a bug in {@link RemoveRedundantSwitchCases} Related
+ * to {@link Issue880}
  * @author Yuval Simon
  * @since 2016-12-09 */
 @SuppressWarnings("static-method")
