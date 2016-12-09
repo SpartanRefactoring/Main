@@ -30,6 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *   case b:
  *     x = 5;
  *     break;
+ *   default:
  * }
  * </pre>
  *
@@ -48,7 +49,9 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
         final int ind = getDefaultIndex(l);
+        boolean hadDefault = false;
         if (ind >= 0) {
+          hadDefault = true;
           int last = ind;
           for (int ¢ = ind + 1; ¢ < l.size(); ++¢) {
             if (l.get(¢).getNodeType() != ASTNode.SWITCH_CASE)
@@ -78,7 +81,11 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           l.remove(1);
           l.remove(0);
         }
-        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
+        if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.BREAK_STATEMENT)
+          l.remove(l.size() - 1);
+        final String tail = l.isEmpty() || !hadDefault || getDefaultIndex(l) >= 0 ? ""
+            : (l.get(l.size() - 1).getNodeType() == ASTNode.RETURN_STATEMENT ? "" : "break; ") + "default:";
+        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + tail + "}")).toOneStatementOrNull(), g);
       }
 
       String statementsToString(final List<Statement> ss) {
@@ -99,7 +106,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
     @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
-    if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE)
+    if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE && !az.switchCase(l.get(l.size() - 1)).isDefault())
       return true;
     for (final Integer k : range.from(0).to(l.size() - 1))
       if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
