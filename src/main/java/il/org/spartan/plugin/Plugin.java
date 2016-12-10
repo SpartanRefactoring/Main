@@ -26,7 +26,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   }
 
   private static void startSpartan() {
-    SpartanizeableAll.go();
     RefreshAll.go();
   }
 
