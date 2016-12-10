@@ -290,6 +290,7 @@ public class Analyze {
         new DefaultParametersAdder(), //
         new Delegator(), //
         new DoNothingReturnParam(), //
+        new DoNothingReturnThis(), //
         new DownCaster(), //
         new Examiner(), //
         new FluentSetter(), ///

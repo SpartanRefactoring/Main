@@ -13,6 +13,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern<MethodDeclaration
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("return $L;", "", ""));
+      add(TipperFactory.patternTipper("return -$L;", "", ""));
     }
   };
 

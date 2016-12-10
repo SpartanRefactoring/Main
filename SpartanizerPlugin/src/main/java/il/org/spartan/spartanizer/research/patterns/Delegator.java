@@ -24,7 +24,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(tippers, expression(onlyOne(statements(¢)))))
+    if (!hazOneStatement(¢) || !anyTips(tippers, expression(onlyOne(statements(¢)))))
       return false;
     final Expression $ = expression(onlyOne(statements(¢)));
     return iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
