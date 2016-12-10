@@ -109,7 +109,7 @@ public class SpartanMovie extends AbstractHandler {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       monitor.log(¢);
-      return new LinkedList<>();
+      return new ArrayList<>();
     }
   }
 

@@ -46,7 +46,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static List<Listener> getListeners(final StyledText t) {
-    final LinkedList<Listener> $ = new LinkedList<>();
+    final ArrayList<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
     final List<Listener> ls = Arrays.asList(t.getListeners(SWT.MouseWheel));

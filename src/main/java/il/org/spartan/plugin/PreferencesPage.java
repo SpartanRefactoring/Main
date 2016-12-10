@@ -111,7 +111,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       super(name, labelText, e.getFieldEditor());
       composite = e.getFieldEditor();
       alive = Toolbox.get(g);
-      dead = new LinkedList<>();
+      dead = new ArrayList<>();
       selection = new Selection();
       getAddButton().setText("Add");
       getAddButton().setEnabled(false);

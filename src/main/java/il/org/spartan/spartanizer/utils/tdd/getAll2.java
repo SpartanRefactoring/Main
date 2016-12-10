@@ -60,7 +60,7 @@ public enum getAll2 {
    * public fields names.
    * @param d - the TypeDeclaration argument */
   public static List<String> publicFields(final TypeDeclaration d) {
-    final LinkedList<String> $ = new LinkedList<>();
+    final ArrayList<String> $ = new ArrayList<>();
     if (d == null)
       return $;
     for (final FieldDeclaration fd : d.getFields())

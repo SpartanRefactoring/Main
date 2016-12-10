@@ -63,16 +63,19 @@ public class Issue050 {
   }
 
   @Test public void a$50_FinalClassMethodsOnlyRightModifierRemoved() {
-    trimmingOf("final class ClassTest{public final void remove();}").gives("final class ClassTest{public void remove();}")//
+    trimmingOf("final class ClassTest{public final void remove();}")//
+        .gives("final class ClassTest{public void remove();}")//
         .stays()//
     ;
   }
 
   @Test public void a$50_inEnumMember() {
-    trimmingOf("enum A{;final void f(){}public final void g(){}}").stays();
+    trimmingOf("enum A{;final void f(){}public final void g(){}}")//
+        .gives("enum A{;void f(){}public void g(){}}")//
+        .stays();
   }
 
-  @Ignore @Test public void a$50_inEnumMemberComplex() {
+  @Test public void a$50_inEnumMemberComplex() {
     trimmingOf("enum A{a1{{f();}protected final void f(){g();}public final void g(){h();}\n"
         + "private final void h(){i();}final void i(){f();}},a2{{f();}final protected void f(){g();}\n"
         + "final void g(){h();}final private void h(){i();}final protected void i(){f();}};\n"
@@ -188,4 +191,42 @@ public class Issue050 {
         .gives("enum a{x,y,z;void f(){}}") //
         .stays();
   }
+
+  @Test public void enumConstants() {
+    trimmingOf("enum A{a(){protected void f(){}},b(){final void g(){}},c(){public void f(){}},d(){protected void f(){}};}") //
+        .gives("enum A{a(){void f(){}},b(){void g(){}},c(){void f(){}},d(){void f(){}};}") //
+        .stays();
+  }
+
+  @Test public void enumConstantsA() {
+    trimmingOf("enum A{a(){protected void f(){}},b(){final void g(){}};}") //
+        .gives("enum A{a(){void f(){}},b(){void g(){}}};}") //
+        .stays();
+  }
+
+  @Test public void enumConstantsB() {
+    trimmingOf("enum A{a{protected void f(){}};}}") //
+        .gives("enum A{a{protected void f(){}};}") //
+        .stays();
+  }
+
+  @Test public void finalMethodInEnum() {
+    trimmingOf("enum A{a1; final void f(){}}")//
+        .gives("enum A{a1; void f(){}}") //
+        .stays();
+  }
+
+  @Test public void protectedFinalMethodInEnum() {
+    trimmingOf("enum A{a1; protected final void f(){}}")//
+        .gives("enum A{a1; void f(){}}") //
+        .stays();
+  }
+
+  @Test public void protectedMethodInEnumMember() {
+    trimmingOf("enum A{a1 { protected void f(){}}; void f() {}}")//
+        .gives("enum A{a1 { void f(){}}; void f() {}}")//
+        .stays();
+  }
+
+
 }
