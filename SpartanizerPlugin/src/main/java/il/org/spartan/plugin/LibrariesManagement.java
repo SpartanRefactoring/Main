@@ -74,7 +74,7 @@ public class LibrariesManagement {
   public static boolean addLibrary(final IJavaProject p) {
     if (p == null)
       return false;
-    final List<IClasspathEntry> nes = new LinkedList<>();
+    final List<IClasspathEntry> nes = new ArrayList<>();
     final IClasspathEntry[] es;
     try {
       es = p.getRawClasspath();

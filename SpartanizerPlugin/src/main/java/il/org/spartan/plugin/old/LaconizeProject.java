@@ -27,7 +27,7 @@ public final class LaconizeProject extends BaseHandler {
   IJavaProject javaProject;
   final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
-  private final List<ICompilationUnit> dead = new ArrayList<>();
+  private final List<ICompilationUnit> done = new ArrayList<>();
   private int passNumber;
 
   /** Returns the number of spartanization tips for a compilation unit
@@ -57,7 +57,7 @@ public final class LaconizeProject extends BaseHandler {
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
-    dead.clear();
+    done.clear();
     initialCount = 0;
     return go();
   }
@@ -102,12 +102,12 @@ public final class LaconizeProject extends BaseHandler {
           pm.worked(1);
           pm.subTask("Compilation unit #" + ++n + "/" + todo.size() + " (" + ¢.getElementName() + ")");
           if (!t.apply(¢))
-            dead.add(¢);
+            done.add(¢);
         }
-        if (!dead.isEmpty())
-          status.append(dead.size() + " CUs did not change; will not be processed further\n");
-        todo.removeAll(dead);
-        dead.clear();
+        if (!done.isEmpty())
+          status.append(done.size() + " CUs did not change; will not be processed further\n");
+        todo.removeAll(done);
+        done.clear();
         pm.done();
       });
     } catch (final InterruptedException | InvocationTargetException ¢) {
