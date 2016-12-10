@@ -17,9 +17,6 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      // add(TipperFactory.patternTipper("return $N($A);", "", ""));
-      // add(TipperFactory.patternTipper("return $N1.$N($A);", "", ""));
-      // add(TipperFactory.patternTipper("return $N1().$N($A);", "", ""));
       add(TipperFactory.patternTipper("$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1.$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1().$N($A)", "", ""));
