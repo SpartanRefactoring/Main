@@ -4,9 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Yuval Simon
+/** This is a unit test for {@link RemoveRedundantSwitchCases}
+ * @author Yuval Simon
  * @since 2016-11-27 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue880 {
   @Test public void a() {
@@ -22,11 +22,11 @@ public class Issue880 {
   }
 
   @Test public void d() {
-    trimmingOf("switch(x) { case a: default:y=3;break; case b:break;}int x=5;").gives("switch(x){default:y=3;break;}int x=5;");
+    trimmingOf("switch(x) { case a: default:y=3;break; case b:break;}int x=5;").gives("switch(x){default:y=3;}int x=5;");
   }
 
   @Test public void e() {
-    trimmingOf("switch(x) { case a: case b:x=3;break; default:case c:}").gives("switch(x) { case a: case b:x=3;break;}");
+    trimmingOf("switch(x) { case a: case b:x=3;break; default:case c:}").gives("switch(x) { case a: case b:x=3;break;default:}");
   }
 
   @Test public void f() {
@@ -34,16 +34,16 @@ public class Issue880 {
   }
 
   @Test public void g() {
-    trimmingOf("switch(x) {case a: x=3; case b: break;}").gives("switch(x) {case a: x=3; break;}");
+    trimmingOf("switch(x) {case a: x=3; case b: break;}").gives("switch(x) {case a: x=3;}");
   }
 
   @Test public void h() {
-    trimmingOf("switch(x) {case a: x=3; case b: case c: break; default: break; case d: case e:}").gives("switch(x) {case a: x=3; break;}");
+    trimmingOf("switch(x) {case a: x=3; case b: case c: break; default: break; case d: case e:}").gives("switch(x) {case a: x=3; break;default:}");
   }
 
   @Test public void i() {
     trimmingOf("switch(x) {case a: x=3; case b: y=4; case c: break; default: break; case d: y=7; case e:}")
-        .gives("switch(x) {case a: x=3; case b:y=4; break; case d: y=7;}");
+        .gives("switch(x) {case a: x=3; case b:y=4; break; case d: y=7; break;default:}");
   }
 
   @Test public void j() {

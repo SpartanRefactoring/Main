@@ -19,7 +19,7 @@ public enum Wrap {
   /** Algorithm for wrapping/unwrapping a method */
   Method("package p;\n" + "public final class C {\n", "} // END p\n"), //
   /** Algorithm for wrapping/unwrapping a statement */
-  Statement(Method.before + "public void m(){\n", "} // END m \n" + Method.after), //
+  Statement(Method.before + "public void m(){", "} // END m \n" + Method.after), //
   /** Algorithm for wrapping/unwrapping an expression */
   Expression(//
       Statement.before //
