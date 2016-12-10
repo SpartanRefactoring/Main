@@ -63,6 +63,30 @@ public final class TrimmerTestsUtils {
       return new Operand($);
     }
 
+    /** Check wether one of the code options is correct
+     * @param options
+     * @return Operand
+     * @author Dor Ma'ayan
+     * @since 09-12-2016 */
+    public Operand givesEither(final String... options) {
+      assert options != null;
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      if (wrap.equals(unpeeled))
+        azzert.fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
+      if (tide.clean(peeled).equals(tide.clean(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+      for (final String option : options)
+        if (Wrap.essence(option).equals(Wrap.essence(peeled)))
+          return new Operand(option);
+      azzert.fail("Expects: " + peeled + " But None of the given options match");
+      return null;
+    }
+
     public void stays() {
       checkSame();
     }
