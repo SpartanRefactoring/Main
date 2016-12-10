@@ -6,11 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.idiomatics.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -34,7 +31,8 @@ public class AnyMatches extends NanoPatternTipper<EnhancedForStatement> {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         firstTip(tippers, s).go(r, g);
-        idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(s)), r);
+        // idiomatic.addImport(az.compilationUnit(searchAncestors.forClass(CompilationUnit.class).from(s)),
+        // r);
       }
     };
   }
