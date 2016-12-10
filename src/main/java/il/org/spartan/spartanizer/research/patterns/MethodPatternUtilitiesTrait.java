@@ -57,4 +57,12 @@ public interface MethodPatternUtilitiesTrait {
   default boolean same(final ASTNode n, final ASTNode b) {
     return (n + "").equals(b + "");
   }
+
+  default boolean returnsParam(final MethodDeclaration ¢) {
+    return identifier(az.name(expression(az.returnStatement(onlyStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
+  }
+
+  default boolean returnsThis(final MethodDeclaration ¢) {
+    return iz.thisExpression(expression(az.returnStatement(onlyStatement(¢))));
+  }
 }
