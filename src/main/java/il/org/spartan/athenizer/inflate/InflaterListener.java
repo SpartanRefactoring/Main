@@ -24,7 +24,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   public InflaterListener(final StyledText text) {
     this.text = text;
-    externalListeners = new LinkedList<>();
+    externalListeners = new ArrayList<>();
     for (final Listener ¢ : text.getListeners(SWT.MouseWheel))
       externalListeners.add(¢);
     final Display display = PlatformUI.getWorkbench().getDisplay();

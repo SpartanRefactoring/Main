@@ -262,10 +262,10 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Collects objects of specific type in a {@link List}. Conducts
      * casting. */
-    @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, LinkedList<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
-      return ((EventMapperFunctor<E, LinkedList<Y>, Y>) this) //
-          .startWith(new LinkedList<Y>()) //
-          .does((final LinkedList<Y> l, final Y u) -> l.add(u));
+    @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, ArrayList<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
+      return ((EventMapperFunctor<E, ArrayList<Y>, Y>) this) //
+          .startWith(new ArrayList<Y>()) //
+          .does((final ArrayList<Y> l, final Y u) -> l.add(u));
     }
 
     /** Remember the last object received of specific type. Conducts casting. */

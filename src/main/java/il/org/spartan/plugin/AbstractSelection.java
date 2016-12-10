@@ -86,7 +86,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   public Self unify(final Self ¢) {
     if (¢ != null && ¢.inner != null) {
       if (inner == null)
-        inner = new LinkedList<>();
+        inner = new ArrayList<>();
       inner.addAll(¢.inner);
     }
     return self();

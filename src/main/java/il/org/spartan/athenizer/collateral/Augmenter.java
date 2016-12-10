@@ -47,7 +47,7 @@ public class Augmenter implements Application {
   /** @param u JD
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
-    final List<List<Statement>> $ = new LinkedList<>();
+    final List<List<Statement>> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unchecked") public boolean visit(final Block b) {
         if (discardOptimization(b))
@@ -55,7 +55,7 @@ public class Augmenter implements Application {
         if (inRange(b, s))
           $.add(b.statements());
         else {
-          final List<Statement> l = new LinkedList<>();
+          final List<Statement> l = new ArrayList<>();
           for (final Statement ¢ : (List<Statement>) b.statements())
             if (inRange(¢, s))
               l.add(¢);

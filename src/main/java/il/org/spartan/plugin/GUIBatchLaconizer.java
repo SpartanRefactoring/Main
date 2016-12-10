@@ -45,11 +45,11 @@ public class GUIBatchLaconizer extends Applicator {
           break;
         final List<WrappedCompilationUnit> selected = selection().inner;
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
-        final List<WrappedCompilationUnit> dead = new ArrayList<>();
+        final List<WrappedCompilationUnit> done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
-            dead.add(¢);
+            done.add(¢);
           ¢.dispose();
           listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName()));
           totalTipsInvoked.addAndGet(tipsInvoked);
@@ -57,7 +57,7 @@ public class GUIBatchLaconizer extends Applicator {
             break;
         }
         listener().pop(message.run_pass_finish.get(Integer.valueOf(pass)));
-        selected.removeAll(dead);
+        selected.removeAll(done);
         if (selected.isEmpty() || !shouldRun())
           break;
       }
