@@ -10,12 +10,12 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
+public final class ReturnAllMatches extends NanoPatternTipper<Block> {
   private static Set<UserDefinedTipper<Block>> tippers = new HashSet<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(statementsPattern("for($T $N : $X1) if($X2) return true; return false;", "return $X1.stream().anyMatch($N -> $X2);",
-          "Any matches pattern. Consolidate into one statement"));
+      add(statementsPattern("for($T $N : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N -> !($X2));",
+          "All matches pattern. Consolidate into one statement"));
     }
   };
 
