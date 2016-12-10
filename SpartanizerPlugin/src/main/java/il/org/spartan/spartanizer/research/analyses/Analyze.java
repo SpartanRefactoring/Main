@@ -285,6 +285,7 @@ public class Analyze {
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
+        new ConstantReturner(), //
         new Creator(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
