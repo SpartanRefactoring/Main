@@ -10,22 +10,18 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class ConstantReturnerTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ConstantReturner();
+public class DoNothingReturnThisTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new DoNothingReturnThis();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
   }
 
-  private static boolean yes(final String ¢) {
-    return javadoced("public class A{" + ¢ + "}");
-  }
-
   /** @param s
    * @return */
   private static boolean not(final String ¢) {
-    return !yes(¢);
+    return !is(¢);
   }
 
   @BeforeClass public static void setUp() {
@@ -37,26 +33,26 @@ public class ConstantReturnerTest {
   }
 
   @Test public void a() {
-    assert yes("boolean foo(){return 3;}");
+    assert is("boolean foo(boolean a){return this;}");
   }
 
   @Test public void b() {
-    assert yes("boolean foo(){return \"omg\";}");
+    assert not("boolean foo(){return this();}");
   }
 
   @Test public void c() {
-    assert not("boolean foo(){return;}");
+    assert not("@Override public int hashCode(Object b) {return this.b;}");
   }
 
   @Test public void d() {
-    assert not("boolean foo(){print(x); return 2;}");
+    assert not("@Override public X unfiltered(int a, int b){  return a;}");
   }
 
   @Test public void e() {
-    assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){return x;}");
+    assert not("@Override public void unfiltered(Object a){  return;}");
   }
 
-  @Test public void f() {
-    assert yes("boolean foo(){return -3;}");
+  private static boolean is(final String ¢) {
+    return javadoced("public class A{" + ¢ + "}");
   }
 }

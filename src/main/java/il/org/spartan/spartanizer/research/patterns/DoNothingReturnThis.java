@@ -4,8 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class DoNothingReturnParam extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class DoNothingReturnThis extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && hazOneStatement(¢) && returnsParam(¢) && returnTypeSameAsParameter(¢);
+    return hazOneStatement(¢) && returnsThis(¢);
   }
 }
