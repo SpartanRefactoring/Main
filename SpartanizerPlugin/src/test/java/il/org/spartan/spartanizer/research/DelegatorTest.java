@@ -101,4 +101,8 @@ public class DelegatorTest {
   @Test public void basic17() {
     notDelegator("long reserveAndGetWaitLength(int permits,long nowMicros){ return max(reserveEarliestAvailable(permits,nowMicros) - nowMicros,0);}");
   }
+
+  @Test public void basic18() {
+    delegator(" @Override public void close() throws IOException { out.close(); }");
+  }
 }
