@@ -95,7 +95,7 @@ public class DelegatorTest {
   }
 
   @Test public void basic16() {
-    notDelegator("@Override public String toString(){ return \"\" + range();}");
+    notDelegator("@Override public String toString(){ return \"\" + member;}");
   }
 
   @Test public void basic17() {
