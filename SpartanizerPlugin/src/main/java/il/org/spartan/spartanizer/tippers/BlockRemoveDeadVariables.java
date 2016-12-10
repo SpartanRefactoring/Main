@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** removes unused variable decelerations example: "int i,j; j++" to "int j;
+/** removes unused variable declarations example: "int i,j; j++" to "int j;
  * j++"
  * @author kobybs
  * @since 4-12-2016 */
@@ -22,7 +22,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
     final Block $ = duplicate.of(n);
     final List<Statement> removalList = new ArrayList<>();
     for (final Statement s : extract.statements($)) {
-      final VariableDeclarationStatement asVar = !iz.variableDeclarationStatement(s) ? null : az.variableDeclarationStatement(s);
+      final VariableDeclarationStatement asVar = az.variableDeclarationStatement(s);
       if (asVar != null) {
         final List<VariableDeclarationFragment> as = new ArrayList<>(step.fragments(asVar));
         step.fragments(asVar).clear();
@@ -38,6 +38,6 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
   }
 
   @Override @SuppressWarnings("unused") public String description(final Block n) {
-    return "Eliminate dead variable";
+    return "Eliminate dead variables";
   }
 }
