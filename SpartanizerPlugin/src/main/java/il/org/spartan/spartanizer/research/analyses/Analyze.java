@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.analyses;
 
 import java.io.*;
+import java.text.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -39,6 +40,7 @@ public class Analyze {
     AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
+    long startTime = System.currentTimeMillis();
     switch (getProperty("analysis")) {
       case "methods":
         methodsAnalyze();
@@ -52,6 +54,7 @@ public class Analyze {
       default:
         analyze();
     }
+    System.out.println("Took " + (new DecimalFormat("#0.00")).format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
 
   /** THE analysis */
@@ -253,6 +256,7 @@ public class Analyze {
             null) //
         .add(Block.class, //
             new ReturnOld(), //
+            new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
             null) //
         .add(EnhancedForStatement.class, //
