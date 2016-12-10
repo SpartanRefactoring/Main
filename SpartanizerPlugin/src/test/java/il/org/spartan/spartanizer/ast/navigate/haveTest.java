@@ -56,7 +56,7 @@ public final class haveTest {
   }
 
   public List<Expression> ExpressionListMaker(final String[] exps) {
-    final List<Expression> $ = new LinkedList<>();
+    final List<Expression> $ = new ArrayList<>();
     for (final String e : exps)
       $.add(into.e(e));
     return $;

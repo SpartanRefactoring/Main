@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
   private class ASTNodeWrapper {
-    public LinkedList<ASTNode> inner;
+    public ArrayList<ASTNode> inner;
 
     public ASTNodeWrapper() {
-      inner = new LinkedList<>();
+      inner = new ArrayList<>();
     }
   }
 

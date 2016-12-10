@@ -22,10 +22,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue683 {
   private class ASTNodeWrapper {
-    public LinkedList<ASTNode> inner;
+    public ArrayList<ASTNode> inner;
 
     public ASTNodeWrapper() {
-      inner = new LinkedList<>();
+      inner = new ArrayList<>();
     }
   }
 

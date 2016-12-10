@@ -191,11 +191,11 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
         final int passesCount = passesCount();
         int pass;
         int totalTips = 0;
-        final List<ICompilationUnit> deadCompilationUnits = new ArrayList<>();
+        final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
           pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
-          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), deadCompilationUnits);
+          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {
             finish(pm);
             break;
@@ -206,8 +206,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
             final int tipsCommited = a.fuzzyImplementationApply(u, s.textSelection);
             totalTips += tipsCommited;
-            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
-            (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
+            (tipsCommited == 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
+            (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
             pm.worked(1);
           }
         }

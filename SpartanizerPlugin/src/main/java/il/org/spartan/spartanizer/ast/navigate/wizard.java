@@ -100,6 +100,7 @@ public interface wizard {
   Predicate<Modifier> isProtected = Modifier::isProtected;
   Predicate<Modifier> isPublic = Modifier::isPublic;
   Predicate<Modifier> isStatic = Modifier::isStatic;
+  List<Predicate<Modifier>> visibilityModifiers = as.list(isPublic, isPrivate, isProtected);
   PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
   InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
   NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
@@ -467,6 +468,11 @@ public interface wizard {
       return $;
     if (iz.enumDeclaration(¢))
       $.addAll(as.list(isStatic, isAbstract, isFinal));
+    if (iz.enumConstantDeclaration(¢)) {
+      $.addAll(visibilityModifiers);
+    if (iz.isMethodDeclaration(¢)) 
+      $.addAll(as.list(isFinal, isStatic, isAbstract));
+    }
     if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
       $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
@@ -480,13 +486,13 @@ public interface wizard {
       $.add(isFinal);
     if (iz.enumDeclaration(container)) {
       $.add(isProtected);
-      if (iz.constructor(¢)) {
-        $.add(isPublic);
-        $.add(isPrivate);
-      }
+      if (iz.constructor(¢))
+        $.addAll(visibilityModifiers);
+      if (iz.isMethodDeclaration(¢)) 
+        $.add(isFinal);
     }
     if (iz.interface¢(container)) {
-      $.addAll(as.list(isPublic, isPrivate, isProtected));
+      $.addAll(visibilityModifiers);
       if (iz.isMethodDeclaration(¢)) {
         $.add(isAbstract);
         $.add(isFinal);
