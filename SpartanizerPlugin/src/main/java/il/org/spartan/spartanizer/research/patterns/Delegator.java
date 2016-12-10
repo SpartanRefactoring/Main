@@ -14,18 +14,19 @@ import static il.org.spartan.lisp.onlyOne;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("return $N($A);", "", ""));
-      add(TipperFactory.patternTipper("return $N1().$N($A);", "", ""));
+      add(TipperFactory.patternTipper("$N($A)", "", ""));
+      add(TipperFactory.patternTipper("$N1.$N($A)", "", ""));
+      add(TipperFactory.patternTipper("$N1().$N($A)", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(tippers, onlyOne(statements(¢))))
+    if (!hazOneStatement(¢) || !anyTips(tippers, expression(onlyOne(statements(¢)))))
       return false;
-    final Expression $ = expression(az.returnStatement(onlyOne(statements(¢))));
+    final Expression $ = expression(onlyOne(statements(¢)));
     return iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
         && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation($))));
   }

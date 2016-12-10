@@ -24,6 +24,6 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   }
 
   @Override public Tip pattern(final ForStatement ¢) {
-    return firstThatTips(tippers, ¢).tip(¢);
+    return firstTipper(tippers, ¢).tip(¢);
   }
 }
