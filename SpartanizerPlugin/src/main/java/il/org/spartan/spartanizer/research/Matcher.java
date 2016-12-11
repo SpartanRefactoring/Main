@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import static il.org.spartan.lisp.last;
 
 /** Performs matching and pairing operations between <b>patterns</b> and
  * <b>ASTNodes</b>.<br>
@@ -39,27 +40,55 @@ public class Matcher {
   final Supplier<ASTNode> patternSupplier;
   ASTNode _pattern;
   final String replacement;
+  final String[] options;
 
   ASTNode pattern() {
     return _pattern != null ? _pattern : (_pattern = patternSupplier.get());
   }
 
   /** @param p
+   * @param options
    * @param n */
   public Matcher(final String p, final String r) {
+    this(p, r, new String[0]);
+  }
+
+  /** @param pattern
+   * @param replacement2
+   * @param options */
+  public Matcher(String p, String r, String[] _options) {
     patternSupplier = () -> extractStatementIfOne(wizard.ast(reformat(p)));
     replacement = reformat(r);
+    options = _options;
   }
 
-  public boolean blockMatches(final ASTNode ¢) {
-    return blockMatches(pattern(), ¢);
+  public boolean blockMatches(final Block ¢) {
+    return blockMatches(pattern(), ¢) && (!containsOption("Last") || lastInBlock(¢));
   }
 
-  public boolean blockMatches(final ASTNode p, final ASTNode n) {
+  /** @param pattern
+   * @param ¢
+   * @return */
+  private boolean lastInBlock(Block ¢) {
+    ASTNode[] ns = getMatchedNodes(¢);
+    return ns[ns.length - 1].equals(last(step.statements(¢)));
+  }
+
+  /** @param o
+   * @param s
+   * @return */
+  private boolean containsOption(String s) {
+    for (String o : options)
+      if (o.equals(s))
+        return true;
+    return false;
+  }
+
+  private boolean blockMatches(final ASTNode p, final Block n) {
     if (!iz.block(n) || !iz.block(p))
       return false;
-    @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
-    @SuppressWarnings("unchecked") final List<Statement> sn = az.block(n).statements();
+    final List<Statement> sp = step.statements(az.block(p));
+    final List<Statement> sn = step.statements(n);
     if (sp == null || sn == null || sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
