@@ -41,7 +41,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "Eliminate redundant comparison with '" + literal(¢) + "'";
+    return "Omit redundant comparison with '" + literal(¢) + "'";
   }
 
   @Override public boolean prerequisite(final InfixExpression ¢) {
