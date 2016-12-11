@@ -80,9 +80,9 @@ public final class TrimmerTestsUtils {
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      for (final String option : options)
-        if (Wrap.essence(option).equals(Wrap.essence(peeled)))
-          return new Operand(option);
+      for (final String $ : options)
+        if (Wrap.essence($).equals(Wrap.essence(peeled)))
+          return new Operand($);
       azzert.fail("Expects: " + peeled + " But None of the given options match");
       return null;
     }

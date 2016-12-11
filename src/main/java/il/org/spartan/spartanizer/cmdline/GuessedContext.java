@@ -145,14 +145,14 @@ public enum GuessedContext {
   /** Remove a wrap from around a phrase
    * @param codeFragment a wrapped program phrase
    * @return unwrapped phrase */
-  public final String off(final String codeFragment) {
+  public String off(final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
 
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  public final String on(final String codeFragment) {
+  public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 
