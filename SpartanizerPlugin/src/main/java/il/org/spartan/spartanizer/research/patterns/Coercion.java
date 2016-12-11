@@ -121,10 +121,9 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       case API_LEVEL_FILE:
         return getType(prepareFile(fileAzFile()));
       default:
-        break;
+        assert false : "illegal apiLevel [" + s + "]";
+        return null;
     }
-    assert false : "illegal apiLevel [" + s + "]";
-    return null;
   }
 
   private static File packageAzFile(final CastExpression ¢) {

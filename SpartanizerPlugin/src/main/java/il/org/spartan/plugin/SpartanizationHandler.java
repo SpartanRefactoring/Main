@@ -98,9 +98,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                   $.stop();
               });
             ++passes;
-            break;
-          default:
-            break;
         }
       }
 
