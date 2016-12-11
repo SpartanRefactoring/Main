@@ -255,6 +255,7 @@ public class Analyze {
             new AssignmentLazyEvaluation(), //
             null) //
         .add(Block.class, //
+            new CreateFrom(), //
             new FindFirstBlock(), //
             new ReturnOld(), //
             new ReturnAllMatches(), //
