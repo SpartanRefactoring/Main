@@ -85,11 +85,12 @@ public class Logger {
     for (final Integer k : ratioMap.keySet().stream().sorted((x, y) -> x < y ? -1 : x > y ? 1 : 0).collect(Collectors.toList())) {
       final List<Double> li = ratioMap.get(k);
       report //
-          .put("#Statements", k) //
+          .put("num. Statements", k) //
           .put("Count", li.size()) //
           .put("Coverage [Avg.]", formatter.format(safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size())))//
-          .put("% of #methods", formatter.format(safeDiv(li.size(), methodsTotal))) //
-          .put("% of #statements", formatter.format(safeDiv(k * li.size(), statementsTotal))) //
+          .put("perc. of methods", formatter.format(safeDiv(li.size(), methodsTotal))) //
+          .put("perc. of statements", formatter.format(safeDiv(k * li.size(), statementsTotal))) //
+          .put("perc. touched", formatter.format(safeDiv(li.stream().filter(x -> x > 0).count(), li.size()))) //
       ;
       report.nl();
     }
