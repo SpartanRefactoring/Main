@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 import static il.org.spartan.lisp.last;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 /** Performs matching and pairing operations between <b>patterns</b> and
  * <b>ASTNodes</b>.<br>
@@ -40,7 +41,7 @@ public class Matcher {
   final Supplier<ASTNode> patternSupplier;
   ASTNode _pattern;
   final String replacement;
-  final String[] options;
+  final Option[] options;
 
   ASTNode pattern() {
     return _pattern != null ? _pattern : (_pattern = patternSupplier.get());
@@ -50,20 +51,20 @@ public class Matcher {
    * @param options
    * @param n */
   public Matcher(final String p, final String r) {
-    this(p, r, new String[0]);
+    this(p, r, new Option[0]);
   }
 
   /** @param pattern
    * @param replacement2
    * @param options */
-  public Matcher(String p, String r, String[] _options) {
+  public Matcher(String p, String r, Option[] _options) {
     patternSupplier = () -> extractStatementIfOne(wizard.ast(reformat(p)));
     replacement = reformat(r);
     options = _options;
   }
 
   public boolean blockMatches(final Block ¢) {
-    return blockMatches(pattern(), ¢) && (!containsOption("Last") || lastInBlock(¢));
+    return blockMatches(pattern(), ¢) && (!containsOption(Option.LAST) || lastInBlock(¢));
   }
 
   /** @param pattern
@@ -71,25 +72,23 @@ public class Matcher {
    * @return */
   private boolean lastInBlock(Block ¢) {
     ASTNode[] ns = getMatchedNodes(¢);
-    return ns[ns.length - 1].equals(last(step.statements(¢)));
+    return ns[ns.length - 1].equals(last(statements(¢)));
   }
 
   /** @param o
-   * @param s
+   * @param o
    * @return */
-  private boolean containsOption(String s) {
-    for (String o : options)
-      if (o.equals(s))
+  private boolean containsOption(Option o) {
+    for (Option ¢ : options)
+      if (¢.equals(o))
         return true;
     return false;
   }
 
   private boolean blockMatches(final ASTNode p, final Block n) {
-    if (!iz.block(n) || !iz.block(p))
-      return false;
-    final List<Statement> sp = step.statements(az.block(p));
-    final List<Statement> sn = step.statements(n);
-    if (sp == null || sn == null || sp.size() > sn.size())
+    final List<Statement> sp = iz.block(p) ? statements(az.block(p)) : Arrays.asList(az.statement(p));
+    final List<Statement> sn = statements(n);
+    if (sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
       if (statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
@@ -108,8 +107,8 @@ public class Matcher {
   }
 
   @SuppressWarnings("boxing") public Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
-    @SuppressWarnings("unchecked") final List<Statement> $ = p.statements();
-    @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
+    final List<Statement> $ = statements(p);
+    final List<Statement> sn = statements(n);
     for (int ¢ = 0; ¢ <= sn.size() - $.size(); ++¢)
       if (statementsMatch($, sn.subList(¢, ¢ + $.size())))
         return new Pair<>(¢, ¢ + $.size());
@@ -256,9 +255,9 @@ public class Matcher {
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
-    if (!iz.block(p) || step.statements(az.block(p)).size() != 1)
+    if (!iz.block(p) || statements(az.block(p)).size() != 1)
       return false;
-    final Statement $ = step.statements(az.block(p)).get(0);
+    final Statement $ = statements(az.block(p)).get(0);
     return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith("$B");
   }
 
@@ -279,7 +278,7 @@ public class Matcher {
       if ($.startsWith("$L"))
         return iz.literal(n) && consistent(ids, $, n + "");
     }
-    return n instanceof Name && $.equals(((Name) n).getFullyQualifiedName());
+    return iz.name(n) && $.equals(step.identifier(az.name(n)));
   }
 
   /** Pairs variables from a pattern <b>p</b> with their corresponding
@@ -378,7 +377,7 @@ public class Matcher {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : statements(az.block(¢)).get(0);
   }
 
   <N extends ASTNode> ASTNode replacement(final N n) {
@@ -405,7 +404,7 @@ public class Matcher {
     final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern()), b);
     final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
     for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
-      $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
+      $[¢ - idxs.first] = statements(b).get(idxs.first);
     return $;
   }
 
@@ -432,15 +431,12 @@ public class Matcher {
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
-    final int $ = az.block(n).statements().size();
+    final int $ = statements(az.block(n)).size();
     return start >= $ ? "" : stringifySubBlock(n, start, $);
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
-    if (start >= end)
-      return "";
-    @SuppressWarnings("unchecked") final List<Statement> $ = az.block(n).statements().subList(start, end);
-    return $.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
+    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
 
   /** @param n
@@ -449,10 +445,8 @@ public class Matcher {
   public ASTNode getMatching(final ASTNode n, final String s) {
     return collectEnviromentNodes(n, new HashMap<>()).get(s);
   }
-  // /** @param s
-  // * @return */
-  // private static String deformat(String ¢) {
-  // return ¢.replaceAll("\\{(\\$B\\d*)\\(\\);}",
-  // "$1").replaceAll("\\{(\\$X\\d*)\\(\\);}", "$1");
-  // }
+
+  public enum Option {
+    LAST, FIRST;
+  }
 }

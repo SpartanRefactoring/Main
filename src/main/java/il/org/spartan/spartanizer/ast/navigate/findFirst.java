@@ -225,4 +225,10 @@ public interface findFirst {
   static ASTNode expressionStatement(final ASTNode ¢) {
     return instanceOf(ExpressionStatement.class, ¢);
   }
+
+  /** @param ¢
+   * @return */
+  static Block block(ASTNode ¢) {
+    return instanceOf(Block.class, ¢);
+  }
 }
