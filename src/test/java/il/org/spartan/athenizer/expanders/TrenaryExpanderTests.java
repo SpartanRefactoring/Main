@@ -10,8 +10,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Raviv Rachmiel
  * @since 8-12-2016 */
 public class TrenaryExpanderTests {
-// TODO: Raviv, you can use one   @SuppressWarnings("static-method") for the entire class
- @Test public void basicCanTip() {
+  // TODO: Raviv, you can use one @SuppressWarnings("static-method") for the
+  // entire class
+  @Test public void basicCanTip() {
     wizard.ast("return a==0? 2:3;").accept(new ASTVisitor() {
       @Override public boolean visit(final ReturnStatement node) {
         assert new TernaryExpander().canTip(node);

@@ -188,8 +188,8 @@ public class leonidasSays {
       case STATEMENTS_LOOK_ALIKE:
         actual = extractStatementIfOne(findFirst.statement(wizard.ast(d.get()))) + "";
         break;
-        default:
-    assertEquals(Essence.of(s).replaceAll(" ", ""), Essence.of(actual).replaceAll(" ", ""));
+      default:
+        assertEquals(Essence.of(s).replaceAll(" ", ""), Essence.of(actual).replaceAll(" ", ""));
     }
   }
 
@@ -206,7 +206,7 @@ public class leonidasSays {
       case STATEMENTS_LOOK_ALIKE:
         return extractStatementIfOne(findFirst.instanceOf(Block.class, u));
       default:
-    return null;
+        return null;
     }
   }
 
