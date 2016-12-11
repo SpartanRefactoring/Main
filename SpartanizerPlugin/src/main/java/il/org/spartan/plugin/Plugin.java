@@ -97,6 +97,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           // }
           return true;
         });
+        // TODO Ori Roth: please clean this up
         if (mp.p != null)
           Job.createSystem(pm -> {
             try {
