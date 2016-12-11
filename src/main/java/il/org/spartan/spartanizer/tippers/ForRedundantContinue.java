@@ -15,11 +15,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final ForStatement ¢) {
-    return "Eliminate redundant " + lastStatement(¢);
+    return "Prune redundant " + lastStatement(¢);
   }
 
   @Override public String description() {
-    return "Eliminate redundant continue";
+    return "Prune redundant continue";
   }
 
   static Statement lastStatement(final ForStatement ¢) {

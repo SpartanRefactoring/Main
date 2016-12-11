@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-26 */
 public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatement> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final EnhancedForStatement ¢) {
-    return "Eliminate redundant " + lastStatement(¢);
+    return "Prune redundant " + lastStatement(¢);
   }
 
   @Override public String description() {
-    return "Eliminate redundant continue";
+    return "Prune redundant continue";
   }
 
   static Statement lastStatement(final EnhancedForStatement ¢) {
