@@ -28,7 +28,6 @@ public final class FindFirstBlock extends NanoPatternTipper<Block> {
   }
 
   @Override public boolean canTip(final Block x) {
-    System.out.println(x);
     return anyTips(tippers, x);
   }
 
