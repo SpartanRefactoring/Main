@@ -71,11 +71,11 @@ public class leonidasSays {
     }
 
     public void matches(final String s2) {
-      assert new Matcher(s, "").matches(ast(s2));
+      assert Matcher.patternMatcher(s, "").matches(ast(s2));
     }
 
     public void notmatches(final String s2) {
-      assert !new Matcher(s, "").matches(ast(s2));
+      assert !Matcher.patternMatcher(s, "").matches(ast(s2));
     }
   }
 
