@@ -35,19 +35,17 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     return $;
   }
 
-  private static ASTNode replaceAssignment(final Statement s) {
-    if (az.expressionStatement(s) == null)
+  private static ASTNode replaceAssignment(final Statement ¢) {
+    if (az.expressionStatement(¢) == null)
       return null;
-    final Assignment __ = az.assignment(az.expressionStatement(s).getExpression());
-    return __ == null ? null : innerReplacement(__.getRightHandSide(), s);
+    final Assignment $ = az.assignment(az.expressionStatement(¢).getExpression());
+    return $ == null ? null : innerReplacement($.getRightHandSide(), ¢);
   }
 
-  private static ASTNode replaceReturn(final Statement s) {
-    if (!(s instanceof ReturnStatement))
-      return null;
-    final ReturnStatement __ = az.returnStatement(s);
-    return !(__.getExpression() instanceof ConditionalExpression) && !(__.getExpression() instanceof ParenthesizedExpression) ? null
-        : innerReplacement(__.getExpression(), s);
+  private static ASTNode replaceReturn(final Statement ¢) {
+    final ReturnStatement $ = az.returnStatement(¢);
+    return $ == null || !($.getExpression() instanceof ConditionalExpression) && !($.getExpression() instanceof ParenthesizedExpression) ? null
+        : innerReplacement($.getExpression(), ¢);
   }
 
   @Override public ASTNode replacement(final Statement ¢) {

@@ -7,8 +7,8 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue050 {
   @Test public void a$50_Constructors1() {

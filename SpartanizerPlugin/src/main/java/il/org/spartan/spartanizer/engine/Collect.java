@@ -450,7 +450,7 @@ public enum Collect {
    * @param what the expression to search for
    * @param ns the n in which to counted
    * @return list of uses */
-  final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
+  List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
     for (final ASTNode n : ns)
       for (final ASTVisitor ¢ : collectors(what, $))
