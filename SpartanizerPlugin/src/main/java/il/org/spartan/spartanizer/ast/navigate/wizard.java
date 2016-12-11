@@ -173,7 +173,7 @@ public interface wizard {
       case METHOD_LOOKALIKE:
         return into.m(p);
       default:
-    return null;
+        return null;
     }
   }
 
@@ -469,8 +469,8 @@ public interface wizard {
       $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.enumConstantDeclaration(¢)) {
       $.addAll(visibilityModifiers);
-    if (iz.isMethodDeclaration(¢)) 
-      $.addAll(as.list(isFinal, isStatic, isAbstract));
+      if (iz.isMethodDeclaration(¢))
+        $.addAll(as.list(isFinal, isStatic, isAbstract));
     }
     if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
       $.addAll(as.list(isStatic, isAbstract, isFinal));
@@ -487,7 +487,7 @@ public interface wizard {
       $.add(isProtected);
       if (iz.constructor(¢))
         $.addAll(visibilityModifiers);
-      if (iz.isMethodDeclaration(¢)) 
+      if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
     }
     if (iz.interface¢(container)) {
