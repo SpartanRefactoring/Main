@@ -228,6 +228,4 @@ public class Issue050 {
         .gives("enum A{a1 { void f(){}}; void f() {}}")//
         .stays();
   }
-
-
 }
