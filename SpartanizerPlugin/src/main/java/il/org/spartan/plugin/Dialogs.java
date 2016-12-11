@@ -128,9 +128,6 @@ public class Dialogs {
           case RIB_ID:
             decrementNestingDepth();
             close();
-            break;
-          default:
-            break;
         }
       }
 
