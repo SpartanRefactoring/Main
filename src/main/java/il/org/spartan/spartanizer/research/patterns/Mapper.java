@@ -16,15 +16,12 @@ public class Mapper extends JavadocMarkerNanoPattern<MethodDeclaration> {
     {
       add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N2.$N3($A);", "", ""));
       add(TipperFactory.patternTipper("for($N1 $N2 : $X) $N3($N2);", "", ""));
+      add(TipperFactory.patternTipper("$X1.stream().forEach($X2);", "", ""));
+      add(TipperFactory.patternTipper("$X1.stream().filter($X2).forEach($X3);", "", ""));
     }
   };
 
-  @Override protected boolean prerequisites(final MethodDeclaration d) {
-    if (statements(d) == null || statements(d).size() != 1)
-      return false;
-    for (final UserDefinedTipper<Statement> ¢ : tippers)
-      if (¢.canTip(onlyOne(statements(d))))
-        return true;
-    return false;
+  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+    return hazOneStatement(¢) && anyTips(tippers, onlyOne(statements(¢)));
   }
 }

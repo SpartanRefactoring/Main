@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class CreatorTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Creator();
+public class MapperTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Mapper();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -37,11 +37,11 @@ public class CreatorTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(){return new Object();}");
+    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().forEach(key -> remove(key));}");
   }
 
   @Test public void b() {
-    assert is("boolean foo(){return new Object(a);}");
+    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().filter(x -> x!= null).forEach(key -> remove(key));}");
   }
 
   @Test public void c() {
