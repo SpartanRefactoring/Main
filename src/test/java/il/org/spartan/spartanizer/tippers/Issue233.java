@@ -4,10 +4,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Yuval Simon
+/** This is a unit test for {@link SwitchEmpty}
+ * @author Yuval Simon
  * @since 2016-11-20 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue233 {
+  //TODO: side effects and unignore {@link Version230} eliminateSwitch test
   @Test public void a() {
     trimmingOf("switch(x) {} int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
