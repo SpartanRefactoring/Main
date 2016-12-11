@@ -25,7 +25,7 @@ public class TipperFactory {
   }
 
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description, Option[] os) {
-    final Matcher $ = new Matcher(pattern, replacement, os);
+    final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
@@ -63,7 +63,7 @@ public class TipperFactory {
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
-    final Matcher $ = new Matcher(_pattern, _replacement);
+    final Matcher $ = Matcher.patternMatcher(_pattern, _replacement);
     return new UserDefinedTipper<N>() {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
