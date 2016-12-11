@@ -39,18 +39,17 @@ public class Toolbox {
         }
     }
   };
-  @SuppressWarnings({
-      "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
-        static final long serialVersionUID = -4821340356894435723L;
-        {
-          final Toolbox t = freshCopyOfAllTippers();
-          assert t.implementation != null;
-          for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
-            if (ts != null)
-              for (final Tipper<? extends ASTNode> ¢ : ts)
-                put(¢.getClass(), ¢.tipperGroup());
-        }
-      };
+  @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
+    static final long serialVersionUID = -4821340356894435723L;
+    {
+      final Toolbox t = freshCopyOfAllTippers();
+      assert t.implementation != null;
+      for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
+        if (ts != null)
+          for (final Tipper<? extends ASTNode> ¢ : ts)
+            put(¢.getClass(), ¢.tipperGroup());
+    }
+  };
   /** The default Instance of this class */
   static Toolbox defaultInstance;
 
@@ -113,11 +112,10 @@ public class Toolbox {
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ThrowStatement.class, //
-            new ThrowNotLastInBlock(), //
-            null) //
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, //
             new ClassInstanceCreationValueTypes(), //
             null) //

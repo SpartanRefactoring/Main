@@ -22,6 +22,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialized = true;
   }
 
+  @Override public final boolean visit(final ExpressionStatement ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final Assignment ¢) {
     return cautiousGo(¢);
   }
