@@ -110,11 +110,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                   message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
                   message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
                   message.time.get(Linguistic.time(System.nanoTime() - startTime)) }).by("\n")).open();
-            break;
-          case DIALOG_PROCESSING:
-            break;
-          default:
-            break;
         }
       }
     });
