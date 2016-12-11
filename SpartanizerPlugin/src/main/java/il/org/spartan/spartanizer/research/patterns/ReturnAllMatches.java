@@ -27,7 +27,7 @@ public final class ReturnAllMatches extends NanoPatternTipper<Block> {
     return firstTip(tippers, x);
   }
 
-  @Override public String description(Block x) {
+  @Override public String description(final Block x) {
     return firstTipper(tippers, x).description(x);
   }
 }

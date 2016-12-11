@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
 public class ReturnAllMatchesTest {
   @Test public void a() {
     trimmingOf("for (  Entry<?> ¢ : that.entrySet())   if (m.count(¢.getElement()) != ¢.getCount())   return false;  return true;")
-        .withTipper(Block.class, new ReturnAllMatches()).gives("return that.entrySet().stream().allMatch(¢ -> !(m.count(¢.getElement()) != ¢.getCount()));");
+        .withTipper(Block.class, new ReturnAllMatches())
+        .gives("return that.entrySet().stream().allMatch(¢ -> !(m.count(¢.getElement()) != ¢.getCount()));");
   }
 }

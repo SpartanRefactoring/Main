@@ -40,7 +40,7 @@ public class Analyze {
     AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
-    long startTime = System.currentTimeMillis();
+    final long startTime = System.currentTimeMillis();
     switch (getProperty("analysis")) {
       case "methods":
         methodsAnalyze();
@@ -54,7 +54,7 @@ public class Analyze {
       default:
         analyze();
     }
-    System.out.println("Took " + (new DecimalFormat("#0.00")).format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
+    System.out.println("Took " + new DecimalFormat("#0.00").format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
 
   /** THE analysis */
