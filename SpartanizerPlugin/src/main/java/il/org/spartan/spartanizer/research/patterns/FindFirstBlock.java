@@ -6,15 +6,16 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.Matcher.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class FindFirstEnhancedFor extends NanoPatternTipper<Block> {
+public final class FindFirstBlock extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("{for($T $N : $X1) if($X2) return $N;}", "return $X1.stream().findFirst($N -> $X2).get();",
-          "Go Fluent : FindFirst"));
+      add(TipperFactory.statementsPattern("for($T $N : $X1) if($X2) return $N;", "return $X1.stream().findFirst($N -> $X2).get();",
+          "Go Fluent : FindFirst", Option.LAST));
       add(TipperFactory.statementsPattern("for($T $N : $X1) if($X2) return $N; throw $X3;",
           "if($X1.stream().anyMatch($N -> $X2)) return $X1.stream().findFirst($N -> $X2).get(); throw $X3;", "Go Fluent : FindFirst"));
       add(TipperFactory.statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();",
