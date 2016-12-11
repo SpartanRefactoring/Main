@@ -10,7 +10,7 @@ import org.junit.*;
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue233 {
-  //TODO: side effects and unignore {@link Version230} eliminateSwitch test
+  // TODO: side effects and unignore {@link Version230} eliminateSwitch test
   @Test public void a() {
     trimmingOf("switch(x) {} int x=5; ++x;").gives("int x=5; ++x;").stays();
   }
