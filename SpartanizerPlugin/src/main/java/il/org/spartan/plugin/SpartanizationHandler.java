@@ -79,6 +79,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
       @Override public void push(final Object... ¢) {
         switch (++level) {
+          default:
+            return;
           case DIALOG_CREATION:
             if ($.selection().size() >= DIALOG_THRESHOLD)
               if (!Dialogs.ok(Dialogs.message(separate.these(¢).by(Linguistic.SEPARATOR))))
@@ -104,6 +106,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       /** see issue #467 [[SuppressWarningsSpartan]] */
       @Override public void pop(final Object... ¢) {
         switch (level--) {
+          default:
+            return;
           case DIALOG_CREATION:
             if (dialogOpen)
               Dialogs.message(separate.these(new Object[] { //
