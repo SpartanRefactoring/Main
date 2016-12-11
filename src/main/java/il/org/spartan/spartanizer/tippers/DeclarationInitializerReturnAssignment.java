@@ -21,17 +21,14 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @DisableSpartan */
 public final class DeclarationInitializerReturnAssignment extends $VariableDeclarationFragementAndStatement implements TipperCategory.Collapse {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate temporary '" + ¢.getName() + "', inlining its value into the subsequent return statement";
+    return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null)
-      return null;
-    final Assignment a = az.assignment(step.expression(s));
+    final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = duplicate.of(from(a));

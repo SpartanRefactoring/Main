@@ -34,6 +34,6 @@ public final class EliminateEmptyFinally extends ReplaceCurrentNode<TryStatement
   }
 
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
-    return "Eliminate empty finally";
+    return "Prune empty finally block";
   }
 }

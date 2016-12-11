@@ -28,7 +28,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
+    return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
   @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
