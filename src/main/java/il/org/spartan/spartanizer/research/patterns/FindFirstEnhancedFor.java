@@ -9,26 +9,28 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class FindFirstEnhancedFor extends NanoPatternTipper<EnhancedForStatement> {
-  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+public final class FindFirstEnhancedFor extends NanoPatternTipper<Block> {
+  private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) return $N2;", "return findFirstIn($X1).satisfying(($N2) -> $X2);",
-          "FindFirstEnhancedFor"));
-      add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) {$N3 = $N2; break;}", "$N3 = findFirstIn($X1).satisfying(($N2) -> $X2);",
-          "FindFirstEnhancedFor"));
+      add(TipperFactory.patternTipper("{for($T $N : $X1) if($X2) return $N;}", "return $X1.stream().findFirst($N -> $X2).get();",
+          "Go Fluent : FindFirst"));
+      add(TipperFactory.statementsPattern("for($T $N : $X1) if($X2) return $N; throw $X3;",
+          "if($X1.stream().anyMatch($N -> $X2)) return $X1.stream().findFirst($N -> $X2).get(); throw $X3;", "Go Fluent : FindFirst"));
+      add(TipperFactory.statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();",
+          "Go Fluent : FindFirst"));
     }
   };
 
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final Block __) {
     return "";
   }
 
-  @Override public boolean canTip(final EnhancedForStatement x) {
+  @Override public boolean canTip(final Block x) {
     return anyTips(tippers, x);
   }
 
-  @Override public Tip pattern(final EnhancedForStatement x) {
+  @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
   }
 }

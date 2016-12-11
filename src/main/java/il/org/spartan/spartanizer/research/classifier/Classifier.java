@@ -23,7 +23,6 @@ public class Classifier extends ASTVisitor {
       add(new AnyMatches());
       add(new ContainsEnhancedFor());
       add(new ForEach());
-      add(new FindFirstEnhancedFor());
       add(new ReduceEnhancedFor());
     }
   };
