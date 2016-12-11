@@ -255,6 +255,7 @@ public class Analyze {
             new AssignmentLazyEvaluation(), //
             null) //
         .add(Block.class, //
+            new FindFirstEnhancedFor(), //
             new ReturnOld(), //
             new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
@@ -263,19 +264,18 @@ public class Analyze {
             new AnyMatches(), //
             new ContainsEnhancedFor(), //
             new ForEach(), //
-            new FindFirstEnhancedFor(), //
-            new ReduceEnhancedFor(), //
+            // new ReduceEnhancedFor(), //
             null) //
-        .add(ForStatement.class, //
-            new Contains(), //
-            // new CopyArray(), //
-            new FindFirst(), //
-            new ForEachEnhanced(), //
-            // new InitArray(), //
-            new MaxEnhanced(), //
-            new Min(), //
-            new Reduce(), //
-            null) //
+        // .add(ForStatement.class, //
+        // new Contains(), //
+        // new CopyArray(), //
+        // new FindFirst(), //
+        // new ForEachEnhanced(), //
+        // new InitArray(), //
+        // new MaxEnhanced(), //
+        // new Min(), //
+        // new Reduce(), //
+        // null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             new IfNullReturn(), //
