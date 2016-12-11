@@ -30,6 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </pre>
  *
  * .
+ * Tested in {@link Issue233}
  * @author Yuval Simon
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
