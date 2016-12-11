@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Raviv Rachmiel
  * @since 8-12-2016 */
-public class TrenaryExpanderTests {
+public class TernaryExpanderTests {
   // TODO: Raviv, you can use one @SuppressWarnings("static-method") for the
   // entire class
   @Test public void basicCanTip() {
