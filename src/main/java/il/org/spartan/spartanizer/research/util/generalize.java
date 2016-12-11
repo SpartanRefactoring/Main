@@ -41,9 +41,9 @@ public class generalize {
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final StringLiteral node) {
-        final StringLiteral lit = ast.newStringLiteral();
-        lit.setLiteralValue(renderIdentifier("L"));
-        r.replace(node, lit, null);
+        final StringLiteral $ = ast.newStringLiteral();
+        $.setLiteralValue(renderIdentifier("L"));
+        r.replace(node, $, null);
         return super.visit(node);
       }
 
@@ -55,12 +55,12 @@ public class generalize {
         return false;
       }
 
-      @Override public boolean visit(final SimpleName node) {
-        final String name = ((Name) node).getFullyQualifiedName();
+      @Override public boolean visit(final SimpleName $) {
+        final String name = ((Name) $).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
-        r.replace(node, ast.newSimpleName(renaming.get(name)), null);
-        return super.visit(node);
+        r.replace($, ast.newSimpleName(renaming.get(name)), null);
+        return super.visit($);
       }
     });
     try {
