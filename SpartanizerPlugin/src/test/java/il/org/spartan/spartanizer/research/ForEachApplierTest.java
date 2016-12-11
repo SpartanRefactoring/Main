@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class MapperTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Mapper();
+public class ForEachApplierTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ForEachApplier();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {

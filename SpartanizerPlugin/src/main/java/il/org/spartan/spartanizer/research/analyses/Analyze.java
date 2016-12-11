@@ -299,7 +299,7 @@ public class Analyze {
         new Examiner(), //
         new FluentSetter(), ///
         new Getter(), //
-        new Mapper(), //
+        new ForEachApplier(), //
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
