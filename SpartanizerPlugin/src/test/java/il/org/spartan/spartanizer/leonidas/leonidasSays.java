@@ -176,6 +176,7 @@ public class leonidasSays {
     String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
         actual = d.get();
         break;
       case EXPRESSION_LOOK_ALIKE:
@@ -184,16 +185,12 @@ public class leonidasSays {
       case METHOD_LOOKALIKE:
         actual = d.get().substring(9, d.get().length() - 2);
         break;
-      case OUTER_TYPE_LOOKALIKE:
-        actual = d.get();
-        break;
       case STATEMENTS_LOOK_ALIKE:
         actual = extractStatementIfOne(findFirst.statement(wizard.ast(d.get()))) + "";
         break;
-      default:
-        break;
-    }
+        default:
     assertEquals(Essence.of(s).replaceAll(" ", ""), Essence.of(actual).replaceAll(" ", ""));
+    }
   }
 
   static ASTNode extractASTNode(final String s, final CompilationUnit u) {
@@ -209,9 +206,8 @@ public class leonidasSays {
       case STATEMENTS_LOOK_ALIKE:
         return extractStatementIfOne(findFirst.instanceOf(Block.class, u));
       default:
-        break;
-    }
     return null;
+    }
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {

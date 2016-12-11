@@ -173,9 +173,8 @@ public interface wizard {
       case METHOD_LOOKALIKE:
         return into.m(p);
       default:
-        break;
-    }
     return null;
+    }
   }
 
   static String body(final ASTNode ¢) {

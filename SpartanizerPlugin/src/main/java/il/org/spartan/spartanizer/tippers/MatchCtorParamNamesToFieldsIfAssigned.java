@@ -32,7 +32,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     final List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
     final List<Statement> bodyStatements = statements(d);
     final List<String> definedLocals = new ArrayList<>();
-    final List<SimpleName> oldNames = new ArrayList<>();
+    final List<SimpleName> $ = new ArrayList<>();
     final List<SimpleName> newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
@@ -53,11 +53,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       final SimpleName paramName = az.simpleName(right(a));
       if (definedLocals.contains(fieldName.getIdentifier()) || params.contains(paramName.getIdentifier()))
         continue;
-      oldNames.add(paramName);
+      $.add(paramName);
       newNames.add(fieldName);
     }
     return new Tip(description(d), d, this.getClass()) {
-      List<SimpleName> on = new ArrayList<>(oldNames);
+      List<SimpleName> on = new ArrayList<>($);
       List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
