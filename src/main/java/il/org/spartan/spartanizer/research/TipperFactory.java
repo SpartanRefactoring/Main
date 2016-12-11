@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.Matcher.*;
 
 /** Factory to create tippers out of user strings! Much easier to implement
  * tippers with. <br>
@@ -19,13 +20,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class TipperFactory {
   public static UserDefinedTipper<Block> statementsPattern(final String _pattern, final String _replacement, final String description,
-      final String... options) {
-    return newSubBlockTipper(_pattern, _replacement, description, options);
+      final Option... os) {
+    return newSubBlockTipper(_pattern, _replacement, description, os);
   }
 
-  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
-      String[] options) {
-    final Matcher $ = new Matcher(pattern, replacement, options);
+  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description, Option[] os) {
+    final Matcher $ = new Matcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
