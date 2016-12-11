@@ -95,4 +95,9 @@ public class MatcherTest {
   @Test public void u() {
     assertFalse(new Matcher("$N1();", "").matches(findFirst.expressionStatement(wizard.ast("a(b);"))));
   }
+
+  @Test public void v() {
+    assertTrue(new Matcher("for($T $N : $X1) if($X2) return $N;", "")
+        .blockMatches(findFirst.block(wizard.ast("for(Object i : is) if(i.isNice()) return i;"))));
+  }
 }
