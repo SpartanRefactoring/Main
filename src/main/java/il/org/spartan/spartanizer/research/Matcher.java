@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
-import static il.org.spartan.lisp.last;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 /** Performs matching and pairing operations between <b>patterns</b> and
@@ -47,24 +47,44 @@ public class Matcher {
     return _pattern != null ? _pattern : (_pattern = patternSupplier.get());
   }
 
-  /** @param p
-   * @param options
-   * @param n */
-  public Matcher(final String p, final String r) {
-    this(p, r, new Option[0]);
+  public static Matcher patternMatcher(final String p, final String s) {
+    return patternMatcher(p, s, new Option[0]);
+  }
+
+  public static Matcher patternMatcher(final String p, final String s, Option[] _options) {
+    return new Matcher(() -> extractStatementIfOne(wizard.ast(reformat(p))), s, _options);
+  }
+
+  public static Matcher blockMatcher(final String p, final String s) {
+    return patternMatcher(p, s, new Option[0]);
+  }
+
+  public static Matcher blockMatcher(final String p, final String s, Option[] _options) {
+    return new Matcher(() -> wrapStatementIfOne(wizard.ast(reformat(p))), s, _options);
   }
 
   /** @param pattern
    * @param replacement2
    * @param options */
-  public Matcher(String p, String r, Option[] _options) {
-    patternSupplier = () -> extractStatementIfOne(wizard.ast(reformat(p)));
+  private Matcher(Supplier<ASTNode> _patternSupplier, String r, Option[] _options) {
+    patternSupplier = _patternSupplier;
     replacement = reformat(r);
     options = _options;
   }
 
   public boolean blockMatches(final Block ¢) {
-    return blockMatches(pattern(), ¢) && (!containsOption(Option.LAST) || lastInBlock(¢));
+    return blockMatches(wrapStatementIfOne(pattern()), ¢) && conditions(¢);
+  }
+
+  private boolean conditions(final Block ¢) {
+    return (!containsOption(Option.LAST) || lastInBlock(¢))//
+        && (!containsOption(Option.FIRST) || firstInBlock(¢));
+  }
+
+  /** @param pattern
+   * @return */
+  private static Block wrapStatementIfOne(ASTNode pattern) {
+    return az.block(iz.block(pattern) ? pattern : wizard.ast("{" + pattern + "}"));
   }
 
   /** @param pattern
@@ -73,6 +93,13 @@ public class Matcher {
   private boolean lastInBlock(Block ¢) {
     ASTNode[] ns = getMatchedNodes(¢);
     return ns[ns.length - 1].equals(last(statements(¢)));
+  }
+
+  /** @param pattern
+   * @param ¢
+   * @return */
+  private boolean firstInBlock(Block ¢) {
+    return getMatchedNodes(¢)[0].equals(first(statements(¢)));
   }
 
   /** @param o
@@ -86,7 +113,9 @@ public class Matcher {
   }
 
   private boolean blockMatches(final ASTNode p, final Block n) {
-    final List<Statement> sp = iz.block(p) ? statements(az.block(p)) : Arrays.asList(az.statement(p));
+    if (!iz.block(p))
+      return false;
+    final List<Statement> sp = statements(az.block(p));
     final List<Statement> sn = statements(n);
     if (sp.size() > sn.size())
       return false;
@@ -401,7 +430,7 @@ public class Matcher {
    * @param idxs
    * @return */
   @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
-    final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern()), b);
+    final Pair<Integer, Integer> idxs = getBlockMatching(wrapStatementIfOne(pattern()), b);
     final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
     for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
       $[¢ - idxs.first] = statements(b).get(idxs.first);
@@ -409,7 +438,7 @@ public class Matcher {
   }
 
   ASTNode blockReplacement(final Block n) {
-    final Pair<Integer, Integer> p = getBlockMatching(az.block(pattern()), az.block(n));
+    final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
