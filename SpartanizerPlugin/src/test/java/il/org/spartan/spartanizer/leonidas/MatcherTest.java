@@ -103,9 +103,8 @@ public class MatcherTest {
     assertTrue(Matcher.blockMatcher("for($T $N : $X1) if($X2) return $N;", "")
         .blockMatches(findFirst.block(wizard.ast("for(Object i : is) if(i.isNice()) return i;"))));
   }
-  
+
   @Test public void w() {
-    assertFalse(Matcher.patternMatcher("x = 1", "")
-        .matches(findFirst.assignment(wizard.ast("x += 1"))));
+    assertFalse(Matcher.patternMatcher("x = 1", "").matches(findFirst.assignment(wizard.ast("x += 1"))));
   }
 }
