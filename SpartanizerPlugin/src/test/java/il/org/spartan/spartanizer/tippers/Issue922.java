@@ -59,8 +59,19 @@ public class Issue922 {
   }
 
   @Test public void a$09() {
-    trimmingOf("aasdfa.asdf.assertFalse(M, T);")//
+    trimmingOf("Assert.assertFalse(M, T);")//
         .gives("assert !T:M;")//
+        .stays();
+  }
+
+  @Test public void a$10() {
+    trimmingOf("org.junit.Assert.assertFalse(M, T);")//
+        .gives("assert !T:M;")//
+        .stays();
+  }
+  @Test public void a$11() {
+    trimmingOf("org.junit.Assert.assertTrue(T);")//
+        .gives("assert T;")//
         .stays();
   }
 }
