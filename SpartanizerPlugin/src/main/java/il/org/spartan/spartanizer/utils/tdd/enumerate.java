@@ -185,4 +185,20 @@ public enum enumerate {
     });
     return $.inner;
   }
+
+  /** @param ¢
+   * @return */
+  public static int ternaries(ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
 }
