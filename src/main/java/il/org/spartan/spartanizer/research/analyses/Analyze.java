@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -59,11 +61,35 @@ public class Analyze {
     System.out.println("Took " + new DecimalFormat("#0.00").format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
 
+  static class Count {
+    static final Pair<Int, Int> ifStatements = new Pair<>(new Int(), new Int());
+    static final Pair<Int, Int> loopsStatements = new Pair<>(new Int(), new Int());
+    static final Pair<Int, Int> statements = new Pair<>(new Int(), new Int());
+
+    public static void before(final ASTNode ¢) {
+      ifStatements.first.inner += enumerate.ifStatements(¢);
+      loopsStatements.first.inner += enumerate.loops(¢);
+      statements.first.inner += enumerate.statements(¢);
+    }
+
+    public static void after(final ASTNode ¢) {
+      ifStatements.second.inner += enumerate.ifStatements(¢);
+      loopsStatements.second.inner += enumerate.loops(¢);
+      statements.second.inner += enumerate.statements(¢);
+    }
+
+    /** @return */
+    public static void print() {
+      System.out.println("statements : " + statements.first.inner + " ---> " + statements.second.inner);
+      System.out.println("loops : " + loopsStatements.first.inner + " ---> " + loopsStatements.second.inner);
+      System.out.println("ifStatements : " + ifStatements.first.inner + " ---> " + ifStatements.second.inner);
+    }
+  }
+
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
     final List<MethodDeclaration> methods = new ArrayList<>();
     for (final File f : inputFiles()) {
-      // System.out.println(f.getName());
       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
@@ -71,7 +97,10 @@ public class Analyze {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
             // System.out.println(¢);
-            methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            Count.before(¢);
+            MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            Count.after(after);
+            methods.add(after);
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
@@ -81,6 +110,7 @@ public class Analyze {
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
+    Count.print();
   }
 
   private static String outputDir() {
