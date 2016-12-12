@@ -34,8 +34,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public static long lastTime;
   public static long startingTime;
 
-  public CommandLine$Applicator() {
-  }
+  public CommandLine$Applicator() {}
 
   public CommandLine$Applicator(final String[] clazzes) {
     super(clazzes);
@@ -77,11 +76,12 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   void go(final CompilationUnit u) {
-//    extract.type(u);
-//    ReportGenerator.report("tips").put("FileName", presentFileName);
-//    ReportGenerator.report("tips").put("FilePath", presentFilePath);
-//    ReportGenerator.report("tips").put("ClassLOCBefore", count.lines(u));
-//    ReportGenerator.report("tips").put("ClassTokenBefore", metrics.tokens(u + ""));
+    // extract.type(u);
+    // ReportGenerator.report("tips").put("FileName", presentFileName);
+    // ReportGenerator.report("tips").put("FilePath", presentFilePath);
+    // ReportGenerator.report("tips").put("ClassLOCBefore", count.lines(u));
+    // ReportGenerator.report("tips").put("ClassTokenBefore", metrics.tokens(u +
+    // ""));
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
@@ -98,10 +98,12 @@ public class CommandLine$Applicator extends Generic$Applicator {
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
-//    ReportGenerator.report("tips").put("ClassLOCAfter", count.lines(outputASTNode));
-//    ReportGenerator.report("tips").put("ClassTokenAfter", metrics.tokens(output));
-//    ReportGenerator.report("tips").put("FileName", presentFileName);
-//    ReportGenerator.report("tips").put("FilePath", presentFilePath);
+    // ReportGenerator.report("tips").put("ClassLOCAfter",
+    // count.lines(outputASTNode));
+    // ReportGenerator.report("tips").put("ClassTokenAfter",
+    // metrics.tokens(output));
+    // ReportGenerator.report("tips").put("FileName", presentFileName);
+    // ReportGenerator.report("tips").put("FilePath", presentFilePath);
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
     MetricsReport.getSettings();
@@ -115,8 +117,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-//    ReportGenerator.report("tips").put("Name", extract.name(input));
-//    ReportGenerator.report("tips").put("Category", extract.category(input));
+    // ReportGenerator.report("tips").put("Name", extract.name(input));
+    // ReportGenerator.report("tips").put("Category", extract.category(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
@@ -192,23 +194,21 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-          AbstractTypeDeclaration includingClass = searchAncestors.forContainingType().from(n);
-          ReportGenerator.report("tips").put("including Class", 
-              includingClass.getName());
+          final AbstractTypeDeclaration includingClass = searchAncestors.forContainingType().from(n);
+          ReportGenerator.report("tips").put("including Class", includingClass.getName());
           ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
-          ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass+""));
-          MethodDeclaration includingMethod = searchAncestors.forContainingMethod().from(n);
-          ReportGenerator.report("tips").put("including Method", 
-              includingMethod == null ? "not in method" : includingMethod.getName());
+          ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
+          final MethodDeclaration includingMethod = searchAncestors.forContainingMethod().from(n);
+          ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
           ReportGenerator.report("tips").put("Method LOC", includingMethod != null ? count.lines(includingMethod) : "not applicable");
           ReportGenerator.report("tips").put("Method Tokens", includingMethod != null ? metrics.tokens(includingMethod + "") : "not applicable");
           ReportGenerator.writeTipsLine(n, s, "tips");
           // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
-        } 
-//          else {
-//          ReportGenerator.emptyTipsLine();
-//        }
+        }
+        // else {
+        // ReportGenerator.emptyTipsLine();
+        // }
         return true;
       }
 
@@ -251,63 +251,35 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         return true;
       }
-      
-      /**
-       * @param n
+
+      /** @param n
        * @param w
-       * @throws TipperFailure
-       */
+       * @throws TipperFailure */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      /**
-       * @param w
-       */
+      /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        String key = monitor.className(w.getClass());
+        final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-      
-      <N extends ASTNode> void tick2(N n, Tipper<N> w) {
-        String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
-        if (!coverage.containsKey(key))
-            coverage.put(key, 0);
-          coverage.put(key, coverage.get(key) + 1);
-     }
 
-     @Override protected void initialization(final ASTNode ¢) {
+      <N extends ASTNode> void tick2(final N n, final Tipper<N> w) {
+        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
+        if (!coverage.containsKey(key))
+          coverage.put(key, 0);
+        coverage.put(key, coverage.get(key) + 1);
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-  
-  private void reportSpectrum() {
-    for(Entry<String, Integer> ¢: spectrum.entrySet()){
-      spectrumStats.put("Tipper", ¢.getKey());
-      spectrumStats.put("Times", ¢.getValue());
-      spectrumStats.nl();
-    }
-    System.err.print("\n Spectrum: " + spectrumStats.close());
-  }
-  
-  private void reportCoverage() {
-        for (Entry<String, Integer> ¢ : coverage.entrySet()) {
-          int i = ¢.getKey().indexOf(".java");
-          String file = ¢.getKey().substring(0, i + 5);
-          coverageStats.put("File", file);
-          coverageStats.put("Method", ¢.getKey());
-          coverageStats.put("Spartanization", ¢.getValue());
-          coverageStats.nl();
-        }
-    System.err.print("\n Coverage: " + coverageStats.close());
-  }
-
-
-
 
   // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
   // return toolbox.firstTipper(¢);
@@ -335,7 +307,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** @param __
    * @return */
   public boolean apply(final AbstractSelection<?> __) {
-    for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()){
+    for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);
       System.out.println("presentFilePath: " + presentFilePath);
       w.compilationUnit.accept(new ASTVisitor() {

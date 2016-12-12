@@ -228,7 +228,7 @@ public interface findFirst {
 
   /** @param ¢
    * @return */
-  static Block block(ASTNode ¢) {
+  static Block block(final ASTNode ¢) {
     return instanceOf(Block.class, ¢);
   }
 }

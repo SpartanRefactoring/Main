@@ -114,7 +114,7 @@ public class Analyze {
           try {
             // System.out.println(¢);
             Count.before(¢);
-            MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
           } catch (@SuppressWarnings("unused") final AssertionError __) {
@@ -248,12 +248,11 @@ public class Analyze {
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         //
       }
-      /**
-       * @author matteo
-       * append also before
-       */
-//      appendFile(new File(getProperty("outputDir") + "/before.java"), (cu + ""));
-//      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
+      /** @author matteo append also before */
+      // appendFile(new File(getProperty("outputDir") + "/before.java"), (cu +
+      // ""));
+      // appendFile(new File(getProperty("outputDir") + "/after.java"),
+      // spartanize(cu));
     }
     Logger.summarize(outputDir());
   }

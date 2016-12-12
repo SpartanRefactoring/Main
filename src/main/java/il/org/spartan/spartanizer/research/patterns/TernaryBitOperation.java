@@ -14,7 +14,7 @@ public class TernaryBitOperation extends NanoPatternTipper<ConditionalExpression
   private static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      //TODO: as.bit
+      // TODO: as.bit
       add(TipperFactory.patternTipper("$X == 0 ? 0 : 1", "Bit.of($X)", ""));
       add(TipperFactory.patternTipper("0 == $X ? 0 : 1", "Bit.of($X)", ""));
       add(TipperFactory.patternTipper("$X == 0 ? 1 : 0", "Bit.not($X)", ""));

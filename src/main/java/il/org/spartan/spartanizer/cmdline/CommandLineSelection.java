@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -73,13 +72,14 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
      * @author Matteo Orru'
      * @return */
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
-//      final List<WrappedCompilationUnit> cuList = new ArrayList<>();
-//      for (final File ¢ : new FilesGenerator(".java").from(path))
-//        cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
-//      return new CommandLineSelection(cuList, "selection");
+      // final List<WrappedCompilationUnit> cuList = new ArrayList<>();
+      // for (final File ¢ : new FilesGenerator(".java").from(path))
+      // cuList.add(WrappedCompilationUnit.of((CompilationUnit)
+      // makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
+      // return new CommandLineSelection(cuList, "selection");
       return getWrappedCompilationUnitsSelection(path);
     }
-    
+
     /** @param path
      * @author Matteo Orru'
      * @return */
@@ -90,7 +90,6 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
           cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
       return new CommandLineSelection(cuList, "selection");
     }
-
 
     /** @param path
      * @return */
