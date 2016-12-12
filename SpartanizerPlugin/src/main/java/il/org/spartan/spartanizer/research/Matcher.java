@@ -57,7 +57,7 @@ public class Matcher {
   }
 
   public static Matcher blockMatcher(final String p, final String s) {
-    return patternMatcher(p, s, new Option[0]);
+    return blockMatcher(p, s, new Option[0]);
   }
 
   public static Matcher blockMatcher(final String p, final String s, Option[] _options) {
