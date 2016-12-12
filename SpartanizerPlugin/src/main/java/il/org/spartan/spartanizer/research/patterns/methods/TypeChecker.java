@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.patterns.methods;
 
 import org.eclipse.jdt.core.dom.*;
 
