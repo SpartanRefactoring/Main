@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 
 /** Performs matching and pairing operations between <b>patterns</b> and
  * <b>ASTNodes</b>.<br>
@@ -52,7 +53,7 @@ public class Matcher {
   }
 
   public static Matcher patternMatcher(final String p, final String s, Option[] _options) {
-    return new Matcher(() -> extractStatementIfOne(wizard.ast(reformat(p))), s, _options);
+    return new Matcher(() -> extractStatementIfOne(ast(reformat(p))), s, _options);
   }
 
   public static Matcher blockMatcher(final String p, final String s) {
@@ -60,7 +61,7 @@ public class Matcher {
   }
 
   public static Matcher blockMatcher(final String p, final String s, Option[] _options) {
-    return new Matcher(() -> wrapStatementIfOne(wizard.ast(reformat(p))), s, _options);
+    return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
   /** @param pattern
@@ -84,7 +85,7 @@ public class Matcher {
   /** @param pattern
    * @return */
   private static Block wrapStatementIfOne(ASTNode pattern) {
-    return az.block(iz.block(pattern) ? pattern : wizard.ast("{" + pattern + "}"));
+    return az.block(iz.block(pattern) ? pattern : ast("{" + pattern + "}"));
   }
 
   /** @param pattern
@@ -154,10 +155,6 @@ public class Matcher {
     return true;
   }
 
-  private static boolean sameOperator(final ASTNode p, final ASTNode n) {
-    return (p + "").equals(n + "");
-  }
-
   /** Validates that matched variables are the same in all matching places. */
   private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
@@ -185,7 +182,7 @@ public class Matcher {
       return false;
     if (iz.literal($))
       return ($ + "").equals(n + "");
-    if (iz.anyOperator($) && !sameOperator($, n))
+    if (assignmentWithDifferentOperators($, n))
       return false;
     final List<ASTNode> pChildren = gatherChildren($, $);
     final List<ASTNode> nChildren = gatherChildren(n, $);
@@ -197,21 +194,25 @@ public class Matcher {
     return true;
   }
 
+  private static boolean assignmentWithDifferentOperators(final ASTNode $, final ASTNode n) {
+    return iz.assignment($) && !operator(az.assignment($)).equals(operator(az.assignment(n)));
+  }
+
   @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode ¢, final ASTNode p) {
     final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
     if (iz.methodInvocation(¢)) {
       if (!isMethodInvocationAndHas$AArgument(p))
-        $.addAll(az.methodInvocation(¢).arguments());
+        $.addAll(arguments(az.methodInvocation(¢)));
       if (haz.expression(az.methodInvocation(¢)))
-        $.add(step.expression(az.methodInvocation(¢)));
+        $.add(expression(az.methodInvocation(¢)));
     }
     if (iz.forStatement(¢)) {
-      $.addAll(step.initializers(az.forStatement(¢)));
-      $.add(step.condition(az.forStatement(¢)));
-      $.addAll(step.updaters(az.forStatement(¢)));
+      $.addAll(initializers(az.forStatement(¢)));
+      $.add(condition(az.forStatement(¢)));
+      $.addAll(updaters(az.forStatement(¢)));
     }
     if (iz.variableDeclarationExpression(¢))
-      $.addAll(step.fragments(az.variableDeclarationExpression(¢)));
+      $.addAll(fragments(az.variableDeclarationExpression(¢)));
     return $;
   }
 
@@ -280,7 +281,7 @@ public class Matcher {
   }
 
   private static String blockVariableName(final ASTNode p) {
-    return az.methodInvocation(az.expressionStatement(step.statements(az.block(p)).get(0)).getExpression()).getName().getFullyQualifiedName();
+    return az.methodInvocation(az.expressionStatement(statements(az.block(p)).get(0)).getExpression()).getName().getFullyQualifiedName();
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
@@ -307,7 +308,7 @@ public class Matcher {
       if ($.startsWith("$L"))
         return iz.literal(n) && consistent(ids, $, n + "");
     }
-    return iz.name(n) && $.equals(step.identifier(az.name(n)));
+    return iz.name(n) && $.equals(identifier(az.name(n)));
   }
 
   /** Pairs variables from a pattern <b>p</b> with their corresponding
@@ -354,7 +355,7 @@ public class Matcher {
       enviroment.put(blockVariableName(p) + "();", n + "");
     else {
       if (isMethodInvocationAndHas$AArgument(p))
-        enviroment.put(argumentsId(p), arguments(n) + "");
+        enviroment.put(argumentsId(p), matchingArguments(n) + "");
       final List<ASTNode> pChildren = gatherChildren(p, p);
       final List<ASTNode> nChildren = gatherChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
@@ -374,7 +375,7 @@ public class Matcher {
   /** [[SuppressWarningsSpartan]] */
   private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
     if (is$X(p))
-      enviroment.put(step.name(az.methodInvocation(p)) + "", n);
+      enviroment.put(name(az.methodInvocation(p)) + "", n);
     else if (startsWith$notBlock(p))
       enviroment.put(p + "", n);
     else if (isBlockVariable(p))
@@ -396,8 +397,8 @@ public class Matcher {
 
   /** @param ¢
    * @return */
-  private static String arguments(final ASTNode ¢) {
-    final String $ = az.methodInvocation(¢).arguments() + "";
+  private static String matchingArguments(final ASTNode ¢) {
+    final String $ = arguments(az.methodInvocation(¢)) + "";
     return $.substring(1, $.length() - 1);
   }
 
@@ -416,14 +417,14 @@ public class Matcher {
     for (final String ¢ : enviroment.keySet())
       if (needsSpecialReplacement(¢))
         $.set($.get().replace(¢, enviroment.get(¢) + ""));
-    wizard.ast(replacement).accept(new ASTVisitor() {
+    ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
           $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
         return true;
       }
     });
-    return extractStatementIfOne(wizard.ast($.get()));
+    return extractStatementIfOne(ast($.get()));
   }
 
   /** @param b
@@ -440,19 +441,19 @@ public class Matcher {
   ASTNode blockReplacement(final Block n) {
     final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
-    final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching), new HashMap<>());
+    final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     for (final String ¢ : enviroment.keySet())
       if (needsSpecialReplacement(¢))
         $.set($.get().replace(¢, enviroment.get(¢) + ""));
-    wizard.ast(replacement).accept(new ASTVisitor() {
+    ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
           $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
         return true;
       }
     });
-    return wizard.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
+    return ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
   }
 
   private static boolean needsSpecialReplacement(final String ¢) {
