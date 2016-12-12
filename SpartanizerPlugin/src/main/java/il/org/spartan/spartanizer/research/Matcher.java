@@ -77,8 +77,8 @@ public class Matcher {
   }
 
   private boolean conditions(final Block ¢) {
-    return (!containsOption(Option.LAST) || lastInBlock(¢))//
-        && (!containsOption(Option.FIRST) || firstInBlock(¢));
+    return (!containsOption(Option.LAST_IN_BLOCK) || lastInBlock(¢))//
+        && (!containsOption(Option.FIRST_IN_BLOCK) || firstInBlock(¢));
   }
 
   /** @param pattern
@@ -476,6 +476,6 @@ public class Matcher {
   }
 
   public enum Option {
-    LAST, FIRST;
+    LAST_IN_BLOCK, FIRST_IN_BLOCK;
   }
 }
