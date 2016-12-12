@@ -69,9 +69,32 @@ public class Issue922 {
         .gives("assert !T:M;")//
         .stays();
   }
+
   @Test public void a$11() {
     trimmingOf("org.junit.Assert.assertTrue(T);")//
         .gives("assert T;")//
+        .stays();
+  }
+
+  @Test public void a$12() {
+    trimmingOf("Assert.assertNotNull(T);")//
+        .gives("assert T != null;")//
+        .stays();
+  }
+
+  @Test public void a$13() {
+    trimmingOf("Assert.assertNotNull(message, T);")//
+        .gives("assert T != null: message;")//
+        .stays();
+  }
+
+  @Test public void a$14() {
+    trimmingOf("Assert.assertNull(message, T);")//
+        .stays();
+  }
+
+  @Test public void a$15() {
+    trimmingOf("Assert.assertNull(message, T);")//
         .stays();
   }
 }
