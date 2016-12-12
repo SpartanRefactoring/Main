@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.Matcher.*;
 
 /** Factory to create tippers out of user strings! Much easier to implement
  * tippers with. <br>
@@ -18,12 +19,13 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class TipperFactory {
-  public static UserDefinedTipper<Block> statementsPattern(final String _pattern, final String _replacement, final String description) {
-    return newSubBlockTipper(_pattern, _replacement, description);
+  public static UserDefinedTipper<Block> statementsPattern(final String _pattern, final String _replacement, final String description,
+      final Option... os) {
+    return newSubBlockTipper(_pattern, _replacement, description, os);
   }
 
-  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description) {
-    final Matcher $ = new Matcher(pattern, replacement);
+  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description, Option[] os) {
+    final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
@@ -61,7 +63,7 @@ public class TipperFactory {
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
-    final Matcher $ = new Matcher(_pattern, _replacement);
+    final Matcher $ = Matcher.patternMatcher(_pattern, _replacement);
     return new UserDefinedTipper<N>() {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;

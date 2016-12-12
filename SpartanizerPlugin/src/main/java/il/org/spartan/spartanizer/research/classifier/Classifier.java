@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.classifier.patterns.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,11 +21,8 @@ public class Classifier extends ASTVisitor {
   static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new AnyMatches());
       add(new ContainsEnhancedFor());
       add(new ForEach());
-      add(new FindFirstEnhancedFor());
-      add(new ReduceEnhancedFor());
     }
   };
   static List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
