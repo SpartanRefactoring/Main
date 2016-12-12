@@ -8,7 +8,6 @@ import org.junit.*;
  * Related to {@link Version250} and {@link Issue086}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-
 @SuppressWarnings("static-method")
 public class Issue907 {
   @Test public void issue086_1() {

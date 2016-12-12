@@ -32,10 +32,10 @@ public class WrappedCompilationUnit {
   public WrappedCompilationUnit(final CompilationUnit cu) {
     compilationUnit = cu;
   }
-  
-  public WrappedCompilationUnit(final CompilationUnit cu, String fileName, String absolutePath) {
+
+  public WrappedCompilationUnit(final CompilationUnit cu, final String fileName, final String absolutePath) {
     this.fileName = fileName;
-    this.filePath = absolutePath;
+    filePath = absolutePath;
     compilationUnit = cu;
   }
 
@@ -81,15 +81,15 @@ public class WrappedCompilationUnit {
     return new WrappedCompilationUnit(from);
   }
 
-  public static WrappedCompilationUnit of(CompilationUnit from, String name, String absolutePath) {
+  public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
     return new WrappedCompilationUnit(from, name, absolutePath);
- }
+  }
 
   public String getFileName() {
-    return this.fileName;
+    return fileName;
   }
 
   public String getFilePath() {
-    return this.filePath;
+    return filePath;
   }
 }
