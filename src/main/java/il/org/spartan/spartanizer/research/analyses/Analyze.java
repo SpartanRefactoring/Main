@@ -264,6 +264,7 @@ public class Analyze {
             new ReturnAnyMatches(), //
             null) //
         .add(EnhancedForStatement.class, //
+            new Aggregate(), //
             new ContainsEnhancedFor(), //
             new ForEach(), //
             // new ReduceEnhancedFor(), //
