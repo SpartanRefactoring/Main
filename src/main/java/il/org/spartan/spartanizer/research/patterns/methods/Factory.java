@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Creator extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Factory extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
