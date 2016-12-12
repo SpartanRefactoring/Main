@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.patterns.common;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return ns.stream().filter(t -> t.canTip(n)).findFirst().get();
   }
 
-  protected static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ns, final N n) {
+  public static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ns, final N n) {
     return firstTipper(ns, n).tip(n);
   }
 

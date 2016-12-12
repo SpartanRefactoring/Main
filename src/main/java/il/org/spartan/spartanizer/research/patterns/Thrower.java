@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 May collide with {@link IfNullThrow} */
