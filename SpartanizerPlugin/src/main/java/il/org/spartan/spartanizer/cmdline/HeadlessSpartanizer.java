@@ -32,7 +32,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   }
 
   HeadlessSpartanizer(final String presentSourcePath, final String name) {
-    inputFolder = presentSourcePath;
+    inputDir = presentSourcePath;
     this.name = name;
   }
 
@@ -79,7 +79,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
-            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
+            .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputDir)))
             .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException ¢) {
       ¢.printStackTrace();

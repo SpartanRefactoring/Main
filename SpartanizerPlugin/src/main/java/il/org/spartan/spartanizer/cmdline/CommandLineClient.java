@@ -56,8 +56,8 @@ public final class CommandLineClient extends HeadlessSpartanizer {
 //    MetricsReport.initialize();
 //>>>>>>> matteo-experimental
     ReportGenerator.generate("metrics");
-    ReportGenerator.setOutputFolder(outputFolder);
-    ReportGenerator.setInputFolder(inputFolder);
+    ReportGenerator.setOutputFolder(outputDir);
+    ReportGenerator.setInputFolder(inputDir);
     run();
 //    MetricsReport.generate();
   }
@@ -68,7 +68,7 @@ public final class CommandLineClient extends HeadlessSpartanizer {
   @SuppressWarnings("static-method")
 //>>>>>>> matteo-experimental
   private void run() {
-    name(system.folder2File(inputFolder));
+    name(system.folder2File(inputDir));
     apply();
     // r.printExternals();
   }
