@@ -10,6 +10,7 @@ import org.junit.*;
  * @since 2016-12-08 */
 @Ignore
 @SuppressWarnings("static-method")
+//TODO: unignore the test in {@link Version250} when fixed
 public class Issue907 {
   @Test public void issue086_1() {
     trimmingOf("if(false)" + "c();\n" + "int a;").gives("if(false)" + "c();\n").gives("{}").gives("").stays();
