@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since Nov 13, 2016 */
@@ -40,27 +41,29 @@ public class generalize {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final StringLiteral node) {
-        final StringLiteral $ = ast.newStringLiteral();
-        $.setLiteralValue(renderIdentifier("L"));
-        r.replace(node, $, null);
-        return super.visit(node);
+      @Override public boolean visit(final StringLiteral l) {
+        final StringLiteral ¢ = ast.newStringLiteral();
+        ¢.setLiteralValue(renderIdentifier("L"));
+        r.replace(l, ¢, null);
+        return super.visit(l);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final ImportDeclaration __) {
+      @Override public boolean visit(final ImportDeclaration ¢) {
+        ___.unused(¢);
         return false;
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final PackageDeclaration __) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
+        ___.unused(¢);
         return false;
       }
 
-      @Override public boolean visit(final SimpleName $) {
-        final String name = ((Name) $).getFullyQualifiedName();
+      @Override public boolean visit(final SimpleName node) {
+        final String name = ((Name) node).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
-        r.replace($, ast.newSimpleName(renaming.get(name)), null);
-        return super.visit($);
+        r.replace(node, ast.newSimpleName(renaming.get(name)), null);
+        return super.visit(node);
       }
     });
     try {

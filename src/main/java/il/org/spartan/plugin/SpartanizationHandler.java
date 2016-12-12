@@ -110,10 +110,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             return;
           case DIALOG_CREATION:
             if (dialogOpen)
-              Dialogs.message(separate.these(new Object[] { //
+              Dialogs.message(separate.these( //
                   message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
                   message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
-                  message.time.get(Linguistic.time(System.nanoTime() - startTime)) }).by("\n")).open();
+                  message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
         }
       }
     });

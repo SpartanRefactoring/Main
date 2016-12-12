@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.patterns.*;
+import il.org.spartan.spartanizer.research.patterns.characteristics.*;
+import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -255,27 +257,28 @@ public class Analyze {
             new AssignmentLazyEvaluation(), //
             null) //
         .add(Block.class, //
+            new CreateFrom(), //
+            new FindFirstBlock(), //
             new ReturnOld(), //
             new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
             null) //
         .add(EnhancedForStatement.class, //
-            new AnyMatches(), //
+            new Aggregate(), //
             new ContainsEnhancedFor(), //
             new ForEach(), //
-            new FindFirstEnhancedFor(), //
-            new ReduceEnhancedFor(), //
+            // new ReduceEnhancedFor(), //
             null) //
-        .add(ForStatement.class, //
-            new Contains(), //
-            // new CopyArray(), //
-            new FindFirst(), //
-            new ForEachEnhanced(), //
-            // new InitArray(), //
-            new MaxEnhanced(), //
-            new Min(), //
-            new Reduce(), //
-            null) //
+        // .add(ForStatement.class, //
+        // new Contains(), //
+        // new CopyArray(), //
+        // new FindFirst(), //
+        // new ForEachEnhanced(), //
+        // new InitArray(), //
+        // new MaxEnhanced(), //
+        // new Min(), //
+        // new Reduce(), //
+        // null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             new IfNullReturn(), //
