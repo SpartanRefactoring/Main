@@ -7,6 +7,9 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
+import il.org.spartan.spartanizer.research.patterns.methods.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch

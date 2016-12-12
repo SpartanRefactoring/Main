@@ -39,7 +39,7 @@ public final class TrimmerTestsUtils {
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);

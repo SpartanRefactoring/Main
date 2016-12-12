@@ -40,6 +40,7 @@ public class GUIBatchLaconizer extends Applicator {
     final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
+        final AtomicInteger thisPassTipsInvoked = new AtomicInteger(0);
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
@@ -51,8 +52,10 @@ public class GUIBatchLaconizer extends Applicator {
           if (tipsInvoked <= 0)
             done.add(¢);
           ¢.dispose();
-          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName()));
+          thisPassTipsInvoked.addAndGet(tipsInvoked);
           totalTipsInvoked.addAndGet(tipsInvoked);
+          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName(),
+              totalTipsInvoked.get(), thisPassTipsInvoked.get()));
           if (!shouldRun())
             break;
         }
@@ -150,7 +153,9 @@ public class GUIBatchLaconizer extends Applicator {
     run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
-    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
+    visit_cu(5,
+        inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2) + "\nTips: total = " + printableAt(inp, 3)
+            + "\tthis pass = " + printableAt(inp, 4)), //
     run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
     private final int inputCount;
     private final Function<Object[], String> printing;
