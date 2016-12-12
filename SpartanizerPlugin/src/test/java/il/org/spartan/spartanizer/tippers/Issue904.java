@@ -41,4 +41,9 @@ public class Issue904 {
         .gives("if(!b)return;g();").gives("if(!b);else g();").gives("if(b)g();").stays() //
     ;
   }
+  
+  //TODO: check if this test should work according to the issue of dead variables
+  @Test public void issue075h() {
+    trimmingOf("int i = +0;").gives("");
+  }
 }
