@@ -248,6 +248,12 @@ public class Analyze {
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         //
       }
+      /**
+       * @author matteo
+       * append also before
+       */
+//      appendFile(new File(getProperty("outputDir") + "/before.java"), (cu + ""));
+//      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
     }
     Logger.summarize(outputDir());
   }
