@@ -43,6 +43,7 @@ public class Trimmer extends AbstractGUIApplicator {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
         TrimmerLog.visitation(n);
+//        System.out.println(n.getClass());
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
         Tipper<N> w = null;
