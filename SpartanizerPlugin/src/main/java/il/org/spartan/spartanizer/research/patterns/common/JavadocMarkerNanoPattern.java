@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.patterns.common;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -30,7 +30,7 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
     return ¢.getName() + " is a " + this.getClass().getSimpleName() + " method";
   }
 
-  protected final String javadoc() {
+  public final String javadoc() {
     return "[[" + this.getClass().getSimpleName() + "]]";
   }
 }

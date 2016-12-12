@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.patterns.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Generate a CSV file including all preliminary information we have on

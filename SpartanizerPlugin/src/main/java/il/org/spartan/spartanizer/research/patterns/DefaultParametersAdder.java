@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** A DefaultParametersAdder method is such one that calls another method
  * (usually with same name) and just adds parameters to the method.

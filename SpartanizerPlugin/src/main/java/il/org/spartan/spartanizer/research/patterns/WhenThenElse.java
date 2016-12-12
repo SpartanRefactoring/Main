@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** There is no reason to use this tipper, it won't make code look better. But
  * this can be used for replacing pattern with something so it won't be found
