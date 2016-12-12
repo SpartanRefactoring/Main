@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.research.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.research.patterns.common.*;
+
 /** @author Ori Marcovitch
  * @since 2016 */
 public class DoNothingReturnThis extends JavadocMarkerNanoPattern<MethodDeclaration> {

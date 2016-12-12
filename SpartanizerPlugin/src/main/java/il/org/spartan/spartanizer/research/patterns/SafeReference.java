@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** Replace X == null ? null : X.Y with X?.Y <br>
  * replace X != null ? X.Y : null with X?.Y <br>
