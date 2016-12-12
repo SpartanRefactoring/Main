@@ -139,4 +139,50 @@ public enum enumerate {
     return $;
   }
   // For you to implement! Let's TDD and get it on!
+
+  /** @return */
+  public static int ifStatements(final ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  /** @param ¢
+   * @return */
+  public static int loops(ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final DoStatement __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
 }
