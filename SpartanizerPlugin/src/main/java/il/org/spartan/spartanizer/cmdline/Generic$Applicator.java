@@ -36,9 +36,9 @@ public class Generic$Applicator {
 
   public Generic$Applicator(final String[] clazzes) {
     System.out.println("clazzes:" + clazzes);
-    if (clazzes == null){
+    if (clazzes == null) {
       selectedNodeTypes = setAllNodeTypes();
-      for(Class<? extends ASTNode> ¢ : selectedNodeTypes)
+      for (final Class<? extends ASTNode> ¢ : selectedNodeTypes)
         System.out.println(¢);
     } else {
       selectedNodeTypes = setSelectedNodeTypes(clazzes);

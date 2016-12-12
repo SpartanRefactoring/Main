@@ -157,7 +157,7 @@ public enum enumerate {
 
   /** @param ¢
    * @return */
-  public static int loops(ASTNode ¢) {
+  public static int loops(final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
@@ -188,7 +188,7 @@ public enum enumerate {
 
   /** @param ¢
    * @return */
-  public static int ternaries(ASTNode ¢) {
+  public static int ternaries(final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();

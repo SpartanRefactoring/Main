@@ -26,21 +26,21 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     return replacement(az.methodInvocation(expression(¢)));
   }
 
-  private static ASTNode replacement(MethodInvocation i) {
+  private static ASTNode replacement(final MethodInvocation i) {
     final List<Expression> es = arguments(i);
     return es.size() > 2 || es.isEmpty() ? null : replacement(i, first(es), second(es));
   }
 
-  public static ASTNode replacement(MethodInvocation i, final Expression first, final Expression second) {
+  public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {
     final Expression message = second == null ? null : first;
     final Expression condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
       $.setMessage(duplicate.of(message));
-     return replacement(i, condition, $);
+    return replacement(i, condition, $);
   }
 
-  public static ASTNode replacement(MethodInvocation i, final Expression condition, final AssertStatement $) {
+  public static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
     switch (name(i) + "") {
       default:
         return null;
@@ -48,12 +48,12 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
         return setAssert($, duplicate.of(condition));
       case "assertFalse":
         return setAssert($, make.notOf(condition));
-      case "assertNotNull": 
+      case "assertNotNull":
         return setAssert($, subject.operands(condition, make.makeNullLiteral(i)).to(NOT_EQUALS));
     }
   }
 
-  public static AssertStatement setAssert(AssertStatement $, Expression x) {
+  public static AssertStatement setAssert(final AssertStatement $, final Expression x) {
     $.setExpression(x);
     return $;
   }

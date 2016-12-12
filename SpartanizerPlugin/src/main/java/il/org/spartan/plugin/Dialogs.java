@@ -126,10 +126,10 @@ public class Dialogs {
         super.buttonPressed(¢);
         switch (¢) {
           default:
-            return;         case RIB_ID:
+            return;
+          case RIB_ID:
             decrementNestingDepth();
             close();
-
         }
       }
 
