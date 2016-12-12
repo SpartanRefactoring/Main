@@ -215,11 +215,11 @@ public final class Version250 {
   @Test public void issue085_86l() {
     trimmingOf("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n").gives("{a();}").gives("a();");
   }
-  
+
   @Test public void issue086_1() {
     trimmingOf("if(false)" + "c();\n" + "int a;").gives("{}int a;").gives("int a;").stays();
   }
-  
+
   @Test public void issue086_2() {
     trimmingOf("if(false) {c();\nb();\na();}").gives("{}").gives("").stays();
   }
