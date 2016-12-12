@@ -64,9 +64,9 @@ public class Matcher {
     return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
-  /** @param pattern
-   * @param replacement2
-   * @param options */
+  /** @param _patternSupplier
+   * @param r
+   * @param _options */
   private Matcher(Supplier<ASTNode> _patternSupplier, String r, Option[] _options) {
     patternSupplier = _patternSupplier;
     replacement = reformat(r);

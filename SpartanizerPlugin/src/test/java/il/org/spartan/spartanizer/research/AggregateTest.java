@@ -24,6 +24,6 @@ public class AggregateTest {
   @Test public void c() {
     trimmingOf(//
         "for(B d : bs) $ += f();"//
-    ).withTipper(EnhancedForStatement.class, new Aggregate()).stays();
+    ).withTipper(EnhancedForStatement.class, new Aggregate()).gives("$=bs.stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
   }
 }
