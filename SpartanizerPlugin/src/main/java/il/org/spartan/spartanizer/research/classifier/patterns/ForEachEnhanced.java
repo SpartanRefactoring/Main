@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.classifier.patterns;
 
 import java.util.*;
 
@@ -10,12 +10,10 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class CopyArray extends NanoPatternTipper<ForStatement> {
+public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
-    {
-      add(TipperFactory.patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2[$N0] = $N3[$N0];", "copy();", "copy"));
-    }
+    {}
   };
 
   @Override public boolean canTip(final ForStatement ¢) {
@@ -23,10 +21,10 @@ public class CopyArray extends NanoPatternTipper<ForStatement> {
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
-    return "Init array: conevrt to fluent API";
+    return "ForEach: conevrt to fluent API";
   }
 
   @Override public Tip pattern(final ForStatement ¢) {
-    return firstTip(tippers, ¢);
+    return firstTipper(tippers, ¢).tip(¢);
   }
 }
