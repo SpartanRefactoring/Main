@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -14,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>assertTrue(X)</code> by <code>assert X;</code>
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2016/12/11 */
 public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Idiomatic {
   @Override public String description(final ExpressionStatement ¢) {
@@ -27,25 +28,33 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
 
   private static ASTNode replacement(MethodInvocation i) {
     final List<Expression> es = arguments(i);
-    if (es.size() > 2 || es.isEmpty())
-      return null;
-    final Expression first = first(es);
-    final Expression second = second(es);
-    Expression condition = second == null ? first : second;
+    return es.size() > 2 || es.isEmpty() ? null : replacement(i, first(es), second(es));
+  }
+
+  public static ASTNode replacement(MethodInvocation i, final Expression first, final Expression second) {
+    final Expression message = second == null ? null : first;
+    final Expression condition = second == null ? first : second;
+    final AssertStatement $ = i.getAST().newAssertStatement();
+    if (message != null)
+      $.setMessage(duplicate.of(message));
+     return replacement(i, condition, $);
+  }
+
+  public static ASTNode replacement(MethodInvocation i, final Expression condition, final AssertStatement $) {
     switch (name(i) + "") {
       default:
         return null;
-      case "assertFalse":
-        condition = make.notOf(condition);
-        //$FALL-THROUGH$
       case "assertTrue":
-        condition = duplicate.of(condition);
-        AssertStatement $ = i.getAST().newAssertStatement();
-        $.setExpression(condition);
-        Expression message = second == null ? null : first;
-        if (message != null)
-          $.setMessage(duplicate.of(message));
-        return $;
+        return setAssert($, duplicate.of(condition));
+      case "assertFalse":
+        return setAssert($, make.notOf(condition));
+      case "assertNotNull": 
+        return setAssert($, subject.operands(condition, make.makeNullLiteral(i)).to(NOT_EQUALS));
     }
+  }
+
+  public static AssertStatement setAssert(AssertStatement $, Expression x) {
+    $.setExpression(x);
+    return $;
   }
 }
