@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
-import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
