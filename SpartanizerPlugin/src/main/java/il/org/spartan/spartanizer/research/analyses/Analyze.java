@@ -227,20 +227,17 @@ public class Analyze {
       final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
-//<<<<<<< HEAD
       try {
         appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         //
       }
-//=======
       /**
        * @author matteo
        * append also before
        */
 //      appendFile(new File(getProperty("outputDir") + "/before.java"), (cu + ""));
 //      appendFile(new File(getProperty("outputDir") + "/after.java"), spartanize(cu));
-//>>>>>>> matteo-experimental
     }
     Logger.summarize(outputDir());
   }
