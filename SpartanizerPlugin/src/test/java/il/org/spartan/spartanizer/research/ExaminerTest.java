@@ -6,7 +6,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.patterns.*;
+import il.org.spartan.spartanizer.research.patterns.methods.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
