@@ -41,9 +41,12 @@ public class generalize {
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final StringLiteral node) {
-        final StringLiteral lit = ast.newStringLiteral();
-        lit.setLiteralValue(renderIdentifier("L"));
-        r.replace(node, lit, null);
+        visitLiteral(ast, r, node);
+        return super.visit(node);
+      }
+
+      @Override public boolean visit(final NumberLiteral node) {
+        visitLiteral(ast, r, node);
         return super.visit(node);
       }
 
@@ -69,5 +72,11 @@ public class generalize {
       ¢.printStackTrace();
     }
     return ASTutils.extractCode(s, document);
+  }
+
+  static void visitLiteral(final AST t, final ASTRewrite r, final ASTNode n) {
+    final StringLiteral lit = t.newStringLiteral();
+    lit.setLiteralValue(renderIdentifier("L"));
+    r.replace(n, lit, null);
   }
 }
