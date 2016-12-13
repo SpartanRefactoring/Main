@@ -640,4 +640,29 @@ public enum step {
   public static SimpleName name(final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getName();
   }
+
+  /** get all methods
+   * @param u JD
+   * @return */
+  public static List<MethodDeclaration> methods(CompilationUnit u) {
+    if (u == null)
+      return null;
+    List<MethodDeclaration> $ = new ArrayList<>();
+    types(u).stream().forEach(t -> $.addAll(methods(t)));
+    return $;
+  }
+
+  public static List<String> methodNames(CompilationUnit u) {
+    if (u == null)
+      return null;
+    List<String> $ = new ArrayList<>();
+    types(u).stream().forEach(t -> $.addAll(methodNames(t)));
+    return $;
+  }
+
+  /** @param d JD
+   * @return */
+  private static List<String> methodNames(AbstractTypeDeclaration d) {
+    return d == null ? null : methods(d).stream().map(m -> identifier(name(m))).collect(Collectors.toList());
+  }
 }
