@@ -114,9 +114,9 @@ public class Analyze {
     for (final File f : inputFiles()) {
       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
-      step.types(cu).stream().filter(haz::methods).forEach(t -> {
+      types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
-        for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
             // System.out.println(¢);
             Count.before(¢);
@@ -137,18 +137,24 @@ public class Analyze {
 
   private static void hIndex() {
     Map<String, Pair<String, Int>> ranking = new HashMap<>();
-    for (final File f : inputFiles())
-      searchDescendants.forClass(MethodInvocation.class).from(az.compilationUnit(compilationUnit(f))).stream().forEach(m -> {
-        String key = f.getName().replaceAll("\\.java", "") + "." + name(m) + "(" + arguments(m).size() + " params)";
+    for (final File f : inputFiles()) {
+      CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+      searchDescendants.forClass(MethodInvocation.class).from(cu).stream().forEach(m -> {
+        String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));
         ++ranking.get(key).second.inner;
       });
+    }
     List<Pair<String, Int>> rs = new ArrayList<>();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : x.second.inner < y.second.inner ? 1 : 0);
     System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");
     System.out.println("min: " + last(rs).first + " [" + last(rs).second.inner + "]");
     System.out.println("h-index: " + hindex(rs));
+  }
+
+  private static String declarationFile(final CompilationUnit u, String methodName, String fileName) {
+    return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }
 
   private static int hindex(List<Pair<String, Int>> ¢) {
@@ -258,11 +264,21 @@ public class Analyze {
     if (directory == null || directory.listFiles() == null)
       return $;
     for (final File entry : directory.listFiles())
-      if (entry.isFile() && entry.getName().endsWith(".java") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test"))
+      if (javaFile(entry) && notTest(entry))
         $.add(entry);
       else
         $.addAll(getJavaFiles(entry));
     return $;
+  }
+
+  private static boolean javaFile(final File entry) {
+    return entry.isFile() && entry.getPath().endsWith(".java");
+  }
+
+  /** @param entry
+   * @return */
+  private static boolean notTest(File entry) {
+    return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
 
   /** analyze nano patterns in code. */
@@ -307,8 +323,8 @@ public class Analyze {
   @SuppressWarnings("rawtypes") private static void methodsAnalyze() {
     for (final File f : inputFiles())
       //
-      step.types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
-        for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+      types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
             for (final Analyzer a : analyses.values())
               a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
