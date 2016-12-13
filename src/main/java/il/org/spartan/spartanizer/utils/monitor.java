@@ -37,14 +37,13 @@ public enum monitor {
       return logToFile(message);
     }
 
-    monitor logToFile(String s) {
+    monitor logToFile(final String s) {
       if (!FILE_EXISTING)
         return this;
       try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
         w.write(s + "\n");
       } catch (final IOException e) {
         log(e);
-        System.out.println(s);
       }
       return this;
     }
