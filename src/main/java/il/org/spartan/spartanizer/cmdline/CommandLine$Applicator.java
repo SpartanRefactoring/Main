@@ -25,8 +25,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   private String presentMethod;
-  private CSVStatistics spectrumStats;
-  private CSVStatistics coverageStats;
   public static String presentFileName;
   public static String presentFilePath;
   public static long startingTimePerFile;
@@ -173,6 +171,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
+      @SuppressWarnings("boxing")
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
@@ -254,6 +253,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
       /** @param n
        * @param w
        * @throws TipperFailure */
+      @SuppressWarnings("unused")
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
@@ -267,8 +267,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      <N extends ASTNode> void tick2(final N __, final Tipper<N> w) {
-        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
+      <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __, final Tipper<N> w) {
+        @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
