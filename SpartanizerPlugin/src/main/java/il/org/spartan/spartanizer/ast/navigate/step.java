@@ -359,7 +359,7 @@ public enum step {
    * @return result of method {@link MethodDeclaration#parameters} downcasted to
    *         its correct type */
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
-    return ¢.parameters();
+    return ¢ == null ? null : ¢.parameters();
   }
 
   /** Expose the list of parameters names in a {@link MethodDeclaration}
@@ -380,18 +380,18 @@ public enum step {
    * @param ¢ JD
    * @return parent of the parameter */
   public static ASTNode parent(final ASTNode ¢) {
-    return ¢.getParent();
+    return ¢ == null ? null : ¢.getParent();
   }
 
-  public static Expression receiver(final MethodInvocation $) {
-    return extract.core($.getExpression());
+  public static Expression receiver(final MethodInvocation ¢) {
+    return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
   /** Expose the list of resources contained in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of resources contained in the argument */
   @SuppressWarnings("unchecked") public static List<VariableDeclarationExpression> resources(final TryStatement ¢) {
-    return ¢.resources();
+    return ¢ == null ? null : ¢.resources();
   }
 
   /** Returns the return type of the function
@@ -405,21 +405,21 @@ public enum step {
    * @param ¢ JD
    * @return right side of the assignment */
   public static Expression right(final Assignment ¢) {
-    return ¢.getRightHandSide();
+    return ¢ == null ? null : ¢.getRightHandSide();
   }
 
   /** Shorthand for {@link CastExpression#getExpression()}
    * @param ¢ JD
    * @return right operand of the parameter */
   public static Expression right(final CastExpression ¢) {
-    return ¢.getExpression();
+    return ¢ == null ? null : ¢.getExpression();
   }
 
   /** Shorthand for {@link InfixExpression#getRightOperand()}
    * @param ¢ JD
    * @return right operand of the parameter */
   public static Expression right(final InfixExpression ¢) {
-    return ¢.getRightOperand();
+    return ¢ == null ? null : ¢.getRightOperand();
   }
 
   /** Expose the list of sideEffects contained in a {@link Block}
