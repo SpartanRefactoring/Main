@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -59,11 +61,51 @@ public class Analyze {
     System.out.println("Took " + new DecimalFormat("#0.00").format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
 
+  static class Count {
+    static final Pair<Int, Int> ifStatements = newPair();
+    static final Pair<Int, Int> loopsStatements = newPair();
+    static final Pair<Int, Int> statements = newPair();
+    static final Pair<Int, Int> ternaries = newPair();
+
+    public static void before(final ASTNode ¢) {
+      ifStatements.first.inner += enumerate.ifStatements(¢);
+      loopsStatements.first.inner += enumerate.loops(¢);
+      statements.first.inner += enumerate.statements(¢);
+      ternaries.first.inner += enumerate.ternaries(¢);
+    }
+
+    public static void after(final ASTNode ¢) {
+      ifStatements.second.inner += enumerate.ifStatements(¢);
+      loopsStatements.second.inner += enumerate.loops(¢);
+      statements.second.inner += enumerate.statements(¢);
+      ternaries.second.inner += enumerate.ternaries(¢);
+    }
+
+    /** @return */
+    public static void print() {
+      System.out.println("statements: " + statements.first.inner + " ---> " + statements.second.inner//
+          + " ratio: [" + safeDiv(statements.second.inner, statements.first.inner) + "]");
+      System.out.println("loops: " + loopsStatements.first.inner + " ---> " + loopsStatements.second.inner//
+          + " ratio: [" + safeDiv(loopsStatements.second.inner, loopsStatements.first.inner) + "]");
+      System.out.println("ifStatements: " + ifStatements.first.inner + " ---> " + ifStatements.second.inner//
+          + " ratio: [" + safeDiv(ifStatements.second.inner, ifStatements.first.inner) + "]");
+      System.out.println("ternaries: " + ternaries.first.inner + " ---> " + ternaries.second.inner//
+          + " ratio: [" + safeDiv(ternaries.second.inner, ternaries.first.inner) + "]");
+    }
+
+    private static double safeDiv(final double sumSratio, final double d) {
+      return d == 0 ? 1 : sumSratio / d;
+    }
+
+    private static Pair<Int, Int> newPair() {
+      return new Pair<>(new Int(), new Int());
+    }
+  }
+
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
     final List<MethodDeclaration> methods = new ArrayList<>();
     for (final File f : inputFiles()) {
-      // System.out.println(f.getName());
       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       step.types(cu).stream().filter(haz::methods).forEach(t -> {
@@ -71,7 +113,10 @@ public class Analyze {
         for (final MethodDeclaration ¢ : step.methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
           try {
             // System.out.println(¢);
-            methods.add(findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
+            Count.before(¢);
+            final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            Count.after(after);
+            methods.add(after);
           } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
@@ -81,6 +126,7 @@ public class Analyze {
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
+    Count.print();
   }
 
   private static String outputDir() {
@@ -202,6 +248,11 @@ public class Analyze {
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         //
       }
+      /** @author matteo append also before */
+      // appendFile(new File(getProperty("outputDir") + "/before.java"), (cu +
+      // ""));
+      // appendFile(new File(getProperty("outputDir") + "/after.java"),
+      // spartanize(cu));
     }
     Logger.summarize(outputDir());
   }
@@ -293,7 +344,7 @@ public class Analyze {
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
     return ¢.add(MethodDeclaration.class, //
         new ConstantReturner(), //
-        new Creator(), //
+        new Factory(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
         new DoNothingReturnParam(), //
