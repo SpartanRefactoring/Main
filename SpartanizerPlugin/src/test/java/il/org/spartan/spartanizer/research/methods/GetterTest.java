@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class DoNothingReturnThisTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new DoNothingReturnThis();
+public class GetterTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Getter();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -22,7 +22,7 @@ public class DoNothingReturnThisTest {
   /** @param s
    * @return */
   private static boolean not(final String ¢) {
-    return !is(¢);
+    return !getter(¢);
   }
 
   @BeforeClass public static void setUp() {
@@ -34,26 +34,26 @@ public class DoNothingReturnThisTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(boolean a){return this;}");
+    assert getter("boolean foo(){return foo;}");
   }
 
   @Test public void b() {
-    assert not("boolean foo(){return this();}");
+    assert not("boolean foo(){return foo();}");
   }
 
   @Test public void c() {
-    assert not("@Override public int hashCode(Object b) {return this.b;}");
+    assert getter("@Override public int hashCode() {return this.b;}");
   }
 
   @Test public void d() {
-    assert not("@Override public X unfiltered(int a, int b){  return a;}");
+    assert getter("@Override public X unfiltered(){  return (SetMultimap)unfiltered;}");
   }
 
   @Test public void e() {
-    assert not("@Override public void unfiltered(Object a){  return;}");
+    assert getter("@Override public SetMultimap<K,V> unfiltered(){  return (SetMultimap<K,V>)unfiltered;}");
   }
 
-  private static boolean is(final String ¢) {
+  private static boolean getter(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
   }
 }

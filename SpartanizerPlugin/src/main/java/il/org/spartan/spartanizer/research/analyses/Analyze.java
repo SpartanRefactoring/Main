@@ -302,6 +302,7 @@ public class Analyze {
     return addMethodPatterns(¢)
         .add(ConditionalExpression.class, //
             new DefaultsTo(), //
+            new Unless(), //
             new SafeReference(), //
             null) //
         .add(Assignment.class, //

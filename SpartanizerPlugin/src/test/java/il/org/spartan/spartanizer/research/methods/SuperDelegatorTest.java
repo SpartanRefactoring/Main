@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class GetterTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Getter();
+public class SuperDelegatorTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new SuperDelegator();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -22,7 +22,7 @@ public class GetterTest {
   /** @param s
    * @return */
   private static boolean not(final String ¢) {
-    return !getter(¢);
+    return !superDelegator(¢);
   }
 
   @BeforeClass public static void setUp() {
@@ -34,7 +34,7 @@ public class GetterTest {
   }
 
   @Test public void a() {
-    assert getter("boolean foo(){return foo;}");
+    assert superDelegator("boolean foo(){return super.foo();}");
   }
 
   @Test public void b() {
@@ -42,18 +42,14 @@ public class GetterTest {
   }
 
   @Test public void c() {
-    assert getter("@Override public int hashCode() {return this.b;}");
+    assert not("@Override public int hashCode() {return this.b;}");
   }
 
   @Test public void d() {
-    assert getter("@Override public X unfiltered(){  return (SetMultimap)unfiltered;}");
+    assert superDelegator("@Override final boolean foo(){return (A)super.foo();}");
   }
 
-  @Test public void e() {
-    assert getter("@Override public SetMultimap<K,V> unfiltered(){  return (SetMultimap<K,V>)unfiltered;}");
-  }
-
-  private static boolean getter(final String ¢) {
+  private static boolean superDelegator(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
   }
 }
