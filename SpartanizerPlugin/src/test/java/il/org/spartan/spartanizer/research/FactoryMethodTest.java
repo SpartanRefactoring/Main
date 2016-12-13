@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class FactoryTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Factory();
+public class FactoryMethodTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new FactoryMethod();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -38,7 +38,7 @@ public class FactoryTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(){return new Object();}");
+    assert is("void foo(){return new Object();}");
   }
 
   @Test public void b() {
