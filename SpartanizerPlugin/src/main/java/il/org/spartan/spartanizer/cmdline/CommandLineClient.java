@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.external.External.Introspector.*;
 
-import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
@@ -13,24 +12,24 @@ public final class CommandLineClient extends HeadlessSpartanizer {
   }
 
   private void go(final String[] args) {
-    if (External.Introspector.extract(args, this).isEmpty()) {
+    // TODO Yossi, the instruction
+    // External.Introspector.extract(args, this).isEmpty()
+    // returns true (an empty list) even if args.length() > 0
+    // I changed it
+    if (args.length == 0) {
       System.err.println(usage(this, args, this));
       return;
     }
-    MetricsReport.getSettings().setInputFolder(inputFolder);
-    MetricsReport.getSettings().setOutputFolder(outputFolder);
-    MetricsReport.initialize();
+    extract(args, this);
     ReportGenerator.generate("metrics");
-    ReportGenerator.setOutputFolder(outputFolder);
-    ReportGenerator.setInputFolder(inputFolder);
+    ReportGenerator.setOutputFolder(outputDir);
+    ReportGenerator.setInputFolder(inputDir);
     run();
-    MetricsReport.generate();
   }
 
-  private void run() {
-    name(system.folder2File(inputFolder));
+  @SuppressWarnings("static-method") private void run() {
+    name(system.folder2File(inputDir));
     apply();
-    // r.printExternals();
   }
 
   static void printPrompt() {
