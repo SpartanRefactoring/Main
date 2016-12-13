@@ -111,4 +111,13 @@ public class MatcherTest {
   @Ignore @Test public void x() {
     assertFalse(Matcher.patternMatcher("x < 7", "").matches(findFirst.infixExpression(wizard.ast("x <= 7"))));
   }
+
+  @Test public void y() {
+    assertTrue(Matcher.patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(wizard.ast("try{}catch(What ever){}"))));
+  }
+
+  @Ignore @Test public void z() {
+    assertTrue(
+        Matcher.patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(wizard.ast("try{}catch(What | Ever never ){}"))));
+  }
 }

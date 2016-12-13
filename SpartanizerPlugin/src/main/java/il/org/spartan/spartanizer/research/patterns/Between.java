@@ -14,10 +14,10 @@ public final class Between extends NanoPatternTipper<InfixExpression> {
   List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$L1 < $N && $N < $L2", "is.value($N).between($L1).and($L2)", "Go fluent: Bwtween"));
-      add(TipperFactory.patternTipper("$L1 <= $N && $N < $L2", "is.value($N).between($L1).inclusive().and($L2)", "Go fluent: Bwtween"));
-      add(TipperFactory.patternTipper("$L1 < $N && $N <= $L2", "is.value($N).between($L1).and($L2).inclusive()", "Go fluent: Bwtween"));
-      add(TipperFactory.patternTipper("$L1 <= $N && $N <= $L2", "is.value($N).between($L1).inclusive().and($L2).inclusive()", "Go fluent: Bwtween"));
+      add(TipperFactory.patternTipper("$X1 < $N && $N < $X2", "is.value($N).between($X1).and($X2)", "Go fluent: Bwtween"));
+      add(TipperFactory.patternTipper("$X1 <= $N && $N < $X2", "is.value($N).between($X1).inclusive().and($X2)", "Go fluent: Bwtween"));
+      add(TipperFactory.patternTipper("$X1 < $N && $N <= $X2", "is.value($N).between($X1).and($X2).inclusive()", "Go fluent: Bwtween"));
+      add(TipperFactory.patternTipper("$X1 <= $N && $N <= $X2", "is.value($N).between($X1).inclusive().and($X2).inclusive()", "Go fluent: Bwtween"));
     }
   };
 
