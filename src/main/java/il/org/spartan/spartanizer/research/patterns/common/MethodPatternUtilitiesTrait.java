@@ -59,7 +59,14 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean returnsParam(final MethodDeclaration ¢) {
-    return identifier(az.name(expression(az.returnStatement(onlyStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
+    return iz.returnStatement(lastStatement(¢))
+        && identifier(az.name(expression(az.returnStatement(lastStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
+  }
+
+  /** @param ¢
+   * @return */
+  default ASTNode lastStatement(final MethodDeclaration ¢) {
+    return last(statements(¢));
   }
 
   default boolean returnsThis(final MethodDeclaration ¢) {
