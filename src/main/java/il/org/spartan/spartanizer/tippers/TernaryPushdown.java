@@ -30,8 +30,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   }
 
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
-        : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(a1.getOperator())).into(x.getParent());
+    return operator(a1) != operator(a2) || !wizard.same(to(a1), to(a2)) ? null
+        : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(operator(a1))).into(x.getParent());
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression
@@ -101,7 +101,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   }
 
   private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
-    if (e1.getOperator() != e2.getOperator())
+    if (operator(e1) != operator(e2))
       return null;
     final List<Expression> es1 = hop.operands(e1);
     final List<Expression> es2 = hop.operands(e2);
