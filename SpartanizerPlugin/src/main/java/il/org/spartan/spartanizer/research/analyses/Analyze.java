@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -138,13 +139,25 @@ public class Analyze {
     Map<String, Pair<String, Int>> ranking = new HashMap<>();
     for (final File f : inputFiles())
       searchDescendants.forClass(MethodInvocation.class).from(az.compilationUnit(compilationUnit(f))).stream().forEach(m -> {
-        String key = f.getName() + "." + name(m) + arguments(m).size();
+        String key = f.getName().replaceAll("\\.java", "") + "." + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));
         ++ranking.get(key).second.inner;
       });
     List<Pair<String, Int>> rs = new ArrayList<>();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : x.second.inner < y.second.inner ? 1 : 0);
+    System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");
+    System.out.println("min: " + last(rs).first + " [" + last(rs).second.inner + "]");
+    System.out.println("h-index: " + hindex(rs));
+  }
+
+  private static int hindex(List<Pair<String, Int>> ¢) {
+    for (int $ = 0; $ < ¢.size(); ++$) {
+      if ($ > ¢.get($).second.inner)
+        return $;
+      System.out.println(¢.get($).first + " : " + ¢.get($).second.inner);
+    }
+    return ¢.size();
   }
 
   private static String outputDir() {
