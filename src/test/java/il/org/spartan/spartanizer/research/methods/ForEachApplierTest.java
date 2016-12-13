@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,12 +11,16 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class UpCasterTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new UpCaster();
+public class ForEachApplierTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ForEachApplier();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
+  }
+
+  private static boolean is(final String ¢) {
+    return javadoced("public class A{" + ¢ + "}");
   }
 
   /** @param s
@@ -34,30 +38,22 @@ public class UpCasterTest {
   }
 
   @Test public void a() {
-    assert not("@Override public boolean unfiltered(A a){}");
+    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().forEach(key -> remove(key));}");
   }
 
   @Test public void b() {
-    assert is("public static int hashCode(char value){return value;  }");
+    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().filter(x -> x!= null).forEach(key -> remove(key));}");
   }
 
   @Test public void c() {
-    assert not("public static int hashCode(int value){return value;  }");
+    assert not("boolean foo(){return new Object(a).c;}");
   }
 
   @Test public void d() {
-    assert not("public static A hashCode(B value){return (A)value;  }");
+    assert not("boolean foo(){return \"\" + new Object(a).c;}");
   }
 
   @Test public void e() {
-    assert not("public static A hashCode(B value){return value + value;  }");
-  }
-
-  @Test public void f() {
-    assert not("public static A hashCode(B value){return value();  }");
-  }
-
-  private static boolean is(final String ¢) {
-    return javadoced("public class A{" + ¢ + "}");
+    assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){ return newHasher().putObject(instance,t).hash(); }");
   }
 }
