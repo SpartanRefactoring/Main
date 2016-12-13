@@ -7,7 +7,6 @@ import java.text.*;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
