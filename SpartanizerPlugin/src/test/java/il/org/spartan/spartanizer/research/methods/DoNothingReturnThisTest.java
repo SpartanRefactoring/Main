@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,16 +11,12 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class ForEachApplierTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ForEachApplier();
+public class DoNothingReturnThisTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new DoNothingReturnThis();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
-  }
-
-  private static boolean is(final String ¢) {
-    return javadoced("public class A{" + ¢ + "}");
   }
 
   /** @param s
@@ -38,22 +34,26 @@ public class ForEachApplierTest {
   }
 
   @Test public void a() {
-    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().forEach(key -> remove(key));}");
+    assert is("boolean foo(boolean a){return this;}");
   }
 
   @Test public void b() {
-    assert is("void invalidateAll(Iterable<?> keys){  keys.stream().filter(x -> x!= null).forEach(key -> remove(key));}");
+    assert not("boolean foo(){return this();}");
   }
 
   @Test public void c() {
-    assert not("boolean foo(){return new Object(a).c;}");
+    assert not("@Override public int hashCode(Object b) {return this.b;}");
   }
 
   @Test public void d() {
-    assert not("boolean foo(){return \"\" + new Object(a).c;}");
+    assert not("@Override public X unfiltered(int a, int b){  return a;}");
   }
 
   @Test public void e() {
-    assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){ return newHasher().putObject(instance,t).hash(); }");
+    assert not("@Override public void unfiltered(Object a){  return;}");
+  }
+
+  private static boolean is(final String ¢) {
+    return javadoced("public class A{" + ¢ + "}");
   }
 }
