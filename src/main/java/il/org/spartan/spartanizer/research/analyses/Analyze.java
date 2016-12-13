@@ -7,6 +7,8 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -54,6 +56,9 @@ public class Analyze {
         break;
       case "sort":
         spartanizeMethodsAndSort();
+        break;
+      case "hindex":
+        hIndex();
         break;
       default:
         analyze();
@@ -127,6 +132,19 @@ public class Analyze {
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
     Count.print();
+  }
+
+  private static void hIndex() {
+    Map<String, Pair<String, Int>> ranking = new HashMap<>();
+    for (final File f : inputFiles())
+      searchDescendants.forClass(MethodInvocation.class).from(az.compilationUnit(compilationUnit(f))).stream().forEach(m -> {
+        String key = f.getName() + "." + name(m) + arguments(m).size();
+        ranking.putIfAbsent(key, new Pair<>(key, new Int()));
+        ++ranking.get(key).second.inner;
+      });
+    List<Pair<String, Int>> rs = new ArrayList<>();
+    rs.addAll(ranking.values());
+    rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : x.second.inner < y.second.inner ? 1 : 0);
   }
 
   private static String outputDir() {
