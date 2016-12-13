@@ -26,7 +26,7 @@ public enum monitor {
   },
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    private final String FILE_NAME = "logs\\log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
+    private final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
     private final boolean FILE_EXISTING = new File("logs").exists();
     
     @Override public monitor debugMessage(final String message) {
