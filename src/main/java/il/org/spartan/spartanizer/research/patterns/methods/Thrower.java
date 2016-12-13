@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.patterns.methods;
 
-import static il.org.spartan.lisp.*;
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
@@ -19,12 +19,7 @@ public class Thrower extends JavadocMarkerNanoPattern<MethodDeclaration> {
     }
   };
 
-  @Override protected boolean prerequisites(final MethodDeclaration d) {
-    if (body(d) == null || statements(d).size() != 1)
-      return false;
-    for (final UserDefinedTipper<Statement> ¢ : tippers)
-      if (¢.canTip(onlyOne(statements(d))))
-        return true;
-    return false;
+  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+    return hazOneStatement(¢) && anyTips(tippers, onlyStatement(¢));
   }
 }
