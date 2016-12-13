@@ -48,24 +48,18 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultListenerNoisy().go();
       }
-      //
       if (Spartanizer$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
-      //
       if (CommandLine$Applicator)
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups, excludedTipperGroups, excludedNanoPatterns)).defaultListenerNoisy()
             .go();
-      if (false)
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator()).defaultListenerNoisy().go();
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
       ReportGenerator.close("tips");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
-      //
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
         CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
