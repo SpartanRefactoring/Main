@@ -339,7 +339,12 @@ public class Analyze {
             new PutIfAbsent(), //
             new IfThrow(), //
             null) //
-    ;
+        .add(InfixExpression.class, //
+            new Between(), //
+            null)//
+        .add(TryStatement.class, //
+            new IfThrowsReturnNull(), //
+            null);
   }
 
   private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
