@@ -2,6 +2,13 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.utils.fault.*;
 
+import java.io.*;
+import java.text.*;
+import java.util.*;
+
+import il.org.spartan.*;
+import il.org.spartan.plugin.*;
+
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil
@@ -15,6 +22,31 @@ public enum monitor {
 
     @Override public monitor error(final String message) {
       System.out.println(message);
+      return this;
+    }
+  },
+  /** Log to external file if in debug mode, see issue #196 */
+  LOG_TO_FILE {
+    private final String FILE_NAME = "logs\\log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
+    private final boolean FILE_EXISTING = new File("logs").exists();
+    
+    @Override public monitor debugMessage(final String message) {
+      return logToFile(message);
+    }
+
+    @Override public monitor error(final String message) {
+      return logToFile(message);
+    }
+
+    private monitor logToFile(String s) {
+      if (!FILE_EXISTING)
+        return this;
+      try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
+        w.write(s + "\n");
+      } catch (final IOException e) {
+        log(e);
+        System.out.println(s);
+      }
       return this;
     }
   },
@@ -56,6 +88,8 @@ public enum monitor {
       throw new RuntimeException(message);
     }
   };
+  private static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
+  private static final String FILE_SEPARATOR = "######################################################################################################\n######################################################################################################\n######################################################################################################";
   public static final monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
@@ -95,6 +129,16 @@ public enum monitor {
    * @param tipper an error */
   public static void log(final Throwable ¢) {
     now.error(¢ + "");
+  }
+
+  /** logs an error in the plugin into an external file
+   * @param tipper an error */
+  public static void logToFile(final Throwable t, final Object... os) {
+    final StringWriter w = new StringWriter();
+    t.printStackTrace(new PrintWriter(w));
+    LOG_TO_FILE.error(w + "");
+    LOG_TO_FILE.debugMessage(separate.these(os).by(FILE_SUB_SEPARATOR)) //
+        .debugMessage(FILE_SEPARATOR);
   }
 
   /** To be invoked whenever you do not know what to do with an exception
