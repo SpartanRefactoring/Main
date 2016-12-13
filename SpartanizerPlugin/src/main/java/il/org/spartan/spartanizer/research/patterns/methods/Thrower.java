@@ -14,7 +14,6 @@ public class Thrower extends JavadocMarkerNanoPattern<MethodDeclaration> {
   Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("if($X1)throw $X2;", "", ""));
       add(TipperFactory.patternTipper("throw $X;", "", ""));
     }
   };
