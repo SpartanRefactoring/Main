@@ -281,7 +281,7 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
-  public static void writeTipsLine(final ASTNode n, final Tip t, final String reportName) {
+  public static void writeTipsLine(final ASTNode __, final Tip t, final String reportName) {
     // name(n, reportName);
     tip(t);
     ReportGenerator.report(reportName).nl();

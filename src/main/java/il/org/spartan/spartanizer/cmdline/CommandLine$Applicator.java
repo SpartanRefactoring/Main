@@ -267,7 +267,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      <N extends ASTNode> void tick2(final N n, final Tipper<N> w) {
+      <N extends ASTNode> void tick2(final N __, final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
