@@ -108,7 +108,7 @@ public class MatcherTest {
     assertFalse(Matcher.patternMatcher("x = 1", "").matches(findFirst.assignment(wizard.ast("x += 1"))));
   }
 
-  @Ignore @Test public void x() {
+   @Test public void x() {
     assertFalse(Matcher.patternMatcher("x < 7", "").matches(findFirst.infixExpression(wizard.ast("x <= 7"))));
   }
 
@@ -116,8 +116,33 @@ public class MatcherTest {
     assertTrue(Matcher.patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(wizard.ast("try{}catch(What ever){}"))));
   }
 
-  @Ignore @Test public void z() {
+   @Test public void z() {
     assertTrue(
         Matcher.patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(wizard.ast("try{}catch(What | Ever never ){}"))));
   }
+   
+   @Test public void a2() {
+     assertTrue(Matcher.patternMatcher("x + 7", "").matches(findFirst.infixExpression(wizard.ast("x + 7"))));
+   }
+   
+   @Test public void b2() {
+     assertFalse(Matcher.patternMatcher("x + 7", "").matches(findFirst.infixExpression(wizard.ast("x - 7"))));
+   }
+   
+   @Test public void c2() {
+     assertFalse(Matcher.patternMatcher("x++", "").matches(findFirst.infixExpression(wizard.ast("--x"))));
+   }
+   
+   @Test public void d2() {
+     assertFalse(Matcher.patternMatcher("++x", "").matches(findFirst.infixExpression(wizard.ast("++x"))));
+   }
+   
+   @Test public void e2() {
+     assertTrue(Matcher.patternMatcher("$X+6+7", "").matches(findFirst.infixExpression(wizard.ast("a+6+7"))));
+   }
+   
+   @Test public void f2() {
+     assertFalse(Matcher.patternMatcher("$X+6+null", "").matches(findFirst.infixExpression(wizard.ast("a+6+7"))));
+   }
+   
 }
