@@ -87,10 +87,10 @@ public class Logger {
       report //
           .put("num. Statements", k) //
           .put("Count", li.size()) //
-          .put("Coverage [Avg.]", formatter.format(safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size())))//
-          .put("perc. of methods", formatter.format(safeDiv(li.size(), methodsTotal))) //
-          .put("perc. of statements", formatter.format(safeDiv(k * li.size(), statementsTotal))) //
-          .put("perc. touched", formatter.format(safeDiv(li.stream().filter(x -> x > 0).count(), li.size()))) //
+          .put("Coverage [Avg.]", formatter.format(100 * safeDiv(li.stream().reduce((x, y) -> x + y).get(), li.size())))//
+          .put("perc. of methods", formatter.format(100 * safeDiv(li.size(), methodsTotal))) //
+          .put("perc. of statements", formatter.format(100 * safeDiv(k * li.size(), statementsTotal))) //
+          .put("perc. touched", formatter.format(100 * safeDiv(li.stream().filter(x -> x > 0).count(), li.size()))) //
       ;
       report.nl();
     }
@@ -106,7 +106,7 @@ public class Logger {
     return d == 0 ? 1 : sumSratio / d;
   }
 
-  private static void summarizeNPStatistics(final String outputDir) {
+  public static void summarizeNPStatistics(final String outputDir) {
     final CSVStatistics report = openNPSummaryFile(outputDir);
     if (report == null)
       return;
@@ -114,12 +114,15 @@ public class Logger {
       final NPRecord n = npStatistics.get(k);
       report //
           .put("Name", n.name) //
-          .put("#Statement", n.numNPStatements) //
-          .put("#Expression", n.numNPExpressions) //
+          .put("occurences", n.occurences)//
+          .put("Statements", n.numNPStatements) //
+          .put("Expressions", n.numNPExpressions) //
       ;
       report.nl();
     }
     report.close();
+    file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
+
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {

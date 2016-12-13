@@ -132,6 +132,7 @@ public class Analyze {
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> x + "").reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
+    Logger.summarizeNPStatistics(outputDir());
     Count.print();
   }
 
