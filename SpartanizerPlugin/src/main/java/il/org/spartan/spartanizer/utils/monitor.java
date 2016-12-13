@@ -26,8 +26,8 @@ public enum monitor {
   },
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    private final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
-    private final boolean FILE_EXISTING = new File("logs").exists();
+    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
+    final boolean FILE_EXISTING = new File("logs").exists();
     
     @Override public monitor debugMessage(final String message) {
       return logToFile(message);
@@ -37,7 +37,7 @@ public enum monitor {
       return logToFile(message);
     }
 
-    private monitor logToFile(String s) {
+    monitor logToFile(String s) {
       if (!FILE_EXISTING)
         return this;
       try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
