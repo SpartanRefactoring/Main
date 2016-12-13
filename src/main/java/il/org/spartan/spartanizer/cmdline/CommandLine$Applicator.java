@@ -199,8 +199,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
           ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
           final MethodDeclaration includingMethod = searchAncestors.forContainingMethod().from(n);
           ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
-          ReportGenerator.report("tips").put("Method LOC", includingMethod != null ? count.lines(includingMethod) : "not applicable");
-          ReportGenerator.report("tips").put("Method Tokens", includingMethod != null ? metrics.tokens(includingMethod + "") : "not applicable");
+          ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
+          ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
           ReportGenerator.writeTipsLine(n, s, "tips");
           // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
