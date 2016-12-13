@@ -18,23 +18,19 @@ public class BetweenTest {
         .stays();
   }
 
+  // different operators
   @Ignore @Test public void b() {
     trimmingOf("if('a' <= c && c < 'z') use();")//
         .withTipper(InfixExpression.class, new Between())//
         .gives("if(is.value(c).between('a').inclusive().and('z'))use();")//
         .stays();
   }
-  // @Test public void respect() {
-  // trimmingOf("return ¢ != null ? ¢ : \"\";")//
-  // .withTipper(ConditionalExpression.class, new Unless())//
-  // .withTipper(ConditionalExpression.class, new DefaultsTo())//
-  // .gives("return default¢(¢).to(\"\");")//
-  // .stays();
-  // }
-  //
-  // @Test public void respect2() {
-  // trimmingOf("return ¢ != null ? ¢ : \"\";")//
-  // .withTipper(ConditionalExpression.class, new Unless())//
-  // .stays();
-  // }
+
+  // order
+  @Ignore @Test public void c() {
+    trimmingOf("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//
+        .withTipper(InfixExpression.class, new Between())//
+        .gives("if(is.value(radix).between(Character.MIN_RADIX).inclusive().and(Character.MAX_RADIX))use();")//
+        .stays();
+  }
 }
