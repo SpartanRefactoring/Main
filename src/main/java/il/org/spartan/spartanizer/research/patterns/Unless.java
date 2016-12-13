@@ -8,12 +8,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** Replace X != null ? X : Y with X ?? Y <br>
- * replace X == null ? Y : X with X ?? Y <br>
- * replace null == X ? Y : X with X ?? Y <br>
- * replace null != X ? X : Y with X ?? Y <br>
- * @author Ori Marcovitch
- * @year 2016 */
+/** @author Ori Marcovitch
+ * @since Dec 13, 2016 */
 public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;

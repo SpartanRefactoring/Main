@@ -107,4 +107,8 @@ public class MatcherTest {
   @Test public void w() {
     assertFalse(Matcher.patternMatcher("x = 1", "").matches(findFirst.assignment(wizard.ast("x += 1"))));
   }
+
+  @Ignore @Test public void x() {
+    assertFalse(Matcher.patternMatcher("x < 7", "").matches(findFirst.infixExpression(wizard.ast("x <= 7"))));
+  }
 }
