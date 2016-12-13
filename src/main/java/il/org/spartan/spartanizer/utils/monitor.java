@@ -26,7 +26,7 @@ public enum monitor {
   },
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".txt";
+    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
     final boolean FILE_EXISTING = new File("logs").exists();
     
     @Override public monitor debugMessage(final String message) {
@@ -86,8 +86,8 @@ public enum monitor {
       throw new RuntimeException(message);
     }
   };
-  private static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-  private static final String FILE_SEPARATOR = "######################################################################################################\n######################################################################################################\n######################################################################################################";
+  public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
+  public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
@@ -134,8 +134,11 @@ public enum monitor {
   public static void logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
-    LOG_TO_FILE.error(w + "");
-    LOG_TO_FILE.debugMessage(separate.these(os).by(FILE_SUB_SEPARATOR)) //
+    Object[] nos = new Object[os.length + 2];
+    System.arraycopy(os, 0, nos, 2, os.length);
+    nos[0] = t + "";
+    nos[1] = (w + "").trim();
+    LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)) //
         .debugMessage(FILE_SEPARATOR);
   }
 
