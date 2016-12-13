@@ -245,23 +245,20 @@ public class Logger {
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
-   * @param u compilation unit */
-  public static void logCompilationUnit(final CompilationUnit u) {
+   * @param ¢ compilation unit */
+  public static void logCompilationUnit(final CompilationUnit ¢) {
     currentType = new Stack<>();
-    for (final AbstractTypeDeclaration ¢ : searchDescendants.forClass(AbstractTypeDeclaration.class).from(u))
-      logType(¢);
+    searchDescendants.forClass(AbstractTypeDeclaration.class).from(¢).stream().filter(haz::methods).forEach(Logger::logType);
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param u compilation unit */
   public static void logType(final AbstractTypeDeclaration d) {
     currentType.push(d);
-    final List<MethodDeclaration> ms = step.methods(d);
-    if (ms == null)
-      return;
+    final List<MethodDeclaration> ms = step.methods(d).stream().filter(m -> enumerate.statements(m) != 0 && !m.isConstructor())
+        .collect(Collectors.toList());
     for (final MethodDeclaration ¢ : ms)
-      if (enumerate.statements(¢) != 0)
-        logMethodInfo(¢);
+      logMethodInfo(¢);
     numMethods += ms.size();
   }
 

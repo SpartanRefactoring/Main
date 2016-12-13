@@ -27,7 +27,7 @@ public final class CommandLineClient extends HeadlessSpartanizer {
     run();
   }
 
-  @SuppressWarnings("static-method") private void run() {
+  private void run() {
     name(system.folder2File(inputDir));
     apply();
   }

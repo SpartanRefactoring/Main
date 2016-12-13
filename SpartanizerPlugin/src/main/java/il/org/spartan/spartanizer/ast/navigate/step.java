@@ -523,7 +523,7 @@ public enum step {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(d -> iz.methodDeclaration((ASTNode) d)).collect(Collectors.toList()) : null;
+                .filter(d -> iz.methodDeclaration(az.astNode(d))).collect(Collectors.toList()) : null;
   }
 
   @SuppressWarnings("unchecked") public static List<CatchClause> extractCatches(final TryStatement ¢) {
