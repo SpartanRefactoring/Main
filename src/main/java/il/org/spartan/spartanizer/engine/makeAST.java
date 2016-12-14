@@ -166,4 +166,17 @@ public enum makeAST {
   public ASTParser makeParser(final String text) {
     return makeParser(text.toCharArray());
   }
+
+  /** Creates a binding parser for a given text
+   * @param text what to parse
+   * @return a newly created parser for the parameter */
+  public ASTParser makeParserWithBinding(final String text) {
+    ASTParser $ = makeParser(text.toCharArray());
+    $.setResolveBindings(true);
+    return $;
+  }
+
+  public ASTParser makeParserWithBinding(final File ¢) {
+    return makeParserWithBinding(string(¢));
+  }
 }
