@@ -389,11 +389,11 @@ public class Analyze {
             null) //
         .add(InfixExpression.class, //
             new Between(), //
-            new LastIndex(), //
+            new LispLastIndex(), //
             null)//
         .add(MethodInvocation.class, //
-            new FirstElement(), //
-            new LastElement(), //
+            new LispFirstElement(), //
+            new LispLastElement(), //
             null) //
         .add(TryStatement.class, //
             new IfThrowsReturnNull(), //
