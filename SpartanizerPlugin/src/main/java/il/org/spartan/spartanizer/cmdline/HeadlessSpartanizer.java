@@ -17,11 +17,11 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @External String name;
   @External boolean selection;
   @External boolean Spartanizer$Applicator;
-  @External(alias = "cs", value = "class name on which apply the tippers") String[] clazzes;
+  @External(alias = "cs", value = "class name on which apply the tippers") String[] classes;
   @External(alias = "allnp", value = "Exclude All Nano Patterns") boolean excludeAllNanoPatterns;
   @External(alias = "enp", value = "Exclude Selected Nano Patterns") String[] excludedNanoPatterns;
   @External(alias = "etg", value = "exclude one or more tipper groups") String[] excludedTipperGroups;
-  @External(alias = "tg", value = "tipper group to be applied to the clazzes") String[] tipperGroups;
+  @External(alias = "tg", value = "tipper group to be applied to the classes") String[] tipperGroups;
 
   public HeadlessSpartanizer() {
     this(".");
@@ -53,7 +53,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       if (Spartanizer$Applicator)
         defaultSelection.defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
       if (CommandLine$Applicator)
-        defaultSelection.defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups, excludedTipperGroups, excludedNanoPatterns))
+        defaultSelection.defaultRunAction(new CommandLine$Applicator(classes, tipperGroups, excludedTipperGroups, excludedNanoPatterns))
             .defaultListenerNoisy().go();
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
