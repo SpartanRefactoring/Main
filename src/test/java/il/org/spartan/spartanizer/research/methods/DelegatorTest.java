@@ -105,4 +105,8 @@ public class DelegatorTest {
   @Test public void basic18() {
     delegator(" @Override public void close() throws IOException { out.close(); }");
   }
+
+  @Test public void basic19() {
+    delegator("@Deprecated @Override public void writeBytes(String ¢) throws IOException {    ((DataOutputStream)out).writeBytes(¢);}");
+  }
 }
