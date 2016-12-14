@@ -10,16 +10,16 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class FirstElement extends NanoPatternTipper<MethodInvocation> {
+public final class LastElement extends NanoPatternTipper<MethodInvocation> {
   List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$X.get(0)", "first($X)", "lisp: first"));
+      add(TipperFactory.patternTipper("$X.get($X.size()-1) ", "last($X)", "lisp: last"));
     }
   };
 
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "lisp: first";
+    return "lisp: last";
   }
 
   @Override public boolean canTip(final MethodInvocation ¢) {
