@@ -144,23 +144,55 @@ public interface wizard {
       BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
 
-  static Set<Modifier> redundants(final BodyDeclaration ¢) {
-    return matches(¢, redundancies(¢));
-  }
-
-  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
-    return m instanceof Modifier && test((Modifier) m, ms);
-  }
-
-  static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
-    for (final Predicate<Modifier> ¢ : ms)
-      if (¢.test(m))
-        return true;
-    return false;
-  }
-
   static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  }
+
+  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** Adds method m to the first type in file.
+   * @param fileName
+   * @param m */
+  static void addMethodToFile(final String fileName, final MethodDeclaration m) {
+    try {
+      final String str = readFromFile(fileName);
+      final Document d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
+      wizard.addMethodToType(t, m, r, null);
+      r.rewriteAST(d, null).apply(d);
+      writeToFile(fileName, d.get());
+    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+      x2.printStackTrace();
+    }
+  }
+
+  /** @param d JD
+   * @param m JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
+  }
+
+  /** @param d JD
+   * @param s JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
@@ -168,6 +200,10 @@ public interface wizard {
     for (final Expression ¢ : hop.operands(flatten.of($)))
       operands.add(make.notOf(¢));
     return subject.operands(operands).to(PrefixNotPushdown.conjugate($.getOperator()));
+  }
+
+  static int arity(final InfixExpression ¢) {
+    return 2 + step.extendedOperands(¢).size();
   }
 
   static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
@@ -241,6 +277,14 @@ public interface wizard {
     return true;
   }
 
+  static CompilationUnit compilationUnitWithBinding(final File ¢) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+  }
+
+  static CompilationUnit compilationUnitWithBinding(final String ¢) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+  }
+
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
@@ -302,14 +346,6 @@ public interface wizard {
     return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
   }
 
-  /** This method fixes a bug from tide.clean which causes ^ to replaced with
-   * [^]
-   * @param ¢
-   * @return */
-  static String fixTideClean(final String ¢) {
-    return ¢.replaceAll("\\[\\^\\]", "\\^");
-  }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -320,6 +356,14 @@ public interface wizard {
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
+  }
+
+  /** This method fixes a bug from tide.clean which causes ^ to replaced with
+   * [^]
+   * @param ¢
+   * @return */
+  static String fixTideClean(final String ¢) {
+    return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
@@ -426,6 +470,10 @@ public interface wizard {
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     return matches(extendedModifiers(¢), ms);
+  }
+
+  static MethodDeclaration methodWithBinding(final String m) {
+    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
 
   /** Determine whether a node is an infix expression whose operator is
@@ -543,6 +591,10 @@ public interface wizard {
     return $;
   }
 
+  static Set<Modifier> redundants(final BodyDeclaration ¢) {
+    return matches(¢, redundancies(¢));
+  }
+
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * <p>
@@ -614,54 +666,14 @@ public interface wizard {
     return true;
   }
 
-  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
-    final Javadoc j = n.getJavadoc();
-    if (j == null)
-      r.replace(n,
-          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
-          g);
-    else
-      r.replace(j,
-          r.createStringPlaceholder(
-              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
-              ASTNode.JAVADOC),
-          g);
+  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
+    return m instanceof Modifier && test((Modifier) m, ms);
   }
 
-  /** @param d JD
-   * @param s JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
-  }
-
-  /** @param d JD
-   * @param m JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
-  }
-
-  /** Adds method m to the first type in file.
-   * @param fileName
-   * @param m */
-  static void addMethodToFile(final String fileName, final MethodDeclaration m) {
-    try {
-      final String str = readFromFile(fileName);
-      final Document d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      final ASTRewrite r = ASTRewrite.create(t.getAST());
-      wizard.addMethodToType(t, m, r, null);
-      r.rewriteAST(d, null).apply(d);
-      writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
-    }
-  }
-
-  static int arity(final InfixExpression ¢) {
-    return 2 + step.extendedOperands(¢).size();
+  static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
+    for (final Predicate<Modifier> ¢ : ms)
+      if (¢.test(m))
+        return true;
+    return false;
   }
 }
