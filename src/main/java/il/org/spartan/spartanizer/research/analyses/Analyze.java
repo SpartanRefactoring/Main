@@ -416,6 +416,7 @@ public class Analyze {
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
+        new ToStringMethod(), //
         new TypeChecker(), //
         new UpCaster(), //
         null);
