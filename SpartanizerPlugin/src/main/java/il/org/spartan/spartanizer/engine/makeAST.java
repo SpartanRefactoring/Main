@@ -61,7 +61,7 @@ public enum makeAST {
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS)//
   ;
   /** IFile -> ICompilationUnit converter
-   * @param f File
+   * @param function File
    * @return ICompilationUnit */
   public static ICompilationUnit iCompilationUnit(final IFile ¢) {
     return JavaCore.createCompilationUnitFrom(¢);
@@ -115,13 +115,13 @@ public enum makeAST {
   }
 
   /** File -> ASTNode converter
-   * @param f File
+   * @param function File
    * @return ASTNode */
   public ASTNode from(final File ¢) {
     return from(string(¢));
   }
 
-  /** @param f IFile
+  /** @param function IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
     return Make.from(this).parser(¢).createAST(null);

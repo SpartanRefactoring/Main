@@ -35,7 +35,7 @@ public final class Builder extends IncrementalProjectBuilder {
   public static final String SPARTANIZATION_TIPPER_KEY = "il.org.spartan.spartanizer.spartanizationTipper";
 
   /** deletes all spartanization tip markers
-   * @param f the file from which to delete the markers
+   * @param function the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
    *         does not exist. This resource is a project that is not open.
    *         Resource changes are disallowed during certain types of resource
