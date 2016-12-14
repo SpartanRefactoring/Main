@@ -53,7 +53,7 @@ public class Matcher {
     return patternMatcher(p, s, new Option[0]);
   }
 
-  public static Matcher patternMatcher(final String p, final String s, Option[] _options) {
+  public static Matcher patternMatcher(final String p, final String s, final Option[] _options) {
     return new Matcher(() -> extractStatementIfOne(ast(reformat(p))), s, _options);
   }
 
@@ -61,14 +61,14 @@ public class Matcher {
     return blockMatcher(p, s, new Option[0]);
   }
 
-  public static Matcher blockMatcher(final String p, final String s, Option[] _options) {
+  public static Matcher blockMatcher(final String p, final String s, final Option[] _options) {
     return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
   /** @param _patternSupplier
    * @param r
    * @param _options */
-  private Matcher(Supplier<ASTNode> _patternSupplier, String r, Option[] _options) {
+  private Matcher(final Supplier<ASTNode> _patternSupplier, final String r, final Option[] _options) {
     patternSupplier = _patternSupplier;
     replacement = reformat(r);
     options = _options;
@@ -85,30 +85,30 @@ public class Matcher {
 
   /** @param pattern
    * @return */
-  private static Block wrapStatementIfOne(ASTNode pattern) {
+  private static Block wrapStatementIfOne(final ASTNode pattern) {
     return az.block(iz.block(pattern) ? pattern : ast("{" + pattern + "}"));
   }
 
   /** @param pattern
    * @param ¢
    * @return */
-  private boolean lastInBlock(Block ¢) {
-    ASTNode[] ns = getMatchedNodes(¢);
-    return ns[ns.length - 1].equals(last(statements(¢)));
+  private boolean lastInBlock(final Block ¢) {
+    final ASTNode[] $ = getMatchedNodes(¢);
+    return $[$.length - 1].equals(last(statements(¢)));
   }
 
   /** @param pattern
    * @param ¢
    * @return */
-  private boolean firstInBlock(Block ¢) {
+  private boolean firstInBlock(final Block ¢) {
     return getMatchedNodes(¢)[0].equals(first(statements(¢)));
   }
 
   /** @param o
    * @param o
    * @return */
-  private boolean containsOption(Option o) {
-    for (Option ¢ : options)
+  private boolean containsOption(final Option o) {
+    for (final Option ¢ : options)
       if (¢.equals(o))
         return true;
     return false;
@@ -201,9 +201,9 @@ public class Matcher {
    * @param n
    * @param ids
    * @return */
-  private static boolean sameOperands(ASTNode $, ASTNode n, Map<String, String> ids) {
-    List<Expression> $Operands = extract.allOperands(az.infixExpression($));
-    List<Expression> nOperands = extract.allOperands(az.infixExpression(n));
+  private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
+    final List<Expression> $Operands = extract.allOperands(az.infixExpression($));
+    final List<Expression> nOperands = extract.allOperands(az.infixExpression(n));
     if ($Operands.size() != nOperands.size())
       return false;
     for (int ¢ = 0; ¢ < $Operands.size(); ++¢)
@@ -215,7 +215,7 @@ public class Matcher {
   /** @param $
    * @param n
    * @return */
-  private static boolean sameOperator(ASTNode $, ASTNode n) {
+  private static boolean sameOperator(final ASTNode $, final ASTNode n) {
     return az.infixExpression($).getOperator().equals(az.infixExpression(n).getOperator());
   }
 

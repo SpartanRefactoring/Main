@@ -122,7 +122,6 @@ public class Logger {
     }
     report.close();
     file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
-
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
