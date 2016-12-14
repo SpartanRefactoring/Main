@@ -134,7 +134,7 @@ public enum monitor {
   public static void logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
-    Object[] nos = new Object[os.length + 2];
+    final Object[] nos = new Object[os.length + 2];
     System.arraycopy(os, 0, nos, 2, os.length);
     nos[0] = t + "";
     nos[1] = (w + "").trim();
