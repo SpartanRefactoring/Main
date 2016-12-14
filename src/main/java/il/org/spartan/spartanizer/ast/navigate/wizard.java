@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.utils.FileUtils.*;
@@ -28,6 +29,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -39,8 +41,8 @@ public interface wizard {
   Map<Assignment.Operator, InfixExpression.Operator> assign2infix = new HashMap<Assignment.Operator, InfixExpression.Operator>() {
     static final long serialVersionUID = 1L;
     {
-      put(PLUS_ASSIGN, PLUS);
-      put(MINUS_ASSIGN, MINUS);
+      put(PLUS_ASSIGN, PLUS2);
+      put(MINUS_ASSIGN, MINUS2);
       put(TIMES_ASSIGN, TIMES);
       put(DIVIDE_ASSIGN, DIVIDE);
       put(BIT_AND_ASSIGN, AND);
@@ -79,8 +81,8 @@ public interface wizard {
   Map<InfixExpression.Operator, Assignment.Operator> infix2assign = new HashMap<InfixExpression.Operator, Assignment.Operator>() {
     static final long serialVersionUID = 1L;
     {
-      put(PLUS, PLUS_ASSIGN);
-      put(MINUS, MINUS_ASSIGN);
+      put(PLUS2, PLUS_ASSIGN);
+      put(MINUS2, MINUS_ASSIGN);
       put(TIMES, TIMES_ASSIGN);
       put(DIVIDE, DIVIDE_ASSIGN);
       put(AND, BIT_AND_ASSIGN);
@@ -115,6 +117,31 @@ public interface wizard {
       }
     }
   };
+  @SuppressWarnings({ "unchecked" }) //
+  Map<Class<? extends ASTNode>, Integer> //
+  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+    static final long serialVersionUID = 1L;
+    {
+      for (int nodeType = 1;; ++nodeType)
+        try {
+          monitor.debug("Searching for " + nodeType);
+          final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
+          monitor.debug("Found node type number of  " + nodeClassForType);
+          put(nodeClassForType, Integer.valueOf(nodeType));
+        } catch (final IllegalArgumentException ¢) {
+          monitor.debug(this, ¢);
+          break;
+        } catch (final Exception ¢) {
+          monitor.logEvaluationError(this, ¢);
+          break;
+        }
+    }
+  };
+  InfixExpression.Operator[] infixOperators = { TIMES, DIVIDE, REMAINDER, PLUS2, MINUS2, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED, LESS,
+      GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, NOT_EQUALS, XOR, AND, OR, CONDITIONAL_AND, CONDITIONAL_OR, };
+  Assignment.Operator[] assignmentOperators = { ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
+      BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
+  PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
 
   static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
@@ -410,7 +437,7 @@ public interface wizard {
   }
 
   static boolean nonAssociative(final InfixExpression ¢) {
-    return ¢ != null && (in(¢.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
+    return ¢ != null && (in(¢.getOperator(), MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
@@ -631,5 +658,9 @@ public interface wizard {
     } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
       x2.printStackTrace();
     }
+  }
+
+  static int arity(InfixExpression ¢) {
+    return 2 + step.extendedOperands(¢).size();
   }
 }
