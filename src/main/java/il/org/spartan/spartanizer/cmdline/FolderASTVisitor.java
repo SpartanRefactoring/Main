@@ -37,8 +37,8 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     } catch (NoSuchMethodException | SecurityException ¢) {
       monitor.logProbableBug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
+      throw new RuntimeException();
     }
-    throw new RuntimeException();
   }
 
   /**  */
@@ -47,8 +47,8 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     visit(args.length != 0 ? args : defaultArguments);
   }
 
-  public static void visit(final String[] args) throws InstantiationException, IllegalAccessException, InvocationTargetException {
-    for (final String ¢ : args)
+  public static void visit(final String[] arguments) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+    for (final String ¢ : External.Introspector.extract(arguments, clazz))
       declaredConstructor().newInstance().visit(¢);
   }
 
@@ -66,8 +66,8 @@ public abstract class FolderASTVisitor extends ASTVisitor {
 
   protected void visit(final String path) {
     dotter.click();
+    presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
     init();
-    presentSourceName = system.folder2File(presentSourcePath = path);
     for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       visit(presentFile = ¢);
     done();
