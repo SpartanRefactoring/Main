@@ -11,17 +11,17 @@ import il.org.spartan.spartanizer.cmdline.report.*;
  * @since 2016 */
 public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @External(alias = "np", value = "Nano Patterns") private static String[] nanoPatterns;
-  @External final CommandLineApplicator c = new CommandLineApplicator();
+  @External final CommandLineApplicator commandLineApplicator = new CommandLineApplicator();
   @External final boolean CommandLine$Applicator = true;
   @External boolean DefaultApplicator;
   @External String name;
   @External boolean selection;
   @External boolean Spartanizer$Applicator;
-  @External(alias = "cs", value = "class name on which apply the tippers") String[] clazzes;
+  @External(alias = "cs", value = "class name on which apply the tippers") String[] classes;
   @External(alias = "allnp", value = "Exclude All Nano Patterns") boolean excludeAllNanoPatterns;
   @External(alias = "enp", value = "Exclude Selected Nano Patterns") String[] excludedNanoPatterns;
   @External(alias = "etg", value = "exclude one or more tipper groups") String[] excludedTipperGroups;
-  @External(alias = "tg", value = "tipper group to be applied to the clazzes") String[] tipperGroups;
+  @External(alias = "tg", value = "tipper group to be applied to the classes") String[] tipperGroups;
 
   public HeadlessSpartanizer() {
     this(".");
@@ -43,18 +43,18 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
+      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator();
+      final CommandLineApplicator defaultSelection = defaultApplicator2
+          .defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
-        c.listener(¢ -> System.out.println("Running DefaultApplicator ...." + ¢));
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultListenerNoisy().go();
+        commandLineApplicator.listener(¢ -> System.out.println("Running DefaultApplicator: " + ¢));
+        defaultSelection.defaultListenerNoisy().go();
       }
       if (Spartanizer$Applicator)
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
+        defaultSelection.defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
       if (CommandLine$Applicator)
-        CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
-            .defaultRunAction(new CommandLine$Applicator(clazzes, tipperGroups, excludedTipperGroups, excludedNanoPatterns)).defaultListenerNoisy()
-            .go();
+        defaultSelection.defaultRunAction(new CommandLine$Applicator(classes, tipperGroups, excludedTipperGroups, excludedNanoPatterns))
+            .defaultListenerNoisy().go();
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
       ReportGenerator.close("tips");
@@ -62,7 +62,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.closeFile("after");
       System.err.println("commandLineApplicator: " + "Done!");
       if (selection)
-        CommandLineApplicator.defaultApplicator().defaultListenerNoisy()
+        defaultApplicator2.defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputDir)))
             .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException ¢) {
