@@ -62,9 +62,9 @@ import il.org.spartan.streotypes.*;
       @NotNull final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(15, sum(1, vs), 1E-8);
-      Assert.assertEquals(1 + 4 + 9 + 16 + 25, sum(2, vs), 1E-8);
-      Assert.assertEquals(1 + 8 + 27 + 64 + 125, sum(3, vs), 1E-8);
-      Assert.assertEquals(1 + 16 + 81 + 256 + 625, sum(4, vs), 1E-8);
+      Assert.assertEquals(55, sum(2, vs), 1E-8);
+      Assert.assertEquals(225, sum(3, vs), 1E-8);
+      Assert.assertEquals(979, sum(4, vs), 1E-8);
     }
   }
 }

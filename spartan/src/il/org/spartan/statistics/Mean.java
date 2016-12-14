@@ -38,9 +38,9 @@ import il.org.spartan.streotypes.*;
       Assert.assertEquals(15, sum(1, vs), 1E-8);
       shift(vs);
       Assert.assertEquals(0, moment(1, vs), 1E-8);
-      Assert.assertEquals((4 + 1 + 0 + 1 + 4) / 5.0, moment(2, vs), 1E-8);
-      Assert.assertEquals((-9 - 1 + 0 + 1 + 9) / 5.0, moment(3, vs), 1E-8);
-      Assert.assertEquals((16 + 1 + 0 + 1 + 16) / 5.0, moment(4, vs), 1E-8);
+      Assert.assertEquals(2.0, moment(2, vs), 1E-8);
+      Assert.assertEquals(0.0, moment(3, vs), 1E-8);
+      Assert.assertEquals(6.8, moment(4, vs), 1E-8);
       Assert.assertEquals(0.0, skewness(vs), 1E-8);
     }
   }
