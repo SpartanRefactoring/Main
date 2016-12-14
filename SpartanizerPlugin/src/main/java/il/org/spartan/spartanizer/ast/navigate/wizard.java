@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.ast.navigate;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.io.*;
 import java.util.*;
@@ -178,6 +178,18 @@ public interface wizard {
    * @return textual representation of the parameter, */
   static String asString(final ASTNode ¢) {
     return removeWhites(wizard.body(¢));
+  }
+
+  static CompilationUnit compilationUnitWithBinding(final String ¢) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+  }
+
+  static CompilationUnit compilationUnitWithBinding(final File ¢) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+  }
+
+  static MethodDeclaration methodWithBinding(final String m) {
+    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
 
   /** Converts a string into an AST, depending on it's form, as determined
