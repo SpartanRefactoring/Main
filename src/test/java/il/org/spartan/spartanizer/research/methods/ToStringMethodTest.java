@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class ToStringMethodTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ToStringMethod();
+  private static final JavadocMarkerNanoPattern JAVADOCER = new ToStringMethod();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {

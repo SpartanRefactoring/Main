@@ -9,19 +9,18 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> implements MethodPatternUtilitiesTrait {
-  @Override public final boolean canTip(final N ¢) {
-    // System.out.println("checking " + javadoc());
-    final Javadoc $ = ¢.getJavadoc();
+public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
+  @Override public final boolean canTip(final MethodDeclaration ¢) {
+    final Javadoc $ = step.javadoc(¢);
     return ($ == null || !($ + "").contains(javadoc())) && prerequisites(¢);
   }
 
-  protected abstract boolean prerequisites(N ¢);
+  protected abstract boolean prerequisites(MethodDeclaration ¢);
 
-  @Override public final Tip pattern(final N n) {
-    return new Tip(description(n), n, this.getClass()) {
+  @Override public final Tip pattern(final MethodDeclaration d) {
+    return new Tip(description(d), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        wizard.addJavaDoc(n, r, g, javadoc());
+        wizard.addJavaDoc(d, r, g, javadoc());
       }
     };
   }

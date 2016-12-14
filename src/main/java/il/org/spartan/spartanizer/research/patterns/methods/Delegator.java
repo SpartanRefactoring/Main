@@ -15,7 +15,7 @@ import static il.org.spartan.lisp.onlyOne;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Delegator extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
