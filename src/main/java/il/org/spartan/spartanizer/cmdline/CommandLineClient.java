@@ -12,10 +12,6 @@ public final class CommandLineClient extends HeadlessSpartanizer {
   }
 
   private void go(final String[] args) {
-    // TODO Yossi, the instruction
-    // External.Introspector.extract(args, this).isEmpty()
-    // returns true (an empty list) even if args.length() > 0
-    // I changed it
     if (args.length == 0) {
       System.err.println(usage(this, args, this));
       return;
