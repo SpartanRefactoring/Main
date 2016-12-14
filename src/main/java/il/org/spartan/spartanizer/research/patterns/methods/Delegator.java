@@ -22,6 +22,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
       add(TipperFactory.patternTipper("$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1.$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1().$N($A)", "", ""));
+      add(TipperFactory.patternTipper("(($T)$N1).$N($A)", "", ""));
     }
   };
 
