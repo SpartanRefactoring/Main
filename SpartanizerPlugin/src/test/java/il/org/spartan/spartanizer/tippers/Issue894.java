@@ -14,7 +14,7 @@ public class Issue894 {
     trimmingOf("for(int ¢ = 3; ¢ < 10; ++¢){++x;}").withTipper(ForStatement.class, new ReplaceForWithRange())
         .gives("for(Integer ¢ : range.from(3).to(10)){{++x;}}").gives("for(Integer ¢ : range.from(3).to(10))++x;").stays();
   }
-  
+
   // ¢-=2 matches ++$N for some reason
   @Test public void test2() {
     trimmingOf("for(int ¢ = 10; ¢ > 5; ¢-=2){++x;++y;}").withTipper(ForStatement.class, new ReplaceForWithRange())

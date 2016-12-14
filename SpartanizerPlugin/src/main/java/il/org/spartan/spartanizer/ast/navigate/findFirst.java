@@ -234,13 +234,13 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode infixExpression(ASTNode ¢) {
+  static ASTNode infixExpression(final ASTNode ¢) {
     return instanceOf(InfixExpression.class, ¢);
   }
 
   /** @param ¢ JD
    * @return */
-  static ASTNode tryStatement(ASTNode ¢) {
+  static ASTNode tryStatement(final ASTNode ¢) {
     return instanceOf(TryStatement.class, ¢);
   }
 }
