@@ -137,16 +137,16 @@ public class Analyze {
   }
 
   private static void hIndex() {
-    Map<String, Pair<String, Int>> ranking = new HashMap<>();
+    final Map<String, Pair<String, Int>> ranking = new HashMap<>();
     for (final File f : inputFiles()) {
-      CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+      final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       searchDescendants.forClass(MethodInvocation.class).from(cu).stream().forEach(m -> {
-        String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
+        final String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));
         ++ranking.get(key).second.inner;
       });
     }
-    List<Pair<String, Int>> rs = new ArrayList<>();
+    final List<Pair<String, Int>> rs = new ArrayList<>();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : x.second.inner < y.second.inner ? 1 : 0);
     System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");
@@ -154,11 +154,11 @@ public class Analyze {
     System.out.println("h-index: " + hindex(rs));
   }
 
-  private static String declarationFile(final CompilationUnit u, String methodName, String fileName) {
+  private static String declarationFile(final CompilationUnit u, final String methodName, final String fileName) {
     return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }
 
-  private static int hindex(List<Pair<String, Int>> ¢) {
+  private static int hindex(final List<Pair<String, Int>> ¢) {
     for (int $ = 0; $ < ¢.size(); ++$) {
       if ($ > ¢.get($).second.inner)
         return $;
@@ -278,7 +278,7 @@ public class Analyze {
 
   /** @param entry
    * @return */
-  private static boolean notTest(File entry) {
+  private static boolean notTest(final File entry) {
     return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
 
