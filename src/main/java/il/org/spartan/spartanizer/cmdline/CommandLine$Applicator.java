@@ -33,22 +33,22 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   public CommandLine$Applicator() {}
 
-  public CommandLine$Applicator(final String[] clazzes) {
-    super(clazzes);
+  public CommandLine$Applicator(final String[] classes) {
+    super(classes);
   }
 
-  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups) {
-    super(clazzes, tipperGroups);
+  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups) {
+    super(classes, tipperGroups);
   }
 
-  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups) {
-    super(clazzes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
+  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String[] excludedTipperGroups) {
+    super(classes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
 
-  public CommandLine$Applicator(final String[] clazzes, final String[] tipperGroups, final String[] excludedTipperGroups,
+  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String[] excludedTipperGroups,
       final String[] excludedNanoPatterns) {
     // left intentionally empty
-    super(clazzes, removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
+    super(classes, removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
   }
 
   private static String[] removeExcludedNanoPatternsAndTippers(final String[] tipperGroups, final String[] excludedTipperGroups,
