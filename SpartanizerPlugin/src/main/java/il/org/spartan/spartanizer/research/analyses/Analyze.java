@@ -389,7 +389,12 @@ public class Analyze {
             null) //
         .add(InfixExpression.class, //
             new Between(), //
+            new LastIndex(), //
             null)//
+        .add(MethodInvocation.class, //
+            new FirstElement(), //
+            new LastElement(), //
+            null) //
         .add(TryStatement.class, //
             new IfThrowsReturnNull(), //
             null);
