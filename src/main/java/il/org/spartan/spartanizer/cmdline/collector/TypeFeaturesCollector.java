@@ -73,10 +73,10 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
     super.endVisit(node);
   }
 
-  @Override protected void done() {
+  @Override protected void done(String path) {
     dotter.end();
+    System.err.println("Done processing: " + path);
     System.err.println("Your output is in: " + writer.close());
-    super.done();
   }
 
   static {
