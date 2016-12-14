@@ -6,8 +6,8 @@ import org.junit.*;
 
 /** @author Ori Roth
  * @since 2016_12_14 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Autamatic_2016_12_14_01_52_17 {
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
