@@ -8,21 +8,26 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-public abstract class FilesASTVisitor extends ASTVisitor {
+/** Parse and visit all Java files under a given path. 
+ * @author Yossi Gil
+ * @year 2016 */
+public abstract class FolderASTVisitor extends ASTVisitor {
+  @External(alias = "i", value = "input folder") protected String inputFolder = ".";
+  @External(alias = "o", value = "output folder") protected String outputFolder = "/tmp";
   protected static String[] defaultArguments = as.array(".");
-  protected static Class<? extends FilesASTVisitor> clazz;
-  private static Constructor<? extends FilesASTVisitor> declaredConstructor;
-  protected String outputFolder = "/tmp";
+  protected static Class<? extends FolderASTVisitor> clazz;
+  private static Constructor<? extends FolderASTVisitor> declaredConstructor;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected Dotter dotter = new Dotter();
 
-  private static Constructor<? extends FilesASTVisitor> declaredConstructor() {
+  private static Constructor<? extends FolderASTVisitor> declaredConstructor() {
     if (clazz == null) {
       monitor.logProbableBug(clazz, fault.stackCapture());
       System.exit(1);

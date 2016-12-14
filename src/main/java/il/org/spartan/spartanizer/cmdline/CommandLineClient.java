@@ -18,13 +18,13 @@ public final class CommandLineClient extends HeadlessSpartanizer {
     }
     extract(args, this);
     ReportGenerator.generate("metrics");
-    ReportGenerator.setOutputFolder(outputDir);
-    ReportGenerator.setInputFolder(inputDir);
+    ReportGenerator.setOutputFolder(outputFolder);
+    ReportGenerator.setInputFolder(inputFolder);
     run();
   }
 
   private void run() {
-    name(system.folder2File(inputDir));
+    name(system.folder2File(inputFolder));
     apply();
   }
 

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** Collects boolean features of methods
  * @author Yossi Gil
  * @year 2016 */
-public final class MethodFeaturesCollector extends FilesASTVisitor {
+public final class MethodFeaturesCollector extends FolderASTVisitor {
   int methodNesting;
   MethodDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
@@ -89,6 +89,6 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FilesASTVisitor.main(args);
+    FolderASTVisitor.main(args);
   }
 }
