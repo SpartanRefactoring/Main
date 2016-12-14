@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.cmdline.report.*;
  * @since 2016 */
 public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @External(alias = "np", value = "Nano Patterns") private static String[] nanoPatterns;
-  @External final CommandLineApplicator c = new CommandLineApplicator();
+  @External final CommandLineApplicator commandLineApplicator = new CommandLineApplicator();
   @External final boolean CommandLine$Applicator = true;
   @External boolean DefaultApplicator;
   @External String name;
@@ -44,7 +44,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       if (DefaultApplicator) {
-        c.listener(¢ -> System.out.println("Running DefaultApplicator ...." + ¢));
+        commandLineApplicator.listener(¢ -> System.out.println("Running DefaultApplicator: " + ¢));
         CommandLineApplicator.defaultApplicator().defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()))
             .defaultListenerNoisy().go();
       }
