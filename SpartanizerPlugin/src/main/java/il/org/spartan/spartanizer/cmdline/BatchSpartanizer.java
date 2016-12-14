@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @author Matteo Orru'
  * @year 2016 */
-public final class BatchSpartanizer extends FilesASTVisitor {
+public final class BatchSpartanizer extends FolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
