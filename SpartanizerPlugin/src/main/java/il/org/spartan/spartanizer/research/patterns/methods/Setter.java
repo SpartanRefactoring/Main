@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Setter extends JavadocMarkerNanoPattern {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class FactoryMethod extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class FactoryMethod extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -22,6 +22,6 @@ public class FactoryMethod extends JavadocMarkerNanoPattern<MethodDeclaration> {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return statements(¢) != null && statements(¢).size() == 1 && anyTips(tippers, onlyOne(statements(¢)));
+    return hazOneStatement(¢) && anyTips(tippers, onlyOne(statements(¢)));
   }
 }

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * (usually with same name) and just adds parameters to the method.
  * @author Ori Marcovitch
  * @since 2016 */
-public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
