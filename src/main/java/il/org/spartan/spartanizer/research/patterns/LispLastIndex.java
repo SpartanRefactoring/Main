@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class LastIndex extends NanoPatternTipper<InfixExpression> {
+public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
   List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
     {
