@@ -66,10 +66,10 @@ import il.org.spartan.utils.Separate.*;
    * @param t an arbitrary object, usually with some of its fields and methods
    *        marked {@link External}
    * @return the parameter */
-  public <T> T extract(final T t) {
-    for (@NotNull final Entry<String, String> ¢ : External.Introspector.toOrderedMap(t).entrySet())
+  public <T> T extract(final T $) {
+    for (@NotNull final Entry<String, String> ¢ : External.Introspector.toOrderedMap($).entrySet())
       put(¢.getKey(), ¢.getValue());
-    return t;
+    return $;
   }
 
   @Override public String get(final String key) {

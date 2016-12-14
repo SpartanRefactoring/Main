@@ -140,8 +140,7 @@ public abstract class LogBook implements Serializable {
    * @throws FileNotFoundException */
   public void merge(@NotNull final File f) throws IOException, ClassNotFoundException {
     @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
-    @NotNull final LogBook l = (LogBook) in.readObject();
-    merge(l);
+    merge(((LogBook) in.readObject()));
     in.close();
   }
 
@@ -153,13 +152,13 @@ public abstract class LogBook implements Serializable {
   @NotNull public LogBook printBy(final Consolidation m, @NotNull final String... keys) {
     close();
     sortBy(keys);
-    @NotNull final Keys commonKeys = commonKeys();
+    @NotNull final Keys $ = commonKeys();
     @NotNull final Keys distinctKeys = new Keys();
     for (final String key : keys)
-      if (!commonKeys.contains(key))
+      if (!$.contains(key))
         distinctKeys.add(key);
     System.out.println(commonSettings());
-    return new Consolidator(m, commonKeys, distinctKeys).go(book.clone());
+    return new Consolidator(m, $, distinctKeys).go(book.clone());
   }
 
   @NotNull public LogBook remove(final String key) {
@@ -183,8 +182,8 @@ public abstract class LogBook implements Serializable {
   }
 
   public final String someValue(final String key) {
-    for (@NotNull final Entry ¢ : book)
-      return ¢.get(key);
+    for (@NotNull final Entry $ : book)
+      return $.get(key);
     return null;
   }
 
@@ -688,17 +687,17 @@ public abstract class LogBook implements Serializable {
       this.mode = mode;
     }
 
-    @NotNull public final LogBook go(@NotNull final Collection<Entry> es) {
+    @NotNull public final LogBook go(@NotNull final Collection<Entry> $) {
       if (!stagger.isEmpty())
-        return go(es, Iterables.first(stagger));
+        return go($, Iterables.first(stagger));
       if (mode == LIST || mode == BOTH)
-        for (@NotNull final Entry ¢ : es)
+        for (@NotNull final Entry ¢ : $)
           println(prefix(removeKeys(¢, exclude)) + ¢.format());
-      if (mode == SUMMARY || mode == BOTH || mode == ENDS && es.size() > 1)
-        summary(es);
-      if (mode == ENDS || es.size() > 1) {
-        final Entry min = min(es);
-        final Entry max = max(es);
+      if (mode == SUMMARY || mode == BOTH || mode == ENDS && $.size() > 1)
+        summary($);
+      if (mode == ENDS || $.size() > 1) {
+        final Entry min = min($);
+        final Entry max = max($);
         System.out.println(shortForm(min) + compare(min, max) + ratio(min, max) + shortForm(max));
       }
       return LogBook.this;
@@ -709,8 +708,8 @@ public abstract class LogBook implements Serializable {
     }
 
     @NotNull private String compare(final Statistics s1, final Statistics s2) {
-      final double p = new WelchT(s1, s2).p;
-      return p < 0.001 ? "==" : "~" + (p > 0.1 ? "" : RELATIVE.format(p) + "") + "~";
+      final double $ = new WelchT(s1, s2).p;
+      return $ < 0.001 ? "==" : "~" + ($ > 0.1 ? "" : RELATIVE.format($) + "") + "~";
     }
 
     private boolean equals(@Nullable final String s1, @Nullable final String s2) {

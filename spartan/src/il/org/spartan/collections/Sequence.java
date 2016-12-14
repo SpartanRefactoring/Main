@@ -54,10 +54,10 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return indexOf(¢) >= 0;
   }
 
-  public int indexOf(final E e) {
-    for (int ¢ = begin; ¢ < end; ++¢)
-      if (es[¢].equals(e))
-        return ¢ - begin;
+  public int indexOf(final E ¢) {
+    for (int $ = begin; $ < end; ++$)
+      if (es[$].equals(¢))
+        return $ - begin;
     return -1;
   }
 

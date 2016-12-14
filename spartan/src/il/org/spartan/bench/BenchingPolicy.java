@@ -32,14 +32,14 @@ public enum BenchingPolicy {
    * @return the average time in nanoseconds for execution (always a positive
    *         number) */
   public static double approximateSteadyStateTime(@NotNull final Operation o) {
-    for (int runs = 1;; runs <<= 1) {
+    for (int $ = 1;; $ <<= 1) {
       // JVM.gc();
       @NotNull final Stopwatch grossTime = new Stopwatch().start();
-      @NotNull final Stopwatch netTime = o.netTime(runs);
+      @NotNull final Stopwatch netTime = o.netTime($);
       grossTime.stop();
       ___.nonnegative(netTime.time());
-      if (new RunRecord(runs, netTime, grossTime).ok())
-        return 1. * netTime.time() / runs;
+      if (new RunRecord($, netTime, grossTime).ok())
+        return 1. * netTime.time() / $;
     }
   }
 
@@ -166,11 +166,11 @@ public enum BenchingPolicy {
     }
   }
 
-  private static double approximateSteadyStateTime(@NotNull final TimingEstimator e) {
+  private static double approximateSteadyStateTime(@NotNull final TimingEstimator $) {
     for (@NotNull final Sequence s = new Multiplicative(0.3);; s.advance()) {
-      @Nullable final RunRecord r = e.run(s.current(), 5);
-      if (r == null || r.ok() || e.steady())
-        return tuneupSteadyState(e);
+      @Nullable final RunRecord r = $.run(s.current(), 5);
+      if (r == null || r.ok() || $.steady())
+        return tuneupSteadyState($);
     }
   }
 
@@ -180,11 +180,11 @@ public enum BenchingPolicy {
     Log.endCompoundStage();
   }
 
-  private static double tuneupSteadyState(@NotNull final TimingEstimator e) {
-    for (int estimatedRuns = runs(e.estimate()); estimatedRuns > 1; estimatedRuns /= 2)
-      if (e.run(estimatedRuns) != null)
+  private static double tuneupSteadyState(@NotNull final TimingEstimator $) {
+    for (int estimatedRuns = runs($.estimate()); estimatedRuns > 1; estimatedRuns /= 2)
+      if ($.run(estimatedRuns) != null)
         break;
-    return e.estimate();
+    return $.estimate();
   }
 
   public static class TEST {

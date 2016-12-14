@@ -545,8 +545,7 @@ import il.org.spartan.reap.Cookbook.*;
       version = latestPrequisiteVersion() + 1;
       assert ϑ != null;
       try {
-        @Nullable final T $ = set(ϑ.¢());
-        azzert.notNull($);
+        azzert.notNull(set(ϑ.¢()));
       } catch (@NotNull final Exception ¢) {
         ¢.printStackTrace();
         undefine();

@@ -40,10 +40,10 @@ public abstract class Statistics {
   }
 
   public static double sampleMean(@NotNull final double[] ds) {
-    double sum = 0;
+    double $ = 0;
     for (final double ¢ : ds)
-      sum += ¢;
-    return sum / ds.length;
+      $ += ¢;
+    return $ / ds.length;
   }
 
   /** Compute a <a href=
@@ -52,13 +52,13 @@ public abstract class Statistics {
    * @param ds the sample
    * @return the sample variance of the parameter */
   public static double sampleVariance(@NotNull final double[] ds) {
-    double sum = 0;
+    double $ = 0;
     double sum2 = 0;
     for (final double ¢ : ds) {
-      sum += ¢;
+      $ += ¢;
       sum2 += ¢ * ¢;
     }
-    return sum2 / (ds.length - 1) - sum * sum / (ds.length * ds.length - ds.length);
+    return sum2 / (ds.length - 1) - $ * $ / (ds.length * ds.length - ds.length);
   }
 
   protected int n;

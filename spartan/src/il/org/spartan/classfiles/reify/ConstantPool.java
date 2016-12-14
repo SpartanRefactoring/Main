@@ -13,9 +13,9 @@ import il.org.spartan.collections.*;
 /** A representation of an entry in the constant pool array.
  * @author Yossi Gil */
 public final class ConstantPool {
-  @NotNull private static UTF8 asUTF8(@NotNull final Constant c) {
+  @NotNull private static UTF8 asUTF8(@NotNull final Constant $) {
     try {
-      return (UTF8) c;
+      return (UTF8) $;
     } catch (@NotNull final ClassCastException ¢) {
       throw new CorruptClassFile(¢);
     }
@@ -151,7 +151,7 @@ public final class ConstantPool {
   /** Read the next constant pool entry from a given stream
    * @param r
    * @return the next constant pool entry found in the given stream */
-  private Constant readConstant(@NotNull final RobustReader r) {
+  private Constant readConstant(@NotNull final RobustReader $) {
     final int//
     CONSTANT_UTF8 = 1, //
         CONSTANT_INTEGER = 3, //
@@ -165,29 +165,29 @@ public final class ConstantPool {
         CONSTANT_INTERFACE_METHODREF = 11, //
         CONSTANT_NAME_AND_TYPE = 12; //
     int b;
-    switch (b = r.readUnsignedByte()) {
+    switch (b = $.readUnsignedByte()) {
       case CONSTANT_CLASS:
-        return new ClassConstant(r.readUnsignedShort());
+        return new ClassConstant($.readUnsignedShort());
       case CONSTANT_FIELDREF:
-        return new FieldReference(r.readUnsignedShort(), r.readUnsignedShort());
+        return new FieldReference($.readUnsignedShort(), $.readUnsignedShort());
       case CONSTANT_METHODREF:
-        return new MethodReference(r.readUnsignedShort(), r.readUnsignedShort());
+        return new MethodReference($.readUnsignedShort(), $.readUnsignedShort());
       case CONSTANT_INTERFACE_METHODREF:
-        return new InterfaceMethodReference(r.readUnsignedShort(), r.readUnsignedShort());
+        return new InterfaceMethodReference($.readUnsignedShort(), $.readUnsignedShort());
       case CONSTANT_STRING:
-        return new StringConstant(r.readUnsignedShort());
+        return new StringConstant($.readUnsignedShort());
       case CONSTANT_INTEGER:
-        return new IntLiteral(r.readInt());
+        return new IntLiteral($.readInt());
       case CONSTANT_FLOAT:
-        return new FloatLiteral(r.readFloat());
+        return new FloatLiteral($.readFloat());
       case CONSTANT_LONG:
-        return new LongLiteral(r.readLong());
+        return new LongLiteral($.readLong());
       case CONSTANT_DOUBLE:
-        return new DoubleLiteral(r.readDouble());
+        return new DoubleLiteral($.readDouble());
       case CONSTANT_NAME_AND_TYPE:
-        return new NameAndTypeConstant(r.readUnsignedShort(), r.readUnsignedShort());
+        return new NameAndTypeConstant($.readUnsignedShort(), $.readUnsignedShort());
       case CONSTANT_UTF8:
-        return new UTF8(r.readUTF());
+        return new UTF8($.readUTF());
       default:
         System.out.print("Unfamiliar field identifier = " + b);
         return null;

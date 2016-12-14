@@ -11,7 +11,7 @@ import il.org.spartan.streotypes.*;
  * @param <T> Type of elements stored in the array.
  * @author Yossi Gil, the Technion.
  * @since 23/08/2008 */
-@Immutable @Canopy @Instantiable public class ImmutableArray<T> implements Iterable<T> {
+@Canopy @Immutable @Instantiable public class ImmutableArray<T> implements Iterable<T> {
   /** The encapsulated array. */
   private final T[] implementation;
 
@@ -52,7 +52,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>boolean</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Booleans {
+  @Canopy @Immutable public static class Booleans {
     /** The encapsulated array. */
     private final boolean[] implementation;
 
@@ -78,7 +78,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>byte</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Bytes {
+  @Canopy @Immutable public static class Bytes {
     /** The encapsulated array. */
     private final byte[] implementation;
 
@@ -104,7 +104,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>char</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Chars {
+  @Canopy @Immutable public static class Chars {
     /** The encapsulated array. */
     private final char[] implementation;
 
@@ -130,7 +130,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>double</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Doubles {
+  @Canopy @Immutable public static class Doubles {
     /** The encapsulated array. */
     private final double[] implementation;
 
@@ -156,7 +156,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>float</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Floats {
+  @Canopy @Immutable public static class Floats {
     /** The encapsulated array. */
     private final float[] implementation;
 
@@ -182,7 +182,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>int</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Ints {
+  @Canopy @Immutable public static class Ints {
     /** The encapsulated array. */
     private final int[] implementation;
 
@@ -208,7 +208,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>long</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Longs {
+  @Canopy @Immutable public static class Longs {
     /** The encapsulated array. */
     private final long[] implementation;
 
@@ -234,7 +234,7 @@ import il.org.spartan.streotypes.*;
   /** An immutable array of <code>short</code>s.
    * @author Yossi Gil, the Technion.
    * @since 23/08/2008 */
-  @Immutable @Canopy public static class Shorts {
+  @Canopy @Immutable public static class Shorts {
     /** The encapsulated array. */
     private final short[] implementation;
 

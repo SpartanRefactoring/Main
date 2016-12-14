@@ -266,8 +266,7 @@ public class ClassRepository implements Iterable<String> {
     @Test public void ensureDotSeparatedNames() {
       try {
         @NotNull final List<File> fs = il.org.spartan.classfiles.JRE.asList();
-        @NotNull final List<File> me = ClassRepository.fromClass(ClassRepositoryTest.class);
-        fs.addAll(me);
+        fs.addAll(ClassRepository.fromClass(ClassRepositoryTest.class));
         @NotNull final ClassRepository cpi = new ClassRepository(fs);
         @NotNull final Set<String> classes = new HashSet<>();
         classes.addAll(cpi.getClasses());

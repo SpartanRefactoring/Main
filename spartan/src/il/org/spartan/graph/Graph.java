@@ -286,9 +286,9 @@ public class Graph<E> extends AbstractGraph<E> {
         this.to = to;
       }
 
-      @Override public boolean equals(final Object o) {
-        @NotNull @SuppressWarnings("unchecked") final BuildingEdge<E> other = (BuildingEdge<E>) o;
-        return from.equals(other.from) && to.equals(other.to);
+      @Override public boolean equals(final Object ¢) {
+        @NotNull @SuppressWarnings("unchecked") final BuildingEdge<E> $ = (BuildingEdge<E>) ¢;
+        return from.equals($.from) && to.equals($.to);
       }
 
       @Override public int hashCode() {

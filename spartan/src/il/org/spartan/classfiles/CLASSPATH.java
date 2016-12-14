@@ -120,13 +120,13 @@ import il.org.spatan.iteration.*;
 
   @NotNull private static ClassLoader computeClassLoader() {
     @NotNull final String[] path = asArray();
-    @NotNull final URL[] urls = new URL[path.length];
+    @NotNull final URL[] $ = new URL[path.length];
     for (int i = 0; i < path.length; ++i)
       try {
-        urls[i] = new File(path[i]).toURI().toURL();
+        $[i] = new File(path[i]).toURI().toURL();
       } catch (@NotNull final MalformedURLException __) {
         // Ignore
       }
-    return new URLClassLoader(urls);
+    return new URLClassLoader($);
   }
 }

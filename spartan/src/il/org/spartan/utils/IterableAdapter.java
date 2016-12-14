@@ -14,7 +14,7 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil, the Technion.
  * @since 31/07/2008
  * @param <T> type of elements in the iterated collection */
-@Instantiable @Canopy public final class IterableAdapter<T> implements Iterable<T> {
+@Canopy @Instantiable public final class IterableAdapter<T> implements Iterable<T> {
   /** A factory method, generating an {@link Iterable} from a given
    * {@link Enumeration}
    * @param <T> type of elements in the iterated collection

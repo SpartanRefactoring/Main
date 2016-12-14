@@ -209,9 +209,9 @@ public class Aggregator {
 
     public abstract double retreive(RealStatistics s);
 
-    public String retreive(final RealStatistics s, @NotNull final String format) {
+    public String retreive(final RealStatistics $, @NotNull final String format) {
       try {
-        return String.format(format, Box.it(retreive(s)));
+        return String.format(format, Box.it(retreive($)));
       } catch (@NotNull final ArithmeticException e) {
         return ""; //
       }

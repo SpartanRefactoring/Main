@@ -37,9 +37,9 @@ import il.org.spartan.streotypes.*;
     }
   }
 
-  public static InputStream toInputStream(@NotNull final String s) {
+  public static InputStream toInputStream(@NotNull final String $) {
     try {
-      return new ByteArrayInputStream(s.getBytes("UTF-8"));
+      return new ByteArrayInputStream($.getBytes("UTF-8"));
     } catch (@NotNull final UnsupportedEncodingException e) {
       unreachable();
       return null;

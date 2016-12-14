@@ -52,14 +52,14 @@ import il.org.spatan.iteration.*;
 
   public static double tauB(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    @NotNull final List<Double> Xs = new ArrayList<>();
+    @NotNull final List<Double> $ = new ArrayList<>();
     @NotNull final List<Double> Ys = new ArrayList<>();
     for (int ¢ = 0; ¢ < xs.length; ++¢)
       if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
-        Xs.add(Box.it(xs[¢]));
+        $.add(Box.it(xs[¢]));
         Ys.add(Box.it(ys[¢]));
       }
-    return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
+    return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }
 
   static int compueS(@NotNull final double[] xs, @NotNull final double[] ys) {
@@ -122,22 +122,22 @@ import il.org.spatan.iteration.*;
   }
 
   private static int computeS(final double[] xs, final double[] ys, final int n) {
-    int nc = 0;
+    int $ = 0;
     int nd = 0;
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j)
         if (xs[i] > xs[j] && ys[i] > ys[j] || xs[i] < xs[j] && ys[i] < ys[j])
-          ++nc;
+          ++$;
         else if (xs[i] > xs[j] && ys[i] < ys[j] || xs[i] < xs[j] && ys[i] > ys[j])
           ++nd;
-    return nc - nd;
+    return $ - nd;
   }
 
   private static double tauB_pruned(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    final int n = xs.length;
-    final int pairs = pairs(n);
-    return computeS(xs, ys, n) / Math.sqrt(1. * (pairs - sigma(xs)) * (pairs - sigma(ys)));
+    final int $ = xs.length;
+    final int pairs = pairs($);
+    return computeS(xs, ys, $) / Math.sqrt(1. * (pairs - sigma(xs)) * (pairs - sigma(ys)));
   }
 
   public static class Charectristics {

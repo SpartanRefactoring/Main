@@ -69,9 +69,9 @@ public class ShallowSize {
     return arraySize(it.length, 2);
   }
 
-  public static int of(@NotNull final Class<?> c) {
-    final Class<?> parent = c.getSuperclass();
-    return align(intrinsic(c) + (parent != null ? of(parent) : headerSize()));
+  public static int of(@NotNull final Class<?> ¢) {
+    final Class<?> $ = ¢.getSuperclass();
+    return align(intrinsic(¢) + ($ != null ? of($) : headerSize()));
   }
 
   public static int of(@NotNull final double it[]) {

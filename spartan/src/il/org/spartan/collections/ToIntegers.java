@@ -114,9 +114,9 @@ public final class ToIntegers<E> {
   }
 
   public int increment(@NotNull final E key) {
-    final int location = location(key);
-    if (location >= 0)
-      return ++values[location];
+    final int $ = location(key);
+    if ($ >= 0)
+      return ++values[$];
     final int find = find(key);
     data[find] = key;
     values[find] = 1;

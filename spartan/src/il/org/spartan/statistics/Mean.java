@@ -24,11 +24,11 @@ import il.org.spartan.streotypes.*;
     return destructiveMoment(i, ds.clone());
   }
 
-  @NotNull public static double[] shift(@NotNull final double... ds) {
-    final double mean = mean(ds);
-    for (int ¢ = 0; ¢ < ds.length; ++¢)
-      ds[¢] -= mean;
-    return ds;
+  @NotNull public static double[] shift(@NotNull final double... $) {
+    final double mean = mean($);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] -= mean;
+    return $;
   }
 
   @SuppressWarnings("static-method") public static class TEST {

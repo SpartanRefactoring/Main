@@ -78,8 +78,7 @@ public class ExecutableEntity extends TypedEntity {
     for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       if (i.opCode == OpCode.GETFIELD || i.opCode == OpCode.PUTFIELD) {
-        final int cpIndex = i.args()[1] | i.args()[0] << 8;
-        @NotNull final FieldReference fr = constantPool.getFieldReference(cpIndex);
+        @NotNull final FieldReference fr = constantPool.getFieldReference(i.args()[1] | i.args()[0] << 8);
         $.add(fr.getClassConstant().getClassName() + ":" + fr.getNameAndType());
       }
     }
@@ -137,10 +136,9 @@ public class ExecutableEntity extends TypedEntity {
   }
 
   private boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName, @NotNull final Instruction i) {
-    final int cpIndex = i.args()[1] | i.args()[0] << 8;
-    @NotNull final MemberReference mr = constantPool.getMemberReference(cpIndex);
-    return mr.getNameAndType().getName().equals(e.name) && mr.getNameAndType().getDescriptor().equals(e.descriptor)
-        && mr.getClassConstant().getClassName().endsWith(thisClassName);
+    @NotNull final MemberReference $ = constantPool.getMemberReference(i.args()[1] | i.args()[0] << 8);
+    return $.getNameAndType().getName().equals(e.name) && $.getNameAndType().getDescriptor().equals(e.descriptor)
+        && $.getClassConstant().getClassName().endsWith(thisClassName);
   }
 
   private CodeEntity readCodeAttribute() {
@@ -148,9 +146,9 @@ public class ExecutableEntity extends TypedEntity {
     return $ == null ? null : readCodeAttribute($);
   }
 
-  @NotNull private CodeEntity readCodeAttribute(@NotNull final AttributeInfo i) {
-    @NotNull final ConstantPoolReader r = i.reader(constantPool);
-    return new CodeEntity(r.readUnsignedShort(), r.readUnsignedShort(), r.readBytesArrray());
+  @NotNull private CodeEntity readCodeAttribute(@NotNull final AttributeInfo ¢) {
+    @NotNull final ConstantPoolReader $ = ¢.reader(constantPool);
+    return new CodeEntity($.readUnsignedShort(), $.readUnsignedShort(), $.readBytesArrray());
   }
 
   @NotNull private ClassConstant[] readExceptions() {

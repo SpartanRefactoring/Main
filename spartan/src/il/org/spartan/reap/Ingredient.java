@@ -23,9 +23,7 @@ public class Ingredient<@Nullable T> extends Cell<T> {
 
   /** see @see il.org.spartan.reap.Cookbook.Cell#get() (auto-generated) */
   @Override public T get() {
-    idiomatic.run(() -> {
-      trace.add(this);
-    }).unless(trace == null);
+    idiomatic.run(() -> trace.add(this)).unless(trace == null);
     return cache();
   }
 

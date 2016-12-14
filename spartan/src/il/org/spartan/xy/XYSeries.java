@@ -43,9 +43,9 @@ public class XYSeries {
   }
 
   @NotNull public XYSeries log() {
-    @NotNull final XYProcessor.RealsOnly p = new XYProcessor.RealsOnly();
-    p.feed(LinearAlgebra.log(x), LinearAlgebra.log(y), dLogY());
-    return new XYSeries(p);
+    @NotNull final XYProcessor.RealsOnly $ = new XYProcessor.RealsOnly();
+    $.feed(LinearAlgebra.log(x), LinearAlgebra.log(y), dLogY());
+    return new XYSeries($);
   }
 
   public int n() {

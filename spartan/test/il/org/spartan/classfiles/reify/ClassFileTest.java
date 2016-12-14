@@ -952,7 +952,7 @@ import il.org.spartan.utils.*;
 
   /***/
   public static class TwoAnnotatedFields {
-    @Nullable @External @Deprecated private static final String firstField = null;
+    @Deprecated @External @Nullable private static final String firstField = null;
     @Deprecated @Nullable final String secondField = null;
   }
 

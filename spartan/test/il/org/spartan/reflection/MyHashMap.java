@@ -183,12 +183,12 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     if (key == null)
       return getForNullKey();
     final int hash = hash(key.hashCode());
-    for (Entry<K, V> e = table[indexFor(hash, table.length)];; e = e.next) {
-      if (e == null)
+    for (Entry<K, V> $ = table[indexFor(hash, table.length)];; $ = $.next) {
+      if ($ == null)
         break;
       Object k;
-      if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
-        return e.value;
+      if ($.hash == hash && ((k = $.key) == key || key.equals(k)))
+        return $.value;
     }
     return null;
   }
@@ -270,8 +270,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *         can also indicate that the map previously associated <tt>null</tt>
    *         with <tt>key</tt>.) */
   @Override public V remove(final Object key) {
-    final Entry<K, V> e = removeEntryForKey(key);
-    return e == null ? null : e.value;
+    final Entry<K, V> $ = removeEntryForKey(key);
+    return $ == null ? null : $.value;
   }
 
   public int selfBytes() {
@@ -426,9 +426,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *        greater than current capacity unless current capacity is
    *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
   void resize(final int newCapacity) {
-    @SuppressWarnings("rawtypes") final Entry[] oldTable = table;
-    final int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM_CAPACITY) {
+    if (table.length == MAXIMUM_CAPACITY) {
       threshold = Integer.MAX_VALUE;
       return;
     }
@@ -475,9 +473,9 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * performance in the two most commonly used operations (get and put), but
    * incorporated with conditionals in others. */
   private V getForNullKey() {
-    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
-      if (¢.key == null)
-        return ¢.value;
+    for (Entry<K, V> $ = table[0]; $ != null; $ = $.next)
+      if ($.key == null)
+        return $.value;
     return null;
   }
 

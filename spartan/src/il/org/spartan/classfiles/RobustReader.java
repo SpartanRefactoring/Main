@@ -12,11 +12,11 @@ public class RobustReader {
     return ¢ == null ? null : new DataInputStream(¢);
   }
 
-  @Nullable protected static FileInputStream asFileInputStream(@Nullable final File f) {
-    if (f == null)
+  @Nullable protected static FileInputStream asFileInputStream(@Nullable final File $) {
+    if ($ == null)
       return null;
     try {
-      return new FileInputStream(f);
+      return new FileInputStream($);
     } catch (@NotNull final FileNotFoundException e) {
       return null;
     }
@@ -150,9 +150,9 @@ public class RobustReader {
     return 0;
   }
 
-  int readBytes(@NotNull final byte[] bs, final int offset, final int howMany) {
+  int readBytes(@NotNull final byte[] $, final int offset, final int howMany) {
     try {
-      return inner.read(bs, offset, howMany);
+      return inner.read($, offset, howMany);
     } catch (@NotNull final IOException ¢) {
       recordError(¢);
       return howMany;

@@ -61,10 +61,10 @@ public class DeepSize {
       return $;
     }
 
-    private static Object get(@NotNull final Field f, final Object o) {
-      f.setAccessible(true);
+    private static Object get(@NotNull final Field $, final Object o) {
+      $.setAccessible(true);
       try {
-        return f.get(o);
+        return $.get(o);
       } catch (@NotNull final IllegalAccessException | IllegalArgumentException ¢) {
         throw new RuntimeException(¢);
       }

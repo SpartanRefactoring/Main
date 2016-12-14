@@ -14,7 +14,7 @@ import il.org.spartan.streotypes.*;
  * @see ImmutableEnumIntMap
  * @author Yossi Gil, the Technion.
  * @since 23/08/2008 */
-@Instantiable @Classical @Canopy public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
+@Canopy @Classical @Instantiable public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
   /** Suite metric values are stored internally here. */
   @NotNull private final int[] implementation;
 

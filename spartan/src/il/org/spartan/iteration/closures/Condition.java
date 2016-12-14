@@ -63,8 +63,8 @@ public interface Condition<Argument> {
       return t -> t != null;
     }
 
-    public static <T> Condition<T> not(@NotNull final Condition<T> c) {
-      return t -> !c.holds(t);
+    public static <T> Condition<T> not(@NotNull final Condition<T> t) {
+      return ¢ -> !t.holds(¢);
     }
 
     public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {

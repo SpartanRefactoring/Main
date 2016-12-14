@@ -36,10 +36,10 @@ public abstract class Operation implements Callable<Object> {
     return netTime.stop();
   }
 
-  @NotNull public Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
-    netTime.start();
+  @NotNull public Stopwatch netTime(@NotNull final Stopwatch $, final int runs) {
+    $.start();
     for (int ¢ = 0; ¢ < runs; ++¢)
       call();
-    return netTime.stop();
+    return $.stop();
   }
 }

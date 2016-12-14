@@ -312,10 +312,10 @@ import il.org.spartan.utils.*;
       case 1:
         return args[0];
       default:
-        @NotNull final Object os[] = new Object[args.length - 1];
+        @NotNull final Object $[] = new Object[args.length - 1];
         for (int ¢ = 1; ¢ < args.length; ++¢)
-          os[¢ - 1] = args[¢];
-        return new Formatter().format(args[0], os) + "";
+          $[¢ - 1] = args[¢];
+        return new Formatter().format(args[0], $) + "";
     }
   }
 

@@ -27,11 +27,11 @@ import il.org.spartan.streotypes.*;
  * @since 27/08/2008 */
 @Utility public enum Prune {
   ;
-  @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
-    for (@NotNull final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+  @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C $) {
+    for (@NotNull final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
-    return ts;
+    return $;
   }
 
   /** Prune <code><b>null</b></code> elements from a given collection.
