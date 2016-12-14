@@ -52,12 +52,12 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       declaredConstructor().newInstance().visit(¢);
   }
 
-  protected void done() {
-    // Empty by default
+  @SuppressWarnings("static-method") protected void done(String path) {
+    ___.______unused(path);
   }
 
-  protected void init() {
-    // Empty by default
+  @SuppressWarnings("static-method") protected void init(String path) {
+    ___.______unused(path);
   }
 
   protected String makeFile(final String fileName) {
@@ -67,10 +67,10 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected void visit(final String path) {
     dotter.click();
     presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
-    init();
+    init(path);
     for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       visit(presentFile = ¢);
-    done();
+    done(path);
   }
 
   void collect(final CompilationUnit ¢) {
