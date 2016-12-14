@@ -74,7 +74,7 @@ public class Analyze {
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
-        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !m.isConstructor() && body(m) != null).collect(Collectors.toList()))
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !excludeMethod(m)).collect(Collectors.toList()))
           try {
             // System.out.println(¢);
             Count.before(¢);
@@ -94,6 +94,10 @@ public class Analyze {
     Logger.summarizeSortedMethodStatistics(outputDir());
     Logger.summarizeNPStatistics(outputDir());
     Count.print();
+  }
+
+  private static boolean excludeMethod(MethodDeclaration ¢) {
+    return ¢.isConstructor() || body(¢) == null;
   }
 
   private static void initializeSpartanizer() {
