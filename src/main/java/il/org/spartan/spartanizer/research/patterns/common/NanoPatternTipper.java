@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
   protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return ns.stream().anyMatch(t -> t.canTip(n));
+    return n != null && ns.stream().anyMatch(t -> t.canTip(n));
   }
 
   protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final Collection<UserDefinedTipper<N>> ns, final N n) {

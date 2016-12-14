@@ -89,6 +89,8 @@ public class Analyze {
     }
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> format.code(x + "")).reduce("", (x, y) -> x + y));
+    writeFile(new File(outputDir() + "/notTagged.java"),
+        methods.stream().filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y));
     Logger.summarizeSortedMethodStatistics(outputDir());
     Logger.summarizeNPStatistics(outputDir());
     Count.print();

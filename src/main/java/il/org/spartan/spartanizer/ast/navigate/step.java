@@ -326,6 +326,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static SimpleName name(final AbstractTypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   public static SimpleName name(final SuperMethodInvocation ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -664,5 +668,11 @@ public enum step {
    * @return */
   private static List<String> methodNames(final AbstractTypeDeclaration d) {
     return d == null ? null : methods(d).stream().map(m -> identifier(name(m))).collect(Collectors.toList());
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static Javadoc javadoc(MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.getJavadoc();
   }
 }

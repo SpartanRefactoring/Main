@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class ForEachApplier extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class ForEachApplier extends JavadocMarkerNanoPattern {
   Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
