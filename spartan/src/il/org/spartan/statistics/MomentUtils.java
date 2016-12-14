@@ -96,8 +96,8 @@ public class MomentUtils {
     // http://ncalculators.com/math-worksheets/how-to-find-skewness.htm
     @Test public void skewness1() {
       @NotNull final double vs[] = { 5, 20, 40, 80, 100 };
-      Assert.assertEquals(257201.8765, (5 - 1) * pow(40.0625, 3), 1E-3);
-      Assert.assertEquals(52140, pow(5 - 49, 3) + pow(20 - 49, 3) + pow(40 - 49, 3) + pow(80 - 49, 3) + pow(100 - 49, 3), 0);
+      Assert.assertEquals(257201.8765, (4) * pow(40.0625, 3), 1E-3);
+      Assert.assertEquals(52140, pow(-44, 3) + pow(-29, 3) + pow(-9, 3) + pow(31, 3) + pow(51, 3), 0);
       Assert.assertEquals(0.2027, 52140 / 257201.8765, 1E-4);
       Assert.assertEquals(0.2027 / skewenessCorrection(vs), skewness(vs), 1E-4);
     }
@@ -132,9 +132,9 @@ public class MomentUtils {
       Assert.assertEquals(1, moment(vs, 0), 1E-8);
       Assert.assertEquals(0, sum(vs, 1), 1E-8);
       Assert.assertEquals(0, moment(vs, 1), 1E-8);
-      Assert.assertEquals((4 + 1 + 0 + 1 + 4) / 5.0, moment(vs, 2), 1E-8);
-      Assert.assertEquals((-9 - 1 + 0 + 1 + 9) / 5.0, moment(vs, 3), 1E-8);
-      Assert.assertEquals((16 + 1 + 0 + 1 + 16) / 5.0, moment(vs, 4), 1E-8);
+      Assert.assertEquals(2.0, moment(vs, 2), 1E-8);
+      Assert.assertEquals(0.0, moment(vs, 3), 1E-8);
+      Assert.assertEquals(6.8, moment(vs, 4), 1E-8);
       Assert.assertEquals(0.0, skewness(vs), 1E-8);
     }
 
@@ -144,7 +144,7 @@ public class MomentUtils {
       Assert.assertEquals(4, pow(2, 2), 1E-10);
       Assert.assertEquals(8, pow(2, 3), 1E-10);
       Assert.assertEquals(16, pow(2, 4), 1E-10);
-      Assert.assertEquals(1 / 32.0, pow(2, -5), 1E-10);
+      Assert.assertEquals(0.03125, pow(2, -5), 1E-10);
     }
 
     // http://ncalculators.com/math-worksheets/how-to-find-skewness.htm
