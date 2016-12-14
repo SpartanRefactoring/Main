@@ -120,7 +120,7 @@ public enum Token {
     this.isError = isError;
   }
 
-  public final boolean isError() {
+  public boolean isError() {
     return isError;
   }
 

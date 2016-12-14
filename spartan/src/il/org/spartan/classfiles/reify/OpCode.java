@@ -187,14 +187,14 @@ public enum OpCode {
     @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
-        final int defaultOffset = s.readInt();
+        final int $ = s.readInt();
         final int low = s.readInt();
         final int high = s.readInt();
         ___.sure(low <= high);
         @NotNull final int offsets[] = new int[high - low + 1];
-        for (int k = 0; k < high - low + 1; ++k)
+        for (int k = 0; k <= high - low; ++k)
           offsets[k] = s.readInt();
-        return new Instruction(this, defaultOffset, offsets);
+        return new Instruction(this, $, offsets);
       } catch (@NotNull final IOException e) {
         throw new RuntimeException();
       }
@@ -204,14 +204,14 @@ public enum OpCode {
     @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
-        final int defaultOffset = s.readInt();
+        final int $ = s.readInt();
         final int nPairs = s.readInt();
         @NotNull final int offsets[] = new int[nPairs];
         for (int k = 0; k < nPairs; ++k) {
           s.skip(4);
           offsets[k] = s.readInt();
         }
-        return new Instruction(this, defaultOffset, offsets);
+        return new Instruction(this, $, offsets);
       } catch (@NotNull final IOException e) {
         throw new RuntimeException();
       }
@@ -242,11 +242,10 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Override @Nullable Instruction readContent(@NotNull final BufferDataInputStream s) {
-      final OpCode o = OpCode.values()[s.read()];
-      if (o != IINC)
-        return readContent(s);
-      s.skip(4);
+    @Override @Nullable Instruction readContent(@NotNull final BufferDataInputStream $) {
+      if (OpCode.values()[$.read()] != IINC)
+        return readContent($);
+      $.skip(4);
       return new Instruction(IINC, null);
     }
   },
@@ -310,11 +309,11 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
-  public static Instruction read(@NotNull final BufferDataInputStream s) {
-    if (s.eof())
+  public static Instruction read(@NotNull final BufferDataInputStream $) {
+    if ($.eof())
       return null;
     try {
-      return OpCode.values()[s.readUnsignedByte()].readContent(s);
+      return OpCode.values()[$.readUnsignedByte()].readContent($);
     } catch (@NotNull final EOFException e) {
       return null;
     } catch (@NotNull final IOException ¢) {
@@ -337,10 +336,10 @@ public enum OpCode {
   }
 
   @Nullable Instruction readContent(@NotNull final BufferDataInputStream s) throws IOException {
-    @NotNull final short[] args = new short[size];
+    @NotNull final short[] $ = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
-      args[¢] = (short) (s.readByte() & 0x000000FF);
-    return new Instruction(this, args);
+      $[¢] = (short) (s.readByte() & 0x000000FF);
+    return new Instruction(this, $);
   }
 
   public class Instruction {

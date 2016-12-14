@@ -87,11 +87,11 @@ public enum LinearAlgebra {
     return $;
   }
 
-  @NotNull public static int[][] adjust(@NotNull final int[][] x) {
-    final int longestColumn = longestColumn(x);
-    for (int ¢ = 0; ¢ < x.length; ++¢)
-      x[¢] = Arrays.copyOf(x[¢], longestColumn);
-    return x;
+  @NotNull public static int[][] adjust(@NotNull final int[][] $) {
+    final int longestColumn = longestColumn($);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = Arrays.copyOf($[¢], longestColumn);
+    return $;
   }
 
   @NotNull public static short[][] adjust(@NotNull final short[][] x) {
@@ -364,11 +364,11 @@ public enum LinearAlgebra {
     return Math.sqrt($);
   }
 
-  @NotNull public static double[] normalize(@NotNull final double x[]) {
-    final double norm = norm(x);
-    for (int ¢ = 0; ¢ < x.length; ++¢)
-      x[¢] /= norm;
-    return x;
+  @NotNull public static double[] normalize(@NotNull final double $[]) {
+    final double norm = norm($);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] /= norm;
+    return $;
   }
 
   /** Compute the point-wise product of two given vectors.

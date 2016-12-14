@@ -57,13 +57,11 @@ public class maybe<@Nullable T> {
     }
 
     @Test public void usecase1() {
-      @org.jetbrains.annotations.Nullable @Nullable final Object o = null;
-      azzert.isNull(maybe.yes(o).get());
+      azzert.isNull(maybe.yes(null).get());
     }
 
     @Test public void usecase2() {
-      @NotNull @Nullable final Object o = new Object();
-      azzert.notNull(maybe.yes(o).get());
+      azzert.notNull(maybe.yes(new Object()).get());
     }
   }
 }

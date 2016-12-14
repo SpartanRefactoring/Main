@@ -119,12 +119,7 @@ public class dump {
         }
         if ($ instanceof Object[])
           out(name, (Object[]) $);
-        if (!($ instanceof Collection))
-          out(name, $);
-        else {
-          @NotNull @SuppressWarnings("unchecked") final Collection<Object> os = (Collection<Object>) $;
-          out(name, os);
-        }
+        out(name, !($ instanceof Collection) ? $ : (Collection<Object>) $);
       } catch (@NotNull final Throwable ¢) {
         // For some reason, a reflection call to method
         // getContent() in URL objects throws this exception.

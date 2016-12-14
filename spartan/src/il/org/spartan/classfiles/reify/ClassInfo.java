@@ -312,7 +312,7 @@ public final class ClassInfo extends ConstantPoolEntity {
   }
 
   @Attribute public int lackOfCohesion() {
-    int emptyIntersect = 0;
+    int $ = 0;
     int nonEmptyIntersect = 0;
     for (@NotNull final MethodInfo m1 : methods)
       for (@NotNull final MethodInfo m2 : methods) {
@@ -328,9 +328,9 @@ public final class ClassInfo extends ConstantPoolEntity {
             break;
           }
         if (!found)
-          ++emptyIntersect;
+          ++$;
       }
-    return Math.max(emptyIntersect - nonEmptyIntersect, 0);
+    return Math.max($ - nonEmptyIntersect, 0);
   }
 
   @Attribute public int methodCount() {
@@ -510,8 +510,8 @@ public final class ClassInfo extends ConstantPoolEntity {
   }
 
   @NotNull private String findSource() {
-    @Nullable final AttributeInfo a = findAttribute("SourceFile");
-    return a == null ? "" : a.reader(constantPool).readStringConstant();
+    @Nullable final AttributeInfo $ = findAttribute("SourceFile");
+    return $ == null ? "" : $.reader(constantPool).readStringConstant();
   }
 
   private boolean isAccessed(@NotNull final TypedEntity e) {

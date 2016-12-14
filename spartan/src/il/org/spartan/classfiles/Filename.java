@@ -56,8 +56,8 @@ public enum Filename {
    *         the empty {@link String} if no such prefix exists.
    * @see #tailPart(String) */
   @NotNull public static String headPart(@NotNull final String name) {
-    final int index = name.lastIndexOf(DOT);
-    return index < 0 ? "" : name.substring(0, index);
+    final int $ = name.lastIndexOf(DOT);
+    return $ < 0 ? "" : name.substring(0, $);
   }
 
   public static boolean isAllInner(@NotNull final String name) {
@@ -145,13 +145,13 @@ public enum Filename {
    *         character.
    * @see #tailPart(String) */
   @NotNull public static String tailPart(@NotNull final String name) {
-    final int index = name.lastIndexOf(DOT);
-    return index < 0 ? name : name.substring(index + 1);
+    final int $ = name.lastIndexOf(DOT);
+    return $ < 0 ? name : name.substring($ + 1);
   }
 
   @NotNull public static String trailerPart(@NotNull final String name) {
-    @NotNull final String tail = tailPart(name);
-    final int index = tail.lastIndexOf('$');
-    return index < 1 ? "" : tail.substring(index + 1);
+    @NotNull final String $ = tailPart(name);
+    final int index = $.lastIndexOf('$');
+    return index < 1 ? "" : $.substring(index + 1);
   }
 }

@@ -68,18 +68,18 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  @NotNull public static float[] shuffle(@NotNull final float[] fs) {
+  @NotNull public static float[] shuffle(@NotNull final float[] $) {
     @NotNull final Random r = new Random(System.nanoTime());
-    for (int ¢ = 0; ¢ < fs.length; ++¢)
-      swap(fs, ¢, r.nextInt(fs.length));
-    return fs;
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      swap($, ¢, r.nextInt($.length));
+    return $;
   }
 
-  @NotNull public static int[] shuffle(@NotNull final int[] a) {
+  @NotNull public static int[] shuffle(@NotNull final int[] $) {
     @NotNull final Random r = new Random(System.nanoTime());
-    for (int ¢ = 0; ¢ < a.length; ++¢)
-      swap(a, ¢, r.nextInt(a.length));
-    return a;
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      swap($, ¢, r.nextInt($.length));
+    return $;
   }
 
   public static <T> void shuffle(@NotNull final T[] ts) {

@@ -149,14 +149,14 @@ import il.org.spartan.utils.*;
 
   private static InputStream searchZip(@NotNull final File where, @NotNull final String fileName) {
     try {
-      @NotNull final ZipFile z = new ZipFile(where.getAbsoluteFile());
-      final ZipEntry e = z.getEntry(fileName);
+      @NotNull final ZipFile $ = new ZipFile(where.getAbsoluteFile());
+      final ZipEntry e = $.getEntry(fileName);
       if (e == null) {
-        z.close();
+        $.close();
         return null;
       }
-      zipsInUse.add(z);
-      return z.getInputStream(e);
+      zipsInUse.add($);
+      return $.getInputStream(e);
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */

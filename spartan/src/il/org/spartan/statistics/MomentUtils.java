@@ -35,11 +35,11 @@ public class MomentUtils {
     return sum(ds, i) / ds.length;
   }
 
-  @NotNull public static double[] normalize(@NotNull final double[] vs) {
-    final double mean = moment(vs, 1);
-    for (int ¢ = 0; ¢ < vs.length; ++¢)
-      vs[¢] -= mean;
-    return vs;
+  @NotNull public static double[] normalize(@NotNull final double[] $) {
+    final double mean = moment($, 1);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] -= mean;
+    return $;
   }
 
   public static double pow(final double d, final int i) {

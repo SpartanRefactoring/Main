@@ -106,7 +106,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       cache(cantBeNull(supplier).get());
     }
 
-    @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public Recipe.NotNull<T> clone() {
+    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Recipe.NotNull<T> clone() {
       return (Recipe.NotNull<T>) super.clone();
     }
 
@@ -150,7 +150,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       assert supplier != null;
     }
 
-    @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public Cell<T> clone() {
+    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Cell<T> clone() {
       return super.clone();
     }
 

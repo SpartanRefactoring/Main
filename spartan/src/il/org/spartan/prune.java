@@ -31,11 +31,11 @@ public enum prune {
   /** @param <T> JD
    * @param <C> JD
    * @param ts JD */
-  @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C ts) {
-    for (@NotNull final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+  @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C $) {
+    for (@NotNull final Iterator<T> ¢ = $.iterator(); ¢.hasNext();)
       if (¢.next() == null)
         ¢.remove();
-    return ts;
+    return $;
   }
 
   /** Prune <code><b>null</b></code> elements from a given collection.

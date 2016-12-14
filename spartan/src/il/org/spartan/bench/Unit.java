@@ -111,11 +111,10 @@ public enum Unit {
     return "%" + ($ < 0.01 ? ".0f" : $ < 0.1 ? ".2f" : $ < 1 || $ < 10 ? ".1f" : $ < 100 || $ < 1000 ? ".0f" : "5.0g");
   }
 
-  public static String format3(final double d) {
-    final double fraction = d - (int) d;
-    if (d == 0 || d >= 1 && fraction < 0.0005)
+  public static String format3(final double ¢) {
+    if (¢ == 0 || ¢ >= 1 && ¢ - (int) ¢ < 0.0005)
       return "%.0f";
-    switch (digits(round3(d))) {
+    switch (digits(round3(¢))) {
       case -1:
       case 0:
         return "%.3f";
@@ -164,7 +163,7 @@ public enum Unit {
 
   public abstract String format(final double d);
 
-  public final String format(@NotNull final Double ¢) {
+  public String format(@NotNull final Double ¢) {
     return format(¢.doubleValue());
   }
 

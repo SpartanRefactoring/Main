@@ -229,7 +229,7 @@ public interface Cookbook {
       }
     }
 
-    @SuppressWarnings({ "static-method", "javadoc", "null" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public static class C {
+    @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc", "null" }) public static class C {
       @Test public void sessionA01() {
         azzert.that(compute((@org.jetbrains.annotations.NotNull final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
             is("(12)"));
@@ -252,7 +252,7 @@ public interface Cookbook {
             is("f(13)"));
       }
 
-      @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
+      @Test @SuppressWarnings("synthetic-access") public void sessionA05() {
         final Cell<Integer> x = value(Integer.valueOf(13));
         final Cell<Character> f = value(Character.valueOf('f'));
         @org.jetbrains.annotations.NotNull final Cell<String> fx = cook(() -> f.get() + "(" + x.get() + ")");
@@ -654,7 +654,7 @@ public interface Cookbook {
         }
 
         @Test public void sessionD14() {
-          assertFalse(a.dependents.contains(aPower05));
+          assert !a.dependents.contains(aPower05);
         }
 
         @Test public void sessionD15() {
@@ -827,12 +827,12 @@ public interface Cookbook {
 
         @Test public void sessionE06() {
           a.set(2);
-          assertFalse("aPower5 should not be updated! (recursive dependency on a)", aPower05.updated());
+          assert !aPower05.updated() : "aPower5 should not be updated! (recursive dependency on a)";
         }
 
         @Test public void sessionF01() {
           a.set(11);
-          assertFalse(aPower02.updated());
+          assert !aPower02.updated();
           azzert.that(aPower02.get(), is(121));
           azzert.aye(aPower02.updated());
           aPower02.set(0xDADA);
@@ -873,7 +873,7 @@ public interface Cookbook {
           azzert.aye(aPower02.updated());
         }
 
-        @SuppressWarnings("synthetic-access") @Test public void sessionG02() {
+        @Test @SuppressWarnings("synthetic-access") public void sessionG02() {
           aPower02.set(0xDADA);
           azzert.notNull(aPower02.cache);
           azzert.that(aPower02.cache, is(0xDADA));
@@ -937,7 +937,7 @@ public interface Cookbook {
      *         stored in this node is updated. */
     public abstract boolean updated();
 
-    @Override @SuppressWarnings("unchecked") @org.jetbrains.annotations.Nullable protected Cell<T> clone() {
+    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
       try {
         return (Cell<T>) super.clone();
       } catch (@org.jetbrains.annotations.NotNull final CloneNotSupportedException e) {
@@ -1150,7 +1150,7 @@ public interface Cookbook {
         cache(cantBeNull(supplier).get());
       }
 
-      @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public NotNull<T> clone() {
+      @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public NotNull<T> clone() {
         return (NotNull<T>) super.clone();
       }
 
@@ -1194,7 +1194,7 @@ public interface Cookbook {
         assert supplier != null;
       }
 
-      @Override @SuppressWarnings({}) @org.jetbrains.annotations.Nullable public Cookbook.Cell<T> clone() {
+      @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Cookbook.Cell<T> clone() {
         return super.clone();
       }
 

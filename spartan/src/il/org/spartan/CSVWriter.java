@@ -14,9 +14,9 @@ import il.org.spartan.streotypes.*;
  * a sequence of {@link CSVLine} records.
  * @author Yossi Gil, 2008/06/20 */
 @Instantiable public class CSVWriter {
-  private static FileWriter open(@NotNull final File f) {
+  private static FileWriter open(@NotNull final File $) {
     try {
-      return new FileWriter(f);
+      return new FileWriter($);
     } catch (@NotNull final IOException ¢) {
       ¢.printStackTrace();
       return null;

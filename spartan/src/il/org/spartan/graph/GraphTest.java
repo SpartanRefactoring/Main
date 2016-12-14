@@ -166,8 +166,7 @@ public class GraphTest {
   }
 
   @Test public void emptyGraph() {
-    @NotNull final Graph.Builder<String> b = new Graph.Builder<>();
-    @NotNull final Graph<String> g = b.build();
+    final Graph<String> g = new Graph.Builder<String>().build();
     assertEquals(g.size(), 0);
     assertEquals(g.vertices().size(), 0);
     assertEquals(g.sourcesCount(), 0);

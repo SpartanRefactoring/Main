@@ -50,15 +50,15 @@ public class FilesGenerator {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     as.iterable(directory.list());
-    @NotNull final Iterator<String> generator = as.list(directory.list()).iterator();
+    @NotNull final Iterator<String> $ = as.list(directory.list()).iterator();
     return new Iterator<File>() {
       @org.jetbrains.annotations.Nullable File next;
 
       @Override public boolean hasNext() {
         for (;;) {
-          if (!generator.hasNext())
+          if (!$.hasNext())
             return false;
-          final String name = generator.next();
+          final String name = $.next();
           if (name == null)
             continue;
           next = new File(directory, name);

@@ -80,10 +80,10 @@ import il.org.spartan.streotypes.*;
    * @param ss an array of strings escape.
    * @return the same array, where each entry is replaced by its escaped
    *         form. */
-  @NotNull public static String[] esc(@NotNull final String[] ss) {
-    for (int ¢ = 0; ¢ < ss.length; ++¢)
-      ss[¢] = esc(ss[¢]);
-    return ss;
+  @NotNull public static String[] esc(@NotNull final String[] $) {
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = esc($[¢]);
+    return $;
   }
 
   public static char first(@NotNull final String ¢) {

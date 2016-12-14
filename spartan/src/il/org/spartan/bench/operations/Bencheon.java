@@ -27,13 +27,13 @@ public abstract class Bencheon extends NamedOperation {
   }
 
   public long netRunTime(final int runs) {
-    final long beforeEachMethodTime = beforeEachMethodTime(runs);
+    final long $ = beforeEachMethodTime(runs);
     final long begin = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();
       call();
     }
-    return System.nanoTime() - begin - beforeEachMethodTime;
+    return System.nanoTime() - $ - begin;
   }
 
   @Override @NotNull public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
@@ -47,11 +47,11 @@ public abstract class Bencheon extends NamedOperation {
 
   @Override public final Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
     beforeAllRuns();
-    long netRunTime;
+    long $;
     do
-      netRunTime = netRunTime(runs);
-    while (netRunTime <= 0);
-    return netTime.setTime(netRunTime).setRuns(runs);
+      $ = netRunTime(runs);
+    while ($ <= 0);
+    return netTime.setTime($).setRuns(runs);
   }
 
   /** @param runs */
@@ -63,10 +63,10 @@ public abstract class Bencheon extends NamedOperation {
   }
 
   long beforeEachMethodTime(final int runs) {
-    final long beginBefore = System.nanoTime();
+    final long $ = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢)
       beforeEachRun();
-    return System.nanoTime() - beginBefore;
+    return System.nanoTime() - $;
   }
 
   public abstract static class Core extends Bencheon {
@@ -81,10 +81,10 @@ public abstract class Bencheon extends NamedOperation {
     }
 
     @Override public long netRunTime(final int runs) {
-      final long begin = System.nanoTime();
+      final long $ = System.nanoTime();
       for (int ¢ = 0; ¢ < runs; ++¢)
         call();
-      return System.nanoTime() - begin;
+      return System.nanoTime() - $;
     }
 
     @Override final long beforeEachMethodTime(@SuppressWarnings("unused") final int runs) {

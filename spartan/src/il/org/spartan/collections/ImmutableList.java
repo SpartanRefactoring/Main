@@ -43,13 +43,13 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.containsAll(¢);
   }
 
-  @Override public boolean equals(@Nullable final Object o) {
-    if (o == this)
+  @Override public boolean equals(@Nullable final Object ¢) {
+    if (¢ == this)
       return true;
-    if (o == null || getClass() != o.getClass())
+    if (¢ == null || getClass() != ¢.getClass())
       return false;
-    @Nullable @SuppressWarnings("unchecked") final ImmutableList<T> otherList = (ImmutableList<T>) o;
-    return data.equals(otherList.data);
+    @Nullable @SuppressWarnings("unchecked") final ImmutableList<T> $ = (ImmutableList<T>) ¢;
+    return data.equals($.data);
   }
 
   @Override public int hashCode() {

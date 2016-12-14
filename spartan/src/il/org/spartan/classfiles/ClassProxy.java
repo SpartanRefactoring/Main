@@ -131,9 +131,9 @@ public class ClassProxy<T> {
     return clazz().desiredAssertionStatus();
   }
 
-  @Override public boolean equals(final Object o) {
+  @Override public boolean equals(final Object $) {
     try {
-      return clazz().equals(o);
+      return clazz().equals($);
     } catch (@NotNull final ClassNotFoundException __) {
       return false;
     }

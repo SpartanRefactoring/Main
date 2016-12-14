@@ -109,38 +109,38 @@ public class Ergodic {
     return midDouble(ds.get(i - 1).doubleValue(), ds.get(i).doubleValue());
   }
 
-  private static Integer select(@NotNull final List<Integer> l) {
-    @NotNull final List<Integer> is = new ArrayList<>(l);
-    Collections.sort(is);
-    final float maxDiff = maxDiff(is);
-    return maxDiff < 0 ? null : selectDiff(is, maxDiff, new Random(0).nextInt(countDiff(is, maxDiff)));
+  private static Integer select(@NotNull final List<Integer> is) {
+    @NotNull final List<Integer> $ = new ArrayList<>(is);
+    Collections.sort($);
+    final float maxDiff = maxDiff($);
+    return maxDiff < 0 ? null : selectDiff($, maxDiff, new Random(0).nextInt(countDiff($, maxDiff)));
   }
 
   private static Integer selectDiff(@NotNull final List<Integer> is, final float maxDiff, final int nextInt) {
-    for (int n = 0, ¢ = 1; ¢ < is.size(); ++¢)
-      if (valid(is, ¢) && diff(is, ¢) == maxDiff) {
-        if (n == nextInt)
-          return mid(is, ¢);
-        ++n;
+    for (int ¢ = 0, $ = 1; $ < is.size(); ++$)
+      if (valid(is, $) && diff(is, $) == maxDiff) {
+        if (¢ == nextInt)
+          return mid(is, $);
+        ++¢;
       }
     return null;
   }
 
   private static Double selectDiffDouble(@NotNull final List<Double> ds, final double maxDiff, final int nextInt) {
-    for (int n = 0, ¢ = 1; ¢ < ds.size(); ++¢)
-      if (diffDouble(ds, ¢) == maxDiff) {
-        if (n == nextInt)
-          return midDouble(ds, ¢);
-        ++n;
+    for (int ¢ = 0, $ = 1; $ < ds.size(); ++$)
+      if (diffDouble(ds, $) == maxDiff) {
+        if (¢ == nextInt)
+          return midDouble(ds, $);
+        ++¢;
       }
     return null;
   }
 
   private static Double selectDouble(@NotNull final List<Double> ds) {
-    @NotNull final List<Double> is = new ArrayList<>(ds);
-    Collections.sort(is);
-    final double maxDiff = maxDiffDouble(is);
-    return maxDiff < 0 ? null : selectDiffDouble(is, maxDiff, new Random(0).nextInt(countDiffDouble(is, maxDiff)));
+    @NotNull final List<Double> $ = new ArrayList<>(ds);
+    Collections.sort($);
+    final double maxDiff = maxDiffDouble($);
+    return maxDiff < 0 ? null : selectDiffDouble($, maxDiff, new Random(0).nextInt(countDiffDouble($, maxDiff)));
   }
 
   private static boolean valid(@NotNull final List<Integer> is, final int i) {

@@ -52,10 +52,8 @@ public class LCS {
 
   @NotNull private static int[] hash(@NotNull final String[] ss) {
     @NotNull final int @NonNull [] $ = new int @NonNull [ss.length];
-    for (int i = 0; i < $.length; ++i) {
-      @SuppressWarnings("null") final @NonNull String s = ss[i];
-      $[i] = hash(s);
-    }
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = hash(ss[¢]);
     return $;
   }
 
@@ -114,7 +112,7 @@ public class LCS {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
 
-  @SuppressWarnings({ "static-method", "javadoc" }) //
+  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
@@ -198,7 +196,6 @@ public class LCS {
       ), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleA() {
       // Common string is: "A"
       @NotNull final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
@@ -208,32 +205,27 @@ public class LCS {
       azzert.that(lcs.length(), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleB() {
       // Common string is: "A"
       @NotNull final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       azzert.that(lcs.length(lcs.A_s.length - 1, lcs.B_s.length - 1), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleC() {
       // Common string is: "A"
       azzert.that(new LCS(chars2Lines("A"), chars2Lines("A")).obtainLength(0, 0), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleD() {
       // Common string is: "A"
       azzert.that(new LCS(chars2Lines("A"), chars2Lines("A")).compute(0, 0), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleE() {
       // Common string is: "A"
       azzert.that(new LCS(chars2Lines("A"), chars2Lines("A")).compute(0, 0), is(1));
     }
 
-    @SuppressWarnings("synthetic-access") //
     @Test public void lengthStringSimpleF() {
       // Common string is: "A"
       azzert.that(new LCS(chars2Lines("A"), chars2Lines("A")).threeWayDynamicProgramingStep(0, 0), is(1));

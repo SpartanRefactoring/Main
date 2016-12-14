@@ -46,18 +46,18 @@ import il.org.spartan.utils.*;
   @Nullable public static String fixNumericalSuffix(@Nullable final String s) {
     if (s == null || s.length() == 0)
       return s;
-    int numDigits = 0;
+    int $ = 0;
     for (int ¢ = 0, len = s.length(); ¢ < len; ++¢) {
-      numDigits = ¢;
+      $ = ¢;
       if (!Character.isDigit(s.charAt(len - ¢ - 1)))
         break;
     }
-    if (numDigits == 0)
+    if ($ == 0)
       return s;
-    final int firstDigitIndex = s.length() - numDigits;
+    final int firstDigitIndex = s.length() - $;
     @NotNull final String ZEROS = "0000000";
-    return numDigits >= ZEROS.length() ? s
-        : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - numDigits) + s.substring(firstDigitIndex);
+    return $ >= ZEROS.length() ? s
+        : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - $) + s.substring(firstDigitIndex);
   }
 
   /** Return the largest prefix of a String the does not contain a certain
@@ -67,8 +67,8 @@ import il.org.spartan.utils.*;
    * @return Prefix of s. If s does not contain the character c then s is
    *         returned. */
   public static String prefixUntil(@NotNull final String s, final char c) {
-    final int p = s.indexOf(c);
-    return s.substring(0, p >= 0 ? p : s.length());
+    final int $ = s.indexOf(c);
+    return s.substring(0, $ >= 0 ? $ : s.length());
   }
 
   /** @param <T> type of items in the list
@@ -131,8 +131,8 @@ import il.org.spartan.utils.*;
    * @return Suffix of s. If s does not contain the character c then the empty
    *         string is returned. */
   @NotNull public static String suffixFrom(@NotNull final String s, final char c) {
-    final int p = s.indexOf(c);
-    return p < 0 ? "" : s.substring(p);
+    final int $ = s.indexOf(c);
+    return $ < 0 ? "" : s.substring($);
   }
 
   /** Generate a string specifying the values of all declared fields of the
@@ -140,18 +140,18 @@ import il.org.spartan.utils.*;
    * @param o Object to inspect
    * @return String representation of o */
   @NotNull public static String toString(@NotNull final Object o) {
-    @NotNull final List<String> list = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     for (@NotNull final Field f : o.getClass().getDeclaredFields()) {
       f.setAccessible(true);
       try {
-        list.add(f.getName() + "=" + f.get(o));
+        $.add(f.getName() + "=" + f.get(o));
       } catch (@NotNull final IllegalArgumentException ¢) {
-        list.add(f.getName() + "= (illegal argument) " + ¢.getMessage());
+        $.add(f.getName() + "= (illegal argument) " + ¢.getMessage());
       } catch (@NotNull final IllegalAccessException ¢) {
-        list.add(f.getName() + "= (illegal access) " + ¢.getMessage());
+        $.add(f.getName() + "= (illegal access) " + ¢.getMessage());
       }
     }
-    return Separate.byCommas(list);
+    return Separate.byCommas($);
   }
 
   @NotNull private final String value;

@@ -200,7 +200,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void falze(final boolean ¢) {
-    assertFalse("", ¢);
+    assert !¢;
   }
 
   @Factory public static Matcher<@Nullable Boolean> greaterThan(final boolean ¢) {

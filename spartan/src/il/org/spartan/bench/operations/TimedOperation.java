@@ -21,10 +21,10 @@ public abstract class TimedOperation extends NamedOperation {
     return run(netTime);
   }
 
-  @Override @NotNull public Stopwatch netTime(final Stopwatch netTime, final int runs) {
+  @Override @NotNull public Stopwatch netTime(final Stopwatch $, final int runs) {
     for (int ¢ = 0; ¢ < runs; ++¢)
-      run(netTime);
-    return netTime;
+      run($);
+    return $;
   }
 
   @NotNull public abstract Stopwatch run(Stopwatch s);
