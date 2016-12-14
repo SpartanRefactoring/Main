@@ -24,7 +24,8 @@ public class TipperFactory {
     return newSubBlockTipper(_pattern, _replacement, description, os);
   }
 
-  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description, final Option[] os) {
+  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
+      final Option[] os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
