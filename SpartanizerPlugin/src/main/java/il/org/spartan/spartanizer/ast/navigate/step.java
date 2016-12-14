@@ -672,7 +672,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static Javadoc javadoc(MethodDeclaration ¢) {
+  public static Javadoc javadoc(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getJavadoc();
   }
 }

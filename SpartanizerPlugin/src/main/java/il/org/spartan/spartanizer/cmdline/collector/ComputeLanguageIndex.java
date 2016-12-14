@@ -23,7 +23,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     FolderASTVisitor.main(args);
   }
 
-  private static String key(Assignment ¢) {
+  private static String key(final Assignment ¢) {
     return key(¢.getOperator());
   }
 
@@ -40,7 +40,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     return key + "(assignment)";
   }
 
-  private static String key(PrefixExpression ¢) {
+  private static String key(final PrefixExpression ¢) {
     return key(¢.getOperator());
   }
 
@@ -48,12 +48,12 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     return key + "(pre)";
   }
 
-  private Map<String, String> keyToCategory = new HashMap<>();
+  private final Map<String, String> keyToCategory = new HashMap<>();
   private int maxArity;
-  private Map<String, Integer> usage = new LinkedHashMap<>();
+  private final Map<String, Integer> usage = new LinkedHashMap<>();
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));
 
-  public void addIfNecessary(final String key, String category) {
+  public void addIfNecessary(final String key, final String category) {
     keyToCategory.put(key, category);
     addIfNecessary(key);
   }
@@ -62,41 +62,41 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     usage.putIfAbsent(key, Integer.valueOf(0));
   }
 
-  @Override public void preVisit(ASTNode ¢) {
+  @Override public void preVisit(final ASTNode ¢) {
     increment(key(¢.getClass()));
   }
 
-  @Override public boolean visit(Assignment ¢) {
+  @Override public boolean visit(final Assignment ¢) {
     return increment(key(¢));
   }
 
-  @Override public boolean visit(InfixExpression ¢) {
+  @Override public boolean visit(final InfixExpression ¢) {
     return increment(key(¢));
   }
 
-  @Override public boolean visit(PostfixExpression ¢) {
+  @Override public boolean visit(final PostfixExpression ¢) {
     increment(¢.getOperator() + "(post)");
     return true;
   }
 
-  @Override public boolean visit(PrefixExpression ¢) {
+  @Override public boolean visit(final PrefixExpression ¢) {
     increment(key(¢));
     return true;
   }
 
   @Override protected void done() {
     dotter.end();
-    for (Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
+    for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
       addIfNecessary(key(¢), "TYPE");
-    for (Assignment.Operator ¢ : wizard.assignmentOperators)
+    for (final Assignment.Operator ¢ : wizard.assignmentOperators)
       addIfNecessary(key(¢), "ASSIGN");
-    for (PrefixExpression.Operator ¢ : wizard.prefixOperators)
+    for (final PrefixExpression.Operator ¢ : wizard.prefixOperators)
       addIfNecessary(key(¢), "PRE");
-    for (Operator ¢ : wizard.infixOperators)
+    for (final Operator ¢ : wizard.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary(key(¢, arity), "INFIX");
     int n = 0;
-    for (String key : usage.keySet()) {
+    for (final String key : usage.keySet()) {
       writer//
           .put("N", ++n)//
           .put("Key", '"' + key + '"')//
@@ -114,11 +114,11 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     return true;
   }
 
-  private String key(InfixExpression ¢) {
+  private String key(final InfixExpression ¢) {
     return key(¢, wizard.arity(¢));
   }
 
-  private String key(InfixExpression ¢, final int arity) {
+  private String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return key(¢.getOperator(), arity);
   }
