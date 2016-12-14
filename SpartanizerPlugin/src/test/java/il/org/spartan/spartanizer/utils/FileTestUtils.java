@@ -146,7 +146,7 @@ public abstract class FileTestUtils {
 
   /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion fault
-   * @param c an arbitrary class object
+   * @param commandLineApplicator an arbitrary class object
    * @return an instance of the parameter */
   public static Object getInstance(final Class<?> $) {
     try {
