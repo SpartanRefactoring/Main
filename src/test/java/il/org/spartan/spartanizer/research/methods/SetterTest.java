@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class GetterTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Getter();
+public class SetterTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Setter();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -34,23 +34,19 @@ public class GetterTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(){return foo;}");
+    assert is("boolean foo(Object o){this.c = o;}");
   }
 
   @Test public void b() {
-    assert not("boolean foo(){return foo();}");
+    assert not("boolean foo(){ x= o;}");
   }
 
   @Test public void c() {
-    assert is("@Override public int hashCode() {return this.b;}");
+    assert is("@Override public int set(Whatever o) {c = o;}");
   }
 
   @Test public void d() {
-    assert is("@Override public X unfiltered(){  return (SetMultimap)unfiltered;}");
-  }
-
-  @Test public void e() {
-    assert is("@Override public SetMultimap<K,V> unfiltered(){  return (SetMultimap<K,V>)unfiltered;}");
+    assert is("@Override public int set(final Whatever o) {c = o;}");
   }
 
   private static boolean is(final String ¢) {

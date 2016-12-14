@@ -26,7 +26,7 @@ public interface MethodPatternUtilitiesTrait {
     return searchDescendants.forClass(ReturnStatement.class).from(¢);
   }
 
-  default boolean hazNoParams(final MethodDeclaration ¢) {
+  default boolean hazNoParameters(final MethodDeclaration ¢) {
     return parameters(¢).isEmpty();
   }
 
