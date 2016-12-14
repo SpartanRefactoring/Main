@@ -18,6 +18,6 @@ public class FluentSetter extends JavadocMarkerNanoPattern {
     if (!hazOneParameter(¢) || body(¢) == null || statements(¢).size() != 2)
       return false;
     final Assignment $ = az.assignment(expression(firstStatement(¢)));
-    return $ != null && ((iz.name(left($)) || tipper.canTip(body(¢))) && wizard.same(right($), name(onlyParameter(¢))));
+    return $ != null && (iz.name(left($)) || tipper.canTip(body(¢))) && wizard.same(right($), name(onlyParameter(¢)));
   }
 }
