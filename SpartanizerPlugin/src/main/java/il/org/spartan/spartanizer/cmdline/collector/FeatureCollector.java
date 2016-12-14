@@ -14,6 +14,7 @@ public interface FeatureCollector<T> {
   }
 
   NamedFunction<ASTNode, T>[] functions();
+
   @SuppressWarnings("hiding")
   class NamedFunction<ASTNode, T> {
     final String name;
@@ -32,5 +33,4 @@ public interface FeatureCollector<T> {
       return function;
     }
   }
-
 }

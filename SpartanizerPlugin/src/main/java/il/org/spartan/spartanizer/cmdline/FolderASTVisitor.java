@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Parse and visit all Java files under a given path. 
+/** Parse and visit all Java files under a given path.
  * @author Yossi Gil
  * @year 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
