@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class FactoryMethodTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new FactoryMethod();
+  private static final JavadocMarkerNanoPattern JAVADOCER = new FactoryMethod();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {

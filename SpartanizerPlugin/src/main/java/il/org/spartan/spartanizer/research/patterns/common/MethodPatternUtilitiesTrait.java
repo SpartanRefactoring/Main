@@ -14,6 +14,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Ori Marcovitch
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
+  default boolean notEmpty(final MethodDeclaration ¢) {
+    return body(¢) != null;
+  }
+
+  default boolean empty(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).isEmpty();
+  }
+
   default boolean hazOneParameter(final MethodDeclaration ¢) {
     return parameters(¢) != null && parameters(¢).size() == 1;
   }
@@ -71,5 +79,17 @@ public interface MethodPatternUtilitiesTrait {
 
   default boolean returnsThis(final MethodDeclaration ¢) {
     return iz.thisExpression(expression(az.returnStatement(onlyStatement(¢))));
+  }
+
+  default boolean lastReturnsThis(final MethodDeclaration ¢) {
+    return iz.thisExpression(expression(az.returnStatement(lastStatement(¢))));
+  }
+
+  default boolean returnTypeSameAsClass(final MethodDeclaration ¢) {
+    return (identifier(name(searchAncestors.forContainingType().from(¢)))).equals(returnType(¢) + "");
+  }
+
+  default Statement firstStatement(MethodDeclaration ¢) {
+    return first(statements(¢));
   }
 }
