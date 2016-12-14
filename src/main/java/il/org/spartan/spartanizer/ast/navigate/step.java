@@ -644,25 +644,25 @@ public enum step {
   /** get all methods
    * @param u JD
    * @return */
-  public static List<MethodDeclaration> methods(CompilationUnit u) {
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = new ArrayList<>();
     types(u).stream().forEach(t -> $.addAll(methods(t)));
     return $;
   }
 
-  public static List<String> methodNames(CompilationUnit u) {
+  public static List<String> methodNames(final CompilationUnit u) {
     if (u == null)
       return null;
-    List<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     types(u).stream().forEach(t -> $.addAll(methodNames(t)));
     return $;
   }
 
   /** @param d JD
    * @return */
-  private static List<String> methodNames(AbstractTypeDeclaration d) {
+  private static List<String> methodNames(final AbstractTypeDeclaration d) {
     return d == null ? null : methods(d).stream().map(m -> identifier(name(m))).collect(Collectors.toList());
   }
 }

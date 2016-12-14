@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016/12/11 */
 public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Idiomatic {
   @Override public String description(final ExpressionStatement ¢) {
-    return "Rewrite '" + ¢ + "' as assert command";
+    return "Rewrite '" + expression(¢) + "' as assert command";
   }
 
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replacement(az.methodInvocation(expression(¢)));
   }
 
-  private static ASTNode replacement(final MethodInvocation i) {
-    final List<Expression> es = arguments(i);
-    return es.size() > 2 || es.isEmpty() ? null : replacement(i, first(es), second(es));
+  private static ASTNode replacement(final MethodInvocation ¢) {
+    final List<Expression> $ = arguments(¢);
+    return $.size() > 2 || $.isEmpty() ? null : replacement(¢, first($), second($));
   }
 
   public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {

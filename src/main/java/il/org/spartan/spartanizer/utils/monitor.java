@@ -28,7 +28,7 @@ public enum monitor {
   LOG_TO_FILE {
     final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
     final boolean FILE_EXISTING = new File("logs").exists();
-    
+
     @Override public monitor debugMessage(final String message) {
       return logToFile(message);
     }
@@ -42,8 +42,8 @@ public enum monitor {
         return this;
       try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
         w.write(s + "\n");
-      } catch (final IOException e) {
-        log(e);
+      } catch (final IOException ¢) {
+        log(¢);
       }
       return this;
     }

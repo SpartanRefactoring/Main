@@ -51,8 +51,8 @@ public class LogToTest {
             es.set(es.size() - 1, es.get(es.size() - 1) + "\n" + l);
           l = r.readLine();
         }
-      } catch (final IOException x) {
-        x.printStackTrace();
+      } catch (final IOException ¢) {
+        ¢.printStackTrace();
         System.out.println("IO problem!");
         return;
       }
@@ -61,8 +61,8 @@ public class LogToTest {
     try (final Writer w = new BufferedWriter(
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
-    } catch (final IOException x) {
-      x.printStackTrace();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
       System.out.println("IO problem!");
       return;
     }
