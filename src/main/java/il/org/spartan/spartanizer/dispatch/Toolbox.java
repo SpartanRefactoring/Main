@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -19,28 +20,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  @SuppressWarnings({ "unchecked" }) //
-  static final Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
-    static final long serialVersionUID = 1L;
-    {
-      for (int nodeType = 1;; ++nodeType)
-        try {
-          monitor.debug("Searching for " + nodeType);
-          final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-          monitor.debug("Found for " + nodeClassForType);
-          put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException ¢) {
-          monitor.debug(this, ¢);
-          break;
-        } catch (final Exception ¢) {
-          monitor.logEvaluationError(this, ¢);
-          break;
-        }
-    }
-  };
   @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
-    static final long serialVersionUID = -4821340356894435723L;
+    static final long serialVersionUID = 1L;
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
@@ -369,12 +350,12 @@ public class Toolbox {
    * @param ns JD
    * @return <code><b>this</b></code>, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer nodeType = classToNodeType.get(n);
+    final Integer nodeType = wizard.classToNodeType.get(n);
     assert nodeType != null : fault.dump() + //
         "\n c = " + n + //
         "\n c.getSimpleName() = " + n.getSimpleName() + //
-        "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
-        "\n classForNodeType = " + classToNodeType + //
+        "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
+        "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)

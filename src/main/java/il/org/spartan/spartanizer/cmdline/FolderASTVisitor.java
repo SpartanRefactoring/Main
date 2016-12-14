@@ -17,8 +17,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected String inputFolder = ".";
-  @External(alias = "o", value = "output folder") protected String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") protected static String inputFolder = ".";
+  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static String[] defaultArguments = as.array(".");
   protected static Class<? extends FolderASTVisitor> clazz;
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
