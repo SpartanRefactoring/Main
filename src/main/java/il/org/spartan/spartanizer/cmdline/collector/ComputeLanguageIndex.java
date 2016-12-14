@@ -51,7 +51,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
   private final Map<String, String> keyToCategory = new HashMap<>();
   private int maxArity;
   private final Map<String, Integer> usage = new LinkedHashMap<>();
-  private final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));
+  private CSVLineWriter writer;
 
   public void addIfNecessary(final String key, final String category) {
     keyToCategory.put(key, category);
@@ -84,6 +84,10 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     return true;
   }
 
+  @Override protected void init() {
+    writer = new CSVLineWriter(makeFile("node-types"));
+  }
+
   @Override protected void done() {
     dotter.end();
     for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
@@ -105,7 +109,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
       writer.nl();
     }
     System.err.println("Your output is in: " + writer.close());
-    super.done();
+    writer = null;
   }
 
   boolean increment(final String key) {
