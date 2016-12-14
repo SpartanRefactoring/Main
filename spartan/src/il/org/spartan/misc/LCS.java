@@ -112,8 +112,8 @@ public class LCS {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
 
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(@NotNull final String s) {
