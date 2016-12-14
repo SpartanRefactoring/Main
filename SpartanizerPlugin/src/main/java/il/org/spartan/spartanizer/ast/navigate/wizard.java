@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import static il.org.spartan.Utils.*;
