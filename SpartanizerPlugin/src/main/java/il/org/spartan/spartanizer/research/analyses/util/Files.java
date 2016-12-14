@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -123,5 +124,15 @@ public enum Files {
 
   public static ASTNode compilationUnit(final File ¢) {
     return clean(getCompilationUnit(¢));
+  }
+
+  public static ASTNode compilationUnitWithBinding(final File ¢) {
+    return clean(getCompilationUnitWithBinding(¢));
+  }
+
+  /** @param ¢
+   * @return */
+  private static ASTNode getCompilationUnitWithBinding(File ¢) {
+    return wizard.compilationUnitWithBinding(¢);
   }
 }
