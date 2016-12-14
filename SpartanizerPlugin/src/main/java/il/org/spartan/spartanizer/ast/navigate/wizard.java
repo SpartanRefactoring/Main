@@ -661,7 +661,7 @@ public interface wizard {
     }
   }
 
-  static int arity(InfixExpression ¢) {
+  static int arity(final InfixExpression ¢) {
     return 2 + step.extendedOperands(¢).size();
   }
 }

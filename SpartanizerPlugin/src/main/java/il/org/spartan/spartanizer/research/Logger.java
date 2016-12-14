@@ -99,7 +99,7 @@ public class Logger {
     renameToCSV(outputDir + "/methodStatistics");
   }
 
-  private static void renameToCSV(String old) {
+  private static void renameToCSV(final String old) {
     file.rename(old, old + ".csv");
   }
 

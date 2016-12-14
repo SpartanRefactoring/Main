@@ -86,10 +86,10 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean returnTypeSameAsClass(final MethodDeclaration ¢) {
-    return (identifier(name(searchAncestors.forContainingType().from(¢)))).equals(returnType(¢) + "");
+    return identifier(name(searchAncestors.forContainingType().from(¢))).equals(returnType(¢) + "");
   }
 
-  default Statement firstStatement(MethodDeclaration ¢) {
+  default Statement firstStatement(final MethodDeclaration ¢) {
     return first(statements(¢));
   }
 }
