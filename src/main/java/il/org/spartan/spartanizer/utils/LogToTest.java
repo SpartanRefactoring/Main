@@ -25,8 +25,8 @@ public class LogToTest {
     }
     final File[] fs = d.listFiles();
     int fc = 0;
-    for (int ¢ = 0; ¢ < fs.length; ++¢)
-      if (fs[¢].isFile() && fs[¢].getName().startsWith("log_spartan"))
+    for (final File element : fs)
+      if (element.isFile() && element.getName().startsWith("log_spartan"))
         ++fc;
     if (fc == 0) {
       System.out.println("First run some tests to create a log file.");
@@ -36,8 +36,8 @@ public class LogToTest {
     final Set<String> xs = new HashSet<>();
     final List<String> ts = new LinkedList<>();
     final Map<String, Integer> nu = new HashMap<>();
-    for (int i = 0; i < fs.length; ++i)
-      try (final BufferedReader r = new BufferedReader(new FileReader(fs[i]))) {
+    for (final File element : fs)
+      try (final BufferedReader r = new BufferedReader(new FileReader(element))) {
         final List<String> es = new LinkedList<>();
         es.add("");
         for (String l = r.readLine(); l != null;) {
@@ -69,7 +69,7 @@ public class LogToTest {
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
 
-  private static void analyze(final Set<String> xs, final List<String> ts, Map<String, Integer> nu, final List<String> ss) {
+  private static void analyze(final Set<String> xs, final List<String> ts, final Map<String, Integer> nu, final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1];
     final String errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))

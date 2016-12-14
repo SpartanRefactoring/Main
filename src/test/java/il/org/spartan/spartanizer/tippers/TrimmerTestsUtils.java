@@ -93,7 +93,8 @@ public final class TrimmerTestsUtils {
 
     public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
-      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()), Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
+      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
+          Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
     public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> ¢) {
