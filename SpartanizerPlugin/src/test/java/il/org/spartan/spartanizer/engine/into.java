@@ -120,4 +120,11 @@ public enum into {
   public static Type t(final String codeFragment) {
     return findFirst.type(s(codeFragment));
   }
+
+  /** @param p a {@link String} that represents a Java Compilation unit
+   * @return {@link CompilationUnit} data structure representing the
+   *         parameter. */
+  public static CompilationUnit cuWithBinding(final String cu) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
+  }
 }
