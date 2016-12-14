@@ -13,7 +13,6 @@ public abstract class AbstractCommandLineProcessor {
     return outputFolder + "/" + presentSourceName + "." + fileName;
   }
 
-
   public static void main(final String[] args) {
     if (args.length == 0)
       new BatchSpartanizer(".", "current-working-directory").fire();

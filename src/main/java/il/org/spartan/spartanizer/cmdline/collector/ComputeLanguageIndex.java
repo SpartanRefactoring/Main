@@ -17,6 +17,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
   static {
     clazz = ComputeLanguageIndex.class;
   }
+
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
@@ -48,12 +49,10 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
   }
 
   private Map<String, String> keyToCategory = new HashMap<>();
-
   private int maxArity;
-
   private Map<String, Integer> usage = new LinkedHashMap<>();
-
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));
+
   public void addIfNecessary(final String key, String category) {
     keyToCategory.put(key, category);
     addIfNecessary(key);
@@ -62,6 +61,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
   public void addIfNecessary(final String key) {
     usage.putIfAbsent(key, Integer.valueOf(0));
   }
+
   @Override public void preVisit(ASTNode ¢) {
     increment(key(¢.getClass()));
   }
@@ -86,7 +86,7 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
 
   @Override protected void done() {
     dotter.end();
-    for (Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet()) 
+    for (Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
       addIfNecessary(key(¢), "TYPE");
     for (Assignment.Operator ¢ : wizard.assignmentOperators)
       addIfNecessary(key(¢), "ASSIGN");
@@ -98,10 +98,10 @@ public class ComputeLanguageIndex extends FolderASTVisitor {
     int n = 0;
     for (String key : usage.keySet()) {
       writer//
-      .put("N", ++n)//
-      .put("Key", '"' + key + '"')//
-      .put("Count", usage.get(key)) //
-      .put("Category", keyToCategory.get(key));
+          .put("N", ++n)//
+          .put("Key", '"' + key + '"')//
+          .put("Count", usage.get(key)) //
+          .put("Category", keyToCategory.get(key));
       writer.nl();
     }
     System.err.println("Your output is in: " + writer.close());
