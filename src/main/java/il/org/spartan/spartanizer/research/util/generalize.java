@@ -33,19 +33,19 @@ public class generalize {
 
   public static String generalizeIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
-    final Document document = new Document(ASTutils.wrapCode(s));
+    final Document d = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource(document.get().toCharArray());
+    parser.setSource(d.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final StringLiteral l) {
+      @Override public boolean visit(final StringLiteral $) {
         final StringLiteral ¢ = ast.newStringLiteral();
         ¢.setLiteralValue(renderIdentifier("L"));
-        r.replace(l, ¢, null);
-        return super.visit(l);
+        r.replace($, ¢, null);
+        return super.visit($);
       }
 
       @Override public boolean visit(final ImportDeclaration ¢) {
@@ -58,19 +58,19 @@ public class generalize {
         return false;
       }
 
-      @Override public boolean visit(final SimpleName node) {
-        final String name = ((Name) node).getFullyQualifiedName();
+      @Override public boolean visit(final SimpleName $) {
+        final String name = ((Name) $).getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
-        r.replace(node, ast.newSimpleName(renaming.get(name)), null);
-        return super.visit(node);
+        r.replace($, ast.newSimpleName(renaming.get(name)), null);
+        return super.visit($);
       }
     });
     try {
-      r.rewriteAST(document, null).apply(document);
+      r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       ¢.printStackTrace();
     }
-    return ASTutils.extractCode(s, document);
+    return ASTutils.extractCode(s, d);
   }
 }

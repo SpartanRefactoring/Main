@@ -171,8 +171,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @SuppressWarnings("boxing")
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
@@ -253,8 +252,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
       /** @param n
        * @param w
        * @throws TipperFailure */
-      @SuppressWarnings("unused")
-      <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
+      @SuppressWarnings("unused") <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
       }
