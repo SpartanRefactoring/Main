@@ -7,6 +7,8 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -14,7 +16,6 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -95,7 +96,11 @@ public class Logger {
       report.nl();
     }
     report.close();
-    file.rename(outputDir + "/methodStatistics", outputDir + "/methodStatistics.csv");
+    renameToCSV(outputDir + "/methodStatistics");
+  }
+
+  private static void renameToCSV(String old) {
+    file.rename(old, old + ".csv");
   }
 
   /** Divide but if b == 0 return 1.
@@ -110,16 +115,19 @@ public class Logger {
     final CSVStatistics report = openNPSummaryFile(outputDir);
     if (report == null)
       return;
-    for (final String k : npStatistics.keySet()) {
-      final NPRecord n = npStatistics.get(k);
-      report //
-          .put("Name", n.name) //
-          .put("occurences", n.occurences)//
-          .put("Statements", n.numNPStatements) //
-          .put("Expressions", n.numNPExpressions) //
-      ;
-      report.nl();
-    }
+    npStatistics.keySet().stream()
+        .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
+            : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
+        .map(k -> npStatistics.get(k))//
+        .forEach(n -> {
+          report //
+              .put("Name", n.name) //
+              .put("Type", n.className).put("occurences", n.occurences)//
+              .put("Statements", n.numNPStatements) //
+              .put("Expressions", n.numNPExpressions) //
+          ;
+          report.nl();
+        });
     report.close();
     file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
   }

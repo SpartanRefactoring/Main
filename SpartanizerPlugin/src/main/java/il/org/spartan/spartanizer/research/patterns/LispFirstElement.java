@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class FirstElement extends NanoPatternTipper<MethodInvocation> {
+public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> {
   List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
     {

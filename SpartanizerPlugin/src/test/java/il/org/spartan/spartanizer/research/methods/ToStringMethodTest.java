@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class GetterTest {
-  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new Getter();
+public class ToStringMethodTest {
+  private static final JavadocMarkerNanoPattern<MethodDeclaration> JAVADOCER = new ToStringMethod();
   static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
 
   private static boolean javadoced(final String ¢) {
@@ -34,23 +34,23 @@ public class GetterTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(){return foo;}");
+    assert is("String toString(){return foo;}");
   }
 
   @Test public void b() {
-    assert not("boolean foo(){return foo();}");
+    assert not("boolean toString(){return foo();}");
   }
 
   @Test public void c() {
-    assert is("@Override public int hashCode() {return this.b;}");
+    assert not("@Override public String hashCode() {return b;}");
   }
 
   @Test public void d() {
-    assert is("@Override public X unfiltered(){  return (SetMultimap)unfiltered;}");
+    assert is("@Override public String toString(Par am){  return b}");
   }
 
   @Test public void e() {
-    assert is("@Override public SetMultimap<K,V> unfiltered(){  return (SetMultimap<K,V>)unfiltered;}");
+    assert is("String toString(){return \"oh got\" + myVonderfull(bar);}");
   }
 
   private static boolean is(final String ¢) {
