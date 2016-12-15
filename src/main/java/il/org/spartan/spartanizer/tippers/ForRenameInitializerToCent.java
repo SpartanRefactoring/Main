@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression> implements TipperCategory.Centification {
   @Override public String description(final VariableDeclarationExpression ¢) {
-    return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
+    return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
   @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
