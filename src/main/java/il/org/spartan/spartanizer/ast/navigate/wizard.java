@@ -234,7 +234,7 @@ public interface wizard {
         return into.t(p);
       case STATEMENTS_LOOK_ALIKE:
         return into.s(p);
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         return into.m(p);
       default:
         return null;
