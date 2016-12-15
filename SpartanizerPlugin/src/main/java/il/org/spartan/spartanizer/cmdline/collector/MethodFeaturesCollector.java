@@ -18,7 +18,6 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
   static {
     clazz = MethodFeaturesCollector.class;
   }
-
   int methodNesting;
   MethodDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
@@ -81,7 +80,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
     super.endVisit(node);
   }
 
-  @Override protected void done(String path) {
+  @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
     System.err.println("Your output is in: " + writer.close());
