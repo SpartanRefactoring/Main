@@ -18,9 +18,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.classifier.*;
-import il.org.spartan.spartanizer.research.patterns.*;
-import il.org.spartan.spartanizer.research.patterns.characteristics.*;
-import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -97,15 +94,15 @@ public class Analyze {
   }
 
   private static boolean excludeMethod(MethodDeclaration ¢) {
-    return ¢.isConstructor() || body(¢) == null;
+    return iz.constructor(¢) || body(¢) == null;
   }
 
   private static void initializeSpartanizer() {
-    spartanizer = addNanoPatterns(new InteractiveSpartanizer());
+    spartanizer = new SpartAnalyzer();
   }
 
   public static Toolbox toolboxWithNanoPatterns() {
-    return addNanoPatterns(new InteractiveSpartanizer()).toolbox;
+    return new SpartAnalyzer().toolbox;
   }
 
   /** run an interactive classifier to classify nanos! */
@@ -160,97 +157,5 @@ public class Analyze {
       analyses.get(a).printComparison();
       analyses.get(a).printAccumulated();
     }
-  }
-
-  /** Add our wonderful patterns (which are actually just special tippers) to
-   * the gUIBatchLaconizer.
-   * @param ¢ our gUIBatchLaconizer
-   * @return */
-  private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
-    if ("false".equals(getProperty("nmethods")))
-      addCharacteristicMethodPatterns(¢);
-    return addMethodPatterns(¢)
-        .add(ConditionalExpression.class, //
-            new DefaultsTo(), //
-            new Unless(), //
-            new SafeReference(), //
-            null) //
-        .add(Assignment.class, //
-            new AssignmentLazyEvaluation(), //
-            null) //
-        .add(Block.class, //
-            new CreateFrom(), //
-            new FindFirstBlock(), //
-            new ReturnOld(), //
-            new ReturnAllMatches(), //
-            new ReturnAnyMatches(), //
-            null) //
-        .add(EnhancedForStatement.class, //
-            new Aggregate(), //
-            new ContainsEnhancedFor(), //
-            new ForEach(), //
-            // new ReduceEnhancedFor(), //
-            null) //
-        // .add(ForStatement.class, //
-        // new Contains(), //
-        // new CopyArray(), //
-        // new FindFirst(), //
-        // new ForEachEnhanced(), //
-        // new InitArray(), //
-        // new MaxEnhanced(), //
-        // new Min(), //
-        // new Reduce(), //
-        // null) //
-        .add(IfStatement.class, //
-            new IfNullThrow(), //
-            new IfNullReturn(), //
-            new IfNullReturnNull(), //
-            new ExecuteWhen(), //
-            new PutIfAbsent(), //
-            new IfThrow(), //
-            null) //
-        .add(InfixExpression.class, //
-            new Between(), //
-            new LispLastIndex(), //
-            null)//
-        .add(MethodInvocation.class, //
-            new LispFirstElement(), //
-            new LispLastElement(), //
-            null) //
-        .add(TryStatement.class, //
-            new IfThrowsReturnNull(), //
-            null);
-  }
-
-  private static InteractiveSpartanizer addMethodPatterns(final InteractiveSpartanizer ¢) {
-    return ¢.add(MethodDeclaration.class, //
-        new ConstantReturner(), //
-        new FactoryMethod(), //
-        new DefaultParametersAdder(), //
-        new Delegator(), //
-        new DoNothingReturnParam(), //
-        new DoNothingReturnThis(), //
-        new DownCaster(), //
-        new Examiner(), //
-        new FluentSetter(), ///
-        new Getter(), //
-        new ForEachApplier(), //
-        new Setter(), //
-        new SuperDelegator(), //
-        new Thrower(), //
-        new ToStringMethod(), //
-        new TypeChecker(), //
-        new UpCaster(), //
-        null);
-  }
-
-  private static InteractiveSpartanizer addCharacteristicMethodPatterns(final InteractiveSpartanizer ¢) {
-    return ¢.add(MethodDeclaration.class, //
-        new Fluenter(), //
-        new Independent(), //
-        new JDPattern(), //
-        new MethodEmpty(), //
-        new UseParameterAndReturnIt(), //
-        null);
   }
 }
