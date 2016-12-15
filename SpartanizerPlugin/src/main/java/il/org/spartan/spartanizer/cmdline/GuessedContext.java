@@ -27,33 +27,33 @@ public enum GuessedContext {
       , //
       "\n\t /* END outer type in a compilation unit */\n" + //
           COMPILATION_UNIT_LOOK_ALIKE.after //
-  ), METHOD_LOOKALIKE( //
+  ), METHOD_LOOK_ALIKE( //
       OUTER_TYPE_LOOKALIKE.before + //
           "\n\t\t public final class C {/* BEGIN Class C*/\n" //
       , //
       "\n\t\t } /* END class C87456AZ */\n" + //
           OUTER_TYPE_LOOKALIKE.after //
   ), STATEMENTS_LOOK_ALIKE(//
-      METHOD_LOOKALIKE.before //
+      METHOD_LOOK_ALIKE.before //
           + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
-      , " }" + METHOD_LOOKALIKE.after), EXPRESSION_LOOK_ALIKE(//
+      , " }" + METHOD_LOOK_ALIKE.after), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
               "\n\t\t\t\t if (foo("//
           , //
           ",0)) return g();\n" //
               + STATEMENTS_LOOK_ALIKE.after //
   ), not_statment_may_occur_in_initializer_block(//
-      METHOD_LOOKALIKE.before + //
+      METHOD_LOOK_ALIKE.before + //
           "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
       , //
       "\n\t\t\t } /* END instance initializer block */\n" + //
-          METHOD_LOOKALIKE.after //
+          METHOD_LOOK_ALIKE.after //
   ), not_statment_may_occur_in_static_initializer_block(//
-      METHOD_LOOKALIKE.before + //
+      METHOD_LOOK_ALIKE.before + //
           "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
       , //
       "\n\t\t\t } /* END instance initializer block */\n" + //
-          METHOD_LOOKALIKE.after //
+          METHOD_LOOK_ALIKE.after //
   ), //
   //
   ;
@@ -61,7 +61,7 @@ public enum GuessedContext {
       COMPILATION_UNIT_LOOK_ALIKE, //
       OUTER_TYPE_LOOKALIKE, //
       STATEMENTS_LOOK_ALIKE, //
-      METHOD_LOOKALIKE, //
+      METHOD_LOOK_ALIKE, //
       EXPRESSION_LOOK_ALIKE, //
       not_statment_may_occur_in_initializer_block, //
       not_statment_may_occur_in_static_initializer_block, //
