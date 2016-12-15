@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
   @Test public void complicated() {
-    assertEquals(GuessedContext.METHOD_LOOKALIKE,
+    assertEquals(GuessedContext.METHOD_LOOK_ALIKE,
         GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence query,final Locale l){" //
             + "if (term == null || query == null)" //
             + "throw new IllegalArgumentException(\"Strings must not be null\");" //
@@ -100,7 +100,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void findMethod() {
-    azzert.that(find("f() { a(); b();}"), is(METHOD_LOOKALIKE));
+    azzert.that(find("f() { a(); b();}"), is(METHOD_LOOK_ALIKE));
   }
 
   @Test public void findPlusPlus() {
@@ -116,15 +116,15 @@ public final class GuessedContextTest {
   }
 
   @Test public void intMethod() {
-    azzert.that(find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"), is(METHOD_LOOKALIKE));
+    azzert.that(find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"), is(METHOD_LOOK_ALIKE));
   }
 
   @Test public void intMethod0() {
-    azzert.that(find("int f() { return s;}"), is(METHOD_LOOKALIKE));
+    azzert.that(find("int f() { return s;}"), is(METHOD_LOOK_ALIKE));
   }
 
   @Test public void intMethod1() {
-    azzert.that(find("void f(){}"), is(METHOD_LOOKALIKE));
+    azzert.that(find("void f(){}"), is(METHOD_LOOK_ALIKE));
   }
 
   @Test public void intoCompilationUnit() {
@@ -144,7 +144,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void method() {
-    azzert.that(METHOD_LOOKALIKE.off(METHOD_LOOKALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
+    azzert.that(METHOD_LOOK_ALIKE.off(METHOD_LOOK_ALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
   @Test public void methodInvocation() {
@@ -157,5 +157,19 @@ public final class GuessedContextTest {
 
   @Test public void statement() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
+  }
+
+  @Test public void method2() {
+    azzert.that(GuessedContext.find(//
+        "A a(){" + //
+            "  b({ c });" + //
+            " }"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
+  @Ignore @Test public void method3() {
+    azzert.that(GuessedContext.find(//
+        "public int hashCode(){a(1^1^1^1);}"//
+    ), is(METHOD_LOOK_ALIKE));
   }
 }
