@@ -52,11 +52,11 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       declaredConstructor().newInstance().visit(¢);
   }
 
-  @SuppressWarnings("static-method") protected void done(String path) {
+  @SuppressWarnings("static-method") protected void done(final String path) {
     ___.______unused(path);
   }
 
-  @SuppressWarnings("static-method") protected void init(String path) {
+  @SuppressWarnings("static-method") protected void init(final String path) {
     ___.______unused(path);
   }
 

@@ -132,7 +132,7 @@ public enum Files {
 
   /** @param ¢
    * @return */
-  private static ASTNode getCompilationUnitWithBinding(File ¢) {
+  private static ASTNode getCompilationUnitWithBinding(final File ¢) {
     return wizard.compilationUnitWithBinding(¢);
   }
 }
