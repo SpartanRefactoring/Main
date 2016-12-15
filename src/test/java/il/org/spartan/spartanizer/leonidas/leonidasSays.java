@@ -182,7 +182,7 @@ public class leonidasSays {
       case EXPRESSION_LOOK_ALIKE:
         actual = d.get().substring(23, d.get().length() - 3);
         break;
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         actual = d.get().substring(9, d.get().length() - 2);
         break;
       case STATEMENTS_LOOK_ALIKE:
@@ -199,7 +199,7 @@ public class leonidasSays {
         return u;
       case EXPRESSION_LOOK_ALIKE:
         return findSecond(Expression.class, findFirst.methodDeclaration(u));
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         return findSecond(MethodDeclaration.class, u);
       case OUTER_TYPE_LOOKALIKE:
         return u;
@@ -261,7 +261,7 @@ public class leonidasSays {
         return ¢;
       case EXPRESSION_LOOK_ALIKE:
         return "class X{int f(){return " + ¢ + ";}}";
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         return "class X{" + ¢ + "}";
       case OUTER_TYPE_LOOKALIKE:
         return ¢;

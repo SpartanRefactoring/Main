@@ -38,7 +38,8 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
-        || cannotInlineInto(nextStatement) || initializer(f) == null
+        || iz.conditionalExpression(initializer(f)) || iz.arrayInitializer(initializer(f)) || cannotInlineInto(nextStatement)
+        || initializer(f) == null
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(f.getName() + "") && !iz.simpleName(f.getInitializer())
             && !iz.literal(f.getInitializer()))
@@ -51,6 +52,8 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
     return $;
   }
 
+
+  
   private static boolean cannotInlineInto(final Statement nextStatement) {
     return iz.returnStatement(nextStatement) || iz.whileStatement(nextStatement) || iz.doStatement(nextStatement)
         || iz.synchronizedStatement(nextStatement) || iz.tryStatement(nextStatement) || containsClassInstanceCreation(nextStatement);
