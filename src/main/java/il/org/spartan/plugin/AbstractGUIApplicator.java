@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.utils.fault.done;
 
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -125,12 +124,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final CompilationUnit ¢, final AtomicInteger counter) {
+  public final ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, (IMarker) null, counter);
   }
 
   public final ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, (IMarker) null, new AtomicInteger(0));
+    return rewriterOf(¢, (IMarker) null, new Int());
   }
 
   public boolean follow() throws CoreException {
@@ -238,7 +237,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
-    final AtomicInteger $ = new AtomicInteger(0);
+    final Int $ = new Int();
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
@@ -271,7 +270,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
-    final AtomicInteger $ = new AtomicInteger(0);
+    final Int $ = new Int();
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
@@ -279,7 +278,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final AtomicInteger counter) {
+  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u, m, counter);
@@ -323,10 +322,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, final AtomicInteger counter);
+  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, final Int counter);
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    consolidateTips(r, u, m, new AtomicInteger(0));
+    consolidateTips(r, u, m, new Int());
   }
 
   /** Determines if the node is outside of the selected text.
@@ -355,7 +354,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m);
-    final AtomicInteger $ = new AtomicInteger(0);
+    final Int $ = new Int();
     textChange.setEdit(createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
@@ -417,7 +416,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new AtomicInteger(0));
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
   private List<ICompilationUnit> getUnits() throws JavaModelException {
@@ -461,7 +460,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private int apply(final WrappedCompilationUnit u) throws JavaModelException, CoreException {
     final TextFileChange textChange = init(u);
     assert textChange != null;
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
     final ASTRewrite r = createRewrite(u2, $);
@@ -500,7 +499,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      final AtomicInteger $ = new AtomicInteger();
+      final Int $ = new Int();
       textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);

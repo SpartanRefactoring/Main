@@ -19,7 +19,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
   private static final CSVLineWriter writer;
 
-  public static boolean increment(Map<String, Integer> category, String key) {
+  public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
   }
@@ -30,7 +30,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     System.err.println("Your output is in: " + writer.close());
   }
 
-  public static int rindex(int[] ranks) {
+  public static int rindex(final int[] ranks) {
     Arrays.sort(ranks);
     int $ = 0;
     for (int ¢ = 0; ¢ < ranks.length; ++¢)
@@ -42,7 +42,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return n + "/" + arity;
   }
 
-  static int[] ranks(Map<?, Integer> i) {
+  static int[] ranks(final Map<?, Integer> i) {
     int n = 0;
     final int $[] = new int[i.size()];
     for (final Integer ¢ : i.values())
@@ -66,7 +66,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return o + "/" + arity;
   }
 
-  private static String key(MethodInvocation ¢) {
+  private static String key(final MethodInvocation ¢) {
     return key(¢.getName(), step.arguments(¢).size());
   }
 
@@ -127,14 +127,14 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return increment("PREFIX", key(¢));
   }
 
-  @Override protected void done(String path) {
+  @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
     addMissingKeys();
-    reporRawUsage();
+    summarize();
   }
 
-  @Override protected void init(String path) {
+  @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
   }
 
@@ -142,7 +142,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
       addIfNecessary("NODE-TYPE", key(¢));
     for (final Assignment.Operator ¢ : wizard.assignmentOperators)
-      addIfNecessary("ASSIGN", key(¢));
+      addIfNecessary("ASSIGNMENT", key(¢));
     for (final PrefixExpression.Operator ¢ : wizard.prefixOperators)
       addIfNecessary("PREFIX", key(¢));
     for (final PostfixExpression.Operator ¢ : wizard.postfixOperators)
@@ -152,11 +152,11 @@ public class TableReusabilityIndices extends FolderASTVisitor {
         addIfNecessary("INFIX", key(¢, arity));
   }
 
-  boolean increment(final String category, String key) {
+  boolean increment(final String category, final String key) {
     return increment(addIfNecessary(category, key), key);
   }
 
-  void reporRawUsage() {
+  void summarize() {
     int n = 0;
     writer.put("NAME", presentSourceName);
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
@@ -176,10 +176,15 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       writer.put(category, rindex(ranks(map)));
     }
     System.err.println("Your output is in: " + w.close());
-    Map<String, Integer> map = usage.get("METHOD");
-    for (String m : defined)
-      map.remove(m);
-    writer.put("EXTERNAL", rindex(ranks(map)));
+    final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String m : defined)
+      adopted.remove(m);
+    writer.put("Adoption", rindex(ranks(adopted)));
+    final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String k : new ArrayList<>(born.keySet()))
+      if (!defined.contains(k))
+        born.remove(k);
+    writer.put("Reuse", rindex(ranks(born)));
     writer.nl();
   }
 
