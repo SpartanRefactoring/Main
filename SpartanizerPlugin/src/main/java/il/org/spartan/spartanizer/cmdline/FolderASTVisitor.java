@@ -61,12 +61,12 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   protected String makeFile(final String fileName) {
-    return outputFolder + "/" + presentSourceName + "." + fileName;
+    return windows() ? outputFolder + "/" + fileName : outputFolder + "/" + presentSourceName + "." + fileName;
   }
 
   protected void visit(final String path) {
     dotter.click();
-    presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
+    presentSourceName = system.folder2File(presentSourcePath = windows() ? path : inputFolder + "/" + path);
     init(path);
     for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       visit(presentFile = ¢);
@@ -90,5 +90,9 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
+  }
+
+  private static boolean windows() {
+    return System.getProperty("os.name").contains("indows");
   }
 }
