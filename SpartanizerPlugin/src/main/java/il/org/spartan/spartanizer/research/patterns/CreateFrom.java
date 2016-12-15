@@ -14,7 +14,7 @@ public final class CreateFrom extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.statementsPattern("$T $N = new $T();  $N.addAll($X);", "$T $N = Create.a($T.class).from($X);", "CreateFrom pattern"));
+      add(TipperFactory.statementsPattern("$T $N = new $T();  $N.addAll($X);", "$T $N = Create.a(\"$T\").from($X);", "CreateFrom pattern"));
     }
   };
 
