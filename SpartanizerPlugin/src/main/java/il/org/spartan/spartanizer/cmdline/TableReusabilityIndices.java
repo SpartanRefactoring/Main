@@ -160,6 +160,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     int n = 0;
     writer.put("NAME", presentSourceName);
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
+    assert usage.keySet() != null;
     for (final String category : usage.keySet()) {
       final Map<String, Integer> map = usage.get(category);
       int m = 0;
@@ -176,6 +177,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       writer.put(category, rindex(ranks(map)));
     }
     System.err.println("Your output is in: " + w.close());
+    if (usage.get("METHOD") == null)
+      return;
     final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String m : defined)
       adopted.remove(m);
