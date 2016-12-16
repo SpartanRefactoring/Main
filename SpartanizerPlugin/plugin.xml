@@ -52,6 +52,19 @@ the program changes: https://goo.gl/sIqIBC
   </application>
 </extension>
 
+
+<!-- Ori marcovitch' application, used to produce the PLATEAU submission-->
+<extension 
+  point="org.eclipse.core.runtime.applications" 
+  name="Binding Fun"
+  id="il.BindingFun"
+>
+  <application>
+  <run class="il.org.spartan.spartanizer.cmdline.collector.BindingFun"/>
+  </application>
+</extension>
+
+
 <!-- Matteo Orru's application, work in progres-->
 <extension
   point="org.eclipse.core.runtime.applications"
