@@ -11,21 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <pre>
- * if (a) {
- *   g();
- * }
- * </pre>
- *
- * into
- *
- * <pre>
- * if (a)
- *   g();
- * </pre>
- *
+/** convert <code> if (a){g();}</code> into <code>if(a)g();</code>
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block> implements TipperCategory.SyntacticBaggage {
