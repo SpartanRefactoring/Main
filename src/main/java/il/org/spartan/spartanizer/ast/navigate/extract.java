@@ -478,6 +478,14 @@ public enum extract {
         return $;
     }
   }
+  
+  public static List<SwitchCase> switchCases(final SwitchStatement s) {
+    final List<SwitchCase> $ = new ArrayList<>();
+    for(Statement ¢ : step.statements(s))
+      if(iz.switchCase(¢))
+        $.add(az.switchCase(¢));
+    return $;
+  }
 
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or

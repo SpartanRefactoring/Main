@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -27,13 +28,14 @@ import il.org.spartan.spartanizer.tipping.*;
 * case b: x=2; break;
  * </pre>
  *
+ * Tested in {@link Issue858}
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
-    @SuppressWarnings("unchecked") final List<Statement> ss = s.statements();
+    final List<Statement> ss = step.statements(s);
     final List<Integer> ll = new ArrayList<>();
     getNotContainedCasesIndexes(ss, ll);
     final StringBuilder $ = new StringBuilder("switch(" + s.getExpression() + "){");
