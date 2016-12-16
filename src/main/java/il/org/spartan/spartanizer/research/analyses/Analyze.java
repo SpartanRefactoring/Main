@@ -93,7 +93,7 @@ public class Analyze {
     Count.print();
   }
 
-  private static boolean excludeMethod(MethodDeclaration ¢) {
+  private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
 
