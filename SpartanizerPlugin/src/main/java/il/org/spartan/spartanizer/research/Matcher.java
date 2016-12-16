@@ -236,6 +236,8 @@ public class Matcher {
       $.add(condition(az.forStatement(¢)));
       $.addAll(updaters(az.forStatement(¢)));
     }
+    if (iz.tryStatement(¢))
+      $.addAll(az.tryStatement(¢).catchClauses());
     if (iz.variableDeclarationExpression(¢))
       $.addAll(fragments(az.variableDeclarationExpression(¢)));
     return $;
