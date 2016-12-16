@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -41,13 +42,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * </pre>
  *
  * .
+ * Tested in {@link Issue880}
  * @author Yuval Simon
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
   @Override public Tip tip(final SwitchStatement s) {
     return s == null ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
+        final List<Statement> l = step.statements(s);
         final int ind = getDefaultIndex(l);
         boolean hadDefault = false;
         if (ind >= 0) {
@@ -105,7 +107,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
   }
 
   @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
-    @SuppressWarnings("unchecked") final List<Statement> l = s.statements();
+    final List<Statement> l = step.statements(s);
     if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE && !az.switchCase(l.get(l.size() - 1)).isDefault())
       return true;
     for (final Integer k : range.from(0).to(l.size() - 1))

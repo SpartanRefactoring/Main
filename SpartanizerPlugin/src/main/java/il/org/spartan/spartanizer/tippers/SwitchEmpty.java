@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -36,8 +37,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        // TODO: Use step.statements.
-        @SuppressWarnings("unchecked") final List<Statement> ll = s.statements();
+        final List<Statement> ll = step.statements(s);
         if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break")) {
           r.remove(s, g);
           return;
@@ -51,27 +51,14 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   }
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
-    final List<SwitchCase> $ = getCases(s);
+    final List<SwitchCase> $ = extract.switchCases(s);
     // TODO: Yuval, please use step.statements here, instead of .statements.
     // Also, try to search for ".statements" and replace elsewhere.
-    @SuppressWarnings("unchecked") final List<Statement> ll = s.statements();
+    final List<Statement> ll = step.statements(s);
     return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break") || $.size() == 1 && $.get(0).isDefault();
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove empty switch statement or switch statement with only default case";
-  }
-
-  // TODO: Move this to class extract and make sure no copies occur in other
-  // classes.
-  private static List<SwitchCase> getCases(final SwitchStatement s) {
-    final List<SwitchCase> $ = new ArrayList<>();
-    s.accept(new ASTVisitor() {
-      @Override public boolean visit(final SwitchCase node) {
-        $.add(node);
-        return super.visit(node);
-      }
-    });
-    return $;
   }
 }
