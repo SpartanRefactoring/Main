@@ -941,7 +941,7 @@ public final class Version230 {
         + "      --i;\n" + "    }")//
             .gives("   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
   }
-  
+
   @Test public void eliminateSwitch() {
     trimmingOf("switch (a) { default: } int x=5; ++x;").gives("int x=5; ++x;");
   }

@@ -41,8 +41,7 @@ import il.org.spartan.spartanizer.tipping.*;
 * (some commands)
  * </pre>
  *
- * .
- * Tested in {@link Issue880}
+ * . Tested in {@link Issue880}
  * @author Yuval Simon
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
@@ -74,8 +73,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           l.remove(¢);
         }
         for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
-          if ((iz.switchCase(l.get(¢)) || iz.breakStatement(l.get(¢)))
-              && iz.breakStatement(l.get(¢ + 1)))
+          if ((iz.switchCase(l.get(¢)) || iz.breakStatement(l.get(¢))) && iz.breakStatement(l.get(¢ + 1)))
             l.remove(¢);
         if (l.size() == 1)
           l.remove(0);
@@ -112,8 +110,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
       return true;
     for (final Integer k : range.from(0).to(l.size() - 1))
       if (iz.switchCase(l.get(k)) && iz.breakStatement(l.get(k + 1))
-          || iz.switchCase(l.get(k)) && iz.switchCase(l.get(k + 1))
-              && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
+          || iz.switchCase(l.get(k)) && iz.switchCase(l.get(k + 1)) && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
         return true;
     return false;
   }
