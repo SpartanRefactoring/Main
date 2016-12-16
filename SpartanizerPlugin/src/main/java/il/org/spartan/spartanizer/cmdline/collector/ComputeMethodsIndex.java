@@ -25,7 +25,7 @@ public class ComputeMethodsIndex extends FolderASTVisitor {
     FolderASTVisitor.main(args);
   }
 
-  @SuppressWarnings("boxing") @Override public boolean visit(final MethodDeclaration ¢) {
+  @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration ¢) {
     if (step.statements(¢) == null || step.statements(¢).isEmpty())
       return false;
     methods.put(identifier(name(¢)), metrics.tokens(¢ + ""));
