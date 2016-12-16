@@ -8,10 +8,8 @@ import org.junit.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-@Ignore
 @SuppressWarnings("static-method")
 public final class Issue107 {
-  static class NotWorking {
     @Test public void b() {
       trimmingOf("for(int c = 0; c <5; c-=1)\n" + "c*=2;").gives("for(int c = 0; c <5; c--)\n" + "c*=2;").gives("for(int c = 0; c <5; --c)\n" + "c*=2;")
           .stays();
@@ -40,7 +38,6 @@ public final class Issue107 {
     @Test public void n() {
       trimmingOf("for(;; (a = 3)+=1){}").gives("for(;; (a = 3)++){}");
     }
-  }
   // Not provably-not-string.
   @Test public void a() {
     trimmingOf("a+=1;").stays();
