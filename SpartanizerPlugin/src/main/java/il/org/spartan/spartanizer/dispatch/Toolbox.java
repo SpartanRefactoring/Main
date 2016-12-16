@@ -286,10 +286,10 @@ public class Toolbox {
             new DeclarationInitializerReturnVariable(), //
             new DeclarationInitializerReturnExpression(), //
             new DeclarationInitializerReturnAssignment(), //
-            new DeclarationInitializerReturnUpdateAssignment(), //
+            new DeclarationInitializerReturn(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
-            new DeclarationFragmentInlineIntoNext(), //
+            new DeclarationInlineIntoNext(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
