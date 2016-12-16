@@ -123,6 +123,7 @@ public class Toolbox {
             new WhileToForUpdaters(), //
             null) //
         .add(SwitchStatement.class, //
+            new SwitchEmpty(), //
             new RemoveRedundantSwitchCases(), //
             new RemoveRedundantSwitchBranch(), //
             null)
