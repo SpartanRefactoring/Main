@@ -853,7 +853,7 @@ public interface iz {
   static boolean stringLiteral(final ASTNode ¢) {
     return ¢ != null && ¢.getNodeType() == STRING_LITERAL;
   }
-  
+
   /** Determine whether a node is a {@link SwitchCase}
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a switch case
