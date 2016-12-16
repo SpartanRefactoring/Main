@@ -21,10 +21,10 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
-    return ¢ != null && (literal.true¢(¢.getExpression()) || literal.false¢(¢.getExpression()));
+    return ¢ != null && (literal.true¢(expression(¢)) || literal.false¢(expression(¢)));
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    return literal.true¢(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
+    return literal.true¢(expression(¢)) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
   }
 }

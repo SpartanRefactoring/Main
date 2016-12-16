@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any
  * operator.
+ * Tested in {@link Issue103}
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
