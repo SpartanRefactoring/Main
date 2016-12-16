@@ -15,6 +15,16 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
+  protected boolean cautiousGo(final ASTNode ¢) {
+    return !exclude.isExcluded(¢) && go(¢);
+  }
+
+  protected abstract <N extends ASTNode> boolean go(final N n);
+
+  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
+    // overridden
+  }
+
   @Override public void preVisit(final ASTNode ¢) {
     if (initialized)
       return;
@@ -22,7 +32,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialized = true;
   }
 
-  @Override public final boolean visit(final ExpressionStatement ¢) {
+  @Override public final boolean visit(final ArrayAccess ¢) {
     return cautiousGo(¢);
   }
 
@@ -38,6 +48,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final CatchClause ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final ClassInstanceCreation ¢) {
     return cautiousGo(¢);
   }
@@ -50,11 +64,11 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final CatchClause ¢) {
+  @Override public final boolean visit(final EnumDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final EnumDeclaration ¢) {
+  @Override public final boolean visit(final ExpressionStatement ¢) {
     return cautiousGo(¢);
   }
 
@@ -78,6 +92,14 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final Javadoc ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final LambdaExpression ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final MethodDeclaration ¢) {
     return cautiousGo(¢);
   }
@@ -94,19 +116,11 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final TryStatement ¢) {
-    return cautiousGo(¢);
-  }
-
-  @Override public final boolean visit(final ArrayAccess ¢) {
+  @Override public final boolean visit(final NumberLiteral ¢) {
     return cautiousGo(¢);
   }
 
   @Override public final boolean visit(final PostfixExpression ¢) {
-    return cautiousGo(¢);
-  }
-
-  @Override public final boolean visit(final NumberLiteral ¢) {
     return cautiousGo(¢);
   }
 
@@ -118,10 +132,6 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SwitchStatement ¢) {
-    return cautiousGo(¢);
-  }
-
   @Override public final boolean visit(final SingleVariableDeclaration ¢) {
     return cautiousGo(¢);
   }
@@ -130,7 +140,15 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final SwitchStatement ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final ThrowStatement ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final TryStatement ¢) {
     return cautiousGo(¢);
   }
 
@@ -152,19 +170,5 @@ public abstract class DispatchingVisitor extends ASTVisitor {
 
   @Override public final boolean visit(final WhileStatement ¢) {
     return cautiousGo(¢);
-  }
-
-  @Override public final boolean visit(final LambdaExpression ¢) {
-    return cautiousGo(¢);
-  }
-
-  protected boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
-  }
-
-  protected abstract <N extends ASTNode> boolean go(final N n);
-
-  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
-    // overridden
   }
 }
