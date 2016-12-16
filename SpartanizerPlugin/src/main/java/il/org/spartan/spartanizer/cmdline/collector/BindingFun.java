@@ -17,18 +17,6 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 public final class BindingFun implements IApplication {
-  static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    final Wrapper<MethodInvocation> $ = new Wrapper<>();
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodInvocation ¢) {
-        if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
-          $.set(¢);
-        return super.visit(¢);
-      }
-    });
-    return $.get() == null ? i : $.get();
-  }
-
   static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
