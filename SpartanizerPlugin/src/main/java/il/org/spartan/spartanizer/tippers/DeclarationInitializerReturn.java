@@ -24,14 +24,14 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * into
  *
  * <pre>
- * return a;
+ * return 3;
  * </pre>
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnUpdateAssignment extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
+public final class DeclarationInitializerReturn extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
+    return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
