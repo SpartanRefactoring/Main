@@ -31,7 +31,7 @@ public class Toolbox {
             put(¢.getClass(), ¢.tipperGroup());
     }
   };
-  /** The default Instance of this class */
+  /** The default instance of this class */
   static Toolbox defaultInstance;
 
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
@@ -72,7 +72,7 @@ public class Toolbox {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  public static Toolbox muttableDefaultInstance() {
+  public static Toolbox mutableDefaultInstance() {
     return freshCopyOfAllTippers();
   }
 
@@ -93,13 +93,12 @@ public class Toolbox {
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
+        .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
-        .add(ClassInstanceCreation.class, //
-            new ClassInstanceCreationValueTypes(), //
-            null) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
@@ -147,6 +146,7 @@ public class Toolbox {
         .add(ArrayAccess.class, //
             new InliningPrefix(), //
             null) //
+        .add(Javadoc.class, new JavadocEmpty())
         .add(InfixExpression.class, //
             new InfixPlusToMinus(), //
             new LessEqualsToLess(), //
@@ -295,9 +295,6 @@ public class Toolbox {
             new WhileToForInitializers(), //
             null) //
         //
-        .add(LambdaExpression.class, //
-            new LambdaExpressionRemoveRedundantCurlyBraces(), //
-            null) //
     //
     ;
   }
