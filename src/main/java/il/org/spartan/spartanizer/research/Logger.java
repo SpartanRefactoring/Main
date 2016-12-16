@@ -176,7 +176,7 @@ public class Logger {
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
-    final MethodDeclaration m = findMethodAncestor(n);
+    final MethodDeclaration m = findAncestorMethod(n);
     if (m == null) {
       System.out.println("OMG: node [" + n + "] without a mother method!");
       return;
@@ -200,7 +200,7 @@ public class Logger {
 
   /** @param ¢
    * @return */
-  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
+  private static MethodDeclaration findAncestorMethod(final ASTNode ¢) {
     ASTNode $ = ¢;
     while (!iz.methodDeclaration($) && $ != null)
       $ = $.getParent();
