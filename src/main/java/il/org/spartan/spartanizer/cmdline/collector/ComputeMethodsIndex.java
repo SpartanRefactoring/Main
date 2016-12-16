@@ -34,11 +34,11 @@ public class ComputeMethodsIndex extends FolderASTVisitor {
 
   private final Map<String, Integer> methods = new LinkedHashMap<>();
 
-  @Override protected void init(String path) {
+  @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
   }
 
-  @Override protected void done(String path) {
+  @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
     final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));

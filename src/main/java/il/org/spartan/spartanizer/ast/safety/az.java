@@ -394,6 +394,12 @@ public enum az {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 
+  /** @param $
+   * @return */
+  public static TryStatement tryStatement(final ASTNode $) {
+    return eval(() -> (TryStatement) $).when($ instanceof TryStatement);
+  }
+
   public static SimpleName simpleName(final PostfixExpression $) {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }

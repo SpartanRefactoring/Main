@@ -52,8 +52,6 @@ public final class DeclarationFragmentInlineIntoNext extends ReplaceToNextStatem
     return $;
   }
 
-
-  
   private static boolean cannotInlineInto(final Statement nextStatement) {
     return iz.returnStatement(nextStatement) || iz.whileStatement(nextStatement) || iz.doStatement(nextStatement)
         || iz.synchronizedStatement(nextStatement) || iz.tryStatement(nextStatement) || containsClassInstanceCreation(nextStatement);

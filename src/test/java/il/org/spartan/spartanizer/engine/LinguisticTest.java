@@ -3,11 +3,11 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import java.text.*;
-import java.util.concurrent.atomic.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Test class for {@link Linguistic}
  * @author yonzarecki
@@ -16,21 +16,16 @@ import il.org.spartan.*;
  * @since 2016-11-13 */
 @SuppressWarnings("static-method") //
 public class LinguisticTest {
-  @Test public void testPluralAtomicInteger() {
-    azzert.that(Linguistic.plurals("house", (AtomicInteger) null), is(Linguistic.UNKNOWN + " houses"));
-    azzert.that(Linguistic.plurals("house", new AtomicInteger(1)), is("one house"));
-    azzert.that(Linguistic.plurals("house", new AtomicInteger(2)), is("2 houses"));
-  }
-
-  @Test public void testPluralesAtomicInteger() {
-    azzert.that(Linguistic.plurales("church", (AtomicInteger) null), is(Linguistic.UNKNOWN + " churches"));
-    azzert.that(Linguistic.plurales("church", new AtomicInteger(1)), is("one church"));
-    azzert.that(Linguistic.plurales("church", new AtomicInteger(2)), is("2 churches"));
+  @Test public void testPluralInt() {
+    azzert.that(Linguistic.plurals("house", (Int) null), is(Linguistic.UNKNOWN + " houses"));
+    azzert.that(Linguistic.plurals("house", new Int(1)), is("one house"));
+    azzert.that(Linguistic.plurals("house", new Int(2)), is("2 houses"));
   }
 
   @Test public void testPluralesInt() {
-    azzert.that(Linguistic.plurales("church", 1), is("one church"));
-    azzert.that(Linguistic.plurales("church", 2), is("2 churches"));
+    azzert.that(Linguistic.plurales("church", (Int) null), is(Linguistic.UNKNOWN + " churches"));
+    azzert.that(Linguistic.plurales("church", new Int(1)), is("one church"));
+    azzert.that(Linguistic.plurales("church", new Int(2)), is("2 churches"));
   }
 
   @Test public void testPluralesInteger() {
@@ -73,13 +68,13 @@ public class LinguisticTest {
 
   @Test public void testUnknownIfNull() {
     azzert.that(Linguistic.unknownIfNull(Integer.valueOf(1)), is("1"));
-    azzert.that(Linguistic.unknownIfNull(new AtomicInteger(1)), is("1"));
+    azzert.that(Linguistic.unknownIfNull(new Int(1)), is("1"));
     azzert.that(Linguistic.unknownIfNull(null), is(Linguistic.UNKNOWN));
   }
 
   @Test @SuppressWarnings("boxing") public void testUnknownIfNullWithFunction() {
     azzert.that(Linguistic.unknownIfNull(Integer.valueOf(1), (final Integer i) -> i + 1), is("2"));
-    azzert.that(Linguistic.unknownIfNull(new AtomicInteger(1), (final AtomicInteger i) -> Integer.valueOf(2)), is("2"));
+    azzert.that(Linguistic.unknownIfNull(new Int(1), (final Int i) -> Integer.valueOf(2)), is("2"));
     azzert.that(Linguistic.unknownIfNull(null, (final Integer i) -> i + 1), is(Linguistic.UNKNOWN));
   }
 }
