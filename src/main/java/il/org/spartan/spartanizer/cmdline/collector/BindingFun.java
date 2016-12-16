@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.collector;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -11,8 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.plugin.old.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -78,48 +75,24 @@ public final class BindingFun implements IApplication {
 
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);
-    final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\git\\guava\\guava")) {
+    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\git\\test")) {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i) {
-          final int n = new LaconizeProject().countTips();
-          if (n == 0)
-            break;
-          s.addRoundStat(n);
-          new Trimmer().apply(u);
-        }
-        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
-          System.out.println("Spartanized file " + f.getAbsolutePath());
-        s.countLinesAfter();
-        fileStats.add(s);
-        ++done;
-      } catch (final JavaModelException | IOException ¢) {
-        System.err.println(f + ": " + ¢.getMessage());
-        ++failed;
-      } catch (final Exception ¢) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
-        ¢.printStackTrace();
-        ++failed;
-      } finally {
-        discardCompilationUnit(u);
+        ASTParser parser = ASTParser.newParser(AST.JLS8);
+        parser.setResolveBindings(true);
+        parser.setSource(u);
+        System.out.println(((CompilationUnit) parser.createAST(null)).getAST().hasResolvedBindings());
+      } catch (JavaModelException | IOException x) {
+        x.printStackTrace();
       }
     }
-    System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
-    if (optStatsChanges)
-      printChangeStatistics(fileStats);
-    if (optStatsLines)
-      printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
   }
 
@@ -178,85 +151,7 @@ public final class BindingFun implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  void printLineStatistics(final List<FileStats> ss) {
-    System.out.println("\nLine differences:");
-    if (optIndividualStatistics)
-      for (final FileStats ¢ : ss) {
-        System.out.println("\n  " + ¢.fileName());
-        System.out.println("    Lines before: " + ¢.getLinesBefore());
-        System.out.println("    Lines after: " + ¢.getLinesAfter());
-      }
-    else {
-      int totalBefore = 0, totalAfter = 0;
-      for (final FileStats ¢ : ss) {
-        totalBefore += ¢.getLinesBefore();
-        totalAfter += ¢.getLinesAfter();
-      }
-      System.out.println("  Lines before: " + totalBefore);
-      System.out.println("  Lines after: " + totalAfter);
-    }
-  }
-
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
-  }
-
-  private void printChangeStatistics(final List<FileStats> ss) {
-    System.out.println("\nTotal changes made: ");
-    if (optIndividualStatistics)
-      for (final FileStats f : ss) {
-        System.out.println("\n  " + f.fileName());
-        for (int ¢ = 0; ¢ < optRounds; ++¢)
-          System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));
-      }
-    else
-      for (int i = 0; i < optRounds; ++i) {
-        int roundSum = 0;
-        for (final FileStats ¢ : ss)
-          roundSum += ¢.getRoundStat(i);
-        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
-      }
-  }
-
-  /** Data structure designed to hold and compute information about a single
-   * file, in order to produce statistics when completed execution */
-  private class FileStats {
-    final File file;
-    final int linesBefore;
-    int linesAfter;
-    final List<Integer> roundStats = new ArrayList<>();
-
-    public FileStats(final File file) throws IOException {
-      linesBefore = countLines(this.file = file);
-    }
-
-    public void addRoundStat(final int ¢) {
-      roundStats.add(Integer.valueOf(¢));
-    }
-
-    public void countLinesAfter() throws IOException {
-      linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
-    }
-
-    public String fileName() {
-      return file.getName();
-    }
-
-    public int getLinesAfter() {
-      return linesAfter;
-    }
-
-    public int getLinesBefore() {
-      return linesBefore;
-    }
-
-    public int getRoundStat(final int $) {
-      try {
-        return roundStats.get($).intValue();
-      } catch (final IndexOutOfBoundsException ¢) {
-        ¢.printStackTrace();
-        return 0;
-      }
-    }
   }
 }

@@ -91,6 +91,29 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     System.err.println("Your output is in: " + outputFolder);
   }
 
+  // private void summarizeNPStatistics(final String outputDir) {
+  // final CSVLineWriter report = new
+  // CSVLineWriter(makeFile("npStatistics.csv"));
+  // if (report == null)
+  // return;
+  // npStatistics.keySet().stream()
+  // .sorted((k1, k2) -> npStatistics.get(k1).occurences <
+  // npStatistics.get(k2).occurences ? 1
+  // : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 :
+  // 0)
+  // .map(k -> npStatistics.get(k))//
+  // .forEach(n -> {
+  // report //
+  // .put("Name", n.name) //
+  // .put("Type", n.className).put("occurences", n.occurences)//
+  // .put("Statements", n.numNPStatements) //
+  // .put("Expressions", n.numNPExpressions) //
+  // ;
+  // report.nl();
+  // });
+  // report.close();
+  // file.rename(makeFile("npStatistics"), makeFile("npStatistics.csv"));
+  // }
   private static boolean excludeMethod(MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
