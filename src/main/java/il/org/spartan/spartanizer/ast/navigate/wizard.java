@@ -42,8 +42,8 @@ public interface wizard {
   Map<Assignment.Operator, InfixExpression.Operator> assign2infix = new HashMap<Assignment.Operator, InfixExpression.Operator>() {
     static final long serialVersionUID = 1L;
     {
-      put(PLUS_ASSIGN, PLUS2);
-      put(MINUS_ASSIGN, MINUS2);
+      put(PLUS_ASSIGN, InfixExpression.Operator.PLUS);
+      put(MINUS_ASSIGN, InfixExpression.Operator.MINUS);
       put(TIMES_ASSIGN, TIMES);
       put(DIVIDE_ASSIGN, DIVIDE);
       put(BIT_AND_ASSIGN, AND);
@@ -82,8 +82,8 @@ public interface wizard {
   Map<InfixExpression.Operator, Assignment.Operator> infix2assign = new HashMap<InfixExpression.Operator, Assignment.Operator>() {
     static final long serialVersionUID = 1L;
     {
-      put(PLUS2, PLUS_ASSIGN);
-      put(MINUS2, MINUS_ASSIGN);
+      put(InfixExpression.Operator.PLUS, PLUS_ASSIGN);
+      put(InfixExpression.Operator.MINUS, MINUS_ASSIGN);
       put(TIMES, TIMES_ASSIGN);
       put(DIVIDE, DIVIDE_ASSIGN);
       put(AND, BIT_AND_ASSIGN);
