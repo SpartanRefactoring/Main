@@ -98,7 +98,7 @@ public final class SingleTipperApplicator {
     }
     for (final Integer i : range.from(0).to(LaconizeProject.MAX_PASSES)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
-      final AtomicInteger pn = new AtomicInteger(i + 1);
+      final Int pn = new Int(i + 1);
       final AtomicBoolean canelled = new AtomicBoolean(false);
       try {
         ps.run(true, true, px -> {
