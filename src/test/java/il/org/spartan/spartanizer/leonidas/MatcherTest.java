@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.research.Matcher.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 
 /** @author Ori Marcovitch
+ * @author Dor Ma'ayan
  * @since Dec 3, 2016 */
 @SuppressWarnings("static-method")
 public class MatcherTest {
@@ -139,5 +140,28 @@ public class MatcherTest {
 
   @Test public void f2() {
     assert !patternMatcher("$X+6+null", "").matches(findFirst.infixExpression(ast("a+6+7")));
+  }
+
+  @Test public void g2() {
+    assert !patternMatcher("try $B1 catch($T $N){int a;}", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
+  }
+
+  @Test public void h2() {
+    assert !patternMatcher("try $B1 catch($T $N){int a;}finally{int a;}", "")
+        .matches(findFirst.tryStatement(ast("try{}catch(What | Ever never){int a;}finally{}")));
+  }
+
+  @Test public void i2() {
+    assert patternMatcher("try $B1 catch($T1 $N1){int a;}catch($T2 $N2){$B}finally{int a;}", "")
+        .matches(findFirst.tryStatement(ast("try{}catch(What | Ever never){int a;}catch(Ever never){int a;}finally{int a;}")));
+  }
+
+  @Test public void j2() {
+    assert !patternMatcher("try $B1 catch($T $N){int a;}finally{int a;}", "")
+        .matches(findFirst.tryStatement(ast("try{}catch(What | Ever never){int a;}finally{int t=0;for(int i=0;i<5;i++){t++;}}")));
+  }
+  
+  @Test public void k2() {
+    assert !patternMatcher("try $B1 catch(a b) $B2", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
   }
 }
