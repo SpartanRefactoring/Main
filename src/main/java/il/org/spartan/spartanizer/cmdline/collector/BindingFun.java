@@ -13,30 +13,10 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** An {@link IApplication} extension entry point, allowing execution of this
- * plug-in from the command line.
- * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
- * @since 2015/09/19 */
+/** An {@link IApplication} extension entry point, allowing execution of ***
+ * @author Ori Marcovitch
+ * @since Dec 16, 2016 */
 public final class BindingFun implements IApplication {
-  /** Count the number of lines in a {@link File} f
-   * @param ¢ File
-   * @return
-   * @throws IOException */
-  static int countLines(final File ¢) throws IOException {
-    try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
-      $.skip(Long.MAX_VALUE);
-      return $.getLineNumber();
-    }
-  }
-
-  /** Count the number of lines in File named filename
-   * @param fileName
-   * @return
-   * @throws IOException */
-  static int countLines(final String fileName) throws IOException {
-    return countLines(new File(fileName));
-  }
-
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
@@ -53,10 +33,11 @@ public final class BindingFun implements IApplication {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
-    return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
+    return getPackageNameFromSource($.createAST(null));
   }
 
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+  private static String getPackageNameFromSource(final ASTNode n) {
+    final Wrapper<String> $ = new Wrapper<>("");
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
@@ -69,9 +50,6 @@ public final class BindingFun implements IApplication {
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
-  boolean optDoNotOverwrite, optIndividualStatistics, optVerbose;
-  boolean optStatsLines, optStatsChanges, printLog;
-  int optRounds = 20;
 
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);
@@ -98,10 +76,6 @@ public final class BindingFun implements IApplication {
 
   @Override public void stop() {
     ___.nothing();
-  }
-
-  String determineOutputFilename(final String path) {
-    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   /** Discard compilation unit u
