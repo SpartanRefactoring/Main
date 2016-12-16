@@ -160,7 +160,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     int n = 0;
     writer.put("NAME", presentSourceName);
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
-    assert usage.keySet() != null;
     for (final String category : usage.keySet()) {
       final Map<String, Integer> map = usage.get(category);
       int m = 0;
@@ -188,6 +187,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       if (!defined.contains(k))
         born.remove(k);
     writer.put("Reuse", rindex(ranks(born)));
+    writer.put("Diff", rindex(ranks(born)) - rindex(ranks(adopted)));
     writer.nl();
   }
 
