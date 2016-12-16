@@ -38,6 +38,11 @@ public class ChainStringToIntegerMap {
     return this;
   }
 
+  @NotNull public ChainStringToIntegerMap putIfAbsent(final String key, final int value) {
+    inner.putIfAbsent(key, Integer.valueOf(value));
+    return this;
+  }
+
   @NotNull public ChainStringToIntegerMap putAll(@NotNull final Map<? extends String, ? extends Integer> ¢) {
     inner.putAll(¢);
     return this;
