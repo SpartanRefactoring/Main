@@ -9,8 +9,8 @@ import org.junit.runners.*;
  * @author Yossi Gil
  * @since 2016 */
 
-@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue103 {
   static class NotWorking {
@@ -118,7 +118,6 @@ public class Issue103 {
     trimmingOf("x = y + x + z + x + k + 9").gives("x += y + z + x + k + 9");
   }
 
-  
 
   @Test public void mma() {
     trimmingOf("x=x*y").gives("x*=y");

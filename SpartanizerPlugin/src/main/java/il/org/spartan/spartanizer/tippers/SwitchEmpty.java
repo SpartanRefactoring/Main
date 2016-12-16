@@ -47,18 +47,17 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
         if (iz.breakStatement(ll.get(ll.size()-1)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        ASTNode res = wizard.ast(!haz.sideEffects(s.getExpression()) ? statementsToString(ll) : s.getExpression() + ";" + statementsToString(ll));
-        r.replace(s, res, g);
+        r.replace(s, wizard.ast(!haz.sideEffects(s.getExpression()) ? statementsToString(ll) : s.getExpression() + ";" + statementsToString(ll)), g);
 
       }
     };
   }
   
   static String statementsToString(List<Statement> ss) {
-    StringBuilder p = new StringBuilder();
+    StringBuilder $ = new StringBuilder();
     for(Statement k : ss)
-      p.append((k + ""));
-    return p + "";
+      $.append(k);
+    return $ + "";
   }
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
