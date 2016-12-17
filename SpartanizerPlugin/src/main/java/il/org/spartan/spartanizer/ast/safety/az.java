@@ -550,4 +550,10 @@ public enum az {
   public static QualifiedName qualifiedName(final ASTNode ¢) {
     return ¢ == null ? null : (QualifiedName) ¢;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static SynchronizedStatement synchronizedStatement(Statement ¢) {
+    return ¢ == null ? null : (SynchronizedStatement) ¢;
+  }
 }
