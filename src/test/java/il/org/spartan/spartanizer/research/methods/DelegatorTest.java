@@ -109,4 +109,12 @@ public class DelegatorTest {
   @Test public void basic19() {
     delegator("@Deprecated @Override public void writeBytes(String ¢) throws IOException {    ((DataOutputStream)out).writeBytes(¢);}");
   }
+
+  @Test public void basic20() {
+    delegator("@Override public int size(){synchronized (mutex) {    return delegate().size();}}");
+  }
+
+  @Test public void basic21() {
+    delegator("  @Override public int indexOf(Object ¢){    synchronized (mutex) {        return delegate().indexOf(¢); }}");
+  }
 }

@@ -73,4 +73,14 @@ public class generalize {
     }
     return ASTutils.extractCode(s, d);
   }
+
+  public static void main(final String args[]) {
+    System.out.println("enter whatever:");
+    try (Scanner reader = new Scanner(System.in)) {
+      String s = "";
+      while (reader.hasNext())
+        s += "\n" + reader.nextLine();
+      System.out.println(generalize.code(s));
+    }
+  }
 }
