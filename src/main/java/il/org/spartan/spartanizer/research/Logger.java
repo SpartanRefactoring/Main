@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -12,7 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -30,11 +30,19 @@ public class Logger {
   private static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
+  private static List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
     summarizeNPStatistics(outputDir);
     reset();
+  }
+
+  /** subscribe to logNP. Every time an NP will hit, the subscriber will be
+   * invoked.
+   * @param ¢ */
+  public static void subsribe(final BiConsumer<ASTNode, String> ¢) {
+    subscribers.add(¢);
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {
@@ -155,9 +163,9 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
+    subscribers.stream().forEach(¢ -> ¢.accept(n, np));
     logNanoContainingMethodInfo(n, np);
     logNPInfo(n, np);
-    AnalyzerOptions.tickNP();
   }
 
   /** @param n
