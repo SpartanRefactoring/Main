@@ -43,6 +43,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new Aggregate(), //
                 new ContainsEnhancedFor(), //
                 new ForEach(), //
+                new Select(), //
                 // new ReduceEnhancedFor(), //
                 null) //
             // .add(ForStatement.class, //
