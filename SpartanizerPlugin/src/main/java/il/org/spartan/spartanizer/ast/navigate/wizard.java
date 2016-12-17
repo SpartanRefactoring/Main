@@ -500,7 +500,7 @@ public interface wizard {
     return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);
   }
 
-  final Bool resolveBinding = Bool.valueOf(false);
+  Bool resolveBinding = Bool.valueOf(false);
 
   static void setParserResolveBindings() {
     resolveBinding.inner = true;
