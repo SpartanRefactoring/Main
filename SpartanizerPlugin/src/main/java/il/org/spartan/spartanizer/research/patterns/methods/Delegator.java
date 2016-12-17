@@ -27,11 +27,16 @@ public class Delegator extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (!hazOneStatement(¢) || !anyTips(tippers, expression(onlyOne(statements(¢)))))
+    return hazOneStatement(¢)
+        && (delegation(¢, onlyStatement(¢)) || delegation(¢, onlyOne(step.statements(az.synchronizedStatement(onlyStatement(¢))))));
+  }
+
+  private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
+    if (!anyTips(tippers, expression(¢)))
       return false;
-    final Expression $ = expression(onlyOne(statements(¢)));
+    final Expression $ = expression(¢);
     return iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
-        && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation($))));
+        && parametersNames(d).containsAll(dependencies(arguments(az.methodInvocation($))));
   }
 
   /** @param arguments

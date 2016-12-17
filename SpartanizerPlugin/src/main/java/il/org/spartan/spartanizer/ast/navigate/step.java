@@ -675,4 +675,16 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static List<Statement> statements(SynchronizedStatement ¢) {
+    return ¢ == null ? null : statements(body(¢));
+  }
+
+  /** @param ¢ JD
+   * @return */
+  private static Block body(SynchronizedStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
 }
