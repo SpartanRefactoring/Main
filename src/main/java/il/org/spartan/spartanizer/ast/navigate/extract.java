@@ -478,11 +478,11 @@ public enum extract {
         return $;
     }
   }
-  
+
   public static List<SwitchCase> switchCases(final SwitchStatement s) {
     final List<SwitchCase> $ = new ArrayList<>();
-    for(Statement ¢ : step.statements(s))
-      if(iz.switchCase(¢))
+    for (final Statement ¢ : step.statements(s))
+      if (iz.switchCase(¢))
         $.add(az.switchCase(¢));
     return $;
   }
