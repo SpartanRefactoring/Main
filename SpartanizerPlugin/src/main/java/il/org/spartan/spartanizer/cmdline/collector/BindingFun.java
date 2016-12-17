@@ -17,6 +17,16 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 public final class BindingFun implements IApplication {
+  static void iterateMethodInvocations(final CompilationUnit u) {
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodInvocation ¢) {
+        assert ¢.getAST().hasResolvedBindings();
+        System.out.println(¢.resolveMethodBinding());
+        return super.visit(¢);
+      }
+    });
+  }
+
   static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
@@ -47,14 +57,15 @@ public final class BindingFun implements IApplication {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\git\\test")) {
+    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\workspace\\testAddComments")) {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
         ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
-        System.out.println(((CompilationUnit) parser.createAST(null)).getAST().hasResolvedBindings());
+        CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        iterateMethodInvocations(cu);
       } catch (JavaModelException | IOException x) {
         x.printStackTrace();
       }
