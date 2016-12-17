@@ -159,7 +159,8 @@ public final class GuessedContextTest {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 
-  @Test public void method2() {
+  
+  @Test @Ignore public void method2() {
     azzert.that(GuessedContext.find(//
         "A a(){" + //
             "  b({ c });" + //

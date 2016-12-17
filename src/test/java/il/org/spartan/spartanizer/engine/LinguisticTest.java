@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author rodedzats
  * @since 2016-11-13 */
 @SuppressWarnings("static-method") //
+@Ignore
 public class LinguisticTest {
   @Test public void testPluralInt() {
     azzert.that(Linguistic.plurals("house", (Int) null), is(Linguistic.UNKNOWN + " houses"));
