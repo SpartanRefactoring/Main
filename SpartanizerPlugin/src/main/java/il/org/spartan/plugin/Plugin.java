@@ -106,13 +106,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                   eclipse.addNature(mp.p);
                   mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
                   break;
-                // case opened_project:
-                // if
-                // (as.list(mp.p.getDescription().getNatureIds()).contains(Nature.NATURE_ID))
-                // TipsOnOffToggle.enableNature(mp.p);
-                // break;
                 default:
-                  break;
               }
             } catch (final Exception ¢) {
               monitor.log(¢);
