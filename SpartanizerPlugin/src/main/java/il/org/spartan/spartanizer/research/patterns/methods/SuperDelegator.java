@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.patterns.methods;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,14 +21,9 @@ public class SuperDelegator extends Delegator {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    super.prerequisites(¢);
-    if (statements(¢) == null || statements(¢).size() != 1 || !anyTips(onlyOne(statements(¢))))
+    if (!hazOneStatement(¢) || !anyTips(tippers, onlyStatement(¢)))
       return false;
-    final SuperMethodInvocation $ = findFirst.superMethodDeclaration(onlyOne(statements(¢)));
+    final SuperMethodInvocation $ = findFirst.superMethodDeclaration(onlyStatement(¢));
     return $ != null && parametersNames(¢).containsAll(dependencies(arguments($)));
-  }
-
-  static boolean anyTips(final Statement s) {
-    return tippers.stream().anyMatch(t -> t.canTip(s));
   }
 }
