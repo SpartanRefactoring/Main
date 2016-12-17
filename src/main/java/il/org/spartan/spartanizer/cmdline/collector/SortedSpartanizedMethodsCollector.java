@@ -34,8 +34,13 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    wizard.setParserResolveBindings();
     FolderASTVisitor.main(args);
   }
+
+  // @Override public boolean visit(final MethodInvocation ¢) {
+  // return super.visit(¢);
+  // }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
@@ -90,7 +95,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
-
+  //
   // private void summarizeNPStatistics(final String outputDir) {
   // final CSVLineWriter report = new
   // CSVLineWriter(makeFile("npStatistics.csv"));
@@ -114,6 +119,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   // report.close();
   // file.rename(makeFile("npStatistics"), makeFile("npStatistics.csv"));
   // }
+
   private static boolean excludeMethod(MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
