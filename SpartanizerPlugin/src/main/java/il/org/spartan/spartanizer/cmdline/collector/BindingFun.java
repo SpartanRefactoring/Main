@@ -51,7 +51,7 @@ public final class BindingFun implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        ASTParser parser = ASTParser.newParser(AST.JLS8);
+        final ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
         System.out.println(((CompilationUnit) parser.createAST(null)).getAST().hasResolvedBindings());
