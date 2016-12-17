@@ -160,7 +160,7 @@ public class MatcherTest {
     assert !patternMatcher("try $B1 catch($T $N){int a;}finally{int a;}", "")
         .matches(findFirst.tryStatement(ast("try{}catch(What | Ever never){int a;}finally{int t=0;for(int i=0;i<5;i++){t++;}}")));
   }
-  
+
   @Test public void k2() {
     assert !patternMatcher("try $B1 catch(a b) $B2", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
   }
