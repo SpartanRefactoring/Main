@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -38,24 +38,32 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = step.statements(s);
-        if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break")) {
+        if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1))) {
           r.remove(s, g);
+          if(haz.sideEffects(s.getExpression()))
+            r.replace(s, wizard.ast(s.getExpression() + ";"), g);
           return;
         }
-        if ((ll.get(ll.size() - 1) + "").contains("break"))
+        if (iz.breakStatement(ll.get(ll.size()-1)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        r.replace(s, subject.statement(subject.ss(ll).toBlock()).toBlock(), g);
+        r.replace(s, wizard.ast(!haz.sideEffects(s.getExpression()) ? statementsToString(ll) : s.getExpression() + ";" + statementsToString(ll)), g);
+
       }
     };
+  }
+  
+  static String statementsToString(List<Statement> ss) {
+    StringBuilder $ = new StringBuilder();
+    for(Statement k : ss)
+      $.append(k);
+    return $ + "";
   }
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
     final List<SwitchCase> $ = extract.switchCases(s);
-    // TODO: Yuval, please use step.statements here, instead of .statements.
-    // Also, try to search for ".statements" and replace elsewhere.
     final List<Statement> ll = step.statements(s);
-    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && (ll.get(1) + "").contains("break") || $.size() == 1 && $.get(0).isDefault();
+    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1)) || $.size() == 1 && $.get(0).isDefault();
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
