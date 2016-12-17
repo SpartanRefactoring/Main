@@ -65,6 +65,7 @@ public final class BindingFun implements IApplication {
         parser.setResolveBindings(true);
         parser.setSource(u);
         CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        ___.______unused();
         iterateMethodInvocations(cu);
       } catch (JavaModelException | IOException x) {
         x.printStackTrace();
