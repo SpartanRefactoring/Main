@@ -176,6 +176,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       writer.put(category, rindex(ranks(map)));
     }
     System.err.println("Your output is in: " + w.close());
+    if (usage.get("METHOD") == null)
+      return;
     final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String m : defined)
       adopted.remove(m);
@@ -185,6 +187,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       if (!defined.contains(k))
         born.remove(k);
     writer.put("Reuse", rindex(ranks(born)));
+    writer.put("Diff", rindex(ranks(born)) - rindex(ranks(adopted)));
     writer.nl();
   }
 

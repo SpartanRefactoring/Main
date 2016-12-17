@@ -141,7 +141,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   @SafeVarargs public final <N extends ASTNode> Trimmer add(final Class<N> n, final Tipper<N>... ns) {
     if (!changed)
-      toolbox = Toolbox.muttableDefaultInstance();
+      toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
     toolbox.add(n, ns);
     return this;

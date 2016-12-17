@@ -41,8 +41,7 @@ import il.org.spartan.spartanizer.tipping.*;
 * (some commands)
  * </pre>
  *
- * .
- * Tested in {@link Issue880}
+ * . Tested in {@link Issue880}
  * @author Yuval Simon
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
@@ -56,37 +55,36 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           hadDefault = true;
           int last = ind;
           for (int ¢ = ind + 1; ¢ < l.size(); ++¢) {
-            if (l.get(¢).getNodeType() != ASTNode.SWITCH_CASE)
+            if (!iz.switchCase(l.get(¢)))
               break;
             last = ¢;
           }
           for (int ¢ = last; ¢ > ind; --¢)
             l.remove(¢);
           for (int ¢ = ind - 1; ¢ >= 0; --¢) {
-            if (l.get(¢).getNodeType() != ASTNode.SWITCH_CASE)
+            if (!iz.switchCase(l.get(¢)))
               break;
             l.remove(¢);
           }
         }
         for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
-          if (l.get(¢).getNodeType() != ASTNode.SWITCH_CASE)
+          if (!iz.switchCase(l.get(¢)))
             break;
           l.remove(¢);
         }
         for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
-          if ((l.get(¢).getNodeType() == ASTNode.SWITCH_CASE || l.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT)
-              && l.get(¢ + 1).getNodeType() == ASTNode.BREAK_STATEMENT)
+          if ((iz.switchCase(l.get(¢)) || iz.breakStatement(l.get(¢))) && iz.breakStatement(l.get(¢ + 1)))
             l.remove(¢);
         if (l.size() == 1)
           l.remove(0);
-        if (l.size() == 2 && l.get(0).getNodeType() == ASTNode.SWITCH_CASE && l.get(1).getNodeType() == ASTNode.BREAK_STATEMENT) {
+        if (l.size() == 2 && iz.switchCase(l.get(0)) && iz.breakStatement(l.get(1))) {
           l.remove(1);
           l.remove(0);
         }
-        if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.BREAK_STATEMENT)
+        if (!l.isEmpty() && iz.breakStatement(l.get(l.size() - 1)))
           l.remove(l.size() - 1);
         final String tail = l.isEmpty() || !hadDefault || getDefaultIndex(l) >= 0 ? ""
-            : (l.get(l.size() - 1).getNodeType() == ASTNode.RETURN_STATEMENT ? "" : "break; ") + "default:";
+            : (iz.returnStatement(l.get(l.size() - 1)) ? "" : "break; ") + "default:";
         r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + tail + "}")).toOneStatementOrNull(), g);
       }
 
@@ -99,7 +97,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
       int getDefaultIndex(final List<Statement> ¢) {
         for (int $ = 0; $ < ¢.size(); ++$)
-          if (¢.get($).getNodeType() == ASTNode.SWITCH_CASE && isListContains(¢, $, "default"))
+          if (iz.switchCase(¢.get($)) && az.switchCase(¢.get($)).isDefault())
             return $;
         return -1;
       }
@@ -108,12 +106,11 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
     final List<Statement> l = step.statements(s);
-    if (!l.isEmpty() && l.get(l.size() - 1).getNodeType() == ASTNode.SWITCH_CASE && !az.switchCase(l.get(l.size() - 1)).isDefault())
+    if (!l.isEmpty() && iz.switchCase(l.get(l.size() - 1)) && !az.switchCase(l.get(l.size() - 1)).isDefault())
       return true;
     for (final Integer k : range.from(0).to(l.size() - 1))
-      if (l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.BREAK_STATEMENT
-          || l.get(k).getNodeType() == ASTNode.SWITCH_CASE && l.get(k + 1).getNodeType() == ASTNode.SWITCH_CASE
-              && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
+      if (iz.switchCase(l.get(k)) && iz.breakStatement(l.get(k + 1))
+          || iz.switchCase(l.get(k)) && iz.switchCase(l.get(k + 1)) && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
         return true;
     return false;
   }
