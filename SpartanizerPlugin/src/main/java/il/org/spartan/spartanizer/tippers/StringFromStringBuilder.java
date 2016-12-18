@@ -35,7 +35,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     }
     t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 2)));
     t.setOperator(PLUS2);
-    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 1)));
+    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), last(xs)));
     return $;
   }
 
