@@ -25,7 +25,7 @@ public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatem
   }
 
   static Statement lastStatement(final EnhancedForStatement ¢) {
-    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) last(az.block(¢.getBody()).statements());
+    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) last(statements(az.block(¢.getBody())));
   }
 
   @Override public Tip tip(final EnhancedForStatement ¢) {
