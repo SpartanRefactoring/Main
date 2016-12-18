@@ -313,7 +313,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean fieldAccess(final Expression ¢) {
+  static boolean fieldAccess(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FIELD_ACCESS);
   }
 
