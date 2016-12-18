@@ -15,12 +15,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Interface to Environment. Holds all the names defined till current PC. In
+/** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({ "unused" })
 public interface Environment {
-  /** Information about a variable in the Environment - its {@link ASTNode}, his
-   * parent's, its {@link type}, and which other variables does it hide. this
+  /** Information about a variable in the environment - its {@link ASTNode}, its
+   * parent's, its {@link type}, and which other variables does it hide. This
    * class is intentionally package level, and intentionally defined local. For
    * now, clients should not be messing with it
    * @since 2016 */
@@ -121,7 +121,7 @@ public interface Environment {
       return flat.containsKey(name) || nest.has(name);
     }
 
-    /** @return Names used the {@link Environment} . */
+    /** @return names used the {@link Environment} . */
     @Override public LinkedHashSet<String> names() {
       return new LinkedHashSet<>(flat.keySet());
     }
@@ -570,8 +570,8 @@ public interface Environment {
     return new LinkedHashSet<>();
   }
 
-  /** Return true iff {@link Environment} doesn'tipper have an entry with a
-   * given name. */
+  /** @return true iff {@link Environment} doesn't have an entry with a given
+   *         name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }

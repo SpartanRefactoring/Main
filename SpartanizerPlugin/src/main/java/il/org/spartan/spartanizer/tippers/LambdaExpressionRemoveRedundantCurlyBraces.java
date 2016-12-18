@@ -38,7 +38,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
   }
 
   @Override public String description(final LambdaExpression ¢) {
-    return "remove curly braces from: " + ¢;
+    return "remove curly braces from " + wizard.trim(¢);
   }
 
   @Override protected boolean prerequisite(final LambdaExpression ¢) {

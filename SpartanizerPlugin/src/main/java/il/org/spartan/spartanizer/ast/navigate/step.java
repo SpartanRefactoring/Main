@@ -272,13 +272,31 @@ public enum step {
   }
 
   public static String identifier(final MethodInvocation ¢) {
-    return ¢ == null ? null : identifier(name(¢));
+    return identifier(name(¢));
   }
 
-  /** @param ¢ JD
-   * @return */
+  public static String identifier(final MethodDeclaration ¢) {
+    return identifier(name(¢));
+  }
+
   public static String identifier(final Name ¢) {
     return ¢ == null ? null : iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : az.qualifiedName(¢).getFullyQualifiedName();
+  }
+
+  public static String identifier(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getFullyQualifiedName();
+  }
+
+  public static String identifier(final SimpleName ¢) {
+    return ¢ == null ? null : ¢.getIdentifier();
+  }
+
+  public static String identifier(final SingleVariableDeclaration ¢) {
+    return identifier(name(¢));
+  }
+
+  public static String identifier(final VariableDeclarationFragment ¢) {
+    return ¢ == null ? null : identifier(¢.getName());
   }
 
   @SuppressWarnings("unchecked") public static List<ImportDeclaration> importDeclarations(final CompilationUnit ¢) {
