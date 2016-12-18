@@ -23,15 +23,24 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Dec 14, 2016 */
 public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   static SpartAnalyzer spartanizer = new SpartAnalyzer();
-  SortedMap<Integer, List<MethodDeclaration>> methods = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  SortedMap<Integer, List<MethodDeclaration>> methods = new TreeMap<>(new Comparator<Integer>() {
+    @Override public int compare(Integer o1, Integer o2) {
+      return o1.compareTo(o2);
+    }
+  });
   static {
     clazz = SortedSpartanizedMethodsCollector.class;
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    wizard.setParserResolveBindings();
     FolderASTVisitor.main(args);
   }
+
+  // @Override public boolean visit(final MethodInvocation ¢) {
+  // return super.visit(¢);
+  // }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
@@ -40,7 +49,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     try {
       final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
-      final Integer key = Integer.valueOf(count.statements(after));
+      Integer key = Integer.valueOf(count.statements(after));
       methods.putIfAbsent(key, new ArrayList<>());
       methods.get(key).add(after);
     } catch (@SuppressWarnings("unused") final AssertionError __) {
@@ -49,7 +58,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     return true;
   }
 
-  @Override public void endVisit(final TypeDeclaration ¢) {
+  @Override public void endVisit(TypeDeclaration ¢) {
     if (haz.methods(¢))
       Logger.finishedType();
   }
@@ -67,11 +76,11 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     return true;
   }
 
-  @Override protected void init(final String path) {
+  @Override protected void init(String path) {
     System.err.println("Processing: " + path);
   }
 
-  @Override protected void done(final String path) {
+  @Override protected void done(String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
     System.err.println("Wait for output files...");
@@ -86,7 +95,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
-
+  //
   // private void summarizeNPStatistics(final String outputDir) {
   // final CSVLineWriter report = new
   // CSVLineWriter(makeFile("npStatistics.csv"));
@@ -110,7 +119,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   // report.close();
   // file.rename(makeFile("npStatistics"), makeFile("npStatistics.csv"));
   // }
-  private static boolean excludeMethod(final MethodDeclaration ¢) {
+
+  private static boolean excludeMethod(MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
 }

@@ -3,38 +3,18 @@ package il.org.spartan.spartanizer.research.methods;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class SuperDelegatorTest {
-  private static final JavadocMarkerNanoPattern JAVADOCER = new SuperDelegator();
-  static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
-
-  private static boolean javadoced(final String ¢) {
-    return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
-  }
-
-  /** @param s
-   * @return */
-  private static boolean not(final String ¢) {
-    return !superDelegator(¢);
-  }
-
+public class SuperDelegatorTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    spartanizer.add(MethodDeclaration.class, JAVADOCER);
-  }
-
-  private static String spartanized(final String ¢) {
-    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
+    spartanizer.add(MethodDeclaration.class, JAVADOCER = new SuperDelegator());
   }
 
   @Test public void a() {
-    assert superDelegator("boolean foo(){return super.foo();}");
+    assert is("boolean foo(){return super.foo();}");
   }
 
   @Test public void b() {
@@ -46,10 +26,6 @@ public class SuperDelegatorTest {
   }
 
   @Test public void d() {
-    assert superDelegator("@Override final boolean foo(){return (A)super.foo();}");
-  }
-
-  private static boolean superDelegator(final String ¢) {
-    return javadoced("public class A{" + ¢ + "}");
+    assert is("@Override final boolean foo(){return (A)super.foo();}");
   }
 }
