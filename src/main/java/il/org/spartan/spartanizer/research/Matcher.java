@@ -267,14 +267,14 @@ public class Matcher {
    * @return */
   private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
-        && consistent(ids, az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
+        && consistent(ids, first(az.methodInvocation(p).arguments()) + "", az.methodInvocation(n).arguments() + "");
   }
 
   /** @param p
    * @return */
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
     return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
-        && (az.methodInvocation(p).arguments().get(0) + "").startsWith("$A");
+        && (first(az.methodInvocation(p).arguments()) + "").startsWith("$A");
   }
 
   /** @param n
@@ -286,14 +286,14 @@ public class Matcher {
   public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
       final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
-        && consistent(ids, c.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
+        && consistent(ids, first(c.arguments()) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   /** @param p
    * @return */
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
-        && (az.classInstanceCreation(p).arguments().get(0) + "").startsWith("$A");
+        && (first(az.classInstanceCreation(p).arguments()) + "").startsWith("$A");
   }
 
   /** @param p
@@ -308,13 +308,13 @@ public class Matcher {
   }
 
   private static String blockVariableName(final ASTNode p) {
-    return az.methodInvocation(az.expressionStatement(statements(az.block(p)).get(0)).getExpression()).getName().getFullyQualifiedName();
+    return az.methodInvocation(az.expressionStatement(first(statements(az.block(p)))).getExpression()).getName().getFullyQualifiedName();
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
     if (!iz.block(p) || statements(az.block(p)).size() != 1)
       return false;
-    final Statement $ = statements(az.block(p)).get(0);
+    final Statement $ = first(statements(az.block(p)));
     return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith("$B");
   }
 
@@ -419,7 +419,7 @@ public class Matcher {
   /** @param p
    * @return */
   private static String argumentsId(final ASTNode p) {
-    return az.methodInvocation(p).arguments().get(0) + "";
+    return first(az.methodInvocation(p).arguments()) + "";
   }
 
   /** @param ¢
@@ -434,7 +434,7 @@ public class Matcher {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : statements(az.block(¢)).get(0);
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : first(statements(az.block(¢)));
   }
 
   <N extends ASTNode> ASTNode replacement(final N n) {

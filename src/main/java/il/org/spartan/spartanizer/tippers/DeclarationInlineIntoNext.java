@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** convert
  *
@@ -99,7 +100,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
 
   static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
-    return $.size() != 1 ? null : $.get(0);
+    return $.size() != 1 ? null : first($);
   }
 
   static List<SimpleName> occurencesOf(final Statement s, final String id) {

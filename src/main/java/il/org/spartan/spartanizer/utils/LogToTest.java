@@ -7,6 +7,7 @@ import java.util.function.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
+import static il.org.spartan.lisp.*;
 
 public class LogToTest {
   // TODO Roth: replace "\\\\" with File.separator (bug in Java???)
@@ -83,7 +84,7 @@ public class LogToTest {
       nu.put(errorLocationFileClean, Integer.valueOf(nu.get(s[s.length - 1]).intValue() + 1));
       errorLocationFileClean += nu.get(errorLocationFileClean).intValue() + 1;
     }
-    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), ss.get(0),
+    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), first(ss),
         ss.get(2).trim().equals(Linguistic.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 

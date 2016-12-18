@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.lisp.*;
 
 /** see issue #814 for more details
  * @author yaelAmitay
@@ -21,7 +22,7 @@ public class Issue814 {
 
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
-    final ReturnStatement s = new MethodExplorer(m).returnStatements().get(0);
+    final ReturnStatement s = first(new MethodExplorer(m).returnStatements());
     m.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment a) {
         final ASTRewrite r = ASTRewrite.create(m.getAST());

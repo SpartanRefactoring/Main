@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** convert
  *
@@ -62,7 +63,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   @Override protected boolean prerequisite(final SwitchStatement s) {
     final List<SwitchCase> $ = extract.switchCases(s);
     final List<Statement> ll = step.statements(s);
-    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1)) || $.size() == 1 && $.get(0).isDefault();
+    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1)) || $.size() == 1 && first($).isDefault();
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

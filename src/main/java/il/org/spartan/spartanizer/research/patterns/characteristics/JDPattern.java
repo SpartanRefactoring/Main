@@ -126,7 +126,6 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $ + "";
   }
 
-  /**  */
   static boolean nullCheckExpression(final Expression ¢) {
     return anyTips(tippers, ¢);
   }
