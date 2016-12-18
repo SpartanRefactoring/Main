@@ -1020,7 +1020,7 @@ public interface iz {
   static boolean variableDeclarationExpression(final ASTNode $) {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
-  
+
   /** @param $
    * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
@@ -1073,21 +1073,21 @@ public interface iz {
   }
 
   default int parseInt(String token) {
-   final String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]") ? Integer.parseInt($)
-        : $.matches("^[-+]?0[xX]") ? Integer.parseInt($, 16)
-            : $.matches("^[-+]?0[bB]") ? Integer.parseInt($, 2) : //
-                !$.matches("^[-+]?0") ? Integer.parseInt($) : //
+    final String $ = token.replaceAll("[\\s_]", "");
+    return $.matches("^[-+]?[1-9]\\w*") ? Integer.parseInt($)
+        : $.matches("^[-+]?0[xX]\\w*") ? Integer.parseInt($, 16)
+            : $.matches("^[-+]?0[bB]\\w*") ? Integer.parseInt($, 2) : //
+                !$.matches("^[-+]?0\\w*") ? Integer.parseInt($) : //
                     Integer.parseInt($, 8);
   }
 
   default long parseLong(String token) {
     String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]") ? Long.parseLong($)
-        : $.matches("^[-+]?0[xX]") ? Long.parseLong($, 16)
-            : $.matches("^[-+]?0[bB]") ? Long.parseLong($, 2) : //
-                !$.matches("^[-+]?0") ? Long.parseLong($) : //
-                  Long.parseLong($, 8);
+    return $.matches("^[-+]?[1-9]\\w*") ? Long.parseLong($)
+        : $.matches("^[-+]?0[xX]\\w*") ? Long.parseLong($, 16)
+            : $.matches("^[-+]?0[bB]\\w*") ? Long.parseLong($, 2) : //
+                !$.matches("^[-+]?0\\w*") ? Long.parseLong($) : //
+                    Long.parseLong($, 8);
   }
 
   /** @param ¢ JD
