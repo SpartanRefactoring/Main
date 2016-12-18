@@ -79,7 +79,7 @@ public class Augmenter implements Application {
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
     if (sss.isEmpty() || first(sss).isEmpty())
       return false;
-    r.replace(((TypeDeclaration) first(((CompilationUnit) first(first(sss)).getRoot()).types())).getName(),
+    r.replace(((TypeDeclaration) first(types((CompilationUnit) first(first(sss)).getRoot()))).getName(),
         first(first(sss)).getAST().newName("CollateralIsFun"), null);
     return true;
   }

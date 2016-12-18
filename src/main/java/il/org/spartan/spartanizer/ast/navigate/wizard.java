@@ -226,7 +226,7 @@ public interface wizard {
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(az.block(into.s(p)).statements()));
+        return az.astNode(first(statements(az.block(into.s(p)))));
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
