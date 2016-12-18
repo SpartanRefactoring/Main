@@ -108,7 +108,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
       exclude.exclude(b);
     return $ == null ? null : new Tip(description(), b, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, az.astNode(first(az.block(into.s("break;")).statements())), g);
+        r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
       }
     };
   }

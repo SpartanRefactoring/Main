@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -60,7 +60,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
         if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
-          final Expression a = (Expression) first(((ClassInstanceCreation) e).arguments());
+          final Expression a = first((arguments((ClassInstanceCreation) e)));
           $.add(0, addParenthesisIfNeeded(a));
           hs |= iz.stringLiteral(a);
         }
@@ -70,7 +70,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       }
       if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
-      final Expression a = (Expression) first(((MethodInvocation) e).arguments());
+      final Expression a = first(arguments((MethodInvocation) e));
       $.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = (MethodInvocation) e;

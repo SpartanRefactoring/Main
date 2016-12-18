@@ -313,7 +313,7 @@ public final class SearchTest {
 
   @Test public void forEnhancedAsParemeterInMethod() {
     final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
-    final SimpleName a = ((EnhancedForStatement) first(d.getBody().statements())).getParameter().getName();
+    final SimpleName a = ((EnhancedForStatement) first(statements(d))).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(d).size(), is(2));
   }
