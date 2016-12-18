@@ -13,15 +13,19 @@ public class ExaminerTest extends JavadocerTest {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = new Examiner());
   }
 
-  @Test public void basic() {
+  @Test public void a() {
     assert is("boolean examiner(){return field == 7;}");
   }
 
-  @Test public void basicNot() {
+  @Test public void b() {
     assert not("int examiner(){return 7;}");
   }
 
-  @Test public void comlicated() {
+  @Test public void c() {
     assert is("boolean examiner(Is this, The... real){return life && just.fantasy() && (caught == landslide || noEscape.from(reality));}");
+  }
+
+  @Test public void d() {
+    assert is("@Override public boolean matchesNoneOf(CharSequence ¢){  return ¢.length() == 0;}");
   }
 }
