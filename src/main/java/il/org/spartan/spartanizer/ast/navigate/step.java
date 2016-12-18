@@ -115,6 +115,8 @@ public enum step {
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
   public static Expression expression(final ASTNode ¢) {
+    if (¢ == null)
+      return null;
     switch (¢.getNodeType()) {
       case ASTNode.EXPRESSION_STATEMENT:
         return expression((ExpressionStatement) ¢);
@@ -146,19 +148,19 @@ public enum step {
   }
 
   public static Expression expression(final CastExpression $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ClassInstanceCreation $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ConditionalExpression ¢) {
-    return extract.core(¢.getExpression());
+    return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
-    return extract.core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ExpressionStatement $) {
@@ -170,7 +172,7 @@ public enum step {
   }
 
   public static Expression expression(final ForStatement ¢) {
-    return ¢.getExpression();
+    return ¢ == null ? null : ¢.getExpression();
   }
 
   public static Expression expression(final IfStatement $) {
@@ -692,5 +694,17 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static List<Statement> statements(SynchronizedStatement ¢) {
+    return ¢ == null ? null : statements(body(¢));
+  }
+
+  /** @param ¢ JD
+   * @return */
+  private static Block body(SynchronizedStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
   }
 }

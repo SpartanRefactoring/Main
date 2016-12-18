@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.collector;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
@@ -9,22 +9,30 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** An {@link IApplication} extension entry point, allowing execution of ***
+/** Like FolderASTVisitor but with binding. Needs to be run as an Application,
+ * which is not fun at all. Not ready yet.
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
-public final class BindingFun implements IApplication {
-  static void iterateMethodInvocations(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodInvocation ¢) {
-        assert ¢.getAST().hasResolvedBindings();
-        System.out.println(¢.resolveMethodBinding());
-        return super.visit(¢);
-      }
-    });
+public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor implements IApplication {
+  @Override void visit(final File ¢) {
+    dotter.click();
+    collect(¢);
+  }
+
+  void collect(final File f) {
+    ICompilationUnit u = null;
+    try {
+      u = openCompilationUnit(f);
+      ASTParser parser = ASTParser.newParser(AST.JLS8);
+      parser.setResolveBindings(true);
+      parser.setSource(u);
+      collect(az.compilationUnit(parser.createAST(null)));
+    } catch (JavaModelException | IOException ¢) {
+      ¢.printStackTrace();
+    }
   }
 
   static String getPackageNameFromSource(final String source) {
@@ -49,6 +57,8 @@ public final class BindingFun implements IApplication {
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
 
+  public abstract void Main(String[] args);
+
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);
     try {
@@ -57,36 +67,11 @@ public final class BindingFun implements IApplication {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\workspace\\testAddComments")) {
-      ICompilationUnit u = null;
-      try {
-        u = openCompilationUnit(f);
-        ASTParser parser = ASTParser.newParser(AST.JLS8);
-        parser.setResolveBindings(true);
-        parser.setSource(u);
-        CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-        ___.______unused();
-        iterateMethodInvocations(cu);
-      } catch (JavaModelException | IOException ¢) {
-        ¢.printStackTrace();
-      }
-    }
     return IApplication.EXIT_OK;
   }
 
   @Override public void stop() {
-    ___.nothing();
-  }
-
-  /** Discard compilation unit u
-   * @param u */
-  void discardCompilationUnit(final ICompilationUnit u) {
-    try {
-      u.close();
-      u.delete(true, null);
-    } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.logEvaluationError(this, ¢);
-    }
+    discardTempIProject();
   }
 
   void discardTempIProject() {

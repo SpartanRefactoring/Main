@@ -13,6 +13,6 @@ import il.org.spartan.spartanizer.research.patterns.*;
 public class CreateFromTest {
   @Test public void a() {
     trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);").withTipper(Block.class, new CreateFrom())
-        .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");
+        .gives("StatsAccumulator $=Create.from(values);");
   }
 }
