@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -20,18 +21,18 @@ public enum analyze {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
-          $.add(step.identifier(node));
+          $.add(identifier(node));
         return true;
       }
 
       boolean izMethodName(final Name ¢) {
-        return iz.methodInvocation(step.parent(¢)) && (step.name(az.methodInvocation(step.parent(¢))) + "").equals(¢ + "")
-            || iz.methodDeclaration(step.parent(¢)) && (step.name(az.methodDeclaration(step.parent(¢))) + "").equals(¢ + "");
+        return iz.methodInvocation(parent(¢)) && (identifier(az.methodInvocation(parent(¢))) + "").equals(¢ + "")
+            || iz.methodDeclaration(parent(¢)) && identifier(az.methodDeclaration(parent(¢))).equals(¢ + "");
       }
 
       @Override public boolean visit(final QualifiedName node) {
         if (!izMethodName(node))
-          $.add(step.identifier(node));
+          $.add(identifier(node));
         return true;
       }
     });
@@ -48,9 +49,9 @@ public enum analyze {
   private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
     if (!iz.typeDeclaration(d)) // TODO: Marco support all types of types
       return null;
-    for (final FieldDeclaration $ : step.fieldDeclarations(az.typeDeclaration(d)))
-      for (final VariableDeclarationFragment ¢ : step.fragments($))
-        if ((step.name(¢) + "").equals(n + ""))
+    for (final FieldDeclaration $ : fieldDeclarations(az.typeDeclaration(d)))
+      for (final VariableDeclarationFragment ¢ : fragments($))
+        if (step.identifier(¢).equals(n + ""))
           return step.type($) + "";
     return null;
   }
@@ -59,7 +60,7 @@ public enum analyze {
     final Str $ = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
+        if ($.notEmpty() || !step.identifier(¢).equals(n + ""))
           return true;
         $.set(step.type(¢));
         return false;
