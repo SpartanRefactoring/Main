@@ -53,8 +53,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     List<SwitchCase> l = extract.switchCases(s);
     List<Statement> ll = step.statements(s);
     int ind = firstBreakIndex(s);
-    return l.size() == 1 && !l.get(0).isDefault() && ll.size() > 1 && ind != 1
-        || l.size() == 2 && ind > 1 && ind < ll.size() - 1 && !iz.switchCase(ll.get(ll.size() - 1)) && (l.get(0).isDefault() || l.get(1).isDefault());
+//    return l.size() == 1 && !l.get(0).isDefault() && ll.size() > 1 && ind != 1
+//        || l.size() == 2 && ind > 1 && ind < ll.size() - 1 && !iz.switchCase(ll.get(ll.size() - 1)) && (l.get(0).isDefault() || l.get(1).isDefault());
+    return l.size() == 2 && ind > 1 && ind < ll.size() - 1 && !iz.switchCase(ll.get(ll.size() - 1)) && (l.get(0).isDefault() || l.get(1).isDefault());
   }
 
   @SuppressWarnings("unused") @Override public String description(SwitchStatement __) {
