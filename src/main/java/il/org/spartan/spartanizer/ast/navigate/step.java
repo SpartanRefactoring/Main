@@ -707,4 +707,10 @@ public enum step {
   private static Block body(SynchronizedStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static SimpleName label(ContinueStatement ¢) {
+    return ¢ == null ? null : ¢.getLabel();
+  }
 }

@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.first;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -89,8 +90,11 @@ public interface iz {
     if (b == null)
       return false;
     final IfStatement $ = az.ifStatement(step.parent(b));
-    return ($ == null || !wizard.same(s, az.astNode(az.block($.getElseStatement()).statements().get(0))) || wizard.recursiveElze(s) != null
-        || elze($) == null) && $ != null && (elze($) == null || wizard.recursiveElze(s) == null)
+    return ($ == null//
+        || !wizard.same(s, az.astNode(first(statements(az.block(elze($))))))//
+        || wizard.recursiveElze(s) != null//
+        || elze($) == null)//
+        && $ != null && (elze($) == null || wizard.recursiveElze(s) == null)
         && (elze($) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement($, s));
   }
 
@@ -1057,7 +1061,7 @@ public interface iz {
 
   /** @param ¢
    * @return */
-  static boolean synchronizedStatement(final Statement ¢) {
+  static boolean synchronizedStatement(final ASTNode ¢) {
     return ¢ instanceof SynchronizedStatement;
   }
 
@@ -1084,5 +1088,17 @@ public interface iz {
    * @return */
   static boolean thisExpression(final Expression ¢) {
     return ¢ instanceof ThisExpression;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean continueStatement(ASTNode ¢) {
+    return ¢ instanceof ContinueStatement;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean labeledStatement(ASTNode ¢) {
+    return ¢ instanceof LabeledStatement;
   }
 }

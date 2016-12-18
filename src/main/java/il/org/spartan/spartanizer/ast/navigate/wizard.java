@@ -552,7 +552,7 @@ public interface wizard {
 
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-    if (extendedModifiers(¢).isEmpty())
+    if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
       return $;
     if (iz.enumDeclaration(¢))
       $.addAll(as.list(isStatic, isAbstract, isFinal));

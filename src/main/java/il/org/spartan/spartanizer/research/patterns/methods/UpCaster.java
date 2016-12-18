@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * @since 2016 */
 public class UpCaster extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && notVoid(¢) && !returnTypeSameAsParameter(¢)
+    return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && returnTypeNotVoid(¢) && !returnTypeSameAsParameter(¢)
         && iz.name(expression(az.returnStatement(onlyStatement(¢))));
   }
 }
