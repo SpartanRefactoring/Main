@@ -38,6 +38,10 @@ public interface MethodPatternUtilitiesTrait {
     return parameters(¢).isEmpty();
   }
 
+  default boolean hazParameters(final MethodDeclaration ¢) {
+    return !hazNoParameters(¢);
+  }
+
   default Statement onlyStatement(final MethodDeclaration ¢) {
     return onlyOne(statements(¢));
   }

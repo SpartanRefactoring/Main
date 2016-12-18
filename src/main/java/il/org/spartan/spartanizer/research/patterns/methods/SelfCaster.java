@@ -9,9 +9,11 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class UpCaster extends JavadocMarkerNanoPattern {
+public class SelfCaster extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && notVoid(¢) && !returnTypeSameAsParameter(¢)
-        && iz.name(expression(az.returnStatement(onlyStatement(¢))));
+    if (!hazOneStatement(¢) || hazParameters(¢))
+      return false;
+    final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
+    return $ != null && returnTypeSameAs(¢, type($)) && iz.thisExpression(expression($));
   }
 }
