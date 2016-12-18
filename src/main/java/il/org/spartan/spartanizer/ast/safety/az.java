@@ -512,7 +512,7 @@ public enum az {
   /** @param ¢ JD
    * @return */
   static PrimitiveType primitiveType(final Type ¢) {
-    return ¢ == null || iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
+    return ¢ == null || !iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
   }
 
   /** @param ¢ JD
@@ -530,7 +530,7 @@ public enum az {
   /** @param ¢ JD
    * @return */
   public static Type type(final ASTNode ¢) {
-    return ¢ == null || iz.type(¢) ? null : (Type) ¢;
+    return ¢ == null || !iz.type(¢) ? null : (Type) ¢;
   }
 
   /** @param ¢ JD
@@ -553,7 +553,13 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static SynchronizedStatement synchronizedStatement(Statement ¢) {
+  public static SynchronizedStatement synchronizedStatement(ASTNode ¢) {
     return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static ContinueStatement continueStatement(ASTNode ¢) {
+    return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
 }

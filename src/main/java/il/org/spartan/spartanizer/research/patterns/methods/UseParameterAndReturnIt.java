@@ -13,7 +13,10 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * @since 2016 */
 public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && notEmpty(¢) && !iz.constructor(¢) && !iz.voidType(returnType(¢))
+    return hazOneParameter(¢)//
+        && notEmpty(¢)//
+        && !iz.constructor(¢)//
+        && !iz.voidType(returnType(¢))
         && returnStatements(¢).stream().map(r -> expression(r) + "").allMatch(e -> e.equals(identifier(name(onlyOne(parameters(¢))))));
   }
 }
