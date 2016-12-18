@@ -28,4 +28,8 @@ public class ExaminerTest extends JavadocerTest {
   @Test public void d() {
     assert is("@Override public boolean matchesNoneOf(CharSequence ¢){  return ¢.length() == 0;}");
   }
+
+  @Test public void e() {
+    assert is("@Override public boolean apply(@Nullable Object ¢){ return ¢ == null;}");
+  }
 }
