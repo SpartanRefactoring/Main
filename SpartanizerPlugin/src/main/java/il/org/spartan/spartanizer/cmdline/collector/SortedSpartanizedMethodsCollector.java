@@ -85,6 +85,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   @Override protected void init(String path) {
     System.err.println("Processing: " + path);
+    Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
   @Override protected void done(String path) {
@@ -104,10 +105,6 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   private static boolean excludeMethod(MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
-  }
-
-  @Override protected void before() {
-    Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
   private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -136,7 +133,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
           .put("perc. of methods", format.decimal(100 * safe.div(li.size(), methodsTotal))) //
           .put("perc. of statements", format.decimal(100 * safe.div(numStatements * li.size(), statementsTotal))) //
           .put("perc. touched",
-              format.decimal(100 * safe.div(li.stream().filter(x -> x.numNPStatements > 0 || x.numExpressions > 0).count(), li.size()))) //
+              format.decimal(100 * safe.div(li.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), li.size()))) //
       ;
       report.nl();
     }

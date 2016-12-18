@@ -72,11 +72,6 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     done(path);
   }
 
-  /** for subclasses to implement if needed */
-  @SuppressWarnings("static-method") protected void before() {
-    ___.nothing();
-  }
-
   void collect(final CompilationUnit ¢) {
     ¢.accept(this);
   }
