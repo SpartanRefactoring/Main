@@ -19,13 +19,20 @@ public class MethodRecord {
   public int numParameters;
   public int numStatements;
   public int numExpressions;
+  public MethodDeclaration before;
+  public MethodDeclaration after;
 
-  public MethodRecord(final MethodDeclaration m) {
-    methodName = m.getName() + "";
-    methodClassName = findTypeAncestor(m);
-    numParameters = m.parameters().size();
-    numStatements = measure.statements(m);
-    numExpressions = measure.expressions(m);
+  public MethodRecord(final MethodDeclaration d) {
+    before = d;
+    methodName = d.getName() + "";
+    methodClassName = findTypeAncestor(d);
+    numParameters = d.parameters().size();
+    numStatements = measure.statements(d);
+    numExpressions = measure.expressions(d);
+  }
+
+  void setAfter(final MethodDeclaration ¢) {
+    after = ¢;
   }
 
   /** @param n matched node
