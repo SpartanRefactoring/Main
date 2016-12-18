@@ -267,14 +267,14 @@ public class Matcher {
    * @return */
   private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
-        && consistent(ids, first(az.methodInvocation(p).arguments()) + "", az.methodInvocation(n).arguments() + "");
+        && consistent(ids, first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
   }
 
   /** @param p
    * @return */
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
     return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
-        && (first(az.methodInvocation(p).arguments()) + "").startsWith("$A");
+        && (first(arguments(az.methodInvocation(p))) + "").startsWith("$A");
   }
 
   /** @param n
@@ -286,14 +286,14 @@ public class Matcher {
   public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
       final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
-        && consistent(ids, first(c.arguments()) + "", az.classInstanceCreation(n).arguments() + "");
+        && consistent(ids, first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   /** @param p
    * @return */
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
-        && (first(az.classInstanceCreation(p).arguments()) + "").startsWith("$A");
+        && (first(arguments(az.classInstanceCreation(p))) + "").startsWith("$A");
   }
 
   /** @param p
@@ -419,7 +419,7 @@ public class Matcher {
   /** @param p
    * @return */
   private static String argumentsId(final ASTNode p) {
-    return first(az.methodInvocation(p).arguments()) + "";
+    return first(arguments(az.methodInvocation(p))) + "";
   }
 
   /** @param ¢

@@ -12,22 +12,23 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** see issue #713 for more details
  * @author Inbal Zukerman
  * @author Elia Traore
  * @since 2016-11-06 */
 public class issue713 {
-  TypeDeclaration noPublic = (TypeDeclaration) first(az.compilationUnit(wizard.ast("public class noPublic {   } ")).types());
+  TypeDeclaration noPublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class noPublic {   } "))));
   TypeDeclaration onlyPrivates = (TypeDeclaration) first(
-      az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } ")).types());
-  TypeDeclaration onePublic = (TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types());
+      types(az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } "))));
+  TypeDeclaration onePublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePublic {  public int x; } "))));
   TypeDeclaration notOnlyPublic = (TypeDeclaration) first(
-      az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } ")).types());
+      types(az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } "))));
   TypeDeclaration listOfPublicFields = (TypeDeclaration) first(
-      az.compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } ")).types());
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } "))));
   TypeDeclaration notCountingMethods = (TypeDeclaration) first(
-      az.compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types());
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } "))));
 
   @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;
