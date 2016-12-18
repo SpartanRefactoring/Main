@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -15,9 +16,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class TableReusabilityIndices extends FolderASTVisitor {
   static {
     clazz = TableReusabilityIndices.class;
-    writer = new CSVLineWriter(outputFolder + "/" + clazz.getSimpleName());
+    try {
+      writer = new CSVStatistics(outputFolder + "/" + clazz.getSimpleName(), "$\\#$");
+    } catch (IOException ¢) {
+      throw new RuntimeException(¢);
+    }
   }
-  private static final CSVLineWriter writer;
+  private static final CSVStatistics writer;
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
@@ -158,7 +163,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   void summarize() {
     int n = 0;
-    writer.put("NAME", presentSourceName);
+    int N = 0;
+    writer.put("$\\#$", ++N);
+    writer.put("Project", presentSourceName);
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
     for (final String category : usage.keySet()) {
       final Map<String, Integer> map = usage.get(category);
@@ -187,7 +194,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       if (!defined.contains(k))
         born.remove(k);
     writer.put("Reuse", rindex(ranks(born)));
-    writer.put("Diff", rindex(ranks(born)) - rindex(ranks(adopted)));
+    writer.put("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
     writer.nl();
   }
 
