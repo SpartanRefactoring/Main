@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @since 2016 */
 public class Logger {
   private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
-  private static final Map<String, NPRecord> npStatistics = new HashMap<>();
+  private static final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
@@ -171,7 +171,7 @@ public class Logger {
   /** @param n
    * @param np */
   private static void logNPInfo(final ASTNode n, final String np) {
-    npStatistics.putIfAbsent(np, new NPRecord(np, n.getClass()));
+    npStatistics.putIfAbsent(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
   }
 
@@ -215,53 +215,6 @@ public class Logger {
     return az.methodDeclaration($);
   }
 
-  /** @param ¢
-   * @return */
-  static String findTypeAncestor(final ASTNode ¢) {
-    ASTNode n = ¢;
-    String $ = "";
-    while (n != null) {
-      while (!iz.abstractTypeDeclaration(n) && n != null)
-        n = n.getParent();
-      if (n == null)
-        break;
-      $ += "." + az.abstractTypeDeclaration(n).getName();
-      n = n.getParent();
-    }
-    return $.substring(1);
-  }
-
-  /** Collects statistics for a method in which a nanopattern was found.
-   * @author Ori Marcovitch
-   * @since 2016 */
-  static class MethodRecord {
-    public String methodName;
-    public String methodClassName;
-    public int numNPStatements;
-    public int numNPExpressions;
-    public List<String> nps = new ArrayList<>();
-    public int numParameters;
-    public int numStatements;
-    public int numExpressions;
-
-    public MethodRecord(final MethodDeclaration m) {
-      methodName = m.getName() + "";
-      methodClassName = findTypeAncestor(m);
-      numParameters = m.parameters().size();
-      numStatements = measure.statements(m);
-      numExpressions = measure.expressions(m);
-    }
-
-    /** @param n matched node
-     * @param np matching nanopattern */
-    public void markNP(final ASTNode n, final String np) {
-      numNPStatements += measure.statements(n);
-      numNPExpressions += measure.expressions(n);
-      nps.add(np);
-      logNodeInfo(n);
-    }
-  }
-
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logCompilationUnit(final CompilationUnit ¢) {
@@ -284,31 +237,6 @@ public class Logger {
    * @param ¢ compilation unit */
   public static void logFile(final String fileName) {
     currentFile = fileName;
-  }
-
-  /** Collects statistics for a nano.
-   * @author Ori Marcovitch
-   * @since 2016 */
-  static class NPRecord {
-    final String name;
-    int occurences;
-    int numNPStatements;
-    int numNPExpressions;
-    final String className;
-
-    /** @param name
-     * @param cl */
-    public NPRecord(final String name, final Class<? extends ASTNode> cl) {
-      this.name = name;
-      className = cl.getSimpleName();
-    }
-
-    /** @param ¢ matched node */
-    public void markNP(final ASTNode ¢) {
-      ++occurences;
-      numNPStatements += measure.statements(¢);
-      numNPExpressions += measure.expressions(¢);
-    }
   }
 
   private static double min(final double a, final double d) {
