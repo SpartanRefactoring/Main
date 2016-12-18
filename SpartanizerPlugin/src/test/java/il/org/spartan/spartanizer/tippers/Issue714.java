@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** see issue #714 for more details
  * @author Dan Abramovich
@@ -40,7 +41,7 @@ public class Issue714 {
   }
 
   @Test public void testNoFinal() {
-    assert !determineIf.isImmutable((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class A {int x;}")).types()));
+    assert !determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class A {int x;}")))));
   }
 
   @Test public void testNull() {
@@ -56,10 +57,10 @@ public class Issue714 {
   }
 
   @Test public void testSimpleTypeDecleration() {
-    assert determineIf.isImmutable((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class A {}")).types()));
+    assert determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class A {}")))));
   }
 
   private TypeDeclaration typeConvert(final String $) {
-    return (TypeDeclaration) first(az.compilationUnit(wizard.ast($)).types());
+    return (TypeDeclaration) first(types(az.compilationUnit(wizard.ast($))));
   }
 }
