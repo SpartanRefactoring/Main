@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
+
 import static il.org.spartan.lisp.first;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -388,7 +390,7 @@ public interface iz {
   }
 
   static int findRadix(String $) {
-    return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8: 10;
+    return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8 : 10;
   }
 
   /** @param o The operator to check
@@ -1101,6 +1103,9 @@ public interface iz {
   default boolean parsesTo(final String $, final int i) {
     try {
       return parseInt($) == i;
+    } catch (final NumberFormatException __) {
+      ___.unused(__);
+      return false;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;

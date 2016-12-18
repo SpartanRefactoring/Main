@@ -32,14 +32,24 @@ public class Delegator extends JavadocMarkerNanoPattern {
 
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
-    return $ != null && anyTips(tippers, expression(¢)) && iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
+    return $ != null//
+        && anyTips(tippers, expression(¢))//
+        && iz.methodInvocation($)//
+        && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
         && parametersNames(d).containsAll(dependencies(arguments(az.methodInvocation($))));
   }
 
   /** @param arguments
    * @return */
-  private static boolean areAtomic(final List<Expression> arguments) {
-    return arguments.stream().allMatch(¢ -> iz.name(¢) || iz.literal(¢));
+  private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
+    return arguments.stream()
+        .allMatch(¢ -> iz.name(¢)//
+            || iz.literal(¢)//
+            || (iz.methodInvocation(¢) && safeContains(parametersNames, ¢)));
+  }
+
+  private static boolean safeContains(final List<String> parametersNames, Expression ¢) {
+    return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 
   /** @param arguments
