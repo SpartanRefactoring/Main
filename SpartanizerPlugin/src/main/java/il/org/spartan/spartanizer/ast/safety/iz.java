@@ -387,6 +387,10 @@ public interface iz {
     return ¢ != null && (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
+  static int findRadix(String $) {
+    return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8: 10;
+  }
+
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands
    *         swap. */
@@ -779,6 +783,16 @@ public interface iz {
     return iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
+  static int parseInt(String token) {
+    final String $ = token.replaceAll("[\\s_]", "");
+    return Integer.parseInt($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
+  }
+
+  static long parseLong(String token) {
+    final String $ = token.replaceAll("[\\s_Ll]", "");
+    return Long.parseLong($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
+  }
+
   /** @param a the assignment who's operator we want to check
    * @return true is the assignment's operator is assign */
   static boolean plainAssignment(final Assignment ¢) {
@@ -1020,7 +1034,7 @@ public interface iz {
   static boolean variableDeclarationExpression(final ASTNode $) {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
-  
+
   /** @param $
    * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
@@ -1070,24 +1084,6 @@ public interface iz {
 
   static boolean wildcardType(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
-  }
-
-  default int parseInt(String token) {
-   final String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]") ? Integer.parseInt($)
-        : $.matches("^[-+]?0[xX]") ? Integer.parseInt($, 16)
-            : $.matches("^[-+]?0[bB]") ? Integer.parseInt($, 2) : //
-                !$.matches("^[-+]?0") ? Integer.parseInt($) : //
-                    Integer.parseInt($, 8);
-  }
-
-  default long parseLong(String token) {
-    String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]") ? Long.parseLong($)
-        : $.matches("^[-+]?0[xX]") ? Long.parseLong($, 16)
-            : $.matches("^[-+]?0[bB]") ? Long.parseLong($, 2) : //
-                !$.matches("^[-+]?0") ? Long.parseLong($) : //
-                  Long.parseLong($, 8);
   }
 
   /** @param ¢ JD
