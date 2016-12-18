@@ -90,7 +90,7 @@ public enum enumerate {
    * @since 16-11-07 */
   @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
-    final List<?> l = d.getBody().statements();
+    final List<?> l = step.statements(step.body(d));
     final boolean[] arr = new boolean[10];
     final int BLOCK = 0;
     final int IFSTATE = 1;
