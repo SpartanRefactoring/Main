@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** Converts <code>""+"foo"</code> to <code>"foo"</code> when x is of type
  * String
@@ -53,6 +54,6 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
         }
       }
     }
-    return $.size() == es.size() ? null : $.size() == 1 ? $.get(0) : subject.operands($).to(PLUS2);
+    return $.size() == es.size() ? null : $.size() == 1 ? first($) : subject.operands($).to(PLUS2);
   }
 }

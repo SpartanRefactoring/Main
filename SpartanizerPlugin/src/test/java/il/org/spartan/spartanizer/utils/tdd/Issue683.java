@@ -13,6 +13,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Tests of {@link tdd.find}
  * @author AnnaBel7
@@ -47,7 +49,7 @@ public class Issue683 {
   }
 
   private ASTNode createAST(final String ¢) {
-    return (ASTNode) az.compilationUnit(wizard.ast(¢)).types().get(0);
+    return first(types(az.compilationUnit(wizard.ast(¢))));
   }
 
   Predicate<ASTNode> createExpressionPredicate() {
@@ -70,12 +72,12 @@ public class Issue683 {
 
   @Test public void f() {
     final ASTNode t = createAST("public class A { int x; int y; int f() { return x + t; } }");
-    azzert.that(find.ancestorType(getChildren(createMethodPredicate(), t).inner.get(0)), is(t));
+    azzert.that(find.ancestorType(first(getChildren(createMethodPredicate(), t).inner)), is(t));
   }
 
   @Test public void g() {
     final ASTNode t = createAST("public class A { int x; int y; public class B { public class C { public class D {} } } int f() { return x + t; } }");
-    azzert.that(find.ancestorType(getChildren(createMethodPredicate(), t).inner.get(0)), is(t));
+    azzert.that(find.ancestorType(first(getChildren(createMethodPredicate(), t).inner)), is(t));
   }
 
   private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {

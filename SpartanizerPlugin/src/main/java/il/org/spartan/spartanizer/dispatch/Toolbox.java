@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -195,6 +196,7 @@ public class Toolbox {
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
+            new LispFirstElement(), //
             null)//
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //

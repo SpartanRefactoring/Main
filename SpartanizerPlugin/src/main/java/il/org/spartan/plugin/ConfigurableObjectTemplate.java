@@ -7,7 +7,6 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public interface ConfigurableObjectTemplate {
-  /**  */
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
     //@formatter:off

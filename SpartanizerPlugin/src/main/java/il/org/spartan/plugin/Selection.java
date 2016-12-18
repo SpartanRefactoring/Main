@@ -15,6 +15,7 @@ import org.eclipse.ui.views.markers.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection
@@ -81,7 +82,7 @@ public class Selection extends AbstractSelection<Selection> {
    * @return name for selection, extracted from the compilation units */
   private static String getName(final List<ICompilationUnit> ¢) {
     // TODO: Yuval Simon study the use of lisp.getOnlyOne and apply here.
-    return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? ¢.get(0).getElementName() : ¢.get(0).getResource().getProject().getName();
+    return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? first(¢).getElementName() : first(¢).getResource().getProject().getName();
   }
 
   /** @param ¢ JD
@@ -95,7 +96,7 @@ public class Selection extends AbstractSelection<Selection> {
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
-    final IResource r = inner.get(0).descriptor.getResource();
+    final IResource r = first(inner).descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();
@@ -304,7 +305,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final ITextSelection ¢) {
       final Selection $ = getCompilationUnit();
       return $ == null || $.inner == null || $.inner.isEmpty() ? null
-          : (¢.getOffset() == 0 && ¢.getLength() == $.inner.get(0).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
+          : (¢.getOffset() == 0 && ¢.getLength() == first($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
               .setName(SELECTION_NAME);
     }
 
@@ -332,7 +333,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final ITreeSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
-        final Object o = ss.get(0);
+        final Object o = first(ss);
         return o == null ? empty()
             : o instanceof MarkerItem ? by((MarkerItem) o)
                 : o instanceof IJavaProject ? by((IJavaProject) o)

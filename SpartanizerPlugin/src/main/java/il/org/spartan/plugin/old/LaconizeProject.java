@@ -13,6 +13,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
@@ -42,7 +43,7 @@ public final class LaconizeProject extends BaseHandler {
       eclipse.progressMonitorDialog(true).run(true, true, pm -> {
         pm.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
         a.setMarker(null);
-        a.setICompilationUnit(todo.get(0));
+        a.setICompilationUnit(first(todo));
         $.addAndGet(a.countTips());
         if (pm.isCanceled())
           $.set(0);

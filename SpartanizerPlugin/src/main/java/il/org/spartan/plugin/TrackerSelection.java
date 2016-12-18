@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import static il.org.spartan.lisp.*;
 
 public class TrackerSelection extends Selection {
   ASTNode track;
@@ -26,11 +27,11 @@ public class TrackerSelection extends Selection {
   }
 
   public void update() {
-    inner.get(0).dispose();
+    first(inner).dispose();
     final ASTNode newTrack = fix(track.getNodeType(),
         track.getLength() > length
-            ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
-            : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
+            ? new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+            : new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {
       inner.clear(); // empty selection
       return;

@@ -140,7 +140,6 @@ public enum enumerate {
   }
   // For you to implement! Let's TDD and get it on!
 
-  /** @return */
   public static int ifStatements(final ASTNode ¢) {
     if (¢ == null)
       return 0;

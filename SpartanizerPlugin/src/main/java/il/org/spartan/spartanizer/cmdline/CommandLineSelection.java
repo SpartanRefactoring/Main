@@ -58,12 +58,10 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return null;
     }
 
-    /** @return */
     public static AbstractSelection<CommandLineSelection> get() {
       return getFromPath(presentSourcePath);
     }
 
-    /** @return */
     public static AbstractSelection<CommandLineSelection> get(final String from) {
       return getFromPath(from);
     }
