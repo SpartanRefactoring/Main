@@ -197,6 +197,7 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new LispFirstElement(), //
+            new StatementsThroughStep(), //
             null)//
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //

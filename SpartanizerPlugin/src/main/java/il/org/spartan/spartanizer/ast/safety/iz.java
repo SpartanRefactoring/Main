@@ -1081,8 +1081,8 @@ public interface iz {
                     Integer.parseInt($, 8);
   }
 
-  default long parseLong(String $) {
-    $ = $.replaceAll("[\\s_]", "");
+  default long parseLong(String token) {
+    String $ = token.replaceAll("[\\s_]", "");
     return $.matches("^[-+]?[1-9]") ? Long.parseLong($)
         : $.matches("^[-+]?0[xX]") ? Long.parseLong($, 16)
             : $.matches("^[-+]?0[bB]") ? Long.parseLong($, 2) : //
