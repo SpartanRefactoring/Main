@@ -1,5 +1,6 @@
 package il.org.spartan.athenizer.collateral;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -14,6 +15,7 @@ import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 import static il.org.spartan.lisp.*;
+
 /** An application of the Athenizer project. Augment java code to be more clear
  * and debugable. TODO Roth: add progress monitor support TODO Roth: add
  * TextEditGroup support (?)
@@ -49,14 +51,14 @@ public class Augmenter implements Application {
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
     final List<List<Statement>> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unchecked") public boolean visit(final Block b) {
+      @Override public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;
         if (inRange(b, s))
-          $.add(b.statements());
+          $.add(statements(b));
         else {
           final List<Statement> l = new ArrayList<>();
-          for (final Statement ¢ : (List<Statement>) b.statements())
+          for (final Statement ¢ : statements(b))
             if (inRange(¢, s))
               l.add(¢);
           if (!discardOptimization(l))
@@ -153,7 +155,7 @@ public class Augmenter implements Application {
    * @param ¢ JD
    * @return true iff block should be discarded */
   static boolean discardOptimization(final Block ¢) {
-    return ¢ == null || ¢.statements() == null || ¢.statements().size() < MIN_STATEMENTS_COUNT;
+    return ¢ == null || statements(¢) == null || statements(¢).size() < MIN_STATEMENTS_COUNT;
   }
 
   /** Determines whether a list of statements should not be collateralized, i.e.
