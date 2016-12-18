@@ -54,12 +54,12 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notVoid(final MethodDeclaration ¢) {
+  default boolean returnTypeNotVoid(final MethodDeclaration ¢) {
     return !iz.voidType(returnType(¢));
   }
 
   default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
-    return (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
+    return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
   default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
@@ -71,8 +71,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean returnsParam(final MethodDeclaration ¢) {
-    return iz.returnStatement(lastStatement(¢))
-        && identifier(az.name(expression(az.returnStatement(lastStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
+    return safeEquals(identifier(az.name(expression(az.returnStatement(lastStatement(¢))))), identifier(name(onlyParameter(¢))));
   }
 
   /** @param ¢
@@ -95,5 +94,9 @@ public interface MethodPatternUtilitiesTrait {
 
   default Statement firstStatement(final MethodDeclaration ¢) {
     return first(statements(¢));
+  }
+
+  default boolean safeEquals(final Object o1, final Object o2) {
+    return o1 != null && o2 != null && o1.equals(o2);
   }
 }
