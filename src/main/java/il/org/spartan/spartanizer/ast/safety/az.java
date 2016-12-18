@@ -512,7 +512,7 @@ public enum az {
   /** @param ¢ JD
    * @return */
   static PrimitiveType primitiveType(final Type ¢) {
-    return ¢ == null ? null : (PrimitiveType) ¢;
+    return ¢ == null || iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
   }
 
   /** @param ¢ JD
@@ -524,30 +524,36 @@ public enum az {
   /** @param ¢ JD
    * @return */
   public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
-    return ¢ == null ? null : (VariableDeclarationStatement) ¢;
+    return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
   }
 
   /** @param ¢ JD
    * @return */
   public static Type type(final ASTNode ¢) {
-    return ¢ == null ? null : (Type) ¢;
+    return ¢ == null || iz.type(¢) ? null : (Type) ¢;
   }
 
   /** @param ¢ JD
    * @return */
   public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
-    return ¢ == null ? null : (SuperMethodInvocation) ¢;
+    return ¢ == null || !iz.superMethodInvocation(¢) ? null : (SuperMethodInvocation) ¢;
   }
 
   /** @param ¢ JD
    * @return */
   public static FieldAccess fieldAccess(final ASTNode ¢) {
-    return ¢ == null ? null : (FieldAccess) ¢;
+    return ¢ == null || !iz.fieldAccess(¢) ? null : (FieldAccess) ¢;
   }
 
   /** @param ¢ JD
    * @return */
   public static QualifiedName qualifiedName(final ASTNode ¢) {
-    return ¢ == null ? null : (QualifiedName) ¢;
+    return ¢ == null || !iz.qualifiedName(¢) ? null : (QualifiedName) ¢;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static SynchronizedStatement synchronizedStatement(Statement ¢) {
+    return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
   }
 }

@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author ZivIzhar
  * @author rodedzats
  * @since 2016-11-13 */
+@Ignore
 @SuppressWarnings("static-method") //
 public class LinguisticTest {
   @Test public void testPluralInt() {
