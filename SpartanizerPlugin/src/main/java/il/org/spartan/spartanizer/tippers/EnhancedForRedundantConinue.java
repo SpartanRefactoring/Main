@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** like (@link ForRedundantContinue) but for enhanced for.
  * @author Kfir Marx
@@ -24,7 +25,7 @@ public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatem
   }
 
   static Statement lastStatement(final EnhancedForStatement ¢) {
-    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) az.block(¢.getBody()).statements().get(az.block(¢.getBody()).statements().size() - 1);
+    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) last(az.block(¢.getBody()).statements());
   }
 
   @Override public Tip tip(final EnhancedForStatement ¢) {
