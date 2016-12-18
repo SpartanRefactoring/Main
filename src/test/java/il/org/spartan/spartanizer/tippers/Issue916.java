@@ -10,12 +10,19 @@ import org.junit.*;
 
 @SuppressWarnings("static-method")
 public class Issue916 {
-  @Test public void a() {
-    trimmingOf("switch(x){ case 1: x=2; }").gives("{if(x==1) { x=2; }}").gives("if(x==1) { x=2; }");
-  }
-  
-  @Test public void b() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; }").gives("{if(x==1) {x=2; y=3;}}");
+  @Ignore
+  static class InQuestion {
+    @Test public void a() {
+      trimmingOf("switch(x){ case 1: x=2; }").gives("{if(x==1) { x=2; }}").gives("if(x==1) { x=2; }");
+    }
+    
+    @Test public void b() {
+      trimmingOf("switch(x){ case 1: x=2; y=3; }").gives("{if(x==1) {x=2; y=3;}}");
+    }
+    
+    @Test public void f() {
+      trimmingOf("switch(x){ case 1: x=2; break; }").gives("{if(x==1) { x=2; }}");
+    }
   }
   
   @Test public void c() {
@@ -28,10 +35,6 @@ public class Issue916 {
   
   @Test public void e() {
     trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3;}").stays();
-  }
-  
-  @Test public void f() {
-    trimmingOf("switch(x){ case 1: x=2; break; }").gives("{if(x==1) { x=2; }}");
   }
   
   @Test public void g() {
