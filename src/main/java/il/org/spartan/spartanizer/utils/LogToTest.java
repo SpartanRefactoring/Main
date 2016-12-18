@@ -49,7 +49,7 @@ public class LogToTest {
           } else if (l.equals(monitor.FILE_SUB_SEPARATOR.trim()))
             es.add("");
           else
-            es.set(es.size() - 1, es.get(es.size() - 1) + "\n" + l);
+            es.set(es.size() - 1, last(es) + "\n" + l);
           l = r.readLine();
         }
       } catch (final IOException ¢) {

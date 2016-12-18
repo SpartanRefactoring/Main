@@ -83,10 +83,9 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           l.remove(1);
           l.remove(0);
         }
-        if (!l.isEmpty() && iz.breakStatement(l.get(l.size() - 1)))
+        if (!l.isEmpty() && iz.breakStatement(last(l)))
           l.remove(l.size() - 1);
-        final String tail = l.isEmpty() || !hadDefault || getDefaultIndex(l) >= 0 ? ""
-            : (iz.returnStatement(l.get(l.size() - 1)) ? "" : "break; ") + "default:";
+        final String tail = l.isEmpty() || !hadDefault || getDefaultIndex(l) >= 0 ? "" : (iz.returnStatement(last(l)) ? "" : "break; ") + "default:";
         r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + tail + "}")).toOneStatementOrNull(), g);
       }
 
@@ -108,7 +107,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
     final List<Statement> l = step.statements(s);
-    if (!l.isEmpty() && iz.switchCase(l.get(l.size() - 1)) && !az.switchCase(l.get(l.size() - 1)).isDefault())
+    if (!l.isEmpty() && iz.switchCase(last(l)) && !az.switchCase(last(l)).isDefault())
       return true;
     for (final Integer k : range.from(0).to(l.size() - 1))
       if (iz.switchCase(l.get(k)) && iz.breakStatement(l.get(k + 1))
