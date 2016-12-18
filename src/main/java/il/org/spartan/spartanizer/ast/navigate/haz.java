@@ -99,11 +99,11 @@ public enum haz {
       }
 
       boolean ¢(final SimpleName ¢) {
-        return ¢(¢.getIdentifier());
+        return ¢(identifier(¢));
       }
 
       boolean ¢(final SingleVariableDeclaration ¢) {
-        return ¢(¢.getName());
+        return ¢(step.name(¢));
       }
 
       boolean ¢(final Statement ¢) {

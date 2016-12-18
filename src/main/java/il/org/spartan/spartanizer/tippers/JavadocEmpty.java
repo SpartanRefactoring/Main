@@ -21,21 +21,21 @@ public final class JavadocEmpty extends CarefulTipper<Javadoc> implements Tipper
   }
 
   @Override public boolean prerequisite(final Javadoc ¢) {
-    List<TagElement> tags = tags(¢);
-    for (TagElement t : tags)
+    final List<TagElement> tags = tags(¢);
+    for (final TagElement t : tags)
       if (!empty(t))
         return false;
     return true;
   }
 
-  private static boolean empty(TagElement ¢) {
-    for (Object a: ¢.fragments())
+  private static boolean empty(final TagElement ¢) {
+    for (final Object a : ¢.fragments())
       if (a != null && (!(a instanceof TextElement) || !empty((TextElement) a)))
         return false;
     return true;
   }
 
-  private static boolean empty(TextElement ¢) {
+  private static boolean empty(final TextElement ¢) {
     return ¢.getText().replaceAll("[\\s*]", "").isEmpty();
   }
 

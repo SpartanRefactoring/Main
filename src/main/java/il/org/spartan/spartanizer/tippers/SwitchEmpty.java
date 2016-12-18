@@ -40,22 +40,21 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
         final List<Statement> ll = step.statements(s);
         if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1))) {
           r.remove(s, g);
-          if(haz.sideEffects(s.getExpression()))
+          if (haz.sideEffects(s.getExpression()))
             r.replace(s, wizard.ast(s.getExpression() + ";"), g);
           return;
         }
-        if (iz.breakStatement(ll.get(ll.size()-1)))
+        if (iz.breakStatement(ll.get(ll.size() - 1)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
         r.replace(s, wizard.ast(!haz.sideEffects(s.getExpression()) ? statementsToString(ll) : s.getExpression() + ";" + statementsToString(ll)), g);
-
       }
     };
   }
-  
-  static String statementsToString(List<Statement> ss) {
-    StringBuilder $ = new StringBuilder();
-    for(Statement k : ss)
+
+  static String statementsToString(final List<Statement> ss) {
+    final StringBuilder $ = new StringBuilder();
+    for (final Statement k : ss)
       $.append(k);
     return $ + "";
   }
