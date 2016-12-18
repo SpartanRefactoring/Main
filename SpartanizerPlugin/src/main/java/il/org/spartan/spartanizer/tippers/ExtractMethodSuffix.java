@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 // TODO Roth: choose more suitable category
 // TODO Roth: add tests for tipper
@@ -139,14 +140,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
-      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(¢.fragments()) instanceof SimpleName) {
         hasParamTags = true;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(¢.fragments().get(0)))
+        if (!ns.contains(first(¢.fragments())))
           xs.add(¢);
         else
-          ns.remove(¢.fragments().get(0));
+          ns.remove(first(¢.fragments()));
       }
     if (!hasParamTags)
       return;

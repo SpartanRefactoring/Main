@@ -11,6 +11,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** Tests of {@link measure.expressions}
  * @author RoeiRaz
@@ -40,7 +41,7 @@ public class Issue753 {
   }
 
   @Test public void e() {
-    azzert.that("foo", is(getAll.methods(az.compilationUnit(wizard.ast("class A{boolean foo(){return false;}}"))).get(0).getName().getIdentifier()));
+    azzert.that("foo", is(first(getAll.methods(az.compilationUnit(wizard.ast("class A{boolean foo(){return false;}}")))).getName().getIdentifier()));
   }
 
   @Test public void f() {
@@ -49,8 +50,8 @@ public class Issue753 {
         + " int anotherFunc(){} }";
     final List<MethodDeclaration> res1 = getAll.methods(az.compilationUnit(wizard.ast(cuStr1)));
     final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(wizard.ast(cuStr2)));
-    azzert.that("foo", is(res1.get(0).getName().getIdentifier()));
-    azzert.that("elite", is(res2.get(0).getName().getIdentifier()));
+    azzert.that("foo", is(first(res1).getName().getIdentifier()));
+    azzert.that("elite", is(first(res2).getName().getIdentifier()));
     azzert.that("innerfunc", is(res2.get(1).getName().getIdentifier()));
     azzert.that("anotherFunc", is(res2.get(2).getName().getIdentifier()));
   }

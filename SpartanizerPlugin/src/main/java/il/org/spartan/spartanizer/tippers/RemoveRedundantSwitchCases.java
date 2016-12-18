@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -77,7 +79,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
             l.remove(¢);
         if (l.size() == 1)
           l.remove(0);
-        if (l.size() == 2 && iz.switchCase(l.get(0)) && iz.breakStatement(l.get(1))) {
+        if (l.size() == 2 && iz.switchCase(first(l)) && iz.breakStatement(l.get(1))) {
           l.remove(1);
           l.remove(0);
         }

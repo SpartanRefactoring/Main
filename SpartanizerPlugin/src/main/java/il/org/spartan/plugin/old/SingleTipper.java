@@ -105,7 +105,6 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return Selection.Util.getAllCompilationUnits();
     }
 
-    /**  */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
       final int $ = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + $ + " " + plurals("file", $) + "\n" //

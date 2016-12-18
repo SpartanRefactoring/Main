@@ -86,7 +86,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
           $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
         }
     });
-    return subject.append(subject.pair($.get(0), $.get(1)).to(from.getOperator()), chop(chop($)));
+    return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {

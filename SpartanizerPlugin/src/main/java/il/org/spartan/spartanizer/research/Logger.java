@@ -315,9 +315,6 @@ public class Logger {
     return a < d ? a : d;
   }
 
-  /**
-   *
-   */
   public static void finishedType() {
     currentType.pop();
   }

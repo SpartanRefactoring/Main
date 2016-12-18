@@ -8,6 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import static il.org.spartan.lisp.*;
 
 /** Tests for issue 687
  * @author Raviv Rachmiel
@@ -20,13 +21,13 @@ public class Issue687 {
   }
 
   @Test public void testCheckActualName() {
-    assert "a".equals(getAll.names((Block) wizard.ast("{a=1+1;}")).get(0) + "");
+    assert "a".equals(first(getAll.names((Block) wizard.ast("{a=1+1;}"))) + "");
   }
 
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
-    assert "a".equals(n.get(0) + "");
+    assert "a".equals(first(n) + "");
     assert "b".equals(n.get(1) + "");
     assert "System".equals(n.get(2) + "");
     assert "out".equals(n.get(3) + "");
@@ -39,7 +40,7 @@ public class Issue687 {
 
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
     final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
-    assert "aba".equals(names.get(0) + "") && "ima".equals(names.get(1) + "");
+    assert "aba".equals(first(names) + "") && "ima".equals(names.get(1) + "");
   }
 
   @Test public void testGetEmpty() {

@@ -1,5 +1,8 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import static il.org.spartan.lisp.*;
+import static org.junit.Assert.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -12,8 +15,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
@@ -211,7 +212,7 @@ public class leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
+    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) first(az.block(¢).statements());
   }
 
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {

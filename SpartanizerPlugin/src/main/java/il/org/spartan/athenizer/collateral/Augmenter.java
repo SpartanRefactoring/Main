@@ -13,7 +13,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
-
+import static il.org.spartan.lisp.*;
 /** An application of the Athenizer project. Augment java code to be more clear
  * and debugable. TODO Roth: add progress monitor support TODO Roth: add
  * TextEditGroup support (?)
@@ -75,10 +75,10 @@ public class Augmenter implements Application {
    * @param g JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
-    if (sss.isEmpty() || sss.get(0).isEmpty())
+    if (sss.isEmpty() || first(sss).isEmpty())
       return false;
-    r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
-        sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
+    r.replace(((TypeDeclaration) first(((CompilationUnit) first(first(sss)).getRoot()).types())).getName(),
+        first(first(sss)).getAST().newName("CollateralIsFun"), null);
     return true;
   }
 
@@ -122,7 +122,7 @@ public class Augmenter implements Application {
    * @param ¢ JD
    * @return true iff service is available */
   public static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
-    return LibrariesManagement.checkLibrary(¢.inner.get(0).descriptor.getJavaProject());
+    return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
   // TODO improve

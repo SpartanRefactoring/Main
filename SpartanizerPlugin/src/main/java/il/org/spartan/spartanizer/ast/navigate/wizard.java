@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.io.*;
 import java.util.*;
@@ -226,7 +226,7 @@ public interface wizard {
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(az.block(into.s(p)).statements().get(0));
+        return az.astNode(first(az.block(into.s(p)).statements()));
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
