@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Tests of methods according to issue 778
  * @author yonzarecki
@@ -20,14 +21,14 @@ import static il.org.spartan.lisp.*;
 public class Issue782 {
   @Test @SuppressWarnings("static-method") public void check2PrivatesName() {
     final List<String> names = getAll
-        .privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; private int y;}")).types()));
+        .privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; private int y;}")))));
     azzert.that(first(names), is("x"));
     azzert.that(names.get(1), is("y"));
   }
 
   @Test @SuppressWarnings("static-method") public void checkAnotherPrivateName() {
     azzert.that(
-        first(getAll.privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePrivate{private int y;}")).types()))),
+        first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePrivate{private int y;}")))))),
         is("y"));
   }
 
@@ -36,15 +37,15 @@ public class Issue782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkFieldsInsideMethods() {
-    final List<String> names = getAll.privateFields((TypeDeclaration) first(
-        az.compilationUnit(wizard.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")).types()));
+    final List<String> names = getAll.privateFields(
+        (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")))));
     azzert.that(first(names), is("x"));
     azzert.that(names.size(), is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void checkMultiDeclarationsInOneLine() {
     final List<String> names = getAll
-        .privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePrivate{private int a,b,c,y;}")).types()));
+        .privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePrivate{private int a,b,c,y;}")))));
     azzert.that(first(names), is("a"));
     azzert.that(names.get(1), is("b"));
     azzert.that(names.get(2), is("c"));
@@ -53,17 +54,17 @@ public class Issue782 {
 
   @Test @SuppressWarnings("static-method") public void checkOnePrivateName() {
     azzert.that(
-        first(getAll.privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types()))),
+        first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")))))),
         is("x"));
   }
 
   @Test @SuppressWarnings("static-method") public void emptyClassShouldReturnEmptyList() {
-    assert getAll.privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class empty{}")).types())).isEmpty();
+    assert getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class empty{}"))))).isEmpty();
   }
 
   @Test @SuppressWarnings("static-method") public void onePrivateFieldReturnOneElementList() {
     azzert.that(
-        getAll.privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePrivate{private int x;}")).types())).size(),
+        getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePrivate{private int x;}"))))).size(),
         is(1));
   }
 
@@ -71,12 +72,12 @@ public class Issue782 {
     azzert
         .that(getAll
             .privateFields(
-                (TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePublicOnePrivate{public int x; private int y;}")).types()))
+                (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePublicOnePrivate{public int x; private int y;}")))))
             .size(), is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void onePublicFieldReturnEmptyList() {
-    azzert.that(getAll.privateFields((TypeDeclaration) first(az.compilationUnit(wizard.ast("public class onePublic{public int x;}")).types())).size(),
+    azzert.that(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePublic{public int x;}"))))).size(),
         is(0));
   }
 
