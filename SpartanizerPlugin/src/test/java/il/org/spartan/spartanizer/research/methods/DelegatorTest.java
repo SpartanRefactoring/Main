@@ -96,4 +96,8 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic21() {
     assert is("  @Override public int indexOf(Object ¢){    synchronized (mutex) {        return delegate().indexOf(¢); }}");
   }
+
+  @Test public void basic22() {
+    assert is("public String join(Map<?,?> ¢){  return join(¢.entrySet());}");
+  }
 }
