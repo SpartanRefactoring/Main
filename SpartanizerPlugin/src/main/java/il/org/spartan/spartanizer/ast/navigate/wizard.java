@@ -691,6 +691,6 @@ public interface wizard {
   }
 
   static String trim(final Object ¢) {
-    return (¢ + "").substring(1, 35);
+    return ¢ == null || (¢ + "").length() < 35 ? (¢ + "") : (¢ + "").substring(1, 35);
   }
 }

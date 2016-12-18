@@ -32,4 +32,8 @@ public class ExaminerTest extends JavadocerTest {
   @Test public void e() {
     assert is("@Override public boolean apply(@Nullable Object ¢){ return ¢ == null;}");
   }
+
+  @Test public void f() {
+    assert is("public boolean matchesNoneOf(CharSequence ¢) {    return indexIn(¢) == -1;  }");
+  }
 }
