@@ -14,6 +14,6 @@ public class SelfCaster extends JavadocMarkerNanoPattern {
     if (!hazOneStatement(¢) || hazParameters(¢))
       return false;
     final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
-    return $ != null && returnTypeSameAs(¢, type($)) && iz.thisExpression(expression($));
+    return returnTypeSameAs(¢, type($)) && iz.thisExpression(expression($));
   }
 }
