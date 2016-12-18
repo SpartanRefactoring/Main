@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
@@ -105,7 +106,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, (ASTNode) first(az.block(into.s("break;")).statements()), g);
+        r.replace($, first(statements(az.block(into.s("break;")))), g);
       }
     };
   }

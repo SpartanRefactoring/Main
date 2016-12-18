@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
@@ -212,7 +213,7 @@ public class leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) first(az.block(¢).statements());
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
   }
 
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
