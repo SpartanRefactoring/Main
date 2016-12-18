@@ -63,11 +63,11 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
-    return (t + "").equals(returnType(¢) + "");
+    return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
   default boolean same(final ASTNode n, final ASTNode b) {
-    return (n + "").equals(b + "");
+    return n != null && b != null && (n + "").equals(b + "");
   }
 
   default boolean returnsParam(final MethodDeclaration ¢) {

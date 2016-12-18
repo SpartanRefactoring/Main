@@ -91,6 +91,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new FluentSetter(), ///
         new Getter(), //
         new ForEachApplier(), //
+        new SelfCaster(), //
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
