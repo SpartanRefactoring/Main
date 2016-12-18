@@ -26,20 +26,40 @@ import static il.org.spartan.lisp.first;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
+  interface literal {
+    /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
+    }
+  }
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
-  }
-
-  static boolean synchronized¢(final BodyDeclaration node) {
-    return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
-  }
-
-  static boolean native¢(final BodyDeclaration node) {
-    return (Modifier.NATIVE & node.getModifiers()) != 0;
-  }
-
-  static boolean default¢(final BodyDeclaration node) {
-    return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
   static boolean abstractTypeDeclaration(final ASTNode ¢) {
@@ -52,6 +72,13 @@ public interface iz {
 
   static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ANONYMOUS_CLASS_DECLARATION);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean anyOperator(final ASTNode ¢) {
+    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+        Assignment.Operator.class }).contains(¢.getClass());
   }
 
   static boolean arrayInitializer(final ASTNode ¢) {
@@ -226,6 +253,10 @@ public interface iz {
         || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
   }
 
+  static boolean constructor(final ASTNode ¢) {
+    return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
+  }
+
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
@@ -238,6 +269,16 @@ public interface iz {
 
   static boolean containsOperator(final ASTNode ¢) {
     return iz.nodeTypeIn(¢, new int[] { ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT });
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean continueStatement(ASTNode ¢) {
+    return ¢ instanceof ContinueStatement;
+  }
+
+  static boolean default¢(final BodyDeclaration node) {
+    return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -256,6 +297,12 @@ public interface iz {
    *         which the de Morgan laws apply. */
   static boolean deMorgan(final Operator ¢) {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean doStatement(final ASTNode ¢) {
+    return ¢ instanceof DoStatement;
   }
 
   static boolean doubleType(final Expression ¢) {
@@ -410,8 +457,28 @@ public interface iz {
     return operator(az.infixExpression(¢)) == DIVIDE;
   }
 
+  static boolean infixEquals(final Expression ¢) {
+    return operator(az.infixExpression(¢)) == EQUALS;
+  }
+
   static boolean infixExpression(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, INFIX_EXPRESSION);
+  }
+
+  static boolean infixGreater(final Expression ¢) {
+    return operator(az.infixExpression(¢)) == GREATER;
+  }
+
+  static boolean infixGreaterEquals(final InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == GREATER_EQUALS;
+  }
+
+  static boolean infixLess(final Expression ¢) {
+    return operator(az.infixExpression(¢)) == LESS;
+  }
+
+  static boolean infixLessEquals(final InfixExpression ¢) {
+    return operator(az.infixExpression(¢)) == LESS_EQUALS;
   }
 
   static boolean infixMinus(final ASTNode ¢) {
@@ -424,26 +491,6 @@ public interface iz {
 
   static boolean infixTimes(final Expression ¢) {
     return operator(az.infixExpression(¢)) == TIMES;
-  }
-
-  static boolean infixEquals(final Expression ¢) {
-    return operator(az.infixExpression(¢)) == EQUALS;
-  }
-
-  static boolean infixLess(final Expression ¢) {
-    return operator(az.infixExpression(¢)) == LESS;
-  }
-
-  static boolean infixGreater(final Expression ¢) {
-    return operator(az.infixExpression(¢)) == GREATER;
-  }
-
-  static boolean infixGreaterEquals(final InfixExpression ¢) {
-    return operator(az.infixExpression(¢)) == GREATER_EQUALS;
-  }
-
-  static boolean infixLessEquals(final InfixExpression ¢) {
-    return operator(az.infixExpression(¢)) == LESS_EQUALS;
   }
 
   /** @param ¢ JD
@@ -526,6 +573,12 @@ public interface iz {
         return ¢.getStackTrace() + "";
       }
     };
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean labeledStatement(ASTNode ¢) {
+    return ¢ instanceof LabeledStatement;
   }
 
   /** Determine whether an item is the last one in a list
@@ -651,6 +704,10 @@ public interface iz {
 
   static boolean name(final ASTNode ¢) {
     return ¢ instanceof Name;
+  }
+
+  static boolean native¢(final BodyDeclaration node) {
+    return (Modifier.NATIVE & node.getModifiers()) != 0;
   }
 
   static boolean negative(final Expression ¢) {
@@ -858,12 +915,34 @@ public interface iz {
     return ¢ != null && ¢.getNodeType() == STRING_LITERAL;
   }
 
+  /** @param ¢ JD
+   * @return */
+  static boolean superMethodInvocation(final Expression ¢) {
+    return ¢ instanceof SuperMethodInvocation;
+  }
+
   /** Determine whether a node is a {@link SwitchCase}
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a switch case
    *         statement */
   static boolean switchCase(final ASTNode ¢) {
     return ¢ != null && ¢.getNodeType() == SWITCH_CASE;
+  }
+
+  static boolean synchronized¢(final BodyDeclaration node) {
+    return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
+  }
+
+  /** @param ¢
+   * @return */
+  static boolean synchronizedStatement(final ASTNode ¢) {
+    return ¢ instanceof SynchronizedStatement;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean thisExpression(final Expression ¢) {
+    return ¢ instanceof ThisExpression;
   }
 
   /** Determine whether a node is the <code><b>this</b></code> keyword
@@ -885,6 +964,12 @@ public interface iz {
 
   static boolean tryStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, TRY_STATEMENT);
+  }
+
+  /** @param ¢ JDs
+   * @return */
+  static boolean type(final ASTNode ¢) {
+    return ¢ instanceof Type;
   }
 
   static boolean typeDeclaration(final ASTNode ¢) {
@@ -935,7 +1020,7 @@ public interface iz {
   static boolean variableDeclarationExpression(final ASTNode $) {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
-
+  
   /** @param $
    * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
@@ -987,6 +1072,24 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
+  default int parseInt(String token) {
+   final String $ = token.replaceAll("[\\s_]", "");
+    return $.matches("^[-+]?[1-9]") ? Integer.parseInt($)
+        : $.matches("^[-+]?0[xX]") ? Integer.parseInt($, 16)
+            : $.matches("^[-+]?0[bB]") ? Integer.parseInt($, 2) : //
+                !$.matches("^[-+]?0") ? Integer.parseInt($) : //
+                    Integer.parseInt($, 8);
+  }
+
+  default long parseLong(String $) {
+    $ = $.replaceAll("[\\s_]", "");
+    return $.matches("^[-+]?[1-9]") ? Long.parseLong($)
+        : $.matches("^[-+]?0[xX]") ? Long.parseLong($, 16)
+            : $.matches("^[-+]?0[bB]") ? Long.parseLong($, 2) : //
+                !$.matches("^[-+]?0") ? Long.parseLong($) : //
+                  Long.parseLong($, 8);
+  }
+
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
    *         false otherwise */
@@ -1001,7 +1104,7 @@ public interface iz {
 
   default boolean parsesTo(final String $, final int i) {
     try {
-      return Integer.parseInt($) == i;
+      return parseInt($) == i;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
@@ -1010,95 +1113,10 @@ public interface iz {
 
   default boolean parsesTo(final String $, final long l) {
     try {
-      return Long.parseLong($) == l;
+      return parseLong($) == l;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(box(l), ¢);
       return false;
     }
-  }
-
-  interface literal {
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
-    }
-  }
-
-  static boolean constructor(final ASTNode ¢) {
-    return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
-  }
-
-  /** @param ¢
-   * @return */
-  static boolean doStatement(final ASTNode ¢) {
-    return ¢ instanceof DoStatement;
-  }
-
-  /** @param ¢
-   * @return */
-  static boolean synchronizedStatement(final ASTNode ¢) {
-    return ¢ instanceof SynchronizedStatement;
-  }
-
-  /** @param ¢ JDs
-   * @return */
-  static boolean type(final ASTNode ¢) {
-    return ¢ instanceof Type;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean superMethodInvocation(final Expression ¢) {
-    return ¢ instanceof SuperMethodInvocation;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean anyOperator(final ASTNode ¢) {
-    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
-        Assignment.Operator.class }).contains(¢.getClass());
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean thisExpression(final Expression ¢) {
-    return ¢ instanceof ThisExpression;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean continueStatement(ASTNode ¢) {
-    return ¢ instanceof ContinueStatement;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean labeledStatement(ASTNode ¢) {
-    return ¢ instanceof LabeledStatement;
   }
 }
