@@ -679,4 +679,8 @@ public interface wizard {
         return true;
     return false;
   }
+
+  static String trim(final Object ¢) {
+    return (¢ + "").substring(1, 35);
+  }
 }
