@@ -41,7 +41,6 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     }
   }
 
-  /**  */
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);

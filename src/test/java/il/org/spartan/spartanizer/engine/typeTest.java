@@ -13,6 +13,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
  * expression using {@link type.Axiom} .
@@ -34,7 +35,6 @@ public final class typeTest {
     // No tests are pending
   }
 
-  /** @DisableSpartan */
   public static class Working {
     private static final long LONG_MINUS_3L = -3L;
     private static final int __1 = 1;
@@ -285,7 +285,6 @@ public final class typeTest {
       azzert.that(Axiom.type((2 * __33 / 4 + 1 - 5) % 4), is(INT));
     }
 
-    /** @DisableSpartan */
     @Test public void axiomExpression8() {
       azzert.that(Axiom.type(LONG_MINUS_3L % 4), is(LONG));
     }

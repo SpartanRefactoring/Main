@@ -28,7 +28,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
     final List<Statement> ss = statements(¢);
     if (!anyTips(onlyOne(ss)))
       return false;
-    final Expression $ = expression(az.returnStatement(ss.get(0)));
+    final Expression $ = expression(az.returnStatement(first(ss)));
     return iz.methodInvocation($) && containsParameters(¢, $) && arguments(az.methodInvocation($)).size() > parametersNames(¢).size();
   }
 

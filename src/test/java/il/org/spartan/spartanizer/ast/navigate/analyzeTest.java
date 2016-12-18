@@ -11,6 +11,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** @author Vivian Shehadeh
  * @author Ward Mattar
@@ -58,26 +59,26 @@ public final class analyzeTest {
 
   @Test public void testFindDeclarationInType0() {
     azzert.that("int",
-        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}")).get(0).getName())));
+        is(analyze.type(first(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}"))).getName())));
   }
 
   @Test public void testFindDeclarationInType1() {
     azzert.that("int", is(analyze.type(
-        searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{int x;public void m(){ x=5;}} ")).get(0).getName())));
+        first(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
   }
 
   @Test public void testFindDeclarationInType2() {
     azzert.that("int", is(
-        analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }")).get(0).getName())));
+        analyze.type(first(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
 
   @Test public void testType0() {
     azzert.that("int",
-        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }")).get(0).getName())));
+        is(analyze.type(first(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }"))).getName())));
   }
 
   @Test public void testType1() {
     azzert.that("int",
-        is(analyze.type(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} ")).get(0).getName())));
+        is(analyze.type(first(searchDescendants.forClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} "))).getName())));
   }
 }

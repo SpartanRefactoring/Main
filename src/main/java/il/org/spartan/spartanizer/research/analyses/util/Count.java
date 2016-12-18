@@ -29,7 +29,6 @@ public enum Count {
     ternaries.second.inner += enumerate.ternaries(¢);
   }
 
-  /** @return */
   public static void print() {
     System.out.println("statements: " + statements.first.inner + " ---> " + statements.second.inner//
         + " ratio: [" + safeDiv(statements.second.inner, statements.first.inner) + "]");

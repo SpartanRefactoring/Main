@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
@@ -19,9 +21,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue686 {
   public class NotAString<T> extends ArrayList<T> {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
   }
 
@@ -55,7 +54,7 @@ public class Issue686 {
   }
 
   @Test public void h() {
-    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);"))).get(0).getName()
+    azzert.that(first(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(String s1, int s2, int i1, int s3);")))).getName()
         .getIdentifier(), is("s1"));
   }
 
@@ -68,7 +67,7 @@ public class Issue686 {
   }
 
   @Test public void k() {
-    azzert.that(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))).get(0)
+    azzert.that(first(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
         .getName().getIdentifier(), is("s1"));
   }
 }
