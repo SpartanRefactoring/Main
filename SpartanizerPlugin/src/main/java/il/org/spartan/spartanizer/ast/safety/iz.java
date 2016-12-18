@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
+
 import static il.org.spartan.lisp.first;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -1073,21 +1075,11 @@ public interface iz {
   }
 
   default int parseInt(String token) {
-    final String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]\\w*") ? Integer.parseInt($)
-        : $.matches("^[-+]?0[xX]\\w*") ? Integer.parseInt($, 16)
-            : $.matches("^[-+]?0[bB]\\w*") ? Integer.parseInt($, 2) : //
-                !$.matches("^[-+]?0\\w*") ? Integer.parseInt($) : //
-                    Integer.parseInt($, 8);
+    return Integer.decode(token).intValue();
   }
 
   default long parseLong(String token) {
-    String $ = token.replaceAll("[\\s_]", "");
-    return $.matches("^[-+]?[1-9]\\w*") ? Long.parseLong($)
-        : $.matches("^[-+]?0[xX]\\w*") ? Long.parseLong($, 16)
-            : $.matches("^[-+]?0[bB]\\w*") ? Long.parseLong($, 2) : //
-                !$.matches("^[-+]?0\\w*") ? Long.parseLong($) : //
-                    Long.parseLong($, 8);
+    return Long.decode(token).longValue();
   }
 
   /** @param ¢ JD
@@ -1105,6 +1097,9 @@ public interface iz {
   default boolean parsesTo(final String $, final int i) {
     try {
       return parseInt($) == i;
+    } catch (final NumberFormatException __) {
+      ___.unused(__);
+      return false;
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
