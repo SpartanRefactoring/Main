@@ -500,12 +500,22 @@ public interface wizard {
     return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);
   }
 
-  boolean resolveBinding = false;
+  Bool resolveBinding = Bool.valueOf(false);
+
+  static void setParserResolveBindings() {
+    resolveBinding.inner = true;
+  }
+
+  static void setBinding(final ASTParser $) {
+    $.setResolveBindings(resolveBinding.inner);
+    if (resolveBinding.inner)
+      $.setEnvironment(null, null, null, true);
+  }
 
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    setBinding($);
     $.setKind(kind);
-    $.setResolveBindings(resolveBinding);
     final Map<String, String> options = JavaCore.getOptions();
     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8); // or newer
     // version
