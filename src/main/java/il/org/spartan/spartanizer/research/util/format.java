@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.util;
 
+import java.text.*;
+
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
@@ -18,5 +20,11 @@ public class format {
       ¢.printStackTrace();
     }
     return $.get();
+  }
+
+  static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
+
+  public static String decimal(final double ¢) {
+    return numberFormatter.format(¢);
   }
 }

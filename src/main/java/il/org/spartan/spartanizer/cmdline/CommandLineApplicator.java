@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -94,6 +94,7 @@ public class CommandLineApplicator extends Applicator {
    * @param a JD
    * @return this applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
+    CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
@@ -132,7 +133,7 @@ public class CommandLineApplicator extends Applicator {
     // listener().push(message.report_start.get());
     if (!shouldRun())
       return;
-    final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
+    final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 1; pass <= l; ++pass) {

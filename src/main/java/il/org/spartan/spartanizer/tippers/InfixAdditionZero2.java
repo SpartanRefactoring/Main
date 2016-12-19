@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** A {@link Tipper} to convert an expression such as
  *
@@ -64,7 +65,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
-    return ops2.size() != 1 ? $ : ops2.get(0);
+    return ops2.size() != 1 ? $ : first(ops2);
   }
 
   private static boolean containsZeroOperand(final InfixExpression x) {
@@ -74,7 +75,6 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  /**  */
   private static boolean containsPlusOperator(final InfixExpression x) {
     for (final Operator ¢ : extract.allOperators(x))
       if (¢ == Operator.PLUS)
@@ -91,7 +91,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
-    return ops2.size() != 1 ? $ : ops2.get(0);
+    return ops2.size() != 1 ? $ : first(ops2);
   }
 
   @Override public boolean prerequisite(final InfixExpression $) {

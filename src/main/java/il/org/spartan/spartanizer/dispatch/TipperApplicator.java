@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -10,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link AbstractGUIApplicator}. This class must eventually die.
@@ -29,8 +29,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m,
-      @SuppressWarnings("unused") final AtomicInteger __) {
+  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);

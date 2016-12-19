@@ -14,7 +14,10 @@ import il.org.spartan.spartanizer.engine.*;
 /** Collects boolean features of methods
  * @author Yossi Gil
  * @year 2016 */
-public final class MethodFeaturesCollector extends FilesASTVisitor {
+public final class MethodFeaturesCollector extends FolderASTVisitor {
+  static {
+    clazz = MethodFeaturesCollector.class;
+  }
   int methodNesting;
   MethodDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
@@ -77,18 +80,14 @@ public final class MethodFeaturesCollector extends FilesASTVisitor {
     super.endVisit(node);
   }
 
-  @Override protected void done() {
+  @Override protected void done(final String path) {
     dotter.end();
+    System.err.println("Done processing: " + path);
     System.err.println("Your output is in: " + writer.close());
-    super.done();
-  }
-
-  static {
-    clazz = MethodFeaturesCollector.class;
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FilesASTVisitor.main(args);
+    FolderASTVisitor.main(args);
   }
 }

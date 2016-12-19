@@ -41,6 +41,6 @@ public final class EliminateEmptyTryBlock extends CarefulTipper<TryStatement> im
   }
 
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
-    return "Eliminate empty try block";
+    return "Prune empty try block";
   }
 }

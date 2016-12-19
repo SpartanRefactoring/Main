@@ -340,7 +340,7 @@ public enum extract {
    * @return {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists. */
   public static PrefixExpression nextPrefix(final ASTNode ¢) {
-    return az.prefixExpression(az.expressionStatement(extract.nextStatement(¢)).getExpression());
+    return az.prefixExpression(expression(az.expressionStatement(extract.nextStatement(¢))));
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
@@ -477,6 +477,14 @@ public enum extract {
         $.add(¢);
         return $;
     }
+  }
+
+  public static List<SwitchCase> switchCases(final SwitchStatement s) {
+    final List<SwitchCase> $ = new ArrayList<>();
+    for (final Statement ¢ : step.statements(s))
+      if (iz.switchCase(¢))
+        $.add(az.switchCase(¢));
+    return $;
   }
 
   /** @param n a node to extract an expression from

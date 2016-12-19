@@ -2,6 +2,7 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.Listener.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
 /** A kind of {@link Listener} that records a long string of the message it got.
@@ -9,10 +10,6 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class StringBuilderListener implements Listener {
   private static Tab tab = new Tab();
-
-  private static String trim(final Object ¢) {
-    return (¢ + "").substring(1, 35);
-  }
 
   private final StringBuilder $ = new StringBuilder();
 
@@ -33,7 +30,7 @@ public class StringBuilderListener implements Listener {
   @Override public void tick(final Object... os) {
     $.append(newId() + ": ");
     for (final Object ¢ : os)
-      $.append(new Separator(", ") + trim(¢));
+      $.append(new Separator(", ") + wizard.trim(¢));
     $.append('\n');
   }
 }

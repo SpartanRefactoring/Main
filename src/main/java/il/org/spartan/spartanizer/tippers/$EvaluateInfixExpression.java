@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
  * @author Yossi Gil
@@ -66,7 +67,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
-                    afterExpressionOperands.size() == 1 ? afterExpressionOperands.get(0) : subject.operands(afterExpressionOperands).to(operator()))
+                    afterExpressionOperands.size() == 1 ? first(afterExpressionOperands) : subject.operands(afterExpressionOperands).to(operator()))
                 .to(operator());
         }
       }
@@ -79,7 +80,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
           final String s = opportunisticReplacement(cuttedExpression);
           if (s != null)
             return subject.pair(
-                beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
+                beforeExpressionOperands.size() == 1 ? first(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),
                 az.expression(x.getAST().newNumberLiteral(s))).to(operator());
         }
       }

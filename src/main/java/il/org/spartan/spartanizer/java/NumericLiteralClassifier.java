@@ -11,24 +11,20 @@ public final class NumericLiteralClassifier {
     return literal == null ? null : new NumericLiteralClassifier(literal).type();
   }
 
-  /** An <code><b>enum</b></code> to give symbolic names to the literal types.
-   * @author Yossi Gil
-   * @since 2015-08-30
-   * @see NumericLiteralClassifier#persuation */
-  final String literal;
+  final String inner;
 
   /** Instantiates this class.
    * @param literal JD */
   public NumericLiteralClassifier(final String literal) {
-    this.literal = literal;
+    this.inner = literal;
   }
 
   /** @return the type of this literal.
    * @see PrudentType */
   public Primitive.Certain type() {
-    if (literal.charAt(0) == '\'')
+    if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;
-    switch (literal.charAt(literal.length() - 1)) {
+    switch (inner.charAt(inner.length() - 1)) {
       case 'l':
       case 'L':
         return Primitive.Certain.LONG;
@@ -41,9 +37,9 @@ public final class NumericLiteralClassifier {
       case 'P':
         return Primitive.Certain.DOUBLE;
       default:
-        if (literal.indexOf('.') >= 0)
+        if (inner.indexOf('.') >= 0)
           return Primitive.Certain.DOUBLE;
-        if (literal.indexOf('E') >= 0 || literal.indexOf('e') >= 0)
+        if (inner.indexOf('E') >= 0 || inner.indexOf('e') >= 0)
           return Primitive.Certain.DOUBLE;
         return Primitive.Certain.INT;
     }

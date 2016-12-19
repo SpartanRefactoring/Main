@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** Converts <code>""+"foo"</code> to <code>"foo"</code> when x is of type
  * String
@@ -28,7 +29,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
+    return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
   @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
@@ -53,6 +54,6 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
         }
       }
     }
-    return $.size() == es.size() ? null : $.size() == 1 ? $.get(0) : subject.operands($).to(PLUS2);
+    return $.size() == es.size() ? null : $.size() == 1 ? first($) : subject.operands($).to(PLUS2);
   }
 }

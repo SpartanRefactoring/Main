@@ -13,6 +13,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
@@ -36,13 +37,13 @@ public final class LaconizeProject extends BaseHandler {
   public int countTips() {
     if (todo.isEmpty())
       return 0;
-    final AtomicInteger $ = new AtomicInteger(0);
+    final Int $ = new Int();
     final AbstractGUIApplicator a = new Trimmer();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, pm -> {
         pm.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
         a.setMarker(null);
-        a.setICompilationUnit(todo.get(0));
+        a.setICompilationUnit(first(todo));
         $.addAndGet(a.countTips());
         if (pm.isCanceled())
           $.set(0);
@@ -87,7 +88,7 @@ public final class LaconizeProject extends BaseHandler {
   boolean singlePass() {
     final Trimmer t = new Trimmer();
     final IProgressService ps = workench.getProgressService();
-    final AtomicInteger passNum = new AtomicInteger(passNumber + 1);
+    final Int passNum = new Int(passNumber + 1);
     final AtomicBoolean $ = new AtomicBoolean(false);
     try {
       ps.run(true, true, pm -> {

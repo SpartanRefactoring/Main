@@ -18,6 +18,10 @@ public class normalize {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
+  public static String unwarpedTestcase(final String raw) {
+    return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
+  }
+
   public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
   }

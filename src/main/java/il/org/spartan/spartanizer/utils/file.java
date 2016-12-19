@@ -26,4 +26,8 @@ public enum file {
     final File $ = new File(path);
     return $.exists() && !$.isDirectory();
   }
+
+  public static void renameToCSV(final String old) {
+    file.rename(old, old + ".csv");
+  }
 }

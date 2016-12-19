@@ -8,7 +8,9 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -19,39 +21,18 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  @SuppressWarnings({ "unchecked" }) //
-  static final Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+  @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
     static final long serialVersionUID = 1L;
     {
-      for (int nodeType = 1;; ++nodeType)
-        try {
-          monitor.debug("Searching for " + nodeType);
-          final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-          monitor.debug("Found for " + nodeClassForType);
-          put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException ¢) {
-          monitor.debug(this, ¢);
-          break;
-        } catch (final Exception ¢) {
-          monitor.logEvaluationError(this, ¢);
-          break;
-        }
+      final Toolbox t = freshCopyOfAllTippers();
+      assert t.implementation != null;
+      for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
+        if (ts != null)
+          for (final Tipper<? extends ASTNode> ¢ : ts)
+            put(¢.getClass(), ¢.tipperGroup());
     }
   };
-  @SuppressWarnings({
-      "rawtypes" }) private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
-        static final long serialVersionUID = -4821340356894435723L;
-        {
-          final Toolbox t = freshCopyOfAllTippers();
-          assert t.implementation != null;
-          for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
-            if (ts != null)
-              for (final Tipper<? extends ASTNode> ¢ : ts)
-                put(¢.getClass(), ¢.tipperGroup());
-        }
-      };
-  /** The default Instance of this class */
+  /** The default instance of this class */
   static Toolbox defaultInstance;
 
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
@@ -92,7 +73,7 @@ public class Toolbox {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  public static Toolbox muttableDefaultInstance() {
+  public static Toolbox mutableDefaultInstance() {
     return freshCopyOfAllTippers();
   }
 
@@ -113,14 +94,12 @@ public class Toolbox {
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
+        .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, new RedundantModifier())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ThrowStatement.class, //
-            new ThrowNotLastInBlock(), //
-            null) //
-        .add(ClassInstanceCreation.class, //
-            new ClassInstanceCreationValueTypes(), //
-            null) //
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
@@ -144,8 +123,10 @@ public class Toolbox {
             new WhileToForUpdaters(), //
             null) //
         .add(SwitchStatement.class, //
+            new SwitchEmpty(), //
             new RemoveRedundantSwitchCases(), //
             new RemoveRedundantSwitchBranch(), //
+            new SwitchWithOneCaseToIf(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -167,6 +148,7 @@ public class Toolbox {
         .add(ArrayAccess.class, //
             new InliningPrefix(), //
             null) //
+        .add(Javadoc.class, new JavadocEmpty())
         .add(InfixExpression.class, //
             new InfixPlusToMinus(), //
             new LessEqualsToLess(), //
@@ -215,6 +197,9 @@ public class Toolbox {
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
+            new LispFirstElement(), //
+            new LispLastElement(), //
+            new StatementsThroughStep(), //
             null)//
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //
@@ -306,18 +291,15 @@ public class Toolbox {
             new DeclarationInitializerReturnVariable(), //
             new DeclarationInitializerReturnExpression(), //
             new DeclarationInitializerReturnAssignment(), //
-            new DeclarationInitializerReturnUpdateAssignment(), //
+            new DeclarationInitializerReturn(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
-            new DeclarationFragmentInlineIntoNext(), //
+            new DeclarationInlineIntoNext(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
-        //
-        .add(LambdaExpression.class, //
-            new LambdaExpressionRemoveRedundantCurlyBraces(), //
-            null) //
+    //
     //
     ;
   }
@@ -371,12 +353,12 @@ public class Toolbox {
    * @param ns JD
    * @return <code><b>this</b></code>, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer nodeType = classToNodeType.get(n);
+    final Integer nodeType = wizard.classToNodeType.get(n);
     assert nodeType != null : fault.dump() + //
         "\n c = " + n + //
         "\n c.getSimpleName() = " + n.getSimpleName() + //
-        "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
-        "\n classForNodeType = " + classToNodeType + //
+        "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
+        "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)

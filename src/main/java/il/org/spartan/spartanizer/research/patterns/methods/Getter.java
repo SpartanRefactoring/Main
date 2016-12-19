@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns.methods;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,18 +11,18 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Getter extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("return $N;", "", ""));
-      add(TipperFactory.patternTipper("return this.$N;", "", ""));
-      add(TipperFactory.patternTipper("return ($T)$N;", "", ""));
-      add(TipperFactory.patternTipper("return ($T)this.$N;", "", ""));
+      add(patternTipper("return $N;", "", ""));
+      add(patternTipper("return this.$N;", "", ""));
+      add(patternTipper("return ($T)$N;", "", ""));
+      add(patternTipper("return ($T)this.$N;", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && hazNoParams(¢) && anyTips(tippers, onlyStatement(¢));
+    return hazOneStatement(¢) && hazNoParameters(¢) && anyTips(tippers, onlyStatement(¢));
   }
 }
