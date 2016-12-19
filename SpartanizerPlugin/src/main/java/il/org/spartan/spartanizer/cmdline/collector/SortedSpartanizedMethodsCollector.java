@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
 /** @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
-  static SpartAnalyzer spartanizer = new SpartAnalyzer();
+  static SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(new Comparator<Integer>() {
     @Override public int compare(Integer o1, Integer o2) {
@@ -51,7 +51,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       methods.get(key).add(m);
-      final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (final AssertionError __) {
@@ -65,24 +65,22 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       scope.pop();
   }
 
-  @Override public void endVisit(TypeDeclaration ¢) {
-    if (haz.methods(¢))
-      Logger.finishedType();
-  }
-
+  // @Override public void endVisit(TypeDeclaration ¢) {
+  // if (haz.methods(¢))
+  // Logger.finishedType();
+  // }
   @Override public boolean visit(final CompilationUnit ¢) {
-    Logger.logCompilationUnit(¢);
+    // Logger.logCompilationUnit(¢);
     ¢.accept(new CleanerVisitor());
     return true;
   }
 
-  @Override public boolean visit(final TypeDeclaration ¢) {
-    if (!haz.methods(¢))
-      return false;
-    Logger.logType(¢);
-    return true;
-  }
-
+  // @Override public boolean visit(final TypeDeclaration ¢) {
+  // if (!haz.methods(¢))
+  // return false;
+  // Logger.logType(¢);
+  // return true;
+  // }
   @Override protected void init(String path) {
     System.err.println("Processing: " + path);
     Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
@@ -125,9 +123,11 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       statementsTotal += numStatements * li.size();
     }
     for (final Integer numStatements : methods.keySet()) {
+      if (numStatements == 0)
+        continue;
       List<MethodRecord> li = methods.get(numStatements);
       report //
-          .put("num. Statements", numStatements) //
+          .put("num. Statements [before]", numStatements) //
           .put("Count", li.size()) //
           .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
           .put("perc. of methods", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
