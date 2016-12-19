@@ -713,4 +713,41 @@ public enum step {
   public static SimpleName label(ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
   }
+
+  /** Given an IfStatement of the form: <br>
+   * if(a) <br>
+   * <t> B1<br>
+   * else if(b) <br>
+   * <t> <t>B2<br>
+   * else if(c)<br>
+   * <t><t> B3<br>
+   * ... <br>
+   * else <br>
+   * <t><t> Bn <br>
+   * Retreives all If branches
+   * @param ¢ JD
+   * @return */
+  public static List<IfStatement> branches(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement s = ¢;
+    List<IfStatement> $ = new ArrayList<>();
+    $.add(s);
+    for (; iz.ifStatement(elze(s));)
+      $.add(s = az.ifStatement(elze(s)));
+    return $;
+  }
+
+  /** returns the else statement of the last if in an if else if else if else
+   * sequence
+   * @param ¢
+   * @return */
+  public static Statement lastElse(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement $ = ¢;
+    for (; iz.ifStatement(elze($));)
+      $ = az.ifStatement(elze($));
+    return elze($);
+  }
 }
