@@ -30,9 +30,10 @@ public enum measure {
     if (n == null)
       return 0;
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
           ++$.inner;
+        return !iz.classInstanceCreation(¢);
       }
     });
     return $.inner;
