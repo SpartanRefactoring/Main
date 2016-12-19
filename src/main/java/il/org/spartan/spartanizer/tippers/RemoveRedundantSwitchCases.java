@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,7 +11,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
@@ -26,6 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *     break;
  *   case c:
  *   default:
+ *   case d:
  *     break;
  * }
  * switch (x) {
@@ -52,41 +50,11 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> l = step.statements(s);
         final int ind = getDefaultIndex(l);
-        boolean hadDefault = false;
-        if (ind >= 0) {
-          hadDefault = true;
-          int last = ind;
-          for (int ¢ = ind + 1; ¢ < l.size(); ++¢) {
-            if (!iz.switchCase(l.get(¢)))
-              break;
-            last = ¢;
-          }
-          for (int ¢ = last; ¢ > ind; --¢)
-            l.remove(¢);
-          for (int ¢ = ind - 1; ¢ >= 0; --¢) {
-            if (!iz.switchCase(l.get(¢)))
-              break;
-            l.remove(¢);
-          }
-        }
-        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
-          if (!iz.switchCase(l.get(¢)))
-            break;
-          l.remove(¢);
-        }
-        for (int ¢ = l.size() - 2; ¢ >= 0; --¢)
-          if ((iz.switchCase(l.get(¢)) || iz.breakStatement(l.get(¢))) && iz.breakStatement(l.get(¢ + 1)))
-            l.remove(¢);
-        if (l.size() == 1)
-          l.remove(0);
-        if (l.size() == 2 && iz.switchCase(first(l)) && iz.breakStatement(l.get(1))) {
-          l.remove(1);
-          l.remove(0);
-        }
-        if (!l.isEmpty() && iz.breakStatement(last(l)))
-          l.remove(l.size() - 1);
-        final String tail = l.isEmpty() || !hadDefault || getDefaultIndex(l) >= 0 ? "" : (iz.returnStatement(last(l)) ? "" : "break; ") + "default:";
-        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + tail + "}")).toOneStatementOrNull(), g);
+        if(ind > 0 && iz.switchCase(l.get(ind-1)))
+          l.remove(ind-1);
+        else if(ind >= 0 && ind < l.size()-1 && iz.switchCase(l.get(ind+1)))
+          l.remove(ind+1);
+        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
       }
 
       String statementsToString(final List<Statement> ss) {
@@ -95,32 +63,23 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
           $ += p;
         return $;
       }
-
-      int getDefaultIndex(final List<Statement> ¢) {
-        for (int $ = 0; $ < ¢.size(); ++$)
-          if (iz.switchCase(¢.get($)) && az.switchCase(¢.get($)).isDefault())
-            return $;
-        return -1;
-      }
     };
   }
 
-  @Override @SuppressWarnings("boxing") protected boolean prerequisite(final SwitchStatement s) {
+  @Override protected boolean prerequisite(final SwitchStatement s) {
     final List<Statement> l = step.statements(s);
-    if (!l.isEmpty() && iz.switchCase(last(l)) && !az.switchCase(last(l)).isDefault())
-      return true;
-    for (final Integer k : range.from(0).to(l.size() - 1))
-      if (iz.switchCase(l.get(k)) && iz.breakStatement(l.get(k + 1))
-          || iz.switchCase(l.get(k)) && iz.switchCase(l.get(k + 1)) && (az.switchCase(l.get(k)).isDefault() || az.switchCase(l.get(k)).isDefault()))
-        return true;
-    return false;
+    int ind = getDefaultIndex(l);
+    return ind > 0 && iz.switchCase(l.get(ind - 1)) || ind >= 0 && ind < l.size() - 1 && iz.switchCase(l.get(ind + 1));
+  }
+  
+  static int getDefaultIndex(final List<Statement> ¢) {
+    for (int $ = 0; $ < ¢.size(); ++$)
+      if (iz.switchCase(¢.get($)) && az.switchCase(¢.get($)).isDefault())
+        return $;
+    return -1;
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
-    return "Remove empty cases or cases combined with default case";
-  }
-
-  static boolean isListContains(final List<Statement> ss, final int i, final String q) {
-    return (ss.get(i) + "").contains(q);
+    return "Remove cases that use default path";
   }
 }
