@@ -88,9 +88,7 @@ public class TrimmerLogTest {
   @Test public void test04() {
     final Operand o = trimmingOf("for(int i=0; i <100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
-    System.out.println(w);
     final String wrap = w.on(o.get());
-    System.out.println(wrap);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     assert u.getJavaElement() == null;
