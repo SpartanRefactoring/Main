@@ -61,6 +61,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new IfNullReturn(), //
                 new IfNullReturnNull(), //
                 new ExecuteWhen(), //
+                new GeneralizedSwitch(), //
                 new PutIfAbsent(), //
                 new IfThrow(), //
                 null) //
