@@ -130,15 +130,26 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
           .put("num. Statements", numStatements) //
           .put("Count", li.size()) //
           .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
-          .put("perc. of methods", format.decimal(100 * safe.div(li.size(), methodsTotal))) //
-          .put("perc. of statements", format.decimal(100 * safe.div(numStatements * li.size(), statementsTotal))) //
-          .put("perc. touched",
-              format.decimal(100 * safe.div(li.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), li.size()))) //
+          .put("perc. of methods", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
+          .put("perc. of statements", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
+          .put("perc. touched", format.decimal(100 * fractionOfMethodsTouched(li))) //
       ;
       report.nl();
     }
     report.close();
     file.renameToCSV(outputDir + "/methodStatistics");
+  }
+
+  private static double fractionOfMethodsTouched(List<MethodRecord> rs) {
+    return safe.div(rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), rs.size());
+  }
+
+  private static double fractionOfStatements(int statementsTotal, final Integer numStatements, List<MethodRecord> rs) {
+    return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
+  }
+
+  private static double fractionOfMethods(int methodsTotal, List<MethodRecord> rs) {
+    return safe.div(rs.size(), methodsTotal);
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(List<MethodRecord> rs) {
