@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.findSingleDifference;
 
 /** Pushdown a ternary as far down as possible
  * @author Yossi Gil
@@ -32,23 +33,6 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return operator(a1) != operator(a2) || !wizard.same(to(a1), to(a2)) ? null
         : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(operator(a1))).into(x.getParent());
-  }
-
-  /** Gets two lists of expressions and returns the idx of the only expression
-   * which is different between them. If the lists differ with other then one
-   * element, -1 is returned.
-   * @param es1
-   * @param es2
-   * @return */
-  @SuppressWarnings("boxing") private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
-    int $ = -1;
-    for (final Integer ¢ : range.from(0).to(es1.size()))
-      if (!wizard.same(es1.get(¢), es2.get(¢))) {
-        if ($ >= 0)
-          return -1;
-        $ = ¢;
-      }
-    return $;
   }
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
