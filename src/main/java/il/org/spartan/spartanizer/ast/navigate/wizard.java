@@ -713,17 +713,48 @@ public interface wizard {
 
   /** Gets two nodes and returns the identifier of the only name i n1 which is
    * different from n2. If the nodes subtrees differ with other then one name or
-   * any node, -1 is returned.
-   * @param es1
-   * @param es2
-   * @return [[SuppressWarningsSpartan]] */
-  static <N extends ASTNode> String findSingleNameDifference(final N n1, final N n2) {
+   * any node, -1 is returned. */
+  static <N extends ASTNode> String findSingleAtomicDifference(final N n1, final N n2) {
     if (n1 == null || n2 == null)
       return null;
-    if (same(n1, n2))
+    if ((n1 + "").equals(n2 + ""))
       return "";
-    return null;
-    // List<Name>
-    // for(final Name : searchAncestors.forClass(Name.class).from(n1)))
+    if (iz.atomic(n1) && iz.atomic(n2))
+      return n1 + "";
+    List<ASTNode> children1 = Recurser.allChildren(n1);
+    List<ASTNode> children2 = Recurser.allChildren(n2);
+    if (children1.size() != children2.size())
+      return null;
+    String $ = findSingleAtomicDifference(children1.get(0), children2.get(0));
+    for (int i = 0; i < children1.size(); ++i) {
+      String diff = findSingleAtomicDifference(children1.get(i), children2.get(i));
+      $ = $ != "" ? $ : diff;
+      if (!$.equals(diff) && !"".equals(diff))
+        return null;
+    }
+    return $;
+  }
+
+  /** like the other one but for a list
+   * @param ns
+   * @return */
+  static <N extends ASTNode> String findSingleAtomicDifference(final List<N> ns) {
+    if (ns.size() < 2)
+      return null;
+    String $ = findSingleAtomicDifference(ns.get(0), ns.get(1));
+    for (int i = 2; i < ns.size(); ++i) {
+      String diff = findSingleAtomicDifference(ns.get(0), ns.get(i));
+      $ = $ != "" ? $ : diff;
+      if (!$.equals(diff) && !"".equals(diff))
+        return null;
+    }
+    return $;
+  }
+
+  static <N extends ASTNode> boolean differsInSingleAtomic(final List<N> ¢) {
+    if (¢ == null || ¢.isEmpty())
+      return false;
+    final String $ = findSingleAtomicDifference(¢);
+    return $ != null && !"".equals($);
   }
 }
