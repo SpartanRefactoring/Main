@@ -11,10 +11,12 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class GenerlizedSwitchTest {
-  @Ignore @Test public void basic() {
+  @Test public void basic() {
     trimmingOf("if(x == 0) d1(); else if(x == 1) d2(); else d3();")//
         .withTipper(IfStatement.class, new GeneralizedSwitch())//
-        .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex));")//
+        .gives("{holds(¢->x==¢).on(0,__->{d1();}).on(1,__->{d2();}).elze(__->{d3();});}")//
+        .gives("holds(¢->x==¢).on(0,__->{d1();}).on(1,__->{d2();}).elze(__->{d3();});")//
+        .gives("holds(¢->x==¢).on(0,__->d1()).on(1,__->d2()).elze(__->d3());")//
         .stays();
   }
 }

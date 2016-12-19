@@ -9,9 +9,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
@@ -27,7 +28,7 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
 
   @Override public boolean canTip(final IfStatement ¢) {
     return !¢.equals(then(az.ifStatement(parent(¢))))//
-        && wizard.differsInSingleAtomic(branchesExpressions(¢));
+        && differsInSingleAtomic(branchesExpressions(¢));
   }
 
   static List<Expression> branchesExpressions(final IfStatement ¢) {
@@ -36,12 +37,23 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
 
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
-      /** [[SuppressWarningsSpartan]] */
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         List<Expression> branchesExpressions = branchesExpressions(¢);
-        String diff = wizard.findSingleAtomicDifference(branchesExpressions);
-        r.replace(¢, wizard.ast("holds.on(" + "¢" + "->" + (first(branchesExpressions) + "").replaceAll(diff, "¢") + ");"), g);
+        r.replace(¢, ast("holds(¢ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "¢") + ")"
+            + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
       }
     };
+  }
+
+  static String elseSring(IfStatement ¢) {
+    return lastElse(¢) == null ? "" : ".elze(__ -> {" + lastElse(¢) + "})";
+  }
+
+  static String createOns(List<String> diffs, List<IfStatement> branches) {
+    assert diffs.size() == branches.size();
+    String $ = "";
+    for (int ¢ = 0; ¢ < diffs.size(); ++¢)
+      $ += ".on(" + diffs.get(¢) + ",__ -> {" + then(branches.get(¢)) + "})";
+    return $;
   }
 }

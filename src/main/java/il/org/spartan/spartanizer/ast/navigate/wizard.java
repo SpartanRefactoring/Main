@@ -757,4 +757,10 @@ public interface wizard {
     final String $ = findSingleAtomicDifference(¢);
     return $ != null && !"".equals($);
   }
+
+  static <N extends ASTNode> List<String> findSingleAtomicDifferences(List<N> ¢) {
+    List<String> $ = new ArrayList<>();
+    ¢.forEach(x -> $.add(x != first(¢) ? findSingleAtomicDifference(x, first(¢)) : findSingleAtomicDifference(first(¢), second(¢))));
+    return $;
+  }
 }
