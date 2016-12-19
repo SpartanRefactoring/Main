@@ -39,16 +39,17 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = step.statements(s);
-        if (ll.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1))) {
+        String ss = !haz.sideEffects(s.getExpression()) ? "" : s.getExpression() + ";";
+        if (noSideEffectCommands(s)) {
           r.remove(s, g);
           if (haz.sideEffects(s.getExpression()))
-            r.replace(s, wizard.ast(s.getExpression() + ";"), g);
+            r.replace(s, wizard.ast(ss), g);
           return;
         }
         if (iz.breakStatement(last(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        r.replace(s, wizard.ast(!haz.sideEffects(s.getExpression()) ? statementsToString(ll) : s.getExpression() + ";" + statementsToString(ll)), g);
+        r.replace(s, wizard.ast(ss + statementsToString(ll)), g);
       }
     };
   }
@@ -60,10 +61,17 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return $ + "";
   }
 
-  @Override protected boolean prerequisite(final SwitchStatement s) {
-    final List<SwitchCase> $ = extract.switchCases(s);
+  @Override protected boolean prerequisite(final SwitchStatement ¢) {
+    final List<SwitchCase> $ = extract.switchCases(¢);
+    return noSideEffectCommands(¢) || $.isEmpty() || ($.size() == 1 && $.get(0).isDefault());
+  }
+  
+  static boolean noSideEffectCommands(final SwitchStatement s) {
     final List<Statement> ll = step.statements(s);
-    return $.isEmpty() || ll.size() == 1 || ll.size() == 2 && iz.breakStatement(ll.get(1)) || $.size() == 1 && first($).isDefault();
+    for(Statement ¢ : ll)
+      if(!iz.switchCase(¢) && !iz.breakStatement(¢))
+        return false;
+    return true;
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

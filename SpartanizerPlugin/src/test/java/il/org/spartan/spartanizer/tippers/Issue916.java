@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Yuval Simon
  * @since 2016-12-18 */
 
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue916 {
   @Ignore
@@ -43,5 +44,9 @@ public class Issue916 {
   
   @Test public void h() {
     trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3; break;}").stays();
+  }
+  
+  @Test public void i() {
+    trimmingOf("switch(x) { case a: default:y=3;break; case b:break;}").stays();
   }
 }
