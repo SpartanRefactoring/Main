@@ -726,9 +726,10 @@ public interface wizard {
     if (children1.size() != children2.size())
       return null;
     String $ = findSingleAtomicDifference(children1.get(0), children2.get(0));
+    $ = $ != null ? $ : "";
     for (int i = 0; i < children1.size(); ++i) {
       String diff = findSingleAtomicDifference(children1.get(i), children2.get(i));
-      $ = $ != "" ? $ : diff;
+      $ = $ != "" || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }
@@ -742,9 +743,10 @@ public interface wizard {
     if (ns.size() < 2)
       return null;
     String $ = findSingleAtomicDifference(ns.get(0), ns.get(1));
+    $ = $ != null ? $ : "";
     for (int i = 2; i < ns.size(); ++i) {
       String diff = findSingleAtomicDifference(ns.get(0), ns.get(i));
-      $ = $ != "" ? $ : diff;
+      $ = $ != "" || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }
