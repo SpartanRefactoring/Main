@@ -4,7 +4,7 @@ package il.org.spartan.spartanizer.utils;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class Str {
-  private String inner;
+  public String inner;
 
   public Str() {
     inner = null;
