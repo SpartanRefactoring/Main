@@ -65,22 +65,11 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       scope.pop();
   }
 
-  // @Override public void endVisit(TypeDeclaration ¢) {
-  // if (haz.methods(¢))
-  // Logger.finishedType();
-  // }
   @Override public boolean visit(final CompilationUnit ¢) {
-    // Logger.logCompilationUnit(¢);
     ¢.accept(new CleanerVisitor());
     return true;
   }
 
-  // @Override public boolean visit(final TypeDeclaration ¢) {
-  // if (!haz.methods(¢))
-  // return false;
-  // Logger.logType(¢);
-  // return true;
-  // }
   @Override protected void init(String path) {
     System.err.println("Processing: " + path);
     Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
@@ -96,8 +85,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
         li -> li.stream().map(m -> m.after).filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
-    summarizeSortedMethodStatistics(outputFolder);
-    summarizeNPStatistics(outputFolder);
+    summarizeSortedMethodStatistics();
+    summarizeNPStatistics();
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
@@ -110,8 +99,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String outputDir) {
-    final CSVStatistics report = openMethodSummaryFile(outputDir);
+  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics() {
+    final CSVStatistics report = openMethodSummaryFile(outputFolder);
     if (report == null)
       return;
     int statementsTotal = 0;
@@ -138,7 +127,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       report.nl();
     }
     report.close();
-    file.renameToCSV(outputDir + "/methodStatistics");
+    file.renameToCSV(outputFolder + "/methodStatistics");
   }
 
   private static double fractionOfMethodsTouched(List<MethodRecord> rs) {
@@ -154,7 +143,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(List<MethodRecord> rs) {
-    return safe.div(rs.stream().map(x -> safe.div(x.numNPStatements, x.numStatements)).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(x -> min(1, safe.div(x.numNPStatements, x.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
@@ -182,8 +171,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     npStatistics.get(np).markNP(n);
   }
 
-  public void summarizeNPStatistics(final String outputDir) {
-    final CSVStatistics report = openNPSummaryFile(outputDir);
+  public void summarizeNPStatistics() {
+    final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
       return;
     npStatistics.keySet().stream()
@@ -193,13 +182,18 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
         .forEach(n -> {
           report //
               .put("Name", n.name) //
-              .put("Type", n.className).put("occurences", n.occurences)//
+              .put("Type", n.className) //
+              .put("occurences", n.occurences) //
               .put("Statements", n.numNPStatements) //
               .put("Expressions", n.numNPExpressions) //
           ;
           report.nl();
         });
     report.close();
-    file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
+    file.renameToCSV(outputFolder + "/npStatistics");
+  }
+
+  private static double min(final double a, final double d) {
+    return a < d ? a : d;
   }
 }
