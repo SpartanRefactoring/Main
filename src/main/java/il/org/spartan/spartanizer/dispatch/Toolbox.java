@@ -126,6 +126,7 @@ public class Toolbox {
             new SwitchEmpty(), //
             new RemoveRedundantSwitchCases(), //
             new RemoveRedundantSwitchBranch(), //
+            new SwitchWithOneCaseToIf(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
