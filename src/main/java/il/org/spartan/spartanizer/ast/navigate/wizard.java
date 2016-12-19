@@ -693,4 +693,37 @@ public interface wizard {
   static String trim(final Object ¢) {
     return ¢ == null || (¢ + "").length() < 35 ? (¢ + "") : (¢ + "").substring(1, 35);
   }
+
+  /** Gets two lists of expressions and returns the idx of the only expression
+   * which is different between them. If the lists differ with other then one
+   * element, -1 is returned.
+   * @param es1
+   * @param es2
+   * @return */
+  @SuppressWarnings("boxing") static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
+    int $ = -1;
+    for (final Integer ¢ : range.from(0).to(es1.size()))
+      if (!wizard.same(es1.get(¢), es2.get(¢))) {
+        if ($ >= 0)
+          return -1;
+        $ = ¢;
+      }
+    return $;
+  }
+
+  /** Gets two nodes and returns the identifier of the only name i n1 which is
+   * different from n2. If the nodes subtrees differ with other then one name or
+   * any node, -1 is returned.
+   * @param es1
+   * @param es2
+   * @return [[SuppressWarningsSpartan]] */
+  static <N extends ASTNode> String findSingleNameDifference(final N n1, final N n2) {
+    if (n1 == null || n2 == null)
+      return null;
+    if (same(n1, n2))
+      return "";
+    return null;
+    // List<Name>
+    // for(final Name : searchAncestors.forClass(Name.class).from(n1)))
+  }
 }
