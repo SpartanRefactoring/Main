@@ -32,7 +32,6 @@ public abstract class AbstractGraph<E> {
    * @param ¢ some Vertex<E>
    * @return if v has no incoming edges then <code><b>null</b></code>,
    *         otherwise, all vertices from which there an edge leading to v. */
-  @SuppressWarnings("static-method") //
   public ImmutableArrayList<Vertex<E>> incoming(@NotNull final Vertex<E> ¢) {
     return ¢.incoming();
   }
@@ -61,7 +60,6 @@ public abstract class AbstractGraph<E> {
    * @return the name, if known, of this graph, or the empty string. */
   public abstract String name();
 
-  @SuppressWarnings("static-method") //
   public int outDegree(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing().size();
   }
@@ -71,7 +69,6 @@ public abstract class AbstractGraph<E> {
    * @return if v has no outgoing edges then <code><b>null</b></code>,
    *         otherwise, all vertices u such that there is an edge emanating from
    *         v and leading to u */
-  @SuppressWarnings("static-method") //
   public ImmutableArrayList<Vertex<E>> outgoing(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing();
   }

@@ -194,8 +194,7 @@ public class Aggregator {
       return TOTAL.format("%g");
     }
 
-    @NotNull @SuppressWarnings("static-method") //
-    public FormatSpecifier format(@NotNull final String format) {
+    @NotNull public FormatSpecifier format(@NotNull final String format) {
       return new FormatSpecifier() {
         @Override @NotNull public String format() {
           return format;

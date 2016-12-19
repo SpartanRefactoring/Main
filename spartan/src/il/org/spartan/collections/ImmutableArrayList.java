@@ -371,7 +371,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     return data.length;
   }
 
-  @Override @NotNull @SuppressWarnings("unused") public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
+  @Override @NotNull public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
     fail();
     return null;
   }
@@ -442,7 +442,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       next = index;
     }
 
-    @Override @SuppressWarnings("unused") public void add(final E __) {
+    @Override public void add(final E __) {
       fail();
     }
 
@@ -466,7 +466,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       return next - 1;
     }
 
-    @Override @SuppressWarnings("unused") public void set(final E __) {
+    @Override public void set(final E __) {
       fail();
     }
   }

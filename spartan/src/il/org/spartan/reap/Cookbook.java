@@ -157,7 +157,7 @@ public interface Cookbook {
    * @since 2016 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) enum ____META {
     ;
-    @SuppressWarnings("javadoc") public static class A {
+    public static class A {
       final Cell<String> begin = value("<");
       final Cell<String> end = new Ingredient<>(">");
       final Cell<String> text = value("p");
@@ -229,7 +229,7 @@ public interface Cookbook {
       }
     }
 
-    @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc", "null" }) public static class C {
+    @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "null" }) public static class C {
       @Test public void sessionA01() {
         azzert.that(compute((@org.jetbrains.annotations.NotNull final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
             is("(12)"));
@@ -377,7 +377,7 @@ public interface Cookbook {
 
       /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
-      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null", "javadoc" }) public static class TEST extends Z {
+      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null" }) public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
         }
