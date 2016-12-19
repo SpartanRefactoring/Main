@@ -11,12 +11,12 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return "Split initialization statement";
   }
 
-  @SuppressWarnings("unchecked") @Override protected boolean prerequisite(VariableDeclarationStatement s) {
-    int assignmentsCounter = 0;
+  @Override @SuppressWarnings("unchecked") protected boolean prerequisite(VariableDeclarationStatement s) {
+    int $ = 0;
     for (VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) s.fragments())
       if (isFragmentApplicable(¢))
-        ++assignmentsCounter;
-    return assignmentsCounter >= 2;
+        ++$;
+    return $ >= 2;
   }
 
   private static boolean isFragmentApplicable(VariableDeclarationFragment ¢) {
