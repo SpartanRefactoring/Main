@@ -89,7 +89,7 @@ public class Analyze {
     writeFile(new File(outputDir() + "/notTagged.java"),
         methods.stream().filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y));
     // Logger.summarizeSortedMethodStatistics(outputDir());
-    Logger.summarizeNPStatistics(outputDir());
+    // Logger.summarizeNPStatistics(outputDir());
     Count.print();
   }
 
