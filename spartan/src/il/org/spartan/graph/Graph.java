@@ -66,7 +66,6 @@ public class Graph<E> extends AbstractGraph<E> {
     return description;
   }
 
-  @SuppressWarnings("static-method") //
   public boolean hasEdge(@NotNull final Vertex<E> from, final Vertex<E> to) {
     for (final Vertex<E> ¢ : from.outgoing())
       if (¢ == to)

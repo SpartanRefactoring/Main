@@ -36,7 +36,7 @@ public enum iterables {
 
   /** @param os JD */
   public static boolean isEmpty(@NotNull final Iterable<?> os) {
-    for (@org.jetbrains.annotations.Nullable final Object name2 : os)
+    for (@Nullable final Object name2 : os)
       if (name2 != null)
         return false;
     return true;

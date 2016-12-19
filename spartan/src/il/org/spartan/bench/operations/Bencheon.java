@@ -87,7 +87,7 @@ public abstract class Bencheon extends NamedOperation {
       return System.nanoTime() - $;
     }
 
-    @Override final long beforeEachMethodTime(@SuppressWarnings("unused") final int runs) {
+    @Override final long beforeEachMethodTime(final int runs) {
       return 0;
     }
   }

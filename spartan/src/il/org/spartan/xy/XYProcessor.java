@@ -249,8 +249,7 @@ public interface XYProcessor {
       p(x, y, 0);
     }
 
-    @Override public void p(@SuppressWarnings("unused") final double x, @SuppressWarnings("unused") final double y,
-        @SuppressWarnings("unused") final double dy) {
+    @Override public void p(final double x, final double y, final double dy) {
       ___.nothing();
     }
 

@@ -93,7 +93,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
      * @return the base implementation returns the empty set, but it is meant to
      *         be overridden by concrete classes inheriting from
      *         {@link Cache.Factory} */
-    @NotNull @SuppressWarnings("static-method") public Map<String, T> all() {
+    @NotNull public Map<String, T> all() {
       return new HashMap<>();
     }
 

@@ -138,13 +138,7 @@ public class CFG {
           for (final int o : i.offsets)
             jumps2targets.put(offset, unsigned2signed_w(offset + o));
           break;
-        case RETURN:
-        case IRETURN:
-        case LRETURN:
-        case FRETURN:
-        case DRETURN:
-        case ARETURN:
-          break;
+
         default:
           break;
       }

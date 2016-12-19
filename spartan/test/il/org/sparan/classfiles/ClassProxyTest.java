@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.*;
 
-@SuppressWarnings({ "static-method", "rawtypes" }) //
+@SuppressWarnings({ "static-method" }) //
 public class ClassProxyTest {
   private static final long serialVersionUID = 8455039288585824990L;
   private final String stringSignature = "My String Signature";

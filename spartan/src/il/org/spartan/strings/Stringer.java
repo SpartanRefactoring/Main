@@ -156,7 +156,7 @@ import il.org.spartan.utils.*;
 
   @NotNull private final String value;
 
-  public <T> Stringer(final String between, @NotNull final int... ts) {
+  public Stringer(final String between, @NotNull final int... ts) {
     @NotNull final StringBuilder b = new StringBuilder();
     @NotNull final Separator s = new Separator(between);
     for (final int ¢ : ts)
