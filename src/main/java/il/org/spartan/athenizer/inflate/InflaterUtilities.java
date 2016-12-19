@@ -40,8 +40,10 @@ public class InflaterUtilities {
         $ = true;
       } else {
         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
-        if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement)))
+        if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement))) {
           s.tip(az.variableDeclarationStatement(statement)).go(r, __);
+          $ = true;
+        }
       }
     }
     return $;
@@ -84,6 +86,11 @@ public class InflaterUtilities {
       @Override public boolean visit(final ExpressionStatement node) {
         if (az.assignment(node.getExpression()) != null)
           $.add(node);
+        return true;
+      }
+      
+      @Override public boolean visit(final VariableDeclarationStatement node) {
+        $.add(node);
         return true;
       }
     });
