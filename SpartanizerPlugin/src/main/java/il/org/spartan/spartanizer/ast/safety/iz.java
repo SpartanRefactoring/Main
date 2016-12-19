@@ -1120,4 +1120,10 @@ public interface iz {
       return false;
     }
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean atomic(ASTNode ¢) {
+    return iz.name(¢) || iz.literal(¢);
+  }
 }

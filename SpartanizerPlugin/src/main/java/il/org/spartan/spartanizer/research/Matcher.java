@@ -187,8 +187,8 @@ public class Matcher {
       return false;
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))
       return sameOperator($, n) && sameOperands($, n, ids);
-    final List<ASTNode> pChildren = gatherChildren($, $);
-    final List<ASTNode> nChildren = gatherChildren(n, $);
+    final List<ASTNode> pChildren = allChildren($, $);
+    final List<ASTNode> nChildren = allChildren(n, $);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
@@ -223,7 +223,7 @@ public class Matcher {
     return iz.assignment($) && !operator(az.assignment($)).equals(operator(az.assignment(n)));
   }
 
-  @SuppressWarnings("unchecked") private static List<ASTNode> gatherChildren(final ASTNode ¢, final ASTNode p) {
+  @SuppressWarnings("unchecked") private static List<ASTNode> allChildren(final ASTNode ¢, final ASTNode p) {
     final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
     if (iz.methodInvocation(¢)) {
       if (!isMethodInvocationAndHas$AArgument(p))
@@ -383,8 +383,8 @@ public class Matcher {
     else {
       if (isMethodInvocationAndHas$AArgument(p))
         enviroment.put(argumentsId(p), matchingArguments(n) + "");
-      final List<ASTNode> pChildren = gatherChildren(p, p);
-      final List<ASTNode> nChildren = gatherChildren(n, p);
+      final List<ASTNode> pChildren = allChildren(p, p);
+      final List<ASTNode> nChildren = allChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
@@ -408,8 +408,8 @@ public class Matcher {
     else if (isBlockVariable(p))
       enviroment.put(blockVariableName(p), n);
     else {
-      final List<ASTNode> pChildren = gatherChildren(p, p);
-      final List<ASTNode> nChildren = gatherChildren(n, p);
+      final List<ASTNode> pChildren = allChildren(p, p);
+      final List<ASTNode> nChildren = allChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviromentNodes(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
