@@ -10,6 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** Tests of methods according to issue 778
  * @author Netanel Felcher
@@ -30,7 +31,7 @@ public class Issue778 {
 
   @Test @SuppressWarnings({ "static-method" }) public void test3() {
     azzert.that("foo",
-        is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }"))).get(0).getName().getIdentifier()));
+        is(first(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }")))).getName().getIdentifier()));
   }
 
   @Test @SuppressWarnings({ "static-method" }) public void test4() {
@@ -49,7 +50,7 @@ public class Issue778 {
   @Test @SuppressWarnings({ "static-method" }) public void test6() {
     final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(
         wizard.ast("public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}")));
-    azzert.that("foo0", is(res.get(0).getName().getIdentifier()));
+    azzert.that("foo0", is(first(res).getName().getIdentifier()));
     azzert.that("foo1", is(res.get(1).getName().getIdentifier()));
     azzert.that("foo2", is(res.get(2).getName().getIdentifier()));
   }

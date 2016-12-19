@@ -11,22 +11,24 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** see issue #713 for more details
  * @author Inbal Zukerman
  * @author Elia Traore
  * @since 2016-11-06 */
 public class issue713 {
-  TypeDeclaration noPublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class noPublic {   } ")).types().get(0);
-  TypeDeclaration onlyPrivates = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } ")).types().get(0);
-  TypeDeclaration onePublic = (TypeDeclaration) az.compilationUnit(wizard.ast("public class onePublic {  public int x; } ")).types().get(0);
-  TypeDeclaration notOnlyPublic = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } ")).types().get(0);
-  TypeDeclaration listOfPublicFields = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } ")).types().get(0);
-  TypeDeclaration notCountingMethods = (TypeDeclaration) az
-      .compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } ")).types().get(0);
+  TypeDeclaration noPublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class noPublic {   } "))));
+  TypeDeclaration onlyPrivates = (TypeDeclaration) first(
+      types(az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } "))));
+  TypeDeclaration onePublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePublic {  public int x; } "))));
+  TypeDeclaration notOnlyPublic = (TypeDeclaration) first(
+      types(az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } "))));
+  TypeDeclaration listOfPublicFields = (TypeDeclaration) first(
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } "))));
+  TypeDeclaration notCountingMethods = (TypeDeclaration) first(
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } "))));
 
   @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;

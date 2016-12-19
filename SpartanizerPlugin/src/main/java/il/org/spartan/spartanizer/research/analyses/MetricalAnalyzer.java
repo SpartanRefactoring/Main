@@ -17,7 +17,6 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
     printMap(afterHistogram);
   }
 
-  /**  */
   @Override @SuppressWarnings("boxing") public void printComparison() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);
@@ -29,7 +28,6 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
             + tidy(!afterHistogram.containsKey(¢) ? 0 : enumElement(afterHistogram.get(¢))));
   }
 
-  /**  */
   @Override @SuppressWarnings("boxing") public void printAccumulated() {
     final int max1 = getMax(beforeHistogram);
     final int max2 = getMax(afterHistogram);

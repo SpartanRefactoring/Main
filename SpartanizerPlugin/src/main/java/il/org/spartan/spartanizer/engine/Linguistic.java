@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
 import java.text.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import il.org.spartan.spartanizer.utils.*;
@@ -66,16 +65,16 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurals(final String s, final AtomicInteger i) {
-    return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
+  static String plurals(final String s, final Int i) {
+    return i == null ? UNKNOWN + " " + s + "s" : i.get() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurales(final String s, final AtomicInteger i) {
-    return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
+  static String plurales(final String s, final Int i) {
+    return i == null ? UNKNOWN + " " + s + "es" : i.get() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 's' to its end.

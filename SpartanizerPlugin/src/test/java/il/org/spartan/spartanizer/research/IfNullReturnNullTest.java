@@ -12,11 +12,17 @@ import il.org.spartan.spartanizer.research.patterns.*;
 @SuppressWarnings("static-method")
 public class IfNullReturnNullTest {
   @Test public void a() {
-    trimmingOf("if(x == null) return null; use();").withTipper(IfStatement.class, new IfNullReturnNull()).gives("If.Null(x).returnsNull(); use();");
-  }
-
-  @Test public void b() {
-    trimmingOf("if(x.y(wiz,this,and(zis)) == null) return null;").withTipper(IfStatement.class, new IfNullReturnNull())
-        .gives("If.Null(x.y(wiz,this,and(zis))).returnsNull();");
+    trimmingOf(//
+        "try {" + //
+            "    A.a(b).c().d(e -> f[g++]=h(e));" + //
+            "  }" + //
+            " catch (  B i) {" + //
+            "    return null;"//
+    ).withTipper(TryStatement.class, new IfThrowsReturnNull())//
+        .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();}")//
+        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();}")//
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();}")//
+        .stays()//
+    ;
   }
 }

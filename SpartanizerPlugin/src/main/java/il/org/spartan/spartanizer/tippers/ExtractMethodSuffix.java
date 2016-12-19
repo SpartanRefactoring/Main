@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 // TODO Roth: choose more suitable category
 // TODO Roth: add tests for tipper
@@ -40,7 +42,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   private static boolean isValid(final MethodDeclaration ¢) {
-    return !¢.isConstructor() && ¢.getBody() != null && ¢.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
+    return !¢.isConstructor() && ¢.getBody() != null && statements(¢.getBody()).size() >= MINIMAL_STATEMENTS_COUNT;
   }
 
   /** @param d JD
@@ -65,23 +67,23 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = duplicate.of(d);
     fixStatements(d, d1, r);
-    d1.getBody().statements().subList(d.getBody().statements().indexOf(forkPoint) + 1, d.getBody().statements().size()).clear();
+    statements(d1).subList(statements(d).indexOf(forkPoint) + 1, statements(d).size()).clear();
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(duplicate.of(d.getName()));
     fixName(i, equalParams);
     for (final VariableDeclaration ¢ : ds)
       i.arguments().add(duplicate.of(¢.getName()));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
-      d1.getBody().statements().add(d.getAST().newExpressionStatement(i));
+      statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
       final ReturnStatement s = d.getAST().newReturnStatement();
       s.setExpression(i);
-      d1.getBody().statements().add(s);
+      statements(d1).add(s);
     }
     $.add(d1);
     final MethodDeclaration d2 = duplicate.of(d);
     fixStatements(d, d2, r);
-    d2.getBody().statements().subList(0, d.getBody().statements().indexOf(forkPoint) + 1).clear();
+    statements(d2).subList(0, statements(d).indexOf(forkPoint) + 1).clear();
     fixName(d2, equalParams);
     fixParameters(d, d2, ds);
     fixJavadoc(d2, ds);
@@ -92,10 +94,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   /** @param d
    * @param d1
    * @param r */
-  @SuppressWarnings("unchecked") private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
-    dx.getBody().statements().clear();
-    for (final Statement ¢ : (List<Statement>) d.getBody().statements())
-      dx.getBody().statements().add(r.createCopyTarget(¢));
+  private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
+    statements(dx.getBody()).clear();
+    for (final Statement ¢ : statements(d.getBody()))
+      statements(dx).add(az.statement(r.createCopyTarget(¢)));
   }
 
   private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
@@ -139,14 +141,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
-      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(¢.fragments()) instanceof SimpleName) {
         hasParamTags = true;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(¢.fragments().get(0)))
+        if (!ns.contains(first(¢.fragments())))
           xs.add(¢);
         else
-          ns.remove(¢.fragments().get(0));
+          ns.remove(first(¢.fragments()));
       }
     if (!hasParamTags)
       return;
@@ -246,7 +248,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     @SuppressWarnings("unchecked") public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = method.parameters();
-      ss = method.getBody() == null ? Collections.EMPTY_LIST : method.getBody().statements();
+      ss = method.getBody() != null ? statements(method) : Collections.EMPTY_LIST;
     }
 
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {

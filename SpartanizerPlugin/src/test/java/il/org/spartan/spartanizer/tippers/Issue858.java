@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Yuval Simon
+/** This is a unit test for {@link RemoveRedundantSwitchBranch}
+ * @author Yuval Simon
  * @since 2016-11-26 */
 @SuppressWarnings("static-method")
 public class Issue858 {

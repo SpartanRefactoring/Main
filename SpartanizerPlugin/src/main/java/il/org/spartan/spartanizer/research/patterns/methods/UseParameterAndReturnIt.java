@@ -11,9 +11,12 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneParameter(¢) && body(¢) != null && !iz.constructor(¢) && !iz.voidType(returnType(¢))
+    return hazOneParameter(¢)//
+        && notEmpty(¢)//
+        && !iz.constructor(¢)//
+        && !iz.voidType(returnType(¢))
         && returnStatements(¢).stream().map(r -> expression(r) + "").allMatch(e -> e.equals(identifier(name(onlyOne(parameters(¢))))));
   }
 }

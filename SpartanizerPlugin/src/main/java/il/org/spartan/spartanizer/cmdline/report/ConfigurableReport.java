@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
  * @author Matteo Orru'
  * @year 2016 */
 public interface ConfigurableReport {
-  /**  */
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
     String outputFolder = "/tmp/"; // default modifier

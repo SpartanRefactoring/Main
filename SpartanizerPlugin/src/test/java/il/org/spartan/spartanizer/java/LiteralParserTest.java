@@ -43,7 +43,7 @@ public final class LiteralParserTest {
   }
 
   @Test public void hasVisibleValue() {
-    azzert.that(new NumericLiteralClassifier("2F").literal, is("2F"));
+    azzert.that(new NumericLiteralClassifier("2F").inner, is("2F"));
   }
 
   @Test public void issue490a() {

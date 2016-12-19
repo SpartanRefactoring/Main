@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.utils.tdd;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,6 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** @author Shay Segal
  * @author Sefi Albo
@@ -37,6 +38,6 @@ public class Issue681 {
   @Test public void test5() {
     final ASTNode funcNode = wizard.ast("static void f() { Runnable r = (x1, x2) -> System.out.println(x1+x2); }");
     azzert.that(findFirst.methodDeclaration(funcNode),
-        is(find.ancestorMethod(findFirst.infixPlus((Statement) findFirst.methodDeclaration(funcNode).getBody().statements().get(0)))));
+        is(find.ancestorMethod(findFirst.infixPlus(first(statements(findFirst.methodDeclaration(funcNode).getBody()))))));
   }
 }

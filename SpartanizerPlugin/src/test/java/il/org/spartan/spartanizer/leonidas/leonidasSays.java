@@ -1,5 +1,8 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import static il.org.spartan.lisp.*;
+import static org.junit.Assert.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -12,8 +15,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
@@ -182,7 +184,7 @@ public class leonidasSays {
       case EXPRESSION_LOOK_ALIKE:
         actual = d.get().substring(23, d.get().length() - 3);
         break;
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         actual = d.get().substring(9, d.get().length() - 2);
         break;
       case STATEMENTS_LOOK_ALIKE:
@@ -199,7 +201,7 @@ public class leonidasSays {
         return u;
       case EXPRESSION_LOOK_ALIKE:
         return findSecond(Expression.class, findFirst.methodDeclaration(u));
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         return findSecond(MethodDeclaration.class, u);
       case OUTER_TYPE_LOOKALIKE:
         return u;
@@ -211,7 +213,7 @@ public class leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
   }
 
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
@@ -261,7 +263,7 @@ public class leonidasSays {
         return ¢;
       case EXPRESSION_LOOK_ALIKE:
         return "class X{int f(){return " + ¢ + ";}}";
-      case METHOD_LOOKALIKE:
+      case METHOD_LOOK_ALIKE:
         return "class X{" + ¢ + "}";
       case OUTER_TYPE_LOOKALIKE:
         return ¢;

@@ -307,4 +307,194 @@ public final class izTest {
     assert iz.thisOrNull(e("this"));
     assert !iz.thisOrNull(e("i+5"));
   }
+
+  @Test public void parseIntD1() {
+    azzert.that(iz.parseInt("10101"), is(10101));
+  }
+
+  @Test public void parseIntD2() {
+    azzert.that(iz.parseInt("-10101"), is(-10101));
+  }
+
+  @Test public void parseIntD3() {
+    azzert.that(iz.parseInt("+10101"), is(10101));
+  }
+
+  @Test public void parseIntD4() {
+    azzert.that(iz.parseInt("   10101    "), is(10101));
+  }
+
+  @Test public void parseIntO1() {
+    azzert.that(iz.parseInt("010101"), is(010101));
+  }
+
+  @Test public void parseIntO2() {
+    azzert.that(iz.parseInt("-010101"), is(-010101));
+  }
+
+  @Test public void parseIntO3() {
+    azzert.that(iz.parseInt("+010101"), is(010101));
+  }
+
+  @Test public void parseIntO4() {
+    azzert.that(iz.parseInt("   010101    "), is(010101));
+  }
+
+  @Test public void parseIntX1() {
+    azzert.that(iz.parseInt("0x10101"), is(0x10101));
+  }
+
+  @Test public void parseIntX2() {
+    azzert.that(iz.parseInt("-0x10101"), is(-0x10101));
+  }
+
+  @Test public void parseIntX3() {
+    azzert.that(iz.parseInt("+0x10101"), is(0x10101));
+  }
+
+  @Test public void parseIntX4() {
+    azzert.that(iz.parseInt("   0x10101    "), is(0x10101));
+  }
+
+  @Test public void parseIntX5() {
+    azzert.that(iz.parseInt("0X10101"), is(0X10101));
+  }
+
+  @Test public void parseIntX6() {
+    azzert.that(iz.parseInt("-0X10101"), is(-0X10101));
+  }
+
+  @Test public void parseIntX7() {
+    azzert.that(iz.parseInt("+0X10101"), is(0X10101));
+  }
+
+  @Test public void parseIntX8() {
+    azzert.that(iz.parseInt("   0X10101    "), is(0X10101));
+  }
+  @Test public void parseIntB1() {
+    azzert.that(iz.parseInt("0b10101"), is(0b10101));
+  }
+
+  @Test public void parseIntB2() {
+    azzert.that(iz.parseInt("-0b10101"), is(-0b10101));
+  }
+
+  @Test public void parseIntB3() {
+    azzert.that(iz.parseInt("+0b10101"), is(0b10101));
+  }
+
+  @Test public void parseIntB4() {
+    azzert.that(iz.parseInt("   0b10101    "), is(0b10101));
+  }
+
+  @Test public void parseIntB5() {
+    azzert.that(iz.parseInt("0B10101"), is(0B10101));
+  }
+
+  @Test public void parseIntB6() {
+    azzert.that(iz.parseInt("-0B10101"), is(-0B10101));
+  }
+
+  @Test public void parseIntB7() {
+    azzert.that(iz.parseInt("+0B10101"), is(0B10101));
+  }
+
+  @Test public void parseIntB8() {
+    azzert.that(iz.parseInt("   0B10101    "), is(0B10101));
+  }
+
+  @Test public void parseLongD1() {
+    azzert.that(iz.parseLong("10101L"), is(10101L));
+  }
+
+  @Test public void parseLongD2() {
+    azzert.that(iz.parseLong("-10101L"), is(-10101L));
+  }
+
+  @Test public void parseLongD3() {
+    azzert.that(iz.parseLong("+10101L"), is(10101L));
+  }
+
+  @Test public void parseLongD4() {
+    azzert.that(iz.parseLong("   10101L    "), is(10101L));
+  }
+
+  @Test public void parseLongO1() {
+    azzert.that(iz.parseLong("010101"), is(010101L));
+  }
+
+  @Test public void parseLongO2() {
+    azzert.that(iz.parseLong("-010101L"), is(-010101L));
+  }
+
+  @Test public void parseLongO3() {
+    azzert.that(iz.parseLong("+010101l"), is(010101L));
+  }
+
+  @Test public void parseLongO4() {
+    azzert.that(iz.parseLong("   010101L    "), is(010101L));
+  }
+
+  @Test public void parseLongX1() {
+    azzert.that(iz.parseLong("0x10101L"), is(0x10101L));
+  }
+
+  @Test public void parseLongX2() {
+    azzert.that(iz.parseLong("-0x10101L"), is(-0x10101L));
+  }
+
+  @Test public void parseLongX3() {
+    azzert.that(iz.parseLong("+0x10101L"), is(0x10101L));
+  }
+
+  @Test public void parseLongX4() {
+    azzert.that(iz.parseLong("   0x10101L    "), is(0x10101L));
+  }
+
+  @Test public void parseLongX5() {
+    azzert.that(iz.parseLong("0X10101L"), is(0X10101L));
+  }
+
+  @Test public void parseLongX6() {
+    azzert.that(iz.parseLong("-0X10101L"), is(-0X10101L));
+  }
+
+  @Test public void parseLongX7() {
+    azzert.that(iz.parseLong("+0X10101L"), is(0X10101L));
+  }
+
+  @Test public void parseLongX8() {
+    azzert.that(iz.parseLong("   0X10101L    "), is(0X10101L));
+  }
+  @Test public void parseLongB1() {
+    azzert.that(iz.parseLong("0b10101L"), is(0b10101L));
+  }
+
+  @Test public void parseLongB2() {
+    azzert.that(iz.parseLong("-0b10101L"), is(-0b10101L));
+  }
+
+  @Test public void parseLongB3() {
+    azzert.that(iz.parseLong("+0b10101L"), is(0b10101L));
+  }
+
+  @Test public void parseLongB4() {
+    azzert.that(iz.parseLong("   0b10101L    "), is(0b10101L));
+  }
+
+  @Test public void parseLongB5() {
+    azzert.that(iz.parseLong("0B10101L"), is(0B10101L));
+  }
+
+  @Test public void parseLongB6() {
+    azzert.that(iz.parseLong("-0B10101L"), is(-0B10101L));
+  }
+
+  @Test public void parseLongB7() {
+    azzert.that(iz.parseLong("+0B10101L"), is(0B10101L));
+  }
+
+  @Test public void parseLongB8() {
+    azzert.that(iz.parseLong("   0B10101L    "), is(0B10101L));
+  }
 }

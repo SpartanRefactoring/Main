@@ -12,6 +12,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.lisp.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil
@@ -133,24 +134,24 @@ public class Issue404 {
 
   @Test public void ka() {
     assert dig.stringLiterals(into.e("\"\"")).size() == 1 : "The List did not contain the expected number of elements.";
-    assert "".equals(dig.stringLiterals(into.e("\"\"")).get(0)) : "The contained element was not the expected one.";
+    assert "".equals(first(dig.stringLiterals(into.e("\"\"")))) : "The contained element was not the expected one.";
   }
 
   @Test public void kb() {
     assert dig.stringLiterals(into.e("\"str\"")).size() == 1 : "The List did not contain the expected number of elements.";
-    assert "str".equals(dig.stringLiterals(into.e("\"str\"")).get(0)) : "The contained element was not the expected one.";
+    assert "str".equals(first(dig.stringLiterals(into.e("\"str\"")))) : "The contained element was not the expected one.";
   }
 
   @Test public void kc() {
     final List<String> $ = dig.stringLiterals(into.a("s = \"a\""));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
-    assert "a".equals($.get(0)) : "The contained element was not the expected one.";
+    assert "a".equals(first($)) : "The contained element was not the expected one.";
   }
 
   @Test public void kd() {
     final List<String> $ = dig.stringLiterals(into.c("\"a\".size()> b.size() ? b : a"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
-    assert "a".equals($.get(0));
+    assert "a".equals(first($));
   }
 
   @Test public void ke() {
@@ -235,7 +236,7 @@ public class Issue404 {
         + "}\n"//
         + "}"));
     assert $.size() == 4 : "The List did not contain the expected number of elements.";
-    assert "first".equals($.get(0)) : "List did not contain expected element \"first\" at index 0";
+    assert "first".equals(first($)) : "List did not contain expected element \"first\" at index 0";
     assert "second".equals($.get(1)) : "List did not contain expected element \"second\" at index 1";
     assert "third".equals($.get(2)) : "List did not contain expected element \"third\" at index 2";
     assert "fourth".equals($.get(3)) : "List did not contain expected element \"fourth\" at index 3";
@@ -264,7 +265,7 @@ public class Issue404 {
     x.setRightOperand(right);
     final List<String> $ = dig.stringLiterals(x);
     assert $.size() == 2 : "The List did not contain the expected number of elements.";
-    assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
+    assert "\"".equals(first($)) : "The List did not contain the expected element \" at index 0";
     assert "\'".equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
 
@@ -279,7 +280,7 @@ public class Issue404 {
     x.setRightOperand(right);
     final List<String> $ = dig.stringLiterals(x);
     assert $.size() == 2 : "The List did not contain the expected number of elements.";
-    assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
+    assert "\"".equals(first($)) : "The List did not contain the expected element \" at index 0";
     assert String.valueOf((char) 1).equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
 
@@ -309,7 +310,7 @@ public class Issue404 {
             + "}\n"//
             + "}"));
     assert $.size() == 4 : "The List did not contain the expected number of elements.";
-    assert "ĀĆ".equals($.get(0)) : "List did not contain expected element \"ĀĆ\" at index 0";
+    assert "ĀĆ".equals(first($)) : "List did not contain expected element \"ĀĆ\" at index 0";
     assert "Ēċ".equals($.get(1)) : "List did not contain expected element \"Ēċ\" at index 1";
     assert "ĘŦţţſ".equals($.get(2)) : "List did not contain expected element \"ĘŦţţſ\" at index 2";
     assert "ŒĤĦfgdr453Ŵ".equals($.get(3)) : "List did not contain expected element \"ŒĤĦfgdr453Ŵ\" at index 3";
@@ -325,7 +326,7 @@ public class Issue404 {
             + "}\n"//
             + "}"));
     assert $.size() == 4 : "The List did not contain the expected number of elements.";
-    assert "עוד חוזר הניגון שזנחת לשווא".equals($.get(0)) : "List did not contain expected element \"עוד חוזר הניגון שזנחת לשווא\" at index 0";
+    assert "עוד חוזר הניגון שזנחת לשווא".equals(first($)) : "List did not contain expected element \"עוד חוזר הניגון שזנחת לשווא\" at index 0";
     assert "והדרך עודנה נפקחת לאורך".equals($.get(1)) : "List did not contain expected element \"והדרך עודנה נפקחת לאורך\" at index 1";
     assert "וענן בשמיו ואילן בגשמיו".equals($.get(2)) : "List did not contain expected element \"וענן בשמיו ואילן בגשמיו\" at index 2";
     assert "מצפים עוד לך, עובר אורח".equals($.get(3)) : "List did not contain expected element \"מצפים עוד לך, עובר אורח\" at index 3";

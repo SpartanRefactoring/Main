@@ -12,6 +12,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.lisp.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -258,7 +259,6 @@ public interface idiomatic {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   class Storer<T> implements Holder<T> {
-    /** */
     final T inner;
 
     /** Instantiates this class.
@@ -341,7 +341,7 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       final List<String> after = on(before).map(x -> mapper(x));
-      assertEquals("11", after.get(0));
+      assertEquals("11", first(after));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
@@ -352,7 +352,7 @@ public interface idiomatic {
       before.add(2);
       before.add(3);
       final List<String> after = on(before).map(x -> mapper(x));
-      assertEquals("1", after.get(0));
+      assertEquals("1", first(after));
       assertEquals("2", after.get(1));
       assertEquals("3", after.get(2));
     }
@@ -363,7 +363,7 @@ public interface idiomatic {
       before.add(2);
       before.add(3);
       final List<Integer> after = on(before).filter(x -> x % 2 == 1);
-      assertEquals(1, after.get(0).intValue());
+      assertEquals(1, first(after).intValue());
       assertEquals(3, after.get(1).intValue());
     }
 
