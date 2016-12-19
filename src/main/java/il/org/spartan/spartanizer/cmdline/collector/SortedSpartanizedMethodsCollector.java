@@ -24,9 +24,9 @@ import il.org.spartan.utils.*;
 /** @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
-  static SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
-  SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(new Comparator<Integer>() {
+  private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(new Comparator<Integer>() {
     @Override public int compare(Integer o1, Integer o2) {
       return o1.compareTo(o2);
     }
@@ -84,6 +84,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   @Override protected void init(String path) {
     System.err.println("Processing: " + path);
     Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
+    Logger.subsribe((n, np) -> logNPInfo(n, np));
   }
 
   @Override protected void done(String path) {
@@ -96,7 +97,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
         li -> li.stream().map(m -> m.after).filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
     summarizeSortedMethodStatistics(outputFolder);
-    // Logger.summarizeNPStatistics(outputFolder);
+    summarizeNPStatistics(outputFolder);
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
@@ -171,5 +172,34 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
+  }
+
+  private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
+
+  private void logNPInfo(final ASTNode n, final String np) {
+    if (!npStatistics.containsKey(np))
+      npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
+    npStatistics.get(np).markNP(n);
+  }
+
+  public void summarizeNPStatistics(final String outputDir) {
+    final CSVStatistics report = openNPSummaryFile(outputDir);
+    if (report == null)
+      return;
+    npStatistics.keySet().stream()
+        .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
+            : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
+        .map(k -> npStatistics.get(k))//
+        .forEach(n -> {
+          report //
+              .put("Name", n.name) //
+              .put("Type", n.className).put("occurences", n.occurences)//
+              .put("Statements", n.numNPStatements) //
+              .put("Expressions", n.numNPExpressions) //
+          ;
+          report.nl();
+        });
+    report.close();
+    file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
   }
 }
