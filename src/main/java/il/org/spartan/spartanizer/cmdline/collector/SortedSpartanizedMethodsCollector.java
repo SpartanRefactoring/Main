@@ -60,7 +60,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     return true;
   }
 
-  @Override public void endVisit(MethodDeclaration ¢) {
+  @Override public void endVisit(final MethodDeclaration ¢) {
     if (!excludeMethod(¢))
       scope.pop();
   }
@@ -72,8 +72,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   @Override protected void init(String path) {
     System.err.println("Processing: " + path);
-    Logger.subsribe((n, np) -> logNanoContainingMethodInfo(n, np));
-    Logger.subsribe((n, np) -> logNPInfo(n, np));
+    Logger.subsribe((n, np) -> logAll(n, np));
   }
 
   @Override protected void done(String path) {
@@ -93,6 +92,13 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   private static boolean excludeMethod(MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
+  }
+
+  private void logAll(final ASTNode n, final String np) {
+    if (containedInInstanceCreation(n))
+      return;
+    logNanoContainingMethodInfo(n, np);
+    logNPInfo(n, np);
   }
 
   private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -195,5 +201,9 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   private static double min(final double a, final double d) {
     return a < d ? a : d;
+  }
+
+  private static boolean containedInInstanceCreation(final ASTNode ¢) {
+    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }
