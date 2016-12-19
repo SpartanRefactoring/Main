@@ -8,6 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.lisp.*;
 
 /** Unit tests for issue #706
  * @author Sapir Bismot
@@ -43,7 +44,7 @@ public class Issue706 {
   }
 
   @Test public void test08() {
-    azzert.that("s1", is(getAll2.stringVariables(az.methodDeclaration(wizard.ast("public String stringCopy(String s1, String s2, int size);"))).get(0)
+    azzert.that("s1", is(first(getAll2.stringVariables(az.methodDeclaration(wizard.ast("public String stringCopy(String s1, String s2, int size);"))))
         .getName().getIdentifier()));
   }
 

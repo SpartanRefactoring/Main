@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Yossi Gil
  * @author Matteo Orru'
  * @since 2016 */
-public final class InteractiveSpartanizer {
+public class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
@@ -72,7 +72,7 @@ public final class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> n, final Tipper<N>... ns) {
     if (!changed)
-      toolbox = Toolbox.muttableDefaultInstance();
+      toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
     toolbox.add(n, ns);
     return this;

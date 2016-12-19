@@ -27,7 +27,7 @@ public enum AnalyzerOptions {
     return get(Analyze.class.getSimpleName(), property);
   }
 
-  static void set(final String property, final String value) {
+  public static void set(final String property, final String value) {
     set(Analyze.class.getSimpleName(), property, value);
   }
 

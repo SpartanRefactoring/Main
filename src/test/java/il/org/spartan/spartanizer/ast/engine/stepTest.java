@@ -12,6 +12,7 @@ import org.junit.runners.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.lisp.*;
 
 /** A test suite for class {@link step}
  * @author Yossi Gil
@@ -27,19 +28,19 @@ public final class stepTest {
   @Test public void imports() {
     final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
     assertEquals(1, li.size());
-    assertEquals("a.b.c", li.get(0).getName() + "");
+    assertEquals("a.b.c", first(li).getName() + "");
   }
 
   @Test public void importsNames() {
     final List<String> li = step.importDeclarationsNames(cu("import a.b.c; class c{}"));
     assertEquals(1, li.size());
-    assertEquals("a.b.c", li.get(0));
+    assertEquals("a.b.c", first(li));
   }
 
   @Test public void importsNames2() {
     final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; class c{}"));
     assertEquals(3, li.size());
-    assertEquals("a.b.c", li.get(0));
+    assertEquals("a.b.c", first(li));
     assertEquals("static f.g.*", li.get(1));
     assertEquals("java.util.*", li.get(2));
   }

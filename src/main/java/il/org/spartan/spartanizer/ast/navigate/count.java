@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.concurrent.atomic.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -19,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public interface count {
   static int imports(final CompilationUnit u) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
@@ -62,7 +60,7 @@ public interface count {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodes(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         $.getAndIncrement();
@@ -72,7 +70,7 @@ public interface count {
   }
 
   static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(cl))
@@ -83,7 +81,7 @@ public interface count {
   }
 
   static int noimports(final CompilationUnit root) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
@@ -97,7 +95,7 @@ public interface count {
    * @param root
    * @return */
   static int noImportsNoComments(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
@@ -118,7 +116,7 @@ public interface count {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int statements(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
+    final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         $.addAndGet(as.bit(iz.statement(¢)));

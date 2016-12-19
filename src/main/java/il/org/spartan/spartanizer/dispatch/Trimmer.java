@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -10,6 +9,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -38,7 +38,8 @@ public class Trimmer extends AbstractGUIApplicator {
     this.toolbox = toolbox;
   }
 
-  @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final AtomicInteger i) {
+  @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
+    final String fileName = Linguistic.unknownIfNull(u.getJavaElement(), e -> e.getElementName());
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -49,7 +50,9 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           w = getTipper(n);
         } catch (final Exception ¢) {
+          ¢.printStackTrace();
           monitor.debug(this, ¢);
+          monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         if (w == null)
           return true;
@@ -59,6 +62,7 @@ public class Trimmer extends AbstractGUIApplicator {
           TrimmerLog.tip(w, n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         if (s != null) {
           i.incrementAndGet();
@@ -91,6 +95,8 @@ public class Trimmer extends AbstractGUIApplicator {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
+        final String fileName = Linguistic.unknownIfNull(az.compilationUnit(n.getRoot()),
+            u -> u.getJavaElement() == null ? Linguistic.UNKNOWN : u.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
@@ -99,6 +105,7 @@ public class Trimmer extends AbstractGUIApplicator {
           w = getTipper(n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         if (w != null)
           progressMonitor.worked(5);
@@ -106,6 +113,7 @@ public class Trimmer extends AbstractGUIApplicator {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         return false;
       }
@@ -134,7 +142,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   @SafeVarargs public final <N extends ASTNode> Trimmer add(final Class<N> n, final Tipper<N>... ns) {
     if (!changed)
-      toolbox = Toolbox.muttableDefaultInstance();
+      toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
     toolbox.add(n, ns);
     return this;

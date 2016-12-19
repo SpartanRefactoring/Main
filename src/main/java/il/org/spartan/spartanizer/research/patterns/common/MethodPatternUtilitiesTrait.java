@@ -14,6 +14,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Ori Marcovitch
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
+  default boolean notEmpty(final MethodDeclaration ¢) {
+    return body(¢) != null;
+  }
+
+  default boolean empty(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).isEmpty();
+  }
+
   default boolean hazOneParameter(final MethodDeclaration ¢) {
     return parameters(¢) != null && parameters(¢).size() == 1;
   }
@@ -26,8 +34,12 @@ public interface MethodPatternUtilitiesTrait {
     return searchDescendants.forClass(ReturnStatement.class).from(¢);
   }
 
-  default boolean hazNoParams(final MethodDeclaration ¢) {
+  default boolean hazNoParameters(final MethodDeclaration ¢) {
     return parameters(¢).isEmpty();
+  }
+
+  default boolean hazParameters(final MethodDeclaration ¢) {
+    return !hazNoParameters(¢);
   }
 
   default Statement onlyStatement(final MethodDeclaration ¢) {
@@ -42,27 +54,49 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notVoid(final MethodDeclaration ¢) {
+  default boolean returnTypeNotVoid(final MethodDeclaration ¢) {
     return !iz.voidType(returnType(¢));
   }
 
   default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
-    return (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
+    return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
   default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
-    return (t + "").equals(returnType(¢) + "");
+    return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
   default boolean same(final ASTNode n, final ASTNode b) {
-    return (n + "").equals(b + "");
+    return n != null && b != null && (n + "").equals(b + "");
   }
 
   default boolean returnsParam(final MethodDeclaration ¢) {
-    return identifier(az.name(expression(az.returnStatement(onlyStatement(¢))))).equals(identifier(name(onlyParameter(¢))));
+    return safeEquals(identifier(az.name(expression(az.returnStatement(lastStatement(¢))))), identifier(name(onlyParameter(¢))));
+  }
+
+  /** @param ¢
+   * @return */
+  default ASTNode lastStatement(final MethodDeclaration ¢) {
+    return last(statements(¢));
   }
 
   default boolean returnsThis(final MethodDeclaration ¢) {
     return iz.thisExpression(expression(az.returnStatement(onlyStatement(¢))));
+  }
+
+  default boolean lastReturnsThis(final MethodDeclaration ¢) {
+    return iz.thisExpression(expression(az.returnStatement(lastStatement(¢))));
+  }
+
+  default boolean returnTypeSameAsClass(final MethodDeclaration ¢) {
+    return identifier(name(searchAncestors.forContainingType().from(¢))).equals(returnType(¢) + "");
+  }
+
+  default Statement firstStatement(final MethodDeclaration ¢) {
+    return first(statements(¢));
+  }
+
+  default boolean safeEquals(final Object o1, final Object o2) {
+    return o1 != null && o2 != null && o1.equals(o2);
   }
 }

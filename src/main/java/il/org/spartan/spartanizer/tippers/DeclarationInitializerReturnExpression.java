@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class DeclarationInitializerReturnExpression extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
+    return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

@@ -1,7 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
   public CompilationUnit compilationUnit;
+  public String fileName;
+  public String filePath;
 
   /** Instantiates this class
    * @param compilationUnit JD */
@@ -28,6 +30,12 @@ public class WrappedCompilationUnit {
    * @author Matteo Orru'
    * @param compilationUnit JD */
   public WrappedCompilationUnit(final CompilationUnit cu) {
+    compilationUnit = cu;
+  }
+
+  public WrappedCompilationUnit(final CompilationUnit cu, final String fileName, final String absolutePath) {
+    this.fileName = fileName;
+    filePath = absolutePath;
     compilationUnit = cu;
   }
 
@@ -57,12 +65,10 @@ public class WrappedCompilationUnit {
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
-  /**  */
   public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
-  /**  */
   public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
@@ -71,5 +77,17 @@ public class WrappedCompilationUnit {
    * @return */
   public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
+  }
+
+  public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
+    return new WrappedCompilationUnit(from, name, absolutePath);
+  }
+
+  public String getFileName() {
+    return fileName;
+  }
+
+  public String getFilePath() {
+    return filePath;
   }
 }

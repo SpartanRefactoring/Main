@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * (usually with same name) and just adds parameters to the method.
  * @author Ori Marcovitch
  * @since 2016 */
-public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -28,7 +28,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern<MethodDecla
     final List<Statement> ss = statements(¢);
     if (!anyTips(onlyOne(ss)))
       return false;
-    final Expression $ = expression(az.returnStatement(ss.get(0)));
+    final Expression $ = expression(az.returnStatement(first(ss)));
     return iz.methodInvocation($) && containsParameters(¢, $) && arguments(az.methodInvocation($)).size() > parametersNames(¢).size();
   }
 

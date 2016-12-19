@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.*;
+import static il.org.spartan.lisp.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
@@ -41,7 +42,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private static void inflate() {
-    final WrappedCompilationUnit wcu = Selection.Util.current().inner.get(0).build();
+    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
     InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 

@@ -90,7 +90,7 @@ public enum enumerate {
    * @since 16-11-07 */
   @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
     int $ = 0;
-    final List<?> l = d.getBody().statements();
+    final List<?> l = step.statements(step.body(d));
     final boolean[] arr = new boolean[10];
     final int BLOCK = 0;
     final int IFSTATE = 1;
@@ -139,4 +139,65 @@ public enum enumerate {
     return $;
   }
   // For you to implement! Let's TDD and get it on!
+
+  public static int ifStatements(final ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  /** @param ¢
+   * @return */
+  public static int loops(final ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
+        ++$.inner;
+        return true;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("unused") final DoStatement __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  /** @param ¢
+   * @return */
+  public static int ternaries(final ASTNode ¢) {
+    if (¢ == null)
+      return 0;
+    final Int $ = new Int();
+    $.inner = 0;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {
+        ++$.inner;
+        return true;
+      }
+    });
+    return $.inner;
+  }
 }

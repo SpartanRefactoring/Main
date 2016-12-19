@@ -8,10 +8,9 @@ import org.junit.*;
  * Related to {@link Issue075}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue906 {
   @Test public void issue075h() {
-    trimmingOf("int i; i = +0;").gives("int i = +0;").gives("");
+    trimmingOf("int i; i = +0;").gives("int i = +0;");
   }
 }

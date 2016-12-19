@@ -41,7 +41,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   private static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
-    $.remove($.get(0));// remove first
+    $.remove(first($));// remove first
     return $;
   }
 
@@ -137,7 +137,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          for (final Expression $ : extract.allOperands(az.infixExpression(temp.get(0))))
+          for (final Expression $ : extract.allOperands(az.infixExpression(first(temp))))
             if (!isIn($, common))
               addDifferent($, different);
         removeElFromList(different, common);
@@ -150,7 +150,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if (common.isEmpty())
       return addition;
     if (common.size() == 1)
-      return subject.pair(common.get(0), addition).to(Operator.TIMES);
+      return subject.pair(first(common), addition).to(Operator.TIMES);
     if (common.size() <= 1)
       return null;
     for (int ¢ = 0; ¢ < common.size() - 1;) {

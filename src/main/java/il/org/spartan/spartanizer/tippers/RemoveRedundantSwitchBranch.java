@@ -5,6 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -27,13 +29,14 @@ import il.org.spartan.spartanizer.tipping.*;
 * case b: x=2; break;
  * </pre>
  *
+ * Tested in {@link Issue858}
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
-    @SuppressWarnings("unchecked") final List<Statement> ss = s.statements();
+    final List<Statement> ss = step.statements(s);
     final List<Integer> ll = new ArrayList<>();
     getNotContainedCasesIndexes(ss, ll);
     final StringBuilder $ = new StringBuilder("switch(" + s.getExpression() + "){");
@@ -51,7 +54,7 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
         }
       for (int k = ll.get(i) + 1; k < ss.size(); ++k) {
         $.append(ss.get(k));
-        if (ss.get(k).getNodeType() == ASTNode.BREAK_STATEMENT)
+        if (iz.breakStatement(ss.get(k)))
           break;
       }
     }
@@ -62,25 +65,25 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
   private static void getNotContainedCasesIndexes(final List<Statement> ss, final List<Integer> ll) {
     boolean startFromBreak = true;
     for (int ¢ = 0; ¢ < ss.size(); ++¢)
-      if (startFromBreak && ss.get(¢).getNodeType() == ASTNode.SWITCH_CASE)
+      if (startFromBreak && iz.switchCase(ss.get(¢)))
         ll.add(Integer.valueOf(¢));
       else
-        startFromBreak = ss.get(¢).getNodeType() == ASTNode.BREAK_STATEMENT;
+        startFromBreak = iz.breakStatement(ss.get(¢));
   }
 
   @SuppressWarnings("boxing") private static boolean sameCommands(final List<Statement> ss, final int t1, final int t2) {
     int $ = t1 < t2 ? t1 : t2;
     int p2 = t2 > t1 ? t2 : t1;
-    for (; $ < ss.size() && ss.get($).getNodeType() == ASTNode.SWITCH_CASE;)
+    for (; $ < ss.size() && iz.switchCase(ss.get($));)
       ++$;
-    for (; p2 < ss.size() && ss.get(p2).getNodeType() == ASTNode.SWITCH_CASE;)
+    for (; p2 < ss.size() && iz.switchCase(ss.get(p2));)
       ++p2;
     if ($ == ss.size())
       return false;
     for (final Integer ¢ : range.from(0).to(ss.size())) {
       if (p2 + ¢ == ss.size())
-        return ss.get($ + ¢).getNodeType() == ASTNode.BREAK_STATEMENT;
-      if (ss.get($ + ¢).getNodeType() == ASTNode.BREAK_STATEMENT && ss.get(p2 + ¢).getNodeType() == ASTNode.BREAK_STATEMENT)
+        return iz.breakStatement(ss.get($ + ¢));
+      if (iz.breakStatement(ss.get($ + ¢)) && iz.breakStatement(ss.get(p2 + ¢)))
         return true;
       if (!(ss.get($ + ¢) + "").equals(ss.get(p2 + ¢) + ""))
         return false;

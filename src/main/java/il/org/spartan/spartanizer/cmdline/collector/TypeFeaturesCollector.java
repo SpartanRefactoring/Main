@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orru'
  * @since 2016 */
 @SuppressWarnings("rawtypes")
-public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCollector {
+public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCollector {
   int classNesting;
   TypeDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("class-properties"));
@@ -73,10 +73,10 @@ public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCol
     super.endVisit(node);
   }
 
-  @Override protected void done() {
+  @Override protected void done(final String path) {
     dotter.end();
+    System.err.println("Done processing: " + path);
     System.err.println("Your output is in: " + writer.close());
-    super.done();
   }
 
   static {
@@ -85,17 +85,27 @@ public class TypeFeaturesCollector extends FilesASTVisitor implements FeatureCol
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FilesASTVisitor.main(args);
+    FolderASTVisitor.main(args);
   }
 
   @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
-    return as.array(m("length", (¢) -> (¢ + "").length()), m("essence", (¢) -> Essence.of(¢ + "").length()),
-        m("tokens", (¢) -> metrics.tokens(¢ + "")), m("nodes", (¢) -> count.nodes((ASTNode) ¢)), m("body", (¢) -> metrics.bodySize((ASTNode) ¢)),
+    return as.array(//
+        m("length", (¢) -> (¢ + "").length()), //
+        m("essence", (¢) -> Essence.of(¢ + "").length()), //
+        m("tokens", (¢) -> metrics.tokens(¢ + "")), //
+        m("nodes", (¢) -> count.nodes((ASTNode) ¢)), //
+        m("body", (¢) -> metrics.bodySize((ASTNode) ¢)),
         m("methodDeclaration",
             (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()),
-        m("tide", (¢) -> clean(¢ + "").length()), m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)),
-        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)),
-        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)),
-        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
+        m("tide", (¢) -> clean(¢ + "").length()), //
+        m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
+        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
+        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)), //
+        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), //
+        //
+        m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)), //
+        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), //
+        //
+        m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
   }
 }
