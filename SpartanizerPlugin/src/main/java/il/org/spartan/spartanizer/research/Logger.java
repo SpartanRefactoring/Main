@@ -12,7 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -23,7 +22,6 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
-  private static final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
   private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
@@ -32,7 +30,6 @@ public class Logger {
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
-    summarizeNPStatistics(outputDir);
     reset();
   }
 
@@ -83,27 +80,6 @@ public class Logger {
     report.close();
   }
 
-  public static void summarizeNPStatistics(final String outputDir) {
-    final CSVStatistics report = openNPSummaryFile(outputDir);
-    if (report == null)
-      return;
-    npStatistics.keySet().stream()
-        .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
-            : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
-        .map(k -> npStatistics.get(k))//
-        .forEach(n -> {
-          report //
-              .put("Name", n.name) //
-              .put("Type", n.className).put("occurences", n.occurences)//
-              .put("Statements", n.numNPStatements) //
-              .put("Expressions", n.numNPExpressions) //
-          ;
-          report.nl();
-        });
-    report.close();
-    file.rename(outputDir + "/npStatistics", outputDir + "/npStatistics.csv");
-  }
-
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
@@ -123,22 +99,6 @@ public class Logger {
 
   public static void logNP(final ASTNode n, final String np) {
     subscribers.stream().forEach(¢ -> ¢.accept(n, np));
-    logNPInfo(n, np);
-  }
-
-  /** @param n
-   * @param np */
-  private static void logNPInfo(final ASTNode n, final String np) {
-    npStatistics.putIfAbsent(np, new NanoPatternRecord(np, n.getClass()));
-    npStatistics.get(np).markNP(n);
-  }
-
-  /** @param ¢
-   * @param np */
-  static void logNodeInfo(final ASTNode ¢) {
-    final String nodeClassName = ¢.getClass().getSimpleName();
-    nodesStatistics.putIfAbsent(nodeClassName, new Int());
-    ++nodesStatistics.get(nodeClassName).inner;
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {
@@ -165,6 +125,14 @@ public class Logger {
     for (final MethodDeclaration ¢ : ms)
       logMethodInfo(¢);
     numMethods += ms.size();
+  }
+
+  /** @param ¢
+   * @param np */
+  @SuppressWarnings("unused") private static void logNodeInfo(final ASTNode ¢) {
+    final String nodeClassName = ¢.getClass().getSimpleName();
+    nodesStatistics.putIfAbsent(nodeClassName, new Int());
+    ++nodesStatistics.get(nodeClassName).inner;
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.

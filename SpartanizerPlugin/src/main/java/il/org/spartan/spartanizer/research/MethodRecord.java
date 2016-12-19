@@ -41,7 +41,6 @@ public class MethodRecord {
     numNPStatements += measure.statements(n);
     numNPExpressions += measure.expressions(n);
     nps.add(np);
-    Logger.logNodeInfo(n);
   }
 
   /** @param ¢
