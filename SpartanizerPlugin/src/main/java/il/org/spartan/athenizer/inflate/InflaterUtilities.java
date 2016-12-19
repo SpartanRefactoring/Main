@@ -38,6 +38,10 @@ public class InflaterUtilities {
       if (change != null) {
         r.replace(statement, change, __);
         $ = true;
+      } else {
+        final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
+        if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement)))
+          s.tip(az.variableDeclarationStatement(statement)).go(r, __);
       }
     }
     return $;
