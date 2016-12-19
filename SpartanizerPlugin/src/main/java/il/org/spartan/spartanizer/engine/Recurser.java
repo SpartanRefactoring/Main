@@ -33,6 +33,25 @@ public final class Recurser<T> {
     return $;
   }
 
+  @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
+    final List<ASTNode> $ = (List<ASTNode>) children(¢);
+    if (iz.methodInvocation(¢)) {
+      $.addAll(arguments(az.methodInvocation(¢)));
+      if (haz.expression(az.methodInvocation(¢)))
+        $.add(expression(az.methodInvocation(¢)));
+    }
+    if (iz.forStatement(¢)) {
+      $.addAll(initializers(az.forStatement(¢)));
+      $.add(condition(az.forStatement(¢)));
+      $.addAll(updaters(az.forStatement(¢)));
+    }
+    if (iz.tryStatement(¢))
+      $.addAll(az.tryStatement(¢).catchClauses());
+    if (iz.variableDeclarationExpression(¢))
+      $.addAll(fragments(az.variableDeclarationExpression(¢)));
+    return $;
+  }
+
   private static List<? extends ASTNode> march(final ASTNode $) {
     try {
       return marchingList($);
