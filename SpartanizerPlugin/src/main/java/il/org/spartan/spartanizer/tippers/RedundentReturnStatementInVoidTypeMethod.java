@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** converts
@@ -33,16 +35,13 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dan Abramovich
  * @since 28-11-2016 */
-public class RedundentReturnStatementInVoidTypeMethod extends ReplaceCurrentNode<MethodDeclaration> implements TipperCategory.Collapse {
+public class RedundentReturnStatementInVoidTypeMethod extends ReplaceCurrentNode<MethodDeclaration>
+    implements TipperCategory.Collapse, MethodPatternUtilitiesTrait {
   @Override public ASTNode replacement(final MethodDeclaration x) {
-    final List<Statement> statements = step.statements(step.body(x));
-    if (!"void".equals(x.getReturnType2() + ""))
-      return null;
-    final ReturnStatement r = az.returnStatement(statements.get(statements.size() - 1));
-    if (r == null || r.getExpression() != null)
+    if (empty(x) || returnTypeNotVoid(x) || !iz.returnStatement(lastStatement(x)) || expression(lastStatement(x)) != null)
       return null;
     final MethodDeclaration $ = duplicate.of(x);
-    step.statements(step.body($)).remove(statements.size() - 1);
+    statements($).remove(last(statements($)));
     return $;
   }
 

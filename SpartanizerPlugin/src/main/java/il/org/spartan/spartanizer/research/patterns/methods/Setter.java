@@ -13,11 +13,11 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Setter extends JavadocMarkerNanoPattern {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
-    if (parameters(¢) == null || parameters(¢).size() != 1 || body(¢) == null || iz.static¢(¢) || iz.constructor(¢) || statements(¢).size() != 1)
+    if (!hazOneParameter(¢) || !hazOneStatement(¢) || iz.static¢(¢) || iz.constructor(¢))
       return false;
     final Assignment $ = az.assignment(expression(az.expressionStatement(onlyOne(statements(¢)))));
     return $ != null && (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), name(onlyOne(parameters(¢))));

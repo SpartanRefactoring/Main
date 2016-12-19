@@ -99,11 +99,11 @@ public enum haz {
       }
 
       boolean ¢(final SimpleName ¢) {
-        return ¢(¢.getIdentifier());
+        return ¢(identifier(¢));
       }
 
       boolean ¢(final SingleVariableDeclaration ¢) {
-        return ¢(¢.getName());
+        return ¢(step.name(¢));
       }
 
       boolean ¢(final Statement ¢) {
@@ -268,5 +268,11 @@ public enum haz {
    * @return */
   public static boolean expression(final MethodInvocation ¢) {
     return ¢ != null && step.expression(¢) != null;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static boolean anyStatements(MethodDeclaration ¢) {
+    return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
   }
 }

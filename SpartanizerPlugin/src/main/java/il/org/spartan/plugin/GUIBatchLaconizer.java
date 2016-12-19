@@ -1,7 +1,6 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.*;
@@ -9,6 +8,7 @@ import org.eclipse.jdt.core.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Possible events during spartanization process
  * <p>
@@ -37,10 +37,10 @@ public class GUIBatchLaconizer extends Applicator {
     listener().push(message.run_start.get(selection().name));
     if (!shouldRun())
       return;
-    final AtomicInteger totalTipsInvoked = new AtomicInteger(0);
+    final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
-        final AtomicInteger thisPassTipsInvoked = new AtomicInteger(0);
+        final Int thisPassTipsInvoked = new Int();
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;

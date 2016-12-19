@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.lisp.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"
@@ -23,7 +24,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     if (xs.isEmpty())
       return make.makeEmptyString(i);
     if (xs.size() == 1)
-      return ASTNode.copySubtree(i.getAST(), xs.get(0));
+      return ASTNode.copySubtree(i.getAST(), first(xs));
     final InfixExpression $ = i.getAST().newInfixExpression();
     InfixExpression t = $;
     for (final Expression ¢ : xs.subList(0, xs.size() - 2)) {
@@ -34,7 +35,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     }
     t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 2)));
     t.setOperator(PLUS2);
-    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 1)));
+    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), last(xs)));
     return $;
   }
 
@@ -59,7 +60,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
         if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
-          final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
+          final Expression a = first((arguments((ClassInstanceCreation) e)));
           $.add(0, addParenthesisIfNeeded(a));
           hs |= iz.stringLiteral(a);
         }
@@ -69,7 +70,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       }
       if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
-      final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
+      final Expression a = first(arguments((MethodInvocation) e));
       $.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = (MethodInvocation) e;

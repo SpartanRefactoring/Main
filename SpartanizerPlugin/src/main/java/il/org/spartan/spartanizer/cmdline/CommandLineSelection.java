@@ -58,22 +58,34 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return null;
     }
 
-    /** @return */
     public static AbstractSelection<CommandLineSelection> get() {
       return getFromPath(presentSourcePath);
     }
 
-    /** @return */
     public static AbstractSelection<CommandLineSelection> get(final String from) {
       return getFromPath(from);
     }
 
     /** @param path
+     * @author Matteo Orru'
      * @return */
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
+      // final List<WrappedCompilationUnit> cuList = new ArrayList<>();
+      // for (final File ¢ : new FilesGenerator(".java").from(path))
+      // cuList.add(WrappedCompilationUnit.of((CompilationUnit)
+      // makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
+      // return new CommandLineSelection(cuList, "selection");
+      return getWrappedCompilationUnitsSelection(path);
+    }
+
+    /** @param path
+     * @author Matteo Orru'
+     * @return */
+    public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(final String path) {
       final List<WrappedCompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path))
-        $.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
+        if (!system.isTestFile(¢))
+          $.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
       return new CommandLineSelection($, "selection");
     }
 

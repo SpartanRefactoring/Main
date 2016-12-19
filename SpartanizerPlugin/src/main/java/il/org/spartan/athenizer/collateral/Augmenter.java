@@ -1,5 +1,6 @@
 package il.org.spartan.athenizer.collateral;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -13,6 +14,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.lisp.*;
 
 /** An application of the Athenizer project. Augment java code to be more clear
  * and debugable. TODO Roth: add progress monitor support TODO Roth: add
@@ -49,14 +51,14 @@ public class Augmenter implements Application {
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
     final List<List<Statement>> $ = new ArrayList<>();
     u.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unchecked") public boolean visit(final Block b) {
+      @Override public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;
         if (inRange(b, s))
-          $.add(b.statements());
+          $.add(statements(b));
         else {
           final List<Statement> l = new ArrayList<>();
-          for (final Statement ¢ : (List<Statement>) b.statements())
+          for (final Statement ¢ : statements(b))
             if (inRange(¢, s))
               l.add(¢);
           if (!discardOptimization(l))
@@ -75,10 +77,10 @@ public class Augmenter implements Application {
    * @param g JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
-    if (sss.isEmpty() || sss.get(0).isEmpty())
+    if (sss.isEmpty() || first(sss).isEmpty())
       return false;
-    r.replace(((TypeDeclaration) ((CompilationUnit) sss.get(0).get(0).getRoot()).types().get(0)).getName(),
-        sss.get(0).get(0).getAST().newName("CollateralIsFun"), null);
+    r.replace(((TypeDeclaration) first(types((CompilationUnit) first(first(sss)).getRoot()))).getName(),
+        first(first(sss)).getAST().newName("CollateralIsFun"), null);
     return true;
   }
 
@@ -122,7 +124,7 @@ public class Augmenter implements Application {
    * @param ¢ JD
    * @return true iff service is available */
   public static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
-    return LibrariesManagement.checkLibrary(¢.inner.get(0).descriptor.getJavaProject());
+    return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
   // TODO improve
@@ -153,7 +155,7 @@ public class Augmenter implements Application {
    * @param ¢ JD
    * @return true iff block should be discarded */
   static boolean discardOptimization(final Block ¢) {
-    return ¢ == null || ¢.statements() == null || ¢.statements().size() < MIN_STATEMENTS_COUNT;
+    return ¢ == null || statements(¢) == null || statements(¢).size() < MIN_STATEMENTS_COUNT;
   }
 
   /** Determines whether a list of statements should not be collateralized, i.e.

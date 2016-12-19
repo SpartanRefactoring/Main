@@ -15,28 +15,41 @@ import static il.org.spartan.lisp.onlyOne;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
+public class Delegator extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1.$N($A)", "", ""));
       add(TipperFactory.patternTipper("$N1().$N($A)", "", ""));
+      add(TipperFactory.patternTipper("(($T)$N1).$N($A)", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (!hazOneStatement(¢) || !anyTips(tippers, expression(onlyOne(statements(¢)))))
-      return false;
-    final Expression $ = expression(onlyOne(statements(¢)));
-    return iz.methodInvocation($) && areAtomic(arguments(az.methodInvocation($)))
-        && parametersNames(¢).containsAll(dependencies(arguments(az.methodInvocation($))));
+    return hazOneStatement(¢) && (delegation(¢, onlyStatement(¢)) || delegation(¢, onlyOne(statements(az.synchronizedStatement(onlyStatement(¢))))));
+  }
+
+  private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
+    final Expression $ = expression(¢);
+    return $ != null//
+        && anyTips(tippers, expression(¢))//
+        && iz.methodInvocation($)//
+        && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
+        && parametersNames(d).containsAll(dependencies(arguments(az.methodInvocation($))));
   }
 
   /** @param arguments
    * @return */
-  private static boolean areAtomic(final List<Expression> arguments) {
-    return arguments.stream().allMatch(¢ -> iz.name(¢) || iz.literal(¢));
+  private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
+    return arguments.stream()
+        .allMatch(¢ -> iz.name(¢)//
+            || iz.literal(¢)//
+            || (iz.methodInvocation(¢) && safeContains(parametersNames, ¢)));
+  }
+
+  private static boolean safeContains(final List<String> parametersNames, Expression ¢) {
+    return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 
   /** @param arguments

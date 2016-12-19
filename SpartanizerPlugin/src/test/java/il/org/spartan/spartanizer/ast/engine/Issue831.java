@@ -7,6 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.lisp.*;
 
 /** see Issue #831 for more details
  * @author Lidia Piatigorski
@@ -52,7 +53,7 @@ public class Issue831 {
   }
 
   @Test public void oneStatementInScanner() {
-    assert "int a;\n".equals(new MethodScannerIExt(oneStatMethod).availableStatements().get(0) + "");
+    assert "int a;\n".equals(first(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
   }
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {

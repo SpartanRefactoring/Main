@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.lisp.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -21,14 +22,14 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
-    if (ss.size() != 1 || !iz.expressionStatement(ss.get(0)))
+    if (ss.size() != 1 || !iz.expressionStatement(first(ss)))
       return false;
-    final Expression e = az.expressionStatement(ss.get(0)).getExpression();
+    final Expression e = az.expressionStatement(first(ss)).getExpression();
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
     return (iz.name($.getLeftHandSide()) || tipper.canTip($.getLeftHandSide()))
-        && wizard.same($.getRightHandSide(), step.parameters(¢).get(0).getName());
+        && wizard.same($.getRightHandSide(), first(step.parameters(¢)).getName());
   }
 
   @Override public Tip pattern(final MethodDeclaration d) {

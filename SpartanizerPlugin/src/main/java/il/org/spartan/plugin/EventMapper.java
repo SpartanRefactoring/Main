@@ -1,8 +1,9 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
+
+import il.org.spartan.spartanizer.utils.*;
 
 /** A {@link Listener} that listen to {@link event}s. Maps both the recorders
  * and the results to the events. The recorders can be {@link Function}s,
@@ -276,9 +277,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Counts calls of this event. Conducts casting.
      * [[SuppressWarningsSpartan]] */
-    @SuppressWarnings("unchecked") public EventMapperFunctor<E, AtomicInteger, AtomicInteger> counter() {
-      return ((EventMapperFunctor<E, AtomicInteger, AtomicInteger>) this) //
-          .startWith(new AtomicInteger(0)) //
+    @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
+      return ((EventMapperFunctor<E, Int, Int>) this) //
+          .startWith(new Int()) //
           .does(c -> {
             c.incrementAndGet();
           });

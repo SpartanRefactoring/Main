@@ -226,9 +226,21 @@ public interface findFirst {
     return instanceOf(ExpressionStatement.class, ¢);
   }
 
-  /** @param ¢
+  /** @param ¢ JD
    * @return */
-  static Block block(ASTNode ¢) {
+  static Block block(final ASTNode ¢) {
     return instanceOf(Block.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode infixExpression(final ASTNode ¢) {
+    return instanceOf(InfixExpression.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode tryStatement(final ASTNode ¢) {
+    return instanceOf(TryStatement.class, ¢);
   }
 }

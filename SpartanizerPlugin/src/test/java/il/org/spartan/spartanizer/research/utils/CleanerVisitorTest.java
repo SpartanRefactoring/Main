@@ -8,6 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
+import static il.org.spartan.lisp.*;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7
@@ -46,10 +47,10 @@ public class CleanerVisitorTest {
   }
 
   @Test public void test1() {
-    new CleanerVisitor().visit((Javadoc) getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner.get(0));
+    new CleanerVisitor().visit((Javadoc) first(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
   }
 
   @Test public void test2() {
-    new CleanerVisitor().visit((ImportDeclaration) getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner.get(0));
+    new CleanerVisitor().visit((ImportDeclaration) first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
   }
 }
