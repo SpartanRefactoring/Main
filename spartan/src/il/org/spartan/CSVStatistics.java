@@ -78,7 +78,8 @@ public class CSVStatistics extends CSVLine.Ordered {
 
   @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
     getStatistics(key).record(value);
-    return super.put(key, value, ss);
+    super.put(key, value, ss);
+    return this;
   }
 
   @Override public CSVLine put(final String key, final int value) {
