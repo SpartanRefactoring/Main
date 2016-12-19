@@ -11,6 +11,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** convert <code>
+ * int a = f(), b = g();
+ * </code> to <code>
+ * int a = f();
+ * int b = g();
+ * </code>
+ * @author Tomer Dragucki
+ * @since 19-12-2016 */
 public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> {
   @Override public String description(@SuppressWarnings("unused") VariableDeclarationStatement __) {
     return "Split initialization statement";
