@@ -39,7 +39,7 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         List<Expression> branchesExpressions = branchesExpressions(¢);
-        r.replace(¢, ast("holds(¢ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "¢") + ")"
+        r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
             + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
       }
     };
