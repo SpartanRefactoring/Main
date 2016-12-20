@@ -11,7 +11,10 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-
+/*
+ * TODO Roth: please write author, since and a line of description
+ * As far as I see this is the trimmer for the expanders --RR
+ */
 public class SingleFlatter {
   CompilationUnit compilationUnit;
   TippersProvider operationsProvider;
