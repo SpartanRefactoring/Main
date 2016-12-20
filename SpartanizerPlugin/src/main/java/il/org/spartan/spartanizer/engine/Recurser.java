@@ -33,6 +33,9 @@ public final class Recurser<T> {
     return $;
   }
 
+  /** Operators cannot be retrieved because they are not nodes...
+   * @param ¢
+   * @return */
   @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
     final List<ASTNode> $ = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
