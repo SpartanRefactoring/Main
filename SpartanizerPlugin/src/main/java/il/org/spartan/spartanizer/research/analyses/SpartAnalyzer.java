@@ -23,9 +23,10 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   private SpartAnalyzer addNanoPatterns() {
     if ("false".equals(getProperty("nmethods")))
       addCharacteristicMethodPatterns();
-    addMethodPatterns();
+    addMethodPatterns();//
     add(ConditionalExpression.class, //
         new DefaultsTo(), //
+        new GeneralizedSwitchTernary(), //
         new Unless(), //
         new SafeReference(), //
         null) //
