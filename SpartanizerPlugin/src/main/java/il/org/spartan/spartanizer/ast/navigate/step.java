@@ -738,6 +738,17 @@ public enum step {
     return $;
   }
 
+  public static List<ConditionalExpression> branches(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression s = ¢;
+    List<ConditionalExpression> $ = new ArrayList<>();
+    $.add(s);
+    for (; iz.conditionalExpression(elze(s));)
+      $.add(s = az.conditionalExpression(elze(s)));
+    return $;
+  }
+
   /** returns the else statement of the last if in an if else if else if else
    * sequence
    * @param ¢
@@ -748,6 +759,15 @@ public enum step {
     IfStatement $ = ¢;
     for (; iz.ifStatement(elze($));)
       $ = az.ifStatement(elze($));
+    return elze($);
+  }
+
+  public static Expression lastElse(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression $ = ¢;
+    for (; iz.conditionalExpression(elze($));)
+      $ = az.conditionalExpression(elze($));
     return elze($);
   }
 }
