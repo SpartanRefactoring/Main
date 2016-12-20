@@ -31,8 +31,6 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
         && differsInSingleAtomic(branchesExpressions(¢)) || differsInSingleExpression(branchesExpressions(¢));
   }
 
-
-
   static List<Expression> branchesExpressions(final ConditionalExpression ¢) {
     return branches(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
   }
@@ -41,10 +39,22 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         List<Expression> branchesExpressions = branchesExpressions(¢);
-        r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
-            + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
+        if (differsInSingleAtomic(branchesExpressions(¢)))
+          r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
+              + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
+        else
+          r.replace(¢, ast("holds(λ ->" + replaceAll(first(branchesExpressions) + "", "" + findSingleExpressionDifference(branchesExpressions), "λ")
+              + ")" + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
       }
     };
+  }
+
+  static String createExpressionOns(List<Expression> diffs, List<ConditionalExpression> branches) {
+    assert diffs.size() == branches.size();
+    String $ = "";
+    for (int ¢ = 0; ¢ < diffs.size(); ++¢)
+      $ += ".on(__ ->" + diffs.get(¢) + ",__ -> " + then(branches.get(¢)) + ")";
+    return $;
   }
 
   static String elseSring(ConditionalExpression ¢) {
@@ -56,6 +66,13 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(" + diffs.get(¢) + ",__ -> " + then(branches.get(¢)) + ")";
+    return $;
+  }
+
+  static String replaceAll(final String target, final String oldString, final String newString) {
+    String $ = target;
+    while (!$.replace(oldString, newString).equals($))
+      $ = $.replace(oldString, newString);
     return $;
   }
 }
