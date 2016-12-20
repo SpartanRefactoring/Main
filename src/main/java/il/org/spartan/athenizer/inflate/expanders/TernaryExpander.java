@@ -49,15 +49,13 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     final Assignment then = ¢.getAST().newAssignment();
     then.setRightHandSide(duplicate.of(¢.getThenExpression()));
     then.setLeftHandSide(duplicate.of(left));
-    System.out.println("1 - " + then);
-    System.out.println("2 - " + az.expressionStatement(then));
-    System.out.println("3 - " + duplicate.of(az.expressionStatement(then)));
-    
-    $.setThenStatement(duplicate.of(az.expressionStatement(then)));
+    ExpressionStatement expStatement =  ¢.getAST().newExpressionStatement(then);
+    $.setThenStatement(duplicate.of(az.expressionStatement(expStatement)));
     final Assignment elze = ¢.getAST().newAssignment();
     elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
     elze.setLeftHandSide(duplicate.of(left));
-    $.setElseStatement(duplicate.of(az.statement(elze)));
+    ExpressionStatement expStatement2 =  ¢.getAST().newExpressionStatement(elze);
+    $.setElseStatement(duplicate.of(az.expressionStatement(expStatement2)));
     return $;
   }
 
