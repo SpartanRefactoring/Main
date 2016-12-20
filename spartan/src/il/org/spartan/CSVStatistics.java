@@ -76,20 +76,22 @@ public class CSVStatistics extends CSVLine.Ordered {
     inner.writeFlush(this);
   }
 
-  @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
+  @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
     getStatistics(key).record(value);
     super.put(key, value, ss);
     return this;
   }
 
-  @Override public CSVLine put(final String key, final int value) {
+  @Override public CSVStatistics put(final String key, final int value) {
     getStatistics(key).record(value);
-    return super.put(key, value);
+    super.put(key, value);
+    return this;
   }
 
-  @Override public CSVLine put(final String key, final long value) {
+  @Override public CSVStatistics put(final String key, final long value) {
     getStatistics(key).record(value);
-    return super.put(key, value);
+    super.put(key, value);
+    return this;
   }
 
   @NotNull public String summaryFileName() {
@@ -101,19 +103,21 @@ public class CSVStatistics extends CSVLine.Ordered {
     return stats.get(key);
   }
 
-  public class Line extends CSVLine.Ordered {
+  public class Line extends CSVStatistics.Ordered {
     public void close() {
       inner.writeFlush(this);
     }
 
-    @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
+    @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
       getStatistics(key).record(value);
-      return super.put(key, value, ss);
+      super.put(key, value, ss);
+      return CSVStatistics.this;
     }
 
-    @Override public CSVLine put(final String key, final long value) {
+    @Override public CSVStatistics put(final String key, final long value) {
       getStatistics(key).record(value);
-      return super.put(key, value);
+      super.put(key, value);
+      return CSVStatistics.this;
     }
   }
 }
