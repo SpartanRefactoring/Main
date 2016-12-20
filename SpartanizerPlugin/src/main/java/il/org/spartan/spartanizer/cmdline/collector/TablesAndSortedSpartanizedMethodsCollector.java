@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since Dec 14, 2016 */
-public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
+public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(new Comparator<Integer>() {
@@ -32,7 +32,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     }
   });
   static {
-    clazz = SortedSpartanizedMethodsCollector.class;
+    clazz = TablesAndSortedSpartanizedMethodsCollector.class;
   }
 
   public static void main(final String[] args)
@@ -78,7 +78,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   @Override protected void done(String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
-    System.err.println("Wait for output files...");
+    Count.print();
+    System.err.println("Generating output files...");
     writeFile(new File(makeFile("after.java")),
         methods.values().stream().map(li -> li.stream().map(x -> format.code(x.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
