@@ -21,7 +21,7 @@ public class GenerlizedSwitchTernaryTest {
   @Test public void basic2() {
     trimmingOf("d = x(y+19) > a(b) ? d1() : z(w+17) > a(b) ? d2() : d3();")//
         .withTipper(ConditionalExpression.class, new GeneralizedSwitchTernary())//
-        .gives("d = holds(λ-> λ > a(b)).on(_->x(y+19),__->d1()).on(_->z(w+17),__->d2()).elze(__->d3());")//
+        .gives("d = holds(λ-> λ > a(b)).on(__->x(y+19),__->d1()).on(__->z(w+17),__->d2()).elze(__->d3());")//
         .stays();
   }
 }
