@@ -812,4 +812,10 @@ public interface wizard {
     ¢.forEach(x -> $.add(x != first(¢) ? findSingleAtomicDifference(x, first(¢)) : findSingleAtomicDifference(first(¢), second(¢))));
     return $;
   }
+
+  static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
+    List<Expression> $ = new ArrayList<>();
+    ¢.forEach(x -> $.add(x != first(¢) ? findSingleExpressionDifference(x, first(¢)) : findSingleExpressionDifference(first(¢), second(¢))));
+    return $;
+  }
 }
