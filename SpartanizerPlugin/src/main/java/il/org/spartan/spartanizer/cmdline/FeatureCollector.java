@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.collector;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.util.function.*;
 
