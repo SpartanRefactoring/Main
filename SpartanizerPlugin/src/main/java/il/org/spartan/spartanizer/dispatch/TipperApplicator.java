@@ -19,6 +19,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
   final Tipper<ASTNode> tipper;
   final Class<? extends ASTNode> clazz;
 
+  
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
    * @param name The title of the refactoring */
@@ -26,7 +27,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     super(w.myName());
     tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
-    assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
+    //assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
   }
 
   @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
