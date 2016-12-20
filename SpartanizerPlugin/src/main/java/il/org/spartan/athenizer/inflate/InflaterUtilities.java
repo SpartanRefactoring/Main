@@ -14,7 +14,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/* @author Raviv Rachmiel
+/* TODO Raviv: write ***Javadoc*** according to conventions --or
+ * @author Raviv Rachmiel
  *
  * @since 8-12-16 */
 public class InflaterUtilities {
@@ -133,9 +134,10 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(SingleFlatter sf, CompilationUnit u) {
-    final ASTRewrite r = ASTRewrite.create(u.getAST());
-    sf.go(sf.operationsProvider.getFunction(), r, null);
+  public static void aux_go(@SuppressWarnings("unused") SingleFlatter sf, CompilationUnit u) {
+    @SuppressWarnings("unused") final ASTRewrite r = ASTRewrite.create(u.getAST());
+    // TODO change
+//    sf.go(sf.operationsProvider.getFunction(), r, null);
     
   }
 }
