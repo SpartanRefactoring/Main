@@ -134,9 +134,9 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(SingleFlatter sf, CompilationUnit u) {
-    final ASTRewrite r = ASTRewrite.create(u.getAST());
-    sf.go(sf.operationsProvider.getFunction(), r, null);
-    
-  }
+//  public static void aux_go(SingleFlatter sf, CompilationUnit u) {
+//    final ASTRewrite r = ASTRewrite.create(u.getAST());
+//    sf.go(sf.operationsProvider.getFunction(), r, null);
+//    
+//  }
 }
