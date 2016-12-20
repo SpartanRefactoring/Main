@@ -9,6 +9,7 @@ import org.junit.runners.*;
  * @since 2016 // put the year/date here */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
+@Ignore
 public class Issue922 {
   @Test public void a$01() {
     trimmingOf("assertTrue(true);")//
