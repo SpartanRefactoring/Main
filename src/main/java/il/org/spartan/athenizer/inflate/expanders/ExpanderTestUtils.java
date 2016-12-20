@@ -13,10 +13,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
-  /** Apply a specific expander
-   * @param n
-   * @param from
-   * @return */
   @SuppressWarnings({ "rawtypes", "unused", "unchecked" }) public static String applyExpander(final ReplaceCurrentNode n, final String from) {
     final ASTNode $ = wizard.ast(from);
     String check = $ + "";
@@ -25,13 +21,25 @@ public class ExpanderTestUtils {
     return ret == null ? from : ret + "";
   }
 
-  static void expanderCheck(final String from, final String expected, final Tipper<? extends ASTNode> n) {
+  /** check that the expender over input returns what we expect
+   * @param from the original signal
+   * @param expected the desired signal
+   * @param n an instance of the expander */
+  public static void expanderCheck(final String from, final String expected, final Tipper<? extends ASTNode> n) {
     final String unpeeled = apply(n, from);
     if (from.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     if (tide.clean(unpeeled).equals(tide.clean(from)))
       azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), is(not(tide.clean(unpeeled))));
     assertSimilar(expected, unpeeled);
+  }
+
+  /** Validate that the expander does nothing over a given input
+   * @param from
+   * @param n */
+  public static void expanderCheckStays(final String from, final Tipper<? extends ASTNode> n) {
+    final String unpeeled = apply(n, from);
+    assertSimilar(from, unpeeled);
   }
 
   @SuppressWarnings("rawtypes") private static String apply(Tipper<? extends ASTNode> n, String from) {
