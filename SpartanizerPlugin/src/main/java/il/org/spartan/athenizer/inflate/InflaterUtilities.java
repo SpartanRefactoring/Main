@@ -43,6 +43,12 @@ public class InflaterUtilities {
         if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement))) {
           s.tip(az.variableDeclarationStatement(statement)).go(r, __);
           $ = true;
+        } else {
+          final CasesSplit x = new CasesSplit();
+          if (statement instanceof SwitchStatement && x.canTip((SwitchStatement) statement)) {
+            x.tip((SwitchStatement) statement).go(r, __);
+            $ = true;
+          }
         }
       }
     }
@@ -90,6 +96,11 @@ public class InflaterUtilities {
       }
       
       @Override public boolean visit(final VariableDeclarationStatement node) {
+        $.add(node);
+        return true;
+      }
+      
+      @Override public boolean visit(final SwitchStatement node) {
         $.add(node);
         return true;
       }
