@@ -21,39 +21,39 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class GeneralizedSwitchTernary extends NanoPatternTipper<ConditionalExpression> {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Go Fluent: Generalized Switch";
   }
 
-  @Override public boolean canTip(final IfStatement ¢) {
-    return !¢.equals(then(az.ifStatement(parent(¢))))//
+  @Override public boolean canTip(final ConditionalExpression ¢) {
+    return !¢.equals(then(az.conditionalExpression(parent(¢))))//
         && differsInSingleAtomic(branchesExpressions(¢));
   }
 
-  static List<Expression> branchesExpressions(final IfStatement ¢) {
+  static List<Expression> branchesExpressions(final ConditionalExpression ¢) {
     return branches(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
-            + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
+            + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
       }
     };
   }
 
-  static String elseSring(IfStatement ¢) {
-    return lastElse(¢) == null ? "" : ".elze(__ -> {" + lastElse(¢) + "})";
+  static String elseSring(ConditionalExpression ¢) {
+    return lastElse(¢) == null ? "" : ".elze(__ -> " + lastElse(¢) + ")";
   }
 
-  static String createOns(List<String> diffs, List<IfStatement> branches) {
+  static String createOns(List<String> diffs, List<ConditionalExpression> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      $ += ".on(" + diffs.get(¢) + ",__ -> {" + then(branches.get(¢)) + "})";
+      $ += ".on(" + diffs.get(¢) + ",__ -> " + then(branches.get(¢)) + ")";
     return $;
   }
 }
