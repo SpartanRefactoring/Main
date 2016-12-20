@@ -1,14 +1,14 @@
-package il.org.spartan.spartanizer.cmdline.collector;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
 import java.lang.reflect.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Collects metrics at different level of granularity: File, Class, Method TODO
