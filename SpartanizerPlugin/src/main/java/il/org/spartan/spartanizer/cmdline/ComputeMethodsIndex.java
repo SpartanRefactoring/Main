@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.collector;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
  * tokens for methods... //TODO Marco
