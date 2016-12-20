@@ -28,8 +28,10 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return !¢.equals(then(az.conditionalExpression(parent(¢))))//
-        && differsInSingleAtomic(branchesExpressions(¢));
+        && differsInSingleAtomic(branchesExpressions(¢)) || differsInSingleExpression(branchesExpressions(¢));
   }
+
+
 
   static List<Expression> branchesExpressions(final ConditionalExpression ¢) {
     return branches(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
