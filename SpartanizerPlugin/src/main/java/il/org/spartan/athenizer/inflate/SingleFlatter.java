@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  */
 public class SingleFlatter {
   CompilationUnit compilationUnit;
-  TippersProvider operationsProvider;
+  OperationsProvider operationsProvider;
   TextSelection textSelection;
 
   private SingleFlatter() {}
@@ -28,7 +28,7 @@ public class SingleFlatter {
     return $;
   }
 
-  public SingleFlatter from(TippersProvider ¢) {
+  public SingleFlatter from(OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
   }
@@ -75,6 +75,19 @@ public class SingleFlatter {
     final int $ = ¢.getStartPosition();
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
+  
+  /* @param startChar1 - starting char of first interval
+  *
+  * @param lenth1 - length of first interval
+  *
+  * @param startChar2 - starting char of second interval
+  *
+  * @param length2 - length of second interval SPARTANIZED - should use
+  * Athenizer one day to understand it */
+ static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
+   return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
+       : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
+ }
 
   protected static class Operation<N extends ASTNode> {
     public final N node;
