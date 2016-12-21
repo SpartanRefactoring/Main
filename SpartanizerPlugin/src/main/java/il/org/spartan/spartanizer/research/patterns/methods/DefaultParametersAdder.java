@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
-  private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("return $N($A);", "", ""));
-      add(patternTipper("return $N.$N2($A);", "", ""));
+      add(patternTipper("$N($A);", "", ""));
+      add(patternTipper("$N.$N2($A);", "", ""));
     }
   };
 
@@ -31,10 +31,12 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean defaulter(final MethodDeclaration d, final Statement s) {
-    if (!anyTips(tippers, s))
-      return false;
-    final Expression $ = expression(s);
-    return iz.methodInvocation($) && containsParameters(d, $) && arguments(az.methodInvocation($)).size() > parametersNames(d).size();
+    return defaulter(d, expression(s));
+  }
+
+  private static boolean defaulter(final MethodDeclaration d, final Expression $) {
+    return anyTips(tippers, $) && iz.methodInvocation($) && containsParameters(d, $)
+        && arguments(az.methodInvocation($)).size() > parametersNames(d).size();
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
