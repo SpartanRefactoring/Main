@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
-  private static final Map<String, Int> nodesStatistics = new HashMap<>();
   private static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
