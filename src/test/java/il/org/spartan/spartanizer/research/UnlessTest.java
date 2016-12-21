@@ -31,4 +31,11 @@ public class UnlessTest {
         .withTipper(ConditionalExpression.class, new Unless())//
         .stays();
   }
+
+  @Test public void basic2() {
+    trimmingOf("return ($ == null) ? null : $.size();")//
+        .withTipper(ConditionalExpression.class, new Unless())//
+        .gives("return unless(($==null)).eval(()->$.size());")//
+        .stays();
+  }
 }
