@@ -36,4 +36,8 @@ public class ExaminerTest extends JavadocerTest {
   @Test public void f() {
     assert is("public boolean matchesNoneOf(CharSequence ¢) {    return indexIn(¢) == -1;  }");
   }
+
+  @Test public void g() {
+    assert is("boolean examiner(){synchronized (mutex) {return field == 7;}}");
+  }
 }
