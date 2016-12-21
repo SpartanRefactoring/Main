@@ -27,8 +27,8 @@ public class DeflaterProvider extends OperationsProvider {
     this.toolbox = tb;
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(N n) {
-    return toolbox.firstTipper(n);
+  @Override public <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
   @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
