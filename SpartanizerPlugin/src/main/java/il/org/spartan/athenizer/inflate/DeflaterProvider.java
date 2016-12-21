@@ -10,29 +10,28 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /* TODO Raviv: write ***Javadoc*** according to conventions --or
+ * 
  * @author Raviv Rachmiel
- * @since 20-12-16
- * will hold an  toolbox for the expanders and return them
- */
+ * 
+ * @since 20-12-16 will hold an toolbox for the expanders and return them */
 public class DeflaterProvider extends OperationsProvider {
   Toolbox toolbox;
-  
+
   public DeflaterProvider() {
     toolbox = Toolbox.defaultInstance();
-    if(toolbox == null)
+    if (toolbox == null)
       toolbox = Toolbox.freshCopyOfAllTippers();
   }
-  
-  public DeflaterProvider(Toolbox tb) {
-    this.toolbox = tb;
+
+  public DeflaterProvider(final Toolbox tb) {
+    toolbox = tb;
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(N n) {
+  @Override public <N extends ASTNode> Tipper<N> getTipper(final N n) {
     return toolbox.firstTipper(n);
   }
 
   @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
-    return ((list) -> (list.get(list.size()-1)));
+    return (list) -> list.get(list.size() - 1);
   }
-  
 }

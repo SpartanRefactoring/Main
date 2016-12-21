@@ -16,8 +16,8 @@ import static il.org.spartan.lisp.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue763 {
   @Test public void a() {
-    assertEquals("Map", analyze.type(first(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "") && iz.methodInvocation(x.getParent()))
-        .from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")))));
+    assertEquals("Map", analyze.type(first(searchDescendants.forClass(Name.class)
+        .suchThat(x -> "x".equals(x + "") && iz.methodInvocation(x.getParent())).from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")))));
   }
 
   @Test public void b() {

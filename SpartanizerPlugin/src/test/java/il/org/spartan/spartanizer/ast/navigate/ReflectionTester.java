@@ -17,8 +17,8 @@ abstract class ReflectionTester {
   private static Map<Class<? extends ReflectionTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
 
   protected final ASTNode myCompilationUnit() {
-    Class<? extends ReflectionTester> c = getClass();
-    CompilationUnit $ = classToASTCompilationUnit.get(c);
+    final Class<? extends ReflectionTester> c = getClass();
+    final CompilationUnit $ = classToASTCompilationUnit.get(c);
     if ($ != null)
       return $;
     classToASTCompilationUnit.put(c, loadAST(c.getSimpleName() + ".java"));
@@ -27,8 +27,8 @@ abstract class ReflectionTester {
 
   protected Initializer initializer = second(searchDescendants.forClass(Initializer.class).from(myCompilationUnit()));
 
-  private static CompilationUnit loadAST(String fileName) {
-    for (File $ : new FilesGenerator(".java").from("."))
+  private static CompilationUnit loadAST(final String fileName) {
+    for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
     return null;

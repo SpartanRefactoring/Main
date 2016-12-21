@@ -13,11 +13,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
-  @SuppressWarnings({ "rawtypes", "unused", "unchecked" }) public static String applyExpander(final ReplaceCurrentNode n, final String from) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) public static String applyExpander(final ReplaceCurrentNode n, final String from) {
     final ASTNode $ = wizard.ast(from);
-    String check = $ + "";
     assert $ != null;
-    ASTNode ret = n.replacement($);
+    final ASTNode ret = n.replacement($);
     return ret == null ? from : ret + "";
   }
 
@@ -42,7 +41,7 @@ public class ExpanderTestUtils {
     assertSimilar(from, unpeeled);
   }
 
-  @SuppressWarnings("rawtypes") private static String apply(Tipper<? extends ASTNode> n, String from) {
+  @SuppressWarnings("rawtypes") private static String apply(final Tipper<? extends ASTNode> n, final String from) {
     return !(n instanceof ReplaceCurrentNode) ? "" : applyExpander((ReplaceCurrentNode) n, from);
   }
 }

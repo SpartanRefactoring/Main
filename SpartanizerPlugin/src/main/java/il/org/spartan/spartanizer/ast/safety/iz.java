@@ -275,7 +275,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean continueStatement(ASTNode ¢) {
+  static boolean continueStatement(final ASTNode ¢) {
     return ¢ instanceof ContinueStatement;
   }
 
@@ -389,7 +389,7 @@ public interface iz {
     return ¢ != null && (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
-  static int findRadix(String $) {
+  static int findRadix(final String $) {
     return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8 : 10;
   }
 
@@ -583,7 +583,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean labeledStatement(ASTNode ¢) {
+  static boolean labeledStatement(final ASTNode ¢) {
     return ¢ instanceof LabeledStatement;
   }
 
@@ -785,12 +785,12 @@ public interface iz {
     return iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
-  static int parseInt(String token) {
+  static int parseInt(final String token) {
     final String $ = token.replaceAll("[\\s_]", "");
     return Integer.parseInt($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
 
-  static long parseLong(String token) {
+  static long parseLong(final String token) {
     final String $ = token.replaceAll("[\\s_Ll]", "");
     return Long.parseLong($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
@@ -1123,7 +1123,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean atomic(ASTNode ¢) {
+  static boolean atomic(final ASTNode ¢) {
     return iz.name(¢) || iz.literal(¢);
   }
 }

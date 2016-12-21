@@ -18,7 +18,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     clazz = TableReusabilityIndices.class;
     try {
       writer = new CSVStatistics(outputFolder + "/" + clazz.getSimpleName(), "$\\#$");
-    } catch (IOException ¢) {
+    } catch (final IOException ¢) {
       throw new RuntimeException(¢);
     }
   }
