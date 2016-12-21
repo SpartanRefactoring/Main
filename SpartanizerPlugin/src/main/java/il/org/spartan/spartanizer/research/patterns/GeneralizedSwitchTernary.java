@@ -54,19 +54,19 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      $ += ".on(__ ->" + diffs.get(¢) + ",__ -> " + then(branches.get(¢)) + ")";
+      $ += ".on(() ->" + diffs.get(¢) + ",() -> " + then(branches.get(¢)) + ")";
     return $;
   }
 
   static String elseSring(final ConditionalExpression ¢) {
-    return lastElse(¢) == null ? "" : ".elze(__ -> " + lastElse(¢) + ")";
+    return lastElse(¢) == null ? "" : ".elze(() -> " + lastElse(¢) + ")";
   }
 
   static String createOns(final List<String> diffs, final List<ConditionalExpression> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      $ += ".on(" + diffs.get(¢) + ",__ -> " + then(branches.get(¢)) + ")";
+      $ += ".on(" + diffs.get(¢) + ",() -> " + then(branches.get(¢)) + ")";
     return $;
   }
 
