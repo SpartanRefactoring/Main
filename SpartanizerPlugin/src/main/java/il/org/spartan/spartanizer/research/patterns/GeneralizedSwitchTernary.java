@@ -38,7 +38,7 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        List<Expression> branchesExpressions = branchesExpressions(¢);
+        final List<Expression> branchesExpressions = branchesExpressions(¢);
         if (differsInSingleAtomic(branchesExpressions(¢)))
           r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
               + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
@@ -49,7 +49,7 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     };
   }
 
-  static String createExpressionOns(List<Expression> diffs, List<ConditionalExpression> branches) {
+  static String createExpressionOns(final List<Expression> diffs, final List<ConditionalExpression> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
@@ -57,11 +57,11 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     return $;
   }
 
-  static String elseSring(ConditionalExpression ¢) {
+  static String elseSring(final ConditionalExpression ¢) {
     return lastElse(¢) == null ? "" : ".elze(__ -> " + lastElse(¢) + ")";
   }
 
-  static String createOns(List<String> diffs, List<ConditionalExpression> branches) {
+  static String createOns(final List<String> diffs, final List<ConditionalExpression> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)

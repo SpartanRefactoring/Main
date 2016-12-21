@@ -553,13 +553,13 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-  public static SynchronizedStatement synchronizedStatement(ASTNode ¢) {
+  public static SynchronizedStatement synchronizedStatement(final ASTNode ¢) {
     return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
   }
 
   /** @param ¢ JD
    * @return */
-  public static ContinueStatement continueStatement(ASTNode ¢) {
+  public static ContinueStatement continueStatement(final ASTNode ¢) {
     return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
 }

@@ -26,11 +26,7 @@ import il.org.spartan.utils.*;
 public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
-  private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(new Comparator<Integer>() {
-    @Override public int compare(Integer o1, Integer o2) {
-      return o1.compareTo(o2);
-    }
-  });
+  private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
     clazz = TablesAndSortedSpartanizedMethodsCollector.class;
   }
@@ -46,9 +42,9 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
       return false;
     Count.before(¢);
     try {
-      Integer key = Integer.valueOf(measure.statements(¢));
+      final Integer key = Integer.valueOf(measure.statements(¢));
       methods.putIfAbsent(key, new ArrayList<>());
-      MethodRecord m = new MethodRecord(¢);
+      final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       methods.get(key).add(m);
       final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
@@ -70,12 +66,12 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     return true;
   }
 
-  @Override protected void init(String path) {
+  @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
     Logger.subsribe((n, np) -> logAll(n, np));
   }
 
-  @Override protected void done(String path) {
+  @Override protected void done(final String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
     Count.print();
@@ -91,7 +87,7 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     System.err.println("Your output is in: " + outputFolder);
   }
 
-  private static boolean excludeMethod(MethodDeclaration ¢) {
+  private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
 
@@ -115,14 +111,14 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     for (final Integer numStatements : methods.keySet()) {
       if (numStatements == 0)
         continue; // don't count methods without body
-      List<MethodRecord> li = methods.get(numStatements);
+      final List<MethodRecord> li = methods.get(numStatements);
       methodsTotal += li.size();
       statementsTotal += numStatements * li.size();
     }
     for (final Integer numStatements : methods.keySet()) {
       if (numStatements == 0)
         continue;
-      List<MethodRecord> li = methods.get(numStatements);
+      final List<MethodRecord> li = methods.get(numStatements);
       report //
           .put("num. Statements [before]", numStatements) //
           .put("Count", li.size()) //
@@ -137,19 +133,19 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     file.renameToCSV(outputFolder + "/methodStatistics");
   }
 
-  private static double fractionOfMethodsTouched(List<MethodRecord> rs) {
+  private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
     return safe.div(rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(int statementsTotal, final Integer numStatements, List<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
-  private static double fractionOfMethods(int methodsTotal, List<MethodRecord> rs) {
+  private static double fractionOfMethods(final int methodsTotal, final List<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
     return safe.div(rs.stream().map(x -> min(1, safe.div(x.numNPStatements, x.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 

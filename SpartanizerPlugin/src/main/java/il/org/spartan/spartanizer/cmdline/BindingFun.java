@@ -61,10 +61,10 @@ public final class BindingFun implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        ASTParser parser = ASTParser.newParser(AST.JLS8);
+        final ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
-        CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
       } catch (JavaModelException | IOException ¢) {

@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /* TODO Raviv: write ***Javadoc*** according to conventions --or
+ * 
  * @author Raviv Rachmiel
  *
  * @since 8-12-16 */
@@ -95,12 +96,12 @@ public class InflaterUtilities {
           $.add(node);
         return true;
       }
-      
+
       @Override public boolean visit(final VariableDeclarationStatement node) {
         $.add(node);
         return true;
       }
-      
+
       @Override public boolean visit(final SwitchStatement node) {
         $.add(node);
         return true;
@@ -134,10 +135,7 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(@SuppressWarnings("unused") SingleFlatter sf, CompilationUnit u) {
-    @SuppressWarnings("unused") final ASTRewrite r = ASTRewrite.create(u.getAST());
-    // TODO change
-//    sf.go(sf.operationsProvider.getFunction(), r, null);
-    
+  public static void aux_go(@SuppressWarnings("unused") final SingleFlatter sf, final CompilationUnit u) {
+    ASTRewrite.create(u.getAST());
   }
 }

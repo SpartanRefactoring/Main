@@ -26,7 +26,7 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
     ICompilationUnit u = null;
     try {
       u = openCompilationUnit(f);
-      ASTParser parser = ASTParser.newParser(AST.JLS8);
+      final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setResolveBindings(true);
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));

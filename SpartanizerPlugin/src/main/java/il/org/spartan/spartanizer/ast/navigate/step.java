@@ -698,19 +698,19 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static List<Statement> statements(SynchronizedStatement ¢) {
+  public static List<Statement> statements(final SynchronizedStatement ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 
   /** @param ¢ JD
    * @return */
-  private static Block body(SynchronizedStatement ¢) {
+  private static Block body(final SynchronizedStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName label(ContinueStatement ¢) {
+  public static SimpleName label(final ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
   }
 
@@ -731,7 +731,7 @@ public enum step {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
-    List<IfStatement> $ = new ArrayList<>();
+    final List<IfStatement> $ = new ArrayList<>();
     $.add(s);
     for (; iz.ifStatement(elze(s));)
       $.add(s = az.ifStatement(elze(s)));
@@ -742,7 +742,7 @@ public enum step {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
-    List<ConditionalExpression> $ = new ArrayList<>();
+    final List<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
     for (; iz.conditionalExpression(elze(s));)
       $.add(s = az.conditionalExpression(elze(s)));

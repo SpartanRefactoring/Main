@@ -371,6 +371,7 @@ public final class izTest {
   @Test public void parseIntX8() {
     azzert.that(iz.parseInt("   0X10101    "), is(0X10101));
   }
+
   @Test public void parseIntB1() {
     azzert.that(iz.parseInt("0b10101"), is(0b10101));
   }
@@ -466,6 +467,7 @@ public final class izTest {
   @Test public void parseLongX8() {
     azzert.that(iz.parseLong("   0X10101L    "), is(0X10101L));
   }
+
   @Test public void parseLongB1() {
     azzert.that(iz.parseLong("0b10101L"), is(0b10101L));
   }

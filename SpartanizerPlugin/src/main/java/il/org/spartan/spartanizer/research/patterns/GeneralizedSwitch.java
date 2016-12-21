@@ -38,18 +38,18 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        List<Expression> branchesExpressions = branchesExpressions(¢);
+        final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
             + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
       }
     };
   }
 
-  static String elseSring(IfStatement ¢) {
+  static String elseSring(final IfStatement ¢) {
     return lastElse(¢) == null ? "" : ".elze(__ -> {" + lastElse(¢) + "})";
   }
 
-  static String createOns(List<String> diffs, List<IfStatement> branches) {
+  static String createOns(final List<String> diffs, final List<IfStatement> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)

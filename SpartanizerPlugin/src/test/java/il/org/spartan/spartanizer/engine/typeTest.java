@@ -13,7 +13,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import static il.org.spartan.lisp.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
  * expression using {@link type.Axiom} .

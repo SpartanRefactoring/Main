@@ -8,9 +8,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts (a?b:c;) to (if(a) b; else c;) relevant for now to return <ternary>
  * or $ = <ternary> also relevant for return (<ternary>) or $ = (<ternary)
- *
  * @author Raviv Rachmiel
- *
  * @since 03-12-16 */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
   private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
@@ -33,8 +31,8 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     $.setElseStatement(duplicate.of(az.statement(elze)));
     return $;
   }
-  
-  private static ASTNode innerAssignReplacement(final Expression x, final Statement s,final Expression left) {
+
+  private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -61,7 +59,7 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     if (az.expressionStatement(¢) == null)
       return null;
     final Assignment $ = az.assignment(az.expressionStatement(¢).getExpression());
-    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢,$.getLeftHandSide());
+    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢, $.getLeftHandSide());
   }
 
   private static ASTNode replaceReturn(final Statement ¢) {
