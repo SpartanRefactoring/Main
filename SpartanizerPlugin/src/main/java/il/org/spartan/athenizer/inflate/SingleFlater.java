@@ -17,8 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-20 */
 public class SingleFlater {
   private CompilationUnit compilationUnit;
-  OperationsProvider operationsProvider;
-  private Function<List<Operation<?>>, Operation<?>> flaterChooser;
+  private OperationsProvider operationsProvider;
   private TextSelection textSelection;
 
   private SingleFlater() {}
@@ -39,11 +38,6 @@ public class SingleFlater {
     operationsProvider = ¢;
     return this;
   }
-  
-  public SingleFlater chooseBy(final Function<List<Operation<?>>, Operation<?>> ¢) {
-    flaterChooser = ¢;
-    return this;
-  }
 
   /** Sets text selection limits for this flater.
    * @param ¢ JD
@@ -60,12 +54,12 @@ public class SingleFlater {
    * @param g JD
    * @return true iff a change has been commited */
   @SuppressWarnings({ "unchecked", "rawtypes" }) public boolean go(final ASTRewrite r, final TextEditGroup g) {
-    if (compilationUnit == null || operationsProvider == null || flaterChooser == null)
+    if (compilationUnit == null || operationsProvider == null)
       return false;
     final List<Operation<?>> operations = new LinkedList<>();
     disabling.scan(compilationUnit);
     compilationUnit.accept(new DispatchingVisitor() {
-      @Override  protected <N extends ASTNode> boolean go(final N n) {
+      @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inRange(n) || disabling.on(n))
           return true;
         Tipper<N> w = null;
@@ -82,7 +76,7 @@ public class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    final Operation $ = flaterChooser.apply(operations);
+    final Operation $ = operationsProvider.getFunction().apply(operations);
     try {
       $.tipper.tip($.node).go(r, g);
     } catch (final Exception ¢) {
