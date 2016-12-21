@@ -28,4 +28,8 @@ public class DefaultparametersAdderTest extends JavadocerTest {
   @Test public void d() {
     assert is("boolean foo(){synchronized(mutex){return foo(a);}}");
   }
+
+  @Test public void e() {
+    assert is("private static void logPatternCompilerError(ServiceConfigurationError ¢) {    logger.log(Level.WARNING, \"thingy\", ¢);}");
+  }
 }
