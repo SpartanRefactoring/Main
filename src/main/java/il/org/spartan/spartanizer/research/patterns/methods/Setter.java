@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.patterns.methods;
 
-import static il.org.spartan.lisp.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -19,7 +17,7 @@ public class Setter extends JavadocMarkerNanoPattern {
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     if (!hazOneParameter(¢) || !hazOneStatement(¢) || iz.static¢(¢) || iz.constructor(¢))
       return false;
-    final Assignment $ = az.assignment(expression(az.expressionStatement(onlyOne(statements(¢)))));
-    return $ != null && (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), name(onlyOne(parameters(¢))));
+    final Assignment $ = az.assignment(expression(az.expressionStatement(onlyStatement(¢))));
+    return (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), name(onlyParameter(¢)));
   }
 }
