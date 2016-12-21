@@ -32,4 +32,13 @@ public class FactoryMethodTest extends JavadocerTest {
   @Test public void e() {
     assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){ return newHasher().putObject(instance,t).hash(); }");
   }
+
+  @Test public void f() {
+    assert is("void foo(){return new Object(){};}");
+  }
+
+  @Test public void g() {
+    assert is(
+        "void foo(){return new Iterator(){    final Iterator<? extends A> fromIterator=fromIterable.iterator();  @Override public boolean hasNext(){   return fromIterator.hasNext();}};} ");
+  }
 }
