@@ -802,7 +802,7 @@ public interface wizard {
       // of n1 is the difference
       if ($ != null && diff != null && !same($, diff))
         return az.expression(n1);
-      $ = $ == null ? diff : $;
+      $ = $ != null ? $ : diff;
     }
     return $;
   }

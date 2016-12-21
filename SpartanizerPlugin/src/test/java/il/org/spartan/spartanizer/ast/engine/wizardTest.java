@@ -77,7 +77,7 @@ public final class wizardTest {
   }
 
   @Test public void e0() {
-    assertEquals("a + b", "" + findSingleExpressionDifference(Arrays.asList(ast("a + b"), ast("a * b"))));
+    assertEquals("a + b", findSingleExpressionDifference(Arrays.asList(ast("a + b"), ast("a * b"))) + "");
   }
 
   @Test public void e1() {
@@ -85,23 +85,23 @@ public final class wizardTest {
   }
 
   @Test public void e2() {
-    assertEquals("x", "" + findSingleExpressionDifference(Arrays.asList(ast("x == a + b"), ast("y == a + b"))));
+    assertEquals("x", findSingleExpressionDifference(Arrays.asList(ast("x == a + b"), ast("y == a + b"))) + "");
   }
 
   @Test public void e3() {
-    assertEquals("x(f,g + 1)", "" + findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == a + b"))));
+    assertEquals("x(f,g + 1)", findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == a + b"))) + "");
   }
 
   @Test public void e4() {
-    assertEquals("x(f,g + 1) == a + b", "" + findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))));
+    assertEquals("x(f,g + 1) == a + b", findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))) + "");
   }
 
   @Test public void e5() {
     assertEquals("x(f,g + 1) * 6 > a + b",
-        "" + findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))));
+        findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))) + "");
   }
 
   @Test public void e6() {
-    assertEquals("f", "" + findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))));
+    assertEquals("f", findSingleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "");
   }
 }

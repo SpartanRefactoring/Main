@@ -5,7 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.inflate.SingleFlatter.*;
+import il.org.spartan.athenizer.inflate.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -27,8 +27,8 @@ public class DeflaterProvider extends OperationsProvider {
     toolbox = tb;
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(final N n) {
-    return toolbox.firstTipper(n);
+  @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
   @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
