@@ -104,4 +104,8 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic23() {
     assert is("public String join(Map<?,?> ¢){ synchronized(mutex){ return join(¢.entrySet());}}");
   }
+
+  @Test public void basic24() {
+    assert is(" @Override public int size(){    return multiset().entrySet().size();  }");
+  }
 }
