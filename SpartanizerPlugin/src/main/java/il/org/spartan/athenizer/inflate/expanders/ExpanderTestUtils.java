@@ -38,8 +38,7 @@ public class ExpanderTestUtils {
    * @param from
    * @param n */
   public static void expanderCheckStays(final String from, final Tipper<? extends ASTNode> n) {
-    final String unpeeled = apply(n, from);
-    assertSimilar(from, unpeeled);
+    assertSimilar(from, apply(n, from));
   }
 
   @SuppressWarnings("rawtypes") private static String apply(Tipper<? extends ASTNode> n, String from) {
