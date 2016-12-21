@@ -16,7 +16,7 @@ public final class NumericLiteralClassifier {
   /** Instantiates this class.
    * @param literal JD */
   public NumericLiteralClassifier(final String literal) {
-    this.inner = literal;
+    inner = literal;
   }
 
   /** @return the type of this literal.

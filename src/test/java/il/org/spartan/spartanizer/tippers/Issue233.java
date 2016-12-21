@@ -32,11 +32,11 @@ public class Issue233 {
   @Test public void f() {
     trimmingOf("switch(x) { case a: case b: case c: }int x=5; ++x;").gives("int x=5; ++x;");
   }
-  
+
   @Test public void f2() {
     trimmingOf("switch(x) { case a: case b: case c: break;}int x=5; ++x;").gives("int x=5; ++x;");
   }
-  
+
   @Test public void f3() {
     trimmingOf("switch(x) { case a: case b: default: case c: }int x=5; ++x;").gives("int x=5; ++x;");
   }

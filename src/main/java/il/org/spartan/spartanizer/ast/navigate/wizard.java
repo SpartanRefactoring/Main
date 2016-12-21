@@ -691,7 +691,7 @@ public interface wizard {
   }
 
   static String trim(final Object ¢) {
-    return ¢ == null || (¢ + "").length() < 35 ? (¢ + "") : (¢ + "").substring(1, 35);
+    return ¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(1, 35);
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression
@@ -723,14 +723,14 @@ public interface wizard {
       return n1 + "";
     if (areSelfDifferent(n1, n2))
       return null;
-    List<ASTNode> children1 = Recurser.allChildren(n1);
-    List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1);
+    final List<ASTNode> children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return null;
     String $ = findSingleAtomicDifference(children1.get(0), children2.get(0));
     $ = $ != null ? $ : "";
     for (int i = 1; i < children1.size(); ++i) {
-      String diff = findSingleAtomicDifference(children1.get(i), children2.get(i));
+      final String diff = findSingleAtomicDifference(children1.get(i), children2.get(i));
       $ = $ != "" || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
@@ -755,7 +755,7 @@ public interface wizard {
     if ($ == null)
       return null;
     for (int i = 2; i < ns.size(); ++i) {
-      String diff = findSingleAtomicDifference(ns.get(0), ns.get(i));
+      final String diff = findSingleAtomicDifference(ns.get(0), ns.get(i));
       $ = $ != "" || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
@@ -789,15 +789,15 @@ public interface wizard {
       return null;
     if (areSelfDifferent(n1, n2))
       return az.expression(n1);
-    List<ASTNode> children1 = Recurser.allChildren(n1);
-    List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1);
+    final List<ASTNode> children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return az.expression(n1);
     if (children1.isEmpty())
       return same(n1, n2) ? null : az.expression(n1);
     Expression $ = findSingleExpressionDifference(children1.get(0), children2.get(0));
     for (int i = 1; i < children1.size(); ++i) {
-      Expression diff = findSingleExpressionDifference(children1.get(i), children2.get(i));
+      final Expression diff = findSingleExpressionDifference(children1.get(i), children2.get(i));
       // If two children aren't the same and not with same expression, the whole
       // of n1 is the difference
       if ($ != null && diff != null && !same($, diff))
@@ -808,13 +808,13 @@ public interface wizard {
   }
 
   static <N extends ASTNode> List<String> findSingleAtomicDifferences(final List<N> ¢) {
-    List<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     ¢.forEach(x -> $.add(x != first(¢) ? findSingleAtomicDifference(x, first(¢)) : findSingleAtomicDifference(first(¢), second(¢))));
     return $;
   }
 
   static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
-    List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>();
     ¢.forEach(x -> $.add(x != first(¢) ? findSingleExpressionDifference(x, first(¢)) : findSingleExpressionDifference(first(¢), second(¢))));
     return $;
   }

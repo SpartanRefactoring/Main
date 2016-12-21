@@ -11,9 +11,10 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /* TODO Raviv: write ***Javadoc*** according to conventions --or
+ * 
  * @author Raviv Rachmiel
- * @since 20-12-16 
- * will hold the new toolbox for the expanders and return
+ * 
+ * @since 20-12-16 will hold the new toolbox for the expanders and return
  * them */
 public class InflaterProvider extends OperationsProvider {
   Toolbox toolbox;
@@ -24,8 +25,8 @@ public class InflaterProvider extends OperationsProvider {
       toolbox = Toolbox.freshCopyOfAllTippers();
   }
 
-  public InflaterProvider(Toolbox tb) {
-    this.toolbox = tb;
+  public InflaterProvider(final Toolbox tb) {
+    toolbox = tb;
   }
 
   public static Toolbox freshCopyOfAllExpanders() {
@@ -37,12 +38,11 @@ public class InflaterProvider extends OperationsProvider {
     ;
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(N n) {
+  @Override public <N extends ASTNode> Tipper<N> getTipper(final N n) {
     return toolbox.firstTipper(n);
   }
-  
-  @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
-    return ((list) -> (list.get(0)));
-  }
 
+  @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
+    return (list) -> list.get(0);
+  }
 }
