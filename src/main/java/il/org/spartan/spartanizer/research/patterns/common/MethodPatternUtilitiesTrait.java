@@ -46,6 +46,10 @@ public interface MethodPatternUtilitiesTrait {
     return onlyOne(statements(¢));
   }
 
+  default Statement onlyStatement(final SynchronizedStatement ¢) {
+    return onlyOne(statements(¢));
+  }
+
   default SingleVariableDeclaration onlyParameter(final MethodDeclaration ¢) {
     return onlyOne(parameters(¢));
   }
@@ -98,5 +102,9 @@ public interface MethodPatternUtilitiesTrait {
 
   default boolean safeEquals(final Object o1, final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
+  }
+
+  default Statement onlySynchronizedStatementStatement(final MethodDeclaration ¢) {
+    return onlyStatement(az.synchronizedStatement(onlyStatement(¢)));
   }
 }
