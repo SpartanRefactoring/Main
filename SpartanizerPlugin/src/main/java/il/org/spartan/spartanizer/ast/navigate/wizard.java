@@ -727,7 +727,7 @@ public interface wizard {
     final List<ASTNode> children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return null;
-    String $ = findSingleAtomicDifference(children1.get(0), children2.get(0));
+    String $ = findSingleAtomicDifference(first(children1), first(children2));
     $ = $ != null ? $ : "";
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = findSingleAtomicDifference(children1.get(i), children2.get(i));
