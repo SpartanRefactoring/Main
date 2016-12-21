@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-20 */
 public class SingleFlater {
   private CompilationUnit compilationUnit;
-  private OperationsProvider operationsProvider;
+  OperationsProvider operationsProvider;
   private Function<List<Operation<?>>, Operation<?>> flaterChooser;
   private TextSelection textSelection;
 
@@ -65,7 +65,7 @@ public class SingleFlater {
     final List<Operation<?>> operations = new LinkedList<>();
     disabling.scan(compilationUnit);
     compilationUnit.accept(new DispatchingVisitor() {
-      @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
+      @Override  protected <N extends ASTNode> boolean go(final N n) {
         if (!inRange(n) || disabling.on(n))
           return true;
         Tipper<N> w = null;
@@ -93,7 +93,7 @@ public class SingleFlater {
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
-  private boolean inRange(final ASTNode ¢) {
+  boolean inRange(final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
