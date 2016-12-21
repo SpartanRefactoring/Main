@@ -135,7 +135,7 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(@SuppressWarnings("unused") final SingleFlatter sf, final CompilationUnit u) {
+  public static void aux_go(@SuppressWarnings("unused") final SingleFlater __, final CompilationUnit u) {
     ASTRewrite.create(u.getAST());
   }
 }

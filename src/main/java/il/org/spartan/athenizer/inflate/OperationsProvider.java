@@ -5,7 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.inflate.SingleFlatter.*;
+import il.org.spartan.athenizer.inflate.SingleFlater.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A provider of matching {@link Tipper} for an {@link ASTNode}.
