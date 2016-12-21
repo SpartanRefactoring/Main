@@ -134,7 +134,7 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(@SuppressWarnings("unused") SingleFlatter sf, CompilationUnit u) {
+  public static void aux_go(@SuppressWarnings("unused") SingleFlater sf, CompilationUnit u) {
     @SuppressWarnings("unused") final ASTRewrite r = ASTRewrite.create(u.getAST());
     // TODO change
 //    sf.go(sf.operationsProvider.getFunction(), r, null);
