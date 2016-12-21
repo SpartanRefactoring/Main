@@ -108,4 +108,12 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic24() {
     assert is(" @Override public int size(){    return multiset().entrySet().size();  }");
   }
+
+  @Test public void basic25() {
+    assert is("   void removeValuesForKey(Object key) {    multimap.keySet().remove(key);  }");
+  }
+
+  @Test public void basic26() {
+    assert is("   int size(Object key) {    multimap.keySet().size();  }");
+  }
 }
