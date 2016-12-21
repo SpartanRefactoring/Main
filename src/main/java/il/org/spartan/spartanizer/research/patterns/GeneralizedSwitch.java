@@ -46,14 +46,14 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
   }
 
   static String elseSring(final IfStatement ¢) {
-    return lastElse(¢) == null ? "" : ".elze(__ -> {" + lastElse(¢) + "})";
+    return lastElse(¢) == null ? "" : ".elze(() -> {" + lastElse(¢) + "})";
   }
 
   static String createOns(final List<String> diffs, final List<IfStatement> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      $ += ".on(" + diffs.get(¢) + ",__ -> {" + then(branches.get(¢)) + "})";
+      $ += ".on(" + diffs.get(¢) + ",() -> {" + then(branches.get(¢)) + "})";
     return $;
   }
 }
