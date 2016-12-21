@@ -16,7 +16,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   /** Recorders mapping. In the current implementation only one recorder is
    * available for each event, though the functions/consumers can be merged
    * together. */
-  @SuppressWarnings("rawtypes") private final Map<E, EventFunctor> recorders;
+ private final Map<E, EventFunctor<?, ?, ?>> recorders;
 
   /** Initialize mapping according to specific events defined in the enum.
    * @param enumClass contains possible events for this listener */
