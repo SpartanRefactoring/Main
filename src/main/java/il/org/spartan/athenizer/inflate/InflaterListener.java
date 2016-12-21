@@ -51,7 +51,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private static void deflate() {
     System.out.println("deflating " + Selection.Util.current());
     final CompilationUnit u = first(Selection.Util.current().inner).build().compilationUnit;
-    SingleFlatter sf = SingleFlatter.in(u).from(new DeflaterProvider());
+    SingleFlater sf = SingleFlater.in(u).from(new DeflaterProvider());
     InflaterUtilities.aux_go(sf,u);
   }
 
