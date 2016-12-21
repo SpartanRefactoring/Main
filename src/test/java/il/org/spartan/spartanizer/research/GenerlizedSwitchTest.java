@@ -14,9 +14,9 @@ public class GenerlizedSwitchTest {
   @Test public void basic() {
     trimmingOf("if(x == 0) d1(); else if(x == 1) d2(); else d3();")//
         .withTipper(IfStatement.class, new GeneralizedSwitch())//
-        .gives("{holds(λ->x==λ).on(0,__->{d1();}).on(1,__->{d2();}).elze(__->{d3();});}")//
-        .gives("holds(λ->x==λ).on(0,__->{d1();}).on(1,__->{d2();}).elze(__->{d3();});")//
-        .gives("holds(λ->x==λ).on(0,__->d1()).on(1,__->d2()).elze(__->d3());")//
+        .gives("{holds(λ->x==λ).on(0,()->{d1();}).on(1,()->{d2();}).elze(()->{d3();});}")//
+        .gives("holds(λ->x==λ).on(0,()->{d1();}).on(1,()->{d2();}).elze(()->{d3();});")//
+        .gives("holds(λ->x==λ).on(0,()->d1()).on(1,()->d2()).elze(()->d3());")//
         .stays();
   }
 }
