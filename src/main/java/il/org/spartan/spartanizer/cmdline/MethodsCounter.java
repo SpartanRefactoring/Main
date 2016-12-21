@@ -32,7 +32,7 @@ public class MethodsCounter extends FolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
-    Integer key = Integer.valueOf(measure.statements(¢));
+    final Integer key = Integer.valueOf(measure.statements(¢));
     methods.putIfAbsent(key, new Int());
     ++methods.get(key).inner;
     return true;
@@ -43,18 +43,18 @@ public class MethodsCounter extends FolderASTVisitor {
     return true;
   }
 
-  @Override protected void init(String path) {
+  @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
   }
 
-  @Override protected void done(String __) {
+  @Override protected void done(final String __) {
     ___.unused(__);
     dotter.line();
     summarizeNumbers();
     System.err.println("Your output is in: " + outputFolder);
   }
 
-  private static boolean excludeMethod(MethodDeclaration ¢) {
+  private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
 

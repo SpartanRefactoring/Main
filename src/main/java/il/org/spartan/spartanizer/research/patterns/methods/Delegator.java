@@ -45,10 +45,10 @@ public class Delegator extends JavadocMarkerNanoPattern {
     return arguments.stream()
         .allMatch(¢ -> iz.name(¢)//
             || iz.literal(¢)//
-            || (iz.methodInvocation(¢) && safeContains(parametersNames, ¢)));
+            || iz.methodInvocation(¢) && safeContains(parametersNames, ¢));
   }
 
-  private static boolean safeContains(final List<String> parametersNames, Expression ¢) {
+  private static boolean safeContains(final List<String> parametersNames, final Expression ¢) {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 

@@ -127,14 +127,6 @@ public class Logger {
     numMethods += ms.size();
   }
 
-  /** @param ¢
-   * @param np */
-  @SuppressWarnings("unused") private static void logNodeInfo(final ASTNode ¢) {
-    final String nodeClassName = ¢.getClass().getSimpleName();
-    nodesStatistics.putIfAbsent(nodeClassName, new Int());
-    ++nodesStatistics.get(nodeClassName).inner;
-  }
-
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logFile(final String fileName) {

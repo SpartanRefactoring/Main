@@ -272,7 +272,7 @@ public enum haz {
 
   /** @param ¢ JD
    * @return */
-  public static boolean anyStatements(MethodDeclaration ¢) {
+  public static boolean anyStatements(final MethodDeclaration ¢) {
     return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
   }
 }

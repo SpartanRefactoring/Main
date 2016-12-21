@@ -17,7 +17,7 @@ public class scopeTest extends ReflectionTester {
         int c2 = f2.read() + new Object() {
           int x, y;
 
-          int sum(int a, int b) {
+          int sum(final int a, final int b) {
             return z + a + b + x + y;
           }
 
@@ -27,7 +27,7 @@ public class scopeTest extends ReflectionTester {
         }.hashCode();
         c1 ^= c2;
         ++c1;
-        int c0 = c1 - c2;
+        final int c0 = c1 - c2;
         --c2;
         c2 ^= c1;
         int c3 = c1 + c2;

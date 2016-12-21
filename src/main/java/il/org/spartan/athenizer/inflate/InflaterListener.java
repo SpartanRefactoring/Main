@@ -47,12 +47,13 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 
-  //.build.compilationUnit is used in order to take care of null compilation unit
+  // .build.compilationUnit is used in order to take care of null compilation
+  // unit
   private static void deflate() {
     System.out.println("deflating " + Selection.Util.current());
     final CompilationUnit u = first(Selection.Util.current().inner).build().compilationUnit;
-    SingleFlatter sf = SingleFlatter.in(u).from(new DeflaterProvider());
-    InflaterUtilities.aux_go(sf,u);
+    final SingleFlatter sf = SingleFlatter.in(u).from(new DeflaterProvider());
+    InflaterUtilities.aux_go(sf, u);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {

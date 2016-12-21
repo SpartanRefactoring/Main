@@ -25,8 +25,8 @@ public class SingleFlatter {
   /** Creates a new {@link SingleFlatter} for a {@link CompilationUnit}.
    * @param ¢ JD
    * @return new {@link SingleFlatter} */
-  public static SingleFlatter in(CompilationUnit ¢) {
-    SingleFlatter $ = new SingleFlatter();
+  public static SingleFlatter in(final CompilationUnit ¢) {
+    final SingleFlatter $ = new SingleFlatter();
     $.compilationUnit = ¢;
     return $;
   }
@@ -34,7 +34,7 @@ public class SingleFlatter {
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
    * @return this flater */
-  public SingleFlatter from(OperationsProvider ¢) {
+  public SingleFlatter from(final OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
   }
@@ -42,7 +42,7 @@ public class SingleFlatter {
   /** Sets text selection limits for this flater.
    * @param ¢ JD
    * @return this flater */
-  public SingleFlatter limit(TextSelection ¢) {
+  public SingleFlatter limit(final TextSelection ¢) {
     textSelection = ¢;
     return this;
   }
@@ -57,7 +57,7 @@ public class SingleFlatter {
       final ASTRewrite r, final TextEditGroup g) {
     if (compilationUnit == null || operationsProvider == null)
       return false;
-    List<Operation<?>> operations = new LinkedList<>();
+    final List<Operation<?>> operations = new LinkedList<>();
     disabling.scan(compilationUnit);
     compilationUnit.accept(new DispatchingVisitor() {
       @SuppressWarnings("synthetic-access") @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -88,13 +88,13 @@ public class SingleFlatter {
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
-  private boolean inRange(ASTNode ¢) {
+  private boolean inRange(final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
 
   /* TODO Raviv: write ***Javadoc*** according to conventions --or
-   * 
+   *
    * @param startChar1 - starting char of first interval
    *
    * @param lenth1 - length of first interval
@@ -117,13 +117,13 @@ public class SingleFlatter {
     public final N node;
     public final Tipper<N> tipper;
 
-    private Operation(N n, Tipper<N> t) {
+    private Operation(final N n, final Tipper<N> t) {
       node = n;
       tipper = t;
     }
 
     /** [[SuppressWarningsSpartan]] */
-    public static <N extends ASTNode> Operation<N> of(N node, Tipper<N> tipper) {
+    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> tipper) {
       return new Operation<>(node, tipper);
     }
   }

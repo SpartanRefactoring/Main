@@ -50,10 +50,10 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> l = step.statements(s);
         final int ind = getDefaultIndex(l);
-        if(ind > 0 && iz.switchCase(l.get(ind-1)))
-          l.remove(ind-1);
-        else if(ind >= 0 && ind < l.size()-1 && iz.switchCase(l.get(ind+1)))
-          l.remove(ind+1);
+        if (ind > 0 && iz.switchCase(l.get(ind - 1)))
+          l.remove(ind - 1);
+        else if (ind >= 0 && ind < l.size() - 1 && iz.switchCase(l.get(ind + 1)))
+          l.remove(ind + 1);
         r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
       }
 
@@ -68,10 +68,10 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> i
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
     final List<Statement> $ = step.statements(s);
-    int ind = getDefaultIndex($);
+    final int ind = getDefaultIndex($);
     return ind > 0 && iz.switchCase($.get(ind - 1)) || ind >= 0 && ind < $.size() - 1 && iz.switchCase($.get(ind + 1));
   }
-  
+
   static int getDefaultIndex(final List<Statement> ¢) {
     for (int $ = 0; $ < ¢.size(); ++$)
       if (iz.switchCase(¢.get($)) && az.switchCase(¢.get($)).isDefault())
