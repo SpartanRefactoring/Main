@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** @author Kfir Marx
  * @since 2016-11-26 */
-@Ignore
+
 @SuppressWarnings("static-method")
 public class Issue147 {
   private static final Statement INPUT = into.s("for(int i=0; i<5;++i){x.fuanc(); continue;}");
@@ -23,7 +23,7 @@ public class Issue147 {
 
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
-        .gives("for(int ¢=0; ¢<5;++¢){++¢; }");//
+        .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
   }
 
   @Test public void a$() {
