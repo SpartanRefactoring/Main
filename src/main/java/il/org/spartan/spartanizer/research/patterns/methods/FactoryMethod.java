@@ -14,6 +14,7 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("return new $T();", "", ""));
+      add(TipperFactory.patternTipper("return new $T[$X];", "", ""));
       add(TipperFactory.patternTipper("return new $T() $B;", "", ""));
     }
   };
