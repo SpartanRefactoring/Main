@@ -24,4 +24,8 @@ public class DefaultparametersAdderTest extends JavadocerTest {
   @Test public void c() {
     assert is("@Override public int hashCode() {return Objects.hashCode(function, resultEquivalence);}");
   }
+
+  @Test public void d() {
+    assert is("boolean foo(){synchronized(mutex){return foo(a);}}");
+  }
 }

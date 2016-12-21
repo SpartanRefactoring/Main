@@ -5,13 +5,12 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.lisp.onlyOne;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -27,7 +26,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && (delegation(¢, onlyStatement(¢)) || delegation(¢, onlyOne(statements(az.synchronizedStatement(onlyStatement(¢))))));
+    return hazOneStatement(¢) && (delegation(¢, onlyStatement(¢)) || delegation(¢, onlySynchronizedStatementStatement(¢)));
   }
 
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
