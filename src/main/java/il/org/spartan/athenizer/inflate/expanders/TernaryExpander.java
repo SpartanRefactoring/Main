@@ -35,7 +35,7 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     return $;
   }
   
-  private static ASTNode innerAssignReplacement(final Expression x, final Statement s,final Expression left,final Operator op) {
+  private static ASTNode innerAssignReplacement(final Expression x, final Statement s,final Expression left,final Operator o) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -50,13 +50,13 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     final Assignment then = ¢.getAST().newAssignment();
     then.setRightHandSide(duplicate.of(¢.getThenExpression()));
     then.setLeftHandSide(duplicate.of(left));
-    then.setOperator(op);
+    then.setOperator(o);
     ExpressionStatement expStatement =  ¢.getAST().newExpressionStatement(then);
     $.setThenStatement(duplicate.of(az.expressionStatement(expStatement)));
     final Assignment elze = ¢.getAST().newAssignment();
     elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
     elze.setLeftHandSide(duplicate.of(left));
-    elze.setOperator(op); 
+    elze.setOperator(o); 
     ExpressionStatement expStatement2 =  ¢.getAST().newExpressionStatement(elze);
     $.setElseStatement(duplicate.of(az.expressionStatement(expStatement2)));
     return $;

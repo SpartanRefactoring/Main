@@ -39,12 +39,13 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         List<Expression> branchesExpressions = branchesExpressions(¢);
-        if (differsInSingleAtomic(branchesExpressions(¢)))
-          r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
-              + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
-        else
-          r.replace(¢, ast("holds(λ ->" + replaceAll(first(branchesExpressions) + "", "" + findSingleExpressionDifference(branchesExpressions), "λ")
-              + ")" + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), branches(¢)) + elseSring(¢)), g);
+        r.replace(¢,
+            ast("holds(λ ->" + (differsInSingleAtomic(branchesExpressions(¢))
+                ? (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
+                    + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)
+                : replaceAll(first(branchesExpressions) + "", findSingleExpressionDifference(branchesExpressions) + "", "λ") + ")"
+                    + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), branches(¢)) + elseSring(¢))),
+            g);
       }
     };
   }

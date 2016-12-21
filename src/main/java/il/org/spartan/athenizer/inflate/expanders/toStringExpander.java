@@ -22,24 +22,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
 public class toStringExpander extends ReplaceCurrentNode<InfixExpression> {
-  @Override public ASTNode replacement(InfixExpression n) {
-    if (extract.allOperands(n).size() != 2)
+  @Override public ASTNode replacement(InfixExpression x) {
+    if (extract.allOperands(x).size() != 2)
       return null;
-    MethodInvocation ret = n.getAST().newMethodInvocation();
-    if (n.getRightOperand().toString().equals("\"\"") && !iz.literal(n.getLeftOperand())) {
-      ret.setExpression(duplicate.of(n.getLeftOperand()));
-    } else {
-      if (n.getLeftOperand().toString().equals("\"\"") && !iz.literal(n.getRightOperand())) {
-        ret.setExpression(duplicate.of(n.getRightOperand()));
-      } else
+    MethodInvocation $ = x.getAST().newMethodInvocation();
+    if ("\"\"".equals((x.getRightOperand() + "")) && !iz.literal(x.getLeftOperand()))
+      $.setExpression(duplicate.of(x.getLeftOperand()));
+    else {
+      if (!"\"\"".equals((x.getLeftOperand() + "")) || iz.literal(x.getRightOperand()))
         return null;
+      $.setExpression(duplicate.of(x.getRightOperand()));
     }
-    SimpleName methodName = n.getAST().newSimpleName("toString");
-    ret.setName(methodName);
-    return ret;
+    SimpleName methodName = x.getAST().newSimpleName("toString");
+    $.setName(methodName);
+    return $;
   }
 
-  @SuppressWarnings("unused") @Override public String description(InfixExpression n) {
+  @SuppressWarnings("unused") @Override public String description(InfixExpression __) {
     return null;
   }
 }
