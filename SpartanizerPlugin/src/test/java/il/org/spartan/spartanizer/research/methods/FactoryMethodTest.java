@@ -41,4 +41,8 @@ public class FactoryMethodTest extends JavadocerTest {
     assert is(
         "void foo(){return new Iterator(){    final Iterator<? extends A> fromIterator=fromIterable.iterator();  @Override public boolean hasNext(){   return fromIterator.hasNext();}};} ");
   }
+
+  @Test public void h() {
+    assert is("@SuppressWarnings(\"unchecked\") Segment<K,V>[] newSegmentArray(int ssize){return new Segment[ssize]; }");
+  }
 }
