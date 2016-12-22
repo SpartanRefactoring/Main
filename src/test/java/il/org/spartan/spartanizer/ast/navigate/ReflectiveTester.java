@@ -25,7 +25,7 @@ abstract class ReflectiveTester {
     return classToASTCompilationUnit.get(c);
   }
 
-  protected final <N extends ASTNode> N find(Class<N> ¢) {
+  protected final <N extends ASTNode> N find(final Class<N> ¢) {
     return first(searchDescendants.forClass(¢).from(myCompilationUnit()));
   }
 
