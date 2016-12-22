@@ -27,4 +27,9 @@ public class SuperDelegatorTest extends JavadocerTest {
   @Test public void d() {
     assert is("@Override final boolean foo(){return (A)super.foo();}");
   }
+
+  @Test public void e() {
+    assert is(
+        " @Override void invokeSubscriberMethod(Object event) throws InvocationTargetException {synchronized (this) { super.invokeSubscriberMethod(event); }}");
+  }
 }
