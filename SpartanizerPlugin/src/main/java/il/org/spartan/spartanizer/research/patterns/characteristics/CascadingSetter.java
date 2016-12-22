@@ -14,7 +14,7 @@ public class CascadingSetter extends JavadocMarkerNanoPattern {
   private static final Setter setter = new Setter();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return fluent(¢) && setter(¢);
+    return hazAtLeastTwoStatements(¢) && fluent(¢) && setter(¢);
   }
 
   private boolean fluent(final MethodDeclaration ¢) {
