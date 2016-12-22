@@ -35,4 +35,12 @@ public class SetterTest extends JavadocerTest {
   @Test public void f() {
     assert is(" public void setXY(int x, int _y) {this.x = x; y = _y;}");
   }
+
+  @Test public void g() {
+    assert not(" public void setXY(int x, int _y) {this.x = x; y = _y; return this;}");
+  }
+
+  @Test public void h() {
+    assert not("boolean foo(Object o){this.c = o; return this;}");
+  }
 }
