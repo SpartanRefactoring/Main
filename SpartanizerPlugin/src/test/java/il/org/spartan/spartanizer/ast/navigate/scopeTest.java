@@ -7,7 +7,7 @@ import org.junit.*;
 /** TDD of {@link scope}
  * @author Yossi Gil
  * @since 2016-12-15 */
-public class scopeTest extends ReflectionTester {
+public class scopeTest extends ReflectiveTester {
   /** This code is never used, it is to model our test */
   {
     if (hashCode() != hashCode()) // This should never happen
