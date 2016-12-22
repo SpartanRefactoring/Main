@@ -13,8 +13,9 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TDD of {@link scope}
+/** TDD of {@link definition}
  * @author Yossi Gil
  * @since 2016-12-15 */
 @SuppressWarnings("static-method")
@@ -167,6 +168,16 @@ public class definitionTest extends ReflectiveTester {
     assert annotations.get("@enumConstant") != null;
   }
 
+  @Test @method public void z() {
+    for (final Annotation ¢ : annotations())
+      go(az.singleMemberAnnotation(¢));
+  }
+
+  private void go(SingleMemberAnnotation ¢) {
+    if (¢ != null && (¢.getTypeName() + "").equals("@" + scopeSize.class.getSimpleName()))
+      azzert.that(scope.of(first(annotees.of(¢))).size(), is(az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken())));
+  }
+
   @Ignore
   @class¢
   static class ___ {
@@ -220,9 +231,9 @@ public class definitionTest extends ReflectiveTester {
     @enum¢
     enum Dummy {
       // @formatter:off
-      @enumConstant a1() { @Override public int f() { return a2.hashCode(); } },
-      @enumConstant a2() { @Override public int f() { return a1.hashCode(); } };
-      @method public int f() { return a1.f() + a2.f(); }
+      @scopeSize(3) @enumConstant a1() { @Override public int f() { return a2.hashCode(); } },
+      @scopeSize(3) @enumConstant a2() { @Override public int f() { return a1.hashCode(); } };
+      @method @scopeSize(3) public int f() { return a1.f() + a2.f(); }
       // @formatter:on
       @Ignore
       interface empty {
@@ -231,20 +242,26 @@ public class definitionTest extends ReflectiveTester {
     }
   }
 
+  @annotation
+  @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
+  private @interface scopeSize {
+    int value();
+  }
+
   // @formatter:off
-  @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface annotation { /** Empty */ }
-    @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface interface¢ { /** Empty */ }
-    @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface class¢ { /** Empty */ }
+    @annotation @Target({ ElementType.TYPE }) private @interface annotation { /** Empty */ }
+    @annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface interface¢ { /** Empty */ }
+    @annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface class¢ { /** Empty */ }
     @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) private @interface enum¢ { /** Empty */ }
     @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD }) private @interface method { /** Empty */ }
     @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface enumConstant { /** Empty */ }
     @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface field { /** Empty */ }
     @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface for¢ { /** Empty */ }
-    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface foreach { /** Empty */ }
-    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface local { /** local variable */ }
-    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface parameter { /** Empty */ }
-    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface try¢ { /** Empty */ }
-    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) private @interface lambda { /** lambda parameter */ }
+    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) private @interface foreach { /** Empty */ }
+    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) private @interface local { /** local variable */ }
+    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) private @interface parameter { /** Empty */ }
+    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) private @interface try¢ { /** Empty */ }
+    @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) private @interface lambda { /** lambda parameter */ }
     @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) private @interface catch¢ { /** Empty */ }
     // @formatter:on
 }

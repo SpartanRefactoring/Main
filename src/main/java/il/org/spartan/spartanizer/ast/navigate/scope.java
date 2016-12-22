@@ -21,7 +21,7 @@ public interface scope {
     return $;
   }
 
-  static List<ASTNode> of(@SuppressWarnings("unused") final VariableDeclarationExpression ¢) {
-    return new ArrayList<>();
+  static List<? extends ASTNode> of(SimpleName x) {
+    return definition.kind(x).scope(x);
   }
 }
