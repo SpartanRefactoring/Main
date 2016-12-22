@@ -26,7 +26,7 @@ public class definitionTest extends ReflectiveTester {
       put("@Test", null);
       put("@Ignore", null);
       put("@Override", null);
-      for (@foreach definition.Kind ¢ : definition.Kind.values())
+      for (@foreach final definition.Kind ¢ : definition.Kind.values())
         put("@" + ¢, null);
     }
     @field static final long serialVersionUID = 1L;
@@ -78,7 +78,7 @@ public class definitionTest extends ReflectiveTester {
     for (final MarkerAnnotation a : markers())
       if (definition.Kind.has((a + "").substring(1)))
         for (final SimpleName ¢ : annotees.of(a))
-            azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""));
+          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""));
   }
 
   @Test public void x() {
