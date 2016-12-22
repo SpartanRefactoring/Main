@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** Test for the GUIBatchLaconizer class
  * @author Matteo Orrù
@@ -33,7 +34,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
       @Override public boolean visit(final AnnotationTypeDeclaration node) {
-        System.out.println("node.getName().getIdentifier(): " + node.getName().getIdentifier());
+        print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true; // super.visit(node);
       }
 
@@ -43,7 +44,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
       @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
-        System.out.println(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
+        print(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -53,7 +54,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * Assignment) */
       @Override public boolean visit(final Assignment node) {
-        System.out.println(node.getOperator());
+        print(node.getOperator());
         return super.visit(node);
       }
 
@@ -63,7 +64,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
       @Override public boolean visit(final ImportDeclaration node) {
-        System.out.println(ImportDeclaration.class + ": " + node.getName());
+        print(ImportDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -73,8 +74,8 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MarkerAnnotation) */
       @Override public boolean visit(final MarkerAnnotation node) {
-        System.out.println("MarkerAnnotation: " + node.getTypeName());
-        System.out.println("parent: " + node.getParent().getNodeType());
+        print("MarkerAnnotation: " + node.getTypeName());
+        print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
 
@@ -84,7 +85,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
       @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println(MethodDeclaration.class + ": " + node.getName());
+        print(MethodDeclaration.class + ": " + node.getName());
         return !hasTestAnnotation(node);
       }
 
@@ -94,7 +95,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
       @Override public boolean visit(final MethodInvocation node) {
-        System.out.println(MethodInvocation.class + ": " + node.getName());
+        print(MethodInvocation.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -104,7 +105,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * NormalAnnotation) */
       @Override public boolean visit(final NormalAnnotation node) {
-        System.out.println("NormalAnnotation: " + node.getTypeName());
+        print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
 
@@ -114,7 +115,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
       @Override public boolean visit(final PackageDeclaration node) {
-        System.out.println(PackageDeclaration.class + ": " + node.getName());
+        print(PackageDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
     });
@@ -200,14 +201,14 @@ public class SpartanizerTest {
   }
 
   @Test public void testSpartanizerCheckMethod_01() {
-    System.out.println(test1);
+    print(test1);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
-    System.out.println(u.getClass());
+    print(u.getClass());
     assert u != null;
   }
 
   @Test public void testSpartanizerCheckMethod_02() {
-    System.out.println(test1);
+    print(test1);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
     assert u != null;
     u.accept(new ASTVisitor() {
@@ -217,7 +218,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
-        System.out.println(AnnotationTypeDeclaration.class);
+        print(AnnotationTypeDeclaration.class);
         // assert ("AnnotationTypeDeclaration is not included",
         // gUIBatchLaconizer.check(¢));
         return super.visit(¢);
@@ -247,7 +248,7 @@ public class SpartanizerTest {
     final String test4 = "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
         + "   assert (i>0);\n" + " }\n" + "}";
-    System.out.println(test4);
+    print(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
     u.accept(new ASTVisitor() {
@@ -326,9 +327,13 @@ public class SpartanizerTest {
       }
 
       @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println("MethodDeclaration node: getName(): " + node.getName());
+        print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node) && countMethods();
       }
     });
+  }
+
+  static void print(final Object ¢) {
+    ___.______unused(¢);
   }
 }
