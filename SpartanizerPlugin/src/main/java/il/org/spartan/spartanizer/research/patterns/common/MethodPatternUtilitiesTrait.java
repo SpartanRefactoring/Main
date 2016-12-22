@@ -58,6 +58,10 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
+  default boolean notStatic(final MethodDeclaration ¢) {
+    return !iz.static¢(¢);
+  }
+
   default boolean returnTypeNotVoid(final MethodDeclaration ¢) {
     return !iz.voidType(returnType(¢));
   }
@@ -78,8 +82,6 @@ public interface MethodPatternUtilitiesTrait {
     return safeEquals(identifier(az.name(expression(az.returnStatement(lastStatement(¢))))), identifier(name(onlyParameter(¢))));
   }
 
-  /** @param ¢
-   * @return */
   default ASTNode lastStatement(final MethodDeclaration ¢) {
     return last(statements(¢));
   }
