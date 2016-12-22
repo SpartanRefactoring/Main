@@ -26,10 +26,10 @@ public class toStringExpander extends ReplaceCurrentNode<InfixExpression> {
     if (extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
-    if ("\"\"".equals((¢.getRightOperand() + "")) && !iz.literal(¢.getLeftOperand()))
+    if ("\"\"".equals(¢.getRightOperand() + "") && !iz.literal(¢.getLeftOperand()))
       $.setExpression(duplicate.of(¢.getLeftOperand()));
     else {
-      if (!"\"\"".equals((¢.getLeftOperand() + "")) || iz.literal(¢.getRightOperand()))
+      if (!"\"\"".equals(¢.getLeftOperand() + "") || iz.literal(¢.getRightOperand()))
         return null;
       $.setExpression(duplicate.of(¢.getRightOperand()));
     }
