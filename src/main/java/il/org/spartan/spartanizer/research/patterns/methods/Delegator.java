@@ -30,7 +30,11 @@ public class Delegator extends JavadocMarkerNanoPattern {
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && (delegation(¢, onlyStatement(¢)) || delegation(¢, onlySynchronizedStatementStatement(¢)));
+        && (delegation(¢, onlyStatement(¢))//
+            || delegation(¢, onlySynchronizedStatementStatement(¢)))//
+        || hazTwoStatements(¢)//
+            && lastReturnsThis(¢)//
+            && delegation(¢, firstStatement(¢));
   }
 
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
