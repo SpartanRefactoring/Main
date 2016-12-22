@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.characteristics.*;
@@ -10,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 @SuppressWarnings("static-method")
 public class FluentSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    spartanizer.add(MethodDeclaration.class, JAVADOCER = new FluentSetter());
+    setNano(new FluentSetter());
   }
 
   @Test public void a() {
