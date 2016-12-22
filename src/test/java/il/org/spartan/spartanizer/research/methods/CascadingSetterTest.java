@@ -39,4 +39,8 @@ public class CascadingSetterTest extends JavadocerTest {
   @Test public void g() {
     assert not(" public Whatever setXY(int x, int _y) {this.x = x; y = _y; return o;}");
   }
+
+  @Test public void h() {
+    assert not(" public Whatever setXY() {return this;}");
+  }
 }

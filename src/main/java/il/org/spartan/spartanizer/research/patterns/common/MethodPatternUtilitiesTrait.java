@@ -30,6 +30,10 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() == 1;
   }
 
+  default boolean hazAtLeastTwoStatements(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).size() >= 2;
+  }
+
   default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return searchDescendants.forClass(ReturnStatement.class).from(¢);
   }
