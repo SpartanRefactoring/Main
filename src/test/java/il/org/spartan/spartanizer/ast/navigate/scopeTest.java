@@ -44,10 +44,10 @@ public class scopeTest extends ReflectionTester {
   }
 
   @Test public void a() {
-    System.err.println(initializer);
+    // System.err.println(initializer);
   }
 
   @Test public void b() {
-    System.err.println(myCompilationUnit());
+    // System.err.println(myCompilationUnit());
   }
 }
