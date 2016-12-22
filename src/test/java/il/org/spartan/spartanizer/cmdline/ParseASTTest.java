@@ -7,6 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 public class ParseASTTest {
   public static void main(final String[] args) {
@@ -29,7 +30,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
       @Override public boolean visit(final AnnotationTypeDeclaration node) {
-        System.out.println("node.getName().getIdentifier(): " + node.getName().getIdentifier());
+        print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true; // super.visit(node);
       }
 
@@ -39,7 +40,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
       @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
-        System.out.println("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
+        print("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
         return super.visit(node);
       }
 
@@ -49,7 +50,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * Assignment) */
       @Override public boolean visit(final Assignment node) {
-        System.out.println(node.getOperator());
+        print(node.getOperator());
         return super.visit(node);
       }
 
@@ -59,7 +60,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
       @Override public boolean visit(final ImportDeclaration node) {
-        System.out.println(node.getName());
+        print(node.getName());
         return super.visit(node);
       }
 
@@ -69,8 +70,8 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MarkerAnnotation) */
       @Override public boolean visit(final MarkerAnnotation node) {
-        System.out.println("MarkerAnnotation: " + node.getTypeName());
-        System.out.println("parent: " + node.getParent().getNodeType());
+        print("MarkerAnnotation: " + node.getTypeName());
+        print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
 
@@ -80,7 +81,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
       @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println("MethodDeclaration node: getName(): " + node.getName());
+        print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node);
       }
 
@@ -90,7 +91,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
       @Override public boolean visit(final MethodInvocation node) {
-        System.out.println(node.getName());
+        print(node.getName());
         return super.visit(node);
       }
 
@@ -100,7 +101,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * NormalAnnotation) */
       @Override public boolean visit(final NormalAnnotation node) {
-        System.out.println("NormalAnnotation: " + node.getTypeName());
+        print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
 
@@ -110,7 +111,7 @@ public class ParseASTTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
       @Override public boolean visit(final PackageDeclaration node) {
-        System.out.println(node.getName());
+        print(node.getName());
         return super.visit(node);
       }
     });
@@ -124,13 +125,17 @@ public class ParseASTTest {
         .accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration $) {
             for (final Statement o : step.statements(step.body($))) {
-              System.out.println("class: " + o.getClass());
-              System.out.println("statement: " + o);
-              System.out.println(step.expression(o));
+              print("class: " + o.getClass());
+              print("statement: " + o);
+              print(step.expression(o));
             }
-            System.out.println(step.body($));
+            print(step.body($));
             return super.visit($);
           }
         });
+  }
+
+  static void print(final Object ¢) {
+    ___.______unused(¢);
   }
 }
