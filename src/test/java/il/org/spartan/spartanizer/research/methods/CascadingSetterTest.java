@@ -7,9 +7,9 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class FluentSetterTest extends JavadocerTest {
+public class CascadingSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new FluentSetter());
+    setNano(new CascadingSetter());
   }
 
   @Test public void a() {
@@ -26,5 +26,17 @@ public class FluentSetterTest extends JavadocerTest {
 
   @Test public void d() {
     assert is("@Override public int set(final Whatever o) {c = o; return this;}");
+  }
+
+  @Test public void e() {
+    assert is(" public Whatever setXY(int x, int _y) {this.x = x; y = _y; return this;}");
+  }
+
+  @Test public void f() {
+    assert not(" public void setXY(int x, int _y) {this.x = x; y = _y;}");
+  }
+
+  @Test public void g() {
+    assert not(" public Whatever setXY(int x, int _y) {this.x = x; y = _y; return o;}");
   }
 }
