@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
-public class Helper extends JavadocMarkerNanoPattern {
+public class Adjuster extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
@@ -30,10 +30,10 @@ public class Helper extends JavadocMarkerNanoPattern {
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && (helper(¢, onlyStatement(¢)) || helper(¢, onlySynchronizedStatementStatement(¢)));
+        && (adjuster(¢, onlyStatement(¢)) || adjuster(¢, onlySynchronizedStatementStatement(¢)));
   }
 
-  private static boolean helper(final MethodDeclaration d, final Statement ¢) {
+  private static boolean adjuster(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
         && anyTips(tippers, expression(¢))//
