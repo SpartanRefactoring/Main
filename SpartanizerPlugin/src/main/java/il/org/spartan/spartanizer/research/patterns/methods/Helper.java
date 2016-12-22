@@ -19,26 +19,52 @@ public class Helper extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$N($A);", "", ""));
-      add(patternTipper("$N.$N2($A);", "", ""));
+      add(patternTipper("$N($A)", "", ""));
+      add(patternTipper("$N1.$N($A)", "", ""));
+      add(patternTipper("$N1().$N($A)", "", ""));
+      add(patternTipper("$N1().$N2().$N($A)", "", ""));
+      add(patternTipper("$N1.$N2().$N($A)", "", ""));
+      add(patternTipper("(($T)$N1).$N($A)", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && (defaulter(¢, onlyStatement(¢)) || defaulter(¢, onlySynchronizedStatementStatement(¢)));
+    return hazOneStatement(¢)//
+        && (helper(¢, onlyStatement(¢)) || helper(¢, onlySynchronizedStatementStatement(¢)));
   }
 
-  private static boolean defaulter(final MethodDeclaration d, final Statement s) {
-    return defaulter(d, expression(s));
+  private static boolean helper(final MethodDeclaration d, final Statement ¢) {
+    final Expression $ = expression(¢);
+    return $ != null//
+        && anyTips(tippers, expression(¢))//
+        && iz.methodInvocation($)//
+        && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
+    ;
   }
 
-  private static boolean defaulter(final MethodDeclaration d, final Expression $) {
-    return anyTips(tippers, $) && iz.methodInvocation($) && containsParameters(d, $)
-        && arguments(az.methodInvocation($)).size() > parametersNames(d).size();
+  private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
+    return arguments.stream()
+        .allMatch(¢ -> iz.name(¢)//
+            || iz.methodInvocation(¢)//
+                && (safeContainsCallee(parametersNames, ¢)//
+                    || parametersContainAllArguments(parametersNames, ¢))//
+    ) && arguments.stream().anyMatch(¢ -> helps(parametersNames, ¢));
   }
 
-  private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    return arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList())
-        .containsAll(parametersNames(¢));
+  private static boolean helps(final List<String> parametersNames, Expression ¢) {
+    return arguments(az.methodInvocation(¢)) != null//
+        && !arguments(az.methodInvocation(¢)).isEmpty()//
+        && parametersContainAllArguments(parametersNames, ¢);
+  }
+
+  /** @param parametersNames
+   * @param ¢
+   * @return */
+  private static boolean parametersContainAllArguments(final List<String> parametersNames, final Expression ¢) {
+    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(a -> a + "").collect(Collectors.toList()));
+  }
+
+  private static boolean safeContainsCallee(final List<String> parametersNames, final Expression ¢) {
+    return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 }
