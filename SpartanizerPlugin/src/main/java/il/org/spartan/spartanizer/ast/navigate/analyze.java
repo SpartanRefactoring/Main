@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -37,6 +38,18 @@ public enum analyze {
       }
     });
     return $;
+  }
+
+  public static List<String> dependencies(final List<Expression> arguments) {
+    if (arguments == null)
+      return new ArrayList<>();
+    final Set<String> $ = new HashSet<>();
+    for (final Expression ¢ : arguments) {
+      $.addAll(analyze.dependencies(¢));
+      if (iz.name(¢))
+        $.add(az.name(¢) + "");
+    }
+    return new ArrayList<>($).stream().collect(Collectors.toList());
   }
 
   public static String type(final Name n) {

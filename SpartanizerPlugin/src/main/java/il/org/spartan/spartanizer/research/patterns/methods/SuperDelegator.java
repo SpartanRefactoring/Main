@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -15,15 +16,14 @@ public class SuperDelegator extends Delegator {
   private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("return super.$N($A);", "", ""));
-      add(TipperFactory.patternTipper("return ($T)super.$N($A);", "", ""));
+      add(patternTipper("return super.$N($A);", "", ""));
+      add(patternTipper("return ($T)super.$N($A);", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (!hazOneStatement(¢) || !anyTips(tippers, onlyStatement(¢)))
-      return false;
-    final SuperMethodInvocation $ = findFirst.superMethodDeclaration(onlyStatement(¢));
-    return $ != null && parametersNames(¢).containsAll(dependencies(arguments($)));
+    return hazOneStatement(¢)//
+        && anyTips(tippers, onlyStatement(¢))//
+        && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.superMethodDeclaration(onlyStatement(¢)))));
   }
 }

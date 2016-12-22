@@ -8,8 +8,6 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
 public class ParseASTTest {
   public static void main(final String[] args) {
     final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
