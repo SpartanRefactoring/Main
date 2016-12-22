@@ -45,21 +45,24 @@ public interface annotees {
         return null;
     }
   }
-  static List<SimpleName> of(AnnotationTypeDeclaration $) {
-    return as.list($.getName());
-  }
-  static List<SimpleName> of(EnumConstantDeclaration $) {
+
+  static List<SimpleName> of(final AnnotationTypeDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of(EnumDeclaration $) {
+  static List<SimpleName> of(final EnumConstantDeclaration $) {
     return as.list($.getName());
   }
+
+  static List<SimpleName> of(final EnumDeclaration $) {
+    return as.list($.getName());
+  }
+
   static List<SimpleName> of(final FieldDeclaration $) {
     return names(fragments($));
   }
 
-  static List<SimpleName> of(MethodDeclaration $) {
+  static List<SimpleName> of(final MethodDeclaration $) {
     return as.list($.getName());
   }
 
@@ -67,7 +70,7 @@ public interface annotees {
     return as.list(¢.getName());
   }
 
-  static List<SimpleName> of(TypeDeclaration $) {
+  static List<SimpleName> of(final TypeDeclaration $) {
     return as.list($.getName());
   }
 
