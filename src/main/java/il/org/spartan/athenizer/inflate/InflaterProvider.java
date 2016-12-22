@@ -11,9 +11,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /* TODO Raviv: write ***Javadoc*** according to conventions --or
- * 
+ *
  * @author Raviv Rachmiel
- * 
+ *
  * @since 20-12-16 will hold the new toolbox for the expanders and return
  * them */
 public class InflaterProvider extends OperationsProvider {
