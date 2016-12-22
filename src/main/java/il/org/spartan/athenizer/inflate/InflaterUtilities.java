@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /* TODO Raviv: write ***Javadoc*** according to conventions --or
- * 
+ *
  * @author Raviv Rachmiel
  *
  * @since 8-12-16 */

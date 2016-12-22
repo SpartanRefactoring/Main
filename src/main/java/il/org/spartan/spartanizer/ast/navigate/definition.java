@@ -9,9 +9,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 public interface definition {
   enum Kind {
     local, lambda, interface¢, class¢, method, catch¢, enum¢, enumConstant, field, foreach, for¢, parameter, try¢, annotation,;
-    public static boolean has(String name) {
+    public static boolean has(final String name) {
       if (name != null)
-        for (Kind ¢ : values())
+        for (final Kind ¢ : values())
           if (name.equals(¢ + ""))
             return true;
       return false;
@@ -22,7 +22,7 @@ public interface definition {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
       case ASTNode.VARIABLE_DECLARATION_FRAGMENT:
-        return kind((VariableDeclarationFragment) ($));
+        return kind((VariableDeclarationFragment) $);
       case ASTNode.SINGLE_VARIABLE_DECLARATION:
         return kind((SingleVariableDeclaration) $);
       case ASTNode.METHOD_DECLARATION:
@@ -41,8 +41,8 @@ public interface definition {
     }
   }
 
-  static Kind kind(VariableDeclarationFragment ¢) {
-    ASTNode $ = parent(¢);
+  static Kind kind(final VariableDeclarationFragment ¢) {
+    final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
       case ASTNode.FIELD_DECLARATION:
         return Kind.field;
