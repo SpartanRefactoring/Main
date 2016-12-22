@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -8,7 +10,33 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2016-12-22 */
 public interface definition {
   enum Kind {
-    local, lambda, interface¢, class¢, method, catch¢, enum¢, enumConstant, field, foreach, for¢, parameter, try¢, annotation,;
+    local {
+    },
+    lambda {
+    },
+    interface¢ {
+    },
+    class¢ {
+    },
+    method {
+    },
+    catch¢ {
+    },
+    enum¢ {
+    },
+    enumConstant, 
+    field {
+    },
+    foreach {
+    },
+    for¢ {
+    },
+    parameter {
+    },
+    try¢ {
+    },
+    annotation {
+    };
     public static boolean has(final String name) {
       if (name != null)
         for (final Kind ¢ : values())
@@ -16,6 +44,11 @@ public interface definition {
             return true;
       return false;
     }
+
+    @SuppressWarnings("static-method")
+    public List<? extends ASTNode> scope(SimpleName ¢) {
+        return members.of(parent(¢));
+      }
   }
 
   static Kind kind(final SimpleName ¢) {
