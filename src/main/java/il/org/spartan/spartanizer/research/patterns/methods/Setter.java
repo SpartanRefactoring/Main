@@ -1,23 +1,39 @@
 package il.org.spartan.spartanizer.research.patterns.methods;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import il.org.spartan.utils.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
-  private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
+  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(patternTipper("this.$N1 = $N2", "", ""));
+      add(patternTipper("$N1 = $N2", "", ""));
+      add(patternTipper("$N1 = $L", "", ""));
+    }
+  };
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
-    if (!hazOneParameter(¢) || !hazOneStatement(¢) || iz.static¢(¢) || iz.constructor(¢))
-      return false;
-    final Assignment $ = az.assignment(expression(az.expressionStatement(onlyStatement(¢))));
-    return (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), name(onlyParameter(¢)));
+    final List<String> $ = parametersNames(¢);
+    ___.nothing();
+    return notStatic(¢)//
+        && notConstructor(¢)//
+        && statements(¢).stream().allMatch(s -> anyTips(tippers, expression(s)) && isRightSideOK(right(az.assignment(expression(s))), $));
+  }
+
+  private static boolean isRightSideOK(final Expression $, final List<String> paramNames) {
+    return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
 }
