@@ -30,6 +30,14 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() == 1;
   }
 
+  default boolean hazTwoStatements(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).size() == 2;
+  }
+
+  default boolean hazAtLeastTwoStatements(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).size() >= 2;
+  }
+
   default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return searchDescendants.forClass(ReturnStatement.class).from(¢);
   }
@@ -58,6 +66,10 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
+  default boolean notStatic(final MethodDeclaration ¢) {
+    return !iz.static¢(¢);
+  }
+
   default boolean returnTypeNotVoid(final MethodDeclaration ¢) {
     return !iz.voidType(returnType(¢));
   }
@@ -78,8 +90,6 @@ public interface MethodPatternUtilitiesTrait {
     return safeEquals(identifier(az.name(expression(az.returnStatement(lastStatement(¢))))), identifier(name(onlyParameter(¢))));
   }
 
-  /** @param ¢
-   * @return */
   default ASTNode lastStatement(final MethodDeclaration ¢) {
     return last(statements(¢));
   }

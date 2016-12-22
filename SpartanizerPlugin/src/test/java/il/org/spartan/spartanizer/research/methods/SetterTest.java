@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.methods.*;
@@ -10,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 @SuppressWarnings("static-method")
 public class SetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    spartanizer.add(MethodDeclaration.class, JAVADOCER = new Setter());
+    setNano(new Setter());
   }
 
   @Test public void a() {
@@ -27,5 +26,21 @@ public class SetterTest extends JavadocerTest {
 
   @Test public void d() {
     assert is("@Override public int set(final Whatever o) {c = o;}");
+  }
+
+  @Test public void e() {
+    assert is(" public void stop() {    shouldRun = false;}");
+  }
+
+  @Test public void f() {
+    assert is(" public void setXY(int x, int _y) {this.x = x; y = _y;}");
+  }
+
+  @Test public void g() {
+    assert not(" public void setXY(int x, int _y) {this.x = x; y = _y; return this;}");
+  }
+
+  @Test public void h() {
+    assert not("boolean foo(Object o){this.c = o; return this;}");
   }
 }

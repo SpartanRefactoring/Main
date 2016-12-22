@@ -4,28 +4,28 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-22 */
 @SuppressWarnings("static-method")
-public class DelegatorTest extends JavadocerTest {
+public class AdjusterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new Delegator());
+    setNano(new Adjuster());
   }
 
   @Test public void basic() {
-    assert is("boolean foo(){return bar();}");
+    assert not("boolean foo(){return bar();}");
   }
 
   @Test public void basic2() {
-    assert is("boolean foo(int a){return bar(a);}");
+    assert not("boolean foo(int a){return bar(a);}");
   }
 
   @Test public void basic3() {
-    assert is("boolean foo(int a){return bar(a,a);}");
+    assert not("boolean foo(int a){return bar(a,a);}");
   }
 
   @Test public void basic4() {
-    assert not("boolean foo(int a){return bar(a,f(a));}");
+    assert is("boolean foo(int a){return bar(a,f(a));}");
   }
 
   @Test public void basic5() {
@@ -45,15 +45,15 @@ public class DelegatorTest extends JavadocerTest {
   }
 
   @Test public void basic9() {
-    assert is("void foo(int a){return bar(a);}");
+    assert not("void foo(int a){return bar(a);}");
   }
 
   @Test public void basic10() {
-    assert is("@Override public Set<E> inEdges(){return incidentEdges();} ");
+    assert not("@Override public Set<E> inEdges(){return incidentEdges();} ");
   }
 
   @Test public void basic11() {
-    assert is("@Override public Set<K> keySet(){ return delegate().keySet();}");
+    assert not("@Override public Set<K> keySet(){ return delegate().keySet();}");
   }
 
   @Test public void basic12() {
@@ -65,7 +65,7 @@ public class DelegatorTest extends JavadocerTest {
   }
 
   @Test public void basic14() {
-    assert is("@Override public Set<K> keySet(String s){ return delegate().keySet(s);}");
+    assert not("@Override public Set<K> keySet(String s){ return delegate().keySet(s);}");
   }
 
   @Test public void basic15() {
@@ -81,42 +81,42 @@ public class DelegatorTest extends JavadocerTest {
   }
 
   @Test public void basic18() {
-    assert is(" @Override public void close() throws IOException { out.close(); }");
+    assert not(" @Override public void close() throws IOException { out.close(); }");
   }
 
   @Test public void basic19() {
-    assert is("@Deprecated @Override public void writeBytes(String ¢) throws IOException {    ((DataOutputStream)out).writeBytes(¢);}");
+    assert not("@Deprecated @Override public void writeBytes(String ¢) throws IOException {    ((DataOutputStream)out).writeBytes(¢);}");
   }
 
   @Test public void basic20() {
-    assert is("@Override public int size(){synchronized (mutex) {    return delegate().size();}}");
+    assert not("@Override public int size(){synchronized (mutex) {    return delegate().size();}}");
   }
 
   @Test public void basic21() {
-    assert is("  @Override public int indexOf(Object ¢){    synchronized (mutex) {        return delegate().indexOf(¢); }}");
+    assert not("  @Override public int indexOf(Object ¢){    synchronized (mutex) {        return delegate().indexOf(¢); }}");
   }
 
   @Test public void basic22() {
-    assert is("public String join(Map<?,?> ¢){  return join(¢.entrySet());}");
+    assert not("public String join(Map<?,?> ¢){  return join(¢.entrySet());}");
   }
 
   @Test public void basic23() {
-    assert is("public String join(Map<?,?> ¢){ synchronized(mutex){ return join(¢.entrySet());}}");
+    assert not("public String join(Map<?,?> ¢){ synchronized(mutex){ return join(¢.entrySet());}}");
   }
 
   @Test public void basic24() {
-    assert is(" @Override public int size(){    return multiset().entrySet().size();  }");
+    assert not(" @Override public int size(){    return multiset().entrySet().size();  }");
   }
 
   @Test public void basic25() {
-    assert is("   void removeValuesForKey(Object key) {    multimap.keySet().remove(key);  }");
+    assert not("   void removeValuesForKey(Object key) {    multimap.keySet().remove(key);  }");
   }
 
   @Test public void basic26() {
-    assert is("   int size(Object key) {    multimap.keySet().size();  }");
+    assert not("   int size(Object key) {    multimap.keySet().size();  }");
   }
 
-  @Test public void basic27() {
-    assert is(" @Override @CanIgnoreReturnValue public Service stopAsync(){delegate.stopAsync();return this;}");
+  @Test public void positive0() {
+    assert is("@CanIgnoreReturnValue public ToStringHelper addValue(boolean value){return addHolder(String.valueOf(value));}");
   }
 }

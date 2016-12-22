@@ -3,19 +3,19 @@ package il.org.spartan.spartanizer.research.patterns.methods;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
-public class Delegator extends JavadocMarkerNanoPattern {
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-22 */
+public class Adjuster extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
@@ -30,30 +30,41 @@ public class Delegator extends JavadocMarkerNanoPattern {
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && (delegation(¢, onlyStatement(¢))//
-            || delegation(¢, onlySynchronizedStatementStatement(¢)))//
-        || hazTwoStatements(¢)//
-            && lastReturnsThis(¢)//
-            && delegation(¢, firstStatement(¢));
+        && (adjuster(¢, onlyStatement(¢)) || adjuster(¢, onlySynchronizedStatementStatement(¢)));
   }
 
-  private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
+  private static boolean adjuster(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
         && anyTips(tippers, expression(¢))//
         && iz.methodInvocation($)//
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
-        && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));
+    ;
   }
 
   private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
-    return arguments.stream()//
-        .allMatch(//
-            ¢ -> iz.name(¢) || iz.methodInvocation(¢) && safeContains(parametersNames, ¢)//
-    );
+    return arguments.stream()
+        .allMatch(¢ -> iz.name(¢)//
+            || iz.methodInvocation(¢)//
+                && (safeContainsCallee(parametersNames, ¢)//
+                    || parametersContainAllArguments(parametersNames, ¢))//
+    ) && arguments.stream().anyMatch(¢ -> helps(parametersNames, ¢));
   }
 
-  private static boolean safeContains(final List<String> parametersNames, final Expression ¢) {
+  private static boolean helps(final List<String> parametersNames, Expression ¢) {
+    return arguments(az.methodInvocation(¢)) != null//
+        && !arguments(az.methodInvocation(¢)).isEmpty()//
+        && parametersContainAllArguments(parametersNames, ¢);
+  }
+
+  /** @param parametersNames
+   * @param ¢
+   * @return */
+  private static boolean parametersContainAllArguments(final List<String> parametersNames, final Expression ¢) {
+    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(a -> a + "").collect(Collectors.toList()));
+  }
+
+  private static boolean safeContainsCallee(final List<String> parametersNames, final Expression ¢) {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 }

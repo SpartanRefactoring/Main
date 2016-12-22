@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.methods;
 
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
@@ -17,6 +19,10 @@ public class JavadocerTest {
 
   private static String spartanized(final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
+  }
+
+  protected static void setNano(final JavadocMarkerNanoPattern ¢) {
+    spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
 
   static boolean is(final String ¢) {
