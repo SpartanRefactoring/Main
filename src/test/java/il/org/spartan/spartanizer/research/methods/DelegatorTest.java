@@ -115,4 +115,8 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic26() {
     assert is("   int size(Object key) {    multimap.keySet().size();  }");
   }
+
+  @Test public void basic27() {
+    assert is(" @Override @CanIgnoreReturnValue public Service stopAsync(){delegate.stopAsync();return this;}");
+  }
 }

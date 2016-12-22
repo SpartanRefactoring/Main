@@ -30,6 +30,10 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() == 1;
   }
 
+  default boolean hazTwoStatements(final MethodDeclaration ¢) {
+    return statements(¢) != null && statements(¢).size() == 2;
+  }
+
   default boolean hazAtLeastTwoStatements(final MethodDeclaration ¢) {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
