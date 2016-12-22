@@ -13,17 +13,25 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class SuperDelegator extends Delegator {
-  private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("return super.$N($A);", "", ""));
-      add(patternTipper("return ($T)super.$N($A);", "", ""));
+      add(patternTipper("super.$N($A)", "", ""));
+      add(patternTipper("($T)super.$N($A)", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && anyTips(tippers, onlyStatement(¢))//
-        && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.superMethodDeclaration(onlyStatement(¢)))));
+        && (superDelegator(¢, onlyStatement(¢))//
+            || superDelegator(¢, onlySynchronizedStatementStatement(¢)))//
+        || hazTwoStatements(¢)//
+            && superDelegator(¢, firstStatement(¢))//
+            && lastReturnsThis(¢);
+  }
+
+  private static boolean superDelegator(final MethodDeclaration ¢, final Statement s) {
+    return anyTips(tippers, expression(s))//
+        && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.superMethodDeclaration(s))));
   }
 }
