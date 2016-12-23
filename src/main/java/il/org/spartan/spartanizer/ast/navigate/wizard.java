@@ -570,8 +570,9 @@ public interface wizard {
     final ASTNode container = hop.containerType(¢);
     if (container == null)
       return $;
-    if (iz.annotationTypeDeclaration(container))
-      $.add(isFinal);
+    // TODO Yossi: compilation error, please fix/remove
+//    if (iz.annotationTypeDeclaration(container))
+//      $.add(isFinal);
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
     if (iz.enumDeclaration(container)) {
