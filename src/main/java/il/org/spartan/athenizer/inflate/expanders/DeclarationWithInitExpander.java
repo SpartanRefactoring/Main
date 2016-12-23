@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> {
-  @SuppressWarnings("unused") @Override public String description(final VariableDeclarationStatement __) {
+  @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration and initialization";
   }
 
@@ -27,9 +27,8 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
-    final VariableDeclarationStatement d = duplicate.of(¢);
-    final VariableDeclarationFragment f1 = (VariableDeclarationFragment) d.fragments().get(0);
-    f1.setInitializer(null);
+    final VariableDeclarationStatement $ = duplicate.of(¢);
+    ((VariableDeclarationFragment) $.fragments().get(0)).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();
     final VariableDeclarationFragment f2 = (VariableDeclarationFragment) ¢.fragments().get(0);
     a.setLeftHandSide(duplicate.of(az.expression(f2.getName())));
@@ -39,7 +38,7 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
         az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(¢.getAST().newExpressionStatement(a), ¢, g);
-        l.insertAfter(d, ¢, g);
+        l.insertAfter($, ¢, g);
         l.remove(¢, g);
       }
     };
