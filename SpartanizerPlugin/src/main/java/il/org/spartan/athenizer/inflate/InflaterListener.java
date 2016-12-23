@@ -49,6 +49,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     System.out.println("HEY1");
     SingleFlater.in(wcu.compilationUnit).from((new InflaterProvider())).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
     System.out.println("HEY2");
+    //Uncomment the next line in order to use the temp system
   InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 
