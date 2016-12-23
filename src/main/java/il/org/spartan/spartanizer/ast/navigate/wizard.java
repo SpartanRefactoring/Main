@@ -570,6 +570,8 @@ public interface wizard {
     final ASTNode container = hop.containerType(¢);
     if (container == null)
       return $;
+//    if (iz.annotationTypeDeclaration(container))
+//      $.add(isFinal);
     if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
     if (iz.enumDeclaration(container)) {
@@ -691,7 +693,7 @@ public interface wizard {
   }
 
   static String trim(final Object ¢) {
-    return ¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(1, 35);
+    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(1, 35)).trim();
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression

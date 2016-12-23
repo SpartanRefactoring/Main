@@ -29,7 +29,7 @@ public enum GuessedContext {
           COMPILATION_UNIT_LOOK_ALIKE.after //
   ), METHOD_LOOK_ALIKE( //
       OUTER_TYPE_LOOKALIKE.before + //
-          "\n\t\t public final class C {/* BEGIN Class C*/\n" //
+          "\n\t\t class C87456AZ {/* BEGIN Class C*/\n" //
       , //
       "\n\t\t } /* END class C87456AZ */\n" + //
           OUTER_TYPE_LOOKALIKE.after //
