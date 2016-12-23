@@ -24,66 +24,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2015-07-16 */
 public enum az {
   ;
-  /** A fluent API to parse numeric literals, including provisions for unary
-   * minus.
-   * @author Yossi Gil
-   * @year 2016 */
-  public interface throwing {
-    static String chop¢necessaryQuestionMark(final String ¢) {
-      return ¢.substring(0, ¢.length() - 1);
-    }
-
-    static double double¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
-              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
-    }
-
-    static double double¢(final String token) throws NumberFormatException {
-      return Double.parseDouble(token);
-    }
-
-    static int int¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
-    }
-
-    static int int¢(final String token) throws NumberFormatException {
-      return Integer.parseInt(token);
-    }
-
-    static long long¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
-          : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
-    }
-
-    static long long¢(final String token) throws NumberFormatException {
-      return Long.parseLong(token);
-    }
-
-    static NumberLiteral negativeLiteral(final Expression ¢) {
-      return throwing.negativeLiteral(prefixExpression(¢));
-    }
-
-    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
-    }
-
-    static String token(final Expression ¢) {
-      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
-    }
-
-    static String token(final NumberLiteral ¢) {
-      return ¢.getToken();
-    }
-
-    static String token(final PrefixExpression ¢) {
-      return az.numberLiteral(operand(¢)).getToken();
-    }
-  }
-
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -110,6 +50,14 @@ public enum az {
     return !iz.annotation($) ? null : (Annotation) $;
   }
 
+  public static AnnotationTypeDeclaration annotationTypeDeclration(ASTNode $) {
+    return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
+  }
+
+  public static AnonymousClassDeclaration anonymousClassDeclaration(ASTNode $) {
+    return !iz.anonymousClassDeclaration($) ? null : (AnonymousClassDeclaration) $;
+  }
+
   /** Down-cast, if possible, to {@link ArrayInitializer}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -124,14 +72,6 @@ public enum az {
    *         <code><b>null</b></code> if the downcast is impossible. */
   public static Assignment assignment(final ASTNode $) {
     return !iz.nodeTypeEquals($, ASSIGNMENT) ? null : (Assignment) $;
-  }
-
-  /** Down-cast, if possible, to {@link Statement}
-   * @param $ result
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static Statement statement(final ASTNode $) {
-    return !iz.statement($) ? null : (Statement) $;
   }
 
   /** Convert, if possible, an {@link Object} to a {@link ASTNode}
@@ -158,10 +98,6 @@ public enum az {
     return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
 
-  public static SwitchCase switchCase(final ASTNode $) {
-    return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
-  }
-
   public static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return ¢ == null || !(¢ instanceof BodyDeclaration) ? null : (BodyDeclaration) ¢;
   }
@@ -172,6 +108,12 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static CastExpression castExpression(final Expression ¢) {
+    return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
   }
 
   /** Down-cast, if possible, to {@link ClassInstanceCreation}
@@ -211,6 +153,12 @@ public enum az {
     return !($ instanceof ConditionalExpression) ? null : (ConditionalExpression) $;
   }
 
+  /** @param ¢ JD
+   * @return */
+  public static ContinueStatement continueStatement(final ASTNode ¢) {
+    return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
+  }
+
   public static EnhancedForStatement enhancedFor(final ASTNode $) {
     return !iz.nodeTypeEquals($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
   }
@@ -243,6 +191,12 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ExpressionStatement expressionStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static FieldAccess fieldAccess(final ASTNode ¢) {
+    return ¢ == null || !iz.fieldAccess(¢) ? null : (FieldAccess) ¢;
   }
 
   public static FieldDeclaration fieldDeclaration(final ASTNode ¢) {
@@ -321,8 +275,20 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
+  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+    final List<IExtendedModifier> $ = new ArrayList<>();
+    duplicate.modifiers(step.extendedModifiers(¢), $);
+    return $;
+  }
+
   public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
+  }
+
+  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    duplicate.into(step.fragments(¢), $);
+    return chop($);
   }
 
   /** Down-cast, if possible, to {@link NormalAnnotation}
@@ -378,6 +344,18 @@ public enum az {
     return eval(() -> (PrefixExpression) $).when($ instanceof PrefixExpression);
   }
 
+  /** @param ¢ JD
+   * @return */
+  static PrimitiveType primitiveType(final Type ¢) {
+    return ¢ == null || !iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static QualifiedName qualifiedName(final ASTNode ¢) {
+    return ¢ == null || !iz.qualifiedName(¢) ? null : (QualifiedName) ¢;
+  }
+
   /** Down-cast, if possible, to {@link ReturnStatement}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -392,12 +370,6 @@ public enum az {
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static SimpleName simpleName(final ASTNode $) {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
-  }
-
-  /** @param $
-   * @return */
-  public static TryStatement tryStatement(final ASTNode $) {
-    return eval(() -> (TryStatement) $).when($ instanceof TryStatement);
   }
 
   public static SimpleName simpleName(final PostfixExpression $) {
@@ -420,12 +392,36 @@ public enum az {
     return !iz.singleVariableDeclaration($) ? null : (SingleVariableDeclaration) $;
   }
 
+  /** Down-cast, if possible, to {@link Statement}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static Statement statement(final ASTNode $) {
+    return !iz.statement($) ? null : (Statement) $;
+  }
+
   /** Down-cast, if possible, to {@link StringLiteral}
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static StringLiteral stringLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, STRING_LITERAL) ? null : (StringLiteral) $;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
+    return ¢ == null || !iz.superMethodInvocation(¢) ? null : (SuperMethodInvocation) ¢;
+  }
+
+  public static SwitchCase switchCase(final ASTNode $) {
+    return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static SynchronizedStatement synchronizedStatement(final ASTNode ¢) {
+    return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ThrowStatement}
@@ -438,6 +434,18 @@ public enum az {
 
   public static boolean true¢(@SuppressWarnings("unused") final int __) {
     return true;
+  }
+
+  /** @param $
+   * @return */
+  public static TryStatement tryStatement(final ASTNode $) {
+    return eval(() -> (TryStatement) $).when($ instanceof TryStatement);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static Type type(final ASTNode ¢) {
+    return ¢ == null || !iz.type(¢) ? null : (Type) ¢;
   }
 
   /** @param ¢ JD
@@ -471,6 +479,12 @@ public enum az {
     return $;
   }
 
+  /** @param ¢ JD
+   * @return */
+  public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
+    return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
+  }
+
   /** @param $
    * @return */
   public static VariableDeclarationFragment variableDeclrationFragment(final ASTNode $) {
@@ -497,69 +511,68 @@ public enum az {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
-  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    final List<IExtendedModifier> $ = new ArrayList<>();
-    duplicate.modifiers(step.extendedModifiers(¢), $);
-    return $;
+  /** A fluent API to parse numeric literals, including provisions for unary
+   * minus.
+   * @author Yossi Gil
+   * @year 2016 */
+  public interface throwing {
+    static String chop¢necessaryQuestionMark(final String ¢) {
+      return ¢.substring(0, ¢.length() - 1);
+    }
+
+    static double double¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
+          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
+              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
+    }
+
+    static double double¢(final String token) throws NumberFormatException {
+      return Double.parseDouble(token);
+    }
+
+    static int int¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
+    }
+
+    static int int¢(final String token) throws NumberFormatException {
+      return Integer.parseInt(token);
+    }
+
+    static long long¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
+          : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+    }
+
+    static long long¢(final String token) throws NumberFormatException {
+      return Long.parseLong(token);
+    }
+
+    static NumberLiteral negativeLiteral(final Expression ¢) {
+      return throwing.negativeLiteral(prefixExpression(¢));
+    }
+
+    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+    }
+
+    static String token(final Expression ¢) {
+      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
+    }
+
+    static String token(final NumberLiteral ¢) {
+      return ¢.getToken();
+    }
+
+    static String token(final PrefixExpression ¢) {
+      return az.numberLiteral(operand(¢)).getToken();
+    }
   }
 
-  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    duplicate.into(step.fragments(¢), $);
-    return chop($);
-  }
+  public static CatchClause catchClause(ASTNode $) {
+    return !iz.catchClause($) ? null : (CatchClause) $;
 
-  /** @param ¢ JD
-   * @return */
-  static PrimitiveType primitiveType(final Type ¢) {
-    return ¢ == null || !iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static CastExpression castExpression(final Expression ¢) {
-    return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
-    return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static Type type(final ASTNode ¢) {
-    return ¢ == null || !iz.type(¢) ? null : (Type) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
-    return ¢ == null || !iz.superMethodInvocation(¢) ? null : (SuperMethodInvocation) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static FieldAccess fieldAccess(final ASTNode ¢) {
-    return ¢ == null || !iz.fieldAccess(¢) ? null : (FieldAccess) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static QualifiedName qualifiedName(final ASTNode ¢) {
-    return ¢ == null || !iz.qualifiedName(¢) ? null : (QualifiedName) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static SynchronizedStatement synchronizedStatement(final ASTNode ¢) {
-    return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static ContinueStatement continueStatement(final ASTNode ¢) {
-    return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
 }
