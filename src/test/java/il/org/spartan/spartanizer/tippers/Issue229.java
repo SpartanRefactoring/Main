@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for {@link SafeVarargs} in
- * {@link $BodyDeclarationRedundantModifiers}
+ * {@link RedundantModifier}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
