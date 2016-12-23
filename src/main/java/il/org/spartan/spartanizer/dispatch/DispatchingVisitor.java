@@ -31,6 +31,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialization(¢);
     initialized = true;
   }
+
   @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
     return cautiousGo(¢);
   }

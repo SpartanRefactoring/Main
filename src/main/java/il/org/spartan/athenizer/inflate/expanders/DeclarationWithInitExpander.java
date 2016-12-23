@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> {
-  @SuppressWarnings("unused") @Override public String description(VariableDeclarationStatement __) {
+  @SuppressWarnings("unused") @Override public String description(final VariableDeclarationStatement __) {
     return "Split declaration and initialization";
   }
 

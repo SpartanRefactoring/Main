@@ -11,10 +11,9 @@ import il.org.spartan.spartanizer.tipping.*;
 /** converts (a?b:c;) to (if(a) b; else c;) relevant for assignment <ternary>
  * also relevant for assignment (<ternary>) s.e $ = (<ternary)
  * @author Raviv Rachmiel
- * @since 23-12-16 
- * */
+ * @since 23-12-16 */
 public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.InVain {
-  private static ASTNode innerAssignReplacement(final Expression x, final Statement s,final Expression left,final Operator o) {
+  private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -34,7 +33,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
     final Assignment elze = ¢.getAST().newAssignment();
     elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
     elze.setLeftHandSide(duplicate.of(left));
-    elze.setOperator(o); 
+    elze.setOperator(o);
     $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
     return $;
   }
@@ -43,7 +42,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
     if (az.expressionStatement(¢) == null)
       return null;
     final Assignment $ = az.assignment(az.expressionStatement(¢).getExpression());
-    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢,$.getLeftHandSide(),$.getOperator());
+    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢, $.getLeftHandSide(), $.getOperator());
   }
 
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
@@ -53,8 +52,4 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
-
-
-
-
 }
