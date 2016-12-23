@@ -20,9 +20,7 @@ public class InflaterProvider extends OperationsProvider {
   Toolbox toolbox;
 
   public InflaterProvider() {
-    toolbox = Toolbox.defaultInstance();
-    if (toolbox == null)
-      toolbox = Toolbox.freshCopyOfAllTippers();
+    toolbox = InflaterProvider.freshCopyOfAllExpanders();
   }
 
   public InflaterProvider(final Toolbox tb) {
