@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Expend :
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
-public class toStringExpander extends ReplaceCurrentNode<InfixExpression> {
+public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (extract.allOperands(¢).size() != 2)
       return null;

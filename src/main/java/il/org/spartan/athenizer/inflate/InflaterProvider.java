@@ -20,9 +20,7 @@ public class InflaterProvider extends OperationsProvider {
   Toolbox toolbox;
 
   public InflaterProvider() {
-    toolbox = Toolbox.defaultInstance();
-    if (toolbox == null)
-      toolbox = Toolbox.freshCopyOfAllTippers();
+    toolbox = InflaterProvider.freshCopyOfAllExpanders();
   }
 
   public InflaterProvider(final Toolbox tb) {
@@ -31,10 +29,14 @@ public class InflaterProvider extends OperationsProvider {
 
   public static Toolbox freshCopyOfAllExpanders() {
     return new Toolbox()//
-        .add(Statement.class, //
-            new TernaryExpander())//
+        .add(ReturnStatement.class, //
+            new ReturnTernaryExpander())//
+        .add(ExpressionStatement.class, //
+            new AssignmentTernaryExpander())//
         .add(InfixExpression.class, //
             new toStringExpander())//
+        .add(SwitchStatement.class, //
+            new CasesSplit())//
     ;
   }
 
