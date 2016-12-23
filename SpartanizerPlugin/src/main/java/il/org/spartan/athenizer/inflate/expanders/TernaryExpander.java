@@ -1,6 +1,7 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -9,7 +10,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** converts (a?b:c;) to (if(a) b; else c;) relevant for now to return <ternary>
  * or $ = <ternary> also relevant for return (<ternary>) or $ = (<ternary)
  * @author Raviv Rachmiel
- * @since 03-12-16 */
+ * @since 03-12-16 
+ * */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
   private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
@@ -31,8 +33,8 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     $.setElseStatement(duplicate.of(az.statement(elze)));
     return $;
   }
-
-  private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left) {
+  
+  private static ASTNode innerAssignReplacement(final Expression x, final Statement s,final Expression left,final Operator o) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -46,12 +48,14 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     $.setExpression(duplicate.of(¢.getExpression()));
     final Assignment then = ¢.getAST().newAssignment();
     then.setRightHandSide(duplicate.of(¢.getThenExpression()));
-    then.setLeftHandSide(left);
-    $.setThenStatement(duplicate.of(az.statement(then)));
+    then.setLeftHandSide(duplicate.of(left));
+    then.setOperator(o);
+    $.setThenStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
     final Assignment elze = ¢.getAST().newAssignment();
     elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
-    elze.setLeftHandSide(left);
-    $.setElseStatement(duplicate.of(az.statement(elze)));
+    elze.setLeftHandSide(duplicate.of(left));
+    elze.setOperator(o); 
+    $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
     return $;
   }
 
@@ -59,7 +63,7 @@ public class TernaryExpander extends ReplaceCurrentNode<Statement> {
     if (az.expressionStatement(¢) == null)
       return null;
     final Assignment $ = az.assignment(az.expressionStatement(¢).getExpression());
-    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢, $.getLeftHandSide());
+    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢,$.getLeftHandSide(),$.getOperator());
   }
 
   private static ASTNode replaceReturn(final Statement ¢) {

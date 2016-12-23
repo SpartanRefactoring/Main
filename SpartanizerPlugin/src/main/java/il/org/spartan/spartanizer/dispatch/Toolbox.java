@@ -276,7 +276,8 @@ public class Toolbox {
         .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
             new AnnotationSort.ofInitializer(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
+        .add(AnnotationTypeDeclaration.class, 
+            new $BodyDeclarationModifiersSort.ofAnnotation(), //
             new AnnotationSort.ofAnnotation(), //
             null)
         .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
