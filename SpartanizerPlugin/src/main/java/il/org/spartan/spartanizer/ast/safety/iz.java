@@ -28,35 +28,36 @@ import static il.org.spartan.lisp.first;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
-  interface literal {
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+  /** @param ¢ JD
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
+   *         false otherwise */
+  default boolean parsesTo(final String $, final double d) {
+    try {
+      return Double.parseDouble($) == d;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return false;
     }
+  }
 
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
+  default boolean parsesTo(final String $, final int i) {
+    try {
+      return parseInt($) == i;
+    } catch (final NumberFormatException __) {
+      ___.unused(__);
+      return false;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return false;
     }
+  }
 
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
+  default boolean parsesTo(final String $, final long l) {
+    try {
+      return parseLong($) == l;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(box(l), ¢);
+      return false;
     }
   }
 
@@ -70,6 +71,10 @@ public interface iz {
 
   static boolean annotation(final IExtendedModifier ¢) {
     return ¢ != null && ¢ instanceof Annotation;
+  }
+
+  static boolean annotationTypeDeclaration(ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_DECLARATION);
   }
 
   static boolean anonymousClassDeclaration(final ASTNode ¢) {
@@ -97,6 +102,12 @@ public interface iz {
 
   static boolean astNode(final Object ¢) {
     return ¢ != null && ¢ instanceof ASTNode;
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean atomic(final ASTNode ¢) {
+    return iz.name(¢) || iz.literal(¢);
   }
 
   /** Determine whether a node is a {@link Block}
@@ -206,6 +217,10 @@ public interface iz {
 
   static boolean comparison(final Operator ¢) {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
+  }
+
+  static boolean compilationUnit(ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, COMPILATION_UNIT); 
   }
 
   /** Check whether an expression is a "conditional and" (&&)
@@ -1088,42 +1103,39 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
-   *         false otherwise */
-  default boolean parsesTo(final String $, final double d) {
-    try {
-      return Double.parseDouble($) == d;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return false;
+  interface literal {
+    /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
     }
   }
 
-  default boolean parsesTo(final String $, final int i) {
-    try {
-      return parseInt($) == i;
-    } catch (final NumberFormatException __) {
-      ___.unused(__);
-      return false;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return false;
-    }
-  }
-
-  default boolean parsesTo(final String $, final long l) {
-    try {
-      return parseLong($) == l;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(box(l), ¢);
-      return false;
-    }
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static boolean atomic(final ASTNode ¢) {
-    return iz.name(¢) || iz.literal(¢);
+  static boolean catchClause(ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
   }
 }

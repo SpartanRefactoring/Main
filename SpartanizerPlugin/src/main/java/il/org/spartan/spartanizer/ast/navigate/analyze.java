@@ -54,7 +54,6 @@ public enum analyze {
 
   public static String type(final Name n) {
     final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
-    // issue #827 fixed case m is null
     final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
   }
