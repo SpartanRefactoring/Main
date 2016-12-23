@@ -45,10 +45,11 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private static void inflate() {
     final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
-    //InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
+    
     System.out.println("HEY1");
-    SingleFlater.in(wcu.compilationUnit).from((new DeflaterProvider())).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
+    SingleFlater.in(wcu.compilationUnit).from((new InflaterProvider())).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
     System.out.println("HEY2");
+  InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 
   // .build.compilationUnit is used in order to take care of null compilation
