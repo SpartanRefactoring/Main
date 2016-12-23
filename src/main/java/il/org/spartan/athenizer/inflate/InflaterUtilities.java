@@ -36,7 +36,7 @@ public class InflaterUtilities {
     if (nl.isEmpty())
       return false;
     for (final ASTNode statement : nl) {
-      final ASTNode change = new TernaryExpander().replacement(az.statement(statement));
+      final ASTNode change = new ReturnTernaryExpander().replacement(az.returnStatement(statement));
       if (change != null) {
         r.replace(statement, change, __);
         $ = true;
