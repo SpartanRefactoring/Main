@@ -50,11 +50,11 @@ public enum az {
     return !iz.annotation($) ? null : (Annotation) $;
   }
 
-  public static AnnotationTypeDeclaration annotationTypeDeclration(ASTNode $) {
+  public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
   }
 
-  public static AnonymousClassDeclaration anonymousClassDeclaration(ASTNode $) {
+  public static AnonymousClassDeclaration anonymousClassDeclaration(final ASTNode $) {
     return !iz.anonymousClassDeclaration($) ? null : (AnonymousClassDeclaration) $;
   }
 
@@ -571,8 +571,7 @@ public enum az {
     }
   }
 
-  public static CatchClause catchClause(ASTNode $) {
+  public static CatchClause catchClause(final ASTNode $) {
     return !iz.catchClause($) ? null : (CatchClause) $;
-
   }
 }

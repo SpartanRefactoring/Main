@@ -48,7 +48,7 @@ public interface annotees {
     }
   }
 
-  static List<SimpleName> of(AnnotationTypeMemberDeclaration $) {
+  static List<SimpleName> of(final AnnotationTypeMemberDeclaration $) {
     return as.list($.getName());
   }
 
