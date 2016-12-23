@@ -19,7 +19,7 @@ public class Issue997 {
   
   @Test public void a1() {
     trimmingOf("@interface A{final int a = 4; final char c;}")//
-        .gives("@interface A{int a = 4; char c}")//
+        .gives("@interface A{int a = 4; char c;}")//
         .stays();
   }
 }
