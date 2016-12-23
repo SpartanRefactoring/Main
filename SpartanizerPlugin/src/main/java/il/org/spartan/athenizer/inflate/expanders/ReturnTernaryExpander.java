@@ -7,11 +7,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary>
- * also relevant for return (<ternary>)
+/** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
+ * relevant for return (<ternary>)
  * @author Raviv Rachmiel
- * @since 03-12-16 
- * */
+ * @since 03-12-16 */
 public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> implements TipperCategory.InVain {
   private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
@@ -47,6 +46,4 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
-
-
 }

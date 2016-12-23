@@ -73,7 +73,7 @@ public interface iz {
     return ¢ != null && ¢ instanceof Annotation;
   }
 
-  static boolean annotationTypeDeclaration(ASTNode ¢) {
+  static boolean annotationTypeDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_DECLARATION);
   }
 
@@ -219,8 +219,8 @@ public interface iz {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  static boolean compilationUnit(ASTNode ¢) {
-    return iz.nodeTypeEquals(¢, COMPILATION_UNIT); 
+  static boolean compilationUnit(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, COMPILATION_UNIT);
   }
 
   /** Check whether an expression is a "conditional and" (&&)
@@ -1135,7 +1135,7 @@ public interface iz {
     }
   }
 
-  static boolean catchClause(ASTNode ¢) {
+  static boolean catchClause(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
   }
 }

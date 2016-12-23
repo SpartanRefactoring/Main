@@ -10,13 +10,13 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
-    for (ASTNode $ : ancestors.of(¢))
-        switch ($.getNodeType()) {
-          case ASTNode.BLOCK:
-            return $;
-          default:
-            continue;
-        }
+    for (final ASTNode $ : ancestors.of(¢))
+      switch ($.getNodeType()) {
+        case ASTNode.BLOCK:
+          return $;
+        default:
+          continue;
+      }
     return null;
   }
 
@@ -32,13 +32,12 @@ public interface scope {
     return $;
   }
 
-  static List<? extends ASTNode> of(SimpleName ¢) {
-    List<? extends ASTNode> $ = definition.scope(¢);
-    assert $!=null: fault.dump() + //
-        "\n\t n="+ ¢ + //
-        "\n\t definition.kind() = " +  definition.kind(¢) + //
+  static List<? extends ASTNode> of(final SimpleName ¢) {
+    final List<? extends ASTNode> $ = definition.scope(¢);
+    assert $ != null : fault.dump() + //
+        "\n\t n=" + ¢ + //
+        "\n\t definition.kind() = " + definition.kind(¢) + //
         fault.done();
-       
     return $;
   }
 }
