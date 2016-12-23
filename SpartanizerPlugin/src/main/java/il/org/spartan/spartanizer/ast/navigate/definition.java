@@ -30,8 +30,8 @@ public interface definition {
         final List<VariableDeclarationFragment> fs = fragments(s);
         assert fs != null;
         addRest($, f, fs);
-        Block b = az.block(parent(s));
-        assert (b != null);
+        final Block b = az.block(parent(s));
+        assert b != null;
         return addRest($, s, statements(b));
       }
     },
@@ -39,13 +39,13 @@ public interface definition {
     },
     interface¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        ASTNode $ = parent(parent(¢));
+        final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     class¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        ASTNode $ = parent(parent(¢));
+        final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
@@ -56,19 +56,19 @@ public interface definition {
     },
     catch¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        CatchClause $ = az.catchClause(parent(parent(¢)));
+        final CatchClause $ = az.catchClause(parent(parent(¢)));
         return as.list($.getBody());
       }
     },
     enum¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        ASTNode $ = parent(parent(¢));
+        final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     enumConstant {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        return members.of((parent(parent(¢))));
+        return members.of(parent(parent(¢)));
       }
     },
     field {
@@ -86,13 +86,13 @@ public interface definition {
     },
     annotation {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        ASTNode $ = parent(parent(¢));
+        final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     annotationMemberDeclaration {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        return members.of((parent(parent(¢))));
+        return members.of(parent(parent(¢)));
       }
     };
     public static boolean has(final String name) {
@@ -117,7 +117,7 @@ public interface definition {
     }
 
     @SuppressWarnings("static-method") List<? extends ASTNode> specificScope(final SimpleName ¢) {
-      return members.of((parent(parent(¢))));
+      return members.of(parent(parent(¢)));
     }
   }
 

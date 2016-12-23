@@ -248,7 +248,7 @@ public class Toolbox {
             new SameEvaluationConditional(), //
             new TernaryBranchesAreOppositeBooleans(), //
             new SameEvaluationConditional(), null) //
-        .add(EnumConstantDeclaration.class,new $BodyDeclarationModifiersSort.ofEnumConstant()) //
+        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort.ofEnumConstant()) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
@@ -276,8 +276,7 @@ public class Toolbox {
         .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
             new AnnotationSort.ofInitializer(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, 
-            new $BodyDeclarationModifiersSort.ofAnnotation(), //
+        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
             new AnnotationSort.ofAnnotation(), //
             null)
         .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
