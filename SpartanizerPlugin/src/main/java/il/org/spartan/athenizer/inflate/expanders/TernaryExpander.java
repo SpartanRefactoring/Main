@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** converts (a?b:c;) to (if(a) b; else c;) relevant for now to return <ternary>
  * or $ = <ternary> also relevant for return (<ternary>) or $ = (<ternary)
  * @author Raviv Rachmiel
- * @since 03-12-16 */
+ * @since 03-12-16 
+ * */
 public class TernaryExpander extends ReplaceCurrentNode<Statement> {
   private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
