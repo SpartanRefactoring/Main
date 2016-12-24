@@ -31,7 +31,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander())//
         .add(ExpressionStatement.class, //
-            new AssignmentAndAssignment(),
+           // new AssignmentAndAssignment(),
             new AssignmentTernaryExpander())//
         .add(InfixExpression.class, //
             new toStringExpander())//
