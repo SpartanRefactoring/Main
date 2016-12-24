@@ -72,6 +72,7 @@ public class SingleFlater {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.log(¢);
         }
         if (w == null)
           return true;
@@ -86,15 +87,14 @@ public class SingleFlater {
       $.tipper.tip($.node).go(r, g);
     } catch (final Exception ¢) {
       monitor.debug(this, ¢);
+      monitor.log(¢);
     }
     return true;
   }
   
-  /* TODO Raviv: Javadoc --or
-   * @param u - the WrappedCompilationUnit which is athenized
-  *
-  * @param ns - the list of statemend which were selected and might be
-  * changed */
+  /**
+   * @param wcu - the WrappedCompilationUnit which is worked on
+  */
  static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
    try {
      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -118,7 +118,7 @@ public class SingleFlater {
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
 
-  /* TODO Raviv: write ***Javadoc*** according to conventions --or
+  /** 
    *
    * @param startChar1 - starting char of first interval
    *
