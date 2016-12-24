@@ -20,12 +20,15 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
   }
   
   @Override public Tip tip(final ExpressionStatement ¢) {
-    @SuppressWarnings("unused") final List<Statement> $ = getAssignments(¢);
+    final List<Statement> statements = getAssignments(¢);
+    
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.getAST();
-        g.getClass();
-        // Waiting for help
+        az.block(¢.getParent());
+        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);        
+        l.insertAfter(statements.get(0), ¢, g);
+        l.insertAfter(statements.get(1), ¢, g);
+        l.remove(¢, g);
       }
     };
   }
@@ -45,13 +48,11 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     
     ExpressionStatement head = create.newExpressionStatement(newA);
     ExpressionStatement tail = create.newExpressionStatement(right(a));
-    
+     
     List<Statement> $ = new ArrayList<>();
     $.add(head);
     $.add(tail);
-    
+
     return $;
   }
-
-  
 }
