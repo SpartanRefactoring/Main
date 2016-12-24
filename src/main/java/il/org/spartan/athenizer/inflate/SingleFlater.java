@@ -69,7 +69,6 @@ public class SingleFlater {
         Tipper<N> w = null;
         try {
           w = operationsProvider.getTipper(n);
-          System.out.println(w + "");
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
         }
