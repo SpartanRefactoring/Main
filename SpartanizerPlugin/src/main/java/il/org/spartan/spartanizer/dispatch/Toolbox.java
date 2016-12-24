@@ -248,7 +248,7 @@ public class Toolbox {
             new SameEvaluationConditional(), //
             new TernaryBranchesAreOppositeBooleans(), //
             new SameEvaluationConditional(), null) //
-        .add(EnumConstantDeclaration.class,new $BodyDeclarationModifiersSort.ofEnumConstant()) //
+        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort.ofEnumConstant()) //
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
