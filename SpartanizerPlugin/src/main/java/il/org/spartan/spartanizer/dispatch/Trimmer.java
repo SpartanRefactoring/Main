@@ -84,6 +84,7 @@ public class Trimmer extends AbstractGUIApplicator {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
+        System.err.println(from);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())
