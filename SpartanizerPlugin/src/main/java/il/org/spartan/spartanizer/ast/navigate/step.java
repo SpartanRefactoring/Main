@@ -770,4 +770,8 @@ public enum step {
       $ = az.conditionalExpression(elze($));
     return elze($);
   }
+
+  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+    return ¢.enumConstants();
+  }
 }

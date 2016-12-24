@@ -8,12 +8,13 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO - Roth, please write since, author and a line of description on this
+// TODO: Roth, please write since, author and a line of description on this
 // expression
-public class CasesSplit extends CarefulTipper<SwitchStatement> {
+public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.InVain {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }

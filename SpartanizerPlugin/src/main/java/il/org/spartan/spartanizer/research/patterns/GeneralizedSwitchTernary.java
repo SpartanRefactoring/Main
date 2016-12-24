@@ -16,6 +16,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -41,9 +42,9 @@ public final class GeneralizedSwitchTernary extends NanoPatternTipper<Conditiona
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
             ast("holds(λ ->" + (differsInSingleAtomic(branchesExpressions(¢))
-                ? (first(branchesExpressions) + "").replaceAll(findSingleAtomicDifference(branchesExpressions), "λ") + ")"
-                    + createOns(findSingleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)
-                : replaceAll(first(branchesExpressions) + "", findSingleExpressionDifference(branchesExpressions) + "", "λ") + ")"
+                ? (first(branchesExpressions) + "").replaceAll(singleAtomicDifference(branchesExpressions), "λ") + ")"
+                    + createOns(singleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢)
+                : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", "λ") + ")"
                     + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), branches(¢)) + elseSring(¢))),
             g);
       }
