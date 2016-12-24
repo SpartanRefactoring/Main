@@ -121,8 +121,8 @@ public enum GuessedContext {
   private static String problems(final CompilationUnit u) {
     String $ = "";
     int n = 0;
-    for (final IProblem p : u.getProblems())
-      $ += "\n\t\t\t" + ++n + ": " + p.getMessage();
+    for (final IProblem ¢ : u.getProblems())
+      $ += "\n\t\t\t" + ++n + ": " + ¢.getMessage();
     return $;
   }
 

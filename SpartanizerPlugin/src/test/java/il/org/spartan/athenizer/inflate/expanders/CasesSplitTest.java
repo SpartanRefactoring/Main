@@ -4,9 +4,12 @@ import org.junit.*;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
-/** Unit test for {@link CasesSplit}.
+/** 
+ * Unit test for  {@link CasesSplit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
- * @since 2016-12-25 */
+ * @since 2016-12-25
+ * [[SuppressWarningsSpartan]]
+ */
 @SuppressWarnings("static-method")
 public class CasesSplitTest {
   @Test public void simpleSequencers() {
