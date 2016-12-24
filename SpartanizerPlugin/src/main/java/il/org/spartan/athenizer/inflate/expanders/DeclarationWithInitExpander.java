@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+//TODO Tomer: add link to testing class when created and write issue number
 /** convert <code>
  * int a = 3;
  * </code> to <code>
