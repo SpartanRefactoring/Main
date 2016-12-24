@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Alex + Dan 
+/** @author Alex + Dan
  * @since 2016 */
 @SuppressWarnings("unused")
 public final class EnvironmentVisitor extends ASTVisitor {
@@ -32,7 +32,7 @@ public final class EnvironmentVisitor extends ASTVisitor {
   // Holds the current scope full name (Path).
   String scopePath = "";
 
-  EnvironmentVisitor(LinkedHashSet<Entry<String, Information>> $) {
+  EnvironmentVisitor(final LinkedHashSet<Entry<String, Information>> $) {
     this.$ = $;
   }
 

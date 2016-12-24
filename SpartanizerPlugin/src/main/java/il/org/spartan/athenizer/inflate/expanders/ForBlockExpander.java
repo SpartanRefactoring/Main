@@ -6,16 +6,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts while(condition)statement to while(condition){statement}
- *  relevant also for  for(condition)statement to for(condition){statement}
- * relevant for return (<ternary>)
+/** converts while(condition)statement to while(condition){statement} relevant
+ * also for for(condition)statement to for(condition){statement} relevant for
+ * return (<ternary>)
  * @author Raviv Rachmiel
  * @since 03-12-16 */
 public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.InVain {
-
-  @SuppressWarnings("unchecked")
-  @Override public ASTNode replacement(ForStatement f) {
-    if(f==null)
+  @SuppressWarnings("unchecked") @Override public ASTNode replacement(final ForStatement f) {
+    if (f == null)
       return null;
     final ForStatement $ = f.getAST().newForStatement();
     final Block b = f.getAST().newBlock();
@@ -24,8 +22,7 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand to block";
   }
-  
 }

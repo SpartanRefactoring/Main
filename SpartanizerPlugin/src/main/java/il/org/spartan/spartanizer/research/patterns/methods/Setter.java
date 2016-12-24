@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.utils.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** Including static setters.
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
@@ -28,8 +29,7 @@ public class Setter extends JavadocMarkerNanoPattern {
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     final List<String> $ = parametersNames(¢);
     ___.nothing();
-    return notStatic(¢)//
-        && notConstructor(¢)//
+    return notConstructor(¢)//
         && notEmpty(¢)
         && statements(¢).stream().allMatch(s -> anyTips(tippers, expression(s)) && isRightSideOK(right(az.assignment(expression(s))), $));
   }
