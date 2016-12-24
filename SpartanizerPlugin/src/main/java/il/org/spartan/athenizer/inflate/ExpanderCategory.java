@@ -12,22 +12,23 @@ public interface ExpanderCategory {
   String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
-   * should be overridden for each tipper and should return one of the values of ExpanderGroup
-   * TODO: Roth, add - {@link ExpanderGroup} when you make the expander preferencesResources
+   * should be overridden for each tipper and should return one of the values of
+   * ExpanderGroup TODO: Roth, add - {@link ExpanderGroup} when you make the
+   * expander preferencesResources
    * @return preference group this tipper belongs to */
   default ExpanderGroup tipperGroup() {
     return ExpanderGroup.find(this);
   }
-  
+
   default ExpanderGroup ExpanderGroup() {
     return ExpanderGroup.find(this);
   }
-  
-  //TODO: Roth, to preferences?
+
+  // TODO: Roth, to preferences?
   interface Nominal extends ExpanderCategory {
     String label = "Nominal";
   }
-  
+
   interface Clearification extends Nominal {
     String label = "adding brackets or some chars which might make the code clearer";
 
@@ -43,7 +44,7 @@ public interface ExpanderCategory {
       return label;
     }
   }
-  
+
   interface Ternarization extends Nominal {
     String label = "ternary arguments";
 
@@ -52,9 +53,8 @@ public interface ExpanderCategory {
     }
   }
 
-  
   /** An enum holding together all the "enabled expanders" options */
-  //TODO: Roth, please make a preferencesResources file for the expanders
+  // TODO: Roth, please make a preferencesResources file for the expanders
   enum ExpanderGroup {
     Abbreviation(ExpanderCategory.Clearification.class), //
     Explanation(ExpanderCategory.Explanation.class), //
@@ -63,8 +63,7 @@ public interface ExpanderCategory {
     public static ExpanderGroup find(final ExpanderCategory ¢) {
       return find(¢.getClass());
     }
-    
-    
+
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
@@ -99,7 +98,4 @@ public interface ExpanderCategory {
       }
     }
   }
-  
-  
 }
-
