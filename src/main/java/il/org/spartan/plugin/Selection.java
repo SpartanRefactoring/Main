@@ -109,7 +109,7 @@ public class Selection extends AbstractSelection<Selection> {
       for (; i < ms.length; ++i) {
         if (ms[i] == null)
           continue;
-        final Integer ics = ((Integer) ms[i].getAttribute(IMarker.CHAR_START)), ice = ((Integer) ms[i].getAttribute(IMarker.CHAR_END));
+        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END);
         if (ics == null || ice == null)
           continue;
         final int cs = ics.intValue();
