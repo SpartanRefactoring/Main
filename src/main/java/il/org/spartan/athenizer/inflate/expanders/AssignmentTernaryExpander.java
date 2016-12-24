@@ -22,19 +22,25 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
+      if(¢==null)
+        return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(duplicate.of(¢.getExpression()));
-    final Assignment then = ¢.getAST().newAssignment();
-    then.setRightHandSide(duplicate.of(¢.getThenExpression()));
-    then.setLeftHandSide(duplicate.of(left));
-    then.setOperator(o);
-    $.setThenStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
-    final Assignment elze = ¢.getAST().newAssignment();
-    elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
-    elze.setLeftHandSide(duplicate.of(left));
-    elze.setOperator(o);
-    $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
+    try {
+      $.setExpression(duplicate.of(¢.getExpression()));
+      final Assignment then = ¢.getAST().newAssignment();
+      then.setRightHandSide(duplicate.of(¢.getThenExpression()));
+      then.setLeftHandSide(duplicate.of(left));
+      then.setOperator(o);
+      $.setThenStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
+      final Assignment elze = ¢.getAST().newAssignment();
+      elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
+      elze.setLeftHandSide(duplicate.of(left));
+      elze.setOperator(o);
+      $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
+    } catch (@SuppressWarnings("unused") NullPointerException e) {
+      return null;
+    }
     return $;
   }
 
