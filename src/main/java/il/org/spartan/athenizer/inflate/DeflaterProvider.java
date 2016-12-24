@@ -9,8 +9,7 @@ import il.org.spartan.athenizer.inflate.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * a wrapper for the original tippers toolbox
+/** a wrapper for the original tippers toolbox
  * @author Raviv Rachmiel
  * @since 20-12-16 will hold an toolbox for the expanders and return them */
 public class DeflaterProvider extends OperationsProvider {
