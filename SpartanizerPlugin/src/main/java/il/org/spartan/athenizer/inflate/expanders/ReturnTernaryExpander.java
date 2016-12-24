@@ -21,6 +21,8 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
+      if (¢ == null)
+        return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(duplicate.of(¢.getExpression()));
