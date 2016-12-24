@@ -24,7 +24,7 @@ public class AssignmentOperatorExpansionTest {
   @Test public void inclusion3() {
     expandingOf("a = b += 1").gives("a = b = b + 1").stays();
   }
-  
+
   @Test public void operators() {
     expandingOf("a %= b |= 1").gives("a = a % (b |= 1)").gives("a = a % (b = b | 1)").stays();
   }
