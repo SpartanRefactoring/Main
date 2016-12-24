@@ -38,7 +38,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       elze.setLeftHandSide(duplicate.of(left));
       elze.setOperator(o);
       $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
-    } catch (@SuppressWarnings("unused") NullPointerException e) {
+    } catch (@SuppressWarnings("unused") final NullPointerException e) {
       return null;
     }
     return $;
