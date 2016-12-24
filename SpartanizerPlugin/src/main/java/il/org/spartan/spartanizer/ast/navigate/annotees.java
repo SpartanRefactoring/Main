@@ -40,10 +40,16 @@ public interface annotees {
         return of((EnumDeclaration) $);
       case ASTNode.ANNOTATION_TYPE_DECLARATION:
         return of((AnnotationTypeDeclaration) $);
+      case ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION:
+        return of((AnnotationTypeMemberDeclaration) $);
       default:
         assert false : $.getClass().getSimpleName();
         return null;
     }
+  }
+
+  static List<SimpleName> of(final AnnotationTypeMemberDeclaration $) {
+    return as.list($.getName());
   }
 
   static List<SimpleName> of(final AnnotationTypeDeclaration $) {

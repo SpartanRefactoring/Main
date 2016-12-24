@@ -29,6 +29,10 @@ abstract class ReflectiveTester {
     return first(searchDescendants.forClass(¢).from(myCompilationUnit()));
   }
 
+  protected List<Annotation> annotations() {
+    return searchDescendants.forClass(Annotation.class).from(myCompilationUnit());
+  }
+
   private static CompilationUnit loadAST(final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
