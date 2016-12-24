@@ -164,4 +164,12 @@ public class MatcherTest {
   @Test public void k2() {
     assert !patternMatcher("try $B1 catch(a b) $B2", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
   }
+
+  @Test public void k3() {
+    assert patternMatcher("$L", "").matches(findFirst.booleanLiteral(ast("true")));
+  }
+
+  @Test public void k4() {
+    assert patternMatcher("$N1 = $L", "").matches(findFirst.assignment(ast("x = true")));
+  }
 }
