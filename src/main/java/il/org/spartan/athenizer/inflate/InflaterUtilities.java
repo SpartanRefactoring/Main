@@ -14,10 +14,9 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/* TODO Raviv: write ***Javadoc*** according to conventions --or
- *
+/** 
+ * Helper functions for the inflater
  * @author Raviv Rachmiel
- *
  * @since 8-12-16 */
 public class InflaterUtilities {
   /** Main function of the application.
@@ -36,7 +35,7 @@ public class InflaterUtilities {
     if (nl.isEmpty())
       return false;
     for (final ASTNode statement : nl) {
-      final ASTNode change = new TernaryExpander().replacement(az.statement(statement));
+      final ASTNode change = new ReturnTernaryExpander().replacement(az.returnStatement(statement));
       if (change != null) {
         r.replace(statement, change, __);
         $ = true;
@@ -50,6 +49,12 @@ public class InflaterUtilities {
           if (statement instanceof SwitchStatement && x.canTip((SwitchStatement) statement)) {
             x.tip((SwitchStatement) statement).go(r, __);
             $ = true;
+          } else {
+            final DeclarationWithInitExpander s1 = new DeclarationWithInitExpander();
+            if (statement instanceof VariableDeclarationStatement && s1.canTip(az.variableDeclarationStatement(statement))) {
+              s1.tip(az.variableDeclarationStatement(statement)).go(r, __);
+              $ = true;
+            }
           }
         }
       }
@@ -135,7 +140,7 @@ public class InflaterUtilities {
     return $;
   }
 
-  public static void aux_go(@SuppressWarnings("unused") final SingleFlater __, final CompilationUnit u) {
-    ASTRewrite.create(u.getAST());
+  public static void aux_go(final CompilationUnit u, final OperationsProvider p) {
+    SingleFlater.in(u).from(p).go(ASTRewrite.create(u.getAST()), null);
   }
 }

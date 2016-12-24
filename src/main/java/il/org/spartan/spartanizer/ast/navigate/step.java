@@ -775,7 +775,7 @@ public enum step {
     return elze($);
   }
 
-  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(EnumDeclaration ¢) {
-    return ¢.enumConstants();
+  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+    return ¢ == null ? null : ¢.enumConstants();
   }
 }
