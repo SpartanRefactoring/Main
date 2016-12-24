@@ -5,15 +5,13 @@ import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.athenizer.inflate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 //TODO Dor: write issue number
@@ -21,8 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
-  public static final TextEditGroup g = null;
-  public static final ASTRewrite r = null;
+  public static final TextEditGroup g =  new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
 
@@ -34,53 +31,48 @@ public class ExpanderTestUtils {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      //final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+      ASTRewrite r = new Trimmer().createRewrite(u);
       SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-      singleFlater.go(new Trimmer().createRewrite(u), new TextEditGroup(""));
-      String unpeeled = u + "";
-      if (wrap.equals(unpeeled))
-        azzert.fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        azzert.that("No trimming of " + get(), peeled, is(not(get())));
-      if (tide.clean(peeled).equals(tide.clean(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      assertSimilar($, peeled);
-      return new Operand($);
-      //      assert $ != null;
-//      final Wrap w = Wrap.find(get());
-//      final String wrap = w.on(get());
-//      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-//      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-//      singleFlater.go(new Trimmer().createRewrite(u), g);
-//      //final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
-//      String unpeeled = u + "";
-//      if ($.equals(unpeeled))
-//        azzert.fail("Nothing done on " + get());
-//      final String peeled = w.off(unpeeled);
-//      if ($.equals(get()))
-//        azzert.that("No trimming of " + get(), peeled, is(not(get())));
-//      if (tide.clean($).equals(tide.clean(get())))
-//        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-//      assertSimilar($, unpeeled);
-//      return new Operand($);
+      singleFlater.go(r,g);
+      try {
+        Document doc = new Document(wrap);
+        r.rewriteAST(doc,null).apply(doc);
+        String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          azzert.fail("Nothing done on " + get());
+        final String peeled = w.off(unpeeled);
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (tide.clean(peeled).equals(tide.clean(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+        assertSimilar($, peeled);
+        return new Operand($);
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        x.printStackTrace();
+      }
+      return null;
     }
 
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      //final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-      SingleFlater singleFlater = SingleFlater.in(u);
-      singleFlater.go(r, g);
-      //final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
-      String unpeeled = u + "";
+      ASTRewrite r = new Trimmer().createRewrite(u);
+      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
+      singleFlater.go(r,g);
+      try {
+        Document doc = new Document(wrap);
+        r.rewriteAST(doc,null).apply(doc);
+        String unpeeled = doc.get();
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
       if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
         assertSimilar(get(), peeled);
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        x.printStackTrace();
+      }
     }
 
     public void stays() {

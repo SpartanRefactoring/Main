@@ -12,7 +12,6 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 public class ToStringExpanderTests {
   @Test public void test0() {
     expandingOf("a+\"\"").gives("a.toString()");
-    //expanderCheck("a+\"\"", "a.toString()", new toStringExpander());
   }
 //
 //  @Test public void test1() {
