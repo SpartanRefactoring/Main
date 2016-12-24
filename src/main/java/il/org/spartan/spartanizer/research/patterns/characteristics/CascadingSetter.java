@@ -22,7 +22,7 @@ public class CascadingSetter extends JavadocMarkerNanoPattern {
   }
 
   private static boolean setter(final MethodDeclaration ¢) {
-    MethodDeclaration $ = duplicate.of(¢);
+    final MethodDeclaration $ = duplicate.of(¢);
     statements($).remove(statements($).size() - 1);
     return setter.canTip($);
   }
