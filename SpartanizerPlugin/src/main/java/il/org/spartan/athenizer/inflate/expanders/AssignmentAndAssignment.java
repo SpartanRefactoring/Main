@@ -24,18 +24,18 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     final Expression e = expression(¢);
     if (!iz.assignment(e))
       return null;
-    final Assignment a = az.assignment(e);
-    return !iz.assignment(right(a)) ? null : new Tip(description(¢), ¢, this.getClass()) {
+    final Assignment $ = az.assignment(e);
+    return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         final Assignment newA = create.newAssignment();
-        newA.setLeftHandSide(duplicate.of(left(a)));
-        Assignment p = a;
+        newA.setLeftHandSide(duplicate.of(left($)));
+        Assignment p = $;
         while (iz.assignment(right(p)))
           p = (Assignment) right(p);
         newA.setRightHandSide(duplicate.of(right(p)));
         final ExpressionStatement head = create.newExpressionStatement(newA);
-        final ExpressionStatement tail = create.newExpressionStatement(duplicate.of(right(a)));
+        final ExpressionStatement tail = create.newExpressionStatement(duplicate.of(right($)));
         az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(head, ¢, g);
