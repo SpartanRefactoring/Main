@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+//TODO Tomer: add link to testing class when created and write issue number
 /** convert <code>
  * int a = 3;
  * </code> to <code>
@@ -23,7 +24,7 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return ¢.fragments().size() == 1;
+    return ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
