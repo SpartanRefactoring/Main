@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+//TODO Doron: add @author/since, issue number and link to test class when created
 public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.InVain { 
 
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
