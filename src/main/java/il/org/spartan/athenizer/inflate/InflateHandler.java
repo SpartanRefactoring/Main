@@ -22,12 +22,13 @@ import il.org.spartan.plugin.*;
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final StyledText text = getText();
+    final ITextEditor e = getTextEditor();
+    final StyledText text = getText(e);
     if (text == null)
       return null;
     final List<Listener> ls = getListeners(text);
     if (ls == null || ls.isEmpty()) {
-      final InflaterListener l = new InflaterListener(text);
+      final InflaterListener l = new InflaterListener(text, e);
       text.addMouseWheelListener(l);
       text.addKeyListener(l);
     } else {
@@ -82,12 +83,16 @@ public class InflateHandler extends AbstractHandler {
     final IWorkbenchPage $ = ww.getActivePage();
     return $ == null ? null : $.getActiveEditor();
   }
+  
+  protected static ITextEditor getTextEditor() {
+    final IEditorPart $ = getEditorPart();
+    return $ == null || !($ instanceof ITextEditor) ? null : (ITextEditor) $;
+  }
 
-  protected static StyledText getText() {
-    final IEditorPart e = getEditorPart();
-    if (e == null || !(e instanceof ITextEditor))
+  protected static StyledText getText(ITextEditor ¢) {
+    if (¢ == null)
       return null;
-    final Control $ = ((ITextEditor) e).getAdapter(org.eclipse.swt.widgets.Control.class);
+    final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
     return $ == null || !($ instanceof StyledText) ? null : (StyledText) $;
   }
 }
