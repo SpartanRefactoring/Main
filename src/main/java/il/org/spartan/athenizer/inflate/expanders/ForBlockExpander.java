@@ -12,12 +12,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 03-12-16 */
 public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.InVain {
-  @SuppressWarnings("unchecked") @Override public ASTNode replacement(final ForStatement f) {
-    if (f == null)
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
+    if (s == null)
       return null;
-    final ForStatement $ = f.getAST().newForStatement();
-    final Block b = f.getAST().newBlock();
-    b.statements().add(duplicate.of(f.getBody()));
+    final ForStatement $ = s.getAST().newForStatement();
+    final Block b = s.getAST().newBlock();
+    b.statements().add(duplicate.of(s.getBody()));
     $.setBody(b);
     return $;
   }
