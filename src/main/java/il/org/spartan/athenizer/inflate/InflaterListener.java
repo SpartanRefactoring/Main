@@ -3,7 +3,7 @@ package il.org.spartan.athenizer.inflate;
 import java.util.*;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -45,20 +45,17 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private static void inflate() {
     final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
-    System.out.println("HEY1");
-    SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
-    System.out.println("HEY2");
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()), wcu);
     // Uncomment the next line in order to use the temp system
-    InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
+    //InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 
   // .build.compilationUnit is used in order to take care of null compilation
   // unit
   private static void deflate() {
-    System.out.println("deflating " + Selection.Util.current());
-    final CompilationUnit u = first(Selection.Util.current().inner).build().compilationUnit;
-    SingleFlater.in(u).from(new DeflaterProvider()).go(ASTRewrite.create(u.getAST()), null);
-    System.out.println("DONE DEFLATING");
+    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
+    //SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()),ASTRewrite.create(wcu.compilationUnit.getAST()),wcu);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {

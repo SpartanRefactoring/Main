@@ -3,11 +3,15 @@ package il.org.spartan.athenizer.inflate;
 import java.util.*;
 import java.util.function.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -85,6 +89,24 @@ public class SingleFlater {
     }
     return true;
   }
+  
+  /* @param u - the WrappedCompilationUnit which is athenized
+  *
+  * @param ns - the list of statemend which were selected and might be
+  * changed */
+ static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u) {
+   try {
+     final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+     textChange.setTextType("java");
+     if (f.go(r,  null)) {
+       textChange.setEdit(r.rewriteAST());
+       if (textChange.getEdit().getLength() != 0)
+         textChange.perform(new NullProgressMonitor());
+     }
+   } catch (final CoreException ¢) {
+     monitor.log(¢);
+   }
+ }
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
