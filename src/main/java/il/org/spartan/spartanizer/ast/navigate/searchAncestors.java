@@ -8,9 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 
-// TODO Yossi Gil: review class, functionality added by Ori
 /** A class to search in the ancestry line of a given node.
- * @author Yossi Gilz
+ * @author Yossi Gil
  * @author Dor Ma'ayan
  * @since 2015-08-22 */
 public abstract class searchAncestors<N extends ASTNode> {
