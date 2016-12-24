@@ -10,12 +10,11 @@ import il.org.spartan.athenizer.inflate.expanders.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/* TODO Raviv: write ***Javadoc*** according to conventions --or
- *
+/** 
+ * holds the new toolbox for the expanders and returns them
  * @author Raviv Rachmiel
- *
- * @since 20-12-16 will hold the new toolbox for the expanders and return
- * them */
+ * @since 20-12-16  
+ */
 public class InflaterProvider extends OperationsProvider {
   Toolbox toolbox;
 
@@ -32,6 +31,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander())//
         .add(ExpressionStatement.class, //
+            new AssignmentAndAssignment(),
             new AssignmentTernaryExpander())//
         .add(InfixExpression.class, //
             new toStringExpander())//
