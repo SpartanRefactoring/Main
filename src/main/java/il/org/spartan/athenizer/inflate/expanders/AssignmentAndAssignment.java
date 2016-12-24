@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert (a=b=#;) to (a=3;b=#;)
+/** Issue #999
+ * Convert (a=b=??;) to (a=3;b=??;)
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
 public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.InVain {
@@ -21,7 +22,6 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
   }
 
   @Override public Tip tip(final ExpressionStatement ¢) {
-    // System.out.println("@@@@@@@@Toolbox worked!");
     final Expression e = expression(¢);
     if (!iz.assignment(e))
       return null;
