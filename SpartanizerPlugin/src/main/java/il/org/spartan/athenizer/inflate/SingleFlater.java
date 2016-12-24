@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
+import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -94,14 +95,16 @@ public class SingleFlater {
   *
   * @param ns - the list of statemend which were selected and might be
   * changed */
- static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u) {
+ static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
    try {
      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
      textChange.setTextType("java");
      if (f.go(r,  null)) {
        textChange.setEdit(r.rewriteAST());
-       if (textChange.getEdit().getLength() != 0)
+       if (textChange.getEdit().getLength() != 0) {
          textChange.perform(new NullProgressMonitor());
+         e.selectAndReveal(textChange.getEdit().getOffset(), textChange.getEdit().getLength());
+       }
      }
    } catch (final CoreException ¢) {
      monitor.log(¢);
