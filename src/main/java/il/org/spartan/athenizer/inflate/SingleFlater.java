@@ -89,7 +89,8 @@ public class SingleFlater {
     return true;
   }
   
-  /* @param u - the WrappedCompilationUnit which is athenized
+  /* TODO Raviv: Javadoc --or
+   * @param u - the WrappedCompilationUnit which is athenized
   *
   * @param ns - the list of statemend which were selected and might be
   * changed */
