@@ -16,6 +16,7 @@ public abstract class OperationsProvider {
    * @return matching {@link Tipper} */
   public abstract <N extends ASTNode> Tipper<N> getTipper(N n);
 
-  // TODO Raviv: write ***Javadoc*** according to conventions --or
+  /** @return a function from list<Op<?> to <Op<?>> which should mean to help us
+   *         choose which tipper we would like to use */
   public abstract Function<List<Operation<?>>, Operation<?>> getFunction();
 }
