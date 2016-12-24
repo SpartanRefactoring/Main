@@ -1,13 +1,12 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -37,10 +36,10 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             AST create = ¢.getAST();
             Assignment newA = create.newAssignment();
-            newA.setLeftHandSide(left(a));
-            newA.setRightHandSide(right(az.assignment(right(a))));
+            newA.setLeftHandSide(duplicate.of(left(a)));
+            newA.setRightHandSide(duplicate.of(right(az.assignment(right(a)))));
             ExpressionStatement head = create.newExpressionStatement(newA);
-            ExpressionStatement tail = create.newExpressionStatement(right(a));
+            ExpressionStatement tail = create.newExpressionStatement(duplicate.of(right(a)));
             az.block(¢.getParent());
             final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
             l.insertAfter(head, ¢, g);
