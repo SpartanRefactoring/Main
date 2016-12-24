@@ -22,7 +22,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
       return false;
     final MethodDeclaration $ = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip($) && !(type(¢) + "").contains(".");
+    return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
   @Override public Tip pattern(final InstanceofExpression ¢) {

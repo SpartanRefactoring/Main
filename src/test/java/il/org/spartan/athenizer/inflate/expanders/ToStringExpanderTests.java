@@ -11,26 +11,19 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class ToStringExpanderTests {
   @Test public void test0() {
-    expanderCheck("a+\"\"", "a.toString()", new toStringExpander());
+    expandingOf("a+\"\"").gives("a.toString()");
   }
 
   @Test public void test1() {
-    expanderCheck("\"\"+t()", "t().toString()", new toStringExpander());
+    expandingOf("\"\"+t()").gives("t().toString()");
   }
 
   @Test public void test2() {
-    expanderCheckStays("\"abcd\"+t()", new toStringExpander());
-  }
-
-  @Test public void test3() {
-    expanderCheckStays("\"\"+3", new toStringExpander());
+    expandingOf("\"abcd\"+t()").stays();
   }
 
   @Test public void test4() {
-    expanderCheckStays("true+\"\"", new toStringExpander());
+    expandingOf("true+\"\"").stays();
   }
 
-  @Test public void test5() {
-    expanderCheckStays("\"\"+\"hi\"", new toStringExpander());
-  }
 }
