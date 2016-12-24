@@ -21,8 +21,8 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$N($A);", "", ""));
-      add(patternTipper("$N.$N2($A);", "", ""));
+      add(patternTipper("$N($A)", "", ""));
+      add(patternTipper("$N.$N2($A)", "", ""));
     }
   };
 
@@ -35,7 +35,9 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean defaulter(final MethodDeclaration d, final Expression $) {
-    return anyTips(tippers, $) && iz.methodInvocation($) && containsParameters(d, $)
+    return anyTips(tippers, $)//
+        && iz.methodInvocation($)//
+        && containsParameters(d, $)//
         && arguments(az.methodInvocation($)).size() > parametersNames(d).size();
   }
 

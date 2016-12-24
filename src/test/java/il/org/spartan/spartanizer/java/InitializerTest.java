@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //
 public final class InitializerTest {
@@ -15,7 +16,7 @@ public final class InitializerTest {
     InitializerTest.b = 200;
     InitializerTest.c = 300;
     // i.e = 500;
-    System.out.println("Static initializer");
+    print("Static initializer");
   }
   static int b;
   static int c;
@@ -27,7 +28,7 @@ public final class InitializerTest {
     // constructor.
     a = 0;
     e = 5000;
-    System.out.println("Instance initializer");
+    print("Instance initializer");
   }
 
   @Test public void T_00() {
@@ -39,5 +40,9 @@ public final class InitializerTest {
   @Test public void T_01() {
     i = new InitializerTest();
     azzert.that(InitializerTest.a, is(0));
+  }
+
+  static void print(final Object ¢) {
+    ___.______unused(¢);
   }
 }

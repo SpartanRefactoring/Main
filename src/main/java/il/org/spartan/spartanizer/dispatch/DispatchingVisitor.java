@@ -32,6 +32,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialized = true;
   }
 
+  @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final ArrayAccess ¢) {
     return cautiousGo(¢);
   }
@@ -61,6 +65,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final EnhancedForStatement ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final EnumConstantDeclaration ¢) {
     return cautiousGo(¢);
   }
 

@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.methods.*;
@@ -10,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 @SuppressWarnings("static-method")
 public class DelegatorTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    spartanizer.add(MethodDeclaration.class, JAVADOCER = new Delegator());
+    setNano(new Delegator());
   }
 
   @Test public void basic() {
@@ -115,5 +114,9 @@ public class DelegatorTest extends JavadocerTest {
 
   @Test public void basic26() {
     assert is("   int size(Object key) {    multimap.keySet().size();  }");
+  }
+
+  @Test public void basic27() {
+    assert is(" @Override @CanIgnoreReturnValue public Service stopAsync(){delegate.stopAsync();return this;}");
   }
 }
