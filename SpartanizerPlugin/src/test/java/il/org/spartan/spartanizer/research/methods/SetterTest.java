@@ -43,4 +43,8 @@ public class SetterTest extends JavadocerTest {
   @Test public void h() {
     assert not("boolean foo(Object o){this.c = o; return this;}");
   }
+
+  @Test public void i() {
+    assert not("boolean foo(Object o){}");
+  }
 }

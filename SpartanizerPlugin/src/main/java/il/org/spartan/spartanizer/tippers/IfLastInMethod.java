@@ -38,23 +38,22 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class IfLastInMethod extends EagerTipper<IfStatement> implements TipperCategory.EarlyReturn {
   @Override public String description(final IfStatement ¢) {
-    return "Invert conditional " + ¢.getExpression() + " for early return";
+    return "Invert conditional " + expression(¢) + " for early return";
   }
 
   @Override public Tip tip(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
-    final Block $ = az.block(s.getParent());
-    return $ == null || !lastIn(s, statements($)) || !($.getParent() instanceof MethodDeclaration) ? null
-        : new Tip(description(s), s, this.getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            Tippers.insertAfter(s, extract.statements(then(s)), r, g);
-            final IfStatement newIf = duplicate.of(s);
-            newIf.setExpression(duplicate.of(make.notOf(s.getExpression())));
-            newIf.setThenStatement(s.getAST().newReturnStatement());
-            newIf.setElseStatement(null);
-            r.replace(s, newIf, g);
-          }
-        };
+    final Block $ = az.block(parent(s));
+    return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), s, this.getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        Tippers.insertAfter(s, extract.statements(then(s)), r, g);
+        final IfStatement newIf = duplicate.of(s);
+        newIf.setExpression(duplicate.of(make.notOf(expression(s))));
+        newIf.setThenStatement(s.getAST().newReturnStatement());
+        newIf.setElseStatement(null);
+        r.replace(s, newIf, g);
+      }
+    };
   }
 }

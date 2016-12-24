@@ -50,6 +50,10 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
+  public static Statement body(final EnhancedForStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
   /** @param ¢ JD
    * @return */
   public static Block body(final LambdaExpression ¢) {
@@ -772,6 +776,6 @@ public enum step {
   }
 
   @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
-    return ¢.enumConstants();
+    return ¢ == null ? null : ¢.enumConstants();
   }
 }
