@@ -72,6 +72,7 @@ public class SingleFlater {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.log(¢);
         }
         if (w == null)
           return true;
@@ -86,6 +87,7 @@ public class SingleFlater {
       $.tipper.tip($.node).go(r, g);
     } catch (final Exception ¢) {
       monitor.debug(this, ¢);
+      monitor.log(¢);
     }
     return true;
   }
