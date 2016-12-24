@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 
 import org.eclipse.ui.*;
+import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
 import static il.org.spartan.lisp.*;
@@ -20,13 +21,15 @@ import static il.org.spartan.lisp.*;
 public class InflaterListener implements MouseWheelListener, KeyListener {
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
   final StyledText text;
+  final ITextEditor editor;
   final List<Listener> externalListeners;
   final Cursor activeCursor;
   final Cursor inactiveCursor;
   boolean active;
 
-  public InflaterListener(final StyledText text) {
+  public InflaterListener(final StyledText text, ITextEditor editor) {
     this.text = text;
+    this.editor = editor;
     externalListeners = new ArrayList<>();
     for (final Listener ¢ : text.getListeners(SWT.MouseWheel))
       externalListeners.add(¢);
@@ -43,19 +46,19 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
         deflate();
   }
 
-  private static void inflate() {
+  private void inflate() {
     final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
-    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()), wcu);
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, editor);
     // Uncomment the next line in order to use the temp system
     //InflaterUtilities.commitChanges(wcu, InflaterUtilities.selectedStatements(InflaterUtilities.getStatements(wcu)));
   }
 
   // .build.compilationUnit is used in order to take care of null compilation
   // unit
-  private static void deflate() {
+  private void deflate() {
     final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
     //SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).go(ASTRewrite.create(wcu.compilationUnit.getAST()), null);
-    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()),ASTRewrite.create(wcu.compilationUnit.getAST()),wcu);
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()),ASTRewrite.create(wcu.compilationUnit.getAST()),wcu, editor);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {
