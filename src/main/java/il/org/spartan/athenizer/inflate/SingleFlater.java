@@ -116,7 +116,7 @@ public class SingleFlater {
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
 
-  /* TODO Raviv: write ***Javadoc*** according to conventions --or
+  /** 
    *
    * @param startChar1 - starting char of first interval
    *
