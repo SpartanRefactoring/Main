@@ -13,11 +13,12 @@ import il.org.spartan.athenizer.inflate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-// TODO Dor: write issue number
-/** Testing utils for expander
+/** Testing utils for expander Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
+  public static final TextEditGroup g = new TextEditGroup("");
+
   public static class Operand extends Wrapper<String> {
     public Operand(final String inner) {
       super(inner);
@@ -29,7 +30,6 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       ASTRewrite r = ASTRewrite.create(u.getAST());
-      TextEditGroup g = new TextEditGroup("");
       SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
       singleFlater.go(r, g);
       try {
@@ -56,7 +56,6 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       ASTRewrite r = ASTRewrite.create(u.getAST());
-      TextEditGroup g = new TextEditGroup("");
       SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
       singleFlater.go(r, g);
       try {

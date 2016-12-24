@@ -83,13 +83,13 @@ public class InflateHandler extends AbstractHandler {
     final IWorkbenchPage $ = ww.getActivePage();
     return $ == null ? null : $.getActiveEditor();
   }
-  
+
   protected static ITextEditor getTextEditor() {
     final IEditorPart $ = getEditorPart();
     return $ == null || !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
-  protected static StyledText getText(ITextEditor ¢) {
+  protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
     final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);

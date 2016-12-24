@@ -7,6 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** convert <code>
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
@@ -24,8 +25,8 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
     if (s == null || $ == null || nextStatement == null || !(nextStatement instanceof ReturnStatement) || !(s.getBody() instanceof EmptyStatement))
       return null;
     final ForStatement f = duplicate.of(s);
-    final IfStatement ifBody = f.getBody().getAST().newIfStatement();
-    ifBody.setExpression(make.notOf(duplicate.of(f.getExpression())));
+    final IfStatement ifBody = f.getAST().newIfStatement();
+    ifBody.setExpression(make.notOf(duplicate.of(expression(f))));
     ifBody.setThenStatement(duplicate.of(nextStatement));
     f.setBody(duplicate.of(ifBody));
     f.setExpression(null);
