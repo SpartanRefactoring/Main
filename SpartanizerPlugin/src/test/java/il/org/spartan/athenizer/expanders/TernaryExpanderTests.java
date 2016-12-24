@@ -23,26 +23,18 @@ public class TernaryExpanderTests {
 
   @Test public void basicCanTip2() {
     wizard.ast("a = a==0? 2:3;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().canTip(node);
+      @Override public boolean visit(final ExpressionStatement node) {
+        assert new AssignmentTernaryExpander().canTip(node);
         return true;
       }
     });
   }
 
-  @Test public void basicCanTip3() {
-    wizard.ast("int b = a==0? 2:3;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().canTip(node);
-        return true;
-      }
-    });
-  }
 
   @Test public void nestedCanTip() {
     wizard.ast("a = a==0? (b==2? 4: 5 ):3;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().canTip(node);
+      @Override public boolean visit(final ExpressionStatement node) {
+        assert new AssignmentTernaryExpander().canTip(node);
         return true;
       }
     });
@@ -50,8 +42,8 @@ public class TernaryExpanderTests {
 
   @Test public void appCanTip() {
     wizard.ast("a = (a==0? (b==2? 4: 5 ):3);").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().canTip(node);
+      @Override public boolean visit(final ExpressionStatement node) {
+        assert new AssignmentTernaryExpander().canTip(node);
         return true;
       }
     });
@@ -68,26 +60,19 @@ public class TernaryExpanderTests {
 
   @Test public void basicTest2() {
     wizard.ast("a = a==0? 1:2;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().replacement(node) instanceof IfStatement;
+      @Override public boolean visit(final ExpressionStatement node) {
+        assert new AssignmentTernaryExpander().replacement(node) instanceof IfStatement;
         return true;
       }
     });
   }
 
-  @Test public void basicTest3() {
-    wizard.ast("int a = a==0? 1:2;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().replacement(node) instanceof IfStatement;
-        return true;
-      }
-    });
-  }
+
 
   @Test public void nestedTest() {
     wizard.ast("a = b==0? (a==0? 1:2) : 4;").accept(new ASTVisitor() {
-      @Override public boolean visit(final ReturnStatement node) {
-        assert new ReturnTernaryExpander().replacement(node) instanceof IfStatement;
+      @Override public boolean visit(final ExpressionStatement node) {
+        assert new AssignmentTernaryExpander().replacement(node) instanceof IfStatement;
         return true;
       }
     });

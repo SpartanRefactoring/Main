@@ -14,10 +14,9 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/* TODO Raviv: write ***Javadoc*** according to conventions --or
- *
+/** 
+ * Helper functions for the inflater
  * @author Raviv Rachmiel
- *
  * @since 8-12-16 */
 public class InflaterUtilities {
   /** Main function of the application.
