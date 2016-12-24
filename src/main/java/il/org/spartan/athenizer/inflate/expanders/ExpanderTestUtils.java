@@ -30,8 +30,7 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-      singleFlater.go(r, g);
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
       try {
         Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -45,8 +44,8 @@ public class ExpanderTestUtils {
           azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
         assertSimilar($, peeled);
         return new Operand($);
-      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        x.printStackTrace();
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        ¢.printStackTrace();
       }
       return null;
     }
@@ -56,8 +55,7 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-      singleFlater.go(r, g);
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
       try {
         Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -67,8 +65,8 @@ public class ExpanderTestUtils {
         final String peeled = w.off(unpeeled);
         if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
           assertSimilar(get(), peeled);
-      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        x.printStackTrace();
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        ¢.printStackTrace();
       }
     }
 
