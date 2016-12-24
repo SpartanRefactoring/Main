@@ -243,4 +243,10 @@ public interface findFirst {
   static ASTNode tryStatement(final ASTNode ¢) {
     return instanceOf(TryStatement.class, ¢);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static ASTNode booleanLiteral(final ASTNode ¢) {
+    return instanceOf(BooleanLiteral.class, ¢);
+  }
 }

@@ -147,6 +147,38 @@ public final class GuessedContextTest {
     azzert.that(METHOD_LOOK_ALIKE.off(METHOD_LOOK_ALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
+  @Test public void method2() {
+    azzert.that(GuessedContext.find(//
+        "A a(){" + //
+            "  b(c);" + //
+            " }"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
+  @Test public void method3() {
+    azzert.that(GuessedContext.find(//
+        "public int hashCode(){return a(1 ^ 1 ^ (1 ^ 1));}"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
+  @Test public void method4() {
+    azzert.that(GuessedContext.find(//
+        "public int hashCode(){return 1;}"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
+  @Test public void method5() {
+    azzert.that(GuessedContext.find(//
+        "public int hashCode(){return a(1);}"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
+  @Test public void method6() {
+    azzert.that(GuessedContext.find(//
+        "public int hashCode(){return a(1 ^ 1 ^ 1);}"//
+    ), is(METHOD_LOOK_ALIKE));
+  }
+
   @Test public void methodInvocation() {
     assertEquals(GuessedContext.EXPRESSION_LOOK_ALIKE, GuessedContext.find("fuo()"));
   }
@@ -157,19 +189,5 @@ public final class GuessedContextTest {
 
   @Test public void statement() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
-  }
-
-  @Ignore @Test public void method2() {
-    azzert.that(GuessedContext.find(//
-        "A a(){" + //
-            "  b({ c });" + //
-            " }"//
-    ), is(METHOD_LOOK_ALIKE));
-  }
-
-  @Ignore @Test public void method3() {
-    azzert.that(GuessedContext.find(//
-        "public int hashCode(){a(1^1^1^1);}"//
-    ), is(METHOD_LOOK_ALIKE));
   }
 }
