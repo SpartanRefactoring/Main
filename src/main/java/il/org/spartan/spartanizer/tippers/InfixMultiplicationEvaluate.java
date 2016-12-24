@@ -55,7 +55,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     long $ = 1;
     try {
       for (final Expression ¢ : xs) {
-        if (type.of(¢) == Certain.DOUBLE)
+        if (type.of(¢) == Certain.DOUBLE && !"".equals(¢ + ""))
           throw new NumberFormatException();
         $ *= az.throwing.long¢(¢);
       }
