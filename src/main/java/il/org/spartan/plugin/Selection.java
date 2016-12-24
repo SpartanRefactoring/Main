@@ -107,8 +107,13 @@ public class Selection extends AbstractSelection<Selection> {
       boolean changed = false;
       int i = 0;
       for (; i < ms.length; ++i) {
-        final int cs = ((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue();
-        if (cs <= o && ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue() >= o) {
+        if (ms[i] == null)
+          continue;
+        final Integer ics = ((Integer) ms[i].getAttribute(IMarker.CHAR_START)), ice = ((Integer) ms[i].getAttribute(IMarker.CHAR_END));
+        if (ics == null || ice == null)
+          continue;
+        final int cs = ics.intValue();
+        if (cs <= o && ice.intValue() >= o) {
           no = cs;
           changed = true;
           break;
