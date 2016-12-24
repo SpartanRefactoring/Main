@@ -1,8 +1,6 @@
-package il.org.spartan.athenizer.expanders;
+package il.org.spartan.athenizer.inflate.expanders;
 
 import org.junit.*;
-
-import il.org.spartan.athenizer.inflate.expanders.*;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 

@@ -1,9 +1,8 @@
-package il.org.spartan.athenizer.expanders;
+package il.org.spartan.athenizer.inflate.expanders;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.athenizer.inflate.expanders.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
