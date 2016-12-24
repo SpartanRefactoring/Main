@@ -16,29 +16,9 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
+import il.org.spartan.spartanizer.ast.navigate.ZZZModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
-
-// @formatter:on
-@annotation
-@Target({ ElementType.TYPE })
-@interface annotation {
-  /**/ }
-
-@annotation
-@Target({ ElementType.METHOD })
-@interface annotationMemberDeclaration {
-  /**/ }
-
-@annotation
-@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
-@interface catch¢ {
-  /**/ }
-
-@annotation
-@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
-@interface class¢ {
-  /**/ }
 
 /** TDD of {@link definition}
  * @author Yossi Gil
@@ -57,7 +37,7 @@ public class definitionTest extends ReflectiveTester {
       put("@class¢", null);
       put("@enum¢", null);
       put("@interface¢", null);
-      for (@foreach final definition.Kind ¢ : definition.Kind.values())
+      for (@ScopeSize(1) @foreach final definition.Kind ¢ : definition.Kind.values())
         put("@" + ¢, null);
     }
     @field static final long serialVersionUID = 1L;
@@ -119,7 +99,7 @@ public class definitionTest extends ReflectiveTester {
         assert ¢ != null : a;
   }
 
-  @Test @scopeSize(44) public void a13() {
+  @ScopeSize(44) @Test public void a13() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@try¢") != null;
@@ -202,7 +182,7 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a27() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(scopeSize.class.getSimpleName() + ""))
+      if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
         azzert.that(x + ": " + annotees.of(x) + ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(), is(value(x)));
     }
   }
@@ -313,7 +293,7 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a33() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && (x.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
+      if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
@@ -325,9 +305,9 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a34() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && (x.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
+      if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
-        if (!"InterfaceInAnEnum".equals(n + ""))
+        if (!InterfaceInAnEnum.class.getSimpleName().equals(n + ""))
           continue;
         final int size = scope.of(n).size();
         assert size >= 0;
@@ -339,9 +319,9 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a35() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && (x.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
+      if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
-        if (!"DummyAnnotation".equals(n + ""))
+        if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
       }
@@ -351,9 +331,9 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a37() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && (x.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
+      if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
-        if (!"DummyInterface".equals(n + ""))
+        if (!DummyInterface.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
       }
@@ -363,9 +343,9 @@ public class definitionTest extends ReflectiveTester {
   @Test @method public void a38() {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
-      if (x != null && (x.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
+      if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
-        if (!"DummyClass".equals(n + ""))
+        if (!DummyClass.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
       }
@@ -389,17 +369,17 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @RunWith(Parameterized.class)
-  public static class ______ extends ReflectiveTester {
-    public ______(final SimpleName name, final Integer scopeSize, final definition.Kind kind) {
+  public static class AllAnnotationsInModel extends ReflectiveTester {
+    public AllAnnotationsInModel(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
       assert name != null;
-      assert scopeSize != null;
+      assert ScopeSize != null;
       this.name = name;
-      this.scopeSize = scopeSize;
+      this.ScopeSize = ScopeSize;
       this.kind = kind;
     }
 
     private final SimpleName name;
-    private final Integer scopeSize;
+    private final Integer ScopeSize;
     private final definition.Kind kind;
 
     @Test public void test() {
@@ -408,16 +388,20 @@ public class definitionTest extends ReflectiveTester {
               "\n\t kind = " + kind + //
               ancestry(name) + //
               "\n\t scope = " + scope.of(name)//
-          , scope.of(name).size(), is(scopeSize.intValue()));
+          , scope.of(name).size(), is(ScopeSize.intValue()));
     }
 
     @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
       final List<Object[]> $ = new ArrayList<>();
       for (final Annotation a : new definitionTest().annotations()) {
         final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
-        if (sma != null && (sma.getTypeName() + "").equals(scopeSize.class.getSimpleName() + "")) {
-          final SimpleName name = first(annotees.of(sma));
-          $.add(as.array(name, Integer.valueOf(value(sma)), definition.kind(name)));
+        if (sma != null && (sma.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
+          int expected = value(sma);
+          for (final SimpleName ¢ : annotees.of(sma)) {
+            $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
+            if (definition.kind(¢) != definition.Kind.field)
+              --expected;
+          }
         }
       }
       return $;
@@ -425,107 +409,62 @@ public class definitionTest extends ReflectiveTester {
   }
 }
 
-@scopeSize(22)
+/** @formatter:off */
+
+@annotation @Target({ ElementType.TYPE }) @interface annotation { /**/ }
+@annotation @Target({ ElementType.METHOD }) @interface annotationMemberDeclaration { /**/ }
 @annotation
-@interface DummyAnnotation {
-  /**/}
-
-@class¢
-@scopeSize(22)
-class DummycClass { /**/}
-
-@enum¢
-@scopeSize(22)
-enum DummyEnum {
-  /**/ }
-
-@interface¢
-@scopeSize(22)
-interface DummyInterface {/**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
-@interface enum¢ {
-  /**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@interface enumConstant {
-  /**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@interface field {
-  /**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@interface for¢ {
-  /**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface foreach {
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
+@interface catch¢ {
   /**/ }
 
 @annotation
 @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
-@interface interface¢ {
+@interface class¢ {
   /**/ }
 
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface lambda {
-  /** lambda parameter */
-}
-
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface local {
-  /** local variable */
-}
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD })
-@interface method {
-  /**/ }
-
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface parameter {
-  /**/ }
-
-@annotation
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
-@interface scopeSize {
-  int value();
-}
-
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface try¢ {
-  /**/ }
-// @formatter:on
+@ScopeSize(22) @annotation @interface DummyAnnotation { /**/}
+@ScopeSize(22) @class¢ class DummyClass { /**/}
+@ScopeSize(22) @enum¢ enum DummyEnum { /**/ }
+@ScopeSize(22) @interface¢ interface DummyInterface {/**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface enum¢ { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface enumConstant { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface field { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface for¢ { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface foreach { /**/ }
+@annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface interface¢ { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface lambda { /** lambda parameter */ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface local { /** local variable */ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD }) @interface method { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface parameter { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface ScopeSize { int value(); }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
 
 @Ignore
 @class¢
+// @formatter:on
 class ZZZModelClass {
   /** This code is never used, it is to model our test */
   {
     // This should never happen
     if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode())
-      try (@try¢ FileReader f1 = new FileReader("a"); @try¢ FileReader f2 = new FileReader("b")) {
-        @local int c1 = f1.read();
+      try (@ScopeSize(4) @try¢ FileReader xxxxx = new FileReader("a");
+          @ScopeSize(3) @try¢ FileReader yyyyy = new FileReader("b" + xxxxx.getEncoding())) {
+        @local int c1 = xxxxx.read();
         @local final int z = 2 * c1;
-        @local int c2 = f2.read() + new Object() {
-          @field @scopeSize(4) int x;
-          @field @scopeSize(4) int y;
+        @local int c2 = yyyyy.read() + new Object() {
+          @ScopeSize(4) @field int fieldInAnonymousClass;
+          @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
-          @Override @method @scopeSize(4) public int hashCode() {
+          @Override @ScopeSize(4) @method public int hashCode() {
             @local final Function<Object, String> $ = (@lambda final Object o) -> o + "";
-            for (@foreach final char ¢ : (this + "").toCharArray())
+            for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
             return sum(super.hashCode(), hashCode() * $.hashCode());
           }
 
-          @method @scopeSize(4) int sum(@parameter final int a, @parameter final int b) {
-            return z + a + b + x + y;
+          @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {
+            return z + a + b + fieldInAnonymousClass + anotherFieldInAnonymousClass;
           }
         }.hashCode();
         c1 ^= c2;
@@ -533,15 +472,33 @@ class ZZZModelClass {
         @local final int c0 = c1 - c2;
         --c2;
         c2 ^= c1;
-        @scopeSize(5) @local int c3 = c1 + c2;
-        @scopeSize(3) @local int c8;
+        @ScopeSize(5) @local int c3 = c1 + c2;
+        @ScopeSize(3) @local int c8;
         ++c2;
         c8 = ++c3;
         if (c1 == c2 * c8)
           throw new CloneNotSupportedException(c0 * c3 + "");
-      } catch (@scopeSize(1) @catch¢ final FileNotFoundException x) {
-        for (@for¢ int j = 0, ¢ = 0; ¢ < 10; j = 1, --j)
+      } catch (@ScopeSize(1) @catch¢ final FileNotFoundException x) {
+        for (@ScopeSize(3) @for¢ int j583 = 0; j583 < 10; --j583) {
+          final int a = 2 * j583 + hashCode();
+          System.out.println(a * a + j583 * hashCode());
+        }
+        for (@ScopeSize(4) @for¢ int a34j = 0, a; a34j < 10; --a34j) {
+          a = 2 * a34j + hashCode();
+          System.out.println(a * a + a34j * hashCode());
+        }
+        for (@ScopeSize(6) @for¢ int j123 = 0, ¢ = 0 + j123; ¢ < 10 * j123; j123 *= 2, --j123, ¢ = j123) {
+          final int a = 2 * j123 + hashCode();
+          System.out.println(a * a + j123 * hashCode());
+          ¢ += j123;
+          System.out.println(a * a + j123 * hashCode());
+        }
+        for (@ScopeSize(7) @for¢ int kay3, j = 0, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+          kay3 = hashCode();
           ¢ += j;
+          ++kay3;
+          System.out.println(kay3);
+        }
         x.printStackTrace();
       } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
         ¢.printStackTrace();
@@ -549,54 +506,62 @@ class ZZZModelClass {
   }
 
   @interface¢
-  interface A {
-    @method @scopeSize(2) int asdfa();
+  interface InnerInterface {
+    @ScopeSize(4) @method int methodInInnerInterface();
 
-    @field @scopeSize(2) int i = 0;
+    @ScopeSize(4) @field int staticFieldInInnerInterface = 0;
+
+    @ScopeSize(4) @method static int staticMethodInInnerInterface() {
+      return 12;
+    }
+
+    @ScopeSize(4) @method default int defaultMethodInInnerInterface() {
+      return 12;
+    }
   }
 
   @enum¢
   enum InnerEnum {
-    @scopeSize(6)
+    @ScopeSize(6)
     @enumConstant
     enumConstant1() {
       @Override public int fenum() {
         return InnerEnum.enumConstant2.hashCode();
       }
     },
-    @scopeSize(6)
+    @ScopeSize(6)
     @enumConstant
     enumConstant2() {
       @Override public int fenum() {
         return InnerEnum.enumConstant1.hashCode();
       }
     };
-    @method @scopeSize(6) public int fenum() {
+    @ScopeSize(6) @method public int fenum() {
       return hashCode() * enumConstant1.hashCode() + enumConstant2.fenum();
     }
 
     @annotation
-    @scopeSize(6)
+    @ScopeSize(6)
     @interface AnnotationInAnEnum {
       // @formatter:off
-      @annotationMemberDeclaration @scopeSize(7) int u1();
-      @annotationMemberDeclaration @scopeSize(7) int u2();
-      @annotationMemberDeclaration @scopeSize(7) int u3();
-      @annotationMemberDeclaration @scopeSize(7) int u4();
-      @annotationMemberDeclaration @scopeSize(7) int u5() default 1;
-      @field @scopeSize(7) static final int  i = 1;
-      @field @scopeSize(7) static int  j = i, k = 1;
+      @annotationMemberDeclaration @ScopeSize(7) int u1();
+      @annotationMemberDeclaration @ScopeSize(7) int u2();
+      @annotationMemberDeclaration @ScopeSize(7) int u3();
+      @annotationMemberDeclaration @ScopeSize(7) int u4();
+      @annotationMemberDeclaration @ScopeSize(7) int u5() default 1;
+      @ScopeSize(7) @field static final int  aaaaa = 1;
+      @ScopeSize(7) @field static int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
       // @formatter:on
     }
 
-    @scopeSize(6)
+    @ScopeSize(6)
     abstract class ClassInAnEnum {
-      @method @scopeSize(1) abstract void u();
+      @ScopeSize(1) @method abstract void abstractMethodInClass(@parameter @ScopeSize(0) int a, @parameter @ScopeSize(0) int b);
     }
 
-    @scopeSize(6)
+    @ScopeSize(6)
     interface InterfaceInAnEnum {
-      @method @scopeSize(1) void u();
+      @ScopeSize(1) @method void u();
     }
   }
 }
