@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -10,7 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.lisp.*;
 
 /** like (@link ForRedundantContinue) but for enhanced for.
  * @author Kfir Marx
@@ -25,7 +26,7 @@ public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatem
   }
 
   static Statement lastStatement(final EnhancedForStatement ¢) {
-    return !iz.block(¢.getBody()) ? ¢.getBody() : (Statement) last(statements(az.block(¢.getBody())));
+    return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
   }
 
   @Override public Tip tip(final EnhancedForStatement ¢) {
@@ -37,7 +38,7 @@ public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatem
   }
 
   @Override public boolean prerequisite(final EnhancedForStatement ¢) {
-    return lastStatement(¢).getNodeType() == ASTNode.CONTINUE_STATEMENT;
+    return iz.continueStatement(lastStatement(¢));
   }
 
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
