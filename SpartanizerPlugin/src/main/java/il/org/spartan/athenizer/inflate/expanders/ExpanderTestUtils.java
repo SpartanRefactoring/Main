@@ -14,15 +14,14 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-//TODO Dor: write issue number
+// TODO Dor: write issue number
 /** Testing utils for expander
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
-  public static final TextEditGroup g =  new TextEditGroup("");
+  public static final TextEditGroup g = new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
-
     public Operand(final String inner) {
       super(inner);
     }
@@ -32,13 +31,13 @@ public class ExpanderTestUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-      ASTRewrite r = new Trimmer().createRewrite(u);
-      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-      singleFlater.go(r,g);
+      final ASTRewrite r = new Trimmer().createRewrite(u);
+      final SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
+      singleFlater.go(r, g);
       try {
-        Document doc = new Document(wrap);
-        r.rewriteAST(doc,null).apply(doc);
-        String unpeeled = doc.get();
+        final Document doc = new Document(wrap);
+        r.rewriteAST(doc, null).apply(doc);
+        final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         final String peeled = w.off(unpeeled);
@@ -58,18 +57,18 @@ public class ExpanderTestUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-      ASTRewrite r = new Trimmer().createRewrite(u);
-      SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
-      singleFlater.go(r,g);
+      final ASTRewrite r = new Trimmer().createRewrite(u);
+      final SingleFlater singleFlater = SingleFlater.in(u).from(new InflaterProvider());
+      singleFlater.go(r, g);
       try {
-        Document doc = new Document(wrap);
-        r.rewriteAST(doc,null).apply(doc);
-        String unpeeled = doc.get();
-      if (wrap.equals(unpeeled))
-        return;
-      final String peeled = w.off(unpeeled);
-      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
-        assertSimilar(get(), peeled);
+        final Document doc = new Document(wrap);
+        r.rewriteAST(doc, null).apply(doc);
+        final String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          return;
+        final String peeled = w.off(unpeeled);
+        if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
+          assertSimilar(get(), peeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
         x.printStackTrace();
       }
@@ -78,9 +77,8 @@ public class ExpanderTestUtils {
     public void stays() {
       checkSame();
     }
-   
   }
-  
+
   public static Operand expandingOf(final String from) {
     return new Operand(from);
   }
