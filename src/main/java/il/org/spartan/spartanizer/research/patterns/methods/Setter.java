@@ -30,6 +30,7 @@ public class Setter extends JavadocMarkerNanoPattern {
     ___.nothing();
     return notStatic(¢)//
         && notConstructor(¢)//
+        && notEmpty(¢)
         && statements(¢).stream().allMatch(s -> anyTips(tippers, expression(s)) && isRightSideOK(right(az.assignment(expression(s))), $));
   }
 

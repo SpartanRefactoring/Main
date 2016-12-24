@@ -67,7 +67,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new IfThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                new Between(), //
+                // new Between(), //
                 new LispLastIndex(), //
                 null)//
             .add(MethodInvocation.class, //

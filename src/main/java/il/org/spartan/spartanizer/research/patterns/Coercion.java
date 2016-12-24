@@ -33,7 +33,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       return false;
     final MethodDeclaration $ = searchAncestors.forContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
-    return (j == null || !(j + "").contains(c.javadoc())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
+    return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
