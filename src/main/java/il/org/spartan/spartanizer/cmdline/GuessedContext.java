@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
+import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
@@ -107,14 +108,22 @@ public enum GuessedContext {
       $.append("\n\t```" + wizard.essence(on) + "'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
-          + " on (essentially) this bit of code");
+          + " problems on (essentially) this bit of code");
       $.append("\n\t\t\t```" + wizard.essence(u + "") + "'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```" + u + "'''");
       $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```" + u.getProblems() + "'''");
+      $.append("\n\t\t\t```" + problems(u) + "'''");
     }
     return $ + "";
+  }
+
+  private static String problems(final CompilationUnit u) {
+    String $ = "";
+    int n = 0;
+    for (final IProblem p : u.getProblems())
+      $ += "\n\t\t\t" + ++n + ": " + p.getMessage();
+    return $;
   }
 
   private final String before;

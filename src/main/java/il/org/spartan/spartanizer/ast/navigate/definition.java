@@ -50,7 +50,7 @@ public interface definition {
     },
     field {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        return members.of(parent((parent((parent(¢))))));
+        return members.of(parent(parent(parent(¢))));
       }
     },
     for¢ {
@@ -112,7 +112,7 @@ public interface definition {
     },
     parameter {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        MethodDeclaration $ = az.methodDeclaration((parent(parent(¢))));
+        final MethodDeclaration $ = az.methodDeclaration(parent(parent(¢)));
         return $.getBody() == null ? new ArrayList<>() : as.list($.getBody());
       }
     },
