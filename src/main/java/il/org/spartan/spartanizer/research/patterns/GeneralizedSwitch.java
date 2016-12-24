@@ -40,7 +40,7 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
-        r.replace(¢, ast("holds(λ ->" + (first(branchesExpressions) + "").replaceAll(singleAtomicDifference(branchesExpressions), "λ") + ")"
+        r.replace(¢, ast("holds(λ ->" + replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), "λ") + ")"
             + createOns(singleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
       }
     };
@@ -55,6 +55,13 @@ public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(" + diffs.get(¢) + ",() -> {" + then(branches.get(¢)) + "})";
+    return $;
+  }
+
+  static String replaceAll(final String target, final String oldString, final String newString) {
+    String $ = target;
+    while (!$.replace(oldString, newString).equals($))
+      $ = $.replace(oldString, newString);
     return $;
   }
 }

@@ -16,7 +16,7 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<TryStatement> {
   static Set<UserDefinedTipper<TryStatement>> tippers = new HashSet<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("try $B1 catch($T $N) $B2", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"));
+      add(TipperFactory.patternTipper("try $B1 catch($T $N){ return null; }", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"));
     }
   };
 
