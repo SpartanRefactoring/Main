@@ -23,7 +23,7 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return ¢.fragments().size() == 1;
+    return ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
