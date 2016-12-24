@@ -3,11 +3,16 @@ package il.org.spartan.athenizer.inflate;
 import java.util.*;
 import java.util.function.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
+import org.eclipse.ui.texteditor.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -67,6 +72,7 @@ public class SingleFlater {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
+          monitor.log(¢);
         }
         if (w == null)
           return true;
@@ -81,9 +87,29 @@ public class SingleFlater {
       $.tipper.tip($.node).go(r, g);
     } catch (final Exception ¢) {
       monitor.debug(this, ¢);
+      monitor.log(¢);
     }
     return true;
   }
+  
+  /**
+   * @param wcu - the WrappedCompilationUnit which is worked on
+  */
+ static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
+   try {
+     final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+     textChange.setTextType("java");
+     if (f.go(r,  null)) {
+       textChange.setEdit(r.rewriteAST());
+       if (textChange.getEdit().getLength() != 0) {
+         textChange.perform(new NullProgressMonitor());
+         e.selectAndReveal(textChange.getEdit().getOffset(), textChange.getEdit().getLength());
+       }
+     }
+   } catch (final CoreException ¢) {
+     monitor.log(¢);
+   }
+ }
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
@@ -92,7 +118,7 @@ public class SingleFlater {
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
 
-  /* TODO Raviv: write ***Javadoc*** according to conventions --or
+  /** 
    *
    * @param startChar1 - starting char of first interval
    *

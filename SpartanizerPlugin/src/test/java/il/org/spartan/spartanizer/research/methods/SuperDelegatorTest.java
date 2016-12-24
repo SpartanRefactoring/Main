@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.methods.*;
@@ -10,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 @SuppressWarnings("static-method")
 public class SuperDelegatorTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    spartanizer.add(MethodDeclaration.class, JAVADOCER = new SuperDelegator());
+    setNano(new SuperDelegator());
   }
 
   @Test public void a() {
@@ -27,5 +26,10 @@ public class SuperDelegatorTest extends JavadocerTest {
 
   @Test public void d() {
     assert is("@Override final boolean foo(){return (A)super.foo();}");
+  }
+
+  @Test public void e() {
+    assert is(
+        " @Override void invokeSubscriberMethod(Object event) throws InvocationTargetException {synchronized (this) { super.invokeSubscriberMethod(event); }}");
   }
 }
