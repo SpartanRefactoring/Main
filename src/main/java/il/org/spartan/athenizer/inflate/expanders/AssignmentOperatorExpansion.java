@@ -34,7 +34,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
       }
     };
   }
-  
+
   static InfixExpression.Operator convertToInfix(Operator ¢) {
     return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
         : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
