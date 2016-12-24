@@ -47,4 +47,8 @@ public class SetterTest extends JavadocerTest {
   @Test public void i() {
     assert not("boolean foo(Object o){}");
   }
+
+  @Test public void j() {
+    assert is("public static void enableCache() {    cacheEnabled = true;  }");
+  }
 }
