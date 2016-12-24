@@ -90,11 +90,9 @@ public class SingleFlater {
     return true;
   }
   
-  /* TODO Raviv: Javadoc --or
-   * @param u - the WrappedCompilationUnit which is athenized
-  *
-  * @param ns - the list of statemend which were selected and might be
-  * changed */
+  /**
+   * @param wcu - the WrappedCompilationUnit which is worked on
+  */
  static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
    try {
      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
