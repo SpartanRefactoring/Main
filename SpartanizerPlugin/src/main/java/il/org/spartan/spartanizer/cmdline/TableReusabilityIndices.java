@@ -16,13 +16,17 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class TableReusabilityIndices extends FolderASTVisitor {
   static {
     clazz = TableReusabilityIndices.class;
+  }
+
+  private static void initializeWriter() {
     try {
-      writer = new CSVStatistics(outputFolder + "/" + clazz.getSimpleName(), "$\\#$");
+      writer = new CSVStatistics(makeFile(clazz.getSimpleName()), "$\\#$");
     } catch (final IOException ¢) {
       throw new RuntimeException(¢);
     }
   }
-  private static final CSVStatistics writer;
+
+  private static CSVStatistics writer;
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
@@ -32,7 +36,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
-    System.err.println("Your output is in: " + writer.close());
+    if (writer != null)
+      System.err.println("Your output is in: " + writer.close());
+    
   }
 
   public static int rindex(final int[] ranks) {
@@ -162,6 +168,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   void summarize() {
+    if (writer == null)
+      initializeWriter();
     int n = 0;
     int N = 0;
     writer.put("$\\#$", ++N);
