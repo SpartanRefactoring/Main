@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
@@ -17,7 +18,7 @@ import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixtrue_ModelClass.InnerEnum.*;
+import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
@@ -64,15 +65,15 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a06() {
-    new ZZZ___Fixtrue_ModelClass().hashCode();
+    new ZZZ___Fixture_ModelClass().hashCode();
   }
 
   @Test public void a07() {
-    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant2.hashCode();
+    ZZZ___Fixture_ModelClass.InnerEnum.enumConstant2.hashCode();
   }
 
   @Test public void a08() {
-    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant1.hashCode();
+    ZZZ___Fixture_ModelClass.InnerEnum.enumConstant1.hashCode();
   }
 
   @Test public void a09() {
@@ -99,7 +100,7 @@ public class definitionTest extends ReflectiveTester {
         assert ¢ != null : a;
   }
 
-  @ScopeSize(44) @Test public void a13() {
+  @ScopeSize(45) @Test public void a13() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@try¢") != null;
@@ -369,17 +370,19 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @RunWith(Parameterized.class)
-  public static class AllAnnotationsInModel extends ReflectiveTester {
-    public AllAnnotationsInModel(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
+  public static class ScopeSizeTest extends ReflectiveTester {
+    static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
+
+    public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
       assert name != null;
       assert ScopeSize != null;
       this.name = name;
-      this.ScopeSize = ScopeSize;
+      scopeSize = ScopeSize;
       this.kind = kind;
     }
 
     private final SimpleName name;
-    private final Integer ScopeSize;
+    private final Integer scopeSize;
     private final definition.Kind kind;
 
     @Test public void test() {
@@ -388,14 +391,14 @@ public class definitionTest extends ReflectiveTester {
               "\n\t kind = " + kind + //
               ancestry(name) + //
               "\n\t scope = " + scope.of(name)//
-          , scope.of(name).size(), is(ScopeSize.intValue()));
+          , scope.of(name).size(), is(scopeSize.intValue()));
     }
 
     @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
       final List<Object[]> $ = new ArrayList<>();
       for (final Annotation a : new definitionTest().annotations()) {
         final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
-        if (sma != null && (sma.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
+        if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
           int expected = value(sma);
           for (final SimpleName ¢ : annotees.of(sma)) {
             $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
@@ -403,6 +406,39 @@ public class definitionTest extends ReflectiveTester {
               --expected;
           }
         }
+      }
+      return $;
+    }
+  }
+
+  @RunWith(Parameterized.class)
+  public static class SingleMarkerTest extends ReflectiveTester {
+    public SingleMarkerTest(final definition.Kind kind, SimpleName name) {
+      assert name != null;
+      this.name = name;
+      this.kind = kind;
+    }
+
+    private final SimpleName name;
+    private final definition.Kind kind;
+
+    @Test public void test() {
+      azzert.that(
+          "\n name = " + name + //
+              "\n\t kind = " + kind + //
+              ancestry(name) + //
+              "\n\t scope = " + scope.of(name)//
+          , definition.kind(name), is(kind));
+    }
+
+    @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
+      final List<Object[]> $ = new ArrayList<>();
+      for (final MarkerAnnotation a : new definitionTest().markers()) {
+        final String key = (a + "").substring(1);
+        if (!definition.Kind.has(key))
+          continue;
+        for (final SimpleName ¢ : annotees.of(a))
+          $.add(as.array(definition.Kind.valueOf(key), ¢));
       }
       return $;
     }
@@ -443,7 +479,7 @@ public class definitionTest extends ReflectiveTester {
 @Ignore
 @class¢
 // @formatter:on
-class ZZZ___Fixtrue_ModelClass {
+class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {
     // This should never happen
@@ -457,10 +493,11 @@ class ZZZ___Fixtrue_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> $ = (@lambda final Object o) -> o + "";
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "";
+            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> { o.getClass(); return o + "";};
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
-            return sum(super.hashCode(), hashCode() * $.hashCode());
+            return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
           }
 
           @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {

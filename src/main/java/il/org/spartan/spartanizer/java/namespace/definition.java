@@ -84,6 +84,13 @@ public interface definition {
       }
     },
     lambda {
+      @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
+        final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
+        assert d != null;
+        final LambdaExpression $ = az.lambdaExpression(parent(d));
+        assert $ != null: d;
+        return as.list($);
+      }
     },
     local {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
