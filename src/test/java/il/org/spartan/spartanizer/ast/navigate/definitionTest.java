@@ -18,6 +18,7 @@ import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.ZZZModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
