@@ -48,7 +48,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a02() {
-    assert (initializer + "").indexOf("¢") >= 0;
+    assert (initializer + "").contains("¢");
   }
 
   @Test public void a03() {
@@ -56,7 +56,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a04() {
-    assert (clazz + "").indexOf("¢") >= 0;
+    assert (clazz + "").contains("¢");
   }
 
   @Test public void a05() {
