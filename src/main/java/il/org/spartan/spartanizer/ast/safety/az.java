@@ -453,7 +453,7 @@ public enum az {
   public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
-  
+
   /** Down-cast, if possible, to {@link UnionType}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -550,8 +550,9 @@ public enum az {
 
     static long long¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
-      return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
-          : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+      return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
+          : !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
+              : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
     }
 
     static long long¢(final String token) throws NumberFormatException {
