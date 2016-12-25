@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.java.Environment.*;
+import static il.org.spartan.spartanizer.java.namespace.Environment.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 public final class EnvironmentTestSpawningAndManualAddition {
   Environment e0 = Environment.genesis();

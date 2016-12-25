@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** An abstract class that allows a class to apply testing on its own code.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-18 */
-abstract class ReflectiveTester {
+public abstract class ReflectiveTester {
   private static Map<Class<? extends ReflectiveTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
 
   protected final ASTNode myCompilationUnit() {
@@ -29,7 +29,7 @@ abstract class ReflectiveTester {
     return first(searchDescendants.forClass(¢).from(myCompilationUnit()));
   }
 
-  protected List<Annotation> annotations() {
+  public List<Annotation> annotations() {
     return searchDescendants.forClass(Annotation.class).from(myCompilationUnit());
   }
 

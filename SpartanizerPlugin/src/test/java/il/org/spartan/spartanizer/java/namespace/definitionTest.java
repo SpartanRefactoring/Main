@@ -1,5 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
-
+package il.org.spartan.spartanizer.java.namespace;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
@@ -16,8 +15,9 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
-import il.org.spartan.spartanizer.ast.navigate.ZZZModelClass.InnerEnum.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixtrue_ModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
@@ -64,15 +64,15 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a06() {
-    new ZZZModelClass().hashCode();
+    new ZZZ___Fixtrue_ModelClass().hashCode();
   }
 
   @Test public void a07() {
-    ZZZModelClass.InnerEnum.enumConstant2.hashCode();
+    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant2.hashCode();
   }
 
   @Test public void a08() {
-    ZZZModelClass.InnerEnum.enumConstant1.hashCode();
+    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant1.hashCode();
   }
 
   @Test public void a09() {
@@ -443,7 +443,7 @@ public class definitionTest extends ReflectiveTester {
 @Ignore
 @class¢
 // @formatter:on
-class ZZZModelClass {
+class ZZZ___Fixtrue_ModelClass {
   /** This code is never used, it is to model our test */
   {
     // This should never happen
