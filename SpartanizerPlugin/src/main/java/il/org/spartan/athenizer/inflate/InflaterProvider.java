@@ -29,7 +29,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander())//
         .add(ExpressionStatement.class, //
-//            new AssignmentAndAssignment(), //
+            // new AssignmentAndAssignment(), //
             new AssignmentTernaryExpander())//
         .add(InfixExpression.class, //
             new toStringExpander())//
@@ -39,7 +39,10 @@ public class InflaterProvider extends OperationsProvider {
             new AssignmentOperatorExpansion())//
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
-    ;
+        .add(VariableDeclarationStatement.class, //
+            new VariableDeclarationStatementSplit()) //
+        .add(VariableDeclarationStatement.class, //
+            new DeclarationWithInitExpander()); //
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
