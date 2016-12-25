@@ -4,7 +4,7 @@ import org.junit.*;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
-/** Unit test for {@link VariableDeclarationStatementSplit}
+/** Unit tests for {@link VariableDeclarationStatementSplit}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
