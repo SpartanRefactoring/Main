@@ -177,7 +177,6 @@ public final class GuessedContextTest {
     azzert.that(GuessedContext.find(//
         "public int hashCode(){return a(1 ^ 1 ^ 1);}"//
     ), is(METHOD_LOOK_ALIKE));
-    System.out.println("//");
   }
 
   @Ignore @Test public void statement2() {
