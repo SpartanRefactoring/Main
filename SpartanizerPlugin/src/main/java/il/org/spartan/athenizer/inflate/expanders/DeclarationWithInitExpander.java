@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -18,9 +19,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Tomer Dragucki
  * @since 23-12-2016 */
-public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> {
+public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
-    return "Split declaration and initialization";
+    return "Split declaration with initialization into two statemenets";
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
