@@ -36,7 +36,7 @@ public interface Renderer {
   default String headerLineEnd() { return footerEnd(); }
   default String headerLineSepator() { return recordSeparator(); } 
   default String footerBegin() { return recordBegin();}
-  default String footerEnd() { return footerEnd();}
+  default String footerEnd() { return recordEnd();}
   default String footerSeparator() { return recordSeparator(); }
   // @formatter:on
 
