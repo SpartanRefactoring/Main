@@ -29,6 +29,7 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
     clazz = TablesAndSortedSpartanizedMethodsCollector.class;
+    TrimmerLog.off();
   }
 
   public static void main(final String[] args)

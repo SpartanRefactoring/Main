@@ -23,7 +23,10 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public boolean canTip(final IfStatement ¢) {
-    return tipper.canTip(¢) && analyze.type(az.simpleName(tipper.getMatching(¢, "$X1"))).startsWith("Map<");
+    if (!tipper.canTip(¢))
+      return false;
+    final String $ = analyze.type(az.simpleName(tipper.getMatching(¢, "$X1")));
+    return $ != null && $.startsWith("Map<");
   }
 
   @Override public Tip pattern(final IfStatement ¢) {
