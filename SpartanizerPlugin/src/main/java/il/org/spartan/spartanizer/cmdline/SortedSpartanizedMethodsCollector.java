@@ -67,7 +67,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
-    Logger.subsribe((n, np) -> logAll(n, np));
+    Logger.subscribe((n, np) -> logAll(n, np));
   }
 
   @Override protected void done(final String path) {
