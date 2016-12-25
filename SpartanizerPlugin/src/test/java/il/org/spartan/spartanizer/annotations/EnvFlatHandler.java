@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.Environment.*;
+import il.org.spartan.spartanizer.java.namespace.Environment.*;
 
 /* Implements the handler of flatEnv outer annotation. */
 public final class EnvFlatHandler extends ENVTestEngineAbstract {
