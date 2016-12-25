@@ -192,6 +192,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.nl();
   }
 
+  protected int methodRIndex() {
+    return rindex(ranks(usage.get("METHOD")));
+  }
+
   private void summarizeProject() {
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
     int n = 0;
