@@ -459,14 +459,14 @@ public class definitionTest extends ReflectiveTester {
 @interface class¢ {
   /**/ }
 
-@ScopeSize(22) @annotation @interface DummyAnnotation { /**/}
-@ScopeSize(22) @class¢ class DummyClass { /**/}
-@ScopeSize(22) @enum¢ enum DummyEnum { /**/ }
-@ScopeSize(22) @interface¢ interface DummyInterface {/**/ }
+@ScopeSize(23) @annotation @interface DummyAnnotation { /**/}
+@ScopeSize(23) @class¢ class DummyClass { /**/}
+@ScopeSize(23) @enum¢ enum DummyEnum { /**/ }
+@ScopeSize(23) @interface¢ interface DummyInterface {/**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface enum¢ { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface enumConstant { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface field { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface for¢ { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE}) @interface for¢ { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface foreach { /**/ }
 @annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface interface¢ { /**/ }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface lambda { /** lambda parameter */ }
@@ -476,9 +476,15 @@ public class definitionTest extends ReflectiveTester {
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface ScopeSize { int value(); }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
 
+// @formatter:on
+@annotation
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
+@interface above {
+  String[] value();
+}
+
 @Ignore
 @class¢
-// @formatter:on
 class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {
@@ -512,15 +518,17 @@ class ZZZ___Fixture_ModelClass {
         @local final int c0 = c1 - c2;
         --c2;
         c2 ^= c1;
-        @ScopeSize(5) @local int c3 = c1 + c2;
-        @ScopeSize(3) @local int c8;
+        @ScopeSize(7) @local int c3 = c1 + c2;
+        @ScopeSize(5) @local int c8;
         ++c2;
+        @SuppressWarnings("unused") @above("c2") int __;
         c8 = ++c3;
         if (c1 == c2 * c8)
           throw new CloneNotSupportedException(c0 * c3 + "");
+        @SuppressWarnings("unused") @above({"c2", "c1"}) int ___;
       } catch (@ScopeSize(1) @catch¢ final FileNotFoundException x) {
         for (@ScopeSize(3) @for¢ int j583 = 0; j583 < 10; --j583) {
-          final int a = 2 * j583 + hashCode();
+          @local @ScopeSize(2) final int a = 2 * j583 + hashCode();
           System.out.println(a * a + j583 * hashCode());
         }
         for (@ScopeSize(4) @for¢ int a34j = 0, a; a34j < 10; --a34j) {
