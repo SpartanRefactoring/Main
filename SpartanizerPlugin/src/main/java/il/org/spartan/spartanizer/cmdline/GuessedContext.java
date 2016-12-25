@@ -81,6 +81,14 @@ public enum GuessedContext {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
+    return accuratelyCheckedContext(codeFragment);
+  }
+
+  /** @param codeFragment */
+  private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
+    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
+      if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
+        return $;
     azzert.fail("GuessContext error: \n" + //
         "Here are the attempts I made at literal [" + codeFragment + "]:,\n" + //
         "\n" + //
@@ -163,6 +171,14 @@ public enum GuessedContext {
    * @return wrapped phrase */
   public String on(final String codeFragment) {
     return before + codeFragment + after;
+  }
+
+  private boolean accurateContains(final String wrap, final String inner) {
+    final String off = off(wrap);
+    final String $ = wizard.accurateEssence(inner);
+    final String essence2 = wizard.accurateEssence(off);
+    assert essence2 != null;
+    return essence2.contains($);
   }
 
   private boolean contains(final String wrap, final String inner) {
