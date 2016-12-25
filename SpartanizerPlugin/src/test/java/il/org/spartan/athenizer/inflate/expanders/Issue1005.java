@@ -45,4 +45,10 @@ public class Issue1005 {
   @Test public void t12() {
     expandingOf("int x = ++y + 1;").gives("int x; x=++y + 1;").stays();
   }
+  @Test public void t13() {
+    expandingOf("for(;;) --x;").gives("for(;;) x--;");
+  }
+  @Test public void t14() {
+    expandingOf("--x;").gives("x--;");
+  }
 }
