@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** convert
  *
@@ -38,11 +39,11 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final List<Statement> ll = step.statements(s);
-        final String ss = !haz.sideEffects(s.getExpression()) ? "" : s.getExpression() + ";";
+        final List<Statement> ll = statements(s);
+        final String ss = !haz.sideEffects(expression(s)) ? "" : expression(s) + ";";
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
-          if (haz.sideEffects(s.getExpression()))
+          if (haz.sideEffects(expression(s)))
             r.replace(s, wizard.ast(ss), g);
           return;
         }
@@ -67,7 +68,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {
-    final List<Statement> ll = step.statements(s);
+    final List<Statement> ll = statements(s);
     for (final Statement ¢ : ll)
       if (!iz.switchCase(¢) && !iz.breakStatement(¢))
         return false;
