@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
 
@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
