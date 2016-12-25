@@ -46,11 +46,11 @@ public class Issue233 {
   }
 
   @Test public void h() {
-    trimmingOf("switch(++x) {}").gives("{++x;}");
+    trimmingOf("switch(++x) {}").gives("++x;");
   }
 
   @Test public void i() {
-    trimmingOf("switch(s.f()) {}").gives("{s.f();}");
+    trimmingOf("switch(s.f()) {}").gives("s.f();");
   }
 
   @Test public void j() {
