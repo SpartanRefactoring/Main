@@ -625,7 +625,8 @@ public interface wizard {
   }
 
   static String removeComments(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+    return codeFragment.replaceAll("//.*?\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
   static String removeComments2(final String codeFragment) {
