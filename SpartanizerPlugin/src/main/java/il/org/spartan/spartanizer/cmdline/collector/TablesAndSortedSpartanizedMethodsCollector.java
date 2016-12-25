@@ -33,7 +33,8 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    wizard.setParserResolveBindings();
+    // wizard.setParserResolveBindings();
+    TrimmerLog.off();
     FolderASTVisitor.main(args);
   }
 
