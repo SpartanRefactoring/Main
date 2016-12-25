@@ -60,7 +60,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   protected String makeFile(final String fileName) {
-    return windows() ? outputFolder + "/" + fileName : outputFolder + "/" + presentSourceName + "." + fileName;
+    return outputFolder + "/"  + (windows()  || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visit(final String path) {
