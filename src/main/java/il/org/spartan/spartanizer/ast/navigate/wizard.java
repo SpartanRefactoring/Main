@@ -29,6 +29,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -347,6 +348,15 @@ public interface wizard {
     return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
   }
 
+  static String accurateEssence(final String codeFragment) {
+    return fixTideClean(clean(into.cu(codeFragment)) + "");
+  }
+
+  static ASTNode clean(final ASTNode ¢) {
+    ¢.accept(new CommentsRemover());
+    return ¢;
+  }
+
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -625,7 +635,8 @@ public interface wizard {
   }
 
   static String removeComments(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+    return codeFragment.replaceAll("//.*?\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
   static String removeComments2(final String codeFragment) {
