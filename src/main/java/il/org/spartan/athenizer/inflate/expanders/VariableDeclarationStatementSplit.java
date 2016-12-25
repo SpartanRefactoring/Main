@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO Tomer: add link to testing class when created and write issue number
-/** convert <code>
+/** Test case is {@link VariableDeclarationStatementSplitTest} Issue No. 968
+ * convert <code>
  * int a = f(), b = g();
  * </code> to <code>
  * int a = f();

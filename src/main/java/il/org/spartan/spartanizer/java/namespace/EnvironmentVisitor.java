@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
 import java.util.Map.*;
@@ -11,24 +11,24 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.Environment.*;
+import il.org.spartan.spartanizer.java.namespace.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Alex + Dan
+/** Three groups of visitors here: 1. Non-declarations with a name. 2.
+ * Non-declarations without a name. 3. Actual Declarations. First two groups are
+ * those in which variable declarations can be made. Since we want to be able to
+ * distinguish variables of different scopes, but with, perhaps, equal names,
+ * need to keep the scope. The full scope might contain things that do not have
+ * a name, hence the need keep to visit ASTNodes without a name such as
+ * {@link Block}s, {@link ForStatement}s, etc. Since there can be more than one
+ * such node in a parent, they are distinguished by their order of appearance.
+ * The third group is the one in which actual addition to the Environment is
+ * made.
+ * @author Alex + Dan
  * @since 2016 */
 @SuppressWarnings("unused")
-public final class EnvironmentVisitor extends ASTVisitor {
+final class EnvironmentVisitor extends ASTVisitor {
   private final LinkedHashSet<Entry<String, Information>> $;
-  /** Three groups of visitors here: 1. Non-declarations with a name. 2.
-   * Non-declarations without a name. 3. Actual Declarations. First two groups
-   * are those in which variable declarations can be made. Since we want to be
-   * able to distinguish variables of different scopes, but with, perhaps, equal
-   * names, need to keep the scope. The full scope might contain things that do
-   * not have a name, hence the need keep to visit ASTNodes without a name such
-   * as {@link Block}s, {@link ForStatement}s, etc. Since there can be more than
-   * one such node in a parent, they are distinguished by their order of
-   * appearance. The third group is the one in which actual addition to the
-   * Environment is made. */
   // Holds the current scope full name (Path).
   String scopePath = "";
 
