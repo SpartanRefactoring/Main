@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-24 */
 public class PrefixToPostfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Idiomatic {
   @Override public ASTNode replacement(final PrefixExpression ¢) {
-    return subject.operand(step.operand(¢)).to(prefixMinus(¢) ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
+    return subject.operand(step.operand(¢)).to(step.operator(¢) == PrefixExpression.Operator.DECREMENT ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
   }
   
   @Override protected boolean prerequisite(PrefixExpression e) {
