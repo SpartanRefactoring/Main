@@ -146,6 +146,8 @@ public enum step {
         return expression((DoStatement) ¢);
       case ASTNode.IF_STATEMENT:
         return expression((IfStatement) ¢);
+      case ASTNode.SWITCH_STATEMENT:
+        return expression((SwitchStatement) ¢);
       default:
         return null;
     }
@@ -189,6 +191,10 @@ public enum step {
 
   public static Expression expression(final ReturnStatement $) {
     return $ == null ? null : extract.core($.getExpression());
+  }
+  
+  public static Expression expression(final SwitchStatement ¢) {
+    return ¢ == null ? null : ¢.getExpression();
   }
 
   public static Expression expression(final ThrowStatement $) {
