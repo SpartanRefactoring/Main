@@ -10,7 +10,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.Environment.*;
+import il.org.spartan.spartanizer.java.namespace.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Dan Greenstein

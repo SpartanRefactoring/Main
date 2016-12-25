@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.Environment.*;
+import il.org.spartan.spartanizer.java.namespace.Environment.*;
 
 public final class EnvNestedHandler extends ENVTestEngineAbstract {
   public EnvNestedHandler(final ASTNode $) {
