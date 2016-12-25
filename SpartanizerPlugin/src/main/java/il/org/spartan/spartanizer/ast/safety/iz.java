@@ -959,6 +959,10 @@ public interface iz {
   static boolean switchCase(final ASTNode ¢) {
     return ¢ != null && ¢.getNodeType() == SWITCH_CASE;
   }
+  
+  static boolean switchStatement(final ASTNode ¢) {
+    return ¢ != null && ¢.getNodeType() == SWITCH_STATEMENT;
+  }
 
   static boolean synchronized¢(final BodyDeclaration node) {
     return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
