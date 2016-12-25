@@ -1003,8 +1003,16 @@ public interface iz {
     return ¢ instanceof Type;
   }
 
+  /** @param ¢ JDs
+   * @return */
   static boolean typeDeclaration(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
+  }
+  
+  /** @param ¢ JDs
+   * @return */
+  static boolean unionType(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, UNION_TYPE);
   }
 
   /** @param ¢ JD
