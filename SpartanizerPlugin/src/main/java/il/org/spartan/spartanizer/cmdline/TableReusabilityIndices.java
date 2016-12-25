@@ -38,7 +38,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     FolderASTVisitor.main(args);
     if (writer != null)
       System.err.println("Your output is in: " + writer.close());
-    
   }
 
   public static int rindex(final int[] ranks) {
@@ -170,11 +169,32 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   void summarize() {
     if (writer == null)
       initializeWriter();
-    int n = 0;
+    summarizeProject();
+    addLineToGlobalStatistcs();
+  }
+
+  private void addLineToGlobalStatistcs() {
     int N = 0;
     writer.put("$\\#$", ++N);
     writer.put("Project", presentSourceName);
+    if (usage.get("METHOD") == null)
+      return;
+    final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String m : defined)
+      adopted.remove(m);
+    writer.put("Adoption", rindex(ranks(adopted)));
+    final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String k : new ArrayList<>(born.keySet()))
+      if (!defined.contains(k))
+        born.remove(k);
+    writer.put("Reuse", rindex(ranks(born)));
+    writer.put("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
+    writer.nl();
+  }
+
+  private void summarizeProject() {
     final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
+    int n = 0;
     for (final String category : usage.keySet()) {
       final Map<String, Integer> map = usage.get(category);
       int m = 0;
@@ -191,19 +211,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       writer.put(category, rindex(ranks(map)));
     }
     System.err.println("Your output is in: " + w.close());
-    if (usage.get("METHOD") == null)
-      return;
-    final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      adopted.remove(m);
-    writer.put("Adoption", rindex(ranks(adopted)));
-    final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>(born.keySet()))
-      if (!defined.contains(k))
-        born.remove(k);
-    writer.put("Reuse", rindex(ranks(born)));
-    writer.put("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
-    writer.nl();
   }
 
   private String key(final InfixExpression ¢) {
