@@ -494,7 +494,10 @@ class ZZZ___Fixture_ModelClass {
 
           @Override @ScopeSize(4) @method public int hashCode() {
             @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "";
-            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> { o.getClass(); return o + "";};
+            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> {
+              o.getClass();
+              return o + "";
+            };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
             return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
@@ -540,6 +543,28 @@ class ZZZ___Fixture_ModelClass {
       } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
         ¢.printStackTrace();
       }
+  }
+
+  @annotation
+  @interface foo {
+    @ScopeSize(5) @field static int bar = 12;
+    @ScopeSize(5) @field static int foo = bar;
+    @ScopeSize(5) @field static int fubar = foo << bar;
+
+    @ScopeSize(5)
+    @enum¢
+    enum Bar {
+      @ScopeSize(3)
+      @enumConstant
+      abra, @enumConstant
+      @ScopeSize(3)
+      cadabra;
+      Bar vaz() {
+        return vaz();
+      }
+    }
+
+    @ScopeSize(5) @field static Bar acuda = Bar.abra, cadbara = Bar.cadabra;
   }
 
   @interface¢
