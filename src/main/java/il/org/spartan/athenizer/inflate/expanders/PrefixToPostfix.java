@@ -29,9 +29,9 @@ public class PrefixToPostfix extends ReplaceCurrentNode<PrefixExpression> implem
     return subject.operand(step.operand(¢)).to(step.operator(¢) == PrefixExpression.Operator.DECREMENT ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
   }
   
-  @Override protected boolean prerequisite(PrefixExpression e) {
-    ASTNode parent = step.parent(e);
-    return expressionStatement(parent) || forStatement(parent);
+  @Override protected boolean prerequisite(PrefixExpression ¢) {
+    ASTNode $ = step.parent(¢);
+    return expressionStatement($) || forStatement($);
   }
 
   @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {

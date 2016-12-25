@@ -31,8 +31,8 @@ import il.org.spartan.spartanizer.tipping.*;
  */
 //TODO Yuval: expand also arr[i+=4], arr[(i=i+4)]
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.InVain {
-  @SuppressWarnings("unused")
-  @Override public String description(ArrayAccess n) {
+  @Override
+  @SuppressWarnings("unused") public String description(ArrayAccess n) {
     return null;
   } 
 }
