@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.spartanizer.java.Environment.*;
+import static il.org.spartan.spartanizer.java.namespace.Environment.*;
 
 import java.util.*;
 import java.util.Map.*;
@@ -10,6 +10,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 /** @author Dan Greenstein
  * @author Alex Kopzon
