@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -8,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -16,52 +14,48 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Ori Marcovitch
- * @since Dec 14, 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-25 */
 public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
-  private static CSVStatistics pWriter;
+  private static Relation pWriter;
   static {
     clazz = TablePatternsReusabilityIndices.class;
   }
 
   private static void initializeWriter() {
-    try {
-      pWriter = new CSVStatistics(outputFileName(), "$\\#$");
-    } catch (final IOException ¢) {
-      throw new RuntimeException(¢);
-    }
+    pWriter = new Relation(outputFileName());
   }
 
   private static String outputFileName() {
-    return makeFile(clazz.getSimpleName());
+    return clazz.getSimpleName();
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     TrimmerLog.off();
     TableReusabilityIndices.main(args);
-    if (pWriter != null)
-      System.err.println("Your output is in: " + pWriter.close());
-    file.renameToCSV(outputFileName());
+    if (pWriter != null) {
+      pWriter.close();
+      System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
+    }
+    file.renameToCSV(Relation.temporariesFolder + outputFileName());
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    if (!excludeMethod(¢))
-      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    return super.visit(¢);
+  @Override public boolean visit(final MethodDeclaration $) {
+    if (!excludeMethod($))
+      try {
+        spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
+      } catch (final AssertionError ¢) {
+        System.err.println(¢);
+      }
+    return super.visit($);
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    System.out.println(packageDeclaration(¢));
     ¢.accept(new CleanerVisitor());
     return true;
-  }
-
-  @Override public boolean visit(TypeDeclaration ¢) {
-    System.out.println(name(¢));
-    return super.visit(¢);
   }
 
   @Override protected void init(final String path) {
@@ -70,8 +64,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   @Override protected void done(final String path) {
-    super.done(path);
-    summarizeNPStatistics();
+    summarizeNPStatistics(path);
     System.err.println("Your output is in: " + outputFolder);
   }
 
@@ -85,14 +78,13 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     npStatistics.get(np).markNP(n);
   }
 
-  public void summarizeNPStatistics() {
+  public void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
     final int r = methodRIndex();
-    pWriter.put("Project", presentSourceName);
-    npStatistics.keySet().stream()
-        .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
-            : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
+    pWriter.put("Project", path);
+    npStatistics.keySet().stream()//
+        .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
         .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
     pWriter.nl();
