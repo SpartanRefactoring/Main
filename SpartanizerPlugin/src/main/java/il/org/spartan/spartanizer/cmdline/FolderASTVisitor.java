@@ -17,13 +17,13 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected static String inputFolder = ".";
+  @External(alias = "i", value = "input folder") protected static String inputFolder = windows() ? "" : ".";
   @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static String[] defaultArguments = as.array(".");
   protected static Class<? extends FolderASTVisitor> clazz;
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
   protected File presentFile;
-  protected String presentSourceName;
+  protected static String presentSourceName;
   protected String presentSourcePath;
   protected Dotter dotter = new Dotter();
 
@@ -59,13 +59,13 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
-  protected String makeFile(final String fileName) {
-    return outputFolder + "/"  + (windows()  || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
+  protected static String makeFile(final String fileName) {
+    return outputFolder + "/" + (windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visit(final String path) {
     dotter.click();
-    presentSourceName = system.folder2File(presentSourcePath = windows() ? path : inputFolder + "/" + path);
+    presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
     init(path);
     for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       visit(presentFile = ¢);
