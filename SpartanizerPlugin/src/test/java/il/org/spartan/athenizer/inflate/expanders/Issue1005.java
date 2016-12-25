@@ -9,15 +9,6 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 @SuppressWarnings("static-method")
 public class Issue1005 {
-  @Ignore
-  private static class BugsFromOtherExpander {
-    @Test public void t11() {
-      expandingOf("int x = ++y;").stays();
-    }
-    @Test public void t12() {
-      expandingOf("int x = ++y + 1;").stays();
-    }
-  }
   @Test public void t1() {
     expandingOf("++i;").gives("i++;");
   }
@@ -47,5 +38,11 @@ public class Issue1005 {
   }
   @Test public void t10() {
     expandingOf("x = ++y;").stays();
+  }
+  @Test public void t11() {
+    expandingOf("int x = ++y;").gives("int x; x=++y;").stays();
+  }
+  @Test public void t12() {
+    expandingOf("int x = ++y + 1;").gives("int x; x=++y + 1;").stays();
   }
 }
