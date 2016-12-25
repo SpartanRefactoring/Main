@@ -453,6 +453,14 @@ public enum az {
   public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
+  
+  /** Down-cast, if possible, to {@link UnionType}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static UnionType UnionType(final ASTNode $) {
+    return !($ instanceof UnionType) ? null : (UnionType) $;
+  }
 
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
