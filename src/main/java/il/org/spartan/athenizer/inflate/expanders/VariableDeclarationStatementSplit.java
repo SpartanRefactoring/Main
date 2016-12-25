@@ -8,11 +8,12 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO Tomer: add link to testing class when created and write issue number
-/** convert <code>
+/** Test case is {@link VariableDeclarationStatementSplitTest} Issue No. 968
+ * convert <code>
  * int a = f(), b = g();
  * </code> to <code>
  * int a = f();
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Tomer Dragucki
  * @since 19-12-2016 */
-public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> {
+public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }

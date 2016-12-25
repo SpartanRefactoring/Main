@@ -179,6 +179,22 @@ public final class GuessedContextTest {
     ), is(METHOD_LOOK_ALIKE));
   }
 
+  @Test public void statement2() {
+    azzert.that(GuessedContext.find(//
+        "\"//\""), is(EXPRESSION_LOOK_ALIKE));
+  }
+
+  @Test(expected = AssertionError.class) public void error2() {
+    GuessedContext.find("willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e));");
+  }
+
+  @Test public void statement3() {
+    azzert.that(
+        GuessedContext.find(//
+            "willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e))"),
+        is(EXPRESSION_LOOK_ALIKE));
+  }
+
   @Test public void methodInvocation() {
     assertEquals(GuessedContext.EXPRESSION_LOOK_ALIKE, GuessedContext.find("fuo()"));
   }
@@ -188,6 +204,10 @@ public final class GuessedContextTest {
   }
 
   @Test public void statement() {
+    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
+  }
+
+  @Test public void bug() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 }

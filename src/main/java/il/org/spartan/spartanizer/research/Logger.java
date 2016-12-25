@@ -35,7 +35,7 @@ public class Logger {
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
    * invoked.
    * @param ¢ */
-  public static void subsribe(final BiConsumer<ASTNode, String> ¢) {
+  public static void subscribe(final BiConsumer<ASTNode, String> ¢) {
     subscribers.add(¢);
   }
 
