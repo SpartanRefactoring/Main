@@ -778,4 +778,8 @@ public enum step {
   @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
   }
+
+  @SuppressWarnings("unchecked") public static List<Type> types(UnionType ¢) {
+    return ¢ == null ? null : ¢.types();
+  }
 }
