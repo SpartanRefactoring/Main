@@ -94,7 +94,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
         .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
             : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences >= r ? "+" : "-"));
+        .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
     pWriter.nl();
   }
 }
