@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Dec 14, 2016 */
 public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
   private static CSVStatistics pWriter;
   static {
     clazz = TablePatternsReusabilityIndices.class;
@@ -41,6 +42,9 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     TrimmerLog.off();
     TableReusabilityIndices.main(args);
+    if (pWriter != null)
+      System.err.println("Your output is in: " + pWriter.close());
+    file.renameToCSV(outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
@@ -62,29 +66,12 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   @Override protected void done(final String path) {
     super.done(path);
     summarizeNPStatistics();
-    pWriter.close();
-    file.renameToCSV(outputFileName());
     System.err.println("Your output is in: " + outputFolder);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
-    return openSummaryFile(outputDir + "/npStatistics.csv");
-  }
-
-  public static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "opening report file");
-      return null;
-    }
-  }
-
-  private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
 
   private void logNPInfo(final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
