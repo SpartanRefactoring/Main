@@ -10,7 +10,21 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+/** Issue #970 <br/>
+ * <br/>
+ * Expand :
+ * 
+ * <pre>
+ * catch(Type1 | Type2 e){block}
+ * </pre>
+ * 
+ * To:
+ * 
+ * <pre>
+ * catch(Type1 e){block}catch(Type2 e){block}
+ * </pre>
+ * 
+ * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
 public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> implements TipperCategory.InVain {
   @Override public ASTNode replacement(TryStatement s) {
