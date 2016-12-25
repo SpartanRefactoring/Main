@@ -47,21 +47,19 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     file.renameToCSV(outputFileName());
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    if (!excludeMethod(¢))
-      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    return super.visit(¢);
+  @Override public boolean visit(final MethodDeclaration $) {
+    if (!excludeMethod($))
+      try {
+        spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
+      } catch (final AssertionError ¢) {
+        System.err.println(¢);
+      }
+    return super.visit($);
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    System.out.println(packageDeclaration(¢));
     ¢.accept(new CleanerVisitor());
     return true;
-  }
-
-  @Override public boolean visit(TypeDeclaration ¢) {
-    System.out.println(name(¢));
-    return super.visit(¢);
   }
 
   @Override protected void init(final String path) {
@@ -90,11 +88,10 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
       initializeWriter();
     final int r = methodRIndex();
     pWriter.put("Project", presentSourceName);
-    npStatistics.keySet().stream()
-        .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
-            : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
+    npStatistics.keySet().stream()//
+        .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences >= r ? "+" : "-"));
+        .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
     pWriter.nl();
   }
 }
