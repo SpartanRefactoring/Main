@@ -29,7 +29,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static String outputFileName() {
-    return (clazz.getSimpleName());
+    return clazz.getSimpleName();
   }
 
   public static void main(final String[] args)
@@ -38,9 +38,9 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     TableReusabilityIndices.main(args);
     if (pWriter != null) {
       pWriter.close();
-      System.err.println("Your output is in: " + outputFileName());
+      System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
     }
-    file.renameToCSV(outputFileName());
+    file.renameToCSV(Relation.temporariesFolder + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
@@ -63,8 +63,8 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     Logger.subscribe((n, np) -> logNPInfo(n, np));
   }
 
-  @Override protected void done(@SuppressWarnings("unused") final String __) {
-    summarizeNPStatistics();
+  @Override protected void done(final String path) {
+    summarizeNPStatistics(path);
     System.err.println("Your output is in: " + outputFolder);
   }
 
@@ -78,11 +78,11 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     npStatistics.get(np).markNP(n);
   }
 
-  public void summarizeNPStatistics() {
+  public void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
     final int r = methodRIndex();
-    pWriter.put("Project", presentSourceName);
+    pWriter.put("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
