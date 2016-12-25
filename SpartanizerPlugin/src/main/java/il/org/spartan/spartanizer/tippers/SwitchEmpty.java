@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
+
 /** convert
  *
  * <pre>
@@ -40,17 +42,17 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
-        final String ss = !haz.sideEffects(expression(s)) ? "" : expression(s) + ";";
+        ExpressionStatement ss = s.getAST().newExpressionStatement(duplicate.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
           if (haz.sideEffects(expression(s)))
-            r.replace(s, wizard.ast(ss), g);
+            r.replace(s, ss, g);
           return;
         }
         if (iz.breakStatement(last(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        r.replace(s, wizard.ast(ss + statementsToString(ll)), g);
+        r.replace(s, wizard.ast((!haz.sideEffects(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
       }
     };
   }

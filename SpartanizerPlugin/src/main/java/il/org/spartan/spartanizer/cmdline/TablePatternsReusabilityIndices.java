@@ -54,8 +54,14 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
+    System.out.println(packageDeclaration(¢));
     ¢.accept(new CleanerVisitor());
     return true;
+  }
+
+  @Override public boolean visit(TypeDeclaration ¢) {
+    System.out.println(name(¢));
+    return super.visit(¢);
   }
 
   @Override protected void init(final String path) {
@@ -88,7 +94,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
         .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
             : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences >= r));
+        .forEach(n -> pWriter.put(n.name, n.occurences >= r ? "+" : "-"));
     pWriter.nl();
   }
 }
