@@ -24,6 +24,10 @@ public class TrimmerLog {
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
   private static String fileName;
 
+  public static void off() {
+    maxApplications = maxTips = maxVisitations = 0;
+  }
+
   public static void activateLogToFile() {
     logToFile = true;
   }
@@ -93,7 +97,7 @@ public class TrimmerLog {
       output.put("Suggests", w.tip(n));
       output.nl();
     }
-    if (!logToScreen || !logToScreen)
+    if (!logToScreen)
       return;
     System.out.println("        File: " + fileName);
     System.out.println("       Tipper: " + clazz(w));
