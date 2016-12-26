@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Issue #999 Convert (a=b=??;) to (a=3;b=??;)
@@ -35,17 +36,16 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
         Assignment p = newTail;
         while (iz.assignment(right(p)))
           p = az.assignment(right(p));
-        
         newHead.setRightHandSide(duplicate.of(right(p)));
-        p.setRightHandSide(left(newHead));
+        // if (sideEffects.free(right(p))) In the future side effect check
+        // should be here
+        p.setRightHandSide(duplicate.of(left(ass)));
         final ExpressionStatement head = create.newExpressionStatement(newHead);
         final ExpressionStatement tail = create.newExpressionStatement(newTail);
-        
-        
         az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
-        l.insertAfter(head, ¢, g);
         l.insertAfter(tail, ¢, g);
+        l.insertAfter(head, ¢, g);
         l.remove(¢, g);
       }
     };
