@@ -17,13 +17,28 @@ public class AggregateTest {
   }
 
   @Test public void b() {
-    trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;").withTipper(EnhancedForStatement.class, new Aggregate())
+    trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
+        .withTipper(EnhancedForStatement.class, new Aggregate())//
         .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
 
   @Test public void c() {
-    trimmingOf(//
-        "for(B d : bs) $ += f();"//
-    ).withTipper(EnhancedForStatement.class, new Aggregate()).gives("$=bs.stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
+    trimmingOf("for(B d : bs) $ += f();")//
+        .withTipper(EnhancedForStatement.class, new Aggregate())//
+        .gives("$=bs.stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("for(B d : (B)bs) $ += f();"//
+    )//
+        .withTipper(EnhancedForStatement.class, new Aggregate())//
+        .gives("$=((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
+  }
+
+  @Test public void e() {
+    trimmingOf("for(B d : omg ? yes : no) $ += f();"//
+    )//
+        .withTipper(EnhancedForStatement.class, new Aggregate())//
+        .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
   }
 }
