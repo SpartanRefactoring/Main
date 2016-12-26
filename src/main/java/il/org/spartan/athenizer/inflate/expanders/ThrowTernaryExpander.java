@@ -9,12 +9,11 @@ import il.org.spartan.spartanizer.tipping.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-/** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
- * relevant for return (<ternary>)
- * @author Raviv Rachmiel
- * @since 03-12-16 */
-public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> implements TipperCategory.InVain {
-  private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
+/** Same as ReturnTernaryExpander just for "throw"
+ * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @since 2016-12-26 */
+public class ThrowTernaryExpander extends ReplaceCurrentNode<ThrowStatement> implements TipperCategory.InVain {
+  private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -28,26 +27,26 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
     }
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(duplicate.of(expression(¢)));
-    final ReturnStatement then = ¢.getAST().newReturnStatement();
+    final ThrowStatement then = ¢.getAST().newThrowStatement();
     then.setExpression(duplicate.of(¢.getThenExpression()));
     $.setThenStatement(duplicate.of(az.statement(then)));
-    final ReturnStatement elze = ¢.getAST().newReturnStatement();
+    final ThrowStatement elze = ¢.getAST().newThrowStatement();
     elze.setExpression(duplicate.of(¢.getElseExpression()));
     $.setElseStatement(duplicate.of(az.statement(elze)));
     return $;
   }
 
   private static ASTNode replaceReturn(final Statement ¢) {
-    final ReturnStatement $ = az.returnStatement(¢);
-    return $ == null || !($.getExpression() instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
-        : innerReturnReplacement(expression($), ¢);
+    final ThrowStatement $ = az.throwStatement(¢);
+    return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
+        : innerThrowReplacement(expression($), ¢);
   }
 
-  @Override public ASTNode replacement(final ReturnStatement ¢) {
+  @Override public ASTNode replacement(final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ThrowStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }
