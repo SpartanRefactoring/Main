@@ -12,18 +12,18 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class ToStringExpanderTests {
   @Test public void test0() {
-    expandingOf("a+\"\"").gives("a.toString()").stays();
+    expansionOf("a+\"\"").gives("a.toString()").stays();
   }
 
   @Test public void test1() {
-    expandingOf("\"\"+t()").gives("t().toString()").stays();
+    expansionOf("\"\"+t()").gives("t().toString()").stays();
   }
 
   @Test public void test2() {
-    expandingOf("\"abcd\"+t()").stays();
+    expansionOf("\"abcd\"+t()").stays();
   }
 
   @Test public void test4() {
-    expandingOf("true+\"\"").stays();
+    expansionOf("true+\"\"").stays();
   }
 }
