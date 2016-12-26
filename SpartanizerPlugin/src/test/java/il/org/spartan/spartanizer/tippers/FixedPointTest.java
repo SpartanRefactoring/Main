@@ -118,9 +118,7 @@ public final class FixedPointTest {
             .gives(
                 "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$-=1; return $;}")
             .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$--; return $;}")
-            .gives(
-                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')--$; return $;}");
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ <s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd') --$; return $;}");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
