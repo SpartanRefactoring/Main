@@ -413,7 +413,7 @@ public class definitionTest extends ReflectiveTester {
 
   @RunWith(Parameterized.class)
   public static class SingleMarkerTest extends ReflectiveTester {
-    public SingleMarkerTest(final definition.Kind kind, SimpleName name) {
+    public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
       assert name != null;
       this.name = name;
       this.kind = kind;
@@ -521,11 +521,9 @@ class ZZZ___Fixture_ModelClass {
         @ScopeSize(7) @local int c3 = c1 + c2;
         @ScopeSize(5) @local int c8;
         ++c2;
-        @SuppressWarnings("unused") @above("c2") int __;
         c8 = ++c3;
         if (c1 == c2 * c8)
           throw new CloneNotSupportedException(c0 * c3 + "");
-        @SuppressWarnings("unused") @above({"c2", "c1"}) int ___;
       } catch (@ScopeSize(1) @catch¢ final FileNotFoundException x) {
         for (@ScopeSize(3) @for¢ int j583 = 0; j583 < 10; --j583) {
           @local @ScopeSize(2) final int a = 2 * j583 + hashCode();
