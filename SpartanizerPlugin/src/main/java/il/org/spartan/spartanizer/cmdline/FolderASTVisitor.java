@@ -72,8 +72,12 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     done(path);
   }
 
-  void collect(final CompilationUnit ¢) {
-    ¢.accept(this);
+  void collect(final CompilationUnit u) {
+    try {
+      u.accept(this);
+    } catch (final NullPointerException ¢) {
+      System.err.println(¢);
+    }
   }
 
   void collect(final String javaCode) {
