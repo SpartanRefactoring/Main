@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.PostfixExpression.Operator.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 // import org.eclipse.jdt.core.dom.Assignment.*;
@@ -14,9 +14,11 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>x += 1 </code> by <code> x++ </code> and also
  * <code>x -= 1 </code> by <code> x-- </code>
+ * .
+ * Test case is {@link Issue107}
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
+public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
   private static boolean isIncrement(final Assignment ¢) {
     return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }

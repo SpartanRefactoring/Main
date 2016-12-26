@@ -995,9 +995,7 @@ public final class Version230 {
             .gives("      for (int ¢ = 0;¢ <s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
                 + "       if (s.charAt(¢) == 'd')\n" + "          res-=1;\n" + "      return res;\n" + " if (b) i = 3;")
             .gives("      for (int ¢ = 0;¢ <s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(¢) == 'd')\n" + "          res --;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ <s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")
+                + "       if (s.charAt(¢) == 'd')\n" + "          --res ;\n" + "      return res;\n" + " if (b) i = 3;")
             .stays();
   }
 
