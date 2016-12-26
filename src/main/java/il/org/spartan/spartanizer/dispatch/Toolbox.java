@@ -131,7 +131,7 @@ public class Toolbox {
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
-            new AssignmentToPostfixIncrement(), //
+            new AssignmentToPrefixIncrement(), //
             null) //
         .add(Block.class, //
             // new BlockRemoveDeadVariables(), //
