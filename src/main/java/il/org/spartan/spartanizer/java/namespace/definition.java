@@ -88,7 +88,7 @@ public interface definition {
         final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
         assert d != null;
         final LambdaExpression $ = az.lambdaExpression(parent(d));
-        assert $ != null: d;
+        assert $ != null : d;
         return as.list($);
       }
     },

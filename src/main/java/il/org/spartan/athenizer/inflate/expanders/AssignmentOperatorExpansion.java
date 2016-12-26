@@ -11,22 +11,22 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> implements TipperCategory.InVain {
-  @Override public String description(@SuppressWarnings("unused") Assignment __) {
+  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use regualr assignment wth operator";
   }
 
-  @Override protected boolean prerequisite(Assignment ¢) {
+  @Override protected boolean prerequisite(final Assignment ¢) {
     return convertToInfix(¢.getOperator()) != null;
   }
 
-  @Override public Tip tip(Assignment ¢) {
+  @Override public Tip tip(final Assignment ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
-        InfixExpression e = ¢.getAST().newInfixExpression();
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(duplicate.of(¢.getLeftHandSide()));
         e.setRightOperand(make.plant(duplicate.of(¢.getRightHandSide())).into(e));
         e.setOperator(convertToInfix(¢.getOperator()));
-        Assignment a = ¢.getAST().newAssignment();
+        final Assignment a = ¢.getAST().newAssignment();
         a.setLeftHandSide(duplicate.of(¢.getLeftHandSide()));
         a.setRightHandSide(e);
         a.setOperator(Operator.ASSIGN);
@@ -35,7 +35,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
     };
   }
 
-  static InfixExpression.Operator convertToInfix(Operator ¢) {
+  static InfixExpression.Operator convertToInfix(final Operator ¢) {
     return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
         : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
             : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
