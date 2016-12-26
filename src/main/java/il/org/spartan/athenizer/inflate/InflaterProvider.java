@@ -51,7 +51,10 @@ public class InflaterProvider extends OperationsProvider {
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander())
         .add(ThrowStatement.class, //
-            new ThrowTernaryExpander()); //
+            new ThrowTernaryExpander()) //
+        .add(ForStatement.class, //
+            new ForBlockExpander()) //
+        ; //
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
