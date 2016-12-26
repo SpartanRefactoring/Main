@@ -1,35 +1,21 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.utils.Box.*;
-
 import java.util.*;
 import java.util.Map.*;
 
-import il.org.spartan.*;
-import il.org.spartan.Aggregator.*;
-import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 
 public abstract class Record<Self extends Record<?>> extends LinkedHashMap<String, Object> {
   private static final long serialVersionUID = 1L;
   public static final String ARRAY_SEPARATOR = ";";
-  protected final Aggregator aggregator = new Aggregator();
-
-  public boolean aggregating() {
-    return !aggregator.isEmpty();
-  }
 
   public Record() {
     reset();
   }
 
   protected abstract Self reset();
-
-  public Iterable<Aggregation> aggregations() {
-    return aggregator.aggregations();
-  }
 
   /** Adds all {@link External} properties in a given object.
    * @param t an arbitrary object, usually with some of its fields and methods
@@ -89,35 +75,7 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
    * @param value The value associated with the key
    * @return this */
   public Self put(final String key, final double value) {
-    return put(key, value, new FormatSpecifier[0]);
-  }
-
-  /** Add a key and a <code><b>double</b><code> value to this instance
-                               *
-                               * &#64;param key
-                               *          The key to be added; must not be <code><b>null</b></code>
-   * @param value The value associated with the key
-   * @param ss Which (if any) aggregate statistics should be produced for this
-   *        column
-   * @return this */
-  public Self put(final String key, final double value, final FormatSpecifier... ss) {
-    aggregator.record(key, value, ss);
     return put(key, value + "");
-  }
-
-  /** Add a key and a <code><b>double</b><code> value to this instance
-                               *
-                               * &#64;param key
-                               *          The key to be added; must not be <code><b>null</b></code>
-   * @param value The value associated with the key
-   * @param format How should the value be formatted
-   * @param ss Which (if any) aggregate statistics should be produced for this
-   *        column
-   * @return this */
-  public Self put(final String key, final double value, final String format, final FormatSpecifier... ss) {
-    aggregator.record(key, value, ss);
-    ___.sure(ss.length == 0 || aggregating());
-    return put(key, String.format(format, box(value)));
   }
 
   /** Add a key and an <code><b>int</b></code> value to this instance
@@ -126,19 +84,6 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
    * @return this */
   public Self put(final String key, final int value) {
     return put(key, value + "");
-  }
-
-  /** Add a key and an <code><b>int</b></code> value to this instance
-   * @param key The key to be added; must not be <code><b>null</b></code>
-   * @param value The value associated with the key
-   * @param format How should this value be formatted?
-   * @param ss List of aggregations to collect on this column and their
-   *        respective formatting
-   * @return this */
-  public Self put(final String key, final int value, final String format, final FormatSpecifier... ss) {
-    aggregator.record(key, value, ss);
-    ___.sure(ss.length == 0 || aggregating());
-    return put(key, String.format(format, box(value)));
   }
 
   /** Add a key and a general {@link Object} value to this instance
@@ -184,16 +129,4 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
     return self();
   }
 
-  /** A mutator to add a key and a general {@link String} value to this instance
-   * @param key The key to be added; must not be <code><b>null</b></code>
-   * @param value The value associated with the key
-   * @return this */
-  public final Self putAggregatorColumn(final String key, final String value) {
-    aggregator.markColumn(key);
-    return put(key, value);
-  }
-
-  protected void addAggregates(final AbstractStringProperties to, final Aggregation a) {
-    aggregator.addAggregates(keySet(), to, a);
-  }
 }
