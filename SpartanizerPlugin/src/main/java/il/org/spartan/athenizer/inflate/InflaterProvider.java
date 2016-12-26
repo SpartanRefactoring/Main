@@ -27,7 +27,8 @@ public class InflaterProvider extends OperationsProvider {
   public static Toolbox freshCopyOfAllExpanders() {
     return new Toolbox()//
         .add(ReturnStatement.class, //
-            new ReturnTernaryExpander())//
+            new ReturnTernaryExpander(), //
+            new ExtractExpressionFromReturn())
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignment(), //
             new AssignmentTernaryExpander())//
@@ -48,7 +49,9 @@ public class InflaterProvider extends OperationsProvider {
         .add(VariableDeclarationStatement.class, //
             new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
-            new MethodInvocationTernaryExpander());
+            new MethodInvocationTernaryExpander())
+        .add(ThrowStatement.class, //
+            new ThrowTernaryExpander()); //
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {

@@ -146,6 +146,16 @@ public interface wizard {
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
 
+  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
+    boolean add = false;
+    for (final ASTNode x : ns)
+      if (add)
+        $.add(x);
+      else
+        add = x == n;
+    return $;
+  }
+
   static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
