@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.namespace.Environment.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 public final class EnvNestedHandler extends ENVTestEngineAbstract {
   public EnvNestedHandler(final ASTNode $) {
@@ -22,7 +22,7 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢ - Node that will be searched for suitable annotations.
    * @param es - Set to compare against. */
-  public EnvNestedHandler(final ASTNode ¢, final LinkedHashSet<Entry<String, Information>> es) {
+  public EnvNestedHandler(final ASTNode ¢, final LinkedHashSet<Entry<String, Symbol>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = ¢;
@@ -41,14 +41,14 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢
    * @param es */
-  public EnvNestedHandler(final String ¢, final LinkedHashSet<Entry<String, Information>> es) {
+  public EnvNestedHandler(final String ¢, final LinkedHashSet<Entry<String, Symbol>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = getCompilationUnit(¢);
     runTest();
   }
 
-  @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
+  @Override protected LinkedHashSet<Entry<String, Symbol>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 
