@@ -93,7 +93,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new DoNothingReturnThis(), //
         new DownCaster(), //
         new Examiner(), //
-        new CascadingSetter(), ///
+        new Cascading.Setter(), ///
         new Getter(), //
         new HashCodeMethod(), //
         new Adjuster(), //
