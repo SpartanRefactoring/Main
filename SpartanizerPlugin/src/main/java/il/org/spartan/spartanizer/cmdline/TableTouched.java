@@ -40,19 +40,20 @@ public class TableTouched extends TableCoverage {
     int totalMethodsTouched = 0;
     touchedWriter.put("Project", path);
     for (int i = 1; i < MAX_STATEMENTS_REPORTED; ++i)
-      if (statementsCoverageStatistics.containsKey(i)) {
+      if (!statementsCoverageStatistics.containsKey(i))
+        touchedWriter.put(i + "", "-");
+      else {
         List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalMethods += rs.size();
         totalMethodsTouched += totalMethodsTouched(rs);
         touchedWriter.put(i + "", format.decimal(100 * fractionOfMethodsTouched(rs)));
-      } else
-        touchedWriter.put(i + "", "-");
+      }
     touchedWriter.put("% of methods touched", safe.div(totalMethodsTouched, totalMethods));
     touchedWriter.nl();
   }
 
-  private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
-    return safe.div(totalMethodsTouched(rs), rs.size());
+  private static double fractionOfMethodsTouched(final List<MethodRecord> ¢) {
+    return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 
   private static double totalMethodsTouched(final List<MethodRecord> rs) {

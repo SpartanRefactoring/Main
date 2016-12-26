@@ -42,8 +42,7 @@ public class TableCoverage extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
-      m.after = after;
+      m.after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       ___.unused(__);
     }
@@ -96,13 +95,14 @@ public class TableCoverage extends FolderASTVisitor {
     int totalStatementsCovered = 0;
     coverageWriter.put("Project", path);
     for (int i = 0; i < MAX_STATEMENTS_REPORTED; ++i)
-      if (statementsCoverageStatistics.containsKey(i)) {
+      if (!statementsCoverageStatistics.containsKey(i))
+        coverageWriter.put(i + "", "-");
+      else {
         List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalStatements += i * rs.size();
         totalStatementsCovered += totalStatementsCovered(rs);
         coverageWriter.put(i + "", format.decimal(100 * avgCoverage(rs)));
-      } else
-        coverageWriter.put(i + "", "-");
+      }
     coverageWriter.put("total Statements covergae %", safe.div(totalStatementsCovered, totalStatements));
     coverageWriter.nl();
   }
