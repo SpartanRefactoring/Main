@@ -93,7 +93,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   /**
-   * 
+   *
    */
   private void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//

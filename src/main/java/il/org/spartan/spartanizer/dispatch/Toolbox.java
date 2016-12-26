@@ -371,7 +371,7 @@ public class Toolbox {
   }
 
   public List<Tipper<? extends ASTNode>> getAllTippers() {
-    List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+    final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;

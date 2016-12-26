@@ -56,7 +56,7 @@ public class InflaterProvider extends OperationsProvider {
             new ForBlockExpander()) //
         .add(WhileStatement.class, //
             new WhileBlockExpander()) //
-        ; //
+    ; //
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
