@@ -53,18 +53,18 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
       }
     };
   }
-  
-  /**[[SuppressWarningsSpartan]]*/
+
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
-    SimpleName $;
-    final ASTNode b = extract.containingStatement(a);
+    final Statement b = extract.containingStatement(a);
     if (!iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
-    $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
+    /** [[SuppressWarningsSpartan]] */
+    SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
     if ($ == null)
       return false;
     final Expression s = expression(az.expressionStatement(b));
-    return iz.assignment(s) && left(az.assignment(s)).equals(a) && iz.plainAssignment(az.assignment(s)) && !iz.containsName($, right(az.assignment(s)));
+    return iz.assignment(s) && left(az.assignment(s)).equals(a) && iz.plainAssignment(az.assignment(s))
+        && !iz.containsName($, right(az.assignment(s)));
   }
 }
