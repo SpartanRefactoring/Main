@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.java.namespace;
 
 import il.org.spartan.spartanizer.annotations.*;
 

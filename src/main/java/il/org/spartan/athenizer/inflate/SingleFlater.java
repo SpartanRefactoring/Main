@@ -7,13 +7,18 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.internal.core.dom.rewrite.*;
+import org.eclipse.jdt.internal.ui.javaeditor.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.jface.text.source.*;
+import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -21,6 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-20 */
 public class SingleFlater {
+  private static final boolean SELECT_CHANGES = false;
   private CompilationUnit compilationUnit;
   private OperationsProvider operationsProvider;
   private TextSelection textSelection;
@@ -99,10 +105,8 @@ public class SingleFlater {
       textChange.setTextType("java");
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
-        if (textChange.getEdit().getLength() != 0) {
-          textChange.perform(new NullProgressMonitor());
-          e.selectAndReveal(textChange.getEdit().getOffset(), textChange.getEdit().getLength());
-        }
+        if (textChange.getEdit().getLength() != 0)
+          changeNFocus(e, textChange, u.compilationUnit);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
@@ -124,6 +128,27 @@ public class SingleFlater {
   static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
     return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
+  }
+
+  @SuppressWarnings("restriction") private static void changeNFocus(final ITextEditor e, final TextFileChange tc,
+      final CompilationUnit u) throws CoreException {
+    if (!(e instanceof CompilationUnitEditor)) {
+      tc.perform(new NullProgressMonitor());
+      return;
+    }
+    ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
+    if (!(v instanceof ProjectionViewer)) {
+      tc.perform(new NullProgressMonitor());
+      return;
+    }
+    ProjectionViewer pv = (ProjectionViewer) v;
+    LineInformation i = LineInformation.create(u);
+    final int ob = pv.getBottomIndex(), ot = pv.getTopIndex(), cb = i.getLineOfOffset(tc.getEdit().getOffset() + tc.getEdit().getLength()),
+        ct = i.getLineOfOffset(tc.getEdit().getOffset());
+    tc.perform(new NullProgressMonitor());
+    e.selectAndReveal(tc.getEdit().getOffset(), !SELECT_CHANGES ? 0 : tc.getEdit().getLength());
+    if (pv.getTopIndex() != ot && ot <= ct && ob >= cb)
+      pv.setTopIndex(ot);
   }
 
   /** describes a single change operation, containing both an {@link ASTNode}
