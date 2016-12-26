@@ -22,40 +22,74 @@ import static il.org.spartan.spartanizer.ast.navigate.find.*;
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class GeneralizedSwitch extends NanoPatternTipper<IfStatement> {
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
+  @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Go Fluent: Generalized Switch";
   }
 
-  @Override public boolean canTip(final IfStatement ¢) {
-    return !¢.equals(then(az.ifStatement(parent(¢))))//
-        && differsInSingleAtomic(branchesExpressions(¢));
+  @Override public boolean canTip(final N ¢) {
+    return !¢.equals(then(az.conditionalExpression(parent(¢))))//
+        && differsInSingleAtomic(branchesExpressions(¢))//
+        || differsInSingleExpression(branchesExpressions(¢));
   }
 
-  static List<Expression> branchesExpressions(final IfStatement ¢) {
-    return branches(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
+  List<Expression> branchesExpressions(final N ¢) {
+    return branchesWrapper(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override public Tip pattern(final N ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
-        r.replace(¢, ast("holds(λ ->" + replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), "λ") + ")"
-            + createOns(singleAtomicDifferences(branchesExpressions), branches(¢)) + elseSring(¢) + ";"), g);
+        r.replace(¢,
+            ast("holds(λ ->" + (differsInSingleAtomic(branchesExpressions(¢))
+                ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), "λ") + ")"
+                    + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
+                : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", "λ") + ")"
+                    + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
+            g);
       }
     };
   }
 
-  static String elseSring(final IfStatement ¢) {
-    return lastElse(¢) == null ? "" : ".elze(() -> {" + lastElse(¢) + "})";
-  }
-
-  static String createOns(final List<String> diffs, final List<IfStatement> branches) {
+  String createExpressionOns(final List<Expression> diffs, final List<N> branches) {
     assert diffs.size() == branches.size();
     String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
-      $ += ".on(" + diffs.get(¢) + ",() -> {" + then(branches.get(¢)) + "})";
+      $ += ".on(() ->" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
     return $;
+  }
+
+  private static String extractSemicolonIfNeeded(final String ¢) {
+    final String $ = ¢.replaceAll("\n", "");
+    return $ == null || !$.endsWith(";") ? $ : $.substring(0, $.length() - 1);
+  }
+
+  String elseString(final N ¢) {
+    return lastElseWrapper(¢) == null ? "" : ".elze(() -> " + extractSemicolonIfNeeded(lastElseWrapper(¢)) + ")" + (iz.ifStatement(¢) ? ";" : "");
+  }
+
+  String createOns(final List<String> diffs, final List<? extends N> branches) {
+    assert diffs.size() == branches.size();
+    String $ = "";
+    for (int ¢ = 0; ¢ < diffs.size(); ++¢)
+      $ += ".on(" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
+    return $;
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  List<? extends ASTNode> branchesWrapper(final N ¢) {
+    return (!iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢)));
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  private String lastElseWrapper(final N ¢) {
+    return (!iz.conditionalExpression(¢) ? lastElse(az.ifStatement(¢)) : lastElse(az.conditionalExpression(¢))) + "";
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  private String thenWrapper(final N ¢) {
+    return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
 
   static String replaceAll(final String target, final String oldString, final String newString) {

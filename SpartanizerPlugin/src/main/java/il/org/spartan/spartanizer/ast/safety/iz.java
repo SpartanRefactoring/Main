@@ -242,6 +242,10 @@ public interface iz {
     return false;
   }
 
+  static boolean conditionalExpression(final ASTNode ¢) {
+    return nodeTypeEquals(¢, CONDITIONAL_EXPRESSION);
+  }
+
   /** Check whether an expression is a "conditional or" (||)
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
@@ -432,7 +436,7 @@ public interface iz {
     return identifier.equals(n.getIdentifier());
   }
 
-  static boolean ifStatement(final Statement ¢) {
+  static boolean ifStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, IF_STATEMENT);
   }
 

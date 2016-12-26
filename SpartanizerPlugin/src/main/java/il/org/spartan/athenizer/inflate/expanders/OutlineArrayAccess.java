@@ -1,14 +1,13 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
-import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -61,7 +60,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
     final ASTNode b = extract.containingStatement(a);
     if (!iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
-    $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
+    $ = az.simpleName(iz.prefixExpression(e) ? az.prefixExpression(e) : az.postfixExpression(e));
     if ($ == null)
       return false;
     final Expression s = expression(az.expressionStatement(b));
