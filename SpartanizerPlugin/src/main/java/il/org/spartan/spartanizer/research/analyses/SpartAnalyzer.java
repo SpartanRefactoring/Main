@@ -2,11 +2,14 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.research.patterns.characteristics.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 
 /** @author Ori Marcovitch
@@ -115,5 +118,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new UseParameterAndReturnIt(), //
         null);
     return this;
+  }
+
+  public List<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
+    List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
+    toolbox.getAllTippers().stream().filter(x -> x instanceof NanoPatternTipper).forEach(t -> $.add((NanoPatternTipper<? extends ASTNode>) t));
+    return $;
   }
 }
