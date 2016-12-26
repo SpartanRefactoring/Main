@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.java.namespace.Environment.*;
@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.java.namespace.Environment.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 
 public final class EnvironmentTestSpawningAndManualAddition {
   Environment e0 = Environment.genesis();
@@ -60,7 +59,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void empty() {
-    e0.put("Alex", new Information());
+    e0.put("Alex", new Symbol());
     azzert.that(e0.empty(), is(false));
   }
 
@@ -73,23 +72,23 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void emptyTestFlatEmptyNestNot() {
-    ee0.put("Alex", new Information());
+    ee0.put("Alex", new Symbol());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void emptyTestNeitherEmpty() {
-    ee0.put("Yossi", new Information());
-    ee1.put("Gill", new Information());
+    ee0.put("Yossi", new Symbol());
+    ee1.put("Gill", new Symbol());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void emptyTestNestEmptyFlatNot() {
-    ee1.put("Dan", new Information());
+    ee1.put("Dan", new Symbol());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void get() {
-    e0.put("Alex", new Information());
+    e0.put("Alex", new Symbol());
     assert e0.get("Alex") != null;
   }
 
@@ -104,12 +103,12 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void has() {
-    e0.put("Alex", new Information());
+    e0.put("Alex", new Symbol());
     azzert.that(e0.has("Alex"), is(true));
   }
 
   @Test public void hasInBoth() {
-    e1.put("Yossi", new Information());
+    e1.put("Yossi", new Symbol());
     azzert.that(e1.has("Yossi"), is(true));
   }
 
@@ -133,16 +132,16 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Before public void init_one_level() {
-    e0.put("Alex", new Information());
-    e0.put("Dan", new Information());
-    e0.put("Yossi", new Information());
-    e1.put("Kopzon", new Information());
-    e1.put("Greenstein", new Information());
-    e1.put("Gill", new Information());
+    e0.put("Alex", new Symbol());
+    e0.put("Dan", new Symbol());
+    e0.put("Yossi", new Symbol());
+    e1.put("Kopzon", new Symbol());
+    e1.put("Greenstein", new Symbol());
+    e1.put("Gill", new Symbol());
   }
 
   @Test public void names() {
-    e0.put("Alex", new Information());
+    e0.put("Alex", new Symbol());
     azzert.that(e0.names().contains("Alex"), is(true));
   }
 
@@ -160,19 +159,19 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void put() {
-    assert e0.put("Alex", new Information()) == null;
+    assert e0.put("Alex", new Symbol()) == null;
   }
 
   @Test public void putOne() {
-    assert e1.put("Kopzon1", new Information()) == null;
+    assert e1.put("Kopzon1", new Symbol()) == null;
   }
 
   @Test public void putOneAndHide() {
-    assert e1.put("Alex", new Information()) != null;
+    assert e1.put("Alex", new Symbol()) != null;
   }
 
   @Test(expected = IllegalArgumentException.class) public void putTest() {
-    e0.nest().put("Dan", new Information());
+    e0.nest().put("Dan", new Symbol());
   }
   // ==================================declaresDown Tests================
 }

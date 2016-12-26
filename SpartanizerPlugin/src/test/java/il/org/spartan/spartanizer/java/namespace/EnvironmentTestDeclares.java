@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.spartanizer.java.namespace.Environment.*;
 
@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 
 /** @author Dan Greenstein
  * @author Alex Kopzon
@@ -20,7 +19,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class EnvironmentTestDeclares {
   @Test public void declare_0() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from(""));
+    final Set<Entry<String, Symbol>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from(""));
     assert !$.contains("a");
     assert $.isEmpty();
   }
@@ -34,7 +33,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_2() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;int b;"));
+    final Set<Entry<String, Symbol>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;int b;"));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -44,7 +43,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_4() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("public void f(int a){String b;}"));
+    final Set<Entry<String, Symbol>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("public void f(int a){String b;}"));
     assert $.contains("a");
     assert $.contains("b");
   }
@@ -54,13 +53,13 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_6() {
-    final Set<Entry<String, Information>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;b=5"));
+    final Set<Entry<String, Symbol>> $ = Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a=0;b=5"));
     assert $.contains("a");
     assert !$.contains("b");
   }
 
   @Test public void declare_7() {
-    final Set<Entry<String, Information>> $ = declaresDown(makeAST.COMPILATION_UNIT
+    final Set<Entry<String, Symbol>> $ = declaresDown(makeAST.COMPILATION_UNIT
         .from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}"));
     assert $.contains("a");
     assert $.contains("b");
@@ -77,19 +76,19 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declaresDownMethodDeclaration01() {
-    for (final Entry<String, Information> ¢ : Environment
+    for (final Entry<String, Symbol> ¢ : Environment
         .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
       assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
   }
 
   @Test public void declaresDownMethodDeclaration02() {
-    for (final Entry<String, Information> ¢ : Environment
+    for (final Entry<String, Symbol> ¢ : Environment
         .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){}void g(int a){}void h(){ int a; }}"))))
       assert (".A.f.a".equals(¢.getKey()) || ".A.g.a".equals(¢.getKey()) || ".A.h.#block0.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
   }
 
   @Test public void declaresDownMethodDeclaration03() {
-    for (final Entry<String, Information> ¢ : Environment
+    for (final Entry<String, Symbol> ¢ : Environment
         .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){class B{" + "void g(int a){}" + "}" + "}}"))))
       assert ".A.f.a".equals(¢.getKey()) || ".A.f.#block0.B.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
   }

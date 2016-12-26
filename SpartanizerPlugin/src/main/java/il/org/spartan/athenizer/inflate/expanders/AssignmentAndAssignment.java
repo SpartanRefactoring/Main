@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Issue #999 Convert (a=b=??;) to (a=3;b=??;)
@@ -30,8 +29,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         Assignment newHead = create.newAssignment();
-        Assignment newTail = create.newAssignment();
-        newTail = duplicate.of($);
+        Assignment newTail = duplicate.of($);
         Assignment p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
