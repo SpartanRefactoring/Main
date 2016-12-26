@@ -14,7 +14,7 @@ public class ToStringExpanderTests {
   @Test public void test0() {
     expandingOf("a+\"\"").gives("a.toString()").stays();
   }
- 
+
   @Test public void test1() {
     expandingOf("\"\"+t()").gives("t().toString()").stays();
   }
