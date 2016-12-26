@@ -11,11 +11,11 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 public class DeclarationWithInitExpanderTest {
   @Test public void a() {
     expandingOf("int a = 0;").gives("int a;" //
-        + "a = 0;");
+        + "a = 0;").stays();
   }
 
   @Test public void b() {
     expandingOf("int a = f();").gives("int a;" //
-        + "a = f();");
+        + "a = f();").stays();
   }
 }
