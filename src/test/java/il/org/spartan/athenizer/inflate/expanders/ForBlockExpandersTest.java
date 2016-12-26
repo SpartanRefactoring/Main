@@ -16,7 +16,7 @@ public class ForBlockExpandersTest {
   @Test public void simpleShouldntAddTest() {
     expansionOf("for(int i=0;i<5;i++){ a=5;}").stays();
   }
-  
+
   @Test public void notSimpleShouldntAddTest() {
     expansionOf("for(int i=0;i<5;i++){ a=5;b=3;}").stays();
   }
