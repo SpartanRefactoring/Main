@@ -24,9 +24,8 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
   public Record() {
     reset();
   }
-  
- protected abstract Self reset() ; 
 
+  protected abstract Self reset();
 
   public Iterable<Aggregation> aggregations() {
     return aggregator.aggregations();
@@ -86,7 +85,7 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-     * @param key The key to be added; must not be <code><b>null</b></code>
+       * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public Self put(final String key, final double value) {
@@ -94,9 +93,9 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                           *
-                           * &#64;param key
-                           *          The key to be added; must not be <code><b>null</b></code>
+                             *
+                             * &#64;param key
+                             *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param ss Which (if any) aggregate statistics should be produced for this
    *        column
@@ -107,9 +106,9 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                           *
-                           * &#64;param key
-                           *          The key to be added; must not be <code><b>null</b></code>
+                             *
+                             * &#64;param key
+                             *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param format How should the value be formatted
    * @param ss Which (if any) aggregate statistics should be produced for this
