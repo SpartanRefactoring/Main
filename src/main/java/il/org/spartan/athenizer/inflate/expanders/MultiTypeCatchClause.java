@@ -13,22 +13,22 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Issue #970 <br/>
  * <br/>
  * Expand :
- * 
+ *
  * <pre>
  * catch(Type1 | Type2 e){block}
  * </pre>
- * 
+ *
  * To:
- * 
+ *
  * <pre>
  * catch(Type1 e){block}catch(Type2 e){block}
  * </pre>
- * 
+ *
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
 public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> implements TipperCategory.InVain {
-  @Override public ASTNode replacement(TryStatement s) {
-    List<CatchClause> catches = step.catchClauses(s);
+  @Override public ASTNode replacement(final TryStatement s) {
+    final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
     for (; i < catches.size(); ++i)
@@ -38,15 +38,15 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
       }
     if (multiTypeCatch == null)
       return null;
-    List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
-    Block commonBody = step.catchClauses(s).get(i).getBody();
-    SimpleName commonName = multiTypeCatch.getException().getName();
-    TryStatement $ = duplicate.of(s);
+    final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
+    final Block commonBody = step.catchClauses(s).get(i).getBody();
+    final SimpleName commonName = multiTypeCatch.getException().getName();
+    final TryStatement $ = duplicate.of(s);
     step.catchClauses($).remove(i);
-    for (Type t : types) {
-      CatchClause c = s.getAST().newCatchClause();
+    for (final Type t : types) {
+      final CatchClause c = s.getAST().newCatchClause();
       c.setBody(duplicate.of(commonBody));
-      SingleVariableDeclaration e = s.getAST().newSingleVariableDeclaration();
+      final SingleVariableDeclaration e = s.getAST().newSingleVariableDeclaration();
       e.setName(duplicate.of(commonName));
       e.setType(duplicate.of(t));
       c.setException(e);
@@ -55,7 +55,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") TryStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }
 }

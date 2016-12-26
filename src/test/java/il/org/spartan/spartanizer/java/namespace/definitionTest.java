@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
@@ -17,7 +18,7 @@ import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixtrue_ModelClass.InnerEnum.*;
+import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
@@ -64,15 +65,15 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a06() {
-    new ZZZ___Fixtrue_ModelClass().hashCode();
+    new ZZZ___Fixture_ModelClass().hashCode();
   }
 
   @Test public void a07() {
-    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant2.hashCode();
+    ZZZ___Fixture_ModelClass.InnerEnum.enumConstant2.hashCode();
   }
 
   @Test public void a08() {
-    ZZZ___Fixtrue_ModelClass.InnerEnum.enumConstant1.hashCode();
+    ZZZ___Fixture_ModelClass.InnerEnum.enumConstant1.hashCode();
   }
 
   @Test public void a09() {
@@ -99,7 +100,7 @@ public class definitionTest extends ReflectiveTester {
         assert ¢ != null : a;
   }
 
-  @ScopeSize(44) @Test public void a13() {
+  @ScopeSize(45) @Test public void a13() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@try¢") != null;
@@ -369,17 +370,58 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @RunWith(Parameterized.class)
-  public static class AllAnnotationsInModel extends ReflectiveTester {
-    public AllAnnotationsInModel(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
+  public static class ScopeSizeTest extends ReflectiveTester {
+    static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
+
+    public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
       assert name != null;
       assert ScopeSize != null;
       this.name = name;
-      this.ScopeSize = ScopeSize;
+      scopeSize = ScopeSize;
       this.kind = kind;
     }
 
     private final SimpleName name;
-    private final Integer ScopeSize;
+    private final Integer scopeSize;
+    private final definition.Kind kind;
+
+    @Test public void test() {
+      azzert.that(
+          "\n name = " + name + //
+          "\n expected = " + scopeSize + //
+          "\n got = " + scope.of(name).size() + //
+              "\n\t kind = " + kind + //
+              ancestry(name) + //
+              "\n\t scope = " + scope.of(name)//
+          , scope.of(name).size(), is(scopeSize.intValue()));
+    }
+
+    @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
+      final List<Object[]> $ = new ArrayList<>();
+      for (final Annotation a : new definitionTest().annotations()) {
+        final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
+        if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
+          int expected = value(sma);
+          for (final SimpleName ¢ : annotees.of(sma)) {
+            $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
+            if (definition.kind(¢) != definition.Kind.field)
+              --expected;
+          }
+        }
+      }
+      return $;
+    }
+  }
+
+  @RunWith(Parameterized.class)
+  public static class SingleMarkerTest extends ReflectiveTester {
+    public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
+      assert name != null;
+      this.name = name;
+      this.kind = kind;
+    }
+
+    private final SimpleName name;
     private final definition.Kind kind;
 
     @Test public void test() {
@@ -388,21 +430,17 @@ public class definitionTest extends ReflectiveTester {
               "\n\t kind = " + kind + //
               ancestry(name) + //
               "\n\t scope = " + scope.of(name)//
-          , scope.of(name).size(), is(ScopeSize.intValue()));
+          , definition.kind(name), is(kind));
     }
 
-    @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
+    @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
       final List<Object[]> $ = new ArrayList<>();
-      for (final Annotation a : new definitionTest().annotations()) {
-        final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
-        if (sma != null && (sma.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-          int expected = value(sma);
-          for (final SimpleName ¢ : annotees.of(sma)) {
-            $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
-            if (definition.kind(¢) != definition.Kind.field)
-              --expected;
-          }
-        }
+      for (final MarkerAnnotation a : new definitionTest().markers()) {
+        final String key = (a + "").substring(1);
+        if (!definition.Kind.has(key))
+          continue;
+        for (final SimpleName ¢ : annotees.of(a))
+          $.add(as.array(definition.Kind.valueOf(key), ¢));
       }
       return $;
     }
@@ -423,14 +461,14 @@ public class definitionTest extends ReflectiveTester {
 @interface class¢ {
   /**/ }
 
-@ScopeSize(22) @annotation @interface DummyAnnotation { /**/}
-@ScopeSize(22) @class¢ class DummyClass { /**/}
-@ScopeSize(22) @enum¢ enum DummyEnum { /**/ }
-@ScopeSize(22) @interface¢ interface DummyInterface {/**/ }
+@ScopeSize(23) @annotation @interface DummyAnnotation { /**/}
+@ScopeSize(23) @class¢ class DummyClass { /**/}
+@ScopeSize(23) @enum¢ enum DummyEnum { /**/ }
+@ScopeSize(23) @interface¢ interface DummyInterface {/**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface enum¢ { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface enumConstant { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface field { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface for¢ { /**/ }
+@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE}) @interface for¢ { /**/ }
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface foreach { /**/ }
 @annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface interface¢ { /**/ }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface lambda { /** lambda parameter */ }
@@ -440,10 +478,16 @@ public class definitionTest extends ReflectiveTester {
 @annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface ScopeSize { int value(); }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
 
+// @formatter:on
+@annotation
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
+@interface above {
+  String[] value();
+}
+
 @Ignore
 @class¢
-// @formatter:on
-class ZZZ___Fixtrue_ModelClass {
+class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {
     // This should never happen
@@ -457,10 +501,14 @@ class ZZZ___Fixtrue_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> $ = (@lambda final Object o) -> o + "";
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "";
+            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> {
+              o.getClass();
+              return o + "";
+            };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
-            return sum(super.hashCode(), hashCode() * $.hashCode());
+            return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
           }
 
           @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {
@@ -472,15 +520,15 @@ class ZZZ___Fixtrue_ModelClass {
         @local final int c0 = c1 - c2;
         --c2;
         c2 ^= c1;
-        @ScopeSize(5) @local int c3 = c1 + c2;
-        @ScopeSize(3) @local int c8;
+        @ScopeSize(7) @local int c3 = c1 + c2;
+        @ScopeSize(5) @local int c8;
         ++c2;
         c8 = ++c3;
         if (c1 == c2 * c8)
           throw new CloneNotSupportedException(c0 * c3 + "");
       } catch (@ScopeSize(1) @catch¢ final FileNotFoundException x) {
         for (@ScopeSize(3) @for¢ int j583 = 0; j583 < 10; --j583) {
-          final int a = 2 * j583 + hashCode();
+          @local @ScopeSize(2) final int a = 2 * j583 + hashCode();
           System.out.println(a * a + j583 * hashCode());
         }
         for (@ScopeSize(4) @for¢ int a34j = 0, a; a34j < 10; --a34j) {
@@ -503,6 +551,28 @@ class ZZZ___Fixtrue_ModelClass {
       } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
         ¢.printStackTrace();
       }
+  }
+
+  @annotation
+  @interface foo {
+    @ScopeSize(5) @field static int bar = 12;
+    @ScopeSize(5) @field static int foo = bar;
+    @ScopeSize(5) @field static int fubar = foo << bar;
+
+    @ScopeSize(5)
+    @enum¢
+    enum Bar {
+      @ScopeSize(3)
+      @enumConstant
+      abra, @enumConstant
+      @ScopeSize(3)
+      cadabra;
+      Bar vaz() {
+        return vaz();
+      }
+    }
+
+    @ScopeSize(5) @field static Bar acuda = Bar.abra, cadbara = Bar.cadabra;
   }
 
   @interface¢

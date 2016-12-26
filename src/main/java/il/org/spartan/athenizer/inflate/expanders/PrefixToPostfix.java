@@ -11,26 +11,26 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert
  *
  * <pre>
- * ++i;
- * --i;
+ * ++i; --i;
+ *
  * <pre>
  * to
  *
  * <pre>
- * i++;
- * i--;
+ * i++; i--;
+ *
  * <pre>
- * 
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */
 public class PrefixToPostfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Idiomatic {
   @Override public ASTNode replacement(final PrefixExpression ¢) {
-    return subject.operand(step.operand(¢)).to(step.operator(¢) == PrefixExpression.Operator.DECREMENT ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
+    return subject.operand(step.operand(¢))
+        .to(step.operator(¢) == PrefixExpression.Operator.DECREMENT ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
   }
-  
-  @Override protected boolean prerequisite(PrefixExpression ¢) {
-    ASTNode $ = step.parent(¢);
+
+  @Override protected boolean prerequisite(final PrefixExpression ¢) {
+    final ASTNode $ = step.parent(¢);
     return expressionStatement($) || forStatement($);
   }
 
