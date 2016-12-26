@@ -20,9 +20,8 @@ public class Symbol {
     return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
   }
 
-  /** The containing block, whose death marks the death of this entry; not
-   * sure, but I think this entry can be shared by many nodes at the same
-   * level */
+  /** The containing block, whose death marks the death of this entry; not sure,
+   * but I think this entry can be shared by many nodes at the same level */
   public final ASTNode blockScope;
   /** What do we know about an entry hidden by this one */
   public final Symbol hiding;

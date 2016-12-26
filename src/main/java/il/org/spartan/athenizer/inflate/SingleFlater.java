@@ -130,8 +130,8 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  @SuppressWarnings("restriction") private static void changeNFocus(final ITextEditor e, final TextFileChange tc,
-      final CompilationUnit u) throws CoreException {
+  @SuppressWarnings("restriction") private static void changeNFocus(final ITextEditor e, final TextFileChange tc, final CompilationUnit u)
+      throws CoreException {
     if (!(e instanceof CompilationUnitEditor)) {
       tc.perform(new NullProgressMonitor());
       return;
