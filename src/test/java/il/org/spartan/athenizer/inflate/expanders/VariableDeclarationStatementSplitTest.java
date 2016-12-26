@@ -10,7 +10,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class VariableDeclarationStatementSplitTest {
   @Test public void a() {
-    expandingOf("int a = 3, b = 4, c = 5;")
+    expansionOf("int a = 3, b = 4, c = 5;")
         .gives("int a = 3;" //
             + "int b = 4, c = 5;")
         .gives("int a;" //
@@ -35,10 +35,10 @@ public class VariableDeclarationStatementSplitTest {
   }
 
   @Test public void b() {
-    expandingOf("int a = 3, b;").stays();
+    expansionOf("int a = 3, b;").stays();
   }
 
   @Test public void c() {
-    expandingOf("int a, b, c;").stays();
+    expansionOf("int a, b, c;").stays();
   }
 }

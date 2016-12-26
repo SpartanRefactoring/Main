@@ -10,21 +10,21 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class MethodInvocationTernaryExpanderTest {
   @Test public void a() {
-    expandingOf("o.f(x ? a : b);").gives("if (x)" //
+    expansionOf("o.f(x ? a : b);").gives("if (x)" //
         + "  o.f(a);" //
         + "else " //
         + "  o.f(b);").stays();
   }
 
   @Test public void b() {
-    expandingOf("o.f(p, x ? a : b);").gives("if (x)" //
+    expansionOf("o.f(p, x ? a : b);").gives("if (x)" //
         + "  o.f(p, a);" //
         + "else" //
         + "  o.f(p, b);").stays();
   }
 
   @Test public void c() {
-    expandingOf("o.f(y ? a1 : b1, x ? a2 : b2);")
+    expansionOf("o.f(y ? a1 : b1, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, x ? a2 : b2);" //
             + "else" //
@@ -50,7 +50,7 @@ public class MethodInvocationTernaryExpanderTest {
   }
 
   @Test public void d() {
-    expandingOf("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
+    expansionOf("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, pp, x ? a2 : b2);" //
             + "else" //

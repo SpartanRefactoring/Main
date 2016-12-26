@@ -10,7 +10,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class CasesSplitTest {
   @Test public void simpleSequencers() {
-    expandingOf("" //
+    expansionOf("" //
         + "switch (x) {\n" //
         + "case 1:\n" //
         + "  f(1);\n" //
@@ -58,7 +58,7 @@ public class CasesSplitTest {
   }
 
   @Test public void complexMerging() {
-    expandingOf("" //
+    expansionOf("" //
         + "switch (x) {\n" //
         + "case 1:\n" //
         + "  f(1);\n" //
