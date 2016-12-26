@@ -136,13 +136,13 @@ public class SingleFlater {
       tc.perform(new NullProgressMonitor());
       return;
     }
-    ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
+    final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
     if (!(v instanceof ProjectionViewer)) {
       tc.perform(new NullProgressMonitor());
       return;
     }
-    ProjectionViewer pv = (ProjectionViewer) v;
-    LineInformation i = LineInformation.create(u);
+    final ProjectionViewer pv = (ProjectionViewer) v;
+    final LineInformation i = LineInformation.create(u);
     final int ob = pv.getBottomIndex(), ot = pv.getTopIndex(), cb = i.getLineOfOffset(tc.getEdit().getOffset() + tc.getEdit().getLength()),
         ct = i.getLineOfOffset(tc.getEdit().getOffset());
     tc.perform(new NullProgressMonitor());

@@ -8,8 +8,8 @@ import il.org.spartan.external.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
- * {@link Record}. This class provides fluent API for generating tables, including
- * aggregation information.
+ * {@link Record}. This class provides fluent API for generating tables,
+ * including aggregation information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Relation extends Record<Relation> implements Closeable {
@@ -41,26 +41,26 @@ public class Relation extends Record<Relation> implements Closeable {
       ¢.close();
   }
 
-  @External Summarizer[] summaries = { Summarizer.n, Summarizer.min, Summarizer.max };
+  @External Statistic[] statisics = Statistic.values();
 
-  void addSummaries(final Summarizer... ss) {
-    final List<Summarizer> a = as.list(summaries);
+  void add(final Statistic... ss) {
+    final List<Statistic> a = as.list(statisics);
     a.addAll(as.list(ss));
-    setSummarizers(a);
+    set(a);
   }
 
-  void removeSummaries(final Summarizer... ss) {
-    final List<Summarizer> a = as.list(summaries);
+  void remove(final Statistic... ss) {
+    final List<Statistic> a = as.list(statisics);
     a.removeAll(as.list(ss));
-    setSummarizers(a);
+    set(a);
   }
 
-  private void setSummarizers(final List<Summarizer> ¢) {
-    setSummarizers(¢.toArray(new Summarizer[¢.size()]));
+  private void set(final List<Statistic> ¢) {
+    set(¢.toArray(new Statistic[¢.size()]));
   }
 
-  void setSummarizers(final Summarizer... ¢) {
-    summaries = ¢;
+  void set(final Statistic... ¢) {
+    statisics = ¢;
   }
 
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
@@ -70,8 +70,6 @@ public class Relation extends Record<Relation> implements Closeable {
       ¢.write(this);
     reset();
   }
-
-
 
   @Override public Relation put(final String key, final int value) {
     getStatistics(key).record(value);

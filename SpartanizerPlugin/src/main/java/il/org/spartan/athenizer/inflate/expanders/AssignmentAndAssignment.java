@@ -29,7 +29,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         Assignment newHead = create.newAssignment();
-        Assignment newTail = duplicate.of($);
+        final Assignment newTail = duplicate.of($);
         Assignment p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
