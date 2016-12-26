@@ -6,11 +6,11 @@ import il.org.spartan.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
-public class RowWriter implements Closeable {
+public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public RowWriter(final Renderer renderer, final String fileName) throws IOException {
+  public RecordWriter(final Renderer renderer, final String fileName) throws IOException {
     this.renderer = renderer;
     this.fileName = fileName + "." + renderer.extension();
     file = new File(fileName);
@@ -56,8 +56,8 @@ public class RowWriter implements Closeable {
 
   public void writeFooter(final Record<?> ¢) {
     if (!footerPrinted) {
-      footerPrinted = true;
       write(renderer.beforeFooter());
+      footerPrinted = true;
     }
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
