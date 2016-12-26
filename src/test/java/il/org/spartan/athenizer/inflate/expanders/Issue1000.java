@@ -10,11 +10,11 @@ public class Issue1000 {
   @Test public void a() {
     expandingOf("return a = 3;").gives("a=3; return a;");
   }
-  
+
   @Test public void b() {
     expandingOf("return a = b = 3;").gives("a = b = 3; return a;");
   }
-  
+
   @Test public void c() {
     expandingOf("return a += b += f();").gives("a += b += f(); return a;");
   }
