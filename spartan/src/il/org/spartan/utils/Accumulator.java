@@ -8,19 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 
 public abstract class Accumulator {
-  static int asInteger(final boolean ¢) {
-    return as.bit(¢);
-  }
 
-  static int asInteger(final Object ¢) {
-    return As.binary(¢);
-  }
-
-  /** @param ¢
-   * @return */
-  static int asInteger(final String ¢) {
-    return As.binary(¢);
-  }
 
   protected int value;
   public int weight = 1;
@@ -35,7 +23,7 @@ public abstract class Accumulator {
   }
 
   public final void add(final boolean ¢) {
-    add(asInteger(¢));
+    add(as.bit(¢));
   }
 
   public void add(final int v) {
@@ -43,7 +31,7 @@ public abstract class Accumulator {
   }
 
   public final void add(final String ¢) {
-    add(asInteger(¢));
+    add(as.bit(¢));
   }
 
   public String name() {
@@ -140,11 +128,11 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method") public static class TEST {
       @Test public void booleanAdds() {
         @NotNull final Last c = new Last();
-        azzert.that(Accumulator.asInteger(false), is(0));
+        azzert.that(as.bit(false), is(0));
         azzert.that(c.value(), is(0));
         c.add(true);
         azzert.that(c.value(), is(1));
-        azzert.that(Accumulator.asInteger(false), is(0));
+        azzert.that(as.bit(false), is(0));
         c.add(false);
         azzert.that(c.value(), is(0));
         c.add(false);
