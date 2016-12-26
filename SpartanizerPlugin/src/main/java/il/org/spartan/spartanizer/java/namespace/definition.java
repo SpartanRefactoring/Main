@@ -84,6 +84,13 @@ public interface definition {
       }
     },
     lambda {
+      @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
+        final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
+        assert d != null;
+        final LambdaExpression $ = az.lambdaExpression(parent(d));
+        assert $ != null : d;
+        return as.list($);
+      }
     },
     local {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
@@ -253,17 +260,5 @@ public interface definition {
 
   static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
-  }
-
-  static List<? extends ASTNode> exclusiveScope(final SimpleName n) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
-    assert f != null;
-    final FieldDeclaration d = az.fieldDeclaration(parent(f));
-    assert d != null;
-    assert parent(d) != null;
-    final List<ASTNode> $ = new ArrayList<>(members.of(parent(d)));
-    $.remove(d);
-    addRest($, f, fragments(d));
-    return $;
   }
 }

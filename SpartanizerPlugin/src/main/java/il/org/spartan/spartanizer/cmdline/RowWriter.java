@@ -10,7 +10,7 @@ public class RowWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public RowWriter(Renderer renderer, final String fileName) throws IOException {
+  public RowWriter(final Renderer renderer, final String fileName) throws IOException {
     this.renderer = renderer;
     this.fileName = fileName + "." + renderer.extension();
     file = new File(fileName);
@@ -18,11 +18,11 @@ public class RowWriter implements Closeable {
     write(renderer.tableBegin());
   }
 
-  private void write(String s) {
+  private void write(final String s) {
     try {
       writer.write(s);
       writer.flush();
-    } catch (IOException ¢) {
+    } catch (final IOException ¢) {
       throw new RuntimeException(¢);
     }
   }
@@ -54,7 +54,7 @@ public class RowWriter implements Closeable {
     writeData(¢);
   }
 
-  public void writeFooter(Record<?> ¢) {
+  public void writeFooter(final Record<?> ¢) {
     if (!footerPrinted) {
       footerPrinted = true;
       write(renderer.beforeFooter());
@@ -62,11 +62,11 @@ public class RowWriter implements Closeable {
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
 
-  private void writeData(Record<?> ¢) {
+  private void writeData(final Record<?> ¢) {
     write(renderer.recordBegin() + separate.these(¢.values()).by(renderer.recordSeparator()) + renderer.recordEnd());
   }
 
-  private void writeHeader(Record<?> ¢) {
+  private void writeHeader(final Record<?> ¢) {
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + separate.these(¢.keySet()).by(renderer.headerLineSepator()) + renderer.headerLineEnd() + //
         renderer.afterHeader());

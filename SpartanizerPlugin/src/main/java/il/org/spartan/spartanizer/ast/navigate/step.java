@@ -192,7 +192,7 @@ public enum step {
   public static Expression expression(final ReturnStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
-  
+
   public static Expression expression(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
@@ -785,7 +785,7 @@ public enum step {
     return ¢ == null ? null : ¢.enumConstants();
   }
 
-  @SuppressWarnings("unchecked") public static List<Type> types(UnionType ¢) {
+  @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
     return ¢ == null ? null : ¢.types();
   }
 }

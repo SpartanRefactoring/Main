@@ -15,64 +15,63 @@ import il.org.spartan.statistics.*;
  * @since 2016-12-25 */
 public class Relation extends Record<Relation> implements Closeable {
   /* @formatter:off*/ @Override protected Relation self() { return this; } /*@formatter:on*/
+
   private static final long serialVersionUID = 1L;
   private int nRecords;
   public final String name;
-
   static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
   private final List<RowWriter> writers = new ArrayList<>();
 
-  public Relation(String name) {
+  public Relation(final String name) {
     this(name, Renderer.builtin.values());
   }
 
-  @SuppressWarnings("resource") public Relation(String name, Renderer... rs) {
+  @SuppressWarnings("resource") public Relation(final String name, final Renderer... rs) {
     this.name = name;
-    for (Renderer r : rs)
+    for (final Renderer r : rs)
       try {
         writers.add(new RowWriter(r, temporariesFolder + name));
-      } catch (IOException ¢) {
+      } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
   }
 
   @Override public void close() {
-    for (RowWriter ¢ : writers)
+    for (final RowWriter ¢ : writers)
       ¢.close();
   }
 
-
   enum Summarizer {
-    min, max, med, mad, sd, range, n, na, 
+    min, max, med, mad, sd, range, n, na,
   }
 
   @External Summarizer[] summaries = { Summarizer.n, Summarizer.min, Summarizer.max };
 
-  void addSummaries(Summarizer... ss) {
-    List<Summarizer> a = as.list(summaries);
+  void addSummaries(final Summarizer... ss) {
+    final List<Summarizer> a = as.list(summaries);
     a.addAll(as.list(ss));
     setSummarizers(a);
   }
 
-  void removeSummaries(Summarizer... ss) {
-    List<Summarizer> a = as.list(summaries);
+  void removeSummaries(final Summarizer... ss) {
+    final List<Summarizer> a = as.list(summaries);
     a.removeAll(as.list(ss));
     setSummarizers(a);
   }
 
-  private void setSummarizers(List<Summarizer> ¢) {
+  private void setSummarizers(final List<Summarizer> ¢) {
     setSummarizers(¢.toArray(new Summarizer[¢.size()]));
   }
 
-  void setSummarizers(Summarizer... ¢) {
+  void setSummarizers(final Summarizer... ¢) {
     summaries = ¢;
   }
 
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
 
   public void nl() {
-    for (RowWriter ¢ : writers)
+    for (final RowWriter ¢ : writers)
       ¢.write(this);
     reset();
   }
@@ -100,9 +99,9 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   @Override protected Relation reset() {
-    for (String ¢: keySet())
-      put(¢,"");
-    put("#",++nRecords + "");
+    for (final String ¢ : keySet())
+      put(¢, "");
+    put("#", ++nRecords + "");
     return this;
   }
 }
