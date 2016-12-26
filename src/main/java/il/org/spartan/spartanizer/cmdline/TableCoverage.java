@@ -45,7 +45,6 @@ public class TableCoverage extends FolderASTVisitor {
       final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       m.after = after;
     } catch (final AssertionError __) {
-      System.out.println(__);
       ___.unused(__);
     }
     return true;
@@ -68,6 +67,8 @@ public class TableCoverage extends FolderASTVisitor {
 
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
+    statementsCoverageStatistics.clear();
+    scope.clear();
     System.err.println("Your output is in: " + outputFolder);
   }
 
@@ -104,7 +105,6 @@ public class TableCoverage extends FolderASTVisitor {
         coverageWriter.put(i + "", "-");
     coverageWriter.put("total Statements covergae %", safe.div(totalStatementsCovered, totalStatements));
     coverageWriter.nl();
-    statementsCoverageStatistics.clear();
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
