@@ -91,7 +91,7 @@ public class Relation extends Record<Relation> implements Closeable {
   @Override protected Relation reset() {
     for (final String ¢ : keySet())
       put(¢, "");
-    put("", ++nRecords + "");
+    put((String)null, ++nRecords + "");
     return this;
   }
 }

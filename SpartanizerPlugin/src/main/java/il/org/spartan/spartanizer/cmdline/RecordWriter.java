@@ -68,7 +68,15 @@ public class RecordWriter implements Closeable {
 
   private void writeHeader(final Record<?> ¢) {
     write(renderer.beforeHeader() + //
-        renderer.headerLineBegin() + separate.these(¢.keySet()).by(renderer.headerLineSepator()) + renderer.headerLineEnd() + //
+        renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
+  }
+
+  private String writeHeaderInner(final Record<?> r) {
+    final Separator s = new Separator(renderer.headerSeparator());
+    final StringBuffer $ = new StringBuffer();
+    for (final String o : r.keySet())
+      $.append(s).append(o != null ? o : renderer.null¢());
+    return $ + "";
   }
 }
