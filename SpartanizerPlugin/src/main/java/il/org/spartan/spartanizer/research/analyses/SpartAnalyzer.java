@@ -29,7 +29,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     addMethodPatterns();//
     add(ConditionalExpression.class, //
         new DefaultsTo(), //
-        new GeneralizedSwitchTernary(), //
+        new GeneralizedSwitch<ConditionalExpression>(), //
         new Unless(), //
         new SafeReference(), //
         null) //
@@ -65,7 +65,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new IfNullReturn(), //
                 new IfNullReturnNull(), //
                 new ExecuteWhen(), //
-                new GeneralizedSwitch(), //
+                new GeneralizedSwitch<IfStatement>(), //
                 new PutIfAbsent(), //
                 new IfThrow(), //
                 null) //

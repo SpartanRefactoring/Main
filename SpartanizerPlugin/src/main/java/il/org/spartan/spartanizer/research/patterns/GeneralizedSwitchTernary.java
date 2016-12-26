@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
+// TODO: Marco destroy.
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
