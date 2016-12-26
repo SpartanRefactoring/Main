@@ -261,16 +261,4 @@ public interface definition {
   static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
   }
-
-  static List<? extends ASTNode> exclusiveScope(final SimpleName n) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
-    assert f != null;
-    final FieldDeclaration d = az.fieldDeclaration(parent(f));
-    assert d != null;
-    assert parent(d) != null;
-    final List<ASTNode> $ = new ArrayList<>(members.of(parent(d)));
-    $.remove(d);
-    addRest($, f, fragments(d));
-    return $;
-  }
 }
