@@ -40,6 +40,11 @@ public interface Renderer {
   default String footerBegin() { return recordBegin();}
   default String footerEnd() { return recordEnd();}
   default String footerSeparator() { return recordSeparator(); }
+  default String max() { return "max"; }
+  default String min() { return "min"; }
+  default String n() { return "n"; }
+  default String na() { return "na"; }
+  default String range() { return "range"; }
   // @formatter:on
 
   enum builtin implements Renderer {

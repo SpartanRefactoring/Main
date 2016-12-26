@@ -4,12 +4,11 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.external.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
- * {@link Row}. This class provides fluent API for generating tables, including
+ * {@link Record}. This class provides fluent API for generating tables, including
  * aggregation information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
@@ -20,7 +19,7 @@ public class Relation extends Record<Relation> implements Closeable {
   private int nRecords;
   public final String name;
   static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
-  private final List<RowWriter> writers = new ArrayList<>();
+  private final List<RecordWriter> writers = new ArrayList<>();
 
   public Relation(final String name) {
     this(name, Renderer.builtin.values());
@@ -30,7 +29,7 @@ public class Relation extends Record<Relation> implements Closeable {
     this.name = name;
     for (final Renderer r : rs)
       try {
-        writers.add(new RowWriter(r, temporariesFolder + name));
+        writers.add(new RecordWriter(r, temporariesFolder + name));
       } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
@@ -38,12 +37,8 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   @Override public void close() {
-    for (final RowWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       ¢.close();
-  }
-
-  enum Summarizer {
-    min, max, med, mad, sd, range, n, na,
   }
 
   @External Summarizer[] summaries = { Summarizer.n, Summarizer.min, Summarizer.max };
@@ -71,15 +66,12 @@ public class Relation extends Record<Relation> implements Closeable {
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
 
   public void nl() {
-    for (final RowWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       ¢.write(this);
     reset();
   }
 
-  @Override public Relation put(final String key, final double value, final FormatSpecifier... ss) {
-    getStatistics(key).record(value);
-    return super.put(key, value, ss);
-  }
+
 
   @Override public Relation put(final String key, final int value) {
     getStatistics(key).record(value);
@@ -101,7 +93,7 @@ public class Relation extends Record<Relation> implements Closeable {
   @Override protected Relation reset() {
     for (final String ¢ : keySet())
       put(¢, "");
-    put("#", ++nRecords + "");
+    put("", ++nRecords + "");
     return this;
   }
 }
