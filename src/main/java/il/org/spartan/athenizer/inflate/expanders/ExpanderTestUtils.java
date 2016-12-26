@@ -29,12 +29,12 @@ public class ExpanderTestUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-      ASTRewrite r = ASTRewrite.create(u.getAST());
+      final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
       try {
-        Document doc = new Document(wrap);
+        final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        String unpeeled = doc.get();
+        final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         final String peeled = w.off(unpeeled);
@@ -54,12 +54,12 @@ public class ExpanderTestUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-      ASTRewrite r = ASTRewrite.create(u.getAST());
+      final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
       try {
-        Document doc = new Document(wrap);
+        final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        String unpeeled = doc.get();
+        final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           return;
         final String peeled = w.off(unpeeled);
