@@ -1,7 +1,6 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
-import static org.junit.Assert.*;
 
 import org.junit.*;
 
