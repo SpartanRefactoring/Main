@@ -4,18 +4,15 @@ import org.junit.*;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
-/** Unit tests for {@link DeclarationWithInitExpander}
+/** Unit tests for {@link MethodInvocationTernaryExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
-public class DeclarationWithInitExpanderTest {
+public class MethodInvocationTernaryExpanderTest {
   @Test public void a() {
-    expandingOf("int a = 0;").gives("int a;" //
-        + "a = 0;").stays();
-  }
-
-  @Test public void b() {
-    expandingOf("int a = f();").gives("int a;" //
-        + "a = f();").stays();
+    expandingOf("o.f(x ? a : b);").gives("if (x)" //
+        + "  o.f(a);" //
+        + "else " //
+        + "  o.f(b);").stays();
   }
 }
