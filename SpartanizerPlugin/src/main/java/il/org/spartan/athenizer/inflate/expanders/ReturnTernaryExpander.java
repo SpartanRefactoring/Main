@@ -7,6 +7,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 /** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
  * relevant for return (<ternary>)
  * @author Raviv Rachmiel
@@ -17,7 +19,7 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {
-      final Expression unpar = az.parenthesizedExpression(x).getExpression();
+      final Expression unpar = expression(az.parenthesizedExpression(x));
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
@@ -25,7 +27,7 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
         return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(duplicate.of(¢.getExpression()));
+    $.setExpression(duplicate.of(expression(¢)));
     final ReturnStatement then = ¢.getAST().newReturnStatement();
     then.setExpression(duplicate.of(¢.getThenExpression()));
     $.setThenStatement(duplicate.of(az.statement(then)));
@@ -37,8 +39,8 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
 
   private static ASTNode replaceReturn(final Statement ¢) {
     final ReturnStatement $ = az.returnStatement(¢);
-    return $ == null || !($.getExpression() instanceof ConditionalExpression) && !($.getExpression() instanceof ParenthesizedExpression) ? null
-        : innerReturnReplacement($.getExpression(), ¢);
+    return $ == null || !($.getExpression() instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
+        : innerReturnReplacement(expression($), ¢);
   }
 
   @Override public ASTNode replacement(final ReturnStatement ¢) {
