@@ -959,7 +959,7 @@ public interface iz {
   static boolean switchCase(final ASTNode ¢) {
     return ¢ != null && ¢.getNodeType() == SWITCH_CASE;
   }
-  
+
   static boolean switchStatement(final ASTNode ¢) {
     return ¢ != null && ¢.getNodeType() == SWITCH_STATEMENT;
   }
@@ -1012,7 +1012,7 @@ public interface iz {
   static boolean typeDeclaration(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }
-  
+
   /** @param ¢ JDs
    * @return */
   static boolean unionType(final ASTNode ¢) {
