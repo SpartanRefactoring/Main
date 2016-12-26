@@ -50,8 +50,7 @@ public abstract class ENVTestEngineAbstract {
    * @param contains JD
    * @return <code><b>true</b></code> <em>iff</em> the sets specified, are
    *         equally the same. */
-  private static void compareInOrder(final LinkedHashSet<Entry<String, Symbol>> contains,
-      final LinkedHashSet<Entry<String, Symbol>> contained) {
+  private static void compareInOrder(final LinkedHashSet<Entry<String, Symbol>> contains, final LinkedHashSet<Entry<String, Symbol>> contained) {
     assert contained != null;
     assert contains != null;
     final Iterator<Entry<String, Symbol>> s = contains.iterator();
@@ -77,8 +76,7 @@ public abstract class ENVTestEngineAbstract {
    * @param contains JD
    * @return <code><b>true</b></code> <em>iff</em> the specified
    *         {@link LinkedHashSet} contains testSet. */
-  private static void compareOutOfOrder(final LinkedHashSet<Entry<String, Symbol>> contains,
-      final LinkedHashSet<Entry<String, Symbol>> contained) {
+  private static void compareOutOfOrder(final LinkedHashSet<Entry<String, Symbol>> contains, final LinkedHashSet<Entry<String, Symbol>> contained) {
     assert contains != null;
     assert contained != null;
     if (contains.containsAll(contained))
@@ -97,11 +95,10 @@ public abstract class ENVTestEngineAbstract {
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
     assert from != null;
-    final String ROOT = "./src/test/java/il/org/spartan/spartanizer/java/";
-    assert ROOT != null;
-    final File f = new File(ROOT + from);
+    assert rOOT != null;
+    final File f = new File(rOOT + from);
     assert f != null;
-    assert f.exists();
+    assert f.exists(): f;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     return $;
@@ -133,6 +130,7 @@ public abstract class ENVTestEngineAbstract {
   // test on a node with
   // potential annotations.
   protected ASTNode n;
+  private static final String rOOT = "./src/test/java/il/org/spartan/spartanizer/java/namespace/";
 
   protected abstract LinkedHashSet<Entry<String, Symbol>> buildEnvironmentSet(BodyDeclaration $);
 

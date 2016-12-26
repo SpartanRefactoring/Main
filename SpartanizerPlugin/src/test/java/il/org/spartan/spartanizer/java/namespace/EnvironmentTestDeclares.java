@@ -76,8 +76,7 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declaresDownMethodDeclaration01() {
-    for (final Entry<String, Symbol> ¢ : Environment
-        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
+    for (final Entry<String, Symbol> ¢ : Environment.declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
       assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
   }
 

@@ -11,16 +11,12 @@ public class Issue999 {
   @Test public void a() {
     expandingOf("a = b = 3;").gives("b = 3; a = b;");
   }
+
   @Test public void b() {
-    expandingOf("a = b = c = 3;")
-    .gives("c = 3; a = b = c;")
-    .gives("c = 3; b = c; a = b;")
-    .stays();
+    expandingOf("a = b = c = 3;").gives("c = 3; a = b = c;").gives("c = 3; b = c; a = b;").stays();
   }
-  
+
   @Test public void c() {
-    expandingOf("a += b += 3;")
-    .gives("b += 3; a += b;")
-    .gives("b = b + 3; a += b;");
+    expandingOf("a += b += 3;").gives("b += 3; a += b;").gives("b = b + 3; a += b;");
   }
 }

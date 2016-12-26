@@ -33,9 +33,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
         Assignment p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
-        
         newHead = duplicate.of(az.assignment(right(p)));
-        
         p.setRightHandSide(duplicate.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead);
         final ExpressionStatement tail = create.newExpressionStatement(newTail);

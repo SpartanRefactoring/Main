@@ -388,8 +388,8 @@ public class definitionTest extends ReflectiveTester {
     @Test public void test() {
       azzert.that(
           "\n name = " + name + //
-          "\n expected = " + scopeSize + //
-          "\n got = " + scope.of(name).size() + //
+              "\n expected = " + scopeSize + //
+              "\n got = " + scope.of(name).size() + //
               "\n\t kind = " + kind + //
               ancestry(name) + //
               "\n\t scope = " + scope.of(name)//
@@ -520,8 +520,8 @@ class ZZZ___Fixture_ModelClass {
         @local final int c0 = c1 - c2;
         --c2;
         c2 ^= c1;
-        @ScopeSize(7) @local int c3 = c1 + c2;
-        @ScopeSize(5) @local int c8;
+        @ScopeSize(5) @local int c3 = c1 + c2;
+        @ScopeSize(3) @local int c8;
         ++c2;
         c8 = ++c3;
         if (c1 == c2 * c8)

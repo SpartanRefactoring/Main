@@ -166,8 +166,8 @@ final class EnvironmentVisitor extends ASTVisitor {
     return null;
   }
 
-  /** Returns the {@link Symbol} of the declaration the current declaration
-   * is hiding.
+  /** Returns the {@link Symbol} of the declaration the current declaration is
+   * hiding.
    * @param ¢ the fullName of the declaration.
    * @return The hidden node's Information */
   /* Implementation notes: Should go over result set, and search for declaration
