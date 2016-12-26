@@ -75,7 +75,7 @@ public class ExpanderTestUtils {
     }
   }
 
-  public static Operand expandingOf(final String from) {
+  public static Operand expansionOf(final String from) {
     return new Operand(from);
   }
 }

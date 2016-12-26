@@ -9,34 +9,34 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class Issue1004 {
   @Test public void t1() {
-    expandingOf("arr[i--] = 5;").gives("arr[i] = 5; i--;");
+    expansionOf("arr[i--] = 5;").gives("arr[i] = 5; i--;");
   }
 
   @Test public void t2() {
-    expandingOf("arr[i++] = i;").stays();
+    expansionOf("arr[i++] = i;").stays();
   }
 
   @Test public void t3() {
-    expandingOf("arr[i++] = arr[i++] + i;").stays();
+    expansionOf("arr[i++] = arr[i++] + i;").stays();
   }
 
   @Test public void t4() {
-    expandingOf("arr[++i] = i;").stays();
+    expansionOf("arr[++i] = i;").stays();
   }
 
   @Test public void t5() {
-    expandingOf("arr[++i] = x;").gives("++i; arr[i] = x;");
+    expansionOf("arr[++i] = x;").gives("++i; arr[i] = x;");
   }
 
   @Test public void t6() {
-    expandingOf("arr[i++] = 5+4;").gives("arr[i] = 5+4; i++;");
+    expansionOf("arr[i++] = 5+4;").gives("arr[i] = 5+4; i++;");
   }
 
   @Test public void t7() {
-    expandingOf("for(;;) { arr[i++]=1;}").gives("for(;;) { arr[i]=1;i++;}");
+    expansionOf("for(;;) { arr[i++]=1;}").gives("for(;;) { arr[i]=1;i++;}");
   }
 
   @Test public void t8() {
-    expandingOf("for(;;) { arr[++i]=1;}").gives("for(;;) { ++i; arr[i]=1;}");
+    expansionOf("for(;;) { arr[++i]=1;}").gives("for(;;) { ++i; arr[i]=1;}");
   }
 }
