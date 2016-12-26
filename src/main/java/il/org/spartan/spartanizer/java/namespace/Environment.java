@@ -18,79 +18,10 @@ import il.org.spartan.spartanizer.utils.*;
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 public interface Environment {
-  /** Information about a variable in the environment - its {@link ASTNode}, its
-   * parent's, its {@link type}, and which other variables does it hide. This
-   * class is intentionally package level, and intentionally defined local. For
-   * now, clients should not be messing with it
-   * @since 2016 */
-  class Information {
-    public static boolean eq(final Object o1, final Object o2) {
-      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
-    }
-
-    /** For Information purposes, {@link type}s are equal if their key is
-     * equal. */
-    static boolean eq(final type t1, final type t2) {
-      return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
-    }
-
-    /** The containing block, whose death marks the death of this entry; not
-     * sure, but I think this entry can be shared by many nodes at the same
-     * level */
-    public final ASTNode blockScope;
-    /** What do we know about an entry hidden by this one */
-    public final Information hiding;
-    /** The node at which this entry was created */
-    public final ASTNode self;
-    /** What do we know about the type of this definition */
-    public final type prudentType;
-
-    // For now, nothing is known, we only maintain lists
-    public Information() {
-      blockScope = self = null;
-      prudentType = null;
-      hiding = null;
-    }
-
-    public Information(final ASTNode blockScope, final Information hiding, final ASTNode self, final type prudentType) {
-      this.blockScope = blockScope;
-      this.hiding = hiding;
-      this.self = self;
-      this.prudentType = prudentType;
-    }
-
-    public Information(final type t) {
-      blockScope = self = null;
-      prudentType = t;
-      hiding = null;
-    }
-
-    public boolean equals(final Information ¢) {
-      return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
-    }
-
-    /** @param ¢
-     * @return <code><b>true</b></code> <em>iff</em> the ASTNode (self) and its
-     *         parent (blockScope) are the same ones, the type's key() is the
-     *         same, and if the Information nodes hidden are equal. */
-    // Required for MapEntry equality, which is, in turn, required for Set
-    // containment check, which is required for testing.
-    @Override public boolean equals(final Object ¢) {
-      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
-    }
-
-    // Required for MapEntry equality, which is, in turn, required for Set
-    // containment check, which is required for testing.
-    @Override public int hashCode() {
-      return (self == null ? 0 : self.hashCode())
-          + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
-    }
-  }
-
   /** Dictionary with a parent. Insertions go the current node, searches start
    * at the current note and Delegate to the parent unless it is null. */
   final class Nested implements Environment {
-    public final Map<String, Information> flat = new LinkedHashMap<>();
+    public final Map<String, Symbol> flat = new LinkedHashMap<>();
     public final Environment nest;
 
     Nested(final Environment parent) {
@@ -104,14 +35,14 @@ public interface Environment {
     }
 
     /** @return Map entries used in the current scope. */
-    @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
+    @Override public LinkedHashSet<Map.Entry<String, Symbol>> entries() {
       return new LinkedHashSet<>(flat.entrySet());
     }
 
     /** @return The information about the name in current {@link Environment}
      *         . */
-    @Override public Information get(final String name) {
-      final Information $ = flat.get(name);
+    @Override public Symbol get(final String name) {
+      final Symbol $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
 
@@ -132,7 +63,7 @@ public interface Environment {
     }
 
     /** Add name to the current scope in the {@link Environment} . */
-    @Override public Information put(final String name, final Information value) {
+    @Override public Symbol put(final String name, final Symbol value) {
       flat.put(name, value);
       assert !flat.isEmpty();
       return hiding(name);
@@ -145,14 +76,14 @@ public interface Environment {
     // This class is intentionally empty
   };
   /** Initializer for EMPTY */
-  LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
+  LinkedHashSet<Entry<String, Symbol>> emptyEntries = new LinkedHashSet<>();
   /** Initializer for EMPTY */
   LinkedHashSet<String> emptySet = new LinkedHashSet<>();
   // Holds the declarations in the subtree and relevant siblings.
-  LinkedHashSet<Entry<String, Information>> upEnv = new LinkedHashSet<>();
+  LinkedHashSet<Entry<String, Symbol>> upEnv = new LinkedHashSet<>();
 
-  static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+  static Symbol createInformation(final VariableDeclarationFragment ¢, final type t) {
+    return new Symbol(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
   /** @param ¢ JD
@@ -160,8 +91,8 @@ public interface Environment {
    *         contained ({@link Block}s. If the {@link Statement} is a
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
-  static List<Entry<String, Information>> declarationsOf(final Statement ¢) {
-    final List<Entry<String, Information>> $ = new ArrayList<>();
+  static List<Entry<String, Symbol>> declarationsOf(final Statement ¢) {
+    final List<Entry<String, Symbol>> $ = new ArrayList<>();
     switch (¢.getNodeType()) {
       case VARIABLE_DECLARATION_STATEMENT:
         $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
@@ -172,8 +103,8 @@ public interface Environment {
     return $;
   }
 
-  static List<Entry<String, Information>> declarationsOf(final VariableDeclarationStatement s) {
-    final List<Entry<String, Information>> $ = new ArrayList<>();
+  static List<Entry<String, Symbol>> declarationsOf(final VariableDeclarationStatement s) {
+    final List<Entry<String, Symbol>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(s.getType()));
     final String path = fullName(s);
     $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t))).collect(Collectors.toList()));
@@ -181,15 +112,15 @@ public interface Environment {
   }
 
   /** @return set of entries declared in the node, including all hiding. */
-  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode ¢) {
+  static LinkedHashSet<Entry<String, Symbol>> declaresDown(final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    final LinkedHashSet<Entry<String, Symbol>> $ = new LinkedHashSet<>();
     ¢.accept(new EnvironmentVisitor($));
     return $;
   }
 
   /** Gets declarations made in ASTNode's Ancestors */
-  static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
+  static LinkedHashSet<Entry<String, Symbol>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
       for (final Statement ¢ : statements(PB))
         upEnv.addAll(declarationsOf(¢));
@@ -206,17 +137,17 @@ public interface Environment {
     return EMPTY.spawn();
   }
 
-  static Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
-    for (final Entry<String, Information> $ : ss)
+  static Symbol get(final LinkedHashSet<Entry<String, Symbol>> ss, final String s) {
+    for (final Entry<String, Symbol> $ : ss)
       if (s.equals($.getKey()))
         return $.getValue();
     return null;
   }
 
-  static Information getHidden(final String s) {
+  static Symbol getHidden(final String s) {
     final String shortName = s.substring(s.lastIndexOf(".") + 1);
     for (String ¢ = parentNameScope(s); !"".equals(¢); ¢ = parentNameScope(¢)) {
-      final Information $ = get(upEnv, ¢ + "." + shortName);
+      final Symbol $ = get(upEnv, ¢ + "." + shortName);
       if ($ != null)
         return $;
     }
@@ -242,7 +173,7 @@ public interface Environment {
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static LinkedHashSet<Entry<String, Information>> uses(@SuppressWarnings("unused") final ASTNode __) {
+  static LinkedHashSet<Entry<String, Symbol>> uses(@SuppressWarnings("unused") final ASTNode __) {
     return new LinkedHashSet<>();
   }
 
@@ -257,12 +188,12 @@ public interface Environment {
     return true;
   }
 
-  default LinkedHashSet<Entry<String, Information>> entries() {
+  default LinkedHashSet<Entry<String, Symbol>> entries() {
     return emptyEntries;
   }
 
-  default LinkedHashSet<Entry<String, Information>> fullEntries() {
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
+  default LinkedHashSet<Entry<String, Symbol>> fullEntries() {
+    final LinkedHashSet<Entry<String, Symbol>> $ = new LinkedHashSet<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
     return $;
@@ -288,7 +219,7 @@ public interface Environment {
   }
 
   /** @return null iff the name is not in use in the {@link Environment} */
-  default Information get(@SuppressWarnings("unused") final String name) {
+  default Symbol get(@SuppressWarnings("unused") final String name) {
     return null;
   }
 
@@ -300,7 +231,7 @@ public interface Environment {
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
-  default Information hiding(final String name) {
+  default Symbol hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
 
@@ -323,7 +254,7 @@ public interface Environment {
    * Note: you will have to assume multiple definitions in the same block, this
    * is a compilation error, but nevertheless, let a later entry with of a
    * certain name to "hide" a former entry with the same name. */
-  default Information put(final String name, final Information i) {
+  default Symbol put(final String name, final Symbol i) {
     throw new IllegalArgumentException(name + "/" + i);
   }
 

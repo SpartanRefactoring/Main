@@ -28,11 +28,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 @SuppressWarnings("unused")
 final class EnvironmentVisitor extends ASTVisitor {
-  private final LinkedHashSet<Entry<String, Information>> $;
+  private final LinkedHashSet<Entry<String, Symbol>> $;
   // Holds the current scope full name (Path).
   String scopePath = "";
 
-  EnvironmentVisitor(final LinkedHashSet<Entry<String, Information>> $) {
+  EnvironmentVisitor(final LinkedHashSet<Entry<String, Symbol>> $) {
     this.$ = $;
   }
 
@@ -46,49 +46,49 @@ final class EnvironmentVisitor extends ASTVisitor {
     return az.enumConstantDeclaration($).getName() + "";
   }
 
-  Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
+  Entry<String, Symbol> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
-    final List<Entry<String, Information>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding") List<Entry<String, Symbol>> convertToEntry(final FieldDeclaration d) {
+    final List<Entry<String, Symbol>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(d.getType()));
     $.addAll(fragments(d).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
-  Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+  Entry<String, Symbol> convertToEntry(final SingleVariableDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
-    final List<Entry<String, Information>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding") List<Entry<String, Symbol>> convertToEntry(final VariableDeclarationExpression x) {
+    final List<Entry<String, Symbol>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(x.getType()));
     $.addAll(fragments(x).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
-    final List<Entry<String, Information>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding") List<Entry<String, Symbol>> convertToEntry(final VariableDeclarationStatement s) {
+    final List<Entry<String, Symbol>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(s.getType()));
     $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
-  Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
-    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+  Symbol createInformation(final AnnotationTypeMemberDeclaration ¢) {
+    return new Symbol(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
   }
 
-  Information createInformation(final SingleVariableDeclaration ¢) {
-    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+  Symbol createInformation(final SingleVariableDeclaration ¢) {
+    return new Symbol(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
   }
 
-  Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+  Symbol createInformation(final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
     // does not contain its type. Hence, the type is sent from the parent in
     // the convertToEntry calls.
-    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+    return new Symbol(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
   // Everything besides the actual variable declaration was visited for
@@ -158,15 +158,15 @@ final class EnvironmentVisitor extends ASTVisitor {
     return scopePath + "." + $;
   }
 
-  Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+  Symbol get(final LinkedHashSet<Entry<String, Symbol>> ss, final String s) {
     System.out.println($);
-    for (final Entry<String, Information> ¢ : ss)
+    for (final Entry<String, Symbol> ¢ : ss)
       if (s.equals(¢.getKey()))
         return ¢.getValue();
     return null;
   }
 
-  /** Returns the {@link Information} of the declaration the current declaration
+  /** Returns the {@link Symbol} of the declaration the current declaration
    * is hiding.
    * @param ¢ the fullName of the declaration.
    * @return The hidden node's Information */
@@ -184,10 +184,10 @@ final class EnvironmentVisitor extends ASTVisitor {
    * only searches declaresDown.
    *
    * If no match is found, return null. */
-  Information getHidden(final String ¢) {
+  Symbol getHidden(final String ¢) {
     final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
     for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-      final Information i = get($, s + "." + shortName);
+      final Symbol i = get($, s + "." + shortName);
       if (i != null)
         return i;
     }

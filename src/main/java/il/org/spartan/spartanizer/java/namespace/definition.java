@@ -63,8 +63,8 @@ public interface definition {
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
-        addRest($, f, fragments(e));
-        addRest($, e, initializers(s));
+        wizard.addRest($, f, fragments(e));
+        wizard.addRest($, e, initializers(s));
         $.add(expression(s));
         $.addAll(updaters(s));
         $.add(s.getBody());
@@ -107,10 +107,10 @@ public interface definition {
             + fault.done();
         final List<VariableDeclarationFragment> fs = fragments(s);
         assert fs != null;
-        addRest($, f, fs);
+        wizard.addRest($, f, fs);
         final Block b = az.block(parent(s));
         assert b != null;
-        return addRest($, s, statements(b));
+        return wizard.addRest($, s, statements(b));
       }
     },
     method {
@@ -141,8 +141,8 @@ public interface definition {
         assert !rs.isEmpty();
         assert rs.contains(e);
         final List<ASTNode> $ = new ArrayList<>();
-        addRest($, f, fs);
-        addRest($, e, rs);
+        wizard.addRest($, f, fs);
+        wizard.addRest($, e, rs);
         $.add(s.getBody());
         $.addAll(catchClauses(s));
         return $;
@@ -246,16 +246,6 @@ public interface definition {
         assert false : $.getClass().getSimpleName();
         return null;
     }
-  }
-
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
-    boolean add = false;
-    for (final ASTNode x : ns)
-      if (add)
-        $.add(x);
-      else
-        add = x == n;
-    return $;
   }
 
   static List<? extends ASTNode> scope(final SimpleName ¢) {
