@@ -370,6 +370,13 @@ public class Toolbox {
     return this;
   }
 
+  public List<Tipper<? extends ASTNode>> getAllTippers() {
+    List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+    for (int ¢ = 0; ¢ < implementation.length; ++¢)
+      $.addAll(get(¢));
+    return $;
+  }
+
   public void disable(final Class<? extends TipperCategory> c) {
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
       if (¢ != null)

@@ -87,6 +87,18 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
         .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
+    fillAbsents();
     pWriter.nl();
+    npStatistics.clear();
+  }
+
+  /**
+   * 
+   */
+  private void fillAbsents() {
+    spartanalyzer.getAllPatterns().stream()//
+        .map(p -> p.getClass().getSimpleName())//
+        .filter(n -> !npStatistics.keySet().contains(n))//
+        .forEach(n -> pWriter.put(n, "-"));
   }
 }
