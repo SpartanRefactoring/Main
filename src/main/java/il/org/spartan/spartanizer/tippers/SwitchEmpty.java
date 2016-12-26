@@ -42,7 +42,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
-        ExpressionStatement ss = s.getAST().newExpressionStatement(duplicate.of(expression(s)));
+        final ExpressionStatement ss = s.getAST().newExpressionStatement(duplicate.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
           if (haz.sideEffects(expression(s)))

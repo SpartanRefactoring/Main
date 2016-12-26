@@ -388,6 +388,8 @@ public class definitionTest extends ReflectiveTester {
     @Test public void test() {
       azzert.that(
           "\n name = " + name + //
+          "\n expected = " + scopeSize + //
+          "\n got = " + scope.of(name).size() + //
               "\n\t kind = " + kind + //
               ancestry(name) + //
               "\n\t scope = " + scope.of(name)//
