@@ -10,12 +10,12 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class DeclarationWithInitExpanderTest {
   @Test public void a() {
-    expandingOf("int a = 0;").gives("int a;" //
+    expansionOf("int a = 0;").gives("int a;" //
         + "a = 0;").stays();
   }
 
   @Test public void b() {
-    expandingOf("int a = f();").gives("int a;" //
+    expansionOf("int a = f();").gives("int a;" //
         + "a = f();").stays();
   }
 }
