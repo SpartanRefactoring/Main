@@ -142,6 +142,8 @@ public enum step {
         return receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) ¢);
+      case ASTNode.CONDITIONAL_EXPRESSION:
+        return expression((ConditionalExpression) ¢);
       case ASTNode.DO_STATEMENT:
         return expression((DoStatement) ¢);
       case ASTNode.IF_STATEMENT:
