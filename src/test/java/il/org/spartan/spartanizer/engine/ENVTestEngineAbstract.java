@@ -98,7 +98,7 @@ public abstract class ENVTestEngineAbstract {
     assert rOOT != null;
     final File f = new File(rOOT + from);
     assert f != null;
-    assert f.exists(): f;
+    assert f.exists() : f;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     return $;
