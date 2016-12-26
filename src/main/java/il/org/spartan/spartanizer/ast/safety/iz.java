@@ -222,11 +222,10 @@ public interface iz {
   static boolean compilationUnit(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, COMPILATION_UNIT);
   }
-  
-  /**@param n ASTNode that contains the identifier
+
+  /** @param n ASTNode that contains the identifier
    * @param x Expression to search the identifier in it
-   * @return true if x contains the identifier of n
-   */
+   * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final Expression x) {
     return !searchDescendants.forClass(SimpleName.class).suchThat(t -> step.identifier(t).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
