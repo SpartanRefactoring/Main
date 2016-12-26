@@ -25,21 +25,21 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     final Expression e = expression(¢);
     if (!iz.assignment(e))
       return null;
-    final Assignment ass = az.assignment(e);
-    return !iz.assignment(right(ass)) ? null : new Tip(description(¢), ¢, this.getClass()) {
+    final Assignment $ = az.assignment(e);
+    return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         final Assignment newHead = create.newAssignment();
         Assignment newTail = create.newAssignment();
-        newHead.setLeftHandSide(duplicate.of(left(ass)));
-        newTail = duplicate.of(az.assignment(right(ass)));
+        newHead.setLeftHandSide(duplicate.of(left($)));
+        newTail = duplicate.of(az.assignment(right($)));
         Assignment p = newTail;
         while (iz.assignment(right(p)))
           p = az.assignment(right(p));
         newHead.setRightHandSide(duplicate.of(right(p)));
         // if (sideEffects.free(right(p))) In the future side effect check
         // should be here
-        p.setRightHandSide(duplicate.of(left(ass)));
+        p.setRightHandSide(duplicate.of(left($)));
         final ExpressionStatement head = create.newExpressionStatement(newHead);
         final ExpressionStatement tail = create.newExpressionStatement(newTail);
         az.block(¢.getParent());
