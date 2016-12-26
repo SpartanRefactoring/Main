@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 @SuppressWarnings("static-method")
 public class CascadingSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new CascadingSetter());
+    setNano(new Cascading.Setter());
   }
 
   @Test public void a() {
