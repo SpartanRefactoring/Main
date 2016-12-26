@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.InVain {
-  @Override public String description(ReturnStatement ¢) {
+  @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }
 
   @Override public Tip tip(final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Assignment a = az.assignment(expression(s));
+        final Assignment a = az.assignment(expression(s));
         final AST create = r.getAST();
         final ExpressionStatement exp = create.newExpressionStatement(duplicate.of(expression(s)));
         final ReturnStatement retNoExp = create.newReturnStatement();
