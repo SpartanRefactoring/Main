@@ -13,25 +13,25 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.InVain {
-  @Override public String description(ReturnStatement r) {
-    return "Extract expression from " + r + " statement";
+  @Override public String description(ReturnStatement ¢) {
+    return "Extract expression from " + ¢ + " statement";
   }
 
-  @Override public Tip tip(final ReturnStatement ret) {
-    if (expression(ret) == null || !iz.assignment(expression(ret)))
+  @Override public Tip tip(final ReturnStatement s) {
+    if (expression(s) == null || !iz.assignment(expression(s)))
       return null;
-    return new Tip(description(ret), ret, this.getClass()) {
+    return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Assignment a = az.assignment(expression(ret));
+        Assignment a = az.assignment(expression(s));
         final AST create = r.getAST();
-        final ExpressionStatement exp = create.newExpressionStatement(duplicate.of(expression(ret)));
+        final ExpressionStatement exp = create.newExpressionStatement(duplicate.of(expression(s)));
         final ReturnStatement retNoExp = create.newReturnStatement();
         retNoExp.setExpression(duplicate.of(left(a)));
-        az.block(ret.getParent());
-        final ListRewrite l = r.getListRewrite(ret.getParent(), Block.STATEMENTS_PROPERTY);
-        l.insertAfter(retNoExp, ret, g);
-        l.insertAfter(exp, ret, g);
-        l.remove(ret, g);
+        az.block(s.getParent());
+        final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
+        l.insertAfter(retNoExp, s, g);
+        l.insertAfter(exp, s, g);
+        l.remove(s, g);
       }
     };
   }
