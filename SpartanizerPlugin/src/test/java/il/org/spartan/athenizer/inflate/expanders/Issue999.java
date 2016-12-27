@@ -6,6 +6,7 @@ import org.junit.*;
 
 /** @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
+// TODO: post a link to the tested class
 @SuppressWarnings("static-method")
 public class Issue999 {
   @Test public void a() {

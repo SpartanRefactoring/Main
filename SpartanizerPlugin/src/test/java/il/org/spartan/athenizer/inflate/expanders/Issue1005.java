@@ -29,11 +29,11 @@ public class Issue1005 {
   }
 
   @Test public void t6() {
-    expansionOf("for(;x<5;++x);").gives("for(;x<5;x++);");
+    expansionOf("for(;x<5;++x){;}").gives("for(;x<5;x++){;}");
   }
 
   @Test public void t7() {
-    expansionOf("for(++x;x<5;);").gives("for(x++;x<5;);");
+    expansionOf("for(++x;x<5;){;}").gives("for(x++;x<5;){;}");
   }
 
   @Test public void t8() {
@@ -41,7 +41,7 @@ public class Issue1005 {
   }
 
   @Test public void t9() {
-    expansionOf("for(;;) ++x;").gives("for(;;) x++;");
+    expansionOf("for(;;) {++x;}").gives("for(;;){ x++;}");
   }
 
   @Test public void t10() {
@@ -57,7 +57,7 @@ public class Issue1005 {
   }
 
   @Test public void t13() {
-    expansionOf("for(;;) --x;").gives("for(;;) x--;");
+    expansionOf("for(;;){ --x;}").gives("for(;;){ x--;}");
   }
 
   @Test public void t14() {

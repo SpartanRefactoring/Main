@@ -15,10 +15,10 @@ public class RecordWriter implements Closeable {
     this.fileName = fileName + "." + renderer.extension();
     file = new File(fileName);
     writer = new FileWriter(file);
-    write(renderer.tableBegin());
+    write(renderer.beforeTable());
   }
 
-  private void write(final String s) {
+  public void write(final String s) {
     try {
       writer.write(s);
       writer.flush();
@@ -39,7 +39,7 @@ public class RecordWriter implements Closeable {
     try {
       if (footerPrinted)
         write(renderer.afterFooter());
-      write(renderer.tableEnd());
+      write(renderer.afterTable());
       writer.close();
     } catch (final IOException ¢) {
       throw new RuntimeException(¢);
@@ -67,8 +67,17 @@ public class RecordWriter implements Closeable {
   }
 
   private void writeHeader(final Record<?> ¢) {
+    renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
-        renderer.headerLineBegin() + separate.these(¢.keySet()).by(renderer.headerLineSepator()) + renderer.headerLineEnd() + //
+        renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
+  }
+
+  private String writeHeaderInner(final Record<?> r) {
+    final Separator s = new Separator(renderer.headerSeparator());
+    final StringBuffer $ = new StringBuffer();
+    for (final String o : r.keySet())
+      $.append(s).append(o != null ? o : renderer.null¢());
+    return $ + "";
   }
 }

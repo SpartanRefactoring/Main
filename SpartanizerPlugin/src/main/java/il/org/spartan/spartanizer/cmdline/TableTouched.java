@@ -37,7 +37,7 @@ public class TableTouched extends TableCoverage {
       if (!statementsCoverageStatistics.containsKey(i))
         touchedWriter.put(i + "", "-");
       else {
-        List<MethodRecord> rs = statementsCoverageStatistics.get(i);
+        final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalMethods += rs.size();
         totalMethodsTouched += totalMethodsTouched(rs);
         touchedWriter.put(i + "", format.decimal(100 * fractionOfMethodsTouched(rs)));

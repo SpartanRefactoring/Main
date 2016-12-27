@@ -95,7 +95,7 @@ public class TableCoverage extends FolderASTVisitor {
       if (!statementsCoverageStatistics.containsKey(i))
         coverageWriter.put(i + "", "-");
       else {
-        List<MethodRecord> rs = statementsCoverageStatistics.get(i);
+        final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalStatements += i * rs.size();
         totalStatementsCovered += totalStatementsCovered(rs);
         coverageWriter.put(i + "", format.decimal(100 * avgCoverage(rs)));

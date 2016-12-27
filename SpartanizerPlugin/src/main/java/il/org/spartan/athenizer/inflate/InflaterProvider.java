@@ -49,14 +49,14 @@ public class InflaterProvider extends OperationsProvider {
         .add(VariableDeclarationStatement.class, //
             new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
-            new MethodInvocationTernaryExpander())
+            new MethodInvocationTernaryExpander()) //
         .add(ThrowStatement.class, //
-            new ThrowTernaryExpander()) //
+            new ThrowTernaryExpander())//
         .add(ForStatement.class, //
             new ForBlockExpander()) //
-        .add(WhileStatement.class, //
-            new WhileBlockExpander()) //
-        ; //
+        .add(IfStatement.class, //
+            new IfElseBlockExpander()) //
+    ;//
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
