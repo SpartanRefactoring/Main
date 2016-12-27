@@ -20,16 +20,17 @@ import il.org.spartan.utils.*;
 public class TableCoverage extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
-  private final Stack<MethodRecord> scope = new Stack<>();
+  private static final Stack<MethodRecord> scope = new Stack<>();
   private static Relation coverageWriter;
-  protected final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
     clazz = TableCoverage.class;
+    TrimmerLog.off();
+    Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    TrimmerLog.off();
     FolderASTVisitor.main(args);
   }
 
@@ -42,7 +43,7 @@ public class TableCoverage extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      m.after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       ___.unused(__);
     }
@@ -56,39 +57,35 @@ public class TableCoverage extends FolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
+    // System.out.println(packageDeclaration(¢) + " " + name(first(types(¢))));
     return true;
   }
 
-  @Override protected void init(final String path) {
-    System.err.println("Processing: " + path);
-    Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
+  @Override protected void init(@SuppressWarnings("unused") final String __) {
+    System.err.println("Processing: " + presentSourcePath);
   }
 
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Your output is in: " + outputFolder);
+    System.err.println("Coverage output is in: " + presentSourcePath);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null;
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(x -> "@Test".equals(x + ""));
   }
 
-  private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
+  private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
   }
 
   private static void initializeWriter() {
-    coverageWriter = new Relation(outputFileName());
+    coverageWriter = new Relation(TableCoverage.class.getSimpleName());
   }
 
-  private static String outputFileName() {
-    return clazz.getSimpleName();
-  }
-
-  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
+  @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
     if (coverageWriter == null)
       initializeWriter();
     int totalStatements = 0;
@@ -103,7 +100,7 @@ public class TableCoverage extends FolderASTVisitor {
         totalStatementsCovered += totalStatementsCovered(rs);
         coverageWriter.put(i + "", format.decimal(100 * avgCoverage(rs)));
       }
-    coverageWriter.put("total Statements covergae %", safe.div(totalStatementsCovered, totalStatements));
+    coverageWriter.put("total Statements covergae %", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     coverageWriter.nl();
   }
 

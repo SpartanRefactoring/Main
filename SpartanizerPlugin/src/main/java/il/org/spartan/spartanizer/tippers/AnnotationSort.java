@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author kobybs
  * @author Dan Abramovich
@@ -36,7 +37,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       new HashSet<>(as.list("NonNull", "Nullable")));
 
   public static int rankAnnotation(final IExtendedModifier ¢) {
-    return rankAnnotation(az.annotation(¢).getTypeName().getFullyQualifiedName());
+    return rankAnnotation(identifier(typeName(az.annotation(¢))));
   }
 
   public static int rankAnnotation(final String annotationName) {

@@ -11,13 +11,11 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
   private static Relation touchedWriter;
-  static {
-    clazz = TableTouched.class;
-  }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    TableCoverage.main(args);
+    clazz = TableTouched.class;
+    FolderASTVisitor.main(args);
   }
 
   @Override protected void done(final String path) {
@@ -26,11 +24,7 @@ public class TableTouched extends TableCoverage {
   }
 
   private static void initializeWriter() {
-    touchedWriter = new Relation(outputFileName());
-  }
-
-  private static String outputFileName() {
-    return clazz.getSimpleName();
+    touchedWriter = new Relation(TableTouched.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public void summarize(final String path) {
@@ -48,8 +42,9 @@ public class TableTouched extends TableCoverage {
         totalMethodsTouched += totalMethodsTouched(rs);
         touchedWriter.put(i + "", format.decimal(100 * fractionOfMethodsTouched(rs)));
       }
-    touchedWriter.put("% of methods touched", safe.div(totalMethodsTouched, totalMethods));
+    touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();
+    System.err.println("Touched output is in: " + presentSourcePath);
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> ¢) {
