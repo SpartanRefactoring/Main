@@ -54,6 +54,8 @@ public class InflaterProvider extends OperationsProvider {
             new ThrowTernaryExpander())//
         .add(ForStatement.class, //
             new ForBlockExpander()) //
+        .add(IfStatement.class, //
+            new IfElseBlockExpander()) //
     ;//
   }
 

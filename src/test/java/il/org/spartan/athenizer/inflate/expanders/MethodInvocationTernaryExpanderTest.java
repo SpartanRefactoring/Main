@@ -13,14 +13,14 @@ public class MethodInvocationTernaryExpanderTest {
     expansionOf("o.f(x ? a : b);").gives("if (x)" //
         + "  o.f(a);" //
         + "else " //
-        + "  o.f(b);").stays();
+        + "  o.f(b);");
   }
 
   @Test public void b() {
     expansionOf("o.f(p, x ? a : b);").gives("if (x)" //
         + "  o.f(p, a);" //
         + "else" //
-        + "  o.f(p, b);").stays();
+        + "  o.f(p, b);");
   }
 
   @Test public void c() {
@@ -29,24 +29,9 @@ public class MethodInvocationTernaryExpanderTest {
             + "  o.f(a1, x ? a2 : b2);" //
             + "else" //
             + "  o.f(b1, x ? a2 : b2);")
-        .gives("if (y)" //
-            + "  if (x)" //
-            + "    o.f(a1, a2);" //
-            + "  else" //
-            + "    o.f(a1, b2);" //
-            + "else" //
-            + "  o.f(b1, x ? a2 : b2);")
-        .gives("if (y)" //
-            + "  if (x)" //
-            + "    o.f(a1, a2);" //
-            + "  else" //
-            + "    o.f(a1, b2);" //
-            + "else" //
-            + "  if (x)" //
-            + "    o.f(b1, a2);" //
-            + "  else" //
-            + "    o.f(b1, b2);")
-        .stays();
+        .gives("if(y){o.f(a1,x?a2:b2);}else{o.f(b1,x?a2:b2);}").gives("if(y){if(x)o.f(a1,a2);else o.f(a1,b2);}else{o.f(b1,x?a2:b2);}")//
+        .gives("if(y){if(x){o.f(a1,a2);}else{o.f(a1,b2);}}else{o.f(b1,x?a2:b2);}")
+        .gives("if(y){if(x){o.f(a1,a2);}else{o.f(a1,b2);}}else{if(x)o.f(b1,a2);else o.f(b1,b2);}");
   }
 
   @Test public void d() {
@@ -55,23 +40,6 @@ public class MethodInvocationTernaryExpanderTest {
             + "  o.f(a1, pp, x ? a2 : b2);" //
             + "else" //
             + "  o.f(b1, pp, x ? a2 : b2);")
-        .gives("if (y)" //
-            + "  if (x)" //
-            + "    o.f(a1, pp, a2);" //
-            + "  else" //
-            + "    o.f(a1, pp, b2);" //
-            + "else" //
-            + "  o.f(b1, pp, x ? a2 : b2);")
-        .gives("if (y)" //
-            + "  if (x)" //
-            + "    o.f(a1, pp, a2);" //
-            + "  else" //
-            + "    o.f(a1, pp, b2);" //
-            + "else" //
-            + "  if (x)" //
-            + "    o.f(b1, pp, a2);" //
-            + "  else" //
-            + "    o.f(b1, pp, b2);")
-        .stays();
+        .gives("if(y){o.f(a1,pp,x?a2:b2);}else{o.f(b1,pp,x?a2:b2);}").gives("if(y){if(x)o.f(a1,pp,a2);else o.f(a1,pp,b2);}else{o.f(b1,pp,x?a2:b2);}");
   }
 }

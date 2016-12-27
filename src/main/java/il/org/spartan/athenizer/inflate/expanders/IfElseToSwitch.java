@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.InVain {
+  /** [[SuppressWarningsSpartan]] */
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
