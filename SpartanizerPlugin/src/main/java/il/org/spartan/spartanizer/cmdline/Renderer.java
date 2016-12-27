@@ -41,7 +41,7 @@ public interface Renderer {
   default String null¢() { return "＃"; }
   // @formatter:on
 
-  default String render(Statistic ¢) {
+  default String render(final Statistic ¢) {
     return ¢ + "";
   }
 
@@ -51,7 +51,7 @@ public interface Renderer {
         return "$\\#$";
       }
 
-      @Override public String render(Statistic ¢) {
+      @Override public String render(final Statistic ¢) {
         switch (¢) {
           default:
             return super.render(¢);
@@ -106,7 +106,7 @@ public interface Renderer {
     };
     static int lastSize;
 
-    @Override public void setHeaderCount(int size) {
+    @Override public void setHeaderCount(final int size) {
       builtin.lastSize = size;
     }
   }

@@ -45,19 +45,17 @@ public class Relation extends Record<Relation> implements Closeable {
 
   @Override public void close() {
     for (final Statistic s : statisics) {
-      for (String key : keySet()) {
-        RealStatistics r = getRealStatistics(key);
+      for (final String key : keySet()) {
+        final RealStatistics r = getRealStatistics(key);
         put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
       }
-      for (RecordWriter ¢ : writers) {
+      for (final RecordWriter ¢ : writers) {
         put((String) null, ¢.renderer.render(s));
         ¢.writeFooter(this);
       }
     }
-    for (final RecordWriter ¢ : writers) {
-
+    for (final RecordWriter ¢ : writers)
       ¢.close();
-    }
   }
 
   public String description() {
@@ -82,7 +80,7 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   private String path(final Renderer ¢) {
-    return temporariesFolder + this.name + "." + ¢.extension();
+    return temporariesFolder + name + "." + ¢.extension();
   }
 
   @Override public Relation put(final String key, final int value) {

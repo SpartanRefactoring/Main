@@ -7,7 +7,6 @@ import org.junit.*;
 /** Test for the WhileBlock expander, issue #975
  * @author Raviv Rachmiel
  * @since 26-12-16 */
-
 @Ignore
 @SuppressWarnings("static-method")
 public class WhileBlockExpanderTest {
@@ -18,7 +17,7 @@ public class WhileBlockExpanderTest {
   @Test public void simpleShouldntAddTest() {
     expansionOf("while(i<5){ a=5;}").stays();
   }
-  
+
   @Test public void notSimpleShouldntAddTest() {
     expansionOf("while(i<5){ a=5;b=3;}").stays();
   }

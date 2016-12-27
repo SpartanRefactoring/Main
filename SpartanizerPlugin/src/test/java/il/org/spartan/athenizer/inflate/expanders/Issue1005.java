@@ -20,7 +20,6 @@ public class Issue1005 {
     expansionOf("if(++i + i++ > ++i + y) { x = f(); }").stays();
   }
 
-  
   @Test public void t4() {
     expansionOf("f(i++,--j,++x)").stays();
   }
