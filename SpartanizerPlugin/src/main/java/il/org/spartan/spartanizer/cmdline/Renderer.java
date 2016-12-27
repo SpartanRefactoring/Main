@@ -36,20 +36,36 @@ public interface Renderer {
   default String recordSeparator()  { return tab(); }
   default String headerLineBegin() { return recordBegin(); }
   default String headerLineEnd() { return footerEnd(); }
-  default String headerLineSepator() { return recordSeparator(); }
+  default String headerSeparator() { return recordSeparator(); }
   default String footerBegin() { return recordBegin();}
   default String footerEnd() { return recordEnd();}
   default String footerSeparator() { return recordSeparator(); }
-  default String max() { return "max"; }
-  default String min() { return "min"; }
-  default String n() { return "n"; }
-  default String na() { return "na"; }
-  default String range() { return "range"; }
+  default String null¢() { return "＃"; }
   // @formatter:on
+
+  default String render(Statistic ¢) {
+    return ¢ + "";
+  }
 
   enum builtin implements Renderer {
     TXT, TEX {
-    // @formatter:off
+      @Override public String null¢() {
+        return "$\\#$"; 
+      }
+
+      @Override public String render(Statistic ¢) {
+        switch (¢) {
+          default:
+            return super.render(¢);
+          case min:
+          case max:
+            return "$\\" + super.render(¢) + "$";
+          case σ:
+            return "$\\sigma$";
+        }
+      }
+
+      // @formatter:off
       @Override public String footerEnd() { return "\\\\\n"; }
       @Override public String recordSeparator() { return "\t&\t"; }
       @Override public String beforeTable() {return "\\toprule"; }
