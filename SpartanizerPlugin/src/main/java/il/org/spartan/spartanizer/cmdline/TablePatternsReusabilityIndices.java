@@ -17,11 +17,12 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
+  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
   private static Relation pWriter;
   static {
     clazz = TablePatternsReusabilityIndices.class;
+    Logger.subscribe((n, np) -> logNPInfo(n, np));
   }
 
   private static void initializeWriter() {
@@ -60,7 +61,6 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
 
   @Override protected void init(final String path) {
     super.init(path);
-    Logger.subscribe((n, np) -> logNPInfo(n, np));
   }
 
   @Override protected void done(final String path) {
@@ -72,7 +72,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     return iz.constructor(¢) || body(¢) == null;
   }
 
-  private void logNPInfo(final ASTNode n, final String np) {
+  private static void logNPInfo(final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
       npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
@@ -92,10 +92,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     npStatistics.clear();
   }
 
-  /**
-   *
-   */
-  private void fillAbsents() {
+  private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
         .map(p -> p.getClass().getSimpleName())//
         .filter(n -> !npStatistics.keySet().contains(n))//
