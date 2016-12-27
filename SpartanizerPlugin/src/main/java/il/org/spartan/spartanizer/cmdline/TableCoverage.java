@@ -57,8 +57,7 @@ public class TableCoverage extends FolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
-    // System.out.println(packageDeclaration(¢) + " " +
-    // name(lisp.first(types(¢))));
+    // System.out.println(packageDeclaration(¢) + " " + name(first(types(¢))));
     return true;
   }
 
