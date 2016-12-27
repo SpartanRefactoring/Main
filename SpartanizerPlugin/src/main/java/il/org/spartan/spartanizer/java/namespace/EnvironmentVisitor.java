@@ -11,7 +11,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.namespace.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.

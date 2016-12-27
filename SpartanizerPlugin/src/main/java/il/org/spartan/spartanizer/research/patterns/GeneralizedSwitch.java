@@ -79,7 +79,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
 
   /** [[SuppressWarningsSpartan]] */
   List<? extends ASTNode> branchesWrapper(final N ¢) {
-    return (!iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢)));
+    return !iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
