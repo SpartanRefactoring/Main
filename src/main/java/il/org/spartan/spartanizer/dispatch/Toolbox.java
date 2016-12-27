@@ -138,7 +138,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
-            // new BlockInlineStatementIntoNext(), // Leonidas
+            new BlockInlineStatementIntoNext(), // Leonidas
             // new BlockRemoveDeadVariables(), // v 2.7
             null) //
         .add(PostfixExpression.class, //
