@@ -59,8 +59,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
     final Statement b = extract.containingStatement(a);
     if (!iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
-    /** [[SuppressWarningsSpartan]] */
-    SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
+    SimpleName $ = az.simpleName(iz.prefixExpression(e) ? az.prefixExpression(e) : az.postfixExpression(e));
     if ($ == null)
       return false;
     final Expression s = expression(az.expressionStatement(b));
