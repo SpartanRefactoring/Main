@@ -59,7 +59,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void empty() {
-    e0.put("Alex", new Symbol());
+    e0.put("Alex", new Binding());
     azzert.that(e0.empty(), is(false));
   }
 
@@ -72,23 +72,23 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void emptyTestFlatEmptyNestNot() {
-    ee0.put("Alex", new Symbol());
+    ee0.put("Alex", new Binding());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void emptyTestNeitherEmpty() {
-    ee0.put("Yossi", new Symbol());
-    ee1.put("Gill", new Symbol());
+    ee0.put("Yossi", new Binding());
+    ee1.put("Gill", new Binding());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void emptyTestNestEmptyFlatNot() {
-    ee1.put("Dan", new Symbol());
+    ee1.put("Dan", new Binding());
     azzert.that(ee1.empty(), is(false));
   }
 
   @Test public void get() {
-    e0.put("Alex", new Symbol());
+    e0.put("Alex", new Binding());
     assert e0.get("Alex") != null;
   }
 
@@ -103,12 +103,12 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void has() {
-    e0.put("Alex", new Symbol());
+    e0.put("Alex", new Binding());
     azzert.that(e0.has("Alex"), is(true));
   }
 
   @Test public void hasInBoth() {
-    e1.put("Yossi", new Symbol());
+    e1.put("Yossi", new Binding());
     azzert.that(e1.has("Yossi"), is(true));
   }
 
@@ -132,16 +132,16 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Before public void init_one_level() {
-    e0.put("Alex", new Symbol());
-    e0.put("Dan", new Symbol());
-    e0.put("Yossi", new Symbol());
-    e1.put("Kopzon", new Symbol());
-    e1.put("Greenstein", new Symbol());
-    e1.put("Gill", new Symbol());
+    e0.put("Alex", new Binding());
+    e0.put("Dan", new Binding());
+    e0.put("Yossi", new Binding());
+    e1.put("Kopzon", new Binding());
+    e1.put("Greenstein", new Binding());
+    e1.put("Gill", new Binding());
   }
 
   @Test public void names() {
-    e0.put("Alex", new Symbol());
+    e0.put("Alex", new Binding());
     azzert.that(e0.names().contains("Alex"), is(true));
   }
 
@@ -159,19 +159,19 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void put() {
-    assert e0.put("Alex", new Symbol()) == null;
+    assert e0.put("Alex", new Binding()) == null;
   }
 
   @Test public void putOne() {
-    assert e1.put("Kopzon1", new Symbol()) == null;
+    assert e1.put("Kopzon1", new Binding()) == null;
   }
 
   @Test public void putOneAndHide() {
-    assert e1.put("Alex", new Symbol()) != null;
+    assert e1.put("Alex", new Binding()) != null;
   }
 
   @Test(expected = IllegalArgumentException.class) public void putTest() {
-    e0.nest().put("Dan", new Symbol());
+    e0.nest().put("Dan", new Binding());
   }
   // ==================================declaresDown Tests================
 }
