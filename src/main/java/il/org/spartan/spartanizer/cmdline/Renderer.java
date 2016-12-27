@@ -29,13 +29,11 @@ public interface Renderer {
   default String afterHeader() { return empty(); }
   default String beforeFooter() { return empty(); }
   default String afterFooter() { return empty(); }
-  default String tableBegin() { return empty(); }
-  default String tableEnd() { return empty(); }
   default String recordBegin() { return empty(); }
   default String recordEnd() {return nl(); }
   default String recordSeparator()  { return tab(); }
   default String headerLineBegin() { return recordBegin(); }
-  default String headerLineEnd() { return footerEnd(); }
+  default String headerLineEnd() { return recordEnd(); }
   default String headerSeparator() { return recordSeparator(); }
   default String footerBegin() { return recordBegin();}
   default String footerEnd() { return recordEnd();}
@@ -50,7 +48,7 @@ public interface Renderer {
   enum builtin implements Renderer {
     TXT, TEX {
       @Override public String null¢() {
-        return "$\\#$"; 
+        return "$\\#$";
       }
 
       @Override public String render(Statistic ¢) {
@@ -66,12 +64,12 @@ public interface Renderer {
       }
 
       // @formatter:off
-      @Override public String footerEnd() { return "\\\\\n"; }
+      @Override public String recordEnd() { return "\\\\\n"; }
       @Override public String recordSeparator() { return "\t&\t"; }
-      @Override public String beforeTable() {return "\\toprule"; }
-      @Override public String afterTable() {return "\\bottomrule"; }
-      @Override public String afterHeader() { return "\\midrule"; }
-      @Override public String beforeFooter() { return "\\midrule"; }
+      @Override public String beforeTable() {return "\\toprule\n"; }
+      @Override public String afterTable() {return "\\bottomrule\n"; }
+      @Override public String afterHeader() { return "\\midrule\n"; }
+      @Override public String beforeFooter() { return "\\midrule\n"; }
     // @formatter:on
     },
     TEX2 {
@@ -89,6 +87,29 @@ public interface Renderer {
     @Override public String footerEnd() { return "\n"; }
     @Override public String recordSeparator() { return ","; }
     // @formatter:on
+    },
+    MARKDOWN {
+      @Override public String afterHeader() {
+        String $ = "";
+        for (int ¢ = 0; ¢ < lastSize; ++¢)
+          $ += "--- |";
+        return $ + nl();
+      }
+
+      // @formatter:off
+      @Override public String beforeTable() { return nl(); }
+      @Override public String afterTable() { return nl(); }
+      @Override public String recordBegin() { return "|" ; }
+      @Override public String recordEnd() { return " |\n"; }
+      @Override public String recordSeparator() { return " | "; }
+    // @formatter:on
+    };
+    static int lastSize;
+
+    @Override public void setHeaderCount(int size) {
+      builtin.lastSize = size;
     }
   }
+
+  void setHeaderCount(int size);
 }
