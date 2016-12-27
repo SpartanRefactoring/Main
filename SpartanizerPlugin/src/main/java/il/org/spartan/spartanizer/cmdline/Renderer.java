@@ -38,7 +38,7 @@ public interface Renderer {
   default String footerBegin() { return recordBegin();}
   default String footerEnd() { return recordEnd();}
   default String footerSeparator() { return recordSeparator(); }
-  default String null¢() { return "＃"; }
+  default String null¢() { return "Nº"; }
   // @formatter:on
 
   default String render(final Statistic ¢) {
@@ -90,7 +90,7 @@ public interface Renderer {
     },
     MARKDOWN {
       @Override public String afterHeader() {
-        String $ = "";
+        String $ = "| ";
         for (int ¢ = 0; ¢ < lastSize; ++¢)
           $ += "--- |";
         return $ + nl();
