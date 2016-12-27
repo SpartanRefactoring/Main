@@ -13,9 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>x += 1 </code> by <code> x++ </code> and also
- * <code>x -= 1 </code> by <code> x-- </code>
- * .
- * Test case is {@link Issue107}
+ * <code>x -= 1 </code> by <code> x-- </code> . Test case is {@link Issue107}
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
