@@ -16,19 +16,19 @@ public class FancyTableOfTippers {
 
   public void go() {
     try (Relation r = new Relation(getClass().getSimpleName().replaceAll("FancyTableOf", ""))) {
-    for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
-      if (Toolbox.defaultInstance().implementation[i] != null)
-        for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
-          if (¢ != null) 
-           r //
-                .put("Category", ¢.tipperGroup())//
-                .put("Tipper", ¢.getClass().getSimpleName())//
-                .put("Node Type Number", i) //
-                .put("Node Class", intToClassName(i))//
-                .put("Actual class", name(¢.myActualOperandsClass()))//
-                .put("Abstract class", name(¢.myAbstractOperandsClass()))//
-            .nl();
-    System.err.println(r.description());
+      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
+        if (Toolbox.defaultInstance().implementation[i] != null)
+          for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
+            if (¢ != null)
+              r //
+                  .put("Category", ¢.tipperGroup())//
+                  .put("Tipper", ¢.getClass().getSimpleName())//
+                  .put("Node Type Number", i) //
+                  .put("Node Class", intToClassName(i))//
+                  .put("Actual class", name(¢.myActualOperandsClass()))//
+                  .put("Abstract class", name(¢.myAbstractOperandsClass()))//
+                  .nl();
+      System.err.println(r.description());
     }
   }
 
