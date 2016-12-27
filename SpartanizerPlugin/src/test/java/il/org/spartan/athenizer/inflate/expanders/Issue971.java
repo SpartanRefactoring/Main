@@ -8,7 +8,6 @@ import org.junit.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")
-@Ignore
 public class Issue971 {
   @Test public void test0() {
     expansionOf("if(true)f();").gives("if(true){f();}").stays();
@@ -23,7 +22,7 @@ public class Issue971 {
   }
 
   @Test public void test3() {
-    expansionOf("if(true)while(false){t();}g();").gives("if(true){while(flase){t();}}g();").stays();
+    expansionOf("if(true)while(false){t();}g();").gives("if(true){while(false){t();}}g();").stays();
   }
 
   @Test public void test4() {
@@ -31,6 +30,11 @@ public class Issue971 {
   }
 
   @Test public void test5() {
-    expansionOf("if(true){t();}elseg();").gives("if(true){t();}else{g();}").stays();
+    expansionOf("if(true){t();}else g();").gives("if(true){t();}else{g();}").stays();
+  }
+
+  @Test public void test6() {
+    expansionOf("if(true)if(b==c)q();else g();").gives("if(true){if(b==c)q();else g();}")//
+        .gives("if(true){if(b==c){q();}else {g();}}");
   }
 }
