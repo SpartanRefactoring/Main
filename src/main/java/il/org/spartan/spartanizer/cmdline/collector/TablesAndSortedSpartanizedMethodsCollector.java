@@ -121,12 +121,12 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
         continue;
       final List<MethodRecord> li = methods.get(numStatements);
       report //
-          .put("num. Statements [before]", numStatements) //
+          .put("#Statements [before]", numStatements) //
           .put("Count", li.size()) //
           .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
-          .put("perc. of methods", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
-          .put("perc. of statements", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
-          .put("perc. touched", format.decimal(100 * fractionOfMethodsTouched(li))) //
+          .put("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
+          .put("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
+          .put("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
       ;
       report.nl();
     }
