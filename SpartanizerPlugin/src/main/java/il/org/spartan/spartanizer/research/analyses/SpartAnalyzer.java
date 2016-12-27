@@ -87,6 +87,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     add(MethodDeclaration.class, //
         new ConstantReturner(), //
         new FactoryMethod(), //
+        new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
         new DoNothingReturnParam(), //
