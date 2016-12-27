@@ -80,11 +80,11 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   }
 
   private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
-    if (!(initializer instanceof ArrayInitializer))
+    if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType((ArrayType) duplicate.of(currentStatement.getType()));
-    $.setInitializer(duplicate.of((ArrayInitializer) initializer));
+    $.setType(az.arrayType(duplicate.of(type(currentStatement))));
+    $.setInitializer(duplicate.of(az.arrayInitializer(initializer)));
     return $;
   }
 
