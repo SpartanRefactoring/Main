@@ -23,16 +23,15 @@ public interface Environment {
   default boolean doesntHave(final String name) {
     return !has(name);
   }
+
   static Environment of(ASTNode n) {
     ASTNode root = n.getRoot();
-    if (iz.compilationUnit(root))
-      return of(az.compilationUnit(root));
-    return null;
-  }
-  static Nested of(CompilationUnit u) {
-    return Environment.EMPTY.spawn().visit(u);
+    return !iz.compilationUnit(root) ? null : of(az.compilationUnit(root));
   }
 
+  static Nested of(CompilationUnit ¢) {
+    return Environment.EMPTY.spawn().visit(¢);
+  }
 
   /** Return true iff {@link Environment} is empty. */
   boolean empty();
@@ -108,7 +107,7 @@ public interface Environment {
 
   /** Used when new definition block (scope) is opened. */
   default Environment spawn(String name) {
-    return new Nested(this,name);
+    return new Nested(this, name);
   }
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
@@ -257,18 +256,10 @@ public interface Environment {
 
     Nested visit(ASTNode n) {
       n.accept(new ASTVisitor() {
-        @Override
-        public boolean preVisit2(ASTNode ¢) {
-          if (iz.statement(¢)) {
-            return true;
-          }
-          if (iz.expression(¢))
-            return true;
-          return true;
+        @Override public boolean preVisit2(ASTNode ¢) {
+          return iz.statement(¢) || iz.expression(¢) || true;
         }
-        
       });
-      
       return this;
     }
 
@@ -276,7 +267,6 @@ public interface Environment {
       this.nest = nest;
       this.name = name;
     }
-
 
     /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
      *         empty. */
@@ -291,7 +281,7 @@ public interface Environment {
 
     /** @return The information about the name in current {@link Environment}
      *         . */
-    @Override public Binding get(final String identifier){
+    @Override public Binding get(final String identifier) {
       final Binding $ = flat.get(identifier);
       return $ != null ? $ : nest.get(identifier);
     }
@@ -324,13 +314,12 @@ public interface Environment {
     }
 
     @Override public int size() {
-      return flat.size(); 
+      return flat.size();
     }
 
     @Override public Nested addChild(Nested child) {
       children.add(child);
       return this;
     }
-
   }
 }
