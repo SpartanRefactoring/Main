@@ -4,13 +4,11 @@ import org.junit.*;
 
 import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
-// TODO Dor: add link to expander class ({@link...), also in the opposite
-// direction if not exists. also change test class name to Issue#
-/** Test class for issue #971
+/** Test class for issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
 @SuppressWarnings("static-method")
-public class ToStringExpanderTests {
+public class Issue965 {
   @Test public void test0() {
     expansionOf("a+\"\"").gives("a.toString()").stays();
   }

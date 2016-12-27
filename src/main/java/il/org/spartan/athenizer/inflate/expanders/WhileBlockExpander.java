@@ -19,12 +19,13 @@ public class WhileBlockExpander extends ReplaceCurrentNode<WhileStatement> imple
     final Block b = $.getAST().newBlock();
     b.statements().add(duplicate.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
-    s.getBody().accept(new ASTVisitor() { @Override
-    @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") Block node) {
-      cc.add(true);
-      return true;
-    }});
-    if(!cc.isEmpty())
+    s.getBody().accept(new ASTVisitor() {
+      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
+        cc.add(true);
+        return true;
+      }
+    });
+    if (!cc.isEmpty())
       return null;
     $.setBody(b);
     return $;

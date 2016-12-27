@@ -53,19 +53,19 @@ public final class Issue107 {
   @Test public void o() {
     trimmingOf("for(int a ; a<3 ; a+=1){}").stays();
   }
-  
+
   @Test public void t1() {
     trimmingOf("while((x-=1) >= 1) System.out.println(x);").gives("while((--x) >= 1) System.out.println(x);");
   }
-  
+
   @Test public void t2() {
     trimmingOf("i = a += 1;").stays();
   }
-  
+
   @Test public void t3() {
     trimmingOf("i += i + 1;").stays();
   }
-  
+
   @Test public void t4() {
     trimmingOf("i -= i - 1").stays();
   }

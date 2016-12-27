@@ -6,6 +6,7 @@ import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
+@Ignore
 @SuppressWarnings("static-method")
 public class CascadingSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

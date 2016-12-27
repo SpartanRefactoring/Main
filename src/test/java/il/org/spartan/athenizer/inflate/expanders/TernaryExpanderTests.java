@@ -12,23 +12,23 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 @SuppressWarnings("static-method")
 public class TernaryExpanderTests {
   @Test public void test0() {
-    expansionOf("return a==0? 2:3;").gives("if(a==0)return 2;else return 3;").stays();
+    expansionOf("return a==0? 2:3;").gives("if(a==0)return 2;else return 3;");
   }
 
   @Test public void test1() {
-    expansionOf("a = a==0? 2:3;").gives("if(a==0)a=2;else a=3;").stays();
+    expansionOf("a = a==0? 2:3;").gives("if(a==0)a=2;else a=3;");
   }
 
   @Test public void test2() {
-    expansionOf("a = a==0? (b==2? 4: 5 ):3;").gives("if(a==0)a=(b==2?4:5);else a=3;").gives("if(a==0)if(b==2)a=4;else a=5;else a=3;").stays();
+    expansionOf("a = a==0? (b==2? 4: 5 ):3;").gives("if(a==0)a=(b==2?4:5);else a=3;");
   }
 
   @Test public void test3() {
-    expansionOf("a = (a==0? (b==2? 4: 5 ):3);").gives("if(a==0)a=(b==2?4:5);else a=3;").gives("if(a==0)if(b==2)a=4;else a=5;else a=3;").stays();
+    expansionOf("a = (a==0? (b==2? 4: 5 ):3);").gives("if(a==0)a=(b==2?4:5);else a=3;");
   }
 
   @Test public void test4() {
-    expansionOf("a = a==0? 1:2;").gives("if(a==0)a=1;else a=2;").stays();
+    expansionOf("a = a==0? 1:2;").gives("if(a==0)a=1;else a=2;");
   }
 
   @Test public void test5() {
