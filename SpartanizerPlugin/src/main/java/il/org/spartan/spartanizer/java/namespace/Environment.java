@@ -23,16 +23,6 @@ public interface Environment {
   default boolean doesntHave(final String name) {
     return !has(name);
   }
-  static Environment of(ASTNode n) {
-    ASTNode root = n.getRoot();
-    if (iz.compilationUnit(root))
-      return of(az.compilationUnit(root));
-    return null;
-  }
-  static Nested of(CompilationUnit u) {
-    return Environment.EMPTY.spawn().visit(u);
-  }
-
 
   /** Return true iff {@link Environment} is empty. */
   boolean empty();
@@ -99,16 +89,9 @@ public interface Environment {
 
   int size();
 
-  /** Used when new definition block (scope) is opened. */
-  default Nested spawn() {
-    return addChild(new Nested(this));
-  }
-
-  Nested addChild(Nested child);
-
-  /** Used when new definition block (scope) is opened. */
-  default Environment spawn(String name) {
-    return new Nested(this,name);
+  /** Used when new block (scope) is opened. */
+  default Environment spawn() {
+    return new Nested(this);
   }
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
@@ -140,10 +123,6 @@ public interface Environment {
 
     @Override public int size() {
       return 0;
-    }
-
-    @Override public Nested addChild(@SuppressWarnings("unused") Nested child) {
-      return null;
     }
   };
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
@@ -246,37 +225,19 @@ public interface Environment {
   /** Dictionary with a parent. Insertions go the current node, searches start
    * at the current note and Delegate to the parent unless it is null. */
   final class Nested implements Environment {
-    public final String name;
-    public final Environment nest;
-    public final Map<String, Binding> flat = new LinkedHashMap<>();
-    public final List<Environment> children = new ArrayList<>();
-
     Nested(final Environment nest) {
       this(nest, "");
     }
 
-    Nested visit(ASTNode n) {
-      n.accept(new ASTVisitor() {
-        @Override
-        public boolean preVisit2(ASTNode ¢) {
-          if (iz.statement(¢)) {
-            return true;
-          }
-          if (iz.expression(¢))
-            return true;
-          return true;
-        }
-        
-      });
-      
-      return this;
-    }
+    public final String name;
+    public final Environment nest;
 
     public Nested(Environment nest, String name) {
       this.nest = nest;
       this.name = name;
     }
 
+    public final Map<String, Binding> flat = new LinkedHashMap<>();
 
     /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
      *         empty. */
@@ -326,11 +287,5 @@ public interface Environment {
     @Override public int size() {
       return flat.size(); 
     }
-
-    @Override public Nested addChild(Nested child) {
-      children.add(child);
-      return this;
-    }
-
   }
 }
