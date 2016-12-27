@@ -33,7 +33,7 @@ public class TableTouched extends TableCoverage {
     int totalMethods = 0;
     int totalMethodsTouched = 0;
     touchedWriter.put("Project", path);
-    for (int i = 1; i < MAX_STATEMENTS_REPORTED; ++i)
+    for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         touchedWriter.put(i + "", "-");
       else {
