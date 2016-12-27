@@ -50,7 +50,8 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           w = getTipper(n);
         } catch (final Exception ¢) {
-          ¢.printStackTrace();
+          System.err.println("ERR");
+          // ¢.printStackTrace();
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }

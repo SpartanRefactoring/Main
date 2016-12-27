@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
   @Override public final boolean canTip(final MethodDeclaration ¢) {
     final Javadoc $ = javadoc(¢);
-    return ($ == null || !($ + "").contains(tag())) && prerequisites(¢);
+    return ($ == null || !($ + "").contains(tag())) && prerequisites(¢)
+        && (!(extract.annotations(¢) + "").contains("({") || !containedInInstanceCreation(¢));
   }
 
   protected abstract boolean prerequisites(MethodDeclaration ¢);
@@ -33,5 +34,9 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
 
   public final String tag() {
     return "[[" + this.getClass().getSimpleName() + "]]";
+  }
+
+  private static boolean containedInInstanceCreation(final ASTNode ¢) {
+    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }

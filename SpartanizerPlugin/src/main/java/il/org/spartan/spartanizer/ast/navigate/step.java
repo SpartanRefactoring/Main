@@ -790,4 +790,8 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
     return ¢ == null ? null : ¢.types();
   }
+
+  public static Name typeName(final Annotation ¢) {
+    return ¢ == null ? null : ¢.getTypeName();
+  }
 }
