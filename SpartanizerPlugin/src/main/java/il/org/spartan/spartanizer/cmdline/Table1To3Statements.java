@@ -92,6 +92,10 @@ public class Table1To3Statements extends FolderASTVisitor {
     int totalMethods = 0;
     int totalStatementsCovered = 0;
     writer.put("Project", path);
+    for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
+      totalStatements += ¢ * statementsCoverageStatistics.get(¢).size();
+      totalMethods += statementsCoverageStatistics.get(¢).size();
+    }
     for (int i = MIN_STATEMENTS_REPORTED; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         writer.put(i + " Count", "-")//
@@ -100,14 +104,13 @@ public class Table1To3Statements extends FolderASTVisitor {
             .put(i + " perc. touched", 100);
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
-        totalStatements += i * rs.size();
         totalStatementsCovered += totalStatementsCovered(rs);
         writer.put(i + " Count", rs.size()).put(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
             .put(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
             .put(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
             .put(i + " perc. touched", format.decimal(100 * fractionOfMethodsTouched(rs)));
       }
-    writer.put("total Statements covergae %", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    writer.put("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     writer.nl();
   }
 
