@@ -92,7 +92,7 @@ public class TableCoverage extends FolderASTVisitor {
     int totalStatements = 0;
     int totalStatementsCovered = 0;
     coverageWriter.put("Project", path);
-    for (int i = 0; i <= MAX_STATEMENTS_REPORTED; ++i)
+    for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         coverageWriter.put(i + "", "-");
       else {
