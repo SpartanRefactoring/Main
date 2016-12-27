@@ -4,6 +4,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue1018 {
   @Test public void a() {
