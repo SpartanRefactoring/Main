@@ -45,7 +45,7 @@ public interface Environment {
 
   /** @return all the full names of the {@link Environment}. */
   default LinkedHashSet<String> fullNames() {
-    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
+    final LinkedHashSet<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
       $.addAll(nest().fullNames());
     return $;
@@ -73,7 +73,7 @@ public interface Environment {
   String name();
 
   /** @return The names used in the current scope. */
-  Set<String> names();
+  Set<String> keys();
 
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
@@ -113,7 +113,7 @@ public interface Environment {
       return "";
     }
 
-    @Override public Set<String> names() {
+    @Override public Set<String> keys() {
       return Collections.emptySet();
     }
 
@@ -252,18 +252,18 @@ public interface Environment {
 
     /** @return The information about the name in current {@link Environment}
      *         . */
-    @Override public Binding get(final String name) {
-      final Binding $ = flat.get(name);
-      return $ != null ? $ : nest.get(name);
+    @Override public Binding get(final String identifier){
+      final Binding $ = flat.get(identifier);
+      return $ != null ? $ : nest.get(identifier);
     }
 
     /** Check whether the {@link Environment} already has the name. */
-    @Override public boolean has(final String name) {
-      return flat.containsKey(name) || nest.has(name);
+    @Override public boolean has(final String identifier) {
+      return flat.containsKey(identifier) || nest.has(identifier);
     }
 
     /** @return names used the {@link Environment} . */
-    @Override public LinkedHashSet<String> names() {
+    @Override public LinkedHashSet<String> keys() {
       return new LinkedHashSet<>(flat.keySet());
     }
 
@@ -274,10 +274,10 @@ public interface Environment {
     }
 
     /** Add name to the current scope in the {@link Environment} . */
-    @Override public Binding put(final String name, final Binding value) {
-      flat.put(name, value);
+    @Override public Binding put(final String identifier, final Binding value) {
+      flat.put(identifier, value);
       assert !flat.isEmpty();
-      return hiding(name);
+      return hiding(identifier);
     }
 
     @Override public String name() {
