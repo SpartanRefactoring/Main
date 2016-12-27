@@ -119,4 +119,8 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic27() {
     assert is(" @Override @CanIgnoreReturnValue public Service stopAsync(){delegate.stopAsync();return this;}");
   }
+
+  @Test public void basic28() {
+    assert is("@SuppressWarnings({\"a\"}) public void bar() {      use();    }");
+  }
 }

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
   default boolean notEmpty(final MethodDeclaration ¢) {
-    return !empty(¢);
+    return statements(¢) != null && !empty(¢);
   }
 
   default boolean empty(final MethodDeclaration ¢) {
