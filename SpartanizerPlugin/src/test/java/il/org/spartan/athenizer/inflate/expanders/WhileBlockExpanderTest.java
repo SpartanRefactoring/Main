@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 
+@Ignore
 @SuppressWarnings("static-method")
 public class WhileBlockExpanderTest {
   @Test public void simpleBlockTest() {
