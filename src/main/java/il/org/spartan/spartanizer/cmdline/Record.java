@@ -71,7 +71,7 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-          * @param key The key to be added; must not be <code><b>null</b></code>
+            * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public Self put(final String key, final double value) {
