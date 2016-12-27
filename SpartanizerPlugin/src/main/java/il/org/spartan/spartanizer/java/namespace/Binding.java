@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
  * class is intentionally package level, and intentionally defined local. For
  * now, clients should not be messing with it
  * @since 2016 */
-public class Symbol {
+public class Binding {
   public static boolean eq(final Object o1, final Object o2) {
     return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
   }
@@ -24,34 +24,34 @@ public class Symbol {
    * but I think this entry can be shared by many nodes at the same level */
   public final ASTNode blockScope;
   /** What do we know about an entry hidden by this one */
-  public final Symbol hiding;
+  public final Binding hiding;
   /** The node at which this entry was created */
   public final ASTNode self;
   /** What do we know about the type of this definition */
-  public final type prudentType;
+  public final type type;
 
   // For now, nothing is known, we only maintain lists
-  public Symbol() {
+  public Binding() {
     blockScope = self = null;
-    prudentType = null;
+    type = null;
     hiding = null;
   }
 
-  public Symbol(final ASTNode blockScope, final Symbol hiding, final ASTNode self, final type prudentType) {
+  public Binding(final ASTNode blockScope, final Binding hiding, final ASTNode self, final type type) {
     this.blockScope = blockScope;
     this.hiding = hiding;
     this.self = self;
-    this.prudentType = prudentType;
+    this.type = type;
   }
 
-  public Symbol(final type t) {
+  public Binding(final type type) {
     blockScope = self = null;
-    prudentType = t;
+    this.type = type;
     hiding = null;
   }
 
-  public boolean equals(final Symbol ¢) {
-    return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
+  public boolean equals(final Binding ¢) {
+    return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
   }
 
   /** @param ¢
@@ -61,7 +61,7 @@ public class Symbol {
   // Required for MapEntry equality, which is, in turn, required for Set
   // containment check, which is required for testing.
   @Override public boolean equals(final Object ¢) {
-    return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Symbol) ¢);
+    return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Binding) ¢);
   }
 
   // Required for MapEntry equality, which is, in turn, required for Set
