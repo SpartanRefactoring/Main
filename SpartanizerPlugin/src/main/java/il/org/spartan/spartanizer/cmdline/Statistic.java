@@ -11,6 +11,10 @@ enum Statistic {
     }
   },
   NA {
+    @Override public String toString() {
+      return "N/A"; 
+    }
+
     @Override public double of(RealStatistics ¢) {
       return ¢.missing();
     }
@@ -33,6 +37,10 @@ enum Statistic {
   MAD {
     @Override public double of(RealStatistics ¢) {
       return ¢.mad();
+    }
+
+    @Override public String toString() {
+      return "M.A.D"; 
     }
   },
   min {
