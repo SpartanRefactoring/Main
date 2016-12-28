@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -28,10 +27,10 @@ public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implem
     if (extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
-    if ("\"\"".equals(¢.getRightOperand() + "") && !iz.literal(¢.getLeftOperand()))
+    if ("\"\"".equals(¢.getRightOperand() + "") && !(¢.getLeftOperand()).resolveTypeBinding().isPrimitive())
       $.setExpression(duplicate.of(¢.getLeftOperand()));
     else {
-      if (!"\"\"".equals(¢.getLeftOperand() + "") || iz.literal(¢.getRightOperand()))
+      if (!"\"\"".equals(¢.getLeftOperand() + "") || (¢.getRightOperand()).resolveTypeBinding().isPrimitive())
         return null;
       $.setExpression(duplicate.of(¢.getRightOperand()));
     }
