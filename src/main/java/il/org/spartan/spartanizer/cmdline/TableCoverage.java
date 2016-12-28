@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -29,6 +30,7 @@ public class TableCoverage extends FolderASTVisitor {
   static {
     clazz = TableCoverage.class;
     TrimmerLog.off();
+    Trimmer.silent = true;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 

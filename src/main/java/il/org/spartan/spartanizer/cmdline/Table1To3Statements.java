@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -30,6 +31,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   static {
     clazz = Table1To3Statements.class;
     TrimmerLog.off();
+    Trimmer.silent = true;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
