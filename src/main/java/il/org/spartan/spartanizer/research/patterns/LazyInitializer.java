@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class LazyInitializer extends NanoPatternTipper<Assignment> {
-  static Set<UserDefinedTipper<Assignment>> tippers = new HashSet<UserDefinedTipper<Assignment>>() {
+  private static final Set<UserDefinedTipper<Assignment>> tippers = new HashSet<UserDefinedTipper<Assignment>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X1 = default¢($X1).to($X2)", "lazyInitialize($X1).with(()->$X2)", "lazy evaluation"));
