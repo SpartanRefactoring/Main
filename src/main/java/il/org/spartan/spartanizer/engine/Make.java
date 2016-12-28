@@ -72,7 +72,7 @@ public enum Make {
     $.setSource(¢);
     return $;
   }
-  
+
   /** Creates a binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */

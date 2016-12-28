@@ -2949,7 +2949,8 @@ public final class Version230 {
 
   @Test public void shortestOperand02() {
     trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;")//
-        .gives("k +=4;if (2 * 6 == k-4) return true;");
+        .gives("k +=4;if (12 + 4 == k) return true;")//
+        .stays();
   }
 
   @Test public void shortestOperand05() {
@@ -3013,11 +3014,13 @@ public final class Version230 {
   }
 
   @Test public void shortestOperand22() {
-    trimmingOf("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();").stays();
+    trimmingOf("return f(a,b,c,d,e) + f(a,b,c,d) + f(a,b,c) + f(a,b) + f(a) + f();")//
+        .stays();
   }
 
   @Test public void shortestOperand23() {
-    trimmingOf("return f() + \".\";     }").stays();
+    trimmingOf("return f() + \".\";     }")//
+        .stays();
   }
 
   @Test public void shortestOperand24() {
@@ -3303,13 +3306,15 @@ public final class Version230 {
   @Test public void switchSimplifyCaseAfterDefault() {
     trimmingOf(
         "switch (n.getNodeType()) {\n" + "default:\n" + "  return -1;\n" + "case BREAK_STATEMENT:\n" + "  return 0;\n" + "case CONTINUE_STATEMENT:\n"
-            + "  return 1;\n" + "case RETURN_STATEMENT:\n" + "  return 2;\n" + "case THROW_STATEMENT:\n" + "  return 3;\n" + "}").stays();
+            + "  return 1;\n" + "case RETURN_STATEMENT:\n" + "  return 2;\n" + "case THROW_STATEMENT:\n" + "  return 3;\n" + "}")//
+        .stays();
   }
 
   @Test public void switchSimplifyCaseAfterDefault1() {
     trimmingOf(
         "switch (n.getNodeType()) {" + "  default:" + "    return -1;" + "  case BREAK_STATEMENT:" + "    return 0;" + "  case CONTINUE_STATEMENT:"
-            + "    return 1;" + "  case RETURN_STATEMENT:" + "    return 2;" + "  case THROW_STATEMENT:" + "    return 3;" + "  }").stays();
+            + "    return 1;" + "  case RETURN_STATEMENT:" + "    return 2;" + "  case THROW_STATEMENT:" + "    return 3;" + "  }")//
+        .stays();
   }
 
   @Test public void switchSimplifyWithDefault2() {
@@ -3327,7 +3332,8 @@ public final class Version230 {
 
   @Test public void synchronizedBraces() {
     trimmingOf("    synchronized (variables) {\n" + "      for (final String key : variables.keySet())\n"
-        + "        $.variables.put(key, variables.get(key));\n" + "    }").stays();
+        + "        $.variables.put(key, variables.get(key));\n" + "    }")//
+        .stays();
   }
 
   @Test public void ternarize05() {
@@ -3440,17 +3446,20 @@ public final class Version230 {
   }
 
   @Test public void ternarize22() {
-    trimmingOf("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").stays();
+    trimmingOf("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ")//
+        .stays();
   }
 
   @Test public void ternarize26() {
-    trimmingOf("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").stays();
+    trimmingOf("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ")//
+        .stays();
   }
 
   @Test public void ternarize33() {
     trimmingOf("int a, b=0;   if (b==3){    a=4; } ")//
         .gives("int a;if(0==3){a=4;}")//
-        .gives("int a;if(0==3)a=4;").stays();
+        .gives("int a;if(0==3)a=4;")//
+        .stays();
   }
 
   @Test public void ternarize35() {
@@ -3464,7 +3473,8 @@ public final class Version230 {
   }
 
   @Test public void ternarize38() {
-    trimmingOf("int a, b=0; use(a,b); if (b==3){    a+=2+r();a-=6;} f();").stays();
+    trimmingOf("int a, b=0; use(a,b); if (b==3){    a+=2+r();a-=6;} f();")//
+        .stays();
   }
 
   @Test public void ternarize42() {
@@ -3473,7 +3483,8 @@ public final class Version230 {
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}")
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")
-        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}").stays();
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
+        .stays();
   }
 
   @Test public void ternarize45() {
@@ -3488,11 +3499,13 @@ public final class Version230 {
   }
 
   @Test public void ternarize49() {
-    trimmingOf("if (s.equals(532)){ S.h(gG); S.out.l(kKz); } f();").stays();
+    trimmingOf("if (s.equals(532)){ S.h(gG); S.out.l(kKz); } f();")//
+        .stays();
   }
 
   @Test public void ternarize52() {
-    trimmingOf("int a=0,b = 0,c,d = 0,e = 0; use(a,b); if (a <b) {c = d;c = e;} f();").stays();
+    trimmingOf("int a=0,b = 0,c,d = 0,e = 0; use(a,b); if (a <b) {c = d;c = e;} f();")//
+        .stays();
   }
 
   @Test public void ternarize54() {
@@ -3543,7 +3556,8 @@ public final class Version230 {
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
         + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
-        + "}").stays();
+        + "}")//
+        .stays();
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {
@@ -3552,10 +3566,12 @@ public final class Version230 {
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
-    trimmingOf("literal ? CONDITIONAL_OR : CONDITIONAL_AND").stays();
+    trimmingOf("literal ? CONDITIONAL_OR : CONDITIONAL_AND")//
+        .stays();
   }
 
   @Test public void xorSortClassConstantsAtEnd() {
-    trimmingOf("f(a,b,c,d) ^ BOB").stays();
+    trimmingOf("f(a,b,c,d) ^ BOB")//
+        .stays();
   }
 }

@@ -42,14 +42,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   @Override public void run(final IMarker ¢) {
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
-  
+
   public static GUIBatchLaconizer applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static GUIBatchLaconizer applicator(Linguistic.Activity activityNamer) {
+  public static GUIBatchLaconizer applicator(final Linguistic.Activity activityNamer) {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
