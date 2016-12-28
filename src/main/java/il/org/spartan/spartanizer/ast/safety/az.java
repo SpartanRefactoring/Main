@@ -584,7 +584,7 @@ public enum az {
     return !iz.catchClause($) ? null : (CatchClause) $;
   }
 
-  public static ArrayType arrayType(Type ¢) {
+  public static ArrayType arrayType(final Type ¢) {
     return !iz.nodeTypeEquals(¢, ARRAY_TYPE) ? null : (ArrayType) ¢;
   }
 }

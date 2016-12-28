@@ -18,8 +18,8 @@ public final class Issue221 {
     boolean b6 = true;
     short s1, s2, s3 = 4, s4;
     char c1, c2 = '\0', c3, c4 = 'a', c5 = 12;
-    long l1, l2 = 0L, l3 = '\0', l4, l5 = (long) 0.0, l6 = (int) 0.0F;
-    float f1 = (float) 0.0, f2 = 0L, f3 = 3, f4;
+    long l1, l2, l3 = '\0', l4, l5 = (long) 0.0, l6 = (int) 0.0F;
+    float f1 = (float) 0.0, f2, f3 = 3, f4;
   }
 
   @Test public void A$01() {

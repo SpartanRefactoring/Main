@@ -47,9 +47,6 @@ public class TableTouched extends TableCoverage {
     System.err.println("Touched output is in: " + presentSourcePath);
   }
 
-  /**
-   * 
-   */
   private void gatherStatistics() {
     totalMethodsTouched = 0;
     for (final Integer ¢ : statementsCoverageStatistics.keySet())
