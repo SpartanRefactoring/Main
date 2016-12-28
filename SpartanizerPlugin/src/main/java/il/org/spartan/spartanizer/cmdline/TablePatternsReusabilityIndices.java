@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
@@ -23,6 +24,8 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   static {
     clazz = TablePatternsReusabilityIndices.class;
     Logger.subscribe((n, np) -> logNPInfo(n, np));
+    TrimmerLog.off();
+    Trimmer.silent = true;
   }
 
   private static void initializeWriter() {
@@ -35,7 +38,6 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    TrimmerLog.off();
     TableReusabilityIndices.main(args);
     if (pWriter != null) {
       pWriter.close();
@@ -48,8 +50,8 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch (final AssertionError ¢) {
-        System.err.println(¢);
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
+        System.err.println("X");
       }
     return super.visit($);
   }
