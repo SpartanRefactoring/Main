@@ -65,7 +65,7 @@ public class InflaterProvider extends OperationsProvider {
     return toolbox.firstTipper(¢);
   }
 
-  @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
-    return (list) -> list.get(0);
+  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+    return (list) -> Collections.singletonList(list.get(0));
   }
 }
