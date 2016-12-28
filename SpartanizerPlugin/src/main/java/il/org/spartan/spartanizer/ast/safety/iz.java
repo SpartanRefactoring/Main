@@ -1161,4 +1161,8 @@ public interface iz {
   static boolean catchClause(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
   }
+
+  static boolean typeDeclarationStatement(Statement ¢) {
+    return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
+  }
 }

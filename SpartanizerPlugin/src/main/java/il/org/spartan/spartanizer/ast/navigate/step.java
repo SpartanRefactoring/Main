@@ -46,11 +46,11 @@ public enum step {
     return $ == 0;
   }
 
-  public static Statement body(final ForStatement ¢) {
+  public static Statement body(final EnhancedForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final EnhancedForStatement ¢) {
+  public static Statement body(final ForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -61,6 +61,12 @@ public enum step {
   }
 
   public static Block body(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  private static Block body(final SynchronizedStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -75,12 +81,54 @@ public enum step {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
+  /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
+   * @param ¢ JD
+   * @return reference to the list of bodyDeclarations in the argument */
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnnotationTypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.bodyDeclarations();
+  }
+
   /** Expose the list of bodyDeclarations in an
    * {@link AnonymousClassDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
   @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
     return ¢ == null ? null : ¢.bodyDeclarations();
+  }
+
+  public static List<ConditionalExpression> branches(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression s = ¢;
+    final List<ConditionalExpression> $ = new ArrayList<>();
+    $.add(s);
+    for (; iz.conditionalExpression(elze(s));)
+      $.add(s = az.conditionalExpression(elze(s)));
+    return $;
+  }
+
+  /** Given an IfStatement of the form: <br>
+   * if(a) <br>
+   * <t> B1<br>
+   * else if(b) <br>
+   * <t> <t>B2<br>
+   * else if(c)<br>
+   * <t><t> B3<br>
+   * ... <br>
+   * else <br>
+   * <t><t> Bn <br>
+   * Retreives all If branches
+   * @param ¢ JD
+   * @return */
+  public static List<IfStatement> branches(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement s = ¢;
+    final List<IfStatement> $ = new ArrayList<>();
+    $.add(s);
+    for (; iz.ifStatement(elze(s));)
+      $.add(s = az.ifStatement(elze(s)));
+    return $;
   }
 
   /** Expose the list of catchClauses in a {@link TryStatement}
@@ -113,6 +161,10 @@ public enum step {
    * @return else statement of the parameter */
   public static Statement elze(final IfStatement ¢) {
     return ¢ == null ? null : ¢.getElseStatement();
+  }
+
+  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+    return ¢ == null ? null : ¢.enumConstants();
   }
 
   /** @param n a node to extract an expression from
@@ -236,10 +288,6 @@ public enum step {
     return ¢ == null ? null : ¢.extendedOperands();
   }
 
-  @SuppressWarnings("unchecked") public static List<CatchClause> extractCatches(final TryStatement ¢) {
-    return ¢ == null ? null : ¢.catchClauses();
-  }
-
   /** FieldDeclarations of type
    * @param ¢ JD
    * @return */
@@ -285,11 +333,15 @@ public enum step {
     return ¢ == null ? null : ¢.getRightHandSide();
   }
 
-  public static String identifier(final MethodInvocation ¢) {
-    return identifier(name(¢));
+  public static String identifier(AnnotationTypeDeclaration ¢) {
+    return ¢.getName() + "";
   }
 
   public static String identifier(final MethodDeclaration ¢) {
+    return identifier(name(¢));
+  }
+
+  public static String identifier(final MethodInvocation ¢) {
     return identifier(name(¢));
   }
 
@@ -341,6 +393,34 @@ public enum step {
    * @return */
   public static Javadoc javadoc(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getJavadoc();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static SimpleName label(final ContinueStatement ¢) {
+    return ¢ == null ? null : ¢.getLabel();
+  }
+
+  public static Expression lastElse(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression $ = ¢;
+    for (; iz.conditionalExpression(elze($));)
+      $ = az.conditionalExpression(elze($));
+    return elze($);
+  }
+
+  /** returns the else statement of the last if in an if else if else if else
+   * sequence
+   * @param ¢
+   * @return */
+  public static Statement lastElse(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement $ = ¢;
+    for (; iz.ifStatement(elze($));)
+      $ = az.ifStatement(elze($));
+    return elze($);
   }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}
@@ -480,6 +560,10 @@ public enum step {
     return ¢ == null ? null : ¢.getPackage();
   }
 
+  @SuppressWarnings("unchecked") public static List<? extends VariableDeclaration> parameters(LambdaExpression ¢) {
+    return ¢ == null ? null : ¢.parameters();
+  }
+
   /** Expose the list of parameters in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return result of method {@link MethodDeclaration#parameters} downcasted to
@@ -566,6 +650,12 @@ public enum step {
    * @return reference to the list of sideEffects contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.statements();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static List<Statement> statements(final SynchronizedStatement ¢) {
+    return ¢ == null ? null : statements(body(¢));
   }
 
   @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc ¢) {
@@ -691,9 +781,17 @@ public enum step {
     return ¢ == null ? null : ¢.typeArguments();
   }
 
+  public static Name typeName(final Annotation ¢) {
+    return ¢ == null ? null : ¢.getTypeName();
+  }
+
   /** @param ¢ JD
    * @return types in ¢ */
   @SuppressWarnings("unchecked") public static List<AbstractTypeDeclaration> types(final CompilationUnit ¢) {
+    return ¢ == null ? null : ¢.types();
+  }
+
+  @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
     return ¢ == null ? null : ¢.types();
   }
 
@@ -706,92 +804,5 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static List<Statement> statements(final SynchronizedStatement ¢) {
-    return ¢ == null ? null : statements(body(¢));
-  }
-
-  /** @param ¢ JD
-   * @return */
-  private static Block body(final SynchronizedStatement ¢) {
-    return ¢ == null ? null : ¢.getBody();
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static SimpleName label(final ContinueStatement ¢) {
-    return ¢ == null ? null : ¢.getLabel();
-  }
-
-  /** Given an IfStatement of the form: <br>
-   * if(a) <br>
-   * <t> B1<br>
-   * else if(b) <br>
-   * <t> <t>B2<br>
-   * else if(c)<br>
-   * <t><t> B3<br>
-   * ... <br>
-   * else <br>
-   * <t><t> Bn <br>
-   * Retreives all If branches
-   * @param ¢ JD
-   * @return */
-  public static List<IfStatement> branches(final IfStatement ¢) {
-    if (¢ == null)
-      return null;
-    IfStatement s = ¢;
-    final List<IfStatement> $ = new ArrayList<>();
-    $.add(s);
-    for (; iz.ifStatement(elze(s));)
-      $.add(s = az.ifStatement(elze(s)));
-    return $;
-  }
-
-  public static List<ConditionalExpression> branches(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression s = ¢;
-    final List<ConditionalExpression> $ = new ArrayList<>();
-    $.add(s);
-    for (; iz.conditionalExpression(elze(s));)
-      $.add(s = az.conditionalExpression(elze(s)));
-    return $;
-  }
-
-  /** returns the else statement of the last if in an if else if else if else
-   * sequence
-   * @param ¢
-   * @return */
-  public static Statement lastElse(final IfStatement ¢) {
-    if (¢ == null)
-      return null;
-    IfStatement $ = ¢;
-    for (; iz.ifStatement(elze($));)
-      $ = az.ifStatement(elze($));
-    return elze($);
-  }
-
-  public static Expression lastElse(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression $ = ¢;
-    for (; iz.conditionalExpression(elze($));)
-      $ = az.conditionalExpression(elze($));
-    return elze($);
-  }
-
-  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
-    return ¢ == null ? null : ¢.enumConstants();
-  }
-
-  @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
-    return ¢ == null ? null : ¢.types();
-  }
-
-  public static Name typeName(final Annotation ¢) {
-    return ¢ == null ? null : ¢.getTypeName();
   }
 }

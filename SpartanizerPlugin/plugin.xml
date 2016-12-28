@@ -60,7 +60,7 @@ the program changes: https://goo.gl/sIqIBC
   id="il.BindingFun"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.cmdline.collector.TablesAndSortedSpartanizedMethodsCollector"/>
+  <run class="il.org.spartan.spartanizer.cmdline.TablesAndSortedSpartanizedMethodsCollector"/>
   </application>
 </extension>
 
