@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
@@ -24,8 +23,6 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   static {
     clazz = TablePatternsReusabilityIndices.class;
     Logger.subscribe((n, np) -> logNPInfo(n, np));
-    TrimmerLog.off();
-    Trimmer.silent = true;
   }
 
   private static void initializeWriter() {
