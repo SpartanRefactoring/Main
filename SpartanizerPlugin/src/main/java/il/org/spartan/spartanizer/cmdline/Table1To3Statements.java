@@ -70,7 +70,7 @@ public class Table1To3Statements extends FolderASTVisitor {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Coverage output is in: " + Relation.temporariesFolder + "/" + path);
+    System.err.println("Output is in: " + Relation.temporariesFolder + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
