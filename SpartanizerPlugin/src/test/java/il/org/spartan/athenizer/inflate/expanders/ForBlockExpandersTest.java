@@ -7,7 +7,6 @@ import org.junit.*;
 /** Test for the ForBlock expander, issue #975
  * @author Raviv Rachmiel
  * @since 26-12-16 */
-@Ignore
 @SuppressWarnings("static-method")
 public class ForBlockExpandersTest {
   @Test public void simpleBlockTest() {
