@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
+@Ignore
 public class AssignmentOperatorExpansionTest {
   @Test public void basic() {
     expansionOf("a += 1").gives("a = a + 1");

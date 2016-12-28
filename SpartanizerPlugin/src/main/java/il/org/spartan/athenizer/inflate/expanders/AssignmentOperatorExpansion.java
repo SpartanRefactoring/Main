@@ -21,7 +21,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
   }
 
   @Override protected boolean prerequisite(final Assignment ¢) {
-    return convertToInfix(¢.getOperator()) != null;
+    return ¢.getAST().hasResolvedBindings() && validTypes(¢) && convertToInfix(¢.getOperator()) != null;
   }
 
   @Override public Tip tip(final Assignment ¢) {
@@ -51,5 +51,10 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
                                 : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
                                     : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
                                         : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
+  }
+  
+  private static boolean validTypes(Assignment ¢) {
+    ITypeBinding $ = ¢.getLeftHandSide().resolveTypeBinding(), br = ¢.getRightHandSide().resolveTypeBinding();
+    return $ != null && br != null && $.isPrimitive() && br.isPrimitive() && $.isEqualTo(br);
   }
 }
