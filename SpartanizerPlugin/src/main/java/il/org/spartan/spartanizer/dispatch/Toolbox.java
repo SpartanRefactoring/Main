@@ -178,7 +178,7 @@ public class Toolbox {
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
             // new InfixIndexOfToStringContains(), // v 2.7
-            new SimplifyComparisionOfAdditions(), //
+            // new SimplifyComparisionOfAdditions(), // infinite loop
             new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
