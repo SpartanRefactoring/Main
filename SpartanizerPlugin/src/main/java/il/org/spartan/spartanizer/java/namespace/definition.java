@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-22 */
 public interface definition {
   enum Kind {
-    annotation {
+    anonymous, compilationUnit, annotation {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
@@ -127,19 +127,10 @@ public interface definition {
     try¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
-        assert f != null;
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
-        assert e != null;
         final List<VariableDeclarationFragment> fs = fragments(e);
-        assert fs != null;
-        assert !fs.isEmpty();
-        assert fs.contains(f);
         final TryStatement s = az.tryStatement(parent(e));
-        assert s != null;
         final List<VariableDeclarationExpression> rs = resources(s);
-        assert rs != null;
-        assert !rs.isEmpty();
-        assert rs.contains(e);
         final List<ASTNode> $ = new ArrayList<>();
         wizard.addRest($, f, fs);
         wizard.addRest($, e, rs);
@@ -250,5 +241,9 @@ public interface definition {
 
   static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
+  }
+
+  static Kind kind(TypeDeclaration x) {
+    return !x.isInterface() ? Kind.class¢ : Kind.interface¢;
   }
 }

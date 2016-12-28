@@ -18,6 +18,13 @@ import il.org.spartan.spartanizer.utils.*;
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree. */
 public interface Environment {
+  static Namespace of(ASTNode ¢) {
+    Namespace $ = property.obtain(Namespace.class).from(¢);
+    if ($ != null)
+      return $;
+    Environment.EMPTY.spawn().init(¢.getRoot());
+    return property.obtain(Namespace.class).from(¢);
+  }
   /** @return true iff {@link Environment} doesn't have an entry with a given
    *         name. */
   default boolean doesntHave(final String name) {
@@ -88,9 +95,7 @@ public interface Environment {
   int size();
 
   /** Used when new block (scope) is opened. */
-  default Environment spawn() {
-    return new NameSpace(this);
-  }
+  Namespace spawn(); 
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
@@ -125,6 +130,10 @@ public interface Environment {
 
     @Override public Binding get(@SuppressWarnings("unused") final String name) {
       return null;
+    }
+
+    @Override public Namespace spawn() {
+      return new Namespace(this); 
     }
   };
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
@@ -180,7 +189,7 @@ public interface Environment {
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
-  static Environment genesis() {
+  static Namespace genesis() {
     return EMPTY.spawn();
   }
 

@@ -22,12 +22,12 @@ public final class TypeNamesCollector {
     collect(where.length != 0 ? where : as.array("."));
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
-      final String shortName = spartan.shorten(s);
+      final String shortName = namer.shorten(s);
       w.put("Count", longNames.get(s).intValue());
       w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
       w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
       w.put("Collisions", shortToFull.get(shortName).size());
-      w.put("Short", spartan.shorten(s));
+      w.put("Short", namer.shorten(s));
       w.put("Original", s);
       w.nl();
     }
@@ -44,7 +44,7 @@ public final class TypeNamesCollector {
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        final String shortName = spartan.shorten(longName);
+        final String shortName = namer.shorten(longName);
         shortToFull.putIfAbsent(shortName, new HashSet<String>());
         shortToFull.get(shortName).add(longName);
       }
