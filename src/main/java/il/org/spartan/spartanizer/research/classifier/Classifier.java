@@ -21,7 +21,7 @@ public class Classifier extends ASTVisitor {
   static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new ContainsEnhancedFor());
+      add(new Contains());
       add(new ForEach());
     }
   };
