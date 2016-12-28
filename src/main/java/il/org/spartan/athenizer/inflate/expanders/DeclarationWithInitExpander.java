@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -16,7 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code> to <code>
  * int a;
  * a = 3;
- * </code>
+ * </code> For now the expander do not expand if the declaration has some
+ * annotation (so that no warnings would be created)
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {
@@ -25,7 +27,7 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null
+    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null
         && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
