@@ -348,7 +348,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <!--<command id="il.org.spartan.AthensCollateral" name="Athens Collateral handler" />-->
      <command id="il.org.spartan.AthensInflate" name="Athens Inflater handler" />
-     <command id="il.org.spartan.AthensInflateTest" name="Test Athens Inflater handler" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -361,7 +360,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.SpartanizationHandler"/>
    <!--<handler commandId="il.org.spartan.AthensCollateral" class="il.org.spartan.athenizer.collateral.CollateralHandler"/>-->
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.inflate.InflateHandler" />
-   <handler commandId="il.org.spartan.AthensInflateTest" class="il.org.spartan.athenizer.inflate.expanders.InflateWholeProject" />
 </extension>
 
 <!-- Menus -->
@@ -491,10 +489,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
 	<key sequence="Ctrl+Alt+D"
 		commandId="il.org.spartan.AthensInflate"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<!-- TODO Roth: disable before release -->
-	<key sequence="Ctrl+Alt+Q"
-		commandId="il.org.spartan.AthensInflateTest"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 

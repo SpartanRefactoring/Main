@@ -14,6 +14,8 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   public ITextSelection textSelection;
   /** Selection's name. */
   public String name;
+  /** True iff the selection is textual. */
+  public boolean isTextSelection;
 
   /** @return true iff the selection is empty, i.e. contain no files */
   public boolean isEmpty() {
@@ -89,6 +91,11 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
         inner = new ArrayList<>();
       inner.addAll(¢.inner);
     }
+    return self();
+  }
+  
+  public Self setIsTextSelection(final boolean isTextSelection) {
+    this.isTextSelection = isTextSelection;
     return self();
   }
 }

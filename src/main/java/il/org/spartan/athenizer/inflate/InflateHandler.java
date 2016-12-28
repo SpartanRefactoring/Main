@@ -2,8 +2,8 @@ package il.org.spartan.athenizer.inflate;
 
 import java.util.*;
 import java.util.List;
-
 import org.eclipse.core.commands.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.events.*;
@@ -14,6 +14,7 @@ import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Handler for the Athenizer project's feature (global athenizer). Uses
  * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an
@@ -21,14 +22,21 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
+  private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
+
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    final Selection $ = Selection.Util.current();
+    return $.isTextSelection ? goWheelAction($) : goAggressiveAction($);
+  }
+
+  private static Void goWheelAction(final Selection s) {
     final ITextEditor e = getTextEditor();
     final StyledText text = getText(e);
     if (text == null)
       return null;
     final List<Listener> ls = getListeners(text);
     if (ls == null || ls.isEmpty()) {
-      final InflaterListener l = new InflaterListener(text, e);
+      final InflaterListener l = new InflaterListener(text, e, s);
       text.addMouseWheelListener(l);
       text.addKeyListener(l);
     } else {
@@ -43,6 +51,11 @@ public class InflateHandler extends AbstractHandler {
       for (final Listener ¢ : ls)
         text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
     }
+    return null;
+  }
+
+  private static Void goAggressiveAction(final Selection ¢) {
+    applicator().selection(¢).passes(SpartanizationHandler.PASSES).operationName(OPERATION_ACTIVITY).go();
     return null;
   }
 
@@ -94,5 +107,11 @@ public class InflateHandler extends AbstractHandler {
       return null;
     final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
     return $ == null || !($ instanceof StyledText) ? null : (StyledText) $;
+  }
+
+  public static GUIBatchLaconizer applicator() {
+    return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
+        ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider()),
+            ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng());
   }
 }
