@@ -42,8 +42,8 @@ public class InflaterProvider extends OperationsProvider {
             new CasesSplit())//
         .add(Assignment.class, //
             new AssignmentOperatorExpansion())//
-        // .add(TryStatement.class, //
-        // new MultiTypeCatchClause())//
+        .add(TryStatement.class, //
+            new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, //
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
