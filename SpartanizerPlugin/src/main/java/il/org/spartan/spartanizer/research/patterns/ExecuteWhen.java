@@ -11,38 +11,33 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @since Nov 7, 2016 */
 public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
-  Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+  private static final Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("if($X) $N($A);", "execute((__) -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
-      add(TipperFactory.patternTipper("if($X1) $X2.$N($A);", "execute((__) -> $X2.$N($A)).when($X1);", "turn into when(X).execute(Y)"));
+      add(patternTipper("if($X) $N($A);", "execute(() -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
+      add(patternTipper("if($X1) $X2.$N($A);", "execute(() -> $X2.$N($A)).when($X1);", "turn into when(X).execute(Y)"));
     }
   };
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "turn into when(x).execute(()->y)";
-  }
-
   @Override public boolean canTip(final IfStatement x) {
-    return anyTips(tippers, x) && !throwing(then(x)) && !iz.returnStatement(then(x)) && !containsReferencesToNonFinal(x);
+    return anyTips(tippers, x)//
+        && !throwing(then(x))//
+        && !iz.returnStatement(then(x))//
+        && doesNotReferenceNonFinal(x);
   }
 
-  /** @param x
+  /** First order approximation - does statement reference non effective final
+   * names? meanwhile we take care just assignments...
+   * @param ¢ statement
    * @return */
-  private static boolean containsReferencesToNonFinal(@SuppressWarnings("unused") final IfStatement __) {
-    // TODO: Marco
-    // Set<Name> names = analyze.dependencies(x);
-    // Set<VariableDeclaration> enviromentVariables =
-    // analyze.enviromentVariables(x);
-    // TypeDeclaration t = searchAncestors.forContainingType().from(x);
-    // FieldDeclaration[] fieldDeclarationsVariables =
-    // step.fieldDeclarations(t);
-    return false;
+  private static boolean doesNotReferenceNonFinal(final IfStatement ¢) {
+    return findFirst.assignment(¢) == null;
   }
 
   /** First order approximation - does statement throw?
