@@ -40,7 +40,7 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
   }
 
   public int count(final Integer type) {
-    return typeHistogram(type).inner;
+    return typeHistogram(type).inner + countNanos(type);
   }
 
   @SuppressWarnings("boxing") public int countNanos(final Integer type) {
