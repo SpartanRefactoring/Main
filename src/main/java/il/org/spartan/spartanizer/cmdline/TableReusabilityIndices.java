@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -19,14 +18,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    try {
-      writer = new CSVStatistics(makeFile(clazz.getSimpleName()), "$\\#$");
-    } catch (final IOException ¢) {
-      throw new RuntimeException(¢);
-    }
+    writer = new Relation(makeFile(clazz.getSimpleName()));
   }
 
-  private static CSVStatistics writer;
+  private static Relation writer;
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
@@ -36,8 +31,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
-    if (writer != null)
-      System.err.println("Your output is in: " + writer.close());
+    writer.close();
   }
 
   public static int rindex(final int[] ranks) {
