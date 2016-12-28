@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.lang.reflect.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -10,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -18,11 +16,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-25 */
 public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
   private static Relation pWriter;
+  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {
     clazz = TablePatternsReusabilityIndices.class;
-    Logger.subscribe((n, np) -> logNPInfo(n, np));
+    Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
   }
 
   private static void initializeWriter() {
@@ -30,7 +28,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static String outputFileName() {
-    return clazz.getSimpleName();
+    return TablePatternsReusabilityIndices.class.getSimpleName();
   }
 
   public static void main(final String[] args)
@@ -55,10 +53,6 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     return true;
   }
 
-  @Override protected void init(final String path) {
-    super.init(path);
-  }
-
   @Override protected void done(final String path) {
     summarizeNPStatistics(path);
     System.err.println("Your output is in: " + outputFolder);
@@ -66,12 +60,6 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
-  }
-
-  private static void logNPInfo(final ASTNode n, final String np) {
-    if (!npStatistics.containsKey(np))
-      npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
-    npStatistics.get(np).markNP(n);
   }
 
   public void summarizeNPStatistics(final String path) {
