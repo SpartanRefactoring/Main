@@ -44,7 +44,6 @@ public class TableTouched extends TableCoverage {
       }
     touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();
-    System.err.println("Touched output is in: " + presentSourcePath);
   }
 
   private void gatherStatistics() {
