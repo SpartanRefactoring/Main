@@ -12,17 +12,23 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @since Dec 13, 2016 */
 public final class Unless extends NanoPatternTipper<ConditionalExpression> {
-  List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X1 ? null : $X2", "unless($X1).eval(() -> $X2)", "Go fluent: Unless pattern"));
       add(patternTipper("$X1  ? $X2 : null", "unless(!$X1).eval(() -> $X2)", "Go fluent: Unless pattern"));
     }
   };
-  static DefaultsTo rival = new DefaultsTo();
+  private static final List<NanoPatternTipper<ConditionalExpression>> rivals = new ArrayList<NanoPatternTipper<ConditionalExpression>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new DefaultsTo());
+      add(new SafeReference());
+    }
+  };
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
-    return anyTips(tippers, ¢) && rival.cantTip(¢);
+    return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
   @Override public Tip pattern(final ConditionalExpression ¢) {
