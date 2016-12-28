@@ -105,4 +105,28 @@ public interface Linguistic {
   static <X> String unknownIfNull(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
+
+  interface Activity {
+    String get();
+
+    String getIng();
+
+    String getEd();
+
+    static Activity simple(final String base) {
+      return new Activity() {
+        @Override public String getIng() {
+          return base + "ing";
+        }
+
+        @Override public String getEd() {
+          return base + "ed";
+        }
+
+        @Override public String get() {
+          return base;
+        }
+      };
+    }
+  }
 }

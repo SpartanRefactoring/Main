@@ -24,7 +24,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
-  private static final int PASSES = 20;
+  private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Spartaniz");
+  public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -42,9 +43,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
+  public static GUIBatchLaconizer applicator() {
+    return applicator(OPERATION_ACTIVITY);
+  }
+
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static GUIBatchLaconizer applicator() {
+  public static GUIBatchLaconizer applicator(final Linguistic.Activity activityNamer) {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
@@ -112,11 +117,12 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             if (dialogOpen)
               Dialogs.message(separate.these( //
                   message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
-                  message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
+                  message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
                   message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
         }
       }
     });
+    $.operationName(OPERATION_ACTIVITY);
     return $;
   }
 
@@ -184,7 +190,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @since 2.6 */
   private enum message {
     title(1, inp -> inp[0] + ""), //
-    passes(2, inp -> "Spartanized " + inp[0] + " compilation units in " + Linguistic.plurales("pass", (Integer) inp[1])), //
+    passes(3, inp -> inp[0] + " " + inp[1] + " compilation units in " + Linguistic.plurales("pass", (Integer) inp[2])), //
     time(1, inp -> "Run time " + inp[0] + " seconds");
     private final int inputCount;
     private final Function<Object[], String> printing;
