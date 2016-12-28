@@ -136,6 +136,14 @@ public class Selection extends AbstractSelection<Selection> {
     return this;
   }
 
+  // TODO Roth: apply to newly added WCU as well
+  public Selection setUseBinding() {
+    if (inner != null)
+      for (final WrappedCompilationUnit ¢ : inner)
+        ¢.useBinding = true;
+    return this;
+  }
+
   @Override public String toString() {
     if (isEmpty())
       return "{empty}";
