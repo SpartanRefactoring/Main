@@ -86,7 +86,7 @@ public class definitionTest extends ReflectiveTester {
     for (@foreach final MarkerAnnotation ¢ : markers())
       assert annotations.containsKey(¢ + "") : "I did not see marker annotation:" + ¢;
   }
-
+@Ignore
   @Test public void a11() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
