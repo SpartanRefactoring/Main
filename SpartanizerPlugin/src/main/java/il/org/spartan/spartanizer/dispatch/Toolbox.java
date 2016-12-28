@@ -138,7 +138,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
-            new BlockInlineStatementIntoNext(), // Leonidas
+            new BlockInlineStatementIntoNext(), //
             // new BlockRemoveDeadVariables(), // v 2.7
             null) //
         .add(PostfixExpression.class, //
@@ -178,7 +178,7 @@ public class Toolbox {
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
             // new InfixIndexOfToStringContains(), // v 2.7
-//            new SimplifyComparisionOfAdditions(), // #1021
+            new SimplifyComparisionOfAdditions(), //
             new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
