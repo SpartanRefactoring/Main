@@ -130,6 +130,12 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
+  /** Commits textual change and fixes the document's view on it's location,
+   * while avoiding small, unnecessary screen "jumps".
+   * @param e JD
+   * @param tc JD
+   * @param u JD
+   * @throws CoreException */
   @SuppressWarnings("restriction") private static void changeNFocus(final ITextEditor e, final TextFileChange tc, final CompilationUnit u)
       throws CoreException {
     if (!(e instanceof CompilationUnitEditor)) {

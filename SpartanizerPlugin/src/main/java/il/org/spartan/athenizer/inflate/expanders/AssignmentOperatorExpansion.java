@@ -10,6 +10,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** Expands <code>a += 3</code> to <code>a = a + 3</code>. Capable of dealing
+ * with inclusion and all operator types: <code>a |= b &= c</code> ->
+ * <code>a = a | (b &= c)</code> -> <code>a = a | (b = b & c)</code>.
+ * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @since 2016-12-28 */
 public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> implements TipperCategory.InVain {
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use regualr assignment wth operator";
