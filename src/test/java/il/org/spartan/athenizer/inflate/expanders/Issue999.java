@@ -18,6 +18,6 @@ public class Issue999 {
   }
 
   @Test public void c() {
-    expansionOf("a += b += 3;").gives("b += 3; a += b;").gives("b = b + 3; a += b;");
+    expansionOf("a += b += 3;").gives("b += 3; a += b;");
   }
 }
