@@ -26,7 +26,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final String API_LEVEL_TYPE = "type";
   private static final String API_FILE = "apiFile";
   private static final String API_LEVEL = "apiLevel";
-  static final DownCaster c = new DownCaster();
+  static final Down.Caster c = new Down.Caster();
 
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))

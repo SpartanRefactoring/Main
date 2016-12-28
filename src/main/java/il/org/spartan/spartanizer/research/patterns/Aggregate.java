@@ -34,8 +34,4 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   @Override public Tip pattern(final EnhancedForStatement x) {
     return firstTip(tippers, x);
   }
-
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
-    return "";
-  }
 }
