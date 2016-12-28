@@ -100,18 +100,20 @@ public class SingleFlater {
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  public static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
+  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
+    boolean $ = false;
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
-          changeNFocus(e, textChange, u.compilationUnit);
+          $ = changeNFocus(e, textChange, u.compilationUnit);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
     }
+    return $;
   }
 
   /** @param ¢ JD
@@ -137,16 +139,16 @@ public class SingleFlater {
    * @param tc JD
    * @param u JD
    * @throws CoreException */
-  @SuppressWarnings("restriction") private static void changeNFocus(final ITextEditor e, final TextFileChange tc, final CompilationUnit u)
+  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final CompilationUnit u)
       throws CoreException {
     if (!(e instanceof CompilationUnitEditor)) {
       tc.perform(new NullProgressMonitor());
-      return;
+      return true;
     }
     final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
     if (!(v instanceof ProjectionViewer)) {
       tc.perform(new NullProgressMonitor());
-      return;
+      return true;
     }
     final ProjectionViewer pv = (ProjectionViewer) v;
     final LineInformation i = LineInformation.create(u);
@@ -156,6 +158,7 @@ public class SingleFlater {
     e.selectAndReveal(tc.getEdit().getOffset(), !SELECT_CHANGES ? 0 : tc.getEdit().getLength());
     if (pv.getTopIndex() != ot && ot <= ct && ob >= cb)
       pv.setTopIndex(ot);
+    return true;
   }
 
   /** describes a single change operation, containing both an {@link ASTNode}
