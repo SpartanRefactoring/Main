@@ -35,7 +35,7 @@ public class ConstantReturnerTest extends JavadocerTest {
   @Test public void f() {
     assert is("boolean foo(){return -3;}");
   }
-  
+
   @Test public void g() {
     assert not("int foo(){return 0;}");
   }

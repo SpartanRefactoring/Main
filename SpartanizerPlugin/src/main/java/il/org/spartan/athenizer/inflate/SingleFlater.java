@@ -89,7 +89,7 @@ public class SingleFlater {
     if (operations.isEmpty())
       return false;
     final List<Operation<?>> $ = operationsProvider.getFunction().apply(operations);
-    for (Operation o : $)
+    for (final Operation o : $)
       try {
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
