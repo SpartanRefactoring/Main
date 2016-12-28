@@ -113,6 +113,7 @@ public class SingleFlater {
     } catch (final CoreException ¢) {
       monitor.log(¢);
     }
+    u.dispose();
     return $;
   }
 

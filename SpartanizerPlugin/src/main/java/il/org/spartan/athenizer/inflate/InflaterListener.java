@@ -23,11 +23,13 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   final List<Listener> externalListeners;
   final Cursor activeCursor;
   final Cursor inactiveCursor;
+  final Selection selection;
   boolean active;
 
-  public InflaterListener(final StyledText text, final ITextEditor editor) {
+  public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
     this.editor = editor;
+    this.selection = selection;
     externalListeners = new ArrayList<>();
     for (final Listener ¢ : text.getListeners(SWT.MouseWheel))
       externalListeners.add(¢);
@@ -45,13 +47,13 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void inflate() {
-    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).buildWithBinding();
+    final WrappedCompilationUnit wcu = first(selection.inner).buildWithBinding();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
         wcu, editor);
   }
 
   private void deflate() {
-    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).buildWithBinding();
+    final WrappedCompilationUnit wcu = first(selection.inner).buildWithBinding();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
         wcu, editor);
   }
