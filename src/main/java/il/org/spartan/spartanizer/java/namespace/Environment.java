@@ -56,13 +56,11 @@ public interface Environment {
   }
 
   /** @return null iff the name is not in use in the {@link Environment} */
-  default Binding get(@SuppressWarnings("unused") final String name) {
-    return null;
-  }
+  Binding get(String name);
 
   /** Answer the question whether the name is in use in the current
    * {@link Environment} */
-  boolean has(final String name);
+  boolean has(String name);
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
@@ -123,6 +121,10 @@ public interface Environment {
 
     @Override public int size() {
       return 0;
+    }
+
+    @Override public Binding get(@SuppressWarnings("unused") final String name) {
+      return null;
     }
   };
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
