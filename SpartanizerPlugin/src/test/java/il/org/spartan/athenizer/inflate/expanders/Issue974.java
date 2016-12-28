@@ -4,11 +4,11 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-/** Tets class for issue #974
+/** Test class for issue #974
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue974 {
   @Test public void test0() {
     expansionOf("i++;").gives("i = i+1;").stays();
