@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -16,8 +17,8 @@ public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
   private static final Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("if($X == null) return;", "precondition.notNull($X);", "replace with precondition.notNull($X)"));
-      add(TipperFactory.patternTipper("if(null == $X) return;", "precondition.notNull($X);", "replace with precondition.notNull($X)"));
+      add(patternTipper("if($X == null) return;", "precondition.notNull($X);", "replace with precondition.notNull($X)"));
+      add(patternTipper("if(null == $X) return;", "precondition.notNull($X);", "replace with precondition.notNull($X)"));
     }
   };
 

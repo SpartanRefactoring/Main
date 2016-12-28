@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -17,10 +18,10 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$X == null", "", ""));
-      add(TipperFactory.patternTipper("$X != null", "", ""));
-      add(TipperFactory.patternTipper("null == $X", "", ""));
-      add(TipperFactory.patternTipper("null == $X", "", ""));
+      add(patternTipper("$X == null", "", ""));
+      add(patternTipper("$X != null", "", ""));
+      add(patternTipper("null == $X", "", ""));
+      add(patternTipper("null == $X", "", ""));
     }
   };
 
