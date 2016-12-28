@@ -25,6 +25,7 @@ enum event {
  * @author Ori Roth
  * @since 2.6 */
 public class GUIBatchLaconizer extends Applicator {
+  private static final String DEFAULT_OPERATION_NAME = "Operat";
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -34,7 +35,7 @@ public class GUIBatchLaconizer extends Applicator {
   @Override @SuppressWarnings("boxing") public void go() {
     if (selection() == null || listener() == null || runContext() == null || passes() <= 0 || selection().isEmpty())
       return;
-    listener().push(message.run_start.get(selection().name));
+    listener().push(message.run_start.get(operationName(), selection().name));
     if (!shouldRun())
       return;
     final Int totalTipsInvoked = new Int();
@@ -54,8 +55,8 @@ public class GUIBatchLaconizer extends Applicator {
           ¢.dispose();
           thisPassTipsInvoked.addAndGet(tipsInvoked);
           totalTipsInvoked.addAndGet(tipsInvoked);
-          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName(),
-              totalTipsInvoked.get(), thisPassTipsInvoked.get()));
+          listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
+              ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
           if (!shouldRun())
             break;
         }
@@ -66,7 +67,7 @@ public class GUIBatchLaconizer extends Applicator {
       }
     });
     // TODO Roth: add metrics etc.
-    listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
+    listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
 
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
@@ -134,10 +135,17 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
+  /** Default operation name.
+   * @return this applicator */
+  public GUIBatchLaconizer defaultOperationName() {
+    operationName(Linguistic.Activity.simple(DEFAULT_OPERATION_NAME));
+    return this;
+  }
+
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public GUIBatchLaconizer defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer());
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
   }
 
   /** Factory method.
@@ -150,13 +158,14 @@ public class GUIBatchLaconizer extends Applicator {
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
+    run_start(2, inp -> printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1)), //
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
-    visit_cu(5,
-        inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2) + "\nTips: total = " + printableAt(inp, 3)
-            + "\tthis pass = " + printableAt(inp, 4)), //
-    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
+    visit_cu(6,
+        inp -> printableAt(inp, 1) + "/" + printableAt(inp, 2) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
+            + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
+    run_finish(3, inp -> "Done " + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
+        + printableAt(inp, 2));
     private final int inputCount;
     private final Function<Object[], String> printing;
 
@@ -172,6 +181,10 @@ public class GUIBatchLaconizer extends Applicator {
 
     private static String printableAt(final Object[] os, final int index) {
       return Linguistic.unknownIfNull(os, xs -> xs[index]);
+    }
+
+    private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
+      return Linguistic.unknownIfNull(os, xs -> operation.apply(xs[index]));
     }
   }
 }
