@@ -50,7 +50,8 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
       e.setName(duplicate.of(commonName));
       e.setType(duplicate.of(t));
       c.setException(e);
-      step.catchClauses($).add(c);
+      step.catchClauses($).add(i, c);
+      ++i;
     }
     return $;
   }
