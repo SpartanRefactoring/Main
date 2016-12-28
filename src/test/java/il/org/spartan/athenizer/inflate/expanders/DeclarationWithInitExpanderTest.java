@@ -18,4 +18,8 @@ public class DeclarationWithInitExpanderTest {
     expansionOf("int a = f();").gives("int a;" //
         + "a = f();").stays();
   }
+
+  @Test public void c() {
+    expansionOf("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };").stays();
+  }
 }
