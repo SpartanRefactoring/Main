@@ -17,9 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code> to <code>
  * int a;
  * a = 3;
- * </code>
- * 
- * For now the expander do not expand if the declaration has some annotation (so that no warnings would be created)
+ * </code> For now the expander do not expand if the declaration has some
+ * annotation (so that no warnings would be created)
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {

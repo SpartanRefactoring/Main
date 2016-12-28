@@ -2949,8 +2949,9 @@ public final class Version230 {
 
   @Test public void shortestOperand02() {
     trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;")//
-        .gives("k +=4;if (12 + 4 == k) return true;")//
-        .stays();
+        .gives("k+=4;if(2*6==k-4)return true;")//
+        .gives("k+=4;if(12==k-4)return true;").gives("k+=4;if(k-4==12)return true;").gives("k+=4;if(k==12+4)return true;")
+        .gives("k+=4;if(k==16)return true;").stays();
   }
 
   @Test public void shortestOperand05() {
@@ -3307,14 +3308,14 @@ public final class Version230 {
     trimmingOf(
         "switch (n.getNodeType()) {\n" + "default:\n" + "  return -1;\n" + "case BREAK_STATEMENT:\n" + "  return 0;\n" + "case CONTINUE_STATEMENT:\n"
             + "  return 1;\n" + "case RETURN_STATEMENT:\n" + "  return 2;\n" + "case THROW_STATEMENT:\n" + "  return 3;\n" + "}")//
-        .stays();
+                .stays();
   }
 
   @Test public void switchSimplifyCaseAfterDefault1() {
     trimmingOf(
         "switch (n.getNodeType()) {" + "  default:" + "    return -1;" + "  case BREAK_STATEMENT:" + "    return 0;" + "  case CONTINUE_STATEMENT:"
             + "    return 1;" + "  case RETURN_STATEMENT:" + "    return 2;" + "  case THROW_STATEMENT:" + "    return 3;" + "  }")//
-        .stays();
+                .stays();
   }
 
   @Test public void switchSimplifyWithDefault2() {
@@ -3333,7 +3334,7 @@ public final class Version230 {
   @Test public void synchronizedBraces() {
     trimmingOf("    synchronized (variables) {\n" + "      for (final String key : variables.keySet())\n"
         + "        $.variables.put(key, variables.get(key));\n" + "    }")//
-        .stays();
+            .stays();
   }
 
   @Test public void ternarize05() {
@@ -3557,7 +3558,7 @@ public final class Version230 {
         + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
         + "}")//
-        .stays();
+            .stays();
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {

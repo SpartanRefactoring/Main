@@ -140,7 +140,10 @@ public class Issue291 {
     trimmingOf("a-1 <= length")//
         .gives("a <= length+1");
   }
-  /* @Test public void test22() {
-   * trimmingOf("int a; boolean b = (a <= length-1);")//
-   * .gives("int a; boolean b = (a < length);"); } */
+
+  /** Infinite Loop test check Issue #1021 */
+  @Test public void test22() {
+    trimmingOf("  public class C {" + "public  void foo() {" + "t(A + 50 < B);" + "}" + "}")//
+        .stays();
+  }
 }
