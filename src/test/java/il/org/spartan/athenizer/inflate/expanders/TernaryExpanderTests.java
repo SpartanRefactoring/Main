@@ -9,6 +9,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 /** @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */
+@Ignore
 @SuppressWarnings("static-method")
 public class TernaryExpanderTests {
   @Test public void test0() {
