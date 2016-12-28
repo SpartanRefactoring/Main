@@ -49,4 +49,8 @@ public final class Int {
   public void incrementAndGet() {
     getAndIncrement();
   }
+
+  @Override public String toString() {
+    return inner + "";
+  }
 }
