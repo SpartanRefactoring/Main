@@ -66,15 +66,11 @@ public class Table1To3Statements extends FolderASTVisitor {
     return true;
   }
 
-  @Override protected void init(@SuppressWarnings("unused") final String __) {
-    System.err.println("Processing: " + presentSourcePath);
-  }
-
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Coverage output is in: " + presentSourcePath);
+    System.err.println("Coverage output is in: " + Relation.temporariesFolder + "/" + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
