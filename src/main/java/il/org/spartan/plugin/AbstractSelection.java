@@ -93,7 +93,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     }
     return self();
   }
-  
+
   public Self setIsTextSelection(final boolean isTextSelection) {
     this.isTextSelection = isTextSelection;
     return self();
