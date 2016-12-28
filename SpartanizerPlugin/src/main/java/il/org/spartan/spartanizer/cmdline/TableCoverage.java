@@ -66,10 +66,6 @@ public class TableCoverage extends FolderASTVisitor {
     return true;
   }
 
-  @Override protected void init(@SuppressWarnings("unused") final String __) {
-    System.err.println("Processing: " + presentSourcePath);
-  }
-
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
