@@ -13,7 +13,7 @@ public class InflateWholeProject extends AbstractHandler {
     final Selection s = Selection.Util.current();
     for (final WrappedCompilationUnit ¢ : s.inner) {
       for (int i = 0; i < MAX_PASSES; ++i) {
-        if (!SingleFlater.commitChanges(SingleFlater.in(¢.build().compilationUnit).from(new InflaterProvider()),
+        if (!SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider()),
             ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null))
           break;
         ¢.dispose();
