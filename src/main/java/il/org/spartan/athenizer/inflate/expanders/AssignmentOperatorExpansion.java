@@ -52,9 +52,9 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
                                     : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
                                         : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
-  
-  private static boolean validTypes(Assignment ¢) {
-    ITypeBinding $ = ¢.getLeftHandSide().resolveTypeBinding(), br = ¢.getRightHandSide().resolveTypeBinding();
+
+  private static boolean validTypes(final Assignment ¢) {
+    final ITypeBinding $ = ¢.getLeftHandSide().resolveTypeBinding(), br = ¢.getRightHandSide().resolveTypeBinding();
     return $ != null && br != null && $.isPrimitive() && br.isPrimitive() && $.isEqualTo(br);
   }
 }

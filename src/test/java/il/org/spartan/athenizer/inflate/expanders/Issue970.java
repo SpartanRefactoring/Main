@@ -7,6 +7,7 @@ import org.junit.*;
 /** Tets class for issue #970
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue970 {
   @Test public void test0() {
