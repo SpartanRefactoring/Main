@@ -45,13 +45,13 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void inflate() {
-    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
+    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).buildWithBinding();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
         wcu, editor);
   }
 
   private void deflate() {
-    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).build();
+    final WrappedCompilationUnit wcu = first(Selection.Util.current().inner).buildWithBinding();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
         wcu, editor);
   }
