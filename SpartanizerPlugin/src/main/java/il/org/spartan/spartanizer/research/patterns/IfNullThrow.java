@@ -13,10 +13,6 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
   private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.patternTipper("if($X == null) throw $X2;",
       "If.Null($X).throwz(() -> $X2);", "If null throw pattern");
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Grumpy pattern";
-  }
-
   @Override public boolean canTip(final IfStatement ¢) {
     return tipper.canTip(¢);
   }

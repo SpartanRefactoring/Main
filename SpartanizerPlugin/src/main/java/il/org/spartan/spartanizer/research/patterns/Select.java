@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 /** @author Ori Marcovitch
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
-  Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
+  private static final Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("for($N1 $N2 : $X1) if($X2) $N3.add($N4);", //
@@ -25,10 +25,6 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
-    return "Go Fluent: filter pattern";
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
