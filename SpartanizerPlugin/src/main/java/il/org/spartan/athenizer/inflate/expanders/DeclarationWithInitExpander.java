@@ -25,7 +25,8 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null;
+    return ¢.fragments().size() == 1 && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer() != null
+        && ((VariableDeclarationFragment) ¢.fragments().get(0)).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
