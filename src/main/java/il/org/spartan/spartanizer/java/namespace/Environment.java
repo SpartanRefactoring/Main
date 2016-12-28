@@ -101,7 +101,7 @@ public interface Environment {
       return true;
     }
 
-    @Override public boolean has(@SuppressWarnings("unused") String name) {
+    @Override public boolean has(@SuppressWarnings("unused") final String name) {
       return false;
     }
 
@@ -232,7 +232,7 @@ public interface Environment {
     public final String name;
     public final Environment nest;
 
-    public Nested(Environment nest, String name) {
+    public Nested(final Environment nest, final String name) {
       this.nest = nest;
       this.name = name;
     }
@@ -252,7 +252,7 @@ public interface Environment {
 
     /** @return The information about the name in current {@link Environment}
      *         . */
-    @Override public Binding get(final String identifier){
+    @Override public Binding get(final String identifier) {
       final Binding $ = flat.get(identifier);
       return $ != null ? $ : nest.get(identifier);
     }
@@ -285,7 +285,7 @@ public interface Environment {
     }
 
     @Override public int size() {
-      return flat.size(); 
+      return flat.size();
     }
   }
 }

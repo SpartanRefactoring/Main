@@ -48,7 +48,7 @@ public class TableTouched extends TableCoverage {
   }
 
   /**
-   * 
+   *
    */
   private void gatherStatistics() {
     totalMethodsTouched = 0;
