@@ -36,6 +36,10 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     };
   }
 
+  @Override public String description(@SuppressWarnings("unused") final N __) {
+    return "";
+  }
+
   String className() {
     return this.getClass().getSimpleName();
   }

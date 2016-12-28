@@ -34,11 +34,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new SafeReference(), //
         null) //
             .add(Assignment.class, //
-                new AssignmentLazyEvaluation(), //
+                new LazyInitializer(), //
                 null) //
             .add(Block.class, //
                 new CreateFrom(), //
-                new FindFirstBlock(), //
+                new FindFirst(), //
                 new ReturnOld(), //
                 new ReturnAllMatches(), //
                 new ReturnAnyMatches(), //
@@ -92,7 +92,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Delegator(), //
         new DoNothingReturnParam(), //
         new DoNothingReturnThis(), //
-        new DownCaster(), //
+        new Down.Caster(), //
         new Examiner(), //
         new Cascading.Setter(), ///
         new Getter(), //
@@ -105,7 +105,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Thrower(), //
         new ToStringMethod(), //
         new TypeChecker(), //
-        new UpCaster(), //
+        new Up.Caster(), //
         null);
     return this;
   }

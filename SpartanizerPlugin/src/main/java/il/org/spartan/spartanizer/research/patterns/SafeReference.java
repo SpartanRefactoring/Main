@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** Replace X == null ? null : X.Y with X?.Y <br>
  * replace X != null ? X.Y : null with X?.Y <br>
@@ -18,16 +19,12 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
   static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("$X1 == null ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
-      add(TipperFactory.patternTipper("$X1 != null ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
-      add(TipperFactory.patternTipper("null == $X1 ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
-      add(TipperFactory.patternTipper("null != $X1 ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
+      add(patternTipper("$N == null ? null : $N.$X", "safe($N).get(()->$N.$X)", "safe reference"));
+      add(patternTipper("$N != null ? $N.$X : null", "safe($N).get(()->$N.$X)", "safe reference"));
+      add(patternTipper("null == $N ? null : $N.$X", "safe($N).get(()->$N.$X)", "safe reference"));
+      add(patternTipper("null != $N ? $N.$X : null", "safe($N).get(()->$N.$X)", "safe reference"));
     }
   };
-
-  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "replace null conditionl ternary with ?.";
-  }
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
