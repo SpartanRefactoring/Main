@@ -29,7 +29,7 @@ public class DeflaterProvider extends OperationsProvider {
     return toolbox.firstTipper(¢);
   }
 
-  @Override public Function<List<Operation<?>>, Operation<?>> getFunction() {
-    return (list) -> list.get(list.size() - 1);
+  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+    return (list) -> Collections.singletonList(list.get(list.size() - 1));
   }
 }
