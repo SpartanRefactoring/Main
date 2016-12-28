@@ -18,6 +18,7 @@ public class WrappedCompilationUnit {
   public CompilationUnit compilationUnit;
   public String fileName;
   public String filePath;
+  public boolean useBinding;
 
   /** Instantiates this class
    * @param compilationUnit JD */
@@ -41,7 +42,8 @@ public class WrappedCompilationUnit {
 
   public WrappedCompilationUnit build() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(descriptor).createAST(nullProgressMonitor);
+      compilationUnit = (CompilationUnit) (!useBinding ? Make.COMPILATION_UNIT.parser(descriptor)
+          : Make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
     return this;
   }
 
