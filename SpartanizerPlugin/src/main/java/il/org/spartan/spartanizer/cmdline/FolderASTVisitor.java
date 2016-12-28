@@ -25,7 +25,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected File presentFile;
   protected static String presentSourceName;
   protected String presentSourcePath;
-  protected Dotter dotter = new Dotter();
+  protected Dotter dotter;
 
   private static Constructor<? extends FolderASTVisitor> declaredConstructor() {
     if (clazz == null) {
@@ -67,7 +67,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     init(path);
     presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
     System.err.println("Processing: " + presentSourcePath);
-    dotter.click();
+    (dotter = new Dotter()).click();
     for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
       visit(presentFile = ¢);
     done(path);

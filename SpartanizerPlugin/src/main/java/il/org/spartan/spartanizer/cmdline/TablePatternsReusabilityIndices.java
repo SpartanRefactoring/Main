@@ -39,11 +39,8 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     TableReusabilityIndices.main(args);
-    if (pWriter != null) {
-      pWriter.close();
-      System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
-    }
-    file.renameToCSV(Relation.temporariesFolder + outputFileName());
+    pWriter.close();
+    System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
@@ -51,7 +48,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
-        System.err.println("X");
+        System.err.print("X");
       }
     return super.visit($);
   }
