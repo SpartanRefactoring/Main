@@ -137,15 +137,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return increment("PREFIX", key(¢));
   }
 
-  @Override protected void done(final String path) {
+  @Override protected void done(@SuppressWarnings("unused") final String path) {
     dotter.end();
-    System.err.println("Done processing: " + path);
     addMissingKeys();
     summarize();
-  }
-
-  @Override protected void init(final String path) {
-    System.err.println("Processing: " + path);
   }
 
   void addMissingKeys() {
