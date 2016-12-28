@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2016 */
-public interface spartan {
+public interface namer {
   static String repeat(final int i, final char c) {
     return String.valueOf(new char[i]).replace('\0', c);
   }

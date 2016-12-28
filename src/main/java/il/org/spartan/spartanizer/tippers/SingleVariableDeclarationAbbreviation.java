@@ -52,20 +52,20 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean isShort(final SingleVariableDeclaration ¢) {
-    final String $ = spartan.shorten(¢.getType());
+    final String $ = namer.shorten(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
-    if (spartan.shorten($.getType()) == null)
+    if (namer.shorten($.getType()) == null)
       return false;
     for (final SimpleName ¢ : new MethodExplorer(d).localVariables())
-      if (¢.getIdentifier().equals(spartan.shorten($.getType()) + pluralVariadic($)))
+      if (¢.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
         return false;
     for (final SingleVariableDeclaration ¢ : parameters(d))
-      if (¢.getName().getIdentifier().equals(spartan.shorten($.getType()) + pluralVariadic($)))
+      if (¢.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
         return false;
-    return !d.getName().getIdentifier().equalsIgnoreCase(spartan.shorten($.getType()) + pluralVariadic($));
+    return !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {
@@ -87,7 +87,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     if (exclude != null)
       exclude.exclude($);
     final SimpleName oldName = d.getName();
-    final String newName = spartan.shorten(d.getType()) + pluralVariadic(d);
+    final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), $, r, g);
