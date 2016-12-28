@@ -18,5 +18,5 @@ public abstract class OperationsProvider {
 
   /** @return a function from list<Op<?> to <Op<?>> which should mean to help us
    *         choose which tipper we would like to use */
-  public abstract Function<List<Operation<?>>, Operation<?>> getFunction();
+  public abstract Function<List<Operation<?>>, List<Operation<?>>> getFunction();
 }
