@@ -110,8 +110,10 @@ public class InflateHandler extends AbstractHandler {
   }
 
   public static GUIBatchLaconizer applicator() {
-    return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
-        ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider()),
-            ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng());
+    return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY)
+        .setRunAction(
+            ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider()),
+                ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0))
+        .name(OPERATION_ACTIVITY.getIng());
   }
 }
