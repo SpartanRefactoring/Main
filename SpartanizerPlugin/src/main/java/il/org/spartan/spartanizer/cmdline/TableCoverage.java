@@ -22,6 +22,9 @@ public class TableCoverage extends FolderASTVisitor {
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Relation coverageWriter;
+  private static int totalStatements;
+  protected static int totalMethods;
+  private static int totalStatementsCovered;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
     clazz = TableCoverage.class;
@@ -89,20 +92,23 @@ public class TableCoverage extends FolderASTVisitor {
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
     if (coverageWriter == null)
       initializeWriter();
-    int totalStatements = 0;
-    int totalStatementsCovered = 0;
+    gatherGeneralStatistics();
     coverageWriter.put("Project", path);
-    for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
-      if (!statementsCoverageStatistics.containsKey(i))
-        coverageWriter.put(i + "", "-");
-      else {
-        final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
-        totalStatements += i * rs.size();
-        totalStatementsCovered += totalStatementsCovered(rs);
-        coverageWriter.put(i + "", format.decimal(100 * avgCoverage(rs)));
-      }
-    coverageWriter.put("total Statements covergae %", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    for (int ¢ = 1; ¢ <= MAX_STATEMENTS_REPORTED; ++¢)
+      coverageWriter.put(¢ + "",
+          !statementsCoverageStatistics.containsKey(¢) ? "-" : format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢))));
+    coverageWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     coverageWriter.nl();
+  }
+
+  @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
+    totalStatementsCovered = totalMethods = totalStatements = 0;
+    for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
+      final List<MethodRecord> rs = statementsCoverageStatistics.get(¢);
+      totalStatements += ¢ * rs.size();
+      totalMethods += rs.size();
+      totalStatementsCovered += totalStatementsCovered(rs);
+    }
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
