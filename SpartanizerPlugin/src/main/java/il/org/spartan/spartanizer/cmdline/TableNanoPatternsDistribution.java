@@ -77,7 +77,7 @@ public class TableNanoPatternsDistribution extends FolderASTVisitor {
       for (final String ¢ : hist.keySet())
         writer//
             .put(¢, hist.get(¢).inner)//
-            .put(¢ + " perc.", hist.get(¢).inner)//
+            .put(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type))))//
         ;
       writer.nl();
     }
