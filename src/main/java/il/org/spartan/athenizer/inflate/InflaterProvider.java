@@ -27,23 +27,23 @@ public class InflaterProvider extends OperationsProvider {
   public static Toolbox freshCopyOfAllExpanders() {
     return new Toolbox()//
         .add(ReturnStatement.class, //
-            new ReturnTernaryExpander(), //
+//            new ReturnTernaryExpander(), //
             new ExtractExpressionFromReturn())
         .add(ExpressionStatement.class, //
-            new AssignmentAndAssignment(), //
-            new AssignmentTernaryExpander())//
+            new AssignmentAndAssignment()) //
+//            new AssignmentTernaryExpander())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
-        .add(InfixExpression.class, //
-            new toStringExpander())//
-        .add(PrefixExpression.class, //
-            new PrefixToPostfix()) //
+//        .add(InfixExpression.class, //
+//            new toStringExpander())//
+//        .add(PrefixExpression.class, //
+//            new PrefixToPostfix()) //
         .add(SwitchStatement.class, //
             new CasesSplit())//
-        .add(Assignment.class, //
-            new AssignmentOperatorExpansion())//
-        .add(TryStatement.class, //
-            new MultiTypeCatchClause())//
+//        .add(Assignment.class, //
+//            new AssignmentOperatorExpansion())//
+//        .add(TryStatement.class, //
+//            new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, //
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //

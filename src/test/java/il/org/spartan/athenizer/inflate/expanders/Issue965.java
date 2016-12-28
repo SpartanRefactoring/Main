@@ -7,6 +7,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 /** Test class for issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue965 {
   @Test public void test0() {
