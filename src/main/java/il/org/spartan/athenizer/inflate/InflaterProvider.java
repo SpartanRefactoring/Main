@@ -34,8 +34,8 @@ public class InflaterProvider extends OperationsProvider {
         // new AssignmentTernaryExpander())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
-        // .add(InfixExpression.class, //
-        // new toStringExpander())//
+         .add(InfixExpression.class, //
+         new toStringExpander())//
         // .add(PrefixExpression.class, //
         // new PrefixToPostfix()) //
         .add(SwitchStatement.class, //

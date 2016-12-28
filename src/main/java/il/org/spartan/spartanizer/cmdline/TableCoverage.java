@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -29,8 +28,6 @@ public class TableCoverage extends FolderASTVisitor {
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
     clazz = TableCoverage.class;
-    TrimmerLog.off();
-    Trimmer.silent = true;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
@@ -48,7 +45,7 @@ public class TableCoverage extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
     } catch (final AssertionError __) {
       ___.unused(__);
     }

@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -26,6 +27,10 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected static String presentSourceName;
   protected String presentSourcePath;
   protected Dotter dotter;
+  {
+    TrimmerLog.off();
+    Trimmer.silent = true;
+  }
 
   private static Constructor<? extends FolderASTVisitor> declaredConstructor() {
     if (clazz == null) {
