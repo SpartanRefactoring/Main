@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -26,11 +27,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 18-11-2016 */
 public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final InfixExpression x) {
-    if (!isLegalOperation(x)//
-        || !iz.infixExpression(left(x))//
-        || az.infixExpression(left(x)).hasExtendedOperands()//
-        || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand())//
-        || !iz.numberLiteral(right(az.infixExpression(left(x)))))
+    if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
+        || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
     final Expression $ = left(az.infixExpression(left(x)));
     Expression right;
@@ -41,11 +39,17 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
         return null;
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.PLUS);
     }
-    return subject.pair($, right).to(operator(x));
+    InfixExpression res = subject.pair($, right).to(operator(x));
+    return prerequisite(res) ? res : null;
   }
 
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
+  }
+
+  @Override public boolean prerequisite(final InfixExpression ¢) {
+    return (new specificity()).compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
+        || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
   @Override public String description(final InfixExpression ¢) {
