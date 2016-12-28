@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
-  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("this.$N1 = $N2", "", ""));

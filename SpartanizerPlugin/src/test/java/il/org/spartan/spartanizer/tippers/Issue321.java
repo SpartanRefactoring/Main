@@ -4,15 +4,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.research.patterns.*;
 
 /** Tests of {@link CachingPattern}
  * @author Ori Marcovitch
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@SuppressWarnings({ "static-method" }) //
 public class Issue321 {
   @Test public void testCachingPattern() {
     trimmingOf( //
@@ -21,11 +19,11 @@ public class Issue321 {
             "   instance = allTippers();" + //
             " return instance;" + //
             "}")//
-                .withTipper(Block.class, new CachingPattern())
+                .withTipper(Block.class, new CachingPattern())//
                 .gives( //
                     "public static Toolbox defaultInstance() {" + //
                         " return  instance != null ? instance : (instance = allTippers());" + //
-                        "}")
+                        "}")//
                 .stays();
   }
 }
