@@ -12,8 +12,31 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO: Roth, please write since, author and a line of description on this
-// expression
+/** Expand cases in a {@link SwitchStatement}: <code>
+ * switch (x) {
+ *   case 1:
+ *     f(1);
+ *   case 2:
+ *     f(2);
+ *     throw new Exception();
+ *   default:
+ *     f(3);
+ * }
+ * </code> turns into <code>
+ * switch (x) {
+ *   case 1:
+ *     f(1);
+ *     f(2);
+ *     throw new Exception();
+ *   case 2:
+ *     f(2);
+ *     throw new Exception();
+ *   default:
+ *     f(3);
+ * }
+ * </code>
+ * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.InVain {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
