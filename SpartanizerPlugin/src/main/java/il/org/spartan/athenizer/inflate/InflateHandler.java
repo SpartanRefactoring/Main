@@ -2,6 +2,8 @@ package il.org.spartan.athenizer.inflate;
 
 import java.util.*;
 import java.util.List;
+import java.util.function.*;
+
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
@@ -13,6 +15,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.athenizer.*;
+import il.org.spartan.athenizer.inflate.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -25,7 +28,7 @@ public class InflateHandler extends AbstractHandler {
   private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final Selection $ = Selection.Util.current();
+    final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction($) : goAggressiveAction($);
   }
 
@@ -110,10 +113,11 @@ public class InflateHandler extends AbstractHandler {
   }
 
   public static GUIBatchLaconizer applicator() {
-    return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY)
-        .setRunAction(
-            ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider()),
-                ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0))
-        .name(OPERATION_ACTIVITY.getIng());
+    return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
+        ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
+          @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+            return l -> l;
+          }
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng());
   }
 }
