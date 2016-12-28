@@ -72,6 +72,16 @@ public enum Make {
     $.setSource(¢);
     return $;
   }
+  
+  /** Creates a binding parser for a given compilation unit
+   * @param u what to parse
+   * @return a newly created parser for the parameter */
+  public ASTParser parserWithBinding(final ICompilationUnit ¢) {
+    final ASTParser $ = wizard.parser(kind);
+    $.setSource(¢);
+    $.setResolveBindings(true);
+    return $;
+  }
 
   /** Creates a parser for a given {@link IFile}
    * @param f JD

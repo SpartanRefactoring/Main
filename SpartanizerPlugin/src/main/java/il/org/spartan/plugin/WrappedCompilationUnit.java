@@ -44,6 +44,12 @@ public class WrappedCompilationUnit {
       compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(descriptor).createAST(nullProgressMonitor);
     return this;
   }
+  
+  public WrappedCompilationUnit buildWithBinding() {
+    if (compilationUnit == null)
+      compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
+    return this;
+  }
 
   public WrappedCompilationUnit dispose() {
     compilationUnit = null;
