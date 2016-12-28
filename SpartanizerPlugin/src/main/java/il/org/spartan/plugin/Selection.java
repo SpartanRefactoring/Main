@@ -311,7 +311,7 @@ public class Selection extends AbstractSelection<Selection> {
       final Selection $ = getCompilationUnit();
       return $ == null || $.inner == null || $.inner.isEmpty() ? null
           : (¢.getOffset() == 0 && ¢.getLength() == first($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
-              .setName(SELECTION_NAME);
+              .setName(SELECTION_NAME).setIsTextSelection(true);
     }
 
     /** Only support selection by {@link IFile}.

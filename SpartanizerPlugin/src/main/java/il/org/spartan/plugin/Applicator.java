@@ -3,6 +3,7 @@ package il.org.spartan.plugin;
 import java.util.function.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Configurable applicator.
  * @param <L> I think we do not need this one. It couples classes too much.
@@ -29,6 +30,8 @@ public abstract class Applicator {
   private boolean shouldRun = true;
   /** Applicator's name. */
   private String name;
+  /** Applicator's operation namer. */
+  private Linguistic.Activity operationName;
 
   /** Tell this applicator it should not run. */
   public void stop() {
@@ -125,6 +128,19 @@ public abstract class Applicator {
    * @return this applicator */
   public Applicator name(final String ¢) {
     name = ¢;
+    return this;
+  }
+  
+  /** @return applicator's name */
+  public Linguistic.Activity operationName() {
+    return operationName;
+  }
+
+  /** Name this applicator.
+   * @param ¢ JD
+   * @return this applicator */
+  public Applicator operationName(final Linguistic.Activity ¢) {
+    operationName = ¢;
     return this;
   }
 
