@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 @SuppressWarnings("static-method")
 public class UpCasterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new UpCaster());
+    setNano(new Up.Caster());
   }
 
   @Test public void a() {
