@@ -3,9 +3,12 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Simplify comparison of additions by moving negative elements sides and by
@@ -32,9 +35,10 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
     final Expression lr = az.infixExpression(x.getLeftOperand()).getRightOperand();
     final Expression rl = az.infixExpression(x.getRightOperand()).getLeftOperand();
     final Expression rr = az.infixExpression(x.getRightOperand()).getRightOperand();
-    return iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($) || iz.numberLiteral($)
+    InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($) || iz.numberLiteral($)
         || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
             : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
+    return prerequisite(res) ? res : null;
   }
 
   private static boolean isLiegal(final InfixExpression ¢) {
@@ -43,6 +47,11 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
 
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
+  }
+
+  @Override public boolean prerequisite(final InfixExpression ¢) {
+    return (new specificity()).compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
+        || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
   @Override public String description(final InfixExpression ¢) {
