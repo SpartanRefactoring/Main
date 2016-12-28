@@ -45,7 +45,7 @@ public class TableCoverage extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
     } catch (final AssertionError __) {
       ___.unused(__);
     }
