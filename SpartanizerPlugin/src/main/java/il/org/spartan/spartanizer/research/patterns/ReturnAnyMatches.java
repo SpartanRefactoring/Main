@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
-  private static Set<UserDefinedTipper<Block>> tippers = new HashSet<UserDefinedTipper<Block>>() {
+  private static final Set<UserDefinedTipper<Block>> tippers = new HashSet<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
       add(statementsPattern("for($T $N : $X1) if($X2) return true; return false;", "return $X1.stream().anyMatch($N -> $X2);",
@@ -27,9 +27,5 @@ public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
-  }
-
-  @Override public String description(final Block x) {
-    return firstTipper(tippers, x).description(x);
   }
 }

@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
-  List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($N1 $N2 : $N3) if($X1) $X2;", "$N3.stream().filter($N2 -> $X1).forEach($N2 -> $X2);",
@@ -26,10 +26,6 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
-    return "ForEach pattern: conevrt to fluent API";
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
