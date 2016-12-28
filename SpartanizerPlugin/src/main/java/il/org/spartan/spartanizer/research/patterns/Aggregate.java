@@ -13,6 +13,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
+  private static final NanoPatternTipper<EnhancedForStatement> rival = new Select();
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -28,7 +29,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   };
 
   @Override public boolean canTip(final EnhancedForStatement x) {
-    return anyTips(tippers, x);
+    return anyTips(tippers, x) && rival.cantTip(x);
   }
 
   @Override public Tip pattern(final EnhancedForStatement x) {

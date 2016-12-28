@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class SuperDelegator extends Delegator {
-  private static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("super.$N($A)", "", ""));
