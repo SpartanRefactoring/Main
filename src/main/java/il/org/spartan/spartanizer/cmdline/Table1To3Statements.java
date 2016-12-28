@@ -24,6 +24,9 @@ public class Table1To3Statements extends FolderASTVisitor {
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Relation writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  private static int totalStatements;
+  private static int totalMethods;
+  private static int totalStatementsCovered;
   static {
     clazz = Table1To3Statements.class;
     TrimmerLog.off();
@@ -88,14 +91,8 @@ public class Table1To3Statements extends FolderASTVisitor {
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
     if (writer == null)
       initializeWriter();
-    int totalStatements = 0;
-    int totalMethods = 0;
-    int totalStatementsCovered = 0;
+    gatherGeneralStatistics();
     writer.put("Project", path);
-    for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
-      totalStatements += ¢ * statementsCoverageStatistics.get(¢).size();
-      totalMethods += statementsCoverageStatistics.get(¢).size();
-    }
     for (int i = MIN_STATEMENTS_REPORTED; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         writer.put(i + " Count", "-")//
@@ -104,7 +101,6 @@ public class Table1To3Statements extends FolderASTVisitor {
             .put(i + " perc. touched", 100);
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
-        totalStatementsCovered += totalStatementsCovered(rs);
         writer.put(i + " Count", rs.size()).put(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
             .put(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
             .put(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
@@ -112,6 +108,16 @@ public class Table1To3Statements extends FolderASTVisitor {
       }
     writer.put("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     writer.nl();
+  }
+
+  @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
+    totalStatementsCovered = totalMethods = totalStatements = 0;
+    for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
+      final List<MethodRecord> rs = statementsCoverageStatistics.get(¢);
+      totalStatements += ¢ * rs.size();
+      totalMethods += rs.size();
+      totalStatementsCovered += totalStatementsCovered(rs);
+    }
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
