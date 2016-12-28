@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
-  private static List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $N2) $N3 = $X;", " $N3 = $N2.stream().reduce(($N1,$N3) -> $X).get();", "Go Fluent. Aggregate"));

@@ -28,6 +28,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
       addCharacteristicMethodPatterns();
     addMethodPatterns();//
     add(ConditionalExpression.class, //
+        new AsBit(), //
         new DefaultsTo(), //
         new GeneralizedSwitch<ConditionalExpression>(), //
         new Unless(), //
@@ -45,21 +46,10 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
-                new ContainsEnhancedFor(), //
+                new Contains(), //
                 new ForEach(), //
                 new Select(), //
-                // new ReduceEnhancedFor(), //
                 null) //
-            // .add(ForStatement.class, //
-            // new Contains(), //
-            // new CopyArray(), //
-            // new FindFirst(), //
-            // new ForEachEnhanced(), //
-            // new InitArray(), //
-            // new MaxEnhanced(), //
-            // new Min(), //
-            // new Reduce(), //
-            // null) //
             .add(IfStatement.class, //
                 new IfNullThrow(), //
                 new IfNullReturn(), //
@@ -70,7 +60,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new IfThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                // new Between(), //
                 new LispLastIndex(), //
                 null)//
             .add(MethodInvocation.class, //

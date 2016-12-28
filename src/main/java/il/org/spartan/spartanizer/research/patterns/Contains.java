@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class ContainsEnhancedFor extends NanoPatternTipper<EnhancedForStatement> {
-  Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
+public class Contains extends NanoPatternTipper<EnhancedForStatement> {
+  private static final Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("for (boolean $N0 : $X) if ($N0 == $N1) return true;", "Arrays.asList($X).contains($N1);",
@@ -25,10 +25,6 @@ public class ContainsEnhancedFor extends NanoPatternTipper<EnhancedForStatement>
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
-    return "Contains pattern: conevrt to fluent API";
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
