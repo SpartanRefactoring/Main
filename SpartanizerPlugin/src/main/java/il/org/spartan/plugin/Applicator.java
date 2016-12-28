@@ -130,7 +130,7 @@ public abstract class Applicator {
     name = ¢;
     return this;
   }
-  
+
   /** @return applicator's name */
   public Linguistic.Activity operationName() {
     return operationName;
