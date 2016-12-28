@@ -88,18 +88,19 @@ public class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    final Operation $ = operationsProvider.getFunction().apply(operations);
-    try {
-      $.tipper.tip($.node).go(r, g);
-    } catch (final Exception ¢) {
-      monitor.debug(this, ¢);
-      monitor.log(¢);
-    }
+    final List<Operation<?>> $ = operationsProvider.getFunction().apply(operations);
+    for (Operation o : $)
+      try {
+        o.tipper.tip(o.node).go(r, g);
+      } catch (final Exception ¢) {
+        monitor.debug(this, ¢);
+        monitor.log(¢);
+      }
     return true;
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
+  public static void commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
