@@ -449,15 +449,15 @@ public class definitionTest extends ReflectiveTester {
 
 /** @formatter:off */
 
-@annotation @Target({ ElementType.TYPE }) @interface annotation { /**/ }
-@annotation @Target({ ElementType.METHOD }) @interface annotationMemberDeclaration { /**/ }
-@annotation
+@Target({ ElementType.TYPE }) @annotation @interface annotation { /**/ }
+@Target({ ElementType.METHOD }) @annotation @interface annotationMemberDeclaration { /**/ }
 @Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
+@annotation
 @interface catch¢ {
   /**/ }
 
-@annotation
 @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
+@annotation
 @interface class¢ {
   /**/ }
 
@@ -465,22 +465,22 @@ public class definitionTest extends ReflectiveTester {
 @ScopeSize(23) @class¢ class DummyClass { /**/}
 @ScopeSize(23) @enum¢ enum DummyEnum { /**/ }
 @ScopeSize(23) @interface¢ interface DummyInterface {/**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface enum¢ { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface enumConstant { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @interface field { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE}) @interface for¢ { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface foreach { /**/ }
-@annotation @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface interface¢ { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface enum¢ { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @annotation @interface enumConstant { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @annotation @interface field { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE}) @annotation @interface for¢ { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @annotation @interface foreach { /**/ }
+@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface interface¢ { /**/ }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface lambda { /** lambda parameter */ }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface local { /** local variable */ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD }) @interface method { /**/ }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD }) @annotation @interface method { /**/ }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface parameter { /**/ }
-@annotation @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @interface ScopeSize { int value(); }
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface ScopeSize { int value(); }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
 
 // @formatter:on
-@annotation
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
+@annotation
 @interface above {
   String[] value();
 }
@@ -564,8 +564,8 @@ class ZZZ___Fixture_ModelClass {
     enum Bar {
       @ScopeSize(3)
       @enumConstant
-      abra, @enumConstant
-      @ScopeSize(3)
+      abra, @ScopeSize(3)
+      @enumConstant
       cadabra;
       Bar vaz() {
         return vaz();
@@ -610,8 +610,8 @@ class ZZZ___Fixture_ModelClass {
       return hashCode() * enumConstant1.hashCode() + enumConstant2.fenum();
     }
 
-    @annotation
     @ScopeSize(6)
+    @annotation
     @interface AnnotationInAnEnum {
       // @formatter:off
       @annotationMemberDeclaration @ScopeSize(7) int u1();
@@ -619,7 +619,7 @@ class ZZZ___Fixture_ModelClass {
       @annotationMemberDeclaration @ScopeSize(7) int u3();
       @annotationMemberDeclaration @ScopeSize(7) int u4();
       @annotationMemberDeclaration @ScopeSize(7) int u5() default 1;
-      @ScopeSize(7) @field static final int  aaaaa = 1;
+      @ScopeSize(7) @field static int  aaaaa = 1;
       @ScopeSize(7) @field static int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
       // @formatter:on
     }
