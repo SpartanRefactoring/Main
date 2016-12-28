@@ -40,8 +40,8 @@ public class InflaterProvider extends OperationsProvider {
 //            new PrefixToPostfix()) //
         .add(SwitchStatement.class, //
             new CasesSplit())//
-//        .add(Assignment.class, //
-//            new AssignmentOperatorExpansion())//
+        .add(Assignment.class, //
+            new AssignmentOperatorExpansion())//
 //        .add(TryStatement.class, //
 //            new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, //
