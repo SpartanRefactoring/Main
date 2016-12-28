@@ -22,4 +22,8 @@ public class DeclarationWithInitExpanderTest {
   @Test public void c() {
     expansionOf("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };").stays();
   }
+  
+  @Test public void d() {
+    expansionOf("@SuppressWarnings(\"unchecked\") int a = f();").stays();
+  }
 }
