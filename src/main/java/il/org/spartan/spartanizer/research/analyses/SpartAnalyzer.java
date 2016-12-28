@@ -38,6 +38,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new LazyInitializer(), //
                 null) //
             .add(Block.class, //
+                new CachingPattern(), //
                 new CreateFrom(), //
                 new FindFirst(), //
                 new ReturnOld(), //

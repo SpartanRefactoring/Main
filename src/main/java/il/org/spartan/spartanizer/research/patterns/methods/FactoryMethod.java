@@ -6,16 +6,17 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class FactoryMethod extends JavadocMarkerNanoPattern {
-  private static Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.patternTipper("return new $T();", "", ""));
-      add(TipperFactory.patternTipper("return new $T[$X];", "", ""));
-      add(TipperFactory.patternTipper("return new $T() $B;", "", ""));
+      add(patternTipper("return new $T();", "", ""));
+      add(patternTipper("return new $T[$X];", "", ""));
+      add(patternTipper("return new $T() $B;", "", ""));
     }
   };
 
