@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-/** Replace X == null ? null : X.Y with X?.Y <br>
+/** We would like to...<br>
+ * Replace X == null ? null : X.Y with X?.Y <br>
  * replace X != null ? X.Y : null with X?.Y <br>
  * replace null == X ? null : X.Y with X?.Y <br>
  * replace null != X ? X.Y : null with X?.Y <br>

@@ -21,7 +21,7 @@ public class TableCoverage extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Relation coverageWriter;
+  private static Relation cWriter; // coverage
   private static int totalStatements;
   protected static int totalMethods;
   private static int totalStatementsCovered;
@@ -81,19 +81,19 @@ public class TableCoverage extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    coverageWriter = new Relation(TableCoverage.class.getSimpleName());
+    cWriter = new Relation(TableCoverage.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
-    if (coverageWriter == null)
+    if (cWriter == null)
       initializeWriter();
     gatherGeneralStatistics();
-    coverageWriter.put("Project", path);
+    cWriter.put("Project", path);
     for (int ¢ = 1; ¢ <= MAX_STATEMENTS_REPORTED; ++¢)
-      coverageWriter.put(¢ + "",
+      cWriter.put(¢ + "",
           !statementsCoverageStatistics.containsKey(¢) ? "-" : format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢))));
-    coverageWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
-    coverageWriter.nl();
+    cWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    cWriter.nl();
   }
 
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
