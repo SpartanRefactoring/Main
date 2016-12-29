@@ -47,9 +47,8 @@ final class Namespace implements Environment {
     return add(bodyDeclarations(¢));
   }
 
-  protected Namespace add(BodyDeclaration ¢) {
-    return add(definition.kind(x))
-
+  protected Namespace add(BodyDeclaration d) {
+    return add(definition.kind(d));
   }
 
   protected Namespace add(List<? extends BodyDeclaration> ds) {
@@ -58,9 +57,8 @@ final class Namespace implements Environment {
     return null;
   }
 
-  protected Namespace add(VariableDeclaration ¢) {
-    ___.______unused(¢);
-    return this;
+  protected Namespace addiv(VariableDeclaration d) {
+    return null;
   }
 
   protected Namespace add(VariableDeclarationExpression ¢) {
