@@ -47,9 +47,10 @@ final class Namespace implements Environment {
     return add(bodyDeclarations(¢));
   }
 
-  protected Namespace add(BodyDeclaration ¢) {
-    return add(definition.kind(x))
-
+  @SuppressWarnings({ "static-method", "unused" }) protected Namespace add(BodyDeclaration ¢) {
+    // TODO Yossi: compilation error
+    // return add(definition.kind(x))
+    return null;
   }
 
   protected Namespace add(List<? extends BodyDeclaration> ds) {
@@ -110,18 +111,19 @@ final class Namespace implements Environment {
         Namespace current = Namespace.this;
         for (final Statement s : statements(b)) {
           if (iz.variableDeclarationStatement(s)) {
-            final VariableDeclarationStatement x = az.variableDeclarationStatement(s);
+            @SuppressWarnings("unused") final VariableDeclarationStatement x = az.variableDeclarationStatement(s);
             current = current.spawn(local);
-            current.add(x);
+            // TODO Yossi: compilation error
+            // current.add(x);
           } else if (iz.typeDeclaration(s)) {
             final TypeDeclaration x = az.typeDeclaration(s);
             current = current.spawn(definition.kind(x));
             current.add(x);
             continue;
           }
-           current.init(s);
+          current.init(s);
         }
-          return false;
+        return false;
       }
 
       @Override public boolean visit(final CatchClause ¢) {
@@ -163,7 +165,8 @@ final class Namespace implements Environment {
     return false;
   }
 
-  protected void xadd(VariableDeclarationStatement x) {
+  @SuppressWarnings("unused") protected void xadd(VariableDeclarationStatement x) {
+    //
   }
 
   /** @return names used the {@link Environment} . */
