@@ -30,6 +30,7 @@ public class SingleFlater {
   private CompilationUnit compilationUnit;
   private OperationsProvider operationsProvider;
   private TextSelection textSelection;
+  private boolean usesDisabling = true;
 
   private SingleFlater() {}
 
@@ -58,6 +59,13 @@ public class SingleFlater {
     return this;
   }
 
+  /** Set disabling for this flater.
+   * @return this flater */
+  public SingleFlater usesDisabling(final boolean ¢) {
+    usesDisabling = ¢;
+    return this;
+  }
+
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
    * @param flaterChooser a {@link Function} to choose an {@link Operation} to
    *        make out of a collection of {@link Option}s.
@@ -71,7 +79,7 @@ public class SingleFlater {
     disabling.scan(compilationUnit);
     compilationUnit.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
-        if (!inRange(n) || disabling.on(n))
+        if (!inRange(n) || (usesDisabling && disabling.on(n)))
           return true;
         Tipper<N> w = null;
         try {
