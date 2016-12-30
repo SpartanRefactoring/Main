@@ -39,7 +39,7 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements Ti
           ut.types().add(0, duplicate.of(cs.get(i).getException().getType()));
           ut.types().add(0, duplicate.of(cs.get(j).getException().getType()));
           mergedCatch.getException().setType(ut);
-          $.catchClauses().add(0, mergedCatch);
+          $.catchClauses().add(j - 1, mergedCatch);
           return $;
         }
     return null;
