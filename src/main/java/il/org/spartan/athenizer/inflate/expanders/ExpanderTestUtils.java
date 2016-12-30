@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.athenizer.inflate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -20,8 +21,13 @@ public class ExpanderTestUtils {
   public static final TextEditGroup g = new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
+    ASTNode ast;
     public Operand(final String inner) {
       super(inner);
+    }
+    
+    public Operand(final ASTNode inner) {
+      ast = inner;
     }
 
     public Operand gives(final String $) {
@@ -42,6 +48,31 @@ public class ExpanderTestUtils {
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
         if (tide.clean(peeled).equals(tide.clean(get())))
           azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+        assertSimilar($, peeled);
+        return new Operand($);
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        ¢.printStackTrace();
+      }
+      return null;
+    }
+    
+    public Operand givesWithBinding(final String $) {
+      assert $ != null;
+      final CompilationUnit u = az.compilationUnit(ast);
+      final String wrap = u + "";
+      final ASTRewrite r = ASTRewrite.create(u.getAST());
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
+      try {
+        final Document doc = new Document(wrap);
+        r.rewriteAST(doc, null).apply(doc);
+        final String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          azzert.fail("Nothing done on " + get());
+       final String peeled = unpeeled;
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+//        if (tide.clean(peeled).equals(tide.clean(get())))
+//          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
         assertSimilar($, peeled);
         return new Operand($);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -76,6 +107,10 @@ public class ExpanderTestUtils {
   }
 
   public static Operand expansionOf(final String from) {
+    return new Operand(from);
+  }
+  
+  public static Operand expansionOf(final ASTNode from) {
     return new Operand(from);
   }
 }

@@ -21,7 +21,8 @@ public abstract class ReflectiveTester {
     final CompilationUnit $ = classToASTCompilationUnit.get(c);
     if ($ != null)
       return $;
-    classToASTCompilationUnit.put(c, loadAST(c.getSimpleName() + ".java"));
+    classToASTCompilationUnit.put(c,
+        loadAST((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
     return classToASTCompilationUnit.get(c);
   }
 
