@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
+@Ignore
 public class SelectTest {
   @Test public void a() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//

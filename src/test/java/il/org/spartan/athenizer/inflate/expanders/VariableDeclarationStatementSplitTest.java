@@ -8,6 +8,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
+@Ignore
 public class VariableDeclarationStatementSplitTest {
   @Test public void a() {
     expansionOf("int a = 3, b = 4, c = 5;")

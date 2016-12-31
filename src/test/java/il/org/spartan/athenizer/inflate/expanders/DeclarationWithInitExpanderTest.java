@@ -8,6 +8,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
+@Ignore
 public class DeclarationWithInitExpanderTest {
   @Test public void a() {
     expansionOf("int a = 0;").gives("int a;" //

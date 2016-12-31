@@ -144,6 +144,9 @@ final class Namespace implements Environment {
         return $ == null || spawn(for¢).add($).init(¢);
       }
 
+      /**
+       * [[SuppressWarningsSpartan]]
+       */
       @Override public boolean visit(final LambdaExpression ¢) {
         Namespace $ = spawn(lambda);
         for (VariableDeclaration d : parameters(¢))
