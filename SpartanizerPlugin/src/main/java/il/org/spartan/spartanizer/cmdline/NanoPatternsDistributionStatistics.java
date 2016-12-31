@@ -50,4 +50,9 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
   public double coverage(final Integer type) {
     return safe.div(countNanos(type), count(type));
   }
+
+  public void fillAbsents() {
+    // new SpartAnalyzer().getAllPatterns().stream().forEach(p -> );
+    //
+  }
 }

@@ -63,6 +63,7 @@ public class TableNanoPatternsDistribution extends FolderASTVisitor {
   }
 
   public static void summarize(final String path) {
+    npStatistics.fillAbsents();
     for (final Integer type : npStatistics.keySet()) {
       if (!writers.containsKey(type))
         initializeWriter(type.intValue());
@@ -71,14 +72,13 @@ public class TableNanoPatternsDistribution extends FolderASTVisitor {
           .put("Project", path)//
           .put("count", npStatistics.count(type))//
           .put("nanos count", npStatistics.countNanos(type))//
-          .put("coverage", npStatistics.coverage(type))//
+          .put("coverage", format.decimal(100 * npStatistics.coverage(type)))//
       ;
       final HashMap<String, Int> hist = npStatistics.nanoHistogram(type);
       for (final String ¢ : hist.keySet())
-        writer//
-            .put(¢, hist.get(¢).inner)//
-            .put(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type))))//
-        ;
+        writer.put(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type))));
+      for (final String ¢ : hist.keySet())
+        writer.put(¢, hist.get(¢).inner);
       writer.nl();
     }
     npStatistics.clear();

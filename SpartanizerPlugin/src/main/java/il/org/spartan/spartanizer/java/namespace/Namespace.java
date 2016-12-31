@@ -8,10 +8,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
-import il.org.spartan.utils.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current note and Delegate to the parent unless it is null.
@@ -22,47 +23,97 @@ final class Namespace implements Environment {
     this(environment, "");
   }
 
-  public Namespace(final Environment environment, final String name) {
-    this.nest = environment;
-    this.name = name;
-  }
-
-  public Namespace(final Namespace nest, final definition.Kind kind, final String name) {
+  public Namespace(final Environment nest, final String name) {
     this.nest = nest;
     this.name = name;
-    this.kind = kind;
   }
 
   private final List<Namespace> children = new ArrayList<>();
   public final Map<String, Binding> flat = new LinkedHashMap<>();
-  definition.Kind kind = definition.Kind.interface¢;
   public final String name;
   public final Environment nest;
 
-  protected Namespace add(AbstractTypeDeclaration ¢) {
-    return add(bodyDeclarations(¢));
+  private Namespace put(final AnnotationTypeDeclaration ¢) {
+    return put("type " + ¢.getName(), ¢.getName());
+  }
+  @SuppressWarnings({}) protected Namespace put(final BodyDeclaration ¢) {
+    return iz.methodDeclaration(¢) ? put(az.methodDeclaration(¢))
+        : iz.fieldDeclaration(¢) ? put(az.fieldDeclaration(¢))
+            : iz.enumConstantDeclaration(¢) ? put(az.enumConstantDeclaration(¢))
+                : iz.annotationTypeDeclaration(¢) ? put(az.annotationTypeDeclration(¢))
+                    : iz.enumDeclaration(¢) ? put(az.enumDeclaration(¢))
+                    : iz.typeDeclaration(¢) ? put(az.typeDeclaration(¢))
+                        : iz.annotationTypeMemberDeclaration(¢) ? put(az.annotationTypeMemberDeclaration(¢)) : null;
+  }
+  private Namespace put(final AnnotationTypeMemberDeclaration ¢) {
+    return put(¢.getName() + "", ¢.getType()); 
   }
 
-  protected Namespace add(AnonymousClassDeclaration ¢) {
-    return add(bodyDeclarations(¢));
+  private Namespace put(final EnumConstantDeclaration ¢) {
+    return put(¢.getName() + "", az.enumDeclaration(¢.getParent()).getName());
   }
 
-  protected Namespace add(BodyDeclaration d) {
-    return add(definition.kind(d));
+  private Namespace put(final EnumDeclaration ¢) {
+    return put("type " + ¢.getName(), ¢.getName());
   }
 
-  protected Namespace add(List<? extends BodyDeclaration> ds) {
-    for (BodyDeclaration ¢ : ds)
-      add(¢);
-    return null;
+  private Namespace put(final FieldDeclaration d) {
+    final Type t = d.getType();
+    for (final VariableDeclarationFragment ¢ : fragments(d))
+      put(¢.getName(), t);
+    return this;
   }
 
-  protected Namespace addiv(VariableDeclaration d) {
-    return null;
+  protected Namespace put(final List<? extends BodyDeclaration> ds) {
+    for (final BodyDeclaration ¢ : ds)
+      put(¢);
+    return this;
   }
 
-  protected Namespace add(VariableDeclarationExpression ¢) {
-    ___.______unused(¢);
+  private Namespace put(final MethodDeclaration ¢) {
+    return put(¢.getName() + "/" + ¢.parameters().size(), ¢.getReturnType2());
+  }
+
+  Namespace put(final SimpleName key, final Type t) {
+    return put(key + "", t);
+  }
+
+  protected Namespace put(final SingleVariableDeclaration ¢) {
+    return put(¢.getName(), ¢.getType());
+  }
+
+  private Namespace put(final String key, final ASTNode n) {
+    put(key, new Binding(key, n));
+    return this;
+  }
+
+  private Namespace put(final String key, final Type t) {
+    put(key, new Binding(key, type.baptize(wizard.condense(t))));
+    return this;
+  }
+
+  protected Namespace put(final TypeDeclaration ¢) {
+    String key = "type " + ¢.getName();
+    put(key, new Binding(key, type.baptize(¢.getName() + "", !¢.isInterface() ? "class" : "interface")));
+    return this;
+  }
+
+  protected Namespace put(final VariableDeclarationExpression x) {
+    final Type t = x.getType();
+    for (final VariableDeclarationFragment ¢ : fragments(x))
+      put(¢.getName(), t);
+    return this;
+  }
+
+  Namespace addAll(final List<BodyDeclaration> ds) {
+    for (final BodyDeclaration ¢ : ds)
+      put(¢);
+    return this;
+  }
+
+  protected Namespace addAllReources(final List<VariableDeclarationExpression> xs) {
+    for (final VariableDeclarationExpression ¢ : xs)
+      put(¢);
     return this;
   }
 
@@ -70,6 +121,14 @@ final class Namespace implements Environment {
     children.add(child);
     return child;
   }
+
+  public String description() {
+    return description("");
+  }
+  public String description(String indent) {
+    return indent + name + "" +  flat + ((children.isEmpty()) ? "" : ":\n" + separate.these(children.stream().map(x ->x.description(indent + "  ")).toArray()).by("\n" + indent + "- ")); 
+  }
+
 
   /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
    *         empty. */
@@ -97,73 +156,87 @@ final class Namespace implements Environment {
     property.attach(this).to(root);
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
-        return spawn(annotation, identifier(¢)).add(bodyDeclarations(¢)).init(¢);
+        return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).init(¢);
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration ¢) {
-        return spawn(anonymous).add(¢).init(¢);
+        return ¢ == root || spawn(class¢).init(¢);
       }
 
       @Override public boolean visit(final Block b) {
+        if (b == root)
+          return true;
         Namespace current = Namespace.this;
         for (final Statement s : statements(b)) {
-          if (iz.variableDeclarationStatement(s)) {
-            final VariableDeclarationStatement x = az.variableDeclarationStatement(s);
-            current = current.spawn(local);
-            current.add(x);
-          } else if (iz.typeDeclaration(s)) {
-            final TypeDeclaration x = az.typeDeclaration(s);
-            current = current.spawn(definition.kind(x));
-            current.add(x);
-            continue;
+            if (iz.typeDeclaration(s)) {
+              final TypeDeclaration x = az.typeDeclaration(s);
+              current = current.spawn(definition.kind(x)).put(x);
+            }
+            if (iz.variableDeclarationStatement(s)) {
+              VariableDeclarationStatement x = az.variableDeclarationStatement(s);
+              Type t = x.getType();
+              current = current.spawn(local);
+              for (VariableDeclarationFragment ¢ : fragments(x))
+                current.put(¢.getName(), t);
           }
-           current.init(s);
+          current.init(s);
         }
-          return false;
+        return false;
       }
 
       @Override public boolean visit(final CatchClause ¢) {
-        return spawn(catch¢).add(¢.getException()).init(¢);
+        return ¢ == root || spawn(catch¢).put(¢.getException()).init(¢);
       }
 
       @Override public boolean visit(final CompilationUnit ¢) {
-        add(types(¢));
+        if (¢ != root)
+          put(types(¢));
         return true;
       }
 
       @Override public boolean visit(final EnhancedForStatement ¢) {
-        return spawn(foreach).add(¢.getParameter()).init(¢);
+        return ¢ == root || spawn(foreach).put(¢.getParameter()).init(¢);
       }
 
       @Override public boolean visit(final ForStatement ¢) {
-        VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
-        return $ == null || spawn(for¢).add($).init(¢);
+        if (¢ == root)
+          return true;
+        final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
+        return $ == null || spawn(for¢).put($).init(¢);
       }
 
-      @Override public boolean visit(final LambdaExpression ¢) {
-        Namespace $ = spawn(lambda);
-        for (VariableDeclaration d : parameters(¢))
-          $.add(d);
-        return $.init(¢);
+      @Override public boolean visit(final LambdaExpression x) {
+        if (x == root)
+          return true;
+        final Namespace $ = spawn(lambda + "");
+        for (final VariableDeclaration ¢ : parameters(x))
+          if (¢ instanceof SingleVariableDeclaration)
+            $.put((SingleVariableDeclaration) ¢);
+          else
+            $.put(az.variableDeclrationFragment(¢).getName(), null);
+        return $.init(x);
+      }
+      @Override public boolean visit(final MethodDeclaration d) {
+        if (d == root)
+          return true;
+        final Namespace $ = spawn("method " + d.getName());
+        for (final SingleVariableDeclaration ¢ : parameters(d))
+            $.put(¢);
+        return $.init(d);
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        Namespace $ = spawn(try¢);
-        for (VariableDeclarationExpression ¢ : step.resources(s))
-          $.add(¢);
-        return $.init(s);
+      @Override public boolean visit(final TryStatement ¢) {
+        return ¢ == root || spawn(try¢).addAllReources(resources(¢)).init(¢);
       }
 
-      @Override public boolean visit(final TypeDeclaration node) {
-        return init(spawn(lambda, ""), bodyDeclarations(node));
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + ¢.getName()).addAll(bodyDeclarations(¢)).init(¢);
       }
     });
     return false;
   }
 
-  protected void xadd(VariableDeclarationStatement x) {
-  }
-
+  
   /** @return names used the {@link Environment} . */
   @Override public LinkedHashSet<String> keys() {
     return new LinkedHashSet<>(flat.keySet());
@@ -195,16 +268,28 @@ final class Namespace implements Environment {
   }
 
   Namespace spawn(final Kind ¢) {
-    return spawn(¢, "");
+    return spawn(¢ + "");
   }
 
   Namespace spawn(final Kind k, final String childName) {
-    return addChild(new Namespace(Namespace.this, k, childName));
+    return spawn(k + " " + childName);
+  }
+
+  Namespace spawn(final String childName) {
+    return addChild(new Namespace(Namespace.this, childName));
+  }
+
+  @Override public String toString() {
+    return name + ": " + flat;
   }
 
   static boolean init(final Namespace n, final List<? extends ASTNode> children) {
     for (final ASTNode child : children)
       n.init(child);
     return false;
+  }
+
+  enum Subspace {
+    METHOD, TYPE, VARIABLE
   }
 }

@@ -29,6 +29,10 @@ public abstract class ReflectiveTester {
     return first(searchDescendants.forClass(¢).from(myCompilationUnit()));
   }
 
+  public List<SingleMemberAnnotation> singleMemberAnnotations() {
+    return searchDescendants.forClass(SingleMemberAnnotation.class).from(myCompilationUnit());
+  }
+
   public List<Annotation> annotations() {
     return searchDescendants.forClass(Annotation.class).from(myCompilationUnit());
   }

@@ -39,6 +39,10 @@ public interface type {
         return description;
       }
 
+      @Override public String toString() {
+        return name + "";
+      }
+
       @Override public String key() {
         return name;
       }
@@ -265,7 +269,6 @@ public interface type {
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
-      assert es.size() >= 2;
       implementation $ = get(first(es));
       for (final Expression ¢ : rest(es))
         $ = $.underBinaryOperator(o, get(¢));
@@ -316,7 +319,6 @@ public interface type {
               return $.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case FOR_STATEMENT:
               return $.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
-            // case WHILE_STATEMENT:
             case IF_STATEMENT:
               return BOOLEAN;
             case PARENTHESIZED_EXPRESSION:
