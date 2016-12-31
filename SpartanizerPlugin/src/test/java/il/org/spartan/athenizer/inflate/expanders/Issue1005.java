@@ -6,7 +6,6 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 /** Test case for @link PrefixToPostfix}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue1005 {
   @Test public void t1() {
