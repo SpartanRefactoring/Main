@@ -156,7 +156,6 @@ public interface definition {
       return members.of(parent(parent(¢)));
     }
 
-    
     public static boolean has(final String name) {
       if (name != null)
         for (final Kind ¢ : values())
