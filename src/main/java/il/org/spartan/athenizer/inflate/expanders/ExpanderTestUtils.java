@@ -29,7 +29,7 @@ public class ExpanderTestUtils {
       super(inner);
     }
 
-    public Operand(final ASTNode inner,String classText) {
+    public Operand(final ASTNode inner, String classText) {
       ast = inner;
       this.classText = classText;
     }
@@ -105,7 +105,7 @@ public class ExpanderTestUtils {
         ¢.printStackTrace();
       }
     }
-    
+
     private void checkSameWithBinding() {
       final String wrap = classText;
       final CompilationUnit u = az.compilationUnit(ast);
@@ -127,7 +127,7 @@ public class ExpanderTestUtils {
     public void stays() {
       checkSame();
     }
-    
+
     public void staysWithBinding() {
       checkSameWithBinding();
     }
@@ -137,7 +137,7 @@ public class ExpanderTestUtils {
     return new Operand(from);
   }
 
-  public static Operand expansionOf(ReflectiveTester ¢ ) {
-    return new Operand(¢.myCompilationUnit(),¢.myClassText());
+  public static Operand expansionOf(ReflectiveTester ¢) {
+    return new Operand(¢.myCompilationUnit(), ¢.myClassText());
   }
 }

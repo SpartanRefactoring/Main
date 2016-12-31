@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * a.toString();
  * </pre>
+ * 
  * Important : Works only in cases where binding exists, otherwise does nothing
  * Issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
