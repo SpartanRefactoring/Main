@@ -714,7 +714,7 @@ public interface wizard {
   }
 
   static String trim(final Object ¢) {
-    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(1, 35)).trim();
+    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression
