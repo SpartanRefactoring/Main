@@ -18,16 +18,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * a.toString();
  * </pre>
- *
+ * Important : Works only in cases where binding exists, otherwise does nothing
  * Issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
 public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    if (extract.allOperands(¢).size() != 2)
+    if (¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null || extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
-    // ITypeBinding b = ¢.getLeftOperand().resolveTypeBinding();
     if ("\"\"".equals(¢.getRightOperand() + "") && !(¢.getLeftOperand()).resolveTypeBinding().isPrimitive())
       $.setExpression(duplicate.of(¢.getLeftOperand()));
     else {

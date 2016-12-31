@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.athenizer.inflate.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -22,13 +23,15 @@ public class ExpanderTestUtils {
 
   public static class Operand extends Wrapper<String> {
     ASTNode ast;
+    String classText;
 
     public Operand(final String inner) {
       super(inner);
     }
 
-    public Operand(final ASTNode inner) {
+    public Operand(final ASTNode inner,String classText) {
       ast = inner;
+      this.classText = classText;
     }
 
     public Operand gives(final String $) {
@@ -60,7 +63,7 @@ public class ExpanderTestUtils {
     public Operand givesWithBinding(final String $) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
-      final String wrap = u + "";
+      final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
@@ -102,9 +105,31 @@ public class ExpanderTestUtils {
         ¢.printStackTrace();
       }
     }
+    
+    private void checkSameWithBinding() {
+      final String wrap = classText;
+      final CompilationUnit u = az.compilationUnit(ast);
+      final ASTRewrite r = ASTRewrite.create(u.getAST());
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
+      try {
+        final Document doc = new Document(wrap);
+        r.rewriteAST(doc, null).apply(doc);
+        final String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          return;
+        if (!unpeeled.equals(get()) && !tide.clean(unpeeled).equals(tide.clean(get())))
+          assertSimilar(get(), unpeeled);
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        ¢.printStackTrace();
+      }
+    }
 
     public void stays() {
       checkSame();
+    }
+    
+    public void staysWithBinding() {
+      checkSameWithBinding();
     }
   }
 
@@ -112,7 +137,7 @@ public class ExpanderTestUtils {
     return new Operand(from);
   }
 
-  public static Operand expansionOf(final ASTNode from) {
-    return new Operand(from);
+  public static Operand expansionOf(ReflectiveTester ¢ ) {
+    return new Operand(¢.myCompilationUnit(),¢.myClassText());
   }
 }
