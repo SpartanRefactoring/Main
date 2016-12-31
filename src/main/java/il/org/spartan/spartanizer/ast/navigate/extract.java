@@ -119,10 +119,9 @@ public enum extract {
 
   private static String category(final TypeDeclaration ¢) {
     final StringBuilder $ = new StringBuilder();
-    $.append(
-        !¢.isPackageMemberTypeDeclaration() ? "internal " //
-            : ¢.isMemberTypeDeclaration() ? "member " //
-                : !¢.isLocalTypeDeclaration() ? "" : "local ");
+    $.append(!¢.isPackageMemberTypeDeclaration() ? "internal " //
+        : ¢.isMemberTypeDeclaration() ? "member " //
+            : !¢.isLocalTypeDeclaration() ? "" : "local ");
     $.append(!¢.isInterface() ? "class" : "interface");
     return $ + "";
   }

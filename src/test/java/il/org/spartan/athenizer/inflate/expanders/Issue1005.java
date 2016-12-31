@@ -6,7 +6,6 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 /** Test case for @link PrefixToPostfix}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue1005 {
   @Test public void t1() {
@@ -49,10 +48,12 @@ public class Issue1005 {
     expansionOf("x = ++y;").stays();
   }
 
+  @Ignore // see bug on #996
   @Test public void t11() {
     expansionOf("int x = ++y;").gives("int x; x=++y;").stays();
   }
 
+  @Ignore // see bug on #996
   @Test public void t12() {
     expansionOf("int x = ++y + 1;").gives("int x; x=++y + 1;").stays();
   }
@@ -63,5 +64,9 @@ public class Issue1005 {
 
   @Test public void t14() {
     expansionOf("--x;").gives("x--;");
+  }
+
+  @Test public void t15() {
+    expansionOf("for(String s=f(); !\"\".equals(s); s = f2(s)) {}").stays();
   }
 }

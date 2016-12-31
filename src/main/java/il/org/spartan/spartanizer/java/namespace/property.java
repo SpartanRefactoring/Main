@@ -2,11 +2,8 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** 
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-27 
- * [[SuppressWarningsSpartan]]
- */
+/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-27 [[SuppressWarningsSpartan]] */
 public enum property {
   ;
   interface Attached {

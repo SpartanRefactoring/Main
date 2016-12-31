@@ -25,6 +25,7 @@ public interface Environment {
     Environment.EMPTY.spawn().init(¢.getRoot());
     return property.obtain(Namespace.class).from(¢);
   }
+
   /** @return true iff {@link Environment} doesn't have an entry with a given
    *         name. */
   default boolean doesntHave(final String name) {
@@ -95,7 +96,7 @@ public interface Environment {
   int size();
 
   /** Used when new block (scope) is opened. */
-  Namespace spawn(); 
+  Namespace spawn();
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
@@ -133,7 +134,7 @@ public interface Environment {
     }
 
     @Override public Namespace spawn() {
-      return new Namespace(this); 
+      return new Namespace(this);
     }
   };
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
