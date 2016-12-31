@@ -50,6 +50,10 @@ public enum az {
     return !iz.annotation($) ? null : (Annotation) $;
   }
 
+  public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(BodyDeclaration ¢) {
+    return !iz.nodeTypeEquals(¢, ANNOTATION_TYPE_MEMBER_DECLARATION) ? null : (AnnotationTypeMemberDeclaration) ¢;
+  }
+
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
   }
@@ -64,6 +68,10 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ArrayInitializer arrayInitializer(final Expression $) {
     return !iz.nodeTypeEquals($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
+  }
+
+  public static ArrayType arrayType(final Type ¢) {
+    return !iz.nodeTypeEquals(¢, ARRAY_TYPE) ? null : (ArrayType) ¢;
   }
 
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
@@ -114,6 +122,10 @@ public enum az {
    * @return */
   public static CastExpression castExpression(final Expression ¢) {
     return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
+  }
+
+  public static CatchClause catchClause(final ASTNode $) {
+    return !iz.catchClause($) ? null : (CatchClause) $;
   }
 
   /** Down-cast, if possible, to {@link ClassInstanceCreation}
@@ -578,13 +590,5 @@ public enum az {
     static String token(final PrefixExpression ¢) {
       return az.numberLiteral(operand(¢)).getToken();
     }
-  }
-
-  public static CatchClause catchClause(final ASTNode $) {
-    return !iz.catchClause($) ? null : (CatchClause) $;
-  }
-
-  public static ArrayType arrayType(final Type ¢) {
-    return !iz.nodeTypeEquals(¢, ARRAY_TYPE) ? null : (ArrayType) ¢;
   }
 }
