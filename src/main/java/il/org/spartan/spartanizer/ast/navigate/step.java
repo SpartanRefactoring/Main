@@ -163,7 +163,8 @@ public enum step {
     return ¢ == null ? null : ¢.getElseStatement();
   }
 
-  @SuppressWarnings("unchecked") static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+  @SuppressWarnings("unchecked")
+  public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
   }
 
@@ -530,6 +531,10 @@ public enum step {
     return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
   }
 
+  public static int nodeType(ASTNode ¢) {
+    return ¢ == null ? 0 : ¢.getNodeType();
+  }
+
   public static Expression operand(final PostfixExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
@@ -793,6 +798,10 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
     return ¢ == null ? null : ¢.types();
+  }
+
+  public static String typeString(ASTNode ¢) {
+    return ¢ == null ? "" : ¢.getClass().getSimpleName(); 
   }
 
   /** Expose the list of updaters contained in a {@link ForStatement}
