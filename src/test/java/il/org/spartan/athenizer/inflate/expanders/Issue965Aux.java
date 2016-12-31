@@ -6,10 +6,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
+
+/**
+ * [[SuppressWarningsSpartan]]
+ */
 public class Issue965Aux extends ReflectiveTester {
-  @SuppressWarnings("static-method")
+  @SuppressWarnings({ "static-method", "unused" })
   public void check1() {
-    @SuppressWarnings("unused") String s = new ArrayList<>() + "";
+    List<Integer> lst =  new ArrayList<>();
+    String s =  lst+"";
   }
 
   public ASTNode getFirstMethod() {
