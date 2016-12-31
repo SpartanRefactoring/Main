@@ -20,38 +20,56 @@ public class Binding {
     return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
   }
 
-  /** The containing block, whose death marks the death of this entry; not sure,
-   * but I think this entry can be shared by many nodes at the same level */
-  public final ASTNode blockScope;
   /** What do we know about an entry hidden by this one */
   public final Binding hiding;
   /** The node at which this entry was created */
   public final ASTNode self;
   /** What do we know about the type of this definition */
   public final type type;
+  public final String key;
 
-  // For now, nothing is known, we only maintain lists
   public Binding() {
-    blockScope = self = null;
-    type = null;
     hiding = null;
+    type = null;
+    self = null;
+    key = null;
+  // For now, nothing is known, we only maintain lists
   }
 
-  public Binding(final ASTNode blockScope, final Binding hiding, final ASTNode self, final type type) {
-    this.blockScope = blockScope;
+  @Override public String toString() {
+    return type  + "";
+  }
+
+  public Binding(@SuppressWarnings("unused") final ASTNode blockScope, final Binding hiding, final ASTNode self, final type type) {
     this.hiding = hiding;
     this.self = self;
     this.type = type;
+    key = null;
   }
 
   public Binding(final type type) {
-    blockScope = self = null;
+    this.type = type;
+    self = null;
+    hiding = null;
+    key = null;
+  }
+
+  public Binding(String key, type type) {
+    this.key = key;
     this.type = type;
     hiding = null;
+    self = null;
+  }
+
+  public Binding(String key, ASTNode self) {
+    this.key = key;
+    this.self = self;
+    hiding = null;
+    type = null;
   }
 
   public boolean equals(final Binding ¢) {
-    return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
+    return eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
   }
 
   /** @param ¢
@@ -68,6 +86,6 @@ public class Binding {
   // containment check, which is required for testing.
   @Override public int hashCode() {
     return (self == null ? 0 : self.hashCode())
-        + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
+        + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31);
   }
 }
