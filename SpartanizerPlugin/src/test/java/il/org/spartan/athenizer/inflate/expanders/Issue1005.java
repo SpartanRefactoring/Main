@@ -63,4 +63,8 @@ public class Issue1005 {
   @Test public void t14() {
     expansionOf("--x;").gives("x--;");
   }
+  
+  @Test public void t15() {
+    expansionOf("for(String s=f(); !\"\".equals(s); s = f2(s)) {}").stays();
+  }
 }
