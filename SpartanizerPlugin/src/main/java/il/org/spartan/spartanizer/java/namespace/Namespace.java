@@ -50,12 +50,39 @@ final class Namespace implements Environment {
     return child;
   }
 
+  protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
+    @knows("¢") final type t = type.bring(d.getName() + "");
+    for (final EnumConstantDeclaration ¢ : ds)
+      put(¢.getName() + "", new Binding(t));
+    return this;
+  }
+
+  private Iterable<Environment> ancestors() {
+    return () -> new Iterator<Environment>() {
+      Environment next = Namespace.this;
+
+      @Override public boolean hasNext() {
+        return next != null;
+      }
+
+      @Override public Environment next() {
+        final Environment $ = next;
+        next = next.nest();
+        return $;
+      }
+    };
+  }
+
+  public String ancestry() {
+    return separate.these(ancestors()).by("\n\t * ");
+  }
+
   public String description() {
     return description("");
   }
 
-  public String description(String indent) {
-    return indent + name + "" + flat + ((children.isEmpty()) ? ""
+  public String description(final String indent) {
+    return indent + name + "" + flat + (children.isEmpty() ? ""
         : ":\n" + separate.these(children.stream().map(x -> x.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
 
@@ -81,15 +108,23 @@ final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  boolean init(final ASTNode root) {
-    property.attach(this).to(root);
-    root.accept(new ASTVisitor() {
+  boolean fillScope(final ASTNode root) {
+    return fillScope(root, root);
+  }
+
+  boolean fillScope(final ASTNode from, final ASTNode root) {
+    property.attach(this).to(from);
+    from.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
-        return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).init(¢);
+        return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).fillScope(¢);
+      }
+
+      @Override public void preVisit(final ASTNode ¢) {
+        System.out.println("visit " + wizard.trim(¢) + "/" + Namespace.this + "/" + Namespace.this.nest);
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration ¢) {
-        return ¢ == root || spawn(class¢).init(¢);
+        return ¢ == root || spawn(class¢).fillScope(¢);
       }
 
       @Override public boolean visit(final Block b) {
@@ -98,40 +133,52 @@ final class Namespace implements Environment {
         Namespace current = Namespace.this;
         for (final Statement s : statements(b)) {
           if (iz.typeDeclaration(s)) {
-            final TypeDeclaration x = az.typeDeclaration(s);
-            current = current.spawn(definition.kind(x)).put(x);
+            final TypeDeclaration d = az.typeDeclaration(s);
+            current = current.spawn(definition.kind(d)).put(d);
+            current.fillScope(s);
+            continue;
           }
           if (iz.variableDeclarationStatement(s)) {
-            VariableDeclarationStatement x = az.variableDeclarationStatement(s);
-            Type t = x.getType();
+            final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
             current = current.spawn(local);
-            for (VariableDeclarationFragment ¢ : fragments(x))
-              current.put(¢.getName(), t);
+            for (final VariableDeclarationFragment ¢ : fragments(vds))
+              current.put(¢.getName(), vds.getType());
+            current.fillScope(s);
+            continue;
           }
-          current.init(s);
+          if (iz.forStatement(s))
+            current.fillScope(s, null);
+          if (iz.enhancedFor(s))
+            current.fillScope(s, null);
+          if (iz.tryStatement(s))
+            current.fillScope(s, null);
+          current.fillScope(s);
         }
         return false;
       }
 
       @Override public boolean visit(final CatchClause ¢) {
-        return ¢ == root || spawn(catch¢).put(¢.getException()).init(¢);
+        return ¢ == root || spawn(catch¢).put(¢.getException()).fillScope(¢);
       }
 
       @Override public boolean visit(final CompilationUnit ¢) {
-        if (¢ != root)
-          put(types(¢));
+        put(types(¢));
         return true;
       }
 
       @Override public boolean visit(final EnhancedForStatement ¢) {
-        return ¢ == root || spawn(foreach).put(¢.getParameter()).init(¢);
+        return ¢ == root || spawn(foreach).put(¢.getParameter()).fillScope(¢);
+      }
+
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        return ¢ == root || spawn("enum " + ¢.getName()).addAll(bodyDeclarations(¢)).addConstants(¢, enumConstants(¢)).fillScope(¢);
       }
 
       @Override public boolean visit(final ForStatement ¢) {
         if (¢ == root)
           return true;
         final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
-        return $ == null || spawn(for¢).put($).init(¢);
+        return $ == null || spawn(for¢).put($).fillScope(¢);
       }
 
       @Override public boolean visit(final LambdaExpression x) {
@@ -143,7 +190,7 @@ final class Namespace implements Environment {
             $.put((SingleVariableDeclaration) ¢);
           else
             $.put(az.variableDeclrationFragment(¢).getName(), null);
-        return $.init(x);
+        return $.fillScope(x);
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
@@ -152,15 +199,25 @@ final class Namespace implements Environment {
         final Namespace $ = spawn("method " + d.getName());
         for (final SingleVariableDeclaration ¢ : parameters(d))
           $.put(¢);
-        return $.init(d);
+        return $.fillScope(d);
       }
 
-      @Override public boolean visit(final TryStatement ¢) {
-        return ¢ == root || spawn(try¢).addAllReources(resources(¢)).init(¢);
+      @Override public boolean visit(final TryStatement s) {
+        System.out.println("visit " + wizard.trim(s));
+        if (s == root)
+          return true;
+        final Namespace $ = spawn(try¢);
+        System.out.println( "Filling scope " + $);
+        System.out.println( "nest  " + $.nest());
+        for (final VariableDeclarationExpression ¢ : resources(s))
+          $.put(¢);
+        System.out.println( "Filling scope " + $);
+        System.out.println( "nest  " + $.nest());
+        return $.fillScope(s.getBody(), null);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + ¢.getName()).addAll(bodyDeclarations(¢)).init(¢);
+        return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + ¢.getName()).addAll(bodyDeclarations(¢)).fillScope(¢);
       }
     });
     return false;
@@ -197,10 +254,6 @@ final class Namespace implements Environment {
                     : iz.enumDeclaration(¢) ? put(az.enumDeclaration(¢))
                         : iz.typeDeclaration(¢) ? put(az.typeDeclaration(¢))
                             : iz.annotationTypeMemberDeclaration(¢) ? put(az.annotationTypeMemberDeclaration(¢)) : null;
-  }
-
-  private Namespace put(final EnumConstantDeclaration ¢) {
-    return put(¢.getName() + "", az.enumDeclaration(¢.getParent()).getName());
   }
 
   private Namespace put(final EnumDeclaration ¢) {
@@ -250,7 +303,7 @@ final class Namespace implements Environment {
   }
 
   protected Namespace put(final TypeDeclaration ¢) {
-    String key = "type " + ¢.getName();
+    @knows("¢") final String key = "type " + ¢.getName();
     put(key, new Binding(key, type.baptize(¢.getName() + "", !¢.isInterface() ? "class" : "interface")));
     return this;
   }
@@ -283,16 +336,12 @@ final class Namespace implements Environment {
   }
 
   @Override public String toString() {
-    return name + ": " + flat;
+    return name + "" + flat;
   }
 
   static boolean init(final Namespace n, final List<? extends ASTNode> children) {
     for (final ASTNode child : children)
-      n.init(child);
+      n.fillScope(child);
     return false;
-  }
-
-  enum Subspace {
-    METHOD, TYPE, VARIABLE
   }
 }
