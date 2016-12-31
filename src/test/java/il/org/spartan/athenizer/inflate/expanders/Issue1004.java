@@ -39,4 +39,8 @@ public class Issue1004 {
   @Test public void t8() {
     expansionOf("for(;;) { arr[++i]=1;}").gives("for(;;) { ++i; arr[i]=1;}");
   }
+  
+  @Test public void t9() {
+    expansionOf("a[+x] = 1;").stays();
+  }
 }
