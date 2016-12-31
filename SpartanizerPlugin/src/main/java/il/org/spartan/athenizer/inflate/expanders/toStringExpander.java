@@ -27,6 +27,7 @@ public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implem
     if (extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
+    // ITypeBinding b = ¢.getLeftOperand().resolveTypeBinding();
     if ("\"\"".equals(¢.getRightOperand() + "") && !(¢.getLeftOperand()).resolveTypeBinding().isPrimitive())
       $.setExpression(duplicate.of(¢.getLeftOperand()));
     else {

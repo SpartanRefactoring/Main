@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.lang.reflect.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -9,6 +10,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.patterns.common.*;
+import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -18,6 +21,13 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Relation pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  private static final Set<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new HashCodeMethod());
+      add(new ToStringMethod());
+    }
+  };
   static {
     clazz = TablePatternsReusabilityIndices.class;
     Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
@@ -59,7 +69,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null;
+    return iz.constructor(¢) || body(¢) == null || anyTips(excluded, ¢);
   }
 
   public void summarizeNPStatistics(final String path) {
@@ -81,5 +91,9 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
         .map(p -> p.getClass().getSimpleName())//
         .filter(n -> !npStatistics.keySet().contains(n))//
         .forEach(n -> pWriter.put(n, "-"));
+  }
+
+  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
+    return d != null && ps.stream().anyMatch(t -> t.canTip(d));
   }
 }

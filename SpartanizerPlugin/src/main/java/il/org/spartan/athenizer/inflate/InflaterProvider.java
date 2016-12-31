@@ -34,20 +34,18 @@ public class InflaterProvider extends OperationsProvider {
         // new AssignmentTernaryExpander())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
-         .add(InfixExpression.class, //
-         new toStringExpander())//
-        // .add(PrefixExpression.class, //
-        // new PrefixToPostfix()) //
+        .add(InfixExpression.class, //
+            new toStringExpander())//
+        .add(PrefixExpression.class, //
+            new PrefixToPostfix()) //
         .add(SwitchStatement.class, //
             new CasesSplit())//
         .add(Assignment.class, //
             new AssignmentOperatorExpansion())//
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
-        .add(VariableDeclarationStatement.class, //
-            new VariableDeclarationStatementSplit()) //
-        .add(VariableDeclarationStatement.class, //
-            new DeclarationWithInitExpander()) //
+        .add(VariableDeclarationStatement.class, new VariableDeclarationStatementSplit())
+        // new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
         .add(ThrowStatement.class, //
