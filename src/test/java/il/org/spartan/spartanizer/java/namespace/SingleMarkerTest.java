@@ -28,7 +28,7 @@ public class SingleMarkerTest extends ReflectiveTester {
     azzert.that(
         "\n name = " + name + //
             "\n\t kind = " + kind + //
-            definitionTest.ancestry(name) + //
+            ReflectiveTester.ancestry(name) + //
             "\n\t scope = " + scope.of(name)//
         , definition.kind(name), is(kind));
   }

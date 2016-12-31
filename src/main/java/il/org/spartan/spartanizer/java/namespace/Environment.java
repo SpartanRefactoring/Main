@@ -18,14 +18,6 @@ import il.org.spartan.spartanizer.utils.*;
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree. */
 public interface Environment {
-  static Namespace of(ASTNode ¢) {
-    Namespace $ = property.obtain(Namespace.class).from(¢);
-    if ($ != null)
-      return $;
-    Environment.EMPTY.spawn().init(¢.getRoot());
-    return property.obtain(Namespace.class).from(¢);
-  }
-
   /** @return true iff {@link Environment} doesn't have an entry with a given
    *         name. */
   default boolean doesntHave(final String name) {
@@ -35,6 +27,8 @@ public interface Environment {
   /** Return true iff {@link Environment} is empty. */
   boolean empty();
 
+  List<Entry<String, Binding>> entries();
+
   default List<Entry<String, Binding>> fullEntries() {
     final List<Entry<String, Binding>> $ = new ArrayList<>(entries());
     if (nest() != null)
@@ -42,12 +36,10 @@ public interface Environment {
     return $;
   }
 
-  List<Entry<String, Binding>> entries();
-
   /** Get full path of the current {@link Environment} (all scope hierarchy).
    * Used for full names of the variables. */
   default String fullName() {
-    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
+    final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name();
   }
 
@@ -76,10 +68,10 @@ public interface Environment {
     return nest() == null ? null : nest().get(name);
   }
 
-  String name();
-
   /** @return The names used in the current scope. */
   Set<String> keys();
+
+  String name();
 
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
@@ -100,25 +92,29 @@ public interface Environment {
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
-  Environment EMPTY = new Environment() {
+  Environment NULL = new Environment() {
     @Override public boolean empty() {
       return true;
-    }
-
-    @Override public boolean has(@SuppressWarnings("unused") final String name) {
-      return false;
     }
 
     @Override public List<Entry<String, Binding>> entries() {
       return Collections.emptyList();
     }
 
-    @Override public String name() {
-      return "";
+    @Override public Binding get(@SuppressWarnings("unused") final String name) {
+      return null;
+    }
+
+    @Override public boolean has(@SuppressWarnings("unused") final String name) {
+      return false;
     }
 
     @Override public Set<String> keys() {
       return Collections.emptySet();
+    }
+
+    @Override public String name() {
+      return "";
     }
 
     @Override public Environment nest() {
@@ -129,20 +125,16 @@ public interface Environment {
       return 0;
     }
 
-    @Override public Binding get(@SuppressWarnings("unused") final String name) {
-      return null;
-    }
-
     @Override public Namespace spawn() {
       return new Namespace(this);
     }
+
+    @Override public String toString() {
+      return "null";
+    }
   };
+
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
-
-  static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
-    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
-  }
-
   /** @param ¢ JD
    * @return All declarations in given {@link Statement}, without entering the
    *         contained ({@link Block}s. If the {@link Statement} is a
@@ -191,7 +183,7 @@ public interface Environment {
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
   static Namespace genesis() {
-    return EMPTY.spawn();
+    return NULL.spawn();
   }
 
   static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
@@ -215,12 +207,31 @@ public interface Environment {
     return az.block(¢.getParent());
   }
 
+  static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
+    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+  }
+
   static String name(@SuppressWarnings("unused") final ASTNode __) {
     return "???";
   }
 
   static String name(final VariableDeclarationFragment ¢) {
     return ¢.getName() + "";
+  }
+
+  static Namespace of(ASTNode n) {
+    for (ASTNode ¢ : ancestors.of(n)) {
+      Namespace $ = property.obtain(Namespace.class).from(¢);
+      if ($ != null)
+        return $;
+    }
+    Environment.NULL.spawn().fillScope(n.getRoot());
+    for (ASTNode ¢ : ancestors.of(n)) {
+      Namespace $ = property.obtain(Namespace.class).from(¢);
+      if ($ != null)
+        return $;
+    }
+    return null;
   }
 
   static String parentNameScope(final String ¢) {

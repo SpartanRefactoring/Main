@@ -33,7 +33,7 @@ class NamespaceFixture {
     int l = j;
     $ *= k + $ * l + 2 * j;
     l = $ * k;
-    @above("k") int s = l + k * k * l;
+    @knows("k") int s = l + k * k * l;
     s *= s + 2;
     f(k + s * hashCode() + l + $ * s);
   }
@@ -55,11 +55,32 @@ class NamespaceFixture {
     }
   }
 }
-
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@interface above {
-  String value();
+@Target({ ElementType.FIELD, //
+  ElementType.PARAMETER, 
+  ElementType.LOCAL_VARIABLE, //
+  ElementType.METHOD,
+  ElementType.ANNOTATION_TYPE,
+  ElementType.CONSTRUCTOR,
+  ElementType.TYPE,
+  
+})
+@interface knows {
+  String[] value();
 }
+
+@Target({ ElementType.FIELD, //
+  ElementType.PARAMETER, 
+  ElementType.LOCAL_VARIABLE, //
+  ElementType.METHOD,
+  ElementType.ANNOTATION_TYPE,
+  ElementType.CONSTRUCTOR,
+  ElementType.TYPE,
+  
+})
+@interface foreign {
+  String[] value();
+}
+
 
 interface xyz {
   enum a {

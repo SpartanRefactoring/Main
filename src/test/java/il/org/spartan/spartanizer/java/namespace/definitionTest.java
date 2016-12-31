@@ -98,7 +98,7 @@ public class definitionTest extends ReflectiveTester {
         assert ¢ != null : a;
   }
 
-  @ScopeSize(43) @Test public void a13() {
+  @ScopeSize(41) @Test public void a13() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@try¢") != null;
@@ -183,7 +183,8 @@ public class definitionTest extends ReflectiveTester {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
-        azzert.that(x + ": " + annotees.of(x) + ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(), is(value(x)));
+        azzert.that(x + ": " + annotees.of(x) + ReflectiveTester.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
+            is(ReflectiveTester.value(x)));
     }
   }
 
@@ -236,7 +237,7 @@ public class definitionTest extends ReflectiveTester {
       assert ns != null;
       final SimpleName n = first(ns);
       assert n != null;
-      if (!"c3".equals(n + ""))
+      if (!"raisin".equals(n + ""))
         continue;
       final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
@@ -297,7 +298,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
       }
     }
   }
@@ -311,7 +312,7 @@ public class definitionTest extends ReflectiveTester {
           continue;
         final int size = scope.of(n).size();
         assert size >= 0;
-        azzert.that(x + ": " + n + "/" + definition.kind(n) + ancestry(n), size, is(value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n) + ReflectiveTester.ancestry(n), size, is(ReflectiveTester.value(x)));
       }
     }
   }
@@ -323,7 +324,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
       }
     }
   }
@@ -335,7 +336,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyInterface.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
       }
     }
   }
@@ -347,7 +348,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyClass.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
       }
     }
   }
@@ -355,34 +356,13 @@ public class definitionTest extends ReflectiveTester {
   List<MarkerAnnotation> markers() {
     return searchDescendants.forClass(MarkerAnnotation.class).from(myCompilationUnit());
   }
-
-  static String ancestry(final ASTNode n) {
-    String $ = "";
-    int i = 0;
-    for (final ASTNode p : ancestors.of(n))
-      $ += "\n\t + " + i++ + ": " + wizard.trim(p + "") + "/" + p.getClass().getSimpleName();
-    return $;
-  }
-
-  static int value(final SingleMemberAnnotation ¢) {
-    return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
-  }
 }
 
 /** @formatter:off */
-
 @Target({ ElementType.TYPE }) @annotation @interface annotation { /**/ }
 @Target({ ElementType.METHOD }) @annotation @interface annotationMemberDeclaration { /**/ }
-@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
-@annotation
-@interface catch¢ {
-  /**/ }
-
-@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
-@annotation
-@interface class¢ {
-  /**/ }
-
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) @annotation @interface catch¢ { /**/ }
+@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface class¢ { /**/ }
 @ScopeSize(23) @annotation @interface DummyAnnotation { /**/}
 @ScopeSize(23) @class¢ class DummyClass { /**/}
 @ScopeSize(23) @enum¢ enum DummyEnum { /**/ }
@@ -403,20 +383,23 @@ public class definitionTest extends ReflectiveTester {
 // @formatter:off
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
 @annotation @interface delme { String[] value(); }
+// @formatter:on
 
 @Ignore
 @class¢
+@knows("type definitionTest")
 class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {
     // This should never happen
-    if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode())
-      try (@ScopeSize(4) @try¢ FileReader xxxxx = new FileReader("a");
-          @ScopeSize(3) @try¢ FileReader yyyyy = new FileReader("b" + xxxxx.getEncoding())) {
-        @local int c1 = xxxxx.read();
-        @local final int z = 2 * c1;
-        @local int c2 = yyyyy.read() + new Object() {
-          @ScopeSize(4) @field int fieldInAnonymousClass;
+    if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode()) {
+      int lemon = hashCode();
+      try (@ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())) {
+        @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
+        @knows({ "localVariableInTryBlock", "myFirstFileReader"})@local final int z = 2 * lemon * localVariableInTryBlock;
+        @knows("resourceInTry") @local int localVariableNewClass = resourceInTry.read() + new Object() {
+          @ScopeSize(4) @field @knows("localVariableNewClass") int fieldInAnonymousClass;
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
@@ -434,59 +417,73 @@ class ZZZ___Fixture_ModelClass {
             return z + a + b + fieldInAnonymousClass + anotherFieldInAnonymousClass;
           }
         }.hashCode();
-        c1 ^= c2;
-        ++c1;
-        @local final int c0 = c1 - c2;
-        --c2;
-        c2 ^= c1;
-        @ScopeSize(5) @local int c3 = c1 + c2;
+        localVariableInTryBlock ^= localVariableNewClass;
+        ++localVariableInTryBlock;
+        @local final int c0 = localVariableInTryBlock - localVariableNewClass;
+        --localVariableNewClass;
+        localVariableNewClass ^= localVariableInTryBlock;
+        @ScopeSize(5) @knows({ "localVariableNewClass", "raisin" }) @local int raisin = localVariableInTryBlock + localVariableNewClass;
         @ScopeSize(3) @local int c8;
-        ++c2;
-        c8 = ++c3;
-        if (c1 == c2 * c8)
-          throw new CloneNotSupportedException(c0 * c3 + "");
-      } catch (@ScopeSize(1) @catch¢ final FileNotFoundException x) {
-        for (@ScopeSize(3) @for¢ int j583 = 0; j583 < 10; --j583) {
-          @local @ScopeSize(2) final int a = 2 * j583 + hashCode();
-          System.out.println(a * a + j583 * hashCode());
+        ++localVariableNewClass;
+        c8 = ++raisin;
+        if (localVariableInTryBlock == c8 * localVariableNewClass)
+          throw new CloneNotSupportedException(c0 * raisin + "");
+      } catch (@knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
+        for (@foreign("resourceInTry") @knows({ "myIgnoredException", "water" }) @ScopeSize(3) @for¢ int water = 0; water < 10; --water) {
+          @knows({ "water", "myIgnoredException", "fig" }) @local @ScopeSize(2) final int fig = 2 * water + hashCode();
+          System.out.println(fig * fig + water * hashCode());
         }
-        for (@ScopeSize(4) @for¢ int a34j = 0, a; a34j < 10; --a34j) {
-          a = 2 * a34j + hashCode();
-          System.out.println(a * a + a34j * hashCode());
+        for (@ScopeSize(4) @for¢ int orange = 0, apple; orange < 10; --orange) {
+          apple = 2 * orange + hashCode();
+          @knows({ "orange", "myIgnoredException", "apple" }) int banana = 2 * apple * (apple - 21) + 2;
+          System.out.println(apple * apple + banana * banana * orange * hashCode());
+          System.out.println(banana);
+          System.out.println(apple * orange);
+          orange *= banana - apple;
         }
-        for (@ScopeSize(6) @for¢ int j123 = 0, ¢ = 0 + j123; ¢ < 10 * j123; j123 *= 2, --j123, ¢ = j123) {
-          final int a = 2 * j123 + hashCode();
-          System.out.println(a * a + j123 * hashCode());
-          ¢ += j123;
-          System.out.println(a * a + j123 * hashCode());
+        for (@knows("carrot") int carrot : toString().toCharArray()) {
+          @knows("carrot") int cherry = 2 * carrot * (carrot - 21) + 2;
+          System.out.println(carrot * cherry + cherry);
         }
-        for (@ScopeSize(7) @for¢ int kay3, j = 0, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
-          kay3 = hashCode();
-          ¢ += j;
-          ++kay3;
-          System.out.println(kay3);
+        for (@ScopeSize(6) @for¢ int melon = 0, ¢ = 0 + melon; ¢ < 10 * melon; melon *= 2, --melon, ¢ = melon) {
+          @knows({ "melon", "¢" }) final int variableInPlainFor = 2 * melon + hashCode();
+          System.out.println(melon * hashCode() + variableInPlainFor * variableInPlainFor);
+          ¢ += melon;
+          System.out.println(melon * hashCode() + variableInPlainFor * variableInPlainFor);
         }
-        x.printStackTrace();
+        for (@ScopeSize(7) @for¢ int pear, j = 0, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+          @knows({ "x", "variableInPlainFor", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode();
+          pear = hashCode() * anotherVariableInAnotherPlainFor;
+          anotherVariableInAnotherPlainFor >>>= pear;
+          ¢ += j + anotherVariableInAnotherPlainFor;
+          ++pear;
+          System.out.println(pear + anotherVariableInAnotherPlainFor);
+        }
+        myIgnoredException.printStackTrace();
       } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
         ¢.printStackTrace();
       }
+      @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) int a = hashCode();
+      System.out.println(a * a);
+    }
   }
 
   @annotation
   @interface foo {
-    @ScopeSize(5) @field static int bar = 12;
+    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) static int bar = 12;
     @ScopeSize(5) @field static int foo = bar;
     @ScopeSize(5) @field static int fubar = foo << bar;
 
     @ScopeSize(5)
     @enum¢
     enum Bar {
+      @knows({ "cadabra", "vaz/0", "abra" })
       @ScopeSize(3)
       @enumConstant
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;
-      Bar vaz() {
+      @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }
     }
@@ -545,7 +542,8 @@ class ZZZ___Fixture_ModelClass {
 
     @ScopeSize(6)
     abstract class ClassInAnEnum {
-      @ScopeSize(1) @method abstract void abstractMethodInClass(@parameter @ScopeSize(0) int a, @parameter @ScopeSize(0) int b);
+      @ScopeSize(1) @knows({ "type ClassInAnEnum", "b" }) @method abstract void abstractMethodInClass(@parameter @ScopeSize(0) int a,
+          @parameter @ScopeSize(0) int b);
     }
 
     @ScopeSize(6)

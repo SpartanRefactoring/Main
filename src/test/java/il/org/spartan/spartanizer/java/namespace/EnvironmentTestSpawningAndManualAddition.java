@@ -149,7 +149,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void Nest() {
-    azzert.that(e0.nest(), is(EMPTY));
+    azzert.that(e0.nest(), is(NULL));
   }
 
   @Test public void NestOne() {

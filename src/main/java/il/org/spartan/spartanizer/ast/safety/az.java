@@ -289,7 +289,7 @@ public enum az {
 
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
     final List<IExtendedModifier> $ = new ArrayList<>();
-    duplicate.modifiers(step.extendedModifiers(¢), $);
+    duplicate.modifiers(extendedModifiers(¢), $);
     return $;
   }
 
@@ -299,7 +299,7 @@ public enum az {
 
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    duplicate.into(step.fragments(¢), $);
+    duplicate.into(fragments(¢), $);
     return chop($);
   }
 
@@ -485,14 +485,14 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
+    return az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
     final VariableDeclarationExpression $ = ¢.getAST()
-        .newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(step.fragments(duplicate.of(¢)))));
+        .newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(fragments(duplicate.of(¢)))));
     fragments($).addAll(nextFragmentsOf(¢));
     $.setType(duplicate.of(¢.getType()));
     extendedModifiers($).addAll(modifiersOf(¢));
