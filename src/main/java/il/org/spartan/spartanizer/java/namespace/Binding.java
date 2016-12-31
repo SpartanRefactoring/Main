@@ -33,11 +33,11 @@ public class Binding {
     type = null;
     self = null;
     key = null;
-  // For now, nothing is known, we only maintain lists
+    // For now, nothing is known, we only maintain lists
   }
 
   @Override public String toString() {
-    return type  + "";
+    return type + "";
   }
 
   public Binding(@SuppressWarnings("unused") final ASTNode blockScope, final Binding hiding, final ASTNode self, final type type) {
@@ -85,7 +85,6 @@ public class Binding {
   // Required for MapEntry equality, which is, in turn, required for Set
   // containment check, which is required for testing.
   @Override public int hashCode() {
-    return (self == null ? 0 : self.hashCode())
-        + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31);
+    return (self == null ? 0 : self.hashCode()) + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31);
   }
 }

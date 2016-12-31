@@ -5,7 +5,6 @@ import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 20-11-2016 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue188 {
   @Test public void test0() {
@@ -20,7 +19,7 @@ public class Issue188 {
 
   @Test public void test2() {
     trimmingOf("try{f();}catch(Exception e){int a;return a;}catch(Exceptiono e){int y;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-        .gives("try{f();}catch(ExceptionNull|Exception e){int a;return a;}catch(Exceptiono e){int y;}finally{return b;}").stays();
+        .gives("try{f();}catch(Exceptiono e){int y;}catch(ExceptionNull|Exception e){int a;return a;}finally{return b;}").stays();
   }
 
   @Test public void test3() {
@@ -39,6 +38,6 @@ public class Issue188 {
 
   @Test public void test5() {
     trimmingOf("try{int y;}catch(Exception e){int a;return a;}catch(Exceptiono e){int a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-        .gives("try{int y;}catch(ExceptionNull|Exception e){int a;return a;}catch(Exceptiono e){int a;}finally{return b;}").stays();
+        .gives("try{int y;}catch(Exceptiono e){int a;}catch(ExceptionNull|Exception e){int a;return a;}finally{return b;}").stays();
   }
 }

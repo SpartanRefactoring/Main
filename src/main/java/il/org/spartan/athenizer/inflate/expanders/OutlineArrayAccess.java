@@ -26,7 +26,9 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * <pre>
  * does not expand if right hand side includes access index operand, such as in
- * arr[i]=i . Test case is {@link Issue1004}
+ * arr[i]=i. works only on ExpressionStatement, varible declaration with
+ * assignment will be treated after outlining by other expanders . Test case is
+ * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.InVain {
@@ -37,7 +39,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
   @Override public Tip tip(final ArrayAccess a) {
     final Expression $ = duplicate.of(a.getIndex());
     final ASTNode b = extract.containingStatement(a);
-    final AST t = b.getParent().getAST();
+    final AST t = b.getAST();
     return new Tip(description(a), a, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
@@ -57,7 +59,8 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
     final Statement b = extract.containingStatement(a);
-    if (!iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e) || iz.assignment(e))
+    if (!iz.expressionStatement(b) || b.getParent() == null || !iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e)
+        || iz.assignment(e))
       return false;
     final SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
     if ($ == null)

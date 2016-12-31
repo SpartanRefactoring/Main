@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
+@Ignore
 @SuppressWarnings("static-method")
 public class SelectTest {
   @Test public void a() {
