@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-22 */
 public interface definition {
   enum Kind {
-    anonymous, compilationUnit, kind, annotation {
+    annotation {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
@@ -156,6 +156,7 @@ public interface definition {
       return members.of(parent(parent(¢)));
     }
 
+    
     public static boolean has(final String name) {
       if (name != null)
         for (final Kind ¢ : values())
@@ -245,14 +246,5 @@ public interface definition {
 
   static Kind kind(TypeDeclaration x) {
     return !x.isInterface() ? Kind.class¢ : Kind.interface¢;
-  }
-
-  static Kind kind(BodyDeclaration d) {
-    if (d instanceof AbstractTypeDeclaration)
-      return Kind.type;
-    if (d instanceof EnumDeclaration)
-      return Kind.enum¢;
-    if (d instanceof TypeDeclaration)
-      return kind(az.typeDeclaration(d)); 
   }
 }

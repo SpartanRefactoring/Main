@@ -94,12 +94,10 @@ public final class EnvironmentTestSpawningAndManualAddition {
 
   @Test public void getFromParent() {
     assert e1.get("Alex") != null;
-    assert e1.get("Alex").blockScope == null;
   }
 
   @Test public void getOne() {
     assert e1.get("Kopzon") != null;
-    assert e1.get("Kopzon").blockScope == null;
   }
 
   @Test public void has() {

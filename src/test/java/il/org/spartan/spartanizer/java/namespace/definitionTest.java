@@ -10,9 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.junit.*;
-import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
@@ -86,7 +84,7 @@ public class definitionTest extends ReflectiveTester {
     for (@foreach final MarkerAnnotation ¢ : markers())
       assert annotations.containsKey(¢ + "") : "I did not see marker annotation:" + ¢;
   }
-@Ignore
+
   @Test public void a11() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
@@ -100,7 +98,7 @@ public class definitionTest extends ReflectiveTester {
         assert ¢ != null : a;
   }
 
-  @ScopeSize(45) @Test public void a13() {
+  @ScopeSize(43) @Test public void a13() {
     for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@try¢") != null;
@@ -159,11 +157,11 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a23() {
-    assert definition.Kind.has("enum¢");
+    assert definition.Kind.has("enum¢") : definition.Kind.enum¢;
   }
 
   @Test public void a24() {
-    assert definition.Kind.has("for¢");
+    assert definition.Kind.has("for¢") : definition.Kind.for¢;
   }
 
   @Test public void a25() {
@@ -177,7 +175,8 @@ public class definitionTest extends ReflectiveTester {
     for (final MarkerAnnotation a : markers())
       if ("@try¢".equals(a + ""))
         for (@foreach final SimpleName ¢ : annotees.of(a))
-          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""));
+          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), //
+              "@" + definition.kind(¢), is(a + ""));
   }
 
   @Test @method public void a27() {
@@ -365,85 +364,8 @@ public class definitionTest extends ReflectiveTester {
     return $;
   }
 
-  static int value(final SingleMemberAnnotation x) {
-    return az.throwing.int¢(az.numberLiteral(x.getValue()).getToken());
-  }
-
-  @RunWith(Parameterized.class)
-  public static class ScopeSizeTest extends ReflectiveTester {
-    static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
-
-    public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
-      assert name != null;
-      assert ScopeSize != null;
-      this.name = name;
-      scopeSize = ScopeSize;
-      this.kind = kind;
-    }
-
-    private final SimpleName name;
-    private final Integer scopeSize;
-    private final definition.Kind kind;
-
-    @Test public void test() {
-      azzert.that(
-          "\n name = " + name + //
-              "\n expected = " + scopeSize + //
-              "\n got = " + scope.of(name).size() + //
-              "\n\t kind = " + kind + //
-              ancestry(name) + //
-              "\n\t scope = " + scope.of(name)//
-          , scope.of(name).size(), is(scopeSize.intValue()));
-    }
-
-    @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
-      final List<Object[]> $ = new ArrayList<>();
-      for (final Annotation a : new definitionTest().annotations()) {
-        final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
-        if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
-          int expected = value(sma);
-          for (final SimpleName ¢ : annotees.of(sma)) {
-            $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
-            if (definition.kind(¢) != definition.Kind.field)
-              --expected;
-          }
-        }
-      }
-      return $;
-    }
-  }
-
-  @RunWith(Parameterized.class)
-  public static class SingleMarkerTest extends ReflectiveTester {
-    public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
-      assert name != null;
-      this.name = name;
-      this.kind = kind;
-    }
-
-    private final SimpleName name;
-    private final definition.Kind kind;
-
-    @Test public void test() {
-      azzert.that(
-          "\n name = " + name + //
-              "\n\t kind = " + kind + //
-              ancestry(name) + //
-              "\n\t scope = " + scope.of(name)//
-          , definition.kind(name), is(kind));
-    }
-
-    @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
-      final List<Object[]> $ = new ArrayList<>();
-      for (final MarkerAnnotation a : new definitionTest().markers()) {
-        final String key = (a + "").substring(1);
-        if (!definition.Kind.has(key))
-          continue;
-        for (final SimpleName ¢ : annotees.of(a))
-          $.add(as.array(definition.Kind.valueOf(key), ¢));
-      }
-      return $;
-    }
+  static int value(final SingleMemberAnnotation ¢) {
+    return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 }
 
@@ -478,12 +400,9 @@ public class definitionTest extends ReflectiveTester {
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface ScopeSize { int value(); }
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
 
-// @formatter:on
+// @formatter:off
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@annotation
-@interface above {
-  String[] value();
-}
+@annotation @interface delme { String[] value(); }
 
 @Ignore
 @class¢

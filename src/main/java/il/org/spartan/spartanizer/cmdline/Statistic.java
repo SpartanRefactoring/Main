@@ -21,7 +21,7 @@ enum Statistic {
   },
   mean {
     @Override public double of(final RealStatistics ¢) {
-      return ¢.min();
+      return ¢.mean();
     }
   },
   σ {

@@ -77,6 +77,10 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_DECLARATION);
   }
 
+  static boolean annotationTypeMemberDeclaration(BodyDeclaration ¢) {
+    return iz.nodeTypeEquals(¢, ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION);
+  }
+
   static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ANONYMOUS_CLASS_DECLARATION);
   }
@@ -198,6 +202,10 @@ public interface iz {
     return ¢ != null && ¢ instanceof CastExpression;
   }
 
+  static boolean catchClause(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
+  }
+
   /** @param ¢
    * @return */
   static boolean classInstanceCreation(final ASTNode ¢) {
@@ -223,13 +231,6 @@ public interface iz {
     return iz.nodeTypeEquals(¢, COMPILATION_UNIT);
   }
 
-  /** @param n ASTNode that contains the identifier
-   * @param x Expression to search the identifier in it
-   * @return true if x contains the identifier of n */
-  static boolean containsName(final SimpleName n, final Expression x) {
-    return !searchDescendants.forClass(SimpleName.class).suchThat(t -> step.identifier(t).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
-  }
-
   /** Check whether an expression is a "conditional and" (&&)
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
@@ -237,6 +238,10 @@ public interface iz {
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_AND} */
   static boolean conditionalAnd(final InfixExpression ¢) {
     return ¢.getOperator() == CONDITIONAL_AND;
+  }
+
+  static boolean conditionalExpression(final ASTNode ¢) {
+    return nodeTypeEquals(¢, CONDITIONAL_EXPRESSION);
   }
 
   /** @param xs JD
@@ -247,10 +252,6 @@ public interface iz {
       if (nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
-  }
-
-  static boolean conditionalExpression(final ASTNode ¢) {
-    return nodeTypeEquals(¢, CONDITIONAL_EXPRESSION);
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -293,6 +294,13 @@ public interface iz {
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
     return ¢ != null
         && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
+  }
+
+  /** @param n ASTNode that contains the identifier
+   * @param x Expression to search the identifier in it
+   * @return true if x contains the identifier of n */
+  static boolean containsName(final SimpleName n, final Expression x) {
+    return !searchDescendants.forClass(SimpleName.class).suchThat(t -> step.identifier(t).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
 
   static boolean containsOperator(final ASTNode ¢) {
@@ -1024,6 +1032,10 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }
 
+  static boolean typeDeclarationStatement(Statement ¢) {
+    return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
+  }
+
   /** @param ¢ JDs
    * @return */
   static boolean unionType(final ASTNode ¢) {
@@ -1156,13 +1168,5 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
-  }
-
-  static boolean catchClause(final ASTNode ¢) {
-    return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
-  }
-
-  static boolean typeDeclarationStatement(Statement ¢) {
-    return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
   }
 }
