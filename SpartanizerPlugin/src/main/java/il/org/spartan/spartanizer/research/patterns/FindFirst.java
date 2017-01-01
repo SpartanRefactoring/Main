@@ -25,10 +25,6 @@ public final class FindFirst extends NanoPatternTipper<Block> {
     }
   };
 
-  @Override public String description(@SuppressWarnings("unused") final Block __) {
-    return "";
-  }
-
   @Override public boolean canTip(final Block x) {
     return anyTips(tippers, x);
   }
