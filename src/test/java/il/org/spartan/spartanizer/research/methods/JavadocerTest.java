@@ -25,11 +25,11 @@ public class JavadocerTest {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
 
-  static boolean is(final String ¢) {
+  protected static boolean is(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
   }
 
-  static boolean not(final String ¢) {
+  protected static boolean not(final String ¢) {
     return !is(¢);
   }
 }
