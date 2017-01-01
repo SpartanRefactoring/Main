@@ -18,7 +18,12 @@ import il.org.spartan.spartanizer.java.namespace.definition.*;
  * the current note and Delegate to the parent unless it is null.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-28 */
-final class Namespace implements Environment {
+public final class Namespace implements Environment {
+  private final List<Namespace> children = new ArrayList<>();
+  public final Map<String, Binding> flat = new LinkedHashMap<>();
+  public final String name;
+  public final Environment nest;
+
   Namespace(final Environment environment) {
     this(environment, "");
   }
@@ -27,11 +32,6 @@ final class Namespace implements Environment {
     this.nest = nest;
     this.name = name;
   }
-
-  private final List<Namespace> children = new ArrayList<>();
-  public final Map<String, Binding> flat = new LinkedHashMap<>();
-  public final String name;
-  public final Environment nest;
 
   Namespace addAll(final List<BodyDeclaration> ds) {
     for (final BodyDeclaration ¢ : ds)
@@ -108,19 +108,22 @@ final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  boolean fillScope(final ASTNode root) {
-    return fillScope(root, root);
+  static Namespace spawnFor(Namespace $, final ForStatement s) {
+    VariableDeclarationExpression x = az.variableDeclarationExpression(s);
+    return s == null || x == null? $ : $.spawn(for¢).put(x);
   }
 
-  boolean fillScope(final ASTNode from, final ASTNode root) {
-    property.attach(this).to(from);
-    from.accept(new ASTVisitor() {
+  static Namespace spawnEnhancedFor(Namespace n, final EnhancedForStatement s) {
+    return s == null ? n : n.spawn(foreach).put(s.getParameter());
+  }
+
+  boolean fillScope(final ASTNode root) {
+    if (root == null)
+      return false;
+    property.attach(this).to(root);
+    root.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).fillScope(¢);
-      }
-
-      @Override public void preVisit(final ASTNode ¢) {
-        System.out.println("visit " + wizard.trim(¢) + "/" + Namespace.this + "/" + Namespace.this.nest);
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration ¢) {
@@ -128,31 +131,31 @@ final class Namespace implements Environment {
       }
 
       @Override public boolean visit(final Block b) {
-        if (b == root)
-          return true;
-        Namespace current = Namespace.this;
+        Namespace n = Namespace.this;
         for (final Statement s : statements(b)) {
+          if (iz.tryStatement(s)) {
+            spawnAndFill(n, az.tryStatement(s));
+            continue;
+          }
+          if (iz.forStatement(s)) {
+            spawnFor(n, az.forStatement(s)).fillScope(s);
+            continue;
+          }
+          if (iz.enhancedFor(s)) {
+            spawnEnhancedFor(n, az.enhancedFor(s)).fillScope(s);
+            continue;
+          }
           if (iz.typeDeclaration(s)) {
             final TypeDeclaration d = az.typeDeclaration(s);
-            current = current.spawn(definition.kind(d)).put(d);
-            current.fillScope(s);
-            continue;
+            n.spawn(definition.kind(d)).put(d).fillScope(s);
           }
           if (iz.variableDeclarationStatement(s)) {
             final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
-            current = current.spawn(local);
+            n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
-              current.put(¢.getName(), vds.getType());
-            current.fillScope(s);
-            continue;
+              n.put(¢.getName(), vds.getType());
           }
-          if (iz.forStatement(s))
-            current.fillScope(s, null);
-          if (iz.enhancedFor(s))
-            current.fillScope(s, null);
-          if (iz.tryStatement(s))
-            current.fillScope(s, null);
-          current.fillScope(s);
+          n.fillScope(s);
         }
         return false;
       }
@@ -167,7 +170,7 @@ final class Namespace implements Environment {
       }
 
       @Override public boolean visit(final EnhancedForStatement ¢) {
-        return ¢ == root || spawn(foreach).put(¢.getParameter()).fillScope(¢);
+        return ¢ == root || spawnEnhancedFor(Namespace.this, ¢).fillScope(¢);
       }
 
       @Override public boolean visit(final EnumDeclaration ¢) {
@@ -202,18 +205,11 @@ final class Namespace implements Environment {
         return $.fillScope(d);
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        System.out.println("visit " + wizard.trim(s));
-        if (s == root)
+      @Override public boolean visit(final TryStatement ¢) {
+        if (¢ == root)
           return true;
-        final Namespace $ = spawn(try¢);
-        System.out.println( "Filling scope " + $);
-        System.out.println( "nest  " + $.nest());
-        for (final VariableDeclarationExpression ¢ : resources(s))
-          $.put(¢);
-        System.out.println( "Filling scope " + $);
-        System.out.println( "nest  " + $.nest());
-        return $.fillScope(s.getBody(), null);
+        spawnAndFill(Namespace.this, ¢);
+        return false;
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
@@ -221,6 +217,21 @@ final class Namespace implements Environment {
       }
     });
     return false;
+  }
+
+  static Namespace spawnAndFill(Namespace n, final TryStatement s) {
+    if (s == null)
+      return n;
+    for (final CatchClause ¢ : catchClauses(s))
+        n.spawn(catch¢).put(¢.getException()).fillScope(¢);
+    n.fillScope(s.getFinally());
+    Namespace $ = n.spawn(try¢);
+    for (final VariableDeclarationExpression ¢ : resources(s))
+      $.put(¢);
+    $.fillScope(s.getBody());
+    for (final VariableDeclarationExpression ¢ : resources(s))
+      $.fillScope(¢);
+    return $;
   }
 
   /** @return names used the {@link Environment} . */
