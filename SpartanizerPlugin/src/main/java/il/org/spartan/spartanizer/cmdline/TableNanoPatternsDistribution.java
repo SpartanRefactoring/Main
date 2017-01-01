@@ -45,7 +45,7 @@ public class TableNanoPatternsDistribution extends FolderASTVisitor {
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
-        System.err.println("N");
+        System.err.print("N");
       }
     return super.visit($);
   }
