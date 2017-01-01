@@ -12,6 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 /** An abstract class that allows a class to apply testing on its own code.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -94,9 +95,8 @@ public abstract class ReflectiveTester {
   }
 
   private static String[] values(final Expression $) {
-    return $ == null ? new String[] {}
-        : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
-          iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
+    return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
+        iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
   }
 
   private static String[] values(final StringLiteral ¢) {
@@ -109,5 +109,26 @@ public abstract class ReflectiveTester {
 
   private static String[] values(final List<Expression> xs) {
     return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(n -> new String[n]);
+  }
+
+  protected static ReflectiveTester[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+      new FixturePlainFor(), //
+      new FixtureCatchBlock(), //
+      new FixtureFinally(), //
+      new NamespaceTest(), //
+      new definitionTest(), //
+      new KnowsTest(null, null, null), //
+  };
+
+  protected static Collection<Object[]> collect(String annotationName, final ReflectiveTester... ts) {
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
+    for (@knows({ "t", "ts", "$" }) final ReflectiveTester t : ts)
+      if (t != null)
+        for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
+          if ((a.getTypeName() + "").equals(annotationName))
+            for (@knows({ "t", "a", "s" }) final String s : values(a))
+              for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
+                $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
+    return $;
   }
 }
