@@ -5,24 +5,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.patterns.*;
-
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-01 */
 @SuppressWarnings("static-method")
 public class DefaultsToTest {
   @Test public void basic() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .gives("return default¢(¢).to(\"\");")//
-        .stays();
-  }
-  
-  @Test public void basic2() {
     trimmingOf("return hiChars == null ? 1 : hiChars.length;")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .gives("return default¢(¢).to(\"\");")//
+        .withTipper(ConditionalExpression.class, new TakeDefaultTo())//
         .stays();
   }
-  
 }
