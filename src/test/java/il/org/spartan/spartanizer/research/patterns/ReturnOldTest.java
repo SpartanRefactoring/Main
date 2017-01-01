@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -10,9 +10,11 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class IfNullReturnTest {
+public class ReturnOldTest {
   @Test public void a() {
-    trimmingOf("if(x == null) return; use(); use();").withTipper(IfStatement.class, new IfNullReturn())
-        .gives("precondition.notNull(x); use(); use();");
+    trimmingOf("int $=value;  value=newValue;  return $;")//
+        .withTipper(Block.class, new ReturnOld())//
+        .gives("return update(value).with(newValue).getOld();")//
+        .stays();
   }
 }

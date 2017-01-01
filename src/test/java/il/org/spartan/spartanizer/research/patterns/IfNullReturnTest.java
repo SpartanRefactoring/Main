@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -10,9 +10,9 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class CreateFromTest {
+public class IfNullReturnTest {
   @Test public void a() {
-    trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);").withTipper(Block.class, new CreateFrom())
-        .gives("StatsAccumulator $=Create.from(values);");
+    trimmingOf("if(x == null) return; use(); use();").withTipper(IfStatement.class, new IfNullReturn())
+        .gives("precondition.notNull(x); use(); use();");
   }
 }
