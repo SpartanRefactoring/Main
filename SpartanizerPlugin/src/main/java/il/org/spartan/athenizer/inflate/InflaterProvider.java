@@ -45,7 +45,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, new VariableDeclarationStatementSplit())
-        // new DeclarationWithInitExpander()) //
+        .add(VariableDeclarationStatement.class, //
+            new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
         .add(ThrowStatement.class, //

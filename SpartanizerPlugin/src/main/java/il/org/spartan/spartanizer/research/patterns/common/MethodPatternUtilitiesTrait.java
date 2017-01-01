@@ -46,6 +46,10 @@ public interface MethodPatternUtilitiesTrait {
     return parameters(¢).isEmpty();
   }
 
+  default boolean hazAtLeastTwoParameters(final MethodDeclaration ¢) {
+    return parameters(¢) != null && parameters(¢).size() >= 2;
+  }
+
   default boolean hazParameters(final MethodDeclaration ¢) {
     return !hazNoParameters(¢);
   }
