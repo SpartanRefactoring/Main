@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.statementsPattern;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** TODO: Marco implement @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-01 */
 public final class Cascade extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
