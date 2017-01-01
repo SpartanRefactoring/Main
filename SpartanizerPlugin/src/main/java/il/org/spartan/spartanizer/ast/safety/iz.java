@@ -1169,4 +1169,10 @@ public interface iz {
       return literal(az.stringLiteral(¢), s);
     }
   }
+
+  /** @param x JD
+   * @return */
+  static boolean emptyBlock(final Block x) {
+    return statements(x) == null || statements(x).isEmpty();
+  }
 }
