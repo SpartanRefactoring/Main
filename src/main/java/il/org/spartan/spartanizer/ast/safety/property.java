@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java.namespace;
+package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -6,11 +6,11 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-12-27 [[SuppressWarningsSpartan]] */
 public enum property {
   ;
-  interface Attached {
+  public interface Attached {
     void to(ASTNode n);
   }
 
-  interface Obtainer<N> {
+  public interface Obtainer<N> {
     N from(ASTNode n);
   }
 
@@ -22,7 +22,7 @@ public enum property {
     return ¢ -> ¢.setProperty(key(o.getClass()), o);
   }
 
-  static <N> Obtainer<N> obtain(Class<N> c) {
+  public static <N> Obtainer<N> obtain(Class<N> c) {
     return new Obtainer<N>() {
       @Override @SuppressWarnings("unchecked") public N from(ASTNode n) {
         return (N) n.getProperty(key(c));
