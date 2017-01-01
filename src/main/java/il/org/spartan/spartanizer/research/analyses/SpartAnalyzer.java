@@ -27,52 +27,54 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     if ("false".equals(getProperty("nmethods")))
       addCharacteristicMethodPatterns();
     addMethodPatterns();//
-    add(ConditionalExpression.class, //
-        new AsBit(), //
-        new DefaultsTo(), //
-        new GeneralizedSwitch<ConditionalExpression>(), //
-        new Unless(), //
-        new SafeReference(), //
-        null) //
-            .add(Assignment.class, //
-                new LazyInitializer(), //
-                null) //
-            .add(Block.class, //
-                new CachingPattern(), //
-                new CreateFrom(), //
-                new FindFirst(), //
-                new ReturnOld(), //
-                new ReturnAllMatches(), //
-                new ReturnAnyMatches(), //
-                null) //
-            .add(EnhancedForStatement.class, //
-                new Aggregate(), //
-                new Contains(), //
-                new ForEach(), //
-                new Select(), //
-                null) //
-            .add(IfStatement.class, //
-                new IfNullThrow(), //
-                new IfNullReturn(), //
-                new IfNullReturnNull(), //
-                new ExecuteWhen(), //
-                new GeneralizedSwitch<IfStatement>(), //
-                new PutIfAbsent(), //
-                new IfThrow(), //
-                null) //
-            .add(InfixExpression.class, //
-                new LispLastIndex(), //
-                null)//
-            .add(MethodInvocation.class, //
-                new LispFirstElement(), //
-                new LispLastElement(), //
-                null) //
-            .add(TryStatement.class, //
-                new IfThrowsReturnNull(), //
-                null)//
-            .add(WhileStatement.class, //
-                new Exhaust(), //
-                null)//
+    this//
+        .add(Assignment.class, //
+            new LazyInitializer(), //
+            null) //
+        .add(Block.class, //
+            new CachingPattern(), //
+            new CreateFrom(), //
+            new FindFirst(), //
+            new ReturnOld(), //
+            new ReturnAllMatches(), //
+            new ReturnAnyMatches(), //
+            null) //
+        .add(ConditionalExpression.class, //
+            new AsBit(), //
+            new DefaultsTo(), //
+            new GeneralizedSwitch<ConditionalExpression>(), //
+            new Unless(), //
+            new SafeReference(), //
+            new TakeDefaultTo(), //
+            null) //
+        .add(EnhancedForStatement.class, //
+            new Aggregate(), //
+            new Contains(), //
+            new ForEach(), //
+            new Select(), //
+            null) //
+        .add(IfStatement.class, //
+            new IfNullThrow(), //
+            new IfNullReturn(), //
+            new IfNullReturnNull(), //
+            new ExecuteWhen(), //
+            new GeneralizedSwitch<IfStatement>(), //
+            new PutIfAbsent(), //
+            new IfThrow(), //
+            null) //
+        .add(InfixExpression.class, //
+            new LispLastIndex(), //
+            null)//
+        .add(MethodInvocation.class, //
+            new LispFirstElement(), //
+            new LispLastElement(), //
+            null) //
+        .add(TryStatement.class, //
+            new IfThrowsReturnNull(), //
+            null)//
+        .add(WhileStatement.class, //
+            new Exhaust(), //
+            null)//
     ;
     return this;
   }
