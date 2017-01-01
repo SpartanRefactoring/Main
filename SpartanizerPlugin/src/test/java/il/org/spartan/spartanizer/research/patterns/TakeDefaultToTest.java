@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-01 */
 @SuppressWarnings("static-method")
 public class TakeDefaultToTest {
   @Test public void basic() {
