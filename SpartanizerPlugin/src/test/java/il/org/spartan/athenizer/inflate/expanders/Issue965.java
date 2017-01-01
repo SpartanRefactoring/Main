@@ -13,8 +13,12 @@ public class Issue965 {
     expansionOf(new Issue965Aux())
         .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
             + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
-            + "public void check1()" + "{" + "List<Integer> lst =new ArrayList<>();" + "String s = lst.toString();" + "}}")
-        .stays();
+            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s = lst+\"\";" + "}}")
+//        .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
+//            + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
+//            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s; s = lst+\"\";" + "}}")
+//        .stays()
+        ;
   }
 
   @Test public void testBinding1() {
