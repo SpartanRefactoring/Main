@@ -393,11 +393,11 @@ class ZZZ___Fixture_ModelClass {
   {
     // This should never happen
     if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode()) {
-      int lemon = hashCode();
+      final int lemon = hashCode();
       try (@ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
           @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())) {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
-        @knows({ "localVariableInTryBlock", "myFirstFileReader"})@local final int z = 2 * lemon * localVariableInTryBlock;
+        @knows({ "localVariableInTryBlock", "myFirstFileReader" }) @local final int z = 2 * lemon * localVariableInTryBlock;
         @knows("resourceInTry") @local int localVariableNewClass = resourceInTry.read() + new Object() {
           @ScopeSize(4) @field @knows("localVariableNewClass") int fieldInAnonymousClass;
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
@@ -431,40 +431,40 @@ class ZZZ___Fixture_ModelClass {
       } catch (@knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
         for (@foreign("resourceInTry") @knows({ "myIgnoredException", "water" }) @ScopeSize(3) @for¢ int water = 0; water < 10; --water) {
           @knows({ "water", "myIgnoredException", "fig" }) @local @ScopeSize(2) final int fig = 2 * water + hashCode();
-          System.out.println(fig * fig + water * hashCode());
+          q(fig * fig + water * hashCode());
         }
         for (@ScopeSize(4) @for¢ int orange = 0, apple; orange < 10; --orange) {
           apple = 2 * orange + hashCode();
-          @knows({ "orange", "myIgnoredException", "apple" }) int banana = 2 * apple * (apple - 21) + 2;
-          System.out.println(apple * apple + banana * banana * orange * hashCode());
-          System.out.println(banana);
-          System.out.println(apple * orange);
+          @knows({ "orange", "myIgnoredException", "apple" }) final int banana = 2 * apple * (apple - 21) + 2;
+          q(apple * apple + banana * banana * orange * hashCode());
+          q(banana);
+          q(apple * orange);
           orange *= banana - apple;
         }
-        for (@knows("carrot") int carrot : toString().toCharArray()) {
-          @knows("carrot") int cherry = 2 * carrot * (carrot - 21) + 2;
-          System.out.println(carrot * cherry + cherry);
+        for (@knows("carrot") final int carrot : toString().toCharArray()) {
+          @knows("carrot") final int cherry = 2 * carrot * (carrot - 21) + 2;
+          q(carrot * cherry + cherry);
         }
         for (@ScopeSize(6) @for¢ int melon = 0, ¢ = 0 + melon; ¢ < 10 * melon; melon *= 2, --melon, ¢ = melon) {
           @knows({ "melon", "¢" }) final int variableInPlainFor = 2 * melon + hashCode();
-          System.out.println(melon * hashCode() + variableInPlainFor * variableInPlainFor);
+          q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
           ¢ += melon;
-          System.out.println(melon * hashCode() + variableInPlainFor * variableInPlainFor);
+          q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
         }
-        for (@ScopeSize(7) @for¢ int pear, j = 0, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
-          @knows({ "x", "variableInPlainFor", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode();
+        for (@ScopeSize(7) @for¢ int pear, j = 0, variableInPlainFor= 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+          @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode() + j + variableInPlainFor;
           pear = hashCode() * anotherVariableInAnotherPlainFor;
           anotherVariableInAnotherPlainFor >>>= pear;
           ¢ += j + anotherVariableInAnotherPlainFor;
           ++pear;
-          System.out.println(pear + anotherVariableInAnotherPlainFor);
+          q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
       } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
         ¢.printStackTrace();
       }
-      @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) int a = hashCode();
-      System.out.println(a * a);
+      @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
+      q(a * a);
     }
   }
 
@@ -550,5 +550,9 @@ class ZZZ___Fixture_ModelClass {
     interface InterfaceInAnEnum {
       @ScopeSize(1) @method void u();
     }
+  }
+
+  private void q(final int ¢) {
+    q(¢);
   }
 }
