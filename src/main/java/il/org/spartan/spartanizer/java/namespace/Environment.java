@@ -40,7 +40,7 @@ public interface Environment {
    * Used for full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
-    return ($ == null ? "" : $ + ".") + name();
+    return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
   }
 
   /** @return all the full names of the {@link Environment}. */
@@ -72,7 +72,7 @@ public interface Environment {
   Set<String> keys();
 
   String name();
-
+  
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
   Environment nest();
