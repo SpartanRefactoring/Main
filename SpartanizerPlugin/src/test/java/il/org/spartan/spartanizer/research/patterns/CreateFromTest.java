@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -10,11 +10,9 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class ReturnOldTest {
+public class CreateFromTest {
   @Test public void a() {
-    trimmingOf("int $=value;  value=newValue;  return $;")//
-        .withTipper(Block.class, new ReturnOld())//
-        .gives("return update(value).with(newValue).getOld();")//
-        .stays();
+    trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);").withTipper(Block.class, new CreateFrom())
+        .gives("StatsAccumulator $=Create.from(values);");
   }
 }

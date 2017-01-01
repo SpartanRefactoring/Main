@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -10,26 +10,26 @@ import il.org.spartan.spartanizer.research.patterns.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class LispLastIndexTest {
+public class LispLastElementTest {
   @Test public void a() {
-    trimmingOf("li.size()-1")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
-        .gives("lastIndex(li)")//
+    trimmingOf("li.get(li.size()-1)")//
+        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .gives("last(li)")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
-        .gives("li.get(lastIndex(li));")//
+        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .gives("last(li);")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("li.get(li.size()-1);")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
+    trimmingOf("omg(li.get(0), li.get(li.size()-1));")//
+        .withTipper(MethodInvocation.class, new LispFirstElement())//
         .withTipper(MethodInvocation.class, new LispLastElement())//
-        .gives("last(li);")//
+        .gives("omg(first(li),last(li));")//
         .stays();
   }
 }
