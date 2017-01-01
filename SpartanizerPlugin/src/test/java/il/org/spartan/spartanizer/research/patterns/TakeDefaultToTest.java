@@ -10,17 +10,9 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class TakeDefaultToTest {
   @Test public void basic() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .gives("return default¢(¢).to(\"\");")//
-        .stays();
-  }
-  
-  @Test public void basic2() {
     trimmingOf("return hiChars == null ? 1 : hiChars.length;")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .gives("return default¢(¢).to(\"\");")//
+        .withTipper(ConditionalExpression.class, new TakeDefaultTo())//
+        .gives("return take(hiChars.length).default¢(hiChars).to(1);")//
         .stays();
   }
-  
 }
