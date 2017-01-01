@@ -5,9 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.patterns.*;
-// TODO: Marco destroy.
-
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
