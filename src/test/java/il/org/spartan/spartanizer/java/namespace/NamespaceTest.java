@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import java.lang.annotation.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -20,7 +18,7 @@ public class NamespaceTest extends ReflectiveTester {
   }
 
   @Test public void a02() {
-    System.out.println(fixture.description());
+    fixture.description().hashCode();
   }
 }
 
@@ -55,33 +53,6 @@ class NamespaceFixture {
     }
   }
 }
-@Target({ ElementType.FIELD, //
-  ElementType.PARAMETER, 
-  ElementType.LOCAL_VARIABLE, //
-  ElementType.METHOD,
-  ElementType.ANNOTATION_TYPE,
-  ElementType.CONSTRUCTOR,
-  ElementType.TYPE,
-  
-})
-@interface knows {
-  String[] value();
-}
-
-@Target({ ElementType.FIELD, //
-  ElementType.PARAMETER, 
-  ElementType.LOCAL_VARIABLE, //
-  ElementType.METHOD,
-  ElementType.ANNOTATION_TYPE,
-  ElementType.CONSTRUCTOR,
-  ElementType.TYPE,
-  
-})
-@interface foreign {
-  String[] value();
-}
-
-
 interface xyz {
   enum a {
     a
