@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research;
+package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -17,4 +17,12 @@ public class DefaultsToTest {
         .gives("return default¢(¢).to(\"\");")//
         .stays();
   }
+  
+  @Test public void basic2() {
+    trimmingOf("return hiChars == null ? 1 : hiChars.length;")//
+        .withTipper(ConditionalExpression.class, new DefaultsTo())//
+        .gives("return default¢(¢).to(\"\");")//
+        .stays();
+  }
+  
 }
