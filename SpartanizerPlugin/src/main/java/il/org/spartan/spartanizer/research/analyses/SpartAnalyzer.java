@@ -69,7 +69,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 null) //
             .add(TryStatement.class, //
                 new IfThrowsReturnNull(), //
-                null);
+                null)//
+            .add(WhileStatement.class, //
+                new Exhaust(), //
+                null)//
+    ;
     return this;
   }
 
@@ -102,6 +106,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   private SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
+        new ArgumentsTuple(), //
         new Fluenter(), //
         new Independent(), //
         new JDPattern(), //
