@@ -9,7 +9,6 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 @RunWith(Parameterized.class)
@@ -24,9 +23,9 @@ public class KnowsTest extends ReflectiveTester {
   }
 
   @knows({ "type KnowsTest", "KnowsTest/3", "shouldKnow", "shouldKnow" }) private final String shouldKnow;
-  @knows({ "type KnowsTest", "recognizes/0", "name" }) private final SimpleName name;
+  @knows({ "type KnowsTest", "knows/0", "name" }) private final SimpleName name;
 
-  @Test public void recognizes() {
+  @Test public void knows() {
     assert Environment.of(name).has(shouldKnow) : //
     "\n name = " + name + //
         "\n should know = " + shouldKnow + //
@@ -38,11 +37,7 @@ public class KnowsTest extends ReflectiveTester {
   }
 
   @Parameters(name = "{index}. {0} knows {1} ({2})") public static Collection<Object[]> data() {
-    return collect(//
-        // new NamespaceTest(), //
-        // new definitionTest(), //
-        new KnowsTest(null, null, null)//
-    );
+    return collect(KNOWN, fixtures);
   }
 
   public int f(final int parameter) {
@@ -64,21 +59,10 @@ public class KnowsTest extends ReflectiveTester {
     @knows({ "x", "y", "z", "$" }) int z = $ * (x + y);
     return x * z + y + $;
   }
-  
+
   public static int h(int x, int y) {
     @knows({ "x", "y", "$" }) int $ = x * y;
     @knows({ "x", "y", "z", "$" }) int z = $ * (x + y);
     return x * z + y + $;
-  }
-
-  private static Collection<Object[]> collect(final ReflectiveTester... ts) {
-    @knows({ "ts", "shouldKnow", "collect/1" }) final List<Object[]> $ = new ArrayList<>();
-    for (final ReflectiveTester t : ts)
-      for (final SingleMemberAnnotation a : t.singleMemberAnnotations())
-        if ((a.getTypeName() + "").equals(KNOWN))
-          for (final String s : values(a))
-            for (final SimpleName ¢ : annotees.of(a))
-              $.add(as.array(¢, s, t.getClass().getSimpleName()));
-    return $;
   }
 }
