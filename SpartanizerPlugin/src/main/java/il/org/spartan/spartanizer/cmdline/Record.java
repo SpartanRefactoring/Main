@@ -92,7 +92,7 @@ public abstract class Record<Self extends Record<?>> extends LinkedHashMap<Strin
    * @param value The value associated with the key
    * @return this */
   public final Self put(final String key, final Integer value) {
-    return value == null ? put(key) : put(key, value + "");
+    return value == null ? put(key) : put(key, value.intValue() );
   }
 
   /** Add a key and a <code><b>long</b></code> value to this instance

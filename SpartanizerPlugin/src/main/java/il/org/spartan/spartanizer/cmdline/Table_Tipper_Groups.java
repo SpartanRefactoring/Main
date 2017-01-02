@@ -27,10 +27,12 @@ public class Table_Tipper_Groups {
             categories.putIfAbsent(key, box.it(0));
             categories.put(key, box.it(categories.get(key).intValue() + 1));
           }
+    final int total = categories.values().stream().reduce((x, y) -> box.it(x.intValue() + y.intValue())).get().intValue();
     try (Relation r = new Relation(getClass())) {
       for (final String ¢ : categories.keySet())
-        r.put("Category", ¢).put("Count", categories.get(¢)).nl();
+        r.put("Category", ¢).put("Count", categories.get(¢)).put("Fraction", 1. * categories.get(¢).intValue() / total).nl();
       System.err.println(r.description());
     }
+      system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
 }

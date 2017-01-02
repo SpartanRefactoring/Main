@@ -10,10 +10,10 @@ public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public RecordWriter(final Renderer renderer, final String fileName) throws IOException {
+  public RecordWriter(final Renderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;
-    this.fileName = fileName.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
-    file = new File(fileName);
+    this.fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
+    file = new File(this.fileName);
     writer = new FileWriter(file);
     write(renderer.beforeTable());
   }
