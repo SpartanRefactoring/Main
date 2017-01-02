@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.research.patterns.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics for a method in which a nanopattern was found.
@@ -38,9 +39,17 @@ public class MethodRecord {
   /** @param n matched node
    * @param np matching nanopattern */
   public void markNP(final ASTNode n, final String np) {
+    if (excluded(np))
+      return;
     numNPStatements += measure.statements(n);
     numNPExpressions += measure.expressions(n);
     nps.add(np);
+  }
+
+  private static final List<String> excluded = Arrays.asList(ArgumentsTuple.class.getSimpleName());
+
+  public static boolean excluded(final String np) {
+    return excluded.contains(np);
   }
 
   /** @param ¢

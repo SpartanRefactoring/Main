@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * @since 2016 */
 public class Fluenter extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return returnTypeSameAsClass(¢) && lastReturnsThis(¢);
+    return returnTypeSameAsClass(¢)//
+        && lastReturnsThis(¢);
   }
 }
