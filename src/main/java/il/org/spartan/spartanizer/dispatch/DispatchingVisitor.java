@@ -128,6 +128,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final ParenthesizedExpression ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final PostfixExpression ¢) {
     return cautiousGo(¢);
   }
