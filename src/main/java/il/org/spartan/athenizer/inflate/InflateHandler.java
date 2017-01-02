@@ -2,9 +2,12 @@ package il.org.spartan.athenizer.inflate;
 
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -12,6 +15,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
+import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.athenizer.*;
@@ -26,33 +30,25 @@ import il.org.spartan.spartanizer.engine.*;
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
   private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
+  private static final AtomicBoolean active = new AtomicBoolean(false);
+  private static final IPartListener pageListener = pageListener();
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final Selection $ = Selection.Util.current().setUseBinding();
-    return $.isTextSelection ? goWheelAction($) : goAggressiveAction($);
+    return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
 
-  private static Void goWheelAction(final Selection s) {
-    final ITextEditor e = getTextEditor();
-    final StyledText text = getText(e);
-    if (text == null)
+  private static Void goWheelAction() {
+    final IPartService s = getPartService();
+    if (s == null)
       return null;
-    final List<Listener> ls = getListeners(text);
-    if (ls == null || ls.isEmpty()) {
-      final InflaterListener l = new InflaterListener(text, e, s);
-      text.addMouseWheelListener(l);
-      text.addKeyListener(l);
-    } else {
-      for (final Listener ¢ : ls)
-        if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
-          ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
-          break;
-        }
-      // XXX seams to be a bug
-      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
-      // replacement:
-      for (final Listener ¢ : ls)
-        text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
+    if (active.get()) {
+      if (active.getAndSet(false))
+        removePageListener(s);
+    } else if (!active.getAndSet(true)) {
+      for (final ITextEditor $ : getOpenedEditors())
+        addListener($);
+      s.addPartListener(pageListener);
     }
     return null;
   }
@@ -90,14 +86,16 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static IEditorPart getEditorPart() {
+    final IWorkbenchPage $ = getPage();
+    return $ == null ? null : $.getActiveEditor();
+  }
+
+  protected static IWorkbenchPage getPage() {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow ww = w.getActiveWorkbenchWindow();
-    if (ww == null)
-      return null;
-    final IWorkbenchPage $ = ww.getActivePage();
-    return $ == null ? null : $.getActiveEditor();
+    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
+    return $ == null ? null : $.getActivePage();
   }
 
   protected static ITextEditor getTextEditor() {
@@ -119,5 +117,119 @@ public class InflateHandler extends AbstractHandler {
             return l -> l;
           }
         }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng());
+  }
+
+  private static IPartService getPartService() {
+    final IWorkbench w = PlatformUI.getWorkbench();
+    if (w == null)
+      return null;
+    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
+    return $ == null ? null : $.getPartService();
+  }
+
+  @SuppressWarnings("unused") private static IPartListener pageListener() {
+    return new IPartListener() {
+      @Override public void partActivated(final IWorkbenchPart __) {
+        //
+      }
+
+      @Override public void partBroughtToTop(final IWorkbenchPart __) {
+        //
+      }
+
+      @Override public void partClosed(final IWorkbenchPart __) {
+        //
+      }
+
+      @Override public void partDeactivated(final IWorkbenchPart __) {
+        //
+      }
+
+      @Override public void partOpened(final IWorkbenchPart ¢) {
+        addListener(¢);
+      }
+    };
+  }
+
+  private static void removePageListener(IPartService s) {
+    s.removePartListener(pageListener);
+    for (final ITextEditor ¢ : getOpenedEditors())
+      removeListener(¢);
+  }
+
+  static void addListener(IWorkbenchPart ¢) {
+    if (¢ instanceof ITextEditor)
+      addListener((ITextEditor) ¢);
+  }
+
+  private static void addListener(ITextEditor ¢) {
+    final StyledText text = getText(¢);
+    if (text == null)
+      return;
+    final IEditorInput i = ¢.getEditorInput();
+    if (i == null || !(i instanceof FileEditorInput))
+      return;
+    final IFile f = ((FileEditorInput) i).getFile();
+    if (f == null)
+      return;
+    final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
+    text.addMouseWheelListener(l);
+    text.addKeyListener(l);
+  }
+
+  private static void removeListener(final ITextEditor e) {
+    final StyledText text = getText(e);
+    if (text == null)
+      return;
+    final List<Listener> ls = getListeners(text);
+    for (final Listener ¢ : ls)
+      if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
+        ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
+        break;
+      }
+    // XXX seams to be a bug
+    removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
+    // replacement:
+    for (final Listener ¢ : ls)
+      text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
+  }
+
+  private static List<ITextEditor> getOpenedEditors() {
+    final IWorkbenchPage p = getPage();
+    final List<ITextEditor> $ = new LinkedList<>();
+    if (p == null)
+      return $;
+    for (final IEditorReference r : p.getEditorReferences()) {
+      final IEditorPart ep = r.getEditor(false);
+      if (ep == null || !(ep instanceof ITextEditor))
+        continue;
+      $.add((ITextEditor) ep);
+    }
+    return $;
+  }
+
+  @Deprecated @SuppressWarnings("unused") private static Void goWheelAction(final Selection s) {
+    final ITextEditor e = getTextEditor();
+    final StyledText text = getText(e);
+    if (text == null)
+      return null;
+    final List<Listener> ls = getListeners(text);
+    if (ls == null || ls.isEmpty()) {
+      final InflaterListener l = new InflaterListener(text, e, s);
+      text.addMouseWheelListener(l);
+      text.addKeyListener(l);
+    } else {
+      for (final Listener ¢ : ls)
+        if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
+          ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
+          break;
+        }
+      // XXX seams to be a bug
+      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
+      // replacement:
+      for (final Listener ¢ : ls)
+        text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
+    }
+    return null;
   }
 }
