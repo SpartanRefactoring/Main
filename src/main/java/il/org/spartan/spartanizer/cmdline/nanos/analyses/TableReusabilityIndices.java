@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.nanos.analyses;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil
