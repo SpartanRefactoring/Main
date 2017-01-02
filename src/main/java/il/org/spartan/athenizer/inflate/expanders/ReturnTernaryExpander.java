@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
  * relevant for return (<ternary>)
- * Issue #883
+ * Issue #883 {@link Issue883}
  * @author Raviv Rachmiel
  * @since 03-12-16 */
 public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> implements TipperCategory.InVain {
