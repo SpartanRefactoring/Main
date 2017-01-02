@@ -128,7 +128,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Run asynchronously in UI thread.
    * @param ¢ JD */
-  static void runAsynchronouslyInUIThread(final Runnable ¢) {
+  public static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
 
