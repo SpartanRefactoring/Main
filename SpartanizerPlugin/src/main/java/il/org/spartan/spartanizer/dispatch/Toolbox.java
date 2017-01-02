@@ -199,6 +199,9 @@ public class Toolbox {
             // new LispLastElement(), //
             // new StatementsThroughStep(), //
             null)//
+        .add(ParenthesizedExpression.class, //
+            new ParenthesizedRemoveExtraParenthesis(), //
+            null) //
         .add(TryStatement.class, //
             new EliminateEmptyFinally(), //
             new MergeCatches(), //
