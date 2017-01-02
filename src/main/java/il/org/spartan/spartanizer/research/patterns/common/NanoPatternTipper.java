@@ -49,4 +49,9 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   protected abstract Tip pattern(final N ¢);
+
+  @SuppressWarnings("static-method")
+  public String category() {
+    return null;
+  }
 }
