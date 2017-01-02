@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics for a nano.
@@ -24,6 +25,8 @@ public class NanoPatternRecord {
   /** @param ¢ matched node */
   public void markNP(final ASTNode ¢) {
     ++occurences;
+    if (MethodRecord.excluded(name))
+      return;
     numNPStatements += measure.statements(¢);
     numNPExpressions += measure.expressions(¢);
   }
