@@ -44,6 +44,8 @@ public class TableNanoPatternsDistribution extends FolderASTVisitor {
         npStatistics.logMethod(findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
+      } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
+        System.err.print("N");
       }
     return super.visit($);
   }
