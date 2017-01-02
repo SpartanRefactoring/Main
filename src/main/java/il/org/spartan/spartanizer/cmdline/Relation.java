@@ -139,5 +139,5 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   private static final long serialVersionUID = 1L;
-  static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
+  public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
 }
