@@ -23,7 +23,7 @@ public class FancyTableOfTippers {
               r //
                   .put("Category", ¢.tipperGroup())//
                   .put("Tipper", ¢.getClass().getSimpleName())//
-                  .put("Node Type Number", i) //
+                  .put("Node Type Number", i + "") //
                   .put("Node Class", intToClassName(i))//
                   .put("Actual class", name(¢.myActualOperandsClass()))//
                   .put("Abstract class", name(¢.myAbstractOperandsClass()))//
