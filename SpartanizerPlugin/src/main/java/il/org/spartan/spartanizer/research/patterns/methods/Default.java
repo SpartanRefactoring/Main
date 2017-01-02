@@ -8,8 +8,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
@@ -24,6 +24,7 @@ public class Default extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return anyTips(tippers, onlyStatement(¢));
+    return empty(¢)//
+        || anyTips(tippers, onlyStatement(¢));
   }
 }
