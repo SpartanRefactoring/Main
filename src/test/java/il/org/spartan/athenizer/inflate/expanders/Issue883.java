@@ -6,12 +6,15 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 // TODO Raviv: add @link to tested expander class (also in the opposite
 // direction if not exists) and change test class name to Issue#
-/** @author Raviv Rachmiel
+/**
+ * Unit Test for the ForBlock expander {@link ReturnTernaryExpander}, issue #883
+ * Also, Unit Test for the ForBlock expander {@link AssignmentTernaryExpander}
+ *  @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */
 @Ignore
 @SuppressWarnings("static-method")
-public class TernaryExpanderTests {
+public class Issue883 {
   @Test public void test0() {
     expansionOf("return a==0? 2:3;").gives("if(a==0)return 2;else return 3;");
   }

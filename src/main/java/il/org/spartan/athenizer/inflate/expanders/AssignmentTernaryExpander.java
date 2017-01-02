@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts (a?b:c;) to (if(a) b; else c;) relevant for assignment <ternary>
  * also relevant for assignment (<ternary>) s.e $ = (<ternary)
+ * Issue #883 {@link Issue883}
  * @author Raviv Rachmiel
  * @since 23-12-16 */
 public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.InVain {
