@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** converts for(condition)statement to for(condition){statement}
+ * Issue #975
  * @author Raviv Rachmiel
  * @since 22-12-16 */
 public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.InVain {
