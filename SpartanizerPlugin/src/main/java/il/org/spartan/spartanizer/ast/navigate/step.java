@@ -163,8 +163,7 @@ public enum step {
     return ¢ == null ? null : ¢.getElseStatement();
   }
 
-  @SuppressWarnings("unchecked")
-  public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
   }
 
@@ -241,7 +240,7 @@ public enum step {
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : $.getExpression();
   }
 
   public static Expression expression(final ReturnStatement $) {
@@ -801,7 +800,7 @@ public enum step {
   }
 
   public static String typeString(ASTNode ¢) {
-    return ¢ == null ? "" : ¢.getClass().getSimpleName(); 
+    return ¢ == null ? "" : ¢.getClass().getSimpleName();
   }
 
   /** Expose the list of updaters contained in a {@link ForStatement}
