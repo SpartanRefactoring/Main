@@ -12,6 +12,8 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Relation extends Record<Relation> implements Closeable {
+  /* @formatter:off*/ @Override protected Relation self() { return this; } /*@formatter:on*/
+
   public Relation(final String name) {
     this(name, Renderer.builtin.values());
   }
@@ -82,6 +84,10 @@ public class Relation extends Record<Relation> implements Closeable {
   private String path(final Renderer ¢) {
     return temporariesFolder + name + "." + ¢.extension();
   }
+  @Override public Relation put(final String key, final double value) {
+    getRealStatistics(key).record(value);
+    return super.put(key, value);
+  }
 
   @Override public Relation put(final String key, final int value) {
     getRealStatistics(key).record(value);
@@ -106,8 +112,6 @@ public class Relation extends Record<Relation> implements Closeable {
     put((String) null, ++length + "");
     return this;
   }
-
-  /* @formatter:off*/ @Override protected Relation self() { return this; } /*@formatter:on*/
 
   private void set(final List<Statistic> ¢) {
     set(¢.toArray(new Statistic[¢.size()]));
