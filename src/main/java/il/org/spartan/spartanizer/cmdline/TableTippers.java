@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -16,23 +15,22 @@ public class TableTippers {
   }
 
   public void go() {
-    int n = 0;
-    final CSVLineWriter w = new CSVLineWriter("/tmp/" + this.getClass().getSimpleName() + "." + system.now());
-    for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
-      if (Toolbox.defaultInstance().implementation[i] != null)
-        for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
-          if (¢ != null) {
-            w//
-                .put("N", ++n)//
-                .put("Category", ¢.tipperGroup())//
-                .put("Tipper", ¢.getClass().getSimpleName())//
-                .put("Node Type Number", i) //
-                .put("Node Class", intToClassName(i))//
-                .put("Actual class", name(¢.myActualOperandsClass()))//
-                .put("Abstract class", name(¢.myAbstractOperandsClass()));
-            w.nl();
-          }
-    System.err.println(n + " lines output found in " + w.close());
+    try (final Relation r = new Relation(getClass().getSimpleName().toLowerCase())) {
+      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
+        if (Toolbox.defaultInstance().implementation[i] != null)
+          for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
+            if (¢ != null) {
+              r//
+                  .put("Category", ¢.tipperGroup())//
+                  .put("Tipper", ¢.getClass().getSimpleName())//
+                  .put("Node Type Number", i) //
+                  .put("Node Class", intToClassName(i))//
+                  .put("Actual class", name(¢.myActualOperandsClass()))//
+                  .put("Abstract class", name(¢.myAbstractOperandsClass()));
+              r.nl();
+            }
+      System.err.println("Output found in " + r.description());
+    } 
   }
 
   /** @param i
