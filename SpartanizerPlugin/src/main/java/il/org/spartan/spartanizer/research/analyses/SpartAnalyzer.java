@@ -108,11 +108,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   private SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
-        new ArgumentsTuple(), //
-        new Fluenter(), //
-        new Independent(), //
-        new JDPattern(), //
-        new MethodEmpty(), //
+        new ArgumentsTuple(), // Pattern (argument list)
+        new Fluenter(), // Uberlola
+        new Independent(), // Uberlola
+        new JDPattern(), // Uberlola pattern.
+        new MethodEmpty(), // Pattern of method: erase and move to default.
         new UseParameterAndReturnIt(), //
         null);
     return this;
