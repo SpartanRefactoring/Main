@@ -30,7 +30,7 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   public Relation(final Class<?> c) {
-    this(c.getSimpleName().toLowerCase().replace('_', '-').replaceAll("^.*_", ""));
+    this(c.getSimpleName().toLowerCase().replace('_', '-').replaceAll("^.*?-", ""));
   }
 
   public Relation(final Object o) {
@@ -78,6 +78,7 @@ public class Relation extends Record<Relation> implements Closeable {
     int n = 0;
     for (final RecordWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
+    
     return $;
   }
 
@@ -116,7 +117,6 @@ public class Relation extends Record<Relation> implements Closeable {
     super.put(key, value);
     return this;
   }
-
   void remove(final Statistic... ss) {
     final List<Statistic> a = as.list(statisics);
     a.removeAll(as.list(ss));
