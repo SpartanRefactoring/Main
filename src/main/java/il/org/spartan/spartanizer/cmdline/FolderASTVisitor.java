@@ -82,7 +82,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     try {
       u.accept(this);
     } catch (final NullPointerException ¢) {
-      System.err.println(¢);
+      ¢.printStackTrace();
     }
   }
 
