@@ -29,6 +29,14 @@ public class Relation extends Record<Relation> implements Closeable {
       }
   }
 
+  public Relation(final Class<?> c) {
+    this(c.getSimpleName().toLowerCase().replace('_', '-').replaceAll("^.*_", ""));
+  }
+
+  public Relation(final Object o) {
+    this(o.getClass());
+  }
+
   private int length;
   public final String name;
   private final List<RecordWriter> writers = new ArrayList<>();
@@ -68,7 +76,7 @@ public class Relation extends Record<Relation> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     int n = 0;
-    for (RecordWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
     return $;
   }

@@ -12,9 +12,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * tippers, i.e., without applying these.
  * @author Yossi Gil
  * @since 2016-11-27 */
-public class TableTipperGroups {
+public class Table_Tipper_Groups {
   public static void main(final String[] args) {
-    new TableTipperGroups().go();
+    new Table_Tipper_Groups().go();
   }
 
   public void go() {
@@ -27,7 +27,7 @@ public class TableTipperGroups {
             categories.putIfAbsent(key, box.it(0));
             categories.put(key, box.it(categories.get(key).intValue() + 1));
           }
-    try (Relation r = new Relation(getClass().getSimpleName().replaceAll("FancyTableOf", ""))) {
+    try (Relation r = new Relation(getClass())) {
       for (final String ¢ : categories.keySet())
         r.put("Category", ¢).put("Count", categories.get(¢)).nl();
       System.err.println(r.description());
