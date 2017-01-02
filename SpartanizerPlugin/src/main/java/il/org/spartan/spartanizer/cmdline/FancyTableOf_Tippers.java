@@ -9,13 +9,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * tippers, i.e., without applying these.
  * @author Yossi Gil
  * @since 2016-11-27 */
-public class FancyTableOfTippers {
+public class FancyTableOf_Tippers {
   public static void main(final String[] args) {
-    new FancyTableOfTippers().go();
+    new FancyTableOf_Tippers().go();
   }
 
   public void go() {
-    try (Relation r = new Relation(getClass().getSimpleName().replaceAll("FancyTableOf", ""))) {
+    try (Relation r = new Relation(this)) {
       for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
@@ -23,7 +23,7 @@ public class FancyTableOfTippers {
               r //
                   .put("Category", ¢.tipperGroup())//
                   .put("Tipper", ¢.getClass().getSimpleName())//
-                  .put("Node Type Number", i) //
+                  .put("Node Type Number", i + "") //
                   .put("Node Class", intToClassName(i))//
                   .put("Actual class", name(¢.myActualOperandsClass()))//
                   .put("Abstract class", name(¢.myAbstractOperandsClass()))//
