@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class BetweenTest {
   @Test public void a() {
-    trimmingOf("if('a' < c && c < 'z') use();")//
+    trimmingOf("if( c >'a' && c < 'z') use();")//
         .withTipper(InfixExpression.class, new Between())//
         .gives("if(is.value(c).between('a').and('z'))use();")//
         .stays();
