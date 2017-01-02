@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -414,6 +415,14 @@ public class Toolbox {
 
   <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
+  }
+
+  public static String intToClassName(final int $) {
+    try {
+      return Table_Tippers.name(ASTNode.nodeClassForType($));
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return "???";
+    }
   }
 
   /** TODO: Apparently there is no check that ¢ is not occupied already... */
