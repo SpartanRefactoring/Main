@@ -23,12 +23,12 @@ import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since Dec 14, 2016 */
-public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor {
+public class AfterFiles extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
-    clazz = TablesAndSortedSpartanizedMethodsCollector.class;
+    clazz = AfterFiles.class;
   }
 
   public static void main(final String[] args)
@@ -82,7 +82,7 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
         li -> li.stream().map(m -> m.after).filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
-    summarizeSortedMethodStatistics();
+    summarizeSortedMethodStatistics(path);
     summarizeNPStatistics();
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
@@ -103,35 +103,32 @@ public class TablesAndSortedSpartanizedMethodsCollector extends FolderASTVisitor
     scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics() {
-    final CSVStatistics report = openMethodSummaryFile(outputFolder);
-    if (report == null)
-      return;
-    int statementsTotal = 0;
-    int methodsTotal = 0;
-    for (final Integer numStatements : methods.keySet()) {
-      if (numStatements == 0)
-        continue; // don't count methods without body
-      final List<MethodRecord> li = methods.get(numStatements);
-      methodsTotal += li.size();
-      statementsTotal += numStatements * li.size();
+  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
+    try (final Relation report = new Relation(path)) {
+      int statementsTotal = 0;
+      int methodsTotal = 0;
+      for (final Integer numStatements : methods.keySet()) {
+        if (numStatements == 0)
+          continue; // don't count methods without body
+        final List<MethodRecord> li = methods.get(numStatements);
+        methodsTotal += li.size();
+        statementsTotal += numStatements * li.size();
+      }
+      for (final Integer numStatements : methods.keySet()) {
+        if (numStatements == 0)
+          continue;
+        final List<MethodRecord> li = methods.get(numStatements);
+        report //
+            .put("#Statements [before]", numStatements) //
+            .put("Count", li.size()) //
+            .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
+            .put("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
+            .put("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
+            .put("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
+        ;
+        report.nl();
+      }
     }
-    for (final Integer numStatements : methods.keySet()) {
-      if (numStatements == 0)
-        continue;
-      final List<MethodRecord> li = methods.get(numStatements);
-      report //
-          .put("#Statements [before]", numStatements) //
-          .put("Count", li.size()) //
-          .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
-          .put("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
-          .put("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
-          .put("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
-      ;
-      report.nl();
-    }
-    report.close();
-    file.renameToCSV(outputFolder + "/methodStatistics");
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
