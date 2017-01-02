@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** converts while(condition)statement to while(condition){statement}
+ * Issue #975
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 public class WhileBlockExpander extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.InVain {
