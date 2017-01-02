@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
   private static Relation touchedWriter;
-  private int totalMethodsTouched;
+  // private int totalMethodsTouched;
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -29,11 +29,13 @@ public class TableTouched extends TableCoverage {
     touchedWriter = new Relation(TableTouched.class.getSimpleName());
   }
 
-  @SuppressWarnings("boxing") public void summarize(final String path) {
+  @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {
     if (touchedWriter == null)
       initializeWriter();
-    gatherStatistics();
+    // gatherStatistics();
     touchedWriter.put("Project", path);
+    int totalMethods = 0;
+    int totalMethodsTouched = 0;
     for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         touchedWriter.put(i + "", "-");
@@ -45,12 +47,6 @@ public class TableTouched extends TableCoverage {
       }
     touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();
-  }
-
-  private void gatherStatistics() {
-    totalMethodsTouched = 0;
-    for (final Integer ¢ : statementsCoverageStatistics.keySet())
-      totalMethodsTouched += totalMethodsTouched(statementsCoverageStatistics.get(¢));
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> ¢) {
