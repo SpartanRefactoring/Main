@@ -1,7 +1,12 @@
-# Laconize your code
+# Spartanizer? Huh?
+The Spartanizer is:
 - An eclipse plugin
 - Offers in the problems view tips for simplifying your code 
-- Batch laconize a function, file and project 
+- Make your code laconic: say much in few words.
+
+The sparanizer help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a collection of nano-patterns. The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code, stripping it to the bare bone.
+
+This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reititerate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 
 ![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
 
