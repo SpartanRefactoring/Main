@@ -22,7 +22,7 @@ public class Relation extends Record<Relation> implements Closeable {
     this.name = name.toLowerCase();
     for (final Renderer r : rs)
       try {
-        writers.add(new RecordWriter(r, path(r)));
+        writers.add(new RecordWriter(r, path()));
       } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
@@ -46,23 +46,31 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   @Override public void close() {
-    for (final Statistic s : statisics) {
-      for (final String key : keySet()) {
-        final RealStatistics r = getRealStatistics(key);
-        put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
+    if (!stats.isEmpty())
+      for (final Statistic s : statisics) {
+        for (final String key : keySet()) {
+          final RealStatistics r = getRealStatistics(key);
+          put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
+        }
+        for (final RecordWriter ¢ : writers) {
+          put((String) null, ¢.renderer.render(s));
+          ¢.writeFooter(this);
+        }
       }
-      for (final RecordWriter ¢ : writers) {
-        put((String) null, ¢.renderer.render(s));
-        ¢.writeFooter(this);
-      }
-    }
     for (final RecordWriter ¢ : writers)
       ¢.close();
   }
 
   public String description() {
-    return "Table named " + name + " produced in " + writers.size() + " formats in " + baseName() + "\n" + "Each format has " + length()
-        + " data rows, each consisting of " + size() + " columns:\n " + keySet();
+    String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
+        "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
+        "Table header is  " + keySet() + "\n"; //
+    if (!stats.isEmpty())
+      $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
+    int n = 0;
+    for (RecordWriter ¢ : writers)
+      $ += "\t " + ++n + ". " + ¢.fileName + "\n";
+    return $;
   }
 
   RealStatistics getRealStatistics(final String key) {
@@ -81,9 +89,10 @@ public class Relation extends Record<Relation> implements Closeable {
     reset();
   }
 
-  private String path(final Renderer ¢) {
-    return temporariesFolder + name + "." + ¢.extension();
+  private String path() {
+    return temporariesFolder + name;
   }
+
   @Override public Relation put(final String key, final double value) {
     getRealStatistics(key).record(value);
     return super.put(key, value);
