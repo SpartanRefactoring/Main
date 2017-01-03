@@ -75,11 +75,10 @@ public class ExpanderTestUtils {
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        // if (tide.clean(peeled).equals(tide.clean(get())))
-        // azzert.that("Trimming of " + get() + "is just reformatting",
-        // tide.clean(get()), is(not(tide.clean(peeled))));
         assertSimilar($, peeled);
-        return new Operand($);
+        final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
+        p.setResolveBindings(true);
+        return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
       }

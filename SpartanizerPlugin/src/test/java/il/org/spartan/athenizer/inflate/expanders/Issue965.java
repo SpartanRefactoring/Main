@@ -14,11 +14,10 @@ public class Issue965 {
         .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
             + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
             + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s = lst+\"\";" + "}}")
-//        .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
-//            + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
-//            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s; s = lst+\"\";" + "}}")
-//        .stays()
-        ;
+        .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
+            + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
+            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s; s = lst+\"\";" + "}}")
+        .staysWithBinding();
   }
 
   @Test public void testBinding1() {
