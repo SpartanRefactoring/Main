@@ -36,24 +36,11 @@ public class SafeReferenceTest {
             new SafeReference())//
         .stays();
   }
-  // @Test public void respect() {
-  // trimmingOf("return ¢ != null ? ¢ : \"\";")//
-  // .withTipper(ConditionalExpression.class, new Unless())//
-  // .withTipper(ConditionalExpression.class, new DefaultsTo())//
-  // .gives("return default¢(¢).to(\"\");")//
-  // .stays();
-  // }
-  //
-  // @Test public void respect2() {
-  // trimmingOf("return ¢ != null ? ¢ : \"\";")//
-  // .withTipper(ConditionalExpression.class, new Unless())//
-  // .stays();
-  // }
-  //
-  // @Test public void basic2() {
-  // trimmingOf("return ($ == null) ? null : $.size();")//
-  // .withTipper(ConditionalExpression.class, new Unless())//
-  // .gives("return unless(($==null)).eval(()->$.size());")//
-  // .stays();
-  // }
+
+  @Test public void method() {
+    trimmingOf("return x == null ? null : x.y();")//
+        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .gives("return safe(x).invoke(()->x.y());")//
+        .stays();
+  }
 }
