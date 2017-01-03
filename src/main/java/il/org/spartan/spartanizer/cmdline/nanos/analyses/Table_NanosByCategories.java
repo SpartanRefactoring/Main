@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import il.org.spartan.spartanizer.research.patterns.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -26,7 +27,7 @@ public class Table_NanosByCategories {
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ != null && ¢ instanceof NanoPatternTipper) {
             final NanoPatternTipper<? extends ASTNode> np = ((NanoPatternTipper<? extends ASTNode>) ¢);
-            final String category = np.category() != null ? np.category() : Toolbox.intToClassName(i);
+            final String category = Category.pretty(np.category() != null ? np.category() : Toolbox.intToClassName(i));
             categories.putIfAbsent(category, new ArrayList<>());
             categories.get(category).add(np.getClass().getSimpleName());
           }

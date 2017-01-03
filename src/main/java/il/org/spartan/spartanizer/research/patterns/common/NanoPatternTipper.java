@@ -50,8 +50,23 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
 
   protected abstract Tip pattern(final N ¢);
 
-  @SuppressWarnings("static-method")
-  public String category() {
+  @SuppressWarnings("static-method") public String category() {
     return null;
+  }
+
+  public enum Category {
+    Iterative, Return, Throw, ConditionalExpression, Method, Relational;
+    public static String pretty(final String name) {
+      switch (name) {
+        case "MethodDeclaration":
+          return "Method";
+        case "ConditionalExpression":
+          return "Conditional";
+        case "EnhancedForStatement":
+          return "Iterative";
+        default:
+          return name;
+      }
+    }
   }
 }
