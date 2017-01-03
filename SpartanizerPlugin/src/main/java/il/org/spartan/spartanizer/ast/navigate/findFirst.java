@@ -222,7 +222,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode expressionStatement(final ASTNode ¢) {
+  static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return instanceOf(ExpressionStatement.class, ¢);
   }
 
@@ -234,19 +234,29 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static ASTNode infixExpression(final ASTNode ¢) {
+  static InfixExpression infixExpression(final ASTNode ¢) {
     return instanceOf(InfixExpression.class, ¢);
   }
 
   /** @param ¢ JD
    * @return */
-  static ASTNode tryStatement(final ASTNode ¢) {
+  static TryStatement tryStatement(final ASTNode ¢) {
     return instanceOf(TryStatement.class, ¢);
   }
 
   /** @param ¢ JD
    * @return */
-  static ASTNode booleanLiteral(final ASTNode ¢) {
+  static BooleanLiteral booleanLiteral(final ASTNode ¢) {
     return instanceOf(BooleanLiteral.class, ¢);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static FieldAccess fieldAccess(ASTNode ¢) {
+    return instanceOf(FieldAccess.class, ¢);
+  }
+
+  static Name name(ASTNode ¢) {
+    return instanceOf(Name.class, ¢);
   }
 }
