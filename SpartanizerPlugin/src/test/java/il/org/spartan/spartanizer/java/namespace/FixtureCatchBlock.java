@@ -71,7 +71,7 @@ public class FixtureCatchBlock extends ReflectiveTester {
           return 12;
         }
       }
-      return f() == 3 ? fileReader.hashCode() : fileReader.hashCode();
+      return fileReader.hashCode();
     } catch (@foreign("$") final IOException x) {
       @foreign("$") final int a = hashCode() * x.hashCode();
       @knows("a") final int y = a * a;
