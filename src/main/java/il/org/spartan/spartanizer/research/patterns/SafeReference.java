@@ -19,14 +19,14 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
       add(patternTipper("$N != null ? $N.$N2 : null", "safe($N).get(()->$N.$N2)", "safe reference"));
       add(patternTipper("null == $N ? null : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"));
       add(patternTipper("null != $N ? $N.$N2 : null", "safe($N).get(()->$N.$N2)", "safe reference"));
-      add(patternTipper("$N == null ? null : $N.$N2()", "safe($N).invoke(()->$N.$N2())", "safe reference"));
-      add(patternTipper("$N != null ? $N.$N2() : null", "safe($N).invoke(()->$N.$N2())", "safe reference"));
-      add(patternTipper("null == $N ? null : $N.$N2()", "safe($N).invoke(()->$N.$N2())", "safe reference"));
-      add(patternTipper("null != $N ? $N.$N2() : null", "safe($N).invoke(()->$N.$N2())", "safe reference"));
-      add(patternTipper("$N == null ? null : $N.$N2.$N3()", "safe($N).invoke(()->$N.$N2.$N3())", "safe reference"));
-      add(patternTipper("$N != null ? $N.$N2.$N3() : null", "safe($N).invoke(()->$N.$N2.$N3())", "safe reference"));
-      add(patternTipper("null == $N ? null : $N.$N2.$N3()", "safe($N).invoke(()->$N.$N2.$N3())", "safe reference"));
-      add(patternTipper("null != $N ? $N.$N2.$N3() : null", "safe($N).invoke(()->$N.$N2.$N3())", "safe reference"));
+      add(patternTipper("$SN1 == null ? null : $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
+      add(patternTipper("$SN != null ? $SN.$SN2.$SN3() : null", "safe($SN).invoke(()->$SN.$SN2.$SN3())", "safe reference"));
+      add(patternTipper("null == $SN ? null : $SN.$SN2.$SN3()", "safe($SN).invoke(()->$SN.$SN2.$SN3())", "safe reference"));
+      add(patternTipper("null != $SN? $SN.$SN2.$SN3() : null", "safe($SN).invoke(()->$SN.$SN2.$SN3())", "safe reference"));
+      add(patternTipper("$N == null ? null : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"));
+      add(patternTipper("$N != null ? $N.$SN() : null", "safe($N).invoke(()->$N.$SN())", "safe reference"));
+      add(patternTipper("null == $N ? null : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"));
+      add(patternTipper("null != $N ? $N.$SN() : null", "safe($N).invoke(()->$N.$SN())", "safe reference"));
     }
   };
 
