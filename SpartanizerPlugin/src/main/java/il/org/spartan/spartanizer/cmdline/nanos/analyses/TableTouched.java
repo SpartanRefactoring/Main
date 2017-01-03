@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
   private static Relation touchedWriter;
-  // private int totalMethodsTouched;
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -32,7 +31,6 @@ public class TableTouched extends TableCoverage {
   @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {
     if (touchedWriter == null)
       initializeWriter();
-    // gatherStatistics();
     touchedWriter.put("Project", path);
     int totalMethods = 0;
     int totalMethodsTouched = 0;
