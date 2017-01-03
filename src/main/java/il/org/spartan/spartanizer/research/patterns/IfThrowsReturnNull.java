@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -27,5 +28,9 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<TryStatement> {
 
   @Override public Tip pattern(final TryStatement ¢) {
     return firstTip(tippers, ¢);
+  }
+
+  @Override public String category() {
+    return Category.Return + "";
   }
 }
