@@ -101,6 +101,12 @@ public final class TrimmerTestsUtils {
       trimmer.add(n, ¢);
       return this;
     }
+
+    @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> n, final Tipper<N>... ns) {
+      for (final Tipper<N> ¢ : ns)
+        trimmer.add(n, ¢);
+      return this;
+    }
   }
 
   static class OperandToTipper<N extends ASTNode> extends TrimmerTestsUtils.Operand {

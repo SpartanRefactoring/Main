@@ -20,10 +20,10 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
   private static final Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$N == null ? null : $N.$X", "safe($N).get(()->$N.$X)", "safe reference"));
-      add(patternTipper("$N != null ? $N.$X : null", "safe($N).get(()->$N.$X)", "safe reference"));
-      add(patternTipper("null == $N ? null : $N.$X", "safe($N).get(()->$N.$X)", "safe reference"));
-      add(patternTipper("null != $N ? $N.$X : null", "safe($N).get(()->$N.$X)", "safe reference"));
+      add(patternTipper("$N == null ? null : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"));
+      add(patternTipper("$N != null ? $N.$N2 : null", "safe($N).get(()->$N.$N2)", "safe reference"));
+      add(patternTipper("null == $N ? null : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"));
+      add(patternTipper("null != $N ? $N.$N2 : null", "safe($N).get(()->$N.$N2)", "safe reference"));
     }
   };
 
