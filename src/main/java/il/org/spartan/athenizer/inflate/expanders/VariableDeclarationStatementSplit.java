@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Tomer Dragucki
  * @since 19-12-2016 */
-public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {
+public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }

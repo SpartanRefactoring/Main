@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 /** Same as ReturnTernaryExpander just for "throw"
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
-public class ThrowTernaryExpander extends ReplaceCurrentNode<ThrowStatement> implements TipperCategory.InVain {
+public class ThrowTernaryExpander extends ReplaceCurrentNode<ThrowStatement> implements TipperCategory.Expander {
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
