@@ -36,8 +36,6 @@ public class Table_NanosByCategories {
             .put("Name", categoryName)//
             .put("Count", categories.get(categoryName).size()) //
             .put("Nanos", categories.get(categoryName).toArray())//
-            // TODO: should be seperated by newline somehow but need to think on
-            // a format that will satisfy LaTeX
             .nl();
       System.err.println(r.description());
     }
