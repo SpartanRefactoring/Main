@@ -37,7 +37,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
-public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.InVain {
+public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.Expander {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }

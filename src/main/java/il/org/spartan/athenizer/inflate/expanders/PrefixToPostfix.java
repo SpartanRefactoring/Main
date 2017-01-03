@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */
-public class PrefixToPostfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Idiomatic {
+public class PrefixToPostfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final PrefixExpression ¢) {
     return subject.operand(step.operand(¢))
         .to(step.operator(¢) == PrefixExpression.Operator.DECREMENT ? PostfixExpression.Operator.DECREMENT : PostfixExpression.Operator.INCREMENT);
