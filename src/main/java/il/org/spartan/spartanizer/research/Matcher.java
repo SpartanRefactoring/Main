@@ -40,6 +40,14 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class Matcher {
+  private static final String $X_pattern = "\\$X\\d*\\(\\)"; // Expression
+  private static final String $T_pattern = "\\$T\\d*"; // Type
+  private static final String $L = "$L"; // Literal
+  private static final String $M = "$M"; // MethodInvocation
+  private static final String $SN = "$SN"; // SimpleName
+  private static final String $B = "$B"; // Block
+  private static final String $A = "$A"; // Arguments
+  private static final String $N = "$N"; // Name
   final Supplier<ASTNode> patternSupplier;
   ASTNode _pattern;
   final String replacement;
@@ -169,7 +177,7 @@ public class Matcher {
       return iz.expression(n) && consistent(ids, $ + "", n + "");
     if (is$T($))
       return iz.type(n) && consistent(ids, $ + "", n + "");
-    if (iz.name($))
+    if (iz.simpleName($) || iz.name($) && ($ + "").startsWith($N))
       return sameName($, n, ids);
     if (iz.literal($))
       return sameLiteral($, n);
@@ -256,29 +264,22 @@ public class Matcher {
   }
 
   private static boolean matches$X(final String p) {
-    return p.matches("\\$X\\d*\\(\\)");
+    return p.matches($X_pattern);
   }
 
   private static boolean matches$T(final String p) {
-    return p.matches("\\$T\\d*");
+    return p.matches($T_pattern);
   }
 
-  /** @param n
-   * @return */
   private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
         && consistent(ids, first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
   }
 
-  /** @param p
-   * @return */
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
-    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
-        && (first(arguments(az.methodInvocation(p))) + "").startsWith("$A");
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (first(arguments(az.methodInvocation(p))) + "").startsWith($A);
   }
 
-  /** @param n
-   * @return */
   private static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
     return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
   }
@@ -289,16 +290,11 @@ public class Matcher {
         && consistent(ids, first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
-  /** @param p
-   * @return */
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
-        && (first(arguments(az.classInstanceCreation(p))) + "").startsWith("$A");
+        && (first(arguments(az.classInstanceCreation(p))) + "").startsWith($A);
   }
 
-  /** @param p
-   * @param n
-   * @return */
   private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
     return iz.literal(n) && (p + "").equals(n + "");
   }
@@ -315,7 +311,7 @@ public class Matcher {
     if (!iz.block(p) || statements(az.block(p)).size() != 1)
       return false;
     final Statement $ = first(statements(az.block(p)));
-    return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith("$B");
+    return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith($B);
   }
 
   /** Checks if node is a block or statement
@@ -328,11 +324,13 @@ public class Matcher {
   private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     final String $ = p + "";
     if ($.startsWith("$")) {
-      if ($.startsWith("$M"))
+      if ($.startsWith($M))
         return iz.methodInvocation(n) && consistent(ids, $, n + "");
-      if ($.startsWith("$N"))
+      if ($.startsWith($SN))
+        return iz.simpleName(n) && consistent(ids, $, n + "");
+      if ($.startsWith($N))
         return iz.name(n) && consistent(ids, $, n + "");
-      if ($.startsWith("$L"))
+      if ($.startsWith($L))
         return iz.literal(n) && consistent(ids, $, n + "");
     }
     return iz.name(n) && $.equals(identifier(az.name(n)));
@@ -392,7 +390,14 @@ public class Matcher {
   }
 
   private static boolean startsWith$notBlock(final ASTNode p) {
-    return is$X(p) || iz.name(p) && ((p + "").startsWith("$M") || (p + "").startsWith("$N") || (p + "").startsWith("$L")) || is$T(p);
+    return is$X(p)//
+        || is$T(p)
+        || iz.name(p) //
+            && ((p + "").startsWith($M) //
+                || (p + "").startsWith($SN) //
+                || (p + "").startsWith($N) //
+                || (p + "").startsWith($L)) //
+    ;
   }
 
   public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
@@ -484,7 +489,7 @@ public class Matcher {
   }
 
   private static boolean needsSpecialReplacement(final String ¢) {
-    return ¢.startsWith("$B") || matches$X(¢);
+    return ¢.startsWith($B) || matches$X(¢);
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
