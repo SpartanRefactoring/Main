@@ -45,7 +45,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new DefaultsTo(), //
             new GeneralizedSwitch<ConditionalExpression>(), //
             new Unless(), //
-            new SafeInvocation(), //
             new SafeReference(), //
             new TakeDefaultTo(), //
             null) //
