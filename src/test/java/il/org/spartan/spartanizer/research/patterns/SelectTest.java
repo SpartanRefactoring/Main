@@ -6,8 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** @author Ori Marcovitch
- * @since 2016 */
-@Ignore
+ * @since Dec 17, 2016 */
 @SuppressWarnings("static-method")
 public class SelectTest {
   @Test public void a() {
