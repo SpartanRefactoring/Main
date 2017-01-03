@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-25 */
+ * @since 2017-01-03 */
 public class TablePatternsStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Relation pWriter;
