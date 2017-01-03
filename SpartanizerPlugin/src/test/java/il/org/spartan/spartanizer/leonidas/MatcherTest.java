@@ -196,4 +196,12 @@ public class MatcherTest {
   @Test public void k10() {
     assert patternMatcher("$N.$SN", "").matches(findFirst.expression(ast("x.y.z")));
   }
+
+  @Test public void k11() {
+    assert patternMatcher("$N.$SN()", "").matches(findFirst.expression(ast("x.y.z()")));
+  }
+
+  @Test public void k12() {
+    assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == null ? null : x.y.z()")));
+  }
 }
