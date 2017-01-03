@@ -20,4 +20,8 @@ public final class ReturnOld extends NanoPatternTipper<Block> {
   @Override public Tip pattern(final Block x) {
     return tipper.tip(x);
   }
+
+  @Override public String category() {
+    return Category.Return + "";
+  }
 }
