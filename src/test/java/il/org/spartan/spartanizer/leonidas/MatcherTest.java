@@ -172,4 +172,8 @@ public class MatcherTest {
   @Test public void k4() {
     assert patternMatcher("$N1 = $L", "").matches(findFirst.assignment(ast("x = true")));
   }
+
+  @Test public void k5() {
+    assert patternMatcher("$N1.$N2", "").matches(findFirst.name(ast("x.y.z")));
+  }
 }
