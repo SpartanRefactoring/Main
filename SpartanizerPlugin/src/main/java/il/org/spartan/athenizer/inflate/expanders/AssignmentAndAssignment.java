@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Issue #999 Convert (a=b=??;) to (a=3;b=??;)
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
-public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.InVain {
+public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.Expander {
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
