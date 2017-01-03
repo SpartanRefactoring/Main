@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code> if (x) o.f(a); else o.f(b); </code>
  * @author Tomer Dragucki
  * @since 23-12-2016 */
-public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.InVain {
+public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ExpressionStatement s) {
     final Expression e = s.getExpression();
     if (!(e instanceof MethodInvocation))
