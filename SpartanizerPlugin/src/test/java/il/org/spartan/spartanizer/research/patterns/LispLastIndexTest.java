@@ -19,7 +19,6 @@ public class LispLastIndexTest {
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
         .withTipper(InfixExpression.class, new LispLastIndex())//
-        .gives("li.get(lastIndex(li));")//
         .stays();
   }
 
