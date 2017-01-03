@@ -23,6 +23,13 @@ public class SafeReferenceTest {
         .stays();
   }
 
+  @Test public void basic3() {
+    trimmingOf("return x == null ? null : x.y.z;")//
+        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .gives("return safe(x).get(()->x.y.z);")//
+        .stays();
+  }
+
   @Test public void respect() {
     trimmingOf("return x ==null ? null : x.field;")//
         .withTippers(ConditionalExpression.class, //
@@ -34,13 +41,6 @@ public class SafeReferenceTest {
             new Unless(), //
             new DefaultsTo(), //
             new SafeReference())//
-        .stays();
-  }
-
-  @Test public void method() {
-    trimmingOf("return x == null ? null : x.y();")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
-        .gives("return safe(x).invoke(()->x.y());")//
         .stays();
   }
 }
