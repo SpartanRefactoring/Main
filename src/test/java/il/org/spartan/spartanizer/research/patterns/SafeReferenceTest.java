@@ -51,8 +51,7 @@ public class SafeReferenceTest {
         .stays();
   }
 
-  // TODO: Marco FIX
-  @Ignore @Test public void method2() {
+  @Test public void method2() {
     trimmingOf("return x == null ? null : x.y.z();")//
         .withTipper(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
