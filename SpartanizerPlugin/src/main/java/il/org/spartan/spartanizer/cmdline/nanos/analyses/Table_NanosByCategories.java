@@ -21,17 +21,17 @@ public class Table_NanosByCategories {
 
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = Analyze.toolboxWithNanoPatterns().implementation;
-    final Map<String, List<String>> categories = new HashMap<>();
+    final Map<String, Set<String>> categories = new HashMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ != null && ¢ instanceof NanoPatternTipper) {
             final NanoPatternTipper<? extends ASTNode> np = ((NanoPatternTipper<? extends ASTNode>) ¢);
             final String category = Category.pretty(np.category() != null ? np.category() : Toolbox.intToClassName(i));
-            categories.putIfAbsent(category, new ArrayList<>());
+            categories.putIfAbsent(category, new HashSet<>());
             categories.get(category).add(np.getClass().getSimpleName());
           }
-    try (Relation r = new Relation(this)) {
+    try (final Relation r = new Relation(this)) {
       for (final String categoryName : categories.keySet())
         r//
             .put("Name", categoryName)//

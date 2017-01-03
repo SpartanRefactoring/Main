@@ -34,7 +34,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(Block.class, //
             new CachingPattern(), //
             new Contains(), //
-            new CreateFrom(), //
+            new CopyCollection(), //
             new FindFirst(), //
             new ReturnOld(), //
             new ReturnAllMatches(), //
@@ -93,14 +93,12 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Examiner(), //
         new Cascading.Setter(), ///
         new Getter(), //
-        new HashCodeMethod(), //
         new Adjuster(), //
         new ForEachApplier(), //
         new SelfCaster(), //
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
-        new ToStringMethod(), //
         new TypeChecker(), //
         new Up.Caster(), //
         null);
@@ -110,9 +108,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   private SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
+        new HashCodeMethod(), // Not Counted
         new Independent(), // Uberlola
         new JDPattern(), // Uberlola
         new UseParameterAndReturnIt(), //
+        new ToStringMethod(), // Not Counted
         null);
     return this;
   }
