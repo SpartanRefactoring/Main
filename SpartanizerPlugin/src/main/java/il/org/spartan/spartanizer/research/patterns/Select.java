@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 /** @author Ori Marcovitch
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
-  private static final Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($N1 $N2 : $X1) if($X2) $N3.add($N4);", //
