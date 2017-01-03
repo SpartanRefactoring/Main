@@ -176,4 +176,24 @@ public class MatcherTest {
   @Test public void k5() {
     assert patternMatcher("$N1.$N2", "").matches(findFirst.name(ast("x.y.z")));
   }
+
+  @Test public void k6() {
+    assert patternMatcher("$SN1", "").matches(findFirst.expression(ast("x")));
+  }
+
+  @Test public void k7() {
+    assert patternMatcher("$SN1 + $SN2", "").matches(findFirst.expression(ast("x + y")));
+  }
+
+  @Test public void k8() {
+    assert patternMatcher("$SN + $SN", "").matches(findFirst.expression(ast("x + x")));
+  }
+
+  @Test public void k9() {
+    assert patternMatcher("$SN.$SN2", "").matches(findFirst.expression(ast("x.y")));
+  }
+
+  @Test public void k10() {
+    assert patternMatcher("$N.$SN", "").matches(findFirst.expression(ast("x.y.z")));
+  }
 }
