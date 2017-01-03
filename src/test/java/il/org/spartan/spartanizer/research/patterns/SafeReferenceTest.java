@@ -9,21 +9,21 @@ import org.junit.*;
  * @since 2017-01-03 */
 @SuppressWarnings("static-method")
 public class SafeReferenceTest {
-  @Test public void basic() {
+  @Test public void field() {
     trimmingOf("return x !=null ? x.y : null;")//
         .withTipper(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
-  @Test public void basic2() {
+  @Test public void field2() {
     trimmingOf("return x ==null ? null : x.field;")//
         .withTipper(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.field);")//
         .stays();
   }
 
-  @Test public void basic3() {
+  @Test public void field3() {
     trimmingOf("return x == null ? null : x.y.z;")//
         .withTipper(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y.z);")//
@@ -41,6 +41,21 @@ public class SafeReferenceTest {
             new Unless(), //
             new DefaultsTo(), //
             new SafeReference())//
+        .stays();
+  }
+
+  @Test public void method() {
+    trimmingOf("return x == null ? null : x.y();")//
+        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .gives("return safe(x).invoke(()->x.y());")//
+        .stays();
+  }
+
+  // TODO: Marco FIX
+  @Ignore @Test public void method2() {
+    trimmingOf("return x == null ? null : x.y.z();")//
+        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 }
