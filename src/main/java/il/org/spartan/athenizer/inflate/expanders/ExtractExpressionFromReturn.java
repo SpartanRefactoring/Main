@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.InVain {
+public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.Expander {
   @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }

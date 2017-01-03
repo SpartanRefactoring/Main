@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.InVain {
+public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.Expander {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }
