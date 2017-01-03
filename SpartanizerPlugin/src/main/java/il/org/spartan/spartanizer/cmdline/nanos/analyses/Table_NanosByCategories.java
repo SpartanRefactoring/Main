@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -36,7 +35,7 @@ public class Table_NanosByCategories {
         r//
             .put("Name", categoryName)//
             .put("Count", categories.get(categoryName).size()) //
-            .put("Nanos", separate.these(categories.get(categoryName)).by(" "))//
+            .put("Nanos", categories.get(categoryName).toArray())//
             // TODO: should be seperated by newline somehow but need to think on
             // a format that will satisfy LaTeX
             .nl();
