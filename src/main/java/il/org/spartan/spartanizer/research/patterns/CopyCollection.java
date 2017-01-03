@@ -8,9 +8,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
-public final class CreateFrom extends NanoPatternTipper<Block> {
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-03 */
+public final class CopyCollection extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
@@ -28,5 +28,9 @@ public final class CreateFrom extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
+  }
+
+  @Override public String category() {
+    return Category.Relational + "";
   }
 }
