@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
@@ -27,5 +27,9 @@ public final class ReturnAllMatches extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
+  }
+
+  @Override public String category() {
+    return Category.Return + "";
   }
 }
