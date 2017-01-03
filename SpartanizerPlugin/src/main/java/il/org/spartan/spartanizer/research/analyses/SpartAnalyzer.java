@@ -33,6 +33,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(Block.class, //
             new CachingPattern(), //
+            new Contains(), //
             new CreateFrom(), //
             new FindFirst(), //
             new ReturnOld(), //
@@ -49,7 +50,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
-            new Contains(), //
             new ForEach(), //
             new Select(), //
             null) //
