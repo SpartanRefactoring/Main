@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
   private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
-  private static final AtomicBoolean active = new AtomicBoolean(false);
+  public static final AtomicBoolean active = new AtomicBoolean(false);
   private static final IPartListener pageListener = pageListener();
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -38,7 +38,7 @@ public class InflateHandler extends AbstractHandler {
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
 
-  private static Void goWheelAction() {
+  public static Void goWheelAction() {
     final IPartService s = getPartService();
     if (s == null)
       return null;
@@ -54,7 +54,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static Void goAggressiveAction(final Selection ¢) {
-    applicator().selection(¢).passes(SpartanizationHandler.PASSES).operationName(OPERATION_ACTIVITY).go();
+    applicator().selection(¢).passes(SpartanizationHandler.PASSES).go();
     return null;
   }
 
@@ -116,7 +116,7 @@ public class InflateHandler extends AbstractHandler {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return l -> l;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng());
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng()).operationName(OPERATION_ACTIVITY);
   }
 
   private static IPartService getPartService() {
