@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
-public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null || extract.allOperands(¢).size() != 2)
       return null;

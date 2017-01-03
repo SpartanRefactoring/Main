@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * annotation (so that no warnings would be created)
  * @author Tomer Dragucki
  * @since 23-12-2016 */
-public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.InVain {
+public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";
   }
