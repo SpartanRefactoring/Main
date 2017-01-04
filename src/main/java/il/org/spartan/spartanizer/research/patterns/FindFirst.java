@@ -37,4 +37,8 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   @Override public String category() {
     return Category.Relational + "";
   }
+
+  @Override public String description() {
+    return "Iterate a collection for the first element matching some predicate";
+  }
 }
