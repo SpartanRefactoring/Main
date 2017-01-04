@@ -36,7 +36,7 @@ public class TableTouched extends TableCoverage {
     int totalMethodsTouched = 0;
     for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
-        touchedWriter.put(i + "", "-");
+        touchedWriter.put(i + "", "");
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalMethods += rs.size();

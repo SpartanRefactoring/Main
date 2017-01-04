@@ -40,6 +40,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
             null) //
+        .add(CatchClause.class, //
+            new IfThrowsReturnNull(), //
+            null)//
         .add(ConditionalExpression.class, //
             new AsBit(), //
             new DefaultsTo(), //
@@ -70,9 +73,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispFirstElement(), //
             new LispLastElement(), //
             null) //
-        .add(TryStatement.class, //
-            new IfThrowsReturnNull(), //
-            null)//
         .add(WhileStatement.class, //
             new Exhaust(), //
             null)//
