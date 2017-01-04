@@ -57,13 +57,13 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Select(), //
             null) //
         .add(IfStatement.class, //
-            new IfNullThrow(), //
+            new NotNullOrThrow(), //
             new IfNullReturn(), //
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<IfStatement>(), //
             new PutIfAbsent(), //
-            new IfHoldsThrow(), //
+            new NotHoldsOrThrow(), //
             null) //
         .add(InfixExpression.class, //
             new LispLastIndex(), //
