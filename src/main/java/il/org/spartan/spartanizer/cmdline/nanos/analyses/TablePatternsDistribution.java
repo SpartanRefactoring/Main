@@ -23,7 +23,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
  * @since 2016-12-29 */
 public class TablePatternsDistribution extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final Map<Integer, Relation> writers = new HashMap<>();
+  private static final Map<Integer, Table> writers = new HashMap<>();
   private static final NanoPatternsDistributionStatistics npStatistics = new NanoPatternsDistributionStatistics();
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();
   static {
@@ -32,14 +32,14 @@ public class TablePatternsDistribution extends FolderASTVisitor {
   }
 
   @SuppressWarnings("resource") private static void initializeWriter(final int type) {
-    writers.put(Integer.valueOf(type), new Relation("distribution_" + ASTNode.nodeClassForType(type).getSimpleName()));
+    writers.put(Integer.valueOf(type), new Table("distribution_" + ASTNode.nodeClassForType(type).getSimpleName()));
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     writers.values().forEach(w -> w.close());
-    System.err.println("Your output is in: " + Relation.temporariesFolder);
+    System.err.println("Your output is in: " + Table.temporariesFolder);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
@@ -73,7 +73,7 @@ public class TablePatternsDistribution extends FolderASTVisitor {
     for (final Integer type : npStatistics.keySet()) {
       if (!writers.containsKey(type))
         initializeWriter(type.intValue());
-      @SuppressWarnings("resource") final Relation writer = writers.get(type);
+      @SuppressWarnings("resource") final Table writer = writers.get(type);
       writer//
           .put("Project", path)//
           .put("count", npStatistics.count(type))//

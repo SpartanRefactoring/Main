@@ -22,7 +22,7 @@ import il.org.spartan.tables.*;
  * @since 2017-01-03 */
 public class TablePatternsStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static Relation pWriter;
+  private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final Set<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
@@ -37,7 +37,7 @@ public class TablePatternsStatistics extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    pWriter = new Relation(outputFileName());
+    pWriter = new Table(outputFileName());
   }
 
   private static String outputFileName() {
@@ -48,7 +48,7 @@ public class TablePatternsStatistics extends FolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

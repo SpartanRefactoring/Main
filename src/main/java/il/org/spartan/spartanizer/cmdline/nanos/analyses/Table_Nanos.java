@@ -24,7 +24,7 @@ public class Table_Nanos {
 
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = Analyze.toolboxWithNanoPatterns().implementation;
-    try (Relation r = new Relation(this)) {
+    try (Table r = new Table(this)) {
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])

@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
-  private static Relation touchedWriter;
+  private static Table touchedWriter;
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -26,7 +26,7 @@ public class TableTouched extends TableCoverage {
   }
 
   private static void initializeWriter() {
-    touchedWriter = new Relation(TableTouched.class.getSimpleName());
+    touchedWriter = new Table(TableTouched.class.getSimpleName());
   }
 
   @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {
