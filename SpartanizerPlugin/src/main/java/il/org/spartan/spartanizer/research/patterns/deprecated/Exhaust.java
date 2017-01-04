@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.patterns.deprecated;
 
 import java.util.*;
 
@@ -29,5 +29,9 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
 
   @Override public String category() {
     return Category.Iterative + "";
+  }
+
+  @Override public String description() {
+    return "Move an Iterable to its end using getNext() != null";
   }
 }

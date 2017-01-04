@@ -5,15 +5,13 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-20 */
 public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
@@ -30,16 +28,11 @@ public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
     return firstTip(tippers, ¢);
   }
 
-  /** not used right now... */
-  static void addImport(final CompilationUnit u, final ASTRewrite r) {
-    final ImportDeclaration d = u.getAST().newImportDeclaration();
-    d.setStatic(true);
-    d.setOnDemand(true);
-    d.setName(u.getAST().newName("il.org.spartan.lisp"));
-    wizard.addImport(u, r, d);
-  }
-
   @Override public String category() {
     return Category.Lisp + "";
+  }
+
+  @Override public String description() {
+    return "Last element in collection";
   }
 }

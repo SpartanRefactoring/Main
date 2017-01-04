@@ -40,6 +40,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
             null) //
+        .add(CatchClause.class, //
+            new IfThrowsReturnNull(), //
+            null)//
         .add(ConditionalExpression.class, //
             new AsBit(), //
             new DefaultsTo(), //
@@ -54,13 +57,13 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Select(), //
             null) //
         .add(IfStatement.class, //
-            new IfNullThrow(), //
+            new NotNullOrThrow(), //
             new IfNullReturn(), //
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<IfStatement>(), //
             new PutIfAbsent(), //
-            new IfThrow(), //
+            new NotHoldsOrThrow(), //
             null) //
         .add(InfixExpression.class, //
             new LispLastIndex(), //
@@ -70,12 +73,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispFirstElement(), //
             new LispLastElement(), //
             null) //
-        .add(TryStatement.class, //
-            new IfThrowsReturnNull(), //
-            null)//
-        .add(WhileStatement.class, //
-            new Exhaust(), //
-            null)//
+    // .add(WhileStatement.class, //
+    // new Exhaust(), //
+    // null)//
     ;
     return this;
   }

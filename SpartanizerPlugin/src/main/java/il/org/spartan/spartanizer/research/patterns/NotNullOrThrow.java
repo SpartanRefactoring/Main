@@ -1,23 +1,21 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-/** if(X) throw Exception;
+/** if(X == null) throw Exception;
  * @author Ori Marcovitch
  * @year 2016 */
-public final class IfThrow extends NanoPatternTipper<IfStatement> {
-  private static final IfNullThrow rival = new IfNullThrow();
-  private static final UserDefinedTipper<IfStatement> tipper = patternTipper("if($X) throw $X2;", "If.True($X).throwz(() -> $X2);",
-      "IfThrow pattern. Go fluent!");
+public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
+  private static final UserDefinedTipper<IfStatement> tipper = //
+      patternTipper("if($X1 == null) throw $X2;", "notNull($X1).orThrow(()->$X2);", "If null throw pattern");
 
   @Override public boolean canTip(final IfStatement ¢) {
-    return tipper.canTip(¢) && rival.cantTip(¢);
+    return tipper.canTip(¢);
   }
 
   @Override public Tip pattern(final IfStatement ¢) {
@@ -26,5 +24,9 @@ public final class IfThrow extends NanoPatternTipper<IfStatement> {
 
   @Override public String category() {
     return Category.Throw + "";
+  }
+
+  @Override public String description() {
+    return "Throw if variable is null";
   }
 }

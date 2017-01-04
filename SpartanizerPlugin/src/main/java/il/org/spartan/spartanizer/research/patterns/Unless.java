@@ -34,4 +34,8 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
+
+  @Override public String description() {
+    return "Evaluate an expression unless some condition is satisfied";
+  }
 }

@@ -22,13 +22,11 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue295 {
-  private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
-  private static final String OUTPUT = "for (A b: g.f((new A()),true))sum+=b;";
   MethodDeclaration input1 = into.d(INPUT1);
   EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, input1);
   NumberLiteral one = findFirst.instanceOf(NumberLiteral.class, input1);
-  Statement seriesA$step1 = into.s(INPUT);
+  Statement seriesA$step1 = into.s("A a = new A();for (A b: g.f(a,true))sum+=b;");
   EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
   BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
@@ -37,8 +35,9 @@ public class Issue295 {
 
   /** Correct way of trimming does not change */
   @Test public void A$a() {
-    trimmingOf(INPUT) //
-        .gives(OUTPUT) //
+    trimmingOf("A a = new A();for (A b: g.f(a,true))sum+=b;") //
+        .gives("for (A b: g.f((new A()),true))sum+=b;") //
+        .gives("for (A b: g.f(new A(),true))sum+=b;") //
         .stays();
   }
 
