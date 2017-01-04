@@ -73,9 +73,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispFirstElement(), //
             new LispLastElement(), //
             null) //
-        .add(WhileStatement.class, //
-            new Exhaust(), //
-            null)//
+    // .add(WhileStatement.class, //
+    // new Exhaust(), //
+    // null)//
     ;
     return this;
   }
