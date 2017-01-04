@@ -91,6 +91,7 @@ public class Toolbox {
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
+            new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
@@ -108,6 +109,7 @@ public class Toolbox {
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
         .add(ForStatement.class, //
+            new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
             new RemoveRedundentFor(), //
@@ -117,6 +119,7 @@ public class Toolbox {
             new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
+            new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new RemoveRedundantWhile(), //
