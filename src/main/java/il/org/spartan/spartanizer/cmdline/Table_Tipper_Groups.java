@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.tables.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

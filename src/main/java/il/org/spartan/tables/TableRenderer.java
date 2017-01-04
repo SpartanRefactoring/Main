@@ -1,8 +1,8 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.tables;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
-public interface Renderer {
+public interface TableRenderer {
   static String empty() {
     return "";
   }
@@ -45,7 +45,7 @@ public interface Renderer {
     return ¢ + "";
   }
 
-  enum builtin implements Renderer {
+  enum builtin implements TableRenderer {
     TXT, TEX {
       @Override public String null¢() {
         return "$\\#$";
