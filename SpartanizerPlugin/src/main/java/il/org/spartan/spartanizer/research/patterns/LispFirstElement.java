@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-20 */
 public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> {
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
@@ -30,5 +30,9 @@ public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> 
 
   @Override public String category() {
     return Category.Lisp + "";
+  }
+
+  @Override public String description() {
+    return "First element in collection";
   }
 }
