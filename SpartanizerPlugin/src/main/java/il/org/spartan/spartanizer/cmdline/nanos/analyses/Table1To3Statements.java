@@ -25,7 +25,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   protected static final int MIN_STATEMENTS_REPORTED = 1;
   protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Relation writer;
+  private static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   private static int totalStatements;
   private static int totalMethods;
@@ -72,7 +72,7 @@ public class Table1To3Statements extends FolderASTVisitor {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Output is in: " + Relation.temporariesFolder + path);
+    System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
@@ -85,7 +85,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    writer = new Relation(Table1To3Statements.class.getSimpleName());
+    writer = new Table(Table1To3Statements.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
