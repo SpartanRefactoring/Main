@@ -34,9 +34,9 @@ public class Table_NanosByCategories {
     try (final Table r = new Table(this)) {
       for (final String categoryName : categories.keySet())
         r//
-            .put("Name", categoryName)//
-            .put("Count", categories.get(categoryName).size()) //
-            .put("Nanos", categories.get(categoryName).toArray())//
+            .col("Name", categoryName)//
+            .col("Count", categories.get(categoryName).size()) //
+            .col("Nanos", categories.get(categoryName).toArray())//
             .nl();
       System.err.println(r.description());
     }

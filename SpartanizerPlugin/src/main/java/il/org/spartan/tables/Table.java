@@ -11,7 +11,7 @@ import il.org.spartan.statistics.*;
  * including aggregation information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table extends Record<Table> implements Closeable {
+public class Table extends Row<Table> implements Closeable {
   /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
 
   public Table(final String name) {
@@ -102,19 +102,19 @@ public class Table extends Record<Table> implements Closeable {
     return temporariesFolder + name;
   }
 
-  @Override public Table put(final String key, final double value) {
+  @Override public Table col(final String key, final double value) {
     getRealStatistics(key).record(value);
-    return super.put(key, value);
+    return super.col(key, value);
   }
 
-  @Override public Table put(final String key, final int value) {
+  @Override public Table col(final String key, final int value) {
     getRealStatistics(key).record(value);
-    return super.put(key, value);
+    return super.col(key, value);
   }
 
-  @Override public Table put(final String key, final long value) {
+  @Override public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
-    super.put(key, value);
+    super.col(key, value);
     return this;
   }
   void remove(final Statistic... ss) {
