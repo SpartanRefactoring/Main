@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */

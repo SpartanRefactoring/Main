@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.tables;
 
 import java.io.*;
 import java.util.*;
@@ -7,39 +7,39 @@ import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
- * {@link Record}. This class provides fluent API for generating tables,
+ * {@link Row}. This class provides fluent API for generating tables,
  * including aggregation information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
-public class Relation extends Record<Relation> implements Closeable {
-  /* @formatter:off*/ @Override protected Relation self() { return this; } /*@formatter:on*/
+public class Table extends Row<Table> implements Closeable {
+  /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
 
-  public Relation(final String name) {
-    this(name, Renderer.builtin.values());
+  public Table(final String name) {
+    this(name, TableRenderer.builtin.values());
   }
 
-  @SuppressWarnings("resource") public Relation(final String name, final Renderer... rs) {
+  @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
-    for (final Renderer r : rs)
+    for (final TableRenderer r : rs)
       try {
-        writers.add(new RecordWriter(r, path()));
+        writers.add(new TableWriter(r, path()));
       } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
   }
 
-  public Relation(final Class<?> c) {
+  public Table(final Class<?> c) {
     this(c.getSimpleName().toLowerCase().replace('_', '-').replaceAll("^.*?-", ""));
   }
 
-  public Relation(final Object o) {
+  public Table(final Object o) {
     this(o.getClass());
   }
 
   private int length;
   public final String name;
-  private final List<RecordWriter> writers = new ArrayList<>();
+  private final List<TableWriter> writers = new ArrayList<>();
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
 
@@ -58,14 +58,14 @@ public class Relation extends Record<Relation> implements Closeable {
       for (final Statistic s : statisics) {
         for (final String key : keySet()) {
           final RealStatistics r = getRealStatistics(key);
-          put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
+          col(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        for (final RecordWriter ¢ : writers) {
-          put((String) null, ¢.renderer.render(s));
+        for (final TableWriter ¢ : writers) {
+          col((String) null, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
       }
-    for (final RecordWriter ¢ : writers)
+    for (final TableWriter ¢ : writers)
       ¢.close();
   }
 
@@ -76,7 +76,7 @@ public class Relation extends Record<Relation> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     int n = 0;
-    for (final RecordWriter ¢ : writers)
+    for (final TableWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
     
     return $;
@@ -93,7 +93,7 @@ public class Relation extends Record<Relation> implements Closeable {
   }
 
   public void nl() {
-    for (final RecordWriter ¢ : writers)
+    for (final TableWriter ¢ : writers)
       ¢.write(this);
     reset();
   }
@@ -102,19 +102,19 @@ public class Relation extends Record<Relation> implements Closeable {
     return temporariesFolder + name;
   }
 
-  @Override public Relation put(final String key, final double value) {
+  @Override public Table col(final String key, final double value) {
     getRealStatistics(key).record(value);
-    return super.put(key, value);
+    return super.col(key, value);
   }
 
-  @Override public Relation put(final String key, final int value) {
+  @Override public Table col(final String key, final int value) {
     getRealStatistics(key).record(value);
-    return super.put(key, value);
+    return super.col(key, value);
   }
 
-  @Override public Relation put(final String key, final long value) {
+  @Override public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
-    super.put(key, value);
+    super.col(key, value);
     return this;
   }
   void remove(final Statistic... ss) {
@@ -123,10 +123,10 @@ public class Relation extends Record<Relation> implements Closeable {
     set(a);
   }
 
-  @Override protected Relation reset() {
+  @Override protected Table reset() {
     for (final String ¢ : keySet())
-      put(¢, "");
-    put((String) null, ++length + "");
+      col(¢, "");
+    col((String) null, ++length + "");
     return this;
   }
 
