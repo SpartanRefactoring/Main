@@ -35,5 +35,9 @@ public final class Infix {
     @Override public Tip pattern(final InfixExpression ¢) {
       return firstTip(tippers, ¢);
     }
+
+    @Override public String category() {
+      return Category.Conditional + "";
+    }
   }
 }
