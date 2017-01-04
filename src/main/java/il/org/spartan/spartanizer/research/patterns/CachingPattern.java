@@ -27,4 +27,8 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
   @Override public String category() {
     return Category.Return + "";
   }
+
+  @Override public String description() {
+    return "A field which its value is defined by an expression which is evaluated only on the first access";
+  }
 }
