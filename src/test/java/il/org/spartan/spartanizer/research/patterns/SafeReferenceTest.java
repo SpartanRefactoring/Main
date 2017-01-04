@@ -106,4 +106,13 @@ public class SafeReferenceTest {
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
+  
+
+  @Test public void method7() {
+    trimmingOf("(x != null) && x.y()")//
+        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .gives("safe(x).invoke(()->x.y())")//
+        .stays();
+  }
+  
 }
