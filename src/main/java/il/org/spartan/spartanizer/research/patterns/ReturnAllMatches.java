@@ -32,4 +32,8 @@ public final class ReturnAllMatches extends NanoPatternTipper<Block> {
   @Override public String category() {
     return Category.Return + "";
   }
+
+  @Override public String description() {
+    return "Return whether all elements in collection match predicate";
+  }
 }
