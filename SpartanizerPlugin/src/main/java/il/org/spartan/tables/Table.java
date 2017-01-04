@@ -78,7 +78,6 @@ public class Table extends Row<Table> implements Closeable {
     int n = 0;
     for (final RecordWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
-    
     return $;
   }
 
@@ -117,6 +116,7 @@ public class Table extends Row<Table> implements Closeable {
     super.col(key, value);
     return this;
   }
+
   void remove(final Statistic... ss) {
     final List<Statistic> a = as.list(statisics);
     a.removeAll(as.list(ss));

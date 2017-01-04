@@ -46,7 +46,7 @@ public class FixtureCatchBlock extends ReflectiveTester {
           try (@knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
               return c.hashCode();
-          } catch (@foreign("d") @knows({"y", "fileReader"}) final IOException y) {
+          } catch (@foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
             y.printStackTrace();
             @foreign({ "x", "d" }) final int a = hashCode() * y.hashCode();
             @knows({ "a", "y", "$" }) final int $ = a * a;

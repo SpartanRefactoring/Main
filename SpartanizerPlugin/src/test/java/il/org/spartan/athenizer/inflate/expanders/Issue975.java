@@ -26,8 +26,7 @@ public class Issue975 {
     expansionOf("for(int i=0;i<5;i++) a=5; b=7;").gives("for(int i=0;i<5;i++){ a=5;}b=7;").stays();
   }
 
-  @Ignore
-  @Test public void simpleBlockTestWhile() {
+  @Ignore @Test public void simpleBlockTestWhile() {
     expansionOf("while(i<5) a=5;").gives("while(i<5){a=5;}").stays();
   }
 
@@ -39,8 +38,7 @@ public class Issue975 {
     expansionOf("while(i<5){ a=5;b=3;}").stays();
   }
 
-  @Ignore
-  @Test public void notSimpleShouldAddTestWhile() {
+  @Ignore @Test public void notSimpleShouldAddTestWhile() {
     expansionOf("while(i<5) a=5; b=7;").gives("while(i<5){ a=5;}b=7;").stays();
   }
 }

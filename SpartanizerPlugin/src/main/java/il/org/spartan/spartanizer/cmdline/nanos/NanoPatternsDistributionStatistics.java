@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
 
 public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<Int, HashMap<String, Int>>> {
   private static final long serialVersionUID = 1L;
-  private ASTVisitor typesDistributionCounter = new ASTVisitor() {
+  private final ASTVisitor typesDistributionCounter = new ASTVisitor() {
     @Override public void preVisit(final ASTNode n) {
       final Integer type = Integer.valueOf(n.getNodeType());
       if (containsKey(type))

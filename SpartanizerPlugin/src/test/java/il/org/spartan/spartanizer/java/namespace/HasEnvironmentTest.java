@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends ReflectiveTester {
-  public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") String signature) {
+  public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
     this.name = name;
   }
 
@@ -30,10 +30,10 @@ public class HasEnvironmentTest extends ReflectiveTester {
 
   private static Set<String> signature = new HashSet<>();
 
-  private static Collection<Object[]> collect(ReflectiveTester... ts) {
+  private static Collection<Object[]> collect(final ReflectiveTester... ts) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
-    for (ReflectiveTester t : ts)
+    for (final ReflectiveTester t : ts)
       for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.myCompilationUnit()))
         if (!signature.contains(signature(¢))) {
           signature.add(signature(¢));
@@ -46,7 +46,7 @@ public class HasEnvironmentTest extends ReflectiveTester {
     return collect(new NamespaceTest(), new definitionTest());
   }
 
-  private static String signature(ASTNode ¢) {
-    return separate.these(typeString(¢) , typeString(parent(¢)) , typeString(parent(parent(¢)))).by('/');
+  private static String signature(final ASTNode ¢) {
+    return separate.these(typeString(¢), typeString(parent(¢)), typeString(parent(parent(¢)))).by('/');
   }
 }

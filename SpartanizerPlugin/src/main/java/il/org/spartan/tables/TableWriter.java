@@ -12,8 +12,8 @@ public class TableWriter implements Closeable {
    * @throws IOException */
   public TableWriter(final TableRenderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;
-    this.fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
-    file = new File(this.fileName);
+    fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
+    file = new File(fileName);
     writer = new FileWriter(file);
     write(renderer.beforeTable());
   }

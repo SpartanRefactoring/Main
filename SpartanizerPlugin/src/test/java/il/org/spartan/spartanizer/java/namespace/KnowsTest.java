@@ -45,24 +45,24 @@ public class KnowsTest extends ReflectiveTester {
     return $ >>> $ * parameter;
   }
 
-  public static Double g(double y) {
-    final DoubleFunction<Double> $ = (x -> Double.valueOf(Math.sin(x * new Object() {
+  public static Double g(final double y) {
+    final DoubleFunction<Double> $ = x -> Double.valueOf(Math.sin(x * new Object() {
       @Override @knows({ "$", "g/1", "f/1", "x", "y" }) public int hashCode() {
         return g(y).hashCode();
       }
-    }.hashCode())));
+    }.hashCode()));
     return $.apply(y);
   }
 
-  public static int g(int x, int y) {
-    @knows({ "x", "y", "$" }) int $ = x * y;
-    @knows({ "x", "y", "z", "$" }) int z = $ * (x + y);
+  public static int g(final int x, final int y) {
+    @knows({ "x", "y", "$" }) final int $ = x * y;
+    @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
     return x * z + y + $;
   }
 
-  public static int h(int x, int y) {
-    @knows({ "x", "y", "$" }) int $ = x * y;
-    @knows({ "x", "y", "z", "$" }) int z = $ * (x + y);
+  public static int h(final int x, final int y) {
+    @knows({ "x", "y", "$" }) final int $ = x * y;
+    @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
     return x * z + y + $;
   }
 }
