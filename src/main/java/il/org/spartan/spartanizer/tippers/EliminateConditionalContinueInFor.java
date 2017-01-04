@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
 public class EliminateConditionalContinueInFor extends EagerTipper<ForStatement> implements TipperCategory.Inlining {
-  @Override public String description(@SuppressWarnings("unused") ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
 

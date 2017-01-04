@@ -77,7 +77,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_DECLARATION);
   }
 
-  static boolean annotationTypeMemberDeclaration(BodyDeclaration ¢) {
+  static boolean annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
     return iz.nodeTypeEquals(¢, ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION);
   }
 
@@ -1038,7 +1038,7 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }
 
-  static boolean typeDeclarationStatement(Statement ¢) {
+  static boolean typeDeclarationStatement(final Statement ¢) {
     return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
   }
 

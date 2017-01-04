@@ -28,7 +28,7 @@ public class Table_Nanos {
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
-            if (¢ != null && ¢ instanceof NanoPatternTipper) 
+            if (¢ != null && ¢ instanceof NanoPatternTipper)
               r//
                   .col("Tipper", name(¢.getClass()))//
                   .col("Node Type Number", i) //
@@ -36,9 +36,9 @@ public class Table_Nanos {
                   .col("Actual class", name(¢.myActualOperandsClass()))//
                   .col("Abstract class", name(¢.myAbstractOperandsClass())) //
                   .col("Description", ¢.description())//
-             .nl();
+                  .nl();
       System.err.println(r.description());
     }
-  system.dumpOutput(system.bash("column -s \\& -t /tmp/nanos.tex"));
+    system.dumpOutput(system.bash("column -s \\& -t /tmp/nanos.tex"));
   }
 }

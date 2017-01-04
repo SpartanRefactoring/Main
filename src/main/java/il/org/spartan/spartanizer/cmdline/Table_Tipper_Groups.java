@@ -34,6 +34,6 @@ public class Table_Tipper_Groups {
         r.col("Category", ¢).col("Count", categories.get(¢)).col("Fraction", 1. * categories.get(¢).intValue() / total).nl();
       System.err.println(r.description());
     }
-      system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
+    system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
 }
