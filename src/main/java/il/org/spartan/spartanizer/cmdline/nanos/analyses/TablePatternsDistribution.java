@@ -75,16 +75,16 @@ public class TablePatternsDistribution extends FolderASTVisitor {
         initializeWriter(type.intValue());
       @SuppressWarnings("resource") final Table writer = writers.get(type);
       writer//
-          .put("Project", path)//
-          .put("count", npStatistics.count(type))//
-          .put("nanos count", npStatistics.countNanos(type))//
-          .put("coverage", format.decimal(100 * npStatistics.coverage(type)))//
+          .col("Project", path)//
+          .col("count", npStatistics.count(type))//
+          .col("nanos count", npStatistics.countNanos(type))//
+          .col("coverage", format.decimal(100 * npStatistics.coverage(type)))//
       ;
       final HashMap<String, Int> hist = npStatistics.nanoHistogram(type);
       for (final String ¢ : hist.keySet())
-        writer.put(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type))));
+        writer.col(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type))));
       for (final String ¢ : hist.keySet())
-        writer.put(¢, hist.get(¢).inner);
+        writer.col(¢, hist.get(¢).inner);
       writer.nl();
     }
     npStatistics.clear();
