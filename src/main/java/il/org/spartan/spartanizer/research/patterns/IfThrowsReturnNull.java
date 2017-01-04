@@ -6,15 +6,15 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** Find if(X == null) return null; <br>
- * Find if(null == X) return null; <br>
- * @author Ori Marcovitch
- * @year 2016 */
-public final class IfThrowsReturnNull extends NanoPatternTipper<TryStatement> {
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-27 */
+public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
   private static final Set<UserDefinedTipper<TryStatement>> tippers = new HashSet<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -22,15 +22,19 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<TryStatement> {
     }
   };
 
-  @Override public boolean canTip(final TryStatement ¢) {
-    return anyTips(tippers, ¢);
+  @Override public boolean canTip(final CatchClause ¢) {
+    return anyTips(tippers, parent(¢));
   }
 
-  @Override public Tip pattern(final TryStatement ¢) {
-    return firstTip(tippers, ¢);
+  @Override public Tip pattern(final CatchClause ¢) {
+    return firstTip(tippers, parent(¢));
   }
 
   @Override public String category() {
     return Category.Return + "";
+  }
+
+  private static TryStatement parent(final CatchClause ¢) {
+    return az.tryStatement(step.parent(¢));
   }
 }
