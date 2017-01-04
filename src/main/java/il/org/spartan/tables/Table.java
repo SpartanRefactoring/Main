@@ -7,11 +7,11 @@ import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
- * {@link Row}. This class provides fluent API for generating tables,
+ * {@link Record}. This class provides fluent API for generating tables,
  * including aggregation information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table extends Row<Table> implements Closeable {
+public class Table extends Record<Table> implements Closeable {
   /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
 
   public Table(final String name) {
@@ -22,7 +22,7 @@ public class Table extends Row<Table> implements Closeable {
     this.name = name.toLowerCase();
     for (final TableRenderer r : rs)
       try {
-        writers.add(new TableWriter(r, path()));
+        writers.add(new RecordWriter(r, path()));
       } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
@@ -39,7 +39,7 @@ public class Table extends Row<Table> implements Closeable {
 
   private int length;
   public final String name;
-  private final List<TableWriter> writers = new ArrayList<>();
+  private final List<RecordWriter> writers = new ArrayList<>();
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
 
@@ -58,14 +58,14 @@ public class Table extends Row<Table> implements Closeable {
       for (final Statistic s : statisics) {
         for (final String key : keySet()) {
           final RealStatistics r = getRealStatistics(key);
-          col(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
+          put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        for (final TableWriter ¢ : writers) {
-          col((String) null, ¢.renderer.render(s));
+        for (final RecordWriter ¢ : writers) {
+          put((String) null, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
       }
-    for (final TableWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       ¢.close();
   }
 
@@ -76,7 +76,7 @@ public class Table extends Row<Table> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     int n = 0;
-    for (final TableWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
     
     return $;
@@ -93,7 +93,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   public void nl() {
-    for (final TableWriter ¢ : writers)
+    for (final RecordWriter ¢ : writers)
       ¢.write(this);
     reset();
   }
@@ -102,19 +102,19 @@ public class Table extends Row<Table> implements Closeable {
     return temporariesFolder + name;
   }
 
-  @Override public Table col(final String key, final double value) {
+  @Override public Table put(final String key, final double value) {
     getRealStatistics(key).record(value);
-    return super.col(key, value);
+    return super.put(key, value);
   }
 
-  @Override public Table col(final String key, final int value) {
+  @Override public Table put(final String key, final int value) {
     getRealStatistics(key).record(value);
-    return super.col(key, value);
+    return super.put(key, value);
   }
 
-  @Override public Table col(final String key, final long value) {
+  @Override public Table put(final String key, final long value) {
     getRealStatistics(key).record(value);
-    super.col(key, value);
+    super.put(key, value);
     return this;
   }
   void remove(final Statistic... ss) {
@@ -125,8 +125,8 @@ public class Table extends Row<Table> implements Closeable {
 
   @Override protected Table reset() {
     for (final String ¢ : keySet())
-      col(¢, "");
-    col((String) null, ++length + "");
+      put(¢, "");
+    put((String) null, ++length + "");
     return this;
   }
 

@@ -31,7 +31,7 @@ public class Table_NanosByCategories {
             categories.putIfAbsent(category, new HashSet<>());
             categories.get(category).add(np.getClass().getSimpleName());
           }
-    try (final Relation r = new Relation(this)) {
+    try (final Table r = new Table(this)) {
       for (final String categoryName : categories.keySet())
         r//
             .put("Name", categoryName)//
