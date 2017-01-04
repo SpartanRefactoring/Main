@@ -12,17 +12,11 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 /** @author Ori Marcovitch
  * @since Dec 7, 2016 */
 public class AsBit extends NanoPatternTipper<ConditionalExpression> {
-  private static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
+  private static final Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X == 0 ? 0 : 1", "as.bit($X)", ""));
-      add(patternTipper("0 == $X ? 0 : 1", "as.bit($X)", ""));
-      add(patternTipper("$X == 0 ? 1 : 0", "bit.not($X)", ""));
-      add(patternTipper("0 == $X ? 1 : 0", "bit.not($X)", ""));
-      add(patternTipper("($X == 0) ? 0 : 1", "as.bit($X)", ""));
-      add(patternTipper("(0 == $X) ? 0 : 1", "as.bit($X)", ""));
-      add(patternTipper("($X == 0) ? 1 : 0", "bit.not($X)", ""));
-      add(patternTipper("(0 == $X) ? 1 : 0", "bit.not($X)", ""));
+      add(patternTipper("$X ? 1 : 0", "as.bit($X)", ""));
+      add(patternTipper("$X ? 0 : 1", "as.bit(!($X))", ""));
     }
   };
 
@@ -32,5 +26,9 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
 
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTipper(tippers, ¢).tip(¢);
+  }
+
+  @Override public String description() {
+    return "Casting a boolean into an int";
   }
 }
