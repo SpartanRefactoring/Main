@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.research.patterns.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */

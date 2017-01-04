@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.tables;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public RecordWriter(final Renderer renderer, final String basePath) throws IOException {
+  public RecordWriter(final TableRenderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;
     this.fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
     file = new File(this.fileName);
@@ -31,7 +31,7 @@ public class RecordWriter implements Closeable {
   /** The name of the file into which records are written. */
   public final String fileName;
   public final OutputStreamWriter writer;
-  public final Renderer renderer;
+  public final TableRenderer renderer;
   private boolean headerPrinted;
   private boolean footerPrinted;
 
