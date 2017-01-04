@@ -26,4 +26,8 @@ public final class LazyInitializer extends NanoPatternTipper<Assignment> {
   @Override public Tip pattern(final Assignment x) {
     return firstTip(tippers, x);
   }
+
+  @Override public String description() {
+    return "An variable initialization which executes only if the value is not yet initialized";
+  }
 }

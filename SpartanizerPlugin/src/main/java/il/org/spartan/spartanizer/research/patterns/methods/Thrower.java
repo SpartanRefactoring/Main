@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
- * @since 2016 May collide with {@link IfNullThrow} */
+ * @since 2016 May collide with {@link NotNullOrThrow} */
 public class Thrower extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;

@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** There's also {@link Infix.SafeReference} which catches the same
+ * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
@@ -38,5 +39,9 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
 
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
+  }
+
+  @Override public String description() {
+    return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
   }
 }

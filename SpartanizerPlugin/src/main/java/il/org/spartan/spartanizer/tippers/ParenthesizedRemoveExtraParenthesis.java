@@ -30,6 +30,8 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   }
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {
-    return iz.parenthesizedExpression(expression(¢));
+    return iz.parenthesizedExpression(parent(¢))//
+        || iz.methodInvocation(parent(¢))//
+            && arguments(az.methodInvocation(parent(¢))).contains(¢);
   }
 }

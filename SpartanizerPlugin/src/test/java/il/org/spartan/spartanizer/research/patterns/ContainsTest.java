@@ -60,7 +60,7 @@ public class ContainsTest {
   @Test public void g() {
     trimmingOf("for (final Object ¢ : os)  if (¢ == (best))   return true; return false;")//
         .withTipper(Block.class, new Contains())//
-        .gives("return collection(os).contains((best));")//
+        .gives("return collection(os).contains(best);")//
         .withTipper(Block.class, new Contains())//
         .stays();
   }
@@ -77,6 +77,7 @@ public class ContainsTest {
     trimmingOf("for (final Object ¢ : os)  if (¢ == (omg ? yes : no))   return true; return false;")//
         .withTipper(Block.class, new Contains())//
         .gives("return collection(os).contains((omg ? yes : no));")//
+        .gives("return collection(os).contains(omg ? yes : no);")//
         .withTipper(Block.class, new Contains())//
         .stays();
   }
