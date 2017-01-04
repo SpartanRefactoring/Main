@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 /** if(X) throw Exception;
  * @author Ori Marcovitch
  * @year 2016 */
-public final class IfThrow extends NanoPatternTipper<IfStatement> {
+public final class IfHoldsThrow extends NanoPatternTipper<IfStatement> {
   private static final IfNullThrow rival = new IfNullThrow();
   private static final UserDefinedTipper<IfStatement> tipper = patternTipper("if($X) throw $X2;", "If.True($X).throwz(() -> $X2);",
       "IfThrow pattern. Go fluent!");
