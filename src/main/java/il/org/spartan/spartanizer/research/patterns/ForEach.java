@@ -31,4 +31,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
+
+  @Override public String description() {
+    return "Iterate a collection and apply a statement for each element";
+  }
 }
