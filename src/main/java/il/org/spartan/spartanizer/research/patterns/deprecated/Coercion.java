@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.research.patterns.deprecated;
 
 import java.io.*;
 import java.nio.file.*;
