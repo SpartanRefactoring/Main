@@ -1,5 +1,5 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.tables;
 
 import java.util.*;
 import java.util.Map.*;

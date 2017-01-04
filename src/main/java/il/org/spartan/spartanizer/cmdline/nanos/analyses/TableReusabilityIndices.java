@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.tables.*;
 
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil
