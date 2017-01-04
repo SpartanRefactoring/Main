@@ -12,7 +12,12 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue209 {
   @Test public void issue116_05() {
-    trimmingOf("\"\" + foo(x.toString())").gives("foo(x.toString()) + \"\"").gives("foo((\"\"+x)) + \"\"").gives("foo((x + \"\")) + \"\"").stays();
+    trimmingOf("\"\" + foo(x.toString())")//
+        .gives("foo(x.toString()) + \"\"")//
+        .gives("foo((\"\"+x)) + \"\"")//
+        .gives("foo(\"\"+x) + \"\"")//
+        .gives("foo(x + \"\") + \"\"")//
+        .stays();
   }
 
   @Test public void issue116_06() {
@@ -65,6 +70,11 @@ public final class Issue209 {
   }
 
   @Test public void reorderTest() {
-    trimmingOf("\"\" + foo(x.toString())").gives("foo(x.toString()) + \"\"").gives("foo((\"\"+x)) + \"\"").gives("foo((x + \"\")) + \"\"").stays();
+    trimmingOf("\"\" + foo(x.toString())")//
+        .gives("foo(x.toString()) + \"\"")//
+        .gives("foo((\"\"+x)) + \"\"")//
+        .gives("foo(\"\"+x) + \"\"")//
+        .gives("foo(x + \"\") + \"\"")//
+        .stays();
   }
 }

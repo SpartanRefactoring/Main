@@ -2879,8 +2879,8 @@ public final class Version230 {
   }
 
   @Test public void shortestFirstAlignment() {
-    trimmingOf("n.isSimpleName() ? (SimpleName) n //\n" + "            : n.isQualifiedName() ? ((QualifiedName) n).getName() //\n"
-        + "                : null").stays();
+    trimmingOf("n.isSimpleName() ? (SimpleName) n : n.isQualifiedName() ? ((QualifiedName) n).getName(): null")//
+        .stays();
   }
 
   @Test public void shortestFirstAlignmentShortened() {

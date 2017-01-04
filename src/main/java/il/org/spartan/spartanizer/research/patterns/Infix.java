@@ -23,8 +23,8 @@ public final class Infix {
         add(patternTipper("$SN1 != null && $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
         add(patternTipper("null != $SN1 && $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
         //
-        add(patternTipper("$N1 != null && $N1.$SN()", "safe($N1).invoke(()->$N1.$SN())", "safe reference"));
-        add(patternTipper("null != $N1 && $N1.$SN()", "safe($N1).invoke(()->$N1.$SN())", "safe reference"));
+        add(patternTipper("$N1 != null && $N1.$SN2()", "safe($N1).invoke(()->$N1.$SN2())", "safe reference"));
+        add(patternTipper("null != $N1 && $N1.$SN2()", "safe($N1).invoke(()->$N1.$SN2())", "safe reference"));
       }
     };
 
@@ -34,6 +34,14 @@ public final class Infix {
 
     @Override public Tip pattern(final InfixExpression ¢) {
       return firstTip(tippers, ¢);
+    }
+
+    @Override public String category() {
+      return Category.Conditional + "";
+    }
+
+    @Override public String description() {
+      return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
     }
   }
 }

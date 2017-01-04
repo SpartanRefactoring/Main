@@ -102,4 +102,8 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   @Override public String category() {
     return Category.Conditional + "";
   }
+
+  @Override public String description() {
+    return "A generalized form of a switch where the switchee can be a Lambda function";
+  }
 }

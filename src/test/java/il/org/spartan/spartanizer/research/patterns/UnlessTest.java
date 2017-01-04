@@ -34,6 +34,7 @@ public class UnlessTest {
     trimmingOf("return ($ == null) ? null : $.size();")//
         .withTipper(ConditionalExpression.class, new Unless())//
         .gives("return unless(($==null)).eval(()->$.size());")//
+        .gives("return unless($==null).eval(()->$.size());")//
         .stays();
   }
 }
