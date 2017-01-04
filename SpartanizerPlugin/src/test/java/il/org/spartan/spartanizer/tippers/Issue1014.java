@@ -9,7 +9,6 @@ import org.junit.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
 @SuppressWarnings("static-method")
-@Ignore
 public class Issue1014 {
   @Test public void test0() {
     trimmingOf("for (final MarkerAnnotation a : new definitionTest().markers()) {" + "final String key = (a + \"\").substring(1);"
