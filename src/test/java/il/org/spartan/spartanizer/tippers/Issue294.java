@@ -17,16 +17,15 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue294 {
-  private static final String INPUT = "A a=new A();for (A b: g.f(a,true))sum+=b;";
-  private static final String OUTPUT = "for(A b: g.f((new A()),true))sum+=b;";
-  Statement s = into.s(INPUT);
+  Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
   EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
   BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
 
   /** Correct way of trimming does not change */
   @Test public void a() {
-    trimmingOf(INPUT) //
-        .gives(OUTPUT) //
+    trimmingOf("A a=new A();for (A b: g.f(a,true))sum+=b;") //
+        .gives("for(A b: g.f((new A()),true))sum+=b;") //
+        .gives("for(A b: g.f(new A(),true))sum+=b;") //
         .stays();
   }
 

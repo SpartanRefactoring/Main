@@ -24,4 +24,8 @@ public final class ReturnOld extends NanoPatternTipper<Block> {
   @Override public String category() {
     return Category.Return + "";
   }
+
+  @Override public String description() {
+    return "Update field and return old value";
+  }
 }

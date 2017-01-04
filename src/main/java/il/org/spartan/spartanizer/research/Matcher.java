@@ -196,10 +196,6 @@ public class Matcher {
     return true;
   }
 
-  /** @param $
-   * @param n
-   * @param ids
-   * @return */
   private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
     final List<Expression> $Operands = extract.allOperands(az.infixExpression($));
     final List<Expression> nOperands = extract.allOperands(az.infixExpression(n));
@@ -211,9 +207,6 @@ public class Matcher {
     return true;
   }
 
-  /** @param $
-   * @param n
-   * @return */
   private static boolean sameOperator(final ASTNode $, final ASTNode n) {
     return az.infixExpression($).getOperator().equals(az.infixExpression(n).getOperator());
   }
@@ -242,8 +235,6 @@ public class Matcher {
     return $;
   }
 
-  /** @param p
-   * @return */
   private static boolean is$T(final ASTNode p) {
     return iz.type(p) && matches$T(p + "");
   }
@@ -374,12 +365,16 @@ public class Matcher {
     else {
       if (isMethodInvocationAndHas$AArgument(p))
         enviroment.put(argumentsId(p), matchingArguments(n) + "");
-      final List<ASTNode> pChildren = allChildren(p, p);
-      final List<ASTNode> nChildren = allChildren(n, p);
+      final List<ASTNode> pChildren = iz.infixExpression(p) ? infixExpressionOperands(p) : allChildren(p, p);
+      final List<ASTNode> nChildren = iz.infixExpression(p) ? infixExpressionOperands(n) : allChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
     return enviroment;
+  }
+
+  @SuppressWarnings("unchecked") private static List<ASTNode> infixExpressionOperands(final ASTNode p) {
+    return (List<ASTNode>) (List<?>) extract.allOperands(az.infixExpression(p));
   }
 
   private static boolean startsWith$notBlock(final ASTNode p) {
