@@ -204,4 +204,24 @@ public class MatcherTest {
   @Test public void k12() {
     assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == null ? null : x.y.z()")));
   }
+
+  @Test public void d3() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("null")));
+  }
+
+  @Test public void d4() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("0")));
+  }
+
+  @Test public void d5() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("false")));
+  }
+
+  @Test public void k13() {
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == null ? null : x.y.z()")));
+  }
+
+  @Test public void k14() {
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == false ? 0 : x.y.z()")));
+  }
 }

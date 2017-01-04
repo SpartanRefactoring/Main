@@ -96,6 +96,12 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ARRAY_INITIALIZER);
   }
 
+  List<String> defaultValues = Arrays.asList("null", "0", "false");
+
+  static boolean defaultLiteral(final ASTNode ¢) {
+    return defaultValues.contains(¢ + "");
+  }
+
   /** @param pattern the statement or block to check if it is an assignment
    * @return <code><b>true</b></code> if the parameter an assignment or false if
    *         the parameter not or if the block Contains more than one

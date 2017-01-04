@@ -42,12 +42,13 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 public class Matcher {
   private static final String $X_pattern = "\\$X\\d*\\(\\)"; // Expression
   private static final String $T_pattern = "\\$T\\d*"; // Type
+  private static final String $A = "$A"; // Arguments
+  private static final String $B = "$B"; // Block
+  private static final String $D = "$D"; // Default value (null, 0 or false)
   private static final String $L = "$L"; // Literal
   private static final String $M = "$M"; // MethodInvocation
-  private static final String $SN = "$SN"; // SimpleName
-  private static final String $B = "$B"; // Block
-  private static final String $A = "$A"; // Arguments
   private static final String $N = "$N"; // Name
+  private static final String $SN = "$SN"; // SimpleName
   final Supplier<ASTNode> patternSupplier;
   ASTNode _pattern;
   final String replacement;
@@ -73,9 +74,6 @@ public class Matcher {
     return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
-  /** @param _patternSupplier
-   * @param r
-   * @param _options */
   private Matcher(final Supplier<ASTNode> _patternSupplier, final String r, final Option[] _options) {
     patternSupplier = _patternSupplier;
     replacement = reformat(r);
@@ -91,30 +89,19 @@ public class Matcher {
         && (!containsOption(Option.FIRST_IN_BLOCK) || firstInBlock(¢));
   }
 
-  /** @param pattern
-   * @return */
   private static Block wrapStatementIfOne(final ASTNode pattern) {
     return az.block(iz.block(pattern) ? pattern : ast("{" + pattern + "}"));
   }
 
-  /** @param pattern
-   * @param ¢
-   * @return */
   private boolean lastInBlock(final Block ¢) {
     final ASTNode[] $ = getMatchedNodes(¢);
     return $[$.length - 1].equals(last(statements(¢)));
   }
 
-  /** @param pattern
-   * @param ¢
-   * @return */
   private boolean firstInBlock(final Block ¢) {
     return getMatchedNodes(¢)[0].equals(first(statements(¢)));
   }
 
-  /** @param o
-   * @param o
-   * @return */
   private boolean containsOption(final Option o) {
     for (final Option ¢ : options)
       if (¢.equals(o))
@@ -168,6 +155,10 @@ public class Matcher {
   private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
+  }
+
+  private static boolean consistent(final Map<String, String> ids, final String id, final ASTNode n) {
+    return consistent(ids, id, n + "");
   }
 
   private static boolean matchesAux(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
@@ -325,13 +316,15 @@ public class Matcher {
     final String $ = p + "";
     if ($.startsWith("$")) {
       if ($.startsWith($M))
-        return iz.methodInvocation(n) && consistent(ids, $, n + "");
+        return iz.methodInvocation(n) && consistent(ids, $, n);
       if ($.startsWith($SN))
-        return iz.simpleName(n) && consistent(ids, $, n + "");
+        return iz.simpleName(n) && consistent(ids, $, n);
       if ($.startsWith($N))
-        return iz.name(n) && consistent(ids, $, n + "");
+        return iz.name(n) && consistent(ids, $, n);
       if ($.startsWith($L))
-        return iz.literal(n) && consistent(ids, $, n + "");
+        return iz.literal(n) && consistent(ids, $, n);
+      if ($.startsWith($D))
+        return iz.defaultLiteral(n) && consistent(ids, $, n);
     }
     return iz.name(n) && $.equals(identifier(az.name(n)));
   }
@@ -396,7 +389,8 @@ public class Matcher {
             && ((p + "").startsWith($M) //
                 || (p + "").startsWith($SN) //
                 || (p + "").startsWith($N) //
-                || (p + "").startsWith($L)) //
+                || (p + "").startsWith($L) //
+                || (p + "").startsWith($D)) //
     ;
   }
 
