@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * a.toString();
  * </pre>
- * 
+ *
  * Important : Works only in cases where binding exists, otherwise does nothing
  * Issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
@@ -28,10 +28,10 @@ public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implem
     if (¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null || extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
-    if ("\"\"".equals(¢.getRightOperand() + "") && !(¢.getLeftOperand()).resolveTypeBinding().isPrimitive())
+    if ("\"\"".equals(¢.getRightOperand() + "") && !¢.getLeftOperand().resolveTypeBinding().isPrimitive())
       $.setExpression(duplicate.of(¢.getLeftOperand()));
     else {
-      if (!"\"\"".equals(¢.getLeftOperand() + "") || (¢.getRightOperand()).resolveTypeBinding().isPrimitive())
+      if (!"\"\"".equals(¢.getLeftOperand() + "") || ¢.getRightOperand().resolveTypeBinding().isPrimitive())
         return null;
       $.setExpression(duplicate.of(¢.getRightOperand()));
     }

@@ -83,7 +83,7 @@ public abstract class ReflectiveTester {
     return null;
   }
 
-  private static IPath getSrcPath(File ¢) {
+  private static IPath getSrcPath(final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
       $ = $.removeLastSegments(1);
@@ -120,7 +120,7 @@ public abstract class ReflectiveTester {
       new KnowsTest(null, null, null), //
   };
 
-  protected static Collection<Object[]> collect(String annotationName, final ReflectiveTester... ts) {
+  protected static Collection<Object[]> collect(final String annotationName, final ReflectiveTester... ts) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
     for (@knows({ "t", "ts", "$" }) final ReflectiveTester t : ts)
       if (t != null)

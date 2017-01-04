@@ -41,7 +41,7 @@ public final class Between extends NanoPatternTipper<InfixExpression> {
     return false;
   }
 
-  static boolean between(Expression x1, Expression x2) {
+  static boolean between(final Expression x1, final Expression x2) {
     return between(az.infixExpression(x1), az.infixExpression(x2));
   }
 

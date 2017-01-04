@@ -50,7 +50,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                       * @param key The key to be added; must not be <code><b>null</b></code>
+                         * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public Self col(final String key, final double value) {
@@ -82,7 +82,6 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return col(key, value + "");
   }
 
-
   /** Add a key and a non specific {@link Object} value to this instance
    * @param key The key to be added; must not be <code><b>null</b></code>; must
    *        not be <code><b>null</b></code>
@@ -96,7 +95,6 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 
-
   public final Self col(final String key, final Object[] os) {
     return col(key, os == null ? null : Separate.by(os, ARRAY_SEPARATOR));
   }
@@ -109,7 +107,6 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     super.put(key, value);
     return self();
   }
-
 
   /** Adds all {@link External} properties in a given object.
    * @param t an arbitrary object, usually with some of its fields and methods

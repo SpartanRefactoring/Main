@@ -108,12 +108,12 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  static Namespace spawnFor(Namespace $, final ForStatement s) {
-    VariableDeclarationExpression x = az.variableDeclarationExpression(s);
-    return s == null || x == null? $ : $.spawn(for¢).put(x);
+  static Namespace spawnFor(final Namespace $, final ForStatement s) {
+    final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
+    return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-  static Namespace spawnEnhancedFor(Namespace n, final EnhancedForStatement s) {
+  static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 
@@ -219,13 +219,13 @@ public final class Namespace implements Environment {
     return false;
   }
 
-  static Namespace spawnAndFill(Namespace n, final TryStatement s) {
+  static Namespace spawnAndFill(final Namespace n, final TryStatement s) {
     if (s == null)
       return n;
     for (final CatchClause ¢ : catchClauses(s))
-        n.spawn(catch¢).put(¢.getException()).fillScope(¢);
+      n.spawn(catch¢).put(¢.getException()).fillScope(¢);
     n.fillScope(s.getFinally());
-    Namespace $ = n.spawn(try¢);
+    final Namespace $ = n.spawn(try¢);
     for (final VariableDeclarationExpression ¢ : resources(s))
       $.put(¢);
     $.fillScope(s.getBody());

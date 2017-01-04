@@ -333,7 +333,7 @@ public enum step {
     return ¢ == null ? null : ¢.getRightHandSide();
   }
 
-  public static String identifier(AnnotationTypeDeclaration ¢) {
+  public static String identifier(final AnnotationTypeDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -530,7 +530,7 @@ public enum step {
     return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
   }
 
-  public static int nodeType(ASTNode ¢) {
+  public static int nodeType(final ASTNode ¢) {
     return ¢ == null ? 0 : ¢.getNodeType();
   }
 
@@ -564,7 +564,7 @@ public enum step {
     return ¢ == null ? null : ¢.getPackage();
   }
 
-  @SuppressWarnings("unchecked") public static List<? extends VariableDeclaration> parameters(LambdaExpression ¢) {
+  @SuppressWarnings("unchecked") public static List<? extends VariableDeclaration> parameters(final LambdaExpression ¢) {
     return ¢ == null ? null : ¢.parameters();
   }
 
@@ -799,7 +799,7 @@ public enum step {
     return ¢ == null ? null : ¢.types();
   }
 
-  public static String typeString(ASTNode ¢) {
+  public static String typeString(final ASTNode ¢) {
     return ¢ == null ? "" : ¢.getClass().getSimpleName();
   }
 

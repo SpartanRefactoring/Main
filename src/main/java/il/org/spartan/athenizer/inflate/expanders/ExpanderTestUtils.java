@@ -29,7 +29,7 @@ public class ExpanderTestUtils {
       super(inner);
     }
 
-    public Operand(final ASTNode inner, String classText) {
+    public Operand(final ASTNode inner, final String classText) {
       ast = inner;
       this.classText = classText;
     }
@@ -136,7 +136,7 @@ public class ExpanderTestUtils {
     return new Operand(from);
   }
 
-  public static Operand expansionOf(ReflectiveTester ¢) {
+  public static Operand expansionOf(final ReflectiveTester ¢) {
     return new Operand(¢.myCompilationUnit(), ¢.myClassText());
   }
 }
