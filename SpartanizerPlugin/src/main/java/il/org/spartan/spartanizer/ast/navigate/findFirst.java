@@ -252,11 +252,11 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  static FieldAccess fieldAccess(ASTNode ¢) {
+  static FieldAccess fieldAccess(final ASTNode ¢) {
     return instanceOf(FieldAccess.class, ¢);
   }
 
-  static Name name(ASTNode ¢) {
+  static Name name(final ASTNode ¢) {
     return instanceOf(Name.class, ¢);
   }
 }

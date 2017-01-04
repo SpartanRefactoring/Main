@@ -243,7 +243,7 @@ public interface definition {
     return kind(¢).scope(¢);
   }
 
-  static Kind kind(TypeDeclaration x) {
+  static Kind kind(final TypeDeclaration x) {
     return !x.isInterface() ? Kind.class¢ : Kind.interface¢;
   }
 }

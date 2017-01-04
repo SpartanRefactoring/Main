@@ -18,14 +18,14 @@ public class FixtureTryResources extends ReflectiveTester {
             if (f() == 3)
               return c.hashCode();
           }
-          @knows("$") int a = hashCode() / 2;
+          @knows("$") final int a = hashCode() / 2;
           if (f() == a)
             return a * c.hashCode() + $.hashCode();
         }
       }
     }
-    @foreign("$") int x = hashCode() >>> 3;
-    @knows("$") int $ = 100 *hashCode() >>> 3;
+    @foreign("$") final int x = hashCode() >>> 3;
+    @knows("$") final int $ = 100 * hashCode() >>> 3;
     return f() == x ? x + $ : 2 * hashCode();
   }
 }

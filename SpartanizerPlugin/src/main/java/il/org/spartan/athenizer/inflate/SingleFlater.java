@@ -79,7 +79,7 @@ public class SingleFlater {
     disabling.scan(compilationUnit);
     compilationUnit.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
-        if (!inRange(n) || (usesDisabling && disabling.on(n)))
+        if (!inRange(n) || usesDisabling && disabling.on(n))
           return true;
         Tipper<N> w = null;
         try {

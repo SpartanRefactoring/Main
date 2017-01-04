@@ -151,18 +151,18 @@ public class InflateHandler extends AbstractHandler {
     };
   }
 
-  private static void removePageListener(IPartService s) {
+  private static void removePageListener(final IPartService s) {
     s.removePartListener(pageListener);
     for (final ITextEditor ¢ : getOpenedEditors())
       removeListener(¢);
   }
 
-  static void addListener(IWorkbenchPart ¢) {
+  static void addListener(final IWorkbenchPart ¢) {
     if (¢ instanceof ITextEditor)
       addListener((ITextEditor) ¢);
   }
 
-  private static void addListener(ITextEditor ¢) {
+  private static void addListener(final ITextEditor ¢) {
     final StyledText text = getText(¢);
     if (text == null)
       return;
@@ -206,30 +206,5 @@ public class InflateHandler extends AbstractHandler {
       $.add((ITextEditor) ep);
     }
     return $;
-  }
-
-  @Deprecated @SuppressWarnings("unused") private static Void goWheelAction(final Selection s) {
-    final ITextEditor e = getTextEditor();
-    final StyledText text = getText(e);
-    if (text == null)
-      return null;
-    final List<Listener> ls = getListeners(text);
-    if (ls == null || ls.isEmpty()) {
-      final InflaterListener l = new InflaterListener(text, e, s);
-      text.addMouseWheelListener(l);
-      text.addKeyListener(l);
-    } else {
-      for (final Listener ¢ : ls)
-        if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
-          ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
-          break;
-        }
-      // XXX seams to be a bug
-      removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
-      // replacement:
-      for (final Listener ¢ : ls)
-        text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
-    }
-    return null;
   }
 }

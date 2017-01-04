@@ -31,7 +31,7 @@ public class TableTippers {
               r.nl();
             }
       System.err.println("Output found in " + r.description());
-    } 
+    }
   }
 
   /** @param i

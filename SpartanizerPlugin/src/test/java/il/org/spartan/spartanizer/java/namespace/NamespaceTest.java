@@ -53,6 +53,7 @@ class NamespaceFixture {
     }
   }
 }
+
 interface xyz {
   enum a {
     a

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -36,6 +37,6 @@ public class ForeignTest extends ReflectiveTester {
 
   @Parameters(name = "{index}. {0} does not know {1} ({2})") //
   public static Collection<Object[]> data() {
-    return collect(FOREIGN,fixtures);
+    return collect(FOREIGN, fixtures);
   }
 }
