@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
   private static Relation touchedWriter;
