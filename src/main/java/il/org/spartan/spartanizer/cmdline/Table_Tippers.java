@@ -20,12 +20,12 @@ public class Table_Tippers {
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
             if (¢ != null)
               r //
-                  .put("Category", ¢.tipperGroup())//
-                  .put("Tipper", ¢.getClass().getSimpleName())//
-                  .put("Node Type Number", i + "") //
-                  .put("Node Class", Toolbox.intToClassName(i))//
-                  .put("Actual class", name(¢.myActualOperandsClass()))//
-                  .put("Abstract class", name(¢.myAbstractOperandsClass()))//
+                  .col("Category", ¢.tipperGroup())//
+                  .col("Tipper", ¢.getClass().getSimpleName())//
+                  .col("Node Type Number", i + "") //
+                  .col("Node Class", Toolbox.intToClassName(i))//
+                  .col("Actual class", name(¢.myActualOperandsClass()))//
+                  .col("Abstract class", name(¢.myAbstractOperandsClass()))//
                   .nl();
       System.err.println(r.description());
     }

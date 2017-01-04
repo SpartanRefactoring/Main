@@ -80,11 +80,11 @@ public class TablePatternsStatistics extends FolderASTVisitor {
   public static void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
-    pWriter.put("Project", path);
+    pWriter.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences));
+        .forEach(n -> pWriter.col(n.name, n.occurences));
     fillAbsents();
     pWriter.nl();
     npStatistics.clear();
@@ -94,7 +94,7 @@ public class TablePatternsStatistics extends FolderASTVisitor {
     spartanalyzer.getAllPatterns().stream()//
         .map(p -> p.getClass().getSimpleName())//
         .filter(n -> !npStatistics.keySet().contains(n))//
-        .forEach(n -> pWriter.put(n, 0));
+        .forEach(n -> pWriter.col(n, 0));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
