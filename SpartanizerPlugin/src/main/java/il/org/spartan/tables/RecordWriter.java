@@ -46,7 +46,7 @@ public class RecordWriter implements Closeable {
     }
   }
 
-  public void write(final Record<?> ¢) {
+  public void write(final Row<?> ¢) {
     if (!headerPrinted) {
       headerPrinted = true;
       writeHeader(¢);
@@ -54,7 +54,7 @@ public class RecordWriter implements Closeable {
     writeData(¢);
   }
 
-  public void writeFooter(final Record<?> ¢) {
+  public void writeFooter(final Row<?> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
       footerPrinted = true;
@@ -62,18 +62,18 @@ public class RecordWriter implements Closeable {
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
 
-  private void writeData(final Record<?> ¢) {
+  private void writeData(final Row<?> ¢) {
     write(renderer.recordBegin() + separate.these(¢.values()).by(renderer.recordSeparator()) + renderer.recordEnd());
   }
 
-  private void writeHeader(final Record<?> ¢) {
+  private void writeHeader(final Row<?> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
   }
 
-  private String writeHeaderInner(final Record<?> r) {
+  private String writeHeaderInner(final Row<?> r) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuffer $ = new StringBuffer();
     for (final String o : r.keySet())

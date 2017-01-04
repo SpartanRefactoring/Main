@@ -166,20 +166,20 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   private void addLineToGlobalStatistcs() {
     int N = 0;
-    writer.put("$\\#$", ++N);
-    writer.put("Project", presentSourceName);
+    writer.col("$\\#$", ++N);
+    writer.col("Project", presentSourceName);
     if (usage.get("METHOD") == null)
       return;
     final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String m : defined)
       adopted.remove(m);
-    writer.put("Adoption", rindex(ranks(adopted)));
+    writer.col("Adoption", rindex(ranks(adopted)));
     final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String k : new ArrayList<>(born.keySet()))
       if (!defined.contains(k))
         born.remove(k);
-    writer.put("Reuse", rindex(ranks(born)));
-    writer.put("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
+    writer.col("Reuse", rindex(ranks(born)));
+    writer.col("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
     writer.nl();
   }
 
@@ -203,7 +203,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
         ;
         w.nl();
       }
-      writer.put(category, rindex(ranks(map)));
+      writer.col(category, rindex(ranks(map)));
     }
     System.err.println("Your output is in: " + w.close());
   }

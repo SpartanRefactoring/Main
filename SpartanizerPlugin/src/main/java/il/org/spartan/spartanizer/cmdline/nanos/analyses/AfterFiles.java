@@ -120,12 +120,12 @@ public class AfterFiles extends FolderASTVisitor {
           continue;
         final List<MethodRecord> li = methods.get(numStatements);
         report //
-            .put("#Statements [before]", numStatements) //
-            .put("Count", li.size()) //
-            .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
-            .put("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
-            .put("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
-            .put("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
+            .col("#Statements [before]", numStatements) //
+            .col("Count", li.size()) //
+            .col("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
+            .col("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
+            .col("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
+            .col("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
         ;
         report.nl();
       }
