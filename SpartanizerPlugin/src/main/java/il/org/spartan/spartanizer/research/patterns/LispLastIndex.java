@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-20 */
 public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
   private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
@@ -31,5 +31,9 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
 
   @Override public String category() {
     return Category.Lisp + "";
+  }
+
+  @Override public String description() {
+    return "Index of last element in collection";
   }
 }
