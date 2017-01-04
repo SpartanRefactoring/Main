@@ -64,6 +64,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(InfixExpression.class, //
             new LispLastIndex(), //
+            new Infix.SafeReference(), //
             null)//
         .add(MethodInvocation.class, //
             new LispFirstElement(), //
