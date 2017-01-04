@@ -23,7 +23,7 @@ public class TableCoverage extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Relation cWriter; // coverage
+  private static Table cWriter; // coverage
   private static int totalStatements;
   protected static int totalMethods;
   private static int totalStatementsCovered;
@@ -70,7 +70,7 @@ public class TableCoverage extends FolderASTVisitor {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Output is in: " + Relation.temporariesFolder + path);
+    System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
@@ -83,7 +83,7 @@ public class TableCoverage extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    cWriter = new Relation(TableCoverage.class.getSimpleName());
+    cWriter = new Table(TableCoverage.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {

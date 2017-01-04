@@ -20,10 +20,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    writer = new Relation(makeFile(clazz.getSimpleName()));
+    writer = new Table(makeFile(clazz.getSimpleName()));
   }
 
-  private static Relation writer;
+  private static Table writer;
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
