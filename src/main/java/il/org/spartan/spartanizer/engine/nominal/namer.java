@@ -14,6 +14,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface namer {
+  String JAVA_CAMEL_CASE_SEPARATOR = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])|_";
+
+  static String[] components(String javaName) {
+    return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
+  }
+
   static String repeat(final int i, final char c) {
     return String.valueOf(new char[i]).replace('\0', c);
   }
