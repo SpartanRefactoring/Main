@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.engine.nominal;
 
 import java.util.regex.*;
 
@@ -16,26 +16,18 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-25 */
 @SuppressWarnings("static-method")
 public final class JavaTypeNameParser {
-  public static boolean isJohnDoe(final SingleVariableDeclaration ¢) {
-    return ¢ != null && isJohnDoe(¢.getType(), ¢.getName());
-  }
-
-  public static boolean isJohnDoe(final String typeName, final String variableName) {
-    return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
-  }
-
-  public static boolean isJohnDoe(final Type t, final SimpleName n) {
-    return n != null && isJohnDoe(t + "", n.getIdentifier());
+  public static JavaTypeNameParser make(final String ¢) {
+    return new JavaTypeNameParser(¢);
   }
 
   /** The type name managed by this instance */
-  public final String typeName;
+  private final String typeName;
 
-  public JavaTypeNameParser(final SimpleName ¢) {
+  private JavaTypeNameParser(final SimpleName ¢) {
     this(¢.getIdentifier());
   }
 
-  public JavaTypeNameParser(final SingleVariableDeclaration ¢) {
+  private JavaTypeNameParser(final SingleVariableDeclaration ¢) {
     this(¢.getName());
   }
 
@@ -43,7 +35,7 @@ public final class JavaTypeNameParser {
    * @param typeName the Java type name to parse
    * @param isCollection denotes whether the type is a collection or a variadic
    *        parameter */
-  public JavaTypeNameParser(final String typeName) {
+  private JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }
 
@@ -59,7 +51,7 @@ public final class JavaTypeNameParser {
     return isGenericVariation(¢.getName());
   }
 
-  /** Returns whether a variable name is a generic variation of its type name. A
+  /** Checks whether a variable name is a generic variation of its type name. A
    * variable name is considered to be a generic variation of its type name if
    * the variable name is equal to the type name, either one of them is
    * contained within the other, or it is an abbreviation of the type name (For

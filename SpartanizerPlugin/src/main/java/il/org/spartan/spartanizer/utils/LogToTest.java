@@ -5,7 +5,7 @@ import java.text.*;
 import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;
 import static il.org.spartan.lisp.*;
 
