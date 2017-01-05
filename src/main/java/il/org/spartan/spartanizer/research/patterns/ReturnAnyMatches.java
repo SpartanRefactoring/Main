@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-05 */
 public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
   private static final Set<UserDefinedTipper<Block>> tippers = new HashSet<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
   }
 
   @Override public String category() {
-    return Category.Return + "";
+    return Category.Relational + "";
   }
 
   @Override public String description() {
