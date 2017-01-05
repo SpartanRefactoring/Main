@@ -29,4 +29,11 @@ public class ForEachTest {
         .gives("((B)c).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
+
+  @Test public void d() {
+    trimmingOf("for (Entry<URI, CTOverride> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
+        .withTipper(EnhancedForStatement.class, new ForEach())//
+        .gives("for(Entry<URI,CTOverride>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
+        .stays();
+  }
 }
