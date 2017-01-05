@@ -7,10 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -22,10 +20,11 @@ public class Examiner extends JavadocMarkerNanoPattern {
       add(patternTipper("synchronized ($X1) { return $X2;}", "", ""));
     }
   };
+  private static final JavadocMarkerNanoPattern rival = new TypeChecker();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return haz.booleanReturnType(¢)//
         && anyTips(tippers, onlyStatement(¢))//
-        && !iz.instanceofExpression(expression(onlyStatement(¢)));
+        && !rival.matches(¢);
   }
 }
