@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class spartanTest {
+public final class namerTest {
   @Test public void arrayOfInts() {
     azzert.that(namer.shorten(t("int[][] __;")), equalTo("iss"));
   }
