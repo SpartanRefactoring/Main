@@ -14,7 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** A test suite for class {@link step}
  * @author Yossi Gil
@@ -111,34 +111,6 @@ public final class FuncsTest {
 
   @Test public void sameOfTwoExpressionsNotSame() {
     assert !wizard.same(e("a+b+c"), e("a+b"));
-  }
-
-  @Test public void shortNameASTRewriter() {
-    azzert.that(namer.shorten(t("ASTRewriter __;")), equalTo("r"));
-  }
-
-  @Test public void shortNameDouble() {
-    azzert.that(namer.shorten(t("double __;")), equalTo("d"));
-  }
-
-  @Test public void shortNameExpression() {
-    azzert.that(namer.shorten(t("Expression __;")), equalTo("x"));
-  }
-
-  @Test public void shortNameExpressions() {
-    azzert.that(namer.shorten(t("Expression[] __;")), equalTo("xs"));
-  }
-
-  @Test public void shortNameExpressionsList() {
-    azzert.that(namer.shorten(t("List<Expression> __;")), equalTo("xs"));
-  }
-
-  @Test public void shortNameInfrastructure() {
-    azzert.that(namer.shorten(t("int __;")), equalTo("i"));
-  }
-
-  @Test public void shortNameQualifiedType() {
-    azzert.that(namer.shorten(t("org.eclipse.jdt.core.dom.InfixExpression __;")), equalTo("x"));
   }
 
   private Type t(final String codeFragment) {
