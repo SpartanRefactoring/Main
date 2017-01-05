@@ -244,4 +244,8 @@ public class MatcherTest {
   @Test public void p05() {
     assert patternMatcher("$X", "").matches(findFirst.expression(ast("(x)")));
   }
+  
+  @Test public void x01() {
+    assert !patternMatcher("$X;", "").matches(findFirst.expression(ast("return 6;")));
+  }
 }
