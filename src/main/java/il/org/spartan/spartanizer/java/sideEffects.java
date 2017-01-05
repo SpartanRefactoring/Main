@@ -4,8 +4,6 @@ import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -91,7 +89,7 @@ public enum sideEffects {
       case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       case VARIABLE_DECLARATION_EXPRESSION:
-        return free(step.fragments(az.variableDeclarationExpression(¢)));
+        return free(az.variableDeclarationExpression(¢));
       default:
         monitor.logProbableBug(//
             sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
@@ -99,9 +97,16 @@ public enum sideEffects {
     }
   }
 
+  private static boolean free(VariableDeclarationExpression x) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(x))
+      if (haz.sideEffects(initializer(¢)))
+        return false;
+    return true;
+  }
+
   private static boolean free(final ArrayCreation ¢) {
     final ArrayInitializer $ = ¢.getInitializer();
-    return free(¢.dimensions()) && ($ == null || free(step.expressions($)));
+    return free(step.dimensions(¢)) && ($ == null || free(step.expressions($)));
   }
 
   private static boolean free(final ConditionalExpression ¢) {
@@ -114,10 +119,9 @@ public enum sideEffects {
         return false;
     return true;
   }
-
-  private static boolean free(final List<?> os) {
-    for (final Object ¢ : os)
-      if (¢ == null || haz.sideEffects(az.expression((ASTNode) ¢)))
+  private static boolean free(final Iterable<? extends Expression> xs) {
+    for (final Expression ¢ : xs)
+      if (¢ == null || haz.sideEffects(az.expression(¢)))
         return false;
     return true;
   }
