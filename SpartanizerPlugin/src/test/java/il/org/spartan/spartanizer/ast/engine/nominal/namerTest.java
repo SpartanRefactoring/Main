@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.engine;
+package il.org.spartan.spartanizer.ast.engine.nominal;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -20,6 +20,16 @@ public final class namerTest {
   @Test public void arrayOfInts() {
     azzert.that(namer.shorten(t("int[][] __;")), equalTo("iss"));
   }
+  @Test public void components01() {
+    azzert.that(namer.components("ConfusingASTNode"), equalTo(new String[] {"Confusing", "AST", "Node"}));
+  } 
+  @Test public void components02() {
+    azzert.that(namer.components("camelCaseXML"), equalTo(new String[] {"camel", "Case", "XML"}));
+  }
+
+  @Test public void components03() {
+    azzert.that(namer.components("with_bTable"), equalTo(new String[] {"with", "b", "Table"}));
+  }
 
   @Test public void listOfInts() {
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
@@ -27,6 +37,10 @@ public final class namerTest {
 
   @Test public void shortNameASTRewriter() {
     azzert.that(namer.shorten(t("ASTRewriter __;")), equalTo("r"));
+  }
+
+  @Test public void shortNameChar() {
+    azzert.that(namer.shorten(t("char __;")), equalTo("c"));
   }
 
   @Test public void shortNameDouble() {
@@ -51,10 +65,6 @@ public final class namerTest {
 
   @Test public void shortNameInt() {
     azzert.that(namer.shorten(t("int __;")), equalTo("i"));
-  }
-
-  @Test public void shortNameChar() {
-    azzert.that(namer.shorten(t("char __;")), equalTo("c"));
   }
 
   @Test public void shortNameQualifiedType() {
