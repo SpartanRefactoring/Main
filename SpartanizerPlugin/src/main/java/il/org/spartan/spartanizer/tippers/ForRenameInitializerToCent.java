@@ -9,7 +9,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -21,6 +20,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
@@ -38,7 +38,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
-    if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
+    if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !iz.variableUsedInFor($, n))

@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** A test suite for class {@link namer}
  * @author Yossi Gil
@@ -22,10 +22,6 @@ public final class namerTest {
   }
 
   @Test public void listOfInts() {
-    azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
-  }
-
-  @Test public void listOfIntsa() {
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
 
@@ -45,12 +41,20 @@ public final class namerTest {
     azzert.that(namer.shorten(t("Expression[] __;")), equalTo("xs"));
   }
 
+  @Test public void shortNameExpressionsIterable() {
+    azzert.that(namer.shorten(t("Iterable<Iterable<Expression>> __;")), equalTo("xss"));
+  }
+
   @Test public void shortNameExpressionsList() {
     azzert.that(namer.shorten(t("List<Expression> __;")), equalTo("xs"));
   }
 
-  @Test public void shortNameInfrastructure() {
+  @Test public void shortNameInt() {
     azzert.that(namer.shorten(t("int __;")), equalTo("i"));
+  }
+
+  @Test public void shortNameChar() {
+    azzert.that(namer.shorten(t("char __;")), equalTo("c"));
   }
 
   @Test public void shortNameQualifiedType() {

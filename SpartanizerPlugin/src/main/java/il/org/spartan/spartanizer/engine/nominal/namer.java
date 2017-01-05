@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.engine.nominal;
 
 import java.util.*;
 
@@ -78,7 +78,7 @@ public interface namer {
   }
 
   static String shorten(final String ¢) {
-    return new JavaTypeNameParser(¢).shortName();
+    return JavaTypeNameParser.make(¢).shortName();
   }
 
   static String shorten(final Type ¢) {
