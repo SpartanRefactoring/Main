@@ -4,8 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-05 */
 @SuppressWarnings("static-method")
 public class TypeCheckerTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
