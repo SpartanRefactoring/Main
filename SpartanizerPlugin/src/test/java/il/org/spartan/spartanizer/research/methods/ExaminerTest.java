@@ -39,4 +39,12 @@ public class ExaminerTest extends JavadocerTest {
   @Test public void g() {
     assert is("boolean examiner(){synchronized (mutex) {return field == 7;}}");
   }
+
+  @Test public void h() {
+    assert not("boolean checker(Object a){return a instanceof A;}");
+  }
+
+  @Test public void i() {
+    assert not("boolean checker(Object a){return (a instanceof A);}");
+  }
 }

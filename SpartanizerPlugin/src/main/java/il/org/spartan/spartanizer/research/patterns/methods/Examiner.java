@@ -7,8 +7,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -22,6 +24,8 @@ public class Examiner extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && haz.booleanReturnType(¢) && anyTips(tippers, onlyStatement(¢));
+    return haz.booleanReturnType(¢)//
+        && anyTips(tippers, onlyStatement(¢))//
+        && !iz.instanceofExpression(expression(onlyStatement(¢)));
   }
 }
