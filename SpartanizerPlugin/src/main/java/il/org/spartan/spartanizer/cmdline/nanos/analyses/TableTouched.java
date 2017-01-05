@@ -37,12 +37,12 @@ public class TableTouched extends TableCoverage {
     int totalMethodsTouched = 0;
     for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
-        touchedWriter.put(i + "", "");
+        touchedWriter.put(i + "", .0);
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalMethods += rs.size();
         totalMethodsTouched += totalMethodsTouched(rs);
-        touchedWriter.put(i + "", format.decimal(100 * fractionOfMethodsTouched(rs)));
+        touchedWriter.put(i + "", Double.valueOf(format.decimal(100 * fractionOfMethodsTouched(rs))));
       }
     touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();

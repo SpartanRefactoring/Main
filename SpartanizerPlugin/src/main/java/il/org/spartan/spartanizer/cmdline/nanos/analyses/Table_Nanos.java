@@ -30,11 +30,8 @@ public class Table_Nanos {
           for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null && ¢ instanceof NanoPatternTipper)
               r//
-                  .col("Tipper", name(¢.getClass()))//
-                  .col("Node Type Number", i) //
+                  .col("Name", name(¢.getClass()))//
                   .col("Node Class", Toolbox.intToClassName(i))//
-                  .col("Actual class", name(¢.myActualOperandsClass()))//
-                  .col("Abstract class", name(¢.myAbstractOperandsClass())) //
                   .col("Description", ¢.description())//
                   .nl();
       System.err.println(r.description());

@@ -93,7 +93,7 @@ public class TableCoverage extends FolderASTVisitor {
     cWriter.put("Project", path);
     for (int ¢ = 1; ¢ <= MAX_STATEMENTS_REPORTED; ++¢)
       cWriter.put(¢ + "",
-          !statementsCoverageStatistics.containsKey(¢) ? "-" : format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢))));
+          !statementsCoverageStatistics.containsKey(¢) ? 0 : Double.valueOf(format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢)))));
     cWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     cWriter.nl();
   }
