@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.research.patterns.methods.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class UpCasterTest extends JavadocerTest {
+public class CasterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
     setNano(new Up.Caster());
   }
@@ -24,11 +24,23 @@ public class UpCasterTest extends JavadocerTest {
     assert not("public static int hashCode(int value){return value;  }");
   }
 
+  @Test public void d() {
+    assert is("private A cast(B value){return (A)value;  }");
+  }
+
   @Test public void e() {
     assert not("public static A hashCode(B value){return value + value;  }");
   }
 
   @Test public void f() {
     assert not("public static A hashCode(B value){return value();  }");
+  }
+
+  @Test public void g() {
+    assert not("public static int hashCode(char value){return this;  }");
+  }
+
+  @Test public void h() {
+    assert not("public A cast(B value){return (A)this;  }");
   }
 }
