@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -13,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Rename unused variable to double underscore "__" VariableChangeName instead
@@ -105,7 +104,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !isJohnDoe($.getType(), $.getName()))
+    if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration ¢ : parameters(method))

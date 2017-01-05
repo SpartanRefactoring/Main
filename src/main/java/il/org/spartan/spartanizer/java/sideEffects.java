@@ -97,7 +97,7 @@ public enum sideEffects {
     }
   }
 
-  private static boolean free(VariableDeclarationExpression x) {
+  private static boolean free(final VariableDeclarationExpression x) {
     for (final VariableDeclarationFragment ¢ : step.fragments(x))
       if (haz.sideEffects(initializer(¢)))
         return false;
@@ -119,6 +119,7 @@ public enum sideEffects {
         return false;
     return true;
   }
+
   private static boolean free(final Iterable<? extends Expression> xs) {
     for (final Expression ¢ : xs)
       if (¢ == null || haz.sideEffects(az.expression(¢)))

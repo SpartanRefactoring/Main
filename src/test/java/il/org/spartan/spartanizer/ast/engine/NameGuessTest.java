@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Tests of {@link NameGuess}
  * @author Yossi Gil

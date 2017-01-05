@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.engine.nominal;
 
 import org.eclipse.jdt.core.dom.*;
 
