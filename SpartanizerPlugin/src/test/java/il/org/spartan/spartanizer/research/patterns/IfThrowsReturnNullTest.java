@@ -15,11 +15,11 @@ public class IfThrowsReturnNullTest {
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
             " catch (  B i) {" + //
-            "    return null;"//
+            "    return null;}"//
     ).withTipper(CatchClause.class, new IfThrowsReturnNull())//
-        .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();}")//
-        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();}")//
-        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();}")//
+        .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
+        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();")//
         .stays()//
     ;
   }
