@@ -18,6 +18,10 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
         && (!(extract.annotations(¢) + "").contains("({") || !containedInInstanceCreation(¢));
   }
 
+  public final boolean matches(final MethodDeclaration ¢) {
+    return prerequisites(¢);
+  }
+
   protected abstract boolean prerequisites(MethodDeclaration ¢);
 
   @Override public final Tip pattern(final MethodDeclaration d) {

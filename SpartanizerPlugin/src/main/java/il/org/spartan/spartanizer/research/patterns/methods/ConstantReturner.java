@@ -21,6 +21,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return anyTips(tippers, onlyStatement(¢)) && !rival.canTip(¢);
+    return anyTips(tippers, onlyStatement(¢))//
+        && !rival.matches(¢);
   }
 }
