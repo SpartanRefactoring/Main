@@ -33,7 +33,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(Block.class, //
             new CachingPattern(), //
-            new Contains(), //
             new CopyCollection(), //
             new FindFirst(), //
             new ReturnOld(), //
