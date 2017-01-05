@@ -24,10 +24,6 @@ public class UpCasterTest extends JavadocerTest {
     assert not("public static int hashCode(int value){return value;  }");
   }
 
-  @Test public void d() {
-    assert not("public static A hashCode(B value){return (A)value;  }");
-  }
-
   @Test public void e() {
     assert not("public static A hashCode(B value){return value + value;  }");
   }
