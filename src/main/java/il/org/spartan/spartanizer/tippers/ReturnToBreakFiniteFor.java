@@ -104,7 +104,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     if (exclude != null)
       exclude.exclude(s);
-    return $ == null ? null : new Tip(description(), s, this.getClass()) {
+    return $ == null ? null : new Tip(description(), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, first(statements(az.block(into.s("break;")))), g);
       }
