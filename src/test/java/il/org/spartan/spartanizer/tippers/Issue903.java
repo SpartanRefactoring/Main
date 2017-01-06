@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** This is a unit test for {@link ReturnToBreakFiniteFor} of previously failed
- * tests. Related to {@link Issue131}.
+ * tests. Related to {@link Issue0131}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
