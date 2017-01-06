@@ -28,8 +28,8 @@ public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Mo
     final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));
     if (v == null)
       return null;
-    final MethodDeclaration methodDeclaration = az.methodDeclaration(parent(v));
-    return !iz.abstract¢(methodDeclaration) && !iz.interface¢(parent(methodDeclaration)) ? null : new Tip(description(m), m, getClass()) {
+    final MethodDeclaration $ = az.methodDeclaration(parent(v));
+    return !iz.abstract¢($) && !iz.interface¢(parent($)) ? null : new Tip(description(m), m, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(m, g);
       }
