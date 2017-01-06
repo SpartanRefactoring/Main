@@ -36,7 +36,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new CopyCollection(), //
             new FindFirst(), //
             new ReturnOld(), //
-            new ReturnAllMatches(), //
+            new HoldsForAll(), //
             new ReturnAnyMatches(), //
             null) //
         .add(CatchClause.class, //
