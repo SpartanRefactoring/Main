@@ -35,7 +35,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new CachingPattern(), //
             new CopyCollection(), //
             new FindFirst(), //
-            new ReturnOld(), //
+            new ReturnPrevious(), //
             new ReturnHoldsForAll(), //
             new ReturnHoldsForSome(), //
             null) //
