@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")
-public class issue411 {
+public class issue0411 {
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
   private static final String OUTPUT1 = "boolean f(){for(A b:f(1))if(b.a)return true;return false;}";
