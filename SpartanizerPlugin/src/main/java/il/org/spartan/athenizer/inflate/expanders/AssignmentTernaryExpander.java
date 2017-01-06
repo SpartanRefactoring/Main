@@ -34,11 +34,27 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       then.setLeftHandSide(duplicate.of(left));
       then.setOperator(o);
       $.setThenStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
+      System.out.println("then -" + duplicate.of(¢.getThenExpression()));
+      System.out.println("left - " + duplicate.of(¢.getThenExpression()));
+      if(az.expression(duplicate.of(¢.getThenExpression())).subtreeMatch(new ASTMatcher(), duplicate.of(left))) {
+        System.out.println("HEY1");
+        final ContinueStatement cont = ¢.getAST().newContinueStatement();
+        
+        $.setThenStatement(duplicate.of(cont));
+      }
+      
       final Assignment elze = ¢.getAST().newAssignment();
       elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
       elze.setLeftHandSide(duplicate.of(left));
       elze.setOperator(o);
       $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
+      System.out.println("else -" + duplicate.of(¢.getThenExpression()));
+      System.out.println("left - " + duplicate.of(¢.getThenExpression()));
+      if(duplicate.of(¢.getElseExpression()).equals(duplicate.of(left))) {
+        System.out.println("HEY1");
+        final ContinueStatement cont = ¢.getAST().newContinueStatement();
+        $.setElseStatement(duplicate.of(cont));
+      }
     } catch (@SuppressWarnings("unused") final NullPointerException e) {
       return null;
     }
