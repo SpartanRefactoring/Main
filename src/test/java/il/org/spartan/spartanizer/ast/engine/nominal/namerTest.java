@@ -20,24 +20,27 @@ public final class namerTest {
   @Test public void arrayOfInts() {
     azzert.that(namer.shorten(t("int[][] __;")), equalTo("iss"));
   }
+
   @Test public void components01() {
-    azzert.that(namer.components("ConfusingASTNode"), equalTo(new String[] {"Confusing", "AST", "Node"}));
-  } 
+    azzert.that(namer.components("ConfusingASTNode"), equalTo(new String[] { "Confusing", "AST", "Node" }));
+  }
+
   @Test public void components02() {
-    azzert.that(namer.components("camelCaseXML"), equalTo(new String[] {"camel", "Case", "XML"}));
+    azzert.that(namer.components("camelCaseXML"), equalTo(new String[] { "camel", "Case", "XML" }));
   }
 
   @Test public void components03() {
-    azzert.that(namer.components("with_bTable"), equalTo(new String[] {"with", "b", "Table"}));
+    azzert.that(namer.components("with_bTable"), equalTo(new String[] { "with", "b", "Table" }));
   }
 
   @Test public void test2() {
-    String[] components = namer.components("Table_NanosByCategories");
-    azzert.that(components , is(new String[] {"Table", "Nanos", "By", "Categories"}));
-    Iterable<String> os = lisp.rest(as.iterable(components));
+    final String[] components = namer.components("Table_NanosByCategories");
+    azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
+    final Iterable<String> os = lisp.rest(as.iterable(components));
     azzert.that(os + "", is(""));
     azzert.that(separate.these(os).by('-').toLowerCase(), is("nanons-by-categories"));
   }
+
   @Test public void listOfInts() {
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }

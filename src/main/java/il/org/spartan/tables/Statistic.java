@@ -57,6 +57,10 @@ enum Statistic {
     @Override public double of(final RealStatistics ¢) {
       return ¢.max() - ¢.min();
     }
+  }, Σ {
+    @Override public double of(RealStatistics ¢) {
+      return ¢.sum();
+    }
   };
   public abstract double of(RealStatistics s);
 }

@@ -33,17 +33,17 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private int length;
-
   public final String name;
-
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
+
   void add(final Statistic... ss) {
     final List<Statistic> a = as.list(statisics);
     a.addAll(as.list(ss));
     set(a);
   }
+
   public String baseName() {
     return temporariesFolder + name + ".*";
   }
@@ -55,13 +55,25 @@ public class Table extends Row<Table> implements Closeable {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
+        String key = lastEmptyColumn();
         for (final RecordWriter ¢ : writers) {
-          put((String) null, ¢.renderer.render(s));
+          put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
       }
     for (final RecordWriter ¢ : writers)
       ¢.close();
+  }
+
+  private String lastEmptyColumn() {
+    String $ = null;
+    for (final String key : keySet()) {
+      final RealStatistics r = getRealStatistics(key);
+      if (r != null && r.n() != 0)
+        break;
+      $ = key;
+    }
+      return $;
   }
 
   @Override public Table col(final String key, final double value) {
@@ -136,13 +148,13 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private static final long serialVersionUID = 1L;
-
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
-  public static String classToNormalizedFileName(Class<? extends Object> class1) {
-    return classToNormalizedFileName(class1.getSimpleName()) ;
+
+  public static String classToNormalizedFileName(final Class<? extends Object> class1) {
+    return classToNormalizedFileName(class1.getSimpleName());
   }
 
-  static String classToNormalizedFileName(String className) {
-    return separate.these((lisp.rest(as.iterable(namer.components(className))))).by('-').toLowerCase();
+  static String classToNormalizedFileName(final String className) {
+    return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
   }
 }
