@@ -55,7 +55,7 @@ public class Table extends Row<Table> implements Closeable {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        String key = lastEmptyColumn();
+        final String key = lastEmptyColumn();
         for (final RecordWriter ¢ : writers) {
           put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
@@ -73,7 +73,7 @@ public class Table extends Row<Table> implements Closeable {
         break;
       $ = key;
     }
-      return $;
+    return $;
   }
 
   @Override public Table col(final String key, final double value) {

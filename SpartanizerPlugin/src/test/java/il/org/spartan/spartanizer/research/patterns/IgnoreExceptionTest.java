@@ -15,7 +15,7 @@ public class IgnoreExceptionTest {
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
             " catch (  B i) {}"//
-    ).withTipper(CatchClause.class, new IgnoreException())//
+    ).using(CatchClause.class, new IgnoreException())//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
@@ -26,7 +26,7 @@ public class IgnoreExceptionTest {
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
-        .withTipper(CatchClause.class, new IgnoreException())//
+        .using(CatchClause.class, new IgnoreException())//
         .gives("{try{{thing();}}catch(B|A a){ignore();};}")//
         .gives("try{{thing();}}catch(B|A a){ignore();}")//
         .gives("try{thing();}catch(B|A a){ignore();}")//

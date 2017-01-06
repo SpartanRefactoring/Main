@@ -17,6 +17,6 @@ public class EliminateConditionalContinueInFor extends EagerTipper<ForStatement>
   }
 
   @Override public Tip tip(final ForStatement ¢) {
-    return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, this.getClass());
+    return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

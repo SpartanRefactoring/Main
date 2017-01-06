@@ -37,7 +37,7 @@ public class Issue0455 {
   }
 
   @Test public void emptyReturnStatement() {
-    trimmingOf("(x) -> {return;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x) -> {return;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("(x) -> {}")//
         .stays();
   }
@@ -59,20 +59,19 @@ public class Issue0455 {
   }
 
   @Test public void paransAreNotAddedToParams() {
-    trimmingOf("x -> {return x;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("x -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("x -> x")//
         .stays();
   }
 
   @Test public void paransAreNotRemovedFromParams() {
-    trimmingOf("(x) -> {return x;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x) -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("(x) -> x")//
         .stays();
   }
 
   @Test public void simpleBiFunction() {
-    trimmingOf("(x,y) -> {return x + y;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())
-        .gives("(x,y) -> x + y")//
+    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()).gives("(x,y) -> x + y")//
         .stays();
   }
 
@@ -83,7 +82,7 @@ public class Issue0455 {
   }
 
   @Test public void simpleProducer() {
-    trimmingOf("()->{return 42;}").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("()->{return 42;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("()->42")//
         .stays();
   }
@@ -121,7 +120,7 @@ public class Issue0455 {
   }
 
   @Test public void singleReturnStatementAndSingleParameterd() {
-    trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});").withTipper(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("new ArrayList<Integer>().map(x -> x+1);")//
         .stays();
   }

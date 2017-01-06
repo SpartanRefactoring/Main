@@ -97,7 +97,7 @@ public final class TrimmerTestsUtils {
           Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
-    public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> ¢) {
+    public <N extends ASTNode> Operand using(final Class<N> n, final Tipper<N> ¢) {
       trimmer.add(n, ¢);
       return this;
     }

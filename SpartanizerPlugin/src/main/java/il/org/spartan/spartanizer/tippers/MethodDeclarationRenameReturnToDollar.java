@@ -33,7 +33,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", d, this.getClass()) {
+    return new Tip("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }

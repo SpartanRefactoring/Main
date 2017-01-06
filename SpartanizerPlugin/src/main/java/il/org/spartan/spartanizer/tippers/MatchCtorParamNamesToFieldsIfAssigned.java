@@ -57,7 +57,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       $.add(paramName);
       newNames.add(fieldName);
     }
-    return new Tip(description(d), d, this.getClass()) {
+    return new Tip(description(d), d, getClass()) {
       List<SimpleName> on = new ArrayList<>($);
       List<SimpleName> nn = new ArrayList<>(newNames);
 

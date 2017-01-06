@@ -41,7 +41,7 @@ public final class JavadocEmpty extends CarefulTipper<Javadoc> implements Tipper
   }
 
   @Override public Tip tip(final Javadoc i) {
-    return new Tip(description(i), i, this.getClass()) {
+    return new Tip(description(i), i, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }

@@ -95,7 +95,7 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
   }
 
   @Override public boolean equals(final Object ¢) {
-    return ¢ != null && this.getClass().equals(¢.getClass());
+    return ¢ != null && getClass().equals(¢.getClass());
   }
 
   @Override public int hashCode() {
