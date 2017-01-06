@@ -4,7 +4,8 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-/** @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+/** Unit test for {@link AssignmentAndAssignment}
+ * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 // TODO: post a link to the tested class
 @SuppressWarnings("static-method")
