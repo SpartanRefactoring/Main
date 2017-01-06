@@ -7,7 +7,7 @@ import org.junit.*;
 /** @author Tomer Dragucki
  * @since 2016 **/
 @SuppressWarnings({ "static-method", "javadoc" })
-public class issue289 {
+public class issue0289 {
   @Test public void a() {
     trimmingOf("void f() {" + "  final Object[] os = new Integer[1];" + "  os[0] = new Object(); }").stays();
   }
