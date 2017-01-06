@@ -10,7 +10,7 @@ import org.junit.*;
  * @since 2016-12-08 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue902 {
+public class Issue0902 {
   @Test public void a() {
     trimmingOf("void f(){int x; int y;return;}")//
         .gives("void f(){int x; int y;}")//

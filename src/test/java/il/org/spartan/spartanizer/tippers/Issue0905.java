@@ -11,7 +11,7 @@ import org.junit.*;
  * @since 2016-12-08 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue905 {
+public class Issue0905 {
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
         .gives("if(b()){}");
