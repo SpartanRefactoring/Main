@@ -36,9 +36,7 @@ public final class namerTest {
   @Test public void test2() {
     final String[] components = namer.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
-    final Iterable<String> os = lisp.rest(as.iterable(components));
-    azzert.that(os + "", is(""));
-    azzert.that(separate.these(os).by('-').toLowerCase(), is("nanons-by-categories"));
+    azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanons-by-categories"));
   }
 
   @Test public void listOfInts() {
