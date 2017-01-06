@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.research.patterns.deprecated.*;
 public class ExhaustTest {
   @Test public void a() {
     trimmingOf("while (keyReferenceQueue.poll() != null) {}")//
-        .withTipper(WhileStatement.class, new Exhaust())//
+        .using(WhileStatement.class, new Exhaust())//
         .gives("exhaust(()->keyReferenceQueue.poll());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("while (keyReferenceQueue.poll() != null) {something(); andAnother();}")//
-        .withTipper(WhileStatement.class, new Exhaust())//
+        .using(WhileStatement.class, new Exhaust())//
         .stays();
   }
 }

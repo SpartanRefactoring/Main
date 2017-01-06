@@ -51,7 +51,7 @@ public class NameGuessTest {
   }
 
   @Test public void className1() {
-    azzert.that(NameGuess.of(this.getClass().getSimpleName()), is(NameGuess.CLASS_NAME));
+    azzert.that(NameGuess.of(getClass().getSimpleName()), is(NameGuess.CLASS_NAME));
   }
 
   @Test public void className2() {

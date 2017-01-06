@@ -11,42 +11,42 @@ import org.junit.*;
 public class SafeReferenceTest {
   @Test public void field() {
     trimmingOf("return x !=null ? x.y : null;")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field2() {
     trimmingOf("return x ==null ? null : x.field;")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.field);")//
         .stays();
   }
 
   @Test public void field3() {
     trimmingOf("return x == null ? null : x.y.z;")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
 
   @Test public void field4() {
     trimmingOf("return x != null && x.y;")//
-        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field5() {
     trimmingOf("return x != null && x.y.z.w;")//
-        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("return safe(x).get(()->x.y.z.w);")//
         .stays();
   }
 
   @Test public void field6() {
     trimmingOf("return x == null ? 0 : x.y.z;")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
@@ -67,49 +67,49 @@ public class SafeReferenceTest {
 
   @Test public void method() {
     trimmingOf("return x == null ? null : x.y();")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y());")//
         .stays();
   }
 
   @Test public void method2() {
     trimmingOf("return x == null ? null : x.y.z();")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method3() {
     trimmingOf("return x == null ? 0 : x.z();")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method4() {
     trimmingOf("return x == null ? 0 : x.y.z();")//
-        .withTipper(ConditionalExpression.class, new SafeReference())//
+        .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method5() {
     trimmingOf("return x != null && x.z();")//
-        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method6() {
     trimmingOf("return x != null && x.y.z();")//
-        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method7() {
     trimmingOf("(x != null) && x.y()")//
-        .withTipper(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("safe(x).invoke(()->x.y())")//
         .stays();
   }

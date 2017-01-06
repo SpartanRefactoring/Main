@@ -11,7 +11,7 @@ import org.junit.*;
 public class AsBitTest {
   @Test public void a() {
     trimmingOf("(k == 0) ? 1 : 0")//
-        .withTipper(ConditionalExpression.class, new AsBit())//
+        .using(ConditionalExpression.class, new AsBit())//
         .gives("as.bit((k == 0))") //
         .gives("as.bit(k == 0)") //
         .stays();
@@ -19,21 +19,21 @@ public class AsBitTest {
 
   @Test public void b() {
     trimmingOf("k == 0 ? 1 : 0")//
-        .withTipper(ConditionalExpression.class, new AsBit())//
+        .using(ConditionalExpression.class, new AsBit())//
         .gives("as.bit(k == 0)")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("k? 1 : 0")//
-        .withTipper(ConditionalExpression.class, new AsBit())//
+        .using(ConditionalExpression.class, new AsBit())//
         .gives("as.bit(k)")//
         .stays();
   }
 
   @Test public void d() {
     trimmingOf("(0 == x(f,g,h.h(a,b,moo))) ? 1 : 0")//
-        .withTipper(ConditionalExpression.class, new AsBit())//
+        .using(ConditionalExpression.class, new AsBit())//
         .gives("as.bit((0 == x(f,g,h.h(a,b,moo))))")//
         .gives("as.bit(0==x(f,g,h.h(a,b,moo)))")//
         .gives("as.bit(x(f,g,h.h(a,b,moo)) == 0)")//
@@ -42,7 +42,7 @@ public class AsBitTest {
 
   @Test public void e() {
     trimmingOf("k == 0 ? 0 : 1")//
-        .withTipper(ConditionalExpression.class, new AsBit())//
+        .using(ConditionalExpression.class, new AsBit())//
         .gives("as.bit(!(k==0))")//
         .gives("as.bit(k != 0 )")//
         .stays();

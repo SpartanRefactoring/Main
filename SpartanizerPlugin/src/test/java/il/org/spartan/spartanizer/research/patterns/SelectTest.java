@@ -11,14 +11,14 @@ import org.junit.*;
 public class SelectTest {
   @Test public void a() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
-        .withTipper(EnhancedForStatement.class, new Select())//
+        .using(EnhancedForStatement.class, new Select())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(Collectors.toList()));")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
-        .withTipper(EnhancedForStatement.class, new Select())//
+        .using(EnhancedForStatement.class, new Select())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(Collectors.toList()));")//
         .stays();
   }
