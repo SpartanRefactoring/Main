@@ -4,5 +4,5 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** [[SuppressWarningsSpartan]] */
 public class Issue965Aux2 extends ReflectiveTester {
-  @SuppressWarnings({ "unused" }) public void check1() {}
+  @SuppressWarnings({ }) public void check1() {}
 }
