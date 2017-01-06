@@ -8,14 +8,14 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import static il.org.spartan.lisp.*;
+import static org.junit.Assert.*;
 
 /** see Issue #831 for more details
  * @author Lidia Piatigorski
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-14 */
-@Ignore
-public class Issue831 {
+public class Issue0831 {
   protected class MethodScannerIExt extends MethodScanner {
     public MethodScannerIExt(final MethodDeclaration method) {
       super(method);
@@ -33,7 +33,7 @@ public class Issue831 {
     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
       body += iter + "";
-    assert "int a;int b;int c;int d;".equals(body);
+    assertEquals("int a;\nint b;\nint c;\nint d;\n",body);
   }
 
   // TODO: Adi - note obfuscated code assert (false), instead of fail().
