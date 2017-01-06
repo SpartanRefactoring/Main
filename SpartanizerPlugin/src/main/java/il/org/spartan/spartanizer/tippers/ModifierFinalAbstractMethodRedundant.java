@@ -22,13 +22,13 @@ public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Mo
     return "Eliminate redundant final '" + az.variableDeclarationStatement(parent(¢)) + "' (argument to abstract method)";
   }
 
-  @Override public Tip tip(final Modifier m ) {
+  @Override public Tip tip(final Modifier m) {
     if (!m.isFinal())
       return null;
-    SingleVariableDeclaration v= az.singleVariableDeclaration(parent(m));
+    final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));
     if (v == null)
       return null;
-    MethodDeclaration methodDeclaration = az.methodDeclaration(parent(v));
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(parent(v));
     return !iz.abstract¢(methodDeclaration) && !iz.interface¢(parent(methodDeclaration)) ? null : new Tip(description(m), m, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(m, g);

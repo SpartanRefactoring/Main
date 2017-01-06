@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** This is a unit test for a bug (issue 445) in {@link WhileNextReturnToWhile}
- * of previously failed tests. Related to {@link Issue0311} and {@link Issue0281}
+ * of previously failed tests. Related to {@link Issue0311} and
+ * {@link Issue0281}
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore

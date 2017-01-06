@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-/** Same as ReturnTernaryExpander just for "throw"
+/** Same as ReturnTernaryExpander just for "throw" {@link Issue #998}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 public class ThrowTernaryExpander extends ReplaceCurrentNode<ThrowStatement> implements TipperCategory.Expander {

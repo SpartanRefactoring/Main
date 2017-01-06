@@ -22,7 +22,8 @@ public interface TableRenderer {
   default String extension() {
     return toString().toLowerCase();
   }
-  default String renderRow(Collection<Object> values) {
+
+  default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
     final Separator s = new Separator(recordSeparator());
     for (final Object ¢ : values)
@@ -33,10 +34,10 @@ public interface TableRenderer {
                       : ¢);
     return $ + recordEnd();
   }
+
   default String cellArray(final Object[] ¢) {
     return separate.these(¢).by(arraySeparator());
   }
-
 
   // @formatter:off
   default String arraySeparator() { return "; "; }
