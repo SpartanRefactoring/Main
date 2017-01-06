@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link SafeVarargs} in {@link RedundantModifier}
+/** Unit tests for {@link SafeVarargs} in {@link ModifierRedundant}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -16,7 +16,7 @@ import il.org.spartan.tables.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class RedundantModifierInAbstractMethod extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
+public final class ModifierFinalRedundantInAbstractMethod extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
     return "Eliminate redundant final modifier of argument in abstract method";
   }
@@ -26,9 +26,6 @@ public final class RedundantModifierInAbstractMethod extends CarefulTipper<Modif
   }
 
   @Override public Tip tip(final Modifier $) {
-    try (final Table r = new Table(this)) {
-     r.hashCode(); 
-    }
     if (!$.isFinal())
       return null;
     SingleVariableDeclaration singleVariableDeclaration = az.singleVariableDeclaration(parent($));
