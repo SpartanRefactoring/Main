@@ -25,11 +25,10 @@ public final class ReturnLastInMethod extends EagerTipper<ReturnStatement> imple
     if (s.getExpression() != null)
       return null;
     final Block $ = az.block(s.getParent());
-    return $ == null || !lastIn(s, statements($)) || !($.getParent() instanceof MethodDeclaration) ? null
-        : new Tip(description(s), s, getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.remove(s, g);
-          }
-        };
+    return $ == null || !lastIn(s, statements($)) || !($.getParent() instanceof MethodDeclaration) ? null : new Tip(description(s), s, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        r.remove(s, g);
+      }
+    };
   }
 }
