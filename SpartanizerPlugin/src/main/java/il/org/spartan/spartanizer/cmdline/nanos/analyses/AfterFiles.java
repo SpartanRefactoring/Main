@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
@@ -104,7 +105,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
-    try (final Relation report = new Relation(path)) {
+    try (final Table report = new Table(path)) {
       int statementsTotal = 0;
       int methodsTotal = 0;
       for (final Integer numStatements : methods.keySet()) {
@@ -119,12 +120,12 @@ public class AfterFiles extends FolderASTVisitor {
           continue;
         final List<MethodRecord> li = methods.get(numStatements);
         report //
-            .put("#Statements [before]", numStatements) //
-            .put("Count", li.size()) //
-            .put("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
-            .put("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
-            .put("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
-            .put("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
+            .col("#Statements [before]", numStatements) //
+            .col("Count", li.size()) //
+            .col("Coverage [Avg.]", format.decimal(100 * avgCoverage(li)))//
+            .col("Methods (%)", format.decimal(100 * fractionOfMethods(methodsTotal, li))) //
+            .col("Statements (%)", format.decimal(100 * fractionOfStatements(statementsTotal, numStatements, li))) //
+            .col("Touched (%)", format.decimal(100 * fractionOfMethodsTouched(li))) //
         ;
         report.nl();
       }

@@ -172,4 +172,80 @@ public class MatcherTest {
   @Test public void k4() {
     assert patternMatcher("$N1 = $L", "").matches(findFirst.assignment(ast("x = true")));
   }
+
+  @Test public void k5() {
+    assert patternMatcher("$N1.$N2", "").matches(findFirst.name(ast("x.y.z")));
+  }
+
+  @Test public void k6() {
+    assert patternMatcher("$SN1", "").matches(findFirst.expression(ast("x")));
+  }
+
+  @Test public void k7() {
+    assert patternMatcher("$SN1 + $SN2", "").matches(findFirst.expression(ast("x + y")));
+  }
+
+  @Test public void k8() {
+    assert patternMatcher("$SN + $SN", "").matches(findFirst.expression(ast("x + x")));
+  }
+
+  @Test public void k9() {
+    assert patternMatcher("$SN.$SN2", "").matches(findFirst.expression(ast("x.y")));
+  }
+
+  @Test public void k10() {
+    assert patternMatcher("$N.$SN", "").matches(findFirst.expression(ast("x.y.z")));
+  }
+
+  @Test public void k11() {
+    assert patternMatcher("$N.$SN()", "").matches(findFirst.expression(ast("x.y.z()")));
+  }
+
+  @Test public void k12() {
+    assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == null ? null : x.y.z()")));
+  }
+
+  @Test public void d3() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("null")));
+  }
+
+  @Test public void d4() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("0")));
+  }
+
+  @Test public void d5() {
+    assert patternMatcher("$D", "").matches(findFirst.expression(ast("false")));
+  }
+
+  @Test public void k13() {
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == null ? null : x.y.z()")));
+  }
+
+  @Test public void k14() {
+    assert patternMatcher("$SN == $D1 ? $D2 : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(ast("x == false ? 0 : x.y.z()")));
+  }
+
+  @Test public void p01() {
+    assert !patternMatcher("x", "").matches(findFirst.expression(ast("(x)")));
+  }
+
+  @Test public void p02() {
+    assert patternMatcher("(x)", "").matches(findFirst.expression(ast("(x)")));
+  }
+
+  @Test public void p03() {
+    assert !patternMatcher("$N", "").matches(findFirst.expression(ast("(x)")));
+  }
+
+  @Test public void p04() {
+    assert !patternMatcher("$SN", "").matches(findFirst.expression(ast("(x)")));
+  }
+
+  @Test public void p05() {
+    assert patternMatcher("$X", "").matches(findFirst.expression(ast("(x)")));
+  }
+
+  @Test public void x01() {
+    assert !patternMatcher("$X;", "").matches(findFirst.expression(ast("return 6;")));
+  }
 }

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,12 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
-  private static final Set<UserDefinedTipper<EnhancedForStatement>> tippers = new HashSet<UserDefinedTipper<EnhancedForStatement>>() {
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($N1 $N2 : $X1) if($X2) $N3.add($N4);", //
@@ -30,5 +31,9 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
+  }
+
+  @Override public String category() {
+    return Category.Quantifier + "";
   }
 }

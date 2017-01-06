@@ -39,4 +39,10 @@ public class AggregateTest {
         .withTipper(EnhancedForStatement.class, new Aggregate())//
         .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();").stays();
   }
+
+  @Test public void respect() {
+    trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
+        .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
+        .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
+  }
 }

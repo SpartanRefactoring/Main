@@ -54,14 +54,14 @@ public class Binding {
     key = null;
   }
 
-  public Binding(String key, type type) {
+  public Binding(final String key, final type type) {
     this.key = key;
     this.type = type;
     hiding = null;
     self = null;
   }
 
-  public Binding(String key, ASTNode self) {
+  public Binding(final String key, final ASTNode self) {
     this.key = key;
     this.self = self;
     hiding = null;

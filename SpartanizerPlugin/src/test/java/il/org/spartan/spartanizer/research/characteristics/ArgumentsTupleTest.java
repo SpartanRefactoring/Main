@@ -68,4 +68,8 @@ public class ArgumentsTupleTest extends JavadocerTest {
   @Test public void n() {
     assert not("boolean foo(int a, int b, int c){bar(a,b,c2);}");
   }
+
+  @Test public void o() {
+    assert not("boolean foo(int a, int b){if(x) return foo(c,a,b,d); else foo(c,a,b,d).f(a);}");
+  }
 }

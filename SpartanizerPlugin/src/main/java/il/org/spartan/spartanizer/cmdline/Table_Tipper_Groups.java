@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.tables.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
@@ -28,11 +29,11 @@ public class Table_Tipper_Groups {
             categories.put(key, box.it(categories.get(key).intValue() + 1));
           }
     final int total = categories.values().stream().reduce((x, y) -> box.it(x.intValue() + y.intValue())).get().intValue();
-    try (Relation r = new Relation(getClass())) {
+    try (final Table r = new Table(this)) {
       for (final String ¢ : categories.keySet())
-        r.put("Category", ¢).put("Count", categories.get(¢)).put("Fraction", 1. * categories.get(¢).intValue() / total).nl();
+        r.col("Category", ¢).col("Count", categories.get(¢)).col("Fraction", 1. * categories.get(¢).intValue() / total).nl();
       System.err.println(r.description());
     }
-      system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
+    system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
 }

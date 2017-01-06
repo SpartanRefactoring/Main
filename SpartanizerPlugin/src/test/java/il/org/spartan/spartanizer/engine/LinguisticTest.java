@@ -7,6 +7,7 @@ import java.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Test class for {@link Linguistic}

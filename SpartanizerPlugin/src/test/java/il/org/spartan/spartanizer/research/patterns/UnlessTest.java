@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** @author Ori Marcovitch
- * @since 2016 */
+ * @since Dec 13, 2016 */
 @SuppressWarnings("static-method")
 public class UnlessTest {
   @Test public void basic() {
@@ -34,6 +34,7 @@ public class UnlessTest {
     trimmingOf("return ($ == null) ? null : $.size();")//
         .withTipper(ConditionalExpression.class, new Unless())//
         .gives("return unless(($==null)).eval(()->$.size());")//
+        .gives("return unless($==null).eval(()->$.size());")//
         .stays();
   }
 }

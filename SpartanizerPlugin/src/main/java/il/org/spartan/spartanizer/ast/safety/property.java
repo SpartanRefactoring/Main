@@ -14,7 +14,7 @@ public enum property {
     N from(ASTNode n);
   }
 
-  static <N> String key(Class<N> ¢) {
+  static <N> String key(final Class<N> ¢) {
     return ¢.getCanonicalName();
   }
 
@@ -22,9 +22,9 @@ public enum property {
     return ¢ -> ¢.setProperty(key(o.getClass()), o);
   }
 
-  public static <N> Obtainer<N> obtain(Class<N> c) {
+  public static <N> Obtainer<N> obtain(final Class<N> c) {
     return new Obtainer<N>() {
-      @Override @SuppressWarnings("unchecked") public N from(ASTNode n) {
+      @Override @SuppressWarnings("unchecked") public N from(final ASTNode n) {
         return (N) n.getProperty(key(c));
       }
     };
