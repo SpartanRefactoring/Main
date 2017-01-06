@@ -50,7 +50,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                         * @param key The key to be added; must not be <code><b>null</b></code>
+                           * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public Self col(final String key, final double value) {
@@ -88,7 +88,10 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param value The value associated with the key
    * @return this */
   public final Self col(final String key, final Object value) {
-    return value == null ? col(key) : col(key, value + "");
+    if (value == null)
+      return col(key);
+    super.put(key, value);
+    return self();
   }
 
   public final Self col(final String key, final Object a[], final int i) {
@@ -96,7 +99,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   public final Self col(final String key, final Object[] os) {
-    return col(key, os == null ? null : Separate.by(os, ARRAY_SEPARATOR));
+    return col(key, os == null || os.length == 0 ? null : (Object) os);
   }
 
   /** A mutator to add a key and a general {@link String} value to this instance
@@ -122,6 +125,6 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
 
   protected abstract Self self();
 
-  public static final String ARRAY_SEPARATOR = ";";
+  public static final String ARRAY_SEPARATOR = "; ";
   private static final long serialVersionUID = 1L;
 }

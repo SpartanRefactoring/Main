@@ -34,6 +34,6 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
   }
 
   @Override public String category() {
-    return Category.Relational + "";
+    return Category.Quantifier + "";
   }
 }
