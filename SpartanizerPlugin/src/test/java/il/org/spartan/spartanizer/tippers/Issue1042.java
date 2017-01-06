@@ -9,15 +9,9 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1042 {
-  @Test public void a0() {
-    trimmingOf("@interface A{final int a=4;}")//
-        .gives("@interface A{int a=4;}")//
-        .stays();
-  }
-
-  @Test public void a1() {
-    trimmingOf("@interface A{final int a=4;final char c;}")//
-        .gives("@interface A{int a=4;char c;}")//
+  @Test public void test() {
+    trimmingOf("abstract int f(final int a, final int b);")//
+    .gives("abstract int f(int a, int b);")//
         .stays();
   }
 }
