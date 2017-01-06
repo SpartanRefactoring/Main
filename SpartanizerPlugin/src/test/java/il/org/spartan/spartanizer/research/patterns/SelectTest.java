@@ -6,8 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** @author Ori Marcovitch
- * @since 2016 */
-@Ignore
+ * @since Dec 17, 2016 */
 @SuppressWarnings("static-method")
 public class SelectTest {
   @Test public void a() {
@@ -21,6 +20,13 @@ public class SelectTest {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
         .withTipper(EnhancedForStatement.class, new Select())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(Collectors.toList()));")//
+        .stays();
+  }
+
+  @Test public void respect() {
+    trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
+        .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
+        .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(Collectors.toList()));")//
         .stays();
   }
 }

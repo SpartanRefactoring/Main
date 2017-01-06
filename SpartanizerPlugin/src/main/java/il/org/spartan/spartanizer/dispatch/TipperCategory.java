@@ -143,4 +143,13 @@ public interface TipperCategory {
       return label;
     }
   }
+
+  /** Expand code to be clearer. */
+  interface Expander extends TipperCategory {
+    String label = "Expander";
+
+    @Override default String description() {
+      return label;
+    }
+  }
 }

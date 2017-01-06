@@ -15,7 +15,8 @@ public class Down {
       if (!hazOneStatement(¢))
         return false;
       final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
-      return returnTypeSameAs(¢, type($)) && same(name(onlyParameter(¢)), expression($));
+      return returnTypeSameAs(¢, type($))//
+          && same(name(onlyParameter(¢)), expression($));
     }
   }
 }

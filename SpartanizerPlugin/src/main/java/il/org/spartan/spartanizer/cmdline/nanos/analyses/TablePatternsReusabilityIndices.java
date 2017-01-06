@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -16,12 +15,13 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 import il.org.spartan.spartanizer.research.patterns.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static Relation pWriter;
+  private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final Set<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    pWriter = new Relation(outputFileName());
+    pWriter = new Table(outputFileName());
   }
 
   private static String outputFileName() {
@@ -47,7 +47,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     TableReusabilityIndices.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Relation.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

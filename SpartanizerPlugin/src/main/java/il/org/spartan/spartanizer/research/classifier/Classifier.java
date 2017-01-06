@@ -11,7 +11,9 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Ori Marcovitch
+/** NOT ACTIVE RIGHT NOW. <br>
+ * NEED TO ADD CATEGORIES.
+ * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
   final Map<String, List<String>> forLoops = new HashMap<>();
@@ -21,7 +23,6 @@ public class Classifier extends ASTVisitor {
   static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new Contains());
       add(new ForEach());
     }
   };

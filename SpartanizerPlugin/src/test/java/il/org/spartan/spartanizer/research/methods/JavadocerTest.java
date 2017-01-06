@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 public class JavadocerTest {
   protected static JavadocMarkerNanoPattern JAVADOCER; // Descendants must
                                                        // initialize
-  static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+  static final SpartAnalyzer spartanizer = new SpartAnalyzer();
 
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");

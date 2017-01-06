@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,7 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.statementsPattern;
 
 /** @author Ori Marcovitch
  * @year 2016 */
@@ -31,5 +32,13 @@ public final class FindFirst extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
+  }
+
+  @Override public String category() {
+    return Category.Quantifier + "";
+  }
+
+  @Override public String description() {
+    return "Iterate a collection for the first element matching some predicate";
   }
 }

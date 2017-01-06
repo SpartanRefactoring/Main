@@ -33,12 +33,16 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(Block.class, //
             new CachingPattern(), //
-            new CreateFrom(), //
+            new CopyCollection(), //
             new FindFirst(), //
             new ReturnOld(), //
             new ReturnAllMatches(), //
             new ReturnAnyMatches(), //
             null) //
+        .add(CatchClause.class, //
+            new IfThrowsReturnNull(), //
+            new IgnoreException(), //
+            null)//
         .add(ConditionalExpression.class, //
             new AsBit(), //
             new DefaultsTo(), //
@@ -49,38 +53,36 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
-            new Contains(), //
             new ForEach(), //
             new Select(), //
             null) //
         .add(IfStatement.class, //
-            new IfNullThrow(), //
+            new NotNullOrThrow(), //
             new IfNullReturn(), //
             new IfNullReturnNull(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<IfStatement>(), //
             new PutIfAbsent(), //
-            new IfThrow(), //
+            new NotHoldsOrThrow(), //
             null) //
         .add(InfixExpression.class, //
             new LispLastIndex(), //
+            new Infix.SafeReference(), //
             null)//
         .add(MethodInvocation.class, //
             new LispFirstElement(), //
             new LispLastElement(), //
             null) //
-        .add(TryStatement.class, //
-            new IfThrowsReturnNull(), //
-            null)//
-        .add(WhileStatement.class, //
-            new Exhaust(), //
-            null)//
+    // .add(WhileStatement.class, //
+    // new Exhaust(), //
+    // null)//
     ;
     return this;
   }
 
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
+        new ArgumentsTuple(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
         new Default(), //
@@ -92,14 +94,12 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Examiner(), //
         new Cascading.Setter(), ///
         new Getter(), //
-        new HashCodeMethod(), //
         new Adjuster(), //
         new ForEachApplier(), //
         new SelfCaster(), //
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
-        new ToStringMethod(), //
         new TypeChecker(), //
         new Up.Caster(), //
         null);
@@ -108,12 +108,12 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   private SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
-        new ArgumentsTuple(), //
-        new Fluenter(), //
-        new Independent(), //
-        new JDPattern(), //
-        new MethodEmpty(), //
+        new Fluenter(), // Uberlola
+        new HashCodeMethod(), // Not Counted
+        new Independent(), // Uberlola
+        new JDPattern(), // Uberlola
         new UseParameterAndReturnIt(), //
+        new ToStringMethod(), // Not Counted
         null);
     return this;
   }

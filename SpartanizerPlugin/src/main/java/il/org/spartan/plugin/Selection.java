@@ -1,7 +1,9 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -15,7 +17,6 @@ import org.eclipse.ui.views.markers.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.lisp.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection

@@ -72,7 +72,7 @@ public interface Environment {
   Set<String> keys();
 
   String name();
-  
+
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
   Environment nest();
@@ -133,8 +133,8 @@ public interface Environment {
       return "null";
     }
   };
-
   LinkedHashSet<Entry<String, Binding>> upEnv = new LinkedHashSet<>();
+
   /** @param ¢ JD
    * @return All declarations in given {@link Statement}, without entering the
    *         contained ({@link Block}s. If the {@link Statement} is a
@@ -219,15 +219,15 @@ public interface Environment {
     return ¢.getName() + "";
   }
 
-  static Namespace of(ASTNode n) {
-    for (ASTNode ¢ : ancestors.of(n)) {
-      Namespace $ = property.obtain(Namespace.class).from(¢);
+  static Namespace of(final ASTNode n) {
+    for (final ASTNode ¢ : ancestors.of(n)) {
+      final Namespace $ = property.obtain(Namespace.class).from(¢);
       if ($ != null)
         return $;
     }
     Environment.NULL.spawn().fillScope(n.getRoot());
-    for (ASTNode ¢ : ancestors.of(n)) {
-      Namespace $ = property.obtain(Namespace.class).from(¢);
+    for (final ASTNode ¢ : ancestors.of(n)) {
+      final Namespace $ = property.obtain(Namespace.class).from(¢);
       if ($ != null)
         return $;
     }

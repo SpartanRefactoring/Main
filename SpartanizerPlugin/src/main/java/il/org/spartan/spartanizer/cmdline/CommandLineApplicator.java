@@ -6,7 +6,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An {@link Applicator} suitable for the command line.

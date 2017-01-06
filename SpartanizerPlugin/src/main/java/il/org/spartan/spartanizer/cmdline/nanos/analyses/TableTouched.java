@@ -7,12 +7,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.tables.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
  * @since 2016-12-25 */
 public class TableTouched extends TableCoverage {
-  private static Relation touchedWriter;
-  private int totalMethodsTouched;
+  private static Table touchedWriter;
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -26,31 +26,26 @@ public class TableTouched extends TableCoverage {
   }
 
   private static void initializeWriter() {
-    touchedWriter = new Relation(TableTouched.class.getSimpleName());
+    touchedWriter = new Table(TableTouched.class.getSimpleName());
   }
 
-  @SuppressWarnings("boxing") public void summarize(final String path) {
+  @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {
     if (touchedWriter == null)
       initializeWriter();
-    gatherStatistics();
     touchedWriter.put("Project", path);
+    int totalMethods = 0;
+    int totalMethodsTouched = 0;
     for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
-        touchedWriter.put(i + "", "-");
+        touchedWriter.put(i + "", .0);
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
         totalMethods += rs.size();
         totalMethodsTouched += totalMethodsTouched(rs);
-        touchedWriter.put(i + "", format.decimal(100 * fractionOfMethodsTouched(rs)));
+        touchedWriter.put(i + "", Double.valueOf(format.decimal(100 * fractionOfMethodsTouched(rs))));
       }
     touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();
-  }
-
-  private void gatherStatistics() {
-    totalMethodsTouched = 0;
-    for (final Integer ¢ : statementsCoverageStatistics.keySet())
-      totalMethodsTouched += totalMethodsTouched(statementsCoverageStatistics.get(¢));
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> ¢) {

@@ -341,9 +341,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.commands">
      <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
      <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
+     <command id="il.org.spartan.ZoomTool" name="active Window"/>
+     <command id="il.org.spartan.ZoomAll" name="entire Project"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
-     <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <!--<command id="il.org.spartan.AthensCollateral" name="Athens Collateral handler" />-->
@@ -352,8 +353,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
-   <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.Handlers"/>
-   <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.Handlers"/>
+   <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
@@ -412,14 +415,19 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-   <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
-      <menu label="Laconize..." mnemonic="L">
-        <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
-        <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
-        <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
-        <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
-   </menu>
-   </menu>
+  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+    <menu label="Spartanizer" mnemonic="S">
+      <menu label="Laconize.." mnemonic="L">
+        <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="C"/>       
+        <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="A"/>
+      </menu>
+      <menu label="Zoom.." mnemonic="Z">
+        <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
+        <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
+      </menu>
+      <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
+    </menu>
+  </menu>
 </menuContribution>
 
   <!-- Project menu -->
