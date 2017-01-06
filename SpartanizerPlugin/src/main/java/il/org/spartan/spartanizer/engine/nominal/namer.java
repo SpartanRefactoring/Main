@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public interface namer {
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
 
-  static String[] components(String javaName) {
+  static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
   }
 
