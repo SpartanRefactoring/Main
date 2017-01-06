@@ -21,7 +21,7 @@ import org.eclipse.ui.texteditor.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.inflate.SingleFlater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Handler for the Athenizer project's feature (global athenizer). Uses
  * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an

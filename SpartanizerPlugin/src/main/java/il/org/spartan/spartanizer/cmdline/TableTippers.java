@@ -16,20 +16,19 @@ public class TableTippers {
   }
 
   public void go() {
-    try (final Table r = new Table(getClass().getSimpleName().toLowerCase())) {
+    try (final Table r = new Table(this)) {
       for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
-            if (¢ != null) {
+            if (¢ != null)
               r//
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", ¢.getClass().getSimpleName())//
                   .col("Node Type Number", i) //
                   .col("Node Class", intToClassName(i))//
                   .col("Actual class", name(¢.myActualOperandsClass()))//
-                  .col("Abstract class", name(¢.myAbstractOperandsClass()));
-              r.nl();
-            }
+                  .col("Abstract class", name(¢.myAbstractOperandsClass())) //
+                  .nl();
       System.err.println("Output found in " + r.description());
     }
   }

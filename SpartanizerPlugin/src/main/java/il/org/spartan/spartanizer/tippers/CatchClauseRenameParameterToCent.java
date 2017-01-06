@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -10,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>catch(Exceprion e){}</code> to
@@ -24,7 +24,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
   @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
     assert c != null;
     final SingleVariableDeclaration parameter = c.getException();
-    if (!isJohnDoe(parameter))
+    if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;

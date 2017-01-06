@@ -1,5 +1,9 @@
 package il.org.spartan.tables;
 
+import java.util.*;
+
+import il.org.spartan.*;
+
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public interface TableRenderer {
@@ -18,10 +22,26 @@ public interface TableRenderer {
   default String extension() {
     return toString().toLowerCase();
   }
+  default String renderRow(Collection<Object> values) {
+    final StringBuilder $ = new StringBuilder(recordBegin());
+    final Separator s = new Separator(recordSeparator());
+    for (final Object ¢ : values)
+      $.append(s)
+          .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)
+              : ¢ instanceof Integer ? cellInteger((Integer) ¢) //
+                  : ¢ instanceof Double ? cellReal((Double) ¢) //
+                      : ¢);
+    return $ + recordEnd();
+  }
+  default String cellArray(final Object[] ¢) {
+    return separate.these(¢).by(arraySeparator());
+  }
 
-// @formatter:off
-  default String integerField(final String value) { return value; }
-  default String realField(final String value) { return value; }
+
+  // @formatter:off
+  default String arraySeparator() { return "; "; }
+  default String cellInteger(final Integer ¢) { return ¢ + ""; }
+  default String cellReal(final Double ¢) { return ¢ + ""; }
   default String stringField(final String value) { return value; }
   default String beforeTable() { return empty(); }
   default String afterTable() { return empty(); }
@@ -60,10 +80,13 @@ public interface TableRenderer {
             return "$\\" + super.render(¢) + "$";
           case σ:
             return "$\\sigma$";
+          case Σ:
+            return "$\\sigma$";
         }
       }
 
       // @formatter:off
+      @Override public String arraySeparator() { return ", "; }
       @Override public String recordEnd() { return "\\\\\n"; }
       @Override public String recordSeparator() { return "\t&\t"; }
       @Override public String beforeTable() {return "\\toprule\n"; }
@@ -74,6 +97,7 @@ public interface TableRenderer {
     },
     TEX2 {
   // @formatter:off
+    @Override public String arraySeparator() { return ", "; }
     @Override public String footerEnd() { return "\\\\\n"; }
     @Override public String recordSeparator() { return "\t&\t"; }
     @Override public String beforeTable() {return "\\hline\n"; }

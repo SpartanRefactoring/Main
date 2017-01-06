@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import java.util.*;
 
@@ -15,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @mdoron this is a redundant tipper, see #750 Convert
@@ -43,7 +43,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       }
     }
     final Statement body = $.getBody();
-    if (body == null || !isJohnDoe(d))
+    if (body == null || !JohnDoe.property(d))
       return null;
     final SimpleName n = d.getName();
     assert n != null;
