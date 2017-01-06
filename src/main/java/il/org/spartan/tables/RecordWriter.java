@@ -12,7 +12,7 @@ public class RecordWriter implements Closeable {
    * @throws IOException */
   public RecordWriter(final TableRenderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;
-    fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
+    fileName = basePath.replaceAll("\\.[a-z0-9A-Z_]*$", "") + "." + renderer.extension();
     file = new File(fileName);
     writer = new FileWriter(file);
     write(renderer.beforeTable());
@@ -63,7 +63,7 @@ public class RecordWriter implements Closeable {
   }
 
   private void writeData(final Row<?> ¢) {
-    write(renderer.recordBegin() + separate.these(¢.values()).by(renderer.recordSeparator()) + renderer.recordEnd());
+    write(renderer.renderRow(¢.values()));
   }
 
   private void writeHeader(final Row<?> ¢) {
