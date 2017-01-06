@@ -9,7 +9,7 @@ import org.junit.*;
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 @SuppressWarnings("static-method")
-public class Issue975 {
+public class Issue0975 {
   @Test public void simpleBlockTest() {
     expansionOf("for(int i=0;i<5;i++) a=5;").gives("for(int i=0;i<5;i++){a=5;}").stays();
   }

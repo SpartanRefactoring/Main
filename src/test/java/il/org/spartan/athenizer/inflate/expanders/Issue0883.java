@@ -14,7 +14,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
  * @since 8-12-2016 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue883 {
+public class Issue0883 {
   @Test public void test0() {
     expansionOf("return a==0? 2:3;").gives("if(a==0)return 2;else return 3;");
   }
