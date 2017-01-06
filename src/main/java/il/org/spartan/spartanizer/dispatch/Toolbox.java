@@ -97,7 +97,7 @@ public class Toolbox {
             null)//
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
-        .add(Modifier.class, new RedundantModifier(), new RedundantModifierInAbstractMethod())//
+        .add(Modifier.class, new ModifierRedundant(), new ModifierFinalRedundantInAbstractMethod())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
@@ -189,7 +189,7 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new RedundentReturnStatementInVoidTypeMethod(), //
+            new ReturnStatementRedundantInVoidMethod(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
             // This is a new
             // tipper

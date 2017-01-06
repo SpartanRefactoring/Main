@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dan Abramovich
  * @since 28-11-2016 */
-public class RedundentReturnStatementInVoidTypeMethod extends ReplaceCurrentNode<MethodDeclaration>
+public class ReturnStatementRedundantInVoidMethod extends ReplaceCurrentNode<MethodDeclaration>
     implements TipperCategory.Collapse, MethodPatternUtilitiesTrait {
   @Override public ASTNode replacement(final MethodDeclaration x) {
     if (empty(x) || returnTypeNotVoid(x) || !iz.returnStatement(lastStatement(x)) || expression(lastStatement(x)) != null)
