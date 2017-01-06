@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
@@ -12,7 +13,9 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
-  /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
+  public Table(final Object o) {
+    this(classToNormalizedFileName(o.getClass()));
+  }
 
   public Table(final String name) {
     this(name, TableRenderer.builtin.values());
@@ -29,19 +32,11 @@ public class Table extends Row<Table> implements Closeable {
       }
   }
 
-  public Table(final Class<?> c) {
-    this(c.getSimpleName().toLowerCase().replace('_', '-').replaceAll("^.*?-", ""));
-  }
-
-  public Table(final Object o) {
-    this(o.getClass());
-  }
-
   private int length;
   public final String name;
-  private final List<RecordWriter> writers = new ArrayList<>();
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
+  private final List<RecordWriter> writers = new ArrayList<>();
 
   void add(final Statistic... ss) {
     final List<Statistic> a = as.list(statisics);
@@ -60,13 +55,41 @@ public class Table extends Row<Table> implements Closeable {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
+        String key = lastEmptyColumn();
         for (final RecordWriter ¢ : writers) {
-          put((String) null, ¢.renderer.render(s));
+          put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
       }
     for (final RecordWriter ¢ : writers)
       ¢.close();
+  }
+
+  private String lastEmptyColumn() {
+    String $ = null;
+    for (final String key : keySet()) {
+      final RealStatistics r = getRealStatistics(key);
+      if (r != null && r.n() != 0)
+        break;
+      $ = key;
+    }
+      return $;
+  }
+
+  @Override public Table col(final String key, final double value) {
+    getRealStatistics(key).record(value);
+    return super.col(key, value);
+  }
+
+  @Override public Table col(final String key, final int value) {
+    getRealStatistics(key).record(value);
+    return super.col(key, value);
+  }
+
+  @Override public Table col(final String key, final long value) {
+    getRealStatistics(key).record(value);
+    super.col(key, value);
+    return this;
   }
 
   public String description() {
@@ -101,22 +124,6 @@ public class Table extends Row<Table> implements Closeable {
     return temporariesFolder + name;
   }
 
-  @Override public Table col(final String key, final double value) {
-    getRealStatistics(key).record(value);
-    return super.col(key, value);
-  }
-
-  @Override public Table col(final String key, final int value) {
-    getRealStatistics(key).record(value);
-    return super.col(key, value);
-  }
-
-  @Override public Table col(final String key, final long value) {
-    getRealStatistics(key).record(value);
-    super.col(key, value);
-    return this;
-  }
-
   void remove(final Statistic... ss) {
     final List<Statistic> a = as.list(statisics);
     a.removeAll(as.list(ss));
@@ -130,6 +137,8 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
+  /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
+
   private void set(final List<Statistic> ¢) {
     set(¢.toArray(new Statistic[¢.size()]));
   }
@@ -140,4 +149,12 @@ public class Table extends Row<Table> implements Closeable {
 
   private static final long serialVersionUID = 1L;
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + "/";
+
+  public static String classToNormalizedFileName(final Class<? extends Object> class1) {
+    return classToNormalizedFileName(class1.getSimpleName());
+  }
+
+  static String classToNormalizedFileName(final String className) {
+    return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
+  }
 }

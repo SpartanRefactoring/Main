@@ -55,8 +55,10 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Iterative, Return, Throw, Conditional, Method, Relational, Lisp;
+    Iterative, Return, Throw, Conditional, Method, Quantifier, Functional;
     public static String pretty(final String name) {
+      if (name.startsWith("Lisp"))
+        return name.replaceAll("^Lisp", "");
       switch (name) {
         case "MethodDeclaration":
           return "Method";

@@ -1,10 +1,11 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import static il.org.spartan.lisp.*;
 
 public class TrackerSelection extends Selection {
   ASTNode track;
