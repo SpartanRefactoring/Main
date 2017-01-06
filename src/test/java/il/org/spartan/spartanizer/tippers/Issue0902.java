@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link RedundentReturnStatementInVoidTypeMethod} of
+/** This is a unit test for {@link ReturnStatementRedundantInVoidMethod} of
  * previously failed tests. Related to {@link Issue0879}.
  * @author Yuval Simon
  * @since 2016-12-08 */
