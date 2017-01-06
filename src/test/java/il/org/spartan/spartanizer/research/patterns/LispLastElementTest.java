@@ -11,22 +11,22 @@ import org.junit.*;
 public class LispLastElementTest {
   @Test public void a() {
     trimmingOf("li.get(li.size()-1)")//
-        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .using(MethodInvocation.class, new LispLastElement())//
         .gives("last(li)")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
-        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .using(MethodInvocation.class, new LispLastElement())//
         .gives("last(li);")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("omg(li.get(0), li.get(li.size()-1));")//
-        .withTipper(MethodInvocation.class, new LispFirstElement())//
-        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .using(MethodInvocation.class, new LispFirstElement())//
+        .using(MethodInvocation.class, new LispLastElement())//
         .gives("omg(first(li),last(li));")//
         .stays();
   }

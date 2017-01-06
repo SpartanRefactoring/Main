@@ -16,7 +16,7 @@ public class IfThrowsReturnNullTest {
             "  }" + //
             " catch (  B i) {" + //
             "    return null;}"//
-    ).withTipper(CatchClause.class, new IfThrowsReturnNull())//
+    ).using(CatchClause.class, new IfThrowsReturnNull())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();")//
@@ -26,7 +26,7 @@ public class IfThrowsReturnNullTest {
 
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
-        .withTipper(CatchClause.class, new IfThrowsReturnNull())//
+        .using(CatchClause.class, new IfThrowsReturnNull())//
         .stays();
   }
 }
