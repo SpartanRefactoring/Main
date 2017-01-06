@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class Issue0086 extends Issue___ {
+public final class Issue0086 extends Issue____ {
   private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";
   Tipper<ThrowStatement> tipper;
   Statement context;
