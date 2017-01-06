@@ -40,7 +40,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
     final Expression $ = duplicate.of(a.getIndex());
     final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();
-    return new Tip(description(a), a, this.getClass()) {
+    return new Tip(description(a), a, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = duplicate.of(a);

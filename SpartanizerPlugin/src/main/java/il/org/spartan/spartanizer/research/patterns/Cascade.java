@@ -28,7 +28,7 @@ public final class Cascade extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {
     return null;
-    // return new Tip("", x, this.getClass()) {
+    // return new Tip("", x, getClass()) {
     // @Override public void go(ASTRewrite r, TextEditGroup g) {
     // final Matcher m = Matcher.creation(x);
     // int j;

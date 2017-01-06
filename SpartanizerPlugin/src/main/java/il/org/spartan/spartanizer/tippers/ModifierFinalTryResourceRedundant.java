@@ -28,7 +28,7 @@ public final class ModifierFinalTryResourceRedundant extends CarefulTipper<Modif
     if (!$.isFinal())
       return null;
     VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));
-    return x == null || az.tryStatement(parent(x)) == null ? null : new Tip(description($), $, this.getClass()) {
+    return x == null || az.tryStatement(parent(x)) == null ? null : new Tip(description($), $, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove($, g);
       }

@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** 
- * @author Yossi Gil
+/** @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
@@ -23,18 +22,17 @@ public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Mo
     return "Eliminate redundant final '" + az.variableDeclarationStatement(parent(¢)) + "' (argument to abstract method)";
   }
 
-  @Override public Tip tip(final Modifier $) {
-    if (!$.isFinal())
+  @Override public Tip tip(final Modifier m ) {
+    if (!m.isFinal())
       return null;
-    SingleVariableDeclaration singleVariableDeclaration = az.singleVariableDeclaration(parent($));
-    if (singleVariableDeclaration == null)
+    SingleVariableDeclaration v= az.singleVariableDeclaration(parent(m));
+    if (v == null)
       return null;
-    MethodDeclaration methodDeclaration = az.methodDeclaration(parent(singleVariableDeclaration));
-    return !Modifier.isAbstract(methodDeclaration.getModifiers()) && !az.typeDeclaration(parent(methodDeclaration)).isInterface() ? null
-        : new Tip(description($), $, this.getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.remove($, g);
-          }
-        };
+    MethodDeclaration methodDeclaration = az.methodDeclaration(parent(v));
+    return !iz.abstract¢(methodDeclaration) && !iz.interface¢(parent(methodDeclaration)) ? null : new Tip(description(m), m, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        r.remove(m, g);
+      }
+    };
   }
 }
