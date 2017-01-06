@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
-public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
+public final class HoldsForSome extends NanoPatternTipper<Block> {
   private static final Set<UserDefinedTipper<Block>> tippers = new HashSet<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
