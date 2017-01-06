@@ -19,4 +19,20 @@ public class ParenthesizedRemoveExtraParenthesisTest {
     trimmingOf("((T)b)")//
         .stays();
   }
+
+  @Test public void c() {
+    trimmingOf("a((b))")//
+        .gives("a(b)")//
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("((B)b).f()")//
+        .stays();
+  }
+
+  @Test public void e() {
+    trimmingOf("((B)b).f")//
+        .stays();
+  }
 }

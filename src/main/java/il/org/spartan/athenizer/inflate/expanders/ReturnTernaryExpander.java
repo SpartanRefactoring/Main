@@ -10,11 +10,10 @@ import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
- * relevant for return (<ternary>)
- * Issue #883 {@link Issue883}
+ * relevant for return (<ternary>) Issue #883 {@link Issue883}
  * @author Raviv Rachmiel
  * @since 03-12-16 */
-public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> implements TipperCategory.InVain {
+public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> implements TipperCategory.Expander {
   private static ASTNode innerReturnReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))

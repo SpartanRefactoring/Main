@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Issue #971
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
-public class IfElseBlockExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.InVain {
+public class IfElseBlockExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null || iz.block(step.then(s)) && step.elze(s) == null || iz.block(step.then(s)) && step.elze(s) != null && iz.block(step.elze(s)))
       return null;

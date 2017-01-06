@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -14,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
@@ -29,7 +29,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
     final SingleVariableDeclaration parameter = onlyOne(parameters(d));
-    if (!isJohnDoe(parameter))
+    if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;

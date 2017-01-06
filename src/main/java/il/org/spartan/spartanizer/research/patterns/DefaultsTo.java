@@ -33,4 +33,8 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
+
+  @Override public String description() {
+    return "Evaluate expression, if null- replace with default value";
+  }
 }

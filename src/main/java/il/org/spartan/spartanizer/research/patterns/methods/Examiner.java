@@ -20,8 +20,11 @@ public class Examiner extends JavadocMarkerNanoPattern {
       add(patternTipper("synchronized ($X1) { return $X2;}", "", ""));
     }
   };
+  private static final JavadocMarkerNanoPattern rival = new TypeChecker();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && haz.booleanReturnType(¢) && anyTips(tippers, onlyStatement(¢));
+    return haz.booleanReturnType(¢)//
+        && anyTips(tippers, onlyStatement(¢))//
+        && !rival.matches(¢);
   }
 }

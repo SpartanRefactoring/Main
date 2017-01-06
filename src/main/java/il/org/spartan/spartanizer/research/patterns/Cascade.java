@@ -42,7 +42,7 @@ public final class Cascade extends NanoPatternTipper<Block> {
     // };
   }
 
-  private static boolean initializeThenUse(Block x, int idx) {
+  private static boolean initializeThenUse(final Block x, final int idx) {
     return Matcher.matcher(x).createsThenUses(idx);
   }
 
@@ -57,15 +57,15 @@ public final class Cascade extends NanoPatternTipper<Block> {
     }
 
     private Matcher(final Block b) {
-      this.ss = statements(b);
+      ss = statements(b);
     }
 
-    private Matcher(List<Statement> ss) {
+    private Matcher(final List<Statement> ss) {
       this.ss = ss;
     }
 
     public boolean creates(final int idx) {
-      Statement $ = ss.get(idx);
+      final Statement $ = ss.get(idx);
       return iz.expressionStatement($) && iz.assignment(expression($)) && creation.canTip(expression($));
     }
 
@@ -74,8 +74,8 @@ public final class Cascade extends NanoPatternTipper<Block> {
     }
 
     public Matcher creation(final int idx) {
-      this.name = creation.getMatching(ss.get(idx), "$N") + "";
-      this.creationIdx = idx;
+      name = creation.getMatching(ss.get(idx), "$N") + "";
+      creationIdx = idx;
       return this;
     }
 

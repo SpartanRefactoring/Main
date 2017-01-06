@@ -7,6 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** see issue #815 and #799 for more details
  * @author Oren Afek

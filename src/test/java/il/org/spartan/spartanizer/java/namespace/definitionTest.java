@@ -451,8 +451,9 @@ class ZZZ___Fixture_ModelClass {
           ¢ += melon;
           q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
         }
-        for (@ScopeSize(8) @for¢ int pear, j = 0, variableInPlainFor= 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
-          @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode() + j + variableInPlainFor;
+        for (@ScopeSize(8) @for¢ int pear, j = 0, variableInPlainFor = 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+          @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode() + j
+              + variableInPlainFor;
           pear = hashCode() * anotherVariableInAnotherPlainFor;
           anotherVariableInAnotherPlainFor >>>= pear;
           ¢ += j + anotherVariableInAnotherPlainFor;

@@ -77,7 +77,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_DECLARATION);
   }
 
-  static boolean annotationTypeMemberDeclaration(BodyDeclaration ¢) {
+  static boolean annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
     return iz.nodeTypeEquals(¢, ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION);
   }
 
@@ -94,6 +94,12 @@ public interface iz {
 
   static boolean arrayInitializer(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, ARRAY_INITIALIZER);
+  }
+
+  List<String> defaultValues = Arrays.asList("null", "0", "false");
+
+  static boolean defaultLiteral(final ASTNode ¢) {
+    return defaultValues.contains(¢ + "");
   }
 
   /** @param pattern the statement or block to check if it is an assignment
@@ -1032,7 +1038,7 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }
 
-  static boolean typeDeclarationStatement(Statement ¢) {
+  static boolean typeDeclarationStatement(final Statement ¢) {
     return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
   }
 

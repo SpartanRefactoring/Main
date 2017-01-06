@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Abbreviates the name of a method parameter that is a viable candidate for
@@ -73,7 +74,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean suitable(final SingleVariableDeclaration ¢) {
-    return new JavaTypeNameParser(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
+    return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
   @Override public String description(final SingleVariableDeclaration ¢) {

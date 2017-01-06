@@ -23,12 +23,23 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
       add(patternTipper("for($N1 $N2 : $X1) $X2;", "($X1).stream().forEach($N2 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
     }
   };
+  private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new Select());
+      add(new Aggregate());
+    }
+  };
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
-    return anyTips(tippers, ¢);
+    return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
+  }
+
+  @Override public String description() {
+    return "Iterate a collection and apply a statement for each element";
   }
 }

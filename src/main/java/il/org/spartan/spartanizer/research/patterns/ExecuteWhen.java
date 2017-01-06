@@ -53,4 +53,8 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   @Override public Tip pattern(final IfStatement x) {
     return firstTip(tippers, x);
   }
+
+  @Override public String description() {
+    return "Execute a statement only if condition holds";
+  }
 }

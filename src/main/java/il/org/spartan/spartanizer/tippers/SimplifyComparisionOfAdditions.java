@@ -39,7 +39,7 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
         return null;
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.PLUS);
     }
-    InfixExpression res = subject.pair($, right).to(operator(x));
+    final InfixExpression res = subject.pair($, right).to(operator(x));
     return prerequisite(res) ? res : null;
   }
 
@@ -48,7 +48,7 @@ public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpr
   }
 
   @Override public boolean prerequisite(final InfixExpression ¢) {
-    return (new specificity()).compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
+    return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
