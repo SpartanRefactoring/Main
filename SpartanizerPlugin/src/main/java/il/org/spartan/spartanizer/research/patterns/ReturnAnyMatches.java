@@ -30,7 +30,7 @@ public final class ReturnAnyMatches extends NanoPatternTipper<Block> {
   }
 
   @Override public String category() {
-    return Category.Relational + "";
+    return Category.Quantifier + "";
   }
 
   @Override public String description() {
