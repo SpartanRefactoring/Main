@@ -14,4 +14,9 @@ public class Issue1042 {
     .gives("abstract int f(int a, int b);")//
         .stays();
   }
+  @Test public void test1() {
+    trimmingOf("interface a { int f(final int a, final int b);}")//
+    .gives("interface a { int f(int a, int b);}")//
+        .stays();
+  }
 }
