@@ -9,7 +9,7 @@ import org.junit.*;
  * @author Yuval Simon
  * @since 2016-12-08 */
 @SuppressWarnings("static-method")
-public class Issue906 {
+public class Issue0906 {
   @Test public void issue075h() {
     trimmingOf("int i; i = +0;").gives("int i = +0;");
   }
