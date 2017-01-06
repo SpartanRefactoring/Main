@@ -11,7 +11,7 @@ import org.junit.*;
 public class DefaultsToTest {
   @Test public void basic() {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
+        .using(ConditionalExpression.class, new DefaultsTo())//
         .gives("return default¢(¢).to(\"\");")//
         .stays();
   }

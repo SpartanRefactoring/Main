@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression> implements TipperCategory.ScopeReduction {
   @Override public Tip tip(final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
-    return new Tip(description(x), x, this.getClass()) {
+    return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, replacement(x, r, g), g);
       }

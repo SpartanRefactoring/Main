@@ -29,7 +29,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   }
 
   @Override public Tip tip(final ForStatement ¢) {
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block b = az.block(step.body(¢));
         if (b != null)

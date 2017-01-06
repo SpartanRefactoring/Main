@@ -1,8 +1,10 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
+import static il.org.spartan.zoomer.inflate.expanders.ExpanderTestUtils.*;
+
 import org.junit.*;
 
-import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
+import il.org.spartan.zoomer.inflate.expanders.*;
 
 /** Unit test for {@link CasesSplit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

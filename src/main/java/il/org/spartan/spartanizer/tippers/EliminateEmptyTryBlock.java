@@ -29,7 +29,7 @@ public final class EliminateEmptyTryBlock extends CarefulTipper<TryStatement> im
   }
 
   @Override public Tip tip(final TryStatement s) {
-    return new Tip(description(s), s, this.getClass()) {
+    return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block finallyBlock = s.getFinally();
         if (finallyBlock == null || finallyBlock.statements().isEmpty())

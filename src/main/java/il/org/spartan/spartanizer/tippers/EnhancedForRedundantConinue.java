@@ -30,7 +30,7 @@ public class EnhancedForRedundantConinue extends CarefulTipper<EnhancedForStatem
   }
 
   @Override public Tip tip(final EnhancedForStatement ¢) {
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         remove(r, lastStatement(¢), g);
       }

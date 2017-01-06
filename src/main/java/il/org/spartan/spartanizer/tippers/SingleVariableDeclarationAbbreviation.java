@@ -89,7 +89,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       exclude.exclude($);
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
-    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, this.getClass()) {
+    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);
