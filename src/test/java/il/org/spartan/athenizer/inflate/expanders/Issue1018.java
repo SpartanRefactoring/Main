@@ -4,6 +4,9 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+/** Unit test for {@link IfElseToSwitch}
+ * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @since 2017-01-06 */
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue1018 {
