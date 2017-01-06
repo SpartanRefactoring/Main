@@ -4,7 +4,8 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-/** @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+/** Unit test for {@link ThrowTernaryExpander} 
+ * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("static-method")
 public class Issue0998 {
