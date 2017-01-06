@@ -39,7 +39,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
   @Override public Tip tip(final SwitchStatement s) {
-    return new Tip(description(s), s, this.getClass()) {
+    return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(duplicate.of(expression(s)));

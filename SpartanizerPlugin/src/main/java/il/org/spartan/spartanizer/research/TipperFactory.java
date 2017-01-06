@@ -29,7 +29,7 @@ public class TipperFactory {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
       @Override public Tip tip(final Block n) {
-        return new Tip(description(n), n, this.getClass(), $.getMatchedNodes(az.block(n))) {
+        return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.blockReplacement(n), g);
           }
@@ -71,7 +71,7 @@ public class TipperFactory {
       }
 
       @Override public Tip tip(final N n) {
-        return new Tip(description(n), n, this.getClass()) {
+        return new Tip(description(n), n, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.replacement(n), g);
           }

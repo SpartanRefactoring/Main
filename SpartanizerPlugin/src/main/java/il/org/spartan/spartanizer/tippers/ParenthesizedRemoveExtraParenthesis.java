@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression> implements TipperCategory.ScopeReduction {
   @Override public Tip tip(final ParenthesizedExpression x) {
-    return new Tip(description(x), x, this.getClass()) {
+    return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, duplicate.of(expression(x)), g);
       }
