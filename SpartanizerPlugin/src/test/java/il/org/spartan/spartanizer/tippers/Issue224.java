@@ -8,7 +8,7 @@ import org.junit.runners.*;
 /** Unit tests for {@link MethodInvocationToStringToEmptyStringAddition}
  * @author Niv Shalmon
  * @since 2016
- * @see Issue209Test */
+ * @see Issue0209Test */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue224 {

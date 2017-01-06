@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
-/** see Issue #717 for more details
+/** see Issue0 #717 for more details
  * @author Lidia Piatigorski
  * @author Nikita Dizhur
  * @author Alex V.

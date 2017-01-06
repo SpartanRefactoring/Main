@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** Unit tests for Renaming fault, Issue 157.
+/** Unit tests for Renaming fault, Issue0 157.
  * @author Dan Greenstein
  * @since 2016 */
 @SuppressWarnings("static-method")

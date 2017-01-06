@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** This is a unit test for {@link BlockRemoveDeadVariables} of previously
- * failed tests. Related to {@link Issue359}.
+ * failed tests. Related to {@link Issue0359}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @Ignore
