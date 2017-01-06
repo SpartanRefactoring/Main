@@ -8,7 +8,7 @@ import org.junit.*;
  * @since 2016-12-26 */
 // TODO: post a link to the tested class
 @SuppressWarnings("static-method")
-public class Issue999 {
+public class Issue0999 {
   @Test public void a() {
     expansionOf("a = b = 3;").gives("b = 3; a = b;");
   }
