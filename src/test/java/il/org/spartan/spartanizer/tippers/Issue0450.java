@@ -10,7 +10,7 @@ import org.junit.*;
  * @author Sapir Bismot
  * @since 16-11-30 */
 @SuppressWarnings("static-method")
-public class Issue450 {
+public class Issue0450 {
   @Test public void test0() {
     trimmingOf("final Separator s = new Separator(\", \");" //
         + "for (final String a : args)" //
