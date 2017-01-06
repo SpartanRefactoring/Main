@@ -97,7 +97,7 @@ public class Toolbox {
             null)//
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
-        .add(Modifier.class, new RedundantModifier())//
+        .add(Modifier.class, new RedundantModifier(), new RedundantModifierInAbstractMethod())//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
