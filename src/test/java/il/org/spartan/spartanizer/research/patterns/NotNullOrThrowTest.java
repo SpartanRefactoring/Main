@@ -11,14 +11,14 @@ import org.junit.*;
 public class NotNullOrThrowTest {
   @Test public void a() {
     trimmingOf("if(x == null) throw new Watever();")//
-        .withTipper(IfStatement.class, new NotNullOrThrow())//
+        .using(IfStatement.class, new NotNullOrThrow())//
         .gives("notNull(x).orThrow(()->new Watever());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("if(x == null) throw new Watever(with(This, and, zis()));")//
-        .withTipper(IfStatement.class, new NotNullOrThrow())//
+        .using(IfStatement.class, new NotNullOrThrow())//
         .gives("notNull(x).orThrow(()->new Watever(with(This,and,zis())));")//
         .stays();
   }

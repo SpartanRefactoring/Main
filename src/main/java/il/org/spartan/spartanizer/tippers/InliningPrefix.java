@@ -33,7 +33,7 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
 
   @Override public Tip tip(final ArrayAccess a) {
     return extract.nextPrefix(a) == null || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()) ? null
-        : new Tip(description(a), a, this.getClass()) {
+        : new Tip(description(a), a, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final PostfixExpression newpost = a.getAST().newPostfixExpression();
             newpost.setOperand(duplicate.of(a.getIndex()));

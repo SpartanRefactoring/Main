@@ -11,14 +11,14 @@ import org.junit.*;
 public class ExecuteWhenTest {
   @Test public void basic() {
     trimmingOf("if(x == 8) print(8);")//
-        .withTipper(IfStatement.class, new ExecuteWhen())//
+        .using(IfStatement.class, new ExecuteWhen())//
         .gives("execute(() -> print(8)).when(x==8);")//
         .stays();
   }
 
   @Test public void comlicated() {
     trimmingOf("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);")//
-        .withTipper(IfStatement.class, new ExecuteWhen())//
+        .using(IfStatement.class, new ExecuteWhen())//
         .gives("execute(()->a.b()._(f,g).f.x(8,g,h*p)).when(x==8&&iz.Literal(lit)||bigDaddy(d));")//
         .stays();
   }

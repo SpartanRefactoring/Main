@@ -19,7 +19,7 @@ public class Issue0856 {
             " B.d(b);" + //
             " return \"and another\";" + //
             "}"//
-    ).withTipper(VariableDeclarationFragment.class, new DeclarationInlineIntoNext())
+    ).using(VariableDeclarationFragment.class, new DeclarationInlineIntoNext())
         .gives(//
             "public static A a() {" + //
                 " B.d(\"one expression\");" + //
@@ -37,7 +37,7 @@ public class Issue0856 {
             " return \"and another\";" + //
             "}"//
     )//
-        .withTipper(VariableDeclarationFragment.class, new DeclarationInlineIntoNext()) //
+        .using(VariableDeclarationFragment.class, new DeclarationInlineIntoNext()) //
         .gives(//
             "public static A foo() {" + //
                 " C c = B.d(\"one expression\");" + //
@@ -45,7 +45,7 @@ public class Issue0856 {
                 " return \"and another\";" + //
                 "}"//
         )//
-        .withTipper(VariableDeclarationFragment.class, new DeclarationInlineIntoNext()) //
+        .using(VariableDeclarationFragment.class, new DeclarationInlineIntoNext()) //
         .gives(//
             "public static A foo() {" + //
                 " print(B.d(\"one expression\"));" + //
@@ -62,7 +62,7 @@ public class Issue0856 {
             "print(b);" + //
             " return \"and another\";" + //
             "}"//
-    ).withTipper(VariableDeclarationFragment.class, new DeclarationInlineIntoNext())//
+    ).using(VariableDeclarationFragment.class, new DeclarationInlineIntoNext())//
         .stays();
   }
 

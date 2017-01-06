@@ -11,21 +11,21 @@ import org.junit.*;
 public class LispFirstElementTest {
   @Test public void a() {
     trimmingOf("li.get(0)")//
-        .withTipper(MethodInvocation.class, new LispFirstElement())//
+        .using(MethodInvocation.class, new LispFirstElement())//
         .gives("first(li)")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("li.get(0);")//
-        .withTipper(MethodInvocation.class, new LispFirstElement())//
+        .using(MethodInvocation.class, new LispFirstElement())//
         .gives("first(li);")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("omg(li.get(0),li.get(0));")//
-        .withTipper(MethodInvocation.class, new LispFirstElement())//
+        .using(MethodInvocation.class, new LispFirstElement())//
         .gives("omg(first(li),first(li));")//
         .stays();
   }

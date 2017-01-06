@@ -10,7 +10,6 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class IfNullReturnTest {
   @Test public void a() {
-    trimmingOf("if(x == null) return; use(); use();").withTipper(IfStatement.class, new IfNullReturn())
-        .gives("precondition.notNull(x); use(); use();");
+    trimmingOf("if(x == null) return; use(); use();").using(IfStatement.class, new IfNullReturn()).gives("precondition.notNull(x); use(); use();");
   }
 }

@@ -38,7 +38,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   @Override public Tip pattern(final N ¢) {
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
