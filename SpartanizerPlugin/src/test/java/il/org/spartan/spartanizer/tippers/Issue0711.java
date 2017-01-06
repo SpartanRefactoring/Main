@@ -9,7 +9,7 @@ import org.junit.*;
  * @author Dan Abramovich
  * @since 22-11-2016 */
 @SuppressWarnings("static-method")
-public class Issue711 {
+public class Issue0711 {
   @Test public void test0() {
     trimmingOf("int oneLarger(int x) {" + "Function<Integer, Integer> $ = i -> i + 1;" + "return $.eval(x);" + "}").stays();
   }
