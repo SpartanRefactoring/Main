@@ -11,7 +11,7 @@ import org.junit.*;
 public class CopyCollectionTest {
   @Test public void a() {
     trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
-        .withTipper(Block.class, new CopyCollection())//
+        .using(Block.class, new CopyCollection())//
         .gives("StatsAccumulator $=Create.from(values);");
   }
 }

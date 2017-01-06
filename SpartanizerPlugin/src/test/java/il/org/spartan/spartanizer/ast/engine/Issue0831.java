@@ -33,7 +33,7 @@ public class Issue0831 {
     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
       body += iter + "";
-    assertEquals("int a;\nint b;\nint c;\nint d;\n",body);
+    assertEquals("int a;\nint b;\nint c;\nint d;\n", body);
   }
 
   // TODO: Adi - note obfuscated code assert (false), instead of fail().

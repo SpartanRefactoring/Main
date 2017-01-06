@@ -19,7 +19,7 @@ public class Issue0321 {
             "   instance = allTippers();" + //
             " return instance;" + //
             "}")//
-                .withTipper(Block.class, new CachingPattern())//
+                .using(Block.class, new CachingPattern())//
                 .gives( //
                     "public static Toolbox defaultInstance() {" + //
                         " return  instance != null ? instance : (instance = allTippers());" + //
