@@ -8,7 +8,7 @@ import org.junit.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")
-public class Issue971 {
+public class Issue0971 {
   @Test public void test0() {
     expansionOf("if(true)f();").gives("if(true){f();}").stays();
   }

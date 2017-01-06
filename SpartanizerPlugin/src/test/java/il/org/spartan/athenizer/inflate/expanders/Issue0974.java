@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2016-12-27 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue974 {
+public class Issue0974 {
   @Test public void test0() {
     expansionOf("i++;").gives("i = i+1;").stays();
   }
