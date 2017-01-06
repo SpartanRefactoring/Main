@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")
-public class issue410 {
+public class Issue0410 {
   @Test public void dealWithBothKindsOfComment() {
     similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");
   }

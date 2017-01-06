@@ -7,7 +7,7 @@ import org.junit.*;
 /** @author Tomer Dragucki
  * @since 2016 [[SuppressWarningsSpartan]] */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class issue352 {
+public class issue0352 {
   @Test public void a() {
     trimmingOf("" + //
         "@Override" + //
