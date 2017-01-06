@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -16,7 +17,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -97,5 +97,13 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     while (!$.replace(oldString, newString).equals($))
       $ = $.replace(oldString, newString);
     return $;
+  }
+
+  @Override public String category() {
+    return Category.Conditional + "";
+  }
+
+  @Override public String description() {
+    return "A generalized form of a switch where the switchee can be a Lambda function";
   }
 }

@@ -91,12 +91,17 @@ public class Toolbox {
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(EnhancedForStatement.class, //
+            new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
-        .add(Modifier.class, new RedundantModifier())//
+        .add(Modifier.class, //
+            new ModifierRedundant(), //
+            new ModifierFinalAbstractMethodRedundant(), //
+            new ModifierFinalTryResourceRedundant(), //
+            null)//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
@@ -108,6 +113,7 @@ public class Toolbox {
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
         .add(ForStatement.class, //
+            new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
             new RemoveRedundentFor(), //
@@ -117,6 +123,7 @@ public class Toolbox {
             new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
+            new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new RemoveRedundantWhile(), //
@@ -186,7 +193,7 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new RedundentReturnStatementInVoidTypeMethod(), //
+            new ReturnStatementRedundantInVoidMethod(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
             // This is a new
             // tipper

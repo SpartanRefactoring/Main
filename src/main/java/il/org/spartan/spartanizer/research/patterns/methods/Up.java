@@ -12,8 +12,13 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 public class Up {
   public static class Caster extends JavadocMarkerNanoPattern {
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-      return hazOneParameter(¢) && hazOneStatement(¢) && notConstructor(¢) && returnTypeNotVoid(¢) && !returnTypeSameAsParameter(¢)
-          && iz.name(expression(az.returnStatement(onlyStatement(¢))));
+      return hazOneParameter(¢)//
+          && hazOneStatement(¢)//
+          && notConstructor(¢)//
+          && returnTypeNotVoid(¢)//
+          && !returnTypeSameAsParameter(¢)//
+          && iz.name(expression(az.returnStatement(onlyStatement(¢))))//
+      ;
     }
   }
 }

@@ -50,7 +50,7 @@ public enum az {
     return !iz.annotation($) ? null : (Annotation) $;
   }
 
-  public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(BodyDeclaration ¢) {
+  public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
     return !iz.nodeTypeEquals(¢, ANNOTATION_TYPE_MEMBER_DECLARATION) ? null : (AnnotationTypeMemberDeclaration) ¢;
   }
 

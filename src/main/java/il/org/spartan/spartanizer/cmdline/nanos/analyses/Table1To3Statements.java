@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -24,7 +25,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   protected static final int MIN_STATEMENTS_REPORTED = 1;
   protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Relation writer;
+  private static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   private static int totalStatements;
   private static int totalMethods;
@@ -71,7 +72,7 @@ public class Table1To3Statements extends FolderASTVisitor {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Output is in: " + Relation.temporariesFolder + path);
+    System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
@@ -84,7 +85,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    writer = new Relation(Table1To3Statements.class.getSimpleName());
+    writer = new Table(Table1To3Statements.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
@@ -94,18 +95,18 @@ public class Table1To3Statements extends FolderASTVisitor {
     writer.put("Project", path);
     for (int i = MIN_STATEMENTS_REPORTED; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
-        writer.put(i + " Count", "-")//
-            .put(i + "perc. of methods", 0)//
-            .put(i + " perc. of statements", 0)//
-            .put(i + " perc. touched", 100);
+        writer.col(i + " Count", "-")//
+            .col(i + "perc. of methods", 0)//
+            .col(i + " perc. of statements", 0)//
+            .col(i + " perc. touched", 100);
       else {
         final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
-        writer.put(i + " Count", rs.size()).put(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
-            .put(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
-            .put(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
-            .put(i + " perc. touched", format.decimal(100 * fractionOfMethodsTouched(rs)));
+        writer.col(i + " Count", rs.size()).col(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
+            .col(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
+            .col(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
+            .col(i + " perc. touched", format.decimal(100 * fractionOfMethodsTouched(rs)));
       }
-    writer.put("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    writer.col("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     writer.nl();
   }
 

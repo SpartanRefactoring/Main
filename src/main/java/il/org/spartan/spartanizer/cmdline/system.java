@@ -12,7 +12,13 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface system {
+  static boolean windows() {
+    return System.getProperty("os.name").contains("indows");
+  }
+
   static Process dumpOutput(final Process $) {
+    if (windows())
+      return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
@@ -76,6 +82,8 @@ public interface system {
   }
 
   static Process bash(final String shellCommand) {
+    if (windows())
+      return null;
     final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
       final Process $ = Runtime.getRuntime().exec(command);

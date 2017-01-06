@@ -29,4 +29,8 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
+
+  @Override public String description() {
+    return "Evaluate expression, if null take some expression, otherwise take another";
+  }
 }

@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
  * @since 2016 */
 public class TypeChecker extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (!hazOneStatement(¢) || !iz.returnStatement(onlyStatement(¢)) || !hazOneParameter(¢))
-      return false;
     final ReturnStatement $ = az.returnStatement(onlyStatement(¢));
-    return iz.instanceofExpression(expression($)) && "boolean".equals(returnType(¢) + "")
+    return hazOneParameter(¢) //
+        && iz.instanceofExpression(expression($)) //
+        && "boolean".equals(returnType(¢) + "") //
         && identifier(name(onlyParameter(¢))).equals(left(az.instanceofExpression(expression($))) + "");
   }
 }

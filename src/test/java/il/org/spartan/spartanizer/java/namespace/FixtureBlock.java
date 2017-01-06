@@ -9,18 +9,18 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2017-01-01 */
 public class FixtureBlock extends ReflectiveTester {
   int f(@knows("ps") final int... ps) throws IOException {
-    @knows({ "ps", "f/1" }) int a = ps[0] + hashCode();
-    @knows({ "a", "ps", "f/1" }) int b = ps[1] + a * hashCode();
-    @knows({ "a", "b", "ps", "f/1" }) int c = ps[2] + b * hashCode();
+    @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
+    @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
+    @knows({ "a", "b", "ps", "f/1" }) final int c = ps[2] + b * hashCode();
     f(a, b, c, c, c);
     return f();
   }
 
   int g(@knows("ps") final int... ps) throws IOException {
     for (;;) {
-      @knows({ "ps", "f/1" }) int a = ps[0] + hashCode();
-      @knows({ "a", "ps", "f/1" }) int b = ps[1] + a * hashCode();
-      @knows({ "a", "b", "ps", "f/1" }) int c = ps[2] + b * hashCode();
+      @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
+      @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
+      @knows({ "a", "b", "ps", "f/1" }) final int c = ps[2] + b * hashCode();
       if (f(a, b, c, c, c) < 2)
         break;
     }

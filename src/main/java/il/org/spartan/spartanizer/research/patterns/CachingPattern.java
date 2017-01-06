@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.research.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.statementsPattern;
 
 /** @author Ori Marcovitch
  * @year 2016 */
@@ -21,5 +22,13 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
 
   @Override public Tip pattern(final Block x) {
     return tipper.tip(x);
+  }
+
+  @Override public String category() {
+    return Category.Return + "";
+  }
+
+  @Override public String description() {
+    return "A field which its value is defined by an expression which is evaluated only on the first access";
   }
 }

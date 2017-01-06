@@ -2,6 +2,8 @@ package il.org.spartan.athenizer.inflate;
 
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.*;
+
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -25,6 +27,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   final Cursor inactiveCursor;
   final Selection selection;
   boolean active;
+  final AtomicBoolean working;
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -36,14 +39,23 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     final Display display = PlatformUI.getWorkbench().getDisplay();
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
+    working = new AtomicBoolean(false);
   }
 
   @Override public void mouseScrolled(final MouseEvent ¢) {
-    if (active)
-      if (¢.count > 0)
+    if (!active || working.get())
+      return;
+    working.set(true);
+    if (¢.count > 0)
+      SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         inflate();
-      else if (¢.count < 0)
+        working.set(false);
+      });
+    else if (¢.count < 0)
+      SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         deflate();
+        working.set(false);
+      });
   }
 
   private void inflate() {

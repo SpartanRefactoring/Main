@@ -35,8 +35,8 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
     final Expression lr = az.infixExpression(x.getLeftOperand()).getRightOperand();
     final Expression rl = az.infixExpression(x.getRightOperand()).getLeftOperand();
     final Expression rr = az.infixExpression(x.getRightOperand()).getRightOperand();
-    InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($) || iz.numberLiteral($)
-        || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
+    final InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($)
+        || iz.numberLiteral($) || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
             : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
     return prerequisite(res) ? res : null;
   }
@@ -50,7 +50,7 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
   }
 
   @Override public boolean prerequisite(final InfixExpression ¢) {
-    return (new specificity()).compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
+    return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
