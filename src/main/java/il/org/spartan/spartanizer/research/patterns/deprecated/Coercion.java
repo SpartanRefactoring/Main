@@ -37,7 +37,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);

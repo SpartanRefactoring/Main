@@ -18,7 +18,7 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> 
   }
 
   @Override public Tip tip(final ReturnStatement s) {
-    return expression(s) == null || !iz.assignment(expression(s)) ? null : new Tip(description(s), s, this.getClass()) {
+    return expression(s) == null || !iz.assignment(expression(s)) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
         final AST create = r.getAST();

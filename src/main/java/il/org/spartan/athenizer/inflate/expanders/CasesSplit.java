@@ -45,7 +45,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   @Override public Tip tip(final SwitchStatement ¢) {
     @SuppressWarnings("unchecked") final List<Statement> $ = getAdditionalStatements(¢.statements(), caseWithNoSequencer(¢));
     final Statement n = (Statement) ¢.statements().get(¢.statements().indexOf($.get(0)) - 1);
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢, SwitchStatement.STATEMENTS_PROPERTY);
         for (@SuppressWarnings("hiding") final Statement ¢ : $)

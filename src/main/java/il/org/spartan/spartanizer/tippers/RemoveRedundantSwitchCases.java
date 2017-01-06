@@ -46,7 +46,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
   @Override public Tip tip(final SwitchStatement s) {
-    return s == null ? null : new Tip(description(s), s, this.getClass()) {
+    return s == null ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> l = step.statements(s);
         final int ind = getDefaultIndex(l);

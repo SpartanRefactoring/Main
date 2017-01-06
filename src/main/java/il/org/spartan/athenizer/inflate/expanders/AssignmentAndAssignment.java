@@ -25,7 +25,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     if (!iz.assignment(e))
       return null;
     final Assignment $ = az.assignment(e);
-    return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, this.getClass()) {
+    return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         Assignment newHead = create.newAssignment();

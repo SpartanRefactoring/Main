@@ -25,7 +25,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
   }
 
   @Override public Tip tip(final Assignment ¢) {
-    return new Tip(description(¢), ¢, this.getClass()) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(duplicate.of(¢.getLeftHandSide()));
