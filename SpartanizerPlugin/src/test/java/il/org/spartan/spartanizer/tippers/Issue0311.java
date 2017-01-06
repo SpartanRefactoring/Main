@@ -17,8 +17,10 @@ public class Issue0311 {
   }
 
   @Test public void challenge_for_i_initialization_expression_3b() {
-    trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
-        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+    trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);")//
+    .gives("for(boolean b=true;b;)$.append(line).append(ls);") //
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);")//
+        .stays();
   }
 
   @Test public void challenge_for_i_initialization_expression_3c() {
