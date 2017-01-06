@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** see Issue #450 for more details This is a unit test for
+/** see Issue0 #450 for more details This is a unit test for
  * {@link DeclarationInitializerStatementTerminatingScope, @link
  * DeclarationFragmentInlineIntoNext}
  * @author Sapir Bismot
