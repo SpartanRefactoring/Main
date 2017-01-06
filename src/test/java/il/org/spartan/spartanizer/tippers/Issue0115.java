@@ -8,7 +8,7 @@ import org.junit.*;
  * @since 2016 */
 @Ignore("Yossi - parsing with spaces, does not parse without. " + "Space from '=' does not seem to be required")
 @SuppressWarnings("static-method")
-public class issue115 {
+public class Issue0115 {
   @Test public void trimmerBugXOR_Notparsing01() {
     trimmingOf("j=j^k").gives("j^=k");
   }

@@ -7,7 +7,7 @@ import org.junit.*;
 /** @author Tomer Dragucki
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class issue826 {
+public class Issue0826 {
   @Test public void a() {
     trimmingOf("A() ? 8 : 8").stays();
   }

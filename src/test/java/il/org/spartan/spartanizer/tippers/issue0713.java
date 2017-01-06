@@ -18,7 +18,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @author Inbal Zukerman
  * @author Elia Traore
  * @since 2016-11-06 */
-public class issue713 {
+public class issue0713 {
   TypeDeclaration noPublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class noPublic {   } "))));
   TypeDeclaration onlyPrivates = (TypeDeclaration) first(
       types(az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } "))));
