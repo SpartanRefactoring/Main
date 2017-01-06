@@ -8,7 +8,7 @@ import org.junit.*;
  * @since 2016 */
 @Ignore("Disabled: there is some bug in distributive rule - not in Toolbox.")
 @SuppressWarnings("static-method")
-public class issue076 {
+public class Issue0076 {
   @Test public void issue076a() {
     trimmingOf("a*b + a*c").gives("a*(b+c)");
   }
