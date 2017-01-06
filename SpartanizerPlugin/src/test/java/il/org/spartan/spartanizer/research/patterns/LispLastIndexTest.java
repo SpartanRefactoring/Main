@@ -11,21 +11,21 @@ import org.junit.*;
 public class LispLastIndexTest {
   @Test public void a() {
     trimmingOf("li.size()-1")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
+        .using(InfixExpression.class, new LispLastIndex())//
         .gives("lastIndex(li)")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
+        .using(InfixExpression.class, new LispLastIndex())//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("li.get(li.size()-1);")//
-        .withTipper(InfixExpression.class, new LispLastIndex())//
-        .withTipper(MethodInvocation.class, new LispLastElement())//
+        .using(InfixExpression.class, new LispLastIndex())//
+        .using(MethodInvocation.class, new LispLastElement())//
         .gives("last(li);")//
         .stays();
   }

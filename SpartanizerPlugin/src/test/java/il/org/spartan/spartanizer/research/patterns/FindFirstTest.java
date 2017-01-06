@@ -10,12 +10,12 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
-    trimmingOf("for(Object i : is) if(i.isNice()) return i;").withTipper(Block.class, new FindFirst())
+    trimmingOf("for(Object i : is) if(i.isNice()) return i;").using(Block.class, new FindFirst())
         .gives("return is.stream().findFirst(i -> i.isNice()).get();");
   }
 
   @Test public void b() {
-    trimmingOf("for(Object i : is) if(i.isNice()) return i; throw new None();").withTipper(Block.class, new FindFirst())
+    trimmingOf("for(Object i : is) if(i.isNice()) return i; throw new None();").using(Block.class, new FindFirst())
         .gives("if(is.stream().anyMatch(i->i.isNice()))return is.stream().findFirst(i->i.isNice()).get();throw new None();");
   }
 }

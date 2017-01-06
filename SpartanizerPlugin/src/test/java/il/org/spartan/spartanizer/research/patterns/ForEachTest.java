@@ -11,28 +11,28 @@ import org.junit.*;
 public class ForEachTest {
   @Test public void a() {
     trimmingOf("for (  A ¢ : is? thiz : theReal)   if (life) justFantasy();")//
-        .withTipper(EnhancedForStatement.class, new ForEach())//
+        .using(EnhancedForStatement.class, new ForEach())//
         .gives("(is?thiz:theReal).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
-        .withTipper(EnhancedForStatement.class, new ForEach())//
+        .using(EnhancedForStatement.class, new ForEach())//
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().forEach(¢->¢.onBroadcast(e));")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("for (  A ¢ : (B)c)   if (life) justFantasy();")//
-        .withTipper(EnhancedForStatement.class, new ForEach())//
+        .using(EnhancedForStatement.class, new ForEach())//
         .gives("((B)c).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
 
   @Test public void d() {
     trimmingOf("for (Entry<URI, CTOverride> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
-        .withTipper(EnhancedForStatement.class, new ForEach())//
+        .using(EnhancedForStatement.class, new ForEach())//
         .gives("for(Entry<URI,CTOverride>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
         .stays();
   }
