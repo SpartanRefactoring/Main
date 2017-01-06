@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.statementsPatter
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class ReturnOld extends NanoPatternTipper<Block> {
+public final class ReturnPrevious extends NanoPatternTipper<Block> {
   private static final UserDefinedTipper<Block> tipper = statementsPattern("$T $N2 = $N3; $N3 = $X; return $N2;",
       "return update($N3).with($X).getOld();", "Return Old");
 

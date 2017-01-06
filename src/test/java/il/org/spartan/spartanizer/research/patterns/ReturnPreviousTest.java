@@ -8,10 +8,10 @@ import org.junit.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
-public class ReturnOldTest {
+public class ReturnPreviousTest {
   @Test public void a() {
     trimmingOf("int $=value;  value=newValue;  return $;")//
-        .using(Block.class, new ReturnOld())//
+        .using(Block.class, new ReturnPrevious())//
         .gives("return update(value).with(newValue).getOld();")//
         .stays();
   }
