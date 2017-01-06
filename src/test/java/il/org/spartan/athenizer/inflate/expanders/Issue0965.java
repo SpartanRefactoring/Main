@@ -9,7 +9,7 @@ import static il.org.spartan.athenizer.inflate.expanders.ExpanderTestUtils.*;
  * @since 2016-12-20 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue965 {
+public class Issue0965 {
   @Test public void testBinding0() {
     expansionOf(new Issue965Aux())
         .givesWithBinding("package il.org.spartan.athenizer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
