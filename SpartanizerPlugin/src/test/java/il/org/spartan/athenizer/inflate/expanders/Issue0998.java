@@ -7,7 +7,7 @@ import org.junit.*;
 /** @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("static-method")
-public class Issue998 {
+public class Issue0998 {
   @Test public void test0() {
     expansionOf("throw a==0? 2:3;").gives("if(a==0)throw 2; else throw 3;");
   }
