@@ -11,11 +11,11 @@ import org.junit.*;
 public class LazyInitializerTest {
   @Test public void basic() {
     trimmingOf("¢ = ¢ != null ? ¢ : \"\";")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .withTipper(Assignment.class, new LazyInitializer())//
+        .using(ConditionalExpression.class, new DefaultsTo())//
+        .using(Assignment.class, new LazyInitializer())//
         .gives("¢ = default¢(¢).to(\"\");")//
-        .withTipper(ConditionalExpression.class, new DefaultsTo())//
-        .withTipper(Assignment.class, new LazyInitializer())//
+        .using(ConditionalExpression.class, new DefaultsTo())//
+        .using(Assignment.class, new LazyInitializer())//
         .gives("lazyInitialize(¢).with(()-> \"\");")//
         .stays();
   }
