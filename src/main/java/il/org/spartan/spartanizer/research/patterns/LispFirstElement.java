@@ -29,7 +29,7 @@ public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> 
   }
 
   @Override public String category() {
-    return Category.Lisp + "";
+    return Category.Functional + "";
   }
 
   @Override public String description() {
