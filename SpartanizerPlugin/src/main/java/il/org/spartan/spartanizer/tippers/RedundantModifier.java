@@ -18,12 +18,16 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class RedundantModifier extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
+  @Override public String description() {
+    return "Eliminate redundant modifier";
+  }
+
   @Override public String description(final Modifier ¢) {
     return "Eliminate redundant [" + ¢ + "] modifier";
   }
 
-  @Override public String description() {
-    return "Eliminate redundant modifier";
+  @Override public boolean prerequisite(final Modifier ¢) {
+    return test(¢, redundancies(az.bodyDeclaration(parent(¢))));
   }
 
   @Override public Tip tip(final Modifier ¢) {
@@ -32,9 +36,5 @@ public final class RedundantModifier extends CarefulTipper<Modifier> implements 
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);
       }
     };
-  }
-
-  @Override public boolean prerequisite(final Modifier ¢) {
-    return test(¢, redundancies(az.bodyDeclaration(parent(¢))));
   }
 }
