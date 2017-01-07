@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate.expanders;
+package il.org.spartan.zoomer.inflate.zoomers;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;

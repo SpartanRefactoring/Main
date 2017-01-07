@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 import java.util.function.*;
@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.zoomer.inflate.SingleFlater.*;
-import il.org.spartan.zoomer.inflate.expanders.*;
+import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 
 /** holds the new toolbox for the expanders and returns them
  * @author Raviv Rachmiel
