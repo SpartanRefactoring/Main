@@ -96,14 +96,10 @@ public class ExpanderTestUtils {
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      final List<MethodDeclaration> ll = wizard.getMethodsSorted(u);
-      MethodDeclaration m = null;
-      for (final MethodDeclaration ¢ : ll)
-        if (¢.getName().getIdentifier().equals(f)) {
-          m = ¢;
-          break;
-        }
-      assert m != null; // method not found
+      
+      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from(u);
+      assert !ll.isEmpty(); // method not found
+      MethodDeclaration m = ll.get(0);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
         final Document doc = new Document(wrap);
@@ -114,14 +110,9 @@ public class ExpanderTestUtils {
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        final List<MethodDeclaration> l = wizard.getMethodsSorted(u);
-        m = null;
-        for (final MethodDeclaration ¢ : l)
-          if (¢.getName().getIdentifier().equals(f)) {
-            m = ¢;
-            break;
-          }
-        assert m != null; // method not found
+        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from(((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)));
+        assert !ll.isEmpty(); // method not found
+        m = l.get(0);
         assertSimilar($, (m + ""));
         final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
         p.setResolveBindings(true);
