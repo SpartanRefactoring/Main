@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -28,18 +27,18 @@ public final class sideEffectsTest {
   }
 
   @Test public void freeFunctionCall() {
-    assert haz.sideEffects(e("f()"));
+    assert !sideEffects.free(e("f()"));
   }
 
   @Test public void freeFunctionCalla() {
-    assert haz.sideEffects(e("i =f()"));
+    assert !sideEffects.free(e("i =f()"));
   }
 
   @Test public void seriesA01() {
-    assert !haz.sideEffects(e("a"));
+    assert sideEffects.free(e("a"));
   }
 
   @Test public void seriesA02() {
-    assert !haz.sideEffects(e("this.a"));
+    assert sideEffects.free(e("this.a"));
   }
 }

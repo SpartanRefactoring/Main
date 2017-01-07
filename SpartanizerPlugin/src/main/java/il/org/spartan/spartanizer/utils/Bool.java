@@ -9,8 +9,21 @@ public final class Bool {
 
   public Bool() {}
 
-  private Bool(final boolean b) {
+  public Bool(final boolean b) {
     inner = b;
+  }
+  public boolean get() {
+    return inner;
+  }
+  
+  Bool set() {
+    return 
+    set(true);
+  }
+
+  Bool set(boolean ¢) {
+    inner = ¢;
+    return this;
   }
 
   /** Function form, good substitute for auto-boxing */
@@ -20,5 +33,10 @@ public final class Bool {
 
   public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
+  }
+
+  public Bool clear() {
+    return set(false);
+    
   }
 }

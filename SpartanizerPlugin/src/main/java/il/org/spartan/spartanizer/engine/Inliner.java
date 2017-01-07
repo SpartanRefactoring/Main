@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Replace a variable with an expression
  * @author Yossi Gil
@@ -56,7 +57,7 @@ public final class Inliner {
     }
 
     public boolean canInlineinto(final ASTNode... ¢) {
-      return Collect.definitionsOf(name).in(¢).isEmpty() && (!haz.sideEffects(get()) || uses(¢).size() <= 1);
+      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
     }
 
     public boolean canSafelyInlineinto(final ASTNode... ¢) {

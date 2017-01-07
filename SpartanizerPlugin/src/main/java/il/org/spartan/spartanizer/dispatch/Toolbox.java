@@ -116,7 +116,7 @@ public class Toolbox {
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new RemoveRedundentFor(), //
+            new RemoveRedundantFor(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
