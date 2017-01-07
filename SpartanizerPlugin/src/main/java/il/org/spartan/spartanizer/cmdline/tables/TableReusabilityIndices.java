@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.nanos.analyses;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -173,14 +173,17 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String m : defined)
       adopted.remove(m);
-    writer.col("Adoption", rindex(ranks(adopted)));
     final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
     for (final String k : new ArrayList<>(born.keySet()))
       if (!defined.contains(k))
         born.remove(k);
-    writer.col("Reuse", rindex(ranks(born)));
-    writer.col("$\\Delta$", rindex(ranks(born)) - rindex(ranks(adopted)));
-    writer.nl();
+    int rindexBorn = rindex(ranks(born));
+    int rindexAdopted = rindex(ranks(adopted));
+    writer//
+    .col("Adoption", rindexAdopted) //
+    .col("Reuse", rindexBorn)//
+    .col("$\\Delta$", rindexBorn - rindexAdopted)//
+    .nl();
   }
 
   protected int methodRIndex() {

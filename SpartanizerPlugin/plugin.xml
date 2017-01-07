@@ -60,7 +60,7 @@ the program changes: https://goo.gl/sIqIBC
   id="il.BindingFun"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.cmdline.nanos.analyses.AfterFiles"/>
+  <run class="il.org.spartan.spartanizer.cmdline.tables.AfterFiles"/>
   </application>
 </extension>
 

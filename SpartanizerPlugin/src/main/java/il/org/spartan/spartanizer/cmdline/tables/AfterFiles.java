@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.nanos.analyses;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 

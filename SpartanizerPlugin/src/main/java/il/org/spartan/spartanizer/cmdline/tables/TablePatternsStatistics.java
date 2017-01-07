@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.nanos.analyses;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -18,8 +19,8 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-25 */
-public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
+ * @since 2017-01-03 */
+public class TablePatternsStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
@@ -31,7 +32,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     }
   };
   static {
-    clazz = TablePatternsReusabilityIndices.class;
+    clazz = TablePatternsStatistics.class;
     Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
   }
 
@@ -40,12 +41,12 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static String outputFileName() {
-    return TablePatternsReusabilityIndices.class.getSimpleName();
+    return TablePatternsStatistics.class.getSimpleName();
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    TableReusabilityIndices.main(args);
+    FolderASTVisitor.main(args);
     pWriter.close();
     System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
@@ -56,6 +57,8 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+        System.err.print("I");
       }
     return super.visit($);
   }
@@ -67,22 +70,21 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
 
   @Override protected void done(final String path) {
     summarizeNPStatistics(path);
-    System.err.println("Your output is in: " + outputFolder);
+    System.err.println(" " + path + " Done");
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null || anyTips(excluded, ¢);
   }
 
-  public void summarizeNPStatistics(final String path) {
+  public static void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
-    final int r = methodRIndex();
-    pWriter.put("Project", path);
+    pWriter.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
+        .forEach(n -> pWriter.col(n.name, n.occurences));
     fillAbsents();
     pWriter.nl();
     npStatistics.clear();
@@ -92,7 +94,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     spartanalyzer.getAllPatterns().stream()//
         .map(p -> p.getClass().getSimpleName())//
         .filter(n -> !npStatistics.keySet().contains(n))//
-        .forEach(n -> pWriter.put(n, "-"));
+        .forEach(n -> pWriter.col(n, 0));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
