@@ -36,11 +36,10 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       $.setThenStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
       System.out.println("then -" + duplicate.of(¢.getThenExpression()));
       System.out.println("left - " + duplicate.of(¢.getThenExpression()));
-      if(az.expression(duplicate.of(¢.getThenExpression())).subtreeMatch(new ASTMatcher(), duplicate.of(left))) {
+      if (az.expression(duplicate.of(¢.getThenExpression())).subtreeMatch(new ASTMatcher(), duplicate.of(left))) {
         System.out.println("HEY1");
         $.setThenStatement(duplicate.of(¢.getAST().newContinueStatement()));
       }
-      
       final Assignment elze = ¢.getAST().newAssignment();
       elze.setRightHandSide(duplicate.of(¢.getElseExpression()));
       elze.setLeftHandSide(duplicate.of(left));
@@ -48,7 +47,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       $.setElseStatement(duplicate.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
       System.out.println("else -" + duplicate.of(¢.getThenExpression()));
       System.out.println("left - " + duplicate.of(¢.getThenExpression()));
-      if(duplicate.of(¢.getElseExpression()).equals(duplicate.of(left))) {
+      if (duplicate.of(¢.getElseExpression()).equals(duplicate.of(left))) {
         System.out.println("HEY1");
         $.setElseStatement(duplicate.of(¢.getAST().newContinueStatement()));
       }

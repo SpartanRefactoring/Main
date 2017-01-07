@@ -43,7 +43,6 @@ public enum sideEffects {
       THIS_EXPRESSION, //
       TYPE_LITERAL, //
   };
-
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, //
       SUPER_METHOD_INVOCATION, //
@@ -56,7 +55,7 @@ public enum sideEffects {
   public static boolean deterministic(final Expression x) {
     if (!sideEffects.free(x))
       return false;
-    final Bool $ = new Bool(true); 
+    final Bool $ = new Bool(true);
     x.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.clear();
@@ -67,16 +66,15 @@ public enum sideEffects {
   }
 
   private static boolean free(final ArrayCreation ¢) {
-    return free(step.dimensions(¢)) && (free(step.expressions(¢.getInitializer())));
+    return free(step.dimensions(¢)) && free(step.expressions(¢.getInitializer()));
   }
-  
 
   public static boolean free(final ASTNode ¢) {
-    return ¢ == null ||//
+    return ¢ == null || //
         (iz.expression(¢) ? sideEffects.free(az.expression(¢))
-        : iz.expressionStatement(¢) ? sideEffects.free(step.expression(az.expressionStatement(¢)))
-            : iz.isVariableDeclarationStatement(¢) ? sideEffects.free(az.variableDeclrationStatement(¢))
-                : iz.block(¢) && sideEffects.free(az.block(¢)));
+            : iz.expressionStatement(¢) ? sideEffects.free(step.expression(az.expressionStatement(¢)))
+                : iz.isVariableDeclarationStatement(¢) ? sideEffects.free(az.variableDeclrationStatement(¢))
+                    : iz.block(¢) && sideEffects.free(az.block(¢)));
   }
 
   public static boolean free(final Block b) {
@@ -85,6 +83,7 @@ public enum sideEffects {
         return false;
     return true;
   }
+
   private static boolean free(final ConditionalExpression ¢) {
     return free(expression(¢), then(¢), elze(¢));
   }

@@ -40,7 +40,7 @@ public class TableNanosByCategories {
             .col("Nanos", categories.get(categoryName).toArray())//
             .nl();
       System.err.println(t.description());
-    system.dumpOutput(system.bash("column -s \\& -t " + "/tmp/" + t.name + ".tex"));
+      system.dumpOutput(system.bash("column -s \\& -t " + "/tmp/" + t.name + ".tex"));
     }
   }
 }
