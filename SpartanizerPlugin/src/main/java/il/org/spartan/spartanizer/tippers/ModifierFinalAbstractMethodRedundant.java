@@ -15,11 +15,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
-    return "Eliminate redundant final modifier of argument in abstract method";
+    return "Remove redundant final modifier of paramaeter to abstract method";
   }
 
   @Override public String description(final Modifier ¢) {
-    return "Eliminate redundant final '" + az.variableDeclarationStatement(parent(¢)) + "' (argument to abstract method)";
+    return "Remove redundant final '" + az.singleVariableDeclaration(parent(¢)) + "' (parameter to abstract method)";
   }
 
   @Override public Tip tip(final Modifier m) {
