@@ -12,13 +12,16 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** {@link Issue #1000} 
+ * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @since 2017-01-07 */
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.Expander {
   @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }
 
   @Override public Tip tip(final ReturnStatement s) {
-    return expression(s) == null || !iz.assignment(expression(s)) ? null : new Tip(description(s), s, getClass()) {
+    return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
         final AST create = r.getAST();
