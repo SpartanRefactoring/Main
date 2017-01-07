@@ -229,10 +229,8 @@ public final class ToIntegers<E> {
       $ &= data.length - 1;
       if (!occupied[$])
         return -1;
-      if (!placeholder[$]) {
-        if (data[$] == e)
-          return $;
-      }
+      if (!placeholder[$] && data[$] == e)
+        return $;
     }
   }
 
