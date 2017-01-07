@@ -10,15 +10,15 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1043 {
-  @Test public void test() {
+  @Test public void test0() {
     trimmingOf("try (final File f = new File()){i++;}") //
         .gives("try (File f = new File()) {++i;}") //
         .stays();
   }
-
-  @Test public void test2() {
+  @Test public void test1() {
     trimmingOf("try (final File f = new File(); final B b = new B()){i++;}") //
         .gives("try (File f = new File(); B b = new B()) {++i;}") //
         .stays();
   }
+
 }

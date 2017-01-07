@@ -29,7 +29,11 @@ public final class ModifierFinalAbstractMethodRedundant extends CarefulTipper<Mo
     if (v == null)
       return null;
     final MethodDeclaration $ = az.methodDeclaration(parent(v));
-    return !iz.abstract¢($) && !iz.interface¢(parent($)) ? null : new Tip(description(m), m, getClass()) {
+    return $ == null || body($) != null ? null : remove(m);
+  }
+
+  private Tip remove(final Modifier m) {
+    return new Tip(description(m), m, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(m, g);
       }
