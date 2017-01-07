@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -38,7 +39,7 @@ public final class TippersTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    azzert.that(!haz.sideEffects(into.e("f()")), is(false));
+    azzert.that(sideEffects.free(into.e("f()")), is(false));
     final VariableDeclarationFragment f = findFirst
         .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
@@ -46,7 +47,7 @@ public final class TippersTest {
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    azzert.that(!haz.sideEffects(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -58,7 +59,7 @@ public final class TippersTest {
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    azzert.that(!haz.sideEffects(initializer), is(false));
+    azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }

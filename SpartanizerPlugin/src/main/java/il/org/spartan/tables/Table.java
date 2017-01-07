@@ -124,10 +124,15 @@ public class Table extends Row<Table> implements Closeable {
     return temporariesFolder + name;
   }
 
-  void remove(final Statistic... ss) {
-    final List<Statistic> a = as.list(statisics);
-    a.removeAll(as.list(ss));
-    set(a);
+  public Table noStatistics() {
+    statisics = new Statistic[0];
+    return this;
+  }
+
+  public Table remove(final Statistic... ¢) {
+    final List<Statistic> $ = as.list(statisics);
+    $.removeAll(as.list(¢));
+    return set($);
   }
 
   @Override protected Table reset() {
@@ -139,12 +144,13 @@ public class Table extends Row<Table> implements Closeable {
 
   /* @formatter:off*/ @Override protected Table self() { return this; } /*@formatter:on*/
 
-  private void set(final List<Statistic> ¢) {
-    set(¢.toArray(new Statistic[¢.size()]));
+  private Table set(final List<Statistic> ¢) {
+    return set(¢.toArray(new Statistic[¢.size()]));
   }
 
-  void set(final Statistic... ¢) {
+  Table set(final Statistic... ¢) {
     statisics = ¢;
+    return this;
   }
 
   private static final long serialVersionUID = 1L;
