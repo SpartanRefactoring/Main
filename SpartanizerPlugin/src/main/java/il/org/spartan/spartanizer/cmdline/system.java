@@ -16,10 +16,6 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  static boolean windows() {
-    return System.getProperty("os.name").contains("indows");
-  }
-
   static Process dumpOutput(final Process $) {
     if (windows())
       return $;
