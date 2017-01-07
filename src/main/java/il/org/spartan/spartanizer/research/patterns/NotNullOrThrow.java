@@ -22,8 +22,8 @@ public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
     return tipper.tip(¢);
   }
 
-  @Override public String category() {
-    return Category.Throw + "";
+  @Override public Category category() {
+    return Category.Throw;
   }
 
   @Override public String description() {

@@ -33,7 +33,7 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override public String category() {
-    return Category.Quantifier + "";
+  @Override public Category category() {
+    return Category.Quantifier;
   }
 }

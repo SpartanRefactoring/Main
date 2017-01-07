@@ -30,8 +30,8 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
     return firstTip(tippers, parent(¢));
   }
 
-  @Override public String category() {
-    return Category.Return + "";
+  @Override public Category category() {
+    return Category.Return;
   }
 
   private static TryStatement parent(final CatchClause ¢) {
