@@ -910,6 +910,36 @@ public interface iz {
     return iz.nodeTypeIn(¢, new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT });
   }
 
+  /** As {@link iz#sequencer}, but also accepts complex sequencers, i.e. a
+   * statement that makes the following statements unreachable. Example:
+   * <code>if (b)
+   *   return 1;
+   * else
+   *   return 2;
+   * System.out.println("Unreachable");</code> Codes as this usually do not
+   * compile: nevertheless, complex sequencers are relevant in switch
+   * statements.
+   * @param ¢ JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer
+   *         (may be complex) */
+  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢.getNodeType()) {
+      case ASTNode.IF_STATEMENT:
+        final IfStatement $ = (IfStatement) ¢;
+        return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
+      case ASTNode.BLOCK: // Not the final implementation: should be changed
+                          // when adding support for loops, switches etc.
+        for (final Statement s : (List<Statement>) ((Block) ¢).statements())
+          if (sequencerComplex(s))
+            return true;
+        return false;
+      default:
+        return sequencer(¢);
+    }
+  }
+
   /** Checks if expression is simple.
    * @param x an expression
    * @return <code><b>true</b></code> <em>iff</em> argument is simple */

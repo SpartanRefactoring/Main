@@ -27,11 +27,11 @@ public class InflaterProvider extends OperationsProvider {
   public static Toolbox freshCopyOfAllExpanders() {
     return new Toolbox()//
         .add(ReturnStatement.class, //
-            // new ReturnTernaryExpander(), //
-            new ExtractExpressionFromReturn())
+            new ReturnTernaryExpander(), //
+            new ExtractExpressionFromReturn()) //
         .add(ExpressionStatement.class, //
-            new AssignmentAndAssignment()) //
-        // new AssignmentTernaryExpander())//
+            new AssignmentAndAssignment(), //
+            new AssignmentTernaryExpander())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
@@ -53,9 +53,7 @@ public class InflaterProvider extends OperationsProvider {
             new ThrowTernaryExpander())//
         .add(ForStatement.class, //
             new ForBlockExpander()) //
-        // .add(WhileStatement.class,
-        // new WhileBlockExpander())
-        .add(IfStatement.class, //
+        .add(WhileStatement.class, new WhileBlockExpander()).add(IfStatement.class, //
             new IfElseBlockExpander()) //
     ;//
   }

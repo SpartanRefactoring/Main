@@ -50,7 +50,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
         final ListRewrite l = r.getListRewrite(¢, SwitchStatement.STATEMENTS_PROPERTY);
         for (@SuppressWarnings("hiding") final Statement ¢ : $)
           l.insertBefore(duplicate.of(¢), n, g);
-        if (!iz.sequencer($.get($.size() - 1)))
+        if (!iz.sequencerComplex($.get($.size() - 1)))
           l.insertBefore(¢.getAST().newBreakStatement(), n, g);
       }
     };
@@ -63,7 +63,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   @SuppressWarnings("unchecked") private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
     for (final Statement ¢ : (List<Statement>) x.statements())
-      if (iz.sequencer(¢))
+      if (iz.sequencerComplex(¢))
         $ = null;
       else if (¢ instanceof SwitchCase) {
         if ($ != null)
@@ -81,7 +81,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
         additionalStatements = true;
       else if (additionalStatements)
         $.add(¢);
-      if (iz.sequencer(¢))
+      if (iz.sequencerComplex(¢))
         return $;
     }
     return $;
