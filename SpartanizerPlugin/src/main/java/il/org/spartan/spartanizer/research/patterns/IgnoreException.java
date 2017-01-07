@@ -30,8 +30,8 @@ public final class IgnoreException extends NanoPatternTipper<CatchClause> {
     return firstTip(tippers, parent(¢));
   }
 
-  @Override public String category() {
-    return Category.Throw + "";
+  @Override public Category category() {
+    return Category.Throw;
   }
 
   private static TryStatement parent(final CatchClause ¢) {

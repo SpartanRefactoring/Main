@@ -99,8 +99,8 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return $;
   }
 
-  @Override public String category() {
-    return Category.Conditional + "";
+  @Override public Category category() {
+    return Category.Ternary;
   }
 
   @Override public String description() {

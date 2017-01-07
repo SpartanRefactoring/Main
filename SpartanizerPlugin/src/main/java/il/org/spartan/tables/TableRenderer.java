@@ -82,7 +82,7 @@ public interface TableRenderer {
           case σ:
             return "$\\sigma$";
           case Σ:
-            return "$\\sigma$";
+            return "$\\Sum$";
         }
       }
 
