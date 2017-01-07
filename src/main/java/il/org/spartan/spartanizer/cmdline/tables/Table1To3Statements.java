@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.nanos.analyses;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -18,18 +19,21 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-25 */
-public class TableNanosCoverage extends FolderASTVisitor {
+ * @since 2016-12-27 */
+public class Table1To3Statements extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  protected static final int MAX_STATEMENTS_REPORTED = 30;
+  protected static final int MIN_STATEMENTS_REPORTED = 1;
+  protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table cWriter; // coverage
-  private static int totalStatements;
-  protected static int totalMethods;
-  private static int totalStatementsCovered;
+  private static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  private static int totalStatements;
+  private static int totalMethods;
+  private static int totalStatementsCovered;
   static {
-    clazz = TableNanosCoverage.class;
+    clazz = Table1To3Statements.class;
+    TrimmerLog.off();
+    Trimmer.silent = true;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
@@ -47,7 +51,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
+      findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       ___.unused(__);
     }
@@ -61,8 +65,6 @@ public class TableNanosCoverage extends FolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
-    // System.out.println(packageDeclaration(¢) + " " +
-    // name(lisp.first(types(¢))));
     return true;
   }
 
@@ -83,19 +85,29 @@ public class TableNanosCoverage extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    cWriter = new Table(TableNanosCoverage.class.getSimpleName());
+    writer = new Table(Table1To3Statements.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
-    if (cWriter == null)
+    if (writer == null)
       initializeWriter();
     gatherGeneralStatistics();
-    cWriter.put("Project", path);
-    for (int ¢ = 1; ¢ <= MAX_STATEMENTS_REPORTED; ++¢)
-      cWriter.put(¢ + "",
-          !statementsCoverageStatistics.containsKey(¢) ? 0 : Double.valueOf(format.decimal(100 * avgCoverage(statementsCoverageStatistics.get(¢)))));
-    cWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
-    cWriter.nl();
+    writer.put("Project", path);
+    for (int i = MIN_STATEMENTS_REPORTED; i <= MAX_STATEMENTS_REPORTED; ++i)
+      if (!statementsCoverageStatistics.containsKey(i))
+        writer.col(i + " Count", "-")//
+            .col(i + "perc. of methods", 0)//
+            .col(i + " perc. of statements", 0)//
+            .col(i + " perc. touched", 100);
+      else {
+        final List<MethodRecord> rs = statementsCoverageStatistics.get(i);
+        writer.col(i + " Count", rs.size()).col(i + " Coverage", format.decimal(100 * avgCoverage(rs)))//
+            .col(i + "perc. of methods", format.decimal(100 * fractionOfMethods(totalMethods, rs)))//
+            .col(i + " perc. of statements", format.decimal(100 * fractionOfStatements(totalStatements, i, rs)))//
+            .col(i + " perc. touched", format.decimal(100 * fractionOfMethodsTouched(rs)));
+      }
+    writer.col("total Statements covergae ", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
+    writer.nl();
   }
 
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
@@ -110,6 +122,18 @@ public class TableNanosCoverage extends FolderASTVisitor {
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
     return safe.div(rs.stream().map(x -> min(1, safe.div(x.numNPStatements, x.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+  }
+
+  private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
+    return safe.div(rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), rs.size());
+  }
+
+  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
+    return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
+  }
+
+  private static double fractionOfMethods(final int methodsTotal, final List<MethodRecord> rs) {
+    return safe.div(rs.size(), methodsTotal);
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
