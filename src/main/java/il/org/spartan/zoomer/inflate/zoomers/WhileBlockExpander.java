@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate.expanders;
+package il.org.spartan.zoomer.inflate.zoomers;
 
 import java.util.*;
 
@@ -8,15 +8,15 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts for(condition)statement to for(condition){statement} Issue #975
+/** converts while(condition)statement to while(condition){statement} Issue #975
  * {@link Issue975}
  * @author Raviv Rachmiel
- * @since 22-12-16 */
-public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Expander {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
+ * @since 26-12-16 */
+public class WhileBlockExpander extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Expander {
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;
-    final ForStatement $ = duplicate.of(s);
+    final WhileStatement $ = duplicate.of(s);
     final Block b = $.getAST().newBlock();
     b.statements().add(duplicate.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "expand to block";
   }
 }

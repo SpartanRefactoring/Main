@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate.expanders;
+package il.org.spartan.zoomer.inflate.zoomers;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.zoomer.inflate.*;
+import il.org.spartan.zoomer.zoomin.*;
 
 /** Testing utils for expander Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

@@ -1,6 +1,7 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
-import static il.org.spartan.zoomer.inflate.expanders.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+
 import org.junit.*;
 
 /** Test case for bug in {@link AssignmentTernaryExpander} .

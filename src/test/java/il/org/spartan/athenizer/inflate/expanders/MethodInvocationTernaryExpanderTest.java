@@ -1,10 +1,10 @@
 package il.org.spartan.athenizer.inflate.expanders;
 
-import static il.org.spartan.zoomer.inflate.expanders.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.expanders.*;
+import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Unit tests for {@link MethodInvocationTernaryExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
