@@ -171,7 +171,6 @@ public interface idiomatic {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   class Storer<T> implements Holder<T> {
-    /** */
     final T inner;
 
     /** Instantiates this class.

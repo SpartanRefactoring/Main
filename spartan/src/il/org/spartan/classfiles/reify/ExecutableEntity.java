@@ -94,10 +94,8 @@ public class ExecutableEntity extends TypedEntity {
       return false;
     for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
-      if (i.isFieldAccessInstruction() && !i.isInvokeInstruction()) {
-        if (isAccessed(e, thisClassName, i))
-          return true;
-      }
+      if (i.isFieldAccessInstruction() && !i.isInvokeInstruction() && isAccessed(e, thisClassName, i))
+        return true;
     }
     return false;
   }

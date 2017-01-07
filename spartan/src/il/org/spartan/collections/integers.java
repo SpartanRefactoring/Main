@@ -216,10 +216,8 @@ public class integers {
       $ &= data.length - 1;
       if (!occupied[$])
         return -1;
-      if (!placeholder[$]) {
-        if (data[$] == i)
-          return $;
-      }
+      if (!placeholder[$] && data[$] == i)
+        return $;
     }
   }
 

@@ -41,12 +41,9 @@ public class MethodInfo extends ExecutableEntity {
 
   public boolean notObjectMethod() {
     try {
-      for (@NotNull final Method ¢ : Class.forName("java.lang.Object").getMethods()) {
-        if (!¢.getName().equals(name))
-          continue;
-        if (signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes())).equals(signature()))
+      for (@NotNull final Method ¢ : Class.forName("java.lang.Object").getMethods())
+        if (¢.getName().equals(name) && signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes())).equals(signature()))
           return false;
-      }
     } catch (@NotNull final ClassNotFoundException ¢) {
       ¢.printStackTrace();
     }

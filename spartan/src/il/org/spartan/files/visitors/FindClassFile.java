@@ -23,17 +23,15 @@ import il.org.spartan.utils.*;
       System.err.printf("Usage: %s [ -n ] [ -f ] className [className ...]\n", name);
       System.exit(1);
     }
-    for (final String arg : args) {
-      if (processOption(arg))
-        continue;
-      try {
-        System.out.println("Searching for class: " + arg + " in " + Parenthesize.square(File.listRoots()));
-        new FileSystemVisitor(File.listRoots(), new Searcher("." + arg + ".class"), ".class").go();
-      } catch (@NotNull final IOException ¢) {
-        System.err.println(¢.getMessage());
-      } catch (@NotNull final StopTraversal e) {
-      }
-    }
+    for (final String arg : args)
+      if (!processOption(arg))
+        try {
+          System.out.println("Searching for class: " + arg + " in " + Parenthesize.square(File.listRoots()));
+          new FileSystemVisitor(File.listRoots(), new Searcher("." + arg + ".class"), ".class").go();
+        } catch (@NotNull final IOException ¢) {
+          System.err.println(¢.getMessage());
+        } catch (@NotNull final StopTraversal e) {
+        }
   }
 
   private static boolean processOption(final String option) {
