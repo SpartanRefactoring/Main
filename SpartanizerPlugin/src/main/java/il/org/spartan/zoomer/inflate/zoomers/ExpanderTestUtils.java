@@ -114,7 +114,15 @@ public class ExpanderTestUtils {
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        assertSimilar($, peeled);
+        final List<MethodDeclaration> l = wizard.getMethodsSorted(u);
+        m = null;
+        for (final MethodDeclaration ¢ : l)
+          if (¢.getName().getIdentifier().equals(f)) {
+            m = ¢;
+            break;
+          }
+        assert m != null; // method not found
+        assertSimilar($, (m + ""));
         final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
         p.setResolveBindings(true);
         return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
