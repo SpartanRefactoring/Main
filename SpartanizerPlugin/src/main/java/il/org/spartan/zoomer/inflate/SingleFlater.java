@@ -27,11 +27,9 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-20 */
 public class SingleFlater {
   private static final boolean SELECT_CHANGES = false;
-  private CompilationUnit compilationUnit;
+  private ASTNode root;
   private OperationsProvider operationsProvider;
   private TextSelection textSelection;
-  private ASTNode rootNode;
-  private boolean usesRoot;
   private boolean usesDisabling = true;
 
   private SingleFlater() {}
@@ -39,9 +37,9 @@ public class SingleFlater {
   /** Creates a new {@link SingleFlater} for a {@link CompilationUnit}.
    * @param ¢ JD
    * @return new {@link SingleFlater} */
-  public static SingleFlater in(final CompilationUnit ¢) {
+  public static SingleFlater in(final ASTNode ¢) {
     final SingleFlater $ = new SingleFlater();
-    $.compilationUnit = ¢;
+    $.root = ¢;
     return $;
   }
 
@@ -68,15 +66,6 @@ public class SingleFlater {
     return this;
   }
   
-  /** Set using rootNode to apply tip only for it's descendants instead of whole compilation unit for this flater.
-   * @return this flater */
-  public SingleFlater usesRoot(final boolean ¢, ASTNode root) {
-    if(¢)
-      rootNode = root;
-    usesRoot = ¢;
-    return this;
-  }
-  
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
    * @param flaterChooser a {@link Function} to choose an {@link Operation} to
    *        make out of a collection of {@link Option}s.
@@ -84,12 +73,11 @@ public class SingleFlater {
    * @param g JD
    * @return true iff a change has been commited */
   @SuppressWarnings({ "unchecked", "rawtypes" }) public boolean go(final ASTRewrite r, final TextEditGroup g) {
-    if (compilationUnit == null || operationsProvider == null)
+    if (root == null || operationsProvider == null)
       return false;
     final List<Operation<?>> operations = new LinkedList<>();
-    disabling.scan(compilationUnit);
-    ASTNode begin = usesRoot ? rootNode : compilationUnit;
-    begin.accept(new DispatchingVisitor() {
+    disabling.scan(root);
+    root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inRange(n) || usesDisabling && disabling.on(n))
           return true;
