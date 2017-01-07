@@ -22,7 +22,7 @@ public class Issue1005 {
   }
 
   @Test public void t4() {
-    expansionOf("f(i++,--j,++x)").stays();
+    expansionOf("f(i++,--j,++x);").stays();
   }
 
   @Test public void t5() {
