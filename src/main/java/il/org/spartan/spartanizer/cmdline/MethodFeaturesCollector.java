@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Collects boolean features of methods
  * @author Yossi Gil
@@ -51,7 +52,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
         .put("empty", extract.statements(¢).isEmpty()) //
         .put("single", extract.statements(¢).size() == 1) //
         .put("double", extract.statements(¢).size() == 1) //
-        .put("side-effects", haz.sideEffects(¢)) //
+        .put("side-effects-free", sideEffects.free(¢)) //
         .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
         .put("array", type != null && type.isArrayType()) //
         .put("parameterized", type != null && type.isParameterizedType()) //

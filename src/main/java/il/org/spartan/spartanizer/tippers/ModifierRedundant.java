@@ -19,11 +19,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierRedundant extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final Modifier ¢) {
-    return "Eliminate redundant [" + ¢ + "] modifier";
+    return "Remove redundant [" + ¢ + "] modifier";
   }
 
   @Override public String description() {
-    return "Eliminate redundant modifier";
+    return "Remove redundant modifier";
   }
 
   @Override public Tip tip(final Modifier ¢) {

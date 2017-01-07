@@ -7,10 +7,11 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -42,6 +43,7 @@ public enum sideEffects {
       THIS_EXPRESSION, //
       TYPE_LITERAL, //
   };
+
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, //
       SUPER_METHOD_INVOCATION, //
@@ -52,16 +54,39 @@ public enum sideEffects {
   };
 
   public static boolean deterministic(final Expression x) {
-    if (haz.sideEffects(x))
+    if (!sideEffects.free(x))
       return false;
-    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
+    final Bool $ = new Bool(true); 
     x.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
-        $.set(Boolean.FALSE);
+        $.clear();
         return false;
       }
     });
-    return $.get().booleanValue();
+    return $.get();
+  }
+
+  private static boolean free(final ArrayCreation ¢) {
+    return free(step.dimensions(¢)) && (free(step.expressions(¢.getInitializer())));
+  }
+  
+
+  public static boolean free(final ASTNode ¢) {
+    return ¢ == null ||//
+        (iz.expression(¢) ? sideEffects.free(az.expression(¢))
+        : iz.expressionStatement(¢) ? sideEffects.free(step.expression(az.expressionStatement(¢)))
+            : iz.isVariableDeclarationStatement(¢) ? sideEffects.free(az.variableDeclrationStatement(¢))
+                : iz.block(¢) && sideEffects.free(az.block(¢)));
+  }
+
+  public static boolean free(final Block b) {
+    for (final Statement ¢ : statements(b))
+      if (!free(¢))
+        return false;
+    return true;
+  }
+  private static boolean free(final ConditionalExpression ¢) {
+    return free(expression(¢), then(¢), elze(¢));
   }
 
   public static boolean free(final Expression ¢) {
@@ -75,13 +100,13 @@ public enum sideEffects {
       case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
-        return !haz.sideEffects(step.expression(¢));
+        return sideEffects.free(step.expression(¢));
       case INSTANCEOF_EXPRESSION:
-        return !haz.sideEffects(left(az.instanceofExpression(¢)));
+        return sideEffects.free(left(az.instanceofExpression(¢)));
       case PREFIX_EXPRESSION:
         return free(az.prefixExpression(¢));
       case PARENTHESIZED_EXPRESSION:
-        return !haz.sideEffects(core(¢));
+        return sideEffects.free(core(¢));
       case INFIX_EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
       case CONDITIONAL_EXPRESSION:
@@ -97,37 +122,41 @@ public enum sideEffects {
     }
   }
 
-  private static boolean free(final VariableDeclarationExpression x) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(x))
-      if (haz.sideEffects(initializer(¢)))
-        return false;
-    return true;
-  }
-
-  private static boolean free(final ArrayCreation ¢) {
-    final ArrayInitializer $ = ¢.getInitializer();
-    return free(step.dimensions(¢)) && ($ == null || free(step.expressions($)));
-  }
-
-  private static boolean free(final ConditionalExpression ¢) {
-    return free(expression(¢), then(¢), elze(¢));
-  }
-
   private static boolean free(final Expression... xs) {
     for (final Expression ¢ : xs)
-      if (haz.sideEffects(¢))
+      if (!sideEffects.free(¢))
         return false;
     return true;
   }
 
-  private static boolean free(final Iterable<? extends Expression> xs) {
+  public static boolean free(final Iterable<? extends Expression> xs) {
+    if (xs == null)
+      return true;
     for (final Expression ¢ : xs)
-      if (¢ == null || haz.sideEffects(az.expression(¢)))
+      if (!sideEffects.free(az.expression(¢)))
         return false;
     return true;
+  }
+
+  public static boolean free(final MethodDeclaration ¢) {
+    return sideEffects.free(¢.getBody());
   }
 
   private static boolean free(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && !haz.sideEffects(step.operand(¢));
+    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(step.operand(¢));
+  }
+
+  private static boolean free(final VariableDeclarationExpression x) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(x))
+      if (!sideEffects.free(initializer(¢)))
+        return false;
+    return true;
+  }
+
+  public static boolean free(final VariableDeclarationStatement s) {
+    for (final VariableDeclarationFragment ¢ : fragments(s))
+      if (!sideEffects.free(¢.getInitializer()))
+        return false;
+    return true;
   }
 }

@@ -17,11 +17,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierFinalTryResourceRedundant extends CarefulTipper<Modifier> implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
-    return "Eliminate redundant final modifier of try resource";
+    return "Remove redundant final modifier of try resource";
   }
 
   @Override public String description(final Modifier ¢) {
-    return "Eliminate redundant final modifier of '" + az.variableDeclarationExpression(parent(¢)) + "' (a try resource)";
+    return "Remove redundant final modifier of '" + az.variableDeclarationExpression(parent(¢)) + "' (a try resource)";
   }
 
   @Override public Tip tip(final Modifier $) {

@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any
@@ -44,7 +45,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static ASTNode replacement(final Expression to, final InfixExpression from) {
-    if (haz.sideEffects(to))
+    if (!sideEffects.free(to))
       return null;
     final Expression $ = reduce(from, to);
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
