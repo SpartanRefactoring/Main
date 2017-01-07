@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 import java.util.function.*;
@@ -6,7 +6,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.zoomer.inflate.SingleFlater.*;
+import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 
 /** A provider of matching {@link Tipper} for an {@link ASTNode}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.eclipse.ui.texteditor.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.zoomer.*;
-import il.org.spartan.zoomer.inflate.SingleFlater.*;
+import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 
 /** Handler for the Athenizer project's feature (global athenizer). Uses
  * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an

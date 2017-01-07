@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 import java.util.function.*;
@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.zoomer.inflate.SingleFlater.*;
+import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 
 /** a wrapper for the original tippers toolbox
  * @author Raviv Rachmiel
