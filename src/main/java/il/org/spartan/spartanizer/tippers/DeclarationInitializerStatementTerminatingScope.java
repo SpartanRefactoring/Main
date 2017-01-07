@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
  * @author Yossi Gil
@@ -60,7 +61,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
-    if (haz.sideEffects(initializer)) {
+    if (!sideEffects.free(initializer)) {
       final SimpleName use = onlyOne(uses);
       if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
         return null;

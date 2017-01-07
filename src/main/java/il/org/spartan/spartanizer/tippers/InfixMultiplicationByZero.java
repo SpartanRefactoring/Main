@@ -25,7 +25,7 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
 
   private static boolean isContainsSideEffect(final InfixExpression x) {
     for (final Expression ¢ : extract.allOperands(x))
-      if (haz.sideEffects(¢))
+      if (!sideEffects.free(¢))
         return true;
     return false;
   }
