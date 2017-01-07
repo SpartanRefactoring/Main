@@ -26,7 +26,7 @@ public abstract class AbstractStringProperties {
     }
   }
 
-  @Nullable public abstract String get(final String key);
+  @Nullable public abstract String get(String key);
 
   /** A total inspector
    * @return the header of the CSV line */
@@ -42,7 +42,7 @@ public abstract class AbstractStringProperties {
     return makeLine(values());
   }
 
-  @NotNull public abstract AbstractStringProperties put(final String key, final String value);
+  @NotNull public abstract AbstractStringProperties put(String key, String value);
 
   public abstract int size();
 

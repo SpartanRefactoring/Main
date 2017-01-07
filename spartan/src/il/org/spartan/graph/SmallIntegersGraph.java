@@ -32,9 +32,9 @@ public abstract class SmallIntegersGraph {
     return has(n1) && has(n2) && component((short) n1) == component((short) n2);
   }
 
-  public abstract boolean has(final int i);
+  public abstract boolean has(int i);
 
-  public abstract boolean has(final int n1, final int n2);
+  public abstract boolean has(int n1, int n2);
 
   public final short nodesCount() {
     return (short) nodes.length;

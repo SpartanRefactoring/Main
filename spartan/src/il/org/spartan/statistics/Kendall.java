@@ -62,6 +62,7 @@ import il.org.spatan.iteration.*;
     return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }
 
+  /** [[SuppressWarningsSpartan]] */
   static int compueS(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
@@ -77,6 +78,7 @@ import il.org.spatan.iteration.*;
     return $;
   }
 
+  /** [[SuppressWarningsSpartan]] */
   static int compueS(@NotNull final int[] xs, @NotNull final int[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;

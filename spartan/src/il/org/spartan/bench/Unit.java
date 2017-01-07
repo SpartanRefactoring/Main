@@ -161,7 +161,7 @@ public enum Unit {
     }
   }
 
-  public abstract String format(final double d);
+  public abstract String format(double d);
 
   public String format(@NotNull final Double ¢) {
     return format(¢.doubleValue());

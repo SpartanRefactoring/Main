@@ -15,7 +15,7 @@ public abstract class TokenProcessor {
     nothing();
   }
 
-  protected abstract void process(final Token t, final String text);
+  protected abstract void process(Token t, String text);
 
   public static class Multiplexor extends TokenProcessor {
     private final Iterable<TokenProcessor> inners;

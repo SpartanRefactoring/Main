@@ -27,7 +27,7 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
    * translator.
    * @param i the <code><b>int</b></code> whose translation shall be returned.
    * @return the translation of <code>i</code>. */
-  public abstract T decode(final int i);
+  public abstract T decode(int i);
 
   @NotNull public final BitSet encode(@NotNull final Iterable<? extends U> us) {
     nonnull(us);
@@ -41,7 +41,7 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
    * by this translator.
    * @param t the whose <code><b>int</b></code> translation shall be returned.
    * @return the <code><b>int</b></code> translation of <code>c</code>. */
-  public abstract int encode(final U t);
+  public abstract int encode(U t);
 
   public abstract static class Anchored<T> extends Codex<T, T> {
   }

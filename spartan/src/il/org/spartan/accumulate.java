@@ -40,7 +40,7 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param t JD
    * @return <code><b>this</b></code> */
-  @NotNull accumulate<T, C> add(final @Nullable T t);
+  @NotNull accumulate<T, C> add(@Nullable T t);
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
