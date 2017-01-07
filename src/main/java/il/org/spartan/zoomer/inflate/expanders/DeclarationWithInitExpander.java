@@ -41,7 +41,8 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
     a.setRightHandSide(duplicate.of(az.expression(f2.getInitializer())));
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
+        final ListRewrite l = r.getListRewrite(¢.getParent(), !SwitchStatement.STATEMENTS_PROPERTY.getNodeClass().isInstance(¢.getParent())
+            ? Block.STATEMENTS_PROPERTY : SwitchStatement.STATEMENTS_PROPERTY);
         l.insertAfter(¢.getAST().newExpressionStatement(a), ¢, g);
         l.insertAfter($, ¢, g);
         l.remove(¢, g);
