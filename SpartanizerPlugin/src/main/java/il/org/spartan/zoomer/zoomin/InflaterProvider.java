@@ -35,7 +35,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
-            new toStringExpander())
+            new toStringExpander(),
+            new TernaryPushupStrings())//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
         .add(SwitchStatement.class, //
@@ -44,7 +45,8 @@ public class InflaterProvider extends OperationsProvider {
             new AssignmentOperatorExpansion())//
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
-        .add(VariableDeclarationStatement.class, new VariableDeclarationStatementSplit())
+        .add(VariableDeclarationStatement.class, //
+            new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
             new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
@@ -53,7 +55,9 @@ public class InflaterProvider extends OperationsProvider {
             new ThrowTernaryExpander())//
         .add(ForStatement.class, //
             new ForBlockExpander()) //
-        .add(WhileStatement.class, new WhileBlockExpander()).add(IfStatement.class, //
+        .add(WhileStatement.class, //
+            new WhileBlockExpander()) //
+        .add(IfStatement.class, //
             new IfElseBlockExpander()) //
     ;//
   }
