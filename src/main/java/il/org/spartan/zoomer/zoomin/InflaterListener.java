@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 import java.util.List;

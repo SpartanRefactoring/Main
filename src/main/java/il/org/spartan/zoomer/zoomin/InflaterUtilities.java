@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate;
+package il.org.spartan.zoomer.zoomin;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.zoomer.inflate.expanders.*;
+import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Helper functions for the inflater
  * @author Raviv Rachmiel

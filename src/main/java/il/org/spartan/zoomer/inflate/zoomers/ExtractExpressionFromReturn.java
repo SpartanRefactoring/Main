@@ -1,4 +1,4 @@
-package il.org.spartan.zoomer.inflate.expanders;
+package il.org.spartan.zoomer.inflate.zoomers;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** {@link Issue #1000} 
+/** {@link Issue #1000}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-07 */
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.Expander {
