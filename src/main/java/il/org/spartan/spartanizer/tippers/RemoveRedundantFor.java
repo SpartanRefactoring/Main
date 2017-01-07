@@ -19,7 +19,7 @@ public class RemoveRedundantFor extends ReplaceCurrentNode<ForStatement> impleme
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return ¢ == null || !sideEffects.free(¢.getExpression()) || !sideEffects.free(initializers(¢))
-        || !sideEffects.free(updaters(¢)) || !sideEffects.free(¢.getBody()) ? null : ¢.getAST().newBlock();
+    return ¢ == null || !sideEffects.free(¢.getExpression()) || !sideEffects.free(initializers(¢)) || !sideEffects.free(updaters(¢))
+        || !sideEffects.free(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }
