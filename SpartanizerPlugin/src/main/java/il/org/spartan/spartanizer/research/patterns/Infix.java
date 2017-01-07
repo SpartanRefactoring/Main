@@ -36,8 +36,8 @@ public final class Infix {
       return firstTip(tippers, ¢);
     }
 
-    @Override public String category() {
-      return Category.Conditional + "";
+    @Override public Category category() {
+      return Category.Ternary;
     }
 
     @Override public String description() {

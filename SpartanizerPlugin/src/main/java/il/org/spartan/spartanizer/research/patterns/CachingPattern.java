@@ -24,8 +24,8 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
     return tipper.tip(x);
   }
 
-  @Override public String category() {
-    return Category.Return + "";
+  @Override public Category category() {
+    return Category.Return;
   }
 
   @Override public String description() {

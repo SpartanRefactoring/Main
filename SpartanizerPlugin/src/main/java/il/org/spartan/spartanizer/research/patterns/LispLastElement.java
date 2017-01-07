@@ -28,8 +28,8 @@ public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
     return firstTip(tippers, ¢);
   }
 
-  @Override public String category() {
-    return Category.Functional + "";
+  @Override public Category category() {
+    return Category.Functional;
   }
 
   @Override public String description() {

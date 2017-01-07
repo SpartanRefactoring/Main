@@ -50,22 +50,34 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
 
   protected abstract Tip pattern(final N ¢);
 
-  @SuppressWarnings("static-method") public String category() {
+  @SuppressWarnings("static-method") public Category category() {
     return null;
   }
 
   public enum Category {
-    Iterative, Return, Throw, Conditional, Method, Quantifier, Functional;
+    Iterative, Return, Throw, Ternary {
+      @Override public String toString() {
+        return "Conditional Expression";
+      }
+    },
+    MethodBody {
+      @Override public String toString() {
+        return "Method Body";
+      }
+    },
+    Quantifier, Functional;
     public static String pretty(final String name) {
       if (name.startsWith("Lisp"))
         return name.replaceAll("^Lisp", "");
       switch (name) {
+        case "IfStatement":
+          return "Conditional Statement";
         case "MethodDeclaration":
-          return "Method";
+          return MethodBody + "";
         case "ConditionalExpression":
-          return "Conditional";
+          return Ternary + "";
         case "EnhancedForStatement":
-          return "Iterative";
+          return Iterative + "";
         default:
           return name;
       }
