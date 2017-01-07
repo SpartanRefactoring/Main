@@ -4,7 +4,7 @@ import il.org.spartan.statistics.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-26 */
-enum Statistic {
+public enum Statistic {
   N {
     @Override public double of(final RealStatistics ¢) {
       return ¢.n();
