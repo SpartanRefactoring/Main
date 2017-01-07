@@ -29,8 +29,8 @@ public final class ReturnHoldsForAll extends NanoPatternTipper<Block> {
     return firstTip(tippers, x);
   }
 
-  @Override public String category() {
-    return Category.Return + "";
+  @Override public Category category() {
+    return Category.Return;
   }
 
   @Override public String description() {

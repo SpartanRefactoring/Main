@@ -32,7 +32,7 @@ public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override public String category() {
-    return Category.Return + "";
+  @Override public Category category() {
+    return Category.Return;
   }
 }
