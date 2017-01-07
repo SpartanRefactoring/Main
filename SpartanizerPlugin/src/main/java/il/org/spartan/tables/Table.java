@@ -38,11 +38,6 @@ public class Table extends Row<Table> implements Closeable {
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
 
-  void add(final Statistic... ss) {
-    final List<Statistic> a = as.list(statisics);
-    a.addAll(as.list(ss));
-    set(a);
-  }
 
   public String baseName() {
     return temporariesFolder + name + ".*";
@@ -132,6 +127,12 @@ public class Table extends Row<Table> implements Closeable {
   public Table remove(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.removeAll(as.list(¢));
+    return set($);
+  }
+
+  public Table add(final Statistic... ¢) {
+    final List<Statistic> $ = as.list(statisics);
+    $.addAll(as.list(¢));
     return set($);
   }
 

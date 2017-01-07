@@ -32,7 +32,7 @@ public class TableNanosByCategories {
             categories.get(category).add(np.getClass().getSimpleName());
           }
     try (final Table t = new Table(this)) {
-      t.noStatistics();
+      t.noStatistics().add(Statistic.Σ);
       for (final String categoryName : categories.keySet())
         t//
             .col("Category", categoryName)//
