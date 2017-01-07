@@ -232,10 +232,10 @@ public final class IntegersMap {
       $ &= data.length - 1;
       if (!occupied[$])
         return -1;
-      if (placeholder[$])
-        continue;
-      if (data[$] == i)
-        return $;
+      if (!placeholder[$]) {
+        if (data[$] == i)
+          return $;
+      }
     }
   }
 
