@@ -1,10 +1,11 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
