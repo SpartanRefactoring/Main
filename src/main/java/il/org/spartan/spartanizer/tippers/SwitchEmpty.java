@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -45,14 +46,14 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
         final ExpressionStatement ss = s.getAST().newExpressionStatement(duplicate.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
-          if (haz.sideEffects(expression(s)))
+          if (!sideEffects.free(expression(s)))
             r.replace(s, ss, g);
           return;
         }
         if (iz.breakStatement(last(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        r.replace(s, wizard.ast((!haz.sideEffects(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
+        r.replace(s, wizard.ast((sideEffects.free(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
       }
     };
   }

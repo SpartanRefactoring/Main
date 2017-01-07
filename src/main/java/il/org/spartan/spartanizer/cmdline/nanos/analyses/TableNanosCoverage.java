@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class TableCoverage extends FolderASTVisitor {
+public class TableNanosCoverage extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
@@ -29,7 +29,7 @@ public class TableCoverage extends FolderASTVisitor {
   private static int totalStatementsCovered;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
-    clazz = TableCoverage.class;
+    clazz = TableNanosCoverage.class;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
   }
 
@@ -83,7 +83,7 @@ public class TableCoverage extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    cWriter = new Table(TableCoverage.class.getSimpleName());
+    cWriter = new Table(TableNanosCoverage.class.getSimpleName());
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
