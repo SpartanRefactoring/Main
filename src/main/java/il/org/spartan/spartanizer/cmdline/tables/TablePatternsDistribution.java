@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.nanos.analyses;
+package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 import java.util.*;
