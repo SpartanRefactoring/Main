@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.java;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -10,9 +10,9 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -27,6 +27,16 @@ public enum haz {
 
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
+  }
+
+  /** @param ¢ JD
+   * @return */
+  public static boolean anyStatements(final MethodDeclaration ¢) {
+    return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
+  }
+
+  public static boolean binding(final ASTNode ¢) {
+    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
   /** Determines whether the method's return type is boolean.
@@ -61,9 +71,22 @@ public enum haz {
     return false;
   }
 
+  /** @param ¢ JD
+   * @return */
+  public static boolean expression(final MethodInvocation ¢) {
+    return ¢ != null && step.expression(¢) != null;
+  }
+
   public static boolean final¢(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
       if (IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL)
+        return true;
+    return false;
+  }
+
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
         return true;
     return false;
   }
@@ -75,13 +98,6 @@ public enum haz {
   public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
 
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
@@ -155,34 +171,25 @@ public enum haz {
             return true;
         return false;
       }
+
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
     }.test(ss);
   }
 
-  public static boolean sideEffects(final Expression ¢) {
-    return !sideEffects.free(¢);
-  }
-
-  public static boolean sideEffects(final MethodDeclaration d) {
-    final Block body = d.getBody();
-    if (body != null)
-      for (final Statement ¢ : statements(body))
-        if (haz.sideEffects(¢))
-          return true;
-    return false;
+  /** @param ¢ JD
+   * @return */
+  public static boolean methods(final AbstractTypeDeclaration ¢) {
+    return step.methods(¢) != null && !step.methods(¢).isEmpty();
   }
 
   public static boolean sideEffects(final Statement ¢) {
     final ExpressionStatement $ = az.expressionStatement(¢);
-    return $ != null && sideEffects($.getExpression());
-  }
-
-  public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
-    final Block body = body(d);
-    if (body != null)
-      for (final Statement ¢ : statements(body))
-        if (haz.unknownNumberOfEvaluations(d, ¢))
-          return true;
-    return false;
+    return $ != null && !sideEffects.free($.getExpression());
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
@@ -203,9 +210,32 @@ public enum haz {
     return false;
   }
 
+  public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
+    final Block body = body(d);
+    if (body != null)
+      for (final Statement ¢ : statements(body))
+        if (haz.unknownNumberOfEvaluations(d, ¢))
+          return true;
+    return false;
+  }
+
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment ¢ : fs)
+          if (continue¢(¢.getName()))
+            return true;
+        return false;
+      }
+
+      boolean continue¢(final SimpleName ¢) {
+        if (iz.identifier("$", ¢))
+          return false;
+        $.set(Boolean.TRUE);
+        return true;
+      }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return continue¢(¢.getName());
       }
@@ -229,50 +259,7 @@ public enum haz {
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         return continue¢(fragments(¢));
       }
-
-      boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          if (continue¢(¢.getName()))
-            return true;
-        return false;
-      }
-
-      boolean continue¢(final SimpleName ¢) {
-        if (iz.identifier("$", ¢))
-          return false;
-        $.set(Boolean.TRUE);
-        return true;
-      }
     });
     return $.get().booleanValue();
-  }
-
-  static boolean binding(final ASTNode ¢) {
-    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
-  }
-
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static boolean methods(final AbstractTypeDeclaration ¢) {
-    return step.methods(¢) != null && !step.methods(¢).isEmpty();
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static boolean expression(final MethodInvocation ¢) {
-    return ¢ != null && step.expression(¢) != null;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  public static boolean anyStatements(final MethodDeclaration ¢) {
-    return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
   }
 }

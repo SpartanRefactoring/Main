@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** removes unused variable declarations example: "int i,j; j++" to "int j; j++"
@@ -26,7 +27,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
         final List<VariableDeclarationFragment> as = new ArrayList<>(step.fragments(asVar));
         step.fragments(asVar).clear();
         for (final VariableDeclarationFragment ¢ : as)
-          if (Collect.usesOf(¢.getName() + "").inside(n).size() > 1 || haz.sideEffects(¢.getInitializer()))
+          if (Collect.usesOf(¢.getName() + "").inside(n).size() > 1 || !sideEffects.free(¢.getInitializer()))
             step.fragments(asVar).add(¢);
         if (step.fragments(asVar).isEmpty())
           removalList.add(s);

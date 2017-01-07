@@ -8,6 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link haz}
  * @author Netanel Felcher
@@ -37,7 +38,7 @@ public class Issue810 {
   }
 
   @Test public void test3() {
-    assert !haz.sideEffects(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
+    assert !sideEffects.free(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
   }
 
   @Test public void test4() {

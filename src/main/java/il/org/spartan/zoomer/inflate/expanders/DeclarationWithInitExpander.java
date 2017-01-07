@@ -6,10 +6,10 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.athenizer.inflate.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Test case is {@link DeclarationWithInitExpanderTest} Issue No. 996 convert

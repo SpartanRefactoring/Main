@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** @author Matteo Orru'
  * @year 2016 */
@@ -84,7 +85,7 @@ public class Issue0239 {
     final SimpleName name = f.getName();
     assert name != null;
     assert f.getInitializer() != null;
-    assert haz.sideEffects(f.getInitializer());
+    assert !sideEffects.free(f.getInitializer());
     final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);

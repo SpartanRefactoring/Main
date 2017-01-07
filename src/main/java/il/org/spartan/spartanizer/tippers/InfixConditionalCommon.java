@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
@@ -63,7 +64,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return haz.sideEffects(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
+    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to($)).to(conjugate);
   }
 }

@@ -86,27 +86,24 @@ public class ExpanderTestUtils {
       }
       return null;
     }
-    
-    /**
-     * @param $ java code
-     * @param f tested method name. expanders will be applied only for this method
-     * @return
-     */
+
+    /** @param $ java code
+     * @param f tested method name. expanders will be applied only for this
+     *        method
+     * @return */
     public Operand givesWithBinding(final String $, final String f) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      
-      List<MethodDeclaration> ll = wizard.getMethodsSorted(u);
+      final List<MethodDeclaration> ll = wizard.getMethodsSorted(u);
       MethodDeclaration m = null;
-      for(MethodDeclaration ¢ : ll)
-        if(¢.getName().getIdentifier().equals(f)) {
+      for (final MethodDeclaration ¢ : ll)
+        if (¢.getName().getIdentifier().equals(f)) {
           m = ¢;
           break;
         }
-      assert m != null;  // method not found
-      
+      assert m != null; // method not found
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
         final Document doc = new Document(wrap);
