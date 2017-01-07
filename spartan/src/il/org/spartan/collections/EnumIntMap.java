@@ -14,5 +14,5 @@ public interface EnumIntMap<E extends Enum<E>> {
   /** Retrieve the value associated with a given enumerated value.
    * @param e some non-<code><b>null</b></code> value of type <code>E</code>.
    * @return the <code><b>int</b></code> value associated with the parameter. */
-  int get(final E e);
+  int get(E e);
 }

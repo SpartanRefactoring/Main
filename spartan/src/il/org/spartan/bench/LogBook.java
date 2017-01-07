@@ -140,7 +140,7 @@ public abstract class LogBook implements Serializable {
    * @throws FileNotFoundException */
   public void merge(@NotNull final File f) throws IOException, ClassNotFoundException {
     @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
-    merge(((LogBook) in.readObject()));
+    merge((LogBook) in.readObject());
     in.close();
   }
 

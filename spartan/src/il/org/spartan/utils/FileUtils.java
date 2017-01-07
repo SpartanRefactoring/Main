@@ -56,7 +56,7 @@ public class FileUtils {
    * @param text what to write
    * @throws FileNotFoundException in case the file could not be found */
   public static void writeToFile(@NotNull final String fileName, @NotNull final String text) throws FileNotFoundException {
-    try (@NotNull final PrintWriter p = new PrintWriter(fileName)) {
+    try (@NotNull PrintWriter p = new PrintWriter(fileName)) {
       p.write(text);
       p.flush();
     }

@@ -9,7 +9,7 @@ public abstract class AbstractSmallIntegersGraph {
     return (short) ¢;
   }
 
-  public abstract short component(final int i);
+  public abstract short component(int i);
 
   public abstract short components();
 
@@ -17,5 +17,5 @@ public abstract class AbstractSmallIntegersGraph {
     return has(n1) && has(n2) && component((short) n1) == component((short) n2);
   }
 
-  public abstract boolean has(final int i);
+  public abstract boolean has(int i);
 }

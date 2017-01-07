@@ -6,7 +6,7 @@ public interface Container<U, T extends U> {
   /** @param u an arbitrary object
    * @return <code><b>true</b</code> <em>if and only if</em> the parameter is
    *         contained in the receiver. */
-  boolean contains(final U u);
+  boolean contains(U u);
 
   /** Which objects are contained in this object?
    * @return an {@link Iterable} over the set of all objects for which

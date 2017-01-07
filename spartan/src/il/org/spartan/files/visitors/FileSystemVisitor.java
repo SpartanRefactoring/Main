@@ -458,7 +458,7 @@ public class FileSystemVisitor {
    * @author Yossi Gil
    * @since 16/05/2011 */
   public abstract static class PlainFileOnlyAction extends FileOnlyAction {
-    @Override public abstract void visitFile(final File f);
+    @Override public abstract void visitFile(File f);
 
     @Override public final void visitZipEntry(final String entryName, final InputStream s) {
       unused(entryName);

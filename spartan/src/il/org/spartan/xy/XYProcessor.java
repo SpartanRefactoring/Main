@@ -32,7 +32,7 @@ public interface XYProcessor {
         super.gather(x, y, dy);
     }
 
-    public abstract boolean valid(final double x, final double y, final double dy);
+    public abstract boolean valid(double x, double y, double dy);
   }
 
   abstract class Gatherer extends Vacuous {

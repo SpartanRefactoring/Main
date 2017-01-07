@@ -1032,7 +1032,7 @@ public interface Cookbook {
 
     /** Fluent API */
     interface $$RecipeMaker {
-      @org.jetbrains.annotations.NotNull <X> Cell<@Nullable X> make(final Supplier<X> x);
+      @org.jetbrains.annotations.NotNull <X> Cell<@Nullable X> make(Supplier<X> x);
     }
 
     @FunctionalInterface interface Function2<T1, T2, R> {

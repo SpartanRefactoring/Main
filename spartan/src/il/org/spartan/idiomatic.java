@@ -244,7 +244,7 @@ public interface idiomatic {
   interface Trigger {
     /** @param <T> JD
      * @param t JD */
-    @org.jetbrains.annotations.Nullable <@Nullable T> T eval(final Supplier<T> t);
+    @org.jetbrains.annotations.Nullable <@Nullable T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD */

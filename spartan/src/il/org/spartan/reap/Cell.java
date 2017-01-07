@@ -118,7 +118,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
 
     /** Fluent API */
     interface $$RecipeMaker {
-      @NotNull <X> Cell<@Nullable X> make(final Supplier<X> x);
+      @NotNull <X> Cell<@Nullable X> make(Supplier<X> x);
     }
 
     /** <code>Cookbook</code>
