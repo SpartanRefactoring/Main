@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.nanos.analyses;
 
-import static il.org.spartan.spartanizer.cmdline.Table_Tippers.*;
+import static il.org.spartan.spartanizer.cmdline.tables.Table_Tippers.*;
 
 import java.util.*;
 
