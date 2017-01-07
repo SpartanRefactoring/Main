@@ -107,7 +107,7 @@ public class ExpanderTestUtils {
         }
       assert m != null;  // method not found
       
-      SingleFlater.in(u).usesDisabling(false).usesRoot(true,m).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
