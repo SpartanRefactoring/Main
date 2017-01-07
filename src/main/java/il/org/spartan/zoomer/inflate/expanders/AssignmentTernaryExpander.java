@@ -38,9 +38,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       System.out.println("left - " + duplicate.of(¢.getThenExpression()));
       if(az.expression(duplicate.of(¢.getThenExpression())).subtreeMatch(new ASTMatcher(), duplicate.of(left))) {
         System.out.println("HEY1");
-        final ContinueStatement cont = ¢.getAST().newContinueStatement();
-        
-        $.setThenStatement(duplicate.of(cont));
+        $.setThenStatement(duplicate.of(¢.getAST().newContinueStatement()));
       }
       
       final Assignment elze = ¢.getAST().newAssignment();
@@ -52,8 +50,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       System.out.println("left - " + duplicate.of(¢.getThenExpression()));
       if(duplicate.of(¢.getElseExpression()).equals(duplicate.of(left))) {
         System.out.println("HEY1");
-        final ContinueStatement cont = ¢.getAST().newContinueStatement();
-        $.setElseStatement(duplicate.of(cont));
+        $.setElseStatement(duplicate.of(¢.getAST().newContinueStatement()));
       }
     } catch (@SuppressWarnings("unused") final NullPointerException e) {
       return null;
