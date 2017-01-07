@@ -98,9 +98,8 @@ public class ClassRepository implements Iterable<String> {
       for (final Enumeration<? extends ZipEntry> entries = new ZipFile(jarFile).entries(); entries.hasMoreElements();) {
         final ZipEntry ze = entries.nextElement();
         @NotNull final NameDotSuffix nds = new NameDotSuffix(ze);
-        if (!nds.suffixIs(DOT_CLASS))
-          continue;
-        result.add(nds.name);
+        if (nds.suffixIs(DOT_CLASS))
+          result.add(nds.name);
       }
     } catch (@NotNull final IOException ¢) {
       throw new RuntimeException("Damaged zip file: " + jarFile, ¢);

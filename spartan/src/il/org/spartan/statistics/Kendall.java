@@ -68,12 +68,11 @@ import il.org.spatan.iteration.*;
     for (int i = 0; i < xs.length; ++i)
       for (int j = i + 1; j < xs.length; ++j) {
         final double xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi == xj || yi == yj)
-          continue;
-        if (xi > xj == yi > yj)
-          ++$;
-        else
-          --$;
+        if (xi != xj && yi != yj)
+          if (xi > xj == yi > yj)
+            ++$;
+          else
+            --$;
       }
     return $;
   }
@@ -84,12 +83,11 @@ import il.org.spatan.iteration.*;
     for (int i = 0; i < xs.length; ++i)
       for (int j = i + 1; j < xs.length; ++j) {
         final int xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi == xj || yi == yj)
-          continue;
-        if (xi > xj == yi > yj)
-          ++$;
-        else
-          --$;
+        if (xi != xj && yi != yj)
+          if (xi > xj == yi > yj)
+            ++$;
+          else
+            --$;
       }
     return $;
   }
