@@ -187,8 +187,6 @@ public enum haz {
     return step.methods(¢) != null && !step.methods(¢).isEmpty();
   }
 
-
-
   public static boolean sideEffects(final Statement ¢) {
     final ExpressionStatement $ = az.expressionStatement(¢);
     return $ != null && !sideEffects.free($.getExpression());
@@ -264,5 +262,4 @@ public enum haz {
     });
     return $.get().booleanValue();
   }
-
 }

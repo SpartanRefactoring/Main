@@ -12,16 +12,16 @@ public final class Bool {
   public Bool(final boolean b) {
     inner = b;
   }
+
   public boolean get() {
     return inner;
   }
-  
+
   Bool set() {
-    return 
-    set(true);
+    return set(true);
   }
 
-  Bool set(boolean ¢) {
+  Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }
@@ -37,6 +37,5 @@ public final class Bool {
 
   public Bool clear() {
     return set(false);
-    
   }
 }

@@ -3,6 +3,8 @@ package il.org.spartan.zoomer.inflate.expanders;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -66,6 +68,43 @@ public class ExpanderTestUtils {
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, g);
+      try {
+        final Document doc = new Document(wrap);
+        r.rewriteAST(doc, null).apply(doc);
+        final String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          azzert.fail("Nothing done on " + get());
+        final String peeled = unpeeled;
+        if (peeled.equals(get()))
+          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        assertSimilar($, peeled);
+        final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
+        p.setResolveBindings(true);
+        return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
+      } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+        ¢.printStackTrace();
+      }
+      return null;
+    }
+
+    /** @param $ java code
+     * @param f tested method name. expanders will be applied only for this
+     *        method
+     * @return */
+    public Operand givesWithBinding(final String $, final String f) {
+      assert $ != null;
+      final CompilationUnit u = az.compilationUnit(ast);
+      final String wrap = classText;
+      final ASTRewrite r = ASTRewrite.create(u.getAST());
+      final List<MethodDeclaration> ll = wizard.getMethodsSorted(u);
+      MethodDeclaration m = null;
+      for (final MethodDeclaration ¢ : ll)
+        if (¢.getName().getIdentifier().equals(f)) {
+          m = ¢;
+          break;
+        }
+      assert m != null; // method not found
+      SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);

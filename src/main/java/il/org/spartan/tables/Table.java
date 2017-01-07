@@ -124,9 +124,9 @@ public class Table extends Row<Table> implements Closeable {
     return temporariesFolder + name;
   }
 
-  public Table noStatistics(){
+  public Table noStatistics() {
     statisics = new Statistic[0];
-    return this; 
+    return this;
   }
 
   public Table remove(final Statistic... ¢) {
