@@ -75,20 +75,20 @@ public interface TableRenderer {
       @Override public String render(final Statistic ¢) {
         switch (¢) {
           default:
-            return super.render(¢);
+            return "\\hfill" + super.render(¢);
           case min:
           case max:
-            return "$\\" + super.render(¢) + "$";
+            return "\\hfill" + "$\\" + super.render(¢) + "$";
           case σ:
-            return "$\\sigma$";
+            return "\\hfill" + "$\\sigma$";
           case Σ:
-            return "$\\Sum$";
+            return "\\hfill" + "$\\Sum$";
         }
       }
 
       // @formatter:off
       @Override public String arraySeparator() { return ", "; }
-      @Override public String recordEnd() { return "\\\\\n"; }
+      @Override public String recordEnd() { return " \\\\\n"; }
       @Override public String recordSeparator() { return "\t&\t"; }
       @Override public String beforeTable() {return "\\toprule\n"; }
       @Override public String afterTable() {return "\\bottomrule\n"; }

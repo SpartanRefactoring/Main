@@ -65,7 +65,7 @@ public class SingleFlater {
     usesDisabling = ¢;
     return this;
   }
-  
+
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
    * @param flaterChooser a {@link Function} to choose an {@link Operation} to
    *        make out of a collection of {@link Option}s.

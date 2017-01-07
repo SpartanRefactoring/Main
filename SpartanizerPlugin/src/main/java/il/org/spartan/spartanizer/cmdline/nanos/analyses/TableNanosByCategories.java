@@ -14,9 +14,9 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
-public class Table_NanosByCategories {
+public class TableNanosByCategories {
   public static void main(final String[] args) {
-    new Table_NanosByCategories().go();
+    new TableNanosByCategories().go();
   }
 
   public void go() {
@@ -31,15 +31,16 @@ public class Table_NanosByCategories {
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.getClass().getSimpleName());
           }
-    try (final Table r = new Table(this)) {
+    try (final Table t = new Table(this)) {
+      t.noStatistics();
       for (final String categoryName : categories.keySet())
-        r//
+        t//
             .col("Category", categoryName)//
             .col("Size", categories.get(categoryName).size()) //
             .col("Nanos", categories.get(categoryName).toArray())//
             .nl();
-      System.err.println(r.description());
+      System.err.println(t.description());
+      system.dumpOutput(system.bash("column -s \\& -t " + "/tmp/" + t.name + ".tex"));
     }
-    system.dumpOutput(system.bash("column -s \\& -t /tmp/nanos.tex"));
   }
 }

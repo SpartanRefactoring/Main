@@ -11,7 +11,7 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
  * @since 2016-12-25 */
-public class TableTouched extends TableCoverage {
+public class TableTouched extends TableNanosCoverage {
   private static Table touchedWriter;
 
   public static void main(final String[] args)
