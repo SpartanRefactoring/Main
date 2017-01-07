@@ -110,7 +110,7 @@ public class ExpanderTestUtils {
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from(((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)));
+        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from((makeAST.COMPILATION_UNIT.from(unpeeled)));
         assert !ll.isEmpty(); // method not found
         m = l.get(0);
         assertSimilar($, (m + ""));
