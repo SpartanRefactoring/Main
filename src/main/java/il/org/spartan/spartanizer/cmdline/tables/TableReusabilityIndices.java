@@ -6,7 +6,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
@@ -18,11 +17,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   static {
     clazz = TableReusabilityIndices.class;
   }
-
-  private static void initializeWriter() {
-    writer = new Table(makeFile(clazz.getSimpleName()));
-  }
-
   private static Table writer;
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
@@ -34,6 +28,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     writer.close();
+    System.out.println("Your output is in " + writer.description());
   }
 
   public static int rindex(final int[] ranks) {
@@ -159,9 +154,26 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   void summarize() {
     if (writer == null)
-      initializeWriter();
-    summarizeProject();
-    addLineToGlobalStatistcs();
+      writer = new Table(this);
+    try (final Table t = new Table("rindices")) {
+      for (final String category : usage.keySet()) {
+        final Map<String, Integer> map = usage.get(category);
+        int n = 0;
+        int m = 0;
+        for (final String key : map.keySet()) {
+          t//
+              .col("N", ++n)//
+              .col("M", ++m)//
+              .col("Category", category)//
+              .col("Key", '"' + key + '"')//
+              .col("Count", map.get(key)) //
+              .nl();
+        }
+        writer.col(category, rindex(ranks(map)));
+        System.err.println("Your output is in: " + t.description());
+        addLineToGlobalStatistcs();
+      }
+    } 
   }
 
   private void addLineToGlobalStatistcs() {
@@ -180,35 +192,14 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     int rindexBorn = rindex(ranks(born));
     int rindexAdopted = rindex(ranks(adopted));
     writer//
-    .col("Adoption", rindexAdopted) //
-    .col("Reuse", rindexBorn)//
-    .col("$\\Delta$", rindexBorn - rindexAdopted)//
-    .nl();
+        .col("Adoption", rindexAdopted) //
+        .col("Reuse", rindexBorn)//
+        .col("$\\Delta$", rindexBorn - rindexAdopted)//
+        .nl();
   }
 
   protected int methodRIndex() {
     return rindex(ranks(usage.get("METHOD")));
-  }
-
-  private void summarizeProject() {
-    final CSVLineWriter w = new CSVLineWriter(makeFile("raw-reuse-ranks"));
-    int n = 0;
-    for (final String category : usage.keySet()) {
-      final Map<String, Integer> map = usage.get(category);
-      int m = 0;
-      for (final String key : map.keySet()) {
-        w//
-            .put("N", ++n)//
-            .put("M", ++m)//
-            .put("Category", category)//
-            .put("Key", '"' + key + '"')//
-            .put("Count", map.get(key)) //
-        ;
-        w.nl();
-      }
-      writer.col(category, rindex(ranks(map)));
-    }
-    System.err.println("Your output is in: " + w.close());
   }
 
   private String key(final InfixExpression ¢) {
