@@ -4,12 +4,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.inflate.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Test case is {@link MethodInvocationTernaryExpanderTest} Issue No. 984
+/** Test case is {@link MethodInvocationTernaryExpanderTest} Issue #984
  * convert <code> o.f(x ? a : b); </code> to
  * <code> if (x) o.f(a); else o.f(b); </code>
  * @author Tomer Dragucki

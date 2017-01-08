@@ -6,12 +6,12 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit tests for {@link DeclarationWithInitExpander}
+/** Unit tests for {@link DeclarationWithInitExpander} Issue #996
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @Ignore
 @SuppressWarnings("static-method")
-public class DeclarationWithInitExpanderTest {
+public class Issue0996 {
   @Test public void a() {
     expansionOf("int a = 0;").gives("int a;" //
         + "a = 0;").stays();

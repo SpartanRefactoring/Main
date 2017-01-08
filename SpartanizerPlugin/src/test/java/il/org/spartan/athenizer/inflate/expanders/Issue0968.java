@@ -6,12 +6,12 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit tests for {@link VariableDeclarationStatementSplit}
+/** Unit tests for {@link VariableDeclarationStatementSplit} Issue #968
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @Ignore
 @SuppressWarnings("static-method")
-public class VariableDeclarationStatementSplitTest {
+public class Issue0968 {
   @Test public void a() {
     expansionOf("int a = 3, b = 4, c = 5;")
         .gives("int a = 3;" //
