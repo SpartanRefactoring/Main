@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
-public final class Cascade extends NanoPatternTipper<Block> {
+public final class Cascade extends NotImplementedNanoPattern<Block> {
   @Override public boolean canTip(final Block x) {
     if (iz.emptyBlock(x))
       return false;
