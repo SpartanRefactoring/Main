@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
@@ -38,5 +38,13 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public String description() {
     return "Aggregate a collection into one element";
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

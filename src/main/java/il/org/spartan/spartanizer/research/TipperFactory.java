@@ -51,6 +51,14 @@ public class TipperFactory {
       @Override public ASTNode getMatching(final ASTNode ¢) {
         return $.replacement(¢);
       }
+
+      @Override public String pattern() {
+        return pattern;
+      }
+
+      @Override public String replacement() {
+        return replacement;
+      }
     };
   }
 
@@ -63,12 +71,12 @@ public class TipperFactory {
    * and transforms them to match the pattern <b>_replacement</b>, using the
    * same values<br>
    * for each pattern variable.
-   * @param _pattern Pattern to match against
-   * @param _replacement Replacement pattern
+   * @param pattern Pattern to match against
+   * @param replacement Replacement pattern
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
-  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
-    final Matcher $ = Matcher.patternMatcher(_pattern, _replacement);
+  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
+    final Matcher $ = Matcher.patternMatcher(pattern, replacement);
     return new UserDefinedTipper<N>() {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
@@ -92,6 +100,14 @@ public class TipperFactory {
 
       @Override public ASTNode getMatching(final ASTNode ¢) {
         return $.replacement(¢);
+      }
+
+      @Override public String pattern() {
+        return pattern;
+      }
+
+      @Override public String replacement() {
+        return replacement;
       }
     };
   }
