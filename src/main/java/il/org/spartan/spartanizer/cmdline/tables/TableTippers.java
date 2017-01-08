@@ -33,8 +33,6 @@ public class TableTippers {
     }
   }
 
-  /** @param i
-   * @return */
   protected static String intToClassName(final int $) {
     try {
       return name(ASTNode.nodeClassForType($));
@@ -43,8 +41,6 @@ public class TableTippers {
     }
   }
 
-  /** @param myActualOperandsClass
-   * @return */
   protected static String name(final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }

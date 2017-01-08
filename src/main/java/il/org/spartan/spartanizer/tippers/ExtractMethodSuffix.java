@@ -91,9 +91,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return $;
   }
 
-  /** @param d
-   * @param d1
-   * @param r */
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(dx.getBody()).clear();
     for (final Statement ¢ : statements(d.getBody()))
