@@ -19,10 +19,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
-/** Find if(X == null) return null; <br>
- * Find if(null == X) return null; <br>
- * @author Ori Marcovitch
- * @year 2016 */
+/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-08 */
 public class AssertNotNull extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with azzert.notNull($X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
