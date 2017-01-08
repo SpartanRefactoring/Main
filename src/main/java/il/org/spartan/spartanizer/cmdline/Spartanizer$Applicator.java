@@ -28,7 +28,6 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     this(Toolbox.defaultInstance());
   }
 
-  /** @param defaultInstance */
   public Spartanizer$Applicator(final Toolbox toolbox) {
     this.toolbox = toolbox;
   }
@@ -97,8 +96,6 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     ReportGenerator.nl("metrics");
   }
 
-  /** @param input
-   * @return */
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
@@ -168,14 +165,11 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         return toolbox.firstTipper(¢);
       }
 
-      /** @param n
-       * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
@@ -223,14 +217,11 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         return toolbox.firstTipper(¢);
       }
 
-      /** @param n
-       * @param w */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))

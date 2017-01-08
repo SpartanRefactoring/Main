@@ -81,7 +81,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
-   * @return a collection of {@link Tip} objects each containing a laconic
+   * @return a collection of {@link Tip} objects each containing a spartanization
    *         tip */
   public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
@@ -387,7 +387,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @throws IllegalArgumentException
    * @throws CoreException */
   protected void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
-    progressMonitor.beginTask("Iterating over laconizeable compilation units...", us.size());
+    progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us)
       scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
     progressMonitor.done();

@@ -92,7 +92,6 @@ public class leonidasSays {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
-    /** @param statementsPattern */
     public statementsTipper(final UserDefinedTipper<Block> tipper) {
       this.tipper = tipper;
     }

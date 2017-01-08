@@ -89,8 +89,6 @@ public enum into {
     return (InfixExpression) e(expression);
   }
 
-  /** @param p
-   * @return */
   public static MethodDeclaration m(final String p) {
     return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.from(p));
   }

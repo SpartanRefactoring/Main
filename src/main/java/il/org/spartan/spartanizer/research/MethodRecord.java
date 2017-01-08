@@ -52,8 +52,6 @@ public class MethodRecord {
     return excluded.contains(np);
   }
 
-  /** @param ¢
-   * @return */
   static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
     String $ = "";

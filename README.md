@@ -4,9 +4,9 @@ The Spartanizer is:
 - Offers in the problems view tips for simplifying your code 
 - Make your code laconic: say much in few words.
 
-The sparanizer help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a collection of nano-patterns. The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code, stripping it to the bare bone.
+The Spartanizer help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a collection of nano-patterns. The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code, stripping it to the bare bone.
 
-This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reititerate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
+This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 
 ![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
 
@@ -26,7 +26,7 @@ Click on the picture below to watch a video demonstration on YouTube.
  [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
 
 # What is this?
-The laconizer or spartnizer is an  Eclipse plugin that automatically applies the principles
+The Spartanizer is an  Eclipse plugin that automatically applies the principles
 of *[Spartan Programming]* to your Java code. It applies many different tippers,
    which are little rules that provide suggestions on how to shorten and
    simplify your code, e.g, by using fewer variables, factoring out common
@@ -50,7 +50,7 @@ lot of reading material on the subject in the [project wiki].
 
 ## Compiling from source
 #### Using Maven and Git in command line(recommended)
-By asuming that the current derectory is at relative path "?", Clone the repository by:
+By assuming that the current directory is at relative path "?", Clone the repository by:
 
 ```
 git clone https://github.com/SpartanRefactoring/Spartanizer.git

@@ -58,15 +58,11 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
         || iz.synchronizedStatement(nextStatement) || iz.tryStatement(nextStatement) || containsClassInstanceCreation(nextStatement);
   }
 
-  /** @param id
-   * @return */
   private static boolean preOrPostfix(final SimpleName id) {
     final ASTNode $ = parent(id);
     return iz.prefixExpression($) || iz.postfixExpression($);
   }
 
-  /** @param nextStatement
-   * @return */
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
     return !searchDescendants.forClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }

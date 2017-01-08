@@ -65,14 +65,10 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
   }
 
-  /** @param ¢
-   * @return */
   private static String fileAzFilePath() {
     return getProperty(API_FILE);
   }
 
-  /** @param ¢
-   * @return */
   private static File fileAzFile() {
     return new File(fileAzFilePath());
   }
@@ -149,8 +145,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return updatePackage(¢.exists() ? ¢ : createFileFromTemplate(¢));
   }
 
-  /** @param object
-   * @return */
   private static File updatePackage(final File ¢) {
     return ¢;
   }
@@ -166,8 +160,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return $;
   }
 
-  /** @param ¢
-   * @return */
   private static String getContainingPackage(final CastExpression ¢) {
     return searchAncestors.forContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }

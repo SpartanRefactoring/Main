@@ -23,12 +23,10 @@ public final class TermsExpander {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
-  /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
 
-  /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
     final Expression ¢ = duplicate.of(t.expression);
     return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
@@ -73,7 +71,6 @@ public final class TermsExpander {
     return recurse(ts, (InfixExpression) $);
   }
 
-  /** @see #recurse(List, InfixExpression) */
   private static Expression recurse(final List<Term> ts, final InfixExpression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())

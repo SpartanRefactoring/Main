@@ -25,7 +25,7 @@ the program changes: https://goo.gl/sIqIBC
 <!-- Preferences page -->
 <extension point="org.eclipse.ui.preferencePages">
   <page 
-  name="Laconization Tips"
+  name="Spartanization Tips"
   class="il.org.spartan.plugin.PreferencesPage"
   id="il.org.spartan.plugin.PluginPreferencesPage"
   category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
@@ -80,7 +80,7 @@ the program changes: https://goo.gl/sIqIBC
 https://goo.gl/OI2pBd -->
 <extension 
   id="il.org.spartan.tip"
-  name="Laconize"
+  name="Spartanize"
   point="org.eclipse.core.resources.markers" 
 >
   <!-- in the future we may want to break this into several kinds, renaming,
@@ -372,7 +372,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
-       tooltip="Laconize"
+       tooltip="Spartanize"
          commandId="il.org.spartan.SpartanGlobal" 
          icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
@@ -394,7 +394,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Popup menus // disabled, see issue #429
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
-     <menu id="il.org.spartan.menus.spartanization" label="Laconize..." mnemonic="L">
+     <menu id="il.org.spartan.menus.spartanization" label="Spartanize..." mnemonic="Z">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
         <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
@@ -415,13 +415,13 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+  <menu id="org.eclipse.jdt.ui.refactoring.menj" label="Refactor">
     <menu label="Spartanizer" mnemonic="S">
-      <menu label="Laconize.." mnemonic="L">
+      <menu label="Spartanize..." mnemonic="S">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="C"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="A"/>
       </menu>
-      <menu label="Zoom.." mnemonic="Z">
+      <menu label="Zoom..." mnemonic="Z">
         <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
         <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
       </menu>
