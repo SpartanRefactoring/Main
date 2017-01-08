@@ -8,7 +8,7 @@ import org.junit.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 @SuppressWarnings("static-method")
-public class IfNullReturnTest {
+public class AssertNotNullTest {
   @Test public void a() {
     trimmingOf("statement(); if(x == null) return; use(); use();")//
         .using(IfStatement.class, new AssertNotNull())//
