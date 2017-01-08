@@ -44,8 +44,8 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return "";
   }
 
-  public String[] technicalName() {
-    return new String[] { className() };
+  public String technicalName() {
+    return className();
   }
 
   public String[] akas() {

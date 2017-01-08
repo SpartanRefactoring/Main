@@ -32,7 +32,7 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
     return "A field which its value is defined by an expression which is evaluated only on the first access";
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "if($X1 == null) $X1 = $X2; return $X1;" };
+  @Override public String technicalName() {
+    return "IfX₁IsNullIntializeWithX₂ReturnX₁";
   }
 }

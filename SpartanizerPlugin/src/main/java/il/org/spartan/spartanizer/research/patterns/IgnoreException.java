@@ -38,7 +38,7 @@ public final class IgnoreException extends NanoPatternTipper<CatchClause> {
     return az.tryStatement(step.parent(¢));
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "catchXIgnore" };
+  @Override public String technicalName() {
+    return "catchXIgnore";
   }
 }

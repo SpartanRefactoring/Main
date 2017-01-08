@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {
-  @Override public String[] technicalName() {
+  @Override public String technicalName() {
     return null;
   }
 

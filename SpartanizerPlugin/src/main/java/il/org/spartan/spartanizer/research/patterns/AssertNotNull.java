@@ -76,7 +76,7 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
     return description;
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "if($X == null) return;", "if($X == null) return null;", "if($X1 == null || $X2 == null) return;" };
+  @Override public String technicalName() {
+    return "IfXIsNullReturn";
   }
 }
