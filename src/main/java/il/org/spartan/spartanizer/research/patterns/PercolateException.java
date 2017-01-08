@@ -13,12 +13,12 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-05 */
-public final class IgnoreException extends NanoPatternTipper<CatchClause> {
+ * @since 2017-01-08 */
+public final class PercolateException extends NanoPatternTipper<CatchClause> {
   private static final Set<UserDefinedTipper<TryStatement>> tippers = new HashSet<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){ignore();};", ""));
+      add(patternTipper("try $B1 catch($T $N){ throw $N;}", "try $B1 catch($T $N){percolate($N);};", ""));
     }
   };
 
@@ -39,6 +39,6 @@ public final class IgnoreException extends NanoPatternTipper<CatchClause> {
   }
 
   @Override public String[] technicalName() {
-    return new String[] { "catchXIgnore" };
+    return new String[] { "catchXThrowX" };
   }
 }

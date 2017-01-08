@@ -42,6 +42,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(CatchClause.class, //
             new IfThrowsReturnNull(), //
             new IgnoreException(), //
+            new PercolateException(), //
             null)//
         .add(ConditionalExpression.class, //
             new AsBit(), //
