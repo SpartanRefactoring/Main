@@ -50,7 +50,7 @@ public abstract class FileTestUtils {
         }
     }
 
-    abstract Object[] makeCase(final AbstractGUIApplicator a, final File d, final File f, final String name);
+    abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
   }
 
   /* Auxiliary function for test suite inherited classes */
@@ -80,7 +80,7 @@ public abstract class FileTestUtils {
     /** Collect test cases from each file in {@link #location}
      * @param $ where to save the collected test cases
      * @param f an entry in {@link #location} */
-    public abstract void go(List<Object[]> $, final File f);
+    public abstract void go(List<Object[]> $, File f);
   }
 
   /** A String determines whereas we are at the IN or OUT side of the test See
@@ -123,7 +123,7 @@ public abstract class FileTestUtils {
   }
 
   private static File createTemporaryRandomAccessFile(final File $, final String s) {
-    try (final RandomAccessFile fh = new RandomAccessFile($, "rw")) {
+    try (RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
       if ($ != null)
         $.deleteOnExit();

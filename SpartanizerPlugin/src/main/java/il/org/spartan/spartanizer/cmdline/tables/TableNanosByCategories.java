@@ -31,7 +31,7 @@ public class TableNanosByCategories {
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.getClass().getSimpleName());
           }
-    try (final Table t = new Table(this)) {
+    try (Table t = new Table(this)) {
       t.noStatistics().add(Statistic.Σ);
       for (final String categoryName : categories.keySet())
         t//

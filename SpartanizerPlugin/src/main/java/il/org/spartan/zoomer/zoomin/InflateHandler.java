@@ -201,9 +201,8 @@ public class InflateHandler extends AbstractHandler {
       return $;
     for (final IEditorReference r : p.getEditorReferences()) {
       final IEditorPart ep = r.getEditor(false);
-      if (ep == null || !(ep instanceof ITextEditor))
-        continue;
-      $.add((ITextEditor) ep);
+      if (ep != null && ep instanceof ITextEditor)
+        $.add((ITextEditor) ep);
     }
     return $;
   }

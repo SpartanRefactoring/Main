@@ -78,7 +78,7 @@ public enum makeAST {
    * @param f JD
    * @return entire contents of this file, as one string */
   public static String string(final File f) {
-    try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
+    try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       for (String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
         if (¢ == null)
           return $;
@@ -99,7 +99,7 @@ public enum makeAST {
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter. */
   public StringBuilder builder(final File f) {
-    try (final Scanner $ = new Scanner(f)) {
+    try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception ¢) {
       monitor.logEvaluationError(this, ¢);

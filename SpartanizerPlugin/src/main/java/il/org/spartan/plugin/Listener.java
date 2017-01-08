@@ -43,7 +43,7 @@ public interface Listener {
 
   /** Main listener function.
    * @param ¢ notification details */
-  void tick(final Object... os);
+  void tick(Object... os);
 
   /** An aggregating kind of {@link Listener} that dispatches the event it
    * receives to the multiple {@link Listener}s it stores internally.

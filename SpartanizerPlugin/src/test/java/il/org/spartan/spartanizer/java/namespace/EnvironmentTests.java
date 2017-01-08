@@ -428,18 +428,13 @@ public final class EnvironmentTests {
 
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
-          for (;;) {
-            /* D */
-            /* C */
-            /* B */
+          for (;;)
             if (new Oompa_Loompa(l) {
               @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa ¢) {
                 return ¢ != null ? super.Oompa_Loompa(¢) : Oompa_Loompa.this.Oompa_Loompa(¢);
               }
-            }.Oompa_Loompa(l) == null)
-              continue l;
-            break l;
-          }
+            }.Oompa_Loompa(l) != null)
+              break l;
         return l;
       }
     }

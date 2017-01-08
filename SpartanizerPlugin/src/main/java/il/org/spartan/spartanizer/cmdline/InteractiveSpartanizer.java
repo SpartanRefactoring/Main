@@ -37,7 +37,7 @@ public class InteractiveSpartanizer {
 
   static String read() {
     String $ = "";
-    try (final Scanner s = new Scanner(System.in)) {
+    try (Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;

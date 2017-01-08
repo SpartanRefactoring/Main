@@ -316,6 +316,10 @@ public enum step {
     return ¢ == null ? null : ¢.fragments();
   }
 
+  @SuppressWarnings("unchecked") public static List<IDocElement> fragments(TagElement ¢) {
+    return ¢ == null ? null : ¢.fragments();
+  }
+
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */

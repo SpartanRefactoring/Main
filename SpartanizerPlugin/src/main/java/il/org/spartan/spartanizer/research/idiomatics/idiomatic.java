@@ -168,7 +168,7 @@ public interface idiomatic {
    * @author Ori Marcovitch
    * @since 2016 */
   abstract class Executor {
-    public abstract <T> void when(final boolean c);
+    public abstract <T> void when(boolean c);
   }
 
   static Executor execute(final Runnable r) {
@@ -403,7 +403,7 @@ public interface idiomatic {
     /** @param <T> JD
      * @param t JD
      * @return */
-    <T> T eval(final Supplier<T> t);
+    <T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD
