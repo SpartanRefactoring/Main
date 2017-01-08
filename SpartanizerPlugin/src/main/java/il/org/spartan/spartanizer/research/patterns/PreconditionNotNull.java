@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2017-01-08 */
 public final class PreconditionNotNull extends AssertNotNull {
   @Override public boolean canTip(final IfStatement ¢) {
-    return nullCheck(¢)//
+    return nullCheck(expression(¢))//
         && first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
   }
 }

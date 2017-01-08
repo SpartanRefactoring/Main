@@ -236,7 +236,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static InfixExpression infixExpression(final ASTNode $) {
-    return !($ instanceof InfixExpression) ? null : (InfixExpression) $;
+    return !iz.nodeTypeEquals($, INFIX_EXPRESSION) ? null : (InfixExpression) $;
   }
 
   /** Down-cast, if possible, to {@link InstanceofExpression}
