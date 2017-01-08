@@ -44,4 +44,8 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
+
+  @Override public Category category() {
+    return Category.Functional;
+  }
 }
