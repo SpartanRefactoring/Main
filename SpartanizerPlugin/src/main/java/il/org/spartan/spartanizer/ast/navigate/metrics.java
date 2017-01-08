@@ -153,7 +153,6 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  /** @param n */
   static int countStatements(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
@@ -165,8 +164,6 @@ public interface metrics {
     return $.inner;
   }
 
-  /** @param n
-   * @return */
   static int countExpressions(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
@@ -178,8 +175,6 @@ public interface metrics {
     return $.inner;
   }
 
-  /** @param n
-   * @return */
   static int countMethods(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {

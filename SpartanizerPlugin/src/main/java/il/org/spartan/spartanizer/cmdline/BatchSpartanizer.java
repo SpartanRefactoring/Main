@@ -63,12 +63,10 @@ public final class BatchSpartanizer extends FolderASTVisitor {
     }
   }
 
-  /** @param input */
   private static void spartanizeFile(final File input) {
     new BatchSpartanizer(input.getAbsolutePath()).fire();
   }
 
-  /** @param input */
   private static void spartanizeDir(final File input) {
     for (final File ¢ : input.listFiles())
       if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
@@ -94,7 +92,6 @@ public final class BatchSpartanizer extends FolderASTVisitor {
     System.out.println("");
   }
 
-  /** @param args */
   private static void parseCommandLineArgs(final String[] args) {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {

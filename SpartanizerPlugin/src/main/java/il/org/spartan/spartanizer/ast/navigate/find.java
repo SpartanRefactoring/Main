@@ -89,9 +89,6 @@ public enum find {
     return $;
   }
 
-  /** @param n1
-   * @param n2
-   * @return */
   static <N extends ASTNode> boolean areSelfDifferent(final N n1, final N n2) {
     return iz.infixExpression(n1) && (!iz.infixExpression(n2) || !operator(az.infixExpression(n1)).equals(operator(az.infixExpression(n2))));
   }

@@ -15,8 +15,6 @@ public class NanoPatternRecord {
   public int numNPExpressions;
   public final String className;
 
-  /** @param name
-   * @param cl */
   public NanoPatternRecord(final String name, final Class<? extends ASTNode> cl) {
     this.name = name;
     className = cl.getSimpleName();

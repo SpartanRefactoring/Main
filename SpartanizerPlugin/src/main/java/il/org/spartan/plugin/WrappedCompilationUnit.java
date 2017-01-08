@@ -81,8 +81,6 @@ public class WrappedCompilationUnit {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
-  /** @param from
-   * @return */
   public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
