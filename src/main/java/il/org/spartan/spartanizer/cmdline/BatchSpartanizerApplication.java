@@ -65,7 +65,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     // .go());
     // final FileStats s = new FileStats(f);
     // for (int i = 0; i <optRounds; ++i) {
-    // final int n = new LaconizeProject().countTips();
+    // final int n = new SpartanizeProject().countTips();
     // if (n == 0)
     // break;
     //// s.addRoundStat(n);
@@ -228,7 +228,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
     final int essence2 = Essence.of(out + "").length();
-    final int wordCount = code.wc(Essence.of(out + ""));
+    final int wordCount = system.wc(Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = count.nodes(from);
     final int body2 = metrics.bodySize(from);
