@@ -57,4 +57,8 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   @Override public String description() {
     return "Execute a statement only if condition holds";
   }
+
+  @Override public String[] technicalName() {
+    return new String[] { "if($X) $N($A);" };
+  }
 }
