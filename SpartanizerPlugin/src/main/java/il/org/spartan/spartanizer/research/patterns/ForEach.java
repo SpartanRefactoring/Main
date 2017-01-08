@@ -42,4 +42,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
+
+  @Override public String[] technicalName() {
+    return new String[] { "for($N1 $N2 : $X1) $X2;", "for($N1 $N2 : $X1) if($X2) $X3;" };
+  }
 }
