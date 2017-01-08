@@ -85,9 +85,9 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Iterative, Return, Exception, Ternary {
+    Iterative, Return, Conditional, Exception, NullConditional, Ternary {
       @Override public String toString() {
-        return "Conditional Expression";
+        return "Conditional";
       }
     },
     MethodBody {

@@ -50,4 +50,8 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
+
+  @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
+    return Category.NullConditional;
+  }
 }
