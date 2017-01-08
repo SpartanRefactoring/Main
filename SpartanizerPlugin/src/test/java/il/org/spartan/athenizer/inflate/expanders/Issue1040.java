@@ -4,13 +4,16 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+
 /** Example for using givesWithBinding(String p, String f) from class {@link ExpanderTestUtils}
  * .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07
+ * [[SuppressWarningsSpartan]]
  */
 @SuppressWarnings("static-method")
-public class Issue1040 {
+public class Issue1040 extends ReflectiveTester {
   @Test public void test1() {
     expansionOf(new Issue1040Aux())
     .givesWithBinding("int a() {"
@@ -87,4 +90,54 @@ public class Issue1040 {
         + "}"
         + "}", "toTest2");
   }
+  
+  @Ignore // does not pass the test, as expected it should stay.
+  @Test public void test6() {
+    expansionOf(new Issue1040Aux3())
+      .givesWithBinding("void toTest() {"
+          + "total = 0;"
+          + "for(final Integer k : arr) {"
+          + "total += total(1);"
+          + "}"
+          + "}", "toTest");
+  }
+  
+  @Test public void test7() {
+    expansionOf(new Issue1040Aux3())
+    .givesWithBinding("void toTest2() {"
+        + "total2 = 0;"
+        + "for(final Integer k : arr) {"
+        + "total2 = total2 + total2(1);"
+        + "}"
+        + "}", "toTest2");
+  }
+  
+  @SuppressWarnings({ "unused" })
+  public class Issue1040Aux3 extends ReflectiveTester {
+    int total;
+    int total2;
+    @SuppressWarnings("boxing")
+    Integer[] arr = {1,2,3,4,5};
+    
+    double total(int x) {
+      return 5.0;
+    }
+    int total2(int x) {
+      return 5;
+    }
+    void toTest() {
+      total = 0;
+      for(final Integer k : arr) {
+        total += total(1);
+      }
+    }
+      
+    void toTest2() {
+      total2 = 0;
+      for(final Integer k : arr) {
+        total2 += total2(1);
+      }
+    }
+  }
+  
 }
