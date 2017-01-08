@@ -68,5 +68,23 @@ public class Issue1040 {
         + "return 0;"
         + "}", "b");
   }
-  
+  @Ignore // does not pass the test, as expected it should stay.
+  @Test public void test4() {
+    expansionOf(new Issue1040Aux2())
+      .givesWithBinding("void toTest() {"
+          + "total = 0;"
+          + "for(final Integer k : arr) {"
+          + "total += total(1);"
+          + "}"
+          + "}", "toTest");
+  }
+  @Test public void test5() {
+    expansionOf(new Issue1040Aux2())
+    .givesWithBinding("void toTest2() {"
+        + "total2 = 0;"
+        + "for(final Integer k : arr) {"
+        + "total2 = total2 + total2(1);"
+        + "}"
+        + "}", "toTest2");
+  }
 }
