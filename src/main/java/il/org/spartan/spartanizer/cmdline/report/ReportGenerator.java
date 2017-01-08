@@ -125,7 +125,6 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  /** @param nm */
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
     final int len = ReportGenerator.Util.find("length").function().run(n1);
@@ -192,8 +191,6 @@ public class ReportGenerator implements ConfigurableReport {
         .put("Statements" + id, nm.statements());//
   }
 
-  /** @param nm1
-   * @param nm2 */
   public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
     report(key) //
         .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
@@ -219,7 +216,6 @@ public class ReportGenerator implements ConfigurableReport {
         .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
   }
 
-  /** @param nm */
   public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))

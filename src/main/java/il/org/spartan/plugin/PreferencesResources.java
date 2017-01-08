@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Daniel Mittelman */
 public class PreferencesResources {
   /** Page description **/
-  public static final String PAGE_DESCRIPTION = "Preferences for the laconization plug-in";
+  public static final String PAGE_DESCRIPTION = "Preferences for the Spartanizer plug-in";
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";

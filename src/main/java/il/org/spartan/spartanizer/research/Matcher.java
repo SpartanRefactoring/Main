@@ -142,9 +142,6 @@ public class Matcher {
     return null;
   }
 
-  /** @param sp
-   * @param subList
-   * @return */
   private static boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
     for (int ¢ = 0; ¢ < sp.size(); ++¢)
       if (!matchesAux(sp.get(¢), subList.get(¢), new HashMap<>()))
@@ -240,8 +237,6 @@ public class Matcher {
     return iz.type(p) && matches$T(p + "");
   }
 
-  /** @param p
-   * @return */
   private static boolean is$X(final ASTNode p) {
     return iz.methodInvocation(p) && matches$X(p + "");
   }
@@ -411,14 +406,10 @@ public class Matcher {
     return enviroment;
   }
 
-  /** @param p
-   * @return */
   private static String argumentsId(final ASTNode p) {
     return first(arguments(az.methodInvocation(p))) + "";
   }
 
-  /** @param ¢
-   * @return */
   private static String matchingArguments(final ASTNode ¢) {
     final String $ = arguments(az.methodInvocation(¢)) + "";
     return $.substring(1, $.length() - 1);
@@ -449,9 +440,6 @@ public class Matcher {
     return extractStatementIfOne(ast($.get()));
   }
 
-  /** @param b
-   * @param idxs
-   * @return */
   @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
     final Pair<Integer, Integer> idxs = getBlockMatching(wrapStatementIfOne(pattern()), b);
     final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];

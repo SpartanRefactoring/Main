@@ -89,8 +89,6 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return new CommandLineSelection($, "selection");
     }
 
-    /** @param path
-     * @return */
     public static List<CompilationUnit> getAllCompilationUnits(final String path) {
       final List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
@@ -113,8 +111,6 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     }
   }
 
-  /** @param inputFolder
-   * @return */
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     System.err.println("Loading selection ...");

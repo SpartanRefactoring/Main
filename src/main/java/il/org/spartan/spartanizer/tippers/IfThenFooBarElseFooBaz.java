@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** XXX: This is a bug of auto-laconize Converts
+/** XXX: This is a bug of auto-spartanization?
+ *  Converts
  *
  * <pre>
  * if (X) {
@@ -55,8 +56,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     }
     return $;
   }
-
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+    @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 

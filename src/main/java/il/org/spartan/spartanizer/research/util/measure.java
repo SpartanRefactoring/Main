@@ -39,8 +39,6 @@ public enum measure {
     return $.inner;
   }
 
-  /** @param ¢
-   * @return */
   static boolean excluded(final Statement ¢) {
     return Arrays.asList(//
         Block.class, //
@@ -55,8 +53,6 @@ public enum measure {
         .contains(¢.getClass());
   }
 
-  /** @param ¢
-   * @return */
   static boolean excluded(final Expression ¢) {
     return Arrays.asList(//
         Annotation.class, //
