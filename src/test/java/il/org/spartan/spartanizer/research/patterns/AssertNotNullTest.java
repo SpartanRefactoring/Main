@@ -16,10 +16,24 @@ public class AssertNotNullTest {
         .stays();
   }
 
+  @Test public void a2() {
+    trimmingOf("statement(); if(x == null || y == null) return; use(); use();")//
+        .using(IfStatement.class, new AssertNotNull())//
+        .gives("statement(); azzert.notNull(x,y); use(); use();")//
+        .stays();
+  }
+
   @Test public void b() {
     trimmingOf("statement(); if(x == null) return null; use(); use();")//
         .using(IfStatement.class, new AssertNotNull())//
         .gives("statement(); azzert.notNull(x); use(); use();")//
+        .stays();
+  }
+
+  @Test public void b2() {
+    trimmingOf("statement(); if(x == null || y == null) return null; use(); use();")//
+        .using(IfStatement.class, new AssertNotNull())//
+        .gives("statement(); azzert.notNull(x,y); use(); use();")//
         .stays();
   }
 
