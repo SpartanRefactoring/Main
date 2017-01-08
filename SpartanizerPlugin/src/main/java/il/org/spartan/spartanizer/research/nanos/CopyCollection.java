@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,10 +39,10 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
   }
 
   @Override public String example() {
-    return "$T $N = new $T();  $N.addAll($X);";
+    return firstPattern(tippers);
   }
 
   @Override public String symbolycReplacement() {
-    return symbolycReplacement(first(tippers));
+    return firstReplacement(tippers);
   }
 }

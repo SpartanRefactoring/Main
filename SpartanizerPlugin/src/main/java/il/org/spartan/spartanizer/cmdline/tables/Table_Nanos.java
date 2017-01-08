@@ -33,6 +33,8 @@ public class Table_Nanos {
                   .col("Name", name(¢.getClass()))//
                   .col("Node Class", Toolbox.intToClassName(i))//
                   .col("Description", ¢.description())//
+                  .col("Example", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
+                  .col("Replacement", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
                   .nl();
       System.err.println(r.description());
     }
