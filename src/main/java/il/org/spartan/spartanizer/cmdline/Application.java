@@ -115,7 +115,7 @@ public final class Application implements IApplication {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = new LaconizeProject().countTips();
+          final int n = new SpartanizeProject().countTips();
           if (n == 0)
             break;
           s.addRoundStat(n);
