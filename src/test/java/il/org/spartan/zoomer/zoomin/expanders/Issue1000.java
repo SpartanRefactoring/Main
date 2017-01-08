@@ -1,4 +1,4 @@
-package il.org.spartan.athenizer.inflate.expanders;
+package il.org.spartan.zoomer.zoomin.expanders;
 
 import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
