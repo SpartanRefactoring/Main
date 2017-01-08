@@ -155,7 +155,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   void summarize() {
     if (writer == null)
       writer = new Table(this);
-    try (final Table t = new Table("rindices")) {
+    try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
         final Map<String, Integer> map = usage.get(category);
         int n = 0;

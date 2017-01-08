@@ -478,9 +478,9 @@ class ZZZ___Fixture_ModelClass {
     @ScopeSize(5)
     @enum¢
     enum Bar {
-      @knows({ "cadabra", "vaz/0", "abra" })
       @ScopeSize(3)
       @enumConstant
+      @knows({ "cadabra", "vaz/0", "abra" })
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;

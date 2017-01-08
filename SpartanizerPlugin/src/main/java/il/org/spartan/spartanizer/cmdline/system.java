@@ -48,7 +48,7 @@ public interface system {
   }
 
   static String runScript(final Process p) throws IOException {
-    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+    try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (final StringBuffer $ = new StringBuffer();; $.append(¢))
         if ((¢ = r.readLine()) == null)
@@ -66,9 +66,8 @@ public interface system {
       final Token t = tokenizer.next();
       if (t == null || t == Token.EOF)
         return $;
-      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
-        continue;
-      ++$;
+      if (t.kind != Token.Kind.COMMENT && t.kind != Token.Kind.NONCODE)
+        ++$;
     }
   }
 

@@ -105,7 +105,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
-    try (final Table report = new Table(path)) {
+    try (Table report = new Table(path)) {
       int statementsTotal = 0;
       int methodsTotal = 0;
       for (final Integer numStatements : methods.keySet()) {

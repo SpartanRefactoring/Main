@@ -21,7 +21,6 @@ import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -194,7 +193,7 @@ public interface type {
     static Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation get(final Expression ¢) {
-      return (implementation) (NodeData.has(¢, propertyName) ? NodeData.get(¢, propertyName) : NodeData.set(¢, propertyName, lookUp(¢, lookDown(¢))));
+      return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));
     }
 
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
