@@ -18,7 +18,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
  * @author Ori Marcovitch
  * @since Nov 7, 2016 */
 public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
-  private static final Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+  private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("if($X) $N($A);", "execute(() -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
@@ -61,5 +61,13 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
 
   @Override public String technicalName() {
     return "IfXThenExecuteS";
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

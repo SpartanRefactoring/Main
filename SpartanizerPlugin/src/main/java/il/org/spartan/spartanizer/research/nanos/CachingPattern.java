@@ -35,4 +35,12 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
   @Override public String technicalName() {
     return "IfX₁IsNullIntializeWithX₂ReturnX₁";
   }
+
+  @Override public String example() {
+    return tipper.pattern();
+  }
+
+  @Override public String symbolycReplacement() {
+    return tipper.replacement();
+  }
 }
