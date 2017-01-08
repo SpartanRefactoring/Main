@@ -44,10 +44,6 @@ public final class analyzeTest {
     azzert.that(s.size(), is(5));
   }
 
-  @Test public void testEnviromentVariables() {
-    azzert.isNull(analyze.enviromentVariables((ASTNode) null));
-  }
-
   @Test public void testFindDeclarationInMethod0() {
     azzert.isNull(analyze.type(az.name(wizard.ast("x"))));
   }
