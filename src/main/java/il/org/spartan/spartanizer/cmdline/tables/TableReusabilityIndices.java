@@ -24,33 +24,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return true;
   }
 
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
-    writer.close();
-    System.out.println("Your output is in " + writer.description());
-  }
-
-  public static int rindex(final int[] ranks) {
-    Arrays.sort(ranks);
-    int $ = 0;
-    for (int ¢ = 0; ¢ < ranks.length; ++¢)
-      $ = Math.max($, Math.min(ranks[¢], ranks.length - ¢));
-    return $;
-  }
-
-  static String key(final SimpleName n, final int arity) {
-    return n + "/" + arity;
-  }
-
-  static int[] ranks(final Map<?, Integer> i) {
-    int n = 0;
-    final int $[] = new int[i.size()];
-    for (final Integer ¢ : i.values())
-      $[n++] = ¢.intValue();
-    return $;
-  }
-
   private static String key(final Assignment ¢) {
     return key(¢.getOperator());
   }
@@ -65,6 +38,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   private static String key(final InfixExpression.Operator o, final int arity) {
     return o + "/" + arity;
+  }
+
+  static String key(final MethodDeclaration ¢) {
+    return key(¢.getName(), step.parameters(¢).size());
   }
 
   private static String key(final MethodInvocation ¢) {
@@ -87,6 +64,33 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return ¢ + (PostfixExpression.Operator.toOperator(¢ + "") == null ? "" : "(pre)");
   }
 
+  static String key(final SimpleName n, final int arity) {
+    return n + "/" + arity;
+  }
+
+  public static void main(final String[] args)
+      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    FolderASTVisitor.main(args);
+    writer.close();
+    System.out.println("Your output is in " + writer.description());
+  }
+
+  static int[] ranks(final Map<?, Integer> i) {
+    int n = 0;
+    final int $[] = new int[i.size()];
+    for (final Integer ¢ : i.values())
+      $[n++] = ¢.intValue();
+    return $;
+  }
+
+  public static int rindex(final int[] ranks) {
+    Arrays.sort(ranks);
+    int $ = 0;
+    for (int ¢ = 0; ¢ < ranks.length; ++¢)
+      $ = Math.max($, Math.min(ranks[¢], ranks.length - ¢));
+    return $;
+  }
+
   private int maxArity;
   private final Map<String, Map<String, Integer>> usage = new LinkedHashMap<>();
   private final Set<String> defined = new LinkedHashSet<>();
@@ -100,38 +104,24 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return $;
   }
 
-  @Override public void preVisit(final ASTNode ¢) {
-    increment("NODE-TYPE", key(¢.getClass()));
-  }
-
-  @Override public boolean visit(final Assignment ¢) {
-    return increment("ASSIGNMENT", key(¢));
-  }
-
-  @Override public boolean visit(final InfixExpression ¢) {
-    return increment("INFIX", key(¢));
-  }
-
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    return defined.add(key(¢.getName(), step.parameters(¢).size()));
-  }
-
-  @Override public boolean visit(final MethodInvocation ¢) {
-    return increment("METHOD", key(¢));
-  }
-
-  @Override public boolean visit(final PostfixExpression ¢) {
-    return increment("POSTFIX", key(¢));
-  }
-
-  @Override public boolean visit(final PrefixExpression ¢) {
-    return increment("PREFIX", key(¢));
-  }
-
-  @Override protected void done(@SuppressWarnings("unused") final String path) {
-    dotter.end();
-    addMissingKeys();
-    summarize();
+  private void addLineToGlobalStatistcs() {
+    writer.col("Project", presentSourceName);
+    if (usage.get("METHOD") == null)
+      return;
+    final Map<String, Integer> external = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String m : defined)
+      external.remove(m);
+    final Map<String, Integer> internal = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String k : new ArrayList<>(internal.keySet()))
+      if (!defined.contains(k))
+        internal.remove(k);
+    final int rIntrernal = rindex(ranks(internal));
+    final int rExternal = rindex(ranks(external));
+    writer//
+        .col("External", rExternal) //
+        .col("Internal", rIntrernal)//
+        .col("Intrnal-External", rIntrernal - rExternal)//
+    ;
   }
 
   void addMissingKeys() {
@@ -148,11 +138,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
         addIfNecessary("INFIX", key(¢, arity));
   }
 
-  boolean increment(final String category, final String key) {
-    return increment(addIfNecessary(category, key), key);
-  }
-
-  void summarize() {
+  @Override protected void done(@SuppressWarnings("unused") final String path) {
+    dotter.end();
+    addMissingKeys();
     if (writer == null)
       writer = new Table(this);
     try (Table t = new Table("rindices")) {
@@ -175,30 +163,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     }
   }
 
-  private void addLineToGlobalStatistcs() {
-    int N = 0;
-    writer.col("$\\#$", ++N);
-    writer.col("Project", presentSourceName);
-    if (usage.get("METHOD") == null)
-      return;
-    final Map<String, Integer> adopted = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      adopted.remove(m);
-    final Map<String, Integer> born = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>(born.keySet()))
-      if (!defined.contains(k))
-        born.remove(k);
-    int rindexBorn = rindex(ranks(born));
-    int rindexAdopted = rindex(ranks(adopted));
-    writer//
-        .col("Adoption", rindexAdopted) //
-        .col("Reuse", rindexBorn)//
-        .col("$\\Delta$", rindexBorn - rindexAdopted)//
-        .nl();
-  }
-
-  protected int methodRIndex() {
-    return rindex(ranks(usage.get("METHOD")));
+  boolean increment(final String category, final String key) {
+    return increment(addIfNecessary(category, key), key);
   }
 
   private String key(final InfixExpression ¢) {
@@ -208,5 +174,37 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   private String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return key(¢.getOperator(), arity);
+  }
+
+  protected int methodRIndex() {
+    return rindex(ranks(usage.get("METHOD")));
+  }
+
+  @Override public void preVisit(final ASTNode ¢) {
+    increment("NODE-TYPE", key(¢.getClass()));
+  }
+
+  @Override public boolean visit(final Assignment ¢) {
+    return increment("ASSIGNMENT", key(¢));
+  }
+
+  @Override public boolean visit(final InfixExpression ¢) {
+    return increment("INFIX", key(¢));
+  }
+
+  @Override public boolean visit(final MethodDeclaration ¢) {
+    return defined.add(key(¢));
+  }
+
+  @Override public boolean visit(final MethodInvocation ¢) {
+    return increment("METHOD", key(¢));
+  }
+
+  @Override public boolean visit(final PostfixExpression ¢) {
+    return increment("POSTFIX", key(¢));
+  }
+
+  @Override public boolean visit(final PrefixExpression ¢) {
+    return increment("PREFIX", key(¢));
   }
 }
