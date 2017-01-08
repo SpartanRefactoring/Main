@@ -63,7 +63,6 @@ public enum Collect {
     };
   }
 
-  /** @see declarationsOf */
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -476,8 +475,6 @@ public enum Collect {
       stringName = name + "";
     }
 
-    /** @param ns
-     * @return */
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return new ArrayList<>();
     }

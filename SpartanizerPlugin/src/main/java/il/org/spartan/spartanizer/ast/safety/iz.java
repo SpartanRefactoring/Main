@@ -212,8 +212,6 @@ public interface iz {
     return iz.nodeTypeEquals(¢, CATCH_CLAUSE);
   }
 
-  /** @param ¢
-   * @return */
   static boolean classInstanceCreation(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
   }
@@ -341,8 +339,6 @@ public interface iz {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
-  /** @param ¢
-   * @return */
   static boolean doStatement(final ASTNode ¢) {
     return ¢ instanceof DoStatement;
   }
@@ -1023,8 +1019,6 @@ public interface iz {
     return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
   }
 
-  /** @param ¢
-   * @return */
   static boolean synchronizedStatement(final ASTNode ¢) {
     return ¢ instanceof SynchronizedStatement;
   }
@@ -1123,8 +1117,6 @@ public interface iz {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
 
-  /** @param $
-   * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_FRAGMENT);
   }

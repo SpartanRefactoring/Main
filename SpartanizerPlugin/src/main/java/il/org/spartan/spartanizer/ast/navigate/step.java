@@ -506,8 +506,6 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  /** @param ¢
-   * @return */
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -516,8 +514,6 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  /** @param ¢
-   * @return */
   public static SimpleName name(final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -532,8 +528,6 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  /** @param d
-   * @return */
   private static List<String> names(final FieldDeclaration d) {
     return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
   }
@@ -566,8 +560,6 @@ public enum step {
     return ¢ == null ? null : ¢.getOperator();
   }
 
-  /** @param ¢
-   * @return */
   public static PackageDeclaration packageDeclaration(final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.getPackage();
   }
@@ -651,8 +643,6 @@ public enum step {
     return ¢ == null ? null : ¢.statements();
   }
 
-  /** @param ¢
-   * @return */
   public static List<Statement> statements(final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }

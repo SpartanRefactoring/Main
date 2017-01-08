@@ -21,14 +21,10 @@ public enum Files {
       dir.mkdir();
   }
 
-  /** @param ¢
-   * @return */
   public static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyze.class.getSimpleName(), ¢);
   }
 
-  /** @param key
-   * @param value */
   public static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
   }
@@ -116,8 +112,6 @@ public enum Files {
     return entry.isFile() && entry.getPath().endsWith(".java");
   }
 
-  /** @param entry
-   * @return */
   public static boolean notTest(final File entry) {
     return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
@@ -130,8 +124,6 @@ public enum Files {
     return clean(getCompilationUnitWithBinding(¢));
   }
 
-  /** @param ¢
-   * @return */
   private static ASTNode getCompilationUnitWithBinding(final File ¢) {
     return wizard.compilationUnitWithBinding(¢);
   }
