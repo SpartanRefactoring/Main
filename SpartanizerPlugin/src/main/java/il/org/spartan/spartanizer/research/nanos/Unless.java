@@ -39,4 +39,12 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   @Override public String description() {
     return "Evaluate an expression unless some condition is satisfied";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

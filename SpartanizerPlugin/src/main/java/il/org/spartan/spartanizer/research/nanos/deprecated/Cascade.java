@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.nanos;
+package il.org.spartan.spartanizer.research.nanos.deprecated;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 

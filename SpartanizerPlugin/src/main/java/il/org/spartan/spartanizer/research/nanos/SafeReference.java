@@ -45,4 +45,12 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
   @Override public String description() {
     return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

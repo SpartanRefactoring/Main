@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public class AssertNotNull extends NanoPatternTipper<IfStatement> {
-  private static final String description = "replace with azzert.notNull($X)";
+  private static final String description = "replace with azzert.notNull(X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
   private static final UserDefinedTipper<Expression> expression = patternTipper("$X == null", "", "");
   private static final UserDefinedTipper<Expression> infix = patternTipper("$X1 == null || $X2", "", "");
@@ -81,10 +81,10 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public String example() {
-    return "if($X == null) return;";
+    return "if(X == null) return;";
   }
 
   @Override public String symbolycReplacement() {
-    return "azzert.notNull($X);";
+    return "azzert.notNull(X);";
   }
 }
