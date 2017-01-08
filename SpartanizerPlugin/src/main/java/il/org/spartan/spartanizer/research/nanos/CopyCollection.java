@@ -31,7 +31,7 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
   }
 
   @Override public Category category() {
-    return Category.Iterative;
+    return Category.Collection;
   }
 
   @Override public String technicalName() {
