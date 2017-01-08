@@ -36,4 +36,12 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
   @Override public String description() {
     return "Index of last element in collection";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

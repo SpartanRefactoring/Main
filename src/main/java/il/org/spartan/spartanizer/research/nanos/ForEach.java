@@ -44,4 +44,12 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "ForEachInCApplyS";
     // "for($N1 $N2 : $X1) if($X2) $X3;";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }
