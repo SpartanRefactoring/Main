@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.research.characteristics;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.methods.*;
-import il.org.spartan.spartanizer.research.patterns.characteristics.*;
+import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */

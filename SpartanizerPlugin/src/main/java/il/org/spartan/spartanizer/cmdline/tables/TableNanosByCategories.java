@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.patterns.common.*;
-import il.org.spartan.spartanizer.research.patterns.common.NanoPatternTipper.*;
+import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 
