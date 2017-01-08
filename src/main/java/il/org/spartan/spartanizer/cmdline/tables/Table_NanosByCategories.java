@@ -14,9 +14,9 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
-public class TableNanosByCategories {
+public class Table_NanosByCategories {
   public static void main(final String[] args) {
-    new TableNanosByCategories().go();
+    new Table_NanosByCategories().go();
   }
 
   public void go() {
