@@ -47,6 +47,10 @@ public class TipperFactory {
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return $.getMatching(n, s);
       }
+
+      @Override public ASTNode getMatching(final ASTNode ¢) {
+        return $.replacement(¢);
+      }
     };
   }
 
@@ -84,6 +88,10 @@ public class TipperFactory {
 
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return $.getMatching(n, s);
+      }
+
+      @Override public ASTNode getMatching(final ASTNode ¢) {
+        return $.replacement(¢);
       }
     };
   }
