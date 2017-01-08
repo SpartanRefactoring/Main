@@ -38,7 +38,7 @@ public class LogToTest {
     final List<String> ts = new LinkedList<>();
     final Map<String, Integer> nu = new HashMap<>();
     for (final File element : fs)
-      try (final BufferedReader r = new BufferedReader(new FileReader(element))) {
+      try (BufferedReader r = new BufferedReader(new FileReader(element))) {
         final List<String> es = new LinkedList<>();
         es.add("");
         for (String l = r.readLine(); l != null;) {
@@ -59,7 +59,7 @@ public class LogToTest {
       }
     System.out.println("Creating test file...");
     final String fileName = TEST_NAMER.get();
-    try (final Writer w = new BufferedWriter(
+    try (Writer w = new BufferedWriter(
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
     } catch (final IOException ¢) {

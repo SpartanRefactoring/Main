@@ -30,7 +30,7 @@ public class Table_Tipper_Groups {
             categories.put(key, box.it(categories.get(key).intValue() + 1));
           }
     final int total = categories.values().stream().reduce((x, y) -> box.it(x.intValue() + y.intValue())).get().intValue();
-    try (final Table r = new Table(this)) {
+    try (Table r = new Table(this)) {
       for (final String ¢ : categories.keySet())
         r.col("Category", ¢).col("Count", categories.get(¢)).col("Fraction", 1. * categories.get(¢).intValue() / total).nl();
       System.err.println(r.description());

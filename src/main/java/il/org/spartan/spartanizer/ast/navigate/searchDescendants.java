@@ -19,15 +19,15 @@ public abstract class searchDescendants<N extends ASTNode> {
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-  public abstract List<N> from(final ASTNode n);
+  public abstract List<N> from(ASTNode n);
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-  public abstract List<N> inclusiveFrom(final ASTNode n);
+  public abstract List<N> inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-  public abstract searchDescendants<N> suchThat(final Predicate<N> ¢);
+  public abstract searchDescendants<N> suchThat(Predicate<N> ¢);
 
   static class ByNodeClass<N extends ASTNode> extends searchDescendants<N> {
     final Class<N> clazz;

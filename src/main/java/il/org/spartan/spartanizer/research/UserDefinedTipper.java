@@ -15,7 +15,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N> imp
   /** @param ¢ the ASTNode being inspected.
    * @return <code><b>true</b></code> <i>iff</i> the argument holds all the
    *         conditions needed for a tip to be possible. */
-  protected abstract boolean prerequisite(final N ¢);
+  protected abstract boolean prerequisite(N ¢);
 
   /** @param n the ASTNode to be inspected.
    * @param s the pattern matching to be found in the ASTNode (for example $X1).

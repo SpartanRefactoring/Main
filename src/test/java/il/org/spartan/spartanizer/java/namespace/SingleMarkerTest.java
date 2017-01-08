@@ -37,10 +37,9 @@ public class SingleMarkerTest extends ReflectiveTester {
     final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);
-      if (!definition.Kind.has(key))
-        continue;
-      for (final SimpleName ¢ : annotees.of(a))
-        $.add(as.array(definition.Kind.valueOf(key), ¢));
+      if (definition.Kind.has(key))
+        for (final SimpleName ¢ : annotees.of(a))
+          $.add(as.array(definition.Kind.valueOf(key), ¢));
     }
     return $;
   }

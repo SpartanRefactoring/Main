@@ -144,9 +144,8 @@ public interface metrics {
       final Token t = tokenizer.next();
       if (t == null || t == Token.EOF)
         return $;
-      if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
-        continue;
-      ++$;
+      if (t.kind != Kind.COMMENT && t.kind != Kind.NONCODE)
+        ++$;
     }
   }
 

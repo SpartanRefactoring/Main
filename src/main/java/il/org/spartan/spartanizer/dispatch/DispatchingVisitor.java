@@ -19,7 +19,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return !exclude.isExcluded(¢) && go(¢);
   }
 
-  protected abstract <N extends ASTNode> boolean go(final N n);
+  protected abstract <N extends ASTNode> boolean go(N n);
 
   protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
     // overridden

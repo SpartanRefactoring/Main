@@ -25,7 +25,7 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  public abstract boolean canTip(final N n);
+  public abstract boolean canTip(N n);
 
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.

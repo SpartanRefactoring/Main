@@ -40,7 +40,7 @@ public enum monitor {
     monitor logToFile(final String s) {
       if (!FILE_EXISTING)
         return this;
-      try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
+      try (Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
         w.write(s + "\n");
       } catch (final IOException ¢) {
         log(¢);
