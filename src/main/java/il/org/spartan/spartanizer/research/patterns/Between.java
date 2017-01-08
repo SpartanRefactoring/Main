@@ -75,7 +75,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "$L1 < $X < $L2" };
+  @Override public String technicalName() {
+    return "XBetweenY₁AndY₂";
   }
 }

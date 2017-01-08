@@ -107,7 +107,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return "A generalized form of a switch where the switchee can be a Lambda function";
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "if(...) $N1($X); else if(...) $N2($X); ... else $Nk($X);" };
+  @Override public String technicalName() {
+    return "if(...) $N1($X); else if(...) $N2($X); ... else $Nk($X);";
   }
 }
