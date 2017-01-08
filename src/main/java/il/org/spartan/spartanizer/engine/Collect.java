@@ -460,7 +460,7 @@ public enum Collect {
     return $;
   }
 
-  abstract ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into);
+  abstract ASTVisitor[] collectors(SimpleName n, List<SimpleName> into);
 
   /** An abstract class to carry out the collection process. Should not be
    * instantiated or used directly by clients, other than the use as part of
@@ -491,7 +491,7 @@ public enum Collect {
       stringName = name;
     }
 
-    public abstract List<SimpleName> in(final ASTNode... ns);
+    public abstract List<SimpleName> in(ASTNode... ns);
   }
 
   /** An auxiliary class which makes it possible to use an easy invocation

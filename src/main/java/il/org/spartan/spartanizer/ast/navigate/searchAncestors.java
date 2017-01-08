@@ -65,11 +65,11 @@ public abstract class searchAncestors<N extends ASTNode> {
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
-  public abstract N from(final ASTNode n);
+  public abstract N from(ASTNode n);
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
-  public abstract ASTNode inclusiveFrom(final ASTNode n);
+  public abstract ASTNode inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
    * @return furtherest ancestor whose type matches the given type. */

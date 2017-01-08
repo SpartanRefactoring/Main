@@ -11,5 +11,5 @@ public interface Application {
    * @param u compilation unit wrapper
    * @param s selection, containing the compilation unit
    * @return how many changes were committed */
-  Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s);
+  Integer commitChanges(WrappedCompilationUnit u, AbstractSelection<?> s);
 }

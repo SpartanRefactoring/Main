@@ -112,6 +112,6 @@ public final class specificity implements Comparator<Expression> {
       return values().length;
     }
 
-    abstract boolean includes(final ASTNode ¢);
+    abstract boolean includes(ASTNode ¢);
   }
 }

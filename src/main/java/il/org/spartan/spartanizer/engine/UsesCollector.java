@@ -91,11 +91,11 @@ abstract class ScopeManager extends ASTVisitor {
     return go(¢);
   }
 
-  abstract boolean go(final AbstractTypeDeclaration d);
+  abstract boolean go(AbstractTypeDeclaration d);
 
-  abstract boolean go(final AnonymousClassDeclaration d);
+  abstract boolean go(AnonymousClassDeclaration d);
 
-  abstract boolean go(final EnhancedForStatement s);
+  abstract boolean go(EnhancedForStatement s);
 
   abstract void pop();
 

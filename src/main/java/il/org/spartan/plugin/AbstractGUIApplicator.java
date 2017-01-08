@@ -322,7 +322,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, final Int counter);
+  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, Int counter);
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     consolidateTips(r, u, m, new Int());
@@ -336,7 +336,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  protected abstract ASTVisitor makeTipsCollector(final List<Tip> $);
+  protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);

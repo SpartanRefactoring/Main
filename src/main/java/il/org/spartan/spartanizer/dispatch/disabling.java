@@ -68,7 +68,7 @@ public interface disabling {
           scan(¢);
           return false;
         }
-        NodeData.set(¢, disabledPropertyId);
+        property.set(¢, disabledPropertyId);
         return true;
       }
     });
@@ -78,7 +78,7 @@ public interface disabling {
    * @return <code><b>true</b></code> <em>iff</em> the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {
-    return NodeData.has(¢, disabledPropertyId);
+    return property.has(¢, disabledPropertyId);
   }
 
   static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {

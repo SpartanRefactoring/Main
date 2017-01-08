@@ -16,7 +16,7 @@ public class TableTippers {
   }
 
   public void go() {
-    try (final Table r = new Table(this)) {
+    try (Table r = new Table(this)) {
       for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])

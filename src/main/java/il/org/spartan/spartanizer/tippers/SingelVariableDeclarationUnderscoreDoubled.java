@@ -72,12 +72,9 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   private static boolean suppressing(final NormalAnnotation a) {
     if (a == null)
       return false;
-    for (final MemberValuePair ¢ : values(a)) {
-      if (!iz.identifier("value", ¢.getName()))
-        continue;
-      if (isUnused(¢.getValue()))
+    for (final MemberValuePair ¢ : values(a))
+      if (iz.identifier("value", ¢.getName()) && isUnused(¢.getValue()))
         return true;
-    }
     return false;
   }
 

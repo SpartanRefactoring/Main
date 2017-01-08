@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class Analyzer<T> {
   protected abstract int metric(ASTNode n);
 
-  public abstract void logMethod(final MethodDeclaration before, final MethodDeclaration after);
+  public abstract void logMethod(MethodDeclaration before, MethodDeclaration after);
 
   public abstract void printComparison();
 

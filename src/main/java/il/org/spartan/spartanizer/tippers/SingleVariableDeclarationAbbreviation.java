@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
@@ -7,8 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,15 +31,13 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       return;
     final List<TagElement> ts = tags(j);
     if (ts != null)
-      for (final TagElement t : ts) {
-        if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-          continue;
-        for (final Object ¢ : t.fragments())
-          if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-            r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
-            return;
-          }
-      }
+      for (final TagElement t : ts)
+        if (TagElement.TAG_PARAM.equals(t.getTagName()))
+          for (final Object ¢ : step.fragments(t))
+            if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
+              r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
+              return;
+            }
   }
 
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
