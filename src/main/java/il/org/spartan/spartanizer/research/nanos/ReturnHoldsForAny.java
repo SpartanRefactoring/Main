@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
-public final class ReturnHoldsForSome extends NanoPatternTipper<Block> {
+public final class ReturnHoldsForAny extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
