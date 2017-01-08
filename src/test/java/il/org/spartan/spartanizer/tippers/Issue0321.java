@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.patterns.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 
 /** Tests of {@link CachingPattern}
  * @author Ori Marcovitch
