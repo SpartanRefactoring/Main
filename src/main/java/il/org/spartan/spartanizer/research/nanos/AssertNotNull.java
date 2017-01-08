@@ -26,7 +26,7 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
   private static final PreconditionNotNull rival = new PreconditionNotNull();
   private static final UserDefinedTipper<Expression> expression = patternTipper("$X == null", "", "");
   private static final UserDefinedTipper<Expression> infix = patternTipper("$X1 == null || $X2", "", "");
-  private static final Set<UserDefinedTipper<Statement>> statements = new HashSet<UserDefinedTipper<Statement>>() {
+  private static final List<UserDefinedTipper<Statement>> statements = new ArrayList<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("return;", "", ""));
@@ -78,5 +78,13 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
 
   @Override public String technicalName() {
     return "IfXIsNullReturn";
+  }
+
+  @Override public String example() {
+    return "if($X == null) return;";
+  }
+
+  @Override public String symbolycReplacement() {
+    return "azzert.notNull($X);";
   }
 }
