@@ -28,9 +28,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
       addCharacteristicMethodPatterns();
     addMethodPatterns();//
     this//
-        .add(Assignment.class, //
-            new LazyInitializer(), //
-            null) //
+        // .add(Assignment.class, //
+        // new LazyInitializer(), // R.I.P
+        // null) //
         .add(Block.class, //
             new CachingPattern(), //
             new CopyCollection(), //
@@ -42,7 +42,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(CatchClause.class, //
             new IfThrowsReturnNull(), //
             new IgnoreException(), //
-            new PercolateException(), //
+            // new PercolateException(), // R.I.P
             null)//
         .add(ConditionalExpression.class, //
             new AsBit(), //
@@ -63,7 +63,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new AssertNotNull(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<IfStatement>(), //
-            new PutIfAbsent(), //
+            // new PutIfAbsent(), // R.I.P
             new PreconditionNotNull(), //
             new NotHoldsOrThrow(), //
             null) //
@@ -98,11 +98,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Getter(), //
         new Adjuster(), //
         new ForEachApplier(), //
-        new SelfCaster(), //
+        // new SelfCaster(), // R.I.P --> merger into Caster?
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
-        new TypeChecker(), //
+//        new TypeChecker(), // R.I.P --> merged into examiner
         new Up.Caster(), //
         null);
     return this;
