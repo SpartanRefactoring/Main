@@ -160,7 +160,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
         final Map<String, Integer> map = usage.get(category);
         int n = 0;
         int m = 0;
-        for (final String key : map.keySet()) {
+        for (final String key : map.keySet())
           t//
               .col("N", ++n)//
               .col("M", ++m)//
@@ -168,12 +168,11 @@ public class TableReusabilityIndices extends FolderASTVisitor {
               .col("Key", '"' + key + '"')//
               .col("Count", map.get(key)) //
               .nl();
-        }
         writer.col(category, rindex(ranks(map)));
         System.err.println("Your output is in: " + t.description());
         addLineToGlobalStatistcs();
       }
-    } 
+    }
   }
 
   private void addLineToGlobalStatistcs() {
