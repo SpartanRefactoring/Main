@@ -67,9 +67,6 @@ public enum AnalyzerOptions {
       setOuterProperty(li[0], li[1]);
   }
 
-  /** @param s
-   * @param by
-   * @return */
   private static String[] bisect(final String s, final String by) {
     final String[] $ = new String[2];
     final int i = s.indexOf(by);

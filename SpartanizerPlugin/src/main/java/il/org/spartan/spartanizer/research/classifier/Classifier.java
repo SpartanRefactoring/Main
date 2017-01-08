@@ -48,7 +48,6 @@ public class Classifier extends ASTVisitor {
     return super.visit(node);
   }
 
-  /** @param ¢ */
   public void analyze(final ASTNode ¢) {
     ¢.accept(this);
     forLoopsAmount = forLoopsList.size();
@@ -133,8 +132,6 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  /** @param code
-   * @return */
   private static String tipperize(final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";

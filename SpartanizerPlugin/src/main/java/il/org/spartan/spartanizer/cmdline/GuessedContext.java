@@ -84,7 +84,6 @@ public enum GuessedContext {
     return accuratelyCheckedContext(codeFragment);
   }
 
-  /** @param codeFragment */
   private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
