@@ -6,11 +6,11 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit tests for {@link MethodInvocationTernaryExpander}
+/** Unit tests for {@link MethodInvocationTernaryExpander} Issue #984
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
-public class MethodInvocationTernaryExpanderTest {
+public class Issue0984 {
   @Test public void a() {
     expansionOf("o.f(x ? a : b);").gives("if (x)" //
         + "  o.f(a);" //
