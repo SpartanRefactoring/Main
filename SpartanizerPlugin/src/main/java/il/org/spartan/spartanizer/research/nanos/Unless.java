@@ -48,7 +48,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
+  @Override public Category category() {
     return Category.NullConditional;
   }
 }

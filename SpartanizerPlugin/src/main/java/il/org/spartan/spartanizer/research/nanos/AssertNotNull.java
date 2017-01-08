@@ -69,7 +69,7 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Category category() {
-    return Category.Return;
+    return Category.NullConditional;
   }
 
   @Override public String description() {
