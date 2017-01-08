@@ -38,7 +38,7 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return az.tryStatement(step.parent(¢));
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "catchXThrowX" };
+  @Override public String technicalName() {
+    return "catchXThrowX";
   }
 }
