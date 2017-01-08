@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * [[SuppressWarningsSpartan]]
  */
 @SuppressWarnings("static-method")
-public class Issue1040 extends ReflectiveTester {
+public class Issue1040 {
   @Test public void test1() {
     expansionOf(new Issue1040Aux())
     .givesWithBinding("int a() {"
