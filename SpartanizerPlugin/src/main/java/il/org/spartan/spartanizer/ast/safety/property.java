@@ -14,24 +14,10 @@ public enum property {
     N from(ASTNode n);
   }
 
-  static <N> String key(final Class<N> ¢) {
-    return ¢.getCanonicalName();
-  }
-
   public static Attached attach(final Object o) {
     return ¢ -> ¢.setProperty(key(o.getClass()), o);
   }
 
-  public static <N> Obtainer<N> obtain(final Class<N> c) {
-    return new Obtainer<N>() {
-      @Override @SuppressWarnings("unchecked") public N from(final ASTNode n) {
-        return (N) n.getProperty(key(c));
-      }
-    };
-  }
-
-  // TODO Roth: attachment.of(n).get(x)
-  // TODO: Yossi Gil, erase the above as per #1
   /** Get property from node.
    * @param n JD
    * @param key property name
@@ -48,6 +34,18 @@ public enum property {
    *         property */
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
+  }
+
+  static <N> String key(final Class<N> ¢) {
+    return ¢.getCanonicalName();
+  }
+
+  public static <N> Obtainer<N> obtain(final Class<N> c) {
+    return new Obtainer<N>() {
+      @Override @SuppressWarnings("unchecked") public N from(final ASTNode n) {
+        return (N) n.getProperty(key(c));
+      }
+    };
   }
 
   /** Sets a binary flag true.
