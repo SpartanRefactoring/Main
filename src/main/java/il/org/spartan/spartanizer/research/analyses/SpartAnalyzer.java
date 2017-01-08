@@ -58,11 +58,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(IfStatement.class, //
             new NotNullOrThrow(), //
-            new IfNullReturn(), //
-            new IfNullReturnNull(), //
+            new AssertNotNull(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<IfStatement>(), //
             new PutIfAbsent(), //
+            new PreconditionNotNull(), //
             new NotHoldsOrThrow(), //
             null) //
         .add(InfixExpression.class, //

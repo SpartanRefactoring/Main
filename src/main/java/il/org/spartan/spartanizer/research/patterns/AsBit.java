@@ -31,4 +31,8 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
   @Override public String description() {
     return "Casting a boolean into an int";
   }
+
+  @Override public String[] technicalName() {
+    return new String[] { "$X ? 1 : 0" };
+  }
 }

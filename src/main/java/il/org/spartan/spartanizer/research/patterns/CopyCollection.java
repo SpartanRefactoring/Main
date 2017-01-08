@@ -33,4 +33,8 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
   @Override public Category category() {
     return Category.Quantifier;
   }
+
+  @Override public String[] technicalName() {
+    return new String[] { "$T $N = new $T();  $N.addAll($X);" };
+  }
 }

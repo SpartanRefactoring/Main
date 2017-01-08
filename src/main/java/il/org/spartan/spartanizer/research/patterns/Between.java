@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
-public final class Between extends NanoPatternTipper<InfixExpression> {
+public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   private static final List<UserDefinedTipper<InfixExpression>> inEqualities = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
     {
@@ -73,5 +73,9 @@ public final class Between extends NanoPatternTipper<InfixExpression> {
   protected static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
     return az.methodInvocation(wizard.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));
+  }
+
+  @Override public String[] technicalName() {
+    return new String[] { "$L1 < $X < $L2" };
   }
 }
