@@ -65,7 +65,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     // .go());
     // final FileStats s = new FileStats(f);
     // for (int i = 0; i <optRounds; ++i) {
-    // final int n = new LaconizeProject().countTips();
+    // final int n = new SpartanizeProject().countTips();
     // if (n == 0)
     // break;
     //// s.addRoundStat(n);
