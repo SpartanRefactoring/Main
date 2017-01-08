@@ -6,12 +6,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** A {@link Tipper} in which represents a NanoPattern.
+/** A {@link Tipper} which represents a NanoPattern.
  * @author Ori Marcovitch
  * @year 2016 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
@@ -48,6 +49,18 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return className();
   }
 
+  @SuppressWarnings("static-method") public String example() {
+    return null;
+  }
+
+  @SuppressWarnings("static-method") public String symbolycReplacement() {
+    return "";
+  }
+
+  protected String symbolycReplacement(final UserDefinedTipper<N> ¢) {
+    return ¢.getMatching(wizard.ast(example())) + "";
+  }
+
   public String[] akas() {
     return new String[] { className() };
   }
@@ -56,7 +69,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return getClass().getSimpleName();
   }
 
-  protected abstract Tip pattern(N ¢);
+  protected abstract Tip pattern(final N ¢);
 
   @SuppressWarnings("static-method") public Category category() {
     return null;

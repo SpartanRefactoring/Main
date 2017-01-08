@@ -491,9 +491,6 @@ public class Matcher {
     return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(x -> x + "").reduce("", (x, y) -> x + y);
   }
 
-  /** @param n
-   * @param s
-   * @return */
   public ASTNode getMatching(final ASTNode n, final String s) {
     return collectEnviromentNodes(n, new HashMap<>()).get(s);
   }
