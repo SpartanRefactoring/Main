@@ -48,8 +48,6 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     };
   }
 
-  /** @param ¢
-   * @return */
   protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }

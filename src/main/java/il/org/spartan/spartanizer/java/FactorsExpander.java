@@ -21,12 +21,10 @@ public final class FactorsExpander {
     return base(new FactorsCollector(¢));
   }
 
-  /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
 
-  /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = duplicate.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
@@ -74,7 +72,6 @@ public final class FactorsExpander {
     return recurse((InfixExpression) $, fs);
   }
 
-  /** @see #recurse(InfixExpression, List) */
   private static Expression recurse(final InfixExpression $, final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())

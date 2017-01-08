@@ -154,8 +154,6 @@ public enum enumerate {
     return $.inner;
   }
 
-  /** @param ¢
-   * @return */
   public static int loops(final ASTNode ¢) {
     if (¢ == null)
       return 0;
@@ -185,8 +183,6 @@ public enum enumerate {
     return $.inner;
   }
 
-  /** @param ¢
-   * @return */
   public static int ternaries(final ASTNode ¢) {
     if (¢ == null)
       return 0;

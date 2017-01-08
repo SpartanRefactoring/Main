@@ -249,15 +249,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
         return true;
       }
 
-      /** @param n
-       * @param w
-       * @throws TipperFailure */
       @SuppressWarnings("unused") <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
@@ -281,9 +277,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
   // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
   // return toolbox.firstTipper(¢);
   // }
-  /** @param u
-   * @param __
-   * @return */
   public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
     apply(u);
     return false;
@@ -301,8 +294,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return false;
   }
 
-  /** @param __
-   * @return */
   public boolean apply(final AbstractSelection<?> __) {
     for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);

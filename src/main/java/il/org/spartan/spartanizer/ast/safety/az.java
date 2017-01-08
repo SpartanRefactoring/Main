@@ -448,8 +448,6 @@ public enum az {
     return true;
   }
 
-  /** @param $
-   * @return */
   public static TryStatement tryStatement(final ASTNode $) {
     return eval(() -> (TryStatement) $).when($ instanceof TryStatement);
   }
@@ -505,8 +503,6 @@ public enum az {
     return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
   }
 
-  /** @param $
-   * @return */
   public static VariableDeclarationFragment variableDeclrationFragment(final ASTNode $) {
     return !iz.variableDeclarationFragment($) ? null : (VariableDeclarationFragment) $;
   }
