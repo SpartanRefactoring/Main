@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Test case is {@link DeclarationWithInitExpanderTest} Issue No. 996 convert
+/** Test case is {@link Issue0996} Issue #996 convert
  * <code>
  * int a = 3;
  * </code> to <code>
