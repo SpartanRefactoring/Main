@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.research.patterns.common.*;
 
 /** @author Ori Marcovitch
@@ -17,8 +16,8 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(statementsPattern("for($T $N : $X1) if($X2) return $N;", "return $X1.stream().findFirst($N -> $X2).get();", "Go Fluent : FindFirst",
-          Option.LAST_IN_BLOCK));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $N; return null;", "return $X1.stream().findFirst($N -> $X2).get();",
+          "Go Fluent : FindFirst"));
       add(statementsPattern("for($T $N : $X1) if($X2) return $N; throw $X3;",
           "if($X1.stream().anyMatch($N -> $X2)) return $X1.stream().findFirst($N -> $X2).get(); throw $X3;", "Go Fluent : FindFirst"));
       add(statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();",
