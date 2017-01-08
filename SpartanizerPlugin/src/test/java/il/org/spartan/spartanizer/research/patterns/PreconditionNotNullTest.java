@@ -16,6 +16,13 @@ public class PreconditionNotNullTest {
         .stays();
   }
 
+  @Test public void a2() {
+    trimmingOf("void m(){if(x == null || y == null) return; use(); use();}")//
+        .using(IfStatement.class, new PreconditionNotNull())//
+        .gives("void m(){azzert.notNull(x,y);use();use();}")//
+        .stays();
+  }
+
   @Test public void b() {
     trimmingOf("void m(){if(x == null) return null; use(); use();}")//
         .using(IfStatement.class, new PreconditionNotNull())//
@@ -23,9 +30,24 @@ public class PreconditionNotNullTest {
         .stays();
   }
 
+  @Test public void b2() {
+    trimmingOf("void m(){if(x == null  || y == null) return null; use(); use();}")//
+        .using(IfStatement.class, new PreconditionNotNull())//
+        .gives("void m(){azzert.notNull(x,y);use();use();}")//
+        .stays();
+  }
+
   @Test public void c() {
     trimmingOf("void m(){s(); if(x == null) return null; use(); use();}")//
         .using(IfStatement.class, new PreconditionNotNull())//
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("void m(){if(x == null || null == abc.b) return null; use(); use();}")//
+        .gives("void m(){if(x==null||abc.b==null)return null;use();use();}")//
+        .using(IfStatement.class, new PreconditionNotNull())//
+        .gives("void m(){azzert.notNull(x,abc.b);use();use();}")//
         .stays();
   }
 }
