@@ -34,7 +34,7 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   }
 
   @Override public Category category() {
-    return Category.Quantifier;
+    return Category.Iterative;
   }
 
   @Override public String description() {
