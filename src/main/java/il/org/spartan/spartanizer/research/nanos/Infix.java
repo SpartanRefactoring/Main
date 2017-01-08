@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** Just another form of {@link SafeReference}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -38,7 +38,7 @@ public final class Infix {
     }
 
     @Override public Category category() {
-      return Category.Ternary;
+      return Category.NullConditional;
     }
 
     @Override public String description() {

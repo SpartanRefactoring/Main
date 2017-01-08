@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** There's also {@link Infix.SafeReference} which catches the same
  * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -52,5 +52,9 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
 
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
+  }
+
+  @Override public Category category() {
+    return Category.NullConditional;
   }
 }
