@@ -23,7 +23,7 @@ public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Category category() {
-    return Category.Throw;
+    return Category.Exception;
   }
 
   @Override public String description() {

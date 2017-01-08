@@ -41,8 +41,8 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   @Override public String description() {
     return "Iterate a collection for the first element matching some predicate";
   }
-  
-  @Override public String[] technicalName() {
-    return new String[] { "for($T $N : $X1) if($X2) return $N;" };
+
+  @Override public String technicalName() {
+    return "ReturnFirstInCSatisfyingX";
   }
 }
