@@ -77,12 +77,14 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   public void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
-    final int r = methodRIndex();
+    final int rMethod = rMethod();
+    final int rInternal = rInternal();
+    final int rExternal = rExternal();
     pWriter.put("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
         .map(k -> npStatistics.get(k))//
-        .forEach(n -> pWriter.put(n.name, n.occurences < r ? "-" : "+"));
+        .forEach(n -> pWriter.put(n.name, n.occurences > rMethod ? "M" : n.occurences > rInternal ? "I" : n.occurences > rExternal ? "X" : "-"));
     fillAbsents();
     pWriter.nl();
     npStatistics.clear();

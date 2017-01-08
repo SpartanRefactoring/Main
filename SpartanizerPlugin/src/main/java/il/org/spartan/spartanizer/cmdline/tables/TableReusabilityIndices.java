@@ -108,15 +108,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.col("Project", presentSourceName);
     if (usage.get("METHOD") == null)
       return;
-    final Map<String, Integer> external = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      external.remove(m);
-    final Map<String, Integer> internal = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>(internal.keySet()))
-      if (!defined.contains(k))
-        internal.remove(k);
-    final int rIntrernal = rindex(ranks(internal));
-    final int rExternal = rindex(ranks(external));
+    final int rExternal = rExternal();
+    final int rIntrernal = rInternal();
     writer//
         .col("External", rExternal) //
         .col("Internal", rIntrernal)//
@@ -176,7 +169,22 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return key(¢.getOperator(), arity);
   }
 
-  protected int methodRIndex() {
+  protected int rExternal() {
+    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String m : defined)
+      $.remove(m);
+    return rindex(ranks($));
+  }
+
+  protected int rInternal() {
+    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    for (final String k : new ArrayList<>($.keySet()))
+      if (!defined.contains(k))
+        $.remove(k);
+    return rindex(ranks($));
+  }
+
+  protected int rMethod() {
     return rindex(ranks(usage.get("METHOD")));
   }
 
