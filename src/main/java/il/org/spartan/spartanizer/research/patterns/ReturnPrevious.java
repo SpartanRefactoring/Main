@@ -28,4 +28,8 @@ public final class ReturnPrevious extends NanoPatternTipper<Block> {
   @Override public String description() {
     return "Update field and return old value";
   }
+
+  @Override public String technicalName() {
+    return "AssignXWithYReturnPreviousX";
+  }
 }

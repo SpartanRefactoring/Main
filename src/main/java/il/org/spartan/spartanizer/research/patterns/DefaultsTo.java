@@ -38,7 +38,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return "Evaluate expression, if null- replace with default value";
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "$X1 != null ? $X1 : $X2" };
+  @Override public String technicalName() {
+    return "IfX₁IsNullX₁ElseX₂";
   }
 }
