@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,9 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
-import static il.org.spartan.lisp.*;
 
 /** Replace X != null ? X : Y with X ?? Y <br>
  * replace X == null ? Y : X with X ?? Y <br>
@@ -45,10 +44,10 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public String example() {
-    return "$X1 != null ? $X1 : $X2";
+    return firstPattern(tippers);
   }
 
   @Override public String symbolycReplacement() {
-    return symbolycReplacement(first(tippers));
+    return firstReplacement(tippers);
   }
 }

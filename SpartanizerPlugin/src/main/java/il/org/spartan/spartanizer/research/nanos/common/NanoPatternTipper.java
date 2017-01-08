@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -32,6 +33,18 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return firstTipper(ns, n).tip(n);
   }
 
+  public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
+    return first(¢).pattern().replaceAll("\\$", "");
+  }
+
+  public static <N extends ASTNode> String firstReplacement(final List<UserDefinedTipper<N>> ¢) {
+    return first(¢).replacement().replaceAll("\\$", "");
+  }
+
+  public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
+    return first(¢);
+  }
+
   @Override public final Tip tip(final N ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -55,10 +68,6 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
 
   @SuppressWarnings("static-method") public String symbolycReplacement() {
     return "";
-  }
-
-  protected String symbolycReplacement(final UserDefinedTipper<N> ¢) {
-    return ¢.getMatching(wizard.ast(example())) + "";
   }
 
   public String[] akas() {
