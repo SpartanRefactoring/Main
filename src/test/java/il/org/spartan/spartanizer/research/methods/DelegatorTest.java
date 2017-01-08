@@ -29,7 +29,7 @@ public class DelegatorTest extends JavadocerTest {
   }
 
   @Test public void basic5() {
-    assert not("boolean foo(int a){if(a == null) return bar(a);}");
+    assert not("boolean foo(int a){if(a == 7) return bar(a);}");
   }
 
   @Test public void basic6() {
