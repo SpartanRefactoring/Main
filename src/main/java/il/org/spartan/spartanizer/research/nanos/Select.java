@@ -36,4 +36,12 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
   @Override public Category category() {
     return Category.Quantifier;
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

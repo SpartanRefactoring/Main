@@ -44,4 +44,12 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   @Override public String technicalName() {
     return "ReturnFirstInCSatisfyingX";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

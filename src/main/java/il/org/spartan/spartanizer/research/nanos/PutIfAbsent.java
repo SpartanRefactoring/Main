@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
-  private static final Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+  private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);", "use putIfAbsent"));
@@ -35,5 +35,13 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
 
   @Override public String description() {
     return "Put an element in a map if a key is absent";
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

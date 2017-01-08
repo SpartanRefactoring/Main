@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
 public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
-  private static final Set<UserDefinedTipper<TryStatement>> tippers = new HashSet<UserDefinedTipper<TryStatement>>() {
+  private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("try $B1 catch($T $N){ return null; }", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"));
@@ -36,5 +36,13 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
 
   private static TryStatement parent(final CatchClause ¢) {
     return az.tryStatement(step.parent(¢));
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

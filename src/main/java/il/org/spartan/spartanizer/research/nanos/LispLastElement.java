@@ -35,4 +35,12 @@ public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
   @Override public String description() {
     return "Last element in collection";
   }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
 }

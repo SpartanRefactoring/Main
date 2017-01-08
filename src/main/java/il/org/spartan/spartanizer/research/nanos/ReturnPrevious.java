@@ -8,18 +8,24 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.statementsPattern;
 
+import java.util.*;
+
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class ReturnPrevious extends NanoPatternTipper<Block> {
-  private static final UserDefinedTipper<Block> tipper = statementsPattern("$T $N2 = $N3; $N3 = $X; return $N2;",
-      "return update($N3).with($X).getOld();", "Return Old");
+  private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(statementsPattern("$T $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old"));
+    }
+  };
 
   @Override public boolean canTip(final Block x) {
-    return tipper.canTip(x);
+    return anyTips(tippers, x);
   }
 
   @Override public Tip pattern(final Block x) {
-    return tipper.tip(x);
+    return firstTip(tippers, x);
   }
 
   @Override public Category category() {
@@ -32,5 +38,13 @@ public final class ReturnPrevious extends NanoPatternTipper<Block> {
 
   @Override public String technicalName() {
     return "AssignXWithYReturnPreviousX";
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }
