@@ -15,15 +15,11 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($N1 $N2 : $N3) if($X1) $X2;", "$N3.stream().filter($N2 -> $X1).forEach($N2 -> $X2);",
-          "ForEachThat pattern: conevrt to fluent API"));
       add(patternTipper("for($N1 $N2 : $N3) $X;", "$N3.stream().forEach($N2 -> $X);", "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($N1 $N2 : $X1) if($X2) $X3;", "($X1).stream().filter($N2 -> $X2).forEach($N2 -> $X3);",
-          "ForEachThat pattern: conevrt to fluent API"));
       add(patternTipper("for($N1 $N2 : $X1) $X2;", "($X1).stream().forEach($N2 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
     }
   };
-  private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
+  protected static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new Select());
@@ -43,7 +39,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override public String[] technicalName() {
-    return new String[] { "for($N1 $N2 : $X1) $X2;", "for($N1 $N2 : $X1) if($X2) $X3;" };
+  @Override public String technicalName() {
+    return "ForEachInCApplyS";
+    // "for($N1 $N2 : $X1) if($X2) $X3;";
   }
 }

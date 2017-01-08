@@ -44,8 +44,8 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
     return "";
   }
 
-  public String[] technicalName() {
-    return new String[] { className() };
+  public String technicalName() {
+    return className();
   }
 
   public String[] akas() {
@@ -63,7 +63,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Iterative, Return, Throw, Ternary {
+    Iterative, Return, Exception, Ternary {
       @Override public String toString() {
         return "Conditional Expression";
       }
