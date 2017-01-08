@@ -29,7 +29,7 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
   }
 
   @Override public Category category() {
-    return Category.Iterative;
+    return Category.Collection;
   }
 
   @Override public String description() {
