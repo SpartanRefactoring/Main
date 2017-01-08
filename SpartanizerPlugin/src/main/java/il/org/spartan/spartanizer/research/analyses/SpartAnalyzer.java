@@ -7,10 +7,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.research.patterns.*;
-import il.org.spartan.spartanizer.research.patterns.characteristics.*;
-import il.org.spartan.spartanizer.research.patterns.common.*;
-import il.org.spartan.spartanizer.research.patterns.methods.*;
+import il.org.spartan.spartanizer.research.nanos.*;
+import il.org.spartan.spartanizer.research.nanos.characteristics.*;
+import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** @author Ori Marcovitch
  * @since Dec 15, 2016 */
