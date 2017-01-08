@@ -108,8 +108,6 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  /** @param string
-   * @return */
   public static monitor debug(final String message) {
     return now.debugMessage(message);
   }

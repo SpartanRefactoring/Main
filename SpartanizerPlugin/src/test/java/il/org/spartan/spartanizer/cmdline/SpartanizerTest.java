@@ -315,7 +315,6 @@ public class SpartanizerTest {
         .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*");
   }
 
-  /** @param u1 */
   private void visitASTNode(final ASTNode u1) {
     u1.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
