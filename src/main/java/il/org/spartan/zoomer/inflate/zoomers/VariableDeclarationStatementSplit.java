@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Test case is {@link VariableDeclarationStatementSplitTest} Issue No. 968
+/** Test case is {@link Issue0968} Issue #968
  * convert <code>
  * int a = f(), b = g();
  * </code> to <code>
