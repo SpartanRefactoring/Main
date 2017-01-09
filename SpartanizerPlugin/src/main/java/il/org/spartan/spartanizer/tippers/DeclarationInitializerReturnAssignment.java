@@ -32,7 +32,7 @@ public final class DeclarationInitializerReturnAssignment extends $VariableDecla
     final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newReturnValue = duplicate.of(from(a));
+    final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;

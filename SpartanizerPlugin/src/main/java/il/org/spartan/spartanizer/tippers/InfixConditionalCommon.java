@@ -38,7 +38,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     $.remove(0);
-    return $.size() < 2 ? duplicate.of(first($)) : subject.operands($).to(¢.getOperator());
+    return $.size() < 2 ? copy.of(first($)) : subject.operands($).to(¢.getOperator());
   }
 
   private static Operator conjugate(final Operator ¢) {

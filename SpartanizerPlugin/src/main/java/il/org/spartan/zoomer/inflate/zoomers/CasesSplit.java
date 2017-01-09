@@ -49,7 +49,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢, SwitchStatement.STATEMENTS_PROPERTY);
         for (@SuppressWarnings("hiding") final Statement ¢ : $)
-          l.insertBefore(duplicate.of(¢), n, g);
+          l.insertBefore(copy.of(¢), n, g);
         if (!iz.sequencerComplex($.get($.size() - 1)))
           l.insertBefore(¢.getAST().newBreakStatement(), n, g);
       }

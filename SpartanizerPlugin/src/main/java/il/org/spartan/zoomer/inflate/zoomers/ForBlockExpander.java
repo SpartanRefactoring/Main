@@ -16,9 +16,9 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;
-    final ForStatement $ = duplicate.of(s);
+    final ForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(duplicate.of(s.getBody()));
+    b.statements().add(copy.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
     s.getBody().accept(new ASTVisitor() {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {

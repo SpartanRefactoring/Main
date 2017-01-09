@@ -28,11 +28,11 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final InfixExpression e = ¢.getAST().newInfixExpression();
-        e.setLeftOperand(duplicate.of(¢.getLeftHandSide()));
-        e.setRightOperand(make.plant(duplicate.of(¢.getRightHandSide())).into(e));
+        e.setLeftOperand(copy.of(¢.getLeftHandSide()));
+        e.setRightOperand(make.plant(copy.of(¢.getRightHandSide())).into(e));
         e.setOperator(convertToInfix(¢.getOperator()));
         final Assignment a = ¢.getAST().newAssignment();
-        a.setLeftHandSide(duplicate.of(¢.getLeftHandSide()));
+        a.setLeftHandSide(copy.of(¢.getLeftHandSide()));
         a.setRightHandSide(e);
         a.setOperator(Operator.ASSIGN);
         r.replace(¢, a, g);

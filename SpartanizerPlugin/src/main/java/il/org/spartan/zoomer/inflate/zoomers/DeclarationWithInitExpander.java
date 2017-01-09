@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Test case is {@link Issue0996} Issue #996 convert
- * <code>
+/** Test case is {@link Issue0996} Issue #996 convert <code>
  * int a = 3;
  * </code> to <code>
  * int a;
@@ -33,12 +32,12 @@ public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarati
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
-    final VariableDeclarationStatement $ = duplicate.of(¢);
+    final VariableDeclarationStatement $ = copy.of(¢);
     ((VariableDeclarationFragment) $.fragments().get(0)).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();
     final VariableDeclarationFragment f2 = (VariableDeclarationFragment) ¢.fragments().get(0);
-    a.setLeftHandSide(duplicate.of(az.expression(f2.getName())));
-    a.setRightHandSide(duplicate.of(az.expression(f2.getInitializer())));
+    a.setLeftHandSide(copy.of(az.expression(f2.getName())));
+    a.setRightHandSide(copy.of(az.expression(f2.getInitializer())));
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢.getParent(), !SwitchStatement.STATEMENTS_PROPERTY.getNodeClass().isInstance(¢.getParent())

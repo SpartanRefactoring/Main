@@ -11,30 +11,30 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0974 {
   @Test public void test0() {
-    expansionOf("i++;").gives("i = i+1;").stays();
+    zoomingInto("i++;").gives("i = i+1;").stays();
   }
 
   @Test public void test1() {
-    expansionOf("i--;").gives("i = i-1;").stays();
+    zoomingInto("i--;").gives("i = i-1;").stays();
   }
 
   @Test public void test2() {
-    expansionOf("++i;").gives("i++;").gives("i = i+1;").stays();
+    zoomingInto("++i;").gives("i++;").gives("i = i+1;").stays();
   }
 
   @Test public void test3() {
-    expansionOf("--i;").gives("i--;").gives("i = i-1;").stays();
+    zoomingInto("--i;").gives("i--;").gives("i = i-1;").stays();
   }
 
   @Test public void test4() {
-    expansionOf("x = f(i--);").stays();
+    zoomingInto("x = f(i--);").stays();
   }
 
   @Test public void test5() {
-    expansionOf("x = f(i++);").stays();
+    zoomingInto("x = f(i++);").stays();
   }
 
   @Test public void test6() {
-    expansionOf("x = f(i--);").stays();
+    zoomingInto("x = f(i--);").stays();
   }
 }

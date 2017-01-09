@@ -336,7 +336,7 @@ public interface wizard {
    *         parameter is {@link Operator#CONDITIONAL_OR}, or
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
-   * @see duplicate#deMorgan(Operator) */
+   * @see copy#deMorgan(Operator) */
   static InfixExpression.Operator deMorgan(final InfixExpression ¢) {
     return wizard.deMorgan(¢.getOperator());
   }
@@ -514,10 +514,10 @@ public interface wizard {
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a
-   *         {@link il.org.spartan.spartanizer.ast.factory.duplicate#duplicate(Expression)}
+   *         {@link il.org.spartan.spartanizer.ast.factory.copy#duplicate(Expression)}
    *         of the parameter wrapped in parenthesis. */
   static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);
+    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
 
   Bool resolveBinding = Bool.valueOf(false);

@@ -27,10 +27,10 @@ public enum Tippers {
       final List<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
-        duplicate.into(¢, to);
+        copy.into(¢, to);
       else {
-        duplicate.into(by1, to);
-        duplicate.into(by2, to);
+        copy.into(by1, to);
+        copy.into(by2, to);
       }
   }
 
@@ -49,7 +49,7 @@ public enum Tippers {
       case 0:
         return x.getAST().newBooleanLiteral(b);
       case 1:
-        return duplicate.of(first($));
+        return copy.of(first($));
       default:
         return subject.operands($).to(x.getOperator());
     }
@@ -110,7 +110,7 @@ public enum Tippers {
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
-    final IfStatement main = duplicate.of(s);
+    final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
     final int rankThen = Tippers.sequencerRank(lisp.last(then));
@@ -147,7 +147,7 @@ public enum Tippers {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicate.into(siblings, statements($));
+    copy.into(siblings, statements($));
     r.replace(parent, $, g);
     return r;
   }

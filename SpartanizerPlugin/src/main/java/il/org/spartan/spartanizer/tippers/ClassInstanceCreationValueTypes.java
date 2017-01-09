@@ -32,8 +32,8 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     final SimpleName simpleName = hop.simpleName(t);
     if (simpleName == null)
       return null;
-    final MethodInvocation $ = subject.operand(duplicate.of(simpleName)).toMethod("valueOf");
-    arguments($).add(duplicate.of(e));
+    final MethodInvocation $ = subject.operand(copy.of(simpleName)).toMethod("valueOf");
+    arguments($).add(copy.of(e));
     return $;
   }
 }

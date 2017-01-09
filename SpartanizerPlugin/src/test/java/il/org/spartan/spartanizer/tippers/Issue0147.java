@@ -19,7 +19,7 @@ public class Issue0147 {
   private static final ForStatement FOR = findFirst.forStatement(INPUT);
   private static final ForStatement FOR1 = findFirst.forStatement(INPUT1);
   private static final ForRedundantContinue TIPPER = new ForRedundantContinue();
-  
+
   @Ignore
   static class NotWorking {
     @Test public void a() {

@@ -27,15 +27,15 @@ public class IfElseBlockExpander extends ReplaceCurrentNode<IfStatement> impleme
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null || iz.block(step.then(s)) && step.elze(s) == null || iz.block(step.then(s)) && step.elze(s) != null && iz.block(step.elze(s)))
       return null;
-    final IfStatement $ = duplicate.of(s);
+    final IfStatement $ = copy.of(s);
     if (!iz.block(step.then(s))) {
       final Block b = s.getAST().newBlock();
-      step.statements(b).add(duplicate.of(step.then(s)));
+      step.statements(b).add(copy.of(step.then(s)));
       $.setThenStatement(b);
     }
     if (step.elze(s) != null && !iz.block(step.elze(s))) {
       final Block b = s.getAST().newBlock();
-      step.statements(b).add(duplicate.of(step.elze(s)));
+      step.statements(b).add(copy.of(step.elze(s)));
       $.setElseStatement(b);
     }
     return $;

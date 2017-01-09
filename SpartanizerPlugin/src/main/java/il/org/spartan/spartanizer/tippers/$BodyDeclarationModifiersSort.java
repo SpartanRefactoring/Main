@@ -50,7 +50,7 @@ public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> /
   }
 
   @Override public N replacement(final N $) {
-    return go(duplicate.of($));
+    return go(copy.of($));
   }
 
   @Override protected boolean prerequisite(final N ¢) {

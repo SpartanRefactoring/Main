@@ -96,8 +96,8 @@ public class ExpanderTestUtils {
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      
-      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from(u);
+      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+          .from(u);
       assert !ll.isEmpty(); // method not found
       MethodDeclaration m = ll.get(0);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
@@ -110,7 +110,8 @@ public class ExpanderTestUtils {
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f)).from(makeAST.COMPILATION_UNIT.from(unpeeled));
+        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+            .from(makeAST.COMPILATION_UNIT.from(unpeeled));
         assert !ll.isEmpty(); // method not found
         m = l.get(0);
         assertSimilar($, m + "");
@@ -170,7 +171,7 @@ public class ExpanderTestUtils {
     }
   }
 
-  public static Operand expansionOf(final String from) {
+  public static Operand zoomingInto(final String from) {
     return new Operand(from);
   }
 

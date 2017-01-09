@@ -143,7 +143,7 @@ public interface hop {
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment precidingFragmentToLastExpression(final ForStatement ¢) {
-    final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
+    final ASTNode n = hop.lastStatement(copy.of(step.body(¢)));
     if (n == null)
       return null;
     final Statement current = az.statement(n);
@@ -160,7 +160,7 @@ public interface hop {
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
   static VariableDeclarationFragment prevFragmentToLastExpression(final WhileStatement ¢) {
-    final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
+    final ASTNode n = hop.lastStatement(copy.of(step.body(¢)));
     if (n == null)
       return null;
     final Statement current = az.statement(n);

@@ -30,7 +30,7 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e)
         || iz.interface¢(hop.containerType(parent)))
       return null;
-    final VariableDeclarationFragment $ = duplicate.of(f);
+    final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(null);
     return $;
   }

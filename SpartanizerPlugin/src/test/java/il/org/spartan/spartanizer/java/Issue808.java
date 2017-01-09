@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public class Issue808 {
   @Test @SuppressWarnings("static-method") public void test01() {
     final Expression ex = az.numberLiteral(wizard.ast("5"));
-    assertNotEquals(ex, new Term(true, duplicate.of(ex)).asExpression());
+    assertNotEquals(ex, new Term(true, copy.of(ex)).asExpression());
   }
 
   @Test @SuppressWarnings("static-method") public void test02() {
@@ -30,7 +30,7 @@ public class Issue808 {
     final Expression ex2 = az.simpleName(wizard.ast("david"));
     final Expression ex3 = az.simpleName(wizard.ast("zahi"));
     azzert.that(new Term(false, ex1).asExpression(), is(ex1));
-    assertNotEquals(ex2, new Term(true, duplicate.of(ex2)).asExpression());
-    assertNotEquals(ex3, new Term(true, duplicate.of(ex3)).asExpression());
+    assertNotEquals(ex2, new Term(true, copy.of(ex2)).asExpression());
+    assertNotEquals(ex3, new Term(true, copy.of(ex3)).asExpression());
   }
 }

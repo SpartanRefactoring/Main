@@ -17,6 +17,7 @@ public class AdvancedGivesTests {
               "for (int ¢ = 0 ; ¢ < 5 ; ++¢) ++¢;");
     }
   }
+
   @Test public void test0() {
     trimmingOf("1+2")//
         .givesEither("3", "").stays();

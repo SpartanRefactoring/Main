@@ -27,8 +27,8 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends $VariableDeclarationFragementAndStatement implements TipperCategory.Collapse {
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
-    final VariableDeclarationFragment $ = duplicate.of(f);
-    $.setInitializer(duplicate.of(x));
+    final VariableDeclarationFragment $ = copy.of(f);
+    $.setInitializer(copy.of(x));
     return $;
   }
 

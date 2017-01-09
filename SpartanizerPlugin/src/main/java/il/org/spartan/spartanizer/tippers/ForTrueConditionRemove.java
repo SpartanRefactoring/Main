@@ -29,6 +29,6 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement> imp
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutCondition(duplicate.of(¢));
+    return !fitting(¢) ? null : buildForWhithoutCondition(copy.of(¢));
   }
 }

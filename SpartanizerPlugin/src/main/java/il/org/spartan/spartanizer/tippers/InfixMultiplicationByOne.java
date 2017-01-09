@@ -22,8 +22,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     for (final Expression ¢ : xs)
       if (!iz.literal1(¢))
         $.add(¢);
-    return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(TIMES);
+    return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 
   @Override public String description(final InfixExpression ¢) {

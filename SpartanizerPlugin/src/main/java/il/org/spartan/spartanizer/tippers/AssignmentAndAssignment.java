@@ -58,7 +58,7 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     $.remove(parent, g);
-    $.replace(right1, duplicate.of(a), g);
+    $.replace(right1, copy.of(a), g);
     return $;
   }
 }

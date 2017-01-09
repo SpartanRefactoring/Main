@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * static</code> functions for restructuring expressions.
  * @author Yossi Gil
  * @since 2015-07-21 */
-public enum duplicate {
+public enum copy {
   ;
   static List<Expression> adjust(final Operator o, final List<Expression> xs) {
     return o != wizard.MINUS2 ? xs : xs.stream().map(¢ -> subject.operand(¢).to(wizard.MINUS1)).collect(Collectors.toList());
@@ -33,15 +33,15 @@ public enum duplicate {
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void into(final N from, final List<N> into) {
-    into.add(duplicate.of(from));
+    into.add(copy.of(from));
   }
 
   public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
     for (final IExtendedModifier ¢ : from)
       if (¢.isModifier())
-        to.add(duplicate.of((Modifier) ¢));
+        to.add(copy.of((Modifier) ¢));
       else if (¢.isAnnotation())
-        to.add(duplicate.of((Annotation) ¢));
+        to.add(copy.of((Annotation) ¢));
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter

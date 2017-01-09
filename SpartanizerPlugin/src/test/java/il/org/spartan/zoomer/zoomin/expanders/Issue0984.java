@@ -12,21 +12,21 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0984 {
   @Test public void a() {
-    expansionOf("o.f(x ? a : b);").gives("if (x)" //
+    zoomingInto("o.f(x ? a : b);").gives("if (x)" //
         + "  o.f(a);" //
         + "else " //
         + "  o.f(b);");
   }
 
   @Test public void b() {
-    expansionOf("o.f(p, x ? a : b);").gives("if (x)" //
+    zoomingInto("o.f(p, x ? a : b);").gives("if (x)" //
         + "  o.f(p, a);" //
         + "else" //
         + "  o.f(p, b);");
   }
 
   @Test public void c() {
-    expansionOf("o.f(y ? a1 : b1, x ? a2 : b2);")
+    zoomingInto("o.f(y ? a1 : b1, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, x ? a2 : b2);" //
             + "else" //
@@ -37,7 +37,7 @@ public class Issue0984 {
   }
 
   @Test public void d() {
-    expansionOf("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
+    zoomingInto("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, pp, x ? a2 : b2);" //
             + "else" //

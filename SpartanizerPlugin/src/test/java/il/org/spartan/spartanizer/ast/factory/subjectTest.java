@@ -110,8 +110,8 @@ public final class subjectTest {
   @Test public void refitPreservesOrder() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = new ArrayList<>();
-    operands.add(duplicate.of(e("3*4")));
-    operands.add(duplicate.of(e("5")));
+    operands.add(copy.of(e("3*4")));
+    operands.add(copy.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
     azzert.that(refit + "", is("3 * 4 + 5"));
@@ -147,7 +147,7 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = hop.operands(duplicate.of(i("a*b")));
+    final List<Expression> operands = hop.operands(copy.of(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression refit = subject.operands(operands).to(i("1+2").getOperator());
     azzert.that(refit.hasExtendedOperands(), is(false));
@@ -155,11 +155,11 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that(subject.operands(hop.operands(duplicate.of(i("a*b*c")))).to(i("1+2+3").getOperator()) + "", is("a + b + c"));
+    azzert.that(subject.operands(hop.operands(copy.of(i("a*b*c")))).to(i("1+2+3").getOperator()) + "", is("a + b + c"));
   }
 
   @Test public void subjectOperandsNotNull() {
-    assert subject.operands(hop.operands(duplicate.of(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
+    assert subject.operands(hop.operands(copy.of(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
 
   @Test public void subjectOperandsWithParenthesis() {

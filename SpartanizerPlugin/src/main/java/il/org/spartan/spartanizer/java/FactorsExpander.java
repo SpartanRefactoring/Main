@@ -26,7 +26,7 @@ public final class FactorsExpander {
   }
 
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
-    final Expression ¢ = duplicate.of(f.expression);
+    final Expression ¢ = copy.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
 

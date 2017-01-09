@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1048 {
   @Test public void test() {
-    expansionOf(
+    zoomingInto(
         "public static InDeclaration instance() {" + "instance = instance != null ? instance : new InDeclaration();" + "return instance;" + "}")
             .stays();
   }

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 16-11-12 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue822 {
+public class Issue0822 {
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);

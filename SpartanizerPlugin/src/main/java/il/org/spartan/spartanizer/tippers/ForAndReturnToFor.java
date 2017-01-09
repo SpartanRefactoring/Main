@@ -25,11 +25,11 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
   @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
-    final ForStatement f = duplicate.of(s);
+    final ForStatement f = copy.of(s);
     final IfStatement ifBody = f.getAST().newIfStatement();
-    ifBody.setExpression(make.notOf(duplicate.of(expression(f))));
-    ifBody.setThenStatement(duplicate.of(nextStatement));
-    f.setBody(duplicate.of(ifBody));
+    ifBody.setExpression(make.notOf(copy.of(expression(f))));
+    ifBody.setThenStatement(copy.of(nextStatement));
+    f.setBody(copy.of(ifBody));
     f.setExpression(null);
     $.replace(s, f, g);
     $.replace(nextStatement, null, g);

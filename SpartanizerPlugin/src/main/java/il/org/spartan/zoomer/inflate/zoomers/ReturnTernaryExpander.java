@@ -27,13 +27,13 @@ public class ReturnTernaryExpander extends ReplaceCurrentNode<ReturnStatement> i
         return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(duplicate.of(expression(¢)));
+    $.setExpression(copy.of(expression(¢)));
     final ReturnStatement then = ¢.getAST().newReturnStatement();
-    then.setExpression(duplicate.of(¢.getThenExpression()));
-    $.setThenStatement(duplicate.of(az.statement(then)));
+    then.setExpression(copy.of(¢.getThenExpression()));
+    $.setThenStatement(copy.of(az.statement(then)));
     final ReturnStatement elze = ¢.getAST().newReturnStatement();
-    elze.setExpression(duplicate.of(¢.getElseExpression()));
-    $.setElseStatement(duplicate.of(az.statement(elze)));
+    elze.setExpression(copy.of(¢.getElseExpression()));
+    $.setElseStatement(copy.of(az.statement(elze)));
     return $;
   }
 
