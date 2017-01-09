@@ -40,7 +40,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new ReturnHoldsForAny(), //
             null) //
         .add(CatchClause.class, //
-            new IfThrowsReturnNull(), //
+            new IfThrowsReturn(), //
             new IgnoreException(), //
             // new PercolateException(), // R.I.P
             null)//

@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")
-public class IfThrowsReturnNullTest {
+public class IfThrowsReturnTest {
   @Test public void a() {
     trimmingOf(//
         "try {" + //
@@ -18,7 +18,7 @@ public class IfThrowsReturnNullTest {
             "  }" + //
             " catch (  B i) {" + //
             "    return null;}"//
-    ).using(CatchClause.class, new IfThrowsReturnNull())//
+    ).using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();")//
@@ -28,7 +28,7 @@ public class IfThrowsReturnNullTest {
 
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
-        .using(CatchClause.class, new IfThrowsReturnNull())//
+        .using(CatchClause.class, new IfThrowsReturn())//
         .stays();
   }
 
@@ -39,7 +39,7 @@ public class IfThrowsReturnNullTest {
             "  }" + //
             " catch (  B i) {" + //
             "    return;}"//
-    ).using(CatchClause.class, new IfThrowsReturnNull())//
+    ).using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();")//
@@ -50,7 +50,7 @@ public class IfThrowsReturnNullTest {
   @Test public void d() {
     trimmingOf("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
         .gives("try{thing();}catch(B|A a){return;}")//
-        .using(CatchClause.class, new IfThrowsReturnNull())//
+        .using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{thing();}}).returns();")//
         .gives("If.throwz(()->{thing();}).returns();")//
         .gives("If.throwz(()->thing()).returns();")//

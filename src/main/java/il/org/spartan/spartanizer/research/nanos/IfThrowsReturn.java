@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
-public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
+public final class IfThrowsReturn extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
