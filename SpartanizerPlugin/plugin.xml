@@ -339,10 +339,12 @@ shown/generated, manual is a bit vague, but that's the bottom line -->
 http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fguide%2Fworkbench_cmd_commands.htm 
 -->
 <extension point="org.eclipse.ui.commands">
+     <command id="il.org.spartan.LaconizeSelection" name="current Selection"/>
      <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
      <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
      <command id="il.org.spartan.ZoomTool" name="active Window"/>
      <command id="il.org.spartan.ZoomAll" name="entire Project"/>
+     <command id="il.org.spartan.ZoomSelection" name="current Selection"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
@@ -353,8 +355,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
+   <handler commandId="il.org.spartan.LaconizeSelection" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
@@ -418,10 +422,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <menu id="org.eclipse.jdt.ui.refactoring.menj" label="Refactor">
     <menu label="Spartanizer" mnemonic="S">
       <menu label="Spartanize..." mnemonic="S">
+        <command commandId="il.org.spartan.LaconizeSelection" style="push" mnemonic="S"/>
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="C"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="A"/>
       </menu>
       <menu label="Zoom..." mnemonic="Z">
+        <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
         <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
         <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
       </menu>
