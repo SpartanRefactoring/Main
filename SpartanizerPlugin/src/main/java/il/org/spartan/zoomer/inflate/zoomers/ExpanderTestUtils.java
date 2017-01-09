@@ -78,9 +78,7 @@ public class ExpanderTestUtils {
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
         assertSimilar($, peeled);
-        final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
-        p.setResolveBindings(true);
-        return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
+        return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
       }
@@ -96,32 +94,36 @@ public class ExpanderTestUtils {
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
-          .from(u);
-      assert !ll.isEmpty(); // method not found
-      MethodDeclaration m = ll.get(0);
+      MethodDeclaration m = getMethod(u, f);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
-        if (wrap.equals(unpeeled))
-          azzert.fail("Nothing done on " + get());
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        final List<MethodDeclaration> l = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
-            .from(makeAST.COMPILATION_UNIT.from(unpeeled));
-        assert !ll.isEmpty(); // method not found
-        m = l.get(0);
+        m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
         assertSimilar($, m + "");
-        final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
-        p.setResolveBindings(true);
-        return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
+        return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
       }
       return null;
+    }
+
+    private static MethodDeclaration getMethod(CompilationUnit u, String f) {
+      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+          .from(u);
+      if (ll.isEmpty())
+        azzert.fail("Don't Such Method Exists");
+      return ll.get(0);
+    }
+
+    private static CompilationUnit createCUWithBinding(String text) {
+      final ASTParser p = Make.COMPILATION_UNIT.parser(text);
+      p.setResolveBindings(true);
+      return az.compilationUnit(p.createAST(null));
     }
 
     private void checkSame() {
@@ -155,7 +157,7 @@ public class ExpanderTestUtils {
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           return;
-        if (!unpeeled.equals(get()) && !tide.clean(unpeeled).equals(tide.clean(get())))
+        if (!unpeeled.equals(get()) && unpeeled.equals(get()))
           assertSimilar(get(), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
