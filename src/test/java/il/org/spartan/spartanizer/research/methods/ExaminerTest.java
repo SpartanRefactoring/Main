@@ -40,11 +40,12 @@ public class ExaminerTest extends JavadocerTest {
     assert is("boolean examiner(){synchronized (mutex) {return field == 7;}}");
   }
 
+  // h and i are examiners because we killed caster
   @Test public void h() {
-    assert not("boolean checker(Object a){return a instanceof A;}");
+    assert is("boolean checker(Object a){return a instanceof A;}");
   }
 
   @Test public void i() {
-    assert not("boolean checker(Object a){return (a instanceof A);}");
+    assert is("boolean checker(Object a){return (a instanceof A);}");
   }
 }
