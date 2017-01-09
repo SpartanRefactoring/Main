@@ -100,12 +100,16 @@ public class ExpanderTestUtils {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
+        if (wrap.equals(unpeeled))
+          azzert.fail("Nothing done on " + get());
         final String peeled = unpeeled;
         if (peeled.equals(get()))
           azzert.that("No trimming of " + get(), peeled, is(not(get())));
         m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
         assertSimilar($, m + "");
-        return new Operand(createCUWithBinding(unpeeled), unpeeled);
+        final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
+        p.setResolveBindings(true);
+        return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
       }
