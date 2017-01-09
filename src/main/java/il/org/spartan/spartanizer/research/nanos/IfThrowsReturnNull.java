@@ -19,6 +19,7 @@ public final class IfThrowsReturnNull extends NanoPatternTipper<CatchClause> {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("try $B1 catch($T $N){ return null; }", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"));
+      add(patternTipper("try $B1 catch($T $N){ return; }", "If.throwz(() -> $B1).returns();", "Go Fluent: IfThrowsReturns"));
     }
   };
 

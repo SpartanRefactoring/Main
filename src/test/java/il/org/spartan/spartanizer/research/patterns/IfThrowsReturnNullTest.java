@@ -31,4 +31,29 @@ public class IfThrowsReturnNullTest {
         .using(CatchClause.class, new IfThrowsReturnNull())//
         .stays();
   }
+
+  @Test public void c() {
+    trimmingOf(//
+        "try {" + //
+            "    A.a(b).c().d(e -> f[g++]=h(e));" + //
+            "  }" + //
+            " catch (  B i) {" + //
+            "    return;}"//
+    ).using(CatchClause.class, new IfThrowsReturnNull())//
+        .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
+        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();")//
+        .stays()//
+    ;
+  }
+
+  @Test public void d() {
+    trimmingOf("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
+        .gives("try{thing();}catch(B|A a){return;}")//
+        .using(CatchClause.class, new IfThrowsReturnNull())//
+        .gives("If.throwz(()->{{thing();}}).returns();")//
+        .gives("If.throwz(()->{thing();}).returns();")//
+        .gives("If.throwz(()->thing()).returns();")//
+        .stays();
+  }
 }
