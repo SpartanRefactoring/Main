@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.java.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0442 {
-  @Ignore
   public static class WorkInProgress {
     @Test public void b() {
       trimmingOf("public S f(X x){return null;}")//

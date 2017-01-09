@@ -31,7 +31,7 @@ public final class JavadocEmpty extends CarefulTipper<Javadoc> implements Tipper
 
   private static boolean empty(final TagElement e) {
     for (final IDocElement ¢ : fragments(e))
-      if (¢ != null && !(¢ instanceof SimpleName) && (¢ instanceof TextElement) && !empty((TextElement) ¢))
+      if (¢ != null && !(¢ instanceof SimpleName) && ¢ instanceof TextElement && !empty((TextElement) ¢))
         return false;
     return true;
   }

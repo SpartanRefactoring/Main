@@ -65,14 +65,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     Collections.sort(ds, new NaturalVariablesOrder(d));
     final List<ASTNode> $ = new ArrayList<>();
-    final MethodDeclaration d1 = duplicate.of(d);
+    final MethodDeclaration d1 = copy.of(d);
     fixStatements(d, d1, r);
     statements(d1).subList(statements(d).indexOf(forkPoint) + 1, statements(d).size()).clear();
     final MethodInvocation i = d.getAST().newMethodInvocation();
-    i.setName(duplicate.of(d.getName()));
+    i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
     for (final VariableDeclaration ¢ : ds)
-      i.arguments().add(duplicate.of(¢.getName()));
+      i.arguments().add(copy.of(¢.getName()));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -81,7 +81,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       statements(d1).add(s);
     }
     $.add(d1);
-    final MethodDeclaration d2 = duplicate.of(d);
+    final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
     statements(d2).subList(0, statements(d).indexOf(forkPoint) + 1).clear();
     fixName(d2, equalParams);
@@ -116,14 +116,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
-        d2.parameters().add(duplicate.of(v));
+        d2.parameters().add(copy.of(v));
       else {
         final SingleVariableDeclaration sv = d.getAST().newSingleVariableDeclaration();
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
-        sv.setName(duplicate.of(v.getName()));
-        sv.setType(duplicate.of(p.getType()));
+        sv.setName(copy.of(v.getName()));
+        sv.setType(copy.of(p.getType()));
         for (final IExtendedModifier md : (List<IExtendedModifier>) p.modifiers())
-          sv.modifiers().add(duplicate.of((ASTNode) md));
+          sv.modifiers().add(copy.of((ASTNode) md));
         d2.parameters().add(sv);
       }
   }

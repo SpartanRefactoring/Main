@@ -9,7 +9,7 @@ import org.junit.*;
  * tests. Related to {@link Issue251}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-@Ignore
+// TODO: Raviv R --yg
 @SuppressWarnings("static-method")
 public class Issue0905 {
   @Test public void t06() {

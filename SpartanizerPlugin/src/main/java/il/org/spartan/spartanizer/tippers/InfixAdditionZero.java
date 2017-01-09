@@ -107,7 +107,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
         final Expression first = n % 2 == 0 ? null : first($);
         for (final Expression ¢ : $)
           if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(copy.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

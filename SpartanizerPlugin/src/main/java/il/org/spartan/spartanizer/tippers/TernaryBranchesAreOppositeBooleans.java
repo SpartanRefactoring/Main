@@ -36,9 +36,9 @@ import il.org.spartan.spartanizer.tipping.*;
 public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     return wizard.same(¢.getElseExpression(), wizard.ast("Boolean.TRUE")) && wizard.same(¢.getThenExpression(), wizard.ast("Boolean.FALSE"))
-        ? make.notOf(duplicate.of(¢.getExpression()))
+        ? make.notOf(copy.of(¢.getExpression()))
         : wizard.same(¢.getElseExpression(), wizard.ast("Boolean.FALSE")) && wizard.same(¢.getThenExpression(), wizard.ast("Boolean.TRUE"))
-            ? duplicate.of(¢.getExpression()) : null;
+            ? copy.of(¢.getExpression()) : null;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {

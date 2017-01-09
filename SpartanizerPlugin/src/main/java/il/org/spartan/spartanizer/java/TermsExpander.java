@@ -28,7 +28,7 @@ public final class TermsExpander {
   }
 
   private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
-    final Expression ¢ = duplicate.of(t.expression);
+    final Expression ¢ = copy.of(t.expression);
     return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
   }
 

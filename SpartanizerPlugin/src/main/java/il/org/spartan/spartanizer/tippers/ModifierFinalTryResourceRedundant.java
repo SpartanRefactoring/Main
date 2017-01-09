@@ -21,7 +21,7 @@ public final class ModifierFinalTryResourceRedundant extends CarefulTipper<Modif
   }
 
   @Override public String description(final Modifier ¢) {
-    return  description() + ": '" + az.variableDeclarationExpression(parent(¢)) + "'";
+    return description() + ": '" + az.variableDeclarationExpression(parent(¢)) + "'";
   }
 
   @Override public Tip tip(final Modifier $) {

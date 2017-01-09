@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block> implements TipperCategory.SyntacticBaggage {
   private static Statement replacement(final Statement $) {
-    return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : duplicate.of($);
+    return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);
   }
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {

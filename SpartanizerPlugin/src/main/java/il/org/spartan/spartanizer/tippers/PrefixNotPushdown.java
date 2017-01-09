@@ -43,7 +43,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   static Expression notOfLiteral(final BooleanLiteral ¢) {
-    final BooleanLiteral $ = duplicate.of(¢);
+    final BooleanLiteral $ = copy.of(¢);
     $.setBooleanValue(!¢.booleanValue());
     return $;
   }

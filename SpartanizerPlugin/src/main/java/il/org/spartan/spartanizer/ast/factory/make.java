@@ -87,7 +87,7 @@ public enum make {
 
   public static ParenthesizedExpression parethesized(final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(¢) == null ? ¢ : duplicate.of(¢));
+    $.setExpression(step.parent(¢) == null ? ¢ : copy.of(¢));
     return $;
   }
 
@@ -122,9 +122,9 @@ public enum make {
       return first(xs);
     final InfixExpression $ = t.newInfixExpression();
     $.setOperator(wizard.PLUS2);
-    $.setLeftOperand(duplicate.of(first(xs)));
-    $.setRightOperand(duplicate.of(second(xs)));
-    for (int ¢ = 2;; ++¢, extendedOperands($).add(duplicate.of(xs.get(¢))))
+    $.setLeftOperand(copy.of(first(xs)));
+    $.setRightOperand(copy.of(second(xs)));
+    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢))))
       if (¢ >= xs.size())
         return $;
   }
@@ -217,7 +217,7 @@ public enum make {
 
     private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-      $.setExpression(duplicate.of(¢));
+      $.setExpression(copy.of(¢));
       return $;
     }
 

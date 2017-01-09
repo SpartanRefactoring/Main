@@ -8,9 +8,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Test case is {@link MethodInvocationTernaryExpanderTest} Issue #984
- * convert <code> o.f(x ? a : b); </code> to
- * <code> if (x) o.f(a); else o.f(b); </code>
+/** Test case is {@link MethodInvocationTernaryExpanderTest} Issue #984 convert
+ * <code> o.f(x ? a : b); </code> to <code> if (x) o.f(a); else o.f(b); </code>
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
@@ -23,13 +22,13 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
     if (c == null)
       return null;
     final IfStatement $ = i.getAST().newIfStatement();
-    $.setExpression(duplicate.of(c.getExpression()));
-    final MethodInvocation mThen = duplicate.of(i);
+    $.setExpression(copy.of(c.getExpression()));
+    final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(getFirstCond(mThen));
-    ((List<Expression>) mThen.arguments()).set(ci, duplicate.of(c.getThenExpression()));
+    ((List<Expression>) mThen.arguments()).set(ci, copy.of(c.getThenExpression()));
     $.setThenStatement(s.getAST().newExpressionStatement(mThen));
-    final MethodInvocation mElse = duplicate.of(i);
-    ((List<Expression>) mElse.arguments()).set(ci, duplicate.of(c.getElseExpression()));
+    final MethodInvocation mElse = copy.of(i);
+    ((List<Expression>) mElse.arguments()).set(ci, copy.of(c.getElseExpression()));
     $.setElseStatement(s.getAST().newExpressionStatement(mElse));
     return $;
   }

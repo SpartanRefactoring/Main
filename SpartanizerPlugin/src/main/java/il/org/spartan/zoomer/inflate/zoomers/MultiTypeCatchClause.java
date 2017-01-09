@@ -33,7 +33,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
     int i = 0;
     for (; i < catches.size(); ++i)
       if (iz.unionType(catches.get(i).getException().getType())) {
-        multiTypeCatch = duplicate.of(catches.get(i));
+        multiTypeCatch = copy.of(catches.get(i));
         break;
       }
     if (multiTypeCatch == null)
@@ -41,14 +41,14 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
     final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
     final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
-    final TryStatement $ = duplicate.of(s);
+    final TryStatement $ = copy.of(s);
     step.catchClauses($).remove(i);
     for (final Type t : types) {
       final CatchClause c = s.getAST().newCatchClause();
-      c.setBody(duplicate.of(commonBody));
+      c.setBody(copy.of(commonBody));
       final SingleVariableDeclaration e = s.getAST().newSingleVariableDeclaration();
-      e.setName(duplicate.of(commonName));
-      e.setType(duplicate.of(t));
+      e.setName(copy.of(commonName));
+      e.setType(copy.of(t));
       c.setException(e);
       step.catchClauses($).add(i, c);
       ++i;

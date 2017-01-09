@@ -104,7 +104,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression ¢) {
-    return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), duplicate.of(¢.getExpression()));
+    return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {

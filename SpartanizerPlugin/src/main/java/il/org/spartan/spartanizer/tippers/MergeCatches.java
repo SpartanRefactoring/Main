@@ -31,13 +31,13 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements Ti
     for (int i = 0; i < cs.size(); ++i)
       for (int j = i + 1; j < cs.size(); ++j)
         if (wizard.same(cs.get(i).getBody(), cs.get(j).getBody())) {
-          final TryStatement $ = duplicate.of(s);
-          final CatchClause mergedCatch = duplicate.of(cs.get(i));
+          final TryStatement $ = copy.of(s);
+          final CatchClause mergedCatch = copy.of(cs.get(i));
           $.catchClauses().remove(i);
           $.catchClauses().remove(j - 1);
           final UnionType ut = s.getAST().newUnionType();
-          ut.types().add(0, duplicate.of(cs.get(i).getException().getType()));
-          ut.types().add(0, duplicate.of(cs.get(j).getException().getType()));
+          ut.types().add(0, copy.of(cs.get(i).getException().getType()));
+          ut.types().add(0, copy.of(cs.get(j).getException().getType()));
           mergedCatch.getException().setType(ut);
           $.catchClauses().add(j - 1, mergedCatch);
           return $;

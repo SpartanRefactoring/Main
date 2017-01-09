@@ -51,7 +51,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
       case 0:
         return make.emptyStatement(¢);
       case 1:
-        return duplicate.of(first($));
+        return copy.of(first($));
       default:
         return reorganizeStatement(¢);
     }
@@ -69,7 +69,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
   private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
-    duplicate.into(ss, statements($));
+    copy.into(ss, statements($));
     return $;
   }
 
@@ -91,7 +91,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
         final Statement $ = first(ss);
         if (iz.blockEssential($))
           return subject.statement($).toBlock();
-        return duplicate.of($);
+        return copy.of($);
       default:
         return reorganizeNestedStatement(b);
     }

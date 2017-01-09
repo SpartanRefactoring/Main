@@ -12,9 +12,9 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0914 {
   @Test public void challenge_while_d() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
-        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}").gives(
-            "static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
+    trimmingOf("static X f(final S ¢) {X $ = ¢.elze();" + //
+        "while ($ instanceof S)$ = ((S) $).elze();return $;}")
+            .gives("static X f(final S ¢){X $=¢.elze();while($ instanceof S){$=((S)$).elze();if(!($ instanceof S))return $;}}");
   }
 
   @Test public void initializers_while_3() {
@@ -28,18 +28,15 @@ public class Issue0914 {
   }
 
   @Test public void t05() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}").gives(
-            "static Statement recursiveElze(final IfStatement ¢){Statement $=¢.getElseStatement();while($ instanceof IfStatement){$=((IfStatement)$).getElseStatement();if(!($ instanceof IfStatement))return $;}}");
+    trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")
+        .gives("static X f(final S ¢){X $=¢.elze();while($ instanceof S){$=((S)$).elze();if(!($ instanceof S))return $;}}");
   }
 
   @Test public void test0() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
-            .gives(
-                "static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement){"
-                    + "$ = ((IfStatement) $).getElseStatement();" + "if(!($ instanceof IfStatement))return $;}" + "}")
-            .gives("static Statement recursiveElze(final IfStatement ¢) {" + "for (Statement $ = ¢.getElseStatement();$ instanceof IfStatement;){"
-                + " $ = ((IfStatement) $).getElseStatement();" + "if (!($ instanceof IfStatement))" + "return $;" + "}}");
+    trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")
+        .gives("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S){" + "$ = ((S) $).elze();" + "if(!($ instanceof S))return $;}"
+            + "}")
+        .gives("static X f(final S ¢) {" + "for (X $ = ¢.elze();$ instanceof S;){" + " $ = ((S) $).elze();" + "if (!($ instanceof S))" + "return $;"
+            + "}}");
   }
 }

@@ -52,9 +52,9 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
-    $.setType(duplicate.of(¢.getType()));
+    $.setType(copy.of(¢.getType()));
     $.setVarargs(¢.isVarargs());
-    duplicate.modifiers(step.extendedModifiers(¢), extendedModifiers($));
+    copy.modifiers(step.extendedModifiers(¢), extendedModifiers($));
     return $;
   }
 

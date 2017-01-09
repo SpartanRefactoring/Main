@@ -27,6 +27,6 @@ abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> ext
 
   @Override public BodyDeclaration replacement(final BodyDeclaration $) {
     final Set<Predicate<Modifier>> predicates = wizard.redundancies($);
-    return predicates.isEmpty() ? null : wizard.prune(duplicate.of($), predicates);
+    return predicates.isEmpty() ? null : wizard.prune(copy.of($), predicates);
   }
 }

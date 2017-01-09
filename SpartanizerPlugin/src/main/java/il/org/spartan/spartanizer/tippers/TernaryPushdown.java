@@ -49,7 +49,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final ClassInstanceCreation $ = duplicate.of(e1);
+    final ClassInstanceCreation $ = copy.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     return $;
@@ -79,7 +79,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final FieldAccess e1, final FieldAccess e2) {
     if (!wizard.same(name(e1), name(e2)))
       return null;
-    final FieldAccess $ = duplicate.of(e1);
+    final FieldAccess $ = copy.of(e1);
     $.setExpression(wizard.parenthesize(subject.pair(expression(e1), expression(e2)).toCondition(expression(x))));
     return $;
   }
@@ -94,7 +94,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final InfixExpression $ = duplicate.of(e1);
+    final InfixExpression $ = copy.of(e1);
     final List<Expression> operands = hop.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x))));
@@ -111,7 +111,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (!wizard.same(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !wizard.same(es1, es2) || NameGuess.isClassName(receiver1) || NameGuess.isClassName(receiver2))
         return null;
-      final MethodInvocation $ = duplicate.of(e1);
+      final MethodInvocation $ = copy.of(e1);
       assert $ != null;
       $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
       return $;
@@ -121,7 +121,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final MethodInvocation $ = duplicate.of(e1);
+    final MethodInvocation $ = copy.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     return $;
@@ -137,7 +137,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
-    final SuperMethodInvocation $ = duplicate.of(e1);
+    final SuperMethodInvocation $ = copy.of(e1);
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     return $;

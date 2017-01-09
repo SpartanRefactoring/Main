@@ -28,14 +28,14 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(duplicate.of(body(¢)));
+    $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
     initializers($).add(Initializers(f));
     return $;
   }
 
   private static Expression dupWhileExpression(final WhileStatement ¢) {
-    return duplicate.of(expression(¢));
+    return copy.of(expression(¢));
   }
 
   private static boolean fitting(final VariableDeclarationStatement s, final WhileStatement ¢) {
@@ -43,7 +43,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
-    return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
+    return copy.of(az.variableDeclrationStatement(¢.getParent()));
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
@@ -64,7 +64,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? ForToForInitializers.handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
+    return iz.infix(from) ? ForToForInitializers.handleInfixCondition(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? ForToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? ForToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }

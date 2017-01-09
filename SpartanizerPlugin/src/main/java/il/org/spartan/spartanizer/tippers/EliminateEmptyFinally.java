@@ -28,7 +28,7 @@ public final class EliminateEmptyFinally extends ReplaceCurrentNode<TryStatement
   }
 
   @Override public ASTNode replacement(final TryStatement ¢) {
-    final TryStatement $ = duplicate.of(¢);
+    final TryStatement $ = copy.of(¢);
     $.setFinally(null);
     return $;
   }
