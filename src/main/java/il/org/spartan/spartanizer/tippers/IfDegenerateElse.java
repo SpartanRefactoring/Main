@@ -40,7 +40,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    final IfStatement $ = duplicate.of(¢);
+    final IfStatement $ = copy.of(¢);
     $.setElseStatement(null);
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }

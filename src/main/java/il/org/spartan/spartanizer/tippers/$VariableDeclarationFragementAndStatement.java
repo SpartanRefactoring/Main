@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   protected static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? duplicate.of(from(¢)) : subject.pair(to(¢), from(¢)).to(wizard.assign2infix($));
+    return $ == ASSIGN ? copy.of(from(¢)) : subject.pair(to(¢), from(¢)).to(wizard.assign2infix($));
   }
 
   protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
@@ -45,7 +45,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
       r.remove(parent, g);
       return;
     }
-    final VariableDeclarationStatement newParent = duplicate.of(parent);
+    final VariableDeclarationStatement newParent = copy.of(parent);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
     r.replace(parent, newParent, g);
@@ -57,7 +57,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     final int $ = metrics.size(parent);
     if (live.isEmpty())
       return $;
-    final VariableDeclarationStatement newParent = duplicate.of(parent);
+    final VariableDeclarationStatement newParent = copy.of(parent);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
     return $ - metrics.size(newParent);
@@ -68,7 +68,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     final int $ = metrics.size(parent);
     if (parent.fragments().size() <= 1)
       return $;
-    final VariableDeclarationStatement newParent = duplicate.of(parent);
+    final VariableDeclarationStatement newParent = copy.of(parent);
     newParent.fragments().remove(parent.fragments().indexOf(f));
     return $ - metrics.size(newParent);
   }
@@ -100,8 +100,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
 
   private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null)
-        .forEach(brother -> $.add(duplicate.of(brother)));
+    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
     return $;
   }
 

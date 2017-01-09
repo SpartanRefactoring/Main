@@ -10,64 +10,64 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1005 {
   @Test public void t1() {
-    expansionOf("++i;").gives("i++;");
+    zoomingInto("++i;").gives("i++;");
   }
 
   @Test public void t2() {
-    expansionOf("while(++i < 0) { x=f(i); }").stays();
+    zoomingInto("while(++i < 0) { x=f(i); }").stays();
   }
 
   @Test public void t3() {
-    expansionOf("if(++i + i++ > ++i + y) { x = f(); }").stays();
+    zoomingInto("if(++i + i++ > ++i + y) { x = f(); }").stays();
   }
 
   @Test public void t4() {
-    expansionOf("f(i++,--j,++x);").stays();
+    zoomingInto("f(i++,--j,++x);").stays();
   }
 
   @Test public void t5() {
-    expansionOf("if(b) { ++i; }").gives("if(b) { i++; }");
+    zoomingInto("if(b) { ++i; }").gives("if(b) { i++; }");
   }
 
   @Test public void t6() {
-    expansionOf("for(;x<5;++x){;}").gives("for(;x<5;x++){;}");
+    zoomingInto("for(;x<5;++x){;}").gives("for(;x<5;x++){;}");
   }
 
   @Test public void t7() {
-    expansionOf("for(++x;x<5;){;}").gives("for(x++;x<5;){;}");
+    zoomingInto("for(++x;x<5;){;}").gives("for(x++;x<5;){;}");
   }
 
   @Test public void t8() {
-    expansionOf("switch(++x){}").stays();
+    zoomingInto("switch(++x){}").stays();
   }
 
   @Test public void t9() {
-    expansionOf("for(;;) {++x;}").gives("for(;;){ x++;}");
+    zoomingInto("for(;;) {++x;}").gives("for(;;){ x++;}");
   }
 
   @Test public void t10() {
-    expansionOf("x = ++y;").stays();
+    zoomingInto("x = ++y;").stays();
   }
 
   @Ignore // see bug on #996
   @Test public void t11() {
-    expansionOf("int x = ++y;").gives("int x; x=++y;").stays();
+    zoomingInto("int x = ++y;").gives("int x; x=++y;").stays();
   }
 
   @Ignore // see bug on #996
   @Test public void t12() {
-    expansionOf("int x = ++y + 1;").gives("int x; x=++y + 1;").stays();
+    zoomingInto("int x = ++y + 1;").gives("int x; x=++y + 1;").stays();
   }
 
   @Test public void t13() {
-    expansionOf("for(;;){ --x;}").gives("for(;;){ x--;}");
+    zoomingInto("for(;;){ --x;}").gives("for(;;){ x--;}");
   }
 
   @Test public void t14() {
-    expansionOf("--x;").gives("x--;");
+    zoomingInto("--x;").gives("x--;");
   }
 
   @Test public void t15() {
-    expansionOf("for(String s=f(); !\"\".equals(s); s = f2(s)) {}").stays();
+    zoomingInto("for(String s=f(); !\"\".equals(s); s = f2(s)) {}").stays();
   }
 }

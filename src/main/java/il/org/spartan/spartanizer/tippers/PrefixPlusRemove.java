@@ -23,7 +23,7 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
   }
 
   @Override public ASTNode replacement(final PrefixExpression ¢) {
-    return ¢.getOperator() != PLUS ? null : plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
+    return ¢.getOperator() != PLUS ? null : plant(copy.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 
   private Expression heart(final Expression ¢) {

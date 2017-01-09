@@ -41,7 +41,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
     final List<Expression> es = hop.operands(x);
     final List<Expression> $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
-    return $ == null ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(operator(x));
+    return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 
   private static ASTNode replacement(final Expression to, final InfixExpression from) {

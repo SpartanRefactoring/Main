@@ -28,7 +28,8 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
 
   private static ASTNode replacement(final MethodInvocation ¢) {
     final List<Expression> $ = arguments(¢);
-    return onlyOne($) == null ? null : replacement(¢, first($), second($));
+    // return onlyOne($) == null ? null : replacement(¢, first($), second($));
+    return replacement(¢, first($), second($));
   }
 
   public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {
@@ -36,7 +37,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     final Expression condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
-      $.setMessage(duplicate.of(message));
+      $.setMessage(copy.of(message));
     return replacement(i, condition, $);
   }
 
@@ -45,7 +46,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
       default:
         return null;
       case "assertTrue":
-        return setAssert($, duplicate.of(condition));
+        return setAssert($, copy.of(condition));
       case "assertFalse":
         return setAssert($, make.notOf(condition));
       case "assertNotNull":

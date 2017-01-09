@@ -316,7 +316,7 @@ public enum step {
     return ¢ == null ? null : ¢.fragments();
   }
 
-  @SuppressWarnings("unchecked") public static List<IDocElement> fragments(TagElement ¢) {
+  @SuppressWarnings("unchecked") public static List<IDocElement> fragments(final TagElement ¢) {
     return ¢ == null ? null : ¢.fragments();
   }
 

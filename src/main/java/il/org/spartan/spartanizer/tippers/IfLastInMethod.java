@@ -48,8 +48,8 @@ public final class IfLastInMethod extends EagerTipper<IfStatement> implements Ti
     return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.insertAfter(s, extract.statements(then(s)), r, g);
-        final IfStatement newIf = duplicate.of(s);
-        newIf.setExpression(duplicate.of(make.notOf(expression(s))));
+        final IfStatement newIf = copy.of(s);
+        newIf.setExpression(copy.of(make.notOf(expression(s))));
         newIf.setThenStatement(s.getAST().newReturnStatement());
         newIf.setElseStatement(null);
         r.replace(s, newIf, g);

@@ -69,7 +69,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipp
           r.replace(parent, newParent, g);
         } else {
           statements(newParent).add(shorterIf);
-          duplicate.into(remainder, statements(newParent));
+          copy.into(remainder, statements(newParent));
           r.replace(s, newParent, g);
         }
       }

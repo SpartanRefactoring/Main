@@ -38,13 +38,13 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
   }
 
   @Override public Tip tip(final ArrayAccess a) {
-    final Expression $ = duplicate.of(a.getIndex());
+    final Expression $ = copy.of(a.getIndex());
     final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();
     return new Tip(description(a), a, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
-        final ArrayAccess newa = duplicate.of(a);
+        final ArrayAccess newa = copy.of(a);
         if (iz.postfixExpression($)) {
           newa.setIndex(a.getAST().newSimpleName(identifier(az.simpleName(operand(az.postfixExpression($))))));
           l.insertAfter(t.newExpressionStatement($), b, g);

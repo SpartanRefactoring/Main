@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Test case is {@link Issue0968} Issue #968
- * convert <code>
+/** Test case is {@link Issue0968} Issue #968 convert <code>
  * int a = f(), b = g();
  * </code> to <code>
  * int a = f();
@@ -36,7 +35,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   @Override @SuppressWarnings("unchecked") public Tip tip(final VariableDeclarationStatement ¢) {
-    final VariableDeclarationStatement $ = duplicate.of(¢), first = duplicate.of(¢);
+    final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($);
     final VariableDeclarationFragment ff = (VariableDeclarationFragment) first.fragments().get($.fragments().indexOf(fs));
     $.fragments().remove(fs);

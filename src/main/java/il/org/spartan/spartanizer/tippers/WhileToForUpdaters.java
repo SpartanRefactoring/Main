@@ -20,15 +20,15 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
+    return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
   private static Statement dupWhileBody(final WhileStatement ¢) {
-    return duplicate.of(step.body(¢));
+    return copy.of(step.body(¢));
   }
 
   private static Expression dupWhileExpression(final WhileStatement ¢) {
-    return duplicate.of(¢.getExpression());
+    return copy.of(¢.getExpression());
   }
 
   private static boolean fitting(final WhileStatement ¢) {

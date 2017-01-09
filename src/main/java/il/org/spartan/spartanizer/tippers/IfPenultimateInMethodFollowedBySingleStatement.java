@@ -41,13 +41,13 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
       return null;
     $.replace(deleteMe, make.emptyStatement(deleteMe), g);
     remove($, nextStatement, g);
-    final IfStatement newIf = duplicate.of(s);
+    final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
       removeLast(step.statements(block));
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
-    newIf.setElseStatement(duplicate.of(nextStatement));
+    newIf.setElseStatement(copy.of(nextStatement));
     $.replace(s, newIf, g);
     remove($, nextStatement, g);
     return $;

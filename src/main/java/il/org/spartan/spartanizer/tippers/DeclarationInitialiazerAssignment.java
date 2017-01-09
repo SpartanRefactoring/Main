@@ -41,7 +41,7 @@ public final class DeclarationInitialiazerAssignment extends $VariableDeclaratio
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = duplicate.of(from(a));
+    final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);

@@ -25,9 +25,9 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
         final AST create = r.getAST();
-        final ExpressionStatement exp = create.newExpressionStatement(duplicate.of(expression(s)));
+        final ExpressionStatement exp = create.newExpressionStatement(copy.of(expression(s)));
         final ReturnStatement retNoExp = create.newReturnStatement();
-        retNoExp.setExpression(duplicate.of(left(a)));
+        retNoExp.setExpression(copy.of(left(a)));
         az.block(s.getParent());
         final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(retNoExp, s, g);

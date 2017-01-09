@@ -22,7 +22,7 @@ public class Cascading {
     }
 
     private static boolean setter(final MethodDeclaration ¢) {
-      final MethodDeclaration $ = duplicate.of(¢);
+      final MethodDeclaration $ = copy.of(¢);
       statements($).remove(statements($).size() - 1);
       return setter.canTip($);
     }

@@ -81,8 +81,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
-   * @return a collection of {@link Tip} objects each containing a spartanization
-   *         tip */
+   * @return a collection of {@link Tip} objects each containing a
+   *         spartanization tip */
   public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));

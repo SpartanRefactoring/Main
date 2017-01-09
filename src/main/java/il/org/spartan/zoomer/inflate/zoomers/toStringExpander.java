@@ -29,11 +29,11 @@ public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implem
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
     if ("\"\"".equals(¢.getRightOperand() + "") && !¢.getLeftOperand().resolveTypeBinding().isPrimitive())
-      $.setExpression(duplicate.of(¢.getLeftOperand()));
+      $.setExpression(copy.of(¢.getLeftOperand()));
     else {
       if (!"\"\"".equals(¢.getLeftOperand() + "") || ¢.getRightOperand().resolveTypeBinding().isPrimitive())
         return null;
-      $.setExpression(duplicate.of(¢.getRightOperand()));
+      $.setExpression(copy.of(¢.getRightOperand()));
     }
     $.setName(¢.getAST().newSimpleName("toString"));
     return $;

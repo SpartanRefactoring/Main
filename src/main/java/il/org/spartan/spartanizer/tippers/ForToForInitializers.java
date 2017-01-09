@@ -31,14 +31,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final ForStatement $ = duplicate.of(¢);
+    final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
-    setInitializers($, duplicate.of(s));
+    setInitializers($, copy.of(s));
     return $;
   }
 
   private static Expression dupForExpression(final ForStatement ¢) {
-    return duplicate.of(expression(¢));
+    return copy.of(expression(¢));
   }
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
@@ -72,8 +72,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     step.fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(az.simpleName(step.left(from)) + ""))
-        .forEachOrdered(¢ -> ¢.setInitializer(duplicate.of(step.right(from))));
-    return duplicate.of(step.left(from));
+        .forEachOrdered(¢ -> ¢.setInitializer(copy.of(step.right(from))));
+    return copy.of(step.left(from));
   }
 
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
@@ -83,7 +83,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       final SimpleName var = az.simpleName(step.left(a));
       for (final VariableDeclarationFragment ¢ : fragments(s))
         if ((¢.getName() + "").equals(var + "")) {
-          ¢.setInitializer(duplicate.of(step.right(a)));
+          ¢.setInitializer(copy.of(step.right(a)));
           $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
         }
     });
@@ -104,7 +104,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
+    return iz.infix(from) ? handleInfixCondition(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
@@ -122,7 +122,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
     step.initializers($).clear();
     step.initializers($).add(az.variableDeclarationExpression(s));
-    step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(duplicate.of(step.fragments(forInitializer)));
+    step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(copy.of(step.fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

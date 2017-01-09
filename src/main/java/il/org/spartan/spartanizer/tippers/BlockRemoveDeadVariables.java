@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 4-12-2016 */
 public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final Block n) {
-    final Block $ = duplicate.of(n);
+    final Block $ = copy.of(n);
     final List<Statement> removalList = new ArrayList<>();
     for (final Statement s : extract.statements($)) {
       final VariableDeclarationStatement asVar = az.variableDeclarationStatement(s);

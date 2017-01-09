@@ -71,7 +71,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
         return null;
     final Expression v = fixArrayInitializer(initializer, currentStatement);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
-    final Statement newStatement = duplicate.of(nextStatement);
+    final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
     $.replace(nextStatement, newStatement, g);
@@ -84,8 +84,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(duplicate.of(type(currentStatement))));
-    $.setInitializer(duplicate.of(az.arrayInitializer(initializer)));
+    $.setType(az.arrayType(copy.of(type(currentStatement))));
+    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
     return $;
   }
 

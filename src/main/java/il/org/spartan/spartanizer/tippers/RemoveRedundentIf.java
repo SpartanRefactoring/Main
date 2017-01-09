@@ -25,7 +25,7 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
     final boolean then = sideEffects.free(then(s));
     final boolean elze = sideEffects.free(elze(s));
     return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
-        : !$ || !then || elze || s.getElseStatement() == null ? null
-            : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
+        : $ && then && !elze && s.getElseStatement() != null ? subject.pair(copy.of(s.getElseStatement()), null).toNot(copy.of(s.getExpression()))
+            : null;
   }
 }

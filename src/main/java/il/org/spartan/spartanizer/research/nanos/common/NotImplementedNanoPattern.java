@@ -9,11 +9,11 @@ public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTip
     return null;
   }
 
-  @Override protected Tip pattern(@SuppressWarnings("unused") N ¢) {
+  @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
     return null;
   }
 
-  @Override public boolean canTip(@SuppressWarnings("unused") N __) {
+  @Override public boolean canTip(@SuppressWarnings("unused") final N __) {
     return false;
   }
 }

@@ -28,7 +28,7 @@ public final class WhileNextReturnToWhile extends EagerTipper<WhileStatement> im
         || iz.block(s.getBody()))
       return null;
     final IfStatement inlineIf = subject.pair($, null).toNot(s.getExpression());
-    final WhileStatement retWhile = duplicate.of(s);
+    final WhileStatement retWhile = copy.of(s);
     final List<Statement> lst = extract.statements(retWhile.getBody());
     lst.add(inlineIf);
     retWhile.setBody(subject.ss(lst).toBlock());
