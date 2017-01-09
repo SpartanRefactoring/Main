@@ -2,26 +2,44 @@ package il.org.spartan.zoomer.zoomin.expanders;
 
 import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
+import java.util.*;
+
 import org.junit.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
-@Ignore
-@SuppressWarnings("static-method")
 public class Issue0965 {
-  @Test public void testBinding0() {
-    expansionOf(new Issue965Aux())
-        .givesWithBinding("package il.org.spartan.zoomer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
-            + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
-            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s = lst+\"\";" + "}}")
-        .givesWithBinding("package il.org.spartan.zoomer.inflate.expanders;import java.util.*;import il.org.spartan.spartanizer.ast.navigate.*;"
-            + "public class Issue965Aux extends ReflectiveTester" + "{" + "  @SuppressWarnings({ \"static-method\", \"unused\" })"
-            + "public void check1()" + "{" + "List<Integer> lst; lst=new ArrayList<>();" + "String s; s = lst+\"\";" + "}}")
+  @Test public void test0() {
+    expansionOf(new TestClass()) //
+        .givesWithBinding("public String check1(){return lst.toString();}", "check1")//
         .staysWithBinding();
   }
 
-  @Test public void testBinding1() {
-    expansionOf(new Issue965Aux2()).staysWithBinding();
+  @Test public void test1() {
+    expansionOf(new TestClass()) //
+        .givesWithBinding("public void check2(){String s;s=lst+\"\";}", "check2")//
+        // .givesWithBinding("public void check2(){String s;s=lst.toString();}",
+        // "check2")//
+        .staysWithBinding();
+  }
+
+  @SuppressWarnings({ "unused" })
+  class TestClass extends ReflectiveTester {
+    List<Integer> lst = new ArrayList<>();
+
+    public String check1() {
+      return lst + "";
+    }
+
+    public void check2() {
+      String s = lst + "";
+    }
+
+    public void check3() {
+      String s = 1 + "";
+    }
   }
 }
