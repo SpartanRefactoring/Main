@@ -14,7 +14,10 @@ import il.org.spartan.statistics.*;
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
   public Table(final Object o) {
-    this(classToNormalizedFileName(o.getClass()));
+    this(o.getClass());
+  }
+  public Table(final Class<?> c) {
+    this(classToNormalizedFileName(c));
   }
 
   public Table(final String name) {
