@@ -26,7 +26,7 @@ public class TableTouched extends TableNanosCoverage {
   }
 
   private static void initializeWriter() {
-    touchedWriter = new Table(TableTouched.class.getSimpleName());
+    touchedWriter = new Table((TableTouched.class));
   }
 
   @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {

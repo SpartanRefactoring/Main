@@ -19,7 +19,7 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
+public class TableNanosReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
@@ -31,7 +31,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
     }
   };
   static {
-    clazz = TablePatternsReusabilityIndices.class;
+    clazz = TableNanosReusabilityIndices.class;
     Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
   }
 
@@ -40,7 +40,7 @@ public class TablePatternsReusabilityIndices extends TableReusabilityIndices {
   }
 
   private static String outputFileName() {
-    return TablePatternsReusabilityIndices.class.getSimpleName();
+    return TableNanosReusabilityIndices.class.getSimpleName();
   }
 
   public static void main(final String[] args)
