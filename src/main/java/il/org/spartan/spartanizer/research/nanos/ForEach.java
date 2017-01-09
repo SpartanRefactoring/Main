@@ -42,7 +42,6 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public String technicalName() {
     return "ForEachInCApplyS";
-    // "for($N1 $N2 : $X1) if($X2) $X3;";
   }
 
   @Override public String example() {
