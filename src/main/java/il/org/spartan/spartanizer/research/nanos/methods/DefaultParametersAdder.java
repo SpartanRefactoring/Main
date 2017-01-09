@@ -27,7 +27,8 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && (defaulter(¢, onlyStatement(¢)) || defaulter(¢, onlySynchronizedStatementStatement(¢)));
+    return hazOneStatement(¢)//
+        && (defaulter(¢, onlyStatement(¢)) || defaulter(¢, onlySynchronizedStatementStatement(¢)));
   }
 
   private static boolean defaulter(final MethodDeclaration d, final Statement s) {
@@ -38,7 +39,9 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
     return anyTips(tippers, $)//
         && iz.methodInvocation($)//
         && containsParameters(d, $)//
-        && arguments(az.methodInvocation($)).size() > parametersNames(d).size();
+        && arguments(az.methodInvocation($)).size() > parametersNames(d).size()//
+        && identifier(name(az.methodInvocation($))).equals(identifier(name(d)))//
+    ;
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
