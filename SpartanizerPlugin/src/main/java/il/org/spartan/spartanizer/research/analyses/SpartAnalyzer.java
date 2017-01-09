@@ -84,6 +84,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
+        new Adjuster(), //
         new ArgumentsTuple(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
@@ -92,18 +93,17 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Delegator(), //
         // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
-        new Down.Caster(), //
+        // new Down.Caster(), // R.I.P
         new Examiner(), //
-        new Cascading.Setter(), ///
         new Getter(), //
-        new Adjuster(), //
         // new ForEachApplier(), // R.I.P, we have ForEach
         // new SelfCaster(), // R.I.P --> merger into Caster?
+        new Cascading.Setter(), ///
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
-        new Up.Caster(), //
+        // new Up.Caster(), // R.I.P
         null);
     return this;
   }

@@ -50,6 +50,8 @@ public class TableNanosDistribution extends FolderASTVisitor {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
         System.err.print("N");
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
+        System.err.print("I");
       }
     return super.visit($);
   }

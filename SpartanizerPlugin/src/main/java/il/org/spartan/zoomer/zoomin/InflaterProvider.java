@@ -38,6 +38,8 @@ public class InflaterProvider extends OperationsProvider {
             new toStringExpander(), new TernaryPushupStrings())//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
+        .add(PostfixExpression.class,//
+            new PostFixToInfixExpander())//
         .add(SwitchStatement.class, //
             new CasesSplit())//
         .add(Assignment.class, //
