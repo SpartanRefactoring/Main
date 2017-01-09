@@ -97,7 +97,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Cascading.Setter(), ///
         new Getter(), //
         new Adjuster(), //
-        new ForEachApplier(), //
+        // new ForEachApplier(), // R.I.P, we have ForEach
         // new SelfCaster(), // R.I.P --> merger into Caster?
         new Setter(), //
         new SuperDelegator(), //
