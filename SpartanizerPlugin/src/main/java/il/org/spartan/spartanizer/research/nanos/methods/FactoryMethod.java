@@ -22,6 +22,7 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && anyTips(tippers, onlyStatement(¢));
+    return hazOneStatement(¢)//
+        && anyTips(tippers, onlyStatement(¢));
   }
 }
