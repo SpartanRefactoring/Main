@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
+@Ignore //This is only for demostration it doesn't suppose to work
 public class Issue1040 {
   @Test public void test1() {
     expansionOf(new Issue1040Aux()).givesWithBinding("int a() {" + "int i;" + "i=0;" + "++i;" + "return 0;" + "}", "a")

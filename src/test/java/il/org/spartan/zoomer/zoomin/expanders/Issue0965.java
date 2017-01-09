@@ -14,14 +14,16 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue0965 {
   @Test public void test0() {
     expansionOf(new TestClass()) //
-        .givesWithBinding("public String check1(){return lst.toString();}", "check1");
+        .givesWithBinding("public String check1(){return lst.toString();}", "check1")//
+        .staysWithBinding();
   }
 
   @Test public void test1() {
     expansionOf(new TestClass()) //
-        .givesWithBinding("public void check2(){String s;s=lst+\"\";}", "check2");
-    // .givesWithBinding("public void check2(){String
-    // s;s=lst.toString();}","check2");
+        .givesWithBinding("public void check2(){String s;s=lst+\"\";}", "check2")//
+        // .givesWithBinding("public void check2(){String s;s=lst.toString();}",
+        // "check2")//
+        .staysWithBinding();
   }
 
   @SuppressWarnings({ "unused" })
