@@ -9,7 +9,6 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 /** Unit tests for {@link DeclarationWithInitExpander} Issue #996
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0996 {
   @Test public void a() {
