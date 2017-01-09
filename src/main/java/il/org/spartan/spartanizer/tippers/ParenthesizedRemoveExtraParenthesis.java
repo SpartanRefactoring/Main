@@ -20,7 +20,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   @Override public Tip tip(final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(x, duplicate.of(expression(x)), g);
+        r.replace(x, copy.of(expression(x)), g);
       }
     };
   }

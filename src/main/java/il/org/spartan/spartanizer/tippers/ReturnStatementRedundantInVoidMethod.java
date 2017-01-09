@@ -40,7 +40,7 @@ public class ReturnStatementRedundantInVoidMethod extends ReplaceCurrentNode<Met
   @Override public ASTNode replacement(final MethodDeclaration x) {
     if (empty(x) || returnTypeNotVoid(x) || !iz.returnStatement(lastStatement(x)) || expression(lastStatement(x)) != null)
       return null;
-    final MethodDeclaration $ = duplicate.of(x);
+    final MethodDeclaration $ = copy.of(x);
     statements($).remove(last(statements($)));
     return $;
   }

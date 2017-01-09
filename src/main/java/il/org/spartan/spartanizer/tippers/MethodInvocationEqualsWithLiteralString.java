@@ -22,9 +22,9 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
 
   private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
-    $.setExpression(duplicate.of(¢));
-    $.setName(duplicate.of(n));
-    arguments($).add(duplicate.of(x));
+    $.setExpression(copy.of(¢));
+    $.setName(copy.of(n));
+    arguments($).add(copy.of(x));
     return $;
   }
 

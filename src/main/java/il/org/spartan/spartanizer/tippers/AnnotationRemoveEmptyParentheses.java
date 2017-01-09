@@ -22,7 +22,7 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
     if (!values(¢).isEmpty())
       return null;
     final MarkerAnnotation $ = ¢.getAST().newMarkerAnnotation();
-    $.setTypeName(duplicate.of(¢.getTypeName()));
+    $.setTypeName(copy.of(¢.getTypeName()));
     return $;
   }
 }

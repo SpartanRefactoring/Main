@@ -24,8 +24,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
     for (final Expression ¢ : xs)
       if (!iz.literal0(¢))
         $.add(¢);
-    return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(PLUS);
+    return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
   }
 
   @Override public String description(final InfixExpression ¢) {

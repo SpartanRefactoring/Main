@@ -50,7 +50,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
     final boolean then = checkBlock(s.getThenStatement());
     final boolean elze = checkBlock(s.getElseStatement());
     return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
-        : !$ || !then || elze || s.getElseStatement() == null ? null
-            : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
+        : $ && then && !elze && s.getElseStatement() != null ? subject.pair(copy.of(s.getElseStatement()), null).toNot(copy.of(s.getExpression()))
+            : null;
   }
 }

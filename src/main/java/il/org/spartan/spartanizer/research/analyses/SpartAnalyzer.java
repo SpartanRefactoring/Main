@@ -102,7 +102,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Setter(), //
         new SuperDelegator(), //
         new Thrower(), //
-//        new TypeChecker(), // R.I.P --> merged into examiner
+        // new TypeChecker(), // R.I.P --> merged into examiner
         new Up.Caster(), //
         null);
     return this;

@@ -16,6 +16,7 @@ public class Table extends Row<Table> implements Closeable {
   public Table(final Object o) {
     this(o.getClass());
   }
+
   public Table(final Class<?> c) {
     this(classToNormalizedFileName(c));
   }
@@ -40,7 +41,6 @@ public class Table extends Row<Table> implements Closeable {
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
-
 
   public String baseName() {
     return temporariesFolder + name + ".*";

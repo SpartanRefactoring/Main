@@ -26,13 +26,13 @@ public class ThrowTernaryExpander extends ReplaceCurrentNode<ThrowStatement> imp
         return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(duplicate.of(expression(¢)));
+    $.setExpression(copy.of(expression(¢)));
     final ThrowStatement then = ¢.getAST().newThrowStatement();
-    then.setExpression(duplicate.of(¢.getThenExpression()));
-    $.setThenStatement(duplicate.of(az.statement(then)));
+    then.setExpression(copy.of(¢.getThenExpression()));
+    $.setThenStatement(copy.of(az.statement(then)));
     final ThrowStatement elze = ¢.getAST().newThrowStatement();
-    elze.setExpression(duplicate.of(¢.getElseExpression()));
-    $.setElseStatement(duplicate.of(az.statement(elze)));
+    elze.setExpression(copy.of(¢.getElseExpression()));
+    $.setElseStatement(copy.of(az.statement(elze)));
     return $;
   }
 

@@ -21,7 +21,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static Statement dupForBody(final ForStatement ¢) {
-    return duplicate.of(step.body(¢));
+    return copy.of(step.body(¢));
   }
 
   private static boolean fitting(final ForStatement ¢) {
@@ -74,7 +74,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static Expression updaterFromBody(final ForStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
+    return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
   @Override public String description(final ForStatement ¢) {
@@ -86,6 +86,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(duplicate.of(¢));
+    return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }
 }

@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.java.*;
 /** Contains subclasses and tools to build expressions and sideEffects */
 public final class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
-    final InfixExpression $ = duplicate.of(base);
-    extendedOperands($).add(make.plant(duplicate.of(add)).into($));
+    final InfixExpression $ = copy.of(base);
+    extendedOperands($).add(make.plant(copy.of(add)).into($));
     return $;
   }
 
   public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
-    InfixExpression $ = duplicate.of(base);
+    InfixExpression $ = copy.of(base);
     for (final Expression ¢ : adds)
       $ = append($, ¢);
     return $;
@@ -106,19 +106,19 @@ public final class subject {
      * @param x JD
      * @return a copy of the expression e
      * @see #rebase
-     * @see duplicate#duplicate */
+     * @see copy#duplicate */
     Expression claim(final Expression ¢) {
-      return wizard.rebase(duplicate.of(extract.core(¢)), ast);
+      return wizard.rebase(copy.of(extract.core(¢)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
      * @param ¢ a Statement
      * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
-     * @see duplicate */
+     * @see copy */
     Statement claim(final Statement ¢) {
       final Statement $ = extract.core(¢);
-      return $ == null ? null : wizard.rebase(duplicate.of($), ast);
+      return $ == null ? null : wizard.rebase(copy.of($), ast);
     }
   }
 

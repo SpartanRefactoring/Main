@@ -12,7 +12,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class CasesSplitTest {
   @Test public void simpleSequencers() {
-    expansionOf("" //
+    zoomingInto("" //
         + "switch (x) {\n" //
         + "case 1:\n" //
         + "  f(1);\n" //
@@ -60,7 +60,7 @@ public class CasesSplitTest {
   }
 
   @Test public void complexMerging() {
-    expansionOf("" //
+    zoomingInto("" //
         + "switch (x) {\n" //
         + "case 1:\n" //
         + "  f(1);\n" //
@@ -103,7 +103,7 @@ public class CasesSplitTest {
 
   // see issue #1046
   @Test public void complexSequencer() {
-    expansionOf("" //
+    zoomingInto("" //
         + "switch (a()) {\n" //
         + "case 1:\n" //
         + "  if (b()) {\n" //
@@ -118,7 +118,7 @@ public class CasesSplitTest {
 
   // see issue #1046
   @Test public void complexSequencerNotLast() {
-    expansionOf("" //
+    zoomingInto("" //
         + "switch (a()) {\n" //
         + "case 1:\n" //
         + "  if (b()) {\n" //
@@ -134,7 +134,7 @@ public class CasesSplitTest {
 
   // see issue #1031
   @Test public void complexSequencerRealWorld() {
-    expansionOf("" //
+    zoomingInto("" //
         + "switch (a()) {\n" //
         + "case 1:\n" //
         + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" //

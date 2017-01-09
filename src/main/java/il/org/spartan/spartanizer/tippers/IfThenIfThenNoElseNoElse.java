@@ -36,7 +36,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement> imp
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     r.replace(s.getExpression(), subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND), g);
-    r.replace(then, duplicate.of(then(then)), g);
+    r.replace(then, copy.of(then(then)), g);
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

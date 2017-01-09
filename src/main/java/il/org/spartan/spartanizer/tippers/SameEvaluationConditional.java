@@ -28,7 +28,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     final InfixExpression $ = az.infixExpression(¢.getExpression());
     return !iz.infixEquals($) || !wizard.same(¢.getThenExpression(), $.getLeftOperand()) && !wizard.same(¢.getThenExpression(), $.getRightOperand())
         || !wizard.same(¢.getElseExpression(), $.getLeftOperand()) && !wizard.same(¢.getElseExpression(), $.getRightOperand())
-        || !sideEffects.free($.getLeftOperand()) || !sideEffects.free($.getRightOperand()) ? null : duplicate.of(¢.getElseExpression());
+        || !sideEffects.free($.getLeftOperand()) || !sideEffects.free($.getRightOperand()) ? null : copy.of(¢.getElseExpression());
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {

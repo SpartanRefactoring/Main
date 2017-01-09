@@ -22,16 +22,16 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
-    $.setExpression(duplicate.of(az.simpleName(step.left(az.comparison(xs.get(0))))));
+    $.setExpression(copy.of(az.simpleName(step.left(az.comparison(xs.get(0))))));
     final List<Statement> ss = step.statements($);
     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
     for (final Expression x : xs) {
       final SwitchCase sc = create.newSwitchCase();
-      sc.setExpression(duplicate.of(step.right(az.comparison(x))));
+      sc.setExpression(copy.of(step.right(az.comparison(x))));
       ss.add(sc);
       for (final Statement s : step.statements(bs.get(i)))
-        ss.add(duplicate.of(s));
+        ss.add(copy.of(s));
       ss.add(create.newBreakStatement());
       ++i;
     }
@@ -41,7 +41,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       sc.setExpression(null);
       ss.add(sc);
       for (final Statement s : step.statements(bs.get(i)))
-        ss.add(duplicate.of(s));
+        ss.add(copy.of(s));
       ss.add(create.newBreakStatement());
     }
     return $;
@@ -78,10 +78,10 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
     final List<Block> $ = new ArrayList<>();
     Statement p;
     for (p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) {
-      Block b = az.block(duplicate.of(az.ifStatement(p).getThenStatement()));
+      Block b = az.block(copy.of(az.ifStatement(p).getThenStatement()));
       if (b == null) {
         b = s.getAST().newBlock();
-        step.statements(b).add(az.statement(duplicate.of(az.ifStatement(p).getThenStatement())));
+        step.statements(b).add(az.statement(copy.of(az.ifStatement(p).getThenStatement())));
       }
       $.add(b);
     }
@@ -92,7 +92,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       return $;
     }
     final Block b = s.getAST().newBlock();
-    step.statements(b).add(duplicate.of(p));
+    step.statements(b).add(copy.of(p));
     $.add(b);
     return $;
   }
