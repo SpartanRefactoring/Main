@@ -21,14 +21,13 @@ import il.org.spartan.spartanizer.ast.factory.*;
  */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase> implements TipperCategory.Sorting {
   @Override public Tip tip(SwitchCase n) {
-    SwitchCase $ = az.switchCase(extract.nextStatement(n));
+    SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     return $ == null || $.isDefault() || n.isDefault() || !iz.intType(expression(n)) && (expression(n) + "").compareTo((expression($) + "")) <= 0
-        || Integer.parseInt((expression(n) + "")) <= Integer.parseInt((expression($) + "")) ? null : new Tip(description(n), n, getClass()) {
+        || iz.intType(expression(n)) && Integer.parseInt((expression(n) + "")) <= Integer.parseInt((expression($) + "")) ? null : new Tip(description(n), n, getClass()) {
           @Override public void go(ASTRewrite r, TextEditGroup g) {
-            final ListRewrite l = r.getListRewrite(n.getParent(), SwitchStatement.STATEMENTS_PROPERTY);
             SwitchCase tmp = copy.of(n);
-            l.replace(n, copy.of($), g);
-            l.replace($, tmp, g);
+            r.replace(n, copy.of($), g);
+            r.replace($, tmp, g);
           }
         };
   }
