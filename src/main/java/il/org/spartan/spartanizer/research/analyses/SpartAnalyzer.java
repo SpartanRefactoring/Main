@@ -90,7 +90,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        new DoNothingReturnParam(), //
+        // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
         new Down.Caster(), //
         new Examiner(), //
