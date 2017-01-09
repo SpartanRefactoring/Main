@@ -92,7 +92,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Delegator(), //
         // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
-        new Down.Caster(), //
+        // new Down.Caster(), // R.I.P
         new Examiner(), //
         new Cascading.Setter(), ///
         new Getter(), //
@@ -103,7 +103,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
-        new Up.Caster(), //
+        // new Up.Caster(), // R.I.P
         null);
     return this;
   }
