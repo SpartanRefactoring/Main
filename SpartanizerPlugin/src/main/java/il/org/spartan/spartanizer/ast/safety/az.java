@@ -429,6 +429,10 @@ public enum az {
   public static SwitchCase switchCase(final ASTNode $) {
     return !iz.nodeTypeEquals($, SWITCH_CASE) ? null : (SwitchCase) $;
   }
+  
+  public static SwitchStatement switchStatement(final ASTNode $) {
+    return !iz.nodeTypeEquals($, SWITCH_STATEMENT) ? null : (SwitchStatement) $;
+  }
 
   /** @param ¢ JD
    * @return */
