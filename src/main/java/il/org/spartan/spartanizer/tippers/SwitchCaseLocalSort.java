@@ -15,9 +15,21 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/**
- * 
- * 
+/** sorts cases of a local branch
+ * <pre>
+ * switch(x) {
+ * case 2:
+ * case 1:
+ * break;
+ * }
+ * <pre>
+ * to
+ * switch(x) {
+ * case 1:
+ * case 2:
+ * break;
+ * }
+ * <pre>
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-09
  */
