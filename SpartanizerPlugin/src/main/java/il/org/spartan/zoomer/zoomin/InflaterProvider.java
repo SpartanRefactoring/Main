@@ -55,10 +55,10 @@ public class InflaterProvider extends OperationsProvider {
             new MethodInvocationTernaryExpander()) //
         .add(ThrowStatement.class, //
             new ThrowTernaryExpander())//
-        .add(ForStatement.class, //
-            new ForBlockExpander()) //
         .add(EnhancedForStatement.class, //
             new ForEachBlockExpander()) //
+        .add(ForStatement.class, //
+            new ForBlockExpander()) //
         .add(WhileStatement.class, //
             new WhileBlockExpander()) //
         .add(IfStatement.class, //
