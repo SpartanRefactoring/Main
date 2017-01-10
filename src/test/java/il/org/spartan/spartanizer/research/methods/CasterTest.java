@@ -25,7 +25,7 @@ public class CasterTest extends JavadocerTest {
   }
 
   @Test public void d() {
-    assert is("private A cast(B value){return (A)value;  }");
+    assert not("private A cast(B value){return (A)value;  }");
   }
 
   @Test public void e() {
