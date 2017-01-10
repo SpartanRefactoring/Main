@@ -16,6 +16,7 @@ import org.eclipse.ui.views.markers.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
@@ -167,7 +168,7 @@ public class Selection extends AbstractSelection<Selection> {
     /** Default name for default package selections. */
     private static final String DEFAULT_PACKAGE_NAME = "(default package)";
     /** Default name for multi selection. */
-    private static final String MULTI_SELECTION_NAME = "selections";
+    @Deprecated @SuppressWarnings("unused") private static final String MULTI_SELECTION_NAME = "selections";
 
     /** @return selection of current compilation unit */
     public static Selection getCurrentCompilationUnit() {
@@ -313,7 +314,6 @@ public class Selection extends AbstractSelection<Selection> {
       return $ == null ? null : by($.getAdapter(IResource.class));
     }
 
-    // feature
     /** @param ¢ JD
      * @return selection by text selection */
     private static Selection by(final ITextSelection ¢) {
@@ -357,14 +357,33 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      for (final Object ¢ : ss)
+      List<MarkerItem> is = new LinkedList<>();
+      List<IJavaProject> ps = new LinkedList<>();
+      List<IPackageFragmentRoot> rs = new LinkedList<>();
+      List<IPackageFragment> hs = new LinkedList<>();
+      List<ICompilationUnit> cs = new LinkedList<>();
+      List<IMember> ms = new LinkedList<>();
+      for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
                 : ¢ instanceof IJavaProject ? by((IJavaProject) ¢)
                     : ¢ instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) ¢)
                         : ¢ instanceof IPackageFragment ? by((IPackageFragment) ¢)
                             : ¢ instanceof ICompilationUnit ? Selection.of((ICompilationUnit) ¢) : ¢ instanceof IMember ? by((IMember) ¢) : null);
-      return $.setName(MULTI_SELECTION_NAME);
+        if (¢ instanceof MarkerItem)
+          is.add((MarkerItem) ¢);
+        else if (¢ instanceof IJavaProject)
+          ps.add((IJavaProject) ¢);
+        else if (¢ instanceof IPackageFragmentRoot)
+          rs.add((IPackageFragmentRoot) ¢);
+        else if (¢ instanceof IPackageFragment)
+          hs.add((IPackageFragment) ¢);
+        else if (¢ instanceof ICompilationUnit)
+          cs.add((ICompilationUnit) ¢);
+        else if (¢ instanceof IMember)
+          ms.add((IMember) ¢);
+      }
+      return $.setName(getMultiSelectionName(is, ps, rs, hs, cs, ms));
     }
 
     /** @param p JD
@@ -451,6 +470,31 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.logEvaluationError(¢);
         return null;
       }
+    }
+
+    /** @param is list of markers in selection
+     * @param ps list of projects in selection
+     * @param rs list of root packages in selection
+     * @param hs list of packages in selection
+     * @param us list of files in selection
+     * @param ms list of members in selection
+     * @return name for the selection */
+    private static String getMultiSelectionName(List<MarkerItem> is, List<IJavaProject> ps, List<IPackageFragmentRoot> rs, List<IPackageFragment> hs,
+        List<ICompilationUnit> us, List<IMember> ms) {
+      final List<String> $ = new LinkedList<>();
+      for (final IJavaProject ¢ : ps)
+        $.add(¢.getElementName());
+      if (!rs.isEmpty())
+        $.add(Linguistic.plurals("root package", rs.size()));
+      if (!hs.isEmpty())
+        $.add(Linguistic.plurals("package", hs.size()));
+      if (!us.isEmpty())
+        $.add(Linguistic.plurals("compilation unit", us.size()));
+      if (!is.isEmpty())
+        $.add(Linguistic.plurals("marker", is.size()));
+      if (!ms.isEmpty())
+        $.add(Linguistic.plurals("code object", ms.size()));
+      return Linguistic.list($);
     }
   }
 }
