@@ -29,7 +29,7 @@ public final class ReturnPrevious extends NanoPatternTipper<Block> {
   }
 
   @Override public Category category() {
-    return Category.Return;
+    return Category.Field;
   }
 
   @Override public String description() {

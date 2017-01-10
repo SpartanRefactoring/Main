@@ -10,4 +10,8 @@ public class DoNothingReturnThis extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢) && returnsThis(¢);
   }
+
+  @Override public Category category() {
+    return Category.Default;
+  }
 }
