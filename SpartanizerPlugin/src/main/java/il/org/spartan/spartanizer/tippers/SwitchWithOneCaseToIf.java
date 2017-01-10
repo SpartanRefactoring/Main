@@ -38,8 +38,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Yuval Simon
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked")
-  @Override public ASTNode replacement(final SwitchStatement s) {
+  @Override
+  @SuppressWarnings("unchecked") public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     final List<SwitchCase> $ = extract.switchCases(s);
@@ -52,8 +52,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     Block b2 = a.newBlock();
     r.setThenStatement(b1);
     r.setElseStatement(b2);
-    InfixExpression cond = makeFrom(s, $, a);
-    r.setExpression(cond);
+    r.setExpression(makeFrom(s, $, a));
     addStatements(firstComOfCase(s), s, b1);
     addStatements(firstComOfDefault(s), s, b2);
     return res;
@@ -64,17 +63,13 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     final List<Statement> ll = statements(s);
     int ind = nsBranchBreakOrRetInd(s, 1);
     int ind2 = nsBranchBreakOrRetInd(s, 2);
-    if(numBranches(s) != 2 || !defaultSingleBranch(s))
+    if (numBranches(s) != 2 || !defaultSingleBranch(s))
       return false;
-    if(ind < 0)
+    if (ind < 0)
       return false;
-    if((iz.breakStatement(ll.get(ind)) && iz.switchCase(ll.get(ind - 1))) || (ind2 > 0 && iz.breakStatement(ll.get(ind2)) && iz.switchCase(ll.get(ind2 - 1))))
-      return false;
-    if(iz.switchCase(last(ll)))
-      return false;
-    if(iz.block(last(ll)))
-      return false;
-    return true;
+    return (iz.breakStatement(ll.get(ind)) && iz.switchCase(ll.get(ind - 1)))
+        || (ind2 > 0 && iz.breakStatement(ll.get(ind2)) && iz.switchCase(ll.get(ind2 - 1))) || iz.switchCase(last(ll)) ? false
+            : iz.block(last(ll)) ? false : true;
   }
 
   @Override @SuppressWarnings("unused") public String description(final SwitchStatement __) {
@@ -96,55 +91,55 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     if(i == ll.size() - 1 && !iz.breakStatement(ll.get(i)))
       b.statements().add(copy.of(ll.get(i)));
   }
+  
   private static boolean defaultSingleBranch(SwitchStatement s) {
     List<Statement> l = statements(s);
-    for(int i = 0; i < l.size(); ++i) {
-      if(iz.switchCase(l.get(i)) && az.switchCase(l.get(i)).isDefault()) {
-        if((i > 0 && iz.switchCase(l.get(i-1))) || (i < l.size() - 1 && iz.switchCase(l.get(i+1))))
-          return false;
+    for(int ¢ = 0; ¢ < l.size(); ++¢)
+      if (iz.switchCase(l.get(¢)) && az.switchCase(l.get(¢)).isDefault()) {
+        if ((¢ > 0 && iz.switchCase(l.get(¢ - 1))) || (¢ < l.size() - 1 && iz.switchCase(l.get(¢ + 1))))
+          break;
         return true;
       }
-    }
     return false;
   }
 
-  private static int nsBranchBreakOrRetInd(final SwitchStatement s, int n) {
+  private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {
     final List<Statement> l = step.statements(az.switchStatement(s));
-    int x;
-    int cur = n;
-    for(x = 1; x < l.size(); ++x)
-      if(iz.switchCase(l.get(x)) && !iz.switchCase(l.get(x-1)) && --cur == 0)
+    int $;
+    int cur = i;
+    for($ = 1; $ < l.size(); ++$)
+      if(iz.switchCase(l.get($)) && !iz.switchCase(l.get($-1)) && --cur == 0)
         break;
-    if(x == l.size())
+    if($ == l.size())
       return -1;
-    Statement k = l.get(--x);
+    Statement k = l.get(--$);
     if(iz.breakStatement(k) || iz.returnStatement(k))
-      return x;
+      return $;
     return -1;
   }
   
   private static int numBranches(final SwitchStatement s) {
     final List<Statement> l = step.statements(az.switchStatement(s));
-    int count = 1;
-    for(int i = 1; i < l.size(); ++i)
-      if(iz.switchCase(l.get(i)) && !iz.switchCase(l.get(i-1)))
-        count++;
-    return count;
+    int $ = 1;
+    for(int ¢ = 1; ¢ < l.size(); ++¢)
+      if(iz.switchCase(l.get(¢)) && !iz.switchCase(l.get(¢-1)))
+        ++$;
+    return $;
   }
   
-  private static InfixExpression makeFrom(SwitchStatement s, List<SwitchCase> l, AST a) {
+  private static InfixExpression makeFrom(SwitchStatement s, List<SwitchCase> cs, AST t) {
     InfixExpression $ = null;
-    for(SwitchCase c : l) {
+    for(SwitchCase c : cs) {
       if(c.isDefault())
         continue;
-      InfixExpression n = a.newInfixExpression();
+      InfixExpression n = t.newInfixExpression();
       n.setOperator(InfixExpression.Operator.EQUALS);
       n.setLeftOperand(copy.of(expression(s)));
       n.setRightOperand(copy.of(expression(c)));
       if($ == null)
         $ = n;
       else {
-        InfixExpression nn = a.newInfixExpression();
+        InfixExpression nn = t.newInfixExpression();
         nn.setOperator(InfixExpression.Operator.CONDITIONAL_OR);
         nn.setLeftOperand($);
         nn.setRightOperand(n);
@@ -156,17 +151,17 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   
   private static int firstComOfDefault(SwitchStatement s) {
     List<Statement> l = statements(s);
-    for(int x = 0; x < l.size(); ++x)
-      if(iz.switchCase(l.get(x)) && az.switchCase(l.get(x)).isDefault())
-        return x+1;
+    for(int $ = 0; $ < l.size(); ++$)
+      if(iz.switchCase(l.get($)) && az.switchCase(l.get($)).isDefault())
+        return $+1;
     return -1;
   }
   
   private static int firstComOfCase(SwitchStatement s) {
     List<Statement> l = statements(s);
-    for(int x = 0; x < l.size(); ++x)
-      if(iz.switchCase(l.get(x)) && !az.switchCase(l.get(x)).isDefault() && !iz.switchCase(l.get(x+1)))
-        return x+1;
+    for(int $ = 0; $ < l.size(); ++$)
+      if(iz.switchCase(l.get($)) && !az.switchCase(l.get($)).isDefault() && !iz.switchCase(l.get($+1)))
+        return $+1;
     return -1;
   }
 }
