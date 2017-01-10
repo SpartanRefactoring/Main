@@ -71,8 +71,8 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
-    writer.close();
     System.out.println("Your output is in " + writer.description());
+    writer.close();
   }
 
   static int[] ranks(final Map<?, Integer> i) {

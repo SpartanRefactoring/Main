@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
 public class Adjuster extends JavadocMarkerNanoPattern {
-  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final List<UserDefinedTipper<Expression>> tippers = new ArrayList<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$N($A)", "", ""));
@@ -36,7 +36,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
   private static boolean adjuster(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
-        && anyTips(tippers, expression(¢))//
+        && anyTips(tippers, $)//
         && iz.methodInvocation($)//
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
     ;
