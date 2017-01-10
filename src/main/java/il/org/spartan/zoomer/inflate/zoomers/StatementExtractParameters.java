@@ -44,15 +44,20 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if ($ == null)
       return null;
     ITypeBinding b = $.resolveTypeBinding();
+    if (b == null)
+      return null;
     Type t;
     try {
       // TODO Roth: use library code
-      t = ImportRewrite.create((ICompilationUnit) ((CompilationUnit) s.getRoot()).getTypeRoot(), false).addImport(b, s.getAST());
+      ImportRewrite ir = ImportRewrite.create((ICompilationUnit) ((CompilationUnit) s.getRoot()).getTypeRoot(), false);
+      if (ir == null)
+        return null;
+      t = ir.addImport(b, s.getAST());
     } catch (JavaModelException ¢) {
       monitor.log(¢);
       return null;
     }
-    return b == null || $ instanceof Assignment ? // TODO Roth: enable
+    return t == null || $ instanceof Assignment ? // TODO Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
           @Override public void go(ASTRewrite r, TextEditGroup g) {
@@ -94,7 +99,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   @SuppressWarnings("hiding") private static List<Expression> candidates(Statement s) {
     List<Expression> $ = new LinkedList<>();
     List<ASTNode> excludedParents = new LinkedList<>();
-    excludedParents.add(s);
+    // TODO Roth: check *what* needed
+    if (s instanceof ExpressionStatement)
+      excludedParents.add(s);
     s.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(ASTNode ¢) {
         if (¢ instanceof Expression)
