@@ -88,7 +88,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             return;
           case DIALOG_CREATION:
             if ($.selection().size() >= DIALOG_THRESHOLD)
-              if (!Dialogs.ok(Dialogs.message(separate.these(¢).by(Linguistic.SEPARATOR))))
+              if (!Dialogs.ok(Dialogs.messageUnsafe(separate.these(¢).by(Linguistic.SEPARATOR))))
                 $.stop();
               else {
                 dialogOpen = true;
@@ -115,7 +115,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             return;
           case DIALOG_CREATION:
             if (dialogOpen)
-              Dialogs.message(separate.these( //
+              Dialogs.messageUnsafe(separate.these( //
                   message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)), //
                   message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
                   message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
