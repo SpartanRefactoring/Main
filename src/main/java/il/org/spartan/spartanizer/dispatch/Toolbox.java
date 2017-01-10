@@ -364,13 +364,17 @@ public class Toolbox {
    * @param ns JD
    * @return <code><b>this</b></code>, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer nodeType = wizard.classToNodeType.get(n);
-    assert nodeType != null : fault.dump() + //
+    final Integer $ = wizard.classToNodeType.get(n);
+    assert $ != null : fault.dump() + //
         "\n c = " + n + //
         "\n c.getSimpleName() = " + n.getSimpleName() + //
         "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
         "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
+    return add($, ns);
+  }
+
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ns) {
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;

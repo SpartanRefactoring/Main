@@ -57,7 +57,7 @@ public interface count {
   }
 
   /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
+   * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodes(final ASTNode root) {
     final Int $ = new Int();
@@ -113,7 +113,7 @@ public interface count {
   }
 
   /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
+   * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int statements(final ASTNode root) {
     final Int $ = new Int();

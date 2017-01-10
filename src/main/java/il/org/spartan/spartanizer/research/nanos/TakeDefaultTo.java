@@ -22,9 +22,10 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
       add(patternTipper("null == $X1 ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent"));
     }
   };
+  static final DefaultsTo rival = new DefaultsTo();
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
-    return anyTips(tippers, ¢);
+    return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
   @Override public Tip pattern(final ConditionalExpression ¢) {
@@ -44,6 +45,6 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
   }
 
   @Override public Category category() {
-    return Category.NullConditional;
+    return Category.Default;
   }
 }
