@@ -59,6 +59,10 @@ public class InteractiveSpartanizer {
     return new Trimmer(toolbox).fixed(from);
   }
 
+  public String fixedPoint(final ASTNode from) {
+    return new Trimmer(toolbox).fixed(from + "");
+  }
+
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -75,6 +79,14 @@ public class InteractiveSpartanizer {
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
     toolbox.add(n, ns);
+    return this;
+  }
+
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ns) {
+    if (!changed)
+      toolbox = Toolbox.mutableDefaultInstance();
+    changed = true;
+    toolbox.add(i, ns);
     return this;
   }
 }
