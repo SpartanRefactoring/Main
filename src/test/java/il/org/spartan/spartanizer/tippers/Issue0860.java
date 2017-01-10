@@ -10,7 +10,7 @@ import org.junit.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-09
  */
-@Ignore
+//@Ignore
 @SuppressWarnings("static-method")
 public class Issue0860 {
   @Test public void t1() {
@@ -92,6 +92,69 @@ public class Issue0860 {
         + "case C9:"
         + "case C1:"
         + "case B:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C2:"
+        + "case C5:"
+        + "case C9:"
+        + "case C1:"
+        + "case B:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C2:"
+        + "case C5:"
+        + "case C1:"
+        + "case C9:"
+        + "case B:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C2:"
+        + "case C1:"
+        + "case C5:"
+        + "case C9:"
+        + "case B:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C1:"
+        + "case C2:"
+        + "case C5:"
+        + "case C9:"
+        + "case B:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C1:"
+        + "case C2:"
+        + "case C5:"
+        + "case B:"
+        + "case C9:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C1:"
+        + "case C2:"
+        + "case B:"
+        + "case C5:"
+        + "case C9:"
+        + "x = 2;"
+        + "break;"
+        + "}")
+    .gives("switch(x) {"
+        + "case C1:"
+        + "case B:"
+        + "case C2:"
+        + "case C5:"
+        + "case C9:"
         + "x = 2;"
         + "break;"
         + "}")
