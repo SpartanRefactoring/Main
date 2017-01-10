@@ -181,7 +181,7 @@ public class SingleFlater {
   }
 
   @SuppressWarnings("restriction") private static boolean changeNFocus(ITextEditor e, TextFileChange tc, WindowInformation i) throws CoreException {
-    if (i == null || !(e instanceof CompilationUnitEditor)) {
+    if (i == null || !(e instanceof CompilationUnitEditor) || e.getSelectionProvider() == null) {
       tc.perform(new NullProgressMonitor());
       return true;
     }
@@ -193,6 +193,7 @@ public class SingleFlater {
     final ProjectionViewer pv = (ProjectionViewer) v;
     tc.perform(new NullProgressMonitor());
     pv.setTopIndex(i.startLine);
+    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
     return false;
   }
 
