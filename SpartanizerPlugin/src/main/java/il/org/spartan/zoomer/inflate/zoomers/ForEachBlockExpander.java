@@ -3,9 +3,6 @@ package il.org.spartan.zoomer.inflate.zoomers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.ForStatement;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,16 +13,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@link Issue1023}
  * @author Raviv Rachmiel
  * @since 10-01-17 */
-public class ForEachBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Expander {
+public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatement> implements TipperCategory.Expander {
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
-    return "expand to block";
-  }
+
   @Override
-  @SuppressWarnings("unchecked") public ASTNode replacement(ForStatement s) {
+  @SuppressWarnings("unchecked") public ASTNode replacement(EnhancedForStatement s) {
     if (s == null)
       return null;
-    final ForStatement $ = copy.of(s);
+    final EnhancedForStatement $ = copy.of(s);
     if(az.enhancedFor(s)==null)
       return null;
     final Block b = $.getAST().newBlock();
@@ -42,6 +37,11 @@ public class ForEachBlockExpander extends ReplaceCurrentNode<ForStatement> imple
     $.setBody(b);
     return $;
   }
+
+  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+    return "expand to block";
+  }
+
   
 }
 
