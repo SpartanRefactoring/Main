@@ -21,7 +21,7 @@ public class Autamatic_2016_12_14_01_52_17 {
         "    try {" + //
         "      B.c(d).e().f(g -> h[i++]=j(g));" + //
         "    }" + //
-        " catch (    C k) {" + //
+        " catch (C k) {" + //
         "      return null;" + //
         "    }" + //
         "  }" + //
