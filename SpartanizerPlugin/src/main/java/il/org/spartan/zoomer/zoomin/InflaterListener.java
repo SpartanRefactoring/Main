@@ -16,6 +16,8 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.zoomer.zoomin.SingleFlater.*;
+
 import static il.org.spartan.lisp.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
@@ -28,6 +30,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   final Selection selection;
   boolean active;
   final AtomicBoolean working;
+  WindowInformation windowInformation;
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -45,6 +48,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   @Override public void mouseScrolled(final MouseEvent ¢) {
     if (!active || working.get())
       return;
+    windowInformation = WindowInformation.of(editor);
     working.set(true);
     if (¢.count > 0)
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
@@ -60,14 +64,14 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void inflate() {
     final WrappedCompilationUnit wcu = first(selection.inner).build();
-    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
-        wcu, editor);
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, editor, windowInformation);
   }
 
   private void deflate() {
     final WrappedCompilationUnit wcu = first(selection.inner).build();
-    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()), ASTRewrite.create(wcu.compilationUnit.getAST()),
-        wcu, editor);
+    SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, editor, windowInformation);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {
