@@ -6,8 +6,7 @@ import org.junit.*;
 
 /** Test case for {@link SwitchCaseLocalSort}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-09
- */
+ * @since 2017-01-09 */
 @SuppressWarnings("static-method")
 public class Issue0860 {
   @Test public void t1() {
