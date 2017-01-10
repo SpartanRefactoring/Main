@@ -355,4 +355,9 @@ public final class Namespace implements Environment {
       n.fillScope(child);
     return false;
   }
+  
+  public String generateName() {
+    // Stub
+    return "tmp" + (new Random()).nextInt(2147483647);
+  }
 }
