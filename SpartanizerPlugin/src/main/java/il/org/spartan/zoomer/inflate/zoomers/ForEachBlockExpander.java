@@ -21,14 +21,13 @@ public class ForEachBlockExpander extends ReplaceCurrentNode<ForStatement> imple
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand to block";
   }
-  @SuppressWarnings("unchecked")
-  @Override public ASTNode replacement(ForStatement s) {
+  @Override
+  @SuppressWarnings("unchecked") public ASTNode replacement(ForStatement s) {
     if (s == null)
       return null;
     final ForStatement $ = copy.of(s);
-    if(az.enhancedFor(s)==null) {
+    if(az.enhancedFor(s)==null)
       return null;
-    }
     final Block b = $.getAST().newBlock();
     b.statements().add(copy.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
