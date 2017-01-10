@@ -41,8 +41,6 @@ Idan Atias <idan2k3 [at] gmail.com>
 Inbal Matityahu <matityahuinbal [at] gmail.com>
 Inbal Zukerman <inbal.zukerman [at] gmail.com>
 Itai Dabran <idabran.cs.technion [at] gmail.com>
-Joha <joha [at] gmail.com>
-Juha Naseredin juha@gmail.com https://en.wikipedia.org/wiki/Nasreddin
 Kfir Marx <kfir.marx [at] gmail.com>
 Kilroyss https://en.wikipedia.org/wiki/Kilroy_was_here
 Koby Ben Shimol <kobybs [at] gmail.com>
@@ -76,7 +74,6 @@ Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
 Shay Segal <siglons [at] gmail.com>
 Shimon Azulay <sazulay3 [at] gmail.com>
 Stav Namir <stav1472 [at] gmail.com>
-Till Eualenspiegel https://en.wikipedia.org/wiki/Till_Eulenspiegel
 Tomer Dragucki <tomerd [at] campus.technion.ac.il>
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Vivian Shehadeh <vivian.sh185 [at] gmail.com>
@@ -92,6 +89,4 @@ Yuval Simon <yuvaltechnion [at] gmail.com>
 Zahi Mizrahi <zahimizra [at] gmail.com>
 Ziv Izhar <szizhar [at] campus.techion.ac.il>
 Zvi Listopad <listopad [at] cs.technion.ac.il>
-خوجة نصر الدين <juha [at] nasereddi.in>
-ארבינקא The Blaumilch Tunnel
 
