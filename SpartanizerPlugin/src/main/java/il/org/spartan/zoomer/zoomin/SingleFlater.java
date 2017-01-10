@@ -29,8 +29,9 @@ public class SingleFlater {
   private static final boolean SELECT_CHANGES = false;
   private ASTNode root;
   private OperationsProvider operationsProvider;
-  private TextSelection textSelection;
+  @Deprecated private TextSelection textSelection;
   private boolean usesDisabling = true;
+  private WindowInformation windowInformation;
 
   private SingleFlater() {}
 
@@ -54,8 +55,16 @@ public class SingleFlater {
   /** Sets text selection limits for this flater.
    * @param ¢ JD
    * @return this flater */
-  public SingleFlater limit(final TextSelection ¢) {
+  @Deprecated public SingleFlater limit(final TextSelection ¢) {
     textSelection = ¢;
+    return this;
+  }
+
+  /** Sets text selection limits of window to this flater.
+   * @param ¢ JD
+   * @return this flater */
+  public SingleFlater limit(final WindowInformation ¢) {
+    windowInformation = ¢;
     return this;
   }
 
@@ -79,7 +88,7 @@ public class SingleFlater {
     disabling.scan(root);
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
-        if (!inRange(n) || usesDisabling && disabling.on(n))
+        if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
         Tipper<N> w = null;
         try {
@@ -108,7 +117,8 @@ public class SingleFlater {
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e) {
+  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e,
+      final WindowInformation i) {
     boolean $ = false;
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -116,7 +126,7 @@ public class SingleFlater {
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(e, textChange, u.compilationUnit);
+          $ = changeNFocus(e, textChange, i);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
@@ -127,7 +137,7 @@ public class SingleFlater {
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
-  boolean inRange(final ASTNode ¢) {
+  @Deprecated boolean inRange(final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
@@ -148,8 +158,8 @@ public class SingleFlater {
    * @param tc JD
    * @param u JD
    * @throws CoreException */
-  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final CompilationUnit u)
-      throws CoreException {
+  @Deprecated @SuppressWarnings({ "restriction", "unused" }) private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc,
+      final CompilationUnit u) throws CoreException {
     if (!(e instanceof CompilationUnitEditor)) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -170,6 +180,27 @@ public class SingleFlater {
     return true;
   }
 
+  @SuppressWarnings("restriction") private static boolean changeNFocus(ITextEditor e, TextFileChange tc, WindowInformation i) throws CoreException {
+    if (i == null || !(e instanceof CompilationUnitEditor)) {
+      tc.perform(new NullProgressMonitor());
+      return true;
+    }
+    final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
+    if (!(v instanceof ProjectionViewer)) {
+      tc.perform(new NullProgressMonitor());
+      return true;
+    }
+    final ProjectionViewer pv = (ProjectionViewer) v;
+    tc.perform(new NullProgressMonitor());
+    pv.setTopIndex(i.startLine);
+    return false;
+  }
+
+  private boolean inWindow(ASTNode ¢) {
+    return windowInformation == null
+        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && (¢.getLength() + ¢.getStartPosition()) <= windowInformation.endChar;
+  }
+
   /** describes a single change operation, containing both an {@link ASTNode}
    * and a matching {@link Tipper}.
    * @param <N> JD
@@ -187,6 +218,47 @@ public class SingleFlater {
     /** [[SuppressWarningsSpartan]] */
     public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> tipper) {
       return new Operation<>(node, tipper);
+    }
+  }
+
+  /** Contains information about the current window
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-01-10 */
+  @SuppressWarnings("restriction")
+  protected static class WindowInformation {
+    private static final int INVALID = -1;
+    public int startChar;
+    public int endChar;
+    public int startLine;
+    public int endLine;
+
+    private WindowInformation(final ITextEditor e) {
+      if (!(e instanceof CompilationUnitEditor)) {
+        invalidate();
+        return;
+      }
+      final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
+      if (!(v instanceof ProjectionViewer)) {
+        invalidate();
+        return;
+      }
+      final ProjectionViewer pv = (ProjectionViewer) v;
+      startChar = pv.getTopIndexStartOffset();
+      endChar = pv.getBottomIndexEndOffset();
+      startLine = pv.getTopIndex();
+      endLine = pv.getBottomIndex();
+    }
+
+    public static WindowInformation of(final ITextEditor ¢) {
+      return new WindowInformation(¢);
+    }
+
+    public boolean invalid() {
+      return startChar == INVALID;
+    }
+
+    public void invalidate() {
+      startChar = INVALID;
     }
   }
 }

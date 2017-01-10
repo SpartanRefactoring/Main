@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * to switch(x) { case 1: case 2: break; }
  * 
  * <pre>
+ * Tests are in {@link Issue0860}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchStatement> implements TipperCategory.Sorting {
@@ -38,7 +39,6 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchStatement> implemen
         c2 = az.switchCase(l.get(¢ + 1));
         if (c1.isDefault() || c2.isDefault())
           continue;
-//        Expression aaa = exspression(c1);
         if (iz.intType(expression(c1)) && Integer.parseInt((expression(c1) + "")) > Integer.parseInt(expression(c2) + "")
             || !iz.intType(expression(c1)) && (expression(c1) + "").compareTo((expression(c2) + "")) > 0) {
           found = true;
@@ -54,6 +54,6 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchStatement> implemen
   }
 
   @Override @SuppressWarnings("unused") public String description(SwitchStatement __) {
-    return "sort cases with same flow control";
+    return "sort cases on the same branch";
   }
 }
