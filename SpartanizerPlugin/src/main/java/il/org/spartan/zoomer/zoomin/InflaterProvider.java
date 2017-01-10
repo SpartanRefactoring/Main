@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.inflate.zoomers.*;
@@ -28,17 +27,19 @@ public class InflaterProvider extends OperationsProvider {
     return new Toolbox()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
-            new ExtractExpressionFromReturn()) //
+            new ExtractExpressionFromReturn(), //
+            new StatementExtractParameters<>()) //
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignment(), //
-            new AssignmentTernaryExpander())//
+            new AssignmentTernaryExpander(), //
+            new StatementExtractParameters<>())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
             new toStringExpander(), new TernaryPushupStrings())//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
-        .add(PostfixExpression.class,//
+        .add(PostfixExpression.class, //
             new PostFixToInfixExpander())//
         .add(SwitchStatement.class, //
             new CasesSplit())//
