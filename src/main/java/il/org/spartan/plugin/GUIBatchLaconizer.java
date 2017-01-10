@@ -222,7 +222,6 @@ public class GUIBatchLaconizer extends Applicator {
     try {
       w.setDescription(d);
     } catch (CoreException ¢) {
-      ¢.printStackTrace();
       monitor.log(¢);
     }
   }
