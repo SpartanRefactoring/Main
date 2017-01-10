@@ -10,7 +10,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
-public class CasesSplitTest {
+public class Issue0977 {
   @Test public void simpleSequencers() {
     zoomingInto("" //
         + "switch (x) {\n" //

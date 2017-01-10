@@ -11,7 +11,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 @Ignore // TODO: Ori Roth
-public class AssignmentOperatorExpansionTest {
+public class Issue1001 {
   @Test public void basic() {
     zoomingInto("a += 1").gives("a = a + 1");
   }
