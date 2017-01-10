@@ -9,10 +9,12 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Expands <code>a += 3</code> to <code>a = a + 3</code>. Capable of dealing
  * with inclusion and all operator types: <code>a |= b &= c</code> ->
- * <code>a = a | (b &= c)</code> -> <code>a = a | (b = b & c)</code>.
+ * <code>a = a | (b &= c)</code> -> <code>a = a | (b = b & c)</code>
+ * Test file: {@link Issue1001}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
 public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> implements TipperCategory.Expander {
