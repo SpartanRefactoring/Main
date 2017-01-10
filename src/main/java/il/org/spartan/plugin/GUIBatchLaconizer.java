@@ -3,8 +3,9 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.function.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -30,6 +31,8 @@ public class GUIBatchLaconizer extends Applicator {
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
   private static final int PASSES_MANY = 20;
+  /** Minimum number of files in selection initiating disabling of auto build */
+  private static final int DISABLE_AUTO_BUILD_THRESHOLD = 100;
 
   /** Spartanization process. */
   @Override @SuppressWarnings("boxing") public void go() {
@@ -38,6 +41,7 @@ public class GUIBatchLaconizer extends Applicator {
     listener().push(message.run_start.get(operationName(), selection().name));
     if (!shouldRun())
       return;
+    boolean isAutoBuildChanged = selection().size() >= DISABLE_AUTO_BUILD_THRESHOLD && disableAutoBuild();
     final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
@@ -66,6 +70,8 @@ public class GUIBatchLaconizer extends Applicator {
           break;
       }
     });
+    if (isAutoBuildChanged)
+      enableAutoBuild();
     // TODO Roth: add metrics etc.
     listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
@@ -185,6 +191,39 @@ public class GUIBatchLaconizer extends Applicator {
 
     private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
       return Linguistic.unknownIfNull(os, xs -> operation.apply(xs[index]));
+    }
+  }
+
+  private static boolean disableAutoBuild() {
+    final IWorkspace w = ResourcesPlugin.getWorkspace();
+    if (w == null)
+      return false;
+    final IWorkspaceDescription d = w.getDescription();
+    if (d == null || !d.isAutoBuilding())
+      return false;
+    d.setAutoBuilding(false);
+    try {
+      w.setDescription(d);
+    } catch (CoreException ¢) {
+      monitor.log(¢);
+      return false;
+    }
+    return true;
+  }
+
+  private static void enableAutoBuild() {
+    final IWorkspace w = ResourcesPlugin.getWorkspace();
+    if (w == null)
+      return;
+    final IWorkspaceDescription d = w.getDescription();
+    if (d == null || d.isAutoBuilding())
+      return;
+    d.setAutoBuilding(true);
+    try {
+      w.setDescription(d);
+    } catch (CoreException ¢) {
+      ¢.printStackTrace();
+      monitor.log(¢);
     }
   }
 }
