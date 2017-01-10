@@ -59,14 +59,12 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   }
 
   @Override protected boolean prerequisite(final SwitchStatement s) {
-    final List<SwitchCase> $ = extract.switchCases(s);
-    final List<Statement> ll = statements(s);
+    final List<Statement> $ = statements(s);
     int ind = nsBranchBreakOrRetInd(s, 1);
     int ind2 = nsBranchBreakOrRetInd(s, 2);
-    return numBranches(s) != 2 || !defaultSingleBranch(s) || ind < 0 ? false
-        : (iz.breakStatement(ll.get(ind)) && iz.switchCase(ll.get(ind - 1)))
-            || (ind2 > 0 && iz.breakStatement(ll.get(ind2)) && iz.switchCase(ll.get(ind2 - 1))) || iz.switchCase(last(ll)) ? false
-                : iz.block(last(ll)) ? false : true;
+    return numBranches(s) == 2 && defaultSingleBranch(s) && ind >= 0
+        && ((!iz.breakStatement($.get(ind)) || !iz.switchCase($.get(ind - 1)))
+            && (ind2 <= 0 || !iz.breakStatement($.get(ind2)) || !iz.switchCase($.get(ind2 - 1))) && !iz.switchCase(last($)) && !iz.block(last($)));
   }
 
   @Override @SuppressWarnings("unused") public String description(final SwitchStatement __) {
@@ -102,9 +100,8 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
 
   private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {
     final List<Statement> l = step.statements(az.switchStatement(s));
-    int $;
-    int cur = i;
-    for ($ = 1; $ < l.size(); ++$)
+    int $ = 1;
+    for (int cur = i; $ < l.size(); ++$)
       if (iz.switchCase(l.get($)) && !iz.switchCase(l.get($ - 1)) && --cur == 0)
         break;
     if ($ == l.size())
