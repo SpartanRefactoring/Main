@@ -23,9 +23,9 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
-      if (¢ == null)
-        return null;
     }
+    if (¢ == null)
+      return null;
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(copy.of(¢.getExpression()));
     final Assignment then = ¢.getAST().newAssignment();
