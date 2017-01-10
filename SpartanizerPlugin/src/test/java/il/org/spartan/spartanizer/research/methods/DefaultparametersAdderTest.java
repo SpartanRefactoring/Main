@@ -29,6 +29,6 @@ public class DefaultparametersAdderTest extends JavadocerTest {
   }
 
   @Test public void e() {
-    assert is("private static void logPatternCompilerError(ServiceConfigurationError ¢) {    logger.log(Level.WARNING, \"thingy\", ¢);}");
+    assert is("private static void logPatternCompilerError(ServiceConfigurationError ¢) {    logger.logPatternCompilerError(Level.WARNING, \"thingy\", ¢);}");
   }
 }
