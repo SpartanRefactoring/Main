@@ -10,4 +10,8 @@ public class DoNothingReturnParam extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneParameter(¢) && hazOneStatement(¢) && returnsParam(¢) && returnTypeSameAsParameter(¢);
   }
+
+  @Override public Category category() {
+    return Category.Default;
+  }
 }
