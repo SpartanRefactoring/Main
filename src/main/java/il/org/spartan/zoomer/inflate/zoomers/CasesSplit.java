@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Expand cases in a {@link SwitchStatement}: <code>
  * switch (x) {
@@ -35,6 +36,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *     f(3);
  * }
  * </code>
+ * Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.Expander {
