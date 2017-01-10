@@ -37,9 +37,9 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     return !needWrap(x) ? $ : subject.operand($).parenthesis();
   }
 
-  private static boolean needWrap(PostfixExpression x) {
-    ASTNode p = x.getParent();
-    return iz.infixExpression(p) || iz.prefixExpression(p) || iz.postfixExpression(p);
+  private static boolean needWrap(PostfixExpression ¢) {
+    ASTNode $ = ¢.getParent();
+    return iz.infixExpression($) || iz.prefixExpression($) || iz.postfixExpression($);
   }
 
   @Override public String description(@SuppressWarnings("unused") PostfixExpression __) {

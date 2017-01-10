@@ -117,17 +117,17 @@ public class ExpanderTestUtils {
     }
 
     private static MethodDeclaration getMethod(CompilationUnit u, String f) {
-      final List<MethodDeclaration> ll = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+      final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
-      if (ll.isEmpty())
+      if ($.isEmpty())
         azzert.fail("Don't Such Method Exists");
-      return ll.get(0);
+      return $.get(0);
     }
 
     private static CompilationUnit createCUWithBinding(String text) {
-      final ASTParser p = Make.COMPILATION_UNIT.parser(text);
-      p.setResolveBindings(true);
-      return az.compilationUnit(p.createAST(null));
+      final ASTParser $ = Make.COMPILATION_UNIT.parser(text);
+      $.setResolveBindings(true);
+      return az.compilationUnit($.createAST(null));
     }
 
     private void checkSame() {

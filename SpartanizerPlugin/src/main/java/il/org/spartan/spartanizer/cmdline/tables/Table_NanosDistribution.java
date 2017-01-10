@@ -21,13 +21,13 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-29 */
-public class TableNanosDistribution extends FolderASTVisitor {
+public class Table_NanosDistribution extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final Map<Integer, Table> writers = new HashMap<>();
   private static final NanoPatternsDistributionStatistics npStatistics = new NanoPatternsDistributionStatistics();
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();
   static {
-    clazz = TableNanosDistribution.class;
+    clazz = Table_NanosDistribution.class;
     Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
   }
 
