@@ -22,10 +22,8 @@ import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 import static il.org.spartan.lisp.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
-  private static final BiFunction<Device, Color, Color> INFLATE_COLOR = (d, o) -> new Color(d, (int) (0.9 * o.getRed()), (int) (0.9 * o.getGreen()),
-      o.getBlue());
-  private static final BiFunction<Device, Color, Color> DEFLATE_COLOR = (d, o) -> new Color(d, (int) (0.9 * o.getRed()), o.getGreen(),
-      (int) (0.9 * o.getBlue()));
+  private static final Function<Device, Color> INFLATE_COLOR = d -> new Color(d, 200, 200, 255);
+  private static final Function<Device, Color> DEFLATE_COLOR = d -> new Color(d, 200, 255, 200);
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
   final StyledText text;
   final ITextEditor editor;
@@ -49,7 +47,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
     working = new AtomicBoolean(false);
-    originalBackground = text.getBackground();
+    originalBackground = text.getSelectionBackground();
   }
 
   @Override public void mouseScrolled(final MouseEvent ¢) {
@@ -70,14 +68,14 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void inflate() {
-    text.setBackground(INFLATE_COLOR.apply(Display.getCurrent(), originalBackground));
+    text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, editor, windowInformation);
   }
 
   private void deflate() {
-    text.setBackground(DEFLATE_COLOR.apply(Display.getCurrent(), originalBackground));
+    text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, editor, windowInformation);
@@ -101,7 +99,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void deactivate() {
-    text.setBackground(originalBackground);
+    text.setSelectionBackground(originalBackground);
     active = false;
     InflateHandler.addListeners(text, externalListeners, SWT.MouseWheel);
     if (!text.isDisposed())
