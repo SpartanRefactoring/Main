@@ -74,7 +74,7 @@ public interface disabling {
     });
   }
 
-  /** @param n an {@link ASTNode}
+  /** @param nodeTypeHolder an {@link ASTNode}
    * @return <code><b>true</b></code> <em>iff</em> the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {

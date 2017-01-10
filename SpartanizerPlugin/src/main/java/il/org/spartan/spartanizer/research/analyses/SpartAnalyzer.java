@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -24,8 +22,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
    * @param ¢ our gUIBatchLaconizer
    * @return */
   private SpartAnalyzer addNanoPatterns() {
-    if ("false".equals(getProperty("nmethods")))
-      addCharacteristicMethodPatterns();
     addMethodPatterns();//
     this//
         // .add(Assignment.class, //
@@ -108,7 +104,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  private SpartAnalyzer addCharacteristicMethodPatterns() {
+  protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted

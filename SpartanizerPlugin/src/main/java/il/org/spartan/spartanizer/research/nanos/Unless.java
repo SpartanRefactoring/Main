@@ -49,6 +49,6 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public Category category() {
-    return Category.NullConditional;
+    return Category.Safety;
   }
 }
