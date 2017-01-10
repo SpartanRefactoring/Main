@@ -356,8 +356,12 @@ public final class Namespace implements Environment {
     return false;
   }
   
-  public String generateName() {
-    // Stub
-    return "tmp" + (new Random()).nextInt(2147483647);
+  public String generateName(Binding ¢) {
+    // TODO: @mdoron Finish checking forward names
+    // TODO: @mdoron Finish uppercase lowercase 
+    String $ = ¢ + "" + (new Random()).nextInt(2147483647);
+    while (has($))
+      $ = ¢ + "" + (new Random()).nextInt(2147483647);
+    return $;
   }
 }
