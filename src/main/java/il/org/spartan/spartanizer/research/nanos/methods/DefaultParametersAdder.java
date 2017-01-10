@@ -48,4 +48,8 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
     return arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList())
         .containsAll(parametersNames(¢));
   }
+
+  @Override public Category category() {
+    return Category.Default;
+  }
 }
