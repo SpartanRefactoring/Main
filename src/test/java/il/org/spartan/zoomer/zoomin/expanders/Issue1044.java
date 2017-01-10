@@ -8,6 +8,5 @@ import il.org.spartan.spartanizer.java.namespace.*;
 
 public class Issue1044 {
   @Test public void test() {
-    System.out.println((new Namespace(null, null)).generateName());
   }
 }
