@@ -38,7 +38,7 @@ public final class Infix {
     }
 
     @Override public Category category() {
-      return Category.NullConditional;
+      return Category.Safety;
     }
 
     @Override public String description() {

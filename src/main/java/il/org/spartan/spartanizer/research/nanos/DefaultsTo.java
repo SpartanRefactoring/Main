@@ -10,10 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** Replace X != null ? X : Y with X ?? Y <br>
- * replace X == null ? Y : X with X ?? Y <br>
- * replace null == X ? Y : X with X ?? Y <br>
- * replace null != X ? X : Y with X ?? Y <br>
+/** This is the ?? operator
  * @author Ori Marcovitch
  * @year 2016 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
@@ -52,6 +49,6 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
-    return Category.NullConditional;
+    return Category.Default;
   }
 }

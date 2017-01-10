@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
+  public final N nodeTypeHolder = null;
+
   protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ns, final N n) {
     return n != null && ns.stream().anyMatch(t -> t.canTip(n));
   }
@@ -85,7 +87,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Collection, Return, Conditional, Exception, NullConditional, Ternary {
+    Collection, Return, Conditional, Exception, Safety, Ternary {
       @Override public String toString() {
         return "Conditional";
       }
@@ -95,7 +97,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
         return "Method Body";
       }
     },
-    Quantifier, Functional;
+    Quantifier, Functional, Default;
     public static String pretty(final String name) {
       if (name.startsWith("Lisp"))
         return name.replaceAll("^Lisp", "");

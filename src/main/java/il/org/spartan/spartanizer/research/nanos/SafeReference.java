@@ -55,6 +55,6 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
   }
 
   @Override public Category category() {
-    return Category.NullConditional;
+    return Category.Safety;
   }
 }
