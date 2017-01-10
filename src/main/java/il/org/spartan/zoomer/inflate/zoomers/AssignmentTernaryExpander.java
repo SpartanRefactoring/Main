@@ -27,33 +27,17 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
         return null;
     }
     final IfStatement $ = s.getAST().newIfStatement();
-    try {
-      $.setExpression(copy.of(¢.getExpression()));
-      final Assignment then = ¢.getAST().newAssignment();
-      then.setRightHandSide(copy.of(¢.getThenExpression()));
-      then.setLeftHandSide(copy.of(left));
-      then.setOperator(o);
-      $.setThenStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
-      System.out.println("then -" + copy.of(¢.getThenExpression()));
-      System.out.println("left - " + copy.of(¢.getThenExpression()));
-      if (az.expression(copy.of(¢.getThenExpression())).subtreeMatch(new ASTMatcher(), copy.of(left))) {
-        System.out.println("HEY1");
-        $.setThenStatement(copy.of(¢.getAST().newContinueStatement()));
-      }
-      final Assignment elze = ¢.getAST().newAssignment();
-      elze.setRightHandSide(copy.of(¢.getElseExpression()));
-      elze.setLeftHandSide(copy.of(left));
-      elze.setOperator(o);
-      $.setElseStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
-      System.out.println("else -" + copy.of(¢.getThenExpression()));
-      System.out.println("left - " + copy.of(¢.getThenExpression()));
-      if (copy.of(¢.getElseExpression()).equals(copy.of(left))) {
-        System.out.println("HEY1");
-        $.setElseStatement(copy.of(¢.getAST().newContinueStatement()));
-      }
-    } catch (@SuppressWarnings("unused") final NullPointerException e) {
-      return null;
-    }
+    $.setExpression(copy.of(¢.getExpression()));
+    final Assignment then = ¢.getAST().newAssignment();
+    then.setRightHandSide(copy.of(¢.getThenExpression()));
+    then.setLeftHandSide(copy.of(left));
+    then.setOperator(o);
+    $.setThenStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
+    final Assignment elze = ¢.getAST().newAssignment();
+    elze.setRightHandSide(copy.of(¢.getElseExpression()));
+    elze.setLeftHandSide(copy.of(left));
+    elze.setOperator(o);
+    $.setElseStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
     return $;
   }
 
