@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * (double) x
  * (long) x
  * </pre>
- * 
+ *  Tested in {@link Issue1007}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {

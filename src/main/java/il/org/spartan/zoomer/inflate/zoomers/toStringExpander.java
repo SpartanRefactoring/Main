@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </pre>
  *
  * Important : Works only in cases where binding exists, otherwise does nothing
- * Issue #965
+ * Tested in {@link Issue096}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
 public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
