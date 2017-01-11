@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit tests for {@link VariableDeclarationStatementSplit} Issue #968
+/** Unit tests for {@link VariableDeclarationStatementSplit}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @Ignore // TODO Tome Tragucki

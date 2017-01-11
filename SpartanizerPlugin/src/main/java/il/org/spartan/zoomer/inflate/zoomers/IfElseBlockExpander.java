@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if(condition){block1}else{block2}
  * </pre>
  *
- * Issue #971
+ * Tested in {@link Issue0971}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
 public class IfElseBlockExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {

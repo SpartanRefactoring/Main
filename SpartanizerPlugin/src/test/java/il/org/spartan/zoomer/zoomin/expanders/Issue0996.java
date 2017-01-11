@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit tests for {@link DeclarationWithInitExpander} Issue #996
+/** Unit tests for {@link DeclarationWithInitExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
