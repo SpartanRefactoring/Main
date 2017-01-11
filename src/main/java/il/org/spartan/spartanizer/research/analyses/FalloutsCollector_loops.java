@@ -7,13 +7,14 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 public class FalloutsCollector_loops extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -28,10 +29,15 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
-    final String after = spartanalyzer.fixedPoint(¢);
-    for (final EnhancedForStatement l : searchDescendants.forClass(EnhancedForStatement.class).from(into.cu(after)))
-      if (!iz.block(body(l)))
-        appendFile(out, l + "");
+    try {
+      for (final EnhancedForStatement l : searchDescendants.forClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))))
+        if (!iz.block(body(l)))
+          appendFile(out, l + "");
+    } catch (@SuppressWarnings("unused") final AssertionError __) {
+      System.err.print("X");
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      System.err.print("I");
+    }
     return true;
   }
 
