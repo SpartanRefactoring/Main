@@ -41,6 +41,22 @@ public enum Files {
     new File(outputDir() + "/after.java").delete();
   }
 
+  public static void blank(final String s) {
+    try (PrintWriter p = new PrintWriter(s)) {
+      p.close();
+    } catch (FileNotFoundException ¢) {
+      ¢.printStackTrace();
+    }
+  }
+
+  public static void blank(final File f) {
+    try (PrintWriter p = new PrintWriter(f)) {
+      p.close();
+    } catch (FileNotFoundException ¢) {
+      ¢.printStackTrace();
+    }
+  }
+
   /** Append String to file.
    * @param f file
    * @param s string */
