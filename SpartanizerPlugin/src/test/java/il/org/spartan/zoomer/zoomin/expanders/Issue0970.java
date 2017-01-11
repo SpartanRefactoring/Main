@@ -4,7 +4,7 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-/** Tets class for issue #970
+/** Test class for {@link MultiTypeCatchClause}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")

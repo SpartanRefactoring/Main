@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts foreach statement to foreach {statement} Issue ##1023
- * {@link Issue1023}
+/** converts foreach statement to foreach {statement}
+ * Test case is{@link Issue1023}
  * @author Raviv Rachmiel
  * @since 10-01-17 */
 public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatement> implements TipperCategory.Expander {

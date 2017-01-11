@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** nit test for {@link AssignmentOperatorExpansion}.
+/** Unit test for {@link AssignmentOperatorExpansion}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")

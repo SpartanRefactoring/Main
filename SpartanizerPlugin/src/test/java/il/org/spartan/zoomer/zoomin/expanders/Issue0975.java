@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit Test for the ForBlock expander {@link ForBlockExpander}, issue #975
+/** Unit Test for the ForBlock expander {@link ForBlockExpander}
  * Also, Unit Test for the WhileBlock expander {@link WhileBlockExpander}
  * @author Raviv Rachmiel
  * @since 26-12-16 */
