@@ -24,4 +24,25 @@ public class ForEachTest {
         .gives("for(Entry<URI,CTOverride>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
         .stays();
   }
+
+  @Test public void c() {
+    trimmingOf("for (Class i : interceptors) try { " //
+        + " l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));} " //
+        + "catch (Throwable ¢) {" //
+        + "logger.warn(\"\",¢);" //
+        + "}")//
+            .using(EnhancedForStatement.class, new ForEach())//
+            .gives(
+                "interceptors.stream().forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
+            .gives(
+                "interceptors.stream().forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
+            .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
+        .using(EnhancedForStatement.class, new ForEach())//
+        .gives("bf.stream().forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
+        .stays();
+  }
 }
