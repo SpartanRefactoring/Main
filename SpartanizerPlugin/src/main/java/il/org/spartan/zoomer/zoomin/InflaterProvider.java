@@ -66,6 +66,8 @@ public class InflaterProvider extends OperationsProvider {
 //            new WhileBlockExpander()) // Removed for now see issue #1060
         .add(IfStatement.class, //
             new IfElseBlockExpander()) //
+        .add(IfStatement.class, //
+            new LongIfExpander())
     ;//
   }
 
