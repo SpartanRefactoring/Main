@@ -36,7 +36,10 @@ public class InflaterProvider extends OperationsProvider {
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
-            new toStringExpander(), new TernaryPushupStrings())//
+            new toStringExpander(), //
+            new TernaryPushupStrings(), //
+            new MultiplicationToDoubleCast()//
+        )//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
         .add(PostfixExpression.class, //
@@ -59,8 +62,8 @@ public class InflaterProvider extends OperationsProvider {
             new ForEachBlockExpander()) //
         .add(ForStatement.class, //
             new ForBlockExpander()) //
-        .add(WhileStatement.class, //
-            new WhileBlockExpander()) //
+//        .add(WhileStatement.class, //
+//            new WhileBlockExpander()) // Removed for now see issue #1060
         .add(IfStatement.class, //
             new IfElseBlockExpander()) //
     ;//
