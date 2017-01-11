@@ -18,6 +18,12 @@ public final class FindFirst extends NanoPatternTipper<Block> {
     {
       add(statementsPattern("for($T $N : $X1) if($X2) return $N; return null;", "return $X1.stream().findFirst($N -> $X2).get();",
           "Go Fluent : FindFirst"));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $N; return $L;", "return $X1.stream().findFirst($N -> $X2).defaultTo($L).get();",
+          "Go Fluent : FindFirst"));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $X3; return null;", "return $X1.stream().findFirst($N -> $X2).map($N -> $X3).get();",
+          "Go Fluent : FindFirst"));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $X3; return $L;",
+          "return $X1.stream().findFirst($N -> $X2).map($N -> $X3).defaultTo($L).get();", "Go Fluent : FindFirst"));
       add(statementsPattern("for($T $N : $X1) if($X2) return $N; throw $X3;",
           "if($X1.stream().anyMatch($N -> $X2)) return $X1.stream().findFirst($N -> $X2).get(); throw $X3;", "Go Fluent : FindFirst"));
       add(statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();",
@@ -42,7 +48,7 @@ public final class FindFirst extends NanoPatternTipper<Block> {
   }
 
   @Override public String technicalName() {
-    return "ReturnFirstInCSatisfyingX";
+    return "ReturnFirstInCSatisfyingXIfNoneY";
   }
 
   @Override public String example() {
