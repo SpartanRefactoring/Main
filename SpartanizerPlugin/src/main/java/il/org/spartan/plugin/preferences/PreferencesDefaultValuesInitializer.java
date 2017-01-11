@@ -1,11 +1,11 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.preferences;
 
-import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
 
-import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.PreferencesResources.*;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.
