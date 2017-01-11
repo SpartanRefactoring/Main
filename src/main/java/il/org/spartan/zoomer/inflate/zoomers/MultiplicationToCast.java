@@ -11,31 +11,41 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert :
+/** Covers Issues #1006 & #1007 </br>
+ * Convert :
  * 
  * <pre>
  * x * 1. / x * 1.0
+ * x * 1L
  * </pre>
  * 
  * To:
  * 
  * <pre>
  * (double) x
+ * (long) x
  * </pre>
  * 
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-11 */
-public class MultiplicationToDoubleCast extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
+public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
     List<Expression> lst = extract.allOperands(x);
     int i = 0;
+    boolean found = false;
+    CastExpression $ = x.getAST().newCastExpression();
     for (Expression e : lst) {
       if (iz.numberLiteral(e) && ("1.".equals(az.numberLiteral(e).getToken()) || "1.0".equals(az.numberLiteral(e).getToken()))) {
-        CastExpression $ = x.getAST().newCastExpression();
-        Type t = x.getAST().newPrimitiveType(PrimitiveType.DOUBLE);
-        $.setType(copy.of(t));
+        $.setType(copy.of(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE)));
+        found = true;
+      }
+      if (iz.numberLiteral(e) && ("1L".equals(az.numberLiteral(e).getToken()))) {
+        $.setType(copy.of(x.getAST().newPrimitiveType(PrimitiveType.LONG)));
+        found = true;
+      }
+      if (found) {
         if (!x.hasExtendedOperands()) {
           if (i == 0) {
             $.setExpression(copy.of(x.getRightOperand()));
