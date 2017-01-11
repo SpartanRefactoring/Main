@@ -1,13 +1,10 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.research.idiomatics.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
@@ -51,19 +48,6 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
   }
 
   @Override public String description(@SuppressWarnings("unused") IfStatement __) {
-    // boolean a = true, b = true, c = true;
-    // if (a && b && c) {
-    // a = false;
-    // }
-    // if (a && b) {
-    // a=false;
-    // }
-    //
-    // if (a) {
-    // if (b) {
-    // a = false;
-    // }
-    // }
     return "Replace an if statement that contains && with two ifs";
   }
 
