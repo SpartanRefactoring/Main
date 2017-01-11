@@ -51,12 +51,12 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
     return "Replace an if statement that contains && with two ifs";
   }
 
-  @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(IfStatement ¢, InfixExpression ie) {
+  @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(IfStatement ¢, InfixExpression x) {
     InfixExpression $ = ¢.getAST().newInfixExpression();
-    $.setOperator(ie.getOperator());
-    $.setLeftOperand(copy.of(ie.getRightOperand()));
-    $.setRightOperand(copy.of((Expression) ie.extendedOperands().get(0)));
-    $.extendedOperands().addAll(copy.of(ie.extendedOperands()));
+    $.setOperator(x.getOperator());
+    $.setLeftOperand(copy.of(x.getRightOperand()));
+    $.setRightOperand(copy.of((Expression) x.extendedOperands().get(0)));
+    $.extendedOperands().addAll(copy.of(x.extendedOperands()));
     $.extendedOperands().remove(0);
     return $;
   }
