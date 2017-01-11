@@ -248,4 +248,61 @@ public class MatcherTest {
   @Test public void x01() {
     assert !patternMatcher("$X;", "").matches(findFirst.expression(ast("return 6;")));
   }
+
+  @Test public void t01() {
+    assert patternMatcher("$T $N;", "").matches(findFirst.variableDeclarationStatement(ast("Object x;")));
+  }
+
+  @Test public void t02() {
+    assert patternMatcher("$T $N;", "").matches(findFirst.variableDeclarationStatement(ast("int x;")));
+  }
+
+  @Test public void t03() {
+    assert patternMatcher("$T $N;", "").matches(findFirst.variableDeclarationStatement(ast("Class<?> x;")));
+  }
+
+  @Test public void t04() {
+    assert patternMatcher("$T $N;", "").matches(findFirst.variableDeclarationStatement(ast("Class<? extends N> x;")));
+  }
+
+  @Test public void t05() {
+    assert !patternMatcher("$T y;", "").matches(findFirst.variableDeclarationStatement(ast("Class<? extends N> x;")));
+  }
+
+  @Test public void t06() {
+    assert !patternMatcher("$T x;", "").matches(findFirst.variableDeclarationStatement(ast("Object y;")));
+  }
+
+  @Test public void t07() {
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(ast("for(C i : col) f();")));
+  }
+
+  @Test public void t08() {
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(ast("for(C<?> i : col) f();")));
+  }
+
+  @Test public void t09() {
+    assert patternMatcher("for($T $N : $X) f();", "").matches(findFirst.enhancedForStatement(ast("for(C<? extends N> i : col) f();")));
+  }
+
+  @Test public void t10() {
+    assert patternMatcher("for($T $N : $X1) $X2;", "").matches(findFirst.enhancedForStatement(ast("for(C<? extends N> i : col) f();")));
+  }
+
+  @Test public void t10b() {
+    assert patternMatcher("for($T $N1 : $N2) $X;", "").matches(findFirst.enhancedForStatement(ast("for(C<? extends N> i : col) f();")));
+  }
+
+  @Test public void t11() {
+    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.enhancedForStatement(ast("for (Class ¢ : bf) f();")));
+  }
+
+  @Test public void t12() {
+    assert patternMatcher("for($T $N2 : $N3) $X;", "").matches(findFirst.enhancedForStatement(ast("for (Class<?> ¢ : bf) f();")));
+  }
+
+  @Test public void t13() {
+    assert patternMatcher("for($T $N2 : $N3) $X;", "")
+        .matches(findFirst.enhancedForStatement(ast("for (Class<? extends BroadcastFilter> ¢ : bf) f();")));
+  }
 }

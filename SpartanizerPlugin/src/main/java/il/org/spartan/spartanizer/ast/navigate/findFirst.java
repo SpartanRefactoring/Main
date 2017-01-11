@@ -259,4 +259,8 @@ public interface findFirst {
   static Name name(final ASTNode ¢) {
     return instanceOf(Name.class, ¢);
   }
+
+  static ASTNode variableDeclarationStatement(ASTNode ¢) {
+    return instanceOf(VariableDeclarationStatement.class, ¢);
+  }
 }
