@@ -8,6 +8,7 @@ import org.junit.*;
  * @author Yuval Simon
  * @since 2016-11-27 */
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue0880 {
   @Test public void c() {
     trimmingOf("switch(x) { case a: default:y=3; case b:}").gives("switch(x){default:y=3; case b:}").stays();
