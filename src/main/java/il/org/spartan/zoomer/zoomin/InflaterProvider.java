@@ -62,8 +62,8 @@ public class InflaterProvider extends OperationsProvider {
             new ForEachBlockExpander()) //
         .add(ForStatement.class, //
             new ForBlockExpander()) //
-//        .add(WhileStatement.class, //
-//            new WhileBlockExpander()) // Removed for now see issue #1060
+        .add(WhileStatement.class, //
+            new WhileBlockExpander()) //
         .add(IfStatement.class, //
             new IfElseBlockExpander()) //
         .add(IfStatement.class, //
