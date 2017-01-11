@@ -38,7 +38,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(InfixExpression.class, //
             new toStringExpander(), //
             new TernaryPushupStrings(), //
-            new MultiplicationToDoubleCast()//
+            new MultiplicationToCast()//
         )//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
