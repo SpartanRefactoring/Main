@@ -24,4 +24,26 @@ public class ForEachFilteredTest {
         .gives("((B)c).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
+
+  @Test public void c() {
+    trimmingOf(
+        "for (AtmosphereResource r : resources) if (Utils.resumableTransport(r.transport())) try {    r.resume();  }   catch (Throwable ¢) {    logger.trace(\"resumeAll\",¢);  }")//
+            .using(EnhancedForStatement.class, new ForEachFiltered())//
+            .gives(
+                "resources.stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){{logger.trace(\"resumeAll\",¢);}}});")//
+            .gives(
+                "resources.stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){logger.trace(\"resumeAll\",¢);}});")//
+            .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf(
+        "for (AtmosphereResource r : (B)resources) if (Utils.resumableTransport(r.transport())) try {    r.resume();  }   catch (Throwable ¢) {    logger.trace(\"resumeAll\",¢);  }")//
+            .using(EnhancedForStatement.class, new ForEachFiltered())//
+            .gives(
+                "((B)resources).stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){{logger.trace(\"resumeAll\",¢);}}});")//
+            .gives(
+                "((B)resources).stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){logger.trace(\"resumeAll\",¢);}});")//
+            .stays();
+  }
 }
