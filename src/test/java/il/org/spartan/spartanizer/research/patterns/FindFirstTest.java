@@ -28,4 +28,16 @@ public class FindFirstTest {
         .using(Block.class, new FindFirst())//
         .gives("theChosen=is.stream().findFirst(i->i.isNice()).get();");
   }
+
+  @Test public void d() {
+    trimmingOf("for (BlockState $ : blocks) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.getTypeId(); return 0;")//
+        .using(Block.class, new FindFirst())//
+        .gives("return blocks.stream().findFirst($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.getTypeId()).defaultTo(0).get();");
+  }
+
+  @Test public void e() {
+    trimmingOf("for(Object i : is) if(i.isNice()) return i; return 0;")//
+        .using(Block.class, new FindFirst())//
+        .gives("return is.stream().findFirst(i->i.isNice()).defaultTo(0).get();");
+  }
 }
