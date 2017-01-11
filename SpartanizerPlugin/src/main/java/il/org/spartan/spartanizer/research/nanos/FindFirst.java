@@ -10,7 +10,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
+/** There are actually few forms of FindFirst<br>
+ * If none, can return null,some default value or throw. <br>
+ * Sometimes returned value is mapped, or a filed of it is extracted. <br>
+ * @author Ori Marcovitch
  * @year 2016 */
 public final class FindFirst extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
