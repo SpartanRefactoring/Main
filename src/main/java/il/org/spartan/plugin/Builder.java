@@ -6,7 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;

@@ -1,9 +1,10 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.preferences;
 
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.jface.preference.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -61,7 +62,7 @@ public class PreferencesResources {
     }
 
     private final Class<? extends TipperCategory> clazz;
-    final String id;
+    public final String id;
     final String label;
 
     TipperGroup(final Class<? extends TipperCategory> clazz) {
