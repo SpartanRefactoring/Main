@@ -10,30 +10,30 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1007 {
   @Test public void t1() {
-    zoomingInto("2 * 1.0").gives("(double) 2");
+    zoomingInto("double  t; t = 2 * 1.0;").gives("double t; t = (double) 2;");
   }
 
   @Test public void t2() {
-    zoomingInto("1.0 * a").gives("(double) a");
+    zoomingInto("double  t; t = 1.0 * a;").gives("double  t; t =(double) a;");
   }
 
   @Test public void t3() {
-    zoomingInto("1. * a").gives("(double) a");
+    zoomingInto("double  t; t =1. * a;").gives("double  t; t =(double) a;");
   }
 
   @Test public void t4() {
-    zoomingInto("a * 1.").gives("(double) a");
+    zoomingInto("double  t; t =a * 1.;").gives("double  t; t =(double) a;");
   }
 
   @Test public void t5() {
-    zoomingInto("1. * 9 * a").gives("(double) 9 * a");
+    zoomingInto("double  t; t =1. * 9 * a;").gives("double  t; t =(double) 9 * a;");
   }
 
   @Test public void t6() {
-    zoomingInto("1. * 9 * a * b").gives("(double) 9 * a * b");
+    zoomingInto("double  t; t =1. * 9 * a * b;").gives("double  t; t =(double) 9 * a * b;");
   }
 
   @Test public void t7() {
-    zoomingInto("9 * a * 1. * b").gives("(double) 9 * a * b");
+    zoomingInto("double  t; t =9 * a * 1. * b;").gives("double  t; t =(double) 9 * a * b;");
   }
 }
