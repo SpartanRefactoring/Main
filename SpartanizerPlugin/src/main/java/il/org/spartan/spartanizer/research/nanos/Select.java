@@ -16,11 +16,11 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($N1 $N2 : $X1) if($X2) $N3.add($N4);", //
-          "$N3.addAll($X1.stream().filter($N2 -> $X2).collect(Collectors.toList()));", //
+      add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //
+          "$N2.addAll($X1.stream().filter($N1 -> $X2).collect(Collectors.toList()));", //
           "Go Fluent: filter pattern"));
-      add(patternTipper("for($N1 $N2 : $X1) if($X2) $N3.add($X3);", //
-          "$N3.addAll($X1.stream().filter($N2 -> $X2).map($N2 -> $X3).collect(Collectors.toList()));", //
+      add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($X3);", //
+          "$N2.addAll($X1.stream().filter($N1 -> $X2).map($N1 -> $X3).collect(Collectors.toList()));", //
           "Go Fluent: filter pattern"));
     }
   };
