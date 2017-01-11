@@ -10,6 +10,7 @@ import org.junit.*;
  * @author Yuval Simon
  * @since 2016-12-08 */
 // TODO: Raviv R --yg
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0905 {
   @Test public void t06() {
