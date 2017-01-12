@@ -53,6 +53,8 @@ public class GUIBatchLaconizer extends Applicator {
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
+          // TODO Roth: this may throw a {@link CoreException}, be sure to catch
+          // it!
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
             done.add(¢);
