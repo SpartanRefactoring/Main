@@ -357,9 +357,9 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(Binding ¢) {
+    // TODO: @mdoron Finish checking forward names (??)
     int postface = 0;
-    // TODO: @mdoron Finish checking forward names
-    String face = ((¢ + "").charAt(0) < 'a' ? (¢ + "").charAt(0) : (¢ + "").charAt(0) - 'a') + (¢ + "").substring(1);
+    String face = ¢ == null ? "var" : ((¢ + "").charAt(0) < 'a' ? (¢ + "").charAt(0) : (¢ + "").charAt(0) - 'a') + (¢ + "").substring(1);
     String $ = face + "" + ++postface;
     while (has($))
       $ = face + "" + ++postface;
