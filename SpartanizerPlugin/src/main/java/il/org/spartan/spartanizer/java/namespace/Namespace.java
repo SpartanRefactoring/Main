@@ -355,7 +355,7 @@ public final class Namespace implements Environment {
       n.fillScope(child);
     return false;
   }
-  
+
   public String generateName(Binding ¢) {
     int postface = 0;
     // TODO: @mdoron Finish checking forward names
