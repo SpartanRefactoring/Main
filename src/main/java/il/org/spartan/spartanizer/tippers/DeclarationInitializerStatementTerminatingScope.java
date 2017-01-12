@@ -80,7 +80,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
