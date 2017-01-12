@@ -355,14 +355,14 @@ public final class Namespace implements Environment {
       n.fillScope(child);
     return false;
   }
-  
-  public String generateName(@SuppressWarnings("unused") Binding ¢) {
-    int xxx = 0;
-    // TODO: @mdoron Finish checking forward names
-    // TODO: @mdoron Finish uppercase lowercase 
-    String $ = "var" + ++xxx;
+
+  public String generateName(Binding ¢) {
+    // TODO: @mdoron Finish checking forward names (??)
+    int postface = 0;
+    String face = ¢ == null ? "var" : ((¢ + "").charAt(0) < 'a' ? (¢ + "").charAt(0) : (¢ + "").charAt(0) - 'a') + (¢ + "").substring(1);
+    String $ = face + "" + ++postface;
     while (has($))
-      $ = "var" + ++xxx;
+      $ = face + "" + ++postface;
     return $;
   }
 }
