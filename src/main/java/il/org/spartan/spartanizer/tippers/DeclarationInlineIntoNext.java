@@ -39,8 +39,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
-        || iz.conditionalExpression(initializer(f)) || iz.arrayInitializer(initializer(f)) || cannotInlineInto(nextStatement)
-        || initializer(f) == null
+        || iz.conditionalExpression(initializer(f)) || cannotInlineInto(nextStatement) || initializer(f) == null
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(f.getName() + "") && !iz.simpleName(f.getInitializer())
             && !iz.literal(f.getInitializer()))
@@ -48,8 +47,11 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     final SimpleName id = peelIdentifier(nextStatement, identifier(name(f)));
     if (id == null || anyFurtherUsage(parent, nextStatement, identifier(id)) || leftSide(nextStatement, identifier(id)) || preOrPostfix(id))
       return null;
+    Expression e = !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis();
+    if (parent instanceof VariableDeclarationStatement)
+      e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     $.remove(parent, g);
-    $.replace(id, !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis(), g);
+    $.replace(id, e, g);
     return $;
   }
 
