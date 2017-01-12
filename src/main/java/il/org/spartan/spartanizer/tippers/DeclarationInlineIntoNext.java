@@ -40,7 +40,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
         || iz.conditionalExpression(initializer(f)) || iz.arrayInitializer(initializer(f)) || cannotInlineInto(nextStatement)
-        || initializer(f) == null
+        || initializer(f) == null || DeclarationInitializerStatementTerminatingScope.isNotAllowedOpOnPrimitive(f, nextStatement)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(f.getName() + "") && !iz.simpleName(f.getInitializer())
             && !iz.literal(f.getInitializer()))
