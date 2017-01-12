@@ -5,6 +5,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -53,7 +55,9 @@ public class Table_Summary extends TableReusabilityIndices {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
+      MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      if (d != null)
+        npDistributionStatistics.logMethod(d);
     } catch (final AssertionError __) {
       ___.unused(__);
     }
