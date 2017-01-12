@@ -30,7 +30,11 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      for (final EnhancedForStatement l : searchDescendants.forClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))))
+      // for (final EnhancedForStatement l :
+      // searchDescendants.forClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))))
+      // if (!iz.block(body(l)))
+      // appendFile(out, l + "");
+      for (final ForStatement l : searchDescendants.forClass(ForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))))
         if (!iz.block(body(l)))
           appendFile(out, l + "");
     } catch (@SuppressWarnings("unused") final AssertionError __) {
