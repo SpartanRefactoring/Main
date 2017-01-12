@@ -29,11 +29,11 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   }
 
   @Override public String description() {
-    return "Iterate a collection and apply a statement for each element";
+    return "Iterate through a range of indexes and apply a statement for each index";
   }
 
   @Override public String technicalName() {
-    return "ForEachInCApplyS";
+    return "ForEachFromL₁ToL₂ApplyS";
   }
 
   @Override public String example() {
