@@ -78,6 +78,7 @@ public class Table_Summary extends TableReusabilityIndices {
 
   private static void clearAll() {
     statementsCoverageStatistics.clear();
+    npDistributionStatistics.clear();
     npStatistics.clear();
     scope.clear();
     totalMethodsTouched = totalStatementsCovered = totalMethods = totalStatements = 0;
@@ -109,22 +110,27 @@ public class Table_Summary extends TableReusabilityIndices {
     writer.col("Fiteratives", fIteratives());
     writer.col("FconditionalExps", fConditionalExpressions());
     writer.col("FconditionalStmts", fConditionalStatements());
+    writer.nl();
   }
 
-  @SuppressWarnings("boxing") private static double fMethods() {
-    return npDistributionStatistics.coverage(ASTNode.METHOD_DECLARATION);
+  private static Double fMethods() {
+    return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static double fIteratives() {
-    return npDistributionStatistics.coverage(ASTNode.ENHANCED_FOR_STATEMENT);
+  @SuppressWarnings("boxing") private static Double getNodeCoverage(int type) {
+    return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
   }
 
-  @SuppressWarnings("boxing") private static double fConditionalExpressions() {
-    return npDistributionStatistics.coverage(ASTNode.CONDITIONAL_EXPRESSION);
+  private static Double fIteratives() {
+    return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 
-  @SuppressWarnings("boxing") private static double fConditionalStatements() {
-    return npDistributionStatistics.coverage(ASTNode.IF_STATEMENT);
+  private static Double fConditionalExpressions() {
+    return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
+  }
+
+  private static Double fConditionalStatements() {
+    return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
   /** [[SuppressWarningsSpartan]] */
