@@ -23,9 +23,9 @@ import il.org.spartan.utils.*;
 public class Table_Summary extends TableReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  protected static final int MAX_STATEMENTS_REPORTED = 30;
+  private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table cWriter; // coverage
+  private static Table writer; // coverage
   private static int totalStatements;
   protected static int totalMethods;
   private static int totalStatementsCovered;
@@ -35,11 +35,13 @@ public class Table_Summary extends TableReusabilityIndices {
     clazz = Table_Summary.class;
     Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
     Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
+    Logger.subscribe((n, np) -> npDistributionStatistics.logNPInfo(n, np));
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
+    writer.close();
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
@@ -52,7 +54,7 @@ public class Table_Summary extends TableReusabilityIndices {
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    } catch (final Exception __) {
+    } catch (final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -70,9 +72,15 @@ public class Table_Summary extends TableReusabilityIndices {
 
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
+    clearAll();
+    System.err.println("Outcol is in: " + Table.temporariesFolder + path);
+  }
+
+  private static void clearAll() {
     statementsCoverageStatistics.clear();
+    npStatistics.clear();
     scope.clear();
-    System.err.println("Output is in: " + Table.temporariesFolder + path);
+    totalMethodsTouched = totalStatementsCovered = totalMethods = totalStatements = 0;
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
@@ -85,27 +93,38 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    cWriter = new Table(Table_Summary.class.getSimpleName());
+    writer = new Table(Table_Summary.class.getSimpleName());
   }
 
-  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
-    if (cWriter == null)
+  public void summarizeSortedMethodStatistics(final String path) {
+    if (writer == null)
       initializeWriter();
     gatherGeneralStatistics();
-    cWriter.put("Project", path);
-    cWriter.put("Coverage", coverage());
-    cWriter.put("Touched", touched());
-    cWriter.put("R-Index", rMethod());
-    cWriter.put("Nanos adopted", adopted());
-    cWriter.put("Fmethods", notImplementedYet());
-    cWriter.put("Fiteratives", notImplementedYet());
-    cWriter.put("FconditionalExps", notImplementedYet());
-    cWriter.put("FconditionalStmts", notImplementedYet());
-    cWriter.nl();
+    writer.col("Project", path);
+    writer.col("Coverage", coverage());
+    writer.col("Touched", touched());
+    writer.col("R-Index", rMethod());
+    writer.col("Nanos adopted", adopted());
+    writer.col("Fmethods", fMethods());
+    writer.col("Fiteratives", fIteratives());
+    writer.col("FconditionalExps", fConditionalExpressions());
+    writer.col("FconditionalStmts", fConditionalStatements());
   }
 
-  private static int notImplementedYet() {
-    return 0;
+  @SuppressWarnings("boxing") private static double fMethods() {
+    return npDistributionStatistics.coverage(ASTNode.METHOD_DECLARATION);
+  }
+
+  @SuppressWarnings("boxing") private static double fIteratives() {
+    return npDistributionStatistics.coverage(ASTNode.ENHANCED_FOR_STATEMENT);
+  }
+
+  @SuppressWarnings("boxing") private static double fConditionalExpressions() {
+    return npDistributionStatistics.coverage(ASTNode.CONDITIONAL_EXPRESSION);
+  }
+
+  @SuppressWarnings("boxing") private static double fConditionalStatements() {
+    return npDistributionStatistics.coverage(ASTNode.IF_STATEMENT);
   }
 
   /** [[SuppressWarningsSpartan]] */
