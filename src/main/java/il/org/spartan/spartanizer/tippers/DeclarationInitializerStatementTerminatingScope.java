@@ -45,6 +45,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
+    
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
@@ -100,7 +101,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
