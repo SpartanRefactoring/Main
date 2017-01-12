@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class ExhaustTest {
   @Test public void a() {
     trimmingOf("while (keyReferenceQueue.poll() != null) {}")//

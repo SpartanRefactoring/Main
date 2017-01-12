@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.research.nanos.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
     trimmingOf("for(Object i : is) if(i.isNice()) return i; return null;")//
