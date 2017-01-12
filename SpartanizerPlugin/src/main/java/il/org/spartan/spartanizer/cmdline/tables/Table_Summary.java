@@ -106,7 +106,9 @@ public class Table_Summary extends TableReusabilityIndices {
       initializeWriter();
     gatherGeneralStatistics();
     writer.col("Project", path);
+    writer.col("Statements", statements());
     writer.col("Coverage", coverage());
+    writer.col("Methods", methods());
     writer.col("Touched", touched());
     writer.col("R-Index", rMethod());
     writer.col("Nanos adopted", adopted());
@@ -115,6 +117,14 @@ public class Table_Summary extends TableReusabilityIndices {
     writer.col("FconditionalExps", fConditionalExpressions());
     writer.col("FconditionalStmts", fConditionalStatements());
     writer.nl();
+  }
+
+  private static int statements() {
+    return totalStatements;
+  }
+
+  private static int methods() {
+    return totalMethods;
   }
 
   private static Double fMethods() {
