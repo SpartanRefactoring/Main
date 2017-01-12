@@ -16,7 +16,7 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
   private static final List<UserDefinedTipper<WhileStatement>> tippers = new ArrayList<UserDefinedTipper<WhileStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("while ($X != null) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API"));
+      add(patternTipper("while ($X) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API"));
     }
   };
 
