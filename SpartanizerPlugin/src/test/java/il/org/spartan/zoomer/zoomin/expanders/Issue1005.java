@@ -19,11 +19,11 @@ public class Issue1005 {
 
   @Test public void t3() {
     zoomingInto("if(++i + i++ > ++i + y) { x = f(); }").
-    gives("if(++i+(i=i+1)>++i+y){x=f();}");
+    gives("if((++i + i++) > ++i + y) { x = f(); }");
   }
 
   @Test public void t4() {
-    zoomingInto("f(i++,--j,++x);").gives("f(i=i+1,--j,++x);");
+    zoomingInto("f(i++,--j,++x);").stays();
   }
 
   @Test public void t5() {
