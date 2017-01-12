@@ -8,9 +8,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Test class for issue #965
+/** Test class for issue #1036
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
- * @since 2016-12-20 */
+ * @since 2016-01-12 */
 public class Issue1036 {
   @Test public void test0() {
     expansionOf(new TestClass()) //
