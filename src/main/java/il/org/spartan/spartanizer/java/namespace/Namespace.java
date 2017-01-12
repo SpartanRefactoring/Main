@@ -356,13 +356,13 @@ public final class Namespace implements Environment {
     return false;
   }
   
-  public String generateName(@SuppressWarnings("unused") Binding ¢) {
-    int xxx = 0;
+  public String generateName(Binding ¢) {
+    int postface = 0;
     // TODO: @mdoron Finish checking forward names
-    // TODO: @mdoron Finish uppercase lowercase 
-    String $ = "var" + ++xxx;
+    String face = ((¢ + "").charAt(0) < 'a' ? (¢ + "").charAt(0) : (¢ + "").charAt(0) - 'a') + (¢ + "").substring(1);
+    String $ = face + "" + ++postface;
     while (has($))
-      $ = "var" + ++xxx;
+      $ = face + "" + ++postface;
     return $;
   }
 }
