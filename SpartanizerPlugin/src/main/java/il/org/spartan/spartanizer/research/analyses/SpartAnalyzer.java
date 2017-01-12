@@ -54,6 +54,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new ForEachFiltered(), //
             new Select(), //
             null) //
+        .add(ForStatement.class, //
+            new ForEachInRange(), //
+            null) //
         .add(IfStatement.class, //
             new NotNullOrThrow(), //
             new AssertNotNull(), //
