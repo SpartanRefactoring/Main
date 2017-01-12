@@ -50,7 +50,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
       return null;
     Expression e = !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis();
     if (parent instanceof VariableDeclarationStatement)
-    e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
+      e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     $.remove(parent, g);
     $.replace(id, e, g);
     return $;
