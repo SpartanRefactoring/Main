@@ -9,7 +9,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 /** Unit tests for {@link VariableDeclarationStatementSplit}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
-@Ignore // TODO Tome Tragucki
+@Ignore // TODO Tomer Tragucki
 @SuppressWarnings("static-method")
 public class Issue0968 {
   @Test public void a() {

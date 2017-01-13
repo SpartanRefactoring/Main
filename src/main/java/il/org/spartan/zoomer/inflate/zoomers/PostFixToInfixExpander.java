@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * i=i+1 / i=i-1 ;
  * </pre>
- *  Test class is {@link Issue0974}
+ * 
+ * Test class is {@link Issue0974}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression> implements TipperCategory.Expander {
