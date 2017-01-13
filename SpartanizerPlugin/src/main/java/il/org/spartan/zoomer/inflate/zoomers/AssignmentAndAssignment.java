@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert (a=b=??;) to (a=3;b=??;)
- * Tested in {@link Issue0999}
+/** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
 public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.Expander {
