@@ -120,7 +120,7 @@ public class Toolbox {
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
-            // new ForRedundantContinue(), //
+            new ForRedundantContinue(), //
             null)//
         .add(WhileStatement.class, //
             new EliminateConditionalContinueInWhile(), //
