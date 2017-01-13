@@ -61,13 +61,14 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
           @Override public void go(ASTRewrite r, TextEditGroup g) {
+            Type tt = !b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions());
             VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             Binding bd = new Binding();
-            String nn = new Namespace(Environment.of(s), "").generateName(null);
+            String nn = new Namespace(Environment.of(s), "").generateName(tt);
             f.setName(s.getAST().newSimpleName(nn));
             f.setInitializer(copy.of($));
             VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
-            v.setType(!b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions()));
+            v.setType(tt);
             Statement ns = copy.of(s);
             s.subtreeMatch(new ASTMatcherSpecific($, ne -> r.replace(ne, s.getAST().newSimpleName(nn), g)), ns);
             if (!(s.getParent() instanceof Block))
