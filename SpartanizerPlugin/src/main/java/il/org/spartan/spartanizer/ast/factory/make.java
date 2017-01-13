@@ -246,4 +246,17 @@ public enum make {
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
   }
+  
+  public static VariableDeclarationStatement variableDeclarationStatement(Type t, String name, Expression e) {
+    AST create = e.getAST();
+    VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
+    SimpleName s = create.newSimpleName(name);
+    fragment.setName(s);
+    fragment.setInitializer(e);
+    VariableDeclarationStatement vd = create.newVariableDeclarationStatement(
+        fragment);
+    vd.setType(t);
+    
+    return vd;
+  }
 }

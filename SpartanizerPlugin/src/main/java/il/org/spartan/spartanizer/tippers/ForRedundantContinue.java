@@ -32,10 +32,13 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block b = az.block(step.body(¢));
-        if (b != null)
-          step.statements(b).remove(lastStatement(¢));
-        else
+        if (b == null)
           r.replace(lastStatement(¢), make.emptyStatement(¢), g);
+        else {
+          step.statements(b).remove(lastStatement(¢));
+          Block newB = copy.of(b);
+          r.replace(b, newB, g);
+        }
       }
     };
   }
