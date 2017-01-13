@@ -63,7 +63,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           @Override public void go(ASTRewrite r, TextEditGroup g) {
             VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             Binding bd = new Binding();
-            String nn = new Namespace(Environment.of(s), "").generateName(bd);
+            String nn = new Namespace(Environment.of(s), "").generateName(null);
             f.setName(s.getAST().newSimpleName(nn));
             f.setInitializer(copy.of($));
             VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
