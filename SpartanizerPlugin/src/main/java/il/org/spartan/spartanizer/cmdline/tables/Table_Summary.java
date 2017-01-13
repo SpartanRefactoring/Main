@@ -127,23 +127,23 @@ public class Table_Summary extends TableReusabilityIndices {
     return totalMethods;
   }
 
-  private static Double fMethods() {
+  private static double fMethods() {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static Double getNodeCoverage(int type) {
+  @SuppressWarnings("boxing") private static double getNodeCoverage(int type) {
     return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
   }
 
-  private static Double fIteratives() {
+  private static double fIteratives() {
     return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 
-  private static Double fConditionalExpressions() {
+  private static double fConditionalExpressions() {
     return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
   }
 
-  private static Double fConditionalStatements() {
+  private static double fConditionalStatements() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
@@ -155,7 +155,7 @@ public class Table_Summary extends TableReusabilityIndices {
         .filter(n -> n.occurences > $).count();
   }
 
-  private static String touched() {
+  private static double touched() {
     return format.decimal(100 * safe.div(totalMethodsTouched, totalMethods));
   }
 
@@ -163,7 +163,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count();
   }
 
-  private static String coverage() {
+  private static double coverage() {
     return format.decimal(100 * safe.div(totalStatementsCovered, totalStatements));
   }
 
