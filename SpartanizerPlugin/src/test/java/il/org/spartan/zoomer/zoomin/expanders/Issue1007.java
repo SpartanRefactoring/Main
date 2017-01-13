@@ -4,8 +4,7 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
-/** Test case for @link MultiplicationToDoubleCast}
- * covers also Issue #1006
+/** Test case for @link MultiplicationToDoubleCast} covers also Issue #1006
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-01-11 */
 @SuppressWarnings("static-method")
