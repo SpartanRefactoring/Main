@@ -16,11 +16,11 @@ public class Issue1004 {
   }
 
   @Test public void t2() {
-    zoomingInto("arr[i++] = i;").gives("arr[i=i+1] = i;").stays();
+    zoomingInto("arr[i++] = i;").stays();
   }
 
   @Test public void t3() {
-    zoomingInto("arr[i++] = arr[i++] + i;").gives("arr[i=i+1]=arr[i++]+i;");
+    zoomingInto("arr[i++] = arr[i++] + i;").stays();
   }
 
   @Test public void t4() {
