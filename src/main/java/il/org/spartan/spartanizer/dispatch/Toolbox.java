@@ -311,6 +311,9 @@ public class Toolbox {
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
+        .add(VariableDeclarationStatement.class, //
+            new TwoDeclarationsIntoOne(), //
+            null) //
     //
     //
     ;
