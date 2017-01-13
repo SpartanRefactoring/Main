@@ -371,11 +371,9 @@ public final class Namespace implements Environment {
     return false;
   }
 
-  public String generateName(Expression ¢) {
-    String className = type.of(¢) + "";
+  public String generateName(Type ¢) {
+    String face = namer.shorten(¢);
     int postface = 0;
-    @SuppressWarnings("boxing") String face = (className.charAt(0) >= 'a' ? className.charAt(0) : (className.charAt(0) + "").toLowerCase())
-        + className.substring(1);
     String $ = face + "" + ++postface;
     while (has($))
       $ = face + "" + ++postface;
