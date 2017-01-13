@@ -38,9 +38,13 @@ public class Issue1044 extends ReflectiveTester {
   }
 }
 
+/**
+ * [[SuppressWarningsSpartan]]
+ */
+@SuppressWarnings("all")
 class NamespaceFixture {
   {
-    Integer i1 = 2, i3 = 4, i2 = 5;
+     Integer i1 = 2, i3 = 4, i2 = 5;
     class b1 {}
   }
 
