@@ -1,6 +1,5 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
-
 import java.util.*;
 import java.util.function.*;
 
@@ -8,7 +7,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -34,43 +32,43 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       Integer.valueOf(ASTNode.METHOD_INVOCATION), Integer.valueOf(ASTNode.INFIX_EXPRESSION), Integer.valueOf(ASTNode.ASSIGNMENT),
       Integer.valueOf(ASTNode.CONDITIONAL_EXPRESSION), Integer.valueOf(ASTNode.LAMBDA_EXPRESSION));
 
-  @Override public String description(@SuppressWarnings("unused") Statement __) {
+  @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
   }
 
-  @Override public Tip tip(Statement s) {
+  @Override public Tip tip(final Statement s) {
     if (!s.getAST().hasResolvedBindings() || !(s.getRoot() instanceof CompilationUnit)
         || !(((CompilationUnit) s.getRoot()).getTypeRoot() instanceof ICompilationUnit))
       return null;
-    Expression $ = choose(candidates(s));
+    final Expression $ = choose(candidates(s));
     if ($ == null)
       return null;
-    ITypeBinding b = $.resolveTypeBinding();
+    final ITypeBinding b = $.resolveTypeBinding();
     if (b == null)
       return null;
     Type t;
     try {
       // TODO Roth: use library code
-      ImportRewrite ir = ImportRewrite.create((ICompilationUnit) ((CompilationUnit) s.getRoot()).getTypeRoot(), false);
+      final ImportRewrite ir = ImportRewrite.create((ICompilationUnit) ((CompilationUnit) s.getRoot()).getTypeRoot(), false);
       if (ir == null)
         return null;
       t = ir.addImport(b, s.getAST());
-    } catch (JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
       return null;
     }
     return t == null || $ instanceof Assignment ? // TODO Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
-          @Override public void go(ASTRewrite r, TextEditGroup g) {
-            Type tt = !b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions());
-            VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-            String nn = scope.newName(s, tt);
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final Type tt = !b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions());
+            final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
+            final String nn = scope.newName(s, tt);
             f.setName(s.getAST().newSimpleName(nn));
             f.setInitializer(copy.of($));
-            VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
+            final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
             v.setType(tt);
-            Statement ns = copy.of(s);
+            final Statement ns = copy.of(s);
             s.subtreeMatch(new ASTMatcherSpecific($, ne -> r.replace(ne, s.getAST().newSimpleName(nn), g)), ns);
             if (!(s.getParent() instanceof Block))
               goNonBlockParent(s.getParent(), v, ns, r, g);
@@ -79,17 +77,17 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           }
 
           /** [[SuppressWarningsSpartan]] */
-          @SuppressWarnings("unchecked") void goNonBlockParent(ASTNode p, VariableDeclarationStatement v, Statement ns, ASTRewrite r,
-              TextEditGroup g) {
-            Block nb = p.getAST().newBlock();
+          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r,
+              final TextEditGroup g) {
+            final Block nb = p.getAST().newBlock();
             nb.statements().add(v);
             nb.statements().add(ns);
             r.replace(s, nb, g);
           }
 
           /** [[SuppressWarningsSpartan]] */
-          void goBlockParent(Block p, VariableDeclarationStatement v, Statement ns, ASTRewrite r, TextEditGroup g) {
-            ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
+          void goBlockParent(final Block p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+            final ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
             lr.insertBefore(v, s, g);
             lr.insertBefore(ns, s, g);
             lr.remove(s, g);
@@ -98,14 +96,14 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Roth: extend (?)
-  @SuppressWarnings("hiding") private static List<Expression> candidates(Statement s) {
-    List<Expression> $ = new LinkedList<>();
-    List<ASTNode> excludedParents = new LinkedList<>();
+  @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
+    final List<Expression> $ = new LinkedList<>();
+    final List<ASTNode> excludedParents = new LinkedList<>();
     // TODO Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
     s.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unchecked") public boolean preVisit2(ASTNode ¢) {
+      @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
           consider($, (Expression) ¢);
         switch (¢.getNodeType()) {
@@ -119,12 +117,12 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
                                                        // terminator
             return false;
           case ASTNode.FOR_STATEMENT:
-            ForStatement fs = (ForStatement) ¢;
+            final ForStatement fs = (ForStatement) ¢;
             consider($, fs.initializers()); // RISKY (for (int i, int j=i+1,
                                             // ...))
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
-            EnhancedForStatement efs = (EnhancedForStatement) ¢;
+            final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
           case ASTNode.EXPRESSION_STATEMENT: // TODO Roth: check if legitimate
@@ -136,15 +134,15 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         }
       }
 
-      void consider(List<Expression> $, Expression x) {
+      void consider(final List<Expression> $, final Expression x) {
         if (!excludedParents.contains(x.getParent()) // TODO Roth: check whether
                                                      // legitimate
             && isComplicated(x))
           $.add(x);
       }
 
-      void consider(List<Expression> $, List<Expression> xs) {
-        for (Expression ¢ : xs)
+      void consider(final List<Expression> $, final List<Expression> xs) {
+        for (final Expression ¢ : xs)
           consider($, ¢);
       }
     });
@@ -152,11 +150,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Roth: extend (?)
-  static boolean isComplicated(Expression ¢) {
+  static boolean isComplicated(final Expression ¢) {
     return COMPLEX_TYPES.contains(Integer.valueOf(¢.getNodeType()));
   }
 
-  private static Expression choose(List<Expression> ¢) {
+  private static Expression choose(final List<Expression> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 
@@ -165,649 +163,649 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ASTNode toMatch;
     Consumer<ASTNode> onMatch;
 
-    public ASTMatcherSpecific(ASTNode toMatch, Consumer<ASTNode> onMatch) {
+    public ASTMatcherSpecific(final ASTNode toMatch, final Consumer<ASTNode> onMatch) {
       this.toMatch = toMatch;
       this.onMatch = onMatch;
     }
 
-    @Override public boolean match(SimpleName node, Object other) {
+    @Override public boolean match(final SimpleName node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(CharacterLiteral node, Object other) {
+    @Override public boolean match(final CharacterLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TagElement node, Object other) {
+    @Override public boolean match(final TagElement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TextElement node, Object other) {
+    @Override public boolean match(final TextElement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MethodInvocation node, Object other) {
+    @Override public boolean match(final MethodInvocation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(FieldAccess node, Object other) {
+    @Override public boolean match(final FieldAccess node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TypeLiteral node, Object other) {
+    @Override public boolean match(final TypeLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TypeDeclarationStatement node, Object other) {
+    @Override public boolean match(final TypeDeclarationStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TypeDeclaration node, Object other) {
+    @Override public boolean match(final TypeDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TryStatement node, Object other) {
+    @Override public boolean match(final TryStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ThrowStatement node, Object other) {
+    @Override public boolean match(final ThrowStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ThisExpression node, Object other) {
+    @Override public boolean match(final ThisExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SynchronizedStatement node, Object other) {
+    @Override public boolean match(final SynchronizedStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SwitchStatement node, Object other) {
+    @Override public boolean match(final SwitchStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SwitchCase node, Object other) {
+    @Override public boolean match(final SwitchCase node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SuperMethodInvocation node, Object other) {
+    @Override public boolean match(final SuperMethodInvocation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SuperFieldAccess node, Object other) {
+    @Override public boolean match(final SuperFieldAccess node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SuperConstructorInvocation node, Object other) {
+    @Override public boolean match(final SuperConstructorInvocation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(StringLiteral node, Object other) {
+    @Override public boolean match(final StringLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SingleVariableDeclaration node, Object other) {
+    @Override public boolean match(final SingleVariableDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SingleMemberAnnotation node, Object other) {
+    @Override public boolean match(final SingleMemberAnnotation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SimpleType node, Object other) {
+    @Override public boolean match(final SimpleType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ReturnStatement node, Object other) {
+    @Override public boolean match(final ReturnStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(QualifiedType node, Object other) {
+    @Override public boolean match(final QualifiedType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(QualifiedName node, Object other) {
+    @Override public boolean match(final QualifiedName node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(PrimitiveType node, Object other) {
+    @Override public boolean match(final PrimitiveType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(PrefixExpression node, Object other) {
+    @Override public boolean match(final PrefixExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(PostfixExpression node, Object other) {
+    @Override public boolean match(final PostfixExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ParenthesizedExpression node, Object other) {
+    @Override public boolean match(final ParenthesizedExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ParameterizedType node, Object other) {
+    @Override public boolean match(final ParameterizedType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(PackageDeclaration node, Object other) {
+    @Override public boolean match(final PackageDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(NumberLiteral node, Object other) {
+    @Override public boolean match(final NumberLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(NullLiteral node, Object other) {
+    @Override public boolean match(final NullLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(NormalAnnotation node, Object other) {
+    @Override public boolean match(final NormalAnnotation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Modifier node, Object other) {
+    @Override public boolean match(final Modifier node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MethodRefParameter node, Object other) {
+    @Override public boolean match(final MethodRefParameter node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MethodRef node, Object other) {
+    @Override public boolean match(final MethodRef node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MethodDeclaration node, Object other) {
+    @Override public boolean match(final MethodDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MemberValuePair node, Object other) {
+    @Override public boolean match(final MemberValuePair node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MemberRef node, Object other) {
+    @Override public boolean match(final MemberRef node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(MarkerAnnotation node, Object other) {
+    @Override public boolean match(final MarkerAnnotation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(LineComment node, Object other) {
+    @Override public boolean match(final LineComment node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(LabeledStatement node, Object other) {
+    @Override public boolean match(final LabeledStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Javadoc node, Object other) {
+    @Override public boolean match(final Javadoc node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Initializer node, Object other) {
+    @Override public boolean match(final Initializer node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(InfixExpression node, Object other) {
+    @Override public boolean match(final InfixExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ImportDeclaration node, Object other) {
+    @Override public boolean match(final ImportDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(IfStatement node, Object other) {
+    @Override public boolean match(final IfStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ForStatement node, Object other) {
+    @Override public boolean match(final ForStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(FieldDeclaration node, Object other) {
+    @Override public boolean match(final FieldDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ExpressionStatement node, Object other) {
+    @Override public boolean match(final ExpressionStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(EnumConstantDeclaration node, Object other) {
+    @Override public boolean match(final EnumConstantDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(EnhancedForStatement node, Object other) {
+    @Override public boolean match(final EnhancedForStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(EmptyStatement node, Object other) {
+    @Override public boolean match(final EmptyStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(DoStatement node, Object other) {
+    @Override public boolean match(final DoStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ContinueStatement node, Object other) {
+    @Override public boolean match(final ContinueStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ConstructorInvocation node, Object other) {
+    @Override public boolean match(final ConstructorInvocation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ConditionalExpression node, Object other) {
+    @Override public boolean match(final ConditionalExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(CompilationUnit node, Object other) {
+    @Override public boolean match(final CompilationUnit node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ClassInstanceCreation node, Object other) {
+    @Override public boolean match(final ClassInstanceCreation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(CatchClause node, Object other) {
+    @Override public boolean match(final CatchClause node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(CastExpression node, Object other) {
+    @Override public boolean match(final CastExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(BreakStatement node, Object other) {
+    @Override public boolean match(final BreakStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(BooleanLiteral node, Object other) {
+    @Override public boolean match(final BooleanLiteral node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(BlockComment node, Object other) {
+    @Override public boolean match(final BlockComment node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Block node, Object other) {
+    @Override public boolean match(final Block node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Assignment node, Object other) {
+    @Override public boolean match(final Assignment node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(AssertStatement node, Object other) {
+    @Override public boolean match(final AssertStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ArrayType node, Object other) {
+    @Override public boolean match(final ArrayType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ArrayInitializer node, Object other) {
+    @Override public boolean match(final ArrayInitializer node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ArrayCreation node, Object other) {
+    @Override public boolean match(final ArrayCreation node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ArrayAccess node, Object other) {
+    @Override public boolean match(final ArrayAccess node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(AnonymousClassDeclaration node, Object other) {
+    @Override public boolean match(final AnonymousClassDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(AnnotationTypeMemberDeclaration node, Object other) {
+    @Override public boolean match(final AnnotationTypeMemberDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(AnnotationTypeDeclaration node, Object other) {
+    @Override public boolean match(final AnnotationTypeDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TypeParameter node, Object other) {
+    @Override public boolean match(final TypeParameter node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(VariableDeclarationExpression node, Object other) {
+    @Override public boolean match(final VariableDeclarationExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(VariableDeclarationFragment node, Object other) {
+    @Override public boolean match(final VariableDeclarationFragment node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(VariableDeclarationStatement node, Object other) {
+    @Override public boolean match(final VariableDeclarationStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(WhileStatement node, Object other) {
+    @Override public boolean match(final WhileStatement node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(WildcardType node, Object other) {
+    @Override public boolean match(final WildcardType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(EnumDeclaration node, Object other) {
+    @Override public boolean match(final EnumDeclaration node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(UnionType node, Object other) {
+    @Override public boolean match(final UnionType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(CreationReference node, Object other) {
+    @Override public boolean match(final CreationReference node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(Dimension node, Object other) {
+    @Override public boolean match(final Dimension node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(ExpressionMethodReference node, Object other) {
+    @Override public boolean match(final ExpressionMethodReference node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(InstanceofExpression node, Object other) {
+    @Override public boolean match(final InstanceofExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(IntersectionType node, Object other) {
+    @Override public boolean match(final IntersectionType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(LambdaExpression node, Object other) {
+    @Override public boolean match(final LambdaExpression node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(NameQualifiedType node, Object other) {
+    @Override public boolean match(final NameQualifiedType node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(SuperMethodReference node, Object other) {
+    @Override public boolean match(final SuperMethodReference node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);
       return false;
     }
 
-    @Override public boolean match(TypeMethodReference node, Object other) {
+    @Override public boolean match(final TypeMethodReference node, final Object other) {
       if (node != toMatch || !(other instanceof ASTNode))
         return super.match(node, other);
       onMatch.accept((ASTNode) other);

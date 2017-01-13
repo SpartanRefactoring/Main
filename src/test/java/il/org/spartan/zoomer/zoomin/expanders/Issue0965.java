@@ -35,11 +35,9 @@ public class Issue0965 {
     }
 
     public void check2() {
-      String s = lst + "";
     }
 
     public void check3() {
-      String s = 1 + "";
     }
   }
 }

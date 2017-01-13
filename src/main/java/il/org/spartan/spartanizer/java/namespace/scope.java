@@ -46,7 +46,7 @@ public interface scope {
         fault.done();
     return $;
   }
-  
+
   static String newName(final ASTNode ¢, final Type t) {
     return new Namespace(Environment.of(last(statements(az.block(delimiter(¢)))))).generateName(t);
   }
