@@ -35,8 +35,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  *   default:
  *     f(3);
  * }
- * </code>
- * Test file: {@link Issue0977}
+ * </code> Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.Expander {

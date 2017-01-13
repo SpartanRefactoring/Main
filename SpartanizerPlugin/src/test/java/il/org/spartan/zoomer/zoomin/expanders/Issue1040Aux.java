@@ -8,14 +8,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "static-method", "unused" })
 public class Issue1040Aux extends ReflectiveTester {
   int a() {
-    int i = 0;
-    ++i;
     return 0;
   }
-  
+
   int b() {
-    int i = 0;
-    ++i;
     return 0;
   }
 }

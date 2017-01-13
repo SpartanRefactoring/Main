@@ -41,7 +41,7 @@ public class GUIBatchLaconizer extends Applicator {
     listener().push(message.run_start.get(operationName(), selection().name));
     if (!shouldRun())
       return;
-    boolean isAutoBuildChanged = selection().size() >= DISABLE_AUTO_BUILD_THRESHOLD && disableAutoBuild();
+    final boolean isAutoBuildChanged = selection().size() >= DISABLE_AUTO_BUILD_THRESHOLD && disableAutoBuild();
     final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
@@ -206,7 +206,7 @@ public class GUIBatchLaconizer extends Applicator {
     d.setAutoBuilding(false);
     try {
       w.setDescription(d);
-    } catch (CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -223,7 +223,7 @@ public class GUIBatchLaconizer extends Applicator {
     d.setAutoBuilding(true);
     try {
       w.setDescription(d);
-    } catch (CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.log(¢);
     }
   }

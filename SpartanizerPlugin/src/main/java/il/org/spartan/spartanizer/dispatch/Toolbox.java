@@ -134,8 +134,7 @@ public class Toolbox {
             new RemoveRedundantSwitchBranch(), //
             new SwitchWithOneCaseToIf(), //
             null)
-        .add(SwitchCase.class,
-            new RemoveRedundantSwitchCases(), //
+        .add(SwitchCase.class, new RemoveRedundantSwitchCases(), //
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //

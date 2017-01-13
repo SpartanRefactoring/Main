@@ -41,12 +41,9 @@ public class Issue0880 {
   @Test public void k() {
     trimmingOf("switch(x){ case a: x=1; break; case b: switch(y) { case c: y=1; break; case d: x=1; break;} break; }").stays();
   }
-  
+
   @Test public void t() {
-    trimmingOf("switch(x) { case b: case a: default: case c: y=3; case b:}")
-    .gives("switch(x){case b: default: case c: y=3; case b:}")
-    .gives("switch(x){default: case c: y=3; case b:}")
-    .gives("switch(x){default: y=3; case b:}")
-    .stays();
+    trimmingOf("switch(x) { case b: case a: default: case c: y=3; case b:}").gives("switch(x){case b: default: case c: y=3; case b:}")
+        .gives("switch(x){default: case c: y=3; case b:}").gives("switch(x){default: y=3; case b:}").stays();
   }
 }

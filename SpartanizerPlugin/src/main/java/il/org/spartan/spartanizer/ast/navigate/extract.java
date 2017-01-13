@@ -374,13 +374,13 @@ public enum extract {
     final Block $ = az.block(¢.getParent());
     return $ == null ? null : next(¢, extract.statements($));
   }
-  
-  /** Extract the {@link Statement} that immediately follows a given SwitchCase statement, inside the switch statement
+
+  /** Extract the {@link Statement} that immediately follows a given SwitchCase
+   * statement, inside the switch statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  @SuppressWarnings("unchecked")
-  public static Statement nextStatementInside(final SwitchCase ¢) {
+  @SuppressWarnings("unchecked") public static Statement nextStatementInside(final SwitchCase ¢) {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
@@ -487,27 +487,27 @@ public enum extract {
         return $;
     }
   }
-  
+
   /** @param ss list of statements
    * @param s statement to search for
    * @return index of s in l, or -1 if not contained */
-  public static int indexOf(List<Statement> ss, Statement s) {
-    for(int $ = 0; $ < ss.size(); ++$)
-      if(wizard.same(s, ss.get($)))
+  public static int indexOf(final List<Statement> ss, final Statement s) {
+    for (int $ = 0; $ < ss.size(); ++$)
+      if (wizard.same(s, ss.get($)))
         return $;
     return -1;
   }
-  
-  public static List<SwitchCase> casesOnSameBranch(SwitchStatement s, SwitchCase c) {
-    List<Statement> ll = step.statements(s);
-    int ind = indexOf(ll, c);
-    if(ind < 0)
+
+  public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
+    final List<Statement> ll = step.statements(s);
+    final int ind = indexOf(ll, c);
+    if (ind < 0)
       return null;
-    List<SwitchCase> $ = new ArrayList<>();
+    final List<SwitchCase> $ = new ArrayList<>();
     $.add(c);
-    for(int ¢ = ind+1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
+    for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
       $.add(az.switchCase(ll.get(¢)));
-    for(int ¢ = ind-1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
+    for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
       $.add(az.switchCase(ll.get(¢)));
     return $;
   }

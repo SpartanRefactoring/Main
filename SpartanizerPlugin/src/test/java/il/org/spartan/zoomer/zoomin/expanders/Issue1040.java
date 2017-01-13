@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
-@Ignore //This is only for demostration it doesn't suppose to work
+@Ignore // This is only for demostration it doesn't suppose to work
 public class Issue1040 {
   @Test public void test1() {
     expansionOf(new Issue1040Aux()).givesWithBinding("int a() {" + "int i;" + "i=0;" + "++i;" + "return 0;" + "}", "a")
@@ -66,16 +66,14 @@ public class Issue1040 {
 
     void toTest() {
       total = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total += total(1);
-      }
     }
 
     void toTest2() {
       total2 = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total2 += total2(1);
-      }
     }
   }
 }
