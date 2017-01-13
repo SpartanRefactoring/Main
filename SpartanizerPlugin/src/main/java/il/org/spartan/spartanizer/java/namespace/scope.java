@@ -1,10 +1,15 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
@@ -40,5 +45,9 @@ public interface scope {
         "\n\t definition.kind() = " + definition.kind(¢) + //
         fault.done();
     return $;
+  }
+  
+  static String newName(final ASTNode ¢, final Type t) {
+    return new Namespace(Environment.of(last(statements(az.block(delimiter(¢)))))).generateName(t);
   }
 }
