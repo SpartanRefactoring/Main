@@ -256,7 +256,7 @@ public enum step {
   public static Expression expression(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
-  
+
   public static Expression expression(final SwitchCase ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }

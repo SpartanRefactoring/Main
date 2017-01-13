@@ -1,4 +1,5 @@
 package il.org.spartan.zoomer.zoomin.expanders;
+
 import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
@@ -13,20 +14,19 @@ public class Issue1023 {
   @Ignore
   static class ToFix { // should pass after fixing {@link Issue0974}
     @Test public void simpleBlockTest() {
-      zoomingInto("for(int i=0;i<5;i++) a=5;").gives("for(int i=0;i<5;i++){a=5;}")
-      .gives("for(int i=0;i<5;i=i+1){a=5;}").stays();
+      zoomingInto("for(int i=0;i<5;i++) a=5;").gives("for(int i=0;i<5;i++){a=5;}").gives("for(int i=0;i<5;i=i+1){a=5;}").stays();
     }
-  
+
     @Test public void simpleShouldntAddTest() {
       zoomingInto("for(int i=0;i<5;i++){ a=5;}")//
-      .gives("for(int i=0;i<5;i=i+1){a=5;}")//
-      .stays();
+          .gives("for(int i=0;i<5;i=i+1){a=5;}")//
+          .stays();
     }
-  
+
     @Test public void notSimpleShouldntAddTest() {
       zoomingInto("for(int i=0;i<5;i++){ a=5;b=3;}")//
-      .gives("for(int i=0;i<5;i=i+1){a=5;b=3;}")//
-      .stays();
+          .gives("for(int i=0;i<5;i=i+1){a=5;b=3;}")//
+          .stays();
     }
   }
 

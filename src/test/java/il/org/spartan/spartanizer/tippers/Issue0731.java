@@ -10,10 +10,10 @@ import org.junit.*;
 public class Issue0731 {
   @Test public void a() {
     trimmingOf("Integer i = 0; i.toString();").stays();
-//    Integer i = 0;
-//    i.toString();
+    // Integer i = 0;
+    // i.toString();
   }
-  
+
   @Test public void b() {
     trimmingOf("Integer i = 0; (i).toString();").stays();
   }

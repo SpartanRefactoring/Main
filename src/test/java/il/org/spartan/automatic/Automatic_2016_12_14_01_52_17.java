@@ -6,9 +6,9 @@ import org.junit.*;
 
 /** @author Ori Roth
  * @since 2016_12_14 */
-@Ignore
+@Ignore // TODO: Ori Roth --yg
 @SuppressWarnings("static-method")
-public class Autamatic_2016_12_14_01_52_17 {
+public class Automatic_2016_12_14_01_52_17 {
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.tippers.LambdaExpressionRemoveRedundantCurlyBraces.prerequisite

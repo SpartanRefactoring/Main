@@ -7,7 +7,7 @@ import org.junit.*;
 /** This is a unit test for {@link RemoveRedundantSwitchCases}
  * @author Yuval Simon
  * @since 2016-11-27 */
-@Ignore
+@Ignore // TODO Yuval Simon
 @SuppressWarnings("static-method")
 public class Issue0880 {
   @Test public void c() {
