@@ -487,6 +487,30 @@ public enum extract {
         return $;
     }
   }
+  
+  /** @param ss list of statements
+   * @param s statement to search for
+   * @return index of s in l, or -1 if not contained */
+  public static int indexOf(List<Statement> ss, Statement s) {
+    for(int $ = 0; $ < ss.size(); ++$)
+      if(wizard.same(s, ss.get($)))
+        return $;
+    return -1;
+  }
+  
+  public static List<SwitchCase> casesOnSameBranch(SwitchStatement s, SwitchCase c) {
+    List<Statement> ll = step.statements(s);
+    int ind = indexOf(ll, c);
+    if(ind < 0)
+      return null;
+    List<SwitchCase> $ = new ArrayList<>();
+    $.add(c);
+    for(int ¢ = ind+1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
+      $.add(az.switchCase(ll.get(¢)));
+    for(int ¢ = ind-1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
+      $.add(az.switchCase(ll.get(¢)));
+    return $;
+  }
 
   public static List<SwitchCase> switchCases(final SwitchStatement s) {
     final List<SwitchCase> $ = new ArrayList<>();
