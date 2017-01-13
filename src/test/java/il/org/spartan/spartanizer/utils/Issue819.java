@@ -10,7 +10,6 @@ import il.org.spartan.*;
  * @author Shimon Azulay
  * @author Idan Atias
  * @since 16-11-11 */
-@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue819 {
   @Test public void str_test0() {
@@ -18,7 +17,7 @@ public class Issue819 {
   }
 
   @Test public void str_test1() {
-    azzert.that(new Str().inner(), is(null));
+    azzert.isNull(new Str().inner());
   }
 
   @Test public void str_test2() {

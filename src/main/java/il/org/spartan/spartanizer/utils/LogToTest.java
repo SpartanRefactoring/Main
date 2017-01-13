@@ -12,7 +12,7 @@ import static il.org.spartan.lisp.*;
 public class LogToTest {
   // TODO Roth: replace "\\\\" with File.separator (bug in Java???)
   private static String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
-  private static Supplier<String> TEST_NAMER = () -> "Autamatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+  private static Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 
   public static void main(final String[] args) {
     if (!new File(TESTS_FOLDER).exists()) {

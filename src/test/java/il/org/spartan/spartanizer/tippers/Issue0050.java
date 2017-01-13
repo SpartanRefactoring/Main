@@ -8,7 +8,6 @@ import org.junit.runners.*;
 /** @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0050 {
   @Test public void a$50_Constructors1() {
@@ -80,9 +79,8 @@ public class Issue0050 {
     trimmingOf("enum A{a1{{f();}protected final void f(){g();}public final void g(){h();}\n"
         + "private final void h(){i();}final void i(){f();}},a2{{f();}final protected void f(){g();}\n"
         + "final void g(){h();}final private void h(){i();}final protected void i(){f();}};\n"
-        + "protected abstract void f();protected void ia(){}void i(){}}\n")
-            .gives("enum A{a1{{f();}void f(){g();}public void g(){h();}void h(){i();}void i(){f();}\n"
-                + "},a2{{f();}void f(){g();}void g(){h();}void h(){i();}void i(){f();}};\n" + "abstract void f();void ia(){}void i(){}}\n");
+        + "protected abstract void f();protected void ia(){}void i(){}}\n").gives(
+            "enum A{a1{{f();}void f(){g();}public void g(){h();}void h(){i();}void i(){f();}},a2{{f();}protected final void f(){g();}void g(){h();}private final void h(){i();}protected final void i(){f();}};abstract void f();void ia(){}void i(){}}");
   }
 
   @Test public void a$50_InterfaceMethods1() {
@@ -194,20 +192,29 @@ public class Issue0050 {
   }
 
   @Test public void enumConstants() {
-    trimmingOf("enum A{a(){protected void f(){}},b(){final void g(){}},c(){public void f(){}},d(){protected void f(){}};}") //
-        .gives("enum A{a(){void f(){}},b(){void g(){}},c(){void f(){}},d(){void f(){}};}") //
-        .stays();
+    trimmingOf("enum A{a{protected int a; }}").gives("enum A{a{int a; }}").stays()//
+    ;
+  }
+
+  @Test public void enumConstants1() {
+    trimmingOf("enum A{a{private int a; }}").gives("enum A{a{int a; }}").stays()//
+    ;
+  }
+
+  @Test public void enumConstants2() {
+    trimmingOf("enum A{a{public int a; }}").gives("enum A{a{int a; }}").stays()//
+    ;
   }
 
   @Test public void enumConstantsA() {
-    trimmingOf("enum A{a(){protected void f(){}},b(){final void g(){}};}") //
-        .gives("enum A{a(){void f(){}},b(){void g(){}}};}") //
+    trimmingOf("enum A{a{protected void f(){}},b{final void g(){}}}") //
+        .gives("enum A{a{void f(){}},b{void g(){}}}") //
         .stays();
   }
 
   @Test public void enumConstantsB() {
-    trimmingOf("enum A{a{protected void f(){}};}}") //
-        .gives("enum A{a{protected void f(){}};}") //
+    trimmingOf("enum A{a{protected void f(){}}}") //
+        .gives("enum A{a{void f(){}}}") //
         .stays();
   }
 

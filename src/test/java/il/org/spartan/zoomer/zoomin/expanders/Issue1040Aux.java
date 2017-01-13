@@ -12,7 +12,7 @@ public class Issue1040Aux extends ReflectiveTester {
     ++i;
     return 0;
   }
-  
+
   int b() {
     int i = 0;
     ++i;

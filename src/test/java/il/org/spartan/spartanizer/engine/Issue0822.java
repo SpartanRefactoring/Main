@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yosef Raisman
  * @author Entony Lekhtman
  * @since 16-11-12 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0822 {
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);
-    azzert.that(makeAST.string(f), azzert.either(azzert.nullValue()).or(azzert.equalTo("")));
+    if (makeAST.string(f) != null)
+      azzert.that(makeAST.string(f), equalTo(""));
   }
 
   @Test public void testBuilderException() {

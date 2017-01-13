@@ -7,7 +7,6 @@ import org.junit.*;
 
 /** @author Oren Afek
  * @since 2016 Testing {@link LambdaExpressionRemoveRedundantCurlyBraces } */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {
@@ -127,6 +126,9 @@ public class Issue0455 {
 
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
+        .gives("x->{{if(x==0){++x;}else{--x;}}}") //
+        .gives("x->{if(x==0){++x;}else{--x;}}") //
+        .gives("x->{if(x==0)++x;else--x;}") //
         .stays();
   }
 
@@ -148,11 +150,6 @@ public class Issue0455 {
   @Test public void singleTryStatementShouldntTip() {
     trimmingOf("x -> {try {throw new Error();}catch(Exception __){}}") //
         .stays();
-  }
-
-  @Test public void singleVariableDeclarationStatementShouldntTip() {
-    trimmingOf("x -> {int y;}") //
-        .gives("x -> {}").stays();
   }
 
   @Test public void superConstructrInvocationShouldntTip() {
