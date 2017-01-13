@@ -1,11 +1,11 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import org.eclipse.jdt.core.dom.*;
 // import static org.junit.Assert.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 
 /** Test class for name generation from Namespace (Environments) 
@@ -21,41 +21,31 @@ public class Issue1044 extends ReflectiveTester {
   private final Namespace classX = fixtureClass.getChild(2);
   
   @Test public void test1a() {
-    Expression e = findFirst.expression(wizard.ast("new Integer(5);"));
-    String name = firstBlock.generateName(e);
-    Assert.assertEquals("integer4", name);
+    Assert.assertEquals("i4", firstBlock.generateName(step.type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5)"))))));
   }
   @Test public void test1b() {
-    Expression e = findFirst.expression(wizard.ast("new B();"));
-    String name = firstBlock.generateName(e);
-    Assert.assertEquals("b1", name);
+    Assert.assertEquals("b1", firstBlock.generateName(step.type(az.classInstanceCreation(findFirst.expression(wizard.ast("new B();"))))));
   }
   @Test public void test2a() {
-    Expression e = findFirst.expression(wizard.ast("new Integer(5);"));
-    String name = functionF.generateName(e);
-    Assert.assertEquals("integer1", name);
+    Assert.assertEquals("i1", functionF.generateName(step.type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5);"))))));
   }
   @Test public void test2b() {
-    Expression e = findFirst.expression(wizard.ast("new A();"));
-    String name = functionF.generateName(e);
-    Assert.assertEquals("a2", name);
+    Assert.assertEquals("a2", functionF.generateName(step.type(az.classInstanceCreation(findFirst.expression(wizard.ast("new A();"))))));
   }
   
-  @Test public void test3() {
-    Expression e = findFirst.expression(wizard.ast("new X();"));
-    String name = classX.generateName(e);
-    Assert.assertEquals("x3", name);
+  @Test public void test3a() {
+    Assert.assertEquals("x3", classX.generateName(step.type(az.classInstanceCreation(findFirst.expression(wizard.ast("new X();"))))));
   }
 }
 
 class NamespaceFixture {
   {
-    Integer integer1 = 2, integer3 = 4, integer2 = 5;
+    Integer i1 = 2, i3 = 4, i2 = 5;
     class b1 {}
   }
 
   int f(final int a1) {
-    Integer integer4 = 5;
+    Integer i4 = 5;
     return a1 >>> hashCode();
   }
 
