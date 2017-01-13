@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-05 */
-@Ignore
 @SuppressWarnings("static-method") //
 public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

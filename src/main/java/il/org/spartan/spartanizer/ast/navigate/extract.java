@@ -374,13 +374,13 @@ public enum extract {
     final Block $ = az.block(¢.getParent());
     return $ == null ? null : next(¢, extract.statements($));
   }
-  
-  /** Extract the {@link Statement} that immediately follows a given SwitchCase statement, inside the switch statement
+
+  /** Extract the {@link Statement} that immediately follows a given SwitchCase
+   * statement, inside the switch statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  @SuppressWarnings("unchecked")
-  public static Statement nextStatementInside(final SwitchCase ¢) {
+  @SuppressWarnings("unchecked") public static Statement nextStatementInside(final SwitchCase ¢) {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
