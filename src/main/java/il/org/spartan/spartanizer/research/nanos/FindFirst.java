@@ -32,11 +32,17 @@ public final class FindFirst extends NanoPatternTipper<Block> {
       add(statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();", description));
     }
   };
-  private static final FindFirst rival = new FindFirst();
+  private static final List<NanoPatternTipper<Block>> rivals = new ArrayList<NanoPatternTipper<Block>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(new ReturnHoldsForAll());
+      add(new ReturnHoldsForAny());
+    }
+  };
 
   @Override public boolean canTip(final Block x) {
     return anyTips(tippers, x)//
-        && rival.cantTip(x)//
+        && nonTips(rivals, x)//
     ;
   }
 

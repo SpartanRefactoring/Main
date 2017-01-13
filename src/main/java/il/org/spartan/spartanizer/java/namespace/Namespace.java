@@ -12,6 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
@@ -48,6 +49,10 @@ public final class Namespace implements Environment {
   Namespace addChild(final Namespace child) {
     children.add(child);
     return child;
+  }
+
+  public Namespace getChild(int ¢) {
+    return children.get(¢);
   }
 
   protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
@@ -356,10 +361,18 @@ public final class Namespace implements Environment {
     return false;
   }
 
-  public String generateName(Binding ¢) {
-    // TODO: @mdoron Finish checking forward names (??)
+  public boolean hasInChildren(final String identifier) {
+    if (has(identifier))
+      return true;
+    for (Namespace ¢ : this.children)
+      if (¢.hasInChildren(identifier))
+        return true;
+    return false;
+  }
+
+  public String generateName(Type ¢) {
+    String face = namer.shorten(¢);
     int postface = 0;
-    String face = ¢ == null ? "var" : ((¢ + "").charAt(0) < 'a' ? (¢ + "").charAt(0) : (¢ + "").charAt(0) - 'a') + (¢ + "").substring(1);
     String $ = face + "" + ++postface;
     while (has($))
       $ = face + "" + ++postface;
