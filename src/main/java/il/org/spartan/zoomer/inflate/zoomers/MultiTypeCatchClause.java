@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * catch(Type1 e){block}catch(Type2 e){block}
  * </pre>
+ *
  * Tested in {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */

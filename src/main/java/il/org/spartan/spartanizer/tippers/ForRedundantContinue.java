@@ -36,7 +36,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
           r.replace(lastStatement(¢), make.emptyStatement(¢), g);
         else {
           step.statements(b).remove(lastStatement(¢));
-          Block newB = copy.of(b);
+          final Block newB = copy.of(b);
           r.replace(b, newB, g);
         }
       }

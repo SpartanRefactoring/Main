@@ -116,7 +116,7 @@ public class ExpanderTestUtils {
       return null;
     }
 
-    private static MethodDeclaration getMethod(CompilationUnit u, String f) {
+    private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
       final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
@@ -124,7 +124,7 @@ public class ExpanderTestUtils {
       return $.get(0);
     }
 
-    private static CompilationUnit createCUWithBinding(String text) {
+    private static CompilationUnit createCUWithBinding(final String text) {
       final ASTParser $ = Make.COMPILATION_UNIT.parser(text);
       $.setResolveBindings(true);
       return az.compilationUnit($.createAST(null));
