@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -8,7 +10,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -64,7 +69,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             Type tt = !b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions());
             VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             Binding bd = new Binding();
-            String nn = new Namespace(Environment.of(s), "").generateName(tt);
+            String nn = scope.newName(s, tt);
             f.setName(s.getAST().newSimpleName(nn));
             f.setInitializer(copy.of($));
             VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
