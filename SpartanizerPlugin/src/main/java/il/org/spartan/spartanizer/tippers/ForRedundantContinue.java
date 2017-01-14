@@ -23,7 +23,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
   @Override public String description() {
     return "Prune redundant continue";
   }
-  
+
   // TODO: Doron Meshulam: please use lisp.last --yg
   // Also, move to class wizard
   static Statement lastStatement(final ForStatement ¢) {
@@ -37,10 +37,10 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
         if (b == null)
           r.replace(lastStatement(¢), make.emptyStatement(¢), g);
         else {
-          // TODO: Doron Meshulam: use list rewrite (search for code that does that) --yg
+          // TODO: Doron Meshulam: use list rewrite (search for code that does
+          // that) --yg
           step.statements(b).remove(lastStatement(¢));
           // TODO: Doron Meshulam: seems like a noop --yg
-          
           r.replace(b, copy.of(b), g);
         }
       }

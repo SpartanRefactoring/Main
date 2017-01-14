@@ -23,9 +23,9 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
     b.statements().add(copy.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
     s.getBody().accept(new ASTVisitor() {
-    // TODO: Raviv Rachmiel use class box, or valueOf if necessary and remove
-  // @SuppressWarnings("boxing") --yg
-     @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
+      // TODO: Raviv Rachmiel use class box, or valueOf if necessary and remove
+      // @SuppressWarnings("boxing") --yg
+      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
         cc.add(true);
         return true;
       }
