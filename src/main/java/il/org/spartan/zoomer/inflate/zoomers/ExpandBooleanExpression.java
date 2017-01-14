@@ -36,9 +36,7 @@ public class ExpandBooleanExpression extends CarefulTipper<InfixExpression> impl
   }
 
   @Override public Tip tip(final InfixExpression ¢) {
-    VariableDeclaration x1 = getSeperate(¢.getLeftOperand());
-    VariableDeclaration x2 = getSeperate(¢.getRightOperand());
-    InfixExpression e = subject.pair(x1.getName(), x2.getName()).to(¢.getOperator());
+    InfixExpression e = subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         //final ListRewrite l = r.getListRewrite(¢, Expression.);
@@ -55,8 +53,7 @@ public class ExpandBooleanExpression extends CarefulTipper<InfixExpression> impl
     x.setInitializer(copy.of(e));
     PrimitiveType t = e.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
     x.setType(t);
-    String x1Name = scope.newName(e, t);
-    x.setName(e.getAST().newSimpleName(x1Name));
+    x.setName(e.getAST().newSimpleName(scope.newName(e, t)));
     return x;
   }
 

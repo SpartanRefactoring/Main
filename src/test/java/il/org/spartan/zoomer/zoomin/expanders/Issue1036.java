@@ -26,9 +26,8 @@ public class Issue1036 {
 
     /**  */
     @SuppressWarnings("null") public String check1() {
-      for (int i = 1; i < children1.size(); i++) {
-        final String diff;
-        diff = null;
+      for (int i = 1; i < children1.size(); ++i) {
+        final String diff = null;
         $ = $ != "" || diff == null ? $ : diff;
         if (!$.equals(diff) && !"".equals(diff))
           return null;

@@ -119,20 +119,20 @@ class Branch {
     return 0;
   }
 
-  int compareTo(final Branch b) {
+  int compareTo(final Branch ¢) {
     if (hasDefault)
       return -1;
-    if (b.hasDefault)
+    if (¢.hasDefault)
       return 1;
-    if (depth() < b.depth())
+    if (depth() < ¢.depth())
       return 1;
-    if (statementsNum() < b.statementsNum())
+    if (statementsNum() < ¢.statementsNum())
       return 1;
-    if (nodesNum() < b.nodesNum())
+    if (nodesNum() < ¢.nodesNum())
       return 1;
-    if (sequencerLevel() < b.sequencerLevel()) // check what should be here
+    if (sequencerLevel() < ¢.sequencerLevel()) // check what should be here
       return 1;
-    if (casesNum() < b.casesNum())
+    if (casesNum() < ¢.casesNum())
       return 1;
     return -1;
   }
