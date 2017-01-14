@@ -5,6 +5,7 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -71,13 +72,9 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
-        return ¢.values();
-      }
-
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
-          addTestSet(values(¢));
+          addTestSet(step.values(¢));
         return true;
       }
     });
