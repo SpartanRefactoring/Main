@@ -362,8 +362,7 @@ public final class Namespace implements Environment {
   }
 
   public boolean hasInChildren(final String identifier) {
-    final boolean $ = has(identifier);
-    if ($)
+    if (has(identifier))
       return true;
     for (final Namespace ¢ : children)
       if (¢.hasInChildren(identifier))
