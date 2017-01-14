@@ -384,6 +384,8 @@ public enum extract {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
+    // TODO: Yuval Simon use class step if necessary and remove
+    // @SuppressWarnings("unchecked") --yg
     return $ == null ? null : next(¢, $.statements());
   }
 

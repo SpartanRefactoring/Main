@@ -122,20 +122,20 @@ public interface findFirst {
   static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<ASTNode> $ = new Wrapper<>();
+    final Wrapper<N> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked")
       @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
           return true;
-        $.set(¢);
+        $.set((N)¢);
         assert $.get() == ¢;
         return false;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
+    return $.get();
   }
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an

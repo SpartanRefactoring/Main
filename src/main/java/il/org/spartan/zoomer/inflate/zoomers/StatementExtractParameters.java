@@ -158,6 +158,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param u
    * @param g
    * @param ilr */
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @SuppressWarnings("unchecked") static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g,
       final ListRewrite ilr) {
     final List<String> idns = new LinkedList<>();
