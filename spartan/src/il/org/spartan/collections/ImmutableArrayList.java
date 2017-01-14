@@ -238,7 +238,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * returns the lowest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
-  @Override public int indexOf(@org.jetbrains.annotations.Nullable final Object o) {
+  @Override public int indexOf(@Nullable final Object o) {
     if (o == null)
       for (int $ = 0; $ < size(); ++$) {
         if (data[$] == null)
@@ -269,7 +269,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * returns the highest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
-  @Override public int lastIndexOf(@org.jetbrains.annotations.Nullable final @Nullable Object o) {
+  @Override public int lastIndexOf(final @Nullable Object o) {
     if (o == null)
       for (int $ = size() - 1; $ >= 0; --$) {
         if (data[$] == null)
@@ -305,7 +305,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @return  the element that was removed from the list
    * @throws IndexOutOfBoundsException   {@inheritDoc}  
    */
-  @Override @org.jetbrains.annotations.Nullable public E remove(final int index) {
+  @Override @Nullable public E remove(final int index) {
     fail();
     return null;
   }
@@ -360,7 +360,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @return  the element previously at the specified position
    * @throws IndexOutOfBoundsException   {@inheritDoc}  
    */
-  @Override @org.jetbrains.annotations.Nullable public E set(final int index, final E element) {
+  @Override @Nullable public E set(final int index, final E element) {
     fail();
     return null;
   }

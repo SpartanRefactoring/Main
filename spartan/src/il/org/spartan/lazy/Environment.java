@@ -136,7 +136,7 @@ import il.org.spartan.reap.Cookbook.*;
       private Property<String> emptyString;
       private Property<String> hello;
       private Property<String> helloWorld;
-      @org.jetbrains.annotations.Nullable private Property<String> nullProperty;
+      @Nullable private Property<String> nullProperty;
       private Property<String> separator;
       private int supplierCalls;
       @NotNull private Property<String> undefinedProperty = undefined();
@@ -321,7 +321,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** version of this instance */
     long version;
     /** returns the instance updated value when invoked */
-    @org.jetbrains.annotations.Nullable @Nullable Function0<? extends @Nullable T> ϑ;
+    @Nullable Function0<? extends @Nullable T> ϑ;
     private boolean frozen;
 
     /** Instantiates this class. */

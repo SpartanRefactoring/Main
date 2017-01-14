@@ -47,7 +47,7 @@ public enum prune {
    *         returned collection. */
   @NotNull public static <T> List<T> nulls(@NotNull final Iterable<T> ts) {
     @NotNull final ArrayList<T> $ = new ArrayList<>();
-    for (@org.jetbrains.annotations.Nullable final T ¢ : ts)
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return $;
@@ -62,7 +62,7 @@ public enum prune {
    *         returned collection. */
   @NotNull public static <T> T[] nulls(@NotNull final T[] ts) {
     @NotNull final List<T> $ = new ArrayList<>();
-    for (@org.jetbrains.annotations.Nullable final T ¢ : ts)
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         $.add(¢);
     return cantBeNull($.toArray(shrink(ts)));
@@ -73,7 +73,7 @@ public enum prune {
    */
   @SafeVarargs @NotNull public static String[] whites(@NotNull final String... ss) {
     @NotNull final List<String> $ = new ArrayList<>();
-    for (@org.jetbrains.annotations.Nullable final String ¢ : ss)
+    for (@Nullable final String ¢ : ss)
       if (¢ != null)
         accumulate.to($).add(¢.trim());
     return asArrray($);
@@ -119,7 +119,7 @@ public enum prune {
         return $;
       }
     };
-    @org.jetbrains.annotations.Nullable final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C",
+    @Nullable final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C",
         null };
     final String[] nonNullArray = { "1", "2", "4" };
 

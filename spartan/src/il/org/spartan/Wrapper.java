@@ -25,7 +25,7 @@ public class Wrapper<T> {
     return (Wrapper<T>) Utils.cantBeNull(super.clone());
   }
 
-  @Override public final boolean equals(@org.jetbrains.annotations.Nullable @Nullable final Object ¢) {
+  @Override public final boolean equals(@Nullable final Object ¢) {
     return super.equals(¢) || ¢ != null && getClass() == ¢.getClass() && equals((Wrapper<?>) ¢);
   }
 

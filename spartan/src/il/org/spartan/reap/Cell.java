@@ -37,7 +37,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   /**
    * see @see java.util.function.Supplier#get() (auto-generated) 
    */
-  @Override @org.jetbrains.annotations.Nullable @Nullable public abstract T get();
+  @Override @Nullable public abstract T get();
 
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
@@ -64,7 +64,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    *         stored in this node is updated. */
   public abstract boolean updated();
 
-  @Override @org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
+  @Override @Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {

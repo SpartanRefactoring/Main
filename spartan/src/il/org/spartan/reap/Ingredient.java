@@ -42,7 +42,7 @@ public class Ingredient<@Nullable T> extends Cell<T> {
       super(value);
     }
 
-    @Override void cache(@org.jetbrains.annotations.Nullable @SuppressWarnings("hiding") @Nullable final T cache) {
+    @Override void cache(@Nullable @SuppressWarnings("hiding") final T cache) {
       super.cache(cache);
       if (cache == null)
         throw new NullPointerException();

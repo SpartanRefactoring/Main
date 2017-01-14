@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.*;
  * @since 2016 */
 public class Recipe<@Nullable T> extends Cell<T> {
   final List<Cell<?>> prerequisites = new ArrayList<>();
-  @org.jetbrains.annotations.Nullable @Nullable Supplier<? extends @Nullable T> supplier;
+  @Nullable Supplier<? extends @Nullable T> supplier;
 
   /** Instantiates this class.
    * @param supplier JD */
@@ -23,11 +23,11 @@ public class Recipe<@Nullable T> extends Cell<T> {
     this.supplier = supplier;
   }
 
-  @Override @org.jetbrains.annotations.Nullable public Cell<T> clone() {
+  @Override @Nullable public Cell<T> clone() {
     return super.clone();
   }
 
-  @Override @org.jetbrains.annotations.Nullable public T get() {
+  @Override @Nullable public T get() {
     if (updated())
       return cache();
     assert supplier != null;
@@ -67,7 +67,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
     return true;
   }
 
-  @org.jetbrains.annotations.Nullable @Nullable T eval() {
+  @Nullable T eval() {
     assert supplier != null;
     return supplier.get();
   }
@@ -106,7 +106,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       cache(cantBeNull(supplier).get());
     }
 
-    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Recipe.NotNull<T> clone() {
+    @Override @SuppressWarnings({}) public Recipe.NotNull<T> clone() {
       return (Recipe.NotNull<T>) super.clone();
     }
 
@@ -150,11 +150,11 @@ public class Recipe<@Nullable T> extends Cell<T> {
       assert supplier != null;
     }
 
-    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Cell<T> clone() {
+    @Override @Nullable @SuppressWarnings({}) public Cell<T> clone() {
       return super.clone();
     }
 
-    @Override @org.jetbrains.annotations.Nullable public T get() {
+    @Override @Nullable public T get() {
       try {
         return super.get();
       } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
@@ -180,7 +180,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       }
     }
 
-    @Override @org.jetbrains.annotations.Nullable @Nullable T eval() {
+    @Override @Nullable T eval() {
       try {
         return super.eval();
       } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {

@@ -44,7 +44,7 @@ public enum CSV {
     nonnull(parts);
     @NotNull final StringBuilder $ = new StringBuilder(10 * parts.length);
     @NotNull final Separator sep = new Separator(",");
-    for (@org.jetbrains.annotations.Nullable final T ¢ : parts)
+    for (@Nullable final T ¢ : parts)
       $.append(sep + escape(¢ == null ? null : ¢ + ""));
     return $ + "";
   }
@@ -68,7 +68,7 @@ public enum CSV {
   /** Escape the given input
    * @param s Input string
    * @return Escaped form of the input */
-  @NotNull public static String escape(@org.jetbrains.annotations.Nullable final @Nullable String s) {
+  @NotNull public static String escape(@Nullable final String s) {
     if (s == null)
       return NULL;
     final int len = s.length();

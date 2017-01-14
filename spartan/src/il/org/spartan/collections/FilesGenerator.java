@@ -46,13 +46,13 @@ public class FilesGenerator {
 
   /** @param directory should be a directory, but we still need to account for
    *        weird creatures such as "System Volume Information" */
-  @org.jetbrains.annotations.Nullable static Iterator<File> directoryIterator(@org.jetbrains.annotations.Nullable final File directory) {
+  @Nullable static Iterator<File> directoryIterator(@Nullable final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     as.iterable(directory.list());
     @NotNull final Iterator<String> $ = as.list(directory.list()).iterator();
     return new Iterator<File>() {
-      @org.jetbrains.annotations.Nullable File next;
+      @Nullable File next;
 
       @Override public boolean hasNext() {
         for (;;) {
@@ -66,7 +66,7 @@ public class FilesGenerator {
         }
       }
 
-      @Override @org.jetbrains.annotations.Nullable public File next() {
+      @Override @Nullable public File next() {
         return next;
       }
     };
