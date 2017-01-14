@@ -31,7 +31,16 @@ public class Issue0311 {
     trimmingOf("while (start <il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr; print(lenExpr); final InstructionHandle[] match = getMatch(startExpr, lenExpr);"
         + //
-        "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}").stays();
+        "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}")
+            .gives("while (start <il_string.length() && matcher.find(start)) {final int startExpr = matcher.start()" + //
+                ",endExpr = matcher.end();final int lenExpr = endExpr - startExpr; print(lenExpr); final InstructionHandle[] match = getMatch(startExpr, lenExpr);"
+                + //
+                "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}")
+            .gives("while (start <il_string.length() && matcher.find(start)) {final int startExpr = matcher.start()" + //
+                ", endExpr = matcher.end(), lenExpr = endExpr - startExpr; print(lenExpr); final InstructionHandle[] match = getMatch(startExpr, lenExpr);"
+                + //
+                "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}")
+            .stays();
   }
 
   @Test public void challenge_while_b() {
@@ -53,8 +62,7 @@ public class Issue0311 {
 
   @Test public void challenge_while_d() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
-        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
-    .stays();
+        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}").stays();
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_1() {
@@ -212,13 +220,12 @@ public class Issue0311 {
 
   // TODO: when fragments will be handled alone, change the test.
   @Test public void initializers_while_3() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")
-    .stays();
+    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_while_4() {
     trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "while(p <10) p = p.getParent();" + "return false;" + "}")
-    .stays();
+        .stays();
   }
 
   @Test public void initializers_with_array_a() {
@@ -271,14 +278,12 @@ public class Issue0311 {
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "continue;"
                 + "p = p.getParent();}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;){if(!dns.contains(p))p=p.getParent();}return false;}")
-           .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}")
-            .stays();
+            .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}").stays();
   }
 
   @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
-    .stays();
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}").stays();
   }
 
   @Test public void t06a() {

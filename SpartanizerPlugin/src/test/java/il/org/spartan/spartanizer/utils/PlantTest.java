@@ -35,8 +35,7 @@ public final class PlantTest {
   }
 
   @Test public void plus() {
-    final Expression e = into.e("a + 2 <b");
-    final Expression plus = findFirst.infixPlus(e);
+    final Expression e = into.e("a + 2 <b"), plus = findFirst.infixPlus(e);
     azzert.that(plus + "", type.isNotString(plus), is(true));
     azzert.that(e + "", type.isNotString(plus), is(true));
   }

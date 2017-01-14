@@ -12,7 +12,7 @@ import static il.org.spartan.lisp.*;
 public class LogToTest {
   // TODO Roth: replace "\\\\" with File.separator (bug in Java???)
   private static String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
-  private static Supplier<String> TEST_NAMER = () -> "Autamatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+  private static Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 
   public static void main(final String[] args) {
     if (!new File(TESTS_FOLDER).exists()) {
@@ -71,8 +71,8 @@ public class LogToTest {
   }
 
   private static void analyze(final Set<String> xs, final List<String> ts, final Map<String, Integer> nu, final List<String> ss) {
-    final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1];
-    final String errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
+    final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
+        errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))
       return;
     xs.add(errorLocationFile);
@@ -97,11 +97,11 @@ public class LogToTest {
   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
       @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
-        + "\n at line #" + errorLocationLine + ".\n[[SuppressWarningsSpartan]]\n*/\n@Test public void " + errorLocationFileClean + "Test() {"
-        + "\ntrimmingOf(" + code + ").doesNotCrash();\n}";
+        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {" + "\ntrimmingOf(" + code
+        + ").doesNotCrash();\n}";
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   private static String wrap(final List<String> ss, final String fileName) {
     final StringBuilder b = new StringBuilder("" //
         + "package il.org.spartan.automatic;\n\n" //

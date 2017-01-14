@@ -615,6 +615,8 @@ public interface wizard {
         $.add(isStatic);
     }
     if (iz.anonymousClassDeclaration(container)) {
+      if (iz.fieldDeclaration(¢))
+        $.addAll(visibilityModifiers);
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);

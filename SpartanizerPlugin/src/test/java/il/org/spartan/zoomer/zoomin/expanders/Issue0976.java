@@ -4,6 +4,8 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+import il.org.spartan.zoomer.inflate.zoomers.*;
+
 /** Unit tests for {@link LongIfExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */

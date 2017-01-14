@@ -28,11 +28,11 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
   }
 
   Int typeHistogram(final Integer type) {
-    return get(type).first;
+    return get(type) == null ? new Int() : get(type).first;
   }
 
   public HashMap<String, Int> nanoHistogram(final Integer type) {
-    return get(type).second;
+    return get(type) == null ? new HashMap<>() : get(type).second;
   }
 
   public void logMethod(final MethodDeclaration ¢) {
@@ -40,7 +40,7 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
   }
 
   public int count(final Integer type) {
-    return typeHistogram(type).inner + countNanos(type);
+    return typeHistogram(type).inner;
   }
 
   @SuppressWarnings("boxing") public int countNanos(final Integer type) {

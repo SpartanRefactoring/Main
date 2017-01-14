@@ -253,11 +253,11 @@ public enum step {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final SwitchStatement ¢) {
+  public static Expression expression(final SwitchCase ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
-  
-  public static Expression expression(final SwitchCase ¢) {
+
+  public static Expression expression(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
