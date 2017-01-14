@@ -16,7 +16,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
   static {
     testSet = generateSet();
   }
-  {
+  static {
     assert testSet != null;
   }
 

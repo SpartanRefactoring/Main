@@ -42,7 +42,7 @@ public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatem
     final StringBuilder $ = new StringBuilder("switch(" + s.getExpression() + "){");
     boolean isChanged = false;
     for (int i = 0; i < ll.size(); ++i) {
-      $.append(ss.get(ll.get(i)) + "");
+      $.append(ss.get(ll.get(i))).append("");
       if (i < ll.size() - 1 && ll.get(i + 1) == ll.get(i) + 1)
         continue;
       for (int j = i + 1; j < ll.size(); ++j)
