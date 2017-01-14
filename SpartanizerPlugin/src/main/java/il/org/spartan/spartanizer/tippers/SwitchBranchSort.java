@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.lisp;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
  * Length measured in statements 3. Length measured in nodes 4. Sequencer level
@@ -20,7 +21,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implem
     final List<Branch> b = intoBranches(n);
     int ind = -1;
     for (int i = 0; i < b.size() - 1; ++i)
-      if (b.get(i).compareTo(b.get(i + 1)) <= 0) {
+      if (!b.get(i).compareTo(b.get(i + 1))) {
         ind = i;
         break;
       }
@@ -32,47 +33,50 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implem
     for (int i = 0; i < b.size(); ++i)
       if (i == ind) {
         b.get(i + 1).addAll(l);
-        b.get(i).addAll(l);
-        ++i;
+        b.get(i++).addAll(l);
       } else
         b.get(i).addAll(l);
     return s;
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
-    // TODO Auto-generated method stub
-    return null;
+    return "Sort switch branches";
   }
 
+  @SuppressWarnings("null")
   private static List<Branch> intoBranches(final SwitchStatement n) {
-    List<SwitchCase> c = new ArrayList<>();
-    List<Statement> s = new ArrayList<>();
+    List<SwitchCase> c = null;
+    List<Statement> s = null;
     final List<Branch> b = new ArrayList<>();
-    b.add(new Branch(c, s));
-    boolean nextBranch = false;
-    boolean passedCases = false;
-    for (final Statement ss : step.statements(n)) {
-      if (nextBranch && iz.switchCase(ss))
-        passedCases = false;
-      if (nextBranch) {
-        b.add(new Branch(c, s));
+    List<Statement> l = step.statements(n);
+    boolean nextBranch = true;
+    assert iz.switchCase(lisp.first(l));
+    for(int i = 0; i < l.size()-1; ++i) {
+      if(nextBranch) {
         c = new ArrayList<>();
         s = new ArrayList<>();
+        b.add(new Branch(c, s));
         nextBranch = false;
+        while(iz.switchCase(l.get(i)) && i < l.size()-1)
+          c.add(az.switchCase(l.get(i++)));
+        if(i >= l.size()-1)
+          break;
       }
-      if (!passedCases) {
-        if (iz.switchCase(ss)) {
-          c.add(az.switchCase(ss));
-          continue;
-        }
-        passedCases = true;
-      }
-      s.add(ss);
-      if (iz.sequencer(ss))
+      if(iz.switchCase(l.get(i+1)) && iz.sequencerComplex(l.get(i)))
         nextBranch = true;
-      else
-        nextBranch = false;
+      s.add(l.get(i));
     }
+    if(iz.switchCase(lisp.last(l))) {
+      if(!s.isEmpty()) {
+        c = new ArrayList<>();
+        s = new ArrayList<>();
+        b.add(new Branch(c, s));
+      }
+      c.add(az.switchCase(lisp.last(l)));
+      s.add(n.getAST().newBreakStatement());
+    }
+    else
+      s.add(lisp.last(l));
     return b;
   }
 }
@@ -81,17 +85,31 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implem
 class Branch {
   List<SwitchCase> cases;
   List<Statement> statements;
-  boolean hasDefault;
+  int hasDefault;
   int numOfStatements;
   int numOfNodes;
   int depth;
+  int sequencerLevel;
 
   public Branch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
     this.statements = statements;
-    numOfNodes = numOfStatements = depth = -1; // lazy evaluation
+    numOfNodes = numOfStatements = depth = sequencerLevel = -1; // lazy evaluation
+    hasDefault = -1;
   }
-
+  
+  boolean hasDefault() {
+    if(hasDefault == -1) {
+      hasDefault = 0;
+      for(SwitchCase c : cases)
+        if(c.isDefault()) {
+          hasDefault = 1;
+          break;
+        }
+    }
+    return hasDefault == 1;
+  }
+  
   int depth() {
     if (depth < 0)
       depth = metrics.height(statements, 0);
@@ -114,27 +132,51 @@ class Branch {
     return cases.size();
   }
 
-  @SuppressWarnings("static-method") int sequencerLevel() {
-    // TODO: finish this
-    return 0;
+  int sequencerLevel() {
+    if(sequencerLevel < 0) {
+      int th = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT);
+      int re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT);
+      int br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT);
+      int co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT);
+      int sum = th+re+br+co;
+      assert sum > 0;
+      if(sum > th && sum > re && sum > br && sum > co)
+        sequencerLevel = 0;
+      else if(th > 0)
+        sequencerLevel = 1;
+      else if(re > 0)
+        sequencerLevel = 2;
+      else if(br > 0)
+        sequencerLevel = 3;
+      else
+        sequencerLevel = 4;
+    }
+    return sequencerLevel;
   }
 
-  int compareTo(final Branch b) {
-    if (hasDefault)
-      return -1;
-    if (b.hasDefault)
-      return 1;
+  /** @param b
+   * @return returns 1 if _this_ has better metrics than b (i.e should come before b in the switch), -1 otherwise
+   */
+  boolean compareTo(final Branch b) {
+    if (hasDefault())
+      return false;
+    if (b.hasDefault())
+      return true;
+    if (sequencerLevel() > 0 && b.sequencerLevel() > 0) {
+      if(sequencerLevel() > b.sequencerLevel())
+        return false;
+      if(sequencerLevel() < b.sequencerLevel())
+        return true;
+    }
     if (depth() < b.depth())
-      return 1;
+      return true;
     if (statementsNum() < b.statementsNum())
-      return 1;
+      return true;
     if (nodesNum() < b.nodesNum())
-      return 1;
-    if (sequencerLevel() < b.sequencerLevel()) // check what should be here
-      return 1;
+      return true;
     if (casesNum() < b.casesNum())
-      return 1;
-    return -1;
+      return true;
+    return false;
   }
 
   void addAll(final List<Statement> ss) {
