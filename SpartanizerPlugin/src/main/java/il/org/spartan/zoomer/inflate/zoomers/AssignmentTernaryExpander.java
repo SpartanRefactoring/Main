@@ -26,6 +26,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
     }
     if (¢ == null)
       return null;
+    // TODO: Raviv use class subject --yg
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(copy.of(¢.getExpression()));
     final Assignment then = ¢.getAST().newAssignment();

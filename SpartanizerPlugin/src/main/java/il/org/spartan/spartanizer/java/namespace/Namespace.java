@@ -51,7 +51,7 @@ public final class Namespace implements Environment {
     return child;
   }
 
-  public Namespace getChild(int ¢) {
+  public Namespace getChild(final int ¢) {
     return children.get(¢);
   }
 
@@ -364,14 +364,14 @@ public final class Namespace implements Environment {
   public boolean hasInChildren(final String identifier) {
     if (has(identifier))
       return true;
-    for (Namespace ¢ : this.children)
+    for (final Namespace ¢ : children)
       if (¢.hasInChildren(identifier))
         return true;
     return false;
   }
 
-  public String generateName(Type ¢) {
-    String face = namer.shorten(¢);
+  public String generateName(final Type ¢) {
+    final String face = namer.shorten(¢);
     int postface = 0;
     String $ = face + "" + ++postface;
     while (has($))

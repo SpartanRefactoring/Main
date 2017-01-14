@@ -370,6 +370,13 @@ public final class subject {
     /** assign then and elze to the matching fields the then operand is the
      * owner
      * @param flat a list of sideEffects */
+    StatementPair(final Statement then) {
+      this(then, null);
+    }
+
+    /** assign then and elze to the matching fields the then operand is the
+     * owner
+     * @param flat a list of sideEffects */
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);
