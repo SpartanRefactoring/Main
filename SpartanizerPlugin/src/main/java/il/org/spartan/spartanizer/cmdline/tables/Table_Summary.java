@@ -77,7 +77,7 @@ public class Table_Summary extends TableReusabilityIndices {
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     clearAll();
-    System.err.println("Outcol is in: " + Table.temporariesFolder + path);
+    System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
 
   private static void clearAll() {
