@@ -32,6 +32,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement> implements TipperCategory.Abbreviation {
+  // TODO: Tomer Dragucki  use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @Override @SuppressWarnings("unchecked") protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement,
       final TextEditGroup g) {
     if (!canTip(s, nextStatement))

@@ -366,6 +366,13 @@ public final class subject {
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
+    
+    /** assign then and elze to the matching fields the then operand is the
+     * owner
+     * @param flat a list of sideEffects */
+    StatementPair(final Statement then) {
+      this(then, null);
+    }
 
     /** assign then and elze to the matching fields the then operand is the
      * owner

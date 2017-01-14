@@ -36,7 +36,9 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }
-
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @SuppressWarnings("unchecked") private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
     for (final Expression $ : (List<Expression>) ¢.arguments())
       if ($ instanceof ConditionalExpression)

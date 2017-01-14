@@ -49,7 +49,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     // TODO: Yuval Simon -rename to $ --yg
     final Block res = a.newBlock();
     final IfStatement r = a.newIfStatement();
-    // TODO: Yuval Simon - use step.statements --yg
+    // TODO: Yuval Simon - use step.pair --yg
     res.statements().add(r);
     final Block b1 = a.newBlock();
     final Block b2 = a.newBlock();
@@ -72,7 +72,8 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   @Override @SuppressWarnings("unused") public String description(final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
-
+  // TODO: Yuval Simon use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static void addStatements(final int x, final SwitchStatement s, final Block b) {
     int i;
     final List<Statement> ll = statements(s);
@@ -89,10 +90,11 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   }
 
   private static boolean defaultSingleBranch(final SwitchStatement s) {
-    final List<Statement> l = statements(s);
-    for (int ¢ = 0; ¢ < l.size(); ++¢)
-      if (iz.switchCase(l.get(¢)) && az.switchCase(l.get(¢)).isDefault()) {
-        if ((¢ <= 0 || !iz.switchCase(l.get(¢ - 1))) && (¢ >= l.size() - 1 || !iz.switchCase(l.get(¢ + 1))))
+    final List<Statement> ss
+    = statements(s);
+    for (int ¢ = 0; ¢ < ss.size(); ++¢)
+      if (iz.switchCase(ss.get(¢)) && az.switchCase(ss.get(¢)).isDefault()) {
+        if ((¢ <= 0 || !iz.switchCase(ss.get(¢ - 1))) && (¢ >= ss.size() - 1 || !iz.switchCase(ss.get(¢ + 1))))
           return true;
         break;
       }

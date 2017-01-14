@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 22-12-16 */
 public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Expander {
+  // TODO: Raviv Rachmiel use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;
@@ -21,7 +23,9 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
     b.statements().add(copy.of(s.getBody()));
     final List<Boolean> cc = new ArrayList<>();
     s.getBody().accept(new ASTVisitor() {
-      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
+    // TODO: Raviv Rachmiel use class box, or valueOf if necessary and remove
+  // @SuppressWarnings("boxing") --yg
+     @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
         cc.add(true);
         return true;
       }

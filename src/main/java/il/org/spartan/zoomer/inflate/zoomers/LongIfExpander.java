@@ -33,9 +33,13 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
     if (!shouldTip(¢))
       return null;
     final IfStatement $ = ¢.getAST().newIfStatement();
+    // TODO: Tomer Dragucki please use class 'az'  --yg
     final InfixExpression ie = (InfixExpression) ¢.getExpression();
+    // TODO: Tomer Dragucki please use left --yg 
     $.setExpression(copy.of(ie.getLeftOperand()));
+    // TODO: Tomer Dragucki use subject.pair().toIf() --yg 
     final IfStatement newThen = ¢.getAST().newIfStatement();
+    
     final Expression ne = !ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie));
     newThen.setExpression(ne);
     newThen.setThenStatement(copy.of(¢.getThenStatement()));
@@ -50,8 +54,9 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
-
+  // TODO: Tomer Dragucki remove  and use class step --yg 
   @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(final IfStatement ¢, final InfixExpression x) {
+    // TODO: Tomer Dragucki use class subject --yg 
     final InfixExpression $ = ¢.getAST().newInfixExpression();
     $.setOperator(x.getOperator());
     $.setLeftOperand(copy.of(x.getRightOperand()));
