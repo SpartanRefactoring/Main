@@ -24,7 +24,7 @@ public class format {
 
   static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
 
-  public static String decimal(final double ¢) {
-    return numberFormatter.format(¢);
+  public static double decimal(final double ¢) {
+    return Double.valueOf(numberFormatter.format(¢)).doubleValue();
   }
 }
