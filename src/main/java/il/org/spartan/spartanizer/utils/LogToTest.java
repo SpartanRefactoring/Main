@@ -71,8 +71,8 @@ public class LogToTest {
   }
 
   private static void analyze(final Set<String> xs, final List<String> ts, final Map<String, Integer> nu, final List<String> ss) {
-    final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1];
-    final String errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
+    final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
+        errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))
       return;
     xs.add(errorLocationFile);
