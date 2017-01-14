@@ -11,12 +11,11 @@ import org.junit.*;
 public class Issue1047 {
   // TODO doron: unignore this test in {@link Issue0147} and in {@link
   // AdvancedGivesTests}
-  
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
   }
-  
+
   @Test public void b() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){System.out.println(); ++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢){System.out.println(); ++¢;}");//
@@ -29,9 +28,9 @@ public class Issue1047 {
   }
 
   @Test public void t3() {
-    trimmingOf("for (int i = 0; i < length; ++i) {" + "char c1 = s1.charAt(i);" + "char c2 = s2.charAt(i);" + "if (c1 == c2)" + "  continue;"
-        + "int alphaIndex = getAlphaIndex(c1);" + "if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))" + "  return false;" + "continue;" + "}")
-            .gives("for (int i = 0; i < length; ++i) {" + "char c1 = s1.charAt(i);" + "char c2 = s2.charAt(i);" + "if (c1 == c2)" + "  continue;"
-                + "int alphaIndex = getAlphaIndex(c1);" + "if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))" + "  return false;" + "}");
+    trimmingOf("for (int i = 0; i < length; ++i) {char c1 = s1.charAt(i);char c2 = s2.charAt(i);if (c1 == c2)  continue;"
+        + "int alphaIndex = getAlphaIndex(c1);if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))  return false;continue;}")
+            .gives("for (int i = 0; i < length; ++i) {char c1 = s1.charAt(i);char c2 = s2.charAt(i);if (c1 == c2)  continue;"
+                + "int alphaIndex = getAlphaIndex(c1);if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))  return false;}");
   }
 }

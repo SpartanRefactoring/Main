@@ -26,7 +26,6 @@ public class Issue0965 {
         .staysWithBinding();
   }
 
-  @SuppressWarnings({ "unused" })
   class TestClass extends ReflectiveTester {
     List<Integer> lst = new ArrayList<>();
 
@@ -35,11 +34,11 @@ public class Issue0965 {
     }
 
     public void check2() {
-      String s = lst + "";
+      //
     }
 
     public void check3() {
-      String s = 1 + "";
+      //
     }
   }
 }

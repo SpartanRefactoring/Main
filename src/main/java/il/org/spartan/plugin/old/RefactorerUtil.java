@@ -55,6 +55,7 @@ public class RefactorerUtil {
     return i + "/" + $;
   }
 
+  // TODO: Ori Roth - move to class Linguistics --yg
   public static String plurals(final String s, final int i) {
     return i == 1 ? s : s + "s";
   }

@@ -35,14 +35,15 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  *   default:
  *     f(3);
  * }
- * </code>
- * Test file: {@link Issue0977}
+ * </code> Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.Expander {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @Override public Tip tip(final SwitchStatement ¢) {
     @SuppressWarnings("unchecked") final List<Statement> $ = getAdditionalStatements(¢.statements(), caseWithNoSequencer(¢));
@@ -61,6 +62,8 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     return caseWithNoSequencer(¢) != null;
   }
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @SuppressWarnings("unchecked") private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;

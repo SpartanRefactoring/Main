@@ -108,12 +108,10 @@ public interface Linguistic {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
 
-  /** Constructs linguistic list of items:
-   * [i1, i2, i3] --> "i1, i2 and i3"
+  /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
-   * @return a linguistic list of the items
-   */
-  static String list(List<String> ¢) {
+   * @return a linguistic list of the items */
+  static String list(final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? ¢.get(0) : separate.these(¢.subList(0, ¢.size() - 1)).by(Linguistic.SEPARATOR) + " and " + ¢.get(¢.size() - 1);
   }

@@ -27,6 +27,7 @@ public class Issue0687 {
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
+    // TODO: Raviv Rachmiel use azzer.that(x, iz(y))
     assert "a".equals(first(n) + "");
     assert "b".equals(n.get(1) + "");
     assert "System".equals(n.get(2) + "");
