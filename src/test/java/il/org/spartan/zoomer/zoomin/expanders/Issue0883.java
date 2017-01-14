@@ -6,7 +6,8 @@ import org.junit.*;
 
 import il.org.spartan.zoomer.inflate.zoomers.*;
 
-/** Unit test for {@link ReturnTernaryExpander} and {@link AssignmentTernaryExpander}
+/** Unit test for {@link ReturnTernaryExpander} and
+ * {@link AssignmentTernaryExpander}
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */

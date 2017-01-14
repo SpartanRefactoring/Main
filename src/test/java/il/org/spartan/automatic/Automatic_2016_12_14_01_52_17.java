@@ -6,13 +6,13 @@ import org.junit.*;
 
 /** @author Ori Roth
  * @since 2016_12_14 */
-@Ignore
+@Ignore // TODO: Ori Roth --yg
 @SuppressWarnings("static-method")
-public class Autamatic_2016_12_14_01_52_17 {
+public class Automatic_2016_12_14_01_52_17 {
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.tippers.LambdaExpressionRemoveRedundantCurlyBraces.prerequisite
-   * at line #45. [[SuppressWarningsSpartan]] */
+   * at line #45. */
   @Test public void prerequisiteTest() {
     trimmingOf("" + //
         "package a;" + //
@@ -31,8 +31,7 @@ public class Autamatic_2016_12_14_01_52_17 {
 
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
-   * il.org.spartan.spartanizer.ast.navigate.extract.nextPrefix at line #343.
-   * [[SuppressWarningsSpartan]] */
+   * il.org.spartan.spartanizer.ast.navigate.extract.nextPrefix at line #343. */
   @Test public void nextPrefixTest() {
     trimmingOf("" + //
         "package a;" + //
@@ -52,7 +51,7 @@ public class Autamatic_2016_12_14_01_52_17 {
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.tippers.SimplifyComparisionOfAdditions.replacement
-   * at line #28. [[SuppressWarningsSpartan]] */
+   * at line #28. */
   @Test public void replacementTest() {
     trimmingOf("" + //
         "package a;" + //
@@ -71,7 +70,7 @@ public class Autamatic_2016_12_14_01_52_17 {
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.tippers.ExpressionStatementAssertTrueFalse.replacement
-   * at line #31. [[SuppressWarningsSpartan]] */
+   * at line #31. */
   @Test public void replacement3Test() {
     trimmingOf("" + //
         "package a;" + //
@@ -88,8 +87,8 @@ public class Autamatic_2016_12_14_01_52_17 {
 
   /** Test created automatically due to java.lang.NullPointerException thrown
    * while testing some test file. Originated at
-   * il.org.spartan.spartanizer.ast.navigate.wizard.redundancies at line #466.
-   * [[SuppressWarningsSpartan]] */
+   * il.org.spartan.spartanizer.ast.navigate.wizard.redundancies at line
+   * #466. */
   @Test public void redundanciesTest() {
     trimmingOf("" + //
         "package a;" + //

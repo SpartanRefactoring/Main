@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Dor Ma'ayan
  * @since 14-11-2016 */
-@Ignore
+@Ignore // TODO: Raviv Rachmiel --yg
 @SuppressWarnings("static-method")
 public class Issue836 {
   @Test public void test0() {

@@ -33,6 +33,7 @@ public class InflaterUtilities {
     boolean $ = false;
     if (nl.isEmpty())
       return false;
+    // TODO: Raviv rename nl to ns --yg
     for (final ASTNode statement : nl) {
       final ASTNode change = new ReturnTernaryExpander().replacement(az.returnStatement(statement));
       if (change != null) {

@@ -55,7 +55,7 @@ public class Table_Summary extends TableReusabilityIndices {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      final MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
         npDistributionStatistics.logMethod(d);
     } catch (final AssertionError __) {
@@ -77,7 +77,7 @@ public class Table_Summary extends TableReusabilityIndices {
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     clearAll();
-    System.err.println("Outcol is in: " + Table.temporariesFolder + path);
+    System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
 
   private static void clearAll() {
@@ -127,35 +127,35 @@ public class Table_Summary extends TableReusabilityIndices {
     return totalMethods;
   }
 
-  private static Double fMethods() {
+  private static double fMethods() {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static Double getNodeCoverage(int type) {
+  @SuppressWarnings("boxing") private static double getNodeCoverage(int type) {
     return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
   }
 
-  private static Double fIteratives() {
+  private static double fIteratives() {
     return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 
-  private static Double fConditionalExpressions() {
+  private static double fConditionalExpressions() {
     return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
   }
 
-  private static Double fConditionalStatements() {
+  private static double fConditionalStatements() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
   /** [[SuppressWarningsSpartan]] */
   private long adopted() {
-    int $ = rMethod();
+    final int $ = rMethod();
     return npStatistics.keySet().stream()//
         .map(k -> npStatistics.get(k))//
         .filter(n -> n.occurences > $).count();
   }
 
-  private static String touched() {
+  private static double touched() {
     return format.decimal(100 * safe.div(totalMethodsTouched, totalMethods));
   }
 
@@ -163,7 +163,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count();
   }
 
-  private static String coverage() {
+  private static double coverage() {
     return format.decimal(100 * safe.div(totalStatementsCovered, totalStatements));
   }
 

@@ -44,7 +44,7 @@ public enum Files {
   public static void blank(final String s) {
     try (PrintWriter p = new PrintWriter(s)) {
       p.close();
-    } catch (FileNotFoundException ¢) {
+    } catch (final FileNotFoundException ¢) {
       ¢.printStackTrace();
     }
   }
@@ -52,7 +52,7 @@ public enum Files {
   public static void blank(final File f) {
     try (PrintWriter p = new PrintWriter(f)) {
       p.close();
-    } catch (FileNotFoundException ¢) {
+    } catch (final FileNotFoundException ¢) {
       ¢.printStackTrace();
     }
   }
