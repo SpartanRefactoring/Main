@@ -15,6 +15,7 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.zoomer.*;
 
@@ -135,8 +136,8 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    for (final Object d : u.imports())
-      if (d instanceof ImportDeclaration && ((ImportDeclaration) d).getName().getFullyQualifiedName().equals(s))
+    for (final ImportDeclaration d : step.imports(u))
+      if (d.getName().getFullyQualifiedName().equals(s))
         return true;
     return false;
   }
