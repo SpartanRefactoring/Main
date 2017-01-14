@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** @author Tomer Dragucki
- * @since 2016 [[SuppressWarningsSpartan]] */
+ * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class issue0352 {
   @Test public void a() {
