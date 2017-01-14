@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** see issue #714 for more details
  * @author Dan Abramovich

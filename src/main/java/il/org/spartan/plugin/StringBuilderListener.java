@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public class StringBuilderListener implements Listener {
-  private static Tab tab = new Tab();
+  private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
   public String $() {

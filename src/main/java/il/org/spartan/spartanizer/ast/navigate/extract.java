@@ -22,6 +22,10 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2015-07-28 */
 public enum extract {
   ;
+  public static Statement lastStatement(final EnhancedForStatement ¢) {
+    return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
+  }
+
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
@@ -68,7 +72,7 @@ public enum extract {
     return asReturn(singleStatement(¢));
   }
 
-  public static ReturnStatement asReturn(final Statement ¢) {
+  private static ReturnStatement asReturn(final Statement ¢) {
     return az.returnStatement(¢);
   }
 
@@ -172,7 +176,7 @@ public enum extract {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
-  public static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
     if (x == null)
       return;
     $.add(x.getOperator());
@@ -368,7 +372,7 @@ public enum extract {
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement nextStatement(final Statement ¢) {
+  private static Statement nextStatement(final Statement ¢) {
     if (¢ == null)
       return null;
     final Block $ = az.block(¢.getParent());
@@ -393,7 +397,7 @@ public enum extract {
     return onlyExpression(arguments(¢));
   }
 
-  public static Expression onlyExpression(final List<Expression> $) {
+  private static Expression onlyExpression(final List<Expression> $) {
     return core(onlyOne($));
   }
 
@@ -493,7 +497,7 @@ public enum extract {
   /** @param ss list of statements
    * @param s statement to search for
    * @return index of s in l, or -1 if not contained */
-  public static int indexOf(final List<Statement> ss, final Statement s) {
+  private static int indexOf(final List<Statement> ss, final Statement s) {
     for (int $ = 0; $ < ss.size(); ++$)
       if (wizard.same(s, ss.get($)))
         return $;
@@ -536,20 +540,5 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
-  }
-
-  public static Type type(final ASTNode $) {
-    switch ($.getNodeType()) {
-      case VARIABLE_DECLARATION_EXPRESSION:
-        return az.variableDeclarationExpression($).getType();
-      case SINGLE_VARIABLE_DECLARATION:
-        return az.singleVariableDeclaration($).getType();
-      case VARIABLE_DECLARATION_STATEMENT:
-        return az.variableDeclrationStatement($).getType();
-      case VARIABLE_DECLARATION_FRAGMENT:
-        return type(az.variableDeclrationFragment($).getParent());
-      default:
-        return null;
-    }
   }
 }

@@ -14,7 +14,7 @@ import il.org.spartan.plugin.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/11
  * @since 2013/07/01 */
-public abstract class BaseHandler extends AbstractHandler {
+abstract class BaseHandler extends AbstractHandler {
   private final AbstractGUIApplicator inner;
 
   /** Instantiates this class */
@@ -24,7 +24,7 @@ public abstract class BaseHandler extends AbstractHandler {
 
   /** Instantiates this class
    * @param inner JD */
-  BaseHandler(final AbstractGUIApplicator inner) {
+  private BaseHandler(final AbstractGUIApplicator inner) {
     this.inner = inner;
   }
 
@@ -36,11 +36,11 @@ public abstract class BaseHandler extends AbstractHandler {
     }
   }
 
-  protected final String getDialogTitle() {
+  private String getDialogTitle() {
     return inner.getName();
   }
 
-  protected AbstractGUIApplicator getRefactoring() {
+  private AbstractGUIApplicator getRefactoring() {
     return inner;
   }
 

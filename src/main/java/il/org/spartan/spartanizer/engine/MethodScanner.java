@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 /** A utility class used to scan statements of a {@link MethodDeclaration}.
  * @author Ori Roth
  * @since 2016 */
@@ -18,11 +20,11 @@ public abstract class MethodScanner {
   @SuppressWarnings("unchecked") public MethodScanner(final MethodDeclaration method) {
     assert method != null;
     this.method = method;
-    if (method.getBody() == null) {
+    if (body(method) == null) {
       statements = null;
       currentStatement = null;
     } else {
-      statements = method.getBody().statements();
+      statements = body(method).statements();
       currentStatement = first(statements);
     }
     currentIndex = -1;

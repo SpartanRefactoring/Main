@@ -1,11 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -13,8 +17,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 // TODO Roth: choose more suitable category
 // TODO Roth: add tests for tipper
@@ -51,7 +53,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
    *         contains same variables, in matters of type and quantity */
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
+  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
@@ -95,8 +97,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
-    statements(dx.getBody()).clear();
-    for (final Statement ¢ : statements(d.getBody()))
+    statements(body(dx)).clear();
+    for (final Statement ¢ : statements(body(d)))
       statements(dx).add(az.statement(r.createCopyTarget(¢)));
   }
 
@@ -173,10 +175,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     // TODO Roth: get more suitable names for constants
     // 1.0 means all statements but the last.
     private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
-    protected final Map<VariableDeclaration, List<Statement>> uses;
-    protected final List<VariableDeclaration> active;
-    protected final List<VariableDeclaration> inactive;
-    protected int variablesTerminated;
+    final Map<VariableDeclaration, List<Statement>> uses;
+    final List<VariableDeclaration> active;
+    final List<VariableDeclaration> inactive;
+    int variablesTerminated;
 
     // TODO: Ori Roth use class step if necessary and remove
     // @SuppressWarnings("unchecked") --yg
@@ -256,7 +258,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     @SuppressWarnings("unchecked") public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = method.parameters();
-      ss = method.getBody() != null ? statements(method) : Collections.EMPTY_LIST;
+      ss = body(method) != null ? statements(method) : Collections.EMPTY_LIST;
     }
 
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {

@@ -27,7 +27,7 @@ public enum find {
     return $;
   }
 
-  public static Expression singleExpressionDifference(final ASTNode n1, final ASTNode n2) {
+  private static Expression singleExpressionDifference(final ASTNode n1, final ASTNode n2) {
     if (n1 == null || n2 == null)
       return null;
     if (areSelfDifferent(n1, n2))

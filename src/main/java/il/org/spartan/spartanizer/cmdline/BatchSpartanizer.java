@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @author Matteo Orru'
  * @year 2016 */
-public final class BatchSpartanizer extends FolderASTVisitor {
+final class BatchSpartanizer extends FolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
@@ -82,7 +82,7 @@ public final class BatchSpartanizer extends FolderASTVisitor {
     return $;
   }
 
-  static void printHelpPrompt() {
+  private static void printHelpPrompt() {
     System.out.println("Batch GUIBatchLaconizer");
     System.out.println("");
     System.out.println("Options:");
@@ -207,7 +207,7 @@ public final class BatchSpartanizer extends FolderASTVisitor {
     });
   }
 
-  void collect(final File f) {
+  private void collect(final File f) {
     if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
@@ -230,7 +230,7 @@ public final class BatchSpartanizer extends FolderASTVisitor {
     );
   }
 
-  void runEssence() {
+  private void runEssence() {
     system.shellEssenceMetrics(beforeFileName);
     system.shellEssenceMetrics(afterFileName);
   }

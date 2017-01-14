@@ -21,6 +21,7 @@ import org.eclipse.ui.texteditor.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.zoomer.*;
+import il.org.spartan.zoomer.collateral.*;
 import il.org.spartan.zoomer.zoomin.SingleFlater.*;
 
 /** Handler for the Athenizer project's feature (global athenizer). Uses

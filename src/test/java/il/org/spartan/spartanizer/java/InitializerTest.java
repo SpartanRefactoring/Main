@@ -20,7 +20,7 @@ public final class InitializerTest {
   }
   static int b;
   static int c;
-  int e;
+  final int e;
   {
     // Instance Initializer can union some operations which are required for
     // each constructor of the class.

@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
     implements TipperCategory.Inlining {
-  static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
+  private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
@@ -81,7 +81,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   }
 
   /**  */
-  protected static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement es = (ExpressionStatement) nextStatement;

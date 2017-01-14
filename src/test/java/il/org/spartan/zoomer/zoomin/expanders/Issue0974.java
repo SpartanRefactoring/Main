@@ -4,6 +4,8 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+import il.org.spartan.zoomer.inflate.zoomers.*;
+
 /** Test class for {@link PostFixToInfixExpander}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */

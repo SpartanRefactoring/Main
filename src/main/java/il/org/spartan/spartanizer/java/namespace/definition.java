@@ -67,7 +67,7 @@ public interface definition {
         wizard.addRest($, e, initializers(s));
         $.add(expression(s));
         $.addAll(updaters(s));
-        $.add(s.getBody());
+        $.add(body(s));
         return $;
       }
     },
@@ -134,7 +134,7 @@ public interface definition {
         final List<ASTNode> $ = new ArrayList<>();
         wizard.addRest($, f, fs);
         wizard.addRest($, e, rs);
-        $.add(s.getBody());
+        $.add(body(s));
         $.addAll(catchClauses(s));
         return $;
       }
