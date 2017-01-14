@@ -108,19 +108,19 @@ public enum GuessedContext {
     int i = 0;
     for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
       final String on = w.on(codeFragment);
-      $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.alternativeContextsToConsiderInThisOrder.length + "):");
-      $.append("\n\t\t Is it a " + w + "?");
+      $.append("\n\nAttempt #").append(++i).append(" (of ").append(GuessedContext.alternativeContextsToConsiderInThisOrder.length).append("):");
+      $.append("\n\t\t Is it a ").append(w).append("?");
       $.append("\n\t Let's see...");
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
-      $.append("\n\t```" + wizard.essence(on) + "'''");
+      $.append("\n\t```").append(wizard.essence(on)).append("'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
           + " problems on (essentially) this bit of code");
-      $.append("\n\t\t\t```" + wizard.essence(u + "") + "'''");
+      $.append("\n\t\t\t```").append(wizard.essence(u + "")).append("'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
-      $.append("\n\t\t\t```" + u + "'''");
+      $.append("\n\t\t\t```").append(u).append("'''");
       $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```" + problems(u) + "'''");
+      $.append("\n\t\t\t```").append(problems(u)).append("'''");
     }
     return $ + "";
   }
