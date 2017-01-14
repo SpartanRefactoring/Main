@@ -86,14 +86,14 @@ public interface metrics {
 
   static int height(final List<ASTNode> ns) {
     int $ = 0;
-    for (ASTNode ¢ : ns)
+    for (final ASTNode ¢ : ns)
       $ = Integer.max($, height(¢));
     return $;
   }
 
-  static int height(final List<Statement> ss, @SuppressWarnings("unused") int x) {
+  static int height(final List<Statement> ss, @SuppressWarnings("unused") final int x) {
     int $ = 0;
-    for (Statement ¢ : ss)
+    for (final Statement ¢ : ss)
       $ = Integer.max($, height(¢));
     return $;
   }
@@ -151,7 +151,7 @@ public interface metrics {
 
   static int nodes(final List<Statement> ss) {
     int $ = 0;
-    for (Statement ¢ : ss)
+    for (final Statement ¢ : ss)
       $ += nodes(¢);
     return $;
   }
@@ -191,7 +191,7 @@ public interface metrics {
 
   static int countStatements(final List<Statement> ss) {
     int $ = 0;
-    for (Statement ¢ : ss)
+    for (final Statement ¢ : ss)
       $ += countStatements(¢);
     return $;
   }

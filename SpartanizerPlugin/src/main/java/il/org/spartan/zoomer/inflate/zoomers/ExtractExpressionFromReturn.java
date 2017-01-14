@@ -27,7 +27,9 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> 
         final AST create = r.getAST();
         final ExpressionStatement exp = create.newExpressionStatement(copy.of(expression(s)));
         final ReturnStatement retNoExp = create.newReturnStatement();
+        // TODO: Doron Meshulam -- please use class subject --yg
         retNoExp.setExpression(copy.of(left(a)));
+        // TODO: Doron Meshulam -- next statement does nothing --yg
         az.block(s.getParent());
         final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(retNoExp, s, g);
