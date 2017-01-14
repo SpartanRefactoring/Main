@@ -77,8 +77,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
    * @param ¢ JD
    * @return this selection */
   public Self add(final WrappedCompilationUnit... us) {
-    for (final WrappedCompilationUnit ¢ : us)
-      inner.add(¢);
+    Collections.addAll(inner, us);
     return self();
   }
 
