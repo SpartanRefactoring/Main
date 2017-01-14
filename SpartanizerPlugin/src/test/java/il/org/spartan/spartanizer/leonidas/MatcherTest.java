@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import static il.org.spartan.spartanizer.research.Matcher.*;
 import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
-import static il.org.spartan.spartanizer.research.Matcher.*;
-import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 
 /** @author Ori Marcovitch
  * @author Dor Ma'ayan

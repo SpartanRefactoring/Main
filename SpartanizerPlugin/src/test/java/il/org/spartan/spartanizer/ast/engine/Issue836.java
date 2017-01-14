@@ -4,10 +4,11 @@ import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author Dor Ma'ayan
  * @since 14-11-2016 */

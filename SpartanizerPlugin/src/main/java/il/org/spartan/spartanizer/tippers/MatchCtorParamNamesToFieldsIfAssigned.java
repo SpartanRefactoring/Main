@@ -60,8 +60,8 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     }
     // TODO: Doron Meshulam - change only one variable at a time --yg
     return new Tip(description(d), d, getClass()) {
-      List<SimpleName> on = new ArrayList<>($);
-      List<SimpleName> nn = new ArrayList<>(newNames);
+      final List<SimpleName> on = new ArrayList<>($);
+      final List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (int ¢ = 1; ¢ <= on.size(); ++¢)

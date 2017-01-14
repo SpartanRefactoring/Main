@@ -24,7 +24,7 @@ public class PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
                                                                         // SAFE
-  public static AtomicBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new AtomicBoolean(true);
+  public static final AtomicBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new AtomicBoolean(true);
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */

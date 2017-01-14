@@ -46,7 +46,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
           && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
-  private static specificity specificity = new specificity();
+  private static final specificity specificity = new specificity();
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
@@ -76,7 +76,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         same place, or after then the second argument in lexicographical
    *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return removeWhites(wizard.body(e1)).compareTo(removeWhites(wizard.body(e2)));
+    return removeWhites(wizard.cleanForm(e1)).compareTo(removeWhites(wizard.cleanForm(e2)));
   }
 
   static int argumentsCompare(final Expression e1, final Expression e2) {

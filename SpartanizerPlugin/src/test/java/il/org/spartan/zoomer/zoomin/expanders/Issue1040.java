@@ -5,6 +5,7 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link ExpanderTestUtils} .
@@ -51,7 +52,7 @@ public class Issue1040 {
   public class Issue1040Aux3 extends ReflectiveTester {
     int total;
     int total2;
-    @SuppressWarnings("boxing") Integer[] arr = { 1, 2, 3, 4, 5 };
+    @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };
 
     double total(final int x) {
       return 5.0;

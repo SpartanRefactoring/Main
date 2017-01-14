@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
-
-import java.util.*;
 
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch

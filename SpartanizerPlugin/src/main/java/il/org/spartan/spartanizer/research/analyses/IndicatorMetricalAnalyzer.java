@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
-  Map<Integer, List<Int>> histogram = new HashMap<>();
+  final Map<Integer, List<Int>> histogram = new HashMap<>();
 
   @Override protected abstract int metric(ASTNode n);
 

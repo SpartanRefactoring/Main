@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
-  Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
+  final Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
     {}
   };

@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue1040Aux2 extends ReflectiveTester {
   int total;
   int total2;
-  @SuppressWarnings("boxing") Integer[] arr = { 1, 2, 3, 4, 5 };
+  @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };
 
   double total(final int x) {
     return 5.0;

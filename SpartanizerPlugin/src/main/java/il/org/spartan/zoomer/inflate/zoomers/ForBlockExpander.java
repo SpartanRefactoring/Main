@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,9 +22,9 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
       return null;
     final ForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(copy.of(s.getBody()));
+    b.statements().add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
-    s.getBody().accept(new ASTVisitor() {
+    body(s).accept(new ASTVisitor() {
       // TODO: Raviv Rachmiel use class box, or valueOf if necessary and remove
       // @SuppressWarnings("boxing") --yg
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {

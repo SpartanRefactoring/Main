@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
 public final class Tips {
-  private static AbstractGUIApplicator[] all = { //
+  private static final AbstractGUIApplicator[] all = { //
       new Trimmer(), //
   };
   @SuppressWarnings("synthetic-access") //

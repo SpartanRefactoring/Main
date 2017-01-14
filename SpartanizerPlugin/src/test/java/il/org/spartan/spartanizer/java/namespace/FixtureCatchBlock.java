@@ -13,7 +13,7 @@ public class FixtureCatchBlock extends ReflectiveTester {
     return f(f);
   }
 
-  int f(final int f) {
+  private int f(final int f) {
     return f(f);
   }
 
@@ -37,7 +37,7 @@ public class FixtureCatchBlock extends ReflectiveTester {
     }
   }
 
-  @knows("f/0") int f() {
+  @knows("f/0") private int f() {
     try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {
       try (@knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)

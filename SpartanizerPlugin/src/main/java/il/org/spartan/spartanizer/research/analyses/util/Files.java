@@ -83,14 +83,14 @@ public enum Files {
    * packageDeclarations and FieldDeclarations.
    * @param cu
    * @return */
-  public static ASTNode clean(final ASTNode cu) {
+  private static ASTNode clean(final ASTNode cu) {
     cu.accept(new CleanerVisitor());
     return cu;
   }
 
   /** @param ¢ file
    * @return compilation unit out of file */
-  public static ASTNode getCompilationUnit(final File ¢) {
+  private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
@@ -104,7 +104,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
    * @return All java files nested inside the outputFolder */
-  public static Set<File> getJavaFiles(final String dirName) {
+  private static Set<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
 
@@ -112,7 +112,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
-  public static Set<File> getJavaFiles(final File directory) {
+  private static Set<File> getJavaFiles(final File directory) {
     final Set<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;
@@ -124,11 +124,11 @@ public enum Files {
     return $;
   }
 
-  public static boolean javaFile(final File entry) {
+  private static boolean javaFile(final File entry) {
     return entry.isFile() && entry.getPath().endsWith(".java");
   }
 
-  public static boolean notTest(final File entry) {
+  private static boolean notTest(final File entry) {
     return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
 

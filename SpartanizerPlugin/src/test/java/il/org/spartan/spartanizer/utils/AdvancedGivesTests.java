@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class AdvancedGivesTests {
   @Ignore
-  static class NotWorking {
+  private static class NotWorking {
     @Test public void test2() {
       trimmingOf("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢; continue;}")//
           .givesEither("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢;}", //

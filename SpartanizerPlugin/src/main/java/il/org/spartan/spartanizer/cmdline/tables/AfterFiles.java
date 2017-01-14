@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
 /** @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class AfterFiles extends FolderASTVisitor {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
   static {
@@ -104,7 +104,7 @@ public class AfterFiles extends FolderASTVisitor {
     scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics(final String path) {
+  @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics(final String path) {
     try (Table report = new Table(path)) {
       int statementsTotal = 0;
       int methodsTotal = 0;
@@ -152,11 +152,11 @@ public class AfterFiles extends FolderASTVisitor {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  private static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
-  public static CSVStatistics openSummaryFile(final String $) {
+  private static CSVStatistics openSummaryFile(final String $) {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
@@ -173,7 +173,7 @@ public class AfterFiles extends FolderASTVisitor {
     npStatistics.get(np).markNP(n);
   }
 
-  public void summarizeNPStatistics() {
+  private void summarizeNPStatistics() {
     final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
       return;

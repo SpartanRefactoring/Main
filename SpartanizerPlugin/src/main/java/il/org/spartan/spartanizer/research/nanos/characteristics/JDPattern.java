@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,12 +12,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class JDPattern extends JavadocMarkerNanoPattern {
-  static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X == null", "", ""));

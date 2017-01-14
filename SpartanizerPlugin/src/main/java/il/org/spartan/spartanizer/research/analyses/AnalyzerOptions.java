@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Nov 1, 2016 */
 public enum AnalyzerOptions {
   ;
-  static Map<String, Map<String, String>> options = new HashMap<>();
-  static Bool verbose = new Bool();
+  static final Map<String, Map<String, String>> options = new HashMap<>();
+  static final Bool verbose = new Bool();
 
   public static String get(final String cls, final String property) {
     return options.get(cls) == null ? null : options.get(cls).get(property);
@@ -31,8 +31,8 @@ public enum AnalyzerOptions {
     set(Analyze.class.getSimpleName(), property, value);
   }
 
-  static Int counter = new Int();
-  public static String INPUT_DIR = "inputDir";
+  static final Int counter = new Int();
+  public static final String INPUT_DIR = "inputDir";
 
   public static void tickNP() {
     if (!verbose.inner)

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 @RunWith(Parameterized.class)
 public class ForeignTest extends ReflectiveTester {
-  String repository;
+  final String repository;
   static final String FOREIGN = foreign.class.getSimpleName() + "";
 
   public ForeignTest(final SimpleName name, final String foreign, final String repository) {

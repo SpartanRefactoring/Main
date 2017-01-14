@@ -27,8 +27,8 @@ public class ReportGenerator implements ConfigurableReport {
   protected String afterFileName;
   protected String beforeFileName;
   protected String spectrumFileName;
-  protected static HashMap<String, CSVStatistics> reports = new HashMap<>();
-  protected static HashMap<String, PrintWriter> files = new HashMap<>();
+  protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
+  protected static final HashMap<String, PrintWriter> files = new HashMap<>();
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {

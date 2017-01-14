@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue0984} Issue #984 convert
  * <code> o.f(x ? a : b); </code> to <code> if (x) o.f(a); else o.f(b); </code>

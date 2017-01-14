@@ -26,7 +26,7 @@ public class Logger {
   private static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
-  private static List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
+  private static final List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
@@ -98,7 +98,7 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
-    subscribers.stream().forEach(¢ -> ¢.accept(n, np));
+    subscribers.forEach(¢ -> ¢.accept(n, np));
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {

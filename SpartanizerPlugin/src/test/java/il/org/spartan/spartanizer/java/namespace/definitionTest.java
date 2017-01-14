@@ -25,9 +25,9 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class definitionTest extends ReflectiveTester {
-  @field final Initializer initializer = find(Initializer.class);
-  @field final TypeDeclaration clazz = find(TypeDeclaration.class);
-  @field final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
+  @field private final Initializer initializer = find(Initializer.class);
+  @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
+  @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
     {
       put("@Test", null);
       put("@Ignore", null);

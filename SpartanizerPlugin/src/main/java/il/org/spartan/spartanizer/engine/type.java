@@ -188,9 +188,9 @@ public interface type {
   }
 
   class inner {
-    private static String propertyName = "spartan type";
+    private static final String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
-    static Map<String, implementation> types = new LinkedHashMap<>();
+    static final Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation get(final Expression ¢) {
       return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));

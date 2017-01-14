@@ -154,7 +154,7 @@ public interface Environment {
 
   static List<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(wizard.condense(s.getType()));
+    final type t = type.baptize(wizard.condense(type(s)));
     final String path = fullName(s);
     $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(path + "." + ¢.getName(), makeBinding(¢, t))).collect(Collectors.toList()));
     return $;

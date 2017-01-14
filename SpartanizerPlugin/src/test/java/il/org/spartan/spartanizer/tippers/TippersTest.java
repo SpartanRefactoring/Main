@@ -30,7 +30,7 @@ public final class TippersTest {
     final String input = "int f() { for (int a: as) return a; }";
     final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
-    final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(m.getBody()))).getParameter();
+    final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(body(m)))).getParameter();
     assert p != null;
     final SimpleName a = p.getName();
     assert a != null;
@@ -85,7 +85,7 @@ public final class TippersTest {
     final Document d = Wrap.Method.intoDocument(input);
     final MethodDeclaration m = findFirst.methodDeclaration(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
-    final Block b = m.getBody();
+    final Block b = body(m);
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(b))).getParameter();
     assert p != null;
     final SimpleName n = p.getName();
