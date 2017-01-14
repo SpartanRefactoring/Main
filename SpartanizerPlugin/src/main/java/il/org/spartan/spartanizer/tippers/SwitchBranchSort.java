@@ -16,44 +16,42 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-11 [[SuppressWarningsSpartan]] */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Sorting {
-  @Override public ASTNode replacement(SwitchStatement n) {
-    List<Branch> b = intoBranches(n);
+  @Override public ASTNode replacement(final SwitchStatement n) {
+    final List<Branch> b = intoBranches(n);
     int ind = -1;
-    for (int i = 0; i < b.size() - 1; ++i) {
+    for (int i = 0; i < b.size() - 1; ++i)
       if (b.get(i).compareTo(b.get(i + 1)) <= 0) {
         ind = i;
         break;
       }
-    }
     if (ind < 0)
       return null;
-    SwitchStatement s = n.getAST().newSwitchStatement();
+    final SwitchStatement s = n.getAST().newSwitchStatement();
     s.setExpression(copy.of(step.expression(n)));
-    List<Statement> l = step.statements(s);
-    for (int i = 0; i < b.size(); ++i) {
+    final List<Statement> l = step.statements(s);
+    for (int i = 0; i < b.size(); ++i)
       if (i == ind) {
         b.get(i + 1).addAll(l);
         b.get(i).addAll(l);
         ++i;
       } else
         b.get(i).addAll(l);
-    }
     return s;
   }
 
-  @Override public String description(@SuppressWarnings("unused") SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     // TODO Auto-generated method stub
     return null;
   }
 
-  private static List<Branch> intoBranches(SwitchStatement n) {
+  private static List<Branch> intoBranches(final SwitchStatement n) {
     List<SwitchCase> c = new ArrayList<>();
     List<Statement> s = new ArrayList<>();
-    List<Branch> b = new ArrayList<>();
+    final List<Branch> b = new ArrayList<>();
     b.add(new Branch(c, s));
     boolean nextBranch = false;
     boolean passedCases = false;
-    for (Statement ss : step.statements(n)) {
+    for (final Statement ss : step.statements(n)) {
       if (nextBranch && iz.switchCase(ss))
         passedCases = false;
       if (nextBranch) {
@@ -88,7 +86,7 @@ class Branch {
   int numOfNodes;
   int depth;
 
-  public Branch(List<SwitchCase> cases, List<Statement> statements) {
+  public Branch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
     this.statements = statements;
     numOfNodes = numOfStatements = depth = -1; // lazy evaluation
@@ -121,7 +119,7 @@ class Branch {
     return 0;
   }
 
-  int compareTo(Branch b) {
+  int compareTo(final Branch b) {
     if (hasDefault)
       return -1;
     if (b.hasDefault)
@@ -139,10 +137,10 @@ class Branch {
     return -1;
   }
 
-  void addAll(List<Statement> ss) {
-    for (SwitchCase ¢ : cases)
+  void addAll(final List<Statement> ss) {
+    for (final SwitchCase ¢ : cases)
       ss.add(copy.of(¢));
-    for (Statement ¢ : statements)
+    for (final Statement ¢ : statements)
       ss.add(copy.of(¢));
   }
 }

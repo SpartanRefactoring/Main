@@ -63,16 +63,14 @@ public class Issue1040 {
 
     void toTest() {
       total = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total += total(1);
-      }
     }
 
     void toTest2() {
       total2 = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total2 += total2(1);
-      }
     }
   }
 }
