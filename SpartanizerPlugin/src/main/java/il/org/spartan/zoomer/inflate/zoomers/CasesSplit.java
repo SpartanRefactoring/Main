@@ -44,7 +44,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   }
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
- 
+
   @Override public Tip tip(final SwitchStatement ¢) {
     @SuppressWarnings("unchecked") final List<Statement> $ = getAdditionalStatements(¢.statements(), caseWithNoSequencer(¢));
     final Statement n = (Statement) ¢.statements().get(¢.statements().indexOf($.get(0)) - 1);
@@ -64,7 +64,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   }
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
- 
+
   @SuppressWarnings("unchecked") private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
     for (final Statement ¢ : (List<Statement>) x.statements())
