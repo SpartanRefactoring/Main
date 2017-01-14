@@ -26,7 +26,7 @@ public class Issue0428 {
   @Test public void d2() {
     trimmingOf("int func() {int j = 0; int k; System.out.print(j); if(f()) return j; return k;}")
         .gives("int func() {int $ = 0; int k; System.out.print($); if(f()) return $; return k;}")
-        .gives("int func() {int $ = 0; int k; System.out.print($); return f()?$:k;}").stays();
+        .gives("int func() {int $ = 0; int k; System.out.print($); return f()?$:k;}");
   }
 
   @Test public void e() {

@@ -26,9 +26,14 @@ public class Issue0239 {
         "final Integer i2 = Integer.valueOf(12345);\n" + //
         "assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
         "}").gives("private void testInteger(final boolean testTransients) {\n" + //
-            "final Integer i1 = Integer.valueOf(12344);\n" + //
-            "assertEqualsAndHashCodeContract(i1, Integer.valueOf(12345), testTransients);\n" + //
+            "final Integer i1 = Integer.valueOf(12344)\n" + //
+            ", i2 = Integer.valueOf(12345);\n" + //
+            "assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
             "}").gives("private void testInteger(final boolean testTransients) {\n" + //
+                "final Integer i2 = Integer.valueOf(12345);\n" + //
+                "assertEqualsAndHashCodeContract(Integer.valueOf(12344), i2, testTransients);\n" + //
+                "}")
+            .gives("private void testInteger(final boolean testTransients) {\n" + //
                 "assertEqualsAndHashCodeContract(Integer.valueOf(12344), Integer.valueOf(12345), testTransients);\n" + //
                 "}")
             .stays();
@@ -42,8 +47,13 @@ public class Issue0239 {
             "  f1(i1,i2);\n" + //
             "}"). //
                 gives("int f() {\n" + //
-                    "final int i1 = Integer.valueOf(1);\n" + //
-                    "f1(i1,Integer.valueOf(2));\n" + //
+                    "  final int i1 = Integer.valueOf(1)\n" + //
+                    "  , i2 = Integer.valueOf(2);\n" + //
+                    "  f1(i1,i2);\n" + //
+                    "}")//
+                .gives("int f() {\n" + //
+                    "final int i2 = Integer.valueOf(2);\n" + //
+                    "f1(Integer.valueOf(1),i2);\n" + //
                     "}")//
                 .gives("int f() {\n" + //
                     "f1(Integer.valueOf(1),Integer.valueOf(2));\n" + //
