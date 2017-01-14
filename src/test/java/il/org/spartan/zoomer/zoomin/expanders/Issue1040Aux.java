@@ -5,7 +5,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Example for testing with binding
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 [[SuppressWarningsSpartan]] */
-@SuppressWarnings({ "static-method", "unused" })
+@SuppressWarnings("static-method")
 public class Issue1040Aux extends ReflectiveTester {
   int a() {
     return 0;

@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.java.namespace.*;
 /** Test class for name generation from Namespace (Environments)
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-10 */
-@SuppressWarnings({ "javadoc" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc" })
 public class Issue1044 extends ReflectiveTester {
   private final Namespace fixtureClass = Environment.of(myCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);

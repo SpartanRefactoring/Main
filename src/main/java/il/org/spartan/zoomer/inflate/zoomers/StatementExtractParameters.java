@@ -9,11 +9,11 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** An expander to extract complex parameters from {@link Statement}: <code>
  * f(1 + a[b ? 1 : 2]);
@@ -47,21 +47,24 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (b == null)
       return null;
     Type t;
-    try {
-      // TODO Roth: use library code
-      final ImportRewrite ir = ImportRewrite.create((ICompilationUnit) ((CompilationUnit) s.getRoot()).getTypeRoot(), false);
-      if (ir == null)
-        return null;
-      t = ir.addImport(b, s.getAST());
-    } catch (final JavaModelException ¢) {
-      monitor.log(¢);
+    final CompilationUnit u = az.compilationUnit(s.getRoot());
+    if (u == null)
       return null;
-    }
+    // TODO Roth: use library code
+    final ImportRewrite ir = ImportRewrite.create(u, true);
+    if (ir == null)
+      return null;
+    ir.setUseContextToFilterImplicitImports(true); // solves many issues
+    ir.setFilterImplicitImports(true); // along with this of course
+    t = ir.addImport(b, s.getAST());
     return t == null || $ instanceof Assignment ? // TODO Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
+          /** [[SuppressWarningsSpartan]] */
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final Type tt = !b.isArray() ? t : s.getAST().newArrayType(t, b.getDimensions());
+            final ListRewrite ilr = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
+            fixAddedImports(s, ir, u, g, ilr);
+            final Type tt = fixWildCardType(t);
             final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             final String nn = scope.newName(s, tt);
             f.setName(s.getAST().newSimpleName(nn));
@@ -144,6 +147,89 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       void consider(final List<Expression> $, final List<Expression> xs) {
         for (final Expression ¢ : xs)
           consider($, ¢);
+      }
+    });
+    return $;
+  }
+
+  /** Manual addition of imports recorded in the {@link ImportRewrite} object.
+   * @param s
+   * @param r
+   * @param u
+   * @param g
+   * @param ilr */
+  @SuppressWarnings("unchecked") static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
+    final List<String> idns = new LinkedList<>();
+    if (r.getAddedImports() != null)
+      idns.addAll(Arrays.asList(r.getAddedImports()));
+    if (r.getAddedStaticImports() != null)
+      idns.addAll(Arrays.asList(r.getAddedStaticImports()));
+    outer: for (final String idn : idns) {
+      // TODO Roth: do it better
+      for (final ImportDeclaration oid : (List<ImportDeclaration>) u.imports())
+        if (idn.equals(oid.getName().getFullyQualifiedName()))
+          continue outer;
+      final ImportDeclaration id = s.getAST().newImportDeclaration();
+      id.setName(s.getAST().newName(idn));
+      ilr.insertLast(id, g);
+    }
+  }
+
+  /** Required due to bug in eclipse (seams so). Given
+   * <code>T extends MyObject</code>, <code>T[]</code> turns with binding into
+   * <code>? extends E[]</code>. The problem is this type is considered as
+   * {@link ArrayType} rather than {@link WildcardType}! Thus the manual fix.
+   * Real world example: <code>
+   * class C<E extends Enum<?>> {
+   *   ...
+   *   protected E[] events() {
+   *     return enumClass.getEnumConstants();
+   *   }
+   *   ...
+   * }
+   * </code> turns to <code>
+   * class C<E extends Enum<?>> {
+   *   ...
+   *   protected E[] events() {
+   *     ? extends E[] x = enumClass.getEnumConstants();
+   *     return x;
+   *   }
+   *   ...
+   * }
+   * </code> and the {@link Type} <code>? extends E[]</code> is considered as
+   * {@link ArrayType} rather than {@link WildcardType}!
+   * @param t
+   * @return */
+  static Type fixWildCardType(final Type $) {
+    if ($ == null)
+      return null;
+    if ($ instanceof WildcardType)
+      return copy.of(((WildcardType) $).getBound());
+    // here is the manual work...
+    final String s = $ + "";
+    if (!s.startsWith("? extends "))
+      return $;
+    $.accept(new ASTVisitor() {
+      boolean stop;
+
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        return super.preVisit2(¢) && !stop;
+      }
+
+      @Override public boolean visit(@SuppressWarnings("hiding") final WildcardType $) {
+        if (s.indexOf($ + "") != 0)
+          return super.visit($);
+        stop = true;
+        final ASTNode p = $.getParent();
+        if (p == null || !(p instanceof Type))
+          return false;
+        final Type pt = (Type) $.getParent();
+        // TODO Roth: more cases?
+        if (pt instanceof ArrayType)
+          ((ArrayType) pt).setElementType(copy.of($.getBound()));
+        else if (pt instanceof ParameterizedType)
+          ((ParameterizedType) pt).setType(copy.of($.getBound()));
+        return false;
       }
     });
     return $;

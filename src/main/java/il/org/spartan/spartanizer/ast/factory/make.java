@@ -247,14 +247,13 @@ public enum make {
     }
   }
 
-  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression e) {
-    final AST create = e.getAST();
+  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
+    final AST create = x.getAST();
     final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
-    final SimpleName s = create.newSimpleName(name);
-    fragment.setName(s);
-    fragment.setInitializer(e);
-    final VariableDeclarationStatement vd = create.newVariableDeclarationStatement(fragment);
-    vd.setType(t);
-    return vd;
+    fragment.setName(create.newSimpleName(name));
+    fragment.setInitializer(x);
+    final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
+    $.setType(t);
+    return $;
   }
 }
