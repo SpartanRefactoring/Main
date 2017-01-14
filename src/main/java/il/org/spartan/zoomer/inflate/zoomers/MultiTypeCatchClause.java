@@ -32,6 +32,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
     final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
+    // TODO: Ori Roth, this is a perfect example for extract method, which would simpify the code
     for (; i < catches.size(); ++i)
       if (iz.unionType(catches.get(i).getException().getType())) {
         multiTypeCatch = copy.of(catches.get(i));

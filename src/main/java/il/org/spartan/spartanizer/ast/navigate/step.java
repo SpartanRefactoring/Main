@@ -36,12 +36,12 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("boxing") private static boolean balanced(final String s) {
+  private static boolean balanced(final String s) {
     int $ = 0;
     for (final Integer ¢ : range.from(0).to(s.length()))
-      if (s.charAt(¢) == '<')
+      if (s.charAt(¢.intValue()) == '<')
         ++$;
-      else if (s.charAt(¢) == '>')
+      else if (s.charAt(¢.intValue()) == '>')
         --$;
     return $ == 0;
   }
@@ -344,7 +344,7 @@ public enum step {
    * @param ¢ JD
    * @return right operand of the parameter */
   public static Expression from(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getRightHandSide();
+    return ¢ == null ? null : right(¢);
   }
 
   public static String identifier(final AnnotationTypeDeclaration ¢) {
@@ -441,7 +441,7 @@ public enum step {
    * @param ¢ JD
    * @return left side of the assignment */
   public static Expression left(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getLeftHandSide();
+    return ¢ == null ? null : left(¢);
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
@@ -625,7 +625,7 @@ public enum step {
    * @param ¢ JD
    * @return right side of the assignment */
   public static Expression right(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getRightHandSide();
+    return ¢ == null ? null : right(¢);
   }
 
   /** Shorthand for {@link CastExpression#getExpression()}
@@ -688,7 +688,7 @@ public enum step {
    * @param ¢ JD
    * @return left operand of the parameter */
   public static Expression to(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getLeftHandSide();
+    return ¢ == null ? null : left(¢);
   }
 
   /** Shorthand for {@link NumberLiteral#getToken()}

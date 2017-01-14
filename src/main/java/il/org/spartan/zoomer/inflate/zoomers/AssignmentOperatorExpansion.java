@@ -1,5 +1,6 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -30,11 +31,11 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final InfixExpression e = ¢.getAST().newInfixExpression();
-        e.setLeftOperand(copy.of(¢.getLeftHandSide()));
-        e.setRightOperand(make.plant(copy.of(¢.getRightHandSide())).into(e));
+        e.setLeftOperand(copy.of(left(¢)));
+        e.setRightOperand(make.plant(copy.of(right(¢))).into(e));
         e.setOperator(convertToInfix(¢.getOperator()));
         final Assignment a = ¢.getAST().newAssignment();
-        a.setLeftHandSide(copy.of(¢.getLeftHandSide()));
+        a.setLeftHandSide(copy.of(left(¢)));
         a.setRightHandSide(e);
         a.setOperator(Operator.ASSIGN);
         r.replace(¢, a, g);
@@ -56,7 +57,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
   }
 
   private static boolean validTypes(final Assignment ¢) {
-    final ITypeBinding $ = ¢.getLeftHandSide().resolveTypeBinding(), br = ¢.getRightHandSide().resolveTypeBinding();
+    final ITypeBinding $ = left(¢).resolveTypeBinding(), br = right(¢).resolveTypeBinding();
     return $ != null && br != null && $.isPrimitive() && br.isPrimitive() && $.isEqualTo(br);
   }
 }
