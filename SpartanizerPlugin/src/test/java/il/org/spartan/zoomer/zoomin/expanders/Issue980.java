@@ -8,8 +8,8 @@ import org.junit.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-13 */
 
-@SuppressWarnings("static-method")
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue980 {
   @Test public void test0() {
     zoomingInto("{return x && y();}")//
