@@ -188,8 +188,8 @@ public class SingleFlater {
     }
 
     /**  */
-    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> tipper) {
-      return new Operation<>(node, tipper);
+    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> n) {
+      return new Operation<>(node, n);
     }
   }
 

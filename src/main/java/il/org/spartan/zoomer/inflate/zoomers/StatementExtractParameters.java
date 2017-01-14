@@ -62,8 +62,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         null : new Tip(description(s), s, getClass()) {
           /**  */
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final ListRewrite ilr = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
-            fixAddedImports(s, ir, u, g, ilr);
+            fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
             final Type tt = fixWildCardType(t);
             final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             final String nn = scope.newName(s, tt);
@@ -80,18 +79,18 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           }
 
           /**  */
-          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns,
+          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
             final Block nb = p.getAST().newBlock();
-            nb.statements().add(v);
+            nb.statements().add(s);
             nb.statements().add(ns);
             r.replace(s, nb, g);
           }
 
           /**  */
-          void goBlockParent(final Block p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+          void goBlockParent(final Block p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
             final ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
-            lr.insertBefore(v, s, g);
+            lr.insertBefore(s, s, g);
             lr.insertBefore(ns, s, g);
             lr.remove(s, g);
           }
