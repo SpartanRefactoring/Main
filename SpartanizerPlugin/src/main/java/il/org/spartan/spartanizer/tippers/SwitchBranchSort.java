@@ -157,7 +157,7 @@ class Branch {
   /** @param b
    * @return returns 1 if _this_ has better metrics than b (i.e should come before b in the switch), -1 otherwise
    */
-  boolean compareTo(final Branch b) {
+  boolean compare(final Branch b) {
     if (hasDefault())
       return false;
     if (b.hasDefault())
@@ -176,6 +176,15 @@ class Branch {
       return true;
     if (casesNum() < b.casesNum())
       return true;
+    
+    return false;
+  }
+  
+  boolean compareTo(final Branch b) {
+    if(compare(b))
+      return true;
+    if(!b.compare(this))
+      return this.hashCode() < b.hashCode();
     return false;
   }
 
