@@ -38,7 +38,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Yuval Simon
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @Override @SuppressWarnings({ "unchecked", "unused" }) public ASTNode replacement(final SwitchStatement s) {
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     final List<SwitchCase> $ = extract.switchCases(s);

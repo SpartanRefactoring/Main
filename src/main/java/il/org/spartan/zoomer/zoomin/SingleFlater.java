@@ -7,7 +7,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.core.dom.rewrite.*;
 import org.eclipse.jdt.internal.ui.javaeditor.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.*;
@@ -26,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-20 */
 public class SingleFlater {
-  private static final boolean SELECT_CHANGES = false;
+  @SuppressWarnings("unused") private static final boolean SELECT_CHANGES = false;
   private ASTNode root;
   private OperationsProvider operationsProvider;
   @Deprecated private TextSelection textSelection;
@@ -152,7 +151,8 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i) throws CoreException {
+  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i)
+      throws CoreException {
     if (i == null || !(e instanceof CompilationUnitEditor) || e.getSelectionProvider() == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -164,8 +164,8 @@ public class SingleFlater {
     }
     final ProjectionViewer pv = (ProjectionViewer) v;
     tc.perform(new NullProgressMonitor());
-    pv.setTopIndex(i.startLine);
     e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
+    pv.setTopIndex(i.startLine);
     return false;
   }
 
