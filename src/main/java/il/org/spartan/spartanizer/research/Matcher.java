@@ -354,7 +354,7 @@ public class Matcher {
     return collectEnviroment(pattern(), n, enviroment);
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> enviroment) {
     if (startsWith$notBlock(p))
       enviroment.put(p + "", n + "");
@@ -391,7 +391,7 @@ public class Matcher {
     return collectEnviromentNodes(pattern(), n, enviroment);
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
     if (is$X(p))
       enviroment.put(name(az.methodInvocation(p)) + "", n);

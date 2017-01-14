@@ -20,7 +20,7 @@ public final class JavadocEmpty extends CarefulTipper<Javadoc> implements Tipper
     return "Remove empty Javadoc comment";
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   @Override public boolean prerequisite(final Javadoc ¢) {
     final List<TagElement> tags = tags(¢);
     for (final TagElement t : tags)

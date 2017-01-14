@@ -9,7 +9,7 @@ import org.junit.*;
  * {@link DeclarationInitializerStatementTerminatingScope}Inlining of
  * {@link ArrayInitializer}
  * @author Ori Roth
- * @since 2016 [[SuppressWarningsSpartan]] */
+ * @since 2016  */
 @SuppressWarnings("static-method")
 public class Issue0364 {
   @Test public void emptyInitializer() {
