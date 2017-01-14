@@ -24,7 +24,9 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }
-
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @Override @SuppressWarnings("unchecked") protected boolean prerequisite(final VariableDeclarationStatement s) {
     int $ = 0;
     for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) s.fragments())
@@ -32,7 +34,9 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
         ++$;
     return $ >= 2;
   }
-
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @Override @SuppressWarnings("unchecked") public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($);
@@ -49,7 +53,9 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
       }
     };
   }
-
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
+ 
   @SuppressWarnings("unchecked") private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
     for (final VariableDeclarationFragment $ : (List<VariableDeclarationFragment>) ¢.fragments())
       if (isFragmentApplicable($))

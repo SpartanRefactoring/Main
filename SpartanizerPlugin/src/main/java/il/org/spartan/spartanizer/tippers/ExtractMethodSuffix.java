@@ -48,8 +48,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   /** @param d JD
    * @param ds variables list
    * @return <code><b>true</b></code> <em>iff</em> the method and the
-   *         listcontains same variables, in matters oftype and quantity
+   *         list contains same variables, in matters of type and quantity
    *         [[SuppressWarningsSpartan]] */
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
@@ -60,7 +62,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         return false;
     return true;
   }
-
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d,
       final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     Collections.sort(ds, new NaturalVariablesOrder(d));
@@ -110,7 +113,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   private static String fixName(final String ¢) {
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
-
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2,
       final List<VariableDeclaration> ds) {
     d2.parameters().clear();
@@ -127,7 +131,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         d2.parameters().add(sv);
       }
   }
-
+  // TODO: Ori Roth use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static void fixJavadoc(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
@@ -170,7 +175,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     protected final List<VariableDeclaration> active;
     protected final List<VariableDeclaration> inactive;
     protected int variablesTerminated;
-
+    // TODO: Ori Roth use class step if necessary and remove
+    // @SuppressWarnings("unchecked") --yg
     @SuppressWarnings("unchecked") public MethodVariablesScanner(final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
@@ -241,7 +247,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   static class NaturalVariablesOrder implements Comparator<VariableDeclaration> {
     final List<SingleVariableDeclaration> ps;
     final List<Statement> ss;
-
+    // TODO: Ori Roth use class step if necessary and remove
+    // @SuppressWarnings("unchecked") --yg
     @SuppressWarnings("unchecked") public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = method.parameters();

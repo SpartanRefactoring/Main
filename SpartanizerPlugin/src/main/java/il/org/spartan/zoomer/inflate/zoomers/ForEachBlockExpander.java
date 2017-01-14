@@ -18,6 +18,7 @@ public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatemen
     if (s == null)
       return null;
     final EnhancedForStatement $ = copy.of(s);
+    // TODO: Raviv Rachmiel ... the next two statements do nothing, I think.--yg
     if (az.enhancedFor(s) == null)
       return null;
     final Block b = $.getAST().newBlock();

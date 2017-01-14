@@ -275,8 +275,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           .does((x, u) -> u);
     }
 
-    /** Counts calls of this event. Conducts casting.
-     * [[SuppressWarningsSpartan]] */
+    /** Counts calls of this event. Conducts casting. */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
       return ((EventMapperFunctor<E, Int, Int>) this) //
           .startWith(new Int()) //
