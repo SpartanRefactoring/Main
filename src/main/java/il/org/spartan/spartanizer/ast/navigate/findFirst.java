@@ -124,13 +124,12 @@ public interface findFirst {
       return null;
     final Wrapper<N> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked")
-      @Override public boolean preVisit2(final ASTNode ¢) {
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
           return true;
-        $.set((N)¢);
+        $.set((N) ¢);
         assert $.get() == ¢;
         return false;
       }
