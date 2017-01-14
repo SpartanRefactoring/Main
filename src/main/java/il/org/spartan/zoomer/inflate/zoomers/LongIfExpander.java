@@ -9,15 +9,15 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue0976} Issue #976 Convert:
- * 
+ *
  * <pre>
  * if (a == b && c == d) {
  *   a = 5;
  * }
  * </pre>
- * 
+ *
  * to:
- * 
+ *
  * <pre>
  * if (a == b) {
  *   if (c == d) {
@@ -25,18 +25,18 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  *   }
  * }
  * </pre>
- * 
+ *
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */
 public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
-  @Override public ASTNode replacement(IfStatement ¢) {
+  @Override public ASTNode replacement(final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    IfStatement $ = ¢.getAST().newIfStatement();
-    InfixExpression ie = (InfixExpression) ¢.getExpression();
+    final IfStatement $ = ¢.getAST().newIfStatement();
+    final InfixExpression ie = (InfixExpression) ¢.getExpression();
     $.setExpression(copy.of(ie.getLeftOperand()));
-    IfStatement newThen = ¢.getAST().newIfStatement();
-    Expression ne = !ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie));
+    final IfStatement newThen = ¢.getAST().newIfStatement();
+    final Expression ne = !ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie));
     newThen.setExpression(ne);
     newThen.setThenStatement(copy.of(¢.getThenStatement()));
     $.setThenStatement(newThen);
@@ -47,12 +47,12 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
 
-  @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(IfStatement ¢, InfixExpression x) {
-    InfixExpression $ = ¢.getAST().newInfixExpression();
+  @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(final IfStatement ¢, final InfixExpression x) {
+    final InfixExpression $ = ¢.getAST().newInfixExpression();
     $.setOperator(x.getOperator());
     $.setLeftOperand(copy.of(x.getRightOperand()));
     $.setRightOperand(copy.of((Expression) x.extendedOperands().get(0)));
@@ -61,7 +61,7 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
     return $;
   }
 
-  private static boolean shouldTip(IfStatement ¢) {
+  private static boolean shouldTip(final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd((InfixExpression) ¢.getExpression());
   }
 }
