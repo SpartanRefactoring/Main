@@ -17,10 +17,12 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
     final Expression e = s.getExpression();
     if (!(e instanceof MethodInvocation))
       return null;
+    // TODO: Tomer Dragucki rewrite your code using class 'az' and 'iz' --yg
     final MethodInvocation i = (MethodInvocation) e;
     final ConditionalExpression c = getFirstCond(i);
     if (c == null)
       return null;
+    // TODO: omer Dragucki rewrite your code using subject.pairt()....
     final IfStatement $ = i.getAST().newIfStatement();
     $.setExpression(copy.of(c.getExpression()));
     final MethodInvocation mThen = copy.of(i);
