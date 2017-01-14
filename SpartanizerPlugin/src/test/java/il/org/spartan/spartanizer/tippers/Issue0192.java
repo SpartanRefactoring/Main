@@ -8,7 +8,7 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0192 {
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   @Ignore @Test public void a() {
     trimmingOf("" + //
         "boolean a = false;" + //

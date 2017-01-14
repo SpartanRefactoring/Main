@@ -60,7 +60,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return t == null || $ instanceof Assignment ? // TODO Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
-          /** [[SuppressWarningsSpartan]] */
+          /**  */
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final ListRewrite ilr = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
             fixAddedImports(s, ir, u, g, ilr);
@@ -79,7 +79,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          /** [[SuppressWarningsSpartan]] */
+          /**  */
           @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
             final Block nb = p.getAST().newBlock();
@@ -88,7 +88,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             r.replace(s, nb, g);
           }
 
-          /** [[SuppressWarningsSpartan]] */
+          /**  */
           void goBlockParent(final Block p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
             final ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
             lr.insertBefore(v, s, g);

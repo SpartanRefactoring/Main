@@ -31,7 +31,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * assignment will be treated after outlining by other expanders . Test case is
  * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2016-12-25 [[SuppressWarningsSpartan]] */
+ * @since 2016-12-25  */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.Expander {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
