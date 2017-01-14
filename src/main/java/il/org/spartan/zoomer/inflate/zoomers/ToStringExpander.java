@@ -1,6 +1,7 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,8 +24,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested in {@link Issue096}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
-public class toStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
+public class ToStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final InfixExpression ¢) {
+    if (¢.getOperator() != Operator.PLUS)
+      return null;
     if (¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null || extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
