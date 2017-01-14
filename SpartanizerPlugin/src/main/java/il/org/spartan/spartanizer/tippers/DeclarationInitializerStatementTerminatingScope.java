@@ -82,19 +82,19 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   /** [[SuppressWarningsSpartan]] */
   protected static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
-    if (!(iz.literal(f.getInitializer())) || !(iz.expressionStatement(nextStatement)))
+    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    ExpressionStatement es = (ExpressionStatement) nextStatement;
+    final ExpressionStatement es = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(es.getExpression())) {
-      MethodInvocation m = (MethodInvocation) es.getExpression();
-      Expression $ = (!iz.parenthesizedExpression(m.getExpression())) ? m.getExpression()
+      final MethodInvocation m = (MethodInvocation) es.getExpression();
+      final Expression $ = !iz.parenthesizedExpression(m.getExpression()) ? m.getExpression()
           : ((ParenthesizedExpression) m.getExpression()).getExpression();
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(es.getExpression()))
       return false;
-    FieldAccess fa = (FieldAccess) es.getExpression();
-    Expression e = (!iz.parenthesizedExpression(fa.getExpression())) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
+    final FieldAccess fa = (FieldAccess) es.getExpression();
+    final Expression e = !iz.parenthesizedExpression(fa.getExpression()) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 

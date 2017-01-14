@@ -55,7 +55,7 @@ public class Table_Summary extends TableReusabilityIndices {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      final MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
         npDistributionStatistics.logMethod(d);
     } catch (final AssertionError __) {
@@ -131,7 +131,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static Double getNodeCoverage(int type) {
+  @SuppressWarnings("boxing") private static Double getNodeCoverage(final int type) {
     return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
   }
 
@@ -149,7 +149,7 @@ public class Table_Summary extends TableReusabilityIndices {
 
   /** [[SuppressWarningsSpartan]] */
   private long adopted() {
-    int $ = rMethod();
+    final int $ = rMethod();
     return npStatistics.keySet().stream()//
         .map(k -> npStatistics.get(k))//
         .filter(n -> n.occurences > $).count();

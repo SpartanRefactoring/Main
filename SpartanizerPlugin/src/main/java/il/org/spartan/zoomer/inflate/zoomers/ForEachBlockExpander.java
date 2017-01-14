@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 10-01-17 */
 public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatement> implements TipperCategory.Expander {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(EnhancedForStatement s) {
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnhancedForStatement s) {
     if (s == null)
       return null;
     final EnhancedForStatement $ = copy.of(s);
