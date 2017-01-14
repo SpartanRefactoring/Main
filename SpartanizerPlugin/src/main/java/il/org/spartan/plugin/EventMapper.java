@@ -78,12 +78,12 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * than update it. */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
-      /** [[SuppressWarningsSpartan]] */
+      /**  */
       @Override public void update(final Map<E, Object> m) {
         consumer.accept(m);
       }
 
-      /** [[SuppressWarningsSpartan]] */
+      /**  */
       @Override public void update(final Map<E, Object> m, final Object o) {
         biConsumer.accept(m, o);
       }
@@ -275,8 +275,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           .does((x, u) -> u);
     }
 
-    /** Counts calls of this event. Conducts casting.
-     * [[SuppressWarningsSpartan]] */
+    /** Counts calls of this event. Conducts casting. */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
       return ((EventMapperFunctor<E, Int, Int>) this) //
           .startWith(new Int()) //

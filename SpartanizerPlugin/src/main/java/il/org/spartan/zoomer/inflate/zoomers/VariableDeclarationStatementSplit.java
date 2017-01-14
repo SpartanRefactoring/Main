@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,6 +24,8 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @Override @SuppressWarnings("unchecked") protected boolean prerequisite(final VariableDeclarationStatement s) {
     int $ = 0;
@@ -33,6 +34,8 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
         ++$;
     return $ >= 2;
   }
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @Override @SuppressWarnings("unchecked") public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
@@ -43,7 +46,6 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     first.fragments().add(ff);
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter($, ¢, g);
         l.insertAfter(first, ¢, g);
@@ -51,6 +53,8 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
       }
     };
   }
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @SuppressWarnings("unchecked") private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
     for (final VariableDeclarationFragment $ : (List<VariableDeclarationFragment>) ¢.fragments())

@@ -18,8 +18,7 @@ public class Issue1005 {
   }
 
   @Test public void t3() {
-    zoomingInto("if(++i + i++ > ++i + y) { x = f(); }").
-    gives("if((++i + i++) > ++i + y) { x = f(); }");
+    zoomingInto("if(++i + i++ > ++i + y) { x = f(); }").gives("if((++i + i++) > ++i + y) { x = f(); }");
   }
 
   @Test public void t4() {

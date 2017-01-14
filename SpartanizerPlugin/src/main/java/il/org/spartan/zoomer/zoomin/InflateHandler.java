@@ -116,7 +116,8 @@ public class InflateHandler extends AbstractHandler {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return l -> l;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng()).operationName(OPERATION_ACTIVITY);
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng())
+        .operationName(OPERATION_ACTIVITY);
   }
 
   private static IPartService getPartService() {
