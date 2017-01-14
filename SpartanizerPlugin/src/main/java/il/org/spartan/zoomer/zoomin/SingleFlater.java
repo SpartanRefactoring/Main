@@ -187,7 +187,7 @@ public class SingleFlater {
       tipper = t;
     }
 
-    /** [[SuppressWarningsSpartan]] */
+    /**  */
     public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> tipper) {
       return new Operation<>(node, tipper);
     }

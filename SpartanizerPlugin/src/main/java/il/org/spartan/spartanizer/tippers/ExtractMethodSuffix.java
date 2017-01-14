@@ -49,7 +49,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
    * @param ds variables list
    * @return <code><b>true</b></code> <em>iff</em> the method and the
    *         list contains same variables, in matters of type and quantity
-   *         [[SuppressWarningsSpartan]] */
+   *          */
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {

@@ -80,7 +80,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   protected static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
