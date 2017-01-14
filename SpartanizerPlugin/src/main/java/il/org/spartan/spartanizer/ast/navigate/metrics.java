@@ -195,6 +195,24 @@ public interface metrics {
       $ += countStatements(¢);
     return $;
   }
+  
+  static int countStatementsOfType(final Statement n, int type) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        if(¢.getNodeType() == type)
+          ++$.inner;
+      }
+    });
+    return $.inner;
+  }
+  
+  static int countStatementsOfType(final List<Statement> ss, int type) {
+    int $ = 0;
+    for (final Statement ¢ : ss)
+      $ += countStatementsOfType(¢, type);
+    return $;
+  }
 
   static int countExpressions(final ASTNode n) {
     final Int $ = new Int();
