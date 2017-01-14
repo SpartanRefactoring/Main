@@ -7,11 +7,12 @@ import org.junit.*;
 /** Test Class for Expand boolean expressions
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-13 */
-@Ignore
+
 @SuppressWarnings("static-method")
+@Ignore
 public class Issue980 {
   @Test public void test0() {
-    zoomingInto("return x && y();")//
+    zoomingInto("{return x && y();}")//
         .gives("boolean a = x; boolean b = y(); return a && b;");
   }
 
