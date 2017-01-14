@@ -38,7 +38,7 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
   }
   // TODO: Tomer Dragucki use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
- 
+
   @SuppressWarnings("unchecked") private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
     for (final Expression $ : (List<Expression>) ¢.arguments())
       if ($ instanceof ConditionalExpression)

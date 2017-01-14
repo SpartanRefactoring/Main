@@ -63,6 +63,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
   @Override protected void handler(final Annotation ¢) {
     handler(az.singleMemberAnnotation(¢));
   }
+
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
@@ -71,7 +72,6 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(step.values(¢));

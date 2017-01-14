@@ -37,7 +37,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
-// TODO Yuval Simon: remove @SuppressWarnings({ "unchecked" }) and use class step --yg
+// TODO Yuval Simon: remove @SuppressWarnings({ "unchecked" }) and use class
+// step --yg
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
@@ -72,6 +73,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   @Override @SuppressWarnings("unused") public String description(final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
+
   // TODO: Yuval Simon use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static void addStatements(final int x, final SwitchStatement s, final Block b) {
@@ -90,8 +92,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   }
 
   private static boolean defaultSingleBranch(final SwitchStatement s) {
-    final List<Statement> ss
-    = statements(s);
+    final List<Statement> ss = statements(s);
     for (int ¢ = 0; ¢ < ss.size(); ++¢)
       if (iz.switchCase(ss.get(¢)) && az.switchCase(ss.get(¢)).isDefault()) {
         if ((¢ <= 0 || !iz.switchCase(ss.get(¢ - 1))) && (¢ >= ss.size() - 1 || !iz.switchCase(ss.get(¢ + 1))))

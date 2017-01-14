@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Length measured in statements 3. Length measured in nodes 4. Sequencer level
  * 5. Number of case that use the branch
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-11  */
+ * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Sorting {
   @Override public ASTNode replacement(final SwitchStatement n) {
     final List<Branch> b = intoBranches(n);

@@ -8,7 +8,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Unit test for {@link AssignmentOperatorExpansion}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
- * @since 2016-12-25  */
+ * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 @Ignore // TODO: Ori Roth
 public class Issue1001 {
