@@ -26,7 +26,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final String API_LEVEL_TYPE = "type";
   private static final String API_FILE = "apiFile";
   private static final String API_LEVEL = "apiLevel";
-  static final Down.Caster c = new Down.Caster();
+  private static final Down.Caster c = new Down.Caster();
 
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
@@ -46,7 +46,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     };
   }
 
-  protected static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
+  static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
       case API_LEVEL_TYPE:
@@ -82,12 +82,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return (returnType + "").equals(t + "");
   }
 
-  static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
+  private static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     final AbstractTypeDeclaration t = containingType(¢);
     wizard.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
   }
 
-  static void addAzMethodToFile(final CastExpression ¢, final String path) {
+  private static void addAzMethodToFile(final CastExpression ¢, final String path) {
     wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
   }
 

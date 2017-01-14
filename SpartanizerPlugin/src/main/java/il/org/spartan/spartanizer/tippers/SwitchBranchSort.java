@@ -4,9 +4,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -79,12 +79,12 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implem
 
 /**  */
 class Branch {
-  List<SwitchCase> cases;
-  List<Statement> statements;
-  boolean hasDefault;
-  int numOfStatements;
-  int numOfNodes;
-  int depth;
+  private final List<SwitchCase> cases;
+  private final List<Statement> statements;
+  private boolean hasDefault;
+  private int numOfStatements;
+  private int numOfNodes;
+  private int depth;
 
   public Branch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
@@ -92,29 +92,29 @@ class Branch {
     numOfNodes = numOfStatements = depth = -1; // lazy evaluation
   }
 
-  int depth() {
+  private int depth() {
     if (depth < 0)
       depth = metrics.height(statements, 0);
     return depth;
   }
 
-  int statementsNum() {
+  private int statementsNum() {
     if (numOfStatements < 0)
       numOfStatements = metrics.countStatements(statements);
     return numOfStatements;
   }
 
-  int nodesNum() {
+  private int nodesNum() {
     if (numOfNodes < 0)
       numOfNodes = metrics.nodes(statements);
     return numOfNodes;
   }
 
-  int casesNum() {
+  private int casesNum() {
     return cases.size();
   }
 
-  @SuppressWarnings("static-method") int sequencerLevel() {
+  @SuppressWarnings("static-method") private int sequencerLevel() {
     // TODO: finish this
     return 0;
   }

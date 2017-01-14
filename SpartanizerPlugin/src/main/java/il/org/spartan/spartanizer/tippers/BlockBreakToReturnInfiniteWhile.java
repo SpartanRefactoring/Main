@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -92,7 +94,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;
-    final Statement body = b.getBody();
+    final Statement body = body(b);
     final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     if (exclude != null)

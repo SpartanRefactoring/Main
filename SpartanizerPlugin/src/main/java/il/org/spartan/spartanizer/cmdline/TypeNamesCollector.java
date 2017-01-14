@@ -16,8 +16,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class TypeNamesCollector {
-  static Map<String, Integer> longNames = new TreeMap<>();
-  static Map<String, Set<String>> shortToFull = new TreeMap<>();
+  static final Map<String, Integer> longNames = new TreeMap<>();
+  static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 
   public static void main(final String[] where) throws IOException {
     collect(where.length != 0 ? where : as.array("."));

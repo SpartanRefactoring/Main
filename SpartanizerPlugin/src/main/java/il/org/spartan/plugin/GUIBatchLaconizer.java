@@ -6,6 +6,7 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -46,7 +47,7 @@ public class GUIBatchLaconizer extends Applicator {
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
         final Int thisPassTipsInvoked = new Int();
-        listener().push(message.run_pass.get(Integer.valueOf(pass)));
+        listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
         final List<WrappedCompilationUnit> selected = selection().inner;
@@ -66,7 +67,7 @@ public class GUIBatchLaconizer extends Applicator {
           if (!shouldRun())
             break;
         }
-        listener().pop(message.run_pass_finish.get(Integer.valueOf(pass)));
+        listener().pop(message.run_pass_finish.get(pass));
         selected.removeAll(done);
         if (selected.isEmpty() || !shouldRun())
           break;

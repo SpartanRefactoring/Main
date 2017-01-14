@@ -13,22 +13,21 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0364 {
   @Test public void emptyInitializer() {
-    trimmingOf("Object[] os = {};\n" + "System.out.println(os);")
-            .givesEither(
-                "System.out.println((new Object[] {}));",
-                "System.out.println(new Object[] {});");
+    trimmingOf("Object[] os = {};\n" + "System.out.println(os);").givesEither("System.out.println((new Object[] {}));",
+        "System.out.println(new Object[] {});");
   }
 
   @Test public void realLifeExample() {
     trimmingOf("if (opterr) {\n" + "  final Object[] msgArgs = { progname, Character.valueOf((char) c) + \"\" };\n"
-        + "  System.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), msgArgs));\n" + "}\n" + "X();").gives("if (opterr) {\n"
-            + "  System.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), (new Object[] { progname, Character.valueOf((char) c) + \"\" })));\n"
-            + "}\n" + "X();");
+        + "  System.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), msgArgs));\n" + "}\n" + "X();")
+            .gives("if (opterr) {\n"
+                + "  System.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), (new Object[] { progname, Character.valueOf((char) c) + \"\" })));\n"
+                + "}\n" + "X();");
   }
 
   @Test public void notTerminating() {
     trimmingOf("void f() {\n" + "  String[] x = {\"\"};" + "  g(x);" + "  h();" + "}")
-            .gives("void f() {\n" + "  g(new String[] {\"\"});" + "  h();" + "}");
+        .gives("void f() {\n" + "  g(new String[] {\"\"});" + "  h();" + "}");
   }
 
   @Test public void notTerminatingRealWorld() {

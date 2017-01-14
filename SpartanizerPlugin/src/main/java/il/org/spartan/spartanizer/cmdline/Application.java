@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-public final class Application implements IApplication {
+final class Application implements IApplication {
   /** Count the number of lines in a {@link File} f
    * @param ¢ File
    * @return
@@ -52,13 +52,13 @@ public final class Application implements IApplication {
     return $.get() == null ? i : $.get();
   }
 
-  static String getPackageNameFromSource(final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
 
-  static void printHelpPrompt() {
+  private static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
     System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
@@ -90,13 +90,16 @@ public final class Application implements IApplication {
     return $.get();
   }
 
-  IJavaProject javaProject;
-  IPackageFragmentRoot srcRoot;
-  IPackageFragment pack;
-  boolean optDoNotOverwrite, optIndividualStatistics, optVerbose;
-  boolean optStatsLines, optStatsChanges, printLog;
-  int optRounds = 20;
-  String optPath;
+  private IJavaProject javaProject;
+  private IPackageFragmentRoot srcRoot;
+  private IPackageFragment pack;
+  private boolean optDoNotOverwrite;
+  private boolean optIndividualStatistics;
+  private boolean optVerbose;
+  private boolean optStatsLines;
+  private boolean optStatsChanges;
+  private int optRounds = 20;
+  private String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
@@ -156,7 +159,7 @@ public final class Application implements IApplication {
 
   /** Discard compilation unit u
    * @param u */
-  void discardCompilationUnit(final ICompilationUnit u) {
+  private void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
@@ -174,13 +177,13 @@ public final class Application implements IApplication {
     }
   }
 
-  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+  private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  boolean parseArguments(final List<String> args) {
+  private boolean parseArguments(final List<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
@@ -202,15 +205,13 @@ public final class Application implements IApplication {
         optStatsLines = true;
       if ("-r".equals(a))
         optStatsChanges = true;
-      if ("-L".equals(a))
-        printLog = true;
       if (!a.startsWith("-"))
         optPath = a;
     }
     return optPath == null;
   }
 
-  void prepareTempIJavaProject() throws CoreException {
+  private void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())
       p.delete(true, null);
@@ -231,7 +232,7 @@ public final class Application implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  void printLineStatistics(final List<FileStats> ss) {
+  private void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats ¢ : ss) {
@@ -250,7 +251,7 @@ public final class Application implements IApplication {
     }
   }
 
-  void setPackage(final String name) throws JavaModelException {
+  private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 

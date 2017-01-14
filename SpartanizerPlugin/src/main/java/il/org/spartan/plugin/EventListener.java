@@ -12,21 +12,21 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
 
   /** Listens to an event.
    * @param e JD */
-  public abstract void tick(E e);
+  protected abstract void tick(E e);
 
   /** Listens to an event with additional object.
    * @param e JD
    * @param o JD */
-  public abstract void tick(E e, Object o);
+  protected abstract void tick(E e, Object o);
 
   /** @param enumClass enum that contains the possible events for this
    *        listener */
-  protected EventListener(final Class<? extends E> enumClass) {
+  EventListener(final Class<? extends E> enumClass) {
     this.enumClass = enumClass;
   }
 
   /** @return possible events for this listener */
-  protected E[] events() {
+  E[] events() {
     return enumClass.getEnumConstants();
   }
 

@@ -233,7 +233,7 @@ public final class Namespace implements Environment {
     final Namespace $ = n.spawn(try¢);
     for (final VariableDeclarationExpression ¢ : resources(s))
       $.put(¢);
-    $.fillScope(s.getBody());
+    $.fillScope(step.body(s));
     for (final VariableDeclarationExpression ¢ : resources(s))
       $.fillScope(¢);
     return $;

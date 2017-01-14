@@ -21,7 +21,7 @@ public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all tips */
   public static final String SPARTANIZATION_LONG_PREFIX = "Laconic tip: ";
   /** Short prefix to be used in front of all tips */
-  public static final String SPARTANIZATION_SHORT_PREFIX = "Tip: ";
+  private static final String SPARTANIZATION_SHORT_PREFIX = "Tip: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
   /** the ID under which this builder is registered */
@@ -45,7 +45,7 @@ public final class Builder extends IncrementalProjectBuilder {
     ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
 
-  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
+  private static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
       final int k = internalDelta.getKind();
       // return true to continue visiting children.
@@ -102,7 +102,7 @@ public final class Builder extends IncrementalProjectBuilder {
     return null;
   }
 
-  protected void fullBuild() {
+  private void fullBuild() {
     try {
       getProject().accept(r -> {
         addMarkers(r);

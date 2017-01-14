@@ -2,7 +2,9 @@ package il.org.spartan.zoomer.zoomin.expanders;
 
 import org.junit.*;
 import org.junit.runners.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;

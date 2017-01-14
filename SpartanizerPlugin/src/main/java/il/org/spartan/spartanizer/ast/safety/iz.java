@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.intIsIn;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -19,8 +21,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-
-import static il.org.spartan.lisp.first;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,

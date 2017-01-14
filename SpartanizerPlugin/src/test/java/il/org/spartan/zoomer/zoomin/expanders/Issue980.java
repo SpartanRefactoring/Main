@@ -7,7 +7,6 @@ import org.junit.*;
 /** Test Class for Expand boolean expressions
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-13 */
-
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue980 {

@@ -40,12 +40,12 @@ public abstract class Applicator {
 
   /** @return <code><b>true</b></code> <em>iff</em> this applicator should
    *         run. */
-  public boolean shouldRun() {
+  protected boolean shouldRun() {
     return shouldRun;
   }
 
   /** @return run context for this applicator. */
-  public Consumer<Runnable> runContext() {
+  protected Consumer<Runnable> runContext() {
     return runContext;
   }
 
@@ -58,7 +58,7 @@ public abstract class Applicator {
   }
 
   /** @return run action for this applicator */
-  public Function<WrappedCompilationUnit, Integer> runAction() {
+  protected Function<WrappedCompilationUnit, Integer> runAction() {
     return runAction;
   }
 
@@ -71,7 +71,7 @@ public abstract class Applicator {
   }
 
   /** @return number of iterations for this applicator */
-  public int passes() {
+  protected int passes() {
     return passes;
   }
 
@@ -84,7 +84,7 @@ public abstract class Applicator {
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public Listener listener() {
+  protected Listener listener() {
     return listener;
   }
 
@@ -113,7 +113,7 @@ public abstract class Applicator {
    * @param ¢ JD
    * @author Matteo Orru'
    * @return this applicator */
-  public Applicator selection(final AbstractSelection<?> ¢) {
+  protected Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }
@@ -132,7 +132,7 @@ public abstract class Applicator {
   }
 
   /** @return applicator's name */
-  public Linguistic.Activity operationName() {
+  Linguistic.Activity operationName() {
     return operationName;
   }
 
