@@ -97,11 +97,11 @@ public class LogToTest {
   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
       @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
-        + "\n at line #" + errorLocationLine + ".\n[[SuppressWarningsSpartan]]\n*/\n@Test public void " + errorLocationFileClean + "Test() {"
+        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {"
         + "\ntrimmingOf(" + code + ").doesNotCrash();\n}";
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   private static String wrap(final List<String> ss, final String fileName) {
     final StringBuilder b = new StringBuilder("" //
         + "package il.org.spartan.automatic;\n\n" //

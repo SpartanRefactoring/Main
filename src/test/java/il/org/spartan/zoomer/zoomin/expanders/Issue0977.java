@@ -8,7 +8,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Unit test for {@link CasesSplit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
- * @since 2016-12-25 [[SuppressWarningsSpartan]] */
+ * @since 2016-12-25  */
 @SuppressWarnings("static-method")
 public class Issue0977 {
   @Test public void simpleSequencers() {

@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.safety;
 import org.eclipse.jdt.core.dom.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-27 [[SuppressWarningsSpartan]] */
+ * @since 2016-12-27  */
 public enum property {
   ;
   public interface Attached {

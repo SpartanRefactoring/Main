@@ -147,7 +147,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**  */
   private long adopted() {
     final int $ = rMethod();
     return npStatistics.keySet().stream()//

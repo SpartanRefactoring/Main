@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link ExpanderTestUtils} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-07 [[SuppressWarningsSpartan]] */
+ * @since 2017-01-07  */
 @SuppressWarnings("static-method")
 @Ignore // This is only for demostration it doesn't suppose to work
 public class Issue1040 {
