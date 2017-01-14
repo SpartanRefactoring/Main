@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.factory;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 

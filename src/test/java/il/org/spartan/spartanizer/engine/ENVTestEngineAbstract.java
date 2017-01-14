@@ -93,7 +93,7 @@ public abstract class ENVTestEngineAbstract {
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  public static ASTNode getCompilationUnit(final String from) {
+  protected static ASTNode getCompilationUnit(final String from) {
     assert from != null;
     assert rOOT != null;
     final File f = new File(rOOT + from);
@@ -120,7 +120,7 @@ public abstract class ENVTestEngineAbstract {
     return false;
   }
 
-  public static void testSetsReset() {
+  static void testSetsReset() {
     if (testSet != null)
       testSet.clear();
   }
@@ -149,7 +149,7 @@ public abstract class ENVTestEngineAbstract {
    * add to the Sets as required. That means that each inner annotation will be
    * visited twice from the same outer annotation, but that should not cause
    * worry, since the outside visitor will do nothing. */
-  public void runTest() {
+  protected void runTest() {
     n.accept(new ASTVisitor() {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */

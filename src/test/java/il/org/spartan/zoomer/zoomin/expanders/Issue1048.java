@@ -4,6 +4,8 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 
 import org.junit.*;
 
+import il.org.spartan.zoomer.inflate.zoomers.*;
+
 /** Test case for bug in {@link AssignmentTernaryExpander} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */

@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 public class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
   private List<WrappedCompilationUnit> compilationUnits;
 
-  public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
+  private CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
     inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
@@ -81,7 +81,8 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     /** @param path
      * @author Matteo Orru'
      * @return */
-    public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(final String path) {
+    @SuppressWarnings("synthetic-access") public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
+        final String path) {
       final List<WrappedCompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path))
         if (!system.isTestFile(¢))

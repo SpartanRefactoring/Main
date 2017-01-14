@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
+import static il.org.spartan.lisp.*;
+
 import java.io.*;
 import java.text.*;
 import java.util.*;
@@ -7,7 +9,6 @@ import java.util.function.*;
 
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;
-import static il.org.spartan.lisp.*;
 
 public class LogToTest {
   // TODO Roth: replace "\\\\" with File.separator (bug in Java???)
@@ -103,11 +104,12 @@ public class LogToTest {
 
   /**  */
   private static String wrap(final List<String> ss, final String fileName) {
-    final StringBuilder b = new StringBuilder("package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n" + "import org.junit.*;\n\n"
-        + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
-        + "@SuppressWarnings(\"static-method\")\n" //
-        + "@Ignore\n" //
-        + "public class " + fileName + " {\n");
+    final StringBuilder b = new StringBuilder(
+        "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
+            + "import org.junit.*;\n\n" + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
+            + "@SuppressWarnings(\"static-method\")\n" //
+            + "@Ignore\n" //
+            + "public class " + fileName + " {\n");
     for (final String t : ss)
       b.append(t).append("\n");
     return format.code(b.append("}\n") + "");

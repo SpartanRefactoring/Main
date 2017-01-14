@@ -27,7 +27,7 @@ public class Issue0965 {
   }
 
   class TestClass extends ReflectiveTester {
-    List<Integer> lst = new ArrayList<>();
+    final List<Integer> lst = new ArrayList<>();
 
     public String check1() {
       return lst + "";

@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,9 +22,9 @@ public class WhileBlockExpander extends ReplaceCurrentNode<WhileStatement> imple
       return null;
     final WhileStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(copy.of(s.getBody()));
+    b.statements().add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
-    s.getBody().accept(new ASTVisitor() {
+    body(s).accept(new ASTVisitor() {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
         cc.add(true);
         return true;

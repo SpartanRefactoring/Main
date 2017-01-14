@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -10,7 +11,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import static il.org.spartan.lisp.*;
 
 /** Tests of methods according to issue 778
  * @author Netanel Felcher

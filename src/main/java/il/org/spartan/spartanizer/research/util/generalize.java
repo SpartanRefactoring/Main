@@ -19,7 +19,7 @@ public class generalize {
     return generalizeIdentifiers(code);
   }
 
-  static Int serial = new Int();
+  static final Int serial = new Int();
 
   private static void finish() {
     serial.inner = 0;

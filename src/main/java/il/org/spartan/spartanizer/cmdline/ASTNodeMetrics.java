@@ -29,7 +29,7 @@ public class ASTNodeMetrics {
     nodes = count.nodes(node);
     body = metrics.bodySize(node);
     final MethodDeclaration methodDeclaration = az.methodDeclaration(node);
-    statements = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
+    statements = methodDeclaration == null ? -1 : extract.statements(step.body(methodDeclaration)).size();
     // extract.statements(az.
     // methodDeclaration(node)
     // .getBody())

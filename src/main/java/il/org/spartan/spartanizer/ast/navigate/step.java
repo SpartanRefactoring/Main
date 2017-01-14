@@ -46,6 +46,10 @@ public enum step {
     return $ == 0;
   }
 
+  public static Block body(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
   public static Statement body(final EnhancedForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
@@ -67,6 +71,10 @@ public enum step {
   /** @param ¢ JD
    * @return */
   private static Block body(final SynchronizedStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
+  public static ASTNode body(final TryStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -309,7 +317,7 @@ public enum step {
    * @param ¢ JD
    * @return */
   public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
-    return ¢ == null ? null : Arrays.asList(¢.getFields()).stream().map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
+    return ¢ == null ? null : Stream.of(¢.getFields()).map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
     });
@@ -441,7 +449,7 @@ public enum step {
    * @param ¢ JD
    * @return left side of the assignment */
   public static Expression left(final Assignment ¢) {
-    return ¢ == null ? null : left(¢);
+    return ¢ == null ? null : ¢.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
@@ -478,7 +486,7 @@ public enum step {
     if (u == null)
       return null;
     final List<String> $ = new ArrayList<>();
-    types(u).stream().forEach(t -> $.addAll(methodNames(t)));
+    types(u).forEach(t -> $.addAll(methodNames(t)));
     return $;
   }
 
@@ -498,7 +506,7 @@ public enum step {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
-    types(u).stream().forEach(t -> $.addAll(methods(t)));
+    types(u).forEach(t -> $.addAll(methods(t)));
     return $;
   }
 
@@ -625,7 +633,7 @@ public enum step {
    * @param ¢ JD
    * @return right side of the assignment */
   public static Expression right(final Assignment ¢) {
-    return ¢ == null ? null : right(¢);
+    return ¢ == null ? null : ¢.getRightHandSide();
   }
 
   /** Shorthand for {@link CastExpression#getExpression()}
@@ -779,12 +787,15 @@ public enum step {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
 
-  /** @param ¢ JD
-   * @return */
   public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
+  /** @param ¢ JD
+   * @return */
+  // public static Type type(final VariableDeclarationStatement ¢) {
+  // return ¢ == null ? null : ¢.getType();
+  // }
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {
     return ¢ == null ? null : ¢.typeArguments();
   }

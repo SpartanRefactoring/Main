@@ -5,14 +5,15 @@ import static il.org.spartan.azzert.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 public class Issue0835 {
-  Tipper<Block> t = new CastBlockSingletonVariableDefinition();
+  final Tipper<Block> t = new CastBlockSingletonVariableDefinition();
 
   @Test public void descriptionNotNull() {
     assert t.description() != null;

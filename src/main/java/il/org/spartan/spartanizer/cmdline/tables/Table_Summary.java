@@ -131,7 +131,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static double getNodeCoverage(int type) {
+  @SuppressWarnings("boxing") private static double getNodeCoverage(final int type) {
     return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
   }
 

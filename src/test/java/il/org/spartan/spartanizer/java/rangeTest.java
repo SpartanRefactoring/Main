@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.java.range;
+
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author Dor Ma'ayan
  * @since 25-11-2016 */

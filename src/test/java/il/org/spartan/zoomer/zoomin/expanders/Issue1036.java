@@ -20,7 +20,7 @@ public class Issue1036 {
   }
 
   class TestClass extends ReflectiveTester {
-    List<Integer> children1 = new ArrayList<>();
+    final List<Integer> children1 = new ArrayList<>();
     List<Integer> children2 = new ArrayList<>();
     String $ = "";
 

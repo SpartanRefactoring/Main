@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+
 import org.junit.*;
 
 /** This is a unit test for a bug (issue 445) in {@link WhileNextReturnToWhile}

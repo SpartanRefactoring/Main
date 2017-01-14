@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.idiomatics;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -12,7 +13,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import static il.org.spartan.lisp.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -113,7 +113,7 @@ public interface idiomatic {
   }
 
   class ObjectHolder<T> {
-    T t;
+    final T t;
 
     public ObjectHolder(final T t) {
       this.t = t;
@@ -432,7 +432,7 @@ public interface idiomatic {
     }
 
     public void apply(final Consumer<? super T> mapper) {
-      collection.stream().forEach(mapper);
+      collection.forEach(mapper);
     }
 
     @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {

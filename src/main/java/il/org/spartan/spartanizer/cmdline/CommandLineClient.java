@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.cmdline.report.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru' */
-public final class CommandLineClient extends HeadlessSpartanizer {
+final class CommandLineClient extends HeadlessSpartanizer {
   public static void main(final String[] args) {
     new CommandLineClient().go(args);
   }

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 

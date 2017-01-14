@@ -21,7 +21,7 @@ import il.org.spartan.zoomer.zoomin.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class ExpanderTestUtils {
-  public static final TextEditGroup g = new TextEditGroup("");
+  static final TextEditGroup textEditGroup = new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
     ASTNode ast;
@@ -42,7 +42,7 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -67,7 +67,7 @@ public class ExpanderTestUtils {
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -95,7 +95,7 @@ public class ExpanderTestUtils {
       final String wrap = classText;
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       MethodDeclaration m = getMethod(u, f);
-      SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -135,7 +135,7 @@ public class ExpanderTestUtils {
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
@@ -154,7 +154,7 @@ public class ExpanderTestUtils {
       final String wrap = classText;
       final CompilationUnit u = az.compilationUnit(ast);
       final ASTRewrite r = ASTRewrite.create(u.getAST());
-      SingleFlater.in(u).from(new InflaterProvider()).go(r, g);
+      SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);

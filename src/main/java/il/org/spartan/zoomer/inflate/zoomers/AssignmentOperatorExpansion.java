@@ -1,12 +1,14 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -24,7 +26,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
   }
 
   @Override protected boolean prerequisite(final Assignment ¢) {
-    return ¢.getAST().hasResolvedBindings() && validTypes(¢) && convertToInfix(¢.getOperator()) != null;
+    return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
   }
 
   @Override public Tip tip(final Assignment ¢) {
@@ -33,7 +35,7 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(copy.of(left(¢)));
         e.setRightOperand(make.plant(copy.of(right(¢))).into(e));
-        e.setOperator(convertToInfix(¢.getOperator()));
+        e.setOperator(wizard.convertToInfix(¢.getOperator()));
         final Assignment a = ¢.getAST().newAssignment();
         a.setLeftHandSide(copy.of(left(¢)));
         a.setRightHandSide(e);
@@ -41,19 +43,6 @@ public class AssignmentOperatorExpansion extends CarefulTipper<Assignment> imple
         r.replace(¢, a, g);
       }
     };
-  }
-
-  static InfixExpression.Operator convertToInfix(final Operator ¢) {
-    return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
-        : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
-            : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
-                : ¢ == Operator.DIVIDE_ASSIGN ? InfixExpression.Operator.DIVIDE
-                    : ¢ == Operator.LEFT_SHIFT_ASSIGN ? InfixExpression.Operator.LEFT_SHIFT
-                        : ¢ == Operator.MINUS_ASSIGN ? InfixExpression.Operator.MINUS
-                            : ¢ == Operator.PLUS_ASSIGN ? InfixExpression.Operator.PLUS
-                                : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
-                                    : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
-                                        : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
 
   private static boolean validTypes(final Assignment ¢) {

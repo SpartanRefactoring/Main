@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** @author Matteo Orru'
  * @since 2016 */
 public class Tips2 {
-  private static AbstractGUIApplicator[] all = { //
+  private static final AbstractGUIApplicator[] all = { //
       new Trimmer(), //
   };
   private final AbstractGUIApplicator value;
