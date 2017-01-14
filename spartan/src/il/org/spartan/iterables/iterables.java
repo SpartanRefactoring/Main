@@ -20,10 +20,10 @@ public enum iterables {
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
    * @return number of items the given iterable yields. */
-  public static <T> int count(@org.jetbrains.annotations.Nullable final @Nullable Iterable<T> ts) {
+  public static <T> int count(final @Nullable Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
-      for (@org.jetbrains.annotations.Nullable final @Nullable T ¢ : ts)
+      for (final @Nullable T ¢ : ts)
         $ += as.bit(¢ != null);
     return $;
   }

@@ -85,7 +85,7 @@ public enum as {
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
    *         <code>1</code> otherwise.
    * @see as#bit(Object) */
-  public static int bit(@org.jetbrains.annotations.Nullable final @Nullable Object ¢) {
+  public static int bit(final @Nullable Object ¢) {
     return ¢ == null ? 0 : 1;
   }
 
@@ -225,7 +225,7 @@ public enum as {
    * references to valid instances, into a {@link NonNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  @NotNull public static String string(@org.jetbrains.annotations.Nullable @Nullable final Object $) {
+  @NotNull public static String string(@Nullable final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
 
@@ -233,7 +233,7 @@ public enum as {
    * or an actual String, into a {@link NonNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  @NotNull public static String string(@org.jetbrains.annotations.Nullable @Nullable final String $) {
+  @NotNull public static String string(@Nullable final String $) {
     return $ != null ? $ : "null";
   }
 
@@ -243,7 +243,7 @@ public enum as {
    *         {@link String} */
   public static String[] strings(@NotNull final Iterable<? extends @Nullable Object> os) {
     @NotNull final List<@NonNull String> $ = new ArrayList<>();
-    for (@org.jetbrains.annotations.Nullable final @Nullable Object ¢ : os)
+    for (final @Nullable Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
@@ -301,7 +301,7 @@ public enum as {
 
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
-        @Override @org.jetbrains.annotations.Nullable @Nullable public String toString() {
+        @Override @Nullable public String toString() {
           return null;
         }
       }), is("null"));

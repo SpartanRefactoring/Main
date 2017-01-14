@@ -147,7 +147,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * @param value value whose presence in this map is to be tested
    * @return <tt>true</tt> if this map maps one or more keys to the specified
    *         value */
-  @Override public boolean containsValue(@org.jetbrains.annotations.Nullable final Object value) {
+  @Override public boolean containsValue(@Nullable final Object value) {
     if (value == null)
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
@@ -179,7 +179,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * explicitly maps the key to {@code null}. The {@link #containsKey
    * containsKey} operation may be used to distinguish these two cases.
    * @see #put(Object, Object) */
-  @Override public V get(@org.jetbrains.annotations.Nullable final Object key) {
+  @Override public V get(@Nullable final Object key) {
     if (key == null)
       return getForNullKey();
     final int hash = hash(key.hashCode());
@@ -214,7 +214,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    *         if there was no mapping for <tt>key</tt>. (A <tt>null</tt> return
    *         can also indicate that the map previously associated <tt>null</tt>
    *         with <tt>key</tt>.) */
-  @Override public V put(@org.jetbrains.annotations.Nullable final K key, final V value) {
+  @Override public V put(@Nullable final K key, final V value) {
     if (key == null)
       return putForNullKey(value);
     final int hash = hash(key.hashCode());
@@ -336,7 +336,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
 
   /** Returns the entry associated with the specified key in the HashMap.
    * Returns null if the HashMap contains no mapping for the key. */
-  Entry<K, V> getEntry(@org.jetbrains.annotations.Nullable final Object key) {
+  Entry<K, V> getEntry(@Nullable final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     for (Entry<K, V> $ = table[indexFor(hash, table.length)]; $ != null; $ = $.next) {
       Object k;
@@ -365,7 +365,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
 
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
-  Entry<K, V> removeEntryForKey(@org.jetbrains.annotations.Nullable final Object key) {
+  Entry<K, V> removeEntryForKey(@Nullable final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     Entry<K, V> prev = table[i];
@@ -487,7 +487,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** This method is used instead of put by constructors and pseudoconstructors
    * (clone, readObject). It does not resize the table, check for
    * comodification, etc. It calls createEntry rather than addEntry. */
-  private void putForCreate(@org.jetbrains.annotations.Nullable final K key, final V value) {
+  private void putForCreate(@Nullable final K key, final V value) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     /** Look for preexisting entry for key. This will never happen for clone or

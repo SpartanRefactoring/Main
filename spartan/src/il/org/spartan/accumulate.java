@@ -14,9 +14,9 @@ public interface accumulate<T, C extends Collection<T>> {
   /** @param <T> JD
    * @param <C> JD
    * @param c JD */
-  @org.jetbrains.annotations.Nullable static <T, C extends Collection<T>> accumulate<T, C> to(@NotNull final C c) {
+  @Nullable static <T, C extends Collection<T>> accumulate<T, C> to(@NotNull final C c) {
     return new accumulate<T, C>() {
-      @Override @NotNull public accumulate<T, C> add(@org.jetbrains.annotations.Nullable final @Nullable T ¢) {
+      @Override @NotNull public accumulate<T, C> add(final @Nullable T ¢) {
         if (¢ == null)
           return this;
         c.add(¢);
@@ -32,7 +32,7 @@ public interface accumulate<T, C extends Collection<T>> {
   /** @param ts JD
    * @return <code><b>this</b></code> */
   @NotNull default accumulate<T, C> add(@NotNull final Iterable<? extends @Nullable T> ts) {
-    for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
+    for (@Nullable final T ¢ : ts)
       if (¢ != null)
         add(¢);
     return this;
@@ -44,9 +44,9 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> add(@org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
+  @NotNull default accumulate<T, C> add(@SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
     if (ts != null)
-      for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
+      for (@Nullable final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;
@@ -54,9 +54,9 @@ public interface accumulate<T, C extends Collection<T>> {
 
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> addAll(@org.jetbrains.annotations.Nullable final @Nullable Iterable<? extends T> ts) {
+  @NotNull default accumulate<T, C> addAll(final @Nullable Iterable<? extends T> ts) {
     if (ts != null)
-      for (@org.jetbrains.annotations.Nullable @Nullable final T ¢ : ts)
+      for (@Nullable final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;

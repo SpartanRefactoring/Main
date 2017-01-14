@@ -16,7 +16,7 @@ public class maybe<@Nullable T> {
     return new maybe<>(¢);
   }
 
-  @org.jetbrains.annotations.Nullable private @Nullable T inner;
+  @Nullable private T inner;
 
   /** Instantiates this class.
    * @param inner JD */
@@ -33,7 +33,7 @@ public class maybe<@Nullable T> {
     return this;
   }
 
-  @org.jetbrains.annotations.Nullable @Nullable public T get() {
+  @Nullable public T get() {
     return inner;
   }
 

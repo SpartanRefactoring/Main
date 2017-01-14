@@ -165,19 +165,19 @@ public interface Cookbook {
       final Cell<String> xBoxed = from(wrap).make(() -> "[[" + wrap() + "]]");
       final Cell<String> zzz = new Ingredient<@Nullable String>().of("zzz");
 
-      @org.jetbrains.annotations.Nullable String begin() {
+      @Nullable String begin() {
         return begin.get();
       }
 
-      @org.jetbrains.annotations.Nullable String end() {
+      @Nullable String end() {
         return end.get();
       }
 
-      @org.jetbrains.annotations.Nullable String text() {
+      @Nullable String text() {
         return text.get();
       }
 
-      @org.jetbrains.annotations.Nullable String wrap() {
+      @Nullable String wrap() {
         return wrap.get();
       }
 
@@ -322,56 +322,56 @@ public interface Cookbook {
       /**
        * @return  contents of cell a 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer a() {
+      @Nullable public final Integer a() {
         return a.get();
       }
 
       /**
        * @return  contents of cell a^2 := (a)^2 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer aPower02() {
+      @Nullable public final Integer aPower02() {
         return aPower02.get();
       }
 
       /**
        * @return  contents of cell a^3 := a^2 * a 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer aPower03() {
+      @Nullable public final Integer aPower03() {
         return aPower03.get();
       }
 
       /**
        * @return  contents of cell a^5 := a^2 * a^3 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer aPower05() {
+      @Nullable public final Integer aPower05() {
         return aPower05.get();
       }
 
       /**
        * @return  contents of cell a^17 := (a)^4 * (a^2)^4 * (a^3)^3 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer aPower17NullSafe() {
+      @Nullable public final Integer aPower17NullSafe() {
         return aPower17NullSafe.get();
       }
 
       /**
        * @return  contents of valued cell <code>b</code> 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer b() {
+      @Nullable public final Integer b() {
         return b.get();
       }
 
       /**
        * @return  contents of valued cell <code>c</code> 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer c() {
+      @Nullable public final Integer c() {
         return c.get();
       }
 
       /**
        * @return  contents of cell d := a + b + c 
        */
-      @org.jetbrains.annotations.Nullable @Nullable public final Integer d() {
+      @Nullable public final Integer d() {
         return d.get();
       }
 
@@ -894,7 +894,7 @@ public interface Cookbook {
    * @see Ingredient
    * @see Recipe */
   @SuppressWarnings("null") abstract class Cell<T> implements Supplier<T>, Cloneable {
-    @org.jetbrains.annotations.Nullable public static Set<Cell<?>> trace;
+    @Nullable public static Set<Cell<?>> trace;
     /** The last value computed for this cell */
     @Nullable T cache;
     /** other cells that depend on this cell */
@@ -909,7 +909,7 @@ public interface Cookbook {
     /**
      * see @see java.util.function.Supplier#get() (auto-generated) 
      */
-    @Override @org.jetbrains.annotations.Nullable @Nullable public abstract T get();
+    @Override @Nullable public abstract T get();
 
     /** Used for fluent API, synonym of {@link Cell#set(Object)} . sets the
      * current value of this cell
@@ -937,7 +937,7 @@ public interface Cookbook {
      *         stored in this node is updated. */
     public abstract boolean updated();
 
-    @Override @org.jetbrains.annotations.Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
+    @Override @Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
       try {
         return (Cell<T>) super.clone();
       } catch (@org.jetbrains.annotations.NotNull final CloneNotSupportedException e) {
@@ -1002,7 +1002,7 @@ public interface Cookbook {
         super(value);
       }
 
-      @Override void cache(@org.jetbrains.annotations.Nullable @SuppressWarnings("hiding") @Nullable final T cache) {
+      @Override void cache(@Nullable @SuppressWarnings("hiding") final T cache) {
         super.cache(cache);
         if (cache == null)
           throw new NullPointerException();
@@ -1058,7 +1058,7 @@ public interface Cookbook {
    * @since 2016 */
   class Recipe<@Nullable T> extends Cell<T> {
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-    @org.jetbrains.annotations.Nullable private @Nullable Supplier<? extends @Nullable T> supplier;
+    @Nullable private Supplier<? extends @Nullable T> supplier;
 
     /** Instantiates this class.
      * @param supplier JD */
@@ -1066,11 +1066,11 @@ public interface Cookbook {
       this.supplier = supplier;
     }
 
-    @Override @org.jetbrains.annotations.Nullable public Cell<T> clone() {
+    @Override @Nullable public Cell<T> clone() {
       return super.clone();
     }
 
-    @Override @org.jetbrains.annotations.Nullable public T get() {
+    @Override @Nullable public T get() {
       if (updated())
         return cache();
       assert supplier != null;
@@ -1111,7 +1111,7 @@ public interface Cookbook {
       return true;
     }
 
-    @org.jetbrains.annotations.Nullable @Nullable T eval() {
+    @Nullable T eval() {
       assert supplier != null;
       return supplier.get();
     }
@@ -1150,7 +1150,7 @@ public interface Cookbook {
         cache(cantBeNull(supplier).get());
       }
 
-      @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public NotNull<T> clone() {
+      @Override @Nullable @SuppressWarnings({}) public NotNull<T> clone() {
         return (NotNull<T>) super.clone();
       }
 
@@ -1194,11 +1194,11 @@ public interface Cookbook {
         assert supplier != null;
       }
 
-      @Override @org.jetbrains.annotations.Nullable @SuppressWarnings({}) public Cookbook.Cell<T> clone() {
+      @Override @SuppressWarnings({}) public Cookbook.Cell<T> clone() {
         return super.clone();
       }
 
-      @Override @org.jetbrains.annotations.Nullable public T get() {
+      @Override @Nullable public T get() {
         try {
           return super.get();
         } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {
@@ -1224,7 +1224,7 @@ public interface Cookbook {
         }
       }
 
-      @Override @org.jetbrains.annotations.Nullable @Nullable T eval() {
+      @Override @Nullable T eval() {
         try {
           return super.eval();
         } catch (@org.jetbrains.annotations.NotNull final NullPointerException x) {

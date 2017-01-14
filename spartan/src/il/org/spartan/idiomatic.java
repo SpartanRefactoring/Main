@@ -23,8 +23,8 @@ public interface idiomatic {
     }
   };
   /** an ignoring trigger */
-  @org.jetbrains.annotations.Nullable Trigger ignore = new Trigger() {
-    @Override @org.jetbrains.annotations.Nullable public <@Nullable T> T eval(final Supplier<T> ____) {
+  @Nullable Trigger ignore = new Trigger() {
+    @Override @Nullable public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
     }
   };
@@ -42,7 +42,7 @@ public interface idiomatic {
    * @condition the condition to use prior to taking this value;
    * @return the parameter if condition holds, otherwise, null
    *         <code>incase</code> */
-  @org.jetbrains.annotations.Nullable static <T> @Nullable T incase(final boolean condition, final T t) {
+  @Nullable static <T> @Nullable T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
 
@@ -64,7 +64,7 @@ public interface idiomatic {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  @NotNull static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
+  @NotNull static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
@@ -83,7 +83,7 @@ public interface idiomatic {
   }
 
   /** @param condition JD */
-  @org.jetbrains.annotations.Nullable static Trigger unless(final boolean condition) {
+  @Nullable static Trigger unless(final boolean condition) {
     return when(!condition);
   }
 
@@ -92,12 +92,12 @@ public interface idiomatic {
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */
-  @org.jetbrains.annotations.Nullable static <T> @Nullable T unless(final boolean condition, final T t) {
+  @Nullable static <T> @Nullable T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
 
   /** @param condition JD */
-  @org.jetbrains.annotations.Nullable static Trigger when(final boolean condition) {
+  @Nullable static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
   }
 
@@ -111,7 +111,7 @@ public interface idiomatic {
      * @param unless  condition on which value is returned
      * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>. 
      */
-    @org.jetbrains.annotations.Nullable @Nullable default T unless(final boolean unless) {
+    @Nullable default T unless(final boolean unless) {
       return when(!unless);
     }
 
@@ -120,7 +120,7 @@ public interface idiomatic {
      * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>.
      * @param when  condition on which value is returned 
      */
-    @org.jetbrains.annotations.Nullable @Nullable default T when(final boolean when) {
+    @Nullable default T when(final boolean when) {
       return when ? get() : null;
     }
   }
@@ -244,11 +244,11 @@ public interface idiomatic {
   interface Trigger {
     /** @param <T> JD
      * @param t JD */
-    @org.jetbrains.annotations.Nullable <@Nullable T> T eval(Supplier<T> t);
+    @Nullable <@Nullable T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD */
-    @org.jetbrains.annotations.Nullable default <@Nullable T> T eval(final T $) {
+    @Nullable default <@Nullable T> T eval(final T $) {
       return eval(() -> $);
     }
   }

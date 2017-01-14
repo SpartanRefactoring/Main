@@ -37,7 +37,7 @@ public class Hamlet implements Environment {
   }
 
   public static class Hamlet2 {
-    @org.jetbrains.annotations.Nullable private final Function0<@Nullable Boolean> permanent1 = null;
+    @Nullable private final Function0<@Nullable Boolean> permanent1 = null;
     private final Property<Boolean> $ = value(false).push(permanent1);
     @SuppressWarnings("unused") private final Function0<@Nullable Boolean> permanent = () -> !$.get();
   }

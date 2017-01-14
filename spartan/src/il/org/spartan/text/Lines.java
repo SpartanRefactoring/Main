@@ -47,7 +47,7 @@ public enum Lines {
    * @param text some string of characters
    * @return parameter, split into an array if lines
    * @see #gather */
-  @NotNull public static String[] scatter(@org.jetbrains.annotations.Nullable final @Nullable String text) {
+  @NotNull public static String[] scatter(final @Nullable String text) {
     return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
 

@@ -86,7 +86,7 @@ public class dump {
     out("elements", os);
   }
 
-  public static void go(@org.jetbrains.annotations.Nullable final @Nullable Object o, @NotNull final String... ss) {
+  public static void go(final @Nullable Object o, @NotNull final String... ss) {
     for (final String ¢ : ss)
       out(¢);
     if (o == null) {

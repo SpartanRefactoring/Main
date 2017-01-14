@@ -290,7 +290,7 @@ public interface Utils {
    * @param $ an instance of the type parameter which is required to be
    *        <code><b>null</b></code>.
    * @return parameter */
-  static <@Nullable T> @Nullable Void mustBeNull(@org.jetbrains.annotations.Nullable final T $) {
+  static <@Nullable T> @Nullable Void mustBeNull(@Nullable final T $) {
     assert $ == null;
     return null;
   }
@@ -349,7 +349,7 @@ public interface Utils {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  @NotNull static String quote(@org.jetbrains.annotations.Nullable final @Nullable String $) {
+  @NotNull static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
