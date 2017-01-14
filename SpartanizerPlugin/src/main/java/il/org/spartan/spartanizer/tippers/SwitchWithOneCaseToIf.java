@@ -37,15 +37,19 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
+// TODO Yuval Simon: remove @SuppressWarnings({ "unchecked" }) and use class step --yg
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @Override @SuppressWarnings({ "unchecked", "unused" }) public ASTNode replacement(final SwitchStatement s) {
+  @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     final List<SwitchCase> $ = extract.switchCases(s);
+    // TODO: Yuval Simon - I do not think you need this call
     statements(s);
     final AST a = s.getAST();
+    // TODO: Yuval Simon -rename to $ --yg
     final Block res = a.newBlock();
     final IfStatement r = a.newIfStatement();
+    // TODO: Yuval Simon - use step.statements --yg
     res.statements().add(r);
     final Block b1 = a.newBlock();
     final Block b2 = a.newBlock();
@@ -121,6 +125,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     for (final SwitchCase c : cs) {
       if (c.isDefault())
         continue;
+      // TODO: Yuval Simon please use fluent API with class subject --yg
       final InfixExpression n = t.newInfixExpression();
       n.setOperator(InfixExpression.Operator.EQUALS);
       n.setLeftOperand(copy.of(expression(s)));
@@ -128,6 +133,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
       if ($ == null)
         $ = n;
       else {
+        // TODO: Yuval Simon please use fluent API with class subject --yg
         final InfixExpression nn = t.newInfixExpression();
         nn.setOperator(InfixExpression.Operator.CONDITIONAL_OR);
         nn.setLeftOperand($);
