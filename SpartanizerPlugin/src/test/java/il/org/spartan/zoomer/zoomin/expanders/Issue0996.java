@@ -12,20 +12,26 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0996 {
   @Test public void a() {
-    zoomingInto("int a = 0;").gives("int a;" //
-        + "a = 0;").stays();
+    zoomingInto("int a = 0;")//
+        .gives("int a;" //
+            + "a = 0;")
+        .stays();
   }
 
   @Test public void b() {
-    zoomingInto("int a = f();").gives("int a;" //
-        + "a = f();").stays();
+    zoomingInto("int a = f();")//
+        .gives("int a;" //
+            + "a = f();")
+        .stays();
   }
 
   @Test public void c() {
-    zoomingInto("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };").stays();
+    zoomingInto("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };")//
+ .stays();
   }
 
   @Test public void d() {
-    zoomingInto("@SuppressWarnings(\"unchecked\") int a = f();").stays();
+    zoomingInto("@SuppressWarnings(\"unchecked\") int a = f();")//
+ .stays();
   }
 }
