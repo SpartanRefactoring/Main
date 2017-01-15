@@ -95,9 +95,9 @@ public class SwitchBranch {
     }
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
-  
   public boolean compareTo(final SwitchBranch ¢) {
-    return compare(¢) || (!¢.compare(this) && this.hashCode() < ¢.hashCode());
+    boolean $ = compare(¢);
+    return $ == ¢.compare(this) ? (lisp.first(cases) + "").compareTo((lisp.first(¢.cases()) + "")) < 0 : $;
   }
 
   private void addAll(final List<Statement> ss) {
@@ -142,8 +142,11 @@ public class SwitchBranch {
         nextBranch = true;
       s.add(l.get(¢));
     }
-    if (!iz.switchCase(lisp.last(l)))
+    if (!iz.switchCase(lisp.last(l))) {
       s.add(lisp.last(l));
+      if(!iz.sequencerComplex(lisp.last(l)))
+        s.add(n.getAST().newBreakStatement());
+    }
     else {
       if (!s.isEmpty()) {
         c = new ArrayList<>();
