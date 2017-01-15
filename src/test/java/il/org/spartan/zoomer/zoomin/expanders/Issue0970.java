@@ -52,6 +52,7 @@ public class Issue0970 {
   @Test public void test5() {
     zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){int z;}" + "catch(Type3 | Type4 e){int z;}")
         .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3|Type4 e){int z;}")
-        .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3 e){int z;}catch(Type4 e){int z;}").stays();
+        .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3 e){int z;}catch(Type4 e){int z;}")//
+ .stays();
   }
 }

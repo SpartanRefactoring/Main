@@ -53,7 +53,8 @@ public class Issue0455 {
   }
 
   @Test public void nestedLambdaExpression() {
-    trimmingOf("x -> y -> {return -y;}").gives("x -> y -> -y") //
+    trimmingOf("x -> y -> {return -y;}")//
+        .gives("x -> y -> -y") //
         .stays();
   }
 
@@ -70,7 +71,8 @@ public class Issue0455 {
   }
 
   @Test public void simpleBiFunction() {
-    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()).gives("(x,y) -> x + y")//
+    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+        .gives("(x,y) -> x + y")//
         .stays();
   }
 

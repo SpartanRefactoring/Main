@@ -15,7 +15,8 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n").stays();
+    trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
+ .stays();
   }
 
   @Test public void forwardDeclaration1() {
@@ -88,7 +89,8 @@ public final class IgnoredTrimmerTest {
   }
 
   @Test public void inlineSingleUse05() {
-    trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y+x); y(y*x); ").gives(" int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
+    trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y+x); y(y*x); ")//
+        .gives(" int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
   }
 
   @Test public void inlineSingleUse09() {
@@ -135,8 +137,10 @@ public final class IgnoredTrimmerTest {
 
   public void issue62b() {
     trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }").gives("int f(int i) { for(;i<100;++i){} return i; }")//
+        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;++i){} return i; }")//
         .stays();
   }
 
