@@ -41,6 +41,6 @@ public class Issue0895 {
             " }" + //
             "}"//
         )//
- .stays();
+        .stays();
   }
 }

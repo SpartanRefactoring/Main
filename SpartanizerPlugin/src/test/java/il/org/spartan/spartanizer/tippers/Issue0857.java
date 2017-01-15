@@ -27,6 +27,6 @@ public class Issue0857 {
                 " return $ + \"\";" + //
                 "}"//
         )//
- .stays();
+        .stays();
   }
 }

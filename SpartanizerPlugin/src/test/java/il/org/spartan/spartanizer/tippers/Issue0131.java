@@ -24,13 +24,13 @@ public final class Issue0131 {
   @Test public void A$030() {
     trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)return x;return x;")//
         .gives("for(int ¢=4 ; ¢<s.length() ; ++¢)break;return x;")//
- .stays();
+        .stays();
   }
 
   @Test public void A$040() {
     trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)if(tipper=4)return x;return x;")
         .gives("for(int ¢=4 ; ¢<s.length() ; ++¢)if(tipper=4)break;return x;")//
- .stays();
+        .stays();
   }
 
   @Test public void A$050() {
@@ -41,13 +41,13 @@ public final class Issue0131 {
   @Test public void A$060() {
     trimmingOf("while(i>5){i+=9;return x;}return x;")//
         .gives("while(i>5){i+=9;break;}return x;")//
- .stays();
+        .stays();
   }
 
   @Test public void A$070() {
     trimmingOf("while(i>5)return x;return x;")//
         .gives("while(i>5)break;return x;")//
- .stays();
+        .stays();
   }
 
   @Test public void A$080() {
@@ -71,7 +71,7 @@ public final class Issue0131 {
         .gives("void foo() {int tipper=5, z=2;for(int i=4;i<s.length();++i){if(z==i){tipper+=9;break;}y+=15;break;}return x;}")
         .gives("void foo() {int tipper=5, z=2;for(int ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;break;}y+=15;break;}return x;}")
         .gives("void foo() {for(int tipper=5, z=2, ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;break;}y+=15;break;}return x;}")//
- .stays();
+        .stays();
   }
 
   @Test public void A$120() {

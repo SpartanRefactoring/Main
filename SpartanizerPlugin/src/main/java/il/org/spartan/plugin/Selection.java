@@ -138,7 +138,7 @@ public class Selection extends AbstractSelection<Selection> {
     return this;
   }
 
-  // TODO Roth: apply to newly added WCU as well
+  // TODO Ori Roth: apply to newly added WCU as well
   public Selection setUseBinding() {
     if (inner != null)
       for (final WrappedCompilationUnit ¢ : inner)

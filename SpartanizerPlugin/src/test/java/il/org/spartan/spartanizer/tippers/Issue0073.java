@@ -13,7 +13,7 @@ import org.junit.runners.*;
 public final class Issue0073 {
   @Test public void a$01() {
     trimmingOf("x + \"\"")//
- .stays();
+        .stays();
   }
 
   @Test public void a$02() {
@@ -24,7 +24,7 @@ public final class Issue0073 {
   @Test public void a$03() {
     trimmingOf("\"\"+\"abc\"")//
         .gives("\"abc\"")//
- .stays();
+        .stays();
   }
 
   @Test public void a$04() {
@@ -35,7 +35,7 @@ public final class Issue0073 {
   @Test public void a$05() {
     trimmingOf("x + \"\"+\"abc\"")//
         .gives("x + \"abc\"")//
- .stays();
+        .stays();
   }
 
   @Test public void a$06() {
@@ -46,7 +46,7 @@ public final class Issue0073 {
   @Test public void a$07() {
     trimmingOf("\"abc\" + \"\"")//
         .gives("\"abc\"")//
- .stays();
+        .stays();
   }
 
   @Test public void a$08() {
@@ -61,7 +61,7 @@ public final class Issue0073 {
 
   @Test public void a$10() {
     trimmingOf("x + \"\"")//
- .stays();
+        .stays();
   }
 
   @Test public void a$11() {

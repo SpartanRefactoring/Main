@@ -17,12 +17,10 @@ import il.org.spartan.*;
 public final class findTest {
   @Test public void a() {
     azzert.that(singleAtomicDifference(ast("a"), ast("b")), is("a"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void b() {
     azzert.that(singleAtomicDifference(ast("a+b"), ast("b+b")), is("a"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void c() {

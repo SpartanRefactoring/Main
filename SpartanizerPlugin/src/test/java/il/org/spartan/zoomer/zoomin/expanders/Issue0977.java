@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
@@ -12,7 +12,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0977 {
   @Test public void simpleSequencers() {
-    zoomingInto("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n" + "  f(3);\n" + "case 4:\n"
+    bloatingOf("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n" + "  f(3);\n" + "case 4:\n"
         + "  throw new Exception();\n" + "default:\n" + "}")
             .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  break;\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n"
                 + "  f(3);\n" + "case 4:\n" + "  throw new Exception();\n" + "default:\n" + "}")
@@ -22,7 +22,7 @@ public class Issue0977 {
   }
 
   @Test public void complexMerging() {
-    zoomingInto(
+    bloatingOf(
         "switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "case 2:\n" + "  f(2);\n" + "default:\n" + "  f(3);\n" + "  throw new Exception();\n" + "}")
             .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  f(3);\n" + "  throw new Exception();\n" + "case 2:\n" + "  f(2);\n"
                 + "default:\n" + "  f(3);\n" + "  throw new Exception();\n" + "}")
@@ -33,22 +33,22 @@ public class Issue0977 {
 
   // see issue #1046
   @Test public void complexSequencer() {
-    zoomingInto("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n"
+    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n"
         + "case 2:\n" + "  e();\n" + "}")//
- .stays();
+            .stays();
   }
 
   // see issue #1046
   @Test public void complexSequencerNotLast() {
-    zoomingInto("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "  f();\n"
+    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "  f();\n"
         + "case 2:\n" + "  e();\n" + "}")//
- .stays();
+            .stays();
   }
 
   // see issue #1031
   @Test public void complexSequencerRealWorld() {
-    zoomingInto("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n"
+    bloatingOf("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n"
         + "} else {\n" + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}")//
- .stays();
+            .stays();
   }
 }

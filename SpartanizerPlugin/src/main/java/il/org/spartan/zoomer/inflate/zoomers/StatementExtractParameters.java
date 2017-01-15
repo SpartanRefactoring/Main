@@ -51,14 +51,14 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final CompilationUnit u = az.compilationUnit(s.getRoot());
     if (u == null)
       return null;
-    // TODO Roth: use library code
+    // TODO Ori Roth: use library code
     final ImportRewrite ir = ImportRewrite.create(u, true);
     if (ir == null)
       return null;
     ir.setUseContextToFilterImplicitImports(true); // solves many issues
     ir.setFilterImplicitImports(true); // along with this of course
     t = ir.addImport(b, s.getAST());
-    return t == null || $ instanceof Assignment ? // TODO Roth: enable
+    return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
           /**  */
@@ -98,11 +98,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         };
   }
 
-  // TODO Roth: extend (?)
+  // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
     final List<Expression> $ = new LinkedList<>();
     final List<ASTNode> excludedParents = new LinkedList<>();
-    // TODO Roth: check *what* needed
+    // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
     s.accept(new ASTVisitor() {
@@ -128,7 +128,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
-          case ASTNode.EXPRESSION_STATEMENT: // TODO Roth: check if legitimate
+          case ASTNode.EXPRESSION_STATEMENT: // TODO Ori Roth: check if
+                                             // legitimate
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
               excludedParents.add(((ExpressionStatement) ¢).getExpression());
             return true;
@@ -138,7 +139,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void consider(final List<Expression> $, final Expression x) {
-        if (!excludedParents.contains(x.getParent()) // TODO Roth: check whether
+        if (!excludedParents.contains(x.getParent()) // TODO Ori Roth: check
+                                                     // whether
                                                      // legitimate
             && isComplicated(x))
           $.add(x);
@@ -165,7 +167,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (r.getAddedStaticImports() != null)
       idns.addAll(Arrays.asList(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
-      // TODO Roth: do it better
+      // TODO Ori Roth: do it better
       for (final ImportDeclaration oid : step.imports(u))
         if (idn.equals(oid.getName().getFullyQualifiedName()))
           continue outer;
@@ -224,7 +226,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         if (p == null || !(p instanceof Type))
           return false;
         final Type pt = (Type) $.getParent();
-        // TODO Roth: more cases?
+        // TODO Ori Roth: more cases?
         if (pt instanceof ArrayType)
           ((ArrayType) pt).setElementType(copy.of($.getBound()));
         else if (pt instanceof ParameterizedType)
@@ -235,7 +237,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return $;
   }
 
-  // TODO Roth: extend (?)
+  // TODO Ori Roth: extend (?)
   static boolean isComplicated(final Expression ¢) {
     return COMPLEX_TYPES.contains(Integer.valueOf(¢.getNodeType()));
   }
@@ -244,7 +246,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 
-  // TODO Roth: move class to utility file
+  // TODO Ori Roth: move class to utility file
   protected class ASTMatcherSpecific extends ASTMatcher {
     ASTNode toMatch;
     Consumer<ASTNode> onMatch;

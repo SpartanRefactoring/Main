@@ -72,7 +72,7 @@ public final class Issue0194 {
         + "x=3; \n" //
         + "return null;" //
     )//
- .stays();
+        .stays();
   }
 
   @Test public void test05() {

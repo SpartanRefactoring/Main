@@ -21,7 +21,7 @@ public class Issue0916 {
 
   @Test public void e() {
     trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3;}")//
- .stays();
+        .stays();
   }
 
   @Test public void g() {
@@ -31,7 +31,7 @@ public class Issue0916 {
 
   @Test public void h() {
     trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3; break;}")//
- .stays();
+        .stays();
   }
 
   @Test public void t1() {

@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
@@ -14,40 +14,40 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0974 {
   @Test public void test0() {
-    zoomingInto("i++;")//
+    bloatingOf("i++;")//
         .gives("i = i+1;")//
- .stays();
+        .stays();
   }
 
   @Test public void test1() {
-    zoomingInto("i--;")//
+    bloatingOf("i--;")//
         .gives("i = i-1;")//
- .stays();
+        .stays();
   }
 
   @Test public void test2() {
-    zoomingInto("++i;")//
+    bloatingOf("++i;")//
         .gives("i++;")//
         .gives("i = i+1;")//
- .stays();
+        .stays();
   }
 
   @Test public void test3() {
-    zoomingInto("--i;")//
+    bloatingOf("--i;")//
         .gives("i--;")//
         .gives("i = i-1;")//
- .stays();
+        .stays();
   }
 
   @Test public void test4() {
-    zoomingInto("x = f(i--);")//
+    bloatingOf("x = f(i--);")//
         .gives("x = f(i=i-1);")//
- .stays();
+        .stays();
   }
 
   @Test public void test5() {
-    zoomingInto("x = f(i++);")//
+    bloatingOf("x = f(i++);")//
         .gives("x = f(i=i+1);")//
- .stays();
+        .stays();
   }
 }

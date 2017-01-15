@@ -11,6 +11,6 @@ public class Issue0315 {
   @Test public void a() {
     trimmingOf("for (int iter = 0; true; ++iter)System.out.print(iter);")//
         .gives("for (int iter = 0;; ++iter)System.out.print(iter);")//
- .stays();
+        .stays();
   }
 }

@@ -14,32 +14,32 @@ public final class Issue0116 {
   @Test public void issue116_01() {
     trimmingOf("\"\" + x")//
         .gives("x + \"\"")//
- .stays();
+        .stays();
   }
 
   @Test public void issue116_02() {
     trimmingOf("\"\" + x.foo()")//
         .gives("x.foo() + \"\"")//
- .stays();
+        .stays();
   }
 
   @Test public void issue116_03() {
     trimmingOf("\"\" + (Integer)(\"\" + x).length()")//
         .gives("(Integer)(\"\" + x).length() + \"\"")//
         .gives("(Integer)(x +\"\").length() + \"\"")//
- .stays();
+        .stays();
   }
 
   @Test public void issue116_04() {
     trimmingOf("String s = \"\" + x.foo();")//
         .gives("String s = x.foo() + \"\";")//
- .stays();
+        .stays();
   }
 
   @Test public void issue116_07() {
     trimmingOf("\"\" + 0 + (x - 7)")//
         .gives("0 + \"\" + (x - 7)")//
- .stays();
+        .stays();
   }
 
   @Test public void issue116_08() {
@@ -49,6 +49,6 @@ public final class Issue0116 {
         .gives("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";")//
- .stays();
+        .stays();
   }
 }
