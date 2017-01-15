@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016 */
 public class ToStringMethod extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return "String".equals(returnType(¢) + "") && "toString".equals(identifier(name(¢)));
+    return "String".equals(returnType(¢) + "")//
+        && "toString".equals(identifier(name(¢)));
   }
 }
