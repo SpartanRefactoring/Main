@@ -96,10 +96,8 @@ public class SwitchBranch {
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
   public boolean compareTo(final SwitchBranch ¢) {
-    boolean c = compare(¢);
-    if(c == ¢.compare(this))
-      return (lisp.first(cases) + "").compareTo((lisp.first(¢.cases()) + "")) < 0;
-    return c;
+    boolean $ = compare(¢);
+    return $ == ¢.compare(this) ? (lisp.first(cases) + "").compareTo((lisp.first(¢.cases()) + "")) < 0 : $;
   }
 
   private void addAll(final List<Statement> ss) {
