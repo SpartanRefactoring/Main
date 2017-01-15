@@ -217,8 +217,8 @@ final class EnvironmentVisitor extends ASTVisitor {
   /** Order of the searched {@link Statement} in its parent {@link ASTNode},
    * among nodes of the same kind. Zero based.
    * @param s
-   * @return The nodes index, according to order of appearance, amongnodesof the
-   *         same type. */
+   * @return The nodes index, according to order of appearance, among nodes of
+   *         the same type. [[SuppressWarningsSpartan]] */
   static int statementOrderAmongTypeInParent(final Statement s) {
     // extract.statements wouldn't work here - we need a shallow extract,
     // not a deep one.
@@ -226,7 +226,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
       return 0;
     int $ = 0;
-    for (final Statement ¢ : n instanceof Block ? statements((Block) n) : statements((SwitchStatement) n)) {
+    for (final Statement ¢ : iz.block(n) ? statements(az.block(n)) : statements(az.switchStatement(n))) {
       // This is intentionally '==' and not equals, meaning the exact same
       // Statement,
       // not just equivalence.

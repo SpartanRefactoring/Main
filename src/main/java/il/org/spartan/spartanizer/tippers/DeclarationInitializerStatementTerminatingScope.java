@@ -87,8 +87,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final ExpressionStatement es = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(es.getExpression())) {
       final MethodInvocation m = (MethodInvocation) es.getExpression();
-      final Expression $ = !iz.parenthesizedExpression(m.getExpression()) ? m.getExpression()
-          : ((ParenthesizedExpression) m.getExpression()).getExpression();
+      final Expression $ = !iz.parenthesizedExpression(expression(m)) ? expression(m) : ((ParenthesizedExpression) expression(m)).getExpression();
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(es.getExpression()))
