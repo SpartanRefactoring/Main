@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue1036 {
   @Test public void test0() {
     expansionOf(new TestClass()) //
-        .givesWithBinding("@SuppressWarnings(\"null\")public String check1(){" + "for(int i=1;i<children1.size();i++){"
-            + "final String diff;diff=null;if($!=\"\"||diff==null)"
+        .givesWithBinding("public String check1(){" + "for(int i=1;i<children1.size();i++){" + "final String diff;diff=null;if($!=\"\"||diff==null)"
             + "$=$;else $=diff;if(!$.equals(diff)&&!\"\".equals(diff))return null;}return \"\";}", "check1");
   }
 

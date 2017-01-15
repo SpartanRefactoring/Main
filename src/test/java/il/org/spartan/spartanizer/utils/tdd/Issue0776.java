@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Osher Hajaj
  * @since 16-11-07 */
 @SuppressWarnings("static-method")
-public class Issue776 {
+public class Issue0776 {
   @Test public void checkDoBlock() {
     azzert.that(1, is(enumerate.blockTypes((MethodDeclaration) wizard.ast("public int foo(int x)" + "{do {}while(true);}"))));
   }
