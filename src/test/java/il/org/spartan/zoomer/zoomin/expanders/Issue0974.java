@@ -14,26 +14,40 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0974 {
   @Test public void test0() {
-    zoomingInto("i++;").gives("i = i+1;").stays();
+    zoomingInto("i++;")//
+        .gives("i = i+1;")//
+ .stays();
   }
 
   @Test public void test1() {
-    zoomingInto("i--;").gives("i = i-1;").stays();
+    zoomingInto("i--;")//
+        .gives("i = i-1;")//
+ .stays();
   }
 
   @Test public void test2() {
-    zoomingInto("++i;").gives("i++;").gives("i = i+1;").stays();
+    zoomingInto("++i;")//
+        .gives("i++;")//
+        .gives("i = i+1;")//
+ .stays();
   }
 
   @Test public void test3() {
-    zoomingInto("--i;").gives("i--;").gives("i = i-1;").stays();
+    zoomingInto("--i;")//
+        .gives("i--;")//
+        .gives("i = i-1;")//
+ .stays();
   }
 
   @Test public void test4() {
-    zoomingInto("x = f(i--);").gives("x = f(i=i-1);").stays();
+    zoomingInto("x = f(i--);")//
+        .gives("x = f(i=i-1);")//
+ .stays();
   }
 
   @Test public void test5() {
-    zoomingInto("x = f(i++);").gives("x = f(i=i+1);").stays();
+    zoomingInto("x = f(i++);")//
+        .gives("x = f(i=i+1);")//
+ .stays();
   }
 }

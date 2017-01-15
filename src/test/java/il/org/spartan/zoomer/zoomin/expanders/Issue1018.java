@@ -43,6 +43,7 @@ public class Issue1018 {
   }
 
   @Test public void f() {
-    zoomingInto("if(x==0){ x+=1;} else if(x==1){ x+=2;}").gives("switch(x){case 0: x+=1; break; case 1: x+=2; break;}");
+    zoomingInto("if(x==0){ x+=1;} else if(x==1){ x+=2;}")//
+        .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break;}");
   }
 }

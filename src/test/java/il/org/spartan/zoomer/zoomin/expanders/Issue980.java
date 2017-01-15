@@ -43,6 +43,7 @@ public class Issue980 {
   @Test public void test6() {
     zoomingInto("return x && y() || z;")//
         .gives("boolean a = x && y();return a && z;")//
-        .gives("boolean a = x;a = a && y();return a && z;").stays();
+        .gives("boolean a = x;a = a && y();return a && z;")//
+ .stays();
   }
 }
