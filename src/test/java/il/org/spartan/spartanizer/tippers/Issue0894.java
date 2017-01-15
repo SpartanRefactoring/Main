@@ -14,7 +14,7 @@ public class Issue0894 {
     trimmingOf("for(int ¢ = 3; ¢ < 10; ++¢){++x;}").using(ForStatement.class, new ReplaceForWithRange())
         .gives("for(Integer ¢ : range.from(3).to(10)){{++x;}}")//
         .gives("for(Integer ¢ : range.from(3).to(10))++x;")//
- .stays();
+        .stays();
   }
 
   // ¢-=2 matches ++$N for some reason
@@ -22,6 +22,6 @@ public class Issue0894 {
     trimmingOf("for(int ¢ = 10; ¢ > 5; ¢-=2){++x;++y;}").using(ForStatement.class, new ReplaceForWithRange())
         .gives("for(Integer ¢ : range.from(10).step(-2).to(5)){{++x;++y;}}")//
         .gives("for(Integer ¢ : range.from(10).step(-2).to(5)){++x;++y;}")//
- .stays();
+        .stays();
   }
 }

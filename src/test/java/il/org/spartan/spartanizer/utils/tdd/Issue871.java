@@ -13,21 +13,18 @@ import il.org.spartan.*;
 public class Issue871 {
   @Test public void test0() {
     azzert.that(new ParameterInt(0).intValue(), is(0));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test1() {
     final ParameterInt i = new ParameterInt();
     i.set(3);
     azzert.that(i.intValue(), is(3));
-    // TODO Auto-generated method stub
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
     final ParameterInt i = new ParameterInt();
     i.set(3);
     azzert.that(i.intValue(), is(3));
-    // TODO Auto-generated method stub
     i.set(4);
   }
 

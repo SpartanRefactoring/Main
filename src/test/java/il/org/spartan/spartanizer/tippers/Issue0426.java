@@ -11,11 +11,11 @@ public class Issue0426 {
   @Test public void a() {
     trimmingOf("for(final Integer i: range.to(10)){System.out.println(i);System.out.println(i);}")
         .gives("for(final Integer ¢: range.to(10)){System.out.println(¢);System.out.println(¢);}")//
- .stays();
+        .stays();
   }
 
   @Test public void b() {
     trimmingOf("for(final Integer i: range.to(10)){System.out.println(¢);System.out.println(i);}")//
- .stays();
+        .stays();
   }
 }

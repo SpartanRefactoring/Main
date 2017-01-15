@@ -38,7 +38,7 @@ public final class Issue0209 {
   @Test public void issue209_02() {
     trimmingOf("new Integer(3).toString();")//
         .gives("Integer.valueOf(3).toString();")//
- .stays();
+        .stays();
   }
 
   @Test public void issue54_01() {
@@ -66,7 +66,7 @@ public final class Issue0209 {
 
   @Test public void issue54_05() {
     trimmingOf("x.toString(5)")//
- .stays();
+        .stays();
   }
 
   @Test public void issue54_06() {
@@ -82,7 +82,7 @@ public final class Issue0209 {
   @Test public void issue54_2() {
     trimmingOf("String s = f() + o.toString();")//
         .gives("String s = f() + \"\" + o;")//
- .stays();
+        .stays();
   }
 
   @Test public void reorderTest() {

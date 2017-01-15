@@ -11,9 +11,7 @@ import org.junit.runners.*;
  * @author Ori Roth
  * @since 2016
  * @see SingleVariableDeclarationAbbreviation#fixJavadoc testing for comments */
-// TODO Roth: add ???
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method") //
 public class Issue0180 {
   @Test public void renameToCent() {

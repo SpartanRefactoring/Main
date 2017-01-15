@@ -26,12 +26,10 @@ public class MatcherTest {
   @Test public void c() {
     azzert.that(patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(ast("for (A b : C) print();")), "$B") + "",
         is("print();\n"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void d() {
     azzert.that(patternMatcher("$X + b", "").getMatching(findFirst.expression(ast("a + b")), "$X") + "", is("a"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void e() {

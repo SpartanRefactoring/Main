@@ -13,18 +13,18 @@ public final class Issue0130 {
   @Test public void A$01() {
     trimmingOf("while(true){doSomething();if(done())break;}return something();")//
         .gives("while(true){doSomething();if(done())return something();}")//
- .stays();
+        .stays();
   }
 
   @Test public void A$02() {
     trimmingOf("while(false){doSomething();if(done())break;}return something();")//
- .stays();
+        .stays();
   }
 
   @Test public void A$03() {
     trimmingOf("while(true){doSomething();if(done()){tipper+=2;break;}}return something();")
         .gives("while(true){doSomething();if(done()){tipper+=2;return something();}}")//
- .stays();
+        .stays();
   }
 
   @Test public void A$04() {
@@ -37,13 +37,13 @@ public final class Issue0130 {
 
   @Test public void A$05() {
     trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢){doSomething();if(done())break;}return something();")//
- .stays();
+        .stays();
   }
 
   @Test public void A$06() {
     trimmingOf("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){tipper+=2;break;}}return something();")
         .gives("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){tipper+=2;return something();}}")
         .gives("for(int ¢=4 ; ; ++¢){doSomething();if(done()){tipper+=2;return something();}}")//
- .stays();
+        .stays();
   }
 }

@@ -83,7 +83,7 @@ public final class BlockSimplifyTest {
         + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
         + "    azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n"
         + "    azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA01() {
@@ -93,7 +93,7 @@ public final class BlockSimplifyTest {
         + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
         + "    azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n"
         + "    azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA02() {
@@ -102,7 +102,7 @@ public final class BlockSimplifyTest {
         + "    azzert.wizard.assertEquals(biginteger.one, c.getdenominator());\n" + "  }\n" + "  {\n" + "    f c = improperformat.parse(s);\n"
         + "   assert c != null;\n" + "    azzert.wizard.assertEquals(biginteger.ten, c.getnumerator());\n"
         + "    azzert.wizard.assertEquals(biginteger.one, c.getdenominator());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA03() {
@@ -110,41 +110,41 @@ public final class BlockSimplifyTest {
         + "    azzert.wizard.assertEquals(System.out.ten, c.g());\n" + "    azzert.wizard.assertEquals(System.out.one, c.g());\n" + "  }\n" + "  {\n"
         + "    f c = improperformat.parse(s);\n" + "    azzert.wizard.assertEquals(System.out.ten, c.g());\n"
         + "    azzert.wizard.assertEquals(System.out.one, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA04() {
     trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s2);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA05() {
     trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s2);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA06() {
     trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s2);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA07() {
     trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s2);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA08() {
     trimmingOf("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    f c = g.parse(s2);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n"
         + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void seriesA09() {

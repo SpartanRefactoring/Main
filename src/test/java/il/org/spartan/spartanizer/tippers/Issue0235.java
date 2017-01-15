@@ -19,13 +19,13 @@ public class Issue0235 {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally {}")//
         .gives("try{ return i; } catch(Exception e) { throw e; }")//
         .gives("try{ return i; } catch(Exception ¢) { throw ¢; }")//
- .stays();
+        .stays();
   }
 
   @Test public void test2() {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally { return 7;}")//
         .gives("try{ return i; } catch(Exception ¢) { throw ¢; } finally { return 7;}")//
- .stays();//
+        .stays();//
   }
 
   @Test public void test3() {

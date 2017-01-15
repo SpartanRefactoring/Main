@@ -18,12 +18,12 @@ public class Issue0082 {
   @Test public void b() {
     trimmingOf("(long)(int)a")//
         .gives("1L*(int)a")//
- .stays();
+        .stays();
   }
 
   @Test public void b_a_cuold_be_double() {
     trimmingOf("(long)a")//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
@@ -31,17 +31,17 @@ public class Issue0082 {
         .gives("1L*(long)2")//
         .gives("1L*1L*2")//
         .gives("2L")//
- .stays();
+        .stays();
   }
 
   @Test public void d() {
     trimmingOf("(long)a*(long)b")//
- .stays();
+        .stays();
   }
 
   @Test public void e() {
     trimmingOf("(double)(long)a")//
         .gives("1.*(long)a")//
- .stays();
+        .stays();
   }
 }

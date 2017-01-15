@@ -60,7 +60,6 @@ public enum TESTUtils {
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
       azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
-    // TODO Auto-generated method stub
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the
