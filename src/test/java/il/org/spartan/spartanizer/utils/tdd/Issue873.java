@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** tests of ParameterObject according to issue 873
  * @author kobybs
  * @since 27-11-2016 */
-@SuppressWarnings({ "static-method", "boxing" })
+@SuppressWarnings({ "static-method" })
 public class Issue873 {
   class MyType {
     final int i;
@@ -22,19 +24,22 @@ public class Issue873 {
   }
 
   @Test public void test0() {
-    assertEquals(4, new ParameterObject<>(new MyType(4)).objectValue().getVal());
+    azzert.that(new ParameterObject<>(new MyType(4)).objectValue().getVal(), is(4));
+    // TODO Auto-generated method stub
   }
 
   @Test public void test1() {
     final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
-    assertEquals(5, i.objectValue().getVal());
+    azzert.that(i.objectValue().getVal(), is(5));
+    // TODO Auto-generated method stub
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
     final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
-    assertEquals(5, i.objectValue().getVal());
+    azzert.that(i.objectValue().getVal(), is(5));
+    // TODO Auto-generated method stub
     i.set(new MyType(4));
   }
 
@@ -45,22 +50,22 @@ public class Issue873 {
   @Test public void test4() {
     final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(3));
-    assertEquals(true, i.hasValue());
+    assert i.hasValue();
   }
 
   @Test public void test5() {
-    assertEquals(false, new ParameterObject<MyType>().hasValue());
+    assert !new ParameterObject<MyType>().hasValue();
   }
 
   @Test public void test6() {
-    assertEquals(false, new ParameterObject<>(new MyType(2)).hasValue());
+    assert !new ParameterObject<>(new MyType(2)).hasValue();
   }
 
   @Test public void test7() {
-    assertEquals(false, new ParameterObject<MyType>().hasDefault());
+    assert !new ParameterObject<MyType>().hasDefault();
   }
 
   @Test public void test8() {
-    assertEquals(true, new ParameterObject<>(new MyType(2)).hasDefault());
+    assert new ParameterObject<>(new MyType(2)).hasDefault();
   }
 }
