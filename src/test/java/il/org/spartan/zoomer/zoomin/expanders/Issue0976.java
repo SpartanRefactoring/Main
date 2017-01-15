@@ -12,19 +12,24 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0976 {
   @Test public void a() {
-    zoomingInto("if(a==b && c==d) { t=5; }").gives("if(a==b) if(c==d) { t=5; }");
+    zoomingInto("if(a==b && c==d) { t=5; }")//
+        .gives("if(a==b) if(c==d) { t=5; }");
   }
 
   @Test public void a1() {
-    zoomingInto("if(a==b && c==d) t=5;").gives("if(a==b && c==d) { t=5; }").gives("if(a==b) if(c==d) { t=5; }");
+    zoomingInto("if(a==b && c==d) t=5;")//
+        .gives("if(a==b && c==d) { t=5; }")//
+        .gives("if(a==b) if(c==d) { t=5; }");
   }
 
   @Test public void b() {
-    zoomingInto("if(a && b && c) { t=5; }").gives("if(a) if(b && c) { t=5; }").gives("if(a) { if(b && c) { t=5; } }")
-        .gives("if(a) { if(b) if(c) { t=5; } }");
+    zoomingInto("if(a && b && c) { t=5; }")//
+        .gives("if(a) if(b && c) { t=5; }")//
+        .gives("if(a) { if(b && c) { t=5; } }").gives("if(a) { if(b) if(c) { t=5; } }");
   }
 
   @Test public void c() {
-    zoomingInto("if(a && b) { f(); } else { g(); }").gives("if(a) if(b) { f(); } else { g(); } else { g(); } ");
+    zoomingInto("if(a && b) { f(); } else { g(); }")//
+        .gives("if(a) if(b) { f(); } else { g(); } else { g(); } ");
   }
 }

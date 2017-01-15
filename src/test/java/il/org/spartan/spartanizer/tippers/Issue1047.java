@@ -17,8 +17,8 @@ public class Issue1047 {
   }
 
   @Test public void b() {
-    trimmingOf("for(int ¢=0; ¢<5;++¢){System.out.println(); ++¢; continue;}")//
-        .gives("for(int ¢=0; ¢<5;++¢){System.out.println(); ++¢;}");//
+    trimmingOf("for(int ¢=0; ¢<5;++¢){pr(); ++¢; continue;}")//
+        .gives("for(int ¢=0; ¢<5;++¢){pr(); ++¢;}");//
   }
 
   @Test public void test2() {

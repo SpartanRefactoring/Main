@@ -38,10 +38,12 @@ public class Issue0968 {
   }
 
   @Test public void b() {
-    zoomingInto("int a = 3, b;").stays();
+    zoomingInto("int a = 3, b;")//
+ .stays();
   }
 
   @Test public void c() {
-    zoomingInto("int a, b, c;").stays();
+    zoomingInto("int a, b, c;")//
+ .stays();
   }
 }
