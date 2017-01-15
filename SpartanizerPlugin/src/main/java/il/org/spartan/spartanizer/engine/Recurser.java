@@ -65,7 +65,7 @@ public final class Recurser<T> {
     }
   }
 
-  private ASTNode root;
+  private final ASTNode root;
   private T current;
 
   public Recurser(final ASTNode root) {

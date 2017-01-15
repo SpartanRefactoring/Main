@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.java.namespace.*;
  * @since 2016-12-18 */
 public abstract class ReflectiveTester {
   private static final String JAVA_HOME = System.getProperty("java.home");
-  private static Map<Class<? extends ReflectiveTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
-  private static Map<Class<? extends ReflectiveTester>, String> classToText = new LinkedHashMap<>();
+  private static final Map<Class<? extends ReflectiveTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
+  private static final Map<Class<? extends ReflectiveTester>, String> classToText = new LinkedHashMap<>();
 
   public final ASTNode myCompilationUnit() {
     final Class<? extends ReflectiveTester> c = getClass();
@@ -111,7 +111,7 @@ public abstract class ReflectiveTester {
     return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(n -> new String[n]);
   }
 
-  protected static ReflectiveTester[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  protected static final ReflectiveTester[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //

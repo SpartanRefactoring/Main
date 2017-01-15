@@ -16,8 +16,8 @@ import il.org.spartan.utils.*;
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
-public final class BindingFun implements IApplication {
-  static void iterateMethodInvocations(final CompilationUnit u) {
+final class BindingFun implements IApplication {
+  private static void iterateMethodInvocations(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {
         assert ¢.getAST().hasResolvedBindings();
@@ -27,7 +27,7 @@ public final class BindingFun implements IApplication {
     });
   }
 
-  static String getPackageNameFromSource(final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
@@ -45,9 +45,9 @@ public final class BindingFun implements IApplication {
     return $.get();
   }
 
-  IJavaProject javaProject;
-  IPackageFragmentRoot srcRoot;
-  IPackageFragment pack;
+  private IJavaProject javaProject;
+  private IPackageFragmentRoot srcRoot;
+  private IPackageFragment pack;
 
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);
@@ -98,13 +98,13 @@ public final class BindingFun implements IApplication {
     }
   }
 
-  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+  private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  void prepareTempIJavaProject() throws CoreException {
+  private void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("tempP");
     if (p.exists())
       p.delete(true, null);
@@ -125,7 +125,7 @@ public final class BindingFun implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  void setPackage(final String name) throws JavaModelException {
+  private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 }

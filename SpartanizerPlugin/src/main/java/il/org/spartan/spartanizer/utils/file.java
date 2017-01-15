@@ -7,12 +7,12 @@ import java.nio.file.*;
  * @since Dec 4, 2016 */
 public enum file {
   ;
-  public static void delete(final String path) {
+  private static void delete(final String path) {
     if (file.exists(path))
       new File(path).delete();
   }
 
-  public static void rename(final String from, final String to) {
+  private static void rename(final String from, final String to) {
     file.delete(to);
     final Path source = Paths.get(from);
     try {
@@ -22,7 +22,7 @@ public enum file {
     }
   }
 
-  public static boolean exists(final String path) {
+  private static boolean exists(final String path) {
     final File $ = new File(path);
     return $.exists() && !$.isDirectory();
   }

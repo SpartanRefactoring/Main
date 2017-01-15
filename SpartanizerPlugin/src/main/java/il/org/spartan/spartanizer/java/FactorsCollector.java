@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 // TOOD Niv: Who wrote this class?
-public final class FactorsCollector {
-  public static boolean isLeafFactor(final Expression ¢) {
+final class FactorsCollector {
+  static boolean isLeafFactor(final Expression ¢) {
     return !iz.infixTimes(¢) && !iz.infixDivide(¢);
   }
 
@@ -56,7 +56,7 @@ public final class FactorsCollector {
         : collectTimesPrefixDivdeExpression(¢);
   }
 
-  Void collectTimesPrefixDivdeExpression(final InfixExpression ¢) {
+  private Void collectTimesPrefixDivdeExpression(final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixDivide(¢);

@@ -1,16 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.lisp.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** removes continue in for loop if it's last statement in the loop.
  * @author Doron Meshulam
@@ -24,6 +27,8 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
     return "Prune redundant continue";
   }
 
+  // TODO: Doron Meshulam: please use lisp.last --yg
+  // Also, move to class wizard
   static Statement lastStatement(final ForStatement ¢) {
     return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
   }
@@ -35,9 +40,11 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement> implements
         if (b == null)
           r.replace(lastStatement(¢), make.emptyStatement(¢), g);
         else {
+          // TODO: Doron Meshulam: use list rewrite (search for code that does
+          // that) --yg
           step.statements(b).remove(lastStatement(¢));
-          Block newB = copy.of(b);
-          r.replace(b, newB, g);
+          // TODO: Doron Meshulam: seems like a noop --yg
+          r.replace(b, copy.of(b), g);
         }
       }
     };

@@ -13,7 +13,7 @@ import il.org.spartan.zoomer.zoomin.SingleFlater.*;
  * @author Raviv Rachmiel
  * @since 20-12-16 will hold an toolbox for the expanders and return them */
 public class DeflaterProvider extends OperationsProvider {
-  Toolbox toolbox;
+  private Toolbox toolbox;
 
   public DeflaterProvider() {
     toolbox = Toolbox.defaultInstance();

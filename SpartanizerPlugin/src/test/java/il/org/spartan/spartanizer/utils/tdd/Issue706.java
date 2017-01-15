@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -8,7 +9,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import static il.org.spartan.lisp.*;
 
 /** Unit tests for issue #706
  * @author Sapir Bismot

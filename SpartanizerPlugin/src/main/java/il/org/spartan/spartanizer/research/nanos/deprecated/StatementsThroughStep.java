@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class StatementsThroughStep extends NanoPatternTipper<MethodInvocation> {
-  List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
+  final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("$X.statements()", "statements($X)", "step: statements"));

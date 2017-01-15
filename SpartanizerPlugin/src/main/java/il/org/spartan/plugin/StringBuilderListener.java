@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public class StringBuilderListener implements Listener {
-  private static Tab tab = new Tab();
+  private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
   public String $() {
@@ -27,9 +27,9 @@ public class StringBuilderListener implements Listener {
   }
 
   @Override public void tick(final Object... os) {
-    $.append(newId() + ": ");
+    $.append(newId()).append(": ");
     for (final Object ¢ : os)
-      $.append(new Separator(", ") + wizard.trim(¢));
+      $.append(new Separator(", ")).append(wizard.trim(¢));
     $.append('\n');
   }
 }

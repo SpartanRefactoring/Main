@@ -5,13 +5,14 @@ import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link ExpanderTestUtils} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-07 [[SuppressWarningsSpartan]] */
-@SuppressWarnings("static-method")
+ * @since 2017-01-07 */
 @Ignore // This is only for demostration it doesn't suppose to work
+@SuppressWarnings("static-method")
 public class Issue1040 {
   @Test public void test1() {
     expansionOf(new Issue1040Aux()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int a() {int i;i=0;i++;return 0;}",
@@ -51,7 +52,7 @@ public class Issue1040 {
   public class Issue1040Aux3 extends ReflectiveTester {
     int total;
     int total2;
-    @SuppressWarnings("boxing") Integer[] arr = { 1, 2, 3, 4, 5 };
+    @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };
 
     double total(final int x) {
       return 5.0;
@@ -63,16 +64,14 @@ public class Issue1040 {
 
     void toTest() {
       total = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total += total(1);
-      }
     }
 
     void toTest2() {
       total2 = 0;
-      for (final Integer k : arr) {
+      for (final Integer k : arr)
         total2 += total2(1);
-      }
     }
   }
 }

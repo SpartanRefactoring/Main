@@ -467,8 +467,8 @@ public enum Collect {
    * @author Yossi Gil
    * @since 2015-09-06 */
   public abstract static class Collector {
-    protected final SimpleName name;
-    protected final String stringName;
+    final SimpleName name;
+    final String stringName;
 
     Collector(final SimpleName name) {
       this.name = name;

@@ -16,17 +16,17 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
-  final Map<String, List<String>> forLoops = new HashMap<>();
-  final List<ASTNode> forLoopsList = new ArrayList<>();
-  int forLoopsAmount;
-  static final Scanner input = new Scanner(System.in);
-  static List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
+  private final Map<String, List<String>> forLoops = new HashMap<>();
+  private final List<ASTNode> forLoopsList = new ArrayList<>();
+  private int forLoopsAmount;
+  private static final Scanner input = new Scanner(System.in);
+  private static final List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new ForEach());
     }
   };
-  static List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
+  private static final List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new CopyArray());

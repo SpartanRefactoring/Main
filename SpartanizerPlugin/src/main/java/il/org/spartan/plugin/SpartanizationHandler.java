@@ -108,7 +108,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         }
       }
 
-      /** see issue #467 [[SuppressWarningsSpartan]] */
+      /** see issue #467 */
       @Override public void pop(final Object... ¢) {
         switch (level--) {
           default:

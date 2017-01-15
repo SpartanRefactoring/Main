@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 
 // TOOD Niv: Who wrote this class?
-public final class FactorsReorganizer {
+final class FactorsReorganizer {
   public static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }

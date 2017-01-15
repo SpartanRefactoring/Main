@@ -40,13 +40,13 @@ public class Issue0822 {
 
   @Test public void testBuilderFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
-    Files.write(p, Arrays.asList("a = a + b;"));
+    Files.write(p, Collections.singletonList("a = a + b;"));
     azzert.that(makeAST.STATEMENTS.builder(p.toFile()) + "", is("a = a + b;"));
   }
 
   @Test public void testExpressionFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
-    Files.write(p, Arrays.asList("a + b"));
+    Files.write(p, Collections.singletonList("a + b"));
     final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
     azzert.that(ast + "", is(wizard.ast("a+b") + ""));
     azzert.that(ast, instanceOf(Expression.class));
@@ -58,7 +58,7 @@ public class Issue0822 {
 
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
-    Files.write(p, Arrays.asList("a = a + b;"));
+    Files.write(p, Collections.singletonList("a = a + b;"));
     final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
     azzert.that(ast + "", is(wizard.ast("a = a + b;") + ""));
     azzert.that(ast, instanceOf(Statement.class));

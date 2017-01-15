@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -11,8 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
-import static il.org.spartan.lisp.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */

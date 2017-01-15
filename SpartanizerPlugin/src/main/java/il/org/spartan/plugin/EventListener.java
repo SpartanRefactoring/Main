@@ -12,21 +12,21 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
 
   /** Listens to an event.
    * @param e JD */
-  public abstract void tick(E e);
+  protected abstract void tick(E e);
 
   /** Listens to an event with additional object.
    * @param e JD
    * @param o JD */
-  public abstract void tick(E e, Object o);
+  protected abstract void tick(E e, Object o);
 
   /** @param enumClass enum that contains the possible events for this
    *        listener */
-  protected EventListener(final Class<? extends E> enumClass) {
+  EventListener(final Class<? extends E> enumClass) {
     this.enumClass = enumClass;
   }
 
   /** @return possible events for this listener */
-  protected E[] events() {
+  E[] events() {
     return enumClass.getEnumConstants();
   }
 
@@ -41,8 +41,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
   /** Simple event listener, defined by a consumer of events.
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
-   * @return listener that send events from the enum class to the consumer
-   *         [[SuppressWarningsSpartan]] */
+   * @return listener that send events from the enum class to the consumer */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E ¢) {
@@ -59,8 +58,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
    * @param bc operation to be conducted on accepted event and object
-   * @return listener that send events from the enum class to consumers
-   *         [[SuppressWarningsSpartan]] */
+   * @return listener that send events from the enum class to consumers */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c, final BiConsumer<E, Object> bc) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E e) {

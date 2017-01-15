@@ -8,9 +8,9 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Unit test for {@link AssignmentOperatorExpansion}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
- * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-@SuppressWarnings("static-method")
+ * @since 2016-12-25 */
 @Ignore // TODO: Ori Roth
+@SuppressWarnings("static-method")
 public class Issue1001 {
   @Test public void basic() {
     zoomingInto("a += 1").gives("a = a + 1");

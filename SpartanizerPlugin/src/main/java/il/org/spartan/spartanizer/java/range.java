@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.NoSuchElementException;
-
-import java.util.Iterator;
+import java.util.*;
 
 /** A fluent API implementation for range
  * @author Dor Ma'ayan

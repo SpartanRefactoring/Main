@@ -72,14 +72,13 @@ public class MethodsCounter extends FolderASTVisitor {
     final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)
       return;
-    methods.keySet().stream()//
-        .forEach(n -> {
-          report //
-              .put("Num. Statements", n) //
-              .put("Count", methods.get(n).inner)//
-          ;
-          report.nl();
-        });
+    methods.keySet().forEach(n -> {
+      report //
+          .put("Num. Statements", n) //
+          .put("Count", methods.get(n).inner)//
+      ;
+      report.nl();
+    });
     report.close();
     file.renameToCSV(outputFolder + "/countStatistics");
   }

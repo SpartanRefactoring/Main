@@ -24,20 +24,20 @@ public class NanoInstancesCollector extends FolderASTVisitor {
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(Block.class, new NanoPatternTipper<Block>() {
-      @Override public Tip pattern(Block ¢) {
+      @Override public Tip pattern(final Block ¢) {
         return new Tip("", ¢, this.getClass()) {
-          @Override public void go(ASTRewrite r, TextEditGroup g) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
             nano.tip(¢).go(r, g);
           }
         };
       }
 
-      @Override public boolean canTip(Block n) {
+      @Override public boolean canTip(final Block n) {
         return nano.canTip(n);
       }
 
-      @Override public String description(Block n) {
+      @Override public String description(final Block n) {
         return nano.description(n);
       }
     });

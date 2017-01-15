@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings("static-method") //
 public final class FactorsCollectorTest {
   final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
-  final FactorsCollector c = new FactorsCollector();
+  private final FactorsCollector c = new FactorsCollector();
 
   @Test public void test00() {
     azzert.that(c.collect(i("a*b")), is(c));
