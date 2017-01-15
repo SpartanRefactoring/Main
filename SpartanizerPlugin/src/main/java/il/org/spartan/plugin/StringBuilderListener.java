@@ -27,9 +27,9 @@ public class StringBuilderListener implements Listener {
   }
 
   @Override public void tick(final Object... os) {
-    $.append(newId() + ": ");
+    $.append(newId()).append(": ");
     for (final Object ¢ : os)
-      $.append(new Separator(", ") + wizard.trim(¢));
+      $.append(new Separator(", ")).append(wizard.trim(¢));
     $.append('\n');
   }
 }

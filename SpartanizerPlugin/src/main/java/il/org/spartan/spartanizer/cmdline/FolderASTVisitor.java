@@ -27,7 +27,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected static String presentSourceName;
   protected String presentSourcePath;
   protected Dotter dotter;
-  {
+  static {
     TrimmerLog.off();
     Trimmer.silent = true;
   }
