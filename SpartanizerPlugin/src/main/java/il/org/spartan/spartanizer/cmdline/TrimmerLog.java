@@ -28,7 +28,7 @@ public class TrimmerLog {
   }
 
   public static void off() {
-    maxApplications = maxTips = maxVisitations = 0;
+    maxApplications = maxTips = maxVisitations = -1;
   }
 
   public static void activateLogToFile() {
