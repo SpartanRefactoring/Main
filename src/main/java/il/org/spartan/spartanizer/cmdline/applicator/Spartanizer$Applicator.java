@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.applicator;
 
 import java.util.*;
 
@@ -11,7 +11,10 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.applications.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
+import il.org.spartan.spartanizer.cmdline.utils.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
