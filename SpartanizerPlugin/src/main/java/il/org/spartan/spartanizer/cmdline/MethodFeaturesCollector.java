@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.collector;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.lang.reflect.*;
 
@@ -8,8 +8,6 @@ import org.eclipse.jdt.core.dom.Type;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.applications.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
