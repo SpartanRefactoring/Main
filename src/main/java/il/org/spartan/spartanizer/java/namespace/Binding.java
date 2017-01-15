@@ -26,6 +26,7 @@ public class Binding {
   private final ASTNode self;
   /** What do we know about the type of this definition */
   private final type type;
+
   public Binding() {
     hiding = null;
     type = null;
