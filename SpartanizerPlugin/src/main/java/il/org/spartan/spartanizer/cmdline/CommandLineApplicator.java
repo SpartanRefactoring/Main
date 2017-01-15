@@ -65,7 +65,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  // // TODO Roth: use Policy / replacement for Trimmer.
+  // // TODO Ori Roth: use Policy / replacement for Trimmer.
   // /** Default run action configuration of {@link GUIBatchLaconizer}.
   // Spartanize the
   // * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.

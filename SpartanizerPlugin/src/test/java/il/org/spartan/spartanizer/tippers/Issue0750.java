@@ -17,6 +17,6 @@ public class Issue0750 {
 
   @Test public void testNoChange() {
     trimmingOf("void f (int ¢) {for(Object o : ¢) System.out.println(o);}")//
- .stays();
+        .stays();
   }
 }

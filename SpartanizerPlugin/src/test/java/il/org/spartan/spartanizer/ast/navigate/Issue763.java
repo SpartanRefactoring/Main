@@ -19,7 +19,6 @@ public class Issue763 {
   @Test public void a() {
     azzert.that(analyze.type(first(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "") && iz.methodInvocation(x.getParent()))
         .from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")))), is("Map"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void b() {
@@ -27,7 +26,6 @@ public class Issue763 {
         analyze.type(first(
             searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "")).from(wizard.ast("class C{  void foo(){Map x; print(x);}}")))),
         is("Map"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void c() {
@@ -35,12 +33,10 @@ public class Issue763 {
         analyze.type(first(
             searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")))),
         is("Map"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void d() {
     azzert.that(analyze.type(first(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + ""))
         .from(wizard.ast("class C{  void foo(Map<String,String> x){ print(x);}}")))), is("Map<String,String>"));
-    // TODO Auto-generated method stub
   }
 }

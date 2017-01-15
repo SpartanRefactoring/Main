@@ -10,7 +10,7 @@ import org.junit.*;
 public class issue0289 {
   @Test public void a() {
     trimmingOf("void f() {" + "  final Object[] os = new Integer[1];" + "  os[0] = new Object(); }")//
- .stays();
+        .stays();
   }
 
   @Test public void b() {

@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import java.util.*;
 
@@ -13,13 +13,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016-12-20 */
 public class Issue0965 {
   @Test public void test0() {
-    expansionOf(new TestClass()) //
+    bloatingOf(new TestClass()) //
         .givesWithBinding("public String check1(){return lst.toString();}", "check1")//
         .staysWithBinding();
   }
 
   @Test public void test1() {
-    expansionOf(new TestClass()) //
+    bloatingOf(new TestClass()) //
         .givesWithBinding("public void check2(){String s;s=lst+\"\";}", "check2")//
         // .givesWithBinding("public void check2(){String s;s=lst.toString();}",
         // "check2")//

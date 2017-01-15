@@ -11,7 +11,7 @@ public class Issue0281 {
   @Test public void test0() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
         + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void test2() {

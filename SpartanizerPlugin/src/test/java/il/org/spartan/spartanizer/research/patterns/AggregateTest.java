@@ -26,7 +26,7 @@ public class AggregateTest {
     trimmingOf("for(B d : bs) $ += f();")//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
- .stays();
+        .stays();
   }
 
   @Test public void d() {
@@ -34,7 +34,7 @@ public class AggregateTest {
     )//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$=((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();")//
- .stays();
+        .stays();
   }
 
   @Test public void e() {
@@ -42,7 +42,7 @@ public class AggregateTest {
     )//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
- .stays();
+        .stays();
   }
 
   @Test public void respect() {
