@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested in {@link Issue0858}
  * @author Yuval Simon
  * @since 2016-11-26 */
-public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
+public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (int i = 0; i < $.size(); ++i)

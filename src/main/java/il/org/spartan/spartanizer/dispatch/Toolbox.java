@@ -132,7 +132,9 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            new RemoveRedundantSwitchBranch(), //
+            new MergeSwitchBranches(), //
+            new RemoveRedundantSwitchReturn(),
+            new RemoveRedundantSwitchContinue(),
             new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
