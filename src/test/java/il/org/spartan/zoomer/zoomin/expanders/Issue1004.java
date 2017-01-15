@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.bloaters.BoatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Test case for {@link OutlineArrayAccess}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
