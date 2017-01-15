@@ -66,11 +66,11 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
   @Override public ASTNode replacement(SwitchStatement s) {
     if(s == null)
       return null;
-    List<SwitchBranch> l = SwitchBranch.intoBranches(s);
+    List<switchBranch> l = switchBranch.intoBranches(s);
     if(l.size() != 2)
       return null;
     boolean hasDefault= false;
-    for(SwitchBranch ¢ : l) {
+    for(switchBranch ¢ : l) {
       if(¢.hasFallThrough() || !¢.hasStatements())
         return null;
       hasDefault |= ¢.hasDefault();
@@ -81,15 +81,15 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     final Block $ = a.newBlock();
     final IfStatement r = a.newIfStatement();
     step.statements($).add(r);
-    SwitchBranch t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
+    switchBranch t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
     r.setExpression(makeFrom(s, t.cases(), a));
     Block b = a.newBlock();
     r.setThenStatement(b);  
-    step.statements(b).addAll(SwitchBranch.removeBreakSequencer(t.statements()));
+    step.statements(b).addAll(switchBranch.removeBreakSequencer(t.statements()));
     b = a.newBlock();
     r.setElseStatement(b);
     t = lisp.first(l).hasDefault() ? lisp.first(l) : lisp.last(l);
-    step.statements(b).addAll(SwitchBranch.removeBreakSequencer(t.statements()));
+    step.statements(b).addAll(switchBranch.removeBreakSequencer(t.statements()));
     return $;
   }
 
