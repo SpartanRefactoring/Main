@@ -196,9 +196,9 @@ public interface metrics {
     return $;
   }
   
-  static int countStatementsOfType(final Statement n, int type) {
+  static int countStatementsOfType(final Statement s, int type) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    s.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if(¢.getNodeType() == type)
           ++$.inner;

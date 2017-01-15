@@ -146,7 +146,7 @@ public interface wizard {
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
 
-  public static InfixExpression.Operator convertToInfix(final Operator ¢) {
+  static InfixExpression.Operator convertToInfix(final Operator ¢) {
     return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
         : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
             : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
