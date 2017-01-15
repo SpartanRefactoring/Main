@@ -77,17 +77,17 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return $;
   }
 
-  /**  */
+  /** [[SuppressWarningsSpartan]] */
   List<? extends ASTNode> branchesWrapper(final N ¢) {
     return !iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢));
   }
 
-  /**  */
+  /** [[SuppressWarningsSpartan]] */
   private String lastElseWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? lastElse(az.ifStatement(¢)) : lastElse(az.conditionalExpression(¢))) + "";
   }
 
-  /**  */
+  /** [[SuppressWarningsSpartan]] */
   private String thenWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
