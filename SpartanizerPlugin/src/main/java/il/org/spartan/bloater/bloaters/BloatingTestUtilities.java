@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Testing utils for expander Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
-public class BoatingTestUtilities {
+public class BloatingTestUtilities {
   static final TextEditGroup textEditGroup = new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
