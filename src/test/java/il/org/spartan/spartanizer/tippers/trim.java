@@ -82,18 +82,18 @@ public interface trim {
           .gives("int b = 3; int a = b; return  a;")//
           .gives("int a = 3; return  a;")//
           .gives("return 3;")//
- .stays();
+          .stays();
     }
 
     @Test public void trimming_of_gives_stays() {
       trim.of("a +=1;")//
           .gives("a++;")//
- .stays();
+          .stays();
     }
 
     @Test public void trimming_of_stays() {
       trim.of("a")//
- .stays();
+          .stays();
     }
 
     @Test public void trimming_repeatedly_of_gives() {

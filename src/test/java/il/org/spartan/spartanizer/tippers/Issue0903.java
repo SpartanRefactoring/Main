@@ -18,7 +18,7 @@ public class Issue0903 {
   @Test public void A$070() {
     trimmingOf("while(i>5)return x;return x;")//
         .gives("while(i>5)break;return x;")//
- .stays();
+        .stays();
   }
 
   @Test public void A$080() {

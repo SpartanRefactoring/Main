@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
@@ -12,12 +12,12 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue1003 {
   @Test public void t1() {
-    zoomingInto("s = \"Happy \" + (holiday ? \"Hanukkah\" : \"birthday\");")//
+    bloatingOf("s = \"Happy \" + (holiday ? \"Hanukkah\" : \"birthday\");")//
         .gives("s = holiday ? \"Happy Hanukkah\" : \"Happy birthday\";");
   }
 
   @Test public void t2() {
-    zoomingInto("s = (cond ? \"aa\" : \"bb\") + \"cc\";")//
+    bloatingOf("s = (cond ? \"aa\" : \"bb\") + \"cc\";")//
         .gives("s = cond ? \"aacc\" : \"bbcc\";");
   }
 }

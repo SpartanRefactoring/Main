@@ -28,7 +28,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
       return null;
     final ForStatement f = copy.of(s);
     final IfStatement ifBody = f.getAST().newIfStatement();
-    // TODO: Raviv, please use class subject --yg
+    // TODO: Raviv Rachmiel please use class subject --yg
     ifBody.setExpression(make.notOf(copy.of(expression(f))));
     ifBody.setThenStatement(copy.of(nextStatement));
     f.setBody(copy.of(ifBody));

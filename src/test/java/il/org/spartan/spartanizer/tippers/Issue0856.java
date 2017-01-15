@@ -26,7 +26,7 @@ public class Issue0856 {
                 " return \"and another\";" + //
                 "}"//
         )//
- .stays();
+        .stays();
   }
 
   @Test public void b() {
@@ -53,7 +53,7 @@ public class Issue0856 {
                 " return \"and another\";" + //
                 "}"//
         )//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
@@ -82,6 +82,6 @@ public class Issue0856 {
                 "((InflaterListener) ((TypedListener) l).getEventListener()).finalize();" + //
                     "return 0;" //
             )//
- .stays();
+            .stays();
   }
 }

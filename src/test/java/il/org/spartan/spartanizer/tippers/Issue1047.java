@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2017-01-08 */
 @SuppressWarnings("static-method")
 public class Issue1047 {
-  // TODO doron: unignore this test in {@link Issue0147} and in {@link
+  // TODO Doron Meshulam: unignore this test in {@link Issue0147} and in {@link
   // AdvancedGivesTests}
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//

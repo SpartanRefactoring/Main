@@ -13,13 +13,13 @@ public final class Issue0107 {
   @Test public void b() {
     trimmingOf("for(int c = 0; c <5; c-=1)\n" + "c*=2;")//
         .gives("for(int c = 0; c <5; --c)\n" + "c*=2;")//
- .stays();
+        .stays();
   }
 
   @Test public void i() {
     trimmingOf("a-=1;")//
         .gives("--a;")//
- .stays();
+        .stays();
   }
 
   @Test public void j() {
@@ -34,37 +34,37 @@ public final class Issue0107 {
 
   @Test public void a() {
     trimmingOf("a+=1;")//
- .stays();
+        .stays();
   }
 
   @Test public void e() {
     trimmingOf("for(String a ; a.length()<3 ; (a = \"\")+=1){}")//
- .stays();
+        .stays();
   }
 
   @Test public void f() {
     trimmingOf("a+=2;")//
- .stays();
+        .stays();
   }
 
   @Test public void g() {
     trimmingOf("a/=1;")//
- .stays();
+        .stays();
   }
 
   @Test public void k() {
     trimmingOf("a-=2;")//
- .stays();
+        .stays();
   }
 
   @Test public void m() {
     trimmingOf("s = \"hello\"; \n" + "s += 1;")//
- .stays();
+        .stays();
   }
 
   @Test public void o() {
     trimmingOf("for(int a ; a<3 ; a+=1){}")//
- .stays();
+        .stays();
   }
 
   @Test public void t1() {
@@ -74,16 +74,16 @@ public final class Issue0107 {
 
   @Test public void t2() {
     trimmingOf("i = a += 1;")//
- .stays();
+        .stays();
   }
 
   @Test public void t3() {
     trimmingOf("i += i + 1;")//
- .stays();
+        .stays();
   }
 
   @Test public void t4() {
     trimmingOf("i -= i - 1")//
- .stays();
+        .stays();
   }
 }

@@ -26,27 +26,22 @@ public class Issue1044 extends ReflectiveTester {
   // TODO: Doron Meshulam: please use azzert.that(x, is(y)) --yg
   @Test public void test1a() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5)"))))), is("i4"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test1b() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new B();"))))), is("b1"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test2a() {
     azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5);"))))), is("i1"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test2b() {
     azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new A();"))))), is("a2"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test3a() {
     azzert.that(classX.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new X();"))))), is("x3"));
-    // TODO Auto-generated method stub
   }
 }
 

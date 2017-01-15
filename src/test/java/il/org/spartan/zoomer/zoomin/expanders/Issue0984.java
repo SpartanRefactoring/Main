@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
@@ -12,7 +12,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0984 {
   @Test public void a() {
-    zoomingInto("o.f(x ? a : b);")//
+    bloatingOf("o.f(x ? a : b);")//
         .gives("if (x)" //
             + "  o.f(a);" //
             + "else " //
@@ -20,7 +20,7 @@ public class Issue0984 {
   }
 
   @Test public void b() {
-    zoomingInto("o.f(p, x ? a : b);")//
+    bloatingOf("o.f(p, x ? a : b);")//
         .gives("if (x)" //
             + "  o.f(p, a);" //
             + "else" //
@@ -28,7 +28,7 @@ public class Issue0984 {
   }
 
   @Test public void c() {
-    zoomingInto("o.f(y ? a1 : b1, x ? a2 : b2);")
+    bloatingOf("o.f(y ? a1 : b1, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, x ? a2 : b2);" //
             + "else" //
@@ -40,7 +40,7 @@ public class Issue0984 {
   }
 
   @Test public void d() {
-    zoomingInto("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
+    bloatingOf("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
         .gives("if (y)" //
             + "  o.f(a1, pp, x ? a2 : b2);" //
             + "else" //

@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
@@ -13,19 +13,19 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0999 {
   @Test public void a() {
-    zoomingInto("a = b = 3;")//
+    bloatingOf("a = b = 3;")//
         .gives("b = 3; a = b;");
   }
 
   @Test public void b() {
-    zoomingInto("a = b = c = 3;")//
+    bloatingOf("a = b = c = 3;")//
         .gives("c = 3; a = b = c;")//
         .gives("c = 3; b = c; a = b;")//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
-    zoomingInto("a += b += 3;")//
+    bloatingOf("a += b += 3;")//
         .gives("b += 3; a += b;");
   }
 }
