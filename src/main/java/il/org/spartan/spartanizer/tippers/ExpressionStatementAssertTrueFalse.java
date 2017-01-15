@@ -43,7 +43,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     return replacement(i, condition, $);
   }
 
-  public static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
+  private static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
     switch (name(i) + "") {
       default:
         return null;
@@ -56,7 +56,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     }
   }
 
-  public static AssertStatement setAssert(final AssertStatement $, final Expression x) {
+  private static AssertStatement setAssert(final AssertStatement $, final Expression x) {
     $.setExpression(x);
     return $;
   }

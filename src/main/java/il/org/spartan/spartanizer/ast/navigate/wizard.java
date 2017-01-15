@@ -146,6 +146,19 @@ public interface wizard {
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
 
+  static InfixExpression.Operator convertToInfix(final Operator ¢) {
+    return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
+        : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
+            : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
+                : ¢ == Operator.DIVIDE_ASSIGN ? InfixExpression.Operator.DIVIDE
+                    : ¢ == Operator.LEFT_SHIFT_ASSIGN ? InfixExpression.Operator.LEFT_SHIFT
+                        : ¢ == Operator.MINUS_ASSIGN ? InfixExpression.Operator.MINUS
+                            : ¢ == Operator.PLUS_ASSIGN ? InfixExpression.Operator.PLUS
+                                : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
+                                    : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
+                                        : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
+  }
+
   static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
     boolean add = false;
     for (final ASTNode x : ns)
@@ -204,7 +217,7 @@ public interface wizard {
    * @param r rewriter
    * @param g edit group, usually null */
   static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d.getBody(), Block.STATEMENTS_PROPERTY).insertLast(s, g);
+    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
@@ -226,7 +239,7 @@ public interface wizard {
    * @param ¢ JD
    * @return textual representation of the parameter, */
   static String asString(final ASTNode ¢) {
-    return removeWhites(wizard.body(¢));
+    return removeWhites(wizard.cleanForm(¢));
   }
 
   /** Converts a string into an AST, depending on it's form, as determined
@@ -253,7 +266,7 @@ public interface wizard {
     }
   }
 
-  static String body(final ASTNode ¢) {
+  static String cleanForm(final ASTNode ¢) {
     return tide.clean(¢ + "");
   }
 
@@ -301,7 +314,7 @@ public interface wizard {
    * @param ¢ JD
    * @return textual representation of the parameter, */
   static String condense(final ASTNode ¢) {
-    return removeWhites(wizard.body(¢));
+    return removeWhites(wizard.cleanForm(¢));
   }
 
   /** Makes an opposite operator from a given one, which keeps its logical
@@ -417,9 +430,7 @@ public interface wizard {
     return $;
   }
 
-  /** Determine whether an InfixExpression.Operator is a comparison operator or
-   * not
-   * @param o JD
+  /** @param o JD
    * @return <code><b>true</b></code> <em>iff</em>one of
    *         {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
@@ -673,7 +684,7 @@ public interface wizard {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && body(n1).equals(body(n2));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && cleanForm(n1).equals(cleanForm(n2));
   }
 
   /** String wise comparison of all the given SimpleNames

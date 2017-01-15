@@ -24,8 +24,7 @@ public final class TrimmerTestsUtils {
 
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -38,8 +37,7 @@ public final class TrimmerTestsUtils {
 
     private void checkSame() {
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
@@ -50,8 +48,7 @@ public final class TrimmerTestsUtils {
     public Operand gives(final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -178,8 +175,7 @@ public final class TrimmerTestsUtils {
   }
 
   static void assertSimplifiesTo(final String from, final String expected, final Tipper<? extends ASTNode> n, final Wrap w) {
-    final String wrap = w.on(from);
-    final String unpeeled = apply(n, wrap);
+    final String wrap = w.on(from), unpeeled = apply(n, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);

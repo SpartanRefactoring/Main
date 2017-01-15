@@ -7,13 +7,14 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author kobybs
  * @author Dan Abramovich
@@ -36,11 +37,11 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       new HashSet<>(as.list("SuppressWarnings")), //
       new HashSet<>(as.list("NonNull", "Nullable")));
 
-  public static int rankAnnotation(final IExtendedModifier ¢) {
+  private static int rankAnnotation(final IExtendedModifier ¢) {
     return rankAnnotation(identifier(typeName(az.annotation(¢))));
   }
 
-  public static int rankAnnotation(final String annotationName) {
+  private static int rankAnnotation(final String annotationName) {
     int $ = 0;
     for (final HashSet<String> ¢ : rankTable) {
       ++$;
@@ -50,7 +51,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
     return rankAnnotation("$USER_DEFINED_ANNOTATION$");
   }
 
-  static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) == 0 ? (m1 + "").compareTo(m2 + "")
+  private static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) == 0 ? (m1 + "").compareTo(m2 + "")
       : rankAnnotation(m1) - rankAnnotation(m2);
 
   public static int compare(final String annotation1, final String annotation2) {

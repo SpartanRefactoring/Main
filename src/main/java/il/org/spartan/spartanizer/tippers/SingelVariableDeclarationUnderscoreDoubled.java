@@ -23,7 +23,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   static final boolean BY_ANNOTATION = false;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
-    return !Collect.usesOf(n).in(d.getBody()).isEmpty();
+    return !Collect.usesOf(n).in(body(d)).isEmpty();
   }
 
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
@@ -96,7 +96,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
 
   @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $, final ExclusionManager m) {
     final MethodDeclaration method = getMethod($);
-    if (method == null || method.getBody() == null)
+    if (method == null || body(method) == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))

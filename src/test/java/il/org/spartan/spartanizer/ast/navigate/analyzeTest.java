@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -11,7 +12,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import static il.org.spartan.lisp.*;
 
 /** @author Vivian Shehadeh
  * @author Ward Mattar

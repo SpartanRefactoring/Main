@@ -6,7 +6,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
@@ -16,7 +19,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.wizard.findSingleDifference;
 
 /** Pushdown a ternary as far down as possible
  * @author Yossi Gil

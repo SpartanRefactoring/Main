@@ -146,7 +146,7 @@ public enum az {
     return !($ instanceof InfixExpression) ? null : az.comparison((InfixExpression) $);
   }
 
-  public static InfixExpression comparison(final InfixExpression $) {
+  private static InfixExpression comparison(final InfixExpression $) {
     return iz.comparison($) ? $ : null;
   }
 
@@ -495,7 +495,7 @@ public enum az {
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(findFirst.elementOf(fragments(copy.of(¢)))));
     fragments($).addAll(nextFragmentsOf(¢));
-    $.setType(copy.of(¢.getType()));
+    $.setType(copy.of(step.type(¢)));
     extendedModifiers($).addAll(modifiersOf(¢));
     return $;
   }

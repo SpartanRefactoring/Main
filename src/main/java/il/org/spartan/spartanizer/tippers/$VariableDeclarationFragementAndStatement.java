@@ -19,12 +19,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
-  protected static Expression assignmentAsExpression(final Assignment ¢) {
+  static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
     return $ == ASSIGN ? copy.of(from(¢)) : subject.pair(to(¢), from(¢)).to(wizard.assign2infix($));
   }
 
-  protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
+  static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
     for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f))
       if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
         return true;
@@ -38,7 +38,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
    * @param f
    * @param r
    * @param g */
-  protected static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
@@ -51,7 +51,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     r.replace(parent, newParent, g);
   }
 
-  protected static int eliminationSaving(final VariableDeclarationFragment f) {
+  static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     final int $ = metrics.size(parent);
@@ -63,7 +63,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $ - metrics.size(newParent);
   }
 
-  protected static int removalSaving(final VariableDeclarationFragment f) {
+  static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
     if (parent.fragments().size() <= 1)
@@ -79,12 +79,12 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
    * @param f
    * @param r
    * @param g */
-  protected static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
-  static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+  private static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {

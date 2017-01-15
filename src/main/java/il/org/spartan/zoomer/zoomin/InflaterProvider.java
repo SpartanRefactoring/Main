@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.inflate.zoomers.*;
@@ -13,7 +14,7 @@ import il.org.spartan.zoomer.zoomin.SingleFlater.*;
  * @author Raviv Rachmiel
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {
-  Toolbox toolbox;
+  final Toolbox toolbox;
 
   public InflaterProvider() {
     toolbox = InflaterProvider.freshCopyOfAllExpanders();
@@ -36,9 +37,10 @@ public class InflaterProvider extends OperationsProvider {
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
-            new toStringExpander(), //
+            new ToStringExpander(), //
             new TernaryPushupStrings(), //
             new MultiplicationToCast()//
+        // new ExpandBooleanExpression() //
         )//
         .add(PrefixExpression.class, //
             new PrefixToPostfix()) //
@@ -56,6 +58,8 @@ public class InflaterProvider extends OperationsProvider {
             new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
+        .add(MethodDeclaration.class, //
+            new RenameShortNames()) //
         .add(ThrowStatement.class, //
             new ThrowTernaryExpander())//
         .add(EnhancedForStatement.class, //

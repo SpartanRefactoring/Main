@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.old;
 
+import static il.org.spartan.lisp.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
@@ -13,7 +15,6 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.lisp.*;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
@@ -106,7 +107,7 @@ public final class SpartanizeProject extends BaseHandler {
             done.add(¢);
         }
         if (!done.isEmpty())
-          status.append(done.size() + " CUs did not change; will not be processed further\n");
+          status.append(done.size()).append(" CUs did not change; will not be processed further\n");
         todo.removeAll(done);
         done.clear();
         pm.done();
@@ -125,8 +126,8 @@ public final class SpartanizeProject extends BaseHandler {
     status.append("Java project is: " + javaProject.getElementName() + "\n");
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
-    status.append("Found " + todo.size() + " compilation units, ");
+    status.append("Found ").append(todo.size()).append(" compilation units, ");
     initialCount = countTips();
-    status.append("with " + initialCount + " tips.\n");
+    status.append("with ").append(initialCount).append(" tips.\n");
   }
 }

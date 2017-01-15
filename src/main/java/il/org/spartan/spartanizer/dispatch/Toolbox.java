@@ -131,10 +131,13 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            new RemoveRedundantSwitchCases(), //
             new RemoveRedundantSwitchBranch(), //
-            new SwitchCaseLocalSort(), //
             new SwitchWithOneCaseToIf(), //
+             new SwitchBranchSort(), //
+            null)
+        .add(SwitchCase.class, 
+            new RemoveRedundantSwitchCases(), //
+            new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -309,6 +312,9 @@ public class Toolbox {
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
+            null) //
+        .add(VariableDeclarationStatement.class, //
+            new TwoDeclarationsIntoOne(), //
             null) //
     //
     //

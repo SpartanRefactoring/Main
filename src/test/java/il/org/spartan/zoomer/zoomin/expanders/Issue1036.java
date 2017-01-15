@@ -20,15 +20,14 @@ public class Issue1036 {
   }
 
   class TestClass extends ReflectiveTester {
-    List<Integer> children1 = new ArrayList<>();
+    final List<Integer> children1 = new ArrayList<>();
     List<Integer> children2 = new ArrayList<>();
     String $ = "";
 
-    /** [[SuppressWarningsSpartan]] */
+    /**  */
     @SuppressWarnings("null") public String check1() {
-      for (int i = 1; i < children1.size(); i++) {
-        final String diff;
-        diff = null;
+      for (int i = 1; i < children1.size(); ++i) {
+        final String diff = null;
         $ = $ != "" || diff == null ? $ : diff;
         if (!$.equals(diff) && !"".equals(diff))
           return null;

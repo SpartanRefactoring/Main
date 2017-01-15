@@ -36,14 +36,18 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("boxing") private static boolean balanced(final String s) {
+  private static boolean balanced(final String s) {
     int $ = 0;
     for (final Integer ¢ : range.from(0).to(s.length()))
-      if (s.charAt(¢) == '<')
+      if (s.charAt(¢.intValue()) == '<')
         ++$;
-      else if (s.charAt(¢) == '>')
+      else if (s.charAt(¢.intValue()) == '>')
         --$;
     return $ == 0;
+  }
+
+  public static Block body(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getBody();
   }
 
   public static Statement body(final EnhancedForStatement ¢) {
@@ -67,6 +71,10 @@ public enum step {
   /** @param ¢ JD
    * @return */
   private static Block body(final SynchronizedStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
+  public static ASTNode body(final TryStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -253,11 +261,11 @@ public enum step {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final SwitchStatement ¢) {
+  public static Expression expression(final SwitchCase ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final SwitchCase ¢) {
+  public static Expression expression(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
@@ -309,7 +317,7 @@ public enum step {
    * @param ¢ JD
    * @return */
   public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
-    return ¢ == null ? null : Arrays.asList(¢.getFields()).stream().map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
+    return ¢ == null ? null : Stream.of(¢.getFields()).map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
     });
@@ -344,7 +352,7 @@ public enum step {
    * @param ¢ JD
    * @return right operand of the parameter */
   public static Expression from(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getRightHandSide();
+    return ¢ == null ? null : right(¢);
   }
 
   public static String identifier(final AnnotationTypeDeclaration ¢) {
@@ -387,6 +395,10 @@ public enum step {
     return ¢ == null ? null
         : ((List<ImportDeclaration>) ¢.imports()).stream().map(x -> (!x.isStatic() ? "" : "static ") + x.getName() + (!x.isOnDemand() ? "" : ".*"))
             .collect(Collectors.toList());
+  }
+
+  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(CompilationUnit ¢) {
+    return ¢ == null ? null : ¢.imports();
   }
 
   /** Expose initializer contained in a {@link VariableDeclaration}
@@ -478,7 +490,7 @@ public enum step {
     if (u == null)
       return null;
     final List<String> $ = new ArrayList<>();
-    types(u).stream().forEach(t -> $.addAll(methodNames(t)));
+    types(u).forEach(t -> $.addAll(methodNames(t)));
     return $;
   }
 
@@ -498,7 +510,7 @@ public enum step {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
-    types(u).stream().forEach(t -> $.addAll(methods(t)));
+    types(u).forEach(t -> $.addAll(methods(t)));
     return $;
   }
 
@@ -688,7 +700,7 @@ public enum step {
    * @param ¢ JD
    * @return left operand of the parameter */
   public static Expression to(final Assignment ¢) {
-    return ¢ == null ? null : ¢.getLeftHandSide();
+    return ¢ == null ? null : left(¢);
   }
 
   /** Shorthand for {@link NumberLiteral#getToken()}
@@ -779,12 +791,15 @@ public enum step {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
 
-  /** @param ¢ JD
-   * @return */
   public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
+  /** @param ¢ JD
+   * @return */
+  // public static Type type(final VariableDeclarationStatement ¢) {
+  // return ¢ == null ? null : ¢.getType();
+  // }
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {
     return ¢ == null ? null : ¢.typeArguments();
   }

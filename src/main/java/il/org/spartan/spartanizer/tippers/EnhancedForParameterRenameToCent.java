@@ -37,7 +37,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     final SimpleName $ = d.getName();
     if (in(identifier($), "$", "¢", "__", "_") || !JohnDoe.property(d))
       return null;
-    final Statement body = s.getBody();
+    final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");

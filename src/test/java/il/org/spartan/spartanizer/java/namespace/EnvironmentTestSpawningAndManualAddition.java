@@ -8,10 +8,10 @@ import org.junit.*;
 import il.org.spartan.*;
 
 public final class EnvironmentTestSpawningAndManualAddition {
-  Environment e0 = Environment.genesis();
-  Environment e1 = e0.spawn();
-  Environment ee0 = Environment.genesis();
-  Environment ee1 = ee0.spawn();
+  private final Environment e0 = Environment.genesis();
+  private final Environment e1 = e0.spawn();
+  private final Environment ee0 = Environment.genesis();
+  private final Environment ee1 = ee0.spawn();
 
   @Test public void defaultDoesntHave() {
     azzert.that(e0.nest().doesntHave("Alex"), is(true));

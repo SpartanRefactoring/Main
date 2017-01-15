@@ -3,6 +3,10 @@ package il.org.spartan.spartanizer.utils;
 import il.org.spartan.*;
 
 class A {
+  {
+    new B().f();
+  }
+
   class B {
     A f() {
       return A.this;

@@ -41,7 +41,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
     return false;
   }
 
-  static boolean between(final Expression x1, final Expression x2) {
+  private static boolean between(final Expression x1, final Expression x2) {
     return between(az.infixExpression(x1), az.infixExpression(x2));
   }
 
@@ -60,17 +60,17 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
     return replacement(az.infixExpression(x1), az.infixExpression(x2));
   }
 
-  protected static MethodInvocation replacement(final InfixExpression x1, final InfixExpression x2) {
+  private static MethodInvocation replacement(final InfixExpression x1, final InfixExpression x2) {
     return (firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
         ? replacementAux(firstTipper(inEqualities, x1).getMatching(x1, "$X1"), firstTipper(inEqualities, x2).getMatching(x2, "$X2"))
         : replacementAux(firstTipper(inEqualities, x2).getMatching(x2, "$X1"), firstTipper(inEqualities, x1).getMatching(x1, "$X2"));
   }
 
-  protected static MethodInvocation replacementAux(final ASTNode x1, final ASTNode x2) {
+  private static MethodInvocation replacementAux(final ASTNode x1, final ASTNode x2) {
     return replacementAux(az.infixExpression(x1), az.infixExpression(x2));
   }
 
-  protected static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
+  private static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
     return az.methodInvocation(wizard.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));
   }

@@ -3,7 +3,8 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-// import org.eclipse.jdt.core.dom.Assignment.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,18 +23,18 @@ public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assign
   }
 
   private static boolean provablyNotString(final Assignment ¢) {
-    return type.isNotString(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assign2infix(¢.getOperator())));
+    return type.isNotString(subject.pair(left(¢), right(¢)).to(wizard.assign2infix(¢.getOperator())));
   }
 
   private static ASTNode replace(final Assignment ¢) {
-    return subject.operand(¢.getLeftHandSide()).to(isIncrement(¢) ? INCREMENT : DECREMENT);
+    return subject.operand(left(¢)).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
 
   @Override public String description(final Assignment ¢) {
-    return "Replace " + ¢ + " to " + ¢.getRightHandSide() + (isIncrement(¢) ? "++" : "--");
+    return "Replace " + ¢ + " to " + right(¢) + (isIncrement(¢) ? "++" : "--");
   }
 
   @Override public ASTNode replacement(final Assignment ¢) {
-    return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(¢.getRightHandSide()) || !provablyNotString(¢) ? null : replace(¢);
+    return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(right(¢)) || !provablyNotString(¢) ? null : replace(¢);
   }
 }

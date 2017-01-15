@@ -2,7 +2,6 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
-import static il.org.spartan.spartanizer.utils.fault.done;
 
 import java.util.*;
 import java.util.List;
@@ -35,13 +34,13 @@ import il.org.spartan.utils.*;
  * @since 2013/01/01 */
 public abstract class AbstractGUIApplicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
-  final Collection<TextFileChange> changes = new ArrayList<>();
+  private final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
   protected String name;
   private ITextSelection selection;
-  final List<Tip> tips = new ArrayList<>();
+  private final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
 
   /*** Instantiates this class, with message identical to name
@@ -54,7 +53,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return apply(cu, new Range(0, 0));
   }
 
-  public boolean apply(final ICompilationUnit cu, final Range r) {
+  private boolean apply(final ICompilationUnit cu, final Range r) {
     return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
@@ -89,11 +88,11 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  public IFile compilationUnitIFile() {
+  private IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
 
-  public String compilationUnitName() {
+  private String compilationUnitName() {
     return iCompilationUnit.getElementName();
   }
 
@@ -124,7 +123,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
+  private ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, (IMarker) null, counter);
   }
 
@@ -189,7 +188,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
-  public IMarkerResolution getFixWithPreview(final String s) {
+  private IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
       /** a quickfix which opens a refactoring wizard with the tipper
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -265,7 +264,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the <code>pm</code> */
-  public int performRule(final ICompilationUnit u) throws CoreException {
+  private int performRule(final ICompilationUnit u) throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -278,7 +277,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
+  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u, m, counter);
@@ -332,7 +331,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return <code><b>true</b></code> <em>iff</em>the node is not inside
    *         selection. If there is no selection at all will return false.
    * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+  private boolean isNodeOutsideSelection(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
   }
 
@@ -342,14 +341,14 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
-  public void scan() {
+  private void scan() {
     tips.clear();
     compilationUnit.accept(makeTipsCollector(tips));
   }
 
   /** @param u JD
    * @throws CoreException */
-  protected int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
+  private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -363,7 +362,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-  protected void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+  private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
@@ -386,7 +385,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * list
    * @throws IllegalArgumentException
    * @throws CoreException */
-  protected void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
+  private void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us)
       scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
@@ -397,7 +396,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return apply(iCompilationUnit, new Range(0, 0));
   }
 
-  void collectAllTips() throws JavaModelException, CoreException {
+  private void collectAllTips() throws JavaModelException, CoreException {
     progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
     progressMonitor.done();
@@ -440,7 +439,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
   }
 
-  protected boolean isTextSelected() {
+  private boolean isTextSelected() {
     return selection != null && !selection.isEmpty();
   }
 
@@ -495,7 +494,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
+  private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);

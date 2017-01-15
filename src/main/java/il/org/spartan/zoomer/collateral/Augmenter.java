@@ -1,6 +1,7 @@
 package il.org.spartan.zoomer.collateral;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -11,11 +12,12 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.zoomer.*;
-
-import static il.org.spartan.lisp.*;
 
 /** An application of the Athenizer project. Augment java code to be more clear
  * and debugable. TODO Roth: add progress monitor support TODO Roth: add
@@ -75,7 +77,7 @@ public class Augmenter implements Application {
   /** Main function of the application.
    * @param r JD
    * @param sss selection as list of lists of statements
-   * @param g JD
+   * @param textEditGroup JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
     if (sss.isEmpty() || first(sss).isEmpty())
@@ -115,7 +117,7 @@ public class Augmenter implements Application {
    * TODO Roth: check project is UTF-8 (or higher?)
    * @param s JD
    * @return true iff service is available */
-  public static boolean checkServiceAvailableBeforeCalculation() {
+  private static boolean checkServiceAvailableBeforeCalculation() {
     return LibrariesManagement.libraryExists();
   }
 
@@ -124,7 +126,7 @@ public class Augmenter implements Application {
    * several projects within selection (?)
    * @param ¢ JD
    * @return true iff service is available */
-  public static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
+  private static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
     return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
@@ -134,8 +136,8 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    for (final Object d : u.imports())
-      if (d instanceof ImportDeclaration && ((ImportDeclaration) d).getName().getFullyQualifiedName().equals(s))
+    for (final ImportDeclaration ¢ : step.imports(u))
+      if (¢.getName().getFullyQualifiedName().equals(s))
         return true;
     return false;
   }
