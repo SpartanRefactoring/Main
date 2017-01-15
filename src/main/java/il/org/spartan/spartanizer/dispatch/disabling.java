@@ -31,9 +31,6 @@ public interface disabling {
    * @since 2016/05/13 */
   static void scan(final ASTNode n) {
     n.accept(new DispatchingVisitor() {
-      @Override public boolean visit(final Initializer ¢) {
-        return cautiousGo(¢);
-      }
 
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
@@ -59,10 +56,6 @@ public interface disabling {
    * @param d disabled {@link BodyDeclaration} */
   static void disable(final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
-      @Override public boolean visit(final Initializer ¢) {
-        return cautiousGo(¢);
-      }
-
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (¢ instanceof BodyDeclaration && disabling.isEnabledByIdentifier((BodyDeclaration) ¢)) {
           scan(¢);
