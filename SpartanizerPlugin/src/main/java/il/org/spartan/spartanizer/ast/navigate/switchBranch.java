@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 
@@ -6,10 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-public class SwitchBranch {
+public class switchBranch {
   private final List<SwitchCase> cases;
   private final List<Statement> statements;
   private int hasDefault;
@@ -18,7 +17,7 @@ public class SwitchBranch {
   private int depth;
   private int sequencerLevel;
 
-  public SwitchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
+  public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
     this.statements = statements;
     hasDefault = numOfNodes = numOfStatements = depth = sequencerLevel = -1;
@@ -82,7 +81,7 @@ public class SwitchBranch {
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
-  private boolean compare(final SwitchBranch ¢) {
+  private boolean compare(final switchBranch ¢) {
     if (hasDefault())
       return false;
     if (¢.hasDefault())
@@ -96,7 +95,7 @@ public class SwitchBranch {
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
 
-  public boolean compareTo(final SwitchBranch ¢) {
+  public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
@@ -108,22 +107,22 @@ public class SwitchBranch {
       ss.add(copy.of(¢));
   }
 
-  private static void addAll(final List<Statement> ss, final List<SwitchBranch> bs) {
-    for (final SwitchBranch ¢ : bs)
+  private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
+    for (final switchBranch ¢ : bs)
       ¢.addAll(ss);
   }
 
-  public static SwitchStatement makeSwitchStatement(final List<SwitchBranch> bs, final Expression x, final AST t) {
+  public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
     return $;
   }
 
-  @SuppressWarnings("null") public static List<SwitchBranch> intoBranches(final SwitchStatement n) {
+  @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
     List<SwitchCase> c = null;
     List<Statement> s = null;
-    final List<SwitchBranch> $ = new ArrayList<>();
+    final List<switchBranch> $ = new ArrayList<>();
     final List<Statement> l = step.statements(n);
     boolean nextBranch = true;
     assert iz.switchCase(lisp.first(l));
@@ -131,7 +130,7 @@ public class SwitchBranch {
       if (nextBranch) {
         c = new ArrayList<>();
         s = new ArrayList<>();
-        $.add(new SwitchBranch(c, s));
+        $.add(new switchBranch(c, s));
         nextBranch = false;
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
@@ -150,7 +149,7 @@ public class SwitchBranch {
       if (!s.isEmpty()) {
         c = new ArrayList<>();
         s = new ArrayList<>();
-        $.add(new SwitchBranch(c, s));
+        $.add(new switchBranch(c, s));
       }
       c.add(az.switchCase(lisp.last(l)));
       s.add(n.getAST().newBreakStatement());
@@ -158,7 +157,7 @@ public class SwitchBranch {
     return $;
   }
 
-  public boolean hasSameCode(final SwitchBranch ¢) {
+  public boolean hasSameCode(final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 

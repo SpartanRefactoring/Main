@@ -58,8 +58,8 @@ public class InflaterProvider extends OperationsProvider {
             new DeclarationWithInitExpander()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
-        .add(MethodDeclaration.class, //
-            new RenameShortNames()) //
+//        .add(MethodDeclaration.class, //
+//            new RenameShortNames()) //
         .add(ThrowStatement.class, //
             new ThrowTernaryExpander())//
         .add(EnhancedForStatement.class, //
