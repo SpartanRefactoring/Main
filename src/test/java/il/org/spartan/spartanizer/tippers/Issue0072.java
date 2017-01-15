@@ -43,32 +43,32 @@ public class Issue0072 {
   @Test public void mc() {
     trimmingOf("x-0-y")//
         .gives("x-y")//
- .stays();
+        .stays();
   }
 
   @Test public void md1() {
     trimmingOf("0-x-0")//
         .gives("-x")//
- .stays();
+        .stays();
   }
 
   @Test public void md2() {
     trimmingOf("0-x-0-y")//
         .gives("-x-y")//
- .stays();
+        .stays();
   }
 
   @Test public void md3() {
     trimmingOf("0-x-0-y-0-z-0-0")//
         .gives("-x-y-z")//
- .stays();
+        .stays();
   }
 
   @Test public void me() {
     trimmingOf("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void me1() {
@@ -90,51 +90,51 @@ public class Issue0072 {
   @Test public void meA() {
     trimmingOf("(x-0)")//
         .gives("(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void mf1() {
     trimmingOf("0-(x-y)")//
         .gives("-(x-y)")//
- .stays();
+        .stays();
   }
 
   @Test public void mf1A() {
     trimmingOf("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void mf1B() {
     assert iz.simple(into.e("x"));
     trimmingOf("-(x-0)")//
         .gives("-(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void mg() {
     trimmingOf("(x-0)-0")//
         .gives("(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void mg1() {
     trimmingOf("-(x-0)-0")//
         .gives("-(x)")//
- .stays();
+        .stays();
   }
 
   @Test public void mh() {
     trimmingOf("x-0-y")//
         .gives("x-y")//
- .stays();
+        .stays();
   }
 
   @Test public void mi() {
     trimmingOf("0-x-0-y-0-z-0")//
         .gives("-x-y-z")//
- .stays();
+        .stays();
   }
 
   @Test public void mj() {
@@ -165,37 +165,37 @@ public class Issue0072 {
   @Test public void pd() {
     trimmingOf("0+(int)x+0")//
         .gives("(int)x")//
- .stays();
+        .stays();
   }
 
   @Test public void pe() {
     trimmingOf("(int)x+0-x")//
         .gives("(int)x-x")//
- .stays();
+        .stays();
   }
 
   @Test public void pf() {
     trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")//
         .gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0").gives("(int)x+(int)x+(int)y+(int)z")//
- .stays();
+        .stays();
   }
 
   @Test public void pg() {
     trimmingOf("0+(x+y)")//
         .gives("0+x+y")//
- .stays();
+        .stays();
   }
 
   @Test public void ph() {
     trimmingOf("0+((x+y)+0+(z+h))+0")//
         .gives("0 +(x+y) +0+(z+h)+0")//
         .gives("0 +x+y +0+(z+h)+0")//
- .stays();
+        .stays();
   }
 
   @Test public void pi() {
     trimmingOf("0+(0+x+y+((int)x+0))")//
         .gives("0+x+y+(int)x +0")//
- .stays();
+        .stays();
   }
 }

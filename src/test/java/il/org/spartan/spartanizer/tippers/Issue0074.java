@@ -11,7 +11,7 @@ import org.junit.*;
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue0074 {
-  // TODO: unignore a test for this tipper in {@link Version 230}
+  // TODO: Yuval Simon unignore a test for this tipper in {@link Version 230}
   @Test public void issue74a() {
     trimmingOf("int[] a = new int[] {,}")//
         .gives("int[] a = new int[] {}");

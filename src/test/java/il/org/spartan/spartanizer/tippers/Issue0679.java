@@ -35,41 +35,33 @@ public class Issue0679 {
 
   @Test public void methodInOutterClassAndMethodInInnerClass() {
     azzert.that(enumerate.methods(cu("class A { void a() {} class B { void b() {} } }")), is(2));
-    // TODO Auto-generated method stub
   }
 
   @Test public void methodsInsideInnerClass() {
     azzert.that(enumerate.methods(cu("class A { class B { void a() {} } }")), is(1));
-    // TODO Auto-generated method stub
   }
 
   @Test public void methodsWithBody() {
     azzert.that(enumerate.methods(cu("class A { int a1() {return 1;} int a2() {return 2;} int a3() {return 3;} }")), is(3));
-    // TODO Auto-generated method stub
   }
 
   @Test public void methodsWithParameters() {
     azzert.that(enumerate.methods(cu("class A { int a1(int n) {return n;} int a2(int m) {return (m+1);} }")), is(2));
-    // TODO Auto-generated method stub
   }
 
   @Test public void noMethodsInCompilationUnit() {
     azzert.that(enumerate.methods(cu("1111")), is(0));
-    // TODO Auto-generated method stub
   }
 
   @Test public void oneMethodInCompilationUnit() {
     azzert.that(enumerate.methods(cu("class A { void a() {} }")), is(1));
-    // TODO Auto-generated method stub
   }
 
   @Test public void twoMethodsInCompilationUnit() {
     azzert.that(enumerate.methods(cu("class A { void a1() {} void a2() {} }")), is(2));
-    // TODO Auto-generated method stub
   }
 
   @Test public void zeroReturnedWhenNullIsSent() {
     azzert.that(enumerate.methods(null), is(0));
-    // TODO Auto-generated method stub
   }
 }

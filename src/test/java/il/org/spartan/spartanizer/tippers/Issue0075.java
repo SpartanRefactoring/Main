@@ -12,7 +12,7 @@ import org.junit.runners.*;
 public class Issue0075 {
   @Test public void issue075a() {
     trimmingOf("int i = 0; ++i;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue075b() {
@@ -42,7 +42,7 @@ public class Issue0075 {
 
   @Test public void issue075g() {
     trimmingOf("i=0")//
- .stays();
+        .stays();
   }
 
   @Test public void issue075h() {

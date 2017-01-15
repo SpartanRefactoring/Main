@@ -16,18 +16,18 @@ public class Issue0437 {
   @Test public void testMutation0() {
     trimmingOf("String str; String stringy; return str.indexOf(stringy)>= 0;")//
         .gives("String str; String stringy; return str.contains(stringy);")//
- .stays();
+        .stays();
   }
 
   @Test public void testMutation1() {
     trimmingOf("String str; if(str.indexOf(\"stringy\")>= 0) return true;")//
         .gives("String str; if(str.contains(\"stringy\")) return true;")//
- .stays();
+        .stays();
   }
 
   @Test public void testMutation2() {
     trimmingOf("String str; if(str.indexOf(stringy)>= 0) return true;")//
         .gives("String str; if(str.contains(stringy)) return true;")//
- .stays();
+        .stays();
   }
 }

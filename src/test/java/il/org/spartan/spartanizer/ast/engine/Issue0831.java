@@ -36,7 +36,6 @@ public class Issue0831 {
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
       body += iter + "";
     azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));
-    // TODO Auto-generated method stub
   }
 
   @Test public void givenNullinsteadMethodAssertionFailure() {

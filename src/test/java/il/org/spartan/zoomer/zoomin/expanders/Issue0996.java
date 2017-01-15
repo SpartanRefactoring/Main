@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.inflate.zoomers.*;
 
 /** Unit tests for {@link DeclarationWithInitExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
@@ -12,26 +12,26 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0996 {
   @Test public void a() {
-    zoomingInto("int a = 0;")//
+    bloatingOf("int a = 0;")//
         .gives("int a;" //
             + "a = 0;")
         .stays();
   }
 
   @Test public void b() {
-    zoomingInto("int a = f();")//
+    bloatingOf("int a = f();")//
         .gives("int a;" //
             + "a = f();")
         .stays();
   }
 
   @Test public void c() {
-    zoomingInto("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };")//
- .stays();
+    bloatingOf("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };")//
+        .stays();
   }
 
   @Test public void d() {
-    zoomingInto("@SuppressWarnings(\"unchecked\") int a = f();")//
- .stays();
+    bloatingOf("@SuppressWarnings(\"unchecked\") int a = f();")//
+        .stays();
   }
 }

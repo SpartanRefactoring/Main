@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** XXX: This is a bug of auto-spartanization? Converts
+/** Converts
  *
  * <pre>
  * if (X) {

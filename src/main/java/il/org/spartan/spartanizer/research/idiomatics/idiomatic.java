@@ -342,11 +342,8 @@ public interface idiomatic {
       before.add("3");
       final List<String> after = on(before).map(x -> mapper(x));
       azzert.that(first(after), is("11"));
-      // TODO Auto-generated method stub
       azzert.that(after.get(1), is("22"));
-      // TODO Auto-generated method stub
       azzert.that(after.get(2), is("33"));
-      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void useMapper2() {
@@ -356,11 +353,8 @@ public interface idiomatic {
       before.add(3);
       final List<String> after = on(before).map(x -> mapper(x));
       azzert.that(first(after), is("1"));
-      // TODO Auto-generated method stub
       azzert.that(after.get(1), is("2"));
-      // TODO Auto-generated method stub
       azzert.that(after.get(2), is("3"));
-      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void useFilter() {
@@ -370,9 +364,7 @@ public interface idiomatic {
       before.add(3);
       final List<Integer> after = on(before).filter(x -> x % 2 == 1);
       azzert.that(first(after).intValue(), is(1));
-      // TODO Auto-generated method stub
       azzert.that(after.get(1).intValue(), is(3));
-      // TODO Auto-generated method stub
     }
 
     @Test public void useReduce() {
@@ -381,7 +373,6 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       azzert.that(on(before).reduce((x, y) -> x + y), is("123"));
-      // TODO Auto-generated method stub
     }
 
     @Test public void useMax() {
@@ -390,7 +381,6 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       azzert.that(on(before).max(String::compareTo), is("3"));
-      // TODO Auto-generated method stub
     }
 
     @Test public void useMin() {
@@ -399,7 +389,6 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       azzert.that(on(before).min(String::compareTo), is("1"));
-      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void whenNullsEval() {

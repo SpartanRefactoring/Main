@@ -12,13 +12,13 @@ public class Issue0233 {
   @Test public void a() {
     trimmingOf("switch(x) {} int x=5; ++x;")//
         .gives("int x=5; ++x;")//
- .stays();
+        .stays();
   }
 
   @Test public void b() {
     trimmingOf("switch(x) {} switch(x) {}int x=5; ++x;")//
         .gives("int x=5; ++x;")//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
@@ -73,6 +73,6 @@ public class Issue0233 {
 
   @Test public void k() {
     trimmingOf("switch(x) {case a: y=5;}")//
- .stays();
+        .stays();
   }
 }
