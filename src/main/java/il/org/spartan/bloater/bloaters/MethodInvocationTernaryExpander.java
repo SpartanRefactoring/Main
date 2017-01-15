@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
@@ -39,11 +40,9 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }
-  // TODO: Tomer Dragucki use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @SuppressWarnings("unchecked") private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
-    for (final Expression $ : (List<Expression>) ¢.arguments())
+  private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
+    for (final Expression $ : step.arguments(¢))
       if ($ instanceof ConditionalExpression)
         return (ConditionalExpression) $;
     return null;

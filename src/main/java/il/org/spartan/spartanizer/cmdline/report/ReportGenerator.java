@@ -29,6 +29,13 @@ public class ReportGenerator implements ConfigurableReport {
   protected String spectrumFileName;
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static final HashMap<String, PrintWriter> files = new HashMap<>();
+  @SuppressWarnings("rawtypes")
+  protected static HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
+  
+  @SuppressWarnings("rawtypes")
+  public static HashMap<String, NamedFunction[]> metricsMap(){
+    return metricsMap;
+  }
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
@@ -38,7 +45,25 @@ public class ReportGenerator implements ConfigurableReport {
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
     }
-
+    
+    /**
+     * @return 
+     * 
+     */
+    
+    @SuppressWarnings("rawtypes")
+    public static HashMap<String, NamedFunction[]> initialize() {
+      HashMap<String, NamedFunction[]> $ = new HashMap<>();
+      $.put("metrics", functions(""));
+      $.put("methods", as.array(m("N. of Nodes", (¢) -> count.nodes(¢)), //
+                                         m("Average Depth", (¢) -> -1000), //(¢) -> Essence.of(¢ + "").length()), //
+                                         m("Average Uncle Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ + "").length()), //
+                                         m("Character Length", (¢) -> -1000) //Essence.of(¢ + "").length()) //
+          // Report Halstead Metrics                               
+          )); //
+      return $;
+    }
+    
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
@@ -48,7 +73,8 @@ public class ReportGenerator implements ConfigurableReport {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) 
+    public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : ReportGenerator.Util.functions(""))
         if ($.name() == ¢)
           return $;
@@ -57,10 +83,11 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) 
+  public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
-      ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
+      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(n1));
+      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(n2));
     }
   }
 
@@ -85,19 +112,22 @@ public class ReportGenerator implements ConfigurableReport {
     double apply(T t, R r);
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void write(final ASTNode input, final ASTNode output, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     double a;
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
@@ -107,7 +137,8 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) 
+  public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     String a; // TODO Matteo: to be converted to double or float? -- Matteo
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
@@ -125,7 +156,8 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
+  @SuppressWarnings({ "unused", "boxing" }) 
+  public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
     final int len = ReportGenerator.Util.find("length").function().run(n1);
     final int ess = ReportGenerator.Util.find("essence").function().run(n1);
@@ -289,7 +321,8 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
+  @SuppressWarnings("unchecked") 
+  public static <T> void writeLine(final Consumer<T> ¢) {
     ¢.accept((T) ¢);
   }
 
@@ -309,5 +342,13 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report("tips").put("startTimeDiff", "");
     ReportGenerator.report("tips").put("startTimeDiffPerFile", "");
     ReportGenerator.report("tips").put("lastTimeDiff", "");
+  }
+
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
+    for (final NamedFunction ¢ : ReportGenerator.metricsMap().get(id)) {
+      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(input));
+      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(output));
+    }
   }
 }
