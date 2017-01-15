@@ -64,6 +64,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
       @Override public void tick(final E ¢) {
         c.accept(¢);
       }
+
       @Override public void tick(final E e, final Object o) {
         bc.accept(e, o);
       }
