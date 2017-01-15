@@ -33,8 +33,8 @@ public class Issue0977 {
 
   // see issue #1046
   @Test public void complexSequencer() {
-    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n"
-        + "case 2:\n" + "  e();\n" + "}")//
+    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "case 2:\n"
+        + "  e();\n" + "}")//
             .stays();
   }
 
@@ -47,8 +47,8 @@ public class Issue0977 {
 
   // see issue #1031
   @Test public void complexSequencerRealWorld() {
-    bloatingOf("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n"
-        + "} else {\n" + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}")//
+    bloatingOf("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n" + "} else {\n"
+        + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}")//
             .stays();
   }
 }
