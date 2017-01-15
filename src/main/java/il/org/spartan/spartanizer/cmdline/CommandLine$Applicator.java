@@ -79,6 +79,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ReportGenerator.report("tips").put("ClassLOCBefore", count.lines(u));
     // ReportGenerator.report("tips").put("ClassTokenBefore", metrics.tokens(u +
     // ""));
+    ReportGenerator.Util.initialize();
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
@@ -90,7 +91,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
+    
+    System.out.println(input.getClass());
     ReportGenerator.report("metrics").put("File", presentFileName);
+    ReportGenerator.report("methods").put("File", presentFileName);
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                          // of
@@ -109,7 +113,17 @@ public class CommandLine$Applicator extends Generic$Applicator {
     MetricsReport.getSettings(); // ?
     Settings.addOutput(outputASTNode);
     computeMetrics(input, outputASTNode);
+    if(input instanceof TypeDeclaration)
+      computeMethodMetrics(input, outputASTNode);
     return false;
+  }
+
+  private void computeMethodMetrics(ASTNode input, ASTNode output) {
+    System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+    ReportGenerator.summaryFileName("methods");
+    ReportGenerator.name(input);
+    ReportGenerator.writeMethodMetrics(input, output, "methods");
+    ReportGenerator.nl("methods");
   }
 
   @SuppressWarnings({ "boxing" }) private void computeMetrics(final ASTNode input, final ASTNode output) {
@@ -118,7 +132,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ReportGenerator.report("tips").put("Category", extract.category(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
-    ReportGenerator.writeMethodMetrics(input, output, "methods");
     ReportGenerator.writeMetrics(input, output, "metrics");
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
     ReportGenerator.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
