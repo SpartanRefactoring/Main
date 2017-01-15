@@ -34,7 +34,7 @@ public class Issue0858 {
   }
 
   @Test public void f() {
-    trimmingOf("switch(x){ case a: case b: case c: x=1; case d: x=1; break; case e: x=2; break; }").stays();
+    trimmingOf("switch(x){case e:x=2;break;case a:case b:case c:x=1;case d:x=1;break;}").stays();
   }
 
   @Test public void g() {
@@ -43,7 +43,7 @@ public class Issue0858 {
   }
 
   @Test public void h() {
-    trimmingOf("switch(x){ case a: case b: case c: x=1; x=1; break; case e: x=2; break; case d: x=1; }").stays();
+    trimmingOf("switch(x){case d:x=1;break;case e:x=2;break;case a:case b:case c:x=1;x=1;break;}").stays();
   }
 
   @Test public void i() {
@@ -51,8 +51,9 @@ public class Issue0858 {
   }
 
   @Test public void j() {
-    trimmingOf("switch(x){ case a: switch(y) {case a: y=1;} break; case b: x=2;"
-        + "switch(y) {case a: y=1;} break; case c: z=3; x=2; switch(y) { case a: y=1;} break; case d: switch(y) {case b: y=1;}}").stays();
+    trimmingOf("switch(x){case a:switch(y){case a:y=1;}break;case d:switch(y){case b:y=1;}break;"
+        + "case b:x=2;switch(y){case a:y=1;}break;case c:z=3;x=2;switch(y){case a:y=1;}break;}")
+    .stays();
   }
 
   @Test public void k() {
@@ -63,7 +64,7 @@ public class Issue0858 {
   }
 
   @Test public void l() {
-    trimmingOf("switch(x){ case a: x=1; y=2; z=3; break; case b: y=2; z=3; break; case c: x=2; y=2; z=3;}").stays();
+    trimmingOf("switch(x){case b:y=2;z=3;break;case a:x=1;y=2;z=3;break;case c:x=2;y=2;z=3;break;}").stays();
   }
 
   @Test public void m() {
