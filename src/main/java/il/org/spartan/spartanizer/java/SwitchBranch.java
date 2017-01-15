@@ -191,7 +191,7 @@ public class SwitchBranch {
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
       $ = f;
     } else if (!iz.block(s)) {
-      if (iz.breakStatement(s))
+      if (iz.breakStatement(s) && iz.block(s.getParent()))
         $ = a.newEmptyStatement();
     } else {
       Block b = a.newBlock();
@@ -203,8 +203,15 @@ public class SwitchBranch {
     
   public static List<Statement> removeBreakSequencer(List<Statement> ss) {
     List<Statement> $ = new ArrayList<>();
-    for(Statement ¢ : ss)
-      $.add(removeBreakSequencer(¢));
+    for(Statement ¢ : ss) {
+      Statement s = removeBreakSequencer(¢);
+      if(s != null)
+        $.add(s);
+    }
     return $;
+  }
+  
+  public boolean hasStatements() {
+    return !statements.isEmpty() && !iz.breakStatement(lisp.first(statements));
   }
 }

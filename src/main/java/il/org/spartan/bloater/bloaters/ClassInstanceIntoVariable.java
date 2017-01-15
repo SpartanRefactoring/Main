@@ -23,6 +23,7 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
 
   @Override public Tip tip(final ExpressionStatement ¢) {
     final Expression e = expression(¢);
+    // TODO: Doron Meshulam Why do you use a flag variable? This is a big no no of SE
     final boolean flag = iz.classInstanceCreation(e);
     return !flag ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
