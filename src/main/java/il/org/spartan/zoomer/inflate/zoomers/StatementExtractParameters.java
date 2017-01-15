@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -78,19 +79,19 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          /**  */
-          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
+          /** [[SuppressWarningsSpartan]] */
+          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
             final Block nb = p.getAST().newBlock();
-            nb.statements().add(s);
+            nb.statements().add(v);
             nb.statements().add(ns);
             r.replace(s, nb, g);
           }
 
-          /**  */
-          void goBlockParent(final Block p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+          /** [[SuppressWarningsSpartan]] */
+          void goBlockParent(final Block p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
             final ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
-            lr.insertBefore(s, s, g);
+            lr.insertBefore(v, s, g);
             lr.insertBefore(ns, s, g);
             lr.remove(s, g);
           }
@@ -157,10 +158,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param u
    * @param g
    * @param ilr */
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g,
-      final ListRewrite ilr) {
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
     final List<String> idns = new LinkedList<>();
     if (r.getAddedImports() != null)
       idns.addAll(Arrays.asList(r.getAddedImports()));
@@ -168,7 +166,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       idns.addAll(Arrays.asList(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Roth: do it better
-      for (final ImportDeclaration oid : (List<ImportDeclaration>) u.imports())
+      for (final ImportDeclaration oid : step.imports(u))
         if (idn.equals(oid.getName().getFullyQualifiedName()))
           continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
@@ -248,8 +246,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Roth: move class to utility file
   protected class ASTMatcherSpecific extends ASTMatcher {
-    final ASTNode toMatch;
-    final Consumer<ASTNode> onMatch;
+    ASTNode toMatch;
+    Consumer<ASTNode> onMatch;
 
     public ASTMatcherSpecific(final ASTNode toMatch, final Consumer<ASTNode> onMatch) {
       this.toMatch = toMatch;
