@@ -95,7 +95,7 @@ public class Toolbox {
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
-        .add(Initializer.class, new InitializerEmptyRemove()) // 
+        .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
@@ -266,7 +266,7 @@ public class Toolbox {
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
-            null) //
+            new TypeDeclarationClassExtendsObject(), null) //
         .add(EnumDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnum(), //
             new AnnotationSort.ofEnum(), //

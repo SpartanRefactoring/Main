@@ -31,7 +31,6 @@ public interface disabling {
    * @since 2016/05/13 */
   static void scan(final ASTNode n) {
     n.accept(new DispatchingVisitor() {
-
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.isDisabledByIdentifier(¢2))
