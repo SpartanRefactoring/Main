@@ -13,7 +13,9 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0975 {
   @Test public void simpleBlockTest() {
-    zoomingInto("for(int i : lili) a=5;").gives("for(int i : lili){a=5;}").stays();
+    zoomingInto("for(int i : lili) a=5;")//
+        .gives("for(int i : lili){a=5;}")//
+ .stays();
   }
 
   @Test public void simpleShouldntAddTest() {
@@ -27,6 +29,7 @@ public class Issue0975 {
   }
 
   @Test public void notSimpleShouldAddTest() {
-    zoomingInto("for(Double i : lili) a=5; b=7;").gives("for(Double i : lili){a=5;}b=7;");
+    zoomingInto("for(Double i : lili) a=5; b=7;")//
+        .gives("for(Double i : lili){a=5;}b=7;");
   }
 }
