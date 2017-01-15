@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Test class for issue #1036
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-01-12 */
+@Ignore
 public class Issue1036 {
   @Test public void test0() {
     bloatingOf(new TestClass()) //
