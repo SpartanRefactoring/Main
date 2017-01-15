@@ -1,7 +1,9 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.applications;
 
 import static il.org.spartan.external.External.Introspector.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.applications.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 
 /** Simplified version of command line client that uses spartanizer applicator

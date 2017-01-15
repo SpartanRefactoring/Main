@@ -1,6 +1,7 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.applications;
 
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 abstract class AbstractCommandLineProcessor {
   @External(alias = "i", value = "input folder") String inputFolder = ".";
