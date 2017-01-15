@@ -38,29 +38,39 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
 
   @Override public void apply() {
     try {
+      
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".before.java", "before");
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".halstead.CSV", "halstead");
+
       final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator();
+      
       final CommandLineApplicator defaultSelection = defaultApplicator2
           .defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
+      
       if (DefaultApplicator) {
         commandLineApplicator.listener(¢ -> System.out.println("Running DefaultApplicator: " + ¢));
         defaultSelection.defaultListenerNoisy().go();
       }
+      
       if (Spartanizer$Applicator)
         defaultSelection.defaultRunAction(new Spartanizer$Applicator()).defaultListenerNoisy().go();
+      
       if (CommandLine$Applicator)
         defaultSelection.defaultRunAction(new CommandLine$Applicator(classes, tipperGroups, excludedTipperGroups, excludedNanoPatterns))
             .defaultListenerNoisy().go();
+      
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
       ReportGenerator.close("tips");
+      ReportGenerator.close("halstead");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
       System.err.println("commandLineApplicator: " + "Done!");
+      
       if (selection)
         defaultApplicator2.defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
