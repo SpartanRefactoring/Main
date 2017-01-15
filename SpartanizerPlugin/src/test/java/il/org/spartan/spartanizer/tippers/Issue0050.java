@@ -12,7 +12,7 @@ import org.junit.runners.*;
 public class Issue0050 {
   @Test public void a$50_Constructors1() {
     trimmingOf("public final class ClassTest{public ClassTest(){}}")//
- .stays();
+        .stays();
   }
 
   @Test public void a$50_enumCtorPrivate() {
@@ -109,7 +109,7 @@ public class Issue0050 {
 
   @Test public void a$50_SimpleDontWorking() {
     trimmingOf("interface a{}")//
- .stays();
+        .stays();
   }
 
   @Test public void a$50_SimpleWorking1() {
@@ -164,17 +164,17 @@ public class Issue0050 {
 
   @Test public void a$50e_enum() {
     trimmingOf("enum a{a,b}")//
- .stays();
+        .stays();
   }
 
   @Test public void a$50e1_enum() {
     trimmingOf("enum a{a}")//
- .stays();
+        .stays();
   }
 
   @Test public void a$50e2_enum() {
     trimmingOf("enum a{}")//
- .stays();
+        .stays();
   }
 
   @Test public void a$50f_enum() {

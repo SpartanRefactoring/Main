@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.zoomer.*;
 
 /** An application of the Athenizer project. Augment java code to be more clear
- * and debugable. TODO Roth: add progress monitor support TODO Roth: add
+ * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add
  * TextEditGroup support (?)
  * @author Ori Roth
  * @since Nov 25, 2016 */
@@ -73,7 +73,7 @@ public class Augmenter implements Application {
     return $;
   }
 
-  // TODO: clear and complete
+  // TODO: Ori Roth Ori Roth clear and complete
   /** Main function of the application.
    * @param r JD
    * @param sss selection as list of lists of statements
@@ -87,7 +87,7 @@ public class Augmenter implements Application {
     return true;
   }
 
-  // TODO complete
+  // TODO Ori Roth: complete
   /** Collateralize a list of statements, returning partition of the statements
    * as list of lists of statements.
    * @param ss statements to be collateralized
@@ -114,7 +114,7 @@ public class Augmenter implements Application {
   }
 
   /** Checks whether the local eclipse machine acknowledge the Spartan Library.
-   * TODO Roth: check project is UTF-8 (or higher?)
+   * TODO Ori Roth: check project is UTF-8 (or higher?)
    * @param s JD
    * @return true iff service is available */
   private static boolean checkServiceAvailableBeforeCalculation() {
@@ -122,15 +122,15 @@ public class Augmenter implements Application {
   }
 
   /** Checks that the projects within the selection has this library. If a
-   * project does not have the library, we try to import it. TODO Roth: allow
-   * several projects within selection (?)
+   * project does not have the library, we try to import it. TODO Ori Roth:
+   * allow several projects within selection (?)
    * @param ¢ JD
    * @return true iff service is available */
   private static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
     return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
-  // TODO improve
+  // TODO Ori Roth improve
   /** @param u JD
    * @param s fully qualified name of an import declaration
    * @return true iff the compilation unit already uses that import
@@ -142,7 +142,7 @@ public class Augmenter implements Application {
     return false;
   }
 
-  // TODO move to utility
+  // TODO Ori Roth move to utility
   /** @param n JD
    * @param s JD
    * @return true iff node is inside selection */

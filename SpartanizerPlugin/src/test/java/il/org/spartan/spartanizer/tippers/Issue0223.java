@@ -150,7 +150,7 @@ public final class Issue0223 {
     trimmingOf("Integer x = new Integer(1 + 9);")//
         .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer x = Integer.valueOf(10);")//
- .stays();
+        .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
@@ -161,7 +161,7 @@ public final class Issue0223 {
   @Test public void vanilla() {
     trimmingOf("new Integer(3)")//
         .gives("Integer.valueOf(3)")//
- .stays();
+        .stays();
   }
 
   @Test public void vanilla01() {

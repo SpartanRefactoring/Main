@@ -13,19 +13,19 @@ public class Issue0880 {
   @Test public void c() {
     trimmingOf("switch(x) { case a: default:y=3; case b:}")//
         .gives("switch(x){default:y=3; case b:}")//
- .stays();
+        .stays();
   }
 
   @Test public void d() {
     trimmingOf("switch(x) { case a: default:y=3;break; case b:break;}")//
         .gives("switch(x){default:y=3;break; case b:break;}")//
- .stays();
+        .stays();
   }
 
   @Test public void e() {
     trimmingOf("switch(x) { case a: case b:x=3;break; default:case c:}")//
         .gives("switch(x) { case a: case b:x=3;break;default:}")//
- .stays();
+        .stays();
   }
 
   @Test public void f() {
@@ -35,21 +35,21 @@ public class Issue0880 {
 
   @Test public void g() {
     trimmingOf("switch(x) {case a: x=3; case b: break;}")//
- .stays();
+        .stays();
   }
 
   @Test public void i() {
     trimmingOf("switch(x) {case a: x=3; case b: y=4; case c: break; default: break; case d: y=7; case e:}")//
- .stays();
+        .stays();
   }
 
   @Test public void j() {
     trimmingOf("switch(x) {case a: case b: x=3;}")//
- .stays();
+        .stays();
   }
 
   @Test public void k() {
     trimmingOf("switch(x){ case a: x=1; break; case b: switch(y) { case c: y=1; break; case d: x=1; break;} break; }")//
- .stays();
+        .stays();
   }
 }

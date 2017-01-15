@@ -37,7 +37,7 @@ public class Issue0071 {
 
   @Test public void f() {
     trimmingOf("1.0*a")//
- .stays();
+        .stays();
   }
 
   @Test public void g() {
@@ -97,6 +97,6 @@ public class Issue0071 {
 
   @Test public void r() {
     trimmingOf("1L*a")//
- .stays();
+        .stays();
   }
 }

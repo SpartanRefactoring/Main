@@ -31,7 +31,7 @@ public class Issue0103 {
       trimmingOf("a = a + (c = c + kif)")//
           .gives("a += c = c + kif")//
           .gives("a += c += kif")//
- .stays();
+          .stays();
     }
 
     @Test public void i_mixed_associative() {
@@ -75,7 +75,7 @@ public class Issue0103 {
 
   @Test public void _div2() {
     trimmingOf("a=5/a;")//
- .stays();
+        .stays();
   }
 
   @Test public void _leftShift1() {
@@ -85,7 +85,7 @@ public class Issue0103 {
 
   @Test public void _leftShift2() {
     trimmingOf("a=5<<a;")//
- .stays();
+        .stays();
   }
 
   @Test public void _modulo1() {
@@ -95,7 +95,7 @@ public class Issue0103 {
 
   @Test public void _modulo2() {
     trimmingOf("a=5%a;")//
- .stays();
+        .stays();
   }
 
   @Test public void _OR1() {
@@ -115,7 +115,7 @@ public class Issue0103 {
 
   @Test public void _rightShift2() {
     trimmingOf("a=5>>a;")//
- .stays();
+        .stays();
   }
 
   @Test public void _XOR1() {
@@ -130,12 +130,12 @@ public class Issue0103 {
 
   @Test public void b() {
     trimmingOf("x=y+x")//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
     trimmingOf("x=y+z")//
- .stays();
+        .stays();
   }
 
   public void d() {

@@ -193,7 +193,6 @@ public class leonidasSays {
         break;
       default:
         azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
-        // TODO Auto-generated method stub
     }
   }
 

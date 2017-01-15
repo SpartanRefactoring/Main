@@ -37,32 +37,26 @@ public final class UtilsTest {
 
   @Test public void removePrefiEmpty() {
     azzert.that("BAAAAB", is(removePrefix("BAAAAB", "A")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removePrefiExhaustive() {
     azzert.that("", is(removePrefix("AXAXAXAXAXAXAXAX", "AX")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removePrefixTypical() {
     azzert.that("BC", is(removePrefix("AAAABC", "AA")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removeSuffiEmpty() {
     azzert.that("BAAAAB", is(removeSuffix("BAAAAB", "A")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removeSuffiExhaustive() {
     azzert.that("", is(removeSuffix("AXAXAXAXAXAXAXAX", "AX")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removeSuffixTypical() {
     azzert.that("AAAA", is(removeSuffix("AAAABC", "BC")));
-    // TODO Auto-generated method stub
   }
 
   @Test public void removeWhitesTest() {

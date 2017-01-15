@@ -14,12 +14,12 @@ public class Issue0914 {
   @Test public void challenge_while_d() {
     trimmingOf("static X f(final S ¢) {X $ = ¢.elze();" + //
         "while ($ instanceof S)$ = ((S) $).elze();return $;}")//
- .stays();
+            .stays();
   }
 
   @Test public void initializers_while_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")//
- .stays();
+        .stays();
   }
 
   @Test public void initializers_while_4() {
@@ -29,17 +29,17 @@ public class Issue0914 {
 
   @Test public void t05() {
     trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")//
- .stays();
+        .stays();
   }
 
   @Test public void test0() {
     trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")//
- .stays();
+        .stays();
   }
 
   @Test public void actualBug() {
     trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {" + "ASTNode $ = ¢;"
         + "while (!iz.methodDeclaration($) && $ != null)" + "$ = $.getParent();" + "return az.methodDeclaration($);" + "}")//
- .stays();
+            .stays();
   }
 }

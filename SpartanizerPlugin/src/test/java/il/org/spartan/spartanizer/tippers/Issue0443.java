@@ -13,12 +13,12 @@ public class Issue0443 {
   @Test public void a() {
     trimmingOf("public void f (String[] ss) {}")//
         .gives("public void f (String[] __) {}")//
- .stays();
+        .stays();
   }
 
   @Test public void b() {
     trimmingOf("public void f (String... ss) {}")//
         .gives("public void f (String... __) {}")//
- .stays();
+        .stays();
   }
 }

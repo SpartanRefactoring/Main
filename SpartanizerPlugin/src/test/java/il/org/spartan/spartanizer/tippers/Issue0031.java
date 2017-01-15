@@ -62,7 +62,7 @@ public class Issue0031 {
     trimmingOf("void foo(Exception exception, Assignment assignment)")//
         .gives("void foo(Exception x, Assignment assignment)").gives("void foo(Exception __, Assignment assignment)")//
         .gives("void foo(Exception __, Assignment a)")//
- .stays();
+        .stays();
   }
 
   @Test public void k() {
@@ -82,6 +82,6 @@ public class Issue0031 {
 
   @Test public void n() {
     trimmingOf("String tellTale(ExamplyExamplar foo)")//
- .stays();
+        .stays();
   }
 }

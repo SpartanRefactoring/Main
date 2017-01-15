@@ -22,7 +22,7 @@ public class Issue0108 {
 
   @Test public void c() {
     trimmingOf("x=y*z")//
- .stays();
+        .stays();
   }
 
   @Test public void d() {
@@ -54,7 +54,7 @@ public class Issue0108 {
     trimmingOf("a = a * (c = c * kif)")//
         .gives("a *= c = c*kif")//
         .gives("a *= c *= kif")//
- .stays();
+        .stays();
   }
 
   @Test public void j() {

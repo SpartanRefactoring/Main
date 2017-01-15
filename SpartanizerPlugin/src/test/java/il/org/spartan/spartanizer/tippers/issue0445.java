@@ -30,6 +30,6 @@ public class issue0445 {
                 "        $.append(\", \").append(array[¢]);" + //
                 "      return $.append(']') + \"\";"//
         )//
- .stays();
+        .stays();
   }
 }

@@ -14,7 +14,7 @@ public class Issue0860 {
         .gives("switch(x){case 2:case 1:case 3:case 10:x=2;break;case 8:x=3; break;default:x=4;break;}")
         .gives("switch(x){case 8:x=3;break;case 2:case 1:case 3:case 10:x=2;break;default:x=4;break;}")
         .gives("switch(x){case 8:x=3;break;case 1:case 2:case 3:case 10:x=2;break;default:x=4;break;}")//
- .stays();
+        .stays();
   }
 
   @Test public void t2() {
