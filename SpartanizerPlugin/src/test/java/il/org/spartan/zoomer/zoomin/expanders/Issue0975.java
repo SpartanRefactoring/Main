@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.bloaters.BoatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Unit Test for the ForBlock expander {@link ForBlockExpander} Also, Unit Test
  * for the WhileBlock expander {@link WhileBlockExpander}
