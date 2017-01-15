@@ -48,13 +48,13 @@ public class Binding {
     hiding = null;
   }
 
-  public Binding(final String key, final type type) {
+  public Binding(@SuppressWarnings("unused") final String key, final type type) {
     this.type = type;
     hiding = null;
     self = null;
   }
 
-  public Binding(final String key, final ASTNode self) {
+  public Binding(@SuppressWarnings("unused") final String key, final ASTNode self) {
     this.self = self;
     hiding = null;
     type = null;

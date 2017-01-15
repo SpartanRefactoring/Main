@@ -42,7 +42,9 @@ public class Issue1044 extends ReflectiveTester {
 }
 
 class NamespaceFixture {
-  static {}
+  static {
+  //TODO: Doron, should be documented
+  }
 
   int f(final int a1) {
     return a1 >>> hashCode();
