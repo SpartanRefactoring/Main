@@ -36,12 +36,12 @@ public class Issue0364 {
         + "    + File.separator + \"java\", \"-cp\", getClass().getClassLoader().getResource(\".\").getFile()\n"
         + "    + File.pathSeparator + System.getProperty(\"java.class.path\"), getClass().getName() + \"$Exit\"};\n"
         + "  Process process = Runtime.getRuntime().exec(cmd);\n" + "  for (InputStream ¢ = process.getInputStream(); ¢.read() != -1;)\n" + "    ;\n"
-        + "  assertEquals(EXIT_CODE, process.waitFor());\n" + "}")
+        + "  wizard.assertEquals(EXIT_CODE, process.waitFor());\n" + "}")
             .gives("@Test public void failureCausesExitCodeOf1() throws Exception {\n"
                 + "  Process process = Runtime.getRuntime().exec(new String[] {System.getProperty(\"java.home\") + File.separator + \"bin\"\n"
                 + "    + File.separator + \"java\", \"-cp\", getClass().getClassLoader().getResource(\".\").getFile()\n"
                 + "    + File.pathSeparator + System.getProperty(\"java.class.path\"), getClass().getName() + \"$Exit\"});\n"
                 + "  for (InputStream ¢ = process.getInputStream(); ¢.read() != -1;)\n" + "    ;\n"
-                + "  assertEquals(EXIT_CODE, process.waitFor());\n" + "}");
+                + "  wizard.assertEquals(EXIT_CODE, process.waitFor());\n" + "}");
   }
 }
