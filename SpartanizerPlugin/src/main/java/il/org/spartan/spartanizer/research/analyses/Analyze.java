@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyze {
-  {
+  static {
     set("outputDir", "/tmp");
   }
   private static InteractiveSpartanizer spartanizer;

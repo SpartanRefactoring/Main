@@ -107,7 +107,7 @@ public final class SpartanizeProject extends BaseHandler {
             done.add(¢);
         }
         if (!done.isEmpty())
-          status.append(done.size() + " CUs did not change; will not be processed further\n");
+          status.append(done.size()).append(" CUs did not change; will not be processed further\n");
         todo.removeAll(done);
         done.clear();
         pm.done();
@@ -126,8 +126,8 @@ public final class SpartanizeProject extends BaseHandler {
     status.append("Java project is: " + javaProject.getElementName() + "\n");
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
-    status.append("Found " + todo.size() + " compilation units, ");
+    status.append("Found ").append(todo.size()).append(" compilation units, ");
     initialCount = countTips();
-    status.append("with " + initialCount + " tips.\n");
+    status.append("with ").append(initialCount).append(" tips.\n");
   }
 }
