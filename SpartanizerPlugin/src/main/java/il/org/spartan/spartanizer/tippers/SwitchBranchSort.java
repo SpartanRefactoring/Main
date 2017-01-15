@@ -4,7 +4,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
@@ -14,13 +13,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Sorting {
   @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<SwitchBranch> $ = SwitchBranch.intoBranches(s);
+    final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
       if (!$.get(¢).compareTo($.get(¢ + 1))) {
-        final SwitchBranch tmp = $.get(¢ + 1);
+        final switchBranch tmp = $.get(¢ + 1);
         $.set(¢ + 1, $.get(¢));
         $.set(¢, tmp);
-        return SwitchBranch.makeSwitchStatement($, step.expression(s), s.getAST());
+        return switchBranch.makeSwitchStatement($, step.expression(s), s.getAST());
       }
     return null;
   }
