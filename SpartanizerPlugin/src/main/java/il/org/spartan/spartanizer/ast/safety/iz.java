@@ -909,7 +909,7 @@ public interface iz {
   }
   
   static boolean sequencer(final ASTNode ¢, int type) {
-    assert sequencer(¢);
+    assert sequencerTypes[0] == type || sequencerTypes[1] == type || sequencerTypes[2] == type || sequencerTypes[3] == type;
     return ¢.getNodeType() == type;
   }
 
@@ -952,7 +952,6 @@ public interface iz {
    * [[SuppressWarningsSpartan]]
    */
   @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢, int type) {
-    assert sequencer(¢);
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
