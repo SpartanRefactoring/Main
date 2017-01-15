@@ -99,8 +99,7 @@ public class Generic$Applicator {
 
   private static List<String> setSelectedTipperGroups(final String... ss) {
     final List<String> $ = new ArrayList<>();
-    for (final String ¢ : ss)
-      $.add(¢);
+    Collections.addAll($, ss);
     return $;
   }
 

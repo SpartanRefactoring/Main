@@ -397,6 +397,10 @@ public enum step {
             .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(CompilationUnit ¢) {
+    return ¢ == null ? null : ¢.imports();
+  }
+
   /** Expose initializer contained in a {@link VariableDeclaration}
    * @param ¢ JD
    * @return initializer */
