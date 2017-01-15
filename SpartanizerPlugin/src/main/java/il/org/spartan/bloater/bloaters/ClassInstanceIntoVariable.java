@@ -22,13 +22,13 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
   }
 
   @Override public Tip tip(final ExpressionStatement ¢) {
-    Expression e = expression(¢);
-    boolean flag = iz.classInstanceCreation(e);
+    final Expression e = expression(¢);
+    final boolean flag = iz.classInstanceCreation(e);
     return !flag ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
-        Type t = copy.of(cic.getType());
-        VariableDeclarationStatement vds = make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic));
+        final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
+        final Type t = copy.of(cic.getType());
+        final VariableDeclarationStatement vds = make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic));
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.replace(¢, vds, g);
       }
