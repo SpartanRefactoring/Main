@@ -198,7 +198,6 @@ public final class GuessedContextTest {
 
   @Test public void methodInvocation() {
     azzert.that(GuessedContext.find("fuo()"), is(GuessedContext.EXPRESSION_LOOK_ALIKE));
-    // TODO Auto-generated method stub
   }
 
   @Test public void offDivision() {
@@ -211,9 +210,5 @@ public final class GuessedContextTest {
 
   @Test public void bug() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
-  }
-
-  @Test public void busssg() {
-    System.out.println(System.getProperty("java.io.tmpdir", "/tmp"));
   }
 }

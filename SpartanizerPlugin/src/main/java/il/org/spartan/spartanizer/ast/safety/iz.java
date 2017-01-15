@@ -912,9 +912,9 @@ public interface iz {
    *   return 1;
    * else
    *   return 2;
-   * System.out.println("Unreachable");</code> Codes as this usually do not
-   * compile: nevertheless, complex sequencers are relevant in switch
-   * statements.
+   * assert false: "Unreachable";
+   * </code> snippet as this usually do not compile: nevertheless, complex
+   * sequencers are relevant in switch statements.
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer
    *         (may be complex) */
