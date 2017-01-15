@@ -18,12 +18,12 @@ import il.org.spartan.*;
 public final class Version250 {
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;")//
- .stays();
+        .stays();
   }
 
   @Test public void additionZeroTest_b() {
     trimmingOf("b=0+a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue070_01() {
@@ -85,7 +85,7 @@ public final class Version250 {
         .gives("(int)g+(double)f")//
         .gives("(int)g + 1.*f")//
         .gives("1.*f + (int)g")//
- .stays();
+        .stays();
   }
 
   @Test public void issue070_12() {
@@ -95,7 +95,7 @@ public final class Version250 {
 
   @Test public void issue076d() {
     trimmingOf("a * (b + c)")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083a() {
@@ -115,12 +115,12 @@ public final class Version250 {
 
   @Test public void issue083d() {
     trimmingOf("if(x.size()==1) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083e() {
     trimmingOf("if(x.size()==2) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083f() {
@@ -130,7 +130,7 @@ public final class Version250 {
 
   @Test public void issue083g() {
     trimmingOf("if(x.size()==4) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083h() {
@@ -140,22 +140,22 @@ public final class Version250 {
 
   @Test public void issue083i() {
     trimmingOf("if(es.size()>= 2) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083j() {
     trimmingOf("if(es.size()> 2) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083k() {
     trimmingOf("if(es.size() <2) return a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083l() {
     trimmingOf("uses(ns).size() <= 1")//
- .stays();
+        .stays();
   }
 
   @Test public void issue083m() {
@@ -169,7 +169,7 @@ public final class Version250 {
         .gives("if(false) ++a;a+=1;")//
         .gives("{}a+=1;")//
         .gives("a+=1;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue085_86a() {
@@ -209,12 +209,12 @@ public final class Version250 {
 
   @Test public void issue085_86g() {
     trimmingOf("if(z==k)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
- .stays();
+        .stays();
   }
 
   @Test public void issue085_86h() {
     trimmingOf("if(5==5)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
- .stays();
+        .stays();
   }
 
   @Test public void issue085_86i() {
@@ -244,53 +244,53 @@ public final class Version250 {
     trimmingOf("if(false)" + "c();\n" + "int a;")//
         .gives("{}int a;")//
         .gives("int a;")//
- .stays();
+        .stays();
   }
 
   @Test public void issue086_2() {
     trimmingOf("if(false) {c();\nb();\na();}")//
         .gives("{}")//
         .gives("")//
- .stays();
+        .stays();
   }
 
   @Test public void issue086_3() {
     trimmingOf("if(false) {c();\nb();\na();}")//
         .gives("{}")//
         .gives("")//
- .stays();
+        .stays();
   }
 
   @Test public void issue086_4() {
     trimmingOf("if(false) {c();\nb();\na();}")//
         .gives("{}")//
         .gives("")//
- .stays();
+        .stays();
   }
 
   @Test public void issue086_5() {
     trimmingOf("if(false) {c();\nb();\na();}")//
         .gives("{}")//
         .gives("")//
- .stays();
+        .stays();
   }
 
   @Test public void issue199() {
     trimmingOf("void f() { \n" + "  if (a == b) {\n" + "    f();\n" + "    return;\n" + "  }\n" + "  g();\n" + "} \n")
         .gives("void f(){if(a==b){f();}else g();}")//
         .gives("void f(){if(a==b)f();else g();}")//
- .stays();
+        .stays();
   }
 
   @Test public void issue199a() {
     trimmingOf("void f() { \n" + "  if (a == b) \n" + "    return;\n" + "  g();\n" + "} \n")//
         .gives("void f(){if(a==b);else g();}").gives("void f(){if(a!=b) g();}")//
- .stays();
+        .stays();
   }
 
   @Test public void issue207() {
     trimmingOf("size() == 0")//
- .stays();
+        .stays();
   }
 
   @Test public void issue218() {
@@ -298,7 +298,7 @@ public final class Version250 {
         .gives("1L*(long)2")//
         .gives("1L*1L*2")//
         .gives("2L")//
- .stays();
+        .stays();
   }
 
   @Test public void issue218a() {
@@ -306,7 +306,7 @@ public final class Version250 {
         .gives("1L*(long)2")//
         .gives("1L*1L*2")//
         .gives("2L")//
- .stays();
+        .stays();
   }
 
   @Test public void issue218x() {
@@ -314,41 +314,41 @@ public final class Version250 {
         .gives("2*(long)1L")//
         .gives("2*1L*1L")//
         .gives("2L")//
- .stays();
+        .stays();
   }
 
   @Test public void issue237() {
     trimmingOf("class X {final int __ = 0;}")//
- .stays();
+        .stays();
     trimmingOf("class X {final boolean __ = false;}")//
- .stays();
+        .stays();
     trimmingOf("class X {final double __ = 0.0;}")//
- .stays();
+        .stays();
     trimmingOf("class X {final Object __ = null;}")//
- .stays();
+        .stays();
   }
 
   @Test public void issue241a() {
     trimmingOf("interface x { int a; }")//
- .stays();
+        .stays();
   }
 
   @Test public void issue241b() {
     trimmingOf("interface x { static int a; }")//
         .gives("interface x { int a; }")//
- .stays();
+        .stays();
   }
 
   @Test public void issue243() {
     trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; " + "long s1 = 2; "
         + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}")//
- .stays();
+            .stays();
   }
 
   @Test public void simpleForLoop() {
     trimmingOf("for (final Integer i: range.to(100)) sum+=i;")//
         .gives("for (final Integer ¢: range.to(100)) sum+=¢;")//
- .stays();
+        .stays();
   }
 
   @Test public void test_b() {

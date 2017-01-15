@@ -10,7 +10,7 @@ import org.junit.*;
 public class Issue0234 {
   @Test public void b$01() {
     trimmingOf("try { f(); } catch(Exception e) { return -1; }")//
- .stays();
+        .stays();
   }
 
   @Test public void b$02() {

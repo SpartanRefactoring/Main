@@ -20,7 +20,7 @@ import il.org.spartan.zoomer.zoomin.*;
 /** Testing utils for expander Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
-public class ExpanderTestUtils {
+public class BoatingTestUtilities {
   static final TextEditGroup textEditGroup = new TextEditGroup("");
 
   public static class Operand extends Wrapper<String> {
@@ -177,11 +177,11 @@ public class ExpanderTestUtils {
     }
   }
 
-  public static Operand zoomingInto(final String from) {
+  public static Operand bloatingOf(final String from) {
     return new Operand(from);
   }
 
-  public static Operand expansionOf(final ReflectiveTester ¢) {
+  public static Operand bloatingOf(final ReflectiveTester ¢) {
     return new Operand(¢.myCompilationUnit(), ¢.myClassText());
   }
 }

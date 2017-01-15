@@ -124,7 +124,7 @@ public final class Issue0086 extends Issue____ {
             .gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
             .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
             .gives("int f(){g(i);throw new RuntimeException();}")//
- .stays();
+            .stays();
   }
 
   private ThrowNotLastInBlock makeTipper() {
@@ -136,13 +136,13 @@ public final class Issue0086 extends Issue____ {
         .gives("throw Something();f(); a=3; return 2;").gives("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
- .stays();
+        .stays();
   }
 
   @Test public void vanilla01() {
     trimmingOf("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
- .stays();
+        .stays();
   }
 }

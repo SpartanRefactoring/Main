@@ -24,12 +24,12 @@ public final class Issue0221 {
 
   @Test public void A$01() {
     trimmingOf("class D { int a; }")//
- .stays();
+        .stays();
   }
 
   @Test public void A$02() {
     trimmingOf("class D { int a = 3; }")//
- .stays();
+        .stays();
   }
 
   @Test public void A$03() {
@@ -39,6 +39,6 @@ public final class Issue0221 {
 
   @Test public void A$04() {
     trimmingOf("class D{Integer a=0;}")//
- .stays();
+        .stays();
   }
 }

@@ -15,6 +15,6 @@ public class Issue0910 {
   @Test public void singleVariableDeclarationStatementShouldntTip() {
     trimmingOf("x -> {int y;}") //
         .gives("x -> {}")//
- .stays();
+        .stays();
   }
 }

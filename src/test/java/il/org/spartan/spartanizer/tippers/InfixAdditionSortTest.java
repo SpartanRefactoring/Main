@@ -28,13 +28,13 @@ public final class InfixAdditionSortTest {
     trimmingOf(input)//
         .gives(OUTPUT)//
         .gives("a*b + b*c  + d*e + 10")//
- .stays();
+        .stays();
   }
 
   @Test public void test01() {
     trimmingOf("1 + a*b")//
         .gives("a*b + 1")//
- .stays();
+        .stays();
   }
 
   @Test public void test02() {

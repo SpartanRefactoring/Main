@@ -14,6 +14,6 @@ public class Issue0907 {
     trimmingOf("if(false)" + "c();\n" + "int a;")//
         .gives("{}int a;")//
         .gives("int a;")//
- .stays();
+        .stays();
   }
 }

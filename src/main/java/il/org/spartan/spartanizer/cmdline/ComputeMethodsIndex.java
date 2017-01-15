@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
- * tokens for methods... //TODO Marco
+ * tokens for methods...
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class ComputeMethodsIndex extends FolderASTVisitor {
