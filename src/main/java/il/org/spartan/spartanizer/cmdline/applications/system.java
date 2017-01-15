@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.applications;
 
 import static il.org.spartan.utils.Box.*;
 
@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.java.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.applications.*;
+import il.org.spartan.spartanizer.cmdline.utils.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Not such a good name for a bunch of static functions
