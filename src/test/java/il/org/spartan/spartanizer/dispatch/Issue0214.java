@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
-public final class Issue214 {
+public final class Issue0214 {
   private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> ¢) {
     return ¢;
   }

@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Zahi Mizrahi
  * @since 16-11-6 */
 @SuppressWarnings("static-method")
-public class Issue710 {
+public class Issue0710 {
   @Test public void test01() {
     assert !determineIf.returnsNull(null);
   }

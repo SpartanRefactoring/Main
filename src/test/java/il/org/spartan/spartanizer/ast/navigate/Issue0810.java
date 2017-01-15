@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Moshe Eliasof
  * @since 16-11-13 */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class Issue810 {
+public class Issue0810 {
   private static final String HELLO_JAVA = "Hello.java";
   public static final String ROOT = "./src/test/resources/";
   private final File f = new File(ROOT + HELLO_JAVA);

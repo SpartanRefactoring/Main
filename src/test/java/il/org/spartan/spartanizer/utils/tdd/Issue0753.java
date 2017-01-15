@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings("static-method")
-public class Issue753 {
+public class Issue0753 {
   @Test public void a() {
     azzert.isNull(getAll.methods(null));
   }

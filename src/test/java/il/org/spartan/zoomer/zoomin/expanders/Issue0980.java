@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2017-01-13 */
 @Ignore
 @SuppressWarnings("static-method")
-public class Issue980 {
+public class Issue0980 {
   @Test public void test0() {
     bloatingOf("{return x && y();}")//
         .gives("boolean a = x; boolean b = y(); return a && b;");
