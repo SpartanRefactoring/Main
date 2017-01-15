@@ -4,8 +4,6 @@ import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.bloaters.*;
-
 /** @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-15 */
 @SuppressWarnings("static-method")
