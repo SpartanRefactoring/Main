@@ -15,7 +15,7 @@ public class Issue0450 {
     trimmingOf("final Separator s = new Separator(\", \");" //
         + "for (final String a : args)" //
         + "System.out.print(s + a);")//
- .stays();
+            .stays();
   }
 
   @Test public void test1() {

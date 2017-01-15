@@ -13,6 +13,6 @@ import org.junit.runners.*;
 public final class Issue0229 {
   @Test public void vanilla() {
     trimmingOf("final class X { @SafeVarargs public final void f(final int... __) {}}")//
- .stays();
+        .stays();
   }
 }

@@ -31,7 +31,6 @@ public final class FixedPointTest {
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
     azzert.that(w.off(wrap), is(from));
-    // TODO Auto-generated method stub
     final String unpeeled = new InteractiveSpartanizer().fixedPoint(wrap);
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + from);

@@ -25,21 +25,18 @@ public class Issue873 {
 
   @Test public void test0() {
     azzert.that(new ParameterObject<>(new MyType(4)).objectValue().getVal(), is(4));
-    // TODO Auto-generated method stub
   }
 
   @Test public void test1() {
     final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
     azzert.that(i.objectValue().getVal(), is(5));
-    // TODO Auto-generated method stub
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
     final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
     azzert.that(i.objectValue().getVal(), is(5));
-    // TODO Auto-generated method stub
     i.set(new MyType(4));
   }
 

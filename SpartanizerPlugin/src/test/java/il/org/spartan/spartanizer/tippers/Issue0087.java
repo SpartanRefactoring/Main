@@ -17,12 +17,12 @@ public class Issue0087 {
 
   @Test public void b() {
     trimmingOf("a-b*c")//
- .stays();
+        .stays();
   }
 
   @Test public void c() {
     trimmingOf("a + (b-c)")//
- .stays();
+        .stays();
   }
 
   @Test public void d() {

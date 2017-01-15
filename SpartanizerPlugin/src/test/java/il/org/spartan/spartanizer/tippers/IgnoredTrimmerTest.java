@@ -16,7 +16,7 @@ import org.junit.runners.*;
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
- .stays();
+        .stays();
   }
 
   @Test public void forwardDeclaration1() {

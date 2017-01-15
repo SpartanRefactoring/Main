@@ -42,7 +42,6 @@ public final class azTest {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
     azzert.that(az.comparison(i), is(i));
-    // TODO Auto-generated method stub
   }
 
   @Test public void asComparisonTypicalInfixIsNotNull() {

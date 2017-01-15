@@ -120,13 +120,13 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     listening = true;
   }
 
-  /* TODO Roth: don't use enums, prefer strings, which require less overhead,
-   * and are easier to debug; --yg */
+  /* TODO Ori Roth: don't use enums, prefer strings, which require less
+   * overhead, and are easier to debug; --yg */
   enum Type {
     new_project, opened_project
   }
 
-  /** TODO Roth: not convinced it is required. --yg */
+  /** TODO Ori Roth: not convinced it is required. --yg */
   static class MProject {
     public IProject p;
     public Type type;

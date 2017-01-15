@@ -11,37 +11,37 @@ public class Issue0427 {
   @Test public void test0() {
     trimmingOf("int f(){return x==y ? y:x;}")//
         .gives("int f(){return x;}")//
- .stays();
+        .stays();
   }
 
   @Test public void test1() {
     trimmingOf("int f(){return x==y ? y:z;}")//
- .stays();
+        .stays();
   }
 
   @Test public void test2() {
     trimmingOf("int f(){return g()==y ? y:g();}")//
- .stays();
+        .stays();
   }
 
   @Test public void test4() {
     trimmingOf("int f(){return g()==h() ? g():h();}")//
- .stays();
+        .stays();
   }
 
   @Test public void test5() {
     trimmingOf("int f(){return x==y ? z:w;}")//
- .stays();
+        .stays();
   }
 
   @Test public void test6() {
     trimmingOf("int f(){return x==null ? x:null;}")//
         .gives("int f(){return null;}")//
- .stays();
+        .stays();
   }
 
   @Test public void test7() {
     trimmingOf("int f(){return f() == null ? f() : null;}")//
- .stays();
+        .stays();
   }
 }

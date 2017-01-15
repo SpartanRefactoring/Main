@@ -42,17 +42,17 @@ public final class CollectedTests {
 
   @Test public void f() {
     trimmingOf("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();")//
- .stays();
+        .stays();
   }
 
   @Test public void g() {
     trimmingOf("")//
- .stays();
+        .stays();
   }
 
   @Test public void h() {
     trimmingOf("public void f() {\n")//
- .stays();
+        .stays();
   }
 
   @Test public void shortestOperand09() {

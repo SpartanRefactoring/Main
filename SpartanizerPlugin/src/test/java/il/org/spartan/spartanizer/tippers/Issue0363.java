@@ -25,7 +25,7 @@ public class Issue0363 {
 
   @Test public void test3() {
     trimmingOf("j = b + argv[optindi]+3; ++optind;")//
- .stays();
+        .stays();
   }
 
   @Test public void test4() {
