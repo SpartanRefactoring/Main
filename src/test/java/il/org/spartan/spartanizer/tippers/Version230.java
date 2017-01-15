@@ -3310,30 +3310,40 @@ public final class Version230 {
   }
 
   @Test public void switchSimplifyCaseAfterDefault() {
-    trimmingOf(
-        "switch (n.getNodeType()) {\n" + "default:\n" + "  return -1;\n" + "case BREAK_STATEMENT:\n" + "  return 0;\n" + "case CONTINUE_STATEMENT:\n"
-            + "  return 1;\n" + "case RETURN_STATEMENT:\n" + "  return 2;\n" + "case THROW_STATEMENT:\n" + "  return 3;\n" + "}")//
-                .stays();
+    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;"
+        + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}")
+    .stays();
   }
 
   @Test public void switchSimplifyCaseAfterDefault1() {
-    trimmingOf(
-        "switch (n.getNodeType()) {" + "  default:" + "    return -1;" + "  case BREAK_STATEMENT:" + "    return 0;" + "  case CONTINUE_STATEMENT:"
-            + "    return 1;" + "  case RETURN_STATEMENT:" + "    return 2;" + "  case THROW_STATEMENT:" + "    return 3;" + "  }")//
-                .stays();
+    trimmingOf("switch(n.getNodeType()){"
+        + "case BREAK_STATEMENT:return 0;"
+        + "case CONTINUE_STATEMENT:return 1;"
+        + "case RETURN_STATEMENT:return 2;"
+        + "case THROW_STATEMENT:return 3;"
+        + "default:return-1;}")
+    .stays();
   }
 
   @Test public void switchSimplifyWithDefault2() {
-    trimmingOf("switch (a) {\n" + "case \"-N\":" + "  optDoNotOverwrite = true;" + "  break;" + "case \"-E\":" + "  optIndividualStatistics = true;"
-        + "  break;" + "case \"-V\":" + "  optVerbose = true;" + "  break;" + "case \"-l\":" + "  optStatsLines = true;" + "  break;" + "case \"-r\":"
-        + "  optStatsChanges = true;" + "  break;" + "default:" + "  if (!a.startsWith(\"-\"))" + "    optPath = a;" + "  try {"
-        + "    if (a.startsWith(\"-C\"))" + "      optRounds = Integer.parseUnsignedInt(a.substring(2));"
-        + "  } catch (final NumberFormatException e) {" + "    throw e;" + "  }" + "}").gives(
-            "switch (a) {\n" + "case \"-N\":" + "  optDoNotOverwrite = true;" + "  break;" + "case \"-E\":" + "  optIndividualStatistics = true;"
-                + "  break;" + "case \"-V\":" + "  optVerbose = true;" + "  break;" + "case \"-l\":" + "  optStatsLines = true;" + "  break;"
-                + "case \"-r\":" + "  optStatsChanges = true;" + "  break;" + "default:" + "  if (!a.startsWith(\"-\"))" + "    optPath = a;"
-                + "  try {" + "    if (a.startsWith(\"-C\"))" + "      optRounds = Integer.parseUnsignedInt(a.substring(2));"
-                + "  } catch (final NumberFormatException ¢) {" + "    throw ¢;" + "  }" + "}");
+    trimmingOf("switch(a){"
+        + "case \"-E\":optIndividualStatistics=true;break;"
+        + "case \"-N\":optDoNotOverwrite=true;break;"
+        + "case \"-V\":optVerbose=true;break;"
+        + "case \"-l\":optStatsLines=true;break;"
+        + "case \"-r\":optStatsChanges=true;break;"
+        + "default:if(!a.startsWith(\"-\"))optPath=a;"
+        + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
+        + "catch(final NumberFormatException e){throw e;}break;}")
+    .gives("switch(a){"
+        + "case \"-E\":optIndividualStatistics=true;break;"
+        + "case \"-N\":optDoNotOverwrite=true;break;"
+        + "case \"-V\":optVerbose=true;break;"
+        + "case \"-l\":optStatsLines=true;break;"
+        + "case \"-r\":optStatsChanges=true;break;"
+        + "default:if(!a.startsWith(\"-\"))optPath=a;"
+        + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
+        + "catch(final NumberFormatException ¢){throw ¢;}break;}");
   }
 
   @Test public void synchronizedBraces() {
