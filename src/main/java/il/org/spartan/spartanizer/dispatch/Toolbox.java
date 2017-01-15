@@ -133,7 +133,7 @@ public class Toolbox {
             new SwitchEmpty(), //
             new RemoveRedundantSwitchBranch(), //
             new SwitchWithOneCaseToIf(), //
-            // new SwitchBranchSort(), //
+//             new SwitchBranchSort(), //
             null)
         .add(SwitchCase.class, 
             new RemoveRedundantSwitchCases(), //
