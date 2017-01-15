@@ -34,18 +34,21 @@ public class Issue0977 {
   // see issue #1046
   @Test public void complexSequencer() {
     zoomingInto("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n"
-        + "case 2:\n" + "  e();\n" + "}").stays();
+        + "case 2:\n" + "  e();\n" + "}")//
+ .stays();
   }
 
   // see issue #1046
   @Test public void complexSequencerNotLast() {
     zoomingInto("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "  f();\n"
-        + "case 2:\n" + "  e();\n" + "}").stays();
+        + "case 2:\n" + "  e();\n" + "}")//
+ .stays();
   }
 
   // see issue #1031
   @Test public void complexSequencerRealWorld() {
     zoomingInto("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n"
-        + "} else {\n" + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}").stays();
+        + "} else {\n" + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}")//
+ .stays();
   }
 }

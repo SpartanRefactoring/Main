@@ -14,7 +14,10 @@ public class Issue1023 {
   @Ignore
   static class ToFix { // should pass after fixing {@link Issue0974}
     @Test public void simpleBlockTest() {
-      zoomingInto("for(int i=0;i<5;i++) a=5;").gives("for(int i=0;i<5;i++){a=5;}").gives("for(int i=0;i<5;i=i+1){a=5;}").stays();
+      zoomingInto("for(int i=0;i<5;i++) a=5;")//
+          .gives("for(int i=0;i<5;i++){a=5;}")//
+          .gives("for(int i=0;i<5;i=i+1){a=5;}")//
+ .stays();
     }
 
     @Test public void simpleShouldntAddTest() {
@@ -31,22 +34,29 @@ public class Issue1023 {
   }
 
   @Test public void notSimpleShouldAddTest() {
-    zoomingInto("for(int i=0;i<5;i++) a=5; b=7;").gives("for(int i=0;i<5;i++){a=5;}b=7;");
+    zoomingInto("for(int i=0;i<5;i++) a=5; b=7;")//
+        .gives("for(int i=0;i<5;i++){a=5;}b=7;");
   }
 
   @Ignore @Test public void simpleBlockTestWhile() {
-    zoomingInto("while(i<5) a=5;").gives("while(i<5){a=5;}").stays();
+    zoomingInto("while(i<5) a=5;")//
+        .gives("while(i<5){a=5;}")//
+ .stays();
   }
 
   @Test public void simpleShouldntAddTestWhile() {
-    zoomingInto("while(i<5){ a=5;}").stays();
+    zoomingInto("while(i<5){ a=5;}")//
+ .stays();
   }
 
   @Test public void notSimpleShouldntAddTestWhile() {
-    zoomingInto("while(i<5){ a=5;b=3;}").stays();
+    zoomingInto("while(i<5){ a=5;b=3;}")//
+ .stays();
   }
 
   @Ignore @Test public void notSimpleShouldAddTestWhile() {
-    zoomingInto("while(i<5) a=5; b=7;").gives("while(i<5){ a=5;}b=7;").stays();
+    zoomingInto("while(i<5) a=5; b=7;")//
+        .gives("while(i<5){ a=5;}b=7;")//
+ .stays();
   }
 }
