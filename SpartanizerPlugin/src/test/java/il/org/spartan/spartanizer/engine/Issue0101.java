@@ -10,7 +10,7 @@ import il.org.spartan.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" })
-public final class Issue101 {
+public final class Issue0101 {
   @Test public void a_1() {
     azzert.that(new Recurser<>(into.i("3+4"), 0).preVisit((x) -> (1 + x.getCurrent())), is(3));
   }

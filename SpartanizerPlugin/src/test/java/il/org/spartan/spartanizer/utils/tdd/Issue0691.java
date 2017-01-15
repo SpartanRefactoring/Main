@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Dor Ma'ayan
  * @author Omri Ben- Shmuel
  * @since 01-11-2016 */
-public class Issue691 {
+public class Issue0691 {
   @Test @SuppressWarnings("static-method") public void test0() {
     azzert.isNull(getAll.invocations((MethodDeclaration) null));
   }

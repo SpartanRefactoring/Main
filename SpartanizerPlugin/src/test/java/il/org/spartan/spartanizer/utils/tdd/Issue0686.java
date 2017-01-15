@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue686 {
+public class Issue0686 {
   public class NotAString<T> extends ArrayList<T> {
     private static final long serialVersionUID = 1L;
   }

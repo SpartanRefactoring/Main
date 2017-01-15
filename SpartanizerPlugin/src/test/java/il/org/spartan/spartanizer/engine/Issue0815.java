@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Oren Afek
  * @author Amir Sagiv
  * @since 16-11-11 */
-public class Issue815 {
+public class Issue0815 {
   private static ASTNode ASTNodeFromString(final String ¢) {
     return wizard.ast(¢);
   }

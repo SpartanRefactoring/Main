@@ -10,7 +10,7 @@ import il.org.spartan.*;
  * @author kobybs
  * @since 27-11-2016 */
 @SuppressWarnings("static-method")
-public class Issue871 {
+public class Issue0871 {
   @Test public void test0() {
     azzert.that(new ParameterInt(0).intValue(), is(0));
   }

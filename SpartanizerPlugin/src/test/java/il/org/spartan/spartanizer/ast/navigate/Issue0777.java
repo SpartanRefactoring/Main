@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since Nov 3, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue777 {
+public class Issue0777 {
   @Test public void a() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
     azzertEquals("class C{void foo(){}}", addMethodToType("class C{}", "void foo(){}"));
   }

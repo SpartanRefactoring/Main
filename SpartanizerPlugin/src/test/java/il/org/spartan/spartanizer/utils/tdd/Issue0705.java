@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author Yuval Simon
  * @since 16-11-2 */
 @SuppressWarnings("static-method")
-public class Issue705 {
+public class Issue0705 {
   @Test public void a() {
     auxList(getAll.instanceofs((MethodDeclaration) null));
   }

@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method")
-public class Issue774 {
+public class Issue0774 {
   @Test public void shouldReturnFalseForBooleanLiteral() {
     assert !determineIf.uses(wizard.ast("false"), "false");
   }
