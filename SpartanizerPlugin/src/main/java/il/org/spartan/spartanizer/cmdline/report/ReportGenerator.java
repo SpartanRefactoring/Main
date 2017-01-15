@@ -30,7 +30,12 @@ public class ReportGenerator implements ConfigurableReport {
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static final HashMap<String, PrintWriter> files = new HashMap<>();
   @SuppressWarnings("rawtypes")
-  protected static final HashMap<String, NamedFunction[]> metricsMap = new HashMap<>();
+  protected static HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
+  
+  @SuppressWarnings("rawtypes")
+  public static HashMap<String, NamedFunction[]> metricsMap(){
+    return metricsMap;
+  }
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
@@ -42,21 +47,23 @@ public class ReportGenerator implements ConfigurableReport {
     }
     
     /**
+     * @return 
      * 
      */
     
-    public static void initialize() {
-      metricsMap.put("metrics", functions(""));
-      metricsMap.put("methods", as.array(m("length", (¢) -> (¢ + "").length()), //
-                                         m("essence", (¢) -> Essence.of(¢ + "").length()), //
-                                         m("tokens", (¢) -> metrics.tokens(¢ + "")), //
-                                         m("nodes", (¢) -> count.nodes(¢)), //
-                                         m("body", (¢) -> metrics.bodySize(¢)), //
-                                         m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1
-                                               : extract.statements(az.methodDeclaration(¢).getBody()).size()), //
-                                         m("tide", (¢) -> clean(¢ + "").length()))); //
+    @SuppressWarnings("rawtypes")
+    public static HashMap<String, NamedFunction[]> initialize() {
+      HashMap<String, NamedFunction[]> $ = new HashMap<>();
+      $.put("metrics", functions(""));
+      $.put("methods", as.array(m("N. of Nodes", (¢) -> count.nodes(¢)), //
+                                         m("Average Depth", (¢) -> -1000), //(¢) -> Essence.of(¢ + "").length()), //
+                                         m("Average Uncle Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ + "").length()), //
+                                         m("Character Length", (¢) -> -1000) //Essence.of(¢ + "").length()) //
+          // Report Halstead Metrics                               
+          )); //
+      return $;
     }
-
+    
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
@@ -149,7 +156,8 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
+  @SuppressWarnings({ "unused", "boxing" }) 
+  public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
     final int len = ReportGenerator.Util.find("length").function().run(n1);
     final int ess = ReportGenerator.Util.find("essence").function().run(n1);
@@ -313,7 +321,8 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
+  @SuppressWarnings("unchecked") 
+  public static <T> void writeLine(final Consumer<T> ¢) {
     ¢.accept((T) ¢);
   }
 
@@ -337,7 +346,7 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(id)) {
+    for (final NamedFunction ¢ : ReportGenerator.metricsMap().get(id)) {
       ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(input));
       ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(output));
     }
