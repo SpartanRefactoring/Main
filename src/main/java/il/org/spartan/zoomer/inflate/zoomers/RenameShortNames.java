@@ -36,7 +36,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979 */
 public class RenameShortNames extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
-  @Override public String description(MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -47,7 +47,7 @@ public class RenameShortNames extends EagerTipper<MethodDeclaration> implements 
     final SingleVariableDeclaration parameter = onlyOne(parameters(d));
     final SimpleName $ = parameter.getName();
     assert $ != null;
-    if ((!in($.getIdentifier(), "$", "¢", "__", "_")) && $.getIdentifier().length() > 1)
+    if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
       return null;
     if (in($.getIdentifier(), "$"))
       return new Tip("Rename paraemter $ to ret", d, getClass()) {

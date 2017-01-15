@@ -3311,39 +3311,23 @@ public final class Version230 {
 
   @Test public void switchSimplifyCaseAfterDefault() {
     trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;"
-        + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}")
-    .stays();
+        + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}").stays();
   }
 
   @Test public void switchSimplifyCaseAfterDefault1() {
-    trimmingOf("switch(n.getNodeType()){"
-        + "case BREAK_STATEMENT:return 0;"
-        + "case CONTINUE_STATEMENT:return 1;"
-        + "case RETURN_STATEMENT:return 2;"
-        + "case THROW_STATEMENT:return 3;"
-        + "default:return-1;}")
-    .stays();
+    trimmingOf("switch(n.getNodeType()){" + "case BREAK_STATEMENT:return 0;" + "case CONTINUE_STATEMENT:return 1;" + "case RETURN_STATEMENT:return 2;"
+        + "case THROW_STATEMENT:return 3;" + "default:return-1;}").stays();
   }
 
   @Test public void switchSimplifyWithDefault2() {
-    trimmingOf("switch(a){"
-        + "case \"-E\":optIndividualStatistics=true;break;"
-        + "case \"-N\":optDoNotOverwrite=true;break;"
-        + "case \"-V\":optVerbose=true;break;"
-        + "case \"-l\":optStatsLines=true;break;"
-        + "case \"-r\":optStatsChanges=true;break;"
-        + "default:if(!a.startsWith(\"-\"))optPath=a;"
-        + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
+    trimmingOf("switch(a){" + "case \"-E\":optIndividualStatistics=true;break;" + "case \"-N\":optDoNotOverwrite=true;break;"
+        + "case \"-V\":optVerbose=true;break;" + "case \"-l\":optStatsLines=true;break;" + "case \"-r\":optStatsChanges=true;break;"
+        + "default:if(!a.startsWith(\"-\"))optPath=a;" + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
         + "catch(final NumberFormatException e){throw e;}break;}")
-    .gives("switch(a){"
-        + "case \"-E\":optIndividualStatistics=true;break;"
-        + "case \"-N\":optDoNotOverwrite=true;break;"
-        + "case \"-V\":optVerbose=true;break;"
-        + "case \"-l\":optStatsLines=true;break;"
-        + "case \"-r\":optStatsChanges=true;break;"
-        + "default:if(!a.startsWith(\"-\"))optPath=a;"
-        + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
-        + "catch(final NumberFormatException ¢){throw ¢;}break;}");
+            .gives("switch(a){" + "case \"-E\":optIndividualStatistics=true;break;" + "case \"-N\":optDoNotOverwrite=true;break;"
+                + "case \"-V\":optVerbose=true;break;" + "case \"-l\":optStatsLines=true;break;" + "case \"-r\":optStatsChanges=true;break;"
+                + "default:if(!a.startsWith(\"-\"))optPath=a;" + "try{if(a.startsWith(\"-C\"))optRounds=Integer.parseUnsignedInt(a.substring(2));}"
+                + "catch(final NumberFormatException ¢){throw ¢;}break;}");
   }
 
   @Test public void synchronizedBraces() {
@@ -3569,10 +3553,11 @@ public final class Version230 {
   @Test public void unsafeBlockSimlify() {
     trimmingOf("public void testParseInteger() {\n" + "  String source = \"10\"; use(source);\n" + "  {\n"
         + "    BigFraction c = properFormat.parse(source);\n" + "   assert c != null;\n"
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
-        + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
-        + "}")//
+        + "    azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n"
+        + "    azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "  {\n"
+        + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
+        + "    azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n"
+        + "    azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}")//
             .stays();
   }
 
