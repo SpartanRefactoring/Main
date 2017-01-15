@@ -3,24 +3,20 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code> if (a){g();}</code> into <code>if(a)g();</code>
  * @author Yossi Gil
  * @since 2016-12-14 */
-public final class JavadocEmpty extends CarefulTipper<Javadoc> implements TipperCategory.SyntacticBaggage {
+public final class JavadocEmpty extends RemovingTipper<Javadoc> implements TipperCategory.SyntacticBaggage {
   @Override public String description(@SuppressWarnings("unused") final Javadoc __) {
     return "Remove empty Javadoc comment";
   }
 
-  /**  */
   @Override public boolean prerequisite(final Javadoc ¢) {
     final List<TagElement> tags = tags(¢);
     for (final TagElement t : tags)
@@ -38,13 +34,5 @@ public final class JavadocEmpty extends CarefulTipper<Javadoc> implements Tipper
 
   private static boolean empty(final TextElement ¢) {
     return ¢.getText().replaceAll("[\\s*]", "").isEmpty();
-  }
-
-  @Override public Tip tip(final Javadoc i) {
-    return new Tip(description(i), i, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(i, g);
-      }
-    };
   }
 }
