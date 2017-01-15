@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-15 */
 public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration> implements TipperCategory.Abbreviation {
-  @Override public ASTNode replacement(TypeDeclaration d) {
+  @Override public ASTNode replacement(final TypeDeclaration d) {
     if (d.isInterface())
       return null;
     final Type t = d.getSuperclassType();
@@ -22,13 +22,13 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
         return null;
       case "Object":
       case "java.lang.Object":
-        TypeDeclaration $ = copy.of(d);
+        final TypeDeclaration $ = copy.of(d);
         $.setSuperclassType(null);
         return $;
     }
   }
 
-  @Override public String description(TypeDeclaration n) {
+  @Override public String description(final TypeDeclaration n) {
     return "Remove implicit extends " + n.getSuperclassType();
   }
 }
