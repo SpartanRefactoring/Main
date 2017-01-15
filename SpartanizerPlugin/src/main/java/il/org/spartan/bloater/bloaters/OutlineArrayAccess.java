@@ -14,24 +14,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** converts
- *
- * <pre>
- * arr[i++] = y; arr[++i] = z;
- *
- * <pre>
- * to
- *
- * <pre>
- * arr[i] = y; ++i; ++i; arr[i] = z;
- *
- * <pre>
- * does not expand if right hand side includes access index operand, such as in
- * arr[i]=i. works only on ExpressionStatement, varible declaration with
- * assignment will be treated after outlining by other expanders . Test case is
- * {@link Issue1004}
+/** 
+ * converts <pre> arr[i++] = y; arr[++i] = z; <pre> to <pre> arr[i] = y; ++i; ++i; arr[i] = z; <pre> does not expand if right hand side includes access index operand, such as in arr[i]=i. works only on ExpressionStatement, varible declaration with assignment will be treated after outlining by other expanders . Test case is {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2016-12-25 */
+ * @since 2016-12-25 
+ * [[SuppressWarningsSpartan]]
+ */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.Expander {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
@@ -63,7 +51,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements Ti
     if (!iz.expressionStatement(b) || b.getParent() == null || !iz.block(b.getParent()) || !iz.expressionStatement(b) || !iz.incrementOrDecrement(e)
         || iz.assignment(e))
       return false;
-    final SimpleName $ = az.simpleName(iz.prefixExpression(e) ? az.prefixExpression(e) : az.postfixExpression(e));
+    final SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
     if ($ == null)
       return false;
     final Expression s = expression(az.expressionStatement(b));
