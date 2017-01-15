@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.intIsIn;
+import static il.org.spartan.lisp.first;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -19,8 +21,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-
-import static il.org.spartan.lisp.first;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -303,7 +303,7 @@ public interface iz {
   /** @param n ASTNode that contains the identifier
    * @param x Expression to search the identifier in it
    * @return true if x contains the identifier of n */
-  static boolean containsName(final SimpleName n, final Expression x) {
+  static boolean containsName(final SimpleName n, final ASTNode x) {
     return !searchDescendants.forClass(SimpleName.class).suchThat(t -> step.identifier(t).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
 

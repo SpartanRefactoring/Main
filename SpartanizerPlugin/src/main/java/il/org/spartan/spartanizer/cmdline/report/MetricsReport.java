@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
 // @SuppressWarnings("unused")
 public class MetricsReport implements ConfigurableReport {
   List<ASTNode> l;
-  private static Settings settings = new Settings();
+  private static final Settings settings = new Settings();
 
   public static void initialize() {
     if (settings.getInputFolder() == null)

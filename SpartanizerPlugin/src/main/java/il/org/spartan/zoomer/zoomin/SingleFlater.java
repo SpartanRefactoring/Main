@@ -7,7 +7,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.core.dom.rewrite.*;
 import org.eclipse.jdt.internal.ui.javaeditor.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.*;
@@ -26,7 +25,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-20 */
 public class SingleFlater {
-  private static final boolean SELECT_CHANGES = false;
   private ASTNode root;
   private OperationsProvider operationsProvider;
   @Deprecated private TextSelection textSelection;
@@ -152,35 +150,8 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  /** Commits textual change and fixes the document's view on it's location,
-   * while avoiding small, unnecessary screen "jumps".
-   * @param e JD
-   * @param tc JD
-   * @param u JD
-   * @throws CoreException */
-  @Deprecated @SuppressWarnings({ "restriction", "unused" }) private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc,
-      final CompilationUnit u) throws CoreException {
-    if (!(e instanceof CompilationUnitEditor)) {
-      tc.perform(new NullProgressMonitor());
-      return true;
-    }
-    final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
-    if (!(v instanceof ProjectionViewer)) {
-      tc.perform(new NullProgressMonitor());
-      return true;
-    }
-    final ProjectionViewer pv = (ProjectionViewer) v;
-    final LineInformation i = LineInformation.create(u);
-    final int ob = pv.getBottomIndex(), ot = pv.getTopIndex(), cb = i.getLineOfOffset(tc.getEdit().getOffset() + tc.getEdit().getLength()),
-        ct = i.getLineOfOffset(tc.getEdit().getOffset());
-    tc.perform(new NullProgressMonitor());
-    e.selectAndReveal(tc.getEdit().getOffset(), !SELECT_CHANGES ? 0 : tc.getEdit().getLength());
-    if (pv.getTopIndex() != ot && ot <= ct && ob >= cb)
-      pv.setTopIndex(ot);
-    return true;
-  }
-
-  @SuppressWarnings("restriction") private static boolean changeNFocus(ITextEditor e, TextFileChange tc, WindowInformation i) throws CoreException {
+  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i)
+      throws CoreException {
     if (i == null || !(e instanceof CompilationUnitEditor) || e.getSelectionProvider() == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -192,14 +163,14 @@ public class SingleFlater {
     }
     final ProjectionViewer pv = (ProjectionViewer) v;
     tc.perform(new NullProgressMonitor());
-    pv.setTopIndex(i.startLine);
     e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
+    pv.setTopIndex(i.startLine);
     return false;
   }
 
-  private boolean inWindow(ASTNode ¢) {
+  private boolean inWindow(final ASTNode ¢) {
     return windowInformation == null
-        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && (¢.getLength() + ¢.getStartPosition()) <= windowInformation.endChar;
+        || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
   }
 
   /** describes a single change operation, containing both an {@link ASTNode}
@@ -216,9 +187,9 @@ public class SingleFlater {
       tipper = t;
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> tipper) {
-      return new Operation<>(node, tipper);
+    /**  */
+    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> n) {
+      return new Operation<>(node, n);
     }
   }
 

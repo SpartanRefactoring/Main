@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public final class BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
-  public static ITypeBinding container(final ASTNode ¢) {
+  private static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = hop.containerType(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 
   /** @param compilationUnit current compilation unit
    * @return current package */
-  public static IPackageBinding getPackage(final CompilationUnit ¢) {
+  private static IPackageBinding getPackage(final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
   }
 
@@ -48,7 +48,7 @@ public final class BindingUtils {
    * @param u current {@link CompilationUnit}
    * @return <code><b>true</b></code> <em>iff</em> method is visible from its
    *         context */
-  public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
+  private static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
     final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
       return true;

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Utility class for dialogs management.
  * @author Ori Roth
  * @since 2.6 */
-public class Dialogs {
+class Dialogs {
   /** Title used for dialogs. */
   private static final String NAME = "Laconic";
   /** Path of the {@link Dialogs#icon} used for dialogs. */
@@ -34,7 +34,7 @@ public class Dialogs {
   /** Logo used for dialogs. */
   private static Image logo;
   /** Id for run in background button. */
-  public static final int RIB_ID = 2;
+  private static final int RIB_ID = 2;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */

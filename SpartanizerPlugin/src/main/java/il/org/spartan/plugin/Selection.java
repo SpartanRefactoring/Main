@@ -167,8 +167,6 @@ public class Selection extends AbstractSelection<Selection> {
     private static final String SELECTION_NAME = "selection";
     /** Default name for default package selections. */
     private static final String DEFAULT_PACKAGE_NAME = "(default package)";
-    /** Default name for multi selection. */
-    @Deprecated @SuppressWarnings("unused") private static final String MULTI_SELECTION_NAME = "selections";
 
     /** @return selection of current compilation unit */
     public static Selection getCurrentCompilationUnit() {
@@ -357,12 +355,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      List<MarkerItem> is = new LinkedList<>();
-      List<IJavaProject> ps = new LinkedList<>();
-      List<IPackageFragmentRoot> rs = new LinkedList<>();
-      List<IPackageFragment> hs = new LinkedList<>();
-      List<ICompilationUnit> cs = new LinkedList<>();
-      List<IMember> ms = new LinkedList<>();
+      final List<MarkerItem> is = new LinkedList<>();
+      final List<IJavaProject> ps = new LinkedList<>();
+      final List<IPackageFragmentRoot> rs = new LinkedList<>();
+      final List<IPackageFragment> hs = new LinkedList<>();
+      final List<ICompilationUnit> cs = new LinkedList<>();
+      final List<IMember> ms = new LinkedList<>();
       for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
@@ -479,8 +477,8 @@ public class Selection extends AbstractSelection<Selection> {
      * @param us list of files in selection
      * @param ms list of members in selection
      * @return name for the selection */
-    private static String getMultiSelectionName(List<MarkerItem> is, List<IJavaProject> ps, List<IPackageFragmentRoot> rs, List<IPackageFragment> hs,
-        List<ICompilationUnit> us, List<IMember> ms) {
+    private static String getMultiSelectionName(final List<MarkerItem> is, final List<IJavaProject> ps, final List<IPackageFragmentRoot> rs,
+        final List<IPackageFragment> hs, final List<ICompilationUnit> us, final List<IMember> ms) {
       final List<String> $ = new LinkedList<>();
       for (final IJavaProject ¢ : ps)
         $.add(¢.getElementName());

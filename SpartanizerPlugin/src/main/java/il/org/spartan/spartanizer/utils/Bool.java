@@ -21,7 +21,7 @@ public final class Bool {
     return set(true);
   }
 
-  Bool set(final boolean ¢) {
+  private Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }

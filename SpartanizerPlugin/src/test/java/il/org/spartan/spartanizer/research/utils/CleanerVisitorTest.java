@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.utils;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -8,7 +10,6 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
-import static il.org.spartan.lisp.*;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7
@@ -16,7 +17,7 @@ import static il.org.spartan.lisp.*;
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
   private class ASTNodeWrapper {
-    public ArrayList<ASTNode> inner;
+    public final ArrayList<ASTNode> inner;
 
     public ASTNodeWrapper() {
       inner = new ArrayList<>();
@@ -27,11 +28,11 @@ public class CleanerVisitorTest {
     return wizard.ast(¢);
   }
 
-  static Predicate<ASTNode> createImportPredicate() {
+  private static Predicate<ASTNode> createImportPredicate() {
     return (p) -> p instanceof ImportDeclaration;
   }
 
-  static Predicate<ASTNode> createJavadocPredicate() {
+  private static Predicate<ASTNode> createJavadocPredicate() {
     return (p) -> p instanceof Javadoc;
   }
 

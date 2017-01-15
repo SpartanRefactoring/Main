@@ -33,7 +33,7 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return this */
-  public CommandLineApplicator defaultListenerSilent() {
+  private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {
       //
     });
@@ -41,7 +41,7 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return this */
-  public CommandLineApplicator defaultPassesFew() {
+  private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
@@ -59,7 +59,7 @@ public class CommandLineApplicator extends Applicator {
   // - we will inspect it once we meet. --or
   /** Applies {@link Spartanizer$Applicator} by default.
    * @return this */
-  public CommandLineApplicator defaultRunAction() {
+  private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
     setRunAction(u -> Integer.valueOf(new Spartanizer$Applicator().apply(u, selection()) ? 1 : 0));
     return this;
@@ -101,13 +101,13 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return this */
-  public CommandLineApplicator defaultRunContext() {
+  private CommandLineApplicator defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
 
   /** @return this */
-  CommandLineApplicator defaultSelection() {
+  private CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
   }

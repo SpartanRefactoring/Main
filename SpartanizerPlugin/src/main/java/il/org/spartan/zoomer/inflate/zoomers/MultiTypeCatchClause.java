@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Issue #970 <br/>
  * <br/>
@@ -23,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
  * catch(Type1 e){block}catch(Type2 e){block}
  * </pre>
- * 
+ *
  * Tested in {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
@@ -32,6 +33,8 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> imple
     final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
+    // TODO: Ori Roth, this is a perfect example for extract method, which would
+    // simpify the code
     for (; i < catches.size(); ++i)
       if (iz.unionType(catches.get(i).getException().getType())) {
         multiTypeCatch = copy.of(catches.get(i));

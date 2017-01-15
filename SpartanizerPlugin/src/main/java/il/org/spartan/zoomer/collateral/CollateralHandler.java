@@ -10,7 +10,7 @@ import il.org.spartan.zoomer.*;
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
-public class CollateralHandler extends AbstractHandler {
+class CollateralHandler extends AbstractHandler {
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     applicator().defaultSelection().go();
     return null;

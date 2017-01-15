@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -14,7 +16,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.lisp.*;
 
 /** convert
  *
@@ -97,7 +98,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     return $.inner;
   }
 
-  static SimpleName peelIdentifier(final Statement s, final String id) {
+  private static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
     return $.size() != 1 ? null : first($);
   }

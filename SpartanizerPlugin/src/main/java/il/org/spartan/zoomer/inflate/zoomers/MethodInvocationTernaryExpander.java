@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue0984} Issue #984 convert
  * <code> o.f(x ? a : b); </code> to <code> if (x) o.f(a); else o.f(b); </code>
@@ -17,10 +18,12 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
     final Expression e = s.getExpression();
     if (!(e instanceof MethodInvocation))
       return null;
+    // TODO: Tomer Dragucki rewrite your code using class 'az' and 'iz' --yg
     final MethodInvocation i = (MethodInvocation) e;
     final ConditionalExpression c = getFirstCond(i);
     if (c == null)
       return null;
+    // TODO: omer Dragucki rewrite your code using subject.pairt()....
     final IfStatement $ = i.getAST().newIfStatement();
     $.setExpression(copy.of(c.getExpression()));
     final MethodInvocation mThen = copy.of(i);
@@ -36,6 +39,8 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }
+  // TODO: Tomer Dragucki use class step if necessary and remove
+  // @SuppressWarnings("unchecked") --yg
 
   @SuppressWarnings("unchecked") private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
     for (final Expression $ : (List<Expression>) ¢.arguments())

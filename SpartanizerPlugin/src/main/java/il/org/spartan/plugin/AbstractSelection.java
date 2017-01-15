@@ -43,14 +43,14 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     return self();
   }
 
-  @SuppressWarnings("unchecked") public Self self() {
+  @SuppressWarnings("unchecked") private Self self() {
     return (Self) this;
   }
 
   /** Set name for this selection.
    * @param ¢ JD
    * @return this selection */
-  public Self setName(final String ¢) {
+  Self setName(final String ¢) {
     name = ¢;
     return self();
   }
@@ -58,7 +58,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Add a compilation unit for this selection.
    * @param ¢ JD
    * @return this selection */
-  public Self add(final WrappedCompilationUnit ¢) {
+  Self add(final WrappedCompilationUnit ¢) {
     if (¢ != null)
       inner.add(¢);
     return self();
@@ -76,16 +76,15 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
-  public Self add(final WrappedCompilationUnit... us) {
-    for (final WrappedCompilationUnit ¢ : us)
-      inner.add(¢);
+  public Self add(final WrappedCompilationUnit... ¢) {
+    Collections.addAll(inner, ¢);
     return self();
   }
 
   /** Extend current selection using compilation units from another selection.
    * @param ¢ JD
    * @return this selection */
-  public Self unify(final Self ¢) {
+  Self unify(final Self ¢) {
     if (¢ != null && ¢.inner != null) {
       if (inner == null)
         inner = new ArrayList<>();
@@ -94,7 +93,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     return self();
   }
 
-  public Self setIsTextSelection(final boolean isTextSelection) {
+  Self setIsTextSelection(final boolean isTextSelection) {
     this.isTextSelection = isTextSelection;
     return self();
   }

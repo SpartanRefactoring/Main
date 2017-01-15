@@ -18,9 +18,9 @@ import il.org.spartan.spartanizer.java.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0294 {
-  Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
-  EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
-  BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
+  final Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
+  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
+  final BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
 
   /** Correct way of trimming does not change */
   @Test public void a() {

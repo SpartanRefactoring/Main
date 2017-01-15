@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -15,13 +16,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.lisp.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
  * @author Yossi Gil
  * @year 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
-  public static int indexForLeftEvaluation(final InfixExpression x) {
+  private static int indexForLeftEvaluation(final InfixExpression x) {
     int $ = 0;
     for (final Expression ¢ : extract.allOperands(x)) {
       if (!iz.number(¢))
@@ -31,7 +31,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return 0;
   }
 
-  public static int indexForRightEvaluation(final InfixExpression x) {
+  private static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(es.get(¢)))

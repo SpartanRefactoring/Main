@@ -20,7 +20,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
   /** Initialize mapping according to specific events defined in the enum.
    * @param enumClass contains possible events for this listener */
-  public EventMapper(final Class<? extends E> enumClass) {
+  EventMapper(final Class<? extends E> enumClass) {
     super(enumClass);
     eventMap = new HashMap<>();
     recorders = new HashMap<>();
@@ -78,14 +78,14 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * than update it. */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
-      /** [[SuppressWarningsSpartan]] */
-      @Override public void update(final Map<E, Object> m) {
-        consumer.accept(m);
+      /**  */
+      @Override public void update(final Map<E, Object> ¢1) {
+        consumer.accept(¢1);
       }
 
-      /** [[SuppressWarningsSpartan]] */
-      @Override public void update(final Map<E, Object> m, final Object o) {
-        biConsumer.accept(m, o);
+      /**  */
+      @Override public void update(final Map<E, Object> e, final Object o) {
+        biConsumer.accept(e, o);
       }
     };
   }
@@ -96,14 +96,14 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * @since 2.6 */
   public static class EventFunctor<E, P, O> {
     /** The event covered by this functor. */
-    protected final E domain;
+    final E domain;
     /** Whether or not the value mapped in {@link EventMapper#eventMap} for
      * {@link EventFunctor#domain} has been initialized. */
     boolean initialized;
     /** Initialization value for {@link EventMapper#eventMap}. */
-    protected P initialization;
+    P initialization;
     /** Initialization supplier for {@link EventMapper#eventMap}. */
-    protected Supplier<P> initializationSupplier;
+    Supplier<P> initializationSupplier;
 
     /** Creates a functor for a specific event.
      * @param domain the event covered by this functor. */
@@ -117,7 +117,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** @return initialization value for this functor, either from
      *         {@link EventFunctor#initialization} or from
      *         {@link EventFunctor#initializationSupplier}. */
-    protected Object initializeValue() {
+    Object initializeValue() {
       assert !initialized;
       initialized = true;
       Object $;
@@ -275,14 +275,11 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           .does((x, u) -> u);
     }
 
-    /** Counts calls of this event. Conducts casting.
-     * [[SuppressWarningsSpartan]] */
+    /** Counts calls of this event. Conducts casting. */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
       return ((EventMapperFunctor<E, Int, Int>) this) //
           .startWith(new Int()) //
-          .does(c -> {
-            c.incrementAndGet();
-          });
+          .does(c -> c.incrementAndGet());
     }
   }
 

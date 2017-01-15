@@ -43,7 +43,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.that(in.f(1) & 1, is(0));
@@ -103,7 +103,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.that(in.f(1) | 1, is(3));
@@ -143,7 +143,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.that(in.f(1) ^ 1, is(3));
@@ -195,7 +195,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.nay(in.f(true) & true);
@@ -235,7 +235,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.nay(in.f(true) & true);
@@ -287,7 +287,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.aye(in.f(false) | false);
@@ -327,7 +327,7 @@ public class Issue0177 {
         }
       }
 
-      Inner in = new Inner(0);
+      final Inner in = new Inner(0);
 
       Class() {
         azzert.that(in.f(1) | 1, is(3));

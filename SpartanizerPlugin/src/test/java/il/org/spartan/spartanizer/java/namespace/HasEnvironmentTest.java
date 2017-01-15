@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -28,7 +29,7 @@ public class HasEnvironmentTest extends ReflectiveTester {
     ;
   }
 
-  private static Set<String> signature = new HashSet<>();
+  private static final Set<String> signature = new HashSet<>();
 
   private static Collection<Object[]> collect(final ReflectiveTester... ts) {
     signature.clear();

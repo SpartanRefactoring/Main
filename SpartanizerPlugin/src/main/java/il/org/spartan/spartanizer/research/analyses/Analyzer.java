@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 /** @author Ori Marcovitch
  * @since Nov 3, 2016 */
-public abstract class Analyzer<T> {
+abstract class Analyzer<T> {
   protected abstract int metric(ASTNode n);
 
   public abstract void logMethod(MethodDeclaration before, MethodDeclaration after);
@@ -16,11 +16,11 @@ public abstract class Analyzer<T> {
 
   public abstract void printAccumulated();
 
-  protected static Integer Integer(final int ¢) {
+  static Integer Integer(final int ¢) {
     return Integer.valueOf(¢);
   }
 
-  protected int getMax(final Map<Integer, T> i) {
+  int getMax(final Map<Integer, T> i) {
     return i.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
   }
 
@@ -28,7 +28,7 @@ public abstract class Analyzer<T> {
    * If double is double, leaves only 2 first digits.
    * @param ¢
    * @return */
-  protected static String tidy(final double ¢) {
+  static String tidy(final double ¢) {
     int $ = 0;
     final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))

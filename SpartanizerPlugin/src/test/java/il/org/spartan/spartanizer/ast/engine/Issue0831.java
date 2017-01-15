@@ -1,5 +1,8 @@
 package il.org.spartan.spartanizer.ast.engine;
 
+import static il.org.spartan.lisp.*;
+import static org.junit.Assert.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -7,8 +10,6 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import static il.org.spartan.lisp.*;
-import static org.junit.Assert.*;
 
 /** see Issue #831 for more details
  * @author Lidia Piatigorski
@@ -26,8 +27,8 @@ public class Issue0831 {
     }
   }
 
-  MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
+  final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
     String body = "";

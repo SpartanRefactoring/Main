@@ -83,7 +83,7 @@ public enum eclipse {
     return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
   }
 
-  public static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
+  private static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
       throws JavaModelException {
     int $ = 0;
     m.worked(1);
@@ -105,7 +105,7 @@ public enum eclipse {
     return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
 
-  public static List<ICompilationUnit> done(final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
+  private static List<ICompilationUnit> done(final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
     pm.done();
     announce(message);
     return $;
@@ -155,15 +155,15 @@ public enum eclipse {
     return null;
   }
 
-  public static ASTNode find(final ICompilationUnit u, final int start, final int end) {
+  private static ASTNode find(final ICompilationUnit u, final int start, final int end) {
     return new NodeFinder(createAST(u), start, end - start).getCoveredNode();
   }
 
-  public static ASTNode createAST(final ICompilationUnit ¢) {
+  private static ASTNode createAST(final ICompilationUnit ¢) {
     return Make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
-  public static int int¢(final IMarker m, final String name) throws CoreException {
+  private static int int¢(final IMarker m, final String name) throws CoreException {
     return az.int¢(m.getAttribute(name));
   }
 

@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -30,7 +32,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     assert $ != null;
     if (in($.getIdentifier(), "$", "¢", "__", "_"))
       return null;
-    final Block b = c.getBody();
+    final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)

@@ -31,12 +31,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements TipperCategory.CommnoFactoring {
-  static Expression extractRight(final Assignment ¢) {
-    final Expression $ = extract.core(from(¢));
-    return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
+  private static Expression extractRight(final Assignment ¢) {
+    return extract.core(from(¢));
   }
 
-  static Expression getRight(final Assignment ¢) {
+  private static Expression getRight(final Assignment ¢) {
     return ¢.getOperator() != ASSIGN ? null : extractRight(¢);
   }
 

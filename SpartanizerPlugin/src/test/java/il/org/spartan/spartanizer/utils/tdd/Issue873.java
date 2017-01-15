@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "boxing" })
 public class Issue873 {
   class MyType {
-    int i;
+    final int i;
 
     MyType(final int val) {
       i = val;

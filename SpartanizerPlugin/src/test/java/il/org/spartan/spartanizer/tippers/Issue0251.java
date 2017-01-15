@@ -22,7 +22,7 @@ public class Issue0251 {
 
   @Test public void t02() {
     trimmingOf("if(b){int i;int b; b=i+1;g();}")//
-        .gives("if(!b)return;int i;int b=i+1;b=i+1;g();");
+        .gives("if(!b)return;int i;int b;b=i+1;g();");
   }
 
   @Test public void t03() {

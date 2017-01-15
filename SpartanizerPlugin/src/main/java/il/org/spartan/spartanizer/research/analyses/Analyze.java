@@ -25,11 +25,11 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyze {
-  {
+  static {
     set("outputDir", "/tmp");
   }
   private static InteractiveSpartanizer spartanizer;
-  @SuppressWarnings("rawtypes") private static Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
+  @SuppressWarnings("rawtypes") private static final Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
     static final long serialVersionUID = 1L;
     {
       put("AvgIndicatorMetrical", new AvgIndicatorMetricalAnalyzer());
