@@ -49,15 +49,19 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   /** @param d JD
    * @param ds variables list
-   * @return <code><b>true</b></code> <em>iff</em> the method and the list
-   *         contains same variables, in matters of type and quantity */
+   * @return <code><b>true</b></code> <em>iff</em> the method and the
+   *         listcontains same variables, in matters of type and quantity
+   *         [[SuppressWarningsSpartan]] */
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
-        : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
+    final List<String> ts = ds.stream()
+        .map(
+            ¢ -> (iz.singleVariableDeclaration(¢) ? (az.singleVariableDeclaration(¢)).getType() : az.variableDeclrationStatement(parent(¢)).getType())
+                + "")
+        .collect(Collectors.toList());
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
