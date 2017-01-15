@@ -1,6 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.azzert.*;
+
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author Sharon Kuninin
  * @author Yarden Lev
@@ -8,76 +12,99 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "deprecation" })
 public class systemTest {
   @Test public void blockCommentIsRemoved() {
-    Assert.assertEquals("int a=0;", system.essence("int a = 0; /* I am a block comment */"));
+    azzert.that(system.essence("int a = 0; /* I am a block comment */"), is("int a=0;"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void blockCommentIsRemoved2() {
-    Assert.assertEquals("++a;", system.essence("++a; /** Another block comment **/"));
+    azzert.that(system.essence("++a; /** Another block comment **/"), is("++a;"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void blockCommentIsRemoved3() {
-    Assert.assertEquals("double a=0.0;", system.essence("double a = 0.0; /* block comment **/"));
+    azzert.that(system.essence("double a = 0.0; /* block comment **/"), is("double a=0.0;"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void blockCommentIsRemoved4() {
-    Assert.assertEquals("c=a+b;", system.essence("c = a + b; /** This will be removed */"));
+    azzert.that(system.essence("c = a + b; /** This will be removed */"), is("c=a+b;"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void emptyLine() {
-    Assert.assertEquals("", system.essence("        \n"));
+    azzert.that(system.essence("        \n"), is(""));
+    // TODO Auto-generated method stub
   }
 
   @Test public void fiveWords() {
-    Assert.assertEquals(5, system.wc("hello world how are you?"));
+    azzert.that(system.wc("hello world how are you?"), is(5));
+    // TODO Auto-generated method stub
   }
 
   @Test public void lineCommentIsRemoved() {
-    Assert.assertEquals("int a;", system.essence("int a;// I am a line comment\r\n"));
+    azzert.that(system.essence("int a;// I am a line comment\r\n"), is("int a;"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void noWords() {
-    Assert.assertEquals(0, system.wc(""));
+    azzert.that(system.wc(""), is(0));
+    // TODO Auto-generated method stub
   }
 
   @Test public void oneWord() {
-    Assert.assertEquals(1, system.wc("hello"));
+    azzert.that(system.wc("hello"), is(1));
+    // TODO Auto-generated method stub
   }
 
   @Test public void spaceIsRemovedBetweenLetterAndNonLetter() {
-    Assert.assertEquals("a3", system.essence("a 3"));
-    Assert.assertEquals("a=", system.essence("a ="));
-    Assert.assertEquals("a-", system.essence("a -"));
+    azzert.that(system.essence("a 3"), is("a3"));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("a ="), is("a="));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("a -"), is("a-"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void spaceIsRemovedBetweenNonLetterAndLetter() {
-    Assert.assertEquals("2b", system.essence("2 b"));
-    Assert.assertEquals("!some_boolean", system.essence("! some_boolean"));
-    Assert.assertEquals("-some_int", system.essence("- some_int"));
+    azzert.that(system.essence("2 b"), is("2b"));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("! some_boolean"), is("!some_boolean"));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("- some_int"), is("-some_int"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void spaceIsRemovedBetweenNonLetters() {
-    Assert.assertEquals("23", system.essence("2 3"));
-    Assert.assertEquals("3213333", system.essence("321 3333"));
-    Assert.assertEquals("-=", system.essence("- ="));
+    azzert.that(system.essence("2 3"), is("23"));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("321 3333"), is("3213333"));
+    // TODO Auto-generated method stub
+    azzert.that(system.essence("- ="), is("-="));
+    // TODO Auto-generated method stub
   }
 
   @Test public void tabIsRemoved() {
-    Assert.assertEquals("a b", system.essence("a \t  b \t"));
+    azzert.that(system.essence("a \t  b \t"), is("a b"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void tabIsRemoved2() {
-    Assert.assertEquals("a b", system.essence("a  b \t\n"));
+    azzert.that(system.essence("a  b \t\n"), is("a b"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void twoSpaces() {
-    Assert.assertEquals("a a", system.essence("a  a"));
+    azzert.that(system.essence("a  a"), is("a a"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void whitespacesAreRemovedFromEOL() {
-    Assert.assertEquals("a b c d", system.essence("a b c d    \n"));
+    azzert.that(system.essence("a b c d    \n"), is("a b c d"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void zeroIsReturnedForNull() {
-    Assert.assertEquals(0, system.wc(null));
+    azzert.that(system.wc(null), is(0));
+    // TODO Auto-generated method stub
   }
 }
