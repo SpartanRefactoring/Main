@@ -279,9 +279,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
       return ((EventMapperFunctor<E, Int, Int>) this) //
           .startWith(new Int()) //
-          .does(c -> {
-            c.incrementAndGet();
-          });
+          .does(c -> c.incrementAndGet());
     }
   }
 

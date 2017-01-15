@@ -97,7 +97,7 @@ public class SwitchBranch {
   }
   public boolean compareTo(final SwitchBranch ¢) {
     boolean $ = compare(¢);
-    return $ == ¢.compare(this) ? (lisp.first(cases) + "").compareTo((lisp.first(¢.cases()) + "")) < 0 : $;
+    return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo((lisp.first(¢.cases()) + "")) < 0;
   }
 
   private void addAll(final List<Statement> ss) {

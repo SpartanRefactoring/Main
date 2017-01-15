@@ -32,8 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements TipperCategory.CommnoFactoring {
   private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = extract.core(from(¢));
-    return $;
+    return extract.core(from(¢));
   }
 
   private static Expression getRight(final Assignment ¢) {

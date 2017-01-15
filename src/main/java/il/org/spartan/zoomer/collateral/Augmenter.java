@@ -136,8 +136,8 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    for (final ImportDeclaration d : step.imports(u))
-      if (d.getName().getFullyQualifiedName().equals(s))
+    for (final ImportDeclaration ¢ : step.imports(u))
+      if (¢.getName().getFullyQualifiedName().equals(s))
         return true;
     return false;
   }
