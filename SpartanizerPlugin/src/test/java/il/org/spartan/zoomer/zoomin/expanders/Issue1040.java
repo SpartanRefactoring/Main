@@ -1,14 +1,14 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
- * {@link BoatingTestUtilities} .
+ * {@link BloatingTestUtilities} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
 @Ignore // This is only for demostration it doesn't suppose to work
