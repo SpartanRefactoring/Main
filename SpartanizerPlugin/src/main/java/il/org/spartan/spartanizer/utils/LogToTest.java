@@ -104,14 +104,14 @@ public class LogToTest {
 
   /**  */
   private static String wrap(final List<String> ss, final String fileName) {
-    final StringBuilder b = new StringBuilder(
+    final StringBuilder $ = new StringBuilder(
         "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
             + "import org.junit.*;\n\n" + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@Ignore\n" //
             + "public class " + fileName + " {\n");
-    for (final String t : ss)
-      b.append(t).append("\n");
-    return format.code(b.append("}\n") + "");
+    for (final String ¢ : ss)
+      $.append(¢).append("\n");
+    return format.code($.append("}\n") + "");
   }
 }
