@@ -58,10 +58,10 @@ public final class Issue0209 {
   }
 
   @Test public void issue54_04() {
-    trimmingOf("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
-        .gives("switch(x.toString()){ case \"1\": case \"2\": return; default: return; }")
-        .gives("switch(x.toString()){ case \"1\": case \"2\": default: return; }")//
-        .gives("switch(\"\" + x){ case \"1\": default: return; }");
+    trimmingOf("switch(x.toString()){ case \"1\":y=2; return; case \"2\":y=2; return; default:  y=2;return; }")
+        .gives("switch(x.toString()){ case \"1\": case \"2\":y=2; return; default: y=2; return; }")
+        .gives("switch(x.toString()){ case \"1\": case \"2\": default: y=2; return; }")//
+        .gives("switch(\"\" + x){ case \"1\": default:y=2; return; }");
   }
 
   @Test public void issue54_05() {
