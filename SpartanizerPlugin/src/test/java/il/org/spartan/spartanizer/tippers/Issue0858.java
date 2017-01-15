@@ -52,8 +52,7 @@ public class Issue0858 {
 
   @Test public void j() {
     trimmingOf("switch(x){case a:switch(y){case a:y=1;}break;case d:switch(y){case b:y=1;}break;"
-        + "case b:x=2;switch(y){case a:y=1;}break;case c:z=3;x=2;switch(y){case a:y=1;}break;}")
-    .stays();
+        + "case b:x=2;switch(y){case a:y=1;}break;case c:z=3;x=2;switch(y){case a:y=1;}break;}").stays();
   }
 
   @Test public void k() {

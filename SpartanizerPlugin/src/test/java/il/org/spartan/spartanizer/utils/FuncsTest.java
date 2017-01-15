@@ -56,7 +56,8 @@ public final class FuncsTest {
   @Test public void asComparisonTypicalInfixIsCorrect() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    assertEquals(i, az.comparison(i));
+    azzert.that(az.comparison(i), is(i));
+    // TODO Auto-generated method stub
   }
 
   @Test public void asComparisonTypicalInfixIsNotNull() {
@@ -66,7 +67,8 @@ public final class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", right(i("a == true == b == c")) + "");
+    azzert.that(right(i("a == true == b == c")) + "", is("c"));
+    // TODO Auto-generated method stub
   }
 
   @Test public void countNonWhiteCharacters() {
