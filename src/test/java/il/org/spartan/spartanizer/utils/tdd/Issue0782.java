@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author rodedzats
  * @author zivizhar
  * @since Nov 8, 2016 */
-public class Issue782 {
+public class Issue0782 {
   @Test @SuppressWarnings("static-method") public void check2PrivatesName() {
     final List<String> names = getAll
         .privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; private int y;}")))));

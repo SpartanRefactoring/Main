@@ -6,7 +6,7 @@ import org.junit.*;
  * @author kobybs
  * @since 27-11-2016 */
 @SuppressWarnings({ "static-method" })
-public class Issue872 {
+public class Issue0872 {
   @Test public void test0() {
     final boolean generateName = new ParameterBool(false).boolValue();
     assert !generateName;

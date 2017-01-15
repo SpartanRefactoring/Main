@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Sapir Bismot
  * @author Yaniv Levinsky */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class Issue706 {
+public class Issue0706 {
   @Test public void test00() {
     getAll2.stringVariables((MethodDeclaration) null);
   }

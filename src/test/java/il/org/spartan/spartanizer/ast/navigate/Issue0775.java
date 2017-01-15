@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Nov 3, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue775 {
+public class Issue0775 {
   @Test public void a() {
     azzert.that(type(az.typeDeclaration(findFirst.typeDeclaration(ast("class C{}")))) + "", is("C"));
   }

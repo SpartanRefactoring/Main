@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Nov 3, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue763 {
+public class Issue0763 {
   @Test public void a() {
     azzert.that(analyze.type(first(searchDescendants.forClass(Name.class).suchThat(x -> "x".equals(x + "") && iz.methodInvocation(x.getParent()))
         .from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")))), is("Map"));

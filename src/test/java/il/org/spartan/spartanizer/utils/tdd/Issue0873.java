@@ -10,7 +10,7 @@ import il.org.spartan.*;
  * @author kobybs
  * @since 27-11-2016 */
 @SuppressWarnings({ "static-method" })
-public class Issue873 {
+public class Issue0873 {
   class MyType {
     final int i;
 
