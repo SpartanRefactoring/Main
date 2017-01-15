@@ -29,11 +29,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class RemoveRedundantSwitchBranch extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @Override public ASTNode replacement(SwitchStatement s) {
-    List<SwitchBranch> $ = SwitchBranch.intoBranches(s);
-    for(int i = 0; i < $.size(); ++i)
-      for(int j = i + 1; j < $.size(); ++j)
-        if($.get(i).hasSameCode($.get(j))) {
+  @Override public ASTNode replacement(final SwitchStatement s) {
+    final List<SwitchBranch> $ = SwitchBranch.intoBranches(s);
+    for (int i = 0; i < $.size(); ++i)
+      for (int j = i + 1; j < $.size(); ++j)
+        if ($.get(i).hasSameCode($.get(j))) {
           $.get(i).cases().addAll($.get(j).cases());
           $.remove(j);
           return SwitchBranch.makeSwitchStatement($, step.expression(s), s.getAST());
