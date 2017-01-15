@@ -358,20 +358,19 @@ public class Matcher {
   }
 
   /**  */
-  private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> enviroment) {
+  private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> $) {
     if (startsWith$notBlock(p))
-      enviroment.put(p + "", n + "");
+      $.put(p + "", n + "");
     else if (isBlockVariable(p))
-      enviroment.put(blockVariableName(p) + "();", n + "");
+      $.put(blockVariableName(p) + "();", n + "");
     else {
       if (isMethodInvocationAndHas$AArgument(p))
-        enviroment.put(argumentsId(p), matchingArguments(n) + "");
-      final List<ASTNode> pChildren = iz.infixExpression(p) ? infixExpressionOperands(p) : allChildren(p, p);
-      final List<ASTNode> nChildren = iz.infixExpression(p) ? infixExpressionOperands(n) : allChildren(n, p);
+        $.put(argumentsId(p), matchingArguments(n) + "");
+      final List<ASTNode> pChildren = !iz.infixExpression(p) ? allChildren(p, p) : infixExpressionOperands(p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-        collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
+        collectEnviroment(pChildren.get(¢), (!iz.infixExpression(p) ? allChildren(n, p) : infixExpressionOperands(n)).get(¢), $);
     }
-    return enviroment;
+    return $;
   }
 
   @SuppressWarnings("unchecked") private static List<ASTNode> infixExpressionOperands(final ASTNode p) {
@@ -395,20 +394,19 @@ public class Matcher {
   }
 
   /**  */
-  private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
+  private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> $) {
     if (is$X(p))
-      enviroment.put(name(az.methodInvocation(p)) + "", n);
+      $.put(name(az.methodInvocation(p)) + "", n);
     else if (startsWith$notBlock(p))
-      enviroment.put(p + "", n);
+      $.put(p + "", n);
     else if (isBlockVariable(p))
-      enviroment.put(blockVariableName(p), n);
+      $.put(blockVariableName(p), n);
     else {
       final List<ASTNode> pChildren = allChildren(p, p);
-      final List<ASTNode> nChildren = allChildren(n, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-        collectEnviromentNodes(pChildren.get(¢), nChildren.get(¢), enviroment);
+        collectEnviromentNodes(pChildren.get(¢), allChildren(n, p).get(¢), $);
     }
-    return enviroment;
+    return $;
   }
 
   private static String argumentsId(final ASTNode p) {
