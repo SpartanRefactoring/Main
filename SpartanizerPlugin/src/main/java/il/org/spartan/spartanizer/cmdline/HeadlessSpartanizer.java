@@ -39,12 +39,14 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @Override public void apply() {
     try {
       
+      System.out.println(ReportGenerator.metricsMap().get("methods"));
+      
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".before.java", "before");
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".halstead.CSV", "halstead");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".methods.CSV", "methods");
 
       final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator();
       
@@ -66,7 +68,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.close("metrics");
       ReportGenerator.close("spectrum");
       ReportGenerator.close("tips");
-      ReportGenerator.close("halstead");
+      ReportGenerator.close("methods");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
       System.err.println("commandLineApplicator: " + "Done!");
