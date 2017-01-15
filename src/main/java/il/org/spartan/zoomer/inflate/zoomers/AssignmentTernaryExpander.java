@@ -20,12 +20,14 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
       ¢ = az.conditionalExpression(x);
     else {
       final Expression unpar = az.parenthesizedExpression(x).getExpression();
+      // TODO: Raviv Rachmiel you do not need this test! az does it for you --yg
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
     }
     if (¢ == null)
       return null;
+    // TODO: Raviv use class subject --yg
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(copy.of(¢.getExpression()));
     final Assignment then = ¢.getAST().newAssignment();

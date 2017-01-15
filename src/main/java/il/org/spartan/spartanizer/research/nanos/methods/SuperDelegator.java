@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
-import static il.org.spartan.spartanizer.research.TipperFactory.patternTipper;
 
 /** @author Ori Marcovitch
  * @since 2016 */

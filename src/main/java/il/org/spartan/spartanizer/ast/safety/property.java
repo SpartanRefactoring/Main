@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.safety;
 import org.eclipse.jdt.core.dom.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-27 [[SuppressWarningsSpartan]] */
+ * @since 2016-12-27 */
 public enum property {
   ;
   public interface Attached {
@@ -40,10 +40,10 @@ public enum property {
     return ¢.getCanonicalName();
   }
 
-  public static <N> Obtainer<N> obtain(final Class<N> c) {
+  public static <N> Obtainer<N> obtain(final Class<N> n) {
     return new Obtainer<N>() {
-      @Override @SuppressWarnings("unchecked") public N from(final ASTNode n) {
-        return (N) n.getProperty(key(c));
+      @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
+        return (N) ¢.getProperty(key(n));
       }
     };
   }

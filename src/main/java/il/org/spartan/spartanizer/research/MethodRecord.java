@@ -12,15 +12,15 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class MethodRecord {
-  public String methodName;
-  public String methodClassName;
+  public final String methodName;
+  public final String methodClassName;
   public int numNPStatements;
   public int numNPExpressions;
-  public List<String> nps = new ArrayList<>();
-  public int numParameters;
-  public int numStatements;
-  public int numExpressions;
-  public MethodDeclaration before;
+  public final List<String> nps = new ArrayList<>();
+  public final int numParameters;
+  public final int numStatements;
+  public final int numExpressions;
+  public final MethodDeclaration before;
   public MethodDeclaration after;
 
   public MethodRecord(final MethodDeclaration d) {

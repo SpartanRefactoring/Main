@@ -7,8 +7,8 @@ import java.util.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
-  Map<Integer, T> beforeHistogram = new HashMap<>();
-  Map<Integer, T> afterHistogram = new HashMap<>();
+  final Map<Integer, T> beforeHistogram = new HashMap<>();
+  final Map<Integer, T> afterHistogram = new HashMap<>();
 
   public void print() {
     System.out.println("[before]");

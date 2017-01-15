@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
     implements TipperCategory.Inlining {
-  static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
+  private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
@@ -80,21 +80,21 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  protected static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
-    if (!(iz.literal(f.getInitializer())) || !(iz.expressionStatement(nextStatement)))
+  /**  */
+  static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    ExpressionStatement es = (ExpressionStatement) nextStatement;
+    final ExpressionStatement es = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(es.getExpression())) {
-      MethodInvocation m = (MethodInvocation) es.getExpression();
-      Expression $ = (!iz.parenthesizedExpression(m.getExpression())) ? m.getExpression()
+      final MethodInvocation m = (MethodInvocation) es.getExpression();
+      final Expression $ = !iz.parenthesizedExpression(m.getExpression()) ? m.getExpression()
           : ((ParenthesizedExpression) m.getExpression()).getExpression();
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(es.getExpression()))
       return false;
-    FieldAccess fa = (FieldAccess) es.getExpression();
-    Expression e = (!iz.parenthesizedExpression(fa.getExpression())) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
+    final FieldAccess fa = (FieldAccess) es.getExpression();
+    final Expression e = !iz.parenthesizedExpression(fa.getExpression()) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 

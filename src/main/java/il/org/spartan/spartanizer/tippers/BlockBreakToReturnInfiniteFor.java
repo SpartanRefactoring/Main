@@ -30,11 +30,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements TipperCategory.Collapse {
-  public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
+  private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
-  public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
+  private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
     if (then == null)
       return null;
     if (iz.breakStatement(then))
@@ -58,7 +58,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
 
-  public static Statement make(final Statement s, final ReturnStatement nextReturn) {
+  private static Statement make(final Statement s, final ReturnStatement nextReturn) {
     return iz.breakStatement(s) ? s //
         : iz.ifStatement(s) ? handleIf(s, nextReturn) //
             : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
@@ -92,8 +92,8 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
-  public Tip make(final ForStatement vor, final ReturnStatement nextReturn, final ExclusionManager exclude) {
-    final Statement $ = make(vor.getBody(), nextReturn);
+  private Tip make(final ForStatement vor, final ReturnStatement nextReturn, final ExclusionManager exclude) {
+    final Statement $ = make(body(vor), nextReturn);
     if (exclude != null)
       exclude.exclude(vor);
     return $ == null ? null : new Tip(description(), vor, getClass(), nextReturn) {

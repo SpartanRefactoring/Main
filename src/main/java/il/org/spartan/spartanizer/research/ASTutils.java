@@ -58,7 +58,7 @@ public class ASTutils {
     return null;
   }
 
-  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
+  private static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
     final Wrapper<Boolean> foundFirst = new Wrapper<>();

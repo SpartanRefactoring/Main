@@ -16,9 +16,9 @@ import il.org.spartan.utils.*;
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public final class CollectClassMetrics {
+final class CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
-  private static CSVStatistics output = init();
+  private static final CSVStatistics output = init();
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : as.array("."));

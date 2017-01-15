@@ -72,7 +72,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return $.toArray(new String[] {});
   }
 
-  void go(final CompilationUnit u) {
+  private void go(final CompilationUnit u) {
     // extract.type(u);
     // ReportGenerator.report("tips").put("FileName", presentFileName);
     // ReportGenerator.report("tips").put("FilePath", presentFilePath);
@@ -112,7 +112,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return false;
   }
 
-  @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings({ "boxing" }) private void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     // ReportGenerator.report("tips").put("Name", extract.name(input));
     // ReportGenerator.report("tips").put("Category", extract.category(input));
@@ -126,11 +126,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.nl("metrics");
   }
 
-  String fixedPoint(final ASTNode ¢) {
+  private String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
 
-  public String fixedPoint(final String from) {
+  private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
@@ -147,7 +147,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
-  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+  private ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     lastTime = new Date().getTime();
     consolidateTips($, ¢);
@@ -168,7 +168,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** consolidate tips on CompilationUnit
    * @param r
    * @param u */
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
+  private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
@@ -219,7 +219,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * -- matteo
    * @param r
    * @param u */
-  public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
+  private void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -285,7 +285,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** Apply to single compilation unit
    * @param ¢
    * @return */
-  public boolean apply(final WrappedCompilationUnit ¢) {
+  private boolean apply(final WrappedCompilationUnit ¢) {
     // System.out.println("*********");
     presentFileName = ¢.getFileName();
     presentFilePath = ¢.getFilePath();

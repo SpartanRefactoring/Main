@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import java.util.*;
@@ -12,7 +13,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import static il.org.spartan.lisp.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil

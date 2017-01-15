@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * {@link EventApplicator}
  * @author Matteo Orru'
  * @year 2016 */
-public final class BatchSpartanizerApplication implements IApplication {
+final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
@@ -99,7 +99,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  static String getPackageNameFromSource(final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
@@ -115,7 +115,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     return $.get();
   }
 
-  void setPackage(final String name) throws JavaModelException {
+  private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 

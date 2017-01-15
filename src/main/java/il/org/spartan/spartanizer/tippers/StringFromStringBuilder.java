@@ -1,17 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.lisp.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"

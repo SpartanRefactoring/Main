@@ -35,7 +35,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     assert $ != null;
     if (in($.getIdentifier(), "$", "¢", "__", "_"))
       return null;
-    final Block b = d.getBody();
+    final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)

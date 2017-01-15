@@ -4,9 +4,10 @@ import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
-import static il.org.spartan.spartanizer.ast.navigate.wizard.ast;
 
 /** @author Ori Marcovitch
  * @since 2016 */

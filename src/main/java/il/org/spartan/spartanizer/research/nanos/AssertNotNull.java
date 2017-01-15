@@ -45,7 +45,7 @@ public class AssertNotNull extends NanoPatternTipper<IfStatement> {
     return anyTips(statements, then(¢));
   }
 
-  protected static boolean nullCheck(final Expression ¢) {
+  static boolean nullCheck(final Expression ¢) {
     return expression.canTip(¢) || infix.canTip(¢) && nullCheck(right(az.infixExpression(¢)));
   }
 

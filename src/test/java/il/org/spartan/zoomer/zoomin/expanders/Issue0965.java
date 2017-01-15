@@ -26,20 +26,19 @@ public class Issue0965 {
         .staysWithBinding();
   }
 
-  @SuppressWarnings({ "unused" })
   class TestClass extends ReflectiveTester {
-    List<Integer> lst = new ArrayList<>();
+    final List<Integer> lst = new ArrayList<>();
 
     public String check1() {
       return lst + "";
     }
 
     public void check2() {
-      String s = lst + "";
+      //
     }
 
     public void check3() {
-      String s = 1 + "";
+      //
     }
   }
 }

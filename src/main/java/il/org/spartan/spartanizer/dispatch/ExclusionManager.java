@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class ExclusionManager {
-  final Set<ASTNode> inner = new HashSet<>();
+  private final Set<ASTNode> inner = new HashSet<>();
 
   public void exclude(final ASTNode ¢) {
     inner.add(¢);

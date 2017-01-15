@@ -24,12 +24,12 @@ import il.org.spartan.spartanizer.utils.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0295 {
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
-  MethodDeclaration input1 = into.d(INPUT1);
-  EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, input1);
-  NumberLiteral one = findFirst.instanceOf(NumberLiteral.class, input1);
-  Statement seriesA$step1 = into.s("A a = new A();for (A b: g.f(a,true))sum+=b;");
-  EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
-  BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
+  final MethodDeclaration input1 = into.d(INPUT1);
+  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, input1);
+  final NumberLiteral one = findFirst.instanceOf(NumberLiteral.class, input1);
+  final Statement seriesA$step1 = into.s("A a = new A();for (A b: g.f(a,true))sum+=b;");
+  final EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
+  final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
   final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);

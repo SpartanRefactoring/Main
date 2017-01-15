@@ -1,12 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -41,45 +38,27 @@ import il.org.spartan.spartanizer.tipping.*;
 * (some commands)
  * </pre>
  *
- * . Tested in {@link Issue880}
+ * . Tested in {@link Issue0880}
  * @author Yuval Simon
  * @since 2016-11-27 */
-public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
-  @Override public Tip tip(final SwitchStatement s) {
-    return s == null ? null : new Tip(description(s), s, getClass()) {
+public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase> implements TipperCategory.Collapse {
+  @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
+    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    if (exclude != null)
+      exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
+    return new Tip(description(n), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final List<Statement> l = step.statements(s);
-        final int ind = getDefaultIndex(l);
-        if (ind > 0 && iz.switchCase(l.get(ind - 1)))
-          l.remove(ind - 1);
-        else if (ind >= 0 && ind < l.size() - 1 && iz.switchCase(l.get(ind + 1)))
-          l.remove(ind + 1);
-        r.replace(s, subject.statement(into.s("switch(" + s.getExpression() + "){" + statementsToString(l) + "}")).toOneStatementOrNull(), g);
-      }
-
-      String statementsToString(final List<Statement> ss) {
-        String $ = new String();
-        for (final Statement p : ss)
-          $ += p;
-        return $;
+        r.remove($.isDefault() ? n : $, g);
       }
     };
   }
 
-  @Override protected boolean prerequisite(final SwitchStatement s) {
-    final List<Statement> $ = step.statements(s);
-    final int ind = getDefaultIndex($);
-    return ind > 0 && iz.switchCase($.get(ind - 1)) || ind >= 0 && ind < $.size() - 1 && iz.switchCase($.get(ind + 1));
+  @Override protected boolean prerequisite(final SwitchCase n) {
+    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  static int getDefaultIndex(final List<Statement> ¢) {
-    for (int $ = 0; $ < ¢.size(); ++$)
-      if (iz.switchCase(¢.get($)) && az.switchCase(¢.get($)).isDefault())
-        return $;
-    return -1;
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
-    return "Remove cases that use default path";
+  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+    return "remove redundant switch case";
   }
 }

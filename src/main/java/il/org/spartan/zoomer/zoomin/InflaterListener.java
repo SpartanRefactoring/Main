@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.zoomin;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
@@ -12,14 +14,11 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
-
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.zoomer.zoomin.SingleFlater.*;
-
-import static il.org.spartan.lisp.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = d -> new Color(d, 200, 200, 255);

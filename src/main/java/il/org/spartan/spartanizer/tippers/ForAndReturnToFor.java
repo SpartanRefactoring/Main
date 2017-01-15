@@ -4,11 +4,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** convert <code>
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
@@ -27,6 +28,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement> impl
       return null;
     final ForStatement f = copy.of(s);
     final IfStatement ifBody = f.getAST().newIfStatement();
+    // TODO: Raviv, please use class subject --yg
     ifBody.setExpression(make.notOf(copy.of(expression(f))));
     ifBody.setThenStatement(copy.of(nextStatement));
     f.setBody(copy.of(ifBody));

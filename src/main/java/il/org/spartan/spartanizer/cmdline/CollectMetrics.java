@@ -18,11 +18,11 @@ import il.org.spartan.utils.*;
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public final class CollectMetrics {
-  private static String OUTPUT = "/tmp/test.csv";
-  private static String OUTPUT_Tips = "/tmp/tips.csv";
-  private static CSVStatistics output = init(OUTPUT, "property");
-  private static CSVStatistics Tips = init(OUTPUT_Tips, "tips");
+final class CollectMetrics {
+  private static final String OUTPUT = "/tmp/test.csv";
+  private static final String OUTPUT_Tips = "/tmp/tips.csv";
+  private static final CSVStatistics output = init(OUTPUT, "property");
+  private static final CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : as.array("."));
