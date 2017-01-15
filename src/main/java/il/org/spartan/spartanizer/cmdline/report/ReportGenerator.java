@@ -29,6 +29,8 @@ public class ReportGenerator implements ConfigurableReport {
   protected String spectrumFileName;
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static final HashMap<String, PrintWriter> files = new HashMap<>();
+  @SuppressWarnings("rawtypes")
+  protected static final HashMap<String, NamedFunction[]> metricsMap = new HashMap<>();
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
@@ -37,6 +39,22 @@ public class ReportGenerator implements ConfigurableReport {
           m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1
               : extract.statements(az.methodDeclaration(¢).getBody()).size()),
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
+    }
+    
+    /**
+     * 
+     */
+    
+    public static void initialize() {
+      metricsMap.put("metrics", functions(""));
+      metricsMap.put("methods", as.array(m("length", (¢) -> (¢ + "").length()), //
+                                         m("essence", (¢) -> Essence.of(¢ + "").length()), //
+                                         m("tokens", (¢) -> metrics.tokens(¢ + "")), //
+                                         m("nodes", (¢) -> count.nodes(¢)), //
+                                         m("body", (¢) -> metrics.bodySize(¢)), //
+                                         m("methodDeclaration", (¢) -> az.methodDeclaration(¢) == null ? -1
+                                               : extract.statements(az.methodDeclaration(¢).getBody()).size()), //
+                                         m("tide", (¢) -> clean(¢ + "").length()))); //
     }
 
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
@@ -58,11 +76,11 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   // running report
-  @SuppressWarnings({ "unused", "unchecked", "rawtypes" }) 
+  @SuppressWarnings({ "unchecked", "rawtypes" }) 
   public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(n1));
-      ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(n2));
+      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(n1));
+      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(n2));
     }
   }
 
@@ -317,11 +335,11 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report("tips").put("lastTimeDiff", "");
   }
 
-  @SuppressWarnings({ "unused", "rawtypes"})
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("methods")) {
-      ReportGenerator.Util.report("metrics").put(¢.name() + "1", ¢.function().run(input));
-      ReportGenerator.Util.report("metrics").put(¢.name() + "2", ¢.function().run(output));
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(id)) {
+      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(input));
+      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(output));
     }
   }
 }
