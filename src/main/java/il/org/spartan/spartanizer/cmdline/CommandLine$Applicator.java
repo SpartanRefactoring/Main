@@ -106,10 +106,10 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ReportGenerator.report("tips").put("FilePath", presentFilePath);
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
-    MetricsReport.getSettings();
+    MetricsReport.getSettings(); // ?
     // add ASTNode to MetricsReport
     Settings.addInput(input);
-    MetricsReport.getSettings();
+    MetricsReport.getSettings(); // ?
     Settings.addOutput(outputASTNode);
     computeMetrics(input, outputASTNode);
     return false;
@@ -121,6 +121,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ReportGenerator.report("tips").put("Category", extract.category(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
+    ReportGenerator.writeMethodMetrics(input, output, null);
     ReportGenerator.writeMetrics(input, output, null);
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
     ReportGenerator.write(input, output, "δ ", (n1, n2) -> system.d(n1, n2));
