@@ -131,6 +131,8 @@ public class BloatingTestUtilities {
     }
 
     private void checkSame() {
+      if (get().length() == 0)
+        return;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
