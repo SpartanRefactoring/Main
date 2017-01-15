@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.inflate.zoomers.*;
 
 /** Unit tests for {@link VariableDeclarationStatementSplit}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>

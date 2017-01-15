@@ -24,11 +24,7 @@ Bundle-ClassPath: .,
  lib/mockito-all-2.0.2-beta.jar,
  lib/spartan-1.2.jar,
  lib/cli-1.02.jar
-Export-Package: il.org.spartan.zoomer;version="2.7.9";,
- il.org.spartan.zoomer.collateral;version="2.7.9";,
- il.org.spartan.zoomer.inflate;version="2.7.9";,
- il.org.spartan.zoomer.inflate.expanders;version="2.7.9";,
- il.org.spartan.plugin;version="2.7.9";
+Export-Package: il.org.spartan.bloater;,il.org.spartan.plugin;version="2.7.9";,il.org.spartan.zoomer.collateral;version="2.7.9";,il.org.spartan.zoomer.inflate.expanders;version="2.7.9";,il.org.spartan.zoomer.inflate;version="2.7.9";version="2.7.9";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
    org.eclipse.ltk.core.refactoring,
