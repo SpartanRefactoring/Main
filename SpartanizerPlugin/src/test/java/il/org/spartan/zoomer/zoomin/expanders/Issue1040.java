@@ -1,11 +1,11 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
+import il.org.spartan.bloater.inflate.zoomers.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.zoomer.inflate.zoomers.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link BoatingTestUtilities} .
