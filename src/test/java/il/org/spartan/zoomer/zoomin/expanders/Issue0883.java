@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Unit test for {@link ReturnTernaryExpander} and
  * {@link AssignmentTernaryExpander}
