@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.applications;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
