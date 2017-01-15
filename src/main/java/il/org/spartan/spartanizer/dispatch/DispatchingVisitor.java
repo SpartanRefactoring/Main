@@ -15,7 +15,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
-  protected boolean cautiousGo(final ASTNode ¢) {
+  boolean cautiousGo(final ASTNode ¢) {
     return !exclude.isExcluded(¢) && go(¢);
   }
 
@@ -149,6 +149,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final SuperConstructorInvocation ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final SwitchCase ¢) {
     return cautiousGo(¢);
   }
 
