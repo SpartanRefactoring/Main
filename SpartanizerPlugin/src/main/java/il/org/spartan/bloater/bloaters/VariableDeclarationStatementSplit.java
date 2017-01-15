@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -24,26 +25,22 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }
-  // TODO: Tomer Dragucki use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @Override @SuppressWarnings("unchecked") protected boolean prerequisite(final VariableDeclarationStatement s) {
+  @Override protected boolean prerequisite(final VariableDeclarationStatement s) {
     int $ = 0;
-    for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) s.fragments())
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
       if (isFragmentApplicable(¢))
         ++$;
     return $ >= 2;
   }
-  // TODO: Tomer Dragucki use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @Override @SuppressWarnings("unchecked") public Tip tip(final VariableDeclarationStatement ¢) {
+  @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($);
     final VariableDeclarationFragment ff = (VariableDeclarationFragment) first.fragments().get($.fragments().indexOf(fs));
     $.fragments().remove(fs);
     first.fragments().clear();
-    first.fragments().add(ff);
+    step.fragments(first).add(ff);
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
@@ -53,11 +50,9 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
       }
     };
   }
-  // TODO: Tomer Dragucki use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @SuppressWarnings("unchecked") private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
-    for (final VariableDeclarationFragment $ : (List<VariableDeclarationFragment>) ¢.fragments())
+  private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
+    for (final VariableDeclarationFragment $ : step.fragments(¢))
       if (isFragmentApplicable($))
         return $;
     return null;

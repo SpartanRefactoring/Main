@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "javadoc" })
 public class Issue1044 extends ReflectiveTester {
   private final Namespace fixtureClass = Environment.of(myCompilationUnit()).getChild(1);

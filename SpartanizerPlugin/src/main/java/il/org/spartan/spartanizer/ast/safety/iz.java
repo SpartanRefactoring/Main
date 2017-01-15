@@ -542,6 +542,10 @@ public interface iz {
   static boolean instanceofExpression(final Expression ¢) {
     return ¢ != null && ¢ instanceof InstanceofExpression;
   }
+  
+  static boolean loop(ASTNode ¢) {
+    return forStatement(¢) || enhancedFor(¢) || whileStatement(¢) || doStatement(¢);
+  }
 
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
