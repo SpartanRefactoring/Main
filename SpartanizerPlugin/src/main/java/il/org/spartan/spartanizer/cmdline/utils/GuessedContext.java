@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.cmdline.utils;
 
 import static il.org.spartan.Utils.*;
 
