@@ -37,7 +37,8 @@ public class ExpandBooleanExpression extends CarefulTipper<InfixExpression> impl
   @Override public Tip tip(final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override
+      @SuppressWarnings({ "unused" }) public void go(final ASTRewrite __, final TextEditGroup g) {
         // final ListRewrite l = r.getListRewrite(¢, Expression.);
         // l.insertAfter(¢, x1, g);
         // l.insertAfter(x1, x2, g);
@@ -47,13 +48,13 @@ public class ExpandBooleanExpression extends CarefulTipper<InfixExpression> impl
     };
   }
 
-  private static SingleVariableDeclaration getSeperate(final Expression e) {
-    final SingleVariableDeclaration x = e.getAST().newSingleVariableDeclaration();
-    x.setInitializer(copy.of(e));
-    final PrimitiveType t = e.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
-    x.setType(t);
-    x.setName(e.getAST().newSimpleName(scope.newName(e, t)));
-    return x;
+  private static SingleVariableDeclaration getSeperate(final Expression x) {
+    final SingleVariableDeclaration $ = x.getAST().newSingleVariableDeclaration();
+    $.setInitializer(copy.of(x));
+    final PrimitiveType t = x.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
+    $.setType(t);
+    $.setName(x.getAST().newSimpleName(scope.newName(x, t)));
+    return $;
   }
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
