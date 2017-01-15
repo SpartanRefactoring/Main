@@ -341,9 +341,12 @@ public interface idiomatic {
       before.add("2");
       before.add("3");
       final List<String> after = on(before).map(x -> mapper(x));
-      assertEquals("11", first(after));
-      assertEquals("22", after.get(1));
-      assertEquals("33", after.get(2));
+      azzert.that(first(after), is("11"));
+      // TODO Auto-generated method stub
+      azzert.that(after.get(1), is("22"));
+      // TODO Auto-generated method stub
+      azzert.that(after.get(2), is("33"));
+      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void useMapper2() {
@@ -352,9 +355,12 @@ public interface idiomatic {
       before.add(2);
       before.add(3);
       final List<String> after = on(before).map(x -> mapper(x));
-      assertEquals("1", first(after));
-      assertEquals("2", after.get(1));
-      assertEquals("3", after.get(2));
+      azzert.that(first(after), is("1"));
+      // TODO Auto-generated method stub
+      azzert.that(after.get(1), is("2"));
+      // TODO Auto-generated method stub
+      azzert.that(after.get(2), is("3"));
+      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void useFilter() {
@@ -363,8 +369,10 @@ public interface idiomatic {
       before.add(2);
       before.add(3);
       final List<Integer> after = on(before).filter(x -> x % 2 == 1);
-      assertEquals(1, first(after).intValue());
-      assertEquals(3, after.get(1).intValue());
+      azzert.that(first(after).intValue(), is(1));
+      // TODO Auto-generated method stub
+      azzert.that(after.get(1).intValue(), is(3));
+      // TODO Auto-generated method stub
     }
 
     @Test public void useReduce() {
@@ -372,7 +380,8 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      assertEquals("123", on(before).reduce((x, y) -> x + y));
+      azzert.that(on(before).reduce((x, y) -> x + y), is("123"));
+      // TODO Auto-generated method stub
     }
 
     @Test public void useMax() {
@@ -380,7 +389,8 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      assertEquals("3", on(before).max(String::compareTo));
+      azzert.that(on(before).max(String::compareTo), is("3"));
+      // TODO Auto-generated method stub
     }
 
     @Test public void useMin() {
@@ -388,7 +398,8 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      assertEquals("1", on(before).min(String::compareTo));
+      azzert.that(on(before).min(String::compareTo), is("1"));
+      // TODO Auto-generated method stub
     }
 
     @Test @SuppressWarnings("boxing") public void whenNullsEval() {
@@ -479,9 +490,9 @@ public interface idiomatic {
     // before.add(2);
     // before.add(3);
     // final List<String> after = mapp(x -> mapper(x)).apply(before);
-    // assertEquals("1", after.get(0));
-    // assertEquals("2", after.get(1));
-    // assertEquals("3", after.get(2));
+    // wizard.assertEquals("1", after.get(0));
+    // wizard.assertEquals("2", after.get(1));
+    // wizard.assertEquals("3", after.get(2));
     // }
   }
 

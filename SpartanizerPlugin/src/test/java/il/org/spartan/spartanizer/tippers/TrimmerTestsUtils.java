@@ -22,6 +22,7 @@ public final class TrimmerTestsUtils {
       trimmer = new Trimmer();
     }
 
+    /** [[SuppressWarningsSpartan]] */
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
@@ -35,6 +36,7 @@ public final class TrimmerTestsUtils {
       assertSimilar(expected, peeled);
     }
 
+    /** [[SuppressWarningsSpartan]] */
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
@@ -45,6 +47,7 @@ public final class TrimmerTestsUtils {
         assertSimilar(get(), peeled);
     }
 
+    /** [[SuppressWarningsSpartan]] */
     public Operand gives(final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
@@ -174,6 +177,7 @@ public final class TrimmerTestsUtils {
     return $.get();
   }
 
+  /** [[SuppressWarningsSpartan]] */
   static void assertSimplifiesTo(final String from, final String expected, final Tipper<? extends ASTNode> n, final Wrap w) {
     final String wrap = w.on(from), unpeeled = apply(n, wrap);
     if (wrap.equals(unpeeled))

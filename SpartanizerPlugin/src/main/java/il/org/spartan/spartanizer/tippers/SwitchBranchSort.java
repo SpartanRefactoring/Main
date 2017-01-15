@@ -9,8 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
  * Length measured in statements 3. Length measured in nodes 4. Sequencer level
- * 5. Number of case that use the branch
- * Test case is {@link Issue0861}
+ * 5. Number of case that use the branch Test case is {@link Issue0861}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Sorting {
@@ -18,7 +17,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implem
     final List<SwitchBranch> $ = SwitchBranch.intoBranches(s);
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
       if (!$.get(¢).compareTo($.get(¢ + 1))) {
-        SwitchBranch tmp = $.get(¢ + 1);
+        final SwitchBranch tmp = $.get(¢ + 1);
         $.set(¢ + 1, $.get(¢));
         $.set(¢, tmp);
         return SwitchBranch.makeSwitchStatement($, step.expression(s), s.getAST());

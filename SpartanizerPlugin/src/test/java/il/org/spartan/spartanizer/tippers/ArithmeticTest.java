@@ -39,15 +39,15 @@ final class ArithmeticTest {
     }
 
     @Test public void issue158_1() {
-      trimmingOf(" assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);").stays();
+      trimmingOf(" wizard.assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);").stays();
     }
 
     @Test public void issue158_2() {
-      trimmingOf(" assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);").gives(" assertEquals(5, s_4x0_5x1.mean(), 1E-6);").stays();
+      trimmingOf(" wizard.assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);").gives(" wizard.assertEquals(5, s_4x0_5x1.mean(), 1E-6);").stays();
     }
 
     @Test public void issue158_3() {
-      trimmingOf(" assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").gives(" assertEquals(198, s_4x0_5x1.mean(), 1E-6);").stays();
+      trimmingOf(" wizard.assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").gives(" wizard.assertEquals(198, s_4x0_5x1.mean(), 1E-6);").stays();
     }
 
     @Test public void issue171_1() {
