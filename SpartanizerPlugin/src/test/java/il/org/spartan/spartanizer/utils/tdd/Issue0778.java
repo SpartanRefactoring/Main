@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Netanel Felcher
  * @author Moshe Eliasof
  * @since Nov 7, 2016 */
-public class Issue778 {
+public class Issue0778 {
   @Test @SuppressWarnings("static-method") public void test0() {
     getAll2.methods(null);
   }

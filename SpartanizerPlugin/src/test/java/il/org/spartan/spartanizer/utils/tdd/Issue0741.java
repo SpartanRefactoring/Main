@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Idan Atias
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" })
-public class Issue741 {
+public class Issue0741 {
   static TypeDeclaration getTypeDeclaration(final String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }

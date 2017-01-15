@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author koralchapnik
  * @author yaelAmitay
  * @since 16-11-04 */
-public class Issue719 {
+public class Issue0719 {
   @Test @SuppressWarnings("static-method") public void checkFiveDefinitionsNested() {
     assert determineIf.definesManyVariables((MethodDeclaration) wizard
         .ast("public void methodZeroDefinition() {int x, y, z; boolean b = True; Object o = new Object(){ Double d = 0.0;}; } "), 5);

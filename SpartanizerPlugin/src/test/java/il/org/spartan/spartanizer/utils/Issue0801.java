@@ -12,7 +12,7 @@ import il.org.spartan.*;
  * @since 16-11-9 **/
 @SuppressWarnings({ "static-method", })
 // TODO: David/Shahar/Zahi: your tests could have been more extensive --yg
-public class Issue801 {
+public class Issue0801 {
   @Test public void test01() {
     azzert.that(Int.valueOf(5).inner(), is(Integer.valueOf(5)));
   }
