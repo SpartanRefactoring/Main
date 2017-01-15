@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.inflate.zoomers.*;
 
 /** Tets class for {@link IfElseBlockExpander}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

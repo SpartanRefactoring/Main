@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.BoatingTestUtilities.*;
+import static il.org.spartan.bloater.inflate.zoomers.BoatingTestUtilities.*;
 
 import java.util.*;
 
