@@ -26,9 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-20 */
 public class ToStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    if (¢.getOperator() != Operator.PLUS)
-      return null;
-    if (¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null || extract.allOperands(¢).size() != 2)
+    if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null
+        || extract.allOperands(¢).size() != 2)
       return null;
     final MethodInvocation $ = ¢.getAST().newMethodInvocation();
     if ("\"\"".equals(¢.getRightOperand() + "") && !¢.getLeftOperand().resolveTypeBinding().isPrimitive())
