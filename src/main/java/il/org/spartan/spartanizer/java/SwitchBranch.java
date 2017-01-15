@@ -172,8 +172,8 @@ public class SwitchBranch {
   }
   
   public boolean hasFallThrough() {
-    for(Statement s : statements)
-      if(iz.switchCase(s))
+    for(Statement ¢ : statements)
+      if(iz.switchCase(¢))
         return true;
     return false;
   }
@@ -182,31 +182,29 @@ public class SwitchBranch {
     if(!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     AST a = s.getAST();
-    Statement ret = null;
+    Statement $ = null;
     if(iz.ifStatement(s)) {
       IfStatement t = az.ifStatement(s);
       IfStatement f = a.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
-      ret = f;
-    }
-    else if(iz.block(s)) {
+      $ = f;
+    } else if (!iz.block(s)) {
+      if (iz.breakStatement(s))
+        $ = a.newEmptyStatement();
+    } else {
       Block b = a.newBlock();
       step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
-      ret = b;
+      $ = b;
     }
-    else if(iz.breakStatement(s)) {
-      EmptyStatement e = a.newEmptyStatement();
-      ret = e;
-    }
-    return ret;
+    return $;
   }
     
-  public static List<Statement> removeBreakSequencer(List<Statement> l) {
-    List<Statement> ret = new ArrayList<>();
-    for(Statement s : l)
-      ret.add(removeBreakSequencer(s));
-    return ret;
+  public static List<Statement> removeBreakSequencer(List<Statement> ss) {
+    List<Statement> $ = new ArrayList<>();
+    for(Statement ¢ : ss)
+      $.add(removeBreakSequencer(¢));
+    return $;
   }
 }
