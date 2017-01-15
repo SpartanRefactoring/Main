@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -32,19 +33,13 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
   @Override public ASTNode replacement(final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    final IfStatement $ = ¢.getAST().newIfStatement();
-    // TODO: Tomer Dragucki please use class 'az' --yg
-    final InfixExpression ie = (InfixExpression) ¢.getExpression();
-    // TODO: Tomer Dragucki please use left --yg
-    $.setExpression(copy.of(ie.getLeftOperand()));
-    // TODO: Tomer Dragucki use subject.pair().toIf() --yg
-    final IfStatement newThen = ¢.getAST().newIfStatement();
-    final Expression ne = !ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie));
-    newThen.setExpression(ne);
-    newThen.setThenStatement(copy.of(¢.getThenStatement()));
-    $.setThenStatement(newThen);
+    final InfixExpression ie = az.infixExpression(¢.getExpression());
+    final IfStatement newThen = subject.pair(copy.of(¢.getThenStatement()), null)
+        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie)));
+    final IfStatement $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
     if (¢.getElseStatement() != null) {
       newThen.setElseStatement(copy.of(¢.getElseStatement()));
+      $.setThenStatement(newThen);
       $.setElseStatement(copy.of(¢.getElseStatement()));
     }
     return $;
@@ -54,14 +49,13 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
     return "Replace an if statement that contains && with two ifs";
   }
 
-  // TODO: Tomer Dragucki remove and use class step --yg
-  @SuppressWarnings("unchecked") private static InfixExpression getReducedIEFromIEWithExtOp(final IfStatement ¢, final InfixExpression x) {
+  private static InfixExpression getReducedIEFromIEWithExtOp(final IfStatement ¢, final InfixExpression x) {
     // TODO: Tomer Dragucki use class subject --yg
     final InfixExpression $ = ¢.getAST().newInfixExpression();
     $.setOperator(x.getOperator());
     $.setLeftOperand(copy.of(x.getRightOperand()));
     $.setRightOperand(copy.of((Expression) x.extendedOperands().get(0)));
-    $.extendedOperands().addAll(copy.of(x.extendedOperands()));
+    step.extendedOperands($).addAll(copy.of(step.extendedOperands(x)));
     $.extendedOperands().remove(0);
     return $;
   }
