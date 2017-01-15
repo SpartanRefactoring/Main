@@ -28,7 +28,7 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
     }
   }
 
-  @Override public String description(final TypeDeclaration n) {
-    return "Remove implicit extends " + n.getSuperclassType();
+  @Override public String description(final TypeDeclaration ¢) {
+    return "Remove implicit extends " + ¢.getSuperclassType();
   }
 }
