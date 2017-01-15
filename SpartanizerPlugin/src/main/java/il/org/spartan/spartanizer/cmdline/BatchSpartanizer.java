@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline.applications;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
@@ -9,9 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.applications.*;
-import il.org.spartan.spartanizer.cmdline.utils.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
