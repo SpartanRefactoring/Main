@@ -10,14 +10,15 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 public class Issue1057 {
   @Test public void a() {
     trimmingOf("" //
-        + "void f() {\n"
-        + "  int a = 1;"
-        + "  x();"
-        + "  int y = x();"
-        + "  for (a = 2; y == 1;)"
-        + "    break;"
+        + "void f() {\n" //
+        + "  int a = 1;" //
+        + "  x();" //
+        + "  int y = x();" //
+        + "  for (a = 2; y == 1;)" //
+        + "    break;" //
         + "}").stays();
   }
+
   @Test public void b() {
     trimmingOf("" //
         + "private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {\n" //
