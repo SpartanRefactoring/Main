@@ -397,7 +397,7 @@ public enum step {
             .collect(Collectors.toList());
   }
 
-  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(CompilationUnit ¢) {
+  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.imports();
   }
 

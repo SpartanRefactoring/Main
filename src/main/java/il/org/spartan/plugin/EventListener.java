@@ -61,8 +61,8 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
    * @return listener that send events from the enum class to consumers */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c, final BiConsumer<E, Object> bc) {
     return new EventListener<E>(enumClass) {
-      @Override public void tick(final E e) {
-        c.accept(e);
+      @Override public void tick(final E ¢) {
+        c.accept(¢);
       }
 
       @Override public void tick(final E e, final Object o) {

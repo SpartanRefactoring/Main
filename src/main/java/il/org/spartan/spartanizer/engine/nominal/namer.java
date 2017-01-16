@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -34,7 +35,7 @@ public interface namer {
 
   static String shorten(final List<Type> ¢) {
     for (final Type $ : ¢)
-      if (!iz.wildcardType($) || az.wildcardType($).getBound() != null)
+      if ((($ + "").length() != 1 || !Character.isUpperCase(lisp.first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
         return shorten($);
     return null;
   }

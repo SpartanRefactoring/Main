@@ -195,19 +195,19 @@ public interface metrics {
       $ += countStatements(¢);
     return $;
   }
-  
-  static int countStatementsOfType(final Statement s, int type) {
+
+  static int countStatementsOfType(final Statement s, final int type) {
     final Int $ = new Int();
     s.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if(¢.getNodeType() == type)
+        if (¢.getNodeType() == type)
           ++$.inner;
       }
     });
     return $.inner;
   }
-  
-  static int countStatementsOfType(final List<Statement> ss, int type) {
+
+  static int countStatementsOfType(final List<Statement> ss, final int type) {
     int $ = 0;
     for (final Statement ¢ : ss)
       $ += countStatementsOfType(¢, type);

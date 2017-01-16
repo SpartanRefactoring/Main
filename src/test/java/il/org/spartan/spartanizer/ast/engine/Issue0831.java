@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.ast.engine;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -34,11 +35,9 @@ public class Issue0831 {
     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
       body += iter + "";
-    assertEquals("int a;\nint b;\nint c;\nint d;\n", body);
+    azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));
   }
 
-  // TODO: Adi - note obfuscated code assert (false), instead of fail().
-  // Other examples occur in other functions.
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();

@@ -13,13 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Fluent API for testing:
  *
  * <pre>
- * trimming.of("a+(b-c)").gives("a+b-c")
+ * trimming.of("a+(b-c)")//
+ *     .gives("a+b-c")
  * </pre>
  *
  * or
  *
  * <pre>
- * trimming.with(InfixExpression.class, new InfixTermsExpand()).of("a+(b-c)").gives("a+b+c")
+ * trimming.with(InfixExpression.class, new InfixTermsExpand()).of("a+(b-c)")//
+ *     .gives("a+b+c")
  * </pre>
 */
 /** ??
@@ -27,7 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public interface trim {
   /** Starting point of fluent API for @Testing:
-   * <code>trimming.repeatedly.of("a+(b-c)").gives("a+b-c")</code>, or <br/>
+   * <code>trimming.repeatedly.of("a+(b-c)")//
+  .gives("a+b-c")</code>, or <br/>
    * <code>trimming // See {@link trim} <br/>
    * .repeatedly //  See {@link trim.repeatedely} <br/>
    * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} <br/>
@@ -70,23 +73,32 @@ public interface trim {
   @SuppressWarnings("static-method")
   class TEST {
     @Test public void trimming_of_gives() {
-      trim.of("a +=1;").gives("a++;");
+      trim.of("a +=1;")//
+          .gives("a++;");
     }
 
     @Test public void trimming_of_gives_gives_gives_stays() {
-      trim.of("int b = 3; int a = b; return  a;").gives("int b = 3; int a = b; return  a;").gives("int a = 3; return  a;").gives("return 3;").stays();
+      trim.of("int b = 3; int a = b; return  a;")//
+          .gives("int b = 3; int a = b; return  a;")//
+          .gives("int a = 3; return  a;")//
+          .gives("return 3;")//
+          .stays();
     }
 
     @Test public void trimming_of_gives_stays() {
-      trim.of("a +=1;").gives("a++;").stays();
+      trim.of("a +=1;")//
+          .gives("a++;")//
+          .stays();
     }
 
     @Test public void trimming_of_stays() {
-      trim.of("a").stays();
+      trim.of("a")//
+          .stays();
     }
 
     @Test public void trimming_repeatedly_of_gives() {
-      trim.repeatedly.of("int b = 3; int a = b; return  a;").gives("return 3;");
+      trim.repeatedly.of("int b = 3; int a = b; return  a;")//
+          .gives("return 3;");
     }
   }
 

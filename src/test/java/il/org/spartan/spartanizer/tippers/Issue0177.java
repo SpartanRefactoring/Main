@@ -51,12 +51,14 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a & b").gives("a&=b");
+    trimmingOf("a=a & b")//
+        .gives("a&=b");
   }
 
   @Test public void bitWiseOr_noSideEffects() {
     azzert.that(1 | 2, is(3));
-    trimmingOf("a=a|b").gives("a|=b");
+    trimmingOf("a=a|b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void bitWiseOr_withSideEffects() {
@@ -71,7 +73,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a|b").gives("a|=b");
+    trimmingOf("a=a|b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void BitWiseOr_withSideEffectsEXT() {
@@ -111,7 +114,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a | b").gives("a|=b");
+    trimmingOf("a=a | b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void BitWiseXor_withSideEffectsEXT() {
@@ -151,12 +155,14 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a = a ^ b ").gives("a ^= b");
+    trimmingOf("a = a ^ b ")//
+        .gives("a ^= b");
   }
 
   @Test public void logicalAnd_noSideEffects() {
     azzert.nay(true & false);
-    trimmingOf("a=a && b").gives("a&=b");
+    trimmingOf("a=a && b")//
+        .gives("a&=b");
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffects() {
@@ -176,7 +182,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a && b").gives("a&=b");
+    trimmingOf("a=a && b")//
+        .gives("a&=b");
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
@@ -203,7 +210,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a && b").gives("a&=b");
+    trimmingOf("a=a && b")//
+        .gives("a&=b");
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
@@ -243,12 +251,14 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a && b").gives("a&=b");
+    trimmingOf("a=a && b")//
+        .gives("a&=b");
   }
 
   @Test public void logicalOr_noSideEffects() {
     azzert.aye(true | false);
-    trimmingOf("a=a||b").gives("a|=b");
+    trimmingOf("a=a||b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffects() {
@@ -268,7 +278,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a||b").gives("a|=b");
+    trimmingOf("a=a||b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
@@ -295,7 +306,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a||b").gives("a|=b");
+    trimmingOf("a=a||b")//
+        .gives("a|=b");
   }
 
   @Test @SuppressWarnings("unused") public void LogicalOr_withSideEffectsEXT() {
@@ -335,6 +347,8 @@ public class Issue0177 {
       }
     }
     new Class();
-    trimmingOf("a=a|(b=b&a)").gives("a|=b=b&a").gives("a|=b&=a");
+    trimmingOf("a=a|(b=b&a)")//
+        .gives("a|=b=b&a")//
+        .gives("a|=b&=a");
   }
 }

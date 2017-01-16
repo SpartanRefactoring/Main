@@ -41,7 +41,7 @@ public final class azTest {
   @Test public void asComparisonTypicalInfixIsCorrect() {
     final InfixExpression i = mock(InfixExpression.class);
     doReturn(GREATER).when(i).getOperator();
-    assertEquals(i, az.comparison(i));
+    azzert.that(az.comparison(i), is(i));
   }
 
   @Test public void asComparisonTypicalInfixIsNotNull() {

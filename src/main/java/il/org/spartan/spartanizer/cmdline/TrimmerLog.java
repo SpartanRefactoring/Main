@@ -23,9 +23,12 @@ public class TrimmerLog {
   private static boolean logToFile;
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
   private static String fileName;
+  static {
+    off();
+  }
 
   public static void off() {
-    maxApplications = maxTips = maxVisitations = 0;
+    maxApplications = maxTips = maxVisitations = -1;
   }
 
   public static void activateLogToFile() {

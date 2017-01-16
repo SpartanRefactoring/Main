@@ -12,22 +12,28 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0236 {
   @Test public void issue236_01() {
-    trimmingOf("b ? \"a long string\" : \"another \"+\"long\"+\" string\"").gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"")
-        .gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"").gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"")
-        .gives("(b ? \"a \" : \"another \"+\"\") +\"long\"+\" string\"").gives("(b ? \"a \" : \"another \") +\"long\"+\" string\"")
-        .gives("((b ? \"a\" : \"another\") + \" \") +\"long\"+\" string\"").gives("(b ? \"a\" : \"another\") + \" \" +\"long\"+\" string\"").stays();
+    trimmingOf("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
+        .gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"").gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"")//
+        .gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"").gives("(b ? \"a \" : \"another \"+\"\") +\"long\"+\" string\"")//
+        .gives("(b ? \"a \" : \"another \") +\"long\"+\" string\"").gives("((b ? \"a\" : \"another\") + \" \") +\"long\"+\" string\"")//
+        .gives("(b ? \"a\" : \"another\") + \" \" +\"long\"+\" string\"")//
+        .stays();
   }
 
   @Test public void issue236_02() {
-    trimmingOf("b? \"something\" : \"something\"+\" else\"").gives("\"something\" + (b? \"\" : \"\"+\" else\")")
-        .gives("\"something\" + (b? \"\" : \" else\")").stays();
+    trimmingOf("b? \"something\" : \"something\"+\" else\"")//
+        .gives("\"something\" + (b? \"\" : \"\"+\" else\")").gives("\"something\" + (b? \"\" : \" else\")")//
+        .stays();
   }
 
   @Test public void issue236_03() {
-    trimmingOf("isIncrement(¢) ? \"++\" : \"--\"").stays();
+    trimmingOf("isIncrement(¢) ? \"++\" : \"--\"")//
+        .stays();
   }
 
   @Test public void issue236_04() {
-    trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"").gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"").stays();
+    trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"")//
+        .gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"")//
+        .stays();
   }
 }

@@ -22,22 +22,28 @@ public final class Issue0165 {
   }
 
   @Test public void seriesA_03_single_underscore() {
-    trimmingOf("void f(int _){}").gives("void f(int __){}").stays();
+    trimmingOf("void f(int _){}")//
+        .gives("void f(int __){}")//
+        .stays();
   }
 
   @Test public void seriesA_04_double_underscore() {
-    trimmingOf("void f(int __){}").stays();
+    trimmingOf("void f(int __){}")//
+        .stays();
   }
 
   @Test public void seriesA_05_unused() {
-    trimmingOf("void f(int a){}").stays();
+    trimmingOf("void f(int a){}")//
+        .stays();
   }
 
   @Test public void seriesA_06_abstract() {
-    trimmingOf("abstract void f(int a);").stays();
+    trimmingOf("abstract void f(int a);")//
+        .stays();
   }
 
   @Test public void seriesA_06_meaningfulName() {
-    trimmingOf("void f(String fileName) {f(fileName);}").stays();
+    trimmingOf("void f(String fileName) {f(fileName);}")//
+        .stays();
   }
 }

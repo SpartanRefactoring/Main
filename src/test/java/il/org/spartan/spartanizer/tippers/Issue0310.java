@@ -44,7 +44,8 @@ public class Issue0310 {
   }
 
   @Test public void updaters_for_4() {
-    trimmingOf("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;++i;++j;}return false;}").stays();
+    trimmingOf("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;++i;++j;}return false;}")//
+        .stays();
   }
 
   @Test public void updaters_ordering_check_1_b() {

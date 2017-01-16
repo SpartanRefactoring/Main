@@ -15,7 +15,8 @@ public class Issue0312 {
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;break;}y+=15;break;}return x;")
-        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;").stays();
+        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;")//
+        .stays();
   }
 
   @Test public void bugInLastIfInMethod1() {
@@ -29,11 +30,14 @@ public class Issue0312 {
   }
 
   @Test public void chocolate1() {
-    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;").stays();
+    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;")//
+        .stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;").gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;").stays();
+    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
+        .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;")//
+        .stays();
   }
 
   @Test public void issue54ForPlain() {
@@ -50,10 +54,12 @@ public class Issue0312 {
   }
 
   @Test public void refactorUtilBug() {
-    trimmingOf("for (; i.length() <s.length();)" + "i = \" \" + i;").stays();
+    trimmingOf("for (; i.length() <s.length();)" + "i = \" \" + i;")//
+        .stays();
   }
 
   @Test public void t18() {
-    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}").stays();
+    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
+        .stays();
   }
 }

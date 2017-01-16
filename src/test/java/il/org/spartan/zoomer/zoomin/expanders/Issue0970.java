@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Test class for {@link MultiTypeCatchClause}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
@@ -12,21 +12,21 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue0970 {
   @Test public void test0() {
-    zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}")
+    bloatingOf("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}")
         .gives("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 e){" + "int z;" + "z=2;" + "return z;" + "}" + "catch(Type2 e){" + "int z;"
             + "z=2;" + "return z;" + "}")
         .stays();
   }
 
   @Test public void test1() {
-    zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}" + "finally {return t;}")
+    bloatingOf("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}" + "finally {return t;}")
         .gives("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 e){" + "int z;" + "z=2;" + "return z;" + "}" + "catch(Type2 e){" + "int z;"
             + "z=2;" + "return z;" + "}finally {return t;}")
         .stays();
   }
 
   @Test public void test2() {
-    zoomingInto(
+    bloatingOf(
         "try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2| Type3 e){" + "int z;" + "z=2;" + "return z;" + "}" + "finally {return t;}")
             .gives("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 e){" + "int z;" + "z=2;" + "return z;" + "}" + "catch(Type2 e){" + "int z;"
                 + "z=2;" + "return z;" + "}" + "catch(Type3 e){" + "int z;" + "z=2;" + "return z;" + "}" + "finally {return t;}")
@@ -34,7 +34,7 @@ public class Issue0970 {
   }
 
   @Test public void test3() {
-    zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch (Exception e){f();g();}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;"
+    bloatingOf("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch (Exception e){f();g();}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;"
         + "return z;" + "}" + "finally {return t;}")
             .gives("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch (Exception e){f();g();}" + "catch(Type1 e){" + "int z;" + "z=2;" + "return z;"
                 + "}" + "catch(Type2 e){" + "int z;" + "z=2;" + "return z;" + "}finally {return t;}")
@@ -42,7 +42,7 @@ public class Issue0970 {
   }
 
   @Test public void test4() {
-    zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}"
+    bloatingOf("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){" + "int z;" + "z=2;" + "return z;" + "}"
         + "catch (Exception e){f();g();}" + "finally {return t;}")
             .gives("try{int a;a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e)"
                 + "{int z;z=2;return z;}catch(Exception e){f();g();}finally{return t;}")
@@ -50,8 +50,9 @@ public class Issue0970 {
   }
 
   @Test public void test5() {
-    zoomingInto("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){int z;}" + "catch(Type3 | Type4 e){int z;}")
+    bloatingOf("try" + "{" + "int a;" + " a=a+1;" + "}" + "catch(Type1 | Type2 e){int z;}" + "catch(Type3 | Type4 e){int z;}")
         .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3|Type4 e){int z;}")
-        .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3 e){int z;}catch(Type4 e){int z;}").stays();
+        .gives("try{int a;a=a+1;}catch(Type1 e){int z;}catch(Type2 e){int z;}catch(Type3 e){int z;}catch(Type4 e){int z;}")//
+        .stays();
   }
 }

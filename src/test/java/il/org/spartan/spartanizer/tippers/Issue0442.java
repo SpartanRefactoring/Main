@@ -39,7 +39,8 @@ public class Issue0442 {
   }
 
   @Test public void c$etc() {
-    trimmingOf("interface I{ I f(I i);}").stays();
+    trimmingOf("interface I{ I f(I i);}")//
+        .stays();
   }
 
   @Test public void chocolate01() {

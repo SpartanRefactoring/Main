@@ -30,7 +30,8 @@ public class Issue0904 {
         .gives("if(!b){g();int tipper;}")//
         .gives("if(b)return;g();int tipper;")//
         .gives("if(b)return;g();")//
-        .gives("if(b);else g();").gives("if(!b)g();").stays() //
+        .gives("if(b);else g();")//
+        .gives("if(!b)g();").stays() //
     ;
   }
 
@@ -39,13 +40,16 @@ public class Issue0904 {
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
         .gives("if(b){int i;int j;g();}")//
         .gives("if(!b)return;int i;int j;g();")//
-        .gives("if(!b)return;g();").gives("if(!b);else g();").gives("if(b)g();").stays() //
+        .gives("if(!b)return;g();")//
+        .gives("if(!b);else g();")//
+        .gives("if(b)g();").stays() //
     ;
   }
 
   // TODO: check if this test should work according to the issue of dead
   // variables
   @Test public void issue075h() {
-    trimmingOf("int i = +0;").gives("");
+    trimmingOf("int i = +0;")//
+        .gives("");
   }
 }

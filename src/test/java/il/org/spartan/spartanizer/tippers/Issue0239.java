@@ -24,17 +24,19 @@ public class Issue0239 {
     trimmingOf("private void testInteger(final boolean testTransients) {\n" + //
         "final Integer i1 = Integer.valueOf(12344);\n" + //
         "final Integer i2 = Integer.valueOf(12345);\n" + //
-        "assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
-        "}").gives("private void testInteger(final boolean testTransients) {\n" + //
-            "final Integer i1 = Integer.valueOf(12344)\n" + //
-            ", i2 = Integer.valueOf(12345);\n" + //
-            "assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
-            "}").gives("private void testInteger(final boolean testTransients) {\n" + //
+        "wizard.assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
+        "}")//
+            .gives("private void testInteger(final boolean testTransients) {\n" + //
+                "final Integer i1 = Integer.valueOf(12344)\n" + //
+                ", i2 = Integer.valueOf(12345);\n" + //
+                "wizard.assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
+                "}")//
+            .gives("private void testInteger(final boolean testTransients) {\n" + //
                 "final Integer i2 = Integer.valueOf(12345);\n" + //
-                "assertEqualsAndHashCodeContract(Integer.valueOf(12344), i2, testTransients);\n" + //
+                "wizard.assertEqualsAndHashCodeContract(Integer.valueOf(12344), i2, testTransients);\n" + //
                 "}")
             .gives("private void testInteger(final boolean testTransients) {\n" + //
-                "assertEqualsAndHashCodeContract(Integer.valueOf(12344), Integer.valueOf(12345), testTransients);\n" + //
+                "wizard.assertEqualsAndHashCodeContract(Integer.valueOf(12344), Integer.valueOf(12345), testTransients);\n" + //
                 "}")
             .stays();
   }

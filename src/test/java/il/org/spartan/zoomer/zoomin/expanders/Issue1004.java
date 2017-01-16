@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Test case for {@link OutlineArrayAccess}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
@@ -12,38 +12,47 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue1004 {
   @Test public void t1() {
-    zoomingInto("arr[i--] = 5;").gives("arr[i] = 5; i--;");
+    bloatingOf("arr[i--] = 5;")//
+        .gives("arr[i] = 5; i--;");
   }
 
   @Test public void t2() {
-    zoomingInto("arr[i++] = i;").stays();
+    bloatingOf("arr[i++] = i;")//
+        .stays();
   }
 
   @Test public void t3() {
-    zoomingInto("arr[i++] = arr[i++] + i;").stays();
+    bloatingOf("arr[i++] = arr[i++] + i;")//
+        .stays();
   }
 
   @Test public void t4() {
-    zoomingInto("arr[++i] = i;").stays();
+    bloatingOf("arr[++i] = i;")//
+        .stays();
   }
 
   @Test public void t5() {
-    zoomingInto("arr[++i] = x;").gives("++i; arr[i] = x;");
+    bloatingOf("arr[++i] = x;")//
+        .gives("++i; arr[i] = x;");
   }
 
   @Test public void t6() {
-    zoomingInto("arr[i++] = 5+4;").gives("arr[i] = 5+4; i++;");
+    bloatingOf("arr[i++] = 5+4;")//
+        .gives("arr[i] = 5+4; i++;");
   }
 
   @Test public void t7() {
-    zoomingInto("for(;;) { arr[i++]=1;}").gives("for(;;) { arr[i]=1;i++;}");
+    bloatingOf("for(;;) { arr[i++]=1;}")//
+        .gives("for(;;) { arr[i]=1;i++;}");
   }
 
   @Test public void t8() {
-    zoomingInto("for(;;) { arr[++i]=1;}").gives("for(;;) { ++i; arr[i]=1;}");
+    bloatingOf("for(;;) { arr[++i]=1;}")//
+        .gives("for(;;) { ++i; arr[i]=1;}");
   }
 
   @Test public void t9() {
-    zoomingInto("a[+x] = 1;").stays();
+    bloatingOf("a[+x] = 1;")//
+        .stays();
   }
 }

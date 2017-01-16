@@ -465,8 +465,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final ASTRewrite r = createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
-    } catch (final AssertionError x) { // assert unreachable():
-      System.out.println(dump() + //
+    } catch (final AssertionError x) {
+      assert unreachable() : dump() + //
           "\n x=" + x + //
           "\n $=" + $ + //
           "\n u=" + u + //
@@ -477,7 +477,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
           "\n textchange=" + textChange + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
           "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
-          done(x));
+          done(x);
       return 0;
     }
     if (textChange.getEdit().getLength() != 0)

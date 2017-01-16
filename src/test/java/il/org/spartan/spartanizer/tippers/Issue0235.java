@@ -18,12 +18,14 @@ public class Issue0235 {
   @Test public void test1() {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally {}")//
         .gives("try{ return i; } catch(Exception e) { throw e; }")//
-        .gives("try{ return i; } catch(Exception ¢) { throw ¢; }").stays();
+        .gives("try{ return i; } catch(Exception ¢) { throw ¢; }")//
+        .stays();
   }
 
   @Test public void test2() {
     trimmingOf("try{ return i; } catch(Exception e) { throw e; } finally { return 7;}")//
-        .gives("try{ return i; } catch(Exception ¢) { throw ¢; } finally { return 7;}").stays();//
+        .gives("try{ return i; } catch(Exception ¢) { throw ¢; } finally { return 7;}")//
+        .stays();//
   }
 
   @Test public void test3() {

@@ -1,10 +1,10 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.zoomer.inflate.zoomers.ExpanderTestUtils.*;
+import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.zoomer.inflate.zoomers.*;
+import il.org.spartan.bloater.bloaters.*;
 
 /** Test case for bug in {@link AssignmentTernaryExpander} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
@@ -13,7 +13,7 @@ import il.org.spartan.zoomer.inflate.zoomers.*;
 @SuppressWarnings("static-method")
 public class Issue1048 {
   @Test public void test() {
-    zoomingInto(
+    bloatingOf(
         "public static InDeclaration instance() {" + "instance = instance != null ? instance : new InDeclaration();" + "return instance;" + "}")
             .stays();
   }
