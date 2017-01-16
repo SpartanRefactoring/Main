@@ -36,45 +36,45 @@ import il.org.spartan.spartanizer.tipping.*;
 // TODO Yuval Simon: remove @SuppressWarnings({ "unchecked" }) and use class
 // step --yg
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-//  @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final SwitchStatement s) {
-//    if (s == null)
-//      return null;
-//    final List<SwitchCase> $ = extract.switchCases(s);
-//    // TODO: Yuval Simon - I do not think you need this call
-//    statements(s);
-//    final AST a = s.getAST();
-//    // TODO: Yuval Simon -rename to $ --yg
-//    final Block res = a.newBlock();
-//    final IfStatement r = a.newIfStatement();
-//    // TODO: Yuval Simon - use step.pair --yg
-//    res.statements().add(r);
-//    final Block b1 = a.newBlock();
-//    final Block b2 = a.newBlock();
-//    r.setThenStatement(b1);
-//    r.setElseStatement(b2);
-//    r.setExpression(makeFrom(s, $, a));
-//    addStatements(firstComOfCase(s), s, b1);
-//    addStatements(firstComOfDefault(s), s, b2);
-//    return res;
-//  }
-
+  // @Override @SuppressWarnings({ "unchecked" }) public ASTNode
+  // replacement(final SwitchStatement s) {
+  // if (s == null)
+  // return null;
+  // final List<SwitchCase> $ = extract.switchCases(s);
+  // // TODO: Yuval Simon - I do not think you need this call
+  // statements(s);
+  // final AST a = s.getAST();
+  // // TODO: Yuval Simon -rename to $ --yg
+  // final Block res = a.newBlock();
+  // final IfStatement r = a.newIfStatement();
+  // // TODO: Yuval Simon - use step.pair --yg
+  // res.statements().add(r);
+  // final Block b1 = a.newBlock();
+  // final Block b2 = a.newBlock();
+  // r.setThenStatement(b1);
+  // r.setElseStatement(b2);
+  // r.setExpression(makeFrom(s, $, a));
+  // addStatements(firstComOfCase(s), s, b1);
+  // addStatements(firstComOfDefault(s), s, b2);
+  // return res;
+  // }
   @Override @SuppressWarnings("unused") public String description(final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
 
   @Override public ASTNode replacement(SwitchStatement s) {
-    if(s == null)
+    if (s == null)
       return null;
     List<switchBranch> l = switchBranch.intoBranches(s);
-    if(l.size() != 2)
+    if (l.size() != 2)
       return null;
-    boolean hasDefault= false;
-    for(switchBranch ¢ : l) {
-      if(¢.hasFallThrough() || !¢.hasStatements())
+    boolean hasDefault = false;
+    for (switchBranch ¢ : l) {
+      if (¢.hasFallThrough() || !¢.hasStatements())
         return null;
       hasDefault |= ¢.hasDefault();
     }
-    if(!hasDefault)
+    if (!hasDefault)
       return null;
     final AST a = s.getAST();
     final Block $ = a.newBlock();
@@ -83,7 +83,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     switchBranch t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
     r.setExpression(makeFrom(s, t.cases(), a));
     Block b = a.newBlock();
-    r.setThenStatement(b);  
+    r.setThenStatement(b);
     step.statements(b).addAll(switchBranch.removeBreakSequencer(t.statements()));
     b = a.newBlock();
     r.setElseStatement(b);
@@ -99,7 +99,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
         continue;
       // TODO: Yuval Simon please use fluent API with class subject --yg
       final InfixExpression n = t.newInfixExpression();
-//      subject.pair(copy.of(expression(s), copy.of(expression(c))
+      // subject.pair(copy.of(expression(s), copy.of(expression(c))
       n.setOperator(InfixExpression.Operator.EQUALS);
       n.setLeftOperand(copy.of(expression(s)));
       n.setRightOperand(copy.of(expression(c)));
