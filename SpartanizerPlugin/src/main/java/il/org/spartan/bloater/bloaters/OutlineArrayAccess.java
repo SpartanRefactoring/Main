@@ -15,16 +15,16 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** converts
- * 
+ *
  * <pre>
  * arr[i++] = y; arr[++i] = z;
- * 
+ *
  * <pre>
  * to
- * 
+ *
  * <pre>
  * arr[i] = y; ++i; ++i; arr[i] = z;
- * 
+ *
  * <pre>
  * does not expand if right hand side includes access index operand, such as in
  * arr[i]=i. works only on ExpressionStatement, varible declaration with

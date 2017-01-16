@@ -117,7 +117,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return false;
   }
 
-  private void computeMethodMetrics(ASTNode input, ASTNode output) {
+  private void computeMethodMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("methods");
     ReportGenerator.name(input);
