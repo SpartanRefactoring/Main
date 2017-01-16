@@ -191,7 +191,7 @@ public enum haz {
     final ExpressionStatement $ = az.expressionStatement(¢);
     return $ != null && !sideEffects.free($.getExpression());
   }
-  
+
   public static boolean sideEffects(final Expression ¢) {
     return ¢ != null && !sideEffects.free(¢);
   }

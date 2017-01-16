@@ -68,23 +68,20 @@ public class Issue0916 {
     trimmingOf("switch(x){ default: x=2; y=3; return 4; case 1:case 2: case 3: case 4: x=3; y=4; return 5;}")
         .gives("{if(x==1 || x==2 || x==3 || x==4) {x=3; y=4; return 5;} else {x=2; y=3;return 4;}}");
   }
-  
+
   @Test public void t8() {
-    trimmingOf("switch(x++){ default: y=2;break; case 1: y=3;}")
-        .gives("{if(x++ == 1) { y=3;} else {y=2;}}");
+    trimmingOf("switch(x++){ default: y=2;break; case 1: y=3;}").gives("{if(x++ == 1) { y=3;} else {y=2;}}");
   }
-  
+
   @Test public void t9() {
-    trimmingOf("switch(x++){ case 1: y=2;break; default: y=3;}")
-        .gives("{if(x++ == 1) { y=2;} else {y=3;}}");
+    trimmingOf("switch(x++){ case 1: y=2;break; default: y=3;}").gives("{if(x++ == 1) { y=2;} else {y=3;}}");
   }
-  
+
   @Test public void t10() {
     trimmingOf("switch(x++){case 1: case 2: y=3; break; default: y=2;break; }").stays();
   }
-  
+
   @Test public void t11() {
-    trimmingOf("switch(x++){ case 1: y=2;break; default: case 2: y=3;}")
-        .gives("{if(x++ == 1) { y=2;} else {y=3;}}");
+    trimmingOf("switch(x++){ case 1: y=2;break; default: case 2: y=3;}").gives("{if(x++ == 1) { y=2;} else {y=3;}}");
   }
 }

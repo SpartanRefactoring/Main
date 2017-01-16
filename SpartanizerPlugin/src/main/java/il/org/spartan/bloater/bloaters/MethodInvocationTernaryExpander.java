@@ -16,7 +16,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final ExpressionStatement s) {
     final Expression e = s.getExpression();
-    if (!(iz.methodInvocation(e)))
+    if (!iz.methodInvocation(e))
       return null;
     final MethodInvocation i = az.methodInvocation(e);
     final ConditionalExpression $ = getFirstCond(i);
