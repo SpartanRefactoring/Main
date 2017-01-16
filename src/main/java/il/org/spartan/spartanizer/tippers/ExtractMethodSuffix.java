@@ -70,7 +70,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d,
       final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
-    Collections.sort(ds, new NaturalVariablesOrder(d));
+    ds.sort(new NaturalVariablesOrder(d));
     final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = copy.of(d);
     fixStatements(d, d1, r);
