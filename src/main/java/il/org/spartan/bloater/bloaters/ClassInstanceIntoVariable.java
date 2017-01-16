@@ -26,9 +26,7 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = copy.of(cic.getType());
-        final VariableDeclarationStatement vds = make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic));
-        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
-        l.replace(¢, vds, g);
+        r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢, make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic)), g);
       }
     };
   }
