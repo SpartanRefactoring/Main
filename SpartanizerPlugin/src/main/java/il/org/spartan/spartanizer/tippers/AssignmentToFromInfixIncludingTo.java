@@ -45,9 +45,8 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static ASTNode replacement(final Expression to, final InfixExpression from) {
-    if(iz.arrayAccess(to)){
+    if (iz.arrayAccess(to))
       return null;
-    }
     if (!sideEffects.free(to))
       return null;
     final Expression $ = reduce(from, to);

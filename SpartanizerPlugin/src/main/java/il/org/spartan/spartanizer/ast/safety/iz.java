@@ -550,7 +550,7 @@ public interface iz {
     return ¢ != null && ¢ instanceof InstanceofExpression;
   }
 
-  static boolean loop(ASTNode ¢) {
+  static boolean loop(final ASTNode ¢) {
     return forStatement(¢) || enhancedFor(¢) || whileStatement(¢) || doStatement(¢);
   }
 
@@ -919,7 +919,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, sequencerTypes);
   }
 
-  static boolean sequencer(final ASTNode ¢, int type) {
+  static boolean sequencer(final ASTNode ¢, final int type) {
     assert sequencerTypes[0] == type || sequencerTypes[1] == type || sequencerTypes[2] == type || sequencerTypes[3] == type;
     return ¢.getNodeType() == type;
   }
@@ -960,7 +960,7 @@ public interface iz {
    *         contrast to sequencerComplex(ASTNode) above, this method not
    *         necessarily checks the following statements are not reachable.
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢, int type) {
+  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢, final int type) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {

@@ -46,20 +46,20 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
     };
   }
 
-  private static boolean checkInput(ArrayAccess a) {
+  private static boolean checkInput(final ArrayAccess a) {
     if (a == null || extract.nextPrefix(a) == null || extract.nextPrefix(a).getOperand() == null
         || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()))
       return true;
     if (iz.assignment(a.getParent()) && iz.infixExpression(az.assignment(a.getParent()).getRightHandSide()))
-      for (Expression ¢ : extract.allOperands(az.infixExpression(az.assignment(a.getParent()).getRightHandSide())))
+      for (final Expression ¢ : extract.allOperands(az.infixExpression(az.assignment(a.getParent()).getRightHandSide())))
         if (iz.arrayAccess(¢))
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
     int counter = 0;
-    List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
+    final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
     lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
-    for (Expression ¢ : lst)
+    for (final Expression ¢ : lst)
       if (iz.arrayAccess(¢))
         ++counter;
     return counter != 1;

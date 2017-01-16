@@ -46,7 +46,7 @@ public class ReportGenerator implements ConfigurableReport {
 
     /** @return */
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
-      HashMap<String, NamedFunction[]> $ = new HashMap<>();
+      final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
       $.put("methods",
           as.array(m("N. of Nodes", (¢) -> count.nodes(¢)), //
