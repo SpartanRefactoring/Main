@@ -20,8 +20,7 @@ public class Issue1001 {
       //
     }
 
-    void f1() {
-    }
+    void f1() {}
 
     void f2() {
       int a;
