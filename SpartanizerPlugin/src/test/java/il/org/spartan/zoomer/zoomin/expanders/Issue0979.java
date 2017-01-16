@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit test for {@link RenameShortNames}
+/** Unit test for {@link RenameShortNamesMethodDec}
  * @author Raviv Rachmiel
  * @since 15-01-2017 */
 @SuppressWarnings("static-method")
