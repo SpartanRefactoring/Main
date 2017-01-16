@@ -1,7 +1,8 @@
 package il.org.spartan.zoomer.inflate.zoomers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -35,6 +36,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979 */
+//TODO: take care of single var decleration, tests
 public class RenameShortNames extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
   @Override public String description(MethodDeclaration ¢) {
     return ¢.getName() + "";
@@ -44,24 +46,30 @@ public class RenameShortNames extends EagerTipper<MethodDeclaration> implements 
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final SingleVariableDeclaration parameter = onlyOne(parameters(d));
-    final SimpleName $ = parameter.getName();
-    assert $ != null;
-    if ((!in($.getIdentifier(), "$", "¢", "__", "_")) && $.getIdentifier().length() > 1)
-      return null;
-    if (in($.getIdentifier(), "$"))
-      return new Tip("Rename paraemter $ to ret", d, getClass()) {
-        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-          Tippers.rename($, d.getAST().newSimpleName("ret"), d, r, g);
-          // SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, "ret", r,
-          // g);
-        }
-      };
-    final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));
-    return new Tip("Rename paraemter " + $ + " to " + ¢, d, getClass()) {
+    final List<SingleVariableDeclaration> parameters = parameters(d);
+    List<SimpleName> prev = new ArrayList<SimpleName>();
+    List<SimpleName> after = new ArrayList<SimpleName>();
+    for (SingleVariableDeclaration parameter : parameters) {
+      final SimpleName $ = parameter.getName();
+      assert $ != null;
+      if ((!in($.getIdentifier(), "$", "¢", "__", "_")) && $.getIdentifier().length() > 1)
+        continue;
+      if (in($.getIdentifier(), "$")) {
+        prev.add($);
+        after.add(d.getAST().newSimpleName("ret"));
+        continue;
+      }
+      final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));
+      prev.add($);
+      after.add(¢);
+    }
+    return prev.isEmpty() ? null : new Tip("Rename paraemters", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename($, ¢, d, r, g);
-        // SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);
+        int counter = 0;
+        for (SimpleName ¢ : prev) {
+          Tippers.rename(¢, after.get(counter), d, r, g);
+          ++counter;
+        }
       }
     };
   }
