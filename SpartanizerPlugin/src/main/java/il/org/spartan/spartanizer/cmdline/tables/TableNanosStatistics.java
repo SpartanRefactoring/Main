@@ -33,7 +33,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
   };
   static {
     clazz = TableNanosStatistics.class;
-    Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
+    Logger.subscribe(npStatistics::logNPInfo);
   }
 
   private static void initializeWriter() {
@@ -83,7 +83,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
     pWriter.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
-        .map(k -> npStatistics.get(k))//
+        .map(npStatistics::get)//
         .forEach(n -> pWriter.col(n.name, n.occurences));
     fillAbsents();
     pWriter.nl();

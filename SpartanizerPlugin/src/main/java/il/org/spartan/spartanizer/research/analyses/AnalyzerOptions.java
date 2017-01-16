@@ -18,8 +18,7 @@ public enum AnalyzerOptions {
   }
 
   static void set(final String cls, final String property, final String value) {
-    if (options.get(cls) == null)
-      options.put(cls, new HashMap<>());
+    options.computeIfAbsent(cls, k -> new HashMap<>());
     options.get(cls).put(property, value);
   }
 

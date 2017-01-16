@@ -43,7 +43,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(ConditionalExpression.class, //
             new AsBit(), //
             new DefaultsTo(), //
-            new GeneralizedSwitch<ConditionalExpression>(), //
+            new GeneralizedSwitch<>(), //
             new Unless(), //
             new SafeReference(), //
             new TakeDefaultTo(), //
@@ -61,7 +61,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new NotNullOrThrow(), //
             new AssertNotNull(), //
             new ExecuteWhen(), //
-            new GeneralizedSwitch<IfStatement>(), //
+            new GeneralizedSwitch<>(), //
             // new PutIfAbsent(), // R.I.P
             new PreconditionNotNull(), //
             new NotHoldsOrThrow(), //

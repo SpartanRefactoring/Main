@@ -32,12 +32,12 @@ public class Table_Summary extends TableReusabilityIndices {
   protected static int totalMethods;
   private static int totalStatementsCovered;
   private static int totalMethodsTouched;
-  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
     clazz = Table_Summary.class;
-    Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
-    Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
-    Logger.subscribe((n, np) -> npDistributionStatistics.logNPInfo(n, np));
+    Logger.subscribe(Table_Summary::logNanoContainingMethodInfo);
+    Logger.subscribe(npStatistics::logNPInfo);
+    Logger.subscribe(npDistributionStatistics::logNPInfo);
   }
 
   public static void main(final String[] args)
@@ -151,7 +151,7 @@ public class Table_Summary extends TableReusabilityIndices {
   private long adopted() {
     final int $ = rMethod();
     return npStatistics.keySet().stream()//
-        .map(k -> npStatistics.get(k))//
+        .map(npStatistics::get)//
         .filter(n -> n.occurences > $).count();
   }
 

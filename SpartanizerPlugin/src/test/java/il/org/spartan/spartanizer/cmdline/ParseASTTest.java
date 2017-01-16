@@ -18,8 +18,8 @@ public class ParseASTTest {
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> modifiers = d.modifiers();
-        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
+        for (final Object modifier : modifiers)
+          if (modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"))
             return true;
         return false;
       }

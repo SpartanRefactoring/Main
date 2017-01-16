@@ -98,7 +98,7 @@ final class BindingFun implements IApplication {
     }
   }
 
-  private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+  private ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
