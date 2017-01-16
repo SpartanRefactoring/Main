@@ -746,4 +746,25 @@ public interface wizard {
       }
     return $;
   }
+
+  static boolean isObject(Type ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢ + "") {
+      default:
+        return false;
+      case "Object":
+      case "java.lang.Object":
+        return true;
+    }
+  }
+
+  static boolean hasObject(List<Type> ts) {
+    if (ts == null)
+      return false;
+    for (Type ¢:ts)
+      if (isObject(¢))
+        return true;
+    return false;
+  }
 }

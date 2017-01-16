@@ -126,7 +126,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   @Override public String description() {
-    return "remove 0 in expressions like ";
+    return "Remove 0+ in expressions like ";
   }
 
   @Override public String description(final InfixExpression ¢) {
