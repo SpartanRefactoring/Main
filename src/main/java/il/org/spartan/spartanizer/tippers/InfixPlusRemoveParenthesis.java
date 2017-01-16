@@ -52,7 +52,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
     for (final Integer i : range.from(0).to(es.size())) {
-      int ii = i.intValue();
+      final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
       if (iz.parenthesizedExpression(es.get(ii))) {
