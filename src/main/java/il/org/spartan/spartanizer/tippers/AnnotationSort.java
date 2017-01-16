@@ -71,7 +71,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       return null;
     final List<Annotation> myCopy = new ArrayList<>();
     myCopy.addAll($);
-    Collections.sort(myCopy, comp);
+    myCopy.sort(comp);
     return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
