@@ -191,6 +191,10 @@ public enum haz {
     final ExpressionStatement $ = az.expressionStatement(¢);
     return $ != null && !sideEffects.free($.getExpression());
   }
+  
+  public static boolean sideEffects(final Expression ¢) {
+    return ¢ != null && !sideEffects.free(¢);
+  }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;

@@ -10,6 +10,7 @@ import il.org.spartan.bloater.bloaters.*;
  * {@link RenameShortNamesVarDec}
  * @author Raviv Rachmiel
  * @since 15-01-2017 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0979 {
   @Test public void basicRet() {
@@ -44,7 +45,6 @@ public class Issue0979 {
         .gives("void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}");
   }
 
-  // TODO: Raviv Rachmiel, excellent job! --yg erase when your read this
   @Ignore @Test public void twoOfSame() {
     bloatingOf("void foo(int b, int a){ b = 1; a =3;}")//
         .gives("void foo(int i1, int i2){ i1=1; i2=3;}");

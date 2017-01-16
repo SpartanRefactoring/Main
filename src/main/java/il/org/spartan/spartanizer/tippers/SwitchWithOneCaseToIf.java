@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
@@ -68,13 +69,10 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     final List<switchBranch> l = switchBranch.intoBranches(s);
     if (l.size() != 2)
       return null;
-    boolean hasDefault = false;
-    for (final switchBranch ¢ : l) {
-      if (¢.hasFallThrough() || !¢.hasStatements())
-        return null;
-      hasDefault |= ¢.hasDefault();
-    }
-    if (!hasDefault)
+    switchBranch b1 = lisp.first(l);
+    switchBranch b2 = lisp.last(l);
+    if ((!b1.hasDefault() && !b2.hasDefault()) || b1.hasFallThrough() || b2.hasFallThrough() || !b1.hasStatements() || !b2.hasStatements()
+        || haz.sideEffects(step.expression(s)) && ((((b1.hasDefault() ? b2 : b1).cases()).size()) > 1))
       return null;
     final AST a = s.getAST();
     final Block $ = a.newBlock();
