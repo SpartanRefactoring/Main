@@ -56,12 +56,12 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
-    int counter = 0;
+    int $ = 0;
     final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
     lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
     for (final Expression ¢ : lst)
       if (iz.arrayAccess(¢))
-        ++counter;
-    return counter != 1;
+        ++$;
+    return $ != 1;
   }
 }
