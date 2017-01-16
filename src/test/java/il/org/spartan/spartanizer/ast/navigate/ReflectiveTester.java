@@ -108,7 +108,7 @@ public abstract class ReflectiveTester {
   }
 
   private static String[] values(final List<Expression> xs) {
-    return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(n -> new String[n]);
+    return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(String[]::new);
   }
 
   protected static final ReflectiveTester[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //

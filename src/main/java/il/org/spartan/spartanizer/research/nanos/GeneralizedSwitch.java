@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.ast.navigate.find.*;
 import java.util.*;
 import java.util.stream.*;
 
+import il.org.spartan.spartanizer.ast.navigate.step;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -34,7 +35,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   List<Expression> branchesExpressions(final N ¢) {
-    return branchesWrapper(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
+    return branchesWrapper(¢).stream().map(step::expression).collect(Collectors.toList());
   }
 
   @Override public Tip pattern(final N ¢) {
