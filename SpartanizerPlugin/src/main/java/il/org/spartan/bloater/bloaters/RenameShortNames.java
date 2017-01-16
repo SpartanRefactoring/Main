@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * to more common or intuitive names (s.e i for an integer variable and ret for
@@ -35,7 +36,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * </code>
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
- * @since 2017-01-10 Issue #979 */
+ * @since 2017-01-10 Issue #979, {@link Issue0979} */
 //TODO: take care of single var decleration, tests
 public class RenameShortNames extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
   @Override public String description(final MethodDeclaration ¢) {
