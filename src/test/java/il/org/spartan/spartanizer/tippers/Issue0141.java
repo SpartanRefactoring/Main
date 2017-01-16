@@ -13,17 +13,20 @@ import org.junit.runners.*;
 public class Issue0141 {
   @Test public void b$01() {
     trimmingOf("public static void go(final Object os[], final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+        + "out(\"elements\", os);   \n" + "}")//
+            .stays();
   }
 
   @Test public void b$02() {
     trimmingOf("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+        + "out(\"elements\", os);   \n" + "}")//
+            .stays();
   }
 
   @Test public void b$03() {
     trimmingOf("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
-        + "out(\"elements\",abracadabra);   \n" + "}").stays();
+        + "out(\"elements\",abracadabra);   \n" + "}")//
+            .stays();
   }
 
   @Test public void b$04() {

@@ -9,10 +9,12 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0826 {
   @Test public void a() {
-    trimmingOf("A() ? 8 : 8").stays();
+    trimmingOf("A() ? 8 : 8")//
+        .stays();
   }
 
   @Test public void b() {
-    trimmingOf("public void b() {" + "    int i = 210;" + "    if (++i < 5)" + "      a(i);" + "    else" + "      a(i);").stays();
+    trimmingOf("public void b() {" + "    int i = 210;" + "    if (++i < 5)" + "      a(i);" + "    else" + "      a(i);")//
+        .stays();
   }
 }

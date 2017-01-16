@@ -15,7 +15,8 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n").stays();
+    trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
+        .stays();
   }
 
   @Test public void forwardDeclaration1() {
@@ -88,18 +89,19 @@ public final class IgnoredTrimmerTest {
   }
 
   @Test public void inlineSingleUse05() {
-    trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y+x); y(y*x); ").gives(" int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
+    trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y+x); y(y*x); ")//
+        .gives(" int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
   }
 
   @Test public void inlineSingleUse09() {
     trimmingOf(
-        " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;); assertEquals(5, a.new Context().lineCount()); final PureIterable&lt;Mutant&gt; ms = a.generateMutants(); assertEquals(2, count(ms)); final PureIterator&lt;Mutant&gt; i = ms.iterator(); assert (i.hasNext()); assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text); assert (i.hasNext()); assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text); assert !(i.hasNext()); ")
+        " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;); wizard.assertEquals(5, a.new Context().lineCount()); final PureIterable&lt;Mutant&gt; ms = a.generateMutants(); wizard.assertEquals(2, count(ms)); final PureIterator&lt;Mutant&gt; i = ms.iterator(); assert (i.hasNext()); wizard.assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text); assert (i.hasNext()); wizard.assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text); assert !(i.hasNext()); ")
             .stays();
   }
 
   @Test public void inlineSingleUse10() {
     trimmingOf(
-        " final A a = new A(\"{\nABRA\n{\nCADABRA\n{\"); assertEquals(5, a.new Context().lineCount()); final PureIterable<Mutant> ms = a.mutantsGenerator(); assertEquals(2, count(ms)); final PureIterator<Mutant> i = ms.iterator(); assert (i.hasNext()); assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text); assert (i.hasNext()); assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text); assert !(i.hasNext());")
+        " final A a = new A(\"{\nABRA\n{\nCADABRA\n{\"); wizard.assertEquals(5, a.new Context().lineCount()); final PureIterable<Mutant> ms = a.mutantsGenerator(); wizard.assertEquals(2, count(ms)); final PureIterator<Mutant> i = ms.iterator(); assert (i.hasNext()); wizard.assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text); assert (i.hasNext()); wizard.assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text); assert !(i.hasNext());")
             .stays();
   }
 
@@ -135,8 +137,10 @@ public final class IgnoredTrimmerTest {
 
   public void issue62b() {
     trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }").gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }").gives("int f(int i) { for(;i<100;++i){} return i; }")//
+        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
+        .gives("int f(int i) { for(;i<100;++i){} return i; }")//
         .stays();
   }
 

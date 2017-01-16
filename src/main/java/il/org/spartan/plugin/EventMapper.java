@@ -247,7 +247,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return (EventMapperFunctor<E, X, Y>) this;
     }
 
-    // TODO Roth: make it clear the casting is for O
+    // TODO Ori Roth: make it clear the casting is for O
     /** Used for casting. */
     @SuppressWarnings({ "unchecked", "unused" }) public <Y> EventMapperFunctor<E, P, Y> gets(final Class<Y> co) {
       return (EventMapperFunctor<E, P, Y>) this;

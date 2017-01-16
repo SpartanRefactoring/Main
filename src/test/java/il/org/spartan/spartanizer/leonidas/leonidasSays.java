@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 import static org.junit.Assert.*;
 
@@ -191,7 +192,7 @@ public class leonidasSays {
         actual = extractStatementIfOne(findFirst.statement(wizard.ast(d.get()))) + "";
         break;
       default:
-        assertEquals(Essence.of(s).replaceAll(" ", ""), Essence.of(actual).replaceAll(" ", ""));
+        azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
     }
   }
 

@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.research.Matcher.*;
-import static org.junit.Assert.*;
 
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** @author Ori Marcovitch
@@ -23,12 +24,12 @@ public class MatcherTest {
   }
 
   @Test public void c() {
-    assertEquals("print();\n",
-        patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(ast("for (A b : C) print();")), "$B") + "");
+    azzert.that(patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(ast("for (A b : C) print();")), "$B") + "",
+        is("print();\n"));
   }
 
   @Test public void d() {
-    assertEquals("a", patternMatcher("$X + b", "").getMatching(findFirst.expression(ast("a + b")), "$X") + "");
+    azzert.that(patternMatcher("$X + b", "").getMatching(findFirst.expression(ast("a + b")), "$X") + "", is("a"));
   }
 
   @Test public void e() {

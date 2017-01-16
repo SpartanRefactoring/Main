@@ -11,7 +11,8 @@ public class Issue0291 {
   @Test public void test00() {
     trimmingOf("a+2==3")//
         .gives("a==3-2")//
-        .gives("a==1").stays();
+        .gives("a==1")//
+        .stays();
   }
 
   @Test public void test01() {

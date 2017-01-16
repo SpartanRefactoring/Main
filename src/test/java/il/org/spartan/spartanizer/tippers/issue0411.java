@@ -84,7 +84,9 @@ public class issue0411 {
   }
 
   @Test public void B07() {
-    trimmingOf(INPUT1).gives(OUTPUT1).stays();
+    trimmingOf(INPUT1)//
+        .gives(OUTPUT1)//
+        .stays();
   }
 
   @Test public void B17() {

@@ -71,7 +71,8 @@ public final class Issue0194 {
         + "} \n" //
         + "x=3; \n" //
         + "return null;" //
-    ).stays();
+    )//
+        .stays();
   }
 
   @Test public void test05() {
@@ -90,7 +91,8 @@ public final class Issue0194 {
                 + "return g(); \n"//
                 + "}" //
                 + "return h(); \n" //
-            ).gives("if(!b1) \n" //
+            )//
+            .gives("if(!b1) \n" //
                 + "return i(); \n" //
                 + "if(!b2) \n" //
                 + "return h(); \n" //
@@ -215,13 +217,14 @@ public final class Issue0194 {
         + "}" //
         + "}" //
         + "return noExcitement();" //
-    ).gives("if(!onoes() || !omigod())" //
-        + "return noExcitement();" //
-        + "if(panic())" //
-        + "return weGonnaDie();" //
-        + "else{" //
-        + "return meh();"//
-        + "}" //
+    )//
+        .gives("if(!onoes() || !omigod())" //
+            + "return noExcitement();" //
+            + "if(panic())" //
+            + "return weGonnaDie();" //
+            + "else{" //
+            + "return meh();"//
+            + "}" //
     );
   }
 

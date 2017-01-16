@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -32,11 +33,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements TipperCategory.CommnoFactoring {
   private static Expression extractRight(final Assignment ¢) {
-    return extract.core(from(¢));
+    final Expression $ = extract.core(from(¢));
+    return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 
   private static Expression getRight(final Assignment ¢) {
-    return ¢.getOperator() != ASSIGN ? null : extractRight(¢);
+    return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
   @Override public String description(final Assignment ¢) {
@@ -44,11 +46,11 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final ASTNode parent = a.getParent();
-    if (!(parent instanceof Statement))
+    final ASTNode parent = parent(a);
+    if (!iz.statement(parent))
       return null;
     final Expression right = getRight(a);
-    if (right == null || right.getNodeType() == NULL_LITERAL)
+    if (right == null || nodeType(right) == NULL_LITERAL)
       return null;
     final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)

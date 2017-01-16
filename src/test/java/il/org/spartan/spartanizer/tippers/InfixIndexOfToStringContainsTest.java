@@ -10,11 +10,14 @@ import org.junit.*;
 @Ignore
 public class InfixIndexOfToStringContainsTest {
   @Test @SuppressWarnings("static-method") public void testMutation0() {
-    trimmingOf("String str; String stringy; return str.indexOf(stringy) >= 0;").gives("String str; String stringy; return str.contains(stringy);")
+    trimmingOf("String str; String stringy; return str.indexOf(stringy) >= 0;")//
+        .gives("String str; String stringy; return str.contains(stringy);")//
         .stays();
   }
 
   @Test @SuppressWarnings("static-method") public void testMutation1() {
-    trimmingOf("\"str\".indexOf(\"stringy\") >= 0").gives("\"str\".contains(\"stringy\")").stays();
+    trimmingOf("\"str\".indexOf(\"stringy\") >= 0")//
+        .gives("\"str\".contains(\"stringy\")")//
+        .stays();
   }
 }

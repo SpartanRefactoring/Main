@@ -12,6 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0229 {
   @Test public void vanilla() {
-    trimmingOf("final class X { @SafeVarargs public final void f(final int... __) {}}").stays();
+    trimmingOf("final class X { @SafeVarargs public final void f(final int... __) {}}")//
+        .stays();
   }
 }

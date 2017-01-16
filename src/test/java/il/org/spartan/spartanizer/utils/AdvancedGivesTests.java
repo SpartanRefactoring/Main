@@ -20,7 +20,8 @@ public class AdvancedGivesTests {
 
   @Test public void test0() {
     trimmingOf("1+2")//
-        .givesEither("3", "").stays();
+        .givesEither("3", "")//
+        .stays();
   }
 
   @Test public void test1() {

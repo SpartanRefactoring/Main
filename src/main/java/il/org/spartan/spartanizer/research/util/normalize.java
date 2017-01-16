@@ -35,7 +35,7 @@ public class normalize {
 
   private static String wrapTest(final String name, final String code) {
     return "@Test public void " + name + "() {" + //
-        "\n\ttrimmingOf(\n" + code + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
+        "\n\ttrimmingOf(\n" + code + "\n.gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
         + code + //
         "\n).stays();\n}";
   }

@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.research.nanos.*;
 public class ReturnHoldsForAnyTest {
   @Test public void _a() {
     trimmingOf(" for (final UserDefinedTipper<Statement> ¢ : tippers) if (¢.canTip(s)) return true; return false;")
-        .using(Block.class, new ReturnHoldsForAny()).gives("return tippers.stream().anyMatch(¢ -> ¢.canTip(s));");
+        .using(Block.class, new ReturnHoldsForAny())//
+        .gives("return tippers.stream().anyMatch(¢ -> ¢.canTip(s));");
   }
 
   @Test public void a() {

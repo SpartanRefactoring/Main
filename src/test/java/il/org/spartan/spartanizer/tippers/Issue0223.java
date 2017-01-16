@@ -147,19 +147,26 @@ public final class Issue0223 {
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimmingOf("Integer x = new Integer(1 + 9);").gives("Integer x = Integer.valueOf(1+9);").gives("Integer x = Integer.valueOf(10);").stays();
+    trimmingOf("Integer x = new Integer(1 + 9);")//
+        .gives("Integer x = Integer.valueOf(1+9);")//
+        .gives("Integer x = Integer.valueOf(10);")//
+        .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimmingOf("String x = new String(f());").gives("String x = String.valueOf(f());");
+    trimmingOf("String x = new String(f());")//
+        .gives("String x = String.valueOf(f());");
   }
 
   @Test public void vanilla() {
-    trimmingOf("new Integer(3)").gives("Integer.valueOf(3)").stays();
+    trimmingOf("new Integer(3)")//
+        .gives("Integer.valueOf(3)")//
+        .stays();
   }
 
   @Test public void vanilla01() {
-    trimmingOf("new Integer(3)").gives("Integer.valueOf(3)");
+    trimmingOf("new Integer(3)")//
+        .gives("Integer.valueOf(3)");
   }
 
   @Test public void vanilla02() {

@@ -12,24 +12,34 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0116 {
   @Test public void issue116_01() {
-    trimmingOf("\"\" + x").gives("x + \"\"").stays();
+    trimmingOf("\"\" + x")//
+        .gives("x + \"\"")//
+        .stays();
   }
 
   @Test public void issue116_02() {
-    trimmingOf("\"\" + x.foo()").gives("x.foo() + \"\"").stays();
+    trimmingOf("\"\" + x.foo()")//
+        .gives("x.foo() + \"\"")//
+        .stays();
   }
 
   @Test public void issue116_03() {
-    trimmingOf("\"\" + (Integer)(\"\" + x).length()").gives("(Integer)(\"\" + x).length() + \"\"").gives("(Integer)(x +\"\").length() + \"\"")
+    trimmingOf("\"\" + (Integer)(\"\" + x).length()")//
+        .gives("(Integer)(\"\" + x).length() + \"\"")//
+        .gives("(Integer)(x +\"\").length() + \"\"")//
         .stays();
   }
 
   @Test public void issue116_04() {
-    trimmingOf("String s = \"\" + x.foo();").gives("String s = x.foo() + \"\";").stays();
+    trimmingOf("String s = \"\" + x.foo();")//
+        .gives("String s = x.foo() + \"\";")//
+        .stays();
   }
 
   @Test public void issue116_07() {
-    trimmingOf("\"\" + 0 + (x - 7)").gives("0 + \"\" + (x - 7)").stays();
+    trimmingOf("\"\" + 0 + (x - 7)")//
+        .gives("0 + \"\" + (x - 7)")//
+        .stays();
   }
 
   @Test public void issue116_08() {
@@ -38,6 +48,7 @@ public final class Issue0116 {
         .gives("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")
         .gives("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
-        .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";").stays();
+        .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";")//
+        .stays();
   }
 }

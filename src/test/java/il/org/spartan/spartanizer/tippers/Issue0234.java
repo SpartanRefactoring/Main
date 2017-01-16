@@ -9,18 +9,23 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0234 {
   @Test public void b$01() {
-    trimmingOf("try { f(); } catch(Exception e) { return -1; }").stays();
+    trimmingOf("try { f(); } catch(Exception e) { return -1; }")//
+        .stays();
   }
 
   @Test public void b$02() {
-    trimmingOf("try { } catch(Exception e) { return -1; } return true;").gives("return true;");
+    trimmingOf("try { } catch(Exception e) { return -1; } return true;")//
+        .gives("return true;");
   }
 
   @Test public void b$03() {
-    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("int a;");
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
+        .gives("int a;");
   }
 
   @Test public void b$04() {
-    trimmingOf("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }").gives("int a=5; {++a;}").gives("int a=5; ++a;");
+    trimmingOf("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }")//
+        .gives("int a=5; {++a;}")//
+        .gives("int a=5; ++a;");
   }
 }

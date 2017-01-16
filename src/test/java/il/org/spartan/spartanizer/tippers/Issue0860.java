@@ -11,10 +11,10 @@ import org.junit.*;
 public class Issue0860 {
   @Test public void t1() {
     trimmingOf("switch(x) {case 2:case 1:case 3:case 10:x = 2;break;default:x = 4;break;case 8:x = 3;}")
-    .gives("switch(x){case 2:case 1:case 3:case 10:x=2;break;case 8:x=3; break;default:x=4;break;}")
-    .gives("switch(x){case 8:x=3;break;case 2:case 1:case 3:case 10:x=2;break;default:x=4;break;}")
-    .gives("switch(x){case 8:x=3;break;case 1:case 2:case 3:case 10:x=2;break;default:x=4;break;}")
-    .stays();
+        .gives("switch(x){case 2:case 1:case 3:case 10:x=2;break;case 8:x=3; break;default:x=4;break;}")
+        .gives("switch(x){case 8:x=3;break;case 2:case 1:case 3:case 10:x=2;break;default:x=4;break;}")
+        .gives("switch(x){case 8:x=3;break;case 1:case 2:case 3:case 10:x=2;break;default:x=4;break;}")//
+        .stays();
   }
 
   @Test public void t2() {

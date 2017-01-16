@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO Roth: choose more suitable category
-// TODO Roth: add tests for tipper
+// TODO Ori Roth: choose more suitable category
+// TODO Ori Roth: add tests for tipper
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
 public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration> implements TipperCategory.EarlyReturn {
-  // TODO Roth: get more suitable names for constants
+  // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 
   @Override public String description(final MethodDeclaration ¢) {
@@ -49,15 +49,17 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   /** @param d JD
    * @param ds variables list
-   * @return <code><b>true</b></code> <em>iff</em> the method and the list
-   *         contains same variables, in matters of type and quantity */
+   * @return <code><b>true</b></code> <em>iff</em> the method and the
+   *         listcontains same variables, in matters of type and quantity
+   *         [[SuppressWarningsSpartan]] */
   // TODO: Ori Roth use class step if necessary and remove
   // @SuppressWarnings("unchecked") --yg
   @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    final List<String> ts = ds.stream().map(¢ -> (¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
-        : az.variableDeclrationStatement(¢.getParent()).getType()) + "").collect(Collectors.toList());
+    final List<String> ts = ds.stream().map(
+        ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
+        .collect(Collectors.toList());
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
@@ -172,7 +174,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   public static class MethodVariablesScanner extends MethodScanner {
-    // TODO Roth: get more suitable names for constants
+    // TODO Ori Roth: get more suitable names for constants
     // 1.0 means all statements but the last.
     private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
     final Map<VariableDeclaration, List<Statement>> uses;
