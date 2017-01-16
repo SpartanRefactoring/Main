@@ -25,7 +25,8 @@ public class Issue0856 {
                 " B.d(\"one expression\");" + //
                 " return \"and another\";" + //
                 "}"//
-        ).stays();
+        )//
+        .stays();
   }
 
   @Test public void b() {
@@ -51,7 +52,8 @@ public class Issue0856 {
                 " print(B.d(\"one expression\"));" + //
                 " return \"and another\";" + //
                 "}"//
-        ).stays();
+        )//
+        .stays();
   }
 
   @Test public void c() {
@@ -75,9 +77,11 @@ public class Issue0856 {
   @Test public void e() {
     trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
         "il.finalize(); " + //
-        "return 0;").gives(//
-            "((InflaterListener) ((TypedListener) l).getEventListener()).finalize();" + //
-                "return 0;" //
-    ).stays();
+        "return 0;")//
+            .gives(//
+                "((InflaterListener) ((TypedListener) l).getEventListener()).finalize();" + //
+                    "return 0;" //
+            )//
+            .stays();
   }
 }

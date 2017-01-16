@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.ast.engine;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -10,71 +10,73 @@ import org.junit.runners.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.*;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class findTest {
   @Test public void a() {
-    assertEquals("a", singleAtomicDifference(ast("a"), ast("b")));
+    azzert.that(singleAtomicDifference(ast("a"), ast("b")), is("a"));
   }
 
   @Test public void b() {
-    assertEquals("a", singleAtomicDifference(ast("a+b"), ast("b+b")));
+    azzert.that(singleAtomicDifference(ast("a+b"), ast("b+b")), is("a"));
   }
 
   @Test public void c() {
-    assertEquals("a", singleAtomicDifference(ast("f(a+b,a)"), ast("f(c+b,c)")));
+    azzert.that(singleAtomicDifference(ast("f(a+b,a)"), ast("f(c+b,c)")), is("a"));
   }
 
   @Test public void d() {
-    assertEquals("a", singleAtomicDifference(ast("f(a+b,a(g))"), ast("f(c+b,c(g))")));
+    azzert.that(singleAtomicDifference(ast("f(a+b,a(g))"), ast("f(c+b,c(g))")), is("a"));
   }
 
   @Test public void f() {
-    assertEquals(null, singleAtomicDifference(ast("f(a+b,d)"), ast("f(c+b,c)")));
+    azzert.isNull(singleAtomicDifference(ast("f(a+b,d)"), ast("f(c+b,c)")));
   }
 
   @Test public void g() {
-    assertEquals("", singleAtomicDifference(ast("f(a+b,c)"), ast("f(a+b,c)")));
+    azzert.that(singleAtomicDifference(ast("f(a+b,c)"), ast("f(a+b,c)")), is(""));
   }
 
   @Test public void h() {
-    assertEquals("0", singleAtomicDifference(ast("bools(a == 0)"), ast("bools(a == 1)")));
+    azzert.that(singleAtomicDifference(ast("bools(a == 0)"), ast("bools(a == 1)")), is("0"));
   }
 
   @Test public void i() {
-    assertEquals("0", singleAtomicDifference(Arrays.asList(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))));
+    azzert.that(singleAtomicDifference(Arrays.asList(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))), is("0"));
   }
 
   @Test public void j() {
-    assertEquals(null, singleAtomicDifference(Arrays.asList(ast("a + b"), ast("a * b"))));
+    azzert.isNull(singleAtomicDifference(Arrays.asList(ast("a + b"), ast("a * b"))));
   }
 
   @Test public void e0() {
-    assertEquals("a + b", singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a * b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a * b"))) + "", is("a + b"));
   }
 
   @Test public void e1() {
-    assertEquals(null, singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a + b"))));
+    azzert.isNull(singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a + b"))));
   }
 
   @Test public void e2() {
-    assertEquals("x", singleExpressionDifference(Arrays.asList(ast("x == a + b"), ast("y == a + b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("x == a + b"), ast("y == a + b"))) + "", is("x"));
   }
 
   @Test public void e3() {
-    assertEquals("x(f,g + 1)", singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == a + b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == a + b"))) + "", is("x(f,g + 1)"));
   }
 
   @Test public void e4() {
-    assertEquals("x(f,g + 1) == a + b", singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))) + "", is("x(f,g + 1) == a + b"));
   }
 
   @Test public void e5() {
-    assertEquals("x(f,g + 1) * 6 > a + b",
-        singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))) + "",
+        is("x(f,g + 1) * 6 > a + b"));
   }
 
   @Test public void e6() {
-    assertEquals("f", singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "");
+    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "", is("f"));
   }
 }

@@ -11,17 +11,20 @@ import org.junit.*;
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue0074 {
-  // TODO: unignore a test for this tipper in {@link Version 230}
+  // TODO: Yuval Simon unignore a test for this tipper in {@link Version 230}
   @Test public void issue74a() {
-    trimmingOf("int[] a = new int[] {,}").gives("int[] a = new int[] {}");
+    trimmingOf("int[] a = new int[] {,}")//
+        .gives("int[] a = new int[] {}");
   }
 
   @Test public void issue74b() {
-    trimmingOf("int[] a = new int[] {2,3,}").gives("int[] a = new int[] {2,3}");
+    trimmingOf("int[] a = new int[] {2,3,}")//
+        .gives("int[] a = new int[] {2,3}");
   }
 
   @Test public void issue74c() {
-    trimmingOf("a = new int[]{2,3,}").gives("a = new int[] {2,3}");
+    trimmingOf("a = new int[]{2,3,}")//
+        .gives("a = new int[] {2,3}");
   }
 
   @Test public void issue74d() {

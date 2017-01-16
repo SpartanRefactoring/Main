@@ -3,8 +3,8 @@ package il.org.spartan.zoomer.zoomin.expanders;
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.zoomer.zoomin.*;
 
 @Deprecated
 public class InflateWholeProject extends AbstractHandler {

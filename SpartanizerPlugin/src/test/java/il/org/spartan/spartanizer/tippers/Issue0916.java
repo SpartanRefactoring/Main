@@ -10,35 +10,43 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0916 {
   @Test public void c() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4;}").gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;}}");
+    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4;}")//
+        .gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;}}");
   }
 
   @Test public void d() {
-    trimmingOf("switch(x){ default: x=2; y=3; break; case 1: x=3; y=4;}").gives("{if(x==1) {x=3; y=4;} else {x=2; y=3;}}");
+    trimmingOf("switch(x){ default: x=2; y=3; break; case 1: x=3; y=4;}")//
+        .gives("{if(x==1) {x=3; y=4;} else {x=2; y=3;}}");
   }
 
   @Test public void e() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3;}").stays();
+    trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3;}")//
+        .stays();
   }
 
   @Test public void g() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4; break;}").gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;}}");
+    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4; break;}")//
+        .gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;}}");
   }
 
   @Test public void h() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3; break;}").stays();
+    trimmingOf("switch(x){ case 1: x=2; y=3; default: x=3; break;}")//
+        .stays();
   }
 
   @Test public void t1() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; return 5; default: x=3; y=4; break;}").gives("{if(x==1) {x=2; y=3; return 5;} else {x=3; y=4;}}");
+    trimmingOf("switch(x){ case 1: x=2; y=3; return 5; default: x=3; y=4; break;}")//
+        .gives("{if(x==1) {x=2; y=3; return 5;} else {x=3; y=4;}}");
   }
 
   @Test public void t2() {
-    trimmingOf("switch(x){ default: x=2; y=3; return 5; case 1: x=3; y=4; break;}").gives("{if(x==1) {x=3; y=4;} else {x=2; y=3; return 5;}}");
+    trimmingOf("switch(x){ default: x=2; y=3; return 5; case 1: x=3; y=4; break;}")//
+        .gives("{if(x==1) {x=3; y=4;} else {x=2; y=3; return 5;}}");
   }
 
   @Test public void t3() {
-    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4; return 5;}").gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;return 5;}}");
+    trimmingOf("switch(x){ case 1: x=2; y=3; break; default: x=3; y=4; return 5;}")//
+        .gives("{if(x==1) {x=2; y=3;} else {x=3; y=4;return 5;}}");
   }
 
   @Test public void t4() {

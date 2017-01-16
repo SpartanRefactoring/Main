@@ -5,8 +5,8 @@ import java.util.function.*;
 
 import org.eclipse.core.commands.*;
 
+import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.zoomer.zoomin.*;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth

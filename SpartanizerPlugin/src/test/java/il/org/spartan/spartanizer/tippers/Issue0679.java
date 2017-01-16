@@ -1,8 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.azzert.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -31,34 +34,34 @@ public class Issue0679 {
   }
 
   @Test public void methodInOutterClassAndMethodInInnerClass() {
-    Assert.assertEquals(2, enumerate.methods(cu("class A { void a() {} class B { void b() {} } }")));
+    azzert.that(enumerate.methods(cu("class A { void a() {} class B { void b() {} } }")), is(2));
   }
 
   @Test public void methodsInsideInnerClass() {
-    Assert.assertEquals(1, enumerate.methods(cu("class A { class B { void a() {} } }")));
+    azzert.that(enumerate.methods(cu("class A { class B { void a() {} } }")), is(1));
   }
 
   @Test public void methodsWithBody() {
-    Assert.assertEquals(3, enumerate.methods(cu("class A { int a1() {return 1;} int a2() {return 2;} int a3() {return 3;} }")));
+    azzert.that(enumerate.methods(cu("class A { int a1() {return 1;} int a2() {return 2;} int a3() {return 3;} }")), is(3));
   }
 
   @Test public void methodsWithParameters() {
-    Assert.assertEquals(2, enumerate.methods(cu("class A { int a1(int n) {return n;} int a2(int m) {return (m+1);} }")));
+    azzert.that(enumerate.methods(cu("class A { int a1(int n) {return n;} int a2(int m) {return (m+1);} }")), is(2));
   }
 
   @Test public void noMethodsInCompilationUnit() {
-    Assert.assertEquals(0, enumerate.methods(cu("1111")));
+    azzert.that(enumerate.methods(cu("1111")), is(0));
   }
 
   @Test public void oneMethodInCompilationUnit() {
-    Assert.assertEquals(1, enumerate.methods(cu("class A { void a() {} }")));
+    azzert.that(enumerate.methods(cu("class A { void a() {} }")), is(1));
   }
 
   @Test public void twoMethodsInCompilationUnit() {
-    Assert.assertEquals(2, enumerate.methods(cu("class A { void a1() {} void a2() {} }")));
+    azzert.that(enumerate.methods(cu("class A { void a1() {} void a2() {} }")), is(2));
   }
 
   @Test public void zeroReturnedWhenNullIsSent() {
-    Assert.assertEquals(0, enumerate.methods(null));
+    azzert.that(enumerate.methods(null), is(0));
   }
 }

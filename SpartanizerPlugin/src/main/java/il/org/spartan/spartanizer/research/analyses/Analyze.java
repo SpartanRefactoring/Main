@@ -74,7 +74,6 @@ public class Analyze {
         Logger.logType(t);
         for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !excludeMethod(m)).collect(Collectors.toList()))
           try {
-            // System.out.println(¢);
             Count.before(¢);
             final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);

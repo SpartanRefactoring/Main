@@ -36,27 +36,27 @@ public final class UtilsTest {
   }
 
   @Test public void removePrefiEmpty() {
-    assertEquals(removePrefix("BAAAAB", "A"), "BAAAAB");
+    azzert.that("BAAAAB", is(removePrefix("BAAAAB", "A")));
   }
 
   @Test public void removePrefiExhaustive() {
-    assertEquals(removePrefix("AXAXAXAXAXAXAXAX", "AX"), "");
+    azzert.that("", is(removePrefix("AXAXAXAXAXAXAXAX", "AX")));
   }
 
   @Test public void removePrefixTypical() {
-    assertEquals(removePrefix("AAAABC", "AA"), "BC");
+    azzert.that("BC", is(removePrefix("AAAABC", "AA")));
   }
 
   @Test public void removeSuffiEmpty() {
-    assertEquals(removeSuffix("BAAAAB", "A"), "BAAAAB");
+    azzert.that("BAAAAB", is(removeSuffix("BAAAAB", "A")));
   }
 
   @Test public void removeSuffiExhaustive() {
-    assertEquals(removeSuffix("AXAXAXAXAXAXAXAX", "AX"), "");
+    azzert.that("", is(removeSuffix("AXAXAXAXAXAXAXAX", "AX")));
   }
 
   @Test public void removeSuffixTypical() {
-    assertEquals(removeSuffix("AAAABC", "BC"), "AAAA");
+    azzert.that("AAAA", is(removeSuffix("AAAABC", "BC")));
   }
 
   @Test public void removeWhitesTest() {

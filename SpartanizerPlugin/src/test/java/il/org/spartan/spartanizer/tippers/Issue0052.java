@@ -67,7 +67,8 @@ public class Issue0052 {
   }
 
   @Test public void A$e() {
-    trimmingOf("public interface A{static void remove() ; public static int i = 3 ;}").gives("public interface A{static void remove() ; int i = 3 ;}")//
+    trimmingOf("public interface A{static void remove() ; public static int i = 3 ;}")//
+        .gives("public interface A{static void remove() ; int i = 3 ;}")//
         .stays() //
     ;
   }

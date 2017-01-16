@@ -95,6 +95,7 @@ public class Toolbox {
             new EnhancedForParameterRenameToCent(), //
             new EnhancedForRedundantConinue(), //
             null)//
+        .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
@@ -131,12 +132,13 @@ public class Toolbox {
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
-            new RemoveRedundantSwitchBranch(), //
+            new MergeSwitchBranches(), //
+            new RemoveRedundantSwitchReturn(),
+            new RemoveRedundantSwitchContinue(),
             new SwitchWithOneCaseToIf(), //
-             new SwitchBranchSort(), //
+            new SwitchBranchSort(), //
             null)
-        .add(SwitchCase.class, 
-            new RemoveRedundantSwitchCases(), //
+        .add(SwitchCase.class, new RemoveRedundantSwitchCases(), //
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
@@ -266,7 +268,7 @@ public class Toolbox {
         .add(TypeDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofType(), //
             new AnnotationSort.ofType(), //
-            null) //
+            new TypeDeclarationClassExtendsObject(), null) //
         .add(EnumDeclaration.class, //
             new $BodyDeclarationModifiersSort.ofEnum(), //
             new AnnotationSort.ofEnum(), //
@@ -286,9 +288,6 @@ public class Toolbox {
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
-            null) //
-        .add(Initializer.class, new $BodyDeclarationModifiersSort.ofInitializer(), //
-            new AnnotationSort.ofInitializer(), //
             null) //
         .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
             new AnnotationSort.ofAnnotation(), //

@@ -69,7 +69,7 @@ public class generalize {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      ¢.printStackTrace();
+      monitor.logEvaluationError(¢);
     }
     return ASTutils.extractCode(s, d);
   }

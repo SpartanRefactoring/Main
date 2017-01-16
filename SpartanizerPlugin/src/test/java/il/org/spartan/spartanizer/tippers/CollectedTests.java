@@ -20,7 +20,8 @@ public final class CollectedTests {
   }
 
   @Test public void b() {
-    trimmingOf("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;").gives(" for (int i = f(); i <100; i++) b[i] = 3;");
+    trimmingOf("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;")//
+        .gives(" for (int i = f(); i <100; i++) b[i] = 3;");
   }
 
   @Test public void c() {
@@ -35,19 +36,23 @@ public final class CollectedTests {
   }
 
   @Test public void e() {
-    trimmingOf("1-c-b").gives("1-b-c");
+    trimmingOf("1-c-b")//
+        .gives("1-b-c");
   }
 
   @Test public void f() {
-    trimmingOf("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").stays();
+    trimmingOf("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();")//
+        .stays();
   }
 
   @Test public void g() {
-    trimmingOf("").stays();
+    trimmingOf("")//
+        .stays();
   }
 
   @Test public void h() {
-    trimmingOf("public void f() {\n").stays();
+    trimmingOf("public void f() {\n")//
+        .stays();
   }
 
   @Test public void shortestOperand09() {
@@ -57,6 +62,7 @@ public final class CollectedTests {
   }
 
   @Test public void i() {
-    trimmingOf("switch (a) { default: }").gives("");
+    trimmingOf("switch (a) { default: }")//
+        .gives("");
   }
 }
