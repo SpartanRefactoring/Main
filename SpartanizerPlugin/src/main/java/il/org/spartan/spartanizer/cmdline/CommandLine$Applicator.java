@@ -91,7 +91,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
-    
     System.out.println(input.getClass());
     ReportGenerator.report("metrics").put("File", presentFileName);
     ReportGenerator.report("methods").put("File", presentFileName);
@@ -113,7 +112,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     MetricsReport.getSettings(); // ?
     Settings.addOutput(outputASTNode);
     computeMetrics(input, outputASTNode);
-    if(input instanceof TypeDeclaration)
+    if (input instanceof TypeDeclaration)
       computeMethodMetrics(input, outputASTNode);
     return false;
   }
