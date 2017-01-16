@@ -20,7 +20,8 @@ public class Issue1001 {
       //
     }
 
-    void f1() { /** Empty */}
+    void f1() { /** Empty */
+    }
 
     void f2() {
       int a;

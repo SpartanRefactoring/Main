@@ -45,7 +45,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    return arguments(az.methodInvocation(x)).stream().filter(n -> iz.name(n)).map(n -> az.name(n) + "").collect(Collectors.toList())
+    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(n -> az.name(n) + "").collect(Collectors.toList())
         .containsAll(parametersNames(¢));
   }
 

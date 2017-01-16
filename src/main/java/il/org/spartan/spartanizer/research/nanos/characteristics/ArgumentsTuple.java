@@ -17,7 +17,7 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
     final String $ = stringify(d);
     ___.nothing();
     return searchDescendants.forClass(MethodInvocation.class).from(d).stream()//
-        .map(¢ -> stringify(¢))//
+        .map(ArgumentsTuple::stringify)//
         .allMatch(s -> s != null && s.contains($));
   }
 

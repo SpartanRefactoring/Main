@@ -63,7 +63,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
   }
 
   private static List<Expression> gather(final InfixExpression ¢) {
-    return gather(¢, new ArrayList<Expression>());
+    return gather(¢, new ArrayList<>());
   }
 
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {

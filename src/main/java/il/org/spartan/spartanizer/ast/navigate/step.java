@@ -317,7 +317,7 @@ public enum step {
    * @param ¢ JD
    * @return */
   public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
-    return ¢ == null ? null : Stream.of(¢.getFields()).map(x -> names(x)).reduce(new ArrayList<>(), (x, y) -> {
+    return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
     });
@@ -602,10 +602,10 @@ public enum step {
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}
-   * @param d JD
+   * @param ¢ JD
    * @return */
-  public static List<Type> parametersTypes(final MethodDeclaration d) {
-    return new ArrayList<>(step.parameters(d).stream().map(x -> step.type(x)).collect(Collectors.toList()));
+  public static List<Type> parametersTypes(final MethodDeclaration ¢) {
+    return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(Collectors.toList()));
   }
 
   /** Shorthand for {@link ASTNode#getParent()}

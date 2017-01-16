@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
-    gather(x, new ArrayList<Expression>());
+    gather(x, new ArrayList<>());
     x.getOperator();
     extract.allOperands(x);
     extract.allOperators(x);
