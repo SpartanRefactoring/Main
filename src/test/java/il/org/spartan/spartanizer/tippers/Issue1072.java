@@ -42,7 +42,7 @@ public class Issue1072 {
 
   @Test public void f() {
     trimmingOf("abstract class X { abstract <T extends Object&C&Object&java.lang.Object&B&Object&A&Object&Object> T list();}")//
-    .gives("abstract class X { abstract <T extends C&B&A> T list(); }")//
+        .gives("abstract class X { abstract <T extends C&B&A> T list(); }")//
         .stays();
   }
 }

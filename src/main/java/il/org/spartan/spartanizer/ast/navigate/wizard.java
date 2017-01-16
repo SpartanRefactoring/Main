@@ -747,7 +747,7 @@ public interface wizard {
     return $;
   }
 
-  static boolean isObject(Type ¢) {
+  static boolean isObject(final Type ¢) {
     if (¢ == null)
       return false;
     switch (¢ + "") {
@@ -759,10 +759,10 @@ public interface wizard {
     }
   }
 
-  static boolean hasObject(List<Type> ts) {
+  static boolean hasObject(final List<Type> ts) {
     if (ts == null)
       return false;
-    for (Type ¢:ts)
+    for (final Type ¢ : ts)
       if (isObject(¢))
         return true;
     return false;

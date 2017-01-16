@@ -16,14 +16,11 @@ public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings("unused")
   public static class Issue1001Aux extends ReflectiveTester {
-    void x(int y) {
+    void x(final int y) {
       //
     }
 
     void f1() {
-      int a;
-      a = 0;
-      a += 1;
     }
 
     void f2() {
@@ -36,10 +33,8 @@ public class Issue1001 {
 
     void f3() {
       int a;
-      int b;
       a = 0;
-      b = 0;
-      x(a += b = 1);
+      x(a += 1);
     }
 
     void f4() {
