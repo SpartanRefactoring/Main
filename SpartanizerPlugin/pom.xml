@@ -10,15 +10,15 @@
   <properties>
     <tycho.version>0.24.0</tycho.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <mars-repo.url>http://download.eclipse.org/releases/neon</mars-repo.url>
+    <neon-repo.url>http://download.eclipse.org/releases/neon</neon-repo.url>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <repositories>
     <repository>
-      <id>mars</id>
-      <url>${mars-repo.url}</url>
+      <id>neon</id>
+      <url>${neon-repo.url}</url>
       <layout>p2</layout>
     </repository>
   </repositories>
