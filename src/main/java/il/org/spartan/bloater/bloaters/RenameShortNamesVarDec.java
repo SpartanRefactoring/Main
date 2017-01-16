@@ -46,12 +46,12 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
   @Override @SuppressWarnings("unused") public Tip tip(final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      List<SimpleName> prev = new ArrayList<SimpleName>();
-      List<SimpleName> after = new ArrayList<SimpleName>();
-      for (Object v : az.variableDeclarationExpression(s).fragments()) {
+      final List<SimpleName> prev = new ArrayList<>();
+      final List<SimpleName> after = new ArrayList<>();
+      for (final Object v : az.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclarationFragment) v).getName();
         assert $ != null;
-        if ((!in($.getIdentifier(), "$", "¢", "__", "_")) && $.getIdentifier().length() > 1)
+        if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
           return null;
         if (in($.getIdentifier(), "$")) {
           prev.add($);
@@ -67,13 +67,13 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
       return s.getParent() == null || prev.isEmpty() ? null : new Tip("Rename parameters", s, getClass()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
-          for (SimpleName ¢ : prev) {
+          for (final SimpleName ¢ : prev) {
             Tippers.rename(¢, after.get(counter), s.getParent(), r, g);
             ++counter;
           }
         }
       };
-    } catch (Exception ¢) {
+    } catch (final Exception ¢) {
       ¢.printStackTrace();
     }
     return null;
