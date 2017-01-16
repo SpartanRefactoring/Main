@@ -25,20 +25,22 @@ public class Issue0895 {
         "   };" + //
         " }" + //
         "}"//
-    ).gives("public final class A {" + //
-        " public static void a(final B b) {" + //
-        "   C c = new C() {" + //
-        "     @D" + //
-        "     public void d() {" + //
-        "       try {" + //
-        "         use();" + //
-        "       } catch (H | E e) {" + //
-        "         F.g(b);" + //
-        "       }" + //
-        "     }" + //
-        "   };" + //
-        " }" + //
-        "}"//
-    ).stays();
+    )//
+        .gives("public final class A {" + //
+            " public static void a(final B b) {" + //
+            "   C c = new C() {" + //
+            "     @D" + //
+            "     public void d() {" + //
+            "       try {" + //
+            "         use();" + //
+            "       } catch (H | E e) {" + //
+            "         F.g(b);" + //
+            "       }" + //
+            "     }" + //
+            "   };" + //
+            " }" + //
+            "}"//
+        )//
+        .stays();
   }
 }

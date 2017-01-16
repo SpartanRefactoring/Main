@@ -54,7 +54,8 @@ public class Issue0500 {
 
   /** Correct way of trimming does not change */
   @Test public void demoOfTrimming() {
-    trimmingOf("a").stays();
+    trimmingOf("a")//
+        .stays();
   }
 
   @Test public void report1() {

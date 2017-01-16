@@ -61,8 +61,6 @@ public class TableNanosCoverage extends FolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
-    // System.out.println(packageDeclaration(¢) + " " +
-    // name(lisp.first(types(¢))));
     return true;
   }
 

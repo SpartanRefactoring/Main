@@ -20,14 +20,16 @@ public class issue0445 {
             "      for (final Integer ¢: range.from(start+1).to(end))" + //
             "        builder.append(\", \").append(array[¢]);" + //
             "      return builder.append(']') + \"\";"//
-    ).gives(//
-        "@Override" + //
-            "    public String toString() {" + //
-            "      StringBuilder $ = new StringBuilder(5 * size());" + //
-            "      $.append('[').append(array[start]);" + //
-            "      for (final Integer ¢: range.from(start+1).to(end))" + //
-            "        $.append(\", \").append(array[¢]);" + //
-            "      return $.append(']') + \"\";"//
-    ).stays();
+    )//
+        .gives(//
+            "@Override" + //
+                "    public String toString() {" + //
+                "      StringBuilder $ = new StringBuilder(5 * size());" + //
+                "      $.append('[').append(array[start]);" + //
+                "      for (final Integer ¢: range.from(start+1).to(end))" + //
+                "        $.append(\", \").append(array[¢]);" + //
+                "      return $.append(']') + \"\";"//
+        )//
+        .stays();
   }
 }

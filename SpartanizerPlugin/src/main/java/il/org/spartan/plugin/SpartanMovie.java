@@ -43,7 +43,8 @@ public class SpartanMovie extends AbstractHandler {
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0;
         int filesModified = 0;
-        // TODO Roth: this function is much much too large. Try to break it --yg
+        // TODO Ori Roth: this function is much much too large. Try to break it
+        // --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
           mightNotBeSlick(page);
           final IFile file = (IFile) currentCompilationUnit.getResource();
@@ -60,7 +61,8 @@ public class SpartanMovie extends AbstractHandler {
               sleep(SLEEP_BETWEEN);
               trimmer.runAsMarkerFix(marker);
               ++changes;
-              marker.delete(); // TODO Roth: does not seem to make a difference
+              marker.delete(); // TODO Ori Roth: does not seem to make a
+                               // difference
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }

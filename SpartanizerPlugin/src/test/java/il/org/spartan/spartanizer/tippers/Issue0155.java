@@ -19,7 +19,8 @@ public final class Issue0155 {
 
   @Test public void inlineNonFinalIntoClassInstanceCreation() {
     trimmingOf("void h(int x) {\n" + "  ++x;\n" + "  final int y = x;\n" + "  new Object() {\n" + "    @Override\n" + "    public int hashCode() {\n"
-        + "      return y;\n" + "    }\n" + "  };\n" + "}").stays();
+        + "      return y;\n" + "    }\n" + "  };\n" + "}")//
+            .stays();
   }
 
   @Test public void issue64a() {
@@ -29,7 +30,8 @@ public final class Issue0155 {
   }
 
   @Test public void issue64b1() {
-    trimmingOf("void f() {" + "    new Object() {\n" + "      @Override public int hashCode() { return 3; }\n" + "    };" + "}").stays();
+    trimmingOf("void f() {" + "    new Object() {\n" + "      @Override public int hashCode() { return 3; }\n" + "    };" + "}")//
+        .stays();
   }
 
   @Test public void issue64b2() {
@@ -40,6 +42,7 @@ public final class Issue0155 {
 
   @Test public void issue64c() {
     trimmingOf("void f(int x) {" + "    ++x;\n" + "    final int a = x;\n" + "    new Object() {\n"
-        + "      @Override public int hashCode() { return a; }\n" + "    };" + "}").stays();
+        + "      @Override public int hashCode() { return a; }\n" + "    };" + "}")//
+            .stays();
   }
 }

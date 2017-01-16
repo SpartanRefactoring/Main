@@ -59,7 +59,7 @@ public enum TESTUtils {
    * @param actual JD */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      org.junit.Assert.assertEquals(Wrap.essence(expected), Wrap.essence(actual));
+      azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the

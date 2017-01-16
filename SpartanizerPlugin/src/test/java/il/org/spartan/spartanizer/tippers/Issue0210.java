@@ -12,27 +12,34 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0210 {
   @Test public void issue210_01() {
-    trimmingOf("8/0").stays();
+    trimmingOf("8/0")//
+        .stays();
   }
 
   // TODO: remove ignore after solving Issue #1067
   @Ignore @Test public void issue210_02() {
-    trimmingOf("int zero = 0;\nint result = 8 / zero; ++result;").gives("int result = 8 / 0; ++result;").stays();
+    trimmingOf("int zero = 0;\nint result = 8 / zero; ++result;")//
+        .gives("int result = 8 / 0; ++result;")//
+        .stays();
   }
 
   @Test public void issue210_03() {
-    trimmingOf("8/4.0/0/12").stays();
+    trimmingOf("8/4.0/0/12")//
+        .stays();
   }
 
   @Test public void issue210_04() {
-    trimmingOf("x+8l/0").stays();
+    trimmingOf("x+8l/0")//
+        .stays();
   }
 
   @Test public void issue210_05() {
-    trimmingOf("8%0").stays();
+    trimmingOf("8%0")//
+        .stays();
   }
 
   @Test public void issue210_06() {
-    trimmingOf("8%0l").stays();
+    trimmingOf("8%0l")//
+        .stays();
   }
 }

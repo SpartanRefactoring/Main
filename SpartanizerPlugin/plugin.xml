@@ -366,7 +366,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.SpartanizationHandler"/>
    <!--<handler commandId="il.org.spartan.AthensCollateral" class="il.org.spartan.zoomer.collateral.CollateralHandler"/>-->
-   <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.zoomer.zoomin.InflateHandler" />
+   <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.bloater.InflateHandler" />
 </extension>
 
 <!-- Menus -->

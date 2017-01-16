@@ -54,7 +54,8 @@ public class GUIBatchLaconizer extends Applicator {
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
-          // TODO Roth: this may throw a {@link CoreException}, be sure to catch
+          // TODO Ori Roth: this may throw a {@link CoreException}, be sure to
+          // catch
           // it!
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
@@ -75,7 +76,7 @@ public class GUIBatchLaconizer extends Applicator {
     });
     if (isAutoBuildChanged)
       enableAutoBuild();
-    // TODO Roth: add metrics etc.
+    // TODO Ori Roth: add metrics etc.
     listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
 
@@ -133,7 +134,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  // TODO Roth: use Policy / replacement for Trimmer.
+  // TODO Ori Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD

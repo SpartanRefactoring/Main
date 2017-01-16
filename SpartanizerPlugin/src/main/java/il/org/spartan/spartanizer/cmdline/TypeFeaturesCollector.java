@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** Collects metrics at different level of granularity: File, Class, Method TODO
- * Matteo: others? even finer?
+/** Collects metrics at different level of granularity: File, Class, Method
  * @author Matteo Orru'
  * @since 2016 */
+// TODO Matteo: others? even finer?
 @SuppressWarnings("rawtypes")
 public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCollector {
   int classNesting;

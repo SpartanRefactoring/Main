@@ -9,7 +9,8 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class issue0289 {
   @Test public void a() {
-    trimmingOf("void f() {" + "  final Object[] os = new Integer[1];" + "  os[0] = new Object(); }").stays();
+    trimmingOf("void f() {" + "  final Object[] os = new Integer[1];" + "  os[0] = new Object(); }")//
+        .stays();
   }
 
   @Test public void b() {
@@ -18,8 +19,10 @@ public class issue0289 {
   }
 
   @Test public void c() {
-    trimmingOf("void f() {" + "  final Object[] os = new Object[1];" + "  os[0] = new Object(); }").gives("void f() {" + //
-        "  (new Object[1])[0] = new Object();" + //
-        "     }").stays();
+    trimmingOf("void f() {" + "  final Object[] os = new Object[1];" + "  os[0] = new Object(); }")//
+        .gives("void f() {" + //
+            "  (new Object[1])[0] = new Object();" + //
+            "     }")
+        .stays();
   }
 }

@@ -334,6 +334,7 @@ public class Issue0404 {
 
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
-    trimmingOf("a").stays();
+    trimmingOf("a")//
+        .stays();
   }
 }

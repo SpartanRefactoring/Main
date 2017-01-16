@@ -19,12 +19,14 @@ public class Issue0857 {
             " B.d(b);" + //
             " return b + \"\";" + //
             "}"//
-    ).gives(//
-        "public static A a() {" + //
-            " A $ = \"str\";" + //
-            " B.d($);" + //
-            " return $ + \"\";" + //
-            "}"//
-    ).stays();
+    )//
+        .gives(//
+            "public static A a() {" + //
+                " A $ = \"str\";" + //
+                " B.d($);" + //
+                " return $ + \"\";" + //
+                "}"//
+        )//
+        .stays();
   }
 }

@@ -28,6 +28,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
+  int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
+  
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
    *         false otherwise */
@@ -540,6 +542,10 @@ public interface iz {
   static boolean instanceofExpression(final Expression ¢) {
     return ¢ != null && ¢ instanceof InstanceofExpression;
   }
+  
+  static boolean loop(ASTNode ¢) {
+    return forStatement(¢) || enhancedFor(¢) || whileStatement(¢) || doStatement(¢);
+  }
 
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
@@ -896,14 +902,19 @@ public interface iz {
   static boolean rightOfAssignment(final Expression ¢) {
     return ¢ != null && right(az.assignment(¢.getParent())).equals(¢);
   }
-
+  
   /** Determine whether a node is a "sequencer", i.e.,
    * <code><b>return</b></code> , <code><b>break</b></code>,
    * <code><b>continue</b></code> or <code><b>throw</b></code>
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   static boolean sequencer(final ASTNode ¢) {
-    return iz.nodeTypeIn(¢, new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT });
+    return iz.nodeTypeIn(¢, sequencerTypes);
+  }
+  
+  static boolean sequencer(final ASTNode ¢, int type) {
+    assert sequencerTypes[0] == type || sequencerTypes[1] == type || sequencerTypes[2] == type || sequencerTypes[3] == type;
+    return ¢.getNodeType() == type;
   }
 
   /** As {@link iz#sequencer}, but also accepts complex sequencers, i.e. a
@@ -912,9 +923,9 @@ public interface iz {
    *   return 1;
    * else
    *   return 2;
-   * System.out.println("Unreachable");</code> Codes as this usually do not
-   * compile: nevertheless, complex sequencers are relevant in switch
-   * statements.
+   * assert false: "Unreachable";
+   * </code> snippet as this usually do not compile: nevertheless, complex
+   * sequencers are relevant in switch statements.
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer
    *         (may be complex) */
@@ -936,6 +947,31 @@ public interface iz {
     }
   }
 
+
+  /** @param ¢ 
+   * @param type Type of sequencer
+   * @return true if ¢ contains this sequencer (only for if-else and blocks)
+   * In contrast to sequencerComplex(ASTNode) above, this method not necessarily checks the following statements 
+   * are not reachable.
+   * [[SuppressWarningsSpartan]]
+   */
+  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢, int type) {
+    if (¢ == null)
+      return false;
+    switch (¢.getNodeType()) {
+      case ASTNode.IF_STATEMENT:
+        final IfStatement $ = (IfStatement) ¢;
+        return sequencerComplex($.getThenStatement(),type) || sequencerComplex($.getElseStatement(),type);
+      case ASTNode.BLOCK:
+        for (final Statement s : (List<Statement>) ((Block) ¢).statements())
+          if (sequencerComplex(s,type))
+            return true;
+        return false;
+      default:
+        return sequencer(¢,type);
+    }
+  }
+  
   /** Checks if expression is simple.
    * @param x an expression
    * @return <code><b>true</b></code> <em>iff</em> argument is simple */

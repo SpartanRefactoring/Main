@@ -11,6 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0909 {
   @Test public void b$03() {
-    trimmingOf("int a; try { } catch(Exception e) { return -1; }").gives("int a;");
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
+        .gives("int a;");
   }
 }
