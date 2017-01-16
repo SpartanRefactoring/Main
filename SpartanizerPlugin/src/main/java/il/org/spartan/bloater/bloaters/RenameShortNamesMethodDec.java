@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
- * to more common or intuitive names (s.e i for an integer variable and ret for
- * a return variable) : <code>
+ * in a method dec to more common or intuitive names (s.e i for an integer
+ * variable and ret for a return variable) : <code>
  * Important - the $ will always change to ret by convention
  * for more naming conventions information - {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
  * int f(int ¢) {
@@ -37,8 +37,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * </code>
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-//TODO: take care of single var decleration, tests
-public class RenameShortNames extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
+// TODO: take care of single var decleration, tests
+public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
@@ -47,7 +47,6 @@ public class RenameShortNames extends EagerTipper<MethodDeclaration> implements 
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-
     final List<SingleVariableDeclaration> parameters = parameters(d);
     List<SimpleName> prev = new ArrayList<SimpleName>();
     List<SimpleName> after = new ArrayList<SimpleName>();
