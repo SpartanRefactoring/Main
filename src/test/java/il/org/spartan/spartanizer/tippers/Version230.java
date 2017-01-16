@@ -3460,7 +3460,8 @@ public final class Version230 {
         + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}");
   }
 
-  @Ignore // trimmer wraps with void method so it is tipped by {@link RemoveRedundantSwitchReturn}
+  @Ignore // trimmer wraps with void method so it is tipped by {@link
+          // RemoveRedundantSwitchReturn}
   @Test public void switchSimplifyCaseAfterDefault1() {
     trimmingOf("switch(n.getNodeType()){" + "case BREAK_STATEMENT:return 0;" + "case CONTINUE_STATEMENT:return 1;" + "case RETURN_STATEMENT:return 2;"
         + "case THROW_STATEMENT:return 3;" + "default:return-1;}")//
