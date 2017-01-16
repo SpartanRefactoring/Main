@@ -130,7 +130,7 @@ public class GUIBatchLaconizer extends Applicator {
    * runs the {@link Runnable} in the current thread.
    * @return this applicator */
   public GUIBatchLaconizer defaultRunContext() {
-    runContext(r -> r.run());
+    runContext(Runnable::run);
     return this;
   }
 

@@ -60,7 +60,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
   }
 
   private static List<Expression> gather(final InfixExpression ¢) {
-    return gather(¢, new ArrayList<Expression>());
+    return gather(¢, new ArrayList<>());
   }
 
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {

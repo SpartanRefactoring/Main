@@ -40,8 +40,7 @@ public enum property {
     return ¢.getCanonicalName();
   }
 
-  @SuppressWarnings("unchecked")
-  public static <N> Obtainer<N> obtain(final Class<N> n) {
+  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> n) {
     return ¢ -> (N) ¢.getProperty(key(n));
   }
 
