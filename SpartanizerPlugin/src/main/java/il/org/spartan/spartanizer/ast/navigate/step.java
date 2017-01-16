@@ -804,6 +804,10 @@ public enum step {
     return ¢ == null ? null : ¢.typeArguments();
   }
 
+  @SuppressWarnings("unchecked") public static List<Type> typeBounds(final TypeParameter ¢) {
+    return ¢ == null ? null : ¢.typeBounds();
+  }
+
   public static Name typeName(final Annotation ¢) {
     return ¢ == null ? null : ¢.getTypeName();
   }

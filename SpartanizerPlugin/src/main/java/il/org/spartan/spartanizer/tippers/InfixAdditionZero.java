@@ -18,6 +18,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -90,7 +91,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "remove 0 in expressions like " + ¢;
+    return "Remove noop of adding 0 in " + wizard.trim(¢);
   }
 
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {

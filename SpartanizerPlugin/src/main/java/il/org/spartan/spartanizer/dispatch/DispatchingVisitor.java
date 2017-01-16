@@ -144,6 +144,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final QualifiedType ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final ReturnStatement ¢) {
     return cautiousGo(¢);
   }
@@ -176,6 +180,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final TypeParameter ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final VariableDeclarationExpression ¢) {
     return cautiousGo(¢);
   }
@@ -189,6 +197,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final WhileStatement ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final WildcardType ¢) {
     return cautiousGo(¢);
   }
 }
