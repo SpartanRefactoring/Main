@@ -38,9 +38,6 @@ public class Issue0230 {
         .stays();
   }
 
-
-
-
   @Test public void a35() {
     trimmingOf("class A{@UserDefined1 @UserDefined2 @Override int f() {}}")//
         .gives("class A{@Override @UserDefined1 @UserDefined2 int f() {}}")//
@@ -51,7 +48,6 @@ public class Issue0230 {
     trimmingOf("class A{@UserDefined1 @UserDefined2 int f() {}}")//
         .stays();
   }
-
 
   @Test public void b() {
     trimmingOf("protected public final class A{volatile static int a;}")//
@@ -73,14 +69,12 @@ public class Issue0230 {
         .stays();
   }
 
-
   @Test public void h() {
     trimmingOf("@Retention(RetentionPolicy.RUNTIME)@Target({ElementType.METHOD})public @interface Tweezable {}")//
         .stays();
   }
 
   @Test public void i() {
-    trimmingOf("public @interface hand_made { String[] value(); }final @hand_made({}) String s = \"a\";")
-        .stays();
+    trimmingOf("public @interface hand_made { String[] value(); }final @hand_made({}) String s = \"a\";").stays();
   }
 }
