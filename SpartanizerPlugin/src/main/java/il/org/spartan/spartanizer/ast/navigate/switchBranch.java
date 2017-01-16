@@ -169,20 +169,20 @@ public class switchBranch {
       $.add(lisp.last(statements));
     return $;
   }
-  
+
   public boolean hasFallThrough() {
-    for(Statement ¢ : statements)
-      if(iz.switchCase(¢))
+    for (Statement ¢ : statements)
+      if (iz.switchCase(¢))
         return true;
     return false;
   }
-  
+
   public static Statement removeBreakSequencer(Statement s) {
-    if(!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
+    if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     AST a = s.getAST();
     Statement $ = null;
-    if(iz.ifStatement(s)) {
+    if (iz.ifStatement(s)) {
       IfStatement t = az.ifStatement(s);
       IfStatement f = a.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
@@ -199,17 +199,17 @@ public class switchBranch {
     }
     return $;
   }
-    
+
   public static List<Statement> removeBreakSequencer(List<Statement> ss) {
     List<Statement> $ = new ArrayList<>();
-    for(Statement ¢ : ss) {
+    for (Statement ¢ : ss) {
       Statement s = removeBreakSequencer(¢);
-      if(s != null)
+      if (s != null)
         $.add(s);
     }
     return $;
   }
-  
+
   public boolean hasStatements() {
     return !statements.isEmpty() && !iz.breakStatement(lisp.first(statements));
   }

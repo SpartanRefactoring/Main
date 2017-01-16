@@ -10,29 +10,21 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** remove redundant return from switch in void method.
- * convert
+/** remove redundant return from switch in void method. convert
+ * 
  * <pre>
- * void a() {
- *   switch(x) {
- *    case 1: y=2; break;
- *    default: return;
- *   }
- * }
+ * void a() { switch(x) { case 1: y=2; break; default: return; } }
+ * 
  * <pre>
  * to
- * <pre>
- * void a() {
- *   switch(x) {
- *    case 1: y=2; break;
- *   }
- * }
- * <pre>
  * 
+ * <pre>
+ * void a() { switch(x) { case 1: y=2; break; } }
+ * 
+ * <pre>
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-15
- */
+ * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(SwitchStatement s) {
     if (s == null)
