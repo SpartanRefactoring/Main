@@ -69,13 +69,11 @@ public class RefactorerUtil {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();
-    return new IRunnableWithProgress() {
-      @Override @SuppressWarnings("boxing") public void run(final IProgressMonitor pm) {
-        pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        $.setICompilationUnit(first(us));
-        a.put(t, $.countTips());
-        pm.done();
-      }
+    return pm -> {
+      pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+      $.setICompilationUnit(first(us));
+      a.put(t, Integer.valueOf($.countTips()));
+      pm.done();
     };
   }
 }

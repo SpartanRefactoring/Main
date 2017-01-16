@@ -186,35 +186,33 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
-    return new IRunnableWithProgress() {
-      @Override @SuppressWarnings("synthetic-access") public void run(final IProgressMonitor pm) {
-        final int passesCount = passesCount();
-        int pass;
-        int totalTips = 0;
-        final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
-        final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
-        for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
-          pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
-          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
-          if (currentCompilationUnits.isEmpty()) {
-            finish(pm);
-            break;
-          }
-          for (final ICompilationUnit u : currentCompilationUnits) {
-            if (pm.isCanceled())
-              break;
-            pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
-            final int tipsCommited = a.fuzzyImplementationApply(u, s.textSelection);
-            totalTips += tipsCommited;
-            (tipsCommited == 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
-            (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
-            pm.worked(1);
-          }
+    return pm -> {
+      final int $ = passesCount();
+      int pass;
+      int totalTips = 0;
+      final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
+      final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
+      for (pass = 0; pass < $ && !finish(pm); ++pass) {
+        pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
+        final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
+        if (currentCompilationUnits.isEmpty()) {
+          finish(pm);
+          break;
         }
-        put(attributes, attribute.CHANGES, modifiedCompilationUnits);
-        put(attributes, attribute.PASSES, Integer.valueOf(pass));
-        put(attributes, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
+        for (final ICompilationUnit u : currentCompilationUnits) {
+          if (pm.isCanceled())
+            break;
+          pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
+          final int tipsCommited = a.fuzzyImplementationApply(u, s.textSelection);
+          totalTips += tipsCommited;
+          (tipsCommited == 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
+          (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
+          pm.worked(1);
+        }
       }
+      put(attributes, attribute.CHANGES, modifiedCompilationUnits);
+      put(attributes, attribute.PASSES, Integer.valueOf(pass));
+      put(attributes, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
     };
   }
 
