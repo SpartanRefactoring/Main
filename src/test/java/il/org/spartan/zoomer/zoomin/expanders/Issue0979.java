@@ -38,6 +38,11 @@ public class Issue0979 {
         .gives("void foo(double d1,int i1){ d1=1.1; i1 = 4;}");
   }
   
+  @Test public void ParamsRenameShortVar3() {
+    bloatingOf("void foo(double b,int a,String t){ b = 1.1; a = 4;}")//
+        .gives("void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}");
+  }
+  
   @Ignore
   @Test public void twoOfSame() {
     bloatingOf("void foo(int b, int a){ b = 1; a =3;}")// 
