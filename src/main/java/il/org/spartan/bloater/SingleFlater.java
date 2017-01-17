@@ -151,27 +151,7 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  @Deprecated @SuppressWarnings({ "restriction", "unused" }) private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i)
-      throws CoreException {
-    if (i == null || !(e instanceof CompilationUnitEditor) || e.getSelectionProvider() == null) {
-      tc.perform(new NullProgressMonitor());
-      return true;
-    }
-    final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
-    if (!(v instanceof ProjectionViewer)) {
-      tc.perform(new NullProgressMonitor());
-      return true;
-    }
-    final ProjectionViewer pv = (ProjectionViewer) v;
-    tc.perform(new NullProgressMonitor());
-    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
-    if (!i.invalid())
-      pv.setTopIndex(i.startLine);
-    return false;
-  }
-  
-  private static boolean changeNFocus(final StyledText t, final TextFileChange tc, final WindowInformation i)
-      throws CoreException {
+  private static boolean changeNFocus(final StyledText t, final TextFileChange tc, final WindowInformation i) throws CoreException {
     if (i == null || t == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -234,7 +214,7 @@ public class SingleFlater {
       endLine = v.getBottomIndex();
     }
 
-    public WindowInformation(StyledText ¢) {
+    public WindowInformation(final StyledText ¢) {
       startLine = ¢.getTopIndex();
       endLine = JFaceTextUtil.getBottomIndex(¢);
       startChar = ¢.getOffsetAtLine(startLine);

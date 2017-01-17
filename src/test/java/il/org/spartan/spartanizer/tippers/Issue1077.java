@@ -4,11 +4,10 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** test case for bug in {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
- * 
+/** test case for bug in
+ * {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-17
- */
+ * @since 2017-01-17 */
 @SuppressWarnings("static-method")
 public class Issue1077 {
   @Test public void t1() {
@@ -41,72 +40,31 @@ public class Issue1077 {
             + "}")//
                 .stays();
   }
-  
+
   @Test public void t3() {
-    trimmingOf("class a { "
-        + "final ASTNode ¢; "
-        + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
-        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
-        + "if (s.has())"
-        + "return true;"
-        + "}"
-        + "}").stays();
+    trimmingOf("class a { " + "final ASTNode ¢; " + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" + "if (s.has())" + "return true;" + "}" + "}").stays();
   }
-  
+
   @Test public void t4() {
-    trimmingOf("class a { "
-        + "final ASTNode ¢;"
-        + "final List<Statement> l; "
+    trimmingOf("class a { " + "final ASTNode ¢;" + "final List<Statement> l; "
         + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
-        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
-        + "if (s.has())"
-        + "return true;"
-        + "}"
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" + "if (s.has())" + "return true;" + "}"
         + "@SuppressWarnings(\"unchecked\") static AA sss(final ASTNode k, int type) {"
-        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
-        + "if (s.has())"
-        + "return new AA();"
-        + "return new AA() {"
-        + "void aa() {"
-        + "for (final Statement t : l)"
-        + "if (t.has())"
-        + "return true;"
-        + "}"
-        + "};"
-        + "}"
-        + "}").stays();
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" + "if (s.has())" + "return new AA();" + "return new AA() {"
+        + "void aa() {" + "for (final Statement t : l)" + "if (t.has())" + "return true;" + "}" + "};" + "}" + "}").stays();
   }
-  
+
   @Test public void t5() {
-    trimmingOf("class a { "
-        + "final List<Statement> l; "
-        + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
-        + "final ASTNode ¢;"
-        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
-        + "if (s.has())"
-        + "return true;"
-        + "}"
-        + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {"
-        + "for (final Statement s : l)"
-        + "if (s.has())"
-        + "return 1;"
-        + "return 0;"
-        + "}"
-        + "}")
-    .gives("class a { "
-        + "final List<Statement> l; "
-        + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
-        + "final ASTNode ¢;"
-        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
-        + "if (s.has())"
-        + "return true;"
-        + "}"
-        + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {"
-        + "for (final Statement ¢ : l)"
-        + "if (¢.has())"
-        + "return 1;"
-        + "return 0;"
-        + "}"
-        + "}");
+    trimmingOf(
+        "class a { " + "final List<Statement> l; " + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
+            + "final ASTNode ¢;" + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" + "if (s.has())" + "return true;" + "}"
+            + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {" + "for (final Statement s : l)" + "if (s.has())" + "return 1;"
+            + "return 0;" + "}" + "}")
+                .gives("class a { " + "final List<Statement> l; "
+                    + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {" + "final ASTNode ¢;"
+                    + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" + "if (s.has())" + "return true;" + "}"
+                    + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {" + "for (final Statement ¢ : l)" + "if (¢.has())"
+                    + "return 1;" + "return 0;" + "}" + "}");
   }
 }
