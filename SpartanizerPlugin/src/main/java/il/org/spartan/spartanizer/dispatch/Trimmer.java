@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import java.util.*;
 
 import org.eclipse.core.resources.*;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -42,7 +43,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
-    final String fileName = Linguistic.unknownIfNull(u.getJavaElement(), e -> e.getElementName());
+    final String fileName = Linguistic.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);

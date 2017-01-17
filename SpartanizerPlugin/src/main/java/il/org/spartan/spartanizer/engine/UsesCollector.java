@@ -272,8 +272,8 @@ class UsesCollector extends HidingDepth {
     // We simply ignore the parameter
   }
 
-  private boolean recurse(final List<? extends ASTNode> ns) {
-    ns.forEach(¢ -> recurse(¢));
+  private boolean recurse(final List<? extends ASTNode> ¢) {
+    ¢.forEach(this::recurse);
     return false;
   }
 
@@ -442,8 +442,8 @@ class StringCollector extends HidingDepth {
     // We simply ignore the parameter
   }
 
-  private boolean recurse(final List<? extends ASTNode> ns) {
-    ns.forEach(¢ -> recurse(¢));
+  private boolean recurse(final List<? extends ASTNode> ¢) {
+    ¢.forEach(this::recurse);
     return false;
   }
 

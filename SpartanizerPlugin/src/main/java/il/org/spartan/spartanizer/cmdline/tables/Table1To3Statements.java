@@ -26,7 +26,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
-  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   private static int totalStatements;
   private static int totalMethods;
   private static int totalStatementsCovered;
@@ -34,7 +34,7 @@ public class Table1To3Statements extends FolderASTVisitor {
     clazz = Table1To3Statements.class;
     TrimmerLog.off();
     Trimmer.silent = true;
-    Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
+    Logger.subscribe(Table1To3Statements::logNanoContainingMethodInfo);
   }
 
   public static void main(final String[] args)
