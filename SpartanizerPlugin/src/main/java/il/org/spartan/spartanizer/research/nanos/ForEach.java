@@ -16,16 +16,16 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($T $N1 : $N2) $X;", "$N2.stream().forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T $N1 : $X1) $X2;", "($X1).stream().forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B", "$N2.stream().forEach($N1 -> {try{ $X; } catch($T2 $N3) $B});",
+      add(patternTipper("for($T $N1 : $N2) $X;", "$N2.forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"));
+      add(patternTipper("for($T $N1 : $X1) $X2;", "($X1).forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
+      add(patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B", "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B});",
           "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B", "($X1).stream().forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B});",
+      add(patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B", "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B});",
           "ForEach pattern: conevrt to fluent API"));
       add(patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2",
-          "$N2.stream().forEach($N1 -> {try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2});", "ForEach pattern: conevrt to fluent API"));
+          "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2});", "ForEach pattern: conevrt to fluent API"));
       add(patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2",
-          "($X1).stream().forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2});", "ForEach pattern: conevrt to fluent API"));
+          "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2});", "ForEach pattern: conevrt to fluent API"));
     }
   };
   protected static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
