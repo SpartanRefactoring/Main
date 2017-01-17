@@ -24,7 +24,7 @@ public class Issue1077 {
             + "return sequencer(¢,type);" //
             + "}" //
             + "}")//
-    .stays(); //
+                .stays(); //
   }
 
   @Test public void t2() {
@@ -34,6 +34,6 @@ public class Issue1077 {
             + "if (sequencerComplex(s))" //
             + "return true;" //
             + "}")//
-    .stays();
+                .stays();
   }
 }
