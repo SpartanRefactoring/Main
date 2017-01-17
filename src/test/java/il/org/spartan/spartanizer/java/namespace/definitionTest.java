@@ -471,12 +471,9 @@ class ZZZ___Fixture_ModelClass {
 
   @annotation
   @interface foo {
-    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" })
-    int bar = 12;
-    @ScopeSize(5) @field
-    int foo = bar;
-    @ScopeSize(5) @field
-    int fubar = foo << bar;
+    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) int bar = 12;
+    @ScopeSize(5) @field int foo = bar;
+    @ScopeSize(5) @field int fubar = foo << bar;
 
     @ScopeSize(5)
     @enum¢
@@ -492,8 +489,7 @@ class ZZZ___Fixture_ModelClass {
       }
     }
 
-    @ScopeSize(5) @field
-    Bar acuda = Bar.abra, cadbara = Bar.cadabra;
+    @ScopeSize(5) @field Bar acuda = Bar.abra, cadbara = Bar.cadabra;
   }
 
   @interface¢
