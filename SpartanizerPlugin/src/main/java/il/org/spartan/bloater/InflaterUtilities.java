@@ -35,9 +35,9 @@ public class InflaterUtilities {
       return false;
     // TODO: Raviv rename nl to ns --yg
     for (final ASTNode statement : nl) {
-      final ASTNode change = new ReturnTernaryExpander().replacement(az.returnStatement(statement));
-      if (change != null) {
-        r.replace(statement, change, __);
+      final ReturnTernaryExpander cc = new ReturnTernaryExpander();
+      if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
+        cc.tip(az.returnStatement(statement)).go(r, __);
         $ = true;
       } else {
         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
