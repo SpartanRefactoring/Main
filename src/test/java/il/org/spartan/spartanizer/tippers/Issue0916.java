@@ -70,11 +70,11 @@ public class Issue0916 {
   }
 
   @Test public void t8() {
-    trimmingOf("switch(x++){ default: y=2;break; case 1: y=3;}").gives("{if(x++ == 1) { y=3;} else {y=2;}}");
+    trimmingOf("switch(x++){ default: y=2;break; case 1: y=3;}").gives("{if(x++ == 1) y=3; else y=2;}");
   }
 
   @Test public void t9() {
-    trimmingOf("switch(x++){ case 1: y=2;break; default: y=3;}").gives("{if(x++ == 1) { y=2;} else {y=3;}}");
+    trimmingOf("switch(x++){ case 1: y=2;break; default: y=3;}").gives("{if(x++ == 1) y=2; else y=3;}");
   }
 
   @Test public void t10() {
@@ -82,6 +82,6 @@ public class Issue0916 {
   }
 
   @Test public void t11() {
-    trimmingOf("switch(x++){ case 1: y=2;break; default: case 2: y=3;}").gives("{if(x++ == 1) { y=2;} else {y=3;}}");
+    trimmingOf("switch(x++){ case 1: y=2;break; default: case 2: y=3;}").gives("{if(x++ == 1) y=2; else y=3;}");
   }
 }
