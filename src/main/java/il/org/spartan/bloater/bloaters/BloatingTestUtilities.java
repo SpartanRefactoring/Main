@@ -74,10 +74,9 @@ public class BloatingTestUtilities {
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
-        final String peeled = unpeeled;
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        assertSimilar($, peeled);
+        if (unpeeled.equals(get()))
+          azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
+        assertSimilar($, unpeeled);
         return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
@@ -102,9 +101,8 @@ public class BloatingTestUtilities {
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
-        final String peeled = unpeeled;
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (unpeeled.equals(get()))
+          azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
         m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
         assertSimilar($, m + "");
         final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
