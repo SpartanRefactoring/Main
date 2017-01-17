@@ -12,6 +12,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.*;
 import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
 
@@ -115,7 +116,7 @@ public class SingleFlater {
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ITextEditor e,
+  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
       final WindowInformation i) {
     boolean $ = false;
     try {
@@ -124,7 +125,7 @@ public class SingleFlater {
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(e, textChange, i);
+          $ = changeNFocus(t, textChange, i);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
@@ -150,7 +151,7 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  @SuppressWarnings("restriction") private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i)
+  @Deprecated @SuppressWarnings({ "restriction", "unused" }) private static boolean changeNFocus(final ITextEditor e, final TextFileChange tc, final WindowInformation i)
       throws CoreException {
     if (i == null || !(e instanceof CompilationUnitEditor) || e.getSelectionProvider() == null) {
       tc.perform(new NullProgressMonitor());
@@ -164,12 +165,26 @@ public class SingleFlater {
     final ProjectionViewer pv = (ProjectionViewer) v;
     tc.perform(new NullProgressMonitor());
     e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
-    pv.setTopIndex(i.startLine);
+    if (!i.invalid())
+      pv.setTopIndex(i.startLine);
+    return false;
+  }
+  
+  private static boolean changeNFocus(final StyledText t, final TextFileChange tc, final WindowInformation i)
+      throws CoreException {
+    if (i == null || t == null) {
+      tc.perform(new NullProgressMonitor());
+      return true;
+    }
+    tc.perform(new NullProgressMonitor());
+    t.setSelection(tc.getEdit().getOffset(), tc.getEdit().getOffset() + tc.getEdit().getLength());
+    if (!i.invalid())
+      t.setTopIndex(i.startLine);
     return false;
   }
 
   private boolean inWindow(final ASTNode ¢) {
-    return windowInformation == null
+    return windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
   }
 
@@ -196,7 +211,6 @@ public class SingleFlater {
   /** Contains information about the current window
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-01-10 */
-  @SuppressWarnings("restriction")
   protected static class WindowInformation {
     private static final int INVALID = -1;
     public int startChar;
@@ -204,24 +218,34 @@ public class SingleFlater {
     public int startLine;
     public int endLine;
 
-    private WindowInformation(final ITextEditor e) {
+    @Deprecated @SuppressWarnings("restriction") private WindowInformation(final ITextEditor e) {
       if (!(e instanceof CompilationUnitEditor)) {
         invalidate();
         return;
       }
       final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
-      if (!(v instanceof ProjectionViewer)) {
+      if (v == null) {
         invalidate();
         return;
       }
-      final ProjectionViewer pv = (ProjectionViewer) v;
-      startChar = pv.getTopIndexStartOffset();
-      endChar = pv.getBottomIndexEndOffset();
-      startLine = pv.getTopIndex();
-      endLine = pv.getBottomIndex();
+      startChar = v.getTopIndexStartOffset();
+      endChar = v.getBottomIndexEndOffset();
+      startLine = v.getTopIndex();
+      endLine = v.getBottomIndex();
     }
 
-    public static WindowInformation of(final ITextEditor ¢) {
+    public WindowInformation(StyledText ¢) {
+      startLine = ¢.getTopIndex();
+      endLine = JFaceTextUtil.getBottomIndex(¢);
+      startChar = ¢.getOffsetAtLine(startLine);
+      endChar = ¢.getOffsetAtLine(endLine);
+    }
+
+    @Deprecated public static WindowInformation of(final ITextEditor ¢) {
+      return new WindowInformation(¢);
+    }
+
+    public static WindowInformation of(final StyledText ¢) {
       return new WindowInformation(¢);
     }
 
