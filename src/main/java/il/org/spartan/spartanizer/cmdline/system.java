@@ -50,7 +50,7 @@ public interface system {
   static String runScript(final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
-      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
+      for (final StringBuilder $ = new StringBuilder();; $.append(¢))
         if ((¢ = r.readLine()) == null)
           return $ + "";
     }

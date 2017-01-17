@@ -103,8 +103,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   RealStatistics getRealStatistics(final String key) {
-    if (stats.get(key) == null)
-      stats.put(key, new RealStatistics());
+    stats.computeIfAbsent(key, k -> new RealStatistics());
     return stats.get(key);
   }
 

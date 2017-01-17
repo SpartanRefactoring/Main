@@ -471,9 +471,12 @@ class ZZZ___Fixture_ModelClass {
 
   @annotation
   @interface foo {
-    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) static int bar = 12;
-    @ScopeSize(5) @field static int foo = bar;
-    @ScopeSize(5) @field static int fubar = foo << bar;
+    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" })
+    int bar = 12;
+    @ScopeSize(5) @field
+    int foo = bar;
+    @ScopeSize(5) @field
+    int fubar = foo << bar;
 
     @ScopeSize(5)
     @enum¢
@@ -489,7 +492,8 @@ class ZZZ___Fixture_ModelClass {
       }
     }
 
-    @ScopeSize(5) @field static Bar acuda = Bar.abra, cadbara = Bar.cadabra;
+    @ScopeSize(5) @field
+    Bar acuda = Bar.abra, cadbara = Bar.cadabra;
   }
 
   @interface¢
@@ -536,8 +540,10 @@ class ZZZ___Fixture_ModelClass {
       @annotationMemberDeclaration @ScopeSize(7) int u3();
       @annotationMemberDeclaration @ScopeSize(7) int u4();
       @annotationMemberDeclaration @ScopeSize(7) int u5() default 1;
-      @ScopeSize(7) @field static int  aaaaa = 1;
-      @ScopeSize(7) @field static int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
+      @ScopeSize(7) @field
+      int  aaaaa = 1;
+      @ScopeSize(7) @field
+      int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
       // @formatter:on
     }
 

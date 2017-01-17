@@ -75,7 +75,7 @@ public class RecordWriter implements Closeable {
 
   private String writeHeaderInner(final Row<?> r) {
     final Separator s = new Separator(renderer.headerSeparator());
-    final StringBuffer $ = new StringBuffer();
+    final StringBuilder $ = new StringBuilder();
     for (final String o : r.keySet())
       $.append(s).append(o != null ? o : renderer.null¢());
     return $ + "";
