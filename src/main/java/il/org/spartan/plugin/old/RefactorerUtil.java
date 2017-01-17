@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
  * common method overrides.
  * @author Ori Roth
  * @since 2016 */
+@Deprecated
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
@@ -55,7 +56,6 @@ public class RefactorerUtil {
     return i + "/" + $;
   }
 
-  // TODO: Ori Roth - move to class Linguistics --yg
   public static String plurals(final String s, final int i) {
     return i == 1 ? s : s + "s";
   }
