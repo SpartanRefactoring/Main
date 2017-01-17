@@ -14,7 +14,7 @@ public class ForEachTest {
   @Test public void a() {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().forEach(¢->¢.onBroadcast(e));")//
+        .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
         .stays();
   }
 
@@ -33,16 +33,16 @@ public class ForEachTest {
         + "}")//
             .using(EnhancedForStatement.class, new ForEach())//
             .gives(
-                "interceptors.stream().forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
+                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
             .gives(
-                "interceptors.stream().forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
+                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
 
   @Test public void d() {
     trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("bf.stream().forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
+        .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
         .stays();
   }
 }
