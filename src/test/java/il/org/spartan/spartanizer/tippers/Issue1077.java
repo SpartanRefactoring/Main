@@ -4,6 +4,11 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
+/** test case for bug in {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
+ * 
+ * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @since 2017-01-17
+ */
 @SuppressWarnings("static-method")
 public class Issue1077 {
   @Test public void t1() {
@@ -29,6 +34,41 @@ public class Issue1077 {
         + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
         + "if (sequencerComplex(s))"
         + "return true;"
+        + "}").stays();
+  }
+  
+  @Test public void t3() {
+    trimmingOf("class a { "
+        + "final ASTNode ¢; "
+        + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
+        + "if (s.has())"
+        + "return true;"
+        + "}"
+        + "}").stays();
+  }
+  
+  @Test public void t4() {
+    trimmingOf("class a { "
+        + "final ASTNode ¢;"
+        + "final List<Statement> l; "
+        + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
+        + "if (s.has())"
+        + "return true;"
+        + "}"
+        + "@SuppressWarnings(\"unchecked\") static AA sss(final ASTNode k, int type) {"
+        + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())"
+        + "if (s.has())"
+        + "return new AA();"
+        + "return new AA() {"
+        + "void aa() {"
+        + "for (final Statement t : l)"
+        + "if (t.has())"
+        + "return true;"
+        + "}"
+        + "};"
+        + "}"
         + "}").stays();
   }
 }
