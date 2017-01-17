@@ -112,7 +112,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
         .add(ForStatement.class, //
@@ -308,7 +308,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInlineIntoNext(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //

@@ -48,7 +48,7 @@ public interface idiomatic {
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<T> $) {
-    return () -> $.get();
+    return $::get;
   }
 
   /** @param condition JD
@@ -280,11 +280,11 @@ public interface idiomatic {
     }
 
     @Test public void use08() {
-      azzert.isNull(unless(true).eval(() -> new Object()));
+      azzert.isNull(unless(true).eval(Object::new));
     }
 
     @Test public void use09() {
-      azzert.notNull(unless(false).eval(() -> new Object()));
+      azzert.notNull(unless(false).eval(Object::new));
     }
 
     @Test public void use1() {
@@ -293,11 +293,11 @@ public interface idiomatic {
     }
 
     @Test public void use10() {
-      azzert.notNull(vhen(true).eval(() -> new Object()));
+      azzert.notNull(vhen(true).eval(Object::new));
     }
 
     @Test public void use11() {
-      azzert.isNull(vhen(false).eval(() -> new Object()));
+      azzert.isNull(vhen(false).eval(Object::new));
     }
 
     @Test public void use2() {
@@ -340,7 +340,7 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      final List<String> after = on(before).map(x -> mapper(x));
+      final List<String> after = on(before).map(this::mapper);
       azzert.that(first(after), is("11"));
       azzert.that(after.get(1), is("22"));
       azzert.that(after.get(2), is("33"));
@@ -351,7 +351,7 @@ public interface idiomatic {
       before.add(1);
       before.add(2);
       before.add(3);
-      final List<String> after = on(before).map(x -> mapper(x));
+      final List<String> after = on(before).map(this::mapper);
       azzert.that(first(after), is("1"));
       azzert.that(after.get(1), is("2"));
       azzert.that(after.get(2), is("3"));
@@ -440,7 +440,7 @@ public interface idiomatic {
     }
 
     @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
-      return (CT) collection.stream().filter(mapper).collect(new GenericCollector<T>(collection.getClass()));
+      return (CT) collection.stream().filter(mapper).collect(new GenericCollector<>(collection.getClass()));
     }
 
     public T reduce(final BinaryOperator<T> reducer) {
@@ -471,7 +471,7 @@ public interface idiomatic {
     }
 
     @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(final CT ¢) {
-      return (CR) ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
+      return (CR) ¢.stream().map(mapper).collect(new GenericCollector<>(¢.getClass()));
     }
     // @SuppressWarnings("boxing") @Test public void useNewMapper() {
     // final List<Integer> before = new ArrayList<>();
@@ -513,7 +513,7 @@ public interface idiomatic {
     }
 
     @Override public BiConsumer<Collection<R>, R> accumulator() {
-      return (c, t) -> c.add(t);
+      return Collection::add;
     }
 
     @Override public BinaryOperator<Collection<R>> combiner() {
