@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -34,15 +33,13 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       return null;
     final EnhancedForStatement $ = (EnhancedForStatement) p;
     final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from($);
-    if (p1 instanceof MethodDeclaration) {
-      final List<SingleVariableDeclaration> l = parameters((MethodDeclaration) p1);
-      if (l.size() == 1) {
-        final SimpleName sn = onlyOne(l).getName();
+    if (p1 instanceof MethodDeclaration)
+      for (SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
+        final SimpleName sn = x.getName();
         assert sn != null;
         if (in(sn.getIdentifier(), "¢"))
           return null;
       }
-    }
     final Statement body = $.getBody();
     if (body == null || !JohnDoe.property(d))
       return null;
