@@ -384,13 +384,11 @@ public enum extract {
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  @SuppressWarnings("unchecked") public static Statement nextStatementInside(final SwitchCase ¢) {
+  public static Statement nextStatementInside(final SwitchCase ¢) {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
-    // TODO: Yuval Simon use class step if necessary and remove
-    // @SuppressWarnings("unchecked") --yg
-    return $ == null ? null : next(¢, $.statements());
+    return $ == null ? null : next(¢, step.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {
