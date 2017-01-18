@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @since 2016-12-15 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc" })
-public class NamespaceTest extends ReflectiveTester {
+public class NamespaceTest extends MetaFixture {
   private final Namespace fixture = Environment.of(reflectedCompilationUnit());
 
   @Test public void a01() {

@@ -11,7 +11,7 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
-public class ForeignTest extends ReflectiveTester {
+public class ForeignTest extends MetaFixture {
   final String repository;
   static final String FOREIGN = foreign.class.getSimpleName() + "";
 

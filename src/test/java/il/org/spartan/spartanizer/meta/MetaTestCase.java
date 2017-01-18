@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Represents a test case, in conjunction with {@link ReflectiveTester}.
+/** Represents a test case, in conjunction with {@link MetaFixture}.
  * <p>
  * This class is not intended to be instantiated. You should use it in only one
  * way: <b>create a anonymous class instance of this class</b>. Further, an
@@ -27,10 +27,10 @@ import il.org.spartan.utils.*;
  * Don't be afraid to experiment. The error messages should guide you.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-public class MetaTestCase extends ReflectiveTester {
+public class MetaTestCase extends MetaFixture {
   public static AbstractTypeDeclaration reflection = step.types(new MetaTestCase(null).reflectedCompilationUnit()).stream()
       .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
-  @SuppressWarnings("serial") public static final Vocabulary vocabulary = new Vocabulary() {
+  @SuppressWarnings("serial") public static final Vocabulary stensil = new Vocabulary() {
     {
       for (final MethodDeclaration ¢ : step.methods(reflection))
         if (!¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))
@@ -114,37 +114,30 @@ public class MetaTestCase extends ReflectiveTester {
     forbidden();
   }
 
-  public static Reify reify(final AnonymousClassDeclaration cd) {
-    final Reify $ = new Reify();
+  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+    final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
       final MethodDeclaration md = (MethodDeclaration) bd;
       final String mangle = mangle(md);
-      assert vocabulary.containsKey(mangle) //
-      : fault.specifically(
-          "Method " + mangle + " does not override a non-private non-static non-final method defined in " + extract.name(reflection) + " "//
-          , md, vocabulary);
-      if (disabling.isDisabledByIdentifier(vocabulary.get(mangle)))
-        assert disabling.isDisabledByIdentifier(md) //
-        : fault.specifically(
-            "Method " + mangle + " must hava JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + extract.name(md), md,
-            vocabulary);
+      String model = extract.name(reflection);
+      assert stensil.containsKey(mangle) //
+      : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
+          , md, stensil);
+      final String javaDoc = " have JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + model;
+      if (disabling.specificallyDisabled(stensil.get(mangle)))
+        assert disabling.specificallyDisabled(md) //
+        : fault.specifically("Method " + mangle + " must " + javaDoc, md, stensil);
       else
-        assert !disabling.isDisabledByIdentifier(md) //
-        : fault.specifically(
-            "Method " + mangle + " must not hava JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + extract.name(md),
-            md, vocabulary);
-      $.shapes.put(mangle + "", md);
+        assert !disabling.specificallyDisabled(md) //
+        : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stensil);
+      $.put(mangle + "", md);
     }
     return $;
   }
 
-  public static MetaTestCase.Reify reify(final ClassInstanceCreation ¢) {
+  public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : reify($);
-  }
-
-  public static class Reify {
-    public final Map<String, MethodDeclaration> shapes = new TreeMap<>();
+    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : MetaTestCase.reify($);
   }
 }
