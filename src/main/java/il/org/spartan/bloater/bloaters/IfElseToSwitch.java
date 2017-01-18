@@ -9,13 +9,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** {@link Issue #1018}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
-  /**  */
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
@@ -30,8 +30,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       final SwitchCase sc = create.newSwitchCase();
       sc.setExpression(copy.of(step.right(az.comparison(x))));
       ss.add(sc);
-      for (final Statement s : step.statements(bs.get(i)))
-        ss.add(copy.of(s));
+      (statements(bs.get(i))).forEach(s -> ss.add(copy.of(s)));
       ss.add(create.newBreakStatement());
       ++i;
     }
@@ -40,8 +39,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       final SwitchCase sc = create.newSwitchCase();
       sc.setExpression(null);
       ss.add(sc);
-      for (final Statement s : step.statements(bs.get(i)))
-        ss.add(copy.of(s));
+      statements(bs.get(i)).forEach(s -> ss.add(copy.of(s)));
       ss.add(create.newBreakStatement());
     }
     return $;

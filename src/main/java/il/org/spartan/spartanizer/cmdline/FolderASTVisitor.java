@@ -73,8 +73,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
     System.err.println("Processing: " + presentSourcePath);
     (dotter = new Dotter()).click();
-    for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
-      visit(presentFile = ¢);
+    new FilesGenerator(".java").from(presentSourcePath).forEach(¢ -> visit(presentFile = ¢));
     done(path);
   }
 

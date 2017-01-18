@@ -81,8 +81,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
   }
 
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
-    for (final Expression ¢ : xs)
-      gather(¢, $);
+    xs.forEach(¢ -> gather(¢, $));
     return $;
   }
 
@@ -106,9 +105,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : first($);
-        for (final Expression ¢ : $)
-          if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(copy.of(minus.peel(¢))).into(¢.getParent()), g);
+        $.stream().filter(¢ -> ¢ != first && minus.level(¢) > 0).forEach(¢ -> r.replace(¢, plant(copy.of(minus.peel(¢))).into(¢.getParent()), g));
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
