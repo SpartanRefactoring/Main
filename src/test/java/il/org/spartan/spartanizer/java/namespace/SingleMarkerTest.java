@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends ReflectiveTester {

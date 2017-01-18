@@ -33,6 +33,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
+    // TODO: Tomer can you deal with this inlining issue? --yg
     final VariableDeclarationStatement ns = (VariableDeclarationStatement) nextStatement, sc = copy.of(s);
     fragments(ns).forEach(¢ -> fragments(sc).add(copy.of(¢)));
     $.replace(s, sc, g);
