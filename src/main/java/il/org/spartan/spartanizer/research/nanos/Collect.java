@@ -6,11 +6,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-18 */
@@ -32,6 +33,24 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
           "Go Fluent: filter pattern"));
     }
   };
+
+  public static class defender extends NanoPatternTipper<EnhancedForStatement> {
+    private static final List<UserDefinedTipper<EnhancedForStatement>> patterns = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+      static final long serialVersionUID = 1L;
+      {
+        add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($X3);", "", ""));
+        add(patternTipper("for($T $N1 : $X1) $N2.add($X2);", "", ""));
+      }
+    };
+
+    @Override protected Tip pattern(EnhancedForStatement ¢) {
+      return firstTip(patterns, ¢);
+    }
+
+    @Override public boolean canTip(EnhancedForStatement ¢) {
+      return anyTips(patterns, ¢);
+    }
+  }
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, az.block(parent(¢)));
