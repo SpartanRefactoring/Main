@@ -67,7 +67,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
-    Logger.subscribe((n, np) -> logAll(n, np));
+    Logger.subscribe(this::logAll);
   }
 
   @Override protected void done(final String path) {
@@ -179,7 +179,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     npStatistics.keySet().stream()
         .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
             : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
-        .map(k -> npStatistics.get(k))//
+        .map(npStatistics::get)//
         .forEach(n -> {
           report //
               .put("Name", n.name) //

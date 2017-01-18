@@ -496,6 +496,18 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
+  public static List<MethodDeclaration> methods(final AnonymousClassDeclaration d) {
+    final List<MethodDeclaration> $ = new ArrayList<>();
+    for (final BodyDeclaration x : step.bodyDeclarations(d)) {
+      final MethodDeclaration y = az.methodDeclaration(x);
+      if (y != null)
+        $.add(y);
+    }
+    return $;
+  }
+
+  /** @param ¢ JD
+   * @return */
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
