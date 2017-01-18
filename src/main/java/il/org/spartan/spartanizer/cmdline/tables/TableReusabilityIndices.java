@@ -169,13 +169,13 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   protected int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    defined.forEach(m -> $.remove(m));
+    defined.forEach($::remove);
     return rindex(ranks($));
   }
 
   protected int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach(k -> $.remove(k));
+    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach($::remove);
     return rindex(ranks($));
   }
 
