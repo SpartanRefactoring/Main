@@ -102,7 +102,6 @@ public class LogToTest {
         + ").doesNotCrash();\n}";
   }
 
-  /**  */
   private static String wrap(final List<String> ss, final String fileName) {
     final StringBuilder $ = new StringBuilder(
         "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
@@ -110,8 +109,7 @@ public class LogToTest {
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@Ignore\n" //
             + "public class " + fileName + " {\n");
-    for (final String ¢ : ss)
-      $.append(¢).append("\n");
+    ss.forEach(¢ -> $.append(¢).append("\n"));
     return format.code($.append("}\n") + "");
   }
 }

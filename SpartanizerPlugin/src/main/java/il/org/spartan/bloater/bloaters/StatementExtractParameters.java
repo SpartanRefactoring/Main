@@ -147,8 +147,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void consider(final List<Expression> $, final List<Expression> xs) {
-        for (final Expression ¢ : xs)
-          consider($, ¢);
+        xs.forEach(¢ -> consider($, ¢));
       }
     });
     return $;
