@@ -31,17 +31,13 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
-        Assignment newHead = create.newAssignment();
-        final Assignment newTail = copy.of($);
-        // TODO: Doron Meshulam convert into a for loop --yg
-        Assignment p = newTail;
+        Assignment newHead = create.newAssignment(), newTail = copy.of($), p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
         // TODO: Doron Meshulam -- please use class subject --yg
         newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
-        final ExpressionStatement head = create.newExpressionStatement(newHead);
-        final ExpressionStatement tail = create.newExpressionStatement(newTail);
+        final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         // TODO: Doron Meshulam -- the following does nothing!--yg
         az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
