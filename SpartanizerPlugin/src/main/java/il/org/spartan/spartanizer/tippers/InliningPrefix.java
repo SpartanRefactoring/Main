@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.PostfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -35,7 +37,7 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
   }
 
   @Override public Tip tip(final ArrayAccess a) {
-    return checkInput(a) ? null : new Tip(description(a), a, getClass()) {
+    return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final PostfixExpression newpost = a.getAST().newPostfixExpression();
         newpost.setOperand(copy.of(a.getIndex()));
@@ -63,5 +65,14 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess> implements Ti
       if (iz.arrayAccess(¢))
         ++$;
     return $ != 1;
+  }
+  
+  protected static boolean prerequisite(final ArrayAccess a) {
+    if (a == null)
+      return false;
+    final SimpleName $ = az.simpleName(a.getIndex());
+    Expression bb = az.expression(a.getParent());
+    return bb != null && $ != null && (iz.assignment(bb) && (!left(az.assignment(bb)).equals(a) || !iz.containsName($, right(az.assignment(bb))))
+        || iz.infixExpression(bb) && (!left(az.infixExpression(bb)).equals(a) || !iz.containsName($, right(az.infixExpression(bb)))));
   }
 }
