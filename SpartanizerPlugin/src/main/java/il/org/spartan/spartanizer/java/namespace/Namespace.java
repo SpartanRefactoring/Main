@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
- * the current note and Delegate to the parent unless it is null.
+ * the current node and delegate to the parent unless it is null.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-28 */
 public final class Namespace implements Environment {

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.meta;
 
 import static il.org.spartan.lisp.*;
 
@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -22,7 +23,7 @@ public abstract class ReflectiveTester {
   private static final Map<Class<? extends ReflectiveTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends ReflectiveTester>, String> classToText = new LinkedHashMap<>();
 
-  public final ASTNode myCompilationUnit() {
+  public final CompilationUnit reflectedCompilationUnit() {
     final Class<? extends ReflectiveTester> c = getClass();
     final CompilationUnit $ = classToASTCompilationUnit.get(c);
     if ($ != null)
@@ -41,15 +42,15 @@ public abstract class ReflectiveTester {
   }
 
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return first(searchDescendants.forClass(¢).from(myCompilationUnit()));
+    return first(searchDescendants.forClass(¢).from(reflectedCompilationUnit()));
   }
 
   public List<SingleMemberAnnotation> singleMemberAnnotations() {
-    return searchDescendants.forClass(SingleMemberAnnotation.class).from(myCompilationUnit());
+    return searchDescendants.forClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 
   public List<Annotation> annotations() {
-    return searchDescendants.forClass(Annotation.class).from(myCompilationUnit());
+    return searchDescendants.forClass(Annotation.class).from(reflectedCompilationUnit());
   }
 
   public static int value(final SingleMemberAnnotation ¢) {

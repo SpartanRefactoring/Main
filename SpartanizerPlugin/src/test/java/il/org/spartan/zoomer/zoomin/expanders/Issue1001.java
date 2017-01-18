@@ -5,7 +5,7 @@ import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Unit test for {@link AssignmentOperatorExpansion}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

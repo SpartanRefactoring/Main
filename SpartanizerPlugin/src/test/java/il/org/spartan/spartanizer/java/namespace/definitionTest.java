@@ -17,6 +17,7 @@ import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
+import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
@@ -59,7 +60,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a05() {
-    assert first(searchDescendants.forClass(AnnotationTypeDeclaration.class).from(myCompilationUnit())) != null;
+    assert first(searchDescendants.forClass(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
   }
 
   @Test public void a06() {
@@ -354,7 +355,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   List<MarkerAnnotation> markers() {
-    return searchDescendants.forClass(MarkerAnnotation.class).from(myCompilationUnit());
+    return searchDescendants.forClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
 
