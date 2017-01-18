@@ -14,12 +14,10 @@ import il.org.spartan.spartanizer.java.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 public final class Recurser<T> {
-  /** Get a list of the direct children of a ASTNode
+  /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
   public static List<? extends ASTNode> children(final ASTNode n) {
-    // TODO: This method does not retrieve methodInvocations' operands... Are
-    // they not children?
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
@@ -133,8 +131,8 @@ public final class Recurser<T> {
     rs.forEach(¢ -> ¢.preVisit(f));
   }
 
-  public T preVisit(final Function<Recurser<T>, T> r) {
-    this.current = r.apply(this);
+  public T preVisit(final Function<Recurser<T>, T> t) {
+    this.current = t.apply(this);
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current;
@@ -142,7 +140,7 @@ public final class Recurser<T> {
     children.forEach(child -> $.add(new Recurser<>(child)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
-      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
+      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(t);
       ++index;
     }
     return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();

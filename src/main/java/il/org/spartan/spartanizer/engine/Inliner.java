@@ -89,7 +89,7 @@ public final class Inliner {
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       Collect.usesOf(name).in(newExpression).forEach(
-          use -> rewriter.replace(use, !(iz.expression(use)) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup));
+          use -> rewriter.replace(use, !iz.expression(use) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup));
     }
 
     private List<SimpleName> unsafeUses(final ASTNode... ¢) {

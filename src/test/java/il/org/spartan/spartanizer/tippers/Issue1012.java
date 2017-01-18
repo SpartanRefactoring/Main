@@ -24,4 +24,16 @@ public class Issue1012 {
         .gives("int a, b = 1; int c; f(); g();")//
         .gives("int a, b = 1, c; f(); g();");
   }
+
+  @Test public void d() {
+    trimmingOf("@Nullable final String[] parts = { null }; @NotNull final String[] t = CSV.split(CSV.combine(parts)); f(parts); g();").stays();
+  }
+
+  @Test public void e() {
+    trimmingOf("@NotNull final int a[] = Permutation.random(10000); int count = 0;").stays();
+  }
+
+  @Test public void f() {
+    trimmingOf("final int a = 0; int b = 8; f(); g();").stays();
+  }
 }
