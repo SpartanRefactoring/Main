@@ -15,12 +15,9 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 23-12-2016 */
 public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final ExpressionStatement s) {
-    final Expression e = s.getExpression();
-    if (!iz.methodInvocation(e))
+    final MethodInvocation i = az.methodInvocation(s.getExpression());
+    if (i == null)
       return null;
-    final MethodInvocation i = az.methodInvocation(e);
-    // TODO: Tomer - you are still confused. If you used az.methodInvocation, you can check for null here.
-    // TODO: Tomer please fix --yg
     final ConditionalExpression $ = getFirstCond(i);
     if ($ == null)
       return null;
