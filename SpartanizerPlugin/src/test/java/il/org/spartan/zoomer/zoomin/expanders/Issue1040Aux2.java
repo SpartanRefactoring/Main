@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
 @SuppressWarnings({ "static-method", "unused" })
-public class Issue1040Aux2 extends ReflectiveTester {
+public class Issue1040Aux2 extends MetaFixture {
   int total;
   int total2;
   @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };

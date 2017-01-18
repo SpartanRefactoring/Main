@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.java.namespace.*;
 /** An abstract class that allows a class to apply testing on its own code.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-18 */
-public abstract class ReflectiveTester {
+public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
-  private static final Map<Class<? extends ReflectiveTester>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
-  private static final Map<Class<? extends ReflectiveTester>, String> classToText = new LinkedHashMap<>();
+  private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
+  private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
 
   public final CompilationUnit reflectedCompilationUnit() {
-    final Class<? extends ReflectiveTester> c = getClass();
+    final Class<? extends MetaFixture> c = getClass();
     final CompilationUnit $ = classToASTCompilationUnit.get(c);
     if ($ != null)
       return $;
@@ -33,7 +33,7 @@ public abstract class ReflectiveTester {
   }
 
   public final String myClassText() {
-    final Class<? extends ReflectiveTester> c = getClass();
+    final Class<? extends MetaFixture> c = getClass();
     final String $ = classToText.get(c);
     if ($ != null)
       return $;
@@ -112,7 +112,7 @@ public abstract class ReflectiveTester {
     return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(String[]::new);
   }
 
-  protected static final ReflectiveTester[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -121,9 +121,9 @@ public abstract class ReflectiveTester {
       new KnowsTest(null, null, null), //
   };
 
-  protected static Collection<Object[]> collect(final String annotationName, final ReflectiveTester... ts) {
+  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... ts) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
-    for (@knows({ "t", "ts", "$" }) final ReflectiveTester t : ts)
+    for (@knows({ "t", "ts", "$" }) final MetaFixture t : ts)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))

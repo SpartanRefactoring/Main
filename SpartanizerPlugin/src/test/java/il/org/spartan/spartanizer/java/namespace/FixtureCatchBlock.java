@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * statement
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
-public class FixtureCatchBlock extends ReflectiveTester {
+public class FixtureCatchBlock extends MetaFixture {
   int f(final Object f) {
     return f(f);
   }

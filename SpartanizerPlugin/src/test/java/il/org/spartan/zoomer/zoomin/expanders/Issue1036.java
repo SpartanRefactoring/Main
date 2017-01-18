@@ -19,7 +19,7 @@ public class Issue1036 {
             + "$=$;else $=diff;if(!$.equals(diff)&&!\"\".equals(diff))return null;}return \"\";}", "check1");
   }
 
-  class TestClass extends ReflectiveTester {
+  class TestClass extends MetaFixture {
     final List<Integer> children1 = new ArrayList<>();
     List<Integer> children2 = new ArrayList<>();
     String $ = "";
