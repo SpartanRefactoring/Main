@@ -27,7 +27,7 @@ public class Issue0822 {
       azzert.that(makeAST.string(f), equalTo(""));
   }
 
-  @Test public void testBuilderException() {
+  @Ignore @Test public void testBuilderException() {
     StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
