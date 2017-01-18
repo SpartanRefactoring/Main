@@ -78,7 +78,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(IfStatement.class, //
             new LongIfExpander()) //
         .add(InfixExpression.class, //
-            new ParenthesesExpander()) //
+            new ParenthesesExpander(),
+            new TernaryPushup()) //
     ;//
   }
 
