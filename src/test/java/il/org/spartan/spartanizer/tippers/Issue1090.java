@@ -1,34 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.junit.runners.Parameterized.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit tests with some type information.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-public class Issue1090 extends ReflectiveTester {
-  public Issue1090(final String name, final String... steps) {}
-
-  @Parameters(name = "{index}. {0}->{1} ") public static Collection<Object[]> data() {
-    return collect(new Issue1090("dummy initilaization"));
-  }
-
-  private static Collection<Object[]> collect(final ReflectiveTester... ts) {
-    final List<Object[]> $ = new ArrayList<>();
-    for (final ReflectiveTester t : ts)
-      for (final AnonymousClassDeclaration d : searchDescendants.forClass(AnonymousClassDeclaration.class).from(t.reflectedCompilationUnit())) {
-        final MetaTestCase.Reify reify = MetaTestCase.reify(d);
-        if (reify != null)
-          $.add(new Object[] { reify });
-      }
-    return $;
-  }
-
+@RunWith(Parameterized.class)
+public class Issue1090 extends MetaFixture {
   static class Fixture {
     byte byteField;
     char charField;
@@ -37,17 +18,9 @@ public class Issue1090 extends ReflectiveTester {
     int intField;
     long longField;
     short shortField;
-    MetaTestCase case1 = new MetaTestCase() {
-      /** [[SuppressWarningsSpartan]] */
-      @Override protected void startingWith() {
-        intField = 0;
-        charField = 0;
-      }
-
-      @Override protected void trimmingStopsAt() {
-        intField = charField = 0;
-      }
-    };
+    MetaTestCase case1=new MetaTestCase(){
+    /** [[SuppressWarningsSpartan]] */
+    @Override protected void startingWith(){intField=0;charField=0;}@Override protected void trimmingStopsAt(){intField=charField=0;}};
 
     byte getByteField() {
       return byteField;

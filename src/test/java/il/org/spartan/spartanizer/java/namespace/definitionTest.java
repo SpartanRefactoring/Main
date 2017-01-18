@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-15 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public class definitionTest extends ReflectiveTester {
+public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);
   @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
   @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
@@ -184,8 +184,8 @@ public class definitionTest extends ReflectiveTester {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
-        azzert.that(x + ": " + annotees.of(x) + ReflectiveTester.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
-            is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + annotees.of(x) + MetaFixture.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
+            is(MetaFixture.value(x)));
     }
   }
 
@@ -299,7 +299,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -313,7 +313,7 @@ public class definitionTest extends ReflectiveTester {
           continue;
         final int size = scope.of(n).size();
         assert size >= 0;
-        azzert.that(x + ": " + n + "/" + definition.kind(n) + ReflectiveTester.ancestry(n), size, is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n) + MetaFixture.ancestry(n), size, is(MetaFixture.value(x)));
       }
     }
   }
@@ -325,7 +325,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -337,7 +337,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyInterface.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -349,7 +349,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyClass.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }

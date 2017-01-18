@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.meta.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings({ "javadoc" })
-public class Issue1044 extends ReflectiveTester {
+public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
   private final Namespace functionF = fixtureClass.getChild(1);

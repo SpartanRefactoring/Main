@@ -182,7 +182,7 @@ public class BloatingTestUtilities {
     return new Operand(from);
   }
 
-  public static Operand bloatingOf(final ReflectiveTester ¢) {
+  public static Operand bloatingOf(final MetaFixture ¢) {
     return new Operand(¢.reflectedCompilationUnit(), ¢.myClassText());
   }
 }

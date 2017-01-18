@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
-public class HasEnvironmentTest extends ReflectiveTester {
+public class HasEnvironmentTest extends MetaFixture {
   public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
     this.name = name;
   }
@@ -25,17 +25,17 @@ public class HasEnvironmentTest extends ReflectiveTester {
   @Test public void notNullNode() {
     assert Environment.of(name) != null : //
     "\n name = " + name + //
-        ReflectiveTester.ancestry(name) + //
+        MetaFixture.ancestry(name) + //
         "\n\t environment = " + Environment.of(name)//
     ;
   }
 
   private static final Set<String> signature = new HashSet<>();
 
-  private static Collection<Object[]> collect(final ReflectiveTester... ts) {
+  private static Collection<Object[]> collect(final MetaFixture... ts) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
-    for (final ReflectiveTester t : ts)
+    for (final MetaFixture t : ts)
       for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.reflectedCompilationUnit()))
         if (!signature.contains(signature(¢))) {
           signature.add(signature(¢));
