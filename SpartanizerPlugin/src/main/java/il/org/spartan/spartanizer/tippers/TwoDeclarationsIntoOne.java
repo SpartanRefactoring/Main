@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -35,8 +34,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     if (!canTip(s, nextStatement))
       return null;
     final VariableDeclarationStatement ns = (VariableDeclarationStatement) nextStatement, sc = copy.of(s);
-    for (final VariableDeclarationFragment ¢ : step.fragments(ns))
-      step.fragments(sc).add(copy.of(¢));
+    fragments(ns).forEach(¢ -> fragments(sc).add(copy.of(¢)));
     $.replace(s, sc, g);
     $.remove(nextStatement, g);
     return $;
@@ -47,10 +45,10 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   }
 
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
-    final Block parent = az.block($.getParent());
+    final Block parent = az.block(parent($));
     return parent == null
         ? iz.variableDeclarationStatement(nextStatement) && (((VariableDeclarationStatement) nextStatement).getType() + "").equals($.getType() + "")
         : !lastIn(nextStatement, statements(parent)) && iz.variableDeclarationStatement(nextStatement)
-            && (((VariableDeclarationStatement) nextStatement).getType() + "").equals($.getType() + "");
+            && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "");
   }
 }

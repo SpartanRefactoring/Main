@@ -142,13 +142,9 @@ public interface Environment {
    *         empty Collection. */
   static List<Entry<String, Binding>> declarationsOf(final Statement ¢) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
-    switch (¢.getNodeType()) {
-      case VARIABLE_DECLARATION_STATEMENT:
-        $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
-        break;
-      default:
-        return $;
-    }
+    if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
+      return $;
+    $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
     return $;
   }
 
@@ -171,8 +167,7 @@ public interface Environment {
   /** Gets declarations made in ASTNode's Ancestors */
   static LinkedHashSet<Entry<String, Binding>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
-      for (final Statement ¢ : statements(PB))
-        upEnv.addAll(declarationsOf(¢));
+      statements(PB).forEach(¢ -> upEnv.addAll(declarationsOf(¢)));
     return upEnv;
   }
 

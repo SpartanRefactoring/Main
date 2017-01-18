@@ -38,8 +38,7 @@ public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Bl
         return null;
     return new Tip(description(), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final Statement ¢ : $)
-          r.remove(¢, g);
+        $.forEach(¢ -> r.remove(¢, g));
       }
     };
   }

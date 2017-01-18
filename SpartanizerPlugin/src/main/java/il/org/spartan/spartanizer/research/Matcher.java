@@ -137,8 +137,7 @@ public class Matcher {
   }
 
   @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
-    final List<Statement> $ = statements(p);
-    final List<Statement> sn = statements(n);
+    final List<Statement> $ = statements(p), sn = statements(n);
     for (int ¢ = 0; ¢ <= sn.size() - $.size(); ++¢)
       if (statementsMatch($, sn.subList(¢, ¢ + $.size())))
         return new Pair<>(¢, ¢ + $.size());
@@ -357,7 +356,6 @@ public class Matcher {
     return collectEnviroment(pattern(), n, enviroment);
   }
 
-  /**  */
   private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> $) {
     if (startsWith$notBlock(p))
       $.put(p + "", n + "");
@@ -393,7 +391,6 @@ public class Matcher {
     return collectEnviromentNodes(pattern(), n, enviroment);
   }
 
-  /**  */
   private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> $) {
     if (is$X(p))
       $.put(name(az.methodInvocation(p)) + "", n);
@@ -430,9 +427,7 @@ public class Matcher {
     final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
-    for (final String ¢ : enviroment.keySet())
-      if (needsSpecialReplacement(¢))
-        $.set($.get().replace(¢, enviroment.get(¢) + ""));
+    enviroment.keySet().stream().filter(¢ -> needsSpecialReplacement(¢)).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -456,9 +451,7 @@ public class Matcher {
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
-    for (final String ¢ : enviroment.keySet())
-      if (needsSpecialReplacement(¢))
-        $.set($.get().replace(¢, enviroment.get(¢) + ""));
+    enviroment.keySet().stream().filter(¢ -> needsSpecialReplacement(¢)).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
