@@ -104,7 +104,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))
       return null;
     if (m != null)
-      parameters(method).stream().filter(¢ -> !$.equals(¢)).forEach(¢ -> m.exclude(¢));
+      parameters(method).stream().filter(¢ -> !$.equals(¢)).forEach(m::exclude);
     return replace($);
   }
 }

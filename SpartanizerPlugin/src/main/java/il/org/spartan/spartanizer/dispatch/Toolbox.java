@@ -451,7 +451,7 @@ public class Toolbox {
     assert t.implementation != null;
     for (final List<Tipper<? extends ASTNode>> element : t.implementation)
       if (element != null)
-        $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(p -> p.myName()).collect(Collectors.toList()));
+        $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList()));
     return $;
   }
 

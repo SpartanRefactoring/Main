@@ -38,7 +38,7 @@ public class Generic$Applicator {
     System.out.println("classes:" + classes);
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
-      selectedNodeTypes.forEach(¢ -> System.out.println(¢));
+      selectedNodeTypes.forEach(System.out::println);
     } else {
       selectedNodeTypes = setSelectedNodeTypes(classes);
       System.out.println("selected: " + selectedNodeTypes.size());

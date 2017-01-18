@@ -82,7 +82,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
-    items.forEach(item -> from.remove(item));
+    items.forEach(from::remove);
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {

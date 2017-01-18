@@ -35,12 +35,12 @@ public final class Namespace implements Environment {
   }
 
   Namespace addAll(final List<BodyDeclaration> ds) {
-    ds.forEach(¢ -> put(¢));
+    ds.forEach(this::put);
     return this;
   }
 
   protected Namespace addAllReources(final List<VariableDeclarationExpression> xs) {
-    xs.forEach(¢ -> put(¢));
+    xs.forEach(this::put);
     return this;
   }
 
@@ -202,7 +202,7 @@ public final class Namespace implements Environment {
         if (d == root)
           return true;
         final Namespace $ = spawn("method " + d.getName());
-        parameters(d).forEach(¢ -> $.put(¢));
+        parameters(d).forEach($::put);
         return $.fillScope(d);
       }
 
@@ -226,9 +226,9 @@ public final class Namespace implements Environment {
     catchClauses(s).forEach(¢ -> n.spawn(catch¢).put(¢.getException()).fillScope(¢));
     n.fillScope(s.getFinally());
     final Namespace $ = n.spawn(try¢);
-    resources(s).forEach(¢ -> $.put(¢));
+    resources(s).forEach($::put);
     $.fillScope(step.body(s));
-    resources(s).forEach(¢ -> $.fillScope(¢));
+    resources(s).forEach($::fillScope);
     return $;
   }
 
@@ -275,7 +275,7 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final List<? extends BodyDeclaration> ds) {
-    ds.forEach(¢ -> put(¢));
+    ds.forEach(this::put);
     return this;
   }
 
@@ -344,7 +344,7 @@ public final class Namespace implements Environment {
   }
 
   static boolean init(final Namespace n, final List<? extends ASTNode> children) {
-    children.forEach(child -> n.fillScope(child));
+    children.forEach(n::fillScope);
     return false;
   }
 
