@@ -59,7 +59,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<String> ts = ds.stream().map(
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
         .collect(Collectors.toList());
-    for (final SingleVariableDeclaration ¢ : step.parameters(d))
+    for (final SingleVariableDeclaration ¢ : parameters(d))
       if (!ts.contains(¢.getType() + ""))
         return false;
     return true;
@@ -75,8 +75,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
-    for (final VariableDeclaration ¢ : ds)
-      step.arguments(i).add(copy.of(¢.getName()));
+    ds.forEach(¢ -> step.arguments(i).add(copy.of(name(¢))));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -97,8 +96,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(body(dx)).clear();
-    for (final Statement ¢ : statements(body(d)))
-      statements(dx).add(az.statement(r.createCopyTarget(¢)));
+    statements(body(d)).forEach(¢ -> statements(dx).add(az.statement(r.createCopyTarget(¢))));
   }
 
   private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
@@ -119,15 +117,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
-        step.parameters(d2).add(copy.of((SingleVariableDeclaration) v));
+        parameters(d2).add(copy.of((SingleVariableDeclaration) v));
       else {
         final SingleVariableDeclaration sv = d.getAST().newSingleVariableDeclaration();
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(copy.of(v.getName()));
         sv.setType(copy.of(p.getType()));
-        for (final IExtendedModifier md : step.extendedModifiers(p))
-          step.extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) md));
-        step.parameters(d2).add(sv);
+        extendedModifiers(p).forEach(md -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) md)));
+        parameters(d2).add(sv);
       }
   }
 
@@ -141,14 +138,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
-      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(step.fragments(¢)) instanceof SimpleName) {
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
         hasParamTags = true;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(first(step.fragments(¢))))
+        if (!ns.contains(first(fragments(¢))))
           xs.add(¢);
         else
-          ns.remove(first(step.fragments(¢)));
+          ns.remove(first(fragments(¢)));
       }
     if (!hasParamTags)
       return;
@@ -156,7 +153,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     for (final String s : ns) {
       final TagElement e = j.getAST().newTagElement();
       e.setTagName(TagElement.TAG_PARAM);
-      step.fragments(e).add(j.getAST().newSimpleName(s));
+      fragments(e).add(j.getAST().newSimpleName(s));
       ts.add(tagPosition, e);
     }
   }
@@ -180,7 +177,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       active = new ArrayList<>();
       inactive = new ArrayList<>();
       variablesTerminated = 0;
-      for (final SingleVariableDeclaration ¢ : step.parameters(method)) {
+      for (final SingleVariableDeclaration ¢ : parameters(method)) {
         setUsesMapping(¢, 0);
         if (uses.containsKey(¢))
           active.add(¢);
@@ -229,8 +226,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (final Integer ¢ : range.from(starting).to(statements.size()))
-        setUsesMapping(d, statements.get(¢));
+      range.from(starting).to(statements.size()).forEach(¢ -> setUsesMapping(d, statements.get(¢)));
     }
 
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
@@ -247,7 +243,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
     public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
-      ps = step.parameters(method);
+      ps = parameters(method);
       ss = body(method) != null ? statements(method) : new LinkedList<>();
     }
 

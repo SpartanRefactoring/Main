@@ -36,13 +36,12 @@ public class Generic$Applicator {
 
   public Generic$Applicator(final String[] classes) {
     System.out.println("classes:" + classes);
-    if (classes != null) {
+    if (classes == null) {
+      selectedNodeTypes = setAllNodeTypes();
+      selectedNodeTypes.forEach(¢ -> System.out.println(¢));
+    } else {
       selectedNodeTypes = setSelectedNodeTypes(classes);
       System.out.println("selected: " + selectedNodeTypes.size());
-    } else {
-      selectedNodeTypes = setAllNodeTypes();
-      for (final Class<? extends ASTNode> ¢ : selectedNodeTypes)
-        System.out.println(¢);
     }
   }
 

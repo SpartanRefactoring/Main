@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Replace a variable with an expression
@@ -87,8 +88,8 @@ public final class Inliner {
       final ASTNode newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
-      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup);
+      Collect.usesOf(name).in(newExpression).forEach(
+          use -> rewriter.replace(use, !(iz.expression(use)) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup));
     }
 
     private List<SimpleName> unsafeUses(final ASTNode... ¢) {

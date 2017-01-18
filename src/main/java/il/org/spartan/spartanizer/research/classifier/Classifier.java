@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.classifier;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -60,8 +61,7 @@ public class Classifier extends ASTVisitor {
   private void summarize() {
     for (final String k : forLoops.keySet()) {
       System.out.println("****" + k + "****");
-      for (final String p : forLoops.get(k))
-        System.out.println(tipperize(p, k));
+      forLoops.get(k).forEach(p -> System.out.println(tipperize(p, k)));
     }
   }
 
@@ -88,9 +88,7 @@ public class Classifier extends ASTVisitor {
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         toRemove = new ArrayList<>();
-        for (final ASTNode l : forLoopsList)
-          if (t.canTip(l))
-            toRemove.add(l);
+        toRemove.addAll(forLoopsList.stream().filter(l -> t.canTip(l)).collect(Collectors.toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);

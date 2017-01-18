@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 
 /** @author Ori Marcovitch
@@ -30,5 +31,10 @@ public class SelectTest {
         .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(Collectors.toList()));")//
         .stays();
+  }
+
+  @Test public void test() {
+    System.out.println((new SpartAnalyzer()).fixedPoint(
+        "final List<Expression> operands = new ArrayList<>();  for (final Expression ¢ : hop.operands(flatten.of($))) operands.add(make.notOf(¢));"));
   }
 }
