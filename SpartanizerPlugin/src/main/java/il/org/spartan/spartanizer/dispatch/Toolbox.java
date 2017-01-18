@@ -325,8 +325,8 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
-    return emptyToolboox().add(clazz, ts);
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
+    return emptyToolboox().add(clazz, ns);
   }
 
   public static void refresh() {
@@ -365,18 +365,18 @@ public class Toolbox {
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.
-   * @param c JD
-   * @param ts JD
+   * @param n JD
+   * @param ns JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
-    final Integer $ = wizard.classToNodeType.get(c);
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
+    final Integer $ = wizard.classToNodeType.get(n);
     assert $ != null : fault.dump() + //
-        "\n c = " + c + //
-        "\n c.getSimpleName() = " + c.getSimpleName() + //
+        "\n c = " + n + //
+        "\n c.getSimpleName() = " + n.getSimpleName() + //
         "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
         "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
-    return add($, ts);
+    return add($, ns);
   }
 
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ns) {
