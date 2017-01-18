@@ -53,8 +53,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   private final Set<String> defined = new LinkedHashSet<>();
 
   public Map<String, Integer> addIfNecessary(final String category, final String key) {
-    if (usage.get(category) == null)
-      usage.put(category, new LinkedHashMap<>());
+    usage.putIfAbsent(category, new LinkedHashMap<>());
     final Map<String, Integer> $ = usage.get(category);
     assert $ != null;
     $.putIfAbsent(key, Integer.valueOf(0));
