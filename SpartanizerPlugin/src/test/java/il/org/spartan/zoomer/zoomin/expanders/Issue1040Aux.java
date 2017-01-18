@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
 @SuppressWarnings("static-method")
-public class Issue1040Aux extends ReflectiveTester {
+public class Issue1040Aux extends MetaFixture {
   int a() {
     return 0;
   }

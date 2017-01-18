@@ -33,7 +33,7 @@ public interface disabling {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
-        if (!disabling.isDisabledByIdentifier(¢2))
+        if (!disabling.specificallyDisabled(¢2))
           return true;
         disabling.disable(¢2);
         return false;
@@ -73,7 +73,7 @@ public interface disabling {
     return property.has(¢, disabledPropertyId);
   }
 
-  static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
+  static boolean specificallyDisabled(final BodyDeclaration ¢) {
     return disabling.hasJavaDocIdentifier(¢, disablers);
   }
 

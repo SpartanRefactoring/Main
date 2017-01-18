@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.meta.*;
 public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings("unused")
-  public static class Issue1001Aux extends ReflectiveTester {
+  public static class Issue1001Aux extends MetaFixture {
     void x(final int y) {
       //
     }

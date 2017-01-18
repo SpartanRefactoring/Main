@@ -37,7 +37,7 @@ public final class TrimmerTestsUtils {
     }
 
     /** [[SuppressWarningsSpartan]] */
-    private void checkSame() {
+    public void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
@@ -63,7 +63,7 @@ public final class TrimmerTestsUtils {
       return new Operand($);
     }
 
-    /** Check wether one of the code options is correct
+    /** Check whether one of the code options is correct
      * @param options
      * @return Operand
      * @author Dor Ma'ayan
@@ -169,7 +169,7 @@ public final class TrimmerTestsUtils {
     return TESTUtils.rewrite(new TipperApplicator(n), $, new Document(from)).get();
   }
 
-  static String applyTrimmer(final Trimmer t, final String from) {
+  public static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = TESTUtils.rewrite(t, u, new Document(from));
