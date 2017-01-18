@@ -33,6 +33,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     {
       add(new Select());
       add(new Aggregate());
+      add(new Collect.defender());
     }
   };
 
