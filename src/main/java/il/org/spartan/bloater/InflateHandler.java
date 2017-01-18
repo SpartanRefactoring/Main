@@ -47,7 +47,7 @@ public class InflateHandler extends AbstractHandler {
       if (active.getAndSet(false))
         removePageListener(s);
     } else if (!active.getAndSet(true)) {
-      (getOpenedEditors()).forEach($ -> addListener($));
+      (getOpenedEditors()).forEach(InflateHandler::addListener);
       s.addPartListener(pageListener);
     }
     return null;
@@ -152,7 +152,7 @@ public class InflateHandler extends AbstractHandler {
 
   private static void removePageListener(final IPartService s) {
     s.removePartListener(pageListener);
-    (getOpenedEditors()).forEach(¢ -> removeListener(¢));
+    (getOpenedEditors()).forEach(InflateHandler::removeListener);
   }
 
   static void addListener(final IWorkbenchPart ¢) {
