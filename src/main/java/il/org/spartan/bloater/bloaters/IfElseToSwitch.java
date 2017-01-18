@@ -4,12 +4,13 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** {@link Issue #1018}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
@@ -30,7 +31,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
       final SwitchCase sc = create.newSwitchCase();
       sc.setExpression(copy.of(step.right(az.comparison(x))));
       ss.add(sc);
-      (statements(bs.get(i))).forEach(s -> ss.add(copy.of(s)));
+      statements(bs.get(i)).forEach(s -> ss.add(copy.of(s)));
       ss.add(create.newBreakStatement());
       ++i;
     }

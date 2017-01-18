@@ -26,9 +26,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     }
   };
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;

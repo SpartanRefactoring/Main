@@ -121,9 +121,9 @@ public abstract class MetaFixture {
       new KnowsTest(null, null, null), //
   };
 
-  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... ts) {
+  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
-    for (@knows({ "t", "ts", "$" }) final MetaFixture t : ts)
+    for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))

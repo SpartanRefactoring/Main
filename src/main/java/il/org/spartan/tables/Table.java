@@ -59,7 +59,7 @@ public class Table extends Row<Table> implements Closeable {
           ¢.writeFooter(this);
         }
       }
-    writers.forEach(¢ -> ¢.close());
+    writers.forEach(RecordWriter::close);
   }
 
   private String lastEmptyColumn() {
@@ -137,7 +137,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   @Override protected Table reset() {
-    (keySet()).forEach(¢ -> put(¢, ""));
+    keySet().forEach(¢ -> put(¢, ""));
     put((String) null, ++length + "");
     return this;
   }

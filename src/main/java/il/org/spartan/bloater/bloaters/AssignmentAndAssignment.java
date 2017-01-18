@@ -31,7 +31,9 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
     return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
-        Assignment newHead = create.newAssignment(), newTail = copy.of($), p = newTail;
+        Assignment newHead = create.newAssignment();
+        final Assignment newTail = copy.of($);
+        Assignment p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
         // TODO: Doron Meshulam -- please use class subject --yg

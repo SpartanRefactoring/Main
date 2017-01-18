@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Represents a test case, in conjunction with {@link MetaFixture}.
+/** Represents a test case, in conjunction with {@link ReflectiveTester}.
  * <p>
  * This class is not intended to be instantiated. You should use it in only one
  * way: <b>create a anonymous class instance of this class</b>. Further, an
@@ -28,9 +28,10 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 public class MetaTestCase extends MetaFixture {
-  public static AbstractTypeDeclaration reflection = step.types(new MetaTestCase(null).reflectedCompilationUnit()).stream()
+  public static MetaTestCase instance = new MetaTestCase(null);
+  public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
       .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
-  @SuppressWarnings("serial") public static final Vocabulary stensil = new Vocabulary() {
+  @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
       for (final MethodDeclaration ¢ : step.methods(reflection))
         if (!¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))
@@ -120,17 +121,17 @@ public class MetaTestCase extends MetaFixture {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
       final MethodDeclaration md = (MethodDeclaration) bd;
       final String mangle = mangle(md);
-      String model = extract.name(reflection);
-      assert stensil.containsKey(mangle) //
+      final String model = extract.name(reflection);
+      assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
-          , md, stensil);
+          , md, stencil);
       final String javaDoc = " have JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + model;
-      if (disabling.specificallyDisabled(stensil.get(mangle)))
+      if (disabling.specificallyDisabled(stencil.get(mangle)))
         assert disabling.specificallyDisabled(md) //
-        : fault.specifically("Method " + mangle + " must " + javaDoc, md, stensil);
+        : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
       else
         assert !disabling.specificallyDisabled(md) //
-        : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stensil);
+        : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stencil);
       $.put(mangle + "", md);
     }
     return $;
@@ -138,6 +139,6 @@ public class MetaTestCase extends MetaFixture {
 
   public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : MetaTestCase.reify($);
+    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : reify($);
   }
 }
