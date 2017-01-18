@@ -480,6 +480,6 @@ public class Matcher {
   }
 
   public enum Option {
-    LAST_IN_BLOCK, FIRST_IN_BLOCK;
+    LAST_IN_BLOCK, FIRST_IN_BLOCK
   }
 }

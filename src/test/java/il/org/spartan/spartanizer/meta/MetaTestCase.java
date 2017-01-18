@@ -29,7 +29,7 @@ import il.org.spartan.utils.*;
  * @since 2017-01-17 */
 public class MetaTestCase extends ReflectiveTester {
   public static AbstractTypeDeclaration reflection = step.types(new MetaTestCase(null).reflectedCompilationUnit()).stream()
-      .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
+      .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary vocabulary = new Vocabulary() {
     {
       for (final MethodDeclaration ¢ : step.methods(reflection))
