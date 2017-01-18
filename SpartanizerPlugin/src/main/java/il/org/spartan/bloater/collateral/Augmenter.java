@@ -3,6 +3,7 @@ package il.org.spartan.bloater.collateral;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -61,9 +62,7 @@ public class Augmenter implements Application {
           $.add(statements(b));
         else {
           final List<Statement> l = new ArrayList<>();
-          for (final Statement ¢ : statements(b))
-            if (inRange(¢, s))
-              l.add(¢);
+          l.addAll(statements(b).stream().filter(¢ -> inRange(¢, s)).collect(Collectors.toList()));
           if (!discardOptimization(l))
             $.add(l);
         }

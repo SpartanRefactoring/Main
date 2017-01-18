@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -46,11 +47,11 @@ public class Analyze {
     createOutputDirIfNeeded();
     final long startTime = System.currentTimeMillis();
     switch (getProperty("analysis")) {
-      case "methods":
-        methodsAnalyze();
-        break;
       case "classify":
         classify();
+        break;
+      case "methods":
+        methodsAnalyze();
         break;
       case "sort":
         spartanizeMethodsAndSort();
@@ -60,6 +61,7 @@ public class Analyze {
         break;
       default:
         analyze();
+        break;
     }
     System.out.println("Took " + new DecimalFormat("#0.00").format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
@@ -140,18 +142,17 @@ public class Analyze {
     return spartanizer.fixedPoint(cu + "");
   }
 
-  @SuppressWarnings("rawtypes") private static void methodsAnalyze() {
-    for (final File f : inputFiles())
-      //
-      types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods).forEach(t -> {
-        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()))
+  private static void methodsAnalyze() {
+    (inputFiles()).forEach(f -> types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods)
+        .forEach(t -> (methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList())).forEach(¢ -> {
           try {
-            for (final Analyzer a : analyses.values())
-              a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + ""))))));
-          } catch (@SuppressWarnings("unused") final AssertionError __) {
+            (analyses.values()).forEach(
+                a -> a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
+          } catch (final AssertionError __) {
+            ___.unused(__);
             //
           }
-      });
+        })));
     for (final String a : analyses.keySet()) {
       System.out.println("++++++++" + a + "++++++++");
       analyses.get(a).printComparison();
