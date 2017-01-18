@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Test class for issue #965
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

@@ -13,6 +13,7 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
