@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Unit test of {@link Namespace}
  * @author Yossi Gil
@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc" })
 public class NamespaceTest extends ReflectiveTester {
-  private final Namespace fixture = Environment.of(myCompilationUnit());
+  private final Namespace fixture = Environment.of(reflectedCompilationUnit());
 
   @Test public void a01() {
     assert fixture != null;

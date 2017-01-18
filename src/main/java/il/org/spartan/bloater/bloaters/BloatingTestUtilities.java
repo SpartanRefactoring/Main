@@ -15,6 +15,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Testing utils for expander Issue #961
@@ -182,6 +183,6 @@ public class BloatingTestUtilities {
   }
 
   public static Operand bloatingOf(final ReflectiveTester ¢) {
-    return new Operand(¢.myCompilationUnit(), ¢.myClassText());
+    return new Operand(¢.reflectedCompilationUnit(), ¢.myClassText());
   }
 }

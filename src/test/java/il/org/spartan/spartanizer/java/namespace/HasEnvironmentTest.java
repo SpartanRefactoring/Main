@@ -12,6 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends ReflectiveTester {
@@ -35,7 +36,7 @@ public class HasEnvironmentTest extends ReflectiveTester {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
     for (final ReflectiveTester t : ts)
-      for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.myCompilationUnit()))
+      for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.reflectedCompilationUnit()))
         if (!signature.contains(signature(¢))) {
           signature.add(signature(¢));
           $.add(as.array(¢, signature(¢)));
