@@ -44,16 +44,15 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
     return "split cases within switch";
   }
 
-  @Override public Tip tip(final SwitchStatement ¢) {
-    final List<Statement> $ = getAdditionalStatements(step.statements(¢), caseWithNoSequencer(¢));
-    final Statement n = (Statement) ¢.statements().get(¢.statements().indexOf($.get(0)) - 1);
-    return new Tip(description(¢), ¢, getClass()) {
+  @Override public Tip tip(final SwitchStatement s) {
+    final List<Statement> $ = getAdditionalStatements(step.statements(s), caseWithNoSequencer(s));
+    final Statement n = (Statement) s.statements().get(s.statements().indexOf($.get(0)) - 1);
+    return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(¢, SwitchStatement.STATEMENTS_PROPERTY);
-        for (@SuppressWarnings("hiding") final Statement ¢ : $)
-          l.insertBefore(copy.of(¢), n, g);
+        final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
+        $.forEach(¢ -> l.insertBefore(copy.of(¢), n, g));
         if (!iz.sequencerComplex($.get($.size() - 1)))
-          l.insertBefore(¢.getAST().newBreakStatement(), n, g);
+          l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
     };
   }
