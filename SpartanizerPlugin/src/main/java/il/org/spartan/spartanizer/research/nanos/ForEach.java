@@ -50,7 +50,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   }
 
   @Override public String technicalName() {
-    return "ForEachInCApplyS";
+    return "foreach C [s.t. P(·)] do S(·)";
   }
 
   @Override public String example() {

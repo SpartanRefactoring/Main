@@ -150,8 +150,8 @@ public class InflateHandler extends AbstractHandler {
     };
   }
 
-  private static void removePageListener(final IPartService s) {
-    s.removePartListener(pageListener);
+  private static void removePageListener(final IPartService ¢) {
+    ¢.removePartListener(pageListener);
     (getOpenedEditors()).forEach(InflateHandler::removeListener);
   }
 

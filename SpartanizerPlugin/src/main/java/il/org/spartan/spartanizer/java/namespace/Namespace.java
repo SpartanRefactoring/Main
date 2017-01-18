@@ -34,13 +34,13 @@ public final class Namespace implements Environment {
     this.name = name;
   }
 
-  Namespace addAll(final List<BodyDeclaration> ds) {
-    ds.forEach(this::put);
+  Namespace addAll(final List<BodyDeclaration> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
-  protected Namespace addAllReources(final List<VariableDeclarationExpression> xs) {
-    xs.forEach(this::put);
+  protected Namespace addAllReources(final List<VariableDeclarationExpression> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
@@ -198,12 +198,12 @@ public final class Namespace implements Environment {
         return $.fillScope(x);
       }
 
-      @Override public boolean visit(final MethodDeclaration d) {
-        if (d == root)
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        if (¢ == root)
           return true;
-        final Namespace $ = spawn("method " + d.getName());
-        parameters(d).forEach($::put);
-        return $.fillScope(d);
+        final Namespace $ = spawn("method " + ¢.getName());
+        parameters(¢).forEach($::put);
+        return $.fillScope(¢);
       }
 
       @Override public boolean visit(final TryStatement ¢) {
@@ -274,8 +274,8 @@ public final class Namespace implements Environment {
     return this;
   }
 
-  protected Namespace put(final List<? extends BodyDeclaration> ds) {
-    ds.forEach(this::put);
+  protected Namespace put(final List<? extends BodyDeclaration> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
