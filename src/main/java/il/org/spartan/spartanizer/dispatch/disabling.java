@@ -49,6 +49,7 @@ public interface disabling {
   /** Enable spartanization identifier, overriding a disabler */
   String enablers[] = { "[[EnableWarningsSpartan]]", //
   };
+  String disabler = disablers[0];
 
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
@@ -66,8 +67,7 @@ public interface disabling {
     });
   }
 
-  /** @param nodeTypeHolder an {@link ASTNode}
-   * @return <code><b>true</b></code> <em>iff</em> the node is spartanization
+  /** @return <code><b>true</b></code> <em>iff</em> the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {
     return property.has(¢, disabledPropertyId);

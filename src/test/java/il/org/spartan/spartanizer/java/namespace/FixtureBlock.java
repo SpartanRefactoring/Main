@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing statements in a block.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
