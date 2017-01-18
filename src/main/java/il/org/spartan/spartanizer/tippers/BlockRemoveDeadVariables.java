@@ -26,9 +26,8 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implemen
       if (asVar != null) {
         final List<VariableDeclarationFragment> as = new ArrayList<>(step.fragments(asVar));
         step.fragments(asVar).clear();
-        for (final VariableDeclarationFragment ¢ : as)
-          if (Collect.usesOf(¢.getName() + "").inside(n).size() > 1 || !sideEffects.free(¢.getInitializer()))
-            step.fragments(asVar).add(¢);
+        as.stream().filter(¢ -> Collect.usesOf(¢.getName() + "").inside(n).size() > 1 || !sideEffects.free(¢.getInitializer()))
+            .forEach(¢ -> step.fragments(asVar).add(¢));
         if (step.fragments(asVar).isEmpty())
           removalList.add(s);
       }
