@@ -10,6 +10,8 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -63,6 +65,8 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
   }
 
   private static boolean isNameDefined(final Statement s, final SimpleName n) {
-    return Environment.of(s).has(step.identifier(n));
+    Statement $ = az.statement(s.getParent());
+    return (Environment.of($ == null ? s
+        : iz.block($) ? lisp.last(step.statements(az.block($))) : iz.switchStatement($) ? lisp.last(step.statements(az.switchStatement($))) : s)).has(step.identifier(n));
   }
 }
