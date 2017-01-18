@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jdt.internal.ui.javaeditor.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.*;
-import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
