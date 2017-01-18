@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -46,9 +47,12 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
 
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
-    return parent == null
-        ? iz.variableDeclarationStatement(nextStatement) && (((VariableDeclarationStatement) nextStatement).getType() + "").equals($.getType() + "")
+    return (parent == null
+        ? iz.variableDeclarationStatement(nextStatement) && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
+            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
         : !lastIn(nextStatement, statements(parent)) && iz.variableDeclarationStatement(nextStatement)
-            && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "");
+            && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
+            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers())
+        && extract.annotations($).equals(extract.annotations(az.variableDeclarationStatement(nextStatement)));
   }
 }
