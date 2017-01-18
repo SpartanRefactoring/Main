@@ -32,10 +32,10 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static final Set<String> signature = new HashSet<>();
 
-  private static Collection<Object[]> collect(final MetaFixture... ts) {
+  private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
-    for (final MetaFixture t : ts)
+    for (final MetaFixture t : fs)
       for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.reflectedCompilationUnit()))
         if (!signature.contains(signature(¢))) {
           signature.add(signature(¢));

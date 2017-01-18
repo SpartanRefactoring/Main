@@ -50,6 +50,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             null) //
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
+            new Collect(), //
             new ForEach(), //
             new ForEachFiltered(), //
             new Select(), //

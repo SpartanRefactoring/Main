@@ -33,6 +33,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     {
       add(new Select());
       add(new Aggregate());
+      add(new Collect.defender());
     }
   };
 
@@ -50,7 +51,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   }
 
   @Override public String technicalName() {
-    return "ForEachInCApplyS";
+    return "foreach C [s.t. P(·)] do S(·)";
   }
 
   @Override public String example() {

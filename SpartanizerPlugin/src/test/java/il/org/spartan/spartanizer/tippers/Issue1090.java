@@ -18,9 +18,17 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-    MetaTestCase case1=new MetaTestCase(){
-    /** [[SuppressWarningsSpartan]] */
-    @Override protected void startingWith(){intField=0;charField=0;}@Override protected void trimmingStopsAt(){intField=charField=0;}};
+    MetaTestCase case1 = new MetaTestCase() {
+      /** [[SuppressWarningsSpartan]] */
+      @Override protected void startingWith() {
+        intField = 0;
+        charField = 0;
+      }
+
+      @Override protected void trimmingStopsAt() {
+        intField = charField = 0;
+      }
+    };
 
     byte getByteField() {
       return byteField;

@@ -67,20 +67,9 @@ public class Issue1077 {
                     + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {" + "for (final Statement ¢ : l)" + "if (¢.has())"
                     + "return 1;" + "return 0;" + "}" + "}");
   }
+
   @Test public void t6() {
-    trimmingOf(
-        "class a { "
-    + "final List<Statement> l; "
-    + "int sss(final ASTNode k, int type) {"
-    + "for (final Statement s : l)"
-    + "if (s.has())"
-    + "return 1;"
-    + "ASTNode ¢ = l.get(0);"
-    + "l.add(¢);"
-    + "¢=l.get(1);"
-    + "return 0;"
-    + "}"
-    + "}").stays();
+    trimmingOf("class a { " + "final List<Statement> l; " + "int sss(final ASTNode k, int type) {" + "for (final Statement s : l)" + "if (s.has())"
+        + "return 1;" + "ASTNode ¢ = l.get(0);" + "l.add(¢);" + "¢=l.get(1);" + "return 0;" + "}" + "}").stays();
   }
-  
 }
