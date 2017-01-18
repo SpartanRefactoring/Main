@@ -19,8 +19,7 @@ public enum determineIf {
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
   public static boolean loaded(final MethodDeclaration d) {
-    final int $ = 3;
-    final int expectedNoOfVars = 5;
+    final int $ = 3, expectedNoOfVars = 5;
     if (d == null)
       return false;
     final Int declaredVarsCounter = new Int();

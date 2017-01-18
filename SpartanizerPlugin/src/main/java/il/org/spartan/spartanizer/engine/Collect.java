@@ -180,8 +180,7 @@ public enum Collect {
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          add(¢.getName());
+        fs.forEach(¢ -> add(¢.getName()));
       }
 
       /** Tries to add to the list provided by the closure (into) the
@@ -193,8 +192,7 @@ public enum Collect {
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> xs) {
-        for (final Expression ¢ : xs)
-          addFragments(fragments(az.variableDeclarationExpression(¢)));
+        xs.forEach(¢ -> addFragments(fragments(az.variableDeclarationExpression(¢))));
         return true;
       }
     };
@@ -248,8 +246,7 @@ public enum Collect {
       }
 
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          add(¢.getName());
+        fs.forEach(¢ -> add(¢.getName()));
       }
 
       /** ThiWs function is needed cause a definition can be not in a
@@ -263,8 +260,7 @@ public enum Collect {
       }
 
       boolean consider(final List<? extends Expression> initializers) {
-        for (final Expression ¢ : initializers)
-          addFragments(fragments(az.variableDeclarationExpression(¢)));
+        initializers.forEach(¢ -> addFragments(fragments(az.variableDeclarationExpression(¢))));
         return true;
       }
     };

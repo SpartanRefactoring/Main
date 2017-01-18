@@ -55,8 +55,7 @@ public class Logger {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
-    double sumSratio = 0;
-    double sumEratio = 0;
+    double sumSratio = 0, sumEratio = 0;
     for (final Integer k : methodsStatistics.keySet()) {
       final MethodRecord m = methodsStatistics.get(k);
       report //
@@ -122,8 +121,7 @@ public class Logger {
     currentType.push(d);
     final List<MethodDeclaration> ms = step.methods(d).stream().filter(m -> enumerate.statements(m) != 0 && !m.isConstructor())
         .collect(Collectors.toList());
-    for (final MethodDeclaration ¢ : ms)
-      logMethodInfo(¢);
+    ms.forEach(Logger::logMethodInfo);
     numMethods += ms.size();
   }
 
