@@ -143,10 +143,10 @@ public class Analyze {
   }
 
   private static void methodsAnalyze() {
-    (inputFiles()).forEach(f -> types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods)
-        .forEach(t -> (methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList())).forEach(¢ -> {
+    inputFiles().forEach(f -> types(az.compilationUnit(compilationUnit(f))).stream().filter(haz::methods)
+        .forEach(t -> methods(t).stream().filter(m -> !m.isConstructor()).collect(Collectors.toList()).forEach(¢ -> {
           try {
-            (analyses.values()).forEach(
+            analyses.values().forEach(
                 a -> a.logMethod(¢, findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
           } catch (final AssertionError __) {
             ___.unused(__);

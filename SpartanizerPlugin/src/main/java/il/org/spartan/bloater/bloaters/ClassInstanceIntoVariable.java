@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>

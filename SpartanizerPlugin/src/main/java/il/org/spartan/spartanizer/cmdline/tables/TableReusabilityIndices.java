@@ -53,8 +53,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   private final Set<String> defined = new LinkedHashSet<>();
 
   public Map<String, Integer> addIfNecessary(final String category, final String key) {
-    if (usage.get(category) == null)
-      usage.put(category, new LinkedHashMap<>());
+    usage.putIfAbsent(category, new LinkedHashMap<>());
     final Map<String, Integer> $ = usage.get(category);
     assert $ != null;
     $.putIfAbsent(key, Integer.valueOf(0));
@@ -128,16 +127,13 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   protected int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      $.remove(m);
+    defined.forEach($::remove);
     return rindex(ranks($));
   }
 
   protected int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>($.keySet()))
-      if (!defined.contains(k))
-        $.remove(k);
+    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach($::remove);
     return rindex(ranks($));
   }
 

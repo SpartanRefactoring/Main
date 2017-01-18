@@ -427,7 +427,7 @@ public class Matcher {
     final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
-    enviroment.keySet().stream().filter(¢ -> needsSpecialReplacement(¢)).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
+    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -451,7 +451,7 @@ public class Matcher {
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
-    enviroment.keySet().stream().filter(¢ -> needsSpecialReplacement(¢)).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
+    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -480,6 +480,6 @@ public class Matcher {
   }
 
   public enum Option {
-    LAST_IN_BLOCK, FIRST_IN_BLOCK;
+    LAST_IN_BLOCK, FIRST_IN_BLOCK
   }
 }

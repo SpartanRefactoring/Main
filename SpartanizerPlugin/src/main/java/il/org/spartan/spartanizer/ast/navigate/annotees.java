@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -12,11 +13,8 @@ import il.org.spartan.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface annotees {
-  static List<SimpleName> names(final List<VariableDeclarationFragment> fs) {
-    final List<SimpleName> $ = new ArrayList<>();
-    for (final VariableDeclarationFragment ¢ : fs)
-      $.add(¢.getName());
-    return $;
+  static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {
+    return ¢.stream().map(VariableDeclaration::getName).collect(Collectors.toList());
   }
 
   static List<SimpleName> of(final Annotation ¢) {
