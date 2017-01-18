@@ -39,15 +39,15 @@ public interface TableRenderer {
 
       @Override public String render(final Statistic ¢) {
         switch (¢) {
-          default:
-            return "\\hfill" + super.render(¢);
-          case min:
-          case max:
-            return "\\hfill" + "$\\" + super.render(¢) + "$";
-          case σ:
-            return "\\hfill" + "$\\sigma$";
           case Σ:
             return "\\hfill" + "$\\Sum$";
+          case σ:
+            return "\\hfill" + "$\\sigma$";
+          case max:
+          case min:
+            return "\\hfill" + "$\\" + super.render(¢) + "$";
+          default:
+            return "\\hfill" + super.render(¢);
         }
       }
     },
@@ -172,14 +172,10 @@ public interface TableRenderer {
 
   default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
-    final Separator s = new Separator(recordSeparator());
-    for (final Object ¢ : values)
-      $.append(s)
-          .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)
-              : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue())) //
-                  : ¢ instanceof Long ? cellInt((Long) ¢) //
-                      : ¢ instanceof Double ? cellReal((Double) ¢) //
-                          : ¢);
+    values.forEach(¢ -> $.append(new Separator(recordSeparator()))
+        .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)
+            : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue()))
+                : ¢ instanceof Long ? cellInt((Long) ¢) : ¢ instanceof Double ? cellReal((Double) ¢) : ¢));
     return $ + recordEnd();
   }
 

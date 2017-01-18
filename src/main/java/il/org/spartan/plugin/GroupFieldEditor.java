@@ -82,8 +82,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
-    for (final FieldEditor ¢ : members)
-      ¢.setEnabled(enabled, parentParam);
+    members.forEach(¢ -> ¢.setEnabled(enabled, parentParam));
   }
 
   @Override public void setFocus() {
@@ -92,14 +91,12 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override public void setPage(final DialogPage p) {
-    for (final FieldEditor ¢ : members)
-      ¢.setPage(p);
+    members.forEach(¢ -> ¢.setPage(p));
   }
 
   @Override public void setPreferenceStore(final IPreferenceStore s) {
     super.setPreferenceStore(s);
-    for (final FieldEditor ¢ : members)
-      ¢.setPreferenceStore(s);
+    members.forEach(¢ -> ¢.setPreferenceStore(s));
   }
 
   @Override public void store() {

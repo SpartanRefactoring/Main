@@ -98,8 +98,7 @@ public final class Recurser<T> {
       return;
     }
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode ¢ : children)
-      rs.add(new Recurser<>(¢));
+    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
@@ -114,8 +113,7 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current = $.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode ¢ : children)
-      rs.add(new Recurser<>(¢));
+    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
@@ -131,23 +129,20 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return;
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode child : children)
-      rs.add(new Recurser<>(child));
-    for (final Recurser<T> ¢ : rs)
-      ¢.preVisit(f);
+    children.forEach(child -> rs.add(new Recurser<>(child)));
+    rs.forEach(¢ -> ¢.preVisit(f));
   }
 
-  public T preVisit(final Function<Recurser<T>, T> t) {
-    this.current = t.apply(this);
+  public T preVisit(final Function<Recurser<T>, T> r) {
+    this.current = r.apply(this);
     final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current;
     final List<Recurser<T>> $ = new ArrayList<>();
-    for (final ASTNode child : children)
-      $.add(new Recurser<>(child));
+    children.forEach(child -> $.add(new Recurser<>(child)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
-      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(t);
+      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
       ++index;
     }
     return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();

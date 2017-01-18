@@ -76,8 +76,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   static int[] ranks(final Map<?, Integer> i) {
-    int n = 0;
-    final int $[] = new int[i.size()];
+    int n = 0, $[] = new int[i.size()];
     for (final Integer ¢ : i.values())
       $[n++] = ¢.intValue();
     return $;
@@ -118,8 +117,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   void addMissingKeys() {
-    for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
-      addIfNecessary("NODE-TYPE", key(¢));
+    (wizard.classToNodeType.keySet()).forEach(¢ -> addIfNecessary("NODE-TYPE", key(¢)));
     for (final Assignment.Operator ¢ : wizard.assignmentOperators)
       addIfNecessary("ASSIGNMENT", key(¢));
     for (final PrefixExpression.Operator ¢ : wizard.prefixOperators)
@@ -171,16 +169,13 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   protected int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      $.remove(m);
+    defined.forEach(m -> $.remove(m));
     return rindex(ranks($));
   }
 
   protected int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>($.keySet()))
-      if (!defined.contains(k))
-        $.remove(k);
+    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach(k -> $.remove(k));
     return rindex(ranks($));
   }
 

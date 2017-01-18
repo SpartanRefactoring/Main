@@ -82,8 +82,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
-    for (final Expression item : items)
-      from.remove(item);
+    items.forEach(item -> from.remove(item));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
@@ -137,9 +136,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          for (final Expression $ : extract.allOperands(az.infixExpression(first(temp))))
-            if (!isIn($, common))
-              addDifferent($, different);
+          extract.allOperands(az.infixExpression(first(temp))).stream().filter($ -> !isIn($, common)).forEach($ -> addDifferent($, different));
         removeElFromList(different, common);
       }
     }

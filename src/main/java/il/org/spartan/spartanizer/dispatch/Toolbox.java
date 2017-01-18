@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -28,8 +29,7 @@ public class Toolbox {
       assert t.implementation != null;
       for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
         if (ts != null)
-          for (final Tipper<? extends ASTNode> ¢ : ts)
-            put(¢.getClass(), ¢.tipperGroup());
+          ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup()));
     }
   };
   /** The default instance of this class */
@@ -325,8 +325,8 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
-    return emptyToolboox().add(clazz, ns);
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
+    return emptyToolboox().add(clazz, ts);
   }
 
   public static void refresh() {
@@ -365,18 +365,18 @@ public class Toolbox {
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.
-   * @param n JD
-   * @param ns JD
+   * @param c JD
+   * @param ts JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer $ = wizard.classToNodeType.get(n);
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
+    final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
-        "\n c = " + n + //
-        "\n c.getSimpleName() = " + n.getSimpleName() + //
+        "\n c = " + c + //
+        "\n c.getSimpleName() = " + c.getSimpleName() + //
         "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
         "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
-    return add($, ns);
+    return add($, ts);
   }
 
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ns) {
@@ -451,9 +451,7 @@ public class Toolbox {
     assert t.implementation != null;
     for (final List<Tipper<? extends ASTNode>> element : t.implementation)
       if (element != null)
-        for (final Tipper<?> p : element)
-          if (¢.equals(p.tipperGroup()))
-            $.add(p.myName());
+        $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(p -> p.myName()).collect(Collectors.toList()));
     return $;
   }
 

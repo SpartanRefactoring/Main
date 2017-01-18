@@ -4,6 +4,7 @@ import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -19,9 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      if (!iz.literal1(¢))
-        $.add(¢);
+    $.addAll(xs.stream().filter(¢ -> !iz.literal1(¢)).collect(Collectors.toList()));
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 
