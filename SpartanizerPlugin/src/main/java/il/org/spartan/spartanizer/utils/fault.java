@@ -36,22 +36,22 @@ public interface fault {
     return dump("");
   }
 
-  static String dump(String specfically) {
-    return "\n FAULT: this should not have happened!" + specfically +"\n-----To help you fix the code, here is some info";
+  static String dump(final String specfically) {
+    return "\n FAULT: this should not have happened!" + specfically + "\n-----To help you fix the code, here is some info";
   }
 
   static boolean unreachable() {
     return false;
   }
 
-  static String specifically(String explanation, Object...os) {
-    String $= dump(explanation);
-    for (Object ¢:os)
+  static String specifically(final String explanation, final Object... os) {
+    String $ = dump(explanation);
+    for (final Object ¢ : os)
       $ += dump(¢.getClass().getSimpleName(), ¢);
     return $ + done();
   }
 
-  static String dump(String name, Object value) {
-   return  "\n " + name +"=[" + value + "]";
+  static String dump(final String name, final Object value) {
+    return "\n " + name + "=[" + value + "]";
   }
 }

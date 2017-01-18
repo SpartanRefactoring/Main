@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for loops
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
