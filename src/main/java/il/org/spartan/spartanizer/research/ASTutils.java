@@ -22,7 +22,6 @@ public class ASTutils {
       case STATEMENTS_LOOK_ALIKE:
         return findFirst.instanceOf(Block.class, u);
       default:
-        break;
     }
     return null;
   }
