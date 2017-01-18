@@ -19,6 +19,8 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
     if (!iz.methodInvocation(e))
       return null;
     final MethodInvocation i = az.methodInvocation(e);
+    // TODO: Tomer - you are still confused. If you used az.methodInvocation, you can check for null here.
+    // TODO: Tomer please fix --yg
     final ConditionalExpression $ = getFirstCond(i);
     if ($ == null)
       return null;

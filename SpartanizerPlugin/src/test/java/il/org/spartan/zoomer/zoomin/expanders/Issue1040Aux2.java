@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Example for testing with binding
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
