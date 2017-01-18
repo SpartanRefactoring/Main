@@ -14,7 +14,7 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.statementsPattern("$T $N = new $T();  $N.addAll($X);", "$T $N = Create.from($X);", "CreateFrom pattern"));
+      add(TipperFactory.statementsPattern("$T1 $N = new $T2();  $N.addAll($X);", "$T1 $N = Create.from($X);", "CreateFrom pattern"));
     }
   };
 

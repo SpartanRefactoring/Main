@@ -16,4 +16,10 @@ public class CopyCollectionTest {
         .using(Block.class, new CopyCollection())//
         .gives("StatsAccumulator $=Create.from(values);");
   }
+
+  @Test public void b() {
+    trimmingOf("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
+        .using(Block.class, new CopyCollection())//
+        .gives("StatsAccumulator<N> $=Create.from(values);");
+  }
 }
