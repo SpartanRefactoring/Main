@@ -26,7 +26,7 @@ public class Issue1005 {
 
   @Test public void t4() {
     bloatingOf("f(i++,--j,++x);")//
-        .stays();
+        .gives("f(i = i+1,--j,++x);");
   }
 
   @Test public void t5() {
