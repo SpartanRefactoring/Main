@@ -44,4 +44,13 @@ public class ForEachFilteredTest {
                 "((B)resources).stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){logger.trace(\"resumeAll\",¢);}});")//
             .stays();
   }
+
+  @Test public void e() {
+    trimmingOf(
+        "for (final MethodDeclaration ¢ : step.methods(reflection))    if (!¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))      put(mangle(¢), ¢);")//
+            .using(EnhancedForStatement.class, new ForEachFiltered())//
+            .gives(
+                "(step.methods(reflection)).stream().filter(¢->!¢.isConstructor()&&!iz.static¢(¢)&&!iz.final¢(¢)&&!iz.private¢(¢)).forEach(¢->put(mangle(¢),¢));")//
+            .stays();
+  }
 }
