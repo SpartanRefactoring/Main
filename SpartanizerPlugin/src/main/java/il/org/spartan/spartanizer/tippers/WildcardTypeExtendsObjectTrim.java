@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-16 */
 public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType> implements TipperCategory.Collapse {
   @Override public String description(final WildcardType ¢) {
-    return "Trim implicit extends " + wizard.trim(¢);
+    return "Trim implicit extends " + trivia.gist(¢);
   }
 
   @Override public WildcardType replacement(final WildcardType ¢) {

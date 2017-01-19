@@ -6,10 +6,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.meta.*;
 
-/** Unit tests with some type information.
+/** Unit tests for {@link  
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-@Ignore
 @RunWith(Parameterized.class)
 public class Issue1090 extends MetaFixture {
   static class Fixture {
