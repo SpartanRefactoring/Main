@@ -33,9 +33,7 @@ public class MetaTestCase extends MetaFixture {
       .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
-      for (final MethodDeclaration ¢ : step.methods(reflection))
-        if (!¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))
-          put(mangle(¢), ¢);
+      step.methods(reflection).stream().filter(¢ -> !¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢)).forEach(¢ -> put(mangle(¢), ¢));
     }
   };
 
