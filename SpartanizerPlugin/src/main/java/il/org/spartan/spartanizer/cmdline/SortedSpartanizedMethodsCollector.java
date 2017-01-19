@@ -104,8 +104,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     final CSVStatistics report = openMethodSummaryFile(outputFolder);
     if (report == null)
       return;
-    int statementsTotal = 0;
-    int methodsTotal = 0;
+    int statementsTotal = 0, methodsTotal = 0;
     for (final Integer numStatements : methods.keySet()) {
       if (numStatements == 0)
         continue; // don't count methods without body

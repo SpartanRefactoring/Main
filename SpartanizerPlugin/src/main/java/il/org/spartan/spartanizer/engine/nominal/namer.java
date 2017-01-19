@@ -55,17 +55,17 @@ public interface namer {
     if ($ == null)
       return shorten(¢.getType());
     switch (¢.getType() + "") {
+      case "ArrayList":
       case "Collection":
+      case "HashSet":
       case "Iterable":
+      case "LinkedHashSet":
       case "List":
       case "Queue":
+      case "Sequence":
       case "Set":
-      case "HashSet":
-      case "LinkedHashSet":
-      case "ArrayList":
       case "TreeSet":
       case "Vector":
-      case "Sequence":
         return $ + "s";
       default:
         return $;

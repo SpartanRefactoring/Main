@@ -119,8 +119,7 @@ public class MetaTestCase extends MetaFixture {
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
       final MethodDeclaration md = (MethodDeclaration) bd;
-      final String mangle = mangle(md);
-      final String model = extract.name(reflection);
+      final String mangle = mangle(md), model = extract.name(reflection);
       assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
           , md, stencil);

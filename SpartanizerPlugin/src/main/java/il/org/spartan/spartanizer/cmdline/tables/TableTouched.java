@@ -33,8 +33,7 @@ public class TableTouched extends TableNanosCoverage {
     if (touchedWriter == null)
       initializeWriter();
     touchedWriter.put("Project", path);
-    int totalMethods = 0;
-    int totalMethodsTouched = 0;
+    int totalMethods = 0, totalMethodsTouched = 0;
     for (int i = 1; i <= MAX_STATEMENTS_REPORTED; ++i)
       if (!statementsCoverageStatistics.containsKey(i))
         touchedWriter.put(i + "", .0);

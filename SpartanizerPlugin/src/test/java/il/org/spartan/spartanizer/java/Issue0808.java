@@ -26,9 +26,7 @@ public class Issue0808 {
   }
 
   @Test @SuppressWarnings("static-method") public void test03() {
-    final Expression ex1 = az.simpleName(wizard.ast("shahar"));
-    final Expression ex2 = az.simpleName(wizard.ast("david"));
-    final Expression ex3 = az.simpleName(wizard.ast("zahi"));
+    final Expression ex1 = az.simpleName(wizard.ast("shahar")), ex2 = az.simpleName(wizard.ast("david")), ex3 = az.simpleName(wizard.ast("zahi"));
     azzert.that(new Term(false, ex1).asExpression(), is(ex1));
     assertNotEquals(ex2, new Term(true, copy.of(ex2)).asExpression());
     assertNotEquals(ex3, new Term(true, copy.of(ex3)).asExpression());

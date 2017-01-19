@@ -49,10 +49,9 @@ public class BloatingTestUtilities {
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = doc.get();
-        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
-        final String wrap1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "";
-        final String unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
+        final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
+            wrap1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "",
+            unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
         if (wrap1.equals(unpeeled1))
           azzert.fail("Nothing done on " + get());
         final String peeled1 = w.off(unpeeled1);

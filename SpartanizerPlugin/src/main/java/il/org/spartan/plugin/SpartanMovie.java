@@ -41,8 +41,7 @@ public class SpartanMovie extends AbstractHandler {
       progressService.run(false, true, pm -> {
         moveProgressDialog();
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
-        int changes = 0;
-        int filesModified = 0;
+        int changes = 0, filesModified = 0;
         // TODO Ori Roth: this function is much much too large. Try to break it
         // --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
@@ -146,8 +145,7 @@ public class SpartanMovie extends AbstractHandler {
   }
 
   static void moveProgressDialog() {
-    final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-    final Shell parentShell = shell == null ? null : shell.getParent().getShell();
+    final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(), parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }

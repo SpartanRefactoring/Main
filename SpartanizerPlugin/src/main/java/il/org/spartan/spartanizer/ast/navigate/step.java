@@ -186,36 +186,36 @@ public enum step {
     if (¢ == null)
       return null;
     switch (¢.getNodeType()) {
-      case ASTNode.EXPRESSION_STATEMENT:
-        return expression((ExpressionStatement) ¢);
-      case ASTNode.WHILE_STATEMENT:
-        return expression((WhileStatement) ¢);
-      case ASTNode.FOR_STATEMENT:
-        return expression((ForStatement) ¢);
-      case ASTNode.RETURN_STATEMENT:
-        return expression((ReturnStatement) ¢);
-      case ASTNode.THROW_STATEMENT:
-        return expression((ThrowStatement) ¢);
-      case ASTNode.CLASS_INSTANCE_CREATION:
-        return expression((ClassInstanceCreation) ¢);
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) ¢);
-      case ASTNode.ENHANCED_FOR_STATEMENT:
-        return az.enhancedFor(¢).getExpression();
-      case ASTNode.METHOD_INVOCATION:
-        return receiver((MethodInvocation) ¢);
-      case ASTNode.PARENTHESIZED_EXPRESSION:
-        return expression((ParenthesizedExpression) ¢);
+      case ASTNode.CLASS_INSTANCE_CREATION:
+        return expression((ClassInstanceCreation) ¢);
       case ASTNode.CONDITIONAL_EXPRESSION:
         return expression((ConditionalExpression) ¢);
       case ASTNode.DO_STATEMENT:
         return expression((DoStatement) ¢);
+      case ASTNode.ENHANCED_FOR_STATEMENT:
+        return az.enhancedFor(¢).getExpression();
+      case ASTNode.EXPRESSION_STATEMENT:
+        return expression((ExpressionStatement) ¢);
+      case ASTNode.FOR_STATEMENT:
+        return expression((ForStatement) ¢);
       case ASTNode.IF_STATEMENT:
         return expression((IfStatement) ¢);
-      case ASTNode.SWITCH_STATEMENT:
-        return expression((SwitchStatement) ¢);
+      case ASTNode.METHOD_INVOCATION:
+        return receiver((MethodInvocation) ¢);
+      case ASTNode.PARENTHESIZED_EXPRESSION:
+        return expression((ParenthesizedExpression) ¢);
+      case ASTNode.RETURN_STATEMENT:
+        return expression((ReturnStatement) ¢);
       case ASTNode.SWITCH_CASE:
         return expression((SwitchCase) ¢);
+      case ASTNode.SWITCH_STATEMENT:
+        return expression((SwitchStatement) ¢);
+      case ASTNode.THROW_STATEMENT:
+        return expression((ThrowStatement) ¢);
+      case ASTNode.WHILE_STATEMENT:
+        return expression((WhileStatement) ¢);
       default:
         return null;
     }

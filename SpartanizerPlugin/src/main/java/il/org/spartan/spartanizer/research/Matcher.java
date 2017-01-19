@@ -116,8 +116,7 @@ public class Matcher {
   private static boolean blockMatches(final ASTNode p, final Block n) {
     if (!iz.block(p))
       return false;
-    final List<Statement> sp = statements(az.block(p));
-    final List<Statement> sn = statements(n);
+    final List<Statement> sp = statements(az.block(p)), sn = statements(n);
     if (sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
@@ -186,8 +185,7 @@ public class Matcher {
       return false;
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))
       return sameOperator($, n) && sameOperands($, n, ids);
-    final List<ASTNode> pChildren = allChildren($, $);
-    final List<ASTNode> nChildren = allChildren(n, $);
+    final List<ASTNode> pChildren = allChildren($, $), nChildren = allChildren(n, $);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
@@ -197,8 +195,7 @@ public class Matcher {
   }
 
   private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
-    final List<Expression> $Operands = extract.allOperands(az.infixExpression($));
-    final List<Expression> nOperands = extract.allOperands(az.infixExpression(n));
+    final List<Expression> $Operands = extract.allOperands(az.infixExpression($)), nOperands = extract.allOperands(az.infixExpression(n));
     if ($Operands.size() != nOperands.size())
       return false;
     for (int ¢ = 0; ¢ < $Operands.size(); ++¢)

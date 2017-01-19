@@ -49,14 +49,12 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     final List<switchBranch> l = switchBranch.intoBranches(s);
     if (l.size() != 2)
       return null;
-    final switchBranch s1 = lisp.first(l);
-    final switchBranch s2 = lisp.last(l);
+    final switchBranch s1 = lisp.first(l), s2 = lisp.last(l);
     if (!s1.hasDefault() && !s2.hasDefault() || s1.hasFallThrough() || s2.hasFallThrough() || !s1.hasStatements() || !s2.hasStatements()
         || haz.sideEffects(step.expression(s)) && (s1.hasDefault() ? s2 : s1).cases().size() > 1)
       return null;
     final AST a = s.getAST();
-    final Block b1 = a.newBlock();
-    final Block b2 = a.newBlock();
+    final Block b1 = a.newBlock(), b2 = a.newBlock();
     switchBranch t = lisp.first(l).hasDefault() ? lisp.first(l) : lisp.last(l);
     step.statements(b2).addAll(switchBranch.removeBreakSequencer(t.statements()));
     t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
