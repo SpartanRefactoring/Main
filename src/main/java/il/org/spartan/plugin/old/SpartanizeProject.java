@@ -121,9 +121,9 @@ public final class SpartanizeProject extends BaseHandler {
 
   public void start() {
     currentCompilationUnit = eclipse.currentCompilationUnit();
-    status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
+    status.append("Starting at compilation unit: ").append(currentCompilationUnit.getElementName()).append("\n");
     javaProject = currentCompilationUnit.getJavaProject();
-    status.append("Java project is: " + javaProject.getElementName() + "\n");
+    status.append("Java project is: ").append(javaProject.getElementName()).append("\n");
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found ").append(todo.size()).append(" compilation units, ");

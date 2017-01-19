@@ -82,7 +82,7 @@ public enum find {
     $ = $ != null ? $ : "";
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
-      $ = $ != "" || diff == null ? $ : diff;
+      $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }
@@ -104,7 +104,7 @@ public enum find {
       return null;
     for (int i = 2; i < ns.size(); ++i) {
       final String diff = singleAtomicDifference(ns.get(0), ns.get(i));
-      $ = $ != "" || diff == null ? $ : diff;
+      $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }
