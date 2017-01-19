@@ -102,8 +102,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
-    final Statement body = body(b);
-    final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (exclude != null)
       exclude.exclude(b);

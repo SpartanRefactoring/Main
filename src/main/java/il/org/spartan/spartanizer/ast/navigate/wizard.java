@@ -159,9 +159,9 @@ public interface wizard {
                                         : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
 
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
+  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> l) {
     boolean add = false;
-    for (final ASTNode x : ns)
+    for (final ASTNode x : l)
       if (add)
         $.add(x);
       else
@@ -240,18 +240,18 @@ public interface wizard {
    *         null */
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
-      case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(statements(az.block(into.s(p)))));
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
         return into.e(p);
+      case METHOD_LOOK_ALIKE:
+        return into.m(p);
       case OUTER_TYPE_LOOKALIKE:
         return into.t(p);
       case STATEMENTS_LOOK_ALIKE:
         return into.s(p);
-      case METHOD_LOOK_ALIKE:
-        return into.m(p);
+      case BLOCK_LOOK_ALIKE:
+        return az.astNode(first(statements(az.block(into.s(p)))));
       default:
         return null;
     }
@@ -672,11 +672,11 @@ public interface wizard {
     if (¢ == null)
       return false;
     switch (¢ + "") {
-      default:
-        return false;
       case "Object":
       case "java.lang.Object":
         return true;
+      default:
+        return false;
     }
   }
 

@@ -73,9 +73,7 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = essence(inner);
-    final String essence2 = essence(off);
+    final String off = off(wrap), $ = essence(inner), essence2 = essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

@@ -76,8 +76,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {
-          final ASTNode oldNode = $.get(i);
-          final ASTNode newNode = myCopy.get(i);
+          final ASTNode oldNode = $.get(i), newNode = myCopy.get(i);
           if (oldNode != newNode)
             l.replace(oldNode, r.createMoveTarget(newNode), g);
         }

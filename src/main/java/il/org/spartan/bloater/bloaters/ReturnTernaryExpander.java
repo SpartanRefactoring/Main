@@ -26,8 +26,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement> implem
         final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
         final Expression cond = expression(e);
         final AST a = x.getAST();
-        final ReturnStatement whenTrue = a.newReturnStatement();
-        final ReturnStatement whenFalse = a.newReturnStatement();
+        final ReturnStatement whenTrue = a.newReturnStatement(), whenFalse = a.newReturnStatement();
         whenTrue.setExpression(copy.of(then(e)));
         whenFalse.setExpression(copy.of(elze(e)));
         final IfStatement f = a.newIfStatement();

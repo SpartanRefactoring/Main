@@ -190,8 +190,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testMethodWithAnnotation_01() {
-    final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1);
-    final ASTNode u2 = makeAST.COMPILATION_UNIT.from(test2);
+    final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1), u2 = makeAST.COMPILATION_UNIT.from(test2);
     assert u1 != null;
     assert u2 != null;
     visitASTNode(u1);

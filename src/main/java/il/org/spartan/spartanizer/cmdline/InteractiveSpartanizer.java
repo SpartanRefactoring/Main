@@ -74,19 +74,19 @@ public class InteractiveSpartanizer {
 
   boolean changed;
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> n, final Tipper<N>... ns) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
-    toolbox.add(n, ns);
+    toolbox.add(c, ts);
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ns) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
-    toolbox.add(i, ns);
+    toolbox.add(i, ts);
     return this;
   }
 }

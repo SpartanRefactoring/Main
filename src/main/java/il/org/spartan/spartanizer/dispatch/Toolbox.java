@@ -81,8 +81,8 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
-    for (final Tipper<N> $ : ns)
+  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
+    for (final Tipper<N> $ : ts)
       if ($.canTip(n))
         return $;
     return null;
@@ -329,8 +329,8 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
-    return emptyToolboox().add(clazz, ns);
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
+    return emptyToolboox().add(clazz, ts);
   }
 
   public static void refresh() {
@@ -369,22 +369,22 @@ public class Toolbox {
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.
-   * @param n JD
-   * @param ns JD
+   * @param c JD
+   * @param ts JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer $ = wizard.classToNodeType.get(n);
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
+    final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
-        "\n c = " + n + //
-        "\n c.getSimpleName() = " + n.getSimpleName() + //
+        "\n c = " + c + //
+        "\n c.getSimpleName() = " + c.getSimpleName() + //
         "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
         "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
-    return add($, ns);
+    return add($, ts);
   }
 
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ns) {
-    for (final Tipper<N> ¢ : ns) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ts) {
+    for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();

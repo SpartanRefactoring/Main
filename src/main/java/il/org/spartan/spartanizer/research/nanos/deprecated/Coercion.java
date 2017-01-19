@@ -52,16 +52,17 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       case API_LEVEL_TYPE:
         addAzMethodToType(¢, r, g);
         break;
-      case API_LEVEL_PACKAGE:
-        prepareFile(packageAzFile(¢));
-        addAzMethodToFile(¢, packageAzFilePath(¢));
-        break;
       case API_LEVEL_FILE:
         prepareFile(fileAzFile());
         addAzMethodToFile(¢, fileAzFilePath());
         break;
+      case API_LEVEL_PACKAGE:
+        prepareFile(packageAzFile(¢));
+        addAzMethodToFile(¢, packageAzFilePath(¢));
+        break;
       default:
         assert false : "illegal apiLevel [" + s + "]";
+        break;
     }
   }
 
@@ -112,12 +113,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static AbstractTypeDeclaration containingType(final CastExpression $) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
-      case API_LEVEL_TYPE:
-        return searchAncestors.forContainingType().from($);
-      case API_LEVEL_PACKAGE:
-        return getType(prepareFile(packageAzFile($)));
       case API_LEVEL_FILE:
         return getType(prepareFile(fileAzFile()));
+      case API_LEVEL_PACKAGE:
+        return getType(prepareFile(packageAzFile($)));
+      case API_LEVEL_TYPE:
+        return searchAncestors.forContainingType().from($);
       default:
         assert false : "illegal apiLevel [" + s + "]";
         return null;

@@ -109,26 +109,23 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         if (¢ instanceof Expression)
           consider($, (Expression) ¢);
         switch (¢.getNodeType()) {
-          case ASTNode.BLOCK:
-          case ASTNode.TYPE_DECLARATION_STATEMENT:
           case ASTNode.ANONYMOUS_CLASS_DECLARATION:
-          case ASTNode.WHILE_STATEMENT:
+          case ASTNode.BLOCK:
           case ASTNode.DO_STATEMENT:
           case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
-          case ASTNode.VARIABLE_DECLARATION_STATEMENT: // tipper recursion
-                                                       // terminator
-            return false;
-          case ASTNode.FOR_STATEMENT:
-            final ForStatement fs = (ForStatement) ¢;
-            consider($, fs.initializers()); // RISKY (for (int i, int j=i+1,
-                                            // ...))
+          case ASTNode.TYPE_DECLARATION_STATEMENT:
+          case ASTNode.VARIABLE_DECLARATION_STATEMENT:
+          case ASTNode.WHILE_STATEMENT:
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
-          case ASTNode.EXPRESSION_STATEMENT: // TODO Ori Roth: check if
-                                             // legitimate
+          case ASTNode.FOR_STATEMENT:
+            final ForStatement fs = (ForStatement) ¢;
+            consider($, fs.initializers());
+            return false;
+          case ASTNode.EXPRESSION_STATEMENT:
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
               excludedParents.add(((ExpressionStatement) ¢).getExpression());
             return true;
