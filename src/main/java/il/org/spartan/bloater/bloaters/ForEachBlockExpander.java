@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
@@ -21,9 +20,6 @@ public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatemen
     if (s == null)
       return null;
     final EnhancedForStatement $ = copy.of(s);
-    // TODO: Raviv Rachmiel ... the next two statements do nothing, I think.--yg
-    if (az.enhancedFor(s) == null)
-      return null;
     final Block b = $.getAST().newBlock();
     b.statements().add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
