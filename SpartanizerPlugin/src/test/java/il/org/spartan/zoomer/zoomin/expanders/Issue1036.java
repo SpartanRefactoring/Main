@@ -24,7 +24,6 @@ public class Issue1036 {
     List<Integer> children2 = new ArrayList<>();
     String $ = "";
 
-    /**  */
     @SuppressWarnings("null") public String check1() {
       for (int i = 1; i < children1.size(); ++i) {
         final String diff = null;

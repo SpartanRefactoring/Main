@@ -61,7 +61,6 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
-          /**  */
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
             final Type tt = fixWildCardType(t);
