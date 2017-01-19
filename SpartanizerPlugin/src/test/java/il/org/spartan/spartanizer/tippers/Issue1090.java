@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 
@@ -8,6 +9,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Unit tests for {@link
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
+@Ignore
 @RunWith(Parameterized.class)
 public class Issue1090 extends MetaFixture {
   static class Fixture {

@@ -89,8 +89,8 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
   }
 
   private static Statement addAllBlocks(final IfStatement s, final List<Block> collectInto) {
-    Statement $;
-    for ($ = s; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
+    Statement $ = s;
+    for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       Block b = az.block(copy.of(az.ifStatement($).getThenStatement()));
       if (b == null) {
         b = s.getAST().newBlock();
