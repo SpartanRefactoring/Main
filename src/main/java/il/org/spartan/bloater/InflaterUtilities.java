@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class InflaterUtilities {
   /** Main function of the application.
    * @param r JD
-   * @param nl list of statements and expression in the selected code which for
+   * @param ns list of statements and expression in the selected code which for
    *        each we check if we can expand
    * @param g JD
    * @return true iff rewrite object should be applied For now - we only have a
@@ -30,12 +30,11 @@ public class InflaterUtilities {
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
-  static boolean rewrite(final ASTRewrite r, final List<ASTNode> nl, final TextEditGroup __) {
+  static boolean rewrite(final ASTRewrite r, final List<ASTNode> ns, final TextEditGroup __) {
     boolean $ = false;
-    if (nl.isEmpty())
+    if (ns.isEmpty())
       return false;
-    // TODO: Raviv rename nl to ns --yg
-    for (final ASTNode statement : nl) {
+    for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
         cc.tip(az.returnStatement(statement)).go(r, __);
