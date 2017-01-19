@@ -56,6 +56,8 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
         continue;
       if (in($.getIdentifier(), "$")) {
         prev.add($);
+        // TODO: Raviv Rachmiel: I renamed "ret" to result, and no test failed.
+        // Shame! --yg
         after.add(d.getAST().newSimpleName("result"));
         continue;
       }

@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
 import java.util.*;
 import java.util.stream.*;
 
+import il.org.spartan.spartanizer.java.IExtendedModifiersRank;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
-  private static final Comparator<IExtendedModifier> comp = (m1, m2) -> rank(m1) - rank(m2);
+  private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
     int previousRank = -1;

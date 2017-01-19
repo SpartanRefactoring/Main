@@ -221,7 +221,7 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands(hop.operands(flatten.of($)).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
+    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList()))
         .to(PrefixNotPushdown.conjugate(operator($)));
   }
 
