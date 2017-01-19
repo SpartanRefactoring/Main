@@ -37,7 +37,7 @@ public class Issue1023 {
         .gives("for(int i=0;i<5;i++){a=5;}b=7;");
   }
 
-   @Test public void simpleBlockTestWhile() {
+  @Test public void simpleBlockTestWhile() {
     bloatingOf("while(i<5) a=5;")//
         .gives("while(i<5){a=5;}")//
         .stays();
@@ -53,7 +53,7 @@ public class Issue1023 {
         .stays();
   }
 
-   @Test public void notSimpleShouldAddTestWhile() {
+  @Test public void notSimpleShouldAddTestWhile() {
     bloatingOf("while(i<5) a=5; b=7;")//
         .gives("while(i<5){ a=5;}b=7;")//
         .stays();
