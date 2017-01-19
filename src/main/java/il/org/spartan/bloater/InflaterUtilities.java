@@ -1,6 +1,7 @@
 package il.org.spartan.bloater;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -132,12 +133,8 @@ public class InflaterUtilities {
    *
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
-    final List<ASTNode> $ = new ArrayList<>();
-    for (final ASTNode ¢ : ns)
-      if (intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
-          Selection.Util.current().textSelection.getLength()))
-        $.add(¢);
-    return $;
+    return ns.stream().filter(¢ -> intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
+        Selection.Util.current().textSelection.getLength())).collect(Collectors.toList());
   }
 
   public static void aux_go(final CompilationUnit u, final OperationsProvider p) {
