@@ -63,7 +63,8 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
-        $.addAll(sentence.stream().filter(disabling::specificallyDisabled).map((Function<MethodDeclaration, Object[]>) Changes::____).collect(Collectors.toList()));
+        $.addAll(sentence.stream().filter(disabling::specificallyDisabled).map((Function<MethodDeclaration, Object[]>) Changes::____)
+            .collect(Collectors.toList()));
       return $;
     }
 
