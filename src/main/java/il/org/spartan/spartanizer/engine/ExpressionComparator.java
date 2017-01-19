@@ -76,7 +76,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         same place, or after then the second argument in lexicographical
    *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return removeWhites(wizard.cleanForm(e1)).compareTo(removeWhites(wizard.cleanForm(e2)));
+    return removeWhites(trivia.cleanForm(e1)).compareTo(removeWhites(trivia.cleanForm(e2)));
   }
 
   static int argumentsCompare(final Expression e1, final Expression e2) {
