@@ -365,4 +365,8 @@ public final class Namespace implements Environment {
       $ = face + "" + ++postface;
     return $;
   }
+  
+  public Namespace addNewName(String s, Type t) {
+    return put(s, t);
+  }
 }
