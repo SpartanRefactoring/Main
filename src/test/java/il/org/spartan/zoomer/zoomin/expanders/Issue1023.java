@@ -11,7 +11,6 @@ import il.org.spartan.bloater.bloaters.*;
  * @since 11-1-17 */
 @SuppressWarnings("static-method")
 public class Issue1023 {
-  @Ignore
   static class ToFix { // should pass after fixing {@link Issue0974}
     @Test public void simpleBlockTest() {
       bloatingOf("for(int i=0;i<5;i++) a=5;")//
@@ -38,7 +37,7 @@ public class Issue1023 {
         .gives("for(int i=0;i<5;i++){a=5;}b=7;");
   }
 
-  @Ignore @Test public void simpleBlockTestWhile() {
+   @Test public void simpleBlockTestWhile() {
     bloatingOf("while(i<5) a=5;")//
         .gives("while(i<5){a=5;}")//
         .stays();
@@ -54,7 +53,7 @@ public class Issue1023 {
         .stays();
   }
 
-  @Ignore @Test public void notSimpleShouldAddTestWhile() {
+   @Test public void notSimpleShouldAddTestWhile() {
     bloatingOf("while(i<5) a=5; b=7;")//
         .gives("while(i<5){ a=5;}b=7;")//
         .stays();
