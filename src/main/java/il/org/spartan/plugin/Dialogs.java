@@ -129,6 +129,7 @@ class Dialogs {
             decrementNestingDepth();
             close();
             break;
+          default:
         }
       }
 
