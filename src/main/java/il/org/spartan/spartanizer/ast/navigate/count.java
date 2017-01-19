@@ -109,7 +109,7 @@ public interface count {
    * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nonWhiteCharacters(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢)).length();
+    return removeWhites(trivia.cleanForm(¢)).length();
   }
 
   /** Counts the number of nodes in a tree rooted at a given node

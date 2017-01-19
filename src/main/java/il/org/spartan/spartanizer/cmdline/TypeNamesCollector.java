@@ -46,7 +46,7 @@ public final class TypeNamesCollector {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
         final String shortName = namer.shorten(longName);
-        shortToFull.putIfAbsent(shortName, new HashSet<String>());
+        shortToFull.putIfAbsent(shortName, new HashSet<>());
         shortToFull.get(shortName).add(longName);
       }
     });

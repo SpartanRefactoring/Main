@@ -9,10 +9,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
-public class KnowsTest extends ReflectiveTester {
+public class KnowsTest extends MetaFixture {
   static final String KNOWN = knows.class.getSimpleName() + "";
   final String repository;
 

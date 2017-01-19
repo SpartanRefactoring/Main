@@ -43,16 +43,16 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(ConditionalExpression.class, //
             new AsBit(), //
             new DefaultsTo(), //
-            new GeneralizedSwitch<ConditionalExpression>(), //
+            new GeneralizedSwitch<>(), //
             new Unless(), //
             new SafeReference(), //
             new TakeDefaultTo(), //
             null) //
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
+            new Collect(), //
             new ForEach(), //
             new ForEachFiltered(), //
-            new Select(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //
@@ -61,7 +61,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new NotNullOrThrow(), //
             new AssertNotNull(), //
             new ExecuteWhen(), //
-            new GeneralizedSwitch<IfStatement>(), //
+            new GeneralizedSwitch<>(), //
             // new PutIfAbsent(), // R.I.P
             new PreconditionNotNull(), //
             new NotHoldsOrThrow(), //
@@ -75,7 +75,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispLastElement(), //
             null) //
     // .add(WhileStatement.class, //
-    // new Exhaust(), //
+    // new Exhaust(), // R.I.P
     // null)//
     ;
     return this;

@@ -29,8 +29,8 @@ public abstract class ENVTestEngineAbstract {
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
   public static void addTestSet(final List<MemberValuePair> ps) {
-    final String s1 = wizard.condense(first(ps).getValue());
-    final String s2 = wizard.condense(second(ps).getValue());
+    final String s1 = trivia.condense(first(ps).getValue()), //
+        s2 = trivia.condense(second(ps).getValue());
     if (testSetContainsVarName(s1.substring(1, s1.length() - 1)))
       azzert.fail("Bad test file - an entity appears twice.");
     testSet.add(new MapEntry<>(s1.substring(1, s1.length() - 1), new Binding(type.baptize(s2.substring(1, s2.length() - 1)))));
@@ -154,8 +154,7 @@ public abstract class ENVTestEngineAbstract {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
+        as.forEach(¢ -> handler(¢));
       }
 
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {

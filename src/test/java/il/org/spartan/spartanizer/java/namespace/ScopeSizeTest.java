@@ -13,11 +13,12 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 @RunWith(Parameterized.class)
-public class ScopeSizeTest extends ReflectiveTester {
+public class ScopeSizeTest extends MetaFixture {
   static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
 
   public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
@@ -38,7 +39,7 @@ public class ScopeSizeTest extends ReflectiveTester {
             "\n expected = " + scopeSize + //
             "\n got = " + scope.of(name).size() + //
             "\n\t kind = " + kind + //
-            ReflectiveTester.ancestry(name) + //
+            MetaFixture.ancestry(name) + //
             "\n\t scope = " + scope.of(name)//
         , scope.of(name).size(), is(scopeSize.intValue()));
   }
@@ -48,7 +49,7 @@ public class ScopeSizeTest extends ReflectiveTester {
     for (final Annotation a : new definitionTest().annotations()) {
       final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
       if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
-        int expected = ReflectiveTester.value(sma);
+        int expected = MetaFixture.value(sma);
         for (final SimpleName ¢ : annotees.of(sma)) {
           $.add(as.array(¢, Integer.valueOf(expected), definition.kind(¢)));
           if (definition.kind(¢) != definition.Kind.field)

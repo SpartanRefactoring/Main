@@ -1,6 +1,7 @@
 package il.org.spartan.bloater;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -35,9 +36,9 @@ public class InflaterUtilities {
       return false;
     // TODO: Raviv rename nl to ns --yg
     for (final ASTNode statement : nl) {
-      final ASTNode change = new ReturnTernaryExpander().replacement(az.returnStatement(statement));
-      if (change != null) {
-        r.replace(statement, change, __);
+      final ReturnTernaryExpander cc = new ReturnTernaryExpander();
+      if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
+        cc.tip(az.returnStatement(statement)).go(r, __);
         $ = true;
       } else {
         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
@@ -132,12 +133,8 @@ public class InflaterUtilities {
    *
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
-    final List<ASTNode> $ = new ArrayList<>();
-    for (final ASTNode ¢ : ns)
-      if (intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
-          Selection.Util.current().textSelection.getLength()))
-        $.add(¢);
-    return $;
+    return ns.stream().filter(¢ -> intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
+        Selection.Util.current().textSelection.getLength())).collect(Collectors.toList());
   }
 
   public static void aux_go(final CompilationUnit u, final OperationsProvider p) {

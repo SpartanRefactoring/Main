@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -28,8 +29,7 @@ public class Toolbox {
       assert t.implementation != null;
       for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
         if (ts != null)
-          for (final Tipper<? extends ASTNode> ¢ : ts)
-            put(¢.getClass(), ¢.tipperGroup());
+          ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup()));
     }
   };
   /** The default instance of this class */
@@ -90,6 +90,8 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(TypeParameter.class, new TypeParameterExtendsObject()) //
+        .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
@@ -110,7 +112,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
         .add(ForStatement.class, //
@@ -133,8 +135,8 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-            new RemoveRedundantSwitchReturn(),
-            new RemoveRedundantSwitchContinue(),
+            new RemoveRedundantSwitchReturn(), //
+            new RemoveRedundantSwitchContinue(), //
             new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
@@ -217,9 +219,11 @@ public class Toolbox {
             new ParenthesizedRemoveExtraParenthesis(), //
             null) //
         .add(TryStatement.class, //
-            new EliminateEmptyFinally(), //
+            new TryBodyEmptyLeaveFinallyIfExists(), //
+            new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
+//            new TryBodyNotEmptyNoCatchesNoFinallyRemove(),  //
+            new TryFinallyEmptyRemove(), //
             new MergeCatches(), //
-            new EliminateEmptyTryBlock(), //
             null)//
         .add(CatchClause.class, //
             new CatchClauseRenameParameterToCent(), //
@@ -308,7 +312,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInlineIntoNext(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
@@ -451,9 +455,7 @@ public class Toolbox {
     assert t.implementation != null;
     for (final List<Tipper<? extends ASTNode>> element : t.implementation)
       if (element != null)
-        for (final Tipper<?> p : element)
-          if (¢.equals(p.tipperGroup()))
-            $.add(p.myName());
+        $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList()));
     return $;
   }
 

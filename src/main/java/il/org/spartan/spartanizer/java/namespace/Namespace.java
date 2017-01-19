@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
- * the current note and Delegate to the parent unless it is null.
+ * the current node and delegate to the parent unless it is null.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-28 */
 public final class Namespace implements Environment {
@@ -34,15 +34,13 @@ public final class Namespace implements Environment {
     this.name = name;
   }
 
-  Namespace addAll(final List<BodyDeclaration> ds) {
-    for (final BodyDeclaration ¢ : ds)
-      put(¢);
+  Namespace addAll(final List<BodyDeclaration> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
-  protected Namespace addAllReources(final List<VariableDeclarationExpression> xs) {
-    for (final VariableDeclarationExpression ¢ : xs)
-      put(¢);
+  protected Namespace addAllReources(final List<VariableDeclarationExpression> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
@@ -57,8 +55,7 @@ public final class Namespace implements Environment {
 
   protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
-    for (final EnumConstantDeclaration ¢ : ds)
-      put(¢.getName() + "", new Binding(t));
+    ds.forEach(¢ -> put(¢.getName() + "", new Binding(t)));
     return this;
   }
 
@@ -201,13 +198,12 @@ public final class Namespace implements Environment {
         return $.fillScope(x);
       }
 
-      @Override public boolean visit(final MethodDeclaration d) {
-        if (d == root)
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        if (¢ == root)
           return true;
-        final Namespace $ = spawn("method " + d.getName());
-        for (final SingleVariableDeclaration ¢ : parameters(d))
-          $.put(¢);
-        return $.fillScope(d);
+        final Namespace $ = spawn("method " + ¢.getName());
+        parameters(¢).forEach($::put);
+        return $.fillScope(¢);
       }
 
       @Override public boolean visit(final TryStatement ¢) {
@@ -227,15 +223,12 @@ public final class Namespace implements Environment {
   static Namespace spawnAndFill(final Namespace n, final TryStatement s) {
     if (s == null)
       return n;
-    for (final CatchClause ¢ : catchClauses(s))
-      n.spawn(catch¢).put(¢.getException()).fillScope(¢);
+    catchClauses(s).forEach(¢ -> n.spawn(catch¢).put(¢.getException()).fillScope(¢));
     n.fillScope(s.getFinally());
     final Namespace $ = n.spawn(try¢);
-    for (final VariableDeclarationExpression ¢ : resources(s))
-      $.put(¢);
+    resources(s).forEach($::put);
     $.fillScope(step.body(s));
-    for (final VariableDeclarationExpression ¢ : resources(s))
-      $.fillScope(¢);
+    resources(s).forEach($::fillScope);
     return $;
   }
 
@@ -277,15 +270,12 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final FieldDeclaration d) {
-    final Type t = d.getType();
-    for (final VariableDeclarationFragment ¢ : fragments(d))
-      put(¢.getName(), t);
+    fragments(d).forEach(¢ -> put(¢.getName(), d.getType()));
     return this;
   }
 
-  protected Namespace put(final List<? extends BodyDeclaration> ds) {
-    for (final BodyDeclaration ¢ : ds)
-      put(¢);
+  protected Namespace put(final List<? extends BodyDeclaration> ¢) {
+    ¢.forEach(this::put);
     return this;
   }
 
@@ -314,7 +304,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final String key, final Type t) {
-    put(key, new Binding(key, type.baptize(wizard.condense(t))));
+    put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
 
@@ -325,9 +315,7 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final VariableDeclarationExpression x) {
-    final Type t = x.getType();
-    for (final VariableDeclarationFragment ¢ : fragments(x))
-      put(¢.getName(), t);
+    fragments(x).forEach(¢ -> put(¢.getName(), x.getType()));
     return this;
   }
 
@@ -356,8 +344,7 @@ public final class Namespace implements Environment {
   }
 
   static boolean init(final Namespace n, final List<? extends ASTNode> children) {
-    for (final ASTNode child : children)
-      n.fillScope(child);
+    children.forEach(n::fillScope);
     return false;
   }
 
@@ -377,5 +364,9 @@ public final class Namespace implements Environment {
     while (has($))
       $ = face + "" + ++postface;
     return $;
+  }
+  
+  public Namespace addNewName(String s, Type t) {
+    return put(s, t);
   }
 }

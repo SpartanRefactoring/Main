@@ -33,10 +33,25 @@ public interface fault {
   }
 
   static String dump() {
-    return "\n FAULT: this should not have happened!\n-----To help you fix the code, here is some info";
+    return dump("");
+  }
+
+  static String dump(final String specfically) {
+    return "\n FAULT: this should not have happened!" + specfically + "\n-----To help you fix the code, here is some info";
   }
 
   static boolean unreachable() {
     return false;
+  }
+
+  static String specifically(final String explanation, final Object... os) {
+    String $ = dump(explanation);
+    for (final Object ¢ : os)
+      $ += dump(¢.getClass().getSimpleName(), ¢);
+    return $ + done();
+  }
+
+  static String dump(final String name, final Object value) {
+    return "\n " + name + "=[" + value + "]";
   }
 }

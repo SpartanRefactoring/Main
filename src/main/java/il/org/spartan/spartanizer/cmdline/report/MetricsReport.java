@@ -69,8 +69,8 @@ public class MetricsReport implements ConfigurableReport {
     return as.array(m("length" + id, (¢) -> (¢ + "").length()), //
         m("essence" + id, (¢) -> Essence.of(¢ + "").length()), //
         m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), //
-        m("nodes" + id, (¢) -> count.nodes(¢)), //
-        m("body" + id, (¢) -> metrics.bodySize(¢)), //
+        m("nodes" + id, count::nodes), //
+        m("body" + id, metrics::bodySize), //
         m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()), //
         m("tide" + id, (¢) -> clean(¢ + "").length())); //
   }

@@ -33,7 +33,7 @@ public interface disabling {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
-        if (!disabling.isDisabledByIdentifier(¢2))
+        if (!disabling.specificallyDisabled(¢2))
           return true;
         disabling.disable(¢2);
         return false;
@@ -49,6 +49,7 @@ public interface disabling {
   /** Enable spartanization identifier, overriding a disabler */
   String enablers[] = { "[[EnableWarningsSpartan]]", //
   };
+  String disabler = disablers[0];
 
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
@@ -66,14 +67,13 @@ public interface disabling {
     });
   }
 
-  /** @param nodeTypeHolder an {@link ASTNode}
-   * @return <code><b>true</b></code> <em>iff</em> the node is spartanization
+  /** @return <code><b>true</b></code> <em>iff</em> the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {
     return property.has(¢, disabledPropertyId);
   }
 
-  static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
+  static boolean specificallyDisabled(final BodyDeclaration ¢) {
     return disabling.hasJavaDocIdentifier(¢, disablers);
   }
 
