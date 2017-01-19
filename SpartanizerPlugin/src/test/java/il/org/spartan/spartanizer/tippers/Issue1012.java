@@ -36,4 +36,8 @@ public class Issue1012 {
   @Test public void f() {
     trimmingOf("final int a = 0; int b = 8; f(); g();").stays();
   }
+
+  @Test public void g() {
+    trimmingOf("@NotNull final int a = 0; @NotNull final int b = 8; f(); g();").gives("@NotNull final int a = 0, b = 8; f(); g();");
+  }
 }
