@@ -219,9 +219,11 @@ public class Toolbox {
             new ParenthesizedRemoveExtraParenthesis(), //
             null) //
         .add(TryStatement.class, //
-            new EliminateEmptyFinally(), //
+            new TryBodyEmptyLeaveFinallyIfExists(), //
+            new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
+            new TryBodyNotEmptyNoCatchesNoFinallyRemove(),  //
+            new TryFinallyEmptyRemove(), //
             new MergeCatches(), //
-            new EliminateEmptyTryBlock(), //
             null)//
         .add(CatchClause.class, //
             new CatchClauseRenameParameterToCent(), //

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter> implements TipperCategory.Collapse {
   @Override public String description(final TypeParameter ¢) {
-    return "Trim implicit extends " + wizard.trim(¢);
+    return "Trim implicit extends " + trivia.gist(¢);
   }
 
   @Override public TypeParameter replacement(final TypeParameter p) {
