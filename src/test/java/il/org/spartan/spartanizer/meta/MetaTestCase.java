@@ -30,7 +30,7 @@ import il.org.spartan.utils.*;
 public class MetaTestCase extends MetaFixture {
   public static MetaTestCase instance = new MetaTestCase(null);
   public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
-      .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
+      .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
       step.methods(reflection).stream().filter(¢ -> !¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))

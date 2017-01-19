@@ -29,10 +29,10 @@ abstract class Analyzer<T> {
    * @param ¢
    * @return */
   static String tidy(final double ¢) {
-    int $ = 0;
     final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
+    int $;
     $ = (int) ¢formatted;
     return $ + "";
   }

@@ -451,7 +451,7 @@ public enum Collect {
       for (final ASTVisitor ¢ : collectors(what, $))
         n.accept(¢);
     removeDuplicates($);
-    $.sort((e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
+    $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
     return $;
   }
 

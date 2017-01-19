@@ -46,7 +46,7 @@ public class MethodRecord {
     nps.add(np);
   }
 
-  private static final List<String> excluded = Arrays.asList(ArgumentsTuple.class.getSimpleName());
+  private static final List<String> excluded = Collections.singletonList(ArgumentsTuple.class.getSimpleName());
 
   public static boolean excluded(final String np) {
     return excluded.contains(np);

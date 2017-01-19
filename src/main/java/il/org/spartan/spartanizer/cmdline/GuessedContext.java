@@ -114,8 +114,7 @@ public enum GuessedContext {
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
       $.append("\n\t```").append(trivia.essence(on)).append("'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
-          + " problems on (essentially) this bit of code");
+      $.append("\n\t\t Alas, what the parser generated ").append(u.getProblems().length).append(" problems on (essentially) this bit of code");
       $.append("\n\t\t\t```").append(trivia.essence(u + "")).append("'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```").append(u).append("'''");
