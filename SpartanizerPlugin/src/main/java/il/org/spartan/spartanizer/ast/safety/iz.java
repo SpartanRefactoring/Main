@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.Utils.intIsIn;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
@@ -16,6 +15,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -661,7 +661,7 @@ public interface iz {
   /** @param pattern Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   static boolean literal(final ASTNode ¢) {
-    return ¢ != null && intIsIn(¢.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return ¢ != null && Utils.intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {
@@ -787,7 +787,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> function #ASTNode.getNodeType
    *         returns one of the types provided as parameters */
   static boolean nodeTypeIn(final ASTNode n, final int... types) {
-    return n != null && intIsIn(n.getNodeType(), types);
+    return n != null && Utils.intIsIn(n.getNodeType(), types);
   }
 
   /** Determine whether an {@link Expression} is so basic that it never needs to

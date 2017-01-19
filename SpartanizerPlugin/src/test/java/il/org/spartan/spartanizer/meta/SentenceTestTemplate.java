@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.meta;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -61,9 +63,8 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
-        for (final MethodDeclaration ¢ : sentence)
-          if (disabling.specificallyDisabled(¢))
-            $.add(____(¢));
+        $.addAll(sentence.stream().filter(disabling::specificallyDisabled).map((Function<MethodDeclaration, Object[]>) Changes::____)
+            .collect(Collectors.toList()));
       return $;
     }
 
@@ -144,9 +145,7 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
-        for (final MethodDeclaration ¢ : sentence)
-          if (!disabling.specificallyDisabled(¢))
-            $.add(____(¢));
+        $.addAll(sentence.stream().filter(¢ -> !disabling.specificallyDisabled(¢)).map(Stays::____).collect(Collectors.toList()));
       return $;
     }
 
