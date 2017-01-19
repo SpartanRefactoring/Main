@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -47,12 +49,18 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
 
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
-    return (parent == null
-        ? iz.variableDeclarationStatement(nextStatement) && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
-        : !lastIn(nextStatement, statements(parent)) && iz.variableDeclarationStatement(nextStatement)
-            && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers())
-        && extract.annotations($).equals(extract.annotations(az.variableDeclarationStatement(nextStatement)));
+    return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
+        && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
+        && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
+        && sameAnnotations(extract.annotations($), (extract.annotations(az.variableDeclarationStatement(nextStatement))));
+  }
+
+  private static boolean sameAnnotations(List<Annotation> l1, List<Annotation> l2) {
+    if (l1.size() != l2.size())
+      return false;
+    for (Annotation ¢ : l1)
+      if (!(¢ + "").equals((l2.get(l1.indexOf(¢)) + "")))
+        return false;
+    return true;
   }
 }
