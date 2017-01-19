@@ -145,9 +145,7 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
-        for (final MethodDeclaration ¢ : sentence)
-          if (!disabling.specificallyDisabled(¢))
-            $.add(____(¢));
+        $.addAll(sentence.stream().filter(¢ -> !disabling.specificallyDisabled(¢)).map(Stays::____).collect(Collectors.toList()));
       return $;
     }
 

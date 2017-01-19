@@ -31,6 +31,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
+    if ($.size() > 10)
+      return null;
     for (int i = 0; i < $.size(); ++i)
       for (int j = i + 1; j < $.size(); ++j)
         if ($.get(i).hasSameCode($.get(j))) {
