@@ -43,7 +43,6 @@ public class ReportGenerator implements ConfigurableReport {
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
     }
 
-    /** @return */
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
       final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
