@@ -221,7 +221,7 @@ public class Toolbox {
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
             new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
-            new TryBodyNotEmptyNoCatchesNoFinallyRemove(),  //
+//            new TryBodyNotEmptyNoCatchesNoFinallyRemove(),  //
             new TryFinallyEmptyRemove(), //
             new MergeCatches(), //
             null)//

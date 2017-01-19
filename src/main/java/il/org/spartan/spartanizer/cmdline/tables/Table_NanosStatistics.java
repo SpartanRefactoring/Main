@@ -20,7 +20,7 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class TableNanosStatistics extends FolderASTVisitor {
+public class Table_NanosStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
@@ -32,7 +32,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
     }
   };
   static {
-    clazz = TableNanosStatistics.class;
+    clazz = Table_NanosStatistics.class;
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
@@ -41,7 +41,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
   }
 
   private static String outputFileName() {
-    return TableNanosStatistics.class.getSimpleName();
+    return Table_NanosStatistics.class.getSimpleName();
   }
 
   public static void main(final String[] args)
