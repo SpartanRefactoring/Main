@@ -52,6 +52,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
+    System.out.println($.getName());
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
