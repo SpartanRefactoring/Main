@@ -19,6 +19,7 @@ public interface scope {
     for (final ASTNode $ : ancestors.of(¢))
       switch ($.getNodeType()) {
         case ASTNode.BLOCK:
+        case ASTNode.SWITCH_STATEMENT:
           return $;
         default:
           return null;
@@ -51,9 +52,17 @@ public interface scope {
   static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
+  
+  static SwitchStatement getSwitch(final ASTNode ¢) {
+    return az.switchStatement(delimiter(¢));
+  }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    return new Namespace(Environment.of(last(statements(getBlock(¢)))));
+    ASTNode $ = delimiter(¢);
+    return new Namespace(Environment.of(iz.block($) ? last(statements(az.block($))) : last(statements(az.switchStatement($)))));
   }
 
   static String newName(final ASTNode ¢, final Type t) {
