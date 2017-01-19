@@ -15,16 +15,16 @@ import java.util.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** convert
- * 
+ *
  * <pre>
  * f(cond ? a : b)
- * 
+ *
  * <pre>
  * to
- * 
+ *
  * <pre>
  * cond ? f(a) : f(b)
- * 
+ *
  * <pre>
  * Test case is {@link Issue1091}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
