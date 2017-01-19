@@ -58,7 +58,7 @@ final class BindingFun implements IApplication {
       return IApplication.EXIT_OK;
     }
     for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\workspace\\testAddComments")) {
-      ICompilationUnit u = null;
+      ICompilationUnit u;
       try {
         u = openCompilationUnit(f);
         final ASTParser parser = ASTParser.newParser(AST.JLS8);
