@@ -15,16 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 23-12-16 */
 public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
   private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
-    ConditionalExpression ¢;
-    if (!(x instanceof ParenthesizedExpression))
-      ¢ = az.conditionalExpression(x);
-    else {
-      final Expression unpar = az.parenthesizedExpression(x).getExpression();
-      // TODO: Raviv Rachmiel you do not need this test! az does it for you --yg
-      if (!(unpar instanceof ConditionalExpression))
-        return null;
-      ¢ = az.conditionalExpression(unpar);
-    }
+    ConditionalExpression ¢ = az.conditionalExpression(!(x instanceof ParenthesizedExpression) ? x : az.parenthesizedExpression(x).getExpression());
     if (¢ == null)
       return null;
     // TODO: Raviv use class subject --yg
