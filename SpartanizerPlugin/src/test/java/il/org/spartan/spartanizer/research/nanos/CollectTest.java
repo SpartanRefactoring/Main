@@ -37,4 +37,19 @@ public class CollectTest {
         .gives("List<SimpleName>$=(fs).stream().collect(Collectors.toList());")//
         .stays();
   }
+
+  @Test public void e() {
+    trimmingOf(
+        "final Collection<Object[]> $ = new ArrayList<>();      for (final List<MethodDeclaration> sentence : allSentences()) for (final MethodDeclaration ¢ : sentence)    if (disabling.specificallyDisabled(¢))      $.add(____(¢));")//
+            .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachFiltered(), new Collect())//
+            .gives("List<SimpleName>$=(fs).stream().collect(Collectors.toList());")//
+            .stays();
+  }
+
+  @Test public void f() {
+    trimmingOf("final Set<Modifier> $ = new LinkedHashSet<>();  for (final IExtendedModifier ¢ : ms)    if (test(¢, ps))      $.add((Modifier) ¢);")//
+        .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachFiltered(), new Collect())//
+        .gives("Set<Modifier>$=(ms).stream().filter(¢->test(¢,ps)).map(¢->(Modifier)¢).collect(Collectors.toList());")//
+        .stays();
+  }
 }
