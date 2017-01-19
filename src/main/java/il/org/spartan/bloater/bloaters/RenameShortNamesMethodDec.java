@@ -47,8 +47,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SimpleName> prev = new ArrayList<>();
-    final List<SimpleName> after = new ArrayList<>();
+    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
     for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;

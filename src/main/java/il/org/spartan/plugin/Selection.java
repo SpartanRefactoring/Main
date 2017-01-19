@@ -101,8 +101,7 @@ public class Selection extends AbstractSelection<Selection> {
     final IResource r = first(inner).descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
-    final int o = textSelection.getOffset();
-    final int l = o + textSelection.getLength();
+    final int o = textSelection.getOffset(), l = o + textSelection.getLength();
     int no = o, nl = l;
     try {
       final IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);

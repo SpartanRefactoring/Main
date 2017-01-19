@@ -17,12 +17,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-12-22 */
 public enum find {
   ;
-  public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
+  public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> l) {
     Expression $;
-    if (ns.size() < 2 || ($ = singleExpressionDifference(ns.get(0), ns.get(1))) == null)
+    if (l.size() < 2 || ($ = singleExpressionDifference(l.get(0), l.get(1))) == null)
       return null;
-    for (int ¢ = 2; ¢ < ns.size(); ++¢)
-      if (!$.equals(singleExpressionDifference(ns.get(0), ns.get(¢))))
+    for (int ¢ = 2; ¢ < l.size(); ++¢)
+      if (!$.equals(singleExpressionDifference(l.get(0), l.get(¢))))
         return null;
     return $;
   }
@@ -32,8 +32,7 @@ public enum find {
       return null;
     if (areSelfDifferent(n1, n2))
       return az.expression(n1);
-    final List<ASTNode> children1 = Recurser.allChildren(n1);
-    final List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return az.expression(n1);
     if (children1.isEmpty())
@@ -74,8 +73,7 @@ public enum find {
       return n1 + "";
     if (areSelfDifferent(n1, n2))
       return null;
-    final List<ASTNode> children1 = Recurser.allChildren(n1);
-    final List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return null;
     String $ = singleAtomicDifference(first(children1), first(children2));
@@ -94,16 +92,16 @@ public enum find {
   }
 
   /** like the other one but for a list
-   * @param ns
+   * @param l
    * @return */
-  public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
-    if (ns.size() < 2)
+  public static <N extends ASTNode> String singleAtomicDifference(final List<N> l) {
+    if (l.size() < 2)
       return null;
-    String $ = singleAtomicDifference(first(ns), second(ns));
+    String $ = singleAtomicDifference(first(l), second(l));
     if ($ == null)
       return null;
-    for (int i = 2; i < ns.size(); ++i) {
-      final String diff = singleAtomicDifference(ns.get(0), ns.get(i));
+    for (int i = 2; i < l.size(); ++i) {
+      final String diff = singleAtomicDifference(l.get(0), l.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;

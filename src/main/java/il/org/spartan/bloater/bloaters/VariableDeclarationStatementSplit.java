@@ -34,8 +34,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
-    final VariableDeclarationFragment fs = getFirstAssignment($);
-    final VariableDeclarationFragment ff = (VariableDeclarationFragment) first.fragments().get($.fragments().indexOf(fs));
+    final VariableDeclarationFragment fs = getFirstAssignment($), ff = (VariableDeclarationFragment) first.fragments().get($.fragments().indexOf(fs));
     $.fragments().remove(fs);
     first.fragments().clear();
     step.fragments(first).add(ff);

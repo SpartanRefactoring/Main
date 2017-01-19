@@ -47,8 +47,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
       return null;
-    final Statement then = ifStatement.getThenStatement();
-    final Statement elze = ifStatement.getElseStatement();
+    final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
     if (then != null) {
       if (iz.breakStatement(then))
         return then;
@@ -94,8 +93,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;
-    final Statement body = body(b);
-    final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
+    final Statement body = body(b), $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     if (exclude != null)
       exclude.exclude(b);

@@ -92,15 +92,7 @@ public enum enumerate {
     int $ = 0;
     final List<?> l = step.statements(step.body(d));
     final boolean[] arr = new boolean[10];
-    final int BLOCK = 0;
-    final int IFSTATE = 1;
-    final int FORSTATE = 2;
-    final int WHILESTATE = 3;
-    final int SWITCHSTATE = 4;
-    final int DOSTATE = 5;
-    final int SYNC = 6;
-    final int TRY = 7;
-    final int LAMBDA = 7;
+    final int BLOCK = 0, IFSTATE = 1, FORSTATE = 2, WHILESTATE = 3, SWITCHSTATE = 4, DOSTATE = 5, SYNC = 6, TRY = 7, LAMBDA = 7;
     // TODO: deal with lambada-expr
     // d.accept(new ASTVisitor() {
     //

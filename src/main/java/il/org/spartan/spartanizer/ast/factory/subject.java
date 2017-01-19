@@ -352,10 +352,10 @@ public final class subject {
      * @see subject#toBlock */
     public Statement toOptionalBlock() {
       switch (inner.size()) {
-        case 0:
-          return ast.newEmptyStatement();
         case 1:
           return first(inner);
+        case 0:
+          return ast.newEmptyStatement();
         default:
           return toBlock();
       }

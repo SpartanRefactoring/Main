@@ -20,26 +20,26 @@ public interface annotees {
   static List<SimpleName> of(final Annotation ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
-      case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
-        return of((VariableDeclarationExpression) $);
-      case ASTNode.VARIABLE_DECLARATION_STATEMENT:
-        return of((VariableDeclarationStatement) $);
-      case ASTNode.SINGLE_VARIABLE_DECLARATION:
-        return of((SingleVariableDeclaration) $);
-      case ASTNode.FIELD_DECLARATION:
-        return of((FieldDeclaration) $);
-      case ASTNode.METHOD_DECLARATION:
-        return of((MethodDeclaration) $);
-      case ASTNode.TYPE_DECLARATION:
-        return of((TypeDeclaration) $);
-      case ASTNode.ENUM_CONSTANT_DECLARATION:
-        return of((EnumConstantDeclaration) $);
-      case ASTNode.ENUM_DECLARATION:
-        return of((EnumDeclaration) $);
       case ASTNode.ANNOTATION_TYPE_DECLARATION:
         return of((AnnotationTypeDeclaration) $);
       case ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION:
         return of((AnnotationTypeMemberDeclaration) $);
+      case ASTNode.ENUM_CONSTANT_DECLARATION:
+        return of((EnumConstantDeclaration) $);
+      case ASTNode.ENUM_DECLARATION:
+        return of((EnumDeclaration) $);
+      case ASTNode.FIELD_DECLARATION:
+        return of((FieldDeclaration) $);
+      case ASTNode.METHOD_DECLARATION:
+        return of((MethodDeclaration) $);
+      case ASTNode.SINGLE_VARIABLE_DECLARATION:
+        return of((SingleVariableDeclaration) $);
+      case ASTNode.TYPE_DECLARATION:
+        return of((TypeDeclaration) $);
+      case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
+        return of((VariableDeclarationExpression) $);
+      case ASTNode.VARIABLE_DECLARATION_STATEMENT:
+        return of((VariableDeclarationStatement) $);
       default:
         assert false : $.getClass().getSimpleName();
         return null;

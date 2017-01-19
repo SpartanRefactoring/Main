@@ -46,9 +46,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;
-    final boolean $ = sideEffects.free(s.getExpression());
-    final boolean then = checkBlock(s.getThenStatement());
-    final boolean elze = checkBlock(s.getElseStatement());
+    final boolean $ = sideEffects.free(s.getExpression()), then = checkBlock(s.getThenStatement()), elze = checkBlock(s.getElseStatement());
     return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
         : $ && then && !elze && s.getElseStatement() != null ? subject.pair(copy.of(s.getElseStatement()), null).toNot(copy.of(s.getExpression()))
             : null;

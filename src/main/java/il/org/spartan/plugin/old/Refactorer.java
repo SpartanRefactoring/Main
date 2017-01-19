@@ -188,8 +188,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
     return pm -> {
       final int $ = passesCount();
-      int pass;
-      int totalTips = 0;
+      int pass, totalTips = 0;
       final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
       final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {

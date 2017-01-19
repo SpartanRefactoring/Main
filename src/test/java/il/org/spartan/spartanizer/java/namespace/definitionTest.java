@@ -403,11 +403,11 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "";
-            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> {
-              o.getClass();
-              return o + "";
-            };
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "",
+                something = (@ScopeSize(1) @lambda final Object o) -> {
+                  o.getClass();
+                  return o + "";
+                };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
             return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();

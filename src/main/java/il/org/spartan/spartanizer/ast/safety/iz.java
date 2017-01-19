@@ -477,13 +477,13 @@ public interface iz {
     switch (¢.getNodeType()) {
       case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(¢));
+      case ASSIGNMENT:
+        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
+            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
       case POSTFIX_EXPRESSION:
         return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(az.prefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
-      case ASSIGNMENT:
-        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
-            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
       default:
         return false;
     }
@@ -638,11 +638,11 @@ public interface iz {
 
   /** Determine whether an item is the last one in a list
    * @param tipper a list item
-   * @param ts a list
+   * @param l a list
    * @return <code><b>true</b></code> <i>iff</i> the item is found in the list
    *         and it is the last one in it. */
-  static <T> boolean last(final T t, final List<T> ts) {
-    return ts.indexOf(t) == ts.size() - 1;
+  static <T> boolean last(final T t, final List<T> l) {
+    return l.indexOf(t) == l.size() - 1;
   }
 
   /** Determines whether a statement is last statement in its containing method

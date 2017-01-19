@@ -77,9 +77,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
   public void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
-    final int rMethod = rMethod();
-    final int rInternal = rInternal();
-    final int rExternal = rExternal();
+    final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
     pWriter.put("Project", path);
     npStatistics.keySet().stream()//
         .sorted(Comparator.comparing(k -> npStatistics.get(k).name))//
