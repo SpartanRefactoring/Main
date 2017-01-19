@@ -101,7 +101,6 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
     return $;
   }
 
-  // private static List<Const>
   @Override public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }
