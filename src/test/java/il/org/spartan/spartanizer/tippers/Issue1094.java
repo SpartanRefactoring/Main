@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1094 extends MetaFixture {
   @Test public void b() {
