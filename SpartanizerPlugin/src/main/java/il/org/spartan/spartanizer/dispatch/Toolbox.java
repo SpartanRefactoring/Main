@@ -12,8 +12,6 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
-import il.org.spartan.spartanizer.research.nanos.Collect;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -127,13 +125,6 @@ public class Toolbox {
             new ForAndReturnToFor(), //
             new ForRedundantContinue(), //
             null)//
-//        .add(EnhancedForStatement.class, //
-//            new Aggregate(), //
-//            new Collect(), //
-//            new ForEach(), //
-//            new ForEachFiltered(), //
-//            new Select(), //
-//            null) //
         .add(WhileStatement.class, //
             new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
@@ -144,8 +135,8 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-            new RemoveRedundantSwitchReturn(),//
-            new RemoveRedundantSwitchContinue(),//
+            new RemoveRedundantSwitchReturn(), //
+            new RemoveRedundantSwitchContinue(), //
             new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
