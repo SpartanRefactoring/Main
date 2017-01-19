@@ -78,12 +78,10 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * than update it. */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
-      /**  */
       @Override public void update(final Map<E, Object> ¢1) {
         consumer.accept(¢1);
       }
 
-      /**  */
       @Override public void update(final Map<E, Object> e, final Object o) {
         biConsumer.accept(e, o);
       }
