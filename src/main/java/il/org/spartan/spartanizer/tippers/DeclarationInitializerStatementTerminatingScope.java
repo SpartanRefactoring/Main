@@ -38,16 +38,14 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
         return true;
     return false;
   }
-  
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if(!strongCondition(f))
-      return null;
-    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
+    if (!strongCondition(f) || f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)
@@ -127,13 +125,13 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
-  
+
   private static boolean strongCondition(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
-//    VariableDeclarationStatement f;
-//    if(¢ == null ||(f = az.variableDeclarationStatement(¢)) == null)
-//      return false;
-//    if(step.fragments(f).size() <= 1)
-//      return true;
+    // VariableDeclarationStatement f;
+    // if(¢ == null ||(f = az.variableDeclarationStatement(¢)) == null)
+    // return false;
+    // if(step.fragments(f).size() <= 1)
+    // return true;
     return true;
   }
 }

@@ -375,7 +375,7 @@ class StringCollector extends HidingDepth {
 
   @Override boolean go(final EnhancedForStatement $) {
     final String name = $.getParameter().getName() + "";
-    if (name == focus || !declaredBy(name))
+    if (Objects.equals(name, focus) || !declaredBy(name))
       return true;
     recurse($.getExpression());
     return recurse($.getBody());

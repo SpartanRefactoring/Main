@@ -40,12 +40,12 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> im
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
     for (final Expression e : lst) {
-      if (iz.literal(e,1.)){
-        $.setType((x.getAST().newPrimitiveType(PrimitiveType.DOUBLE)));
+      if (iz.literal(e, 1.)) {
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));
         found = true;
       }
-      if (iz.literal(e,1L)) { 
-        $.setType((x.getAST().newPrimitiveType(PrimitiveType.LONG)));
+      if (iz.literal(e, 1L)) {
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.LONG));
         found = true;
       }
       if (found) {

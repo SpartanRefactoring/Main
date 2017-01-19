@@ -71,7 +71,7 @@ public class ReportGenerator implements ConfigurableReport {
 
     @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : ReportGenerator.Util.functions(""))
-        if ($.name() == ¢)
+        if (Objects.equals($.name(), ¢))
           return $;
       return null;
     }

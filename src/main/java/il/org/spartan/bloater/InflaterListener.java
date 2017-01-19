@@ -40,8 +40,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     this.editor = editor;
     this.selection = selection;
     externalListeners = new ArrayList<>();
-    for (final Listener ¢ : text.getListeners(SWT.MouseWheel))
-      externalListeners.add(¢);
+    Collections.addAll(externalListeners, text.getListeners(SWT.MouseWheel));
     final Display display = PlatformUI.getWorkbench().getDisplay();
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
