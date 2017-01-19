@@ -56,14 +56,11 @@ public interface scope {
   }
 
   static String newName(final ASTNode ¢, final Type t) {
-    Namespace n;
-    if (getBlock(¢).getProperty("Namespace") != null)
-      n = (Namespace) ¢.getProperty("Namespace");
-    else
-      n = getScopeNamespace(getBlock(¢));
+    final Block b = getBlock(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(b) : (Namespace) ¢.getProperty("Namespace");
     final String $ = n.generateName(t);
     n.addNewName($, t);
-    getBlock(¢).setProperty("Namespace", n);
+    b.setProperty("Namespace", n);
     return $;
   }
 
