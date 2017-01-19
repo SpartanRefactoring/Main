@@ -52,14 +52,14 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
         && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
-        && sameAnnotations(extract.annotations($), (extract.annotations(az.variableDeclarationStatement(nextStatement))));
+        && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));
   }
 
-  private static boolean sameAnnotations(List<Annotation> l1, List<Annotation> l2) {
+  private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
     if (l1.size() != l2.size())
       return false;
-    for (Annotation ¢ : l1)
-      if (!(¢ + "").equals((l2.get(l1.indexOf(¢)) + "")))
+    for (final Annotation ¢ : l1)
+      if (!(¢ + "").equals(l2.get(l1.indexOf(¢)) + ""))
         return false;
     return true;
   }
