@@ -47,12 +47,24 @@ public interface scope {
     return $;
   }
 
+  static Block getBlock(final ASTNode ¢) {
+    return az.block(delimiter(¢));
+  }
+  
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    return new Namespace(Environment.of(last(statements(az.block(delimiter(¢))))));
+    return new Namespace(Environment.of(last(statements(getBlock(¢)))));
   }
   
   static String newName(final ASTNode ¢, final Type t) {
-    return getScopeNamespace(¢).generateName(t);
+    Namespace n;
+    if (getBlock(¢).getProperty("Namespace") != null)
+      n = (Namespace) ¢.getProperty("Namespace");
+    else
+      n = getScopeNamespace(getBlock(¢));
+    String $ = n.generateName(t);
+    n.addNewName($, t);
+    getBlock(¢).setProperty("Namespace", n);
+    return $;
   }
   
   static boolean hasInScope(final ASTNode ¢, String identifier) {
