@@ -53,7 +53,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Collect(), //
             new ForEach(), //
             new ForEachFiltered(), //
-            new Select(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //
@@ -76,7 +75,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispLastElement(), //
             null) //
     // .add(WhileStatement.class, //
-    // new Exhaust(), //
+    // new Exhaust(), // R.I.P
     // null)//
     ;
     return this;

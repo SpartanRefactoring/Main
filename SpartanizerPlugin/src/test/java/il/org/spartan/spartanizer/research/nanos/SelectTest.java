@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** @author Ori Marcovitch
  * @since Dec 17, 2016 */
