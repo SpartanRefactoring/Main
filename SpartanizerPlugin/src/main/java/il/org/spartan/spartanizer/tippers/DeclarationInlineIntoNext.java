@@ -52,7 +52,24 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     Expression e = !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis();
     if (parent instanceof VariableDeclarationStatement)
       e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
-    $.remove(parent, g);
+    VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    if(pp == null || fragments(pp).size() <= 1)
+      $.remove(parent, g);
+    else {
+      if(step.type(pp).getNodeType() == ASTNode.ARRAY_TYPE)
+        return null;
+      VariableDeclarationStatement pn = copy.of(pp);
+      List<VariableDeclarationFragment> l = fragments(pp);
+      for(int ¢ = l.size() - 1; ¢ >= 0; --¢) {
+        if(l.get(¢).equals(f)) {
+          fragments(pn).remove(¢);
+          break;
+        }
+        if(iz.containsName(f.getName(), l.get(¢).getInitializer()))
+          return null;
+      }
+      $.replace(parent, pn, g);
+    }
     $.replace(id, e, g);
     return $;
   }
@@ -103,7 +120,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     return $.size() != 1 ? null : first($);
   }
 
-  static List<SimpleName> occurencesOf(final Statement s, final String id) {
-    return searchDescendants.forClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from(s);
+  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+    return searchDescendants.forClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
   }
 }
