@@ -43,4 +43,11 @@ public class ForEachTest {
         .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
         .stays();
   }
+
+  @Test public void e() {
+    trimmingOf("  for (final Statement k : ss)    $.append(k);")//
+        .using(EnhancedForStatement.class, new ForEach())//
+        .gives("ss.forEach(k -> $.append(k));")//
+        .stays();
+  }
 }
