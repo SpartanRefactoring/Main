@@ -185,21 +185,20 @@ public class InflateHandler extends AbstractHandler {
         ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
         break;
       }
-    // XXX seams to be a bug
+    // TODO: Ori Roth XXX seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
   }
 
   private static List<ITextEditor> getOpenedEditors() {
-    final IWorkbenchPage p = getPage();
     final List<ITextEditor> $ = new LinkedList<>();
-    if (p == null)
-      return $;
-    for (final IEditorReference r : p.getEditorReferences()) {
-      final IEditorPart ep = r.getEditor(false);
-      if (ep != null && ep instanceof ITextEditor)
-        $.add((ITextEditor) ep);
-    }
+    final IWorkbenchPage p = getPage();
+    if (p != null)
+      for (final IEditorReference r : p.getEditorReferences()) {
+        final IEditorPart ep = r.getEditor(false);
+        if (ep != null && ep instanceof ITextEditor)
+          $.add((ITextEditor) ep);
+      }
     return $;
   }
 }

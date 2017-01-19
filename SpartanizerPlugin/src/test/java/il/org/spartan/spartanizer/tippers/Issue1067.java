@@ -20,7 +20,7 @@ public class Issue1067 {
   @Test public void t2() {
     trimmingOf("int zero = 1, result = 8;" + "++result;").stays();
   }
-  
+
   static class Issue0856 {
     @Test public void e() {
       trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
@@ -33,14 +33,14 @@ public class Issue1067 {
               .stays();
     }
   }
-  
+
   static class Issue0364 {
     @Test public void notTerminating() {
       trimmingOf("void f() {\n" + "  String[] x = {\"\"};" + "  g(x);" + "  h();" + "}")
           .gives("void f() {\n" + "  g(new String[] {\"\"});" + "  h();" + "}");
     }
   }
-  
+
   static class Version230 {
     @Test public void inlineArrayInitialization1() {
       trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" //
