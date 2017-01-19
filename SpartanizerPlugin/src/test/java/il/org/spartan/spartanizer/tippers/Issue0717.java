@@ -37,7 +37,7 @@ public class Issue0717 {
 
   private String generateRandomString(final int maxLen) {
     final StringBuilder $ = new StringBuilder();
-    int len = 0;
+    int len;
     final Random randomGenerator = new Random();
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)

@@ -21,7 +21,7 @@ public class InteractiveSpartanizer {
       // System.err.println("input: " + input); //
       final GuessedContext c = GuessedContext.find(input);
       // System.out.println(c.name());
-      CompilationUnit cu = null;
+      CompilationUnit cu;
       String output;
       if (c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE))
         output = new InteractiveSpartanizer().fixedPoint(input);
