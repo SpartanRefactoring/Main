@@ -27,10 +27,10 @@ public class TableNanosCoverage extends FolderASTVisitor {
   private static int totalStatements;
   protected static int totalMethods;
   private static int totalStatementsCovered;
-  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>((o1, o2) -> o1.compareTo(o2));
+  protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
     clazz = TableNanosCoverage.class;
-    Logger.subscribe((n, np) -> logNanoContainingMethodInfo(n, np));
+    Logger.subscribe(TableNanosCoverage::logNanoContainingMethodInfo);
   }
 
   public static void main(final String[] args)

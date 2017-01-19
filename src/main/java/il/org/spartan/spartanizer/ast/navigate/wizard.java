@@ -11,6 +11,7 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -221,10 +222,8 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    final List<Expression> operands = new ArrayList<>();
-    for (final Expression ¢ : hop.operands(flatten.of($)))
-      operands.add(make.notOf(¢));
-    return subject.operands(operands).to(PrefixNotPushdown.conjugate($.getOperator()));
+    return subject.operands((hop.operands(flatten.of($))).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
+        .to(PrefixNotPushdown.conjugate(operator($)));
   }
 
   static int arity(final InfixExpression ¢) {
@@ -233,13 +232,6 @@ public interface wizard {
 
   static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
     return assign2infix.get(¢);
-  }
-
-  /** Obtain a condensed textual representation of an {@link ASTNode}
-   * @param ¢ JD
-   * @return textual representation of the parameter, */
-  static String asString(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢));
   }
 
   /** Converts a string into an AST, depending on it's form, as determined
@@ -266,25 +258,6 @@ public interface wizard {
     }
   }
 
-  static String cleanForm(final ASTNode ¢) {
-    return tide.clean(¢ + "");
-  }
-
-  /** the function checks if all the given assignments have the same left hand
-   * side(variable) and operator
-   * @param base The assignment to compare all others to
-   * @param as The assignments to compare
-   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
-   *         left hand side and operator as the first one or false otherwise */
-  static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNull(base, as))
-      return false;
-    for (final Assignment ¢ : as)
-      if (wizard.incompatible(base, ¢))
-        return false;
-    return true;
-  }
-
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
     return infix2assign.get(o2) == o1;
   }
@@ -308,13 +281,6 @@ public interface wizard {
 
   static CompilationUnit compilationUnitWithBinding(final String ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
-  }
-
-  /** Obtain a condensed textual representation of an {@link ASTNode}
-   * @param ¢ JD
-   * @return textual representation of the parameter, */
-  static String condense(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢));
   }
 
   /** Makes an opposite operator from a given one, which keeps its logical
@@ -367,19 +333,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  static String essence(final String codeFragment) {
-    return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
-  }
-
-  static String accurateEssence(final String codeFragment) {
-    return fixTideClean(clean(into.cu(codeFragment)) + "");
-  }
-
-  static ASTNode clean(final ASTNode ¢) {
-    ¢.accept(new CommentsRemover());
-    return ¢;
-  }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -390,14 +343,6 @@ public interface wizard {
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
-  }
-
-  /** This method fixes a bug from tide.clean which causes ^ to replaced with
-   * [^]
-   * @param ¢
-   * @return */
-  static String fixTideClean(final String ¢) {
-    return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
@@ -485,19 +430,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d))
-      if (test(¢, ms))
-        $.add((Modifier) ¢);
-    return $;
+    return extendedModifiers(d).stream().filter(¢ -> test(¢, ms)).map(¢ -> (Modifier) ¢).collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : ms)
-      if (test(¢, ps))
-        $.add((Modifier) ¢);
-    return $;
+    return ms.stream().filter(¢ -> test(¢, ps)).map(¢ -> (Modifier) ¢).collect(Collectors.toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
@@ -657,17 +594,6 @@ public interface wizard {
     }
   }
 
-  static String removeComments(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
-  static String removeComments2(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
   /** replaces an ASTNode with another
    * @param n
    * @param with */
@@ -684,7 +610,7 @@ public interface wizard {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && cleanForm(n1).equals(cleanForm(n2));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
 
   /** String wise comparison of all the given SimpleNames
@@ -726,10 +652,6 @@ public interface wizard {
     return false;
   }
 
-  static String trim(final Object ¢) {
-    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
-  }
-
   /** Gets two lists of expressions and returns the idx of the only expression
    * which is different between them. If the lists differ with other then one
    * element, -1 is returned.
@@ -745,5 +667,41 @@ public interface wizard {
         $ = ¢;
       }
     return $;
+  }
+
+  static boolean isObject(final Type ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢ + "") {
+      default:
+        return false;
+      case "Object":
+      case "java.lang.Object":
+        return true;
+    }
+  }
+
+  static boolean hasObject(final List<Type> ts) {
+    if (ts == null)
+      return false;
+    for (final Type ¢ : ts)
+      if (isObject(¢))
+        return true;
+    return false;
+  }
+
+  /** the function checks if all the given assignments have the same left hand
+   * side(variable) and operator
+   * @param base The assignment to compare all others to
+   * @param as The assignments to compare
+   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
+   *         left hand side and operator as the first one or false otherwise */
+  static boolean compatible(final Assignment base, final Assignment... as) {
+    if (hasNull(base, as))
+      return false;
+    for (final Assignment ¢ : as)
+      if (incompatible(base, ¢))
+        return false;
+    return true;
   }
 }

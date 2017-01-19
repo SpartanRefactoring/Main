@@ -40,12 +40,8 @@ public enum property {
     return ¢.getCanonicalName();
   }
 
-  public static <N> Obtainer<N> obtain(final Class<N> n) {
-    return new Obtainer<N>() {
-      @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
-        return (N) ¢.getProperty(key(n));
-      }
-    };
+  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> n) {
+    return ¢ -> (N) ¢.getProperty(key(n));
   }
 
   /** Sets a binary flag true.

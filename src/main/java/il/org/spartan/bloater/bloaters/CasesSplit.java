@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -42,19 +43,16 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @Override public Tip tip(final SwitchStatement ¢) {
-    @SuppressWarnings("unchecked") final List<Statement> $ = getAdditionalStatements(¢.statements(), caseWithNoSequencer(¢));
-    final Statement n = (Statement) ¢.statements().get(¢.statements().indexOf($.get(0)) - 1);
-    return new Tip(description(¢), ¢, getClass()) {
+  @Override public Tip tip(final SwitchStatement s) {
+    final List<Statement> $ = getAdditionalStatements(step.statements(s), caseWithNoSequencer(s));
+    final Statement n = (Statement) s.statements().get(s.statements().indexOf($.get(0)) - 1);
+    return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(¢, SwitchStatement.STATEMENTS_PROPERTY);
-        for (@SuppressWarnings("hiding") final Statement ¢ : $)
-          l.insertBefore(copy.of(¢), n, g);
+        final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
+        $.forEach(¢ -> l.insertBefore(copy.of(¢), n, g));
         if (!iz.sequencerComplex($.get($.size() - 1)))
-          l.insertBefore(¢.getAST().newBreakStatement(), n, g);
+          l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
     };
   }
@@ -62,12 +60,10 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     return caseWithNoSequencer(¢) != null;
   }
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
 
-  @SuppressWarnings("unchecked") private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
+  private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : (List<Statement>) x.statements())
+    for (final Statement ¢ : step.statements(x))
       if (iz.sequencerComplex(¢))
         $ = null;
       else if (¢ instanceof SwitchCase) {

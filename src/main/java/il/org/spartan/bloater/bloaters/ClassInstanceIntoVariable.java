@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
@@ -26,9 +27,8 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = copy.of(cic.getType());
-        final VariableDeclarationStatement vds = make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic));
-        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
-        l.replace(¢, vds, g);
+        r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢,
+            make.variableDeclarationStatement(t, scope.newName(cic, t), copy.of(cic)), g);
       }
     };
   }

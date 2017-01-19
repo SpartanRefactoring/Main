@@ -102,7 +102,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** @return this */
   private CommandLineApplicator defaultRunContext() {
-    runContext(r -> r.run());
+    runContext(Runnable::run);
     return this;
   }
 

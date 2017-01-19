@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,11 +22,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-11 */
 public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Block> implements TipperCategory.Collapse {
   @Override public String description() {
-    return "remove the block";
+    return "Remove the block";
   }
 
-  @Override public String description(final Block n) {
-    return "remove the block: " + n;
+  @Override public String description(final Block ¢) {
+    return "Remove the block: " + trivia.gist(¢);
   }
 
   @Override public Tip tip(final Block n) {
@@ -37,8 +38,7 @@ public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Bl
         return null;
     return new Tip(description(), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final Statement ¢ : $)
-          r.remove(¢, g);
+        $.forEach(¢ -> r.remove(¢, g));
       }
     };
   }

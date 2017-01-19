@@ -32,7 +32,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
   };
   static {
     clazz = Table_NanosReusabilityIndices.class;
-    Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
+    Logger.subscribe(npStatistics::logNPInfo);
   }
 
   private static void initializeWriter() {
@@ -83,7 +83,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
     pWriter.put("Project", path);
     npStatistics.keySet().stream()//
         .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
-        .map(k -> npStatistics.get(k))//
+        .map(npStatistics::get)//
         .forEach(n -> pWriter.put(n.name, n.occurences > rMethod ? "M" : n.occurences > rInternal ? "I" : n.occurences > rExternal ? "X" : "-"));
     fillAbsents();
     pWriter.nl();

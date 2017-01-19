@@ -59,8 +59,7 @@ public class Table extends Row<Table> implements Closeable {
           ¢.writeFooter(this);
         }
       }
-    for (final RecordWriter ¢ : writers)
-      ¢.close();
+    writers.forEach(RecordWriter::close);
   }
 
   private String lastEmptyColumn() {
@@ -103,8 +102,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   RealStatistics getRealStatistics(final String key) {
-    if (stats.get(key) == null)
-      stats.put(key, new RealStatistics());
+    stats.computeIfAbsent(key, k -> new RealStatistics());
     return stats.get(key);
   }
 
@@ -113,8 +111,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   public void nl() {
-    for (final RecordWriter ¢ : writers)
-      ¢.write(this);
+    writers.forEach(¢ -> ¢.write(this));
     reset();
   }
 
@@ -140,8 +137,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   @Override protected Table reset() {
-    for (final String ¢ : keySet())
-      put(¢, "");
+    keySet().forEach(¢ -> put(¢, ""));
     put((String) null, ++length + "");
     return this;
   }
@@ -160,7 +156,7 @@ public class Table extends Row<Table> implements Closeable {
   private static final long serialVersionUID = 1L;
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp/");
 
-  public static String classToNormalizedFileName(final Class<? extends Object> class1) {
+  public static String classToNormalizedFileName(final Class<?> class1) {
     return classToNormalizedFileName(class1.getSimpleName());
   }
 

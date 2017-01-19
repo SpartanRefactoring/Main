@@ -24,8 +24,6 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link DisabledChecker}.
  * @author Ori Roth */
 public final class SuppressWarningsLaconicOnOff {
-  static final String disabler = disabling.disablers[0];
-
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation
@@ -50,7 +48,7 @@ public final class SuppressWarningsLaconicOnOff {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
+      s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabling.disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
@@ -141,14 +139,14 @@ public final class SuppressWarningsLaconicOnOff {
           return;
         BodyDeclaration d;
         switch (t) {
-          case FUNCTION:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
-            break;
           case CLASS:
             d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
             break;
           case FILE:
             d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
+            break;
+          case FUNCTION:
+            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
             break;
           default:
             return;
