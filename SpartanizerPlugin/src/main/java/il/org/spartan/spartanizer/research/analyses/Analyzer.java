@@ -32,9 +32,7 @@ abstract class Analyzer<T> {
     final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     if (¢formatted != Math.floor(¢formatted))
       return ¢formatted + "";
-    int $;
-    $ = (int) ¢formatted;
-    return $ + "";
+    return (int) ¢formatted + "";
   }
 
   protected abstract double enumElement(T t);

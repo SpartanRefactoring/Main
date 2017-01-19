@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-19 */
 public final class TryBodyNotEmptyNoCatchesNoFinallyRemove extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Collapse {
   @Override public boolean prerequisite(final TryStatement ¢) {
-    return !¢.getBody().statements().isEmpty() && ¢.catchClauses().isEmpty() && (¢.getFinally() == null || ¢.getFinally().statements().isEmpty());
+    return !¢.getBody().statements().isEmpty() && ¢.resources().isEmpty() && ¢.catchClauses().isEmpty()
+        && (¢.getFinally() == null || ¢.getFinally().statements().isEmpty());
   }
 
   @Override public ASTNode replacement(final TryStatement ¢) {
