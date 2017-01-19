@@ -11,6 +11,7 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -221,10 +222,8 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    final List<Expression> operands = new ArrayList<>();
-    for (final Expression ¢ : hop.operands(flatten.of($)))
-      operands.add(make.notOf(¢));
-    return subject.operands(operands).to(PrefixNotPushdown.conjugate($.getOperator()));
+    return subject.operands((hop.operands(flatten.of($))).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
+        .to(PrefixNotPushdown.conjugate(operator($)));
   }
 
   static int arity(final InfixExpression ¢) {
@@ -431,19 +430,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d))
-      if (test(¢, ms))
-        $.add((Modifier) ¢);
-    return $;
+    return extendedModifiers(d).stream().filter(¢ -> test(¢, ms)).map(¢ -> (Modifier) ¢).collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : ms)
-      if (test(¢, ps))
-        $.add((Modifier) ¢);
-    return $;
+    return ms.stream().filter(¢ -> test(¢, ps)).map(¢ -> (Modifier) ¢).collect(Collectors.toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
