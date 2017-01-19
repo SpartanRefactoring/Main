@@ -50,9 +50,9 @@ public class BloatingTestUtilities {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
-        String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
-        String wrap1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "";
-        String unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
+        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+        final String wrap1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "";
+        final String unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
         if (wrap1.equals(unpeeled1))
           azzert.fail("Nothing done on " + get());
         final String peeled1 = w.off(unpeeled1);
@@ -75,7 +75,7 @@ public class BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
@@ -103,7 +103,7 @@ public class BloatingTestUtilities {
       MethodDeclaration m = getMethod(u, f);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
@@ -132,7 +132,7 @@ public class BloatingTestUtilities {
       if (u == null)
         return null;
       counter = 0;
-      CompilationUnit $ = copy.of(u);
+      final CompilationUnit $ = copy.of(u);
       $.accept(new ASTVisitor() {
         @Override public void preVisit(final ASTNode an) {
           if (!iz.simpleName(an))
