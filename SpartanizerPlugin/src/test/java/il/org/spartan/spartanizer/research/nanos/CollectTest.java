@@ -60,4 +60,6 @@ public class CollectTest {
         .gives("Set<Modifier>$=(ms).stream().filter(¢->test(¢,ps)).map(¢->(Modifier)¢).collect(Collectors.toList());")//
         .stays();
   }
+  
+  
 }
