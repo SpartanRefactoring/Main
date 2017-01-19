@@ -28,12 +28,12 @@ public class InflaterProvider extends OperationsProvider {
     return new Toolbox()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
-            new ExtractExpressionFromReturn(), //
-            new StatementExtractParameters<>()) //
+            new ExtractExpressionFromReturn()) //
+//            new StatementExtractParameters<>()) //
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignment(), //
             new AssignmentTernaryExpander(), //
-            new StatementExtractParameters<>(), 
+//            new StatementExtractParameters<>(), 
             new ClassInstanceIntoVariable())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
@@ -57,12 +57,12 @@ public class InflaterProvider extends OperationsProvider {
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
             new DeclarationWithInitExpander()) //
-        .add(MethodInvocation.class, //
-            new OutlineTernaryMethodInvocation()) //
+//        .add(MethodInvocation.class, //
+//            new OutlineTernaryMethodInvocation()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
-        .add(MethodDeclaration.class, //
-            new RenameShortNamesMethodDec()) //
+//        .add(MethodDeclaration.class, //
+//            new RenameShortNamesMethodDec()) //
         // .add(VariableDeclarationStatement.class, //
         // new RenameShortNamesVarDec()) //
         .add(ThrowStatement.class, //
@@ -78,8 +78,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(IfStatement.class, //
             new LongIfExpander()) //
         .add(InfixExpression.class, //
-            new ParenthesesExpander(),
-            new TernaryPushup()) //
+            new ParenthesesExpander())
+//            new TernaryPushup()) //
     ;//
   }
 
