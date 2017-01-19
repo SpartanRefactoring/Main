@@ -60,6 +60,15 @@ public class CollectTest {
         .gives("Set<Modifier>$=(ms).stream().filter(¢->test(¢,ps)).map(¢->(Modifier)¢).collect(Collectors.toList());")//
         .stays();
   }
-  
-  
+
+  @Test public void g() {
+    trimmingOf(
+        "final List<String> $ = new ArrayList<>();  for (final Element e : Jsoup.parse(d.getHtml()).select(\"div.Section1\").first().children())    $.add(e.tagName()); return $;")//
+            .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachFiltered(), new Collect())//
+            .gives(
+                "List<String>$=(Jsoup.parse(d.getHtml()).select(\"div.Section1\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
+            .gives(
+                "return(Jsoup.parse(d.getHtml()).select(\"div.Section1\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
+            .stays();
+  }
 }
