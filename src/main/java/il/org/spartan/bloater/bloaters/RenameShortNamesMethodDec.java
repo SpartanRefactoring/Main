@@ -55,9 +55,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
         continue;
       if (in($.getIdentifier(), "$")) {
         prev.add($);
-        // TODO: Raviv Rachmiel: I renamed "ret" to result, and no test failed.
-        // Shame! --yg
-        after.add(d.getAST().newSimpleName("result"));
+        after.add(d.getAST().newSimpleName("ret"));
         continue;
       }
       final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));
@@ -68,6 +66,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
+          System.out.println(after.get(counter).toString());
           Tippers.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }
