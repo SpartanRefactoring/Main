@@ -185,8 +185,6 @@ public final class SingleTipperApplicator {
         case FILE:
           applyFile(w, n);
           return;
-        default:
-          return;
       }
     }
 

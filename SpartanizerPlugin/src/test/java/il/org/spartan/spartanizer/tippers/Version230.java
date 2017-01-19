@@ -44,8 +44,7 @@ public final class Version230 {
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
-    final String from = "2 + a <b";
-    final String expected = "a + 2 <b";
+    final String from = "2 + a <b", expected = "a + 2 <b";
     final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
@@ -1412,8 +1411,7 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.canTip(e);
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert ExpressionComparator.moreArguments(e1, e2);
@@ -1433,8 +1431,7 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.canTip(e);
-    final Expression e1 = left(e);
-    final Expression e2 = right(e);
+    final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;

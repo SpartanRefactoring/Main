@@ -40,10 +40,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression> im
     }
     final ConditionalExpression $ = ast.newConditionalExpression();
     $.setExpression(copy.of(r.getExpression()));
-    final StringLiteral l1 = az.stringLiteral(step.then(r));
-    final StringLiteral l2 = az.stringLiteral(step.elze(r));
-    final StringLiteral n1 = copy.of(l1);
-    final StringLiteral n2 = copy.of(l2);
+    final StringLiteral l1 = az.stringLiteral(step.then(r)), l2 = az.stringLiteral(step.elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
     if (iz.stringLiteral(step.left(nn))) {
       n1.setLiteralValue(l.getLiteralValue() + l1.getLiteralValue());
       n2.setLiteralValue(l.getLiteralValue() + l2.getLiteralValue());

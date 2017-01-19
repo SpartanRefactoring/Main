@@ -27,8 +27,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;
-    final Expression $ = core(then(x));
-    final Expression elze = core(elze(x));
+    final Expression $ = core(then(x)), elze = core(elze(x));
     return wizard.same($, elze) ? null : pushdown(x, $, elze);
   }
 
@@ -44,8 +43,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!wizard.same(type(e1), type(e2)) || !wizard.same(expression(e1), expression(e2)))
       return null;
-    final List<Expression> es1 = arguments(e1);
-    final List<Expression> es2 = arguments(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
@@ -61,18 +59,18 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (e1.getNodeType() != e2.getNodeType())
       return null;
     switch (e1.getNodeType()) {
-      case SUPER_METHOD_INVOCATION:
-        return pushdown(x, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
-      case METHOD_INVOCATION:
-        return pushdown(x, (MethodInvocation) e1, (MethodInvocation) e2);
-      case INFIX_EXPRESSION:
-        return pushdown(x, (InfixExpression) e1, (InfixExpression) e2);
       case ASSIGNMENT:
         return pushdown(x, (Assignment) e1, (Assignment) e2);
-      case FIELD_ACCESS:
-        return pushdown(x, (FieldAccess) e1, (FieldAccess) e2);
       case CLASS_INSTANCE_CREATION:
         return pushdown(x, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
+      case FIELD_ACCESS:
+        return pushdown(x, (FieldAccess) e1, (FieldAccess) e2);
+      case INFIX_EXPRESSION:
+        return pushdown(x, (InfixExpression) e1, (InfixExpression) e2);
+      case METHOD_INVOCATION:
+        return pushdown(x, (MethodInvocation) e1, (MethodInvocation) e2);
+      case SUPER_METHOD_INVOCATION:
+        return pushdown(x, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
       default:
         return null;
     }
@@ -89,8 +87,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
     if (operator(e1) != operator(e2))
       return null;
-    final List<Expression> es1 = hop.operands(e1);
-    final List<Expression> es2 = hop.operands(e2);
+    final List<Expression> es1 = hop.operands(e1), es2 = hop.operands(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
@@ -106,10 +103,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = arguments(e1);
-    final List<Expression> es2 = arguments(e2);
-    final Expression receiver1 = expression(e1);
-    final Expression receiver2 = expression(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
+    final Expression receiver1 = expression(e1), receiver2 = expression(e2);
     if (!wizard.same(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !wizard.same(es1, es2) || NameGuess.isClassName(receiver1) || NameGuess.isClassName(receiver2))
         return null;
@@ -132,8 +127,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
-    final List<Expression> es1 = arguments(e1);
-    final List<Expression> es2 = arguments(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);

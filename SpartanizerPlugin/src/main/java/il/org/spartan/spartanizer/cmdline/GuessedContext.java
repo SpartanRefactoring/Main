@@ -172,17 +172,13 @@ public enum GuessedContext {
   }
 
   private boolean accurateContains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = trivia.accurateEssence(inner);
-    final String essence2 = trivia.accurateEssence(off);
+    final String off = off(wrap), $ = trivia.accurateEssence(inner), essence2 = trivia.accurateEssence(off);
     assert essence2 != null;
     return essence2.contains($);
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = trivia.essence(inner);
-    final String essence2 = trivia.essence(off);
+    final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

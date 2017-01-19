@@ -257,8 +257,7 @@ public class Issue0404 {
   @Test public void mb() {
     final InfixExpression x = into.i("\"\" + \" \"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
-    final StringLiteral left = x.getAST().newStringLiteral();
-    final StringLiteral right = x.getAST().newStringLiteral();
+    final StringLiteral left = x.getAST().newStringLiteral(), right = x.getAST().newStringLiteral();
     left.setLiteralValue("\"");
     right.setLiteralValue("\'");
     x.setLeftOperand(left);
@@ -272,8 +271,7 @@ public class Issue0404 {
   @Test public void mc() {
     final InfixExpression x = into.i("\"\" + \"\"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
-    final StringLiteral left = x.getAST().newStringLiteral();
-    final StringLiteral right = x.getAST().newStringLiteral();
+    final StringLiteral left = x.getAST().newStringLiteral(), right = x.getAST().newStringLiteral();
     left.setLiteralValue(String.valueOf((char) 34)); // "
     right.setLiteralValue(String.valueOf((char) 1));
     x.setLeftOperand(left);

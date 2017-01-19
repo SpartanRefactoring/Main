@@ -105,8 +105,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   @Override public String description(final InfixExpression x) {
-    final Expression $ = right(x);
-    final Expression left = left(x);
+    final Expression $ = right(x), left = left(x);
     return description(expression(left instanceof MethodInvocation ? left : $));
   }
 
@@ -114,8 +113,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     final Operator $ = x.getOperator();
     if (!iz.comparison($))
       return null;
-    final Expression right = right(x);
-    final Expression left = left(x);
+    final Expression right = right(x), left = left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? replacement($, az.methodInvocation(left), right)
             : replacement(wizard.conjugate($), az.methodInvocation(right), left);

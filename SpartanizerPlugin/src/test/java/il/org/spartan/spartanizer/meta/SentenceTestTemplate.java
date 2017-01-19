@@ -51,9 +51,7 @@ public class SentenceTestTemplate {
     @Parameter(0) public String name;
 
     @Test public void changes() {
-      final String from = changes + "";
-      final String wrap = Wrap.Method.on(from);
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = Wrap.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -85,8 +83,7 @@ public class SentenceTestTemplate {
     @Parameter(2) public MethodDeclaration second;
 
     @Test public void chagesTo() {
-      final String peeled = Wrap.Method.off(TrimmerTestsUtils.applyTrimmer(trimmer, Wrap.Method.on(firstBody())));
-      final String to = secondBody();
+      final String peeled = Wrap.Method.off(TrimmerTestsUtils.applyTrimmer(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
       if (!to.equals(peeled))
         azzert.that(Wrap.essence(peeled), is(Wrap.essence(to)));
     }
@@ -132,9 +129,7 @@ public class SentenceTestTemplate {
     @Parameter(1) public MethodDeclaration stays;
 
     @Test public void stays() {
-      final String from = stays + "";
-      final String wrap = Wrap.Method.on(from);
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = Wrap.Method.off(unpeeled);

@@ -65,8 +65,7 @@ public class normalize {
 
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
-    final Wrapper<String> id = new Wrapper<>("start");
-    final Wrapper<String> Id = new Wrapper<>("START");
+    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final Document $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
