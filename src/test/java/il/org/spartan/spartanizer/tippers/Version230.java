@@ -1285,6 +1285,7 @@ public final class Version230 {
         .gives("  public int y() {\n" + "    final Z $ = new Z(6);\n" + "    S.h($.j);\n" + "    return $;\n" + "  }\n");
   }
 
+  @Ignore
   @Test public void inlineArrayInitialization1() {
     trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" //
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
