@@ -48,7 +48,7 @@ public interface trivia {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
-  static String gist(ASTNode ¢) {
+  static String gist(final ASTNode ¢) {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
