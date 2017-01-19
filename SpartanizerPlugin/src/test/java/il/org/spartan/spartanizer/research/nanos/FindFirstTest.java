@@ -7,7 +7,6 @@ import org.junit.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@Ignore
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
@@ -38,5 +37,11 @@ public class FindFirstTest {
     trimmingOf("for(Object i : is) if(i.isNice()) return i; return 0;")//
         .using(Block.class, new FindFirst())//
         .gives("return is.stream().findFirst(i->i.isNice()).defaultTo(0).get();");
+  }
+
+  @Test public void f() {
+    trimmingOf(" for (final TipperGroup $ : TipperGroup.values())    if ($.clazz.isAssignableFrom(¢))      return $; return null;")//
+        .using(Block.class, new FindFirst())//
+        .gives("return TipperGroup.values().stream().findFirst($->$.clazz.isAssignableFrom(¢)).get();");
   }
 }

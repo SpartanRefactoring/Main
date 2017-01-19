@@ -42,13 +42,13 @@ public enum measure {
   static boolean excluded(final Statement ¢) {
     return Arrays.asList(//
         Block.class, //
-        BreakStatement.class, //
-        ContinueStatement.class, //
-        EmptyStatement.class, //
-        LabeledStatement.class, //
-        SwitchCase.class, //
-        TypeDeclarationStatement.class, //
-        VariableDeclarationStatement.class //
+        // BreakStatement.class, //
+        // ContinueStatement.class, //
+        EmptyStatement.class //
+    // LabeledStatement.class, //
+    // SwitchCase.class, //
+    // TypeDeclarationStatement.class, //
+    // VariableDeclarationStatement.class //
     )//
         .contains(¢.getClass());
   }
