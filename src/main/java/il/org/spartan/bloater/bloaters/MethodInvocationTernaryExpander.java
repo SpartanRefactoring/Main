@@ -18,11 +18,11 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
     final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
-    final ConditionalExpression $ = getFirstCond(i);
+    final ConditionalExpression $ = findFirst.conditionalArgument(i);
     if ($ == null)
       return null;
     final MethodInvocation mThen = copy.of(i);
-    final int ci = mThen.arguments().indexOf(getFirstCond(mThen));
+    final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));
     step.arguments(mThen).set(ci, copy.of($.getThenExpression()));
     final MethodInvocation mElse = copy.of(i);
     step.arguments(mElse).set(ci, copy.of($.getElseExpression()));
@@ -31,12 +31,5 @@ public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<Expressi
 
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
-  }
-
-  private static ConditionalExpression getFirstCond(final MethodInvocation ¢) {
-    for (final Expression $ : step.arguments(¢))
-      if (iz.conditionalExpression($))
-        return az.conditionalExpression($);
-    return null;
   }
 }
