@@ -47,17 +47,16 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SingleVariableDeclaration> parameters = parameters(d);
     final List<SimpleName> prev = new ArrayList<>();
     final List<SimpleName> after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters) {
+    for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
         continue;
       if (in($.getIdentifier(), "$")) {
         prev.add($);
-        after.add(d.getAST().newSimpleName("ret"));
+        after.add(d.getAST().newSimpleName("result"));
         continue;
       }
       final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));
