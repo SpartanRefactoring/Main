@@ -146,7 +146,7 @@ public class Selection extends AbstractSelection<Selection> {
     return this;
   }
 
-  @SuppressWarnings("deprecation") @Override public String toString() {
+  @Override @SuppressWarnings("deprecation") public String toString() {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();

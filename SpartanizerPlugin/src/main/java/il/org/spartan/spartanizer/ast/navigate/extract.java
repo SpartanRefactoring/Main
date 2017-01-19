@@ -515,8 +515,8 @@ public enum extract {
     return $;
   }
 
-  public static List<SwitchCase> switchCases(final SwitchStatement s) {
-    return step.statements(s).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
+  public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
   }
 
   /** @param n a node to extract an expression from
