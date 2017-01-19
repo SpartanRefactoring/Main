@@ -20,7 +20,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** An application of the Athenizer project. Augment java code to be more clear
+/** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add
  * TextEditGroup support (?)
  * @author Ori Roth

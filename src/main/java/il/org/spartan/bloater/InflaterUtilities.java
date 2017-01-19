@@ -29,7 +29,7 @@ public class InflaterUtilities {
    *         in the spartanizer But we should definitely implement it one day
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
-   *         infrastracture when we have more expanders */
+   *         infrastructure when we have more expanders */
   static boolean rewrite(final ASTRewrite r, final List<ASTNode> nl, final TextEditGroup __) {
     boolean $ = false;
     if (nl.isEmpty())
@@ -63,10 +63,9 @@ public class InflaterUtilities {
     return $;
   }
 
-  /* @param u - the WrappedCompilationUnit which is athenized
-   *
-   * @param ns - the list of statemend which were selected and might be
-   * changed */
+  /** @param u - the WrappedCompilationUnit which is bloated
+   * @param ns - the list of statements which were selected and might be
+   *        changed */
   static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -82,13 +81,12 @@ public class InflaterUtilities {
     }
   }
 
-  /* @param u - the WrappedCompilationUnit
-   *
+  /** @param u - the WrappedCompilationUnit
    * @return - list of relevant statements for the expanders gets Statements
-   * (for now, maybe we should change the name to getASTNodes one day when we
-   * have a lot of statements) from compilationUnit - only kind of statements we
-   * might need for the athenizer SHOULD BE CHANGED when we add more
-   * expanders */
+   *         (for now, maybe we should change the name to getASTNodes one day
+   *         when we have a lot of statements) from compilationUnit - only kind
+   *         of statements we might need for the Bloater SHOULD BE CHANGED when
+   *         we add more expanders */
   static List<ASTNode> getStatements(final WrappedCompilationUnit u) {
     final List<ASTNode> $ = new ArrayList<>();
     u.compilationUnit.accept(new ASTVisitor() {
@@ -116,21 +114,17 @@ public class InflaterUtilities {
     return $;
   }
 
-  /* @param startChar1 - starting char of first interval
-   *
+  /** @param startChar1 - starting char of first interval
    * @param lenth1 - length of first interval
-   *
    * @param startChar2 - starting char of second interval
-   *
-   * @param length2 - length of second interval SPARTANIZED - should use
-   * Athenizer one day to understand it */
+   * @param length2 - length of second interval SPARTANIZED - should use Bloater
+   *        one day to understand it */
   static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
     return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  /* @param ns ASTNodes in compilation unit which might be relevant
-   *
+  /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
     return ns.stream().filter(¢ -> intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),

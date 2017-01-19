@@ -144,7 +144,7 @@ public class SingleFlater {
    * @param lenth1 - length of first interval
    * @param startChar2 - starting char of second interval
    * @param length2 - length of second interval SPARTANIZED - should use
-   *        Athenizer one day to understand it */
+   *        Bloater one day to understand it */
   static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
     return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
