@@ -81,11 +81,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(step.left(a));
-      for (final VariableDeclarationFragment ¢ : fragments(s))
-        if ((¢.getName() + "").equals(var + "")) {
-          ¢.setInitializer(copy.of(step.right(a)));
-          $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
-        }
+      fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(var + "")).forEach(¢ -> {
+        ¢.setInitializer(copy.of(step.right(a)));
+        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
+      });
     });
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }

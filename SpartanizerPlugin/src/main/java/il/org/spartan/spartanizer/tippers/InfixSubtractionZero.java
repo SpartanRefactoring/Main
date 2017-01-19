@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -29,10 +30,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static List<Expression> prune(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      if (!iz.literal0(¢))
-        $.add(¢);
+    final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
     return $.size() != xs.size() ? $ : null;
   }
 
