@@ -87,7 +87,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a11() {
-    (markers()).forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     for (final String ¢ : annotations.keySet())
       assert annotations.get(¢) != null : "Annotation " + ¢ + " not used; what I saw was: \n" + markers();
   }

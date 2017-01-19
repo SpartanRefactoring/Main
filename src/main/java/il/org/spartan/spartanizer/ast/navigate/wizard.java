@@ -30,7 +30,6 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -222,7 +221,7 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands((hop.operands(flatten.of($))).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
+    return subject.operands(hop.operands(flatten.of($)).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
         .to(PrefixNotPushdown.conjugate(operator($)));
   }
 
