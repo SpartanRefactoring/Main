@@ -61,7 +61,7 @@ public abstract class MetaFixture {
     String $ = "";
     int i = 0;
     for (final ASTNode p : ancestors.of(n))
-      $ += "\n\t + " + i++ + ": " + wizard.trim(p + "") + "/" + p.getClass().getSimpleName();
+      $ += "\n\t + " + i++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName();
     return $;
   }
 

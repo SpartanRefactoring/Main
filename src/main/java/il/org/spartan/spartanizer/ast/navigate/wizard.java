@@ -235,13 +235,6 @@ public interface wizard {
     return assign2infix.get(¢);
   }
 
-  /** Obtain a condensed textual representation of an {@link ASTNode}
-   * @param ¢ JD
-   * @return textual representation of the parameter, */
-  static String asString(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢));
-  }
-
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
    * @param p string to convert
@@ -264,25 +257,6 @@ public interface wizard {
       default:
         return null;
     }
-  }
-
-  static String cleanForm(final ASTNode ¢) {
-    return tide.clean(¢ + "");
-  }
-
-  /** the function checks if all the given assignments have the same left hand
-   * side(variable) and operator
-   * @param base The assignment to compare all others to
-   * @param as The assignments to compare
-   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
-   *         left hand side and operator as the first one or false otherwise */
-  static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNull(base, as))
-      return false;
-    for (final Assignment ¢ : as)
-      if (wizard.incompatible(base, ¢))
-        return false;
-    return true;
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
@@ -308,13 +282,6 @@ public interface wizard {
 
   static CompilationUnit compilationUnitWithBinding(final String ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
-  }
-
-  /** Obtain a condensed textual representation of an {@link ASTNode}
-   * @param ¢ JD
-   * @return textual representation of the parameter, */
-  static String condense(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢));
   }
 
   /** Makes an opposite operator from a given one, which keeps its logical
@@ -367,19 +334,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  static String essence(final String codeFragment) {
-    return fixTideClean(tide.clean(wizard.removeComments2(codeFragment)));
-  }
-
-  static String accurateEssence(final String codeFragment) {
-    return fixTideClean(clean(into.cu(codeFragment)) + "");
-  }
-
-  static ASTNode clean(final ASTNode ¢) {
-    ¢.accept(new CommentsRemover());
-    return ¢;
-  }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -390,14 +344,6 @@ public interface wizard {
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
-  }
-
-  /** This method fixes a bug from tide.clean which causes ^ to replaced with
-   * [^]
-   * @param ¢
-   * @return */
-  static String fixTideClean(final String ¢) {
-    return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
@@ -657,17 +603,6 @@ public interface wizard {
     }
   }
 
-  static String removeComments(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
-  static String removeComments2(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
   /** replaces an ASTNode with another
    * @param n
    * @param with */
@@ -684,7 +619,7 @@ public interface wizard {
    * @param n2 JD
    * @return <code><b>true</b></code> if the parameters are the same. */
   static boolean same(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && cleanForm(n1).equals(cleanForm(n2));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
 
   /** String wise comparison of all the given SimpleNames
@@ -726,10 +661,6 @@ public interface wizard {
     return false;
   }
 
-  static String trim(final Object ¢) {
-    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
-  }
-
   /** Gets two lists of expressions and returns the idx of the only expression
    * which is different between them. If the lists differ with other then one
    * element, -1 is returned.
@@ -766,5 +697,20 @@ public interface wizard {
       if (isObject(¢))
         return true;
     return false;
+  }
+
+  /** the function checks if all the given assignments have the same left hand
+   * side(variable) and operator
+   * @param base The assignment to compare all others to
+   * @param as The assignments to compare
+   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
+   *         left hand side and operator as the first one or false otherwise */
+  static boolean compatible(final Assignment base, final Assignment... as) {
+    if (hasNull(base, as))
+      return false;
+    for (final Assignment ¢ : as)
+      if (incompatible(base, ¢))
+        return false;
+    return true;
   }
 }

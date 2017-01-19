@@ -47,7 +47,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(wizard.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();", is(trivia.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
 
   @Test public void expression() {
