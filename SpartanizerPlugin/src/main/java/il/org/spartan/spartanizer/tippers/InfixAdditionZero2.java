@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
-    gather(x, new ArrayList<Expression>());
+    gather(x, new ArrayList<>());
     x.getOperator();
     extract.allOperands(x);
     extract.allOperators(x);
@@ -120,13 +120,12 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
-    for (final Expression ¢ : xs)
-      gather(¢, $);
+    xs.forEach(¢ -> gather(¢, $));
     return $;
   }
 
   @Override public String description() {
-    return "remove 0 in expressions like ";
+    return "Remove 0+ in expressions like ";
   }
 
   @Override public String description(final InfixExpression ¢) {

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -46,8 +47,7 @@ public class InflateHandler extends AbstractHandler {
       if (active.getAndSet(false))
         removePageListener(s);
     } else if (!active.getAndSet(true)) {
-      for (final ITextEditor $ : getOpenedEditors())
-        addListener($);
+      getOpenedEditors().forEach(InflateHandler::addListener);
       s.addPartListener(pageListener);
     }
     return null;
@@ -65,17 +65,15 @@ public class InflateHandler extends AbstractHandler {
     final List<Listener> ls = Arrays.asList(t.getListeners(SWT.MouseWheel));
     if (ls == null)
       return $;
-    for (final Listener ¢ : ls)
-      if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener)
-        $.add(¢);
+    $.addAll(ls.stream().filter(¢ -> ¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener)
+        .collect(Collectors.toList()));
     return $;
   }
 
   protected static void addListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
       for (final int i : types)
-        for (final Listener ¢ : ls)
-          t.addListener(i, ¢);
+        ls.forEach(¢ -> t.addListener(i, ¢));
   }
 
   protected static void removeListeners(final StyledText t, final List<Listener> ls, final int... types) {
@@ -152,10 +150,9 @@ public class InflateHandler extends AbstractHandler {
     };
   }
 
-  private static void removePageListener(final IPartService s) {
-    s.removePartListener(pageListener);
-    for (final ITextEditor ¢ : getOpenedEditors())
-      removeListener(¢);
+  private static void removePageListener(final IPartService ¢) {
+    ¢.removePartListener(pageListener);
+    getOpenedEditors().forEach(InflateHandler::removeListener);
   }
 
   static void addListener(final IWorkbenchPart ¢) {
@@ -190,9 +187,7 @@ public class InflateHandler extends AbstractHandler {
       }
     // XXX seams to be a bug
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
-    // replacement:
-    for (final Listener ¢ : ls)
-      text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener());
+    ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
   }
 
   private static List<ITextEditor> getOpenedEditors() {

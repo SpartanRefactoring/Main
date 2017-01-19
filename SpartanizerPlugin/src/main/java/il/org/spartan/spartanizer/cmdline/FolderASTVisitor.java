@@ -18,8 +18,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected static final String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static final String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array(".");
   protected static Class<? extends FolderASTVisitor> clazz;
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
@@ -73,8 +73,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
     System.err.println("Processing: " + presentSourcePath);
     (dotter = new Dotter()).click();
-    for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
-      visit(presentFile = ¢);
+    new FilesGenerator(".java").from(presentSourcePath).forEach(¢ -> visit(presentFile = ¢));
     done(path);
   }
 

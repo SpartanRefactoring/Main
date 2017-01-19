@@ -26,7 +26,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   }
 
   @Override public String description(final ParenthesizedExpression ¢) {
-    return "remove extra parenthesis " + wizard.trim(¢);
+    return "remove extra parenthesis " + trivia.gist(¢);
   }
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {

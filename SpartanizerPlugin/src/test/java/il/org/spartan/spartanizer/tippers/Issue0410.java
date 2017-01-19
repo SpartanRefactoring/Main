@@ -23,10 +23,10 @@ public class Issue0410 {
   }
 
   @Test public void removeCommentsTest() {
-    similar(wizard.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
+    similar(trivia.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
   private void similar(final String s1, final String s2) {
-    azzert.that(wizard.essence(s2), is(wizard.essence(s1)));
+    azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 }

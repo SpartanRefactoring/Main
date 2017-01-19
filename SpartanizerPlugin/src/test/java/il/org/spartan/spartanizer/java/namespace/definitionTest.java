@@ -17,6 +17,7 @@ import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
+import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TDD of {@link definition}
@@ -24,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-15 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public class definitionTest extends ReflectiveTester {
+public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);
   @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
   @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
@@ -59,7 +60,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a05() {
-    assert first(searchDescendants.forClass(AnnotationTypeDeclaration.class).from(myCompilationUnit())) != null;
+    assert first(searchDescendants.forClass(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
   }
 
   @Test public void a06() {
@@ -86,8 +87,7 @@ public class definitionTest extends ReflectiveTester {
   }
 
   @Test public void a11() {
-    for (final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    (markers()).forEach(¢ -> annotations.put(¢ + "", ¢));
     for (final String ¢ : annotations.keySet())
       assert annotations.get(¢) != null : "Annotation " + ¢ + " not used; what I saw was: \n" + markers();
   }
@@ -183,8 +183,8 @@ public class definitionTest extends ReflectiveTester {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
-        azzert.that(x + ": " + annotees.of(x) + ReflectiveTester.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
-            is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + annotees.of(x) + MetaFixture.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
+            is(MetaFixture.value(x)));
     }
   }
 
@@ -298,7 +298,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -312,7 +312,7 @@ public class definitionTest extends ReflectiveTester {
           continue;
         final int size = scope.of(n).size();
         assert size >= 0;
-        azzert.that(x + ": " + n + "/" + definition.kind(n) + ReflectiveTester.ancestry(n), size, is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n) + MetaFixture.ancestry(n), size, is(MetaFixture.value(x)));
       }
     }
   }
@@ -324,7 +324,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -336,7 +336,7 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyInterface.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
@@ -348,13 +348,13 @@ public class definitionTest extends ReflectiveTester {
         final SimpleName n = first(annotees.of(x));
         if (!DummyClass.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(ReflectiveTester.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
       }
     }
   }
 
   List<MarkerAnnotation> markers() {
-    return searchDescendants.forClass(MarkerAnnotation.class).from(myCompilationUnit());
+    return searchDescendants.forClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
 
@@ -471,9 +471,9 @@ class ZZZ___Fixture_ModelClass {
 
   @annotation
   @interface foo {
-    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) static int bar = 12;
-    @ScopeSize(5) @field static int foo = bar;
-    @ScopeSize(5) @field static int fubar = foo << bar;
+    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) int bar = 12;
+    @ScopeSize(5) @field int foo = bar;
+    @ScopeSize(5) @field int fubar = foo << bar;
 
     @ScopeSize(5)
     @enum¢
@@ -489,7 +489,7 @@ class ZZZ___Fixture_ModelClass {
       }
     }
 
-    @ScopeSize(5) @field static Bar acuda = Bar.abra, cadbara = Bar.cadabra;
+    @ScopeSize(5) @field Bar acuda = Bar.abra, cadbara = Bar.cadabra;
   }
 
   @interface¢
@@ -536,8 +536,10 @@ class ZZZ___Fixture_ModelClass {
       @annotationMemberDeclaration @ScopeSize(7) int u3();
       @annotationMemberDeclaration @ScopeSize(7) int u4();
       @annotationMemberDeclaration @ScopeSize(7) int u5() default 1;
-      @ScopeSize(7) @field static int  aaaaa = 1;
-      @ScopeSize(7) @field static int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
+      @ScopeSize(7) @field
+      int  aaaaa = 1;
+      @ScopeSize(7) @field
+      int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
       // @formatter:on
     }
 

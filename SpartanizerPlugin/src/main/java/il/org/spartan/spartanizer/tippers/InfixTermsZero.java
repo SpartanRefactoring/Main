@@ -4,6 +4,7 @@ import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -20,10 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   private static ASTNode replacement(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      if (!iz.literal0(¢))
-        $.add(¢);
+    final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
   }
 

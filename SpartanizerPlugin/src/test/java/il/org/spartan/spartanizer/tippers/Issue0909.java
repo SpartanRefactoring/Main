@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link EliminateEmptyTryBlock} of previously failed
+/** This is a unit test for {@link TryBodyEmptyLeaveFinallyIfExists} of previously failed
  * tests. Related to {@link Issue234}.
  * @author Yuval Simon
  * @since 2016-12-08 */

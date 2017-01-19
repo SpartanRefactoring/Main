@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -11,11 +10,14 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @mdoron this is a redundant tipper, see #750 Convert
@@ -34,15 +36,13 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       return null;
     final EnhancedForStatement $ = (EnhancedForStatement) p;
     final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from($);
-    if (p1 instanceof MethodDeclaration) {
-      final List<SingleVariableDeclaration> l = parameters((MethodDeclaration) p1);
-      if (l.size() == 1) {
-        final SimpleName sn = onlyOne(l).getName();
+    if (p1 instanceof MethodDeclaration)
+      for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
+        final SimpleName sn = x.getName();
         assert sn != null;
         if (in(sn.getIdentifier(), "¢"))
           return null;
       }
-    }
     final Statement body = $.getBody();
     if (body == null || !JohnDoe.property(d))
       return null;
@@ -57,10 +57,18 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
+    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, $, r, g);
       }
     };
+  }
+
+  private static boolean isNameDefined(final Statement s, final SimpleName n) {
+    final Statement $ = az.statement(s.getParent());
+    return Environment
+        .of($ == null ? s
+            : iz.block($) ? lisp.last(step.statements(az.block($))) : iz.switchStatement($) ? lisp.last(step.statements(az.switchStatement($))) : s)
+        .has(step.identifier(n));
   }
 }

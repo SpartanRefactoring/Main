@@ -28,7 +28,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();
   static {
     clazz = Table_NanosDistribution.class;
-    Logger.subscribe((n, np) -> npStatistics.logNPInfo(n, np));
+    Logger.subscribe(npStatistics::logNPInfo);
   }
 
   @SuppressWarnings("resource") private static void initializeWriter(final int type) {
@@ -38,7 +38,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
-    writers.values().forEach(w -> w.close());
+    writers.values().forEach(Table::close);
     System.err.println("Your output is in: " + Table.temporariesFolder);
   }
 

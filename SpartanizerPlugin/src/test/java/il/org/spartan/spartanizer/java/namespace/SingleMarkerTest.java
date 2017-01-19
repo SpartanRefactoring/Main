@@ -12,9 +12,10 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
-public class SingleMarkerTest extends ReflectiveTester {
+public class SingleMarkerTest extends MetaFixture {
   public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
     assert name != null;
     this.name = name;
@@ -28,7 +29,7 @@ public class SingleMarkerTest extends ReflectiveTester {
     azzert.that(
         "\n name = " + name + //
             "\n\t kind = " + kind + //
-            ReflectiveTester.ancestry(name) + //
+            MetaFixture.ancestry(name) + //
             "\n\t scope = " + scope.of(name)//
         , definition.kind(name), is(kind));
   }
@@ -38,8 +39,7 @@ public class SingleMarkerTest extends ReflectiveTester {
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);
       if (definition.Kind.has(key))
-        for (final SimpleName ¢ : annotees.of(a))
-          $.add(as.array(definition.Kind.valueOf(key), ¢));
+        annotees.of(a).forEach(¢ -> $.add(as.array(definition.Kind.valueOf(key), ¢)));
     }
     return $;
   }

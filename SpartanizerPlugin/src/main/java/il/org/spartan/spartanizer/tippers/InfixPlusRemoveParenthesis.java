@@ -39,31 +39,32 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   }
 
   @Override public String description() {
-    return "remove uneccecary parenthesis";
+    return "Remove redundant parenthesis";
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return description();
+  @Override public String description(final InfixExpression ¢) {
+    return description() + " in: " + trivia.gist(¢);
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
     for (final Integer i : range.from(0).to(es.size())) {
+      final int ii = i.intValue();
       final boolean b = isString;
-      isString |= !type.isNotString(es.get(i));
-      if (iz.parenthesizedExpression(es.get(i))) {
-        Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
+      isString |= !type.isNotString(es.get(ii));
+      if (iz.parenthesizedExpression(es.get(ii))) {
+        Expression ¢ = az.parenthesizedExpression(es.get(ii)).getExpression();
         for (; iz.parenthesizedExpression(¢);) {
           ¢ = az.parenthesizedExpression(¢).getExpression();
-          replace(es, ¢, i);
+          replace(es, ¢, ii);
         }
-        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditionalExpression(¢)
+        if (iz.infixExpression(¢) && ii != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditionalExpression(¢)
             || iz.nodeTypeEquals(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
-        replace(es, ¢, i);
+        replace(es, ¢, ii);
       }
     }
     final Expression $ = subject.operands(es).to(wizard.PLUS2);

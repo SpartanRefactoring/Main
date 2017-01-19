@@ -81,11 +81,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(step.left(a));
-      for (final VariableDeclarationFragment ¢ : fragments(s))
-        if ((¢.getName() + "").equals(var + "")) {
-          ¢.setInitializer(copy.of(step.right(a)));
-          $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
-        }
+      fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(var + "")).forEach(¢ -> {
+        ¢.setInitializer(copy.of(step.right(a)));
+        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
+      });
     });
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
@@ -111,8 +110,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = step.initializers(¢);
-    if (initializers.isEmpty() || !iz.variableDeclarationExpression(first(initializers)))
+    if (initializers.isEmpty())
       return true;
+    if (!iz.variableDeclarationExpression(first(initializers)))
+      return false;
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(first(initializers));
     assert $ != null : "ForToForInitializers -> for initializer is null and not empty?!?";
     return fittingType(s, $) && fittingModifiers(s, $);
@@ -140,8 +141,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(step.fragments(declarationStatement));
-    // TODO Ori Roth: use list rewriter; talk to Ori Roth
     $.remove(declarationStatement, g);
+    // TODO Ori Roth: use list rewriter; talk to Ori Roth
     $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
     return $;
   }

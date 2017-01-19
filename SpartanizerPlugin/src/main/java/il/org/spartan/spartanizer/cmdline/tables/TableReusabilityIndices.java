@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.tables.*;
 
 /** Collects various reusability indices for a given folder(s)
@@ -22,50 +23,6 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
-  }
-
-  private static String key(final Assignment ¢) {
-    return key(¢.getOperator());
-  }
-
-  private static String key(final Assignment.Operator key) {
-    return key + "";
-  }
-
-  private static String key(final Class<? extends ASTNode> key) {
-    return key.getSimpleName();
-  }
-
-  private static String key(final InfixExpression.Operator o, final int arity) {
-    return o + "/" + arity;
-  }
-
-  static String key(final MethodDeclaration ¢) {
-    return key(¢.getName(), step.parameters(¢).size());
-  }
-
-  private static String key(final MethodInvocation ¢) {
-    return key(¢.getName(), step.arguments(¢).size());
-  }
-
-  private static String key(final PostfixExpression ¢) {
-    return key(¢.getOperator());
-  }
-
-  private static String key(final PostfixExpression.Operator ¢) {
-    return ¢ + (PrefixExpression.Operator.toOperator(¢ + "") == null ? "" : "(post)");
-  }
-
-  private static String key(final PrefixExpression ¢) {
-    return key(¢.getOperator());
-  }
-
-  private static String key(final PrefixExpression.Operator ¢) {
-    return ¢ + (PostfixExpression.Operator.toOperator(¢ + "") == null ? "" : "(pre)");
-  }
-
-  static String key(final SimpleName n, final int arity) {
-    return n + "/" + arity;
   }
 
   public static void main(final String[] args)
@@ -96,8 +53,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   private final Set<String> defined = new LinkedHashSet<>();
 
   public Map<String, Integer> addIfNecessary(final String category, final String key) {
-    if (usage.get(category) == null)
-      usage.put(category, new LinkedHashMap<>());
+    usage.putIfAbsent(category, new LinkedHashMap<>());
     final Map<String, Integer> $ = usage.get(category);
     assert $ != null;
     $.putIfAbsent(key, Integer.valueOf(0));
@@ -119,16 +75,16 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   void addMissingKeys() {
     for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
-      addIfNecessary("NODE-TYPE", key(¢));
+      addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢));
     for (final Assignment.Operator ¢ : wizard.assignmentOperators)
-      addIfNecessary("ASSIGNMENT", key(¢));
+      addIfNecessary("ASSIGNMENT", Vocabulary.mangle(¢));
     for (final PrefixExpression.Operator ¢ : wizard.prefixOperators)
-      addIfNecessary("PREFIX", key(¢));
+      addIfNecessary("PREFIX", Vocabulary.mangle(¢));
     for (final PostfixExpression.Operator ¢ : wizard.postfixOperators)
-      addIfNecessary("POSTFIX", key(¢));
+      addIfNecessary("POSTFIX", Vocabulary.mangle(¢));
     for (final Operator ¢ : wizard.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
-        addIfNecessary("INFIX", key(¢, arity));
+        addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
   }
 
   @Override protected void done(@SuppressWarnings("unused") final String path) {
@@ -166,21 +122,18 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   private String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
-    return key(¢.getOperator(), arity);
+    return Vocabulary.mangle(¢.getOperator(), arity);
   }
 
   protected int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String m : defined)
-      $.remove(m);
+    defined.forEach($::remove);
     return rindex(ranks($));
   }
 
   protected int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    for (final String k : new ArrayList<>($.keySet()))
-      if (!defined.contains(k))
-        $.remove(k);
+    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach($::remove);
     return rindex(ranks($));
   }
 
@@ -189,11 +142,11 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   @Override public void preVisit(final ASTNode ¢) {
-    increment("NODE-TYPE", key(¢.getClass()));
+    increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
   }
 
   @Override public boolean visit(final Assignment ¢) {
-    return increment("ASSIGNMENT", key(¢));
+    return increment("ASSIGNMENT", Vocabulary.mangle(¢));
   }
 
   @Override public boolean visit(final InfixExpression ¢) {
@@ -201,18 +154,18 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
-    return defined.add(key(¢));
+    return defined.add(Vocabulary.mangle(¢));
   }
 
   @Override public boolean visit(final MethodInvocation ¢) {
-    return increment("METHOD", key(¢));
+    return increment("METHOD", Vocabulary.mangle(¢));
   }
 
   @Override public boolean visit(final PostfixExpression ¢) {
-    return increment("POSTFIX", key(¢));
+    return increment("POSTFIX", Vocabulary.mangle(¢));
   }
 
   @Override public boolean visit(final PrefixExpression ¢) {
-    return increment("PREFIX", key(¢));
+    return increment("PREFIX", Vocabulary.mangle(¢));
   }
 }

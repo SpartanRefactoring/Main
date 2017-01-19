@@ -11,12 +11,11 @@ import il.org.spartan.bloater.bloaters.*;
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0883 {
   @Test public void test0() {
     bloatingOf("return a==0? 2:3;")//
-        .gives("if(a==0)return 2;else return 3;");
+        .gives("if(a==0)return 2;" + " return 3;");
   }
 
   @Test public void test1() {

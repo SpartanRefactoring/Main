@@ -4,6 +4,7 @@ import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -211,8 +212,7 @@ public enum extract {
   }
 
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    for (final Statement ¢ : step.statements(b))
-      ifsInto(¢, $);
+    step.statements(b).forEach(¢ -> ifsInto(¢, $));
     return $;
   }
 
@@ -384,13 +384,11 @@ public enum extract {
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  @SuppressWarnings("unchecked") public static Statement nextStatementInside(final SwitchCase ¢) {
+  public static Statement nextStatementInside(final SwitchCase ¢) {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
-    // TODO: Yuval Simon use class step if necessary and remove
-    // @SuppressWarnings("unchecked") --yg
-    return $ == null ? null : next(¢, $.statements());
+    return $ == null ? null : next(¢, step.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {
@@ -477,8 +475,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : step.statements(b))
-      statementsInto(¢, $);
+    step.statements(b).forEach(¢ -> statementsInto(¢, $));
     return $;
   }
 
@@ -519,11 +516,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement s) {
-    final List<SwitchCase> $ = new ArrayList<>();
-    for (final Statement ¢ : step.statements(s))
-      if (iz.switchCase(¢))
-        $.add(az.switchCase(¢));
-    return $;
+    return step.statements(s).stream().filter(¢ -> iz.switchCase(¢)).map(¢ -> az.switchCase(¢)).collect(Collectors.toList());
   }
 
   /** @param n a node to extract an expression from

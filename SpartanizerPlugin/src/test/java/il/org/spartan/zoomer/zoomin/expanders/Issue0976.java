@@ -9,6 +9,7 @@ import il.org.spartan.bloater.bloaters.*;
 /** Unit tests for {@link LongIfExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0976 {
   @Test public void a() {

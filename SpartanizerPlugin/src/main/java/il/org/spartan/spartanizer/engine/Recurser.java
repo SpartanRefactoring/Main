@@ -14,12 +14,10 @@ import il.org.spartan.spartanizer.java.*;
 /** @author Dor Ma'ayan
  * @since 2016 */
 public final class Recurser<T> {
-  /** Get a list of the direct children of a ASTNode
+  /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
   public static List<? extends ASTNode> children(final ASTNode n) {
-    // TODO: This method does not retrieve methodInvocations' operands... Are
-    // they not children?
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
@@ -98,8 +96,7 @@ public final class Recurser<T> {
       return;
     }
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode ¢ : children)
-      rs.add(new Recurser<T>(¢));
+    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
@@ -114,8 +111,7 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current = $.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode ¢ : children)
-      rs.add(new Recurser<T>(¢));
+    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
@@ -131,10 +127,8 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return;
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode child : children)
-      rs.add(new Recurser<T>(child));
-    for (final Recurser<T> ¢ : rs)
-      ¢.preVisit(f);
+    children.forEach(child -> rs.add(new Recurser<>(child)));
+    rs.forEach(¢ -> ¢.preVisit(f));
   }
 
   public T preVisit(final Function<Recurser<T>, T> t) {
@@ -143,8 +137,7 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current;
     final List<Recurser<T>> $ = new ArrayList<>();
-    for (final ASTNode child : children)
-      $.add(new Recurser<T>(child));
+    children.forEach(child -> $.add(new Recurser<>(child)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
       this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(t);

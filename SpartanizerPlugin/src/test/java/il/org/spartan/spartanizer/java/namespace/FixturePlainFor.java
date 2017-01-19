@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for loops
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
-public class FixturePlainFor extends ReflectiveTester {
+public class FixturePlainFor extends MetaFixture {
   int f(final int a[]) {
     @knows({ "f/1", "$" }) int $ = 12;
     for (@knows({ "f/1", "$", "i" }) int i = 0; i < a.length; ++i)

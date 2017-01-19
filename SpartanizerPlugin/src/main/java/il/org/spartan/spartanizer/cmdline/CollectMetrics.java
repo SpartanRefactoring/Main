@@ -66,8 +66,7 @@ final class CollectMetrics {
   }
 
   private static void go(final String[] where) {
-    for (final File ¢ : new FilesGenerator(".java").from(where))
-      go(¢);
+    new FilesGenerator(".java").from(where).forEach(¢ -> go(¢));
   }
 
   private static CSVStatistics init(final String $, final String property) {
