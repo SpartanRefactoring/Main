@@ -661,7 +661,7 @@ public interface iz {
   /** @param pattern Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   static boolean literal(final ASTNode ¢) {
-    return ¢ != null && intIsIn(¢.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return ¢ != null && intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {
