@@ -40,10 +40,18 @@ public class CollectTest {
 
   @Test public void e() {
     trimmingOf(
-        "final Collection<Object[]> $ = new ArrayList<>();      for (final List<MethodDeclaration> sentence : allSentences()) for (final MethodDeclaration ¢ : sentence)    if (disabling.specificallyDisabled(¢))      $.add(____(¢));")//
+        "for (final List<MethodDeclaration> sentence : allSentences()) for (final MethodDeclaration ¢ : sentence)    if (disabling.specificallyDisabled(¢))      $.add(____(¢));")//
             .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachFiltered(), new Collect())//
-            .gives("List<SimpleName>$=(fs).stream().collect(Collectors.toList());")//
+            .gives(
+                "for(final List<MethodDeclaration>sentence:allSentences())$.addAll((sentence).stream().filter(¢->disabling.specificallyDisabled(¢)).map(¢->____(¢)).collect(Collectors.toList()));")//
             .stays();
+  }
+
+  @Test public void e0() {
+    trimmingOf("for (S s : as()) for (M ¢ : s) if (a.b(¢)) $.add(____(¢));")//
+        .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachFiltered(), new Collect())//
+        .gives("for(S s:as())$.addAll((s).stream().filter(¢->a.b(¢)).map(¢->____(¢)).collect(Collectors.toList()));")//
+        .stays();
   }
 
   @Test public void f() {
