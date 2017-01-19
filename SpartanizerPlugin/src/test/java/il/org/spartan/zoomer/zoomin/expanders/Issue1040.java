@@ -5,7 +5,7 @@ import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link BloatingTestUtilities} .
@@ -49,7 +49,7 @@ public class Issue1040 {
   }
 
   @SuppressWarnings({ "unused" })
-  public class Issue1040Aux3 extends ReflectiveTester {
+  public class Issue1040Aux3 extends MetaFixture {
     int total;
     int total2;
     @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };

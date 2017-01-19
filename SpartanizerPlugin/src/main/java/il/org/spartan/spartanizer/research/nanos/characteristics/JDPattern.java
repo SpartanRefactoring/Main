@@ -26,11 +26,11 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     }
   };
 
+  /** [[SuppressWarningsSpartan]] */
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
-    final Set<String> ps = new HashSet<>(parametersNames(d));
-    final Set<String> set = new HashSet<>(ps);
+    final Set<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
     $.inner = true;
@@ -83,9 +83,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     $.inner = false;
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        for (final String p : ss)
-          if ((n + "").equals(p) && !nullCheckExpression(az.infixExpression(parent(n))))
-            $.inner = true;
+        ss.stream().filter(p -> (n + "").equals(p) && !nullCheckExpression(az.infixExpression(parent(n)))).forEach(p -> $.inner = true);
         return false;
       }
     });

@@ -12,9 +12,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
-public class HasEnvironmentTest extends ReflectiveTester {
+public class HasEnvironmentTest extends MetaFixture {
   public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
     this.name = name;
   }
@@ -24,22 +25,21 @@ public class HasEnvironmentTest extends ReflectiveTester {
   @Test public void notNullNode() {
     assert Environment.of(name) != null : //
     "\n name = " + name + //
-        ReflectiveTester.ancestry(name) + //
+        MetaFixture.ancestry(name) + //
         "\n\t environment = " + Environment.of(name)//
     ;
   }
 
   private static final Set<String> signature = new HashSet<>();
 
-  private static Collection<Object[]> collect(final ReflectiveTester... ts) {
+  private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
-    for (final ReflectiveTester t : ts)
-      for (final ASTNode ¢ : searchDescendants.forClass(ASTNode.class).from(t.myCompilationUnit()))
-        if (!signature.contains(signature(¢))) {
-          signature.add(signature(¢));
-          $.add(as.array(¢, signature(¢)));
-        }
+    for (final MetaFixture t : fs)
+      searchDescendants.forClass(ASTNode.class).from(t.reflectedCompilationUnit()).stream().filter(¢ -> !signature.contains(signature(¢))).forEach(¢ -> {
+        signature.add(signature(¢));
+        $.add(as.array(¢, signature(¢)));
+      });
     return $;
   }
 

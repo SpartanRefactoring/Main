@@ -28,12 +28,13 @@ public class InflaterProvider extends OperationsProvider {
     return new Toolbox()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
-            new ExtractExpressionFromReturn(), //
-            new StatementExtractParameters<>()) //
+            new ExtractExpressionFromReturn()) //
+//            new StatementExtractParameters<>()) //
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignment(), //
             new AssignmentTernaryExpander(), //
-            new StatementExtractParameters<>(), new ClassInstanceIntoVariable())//
+//            new StatementExtractParameters<>(),
+            new ClassInstanceIntoVariable())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
@@ -56,12 +57,14 @@ public class InflaterProvider extends OperationsProvider {
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
             new DeclarationWithInitExpander()) //
+//        .add(MethodInvocation.class, //
+//            new OutlineTernaryMethodInvocation()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
-        .add(MethodDeclaration.class, //
-            new RenameShortNamesMethodDec()) //
-//        .add(VariableDeclarationStatement.class, //
-//            new RenameShortNamesVarDec()) //
+//        .add(MethodDeclaration.class, //
+//            new RenameShortNamesMethodDec()) //
+        // .add(VariableDeclarationStatement.class, //
+        // new RenameShortNamesVarDec()) //
         .add(ThrowStatement.class, //
             new ThrowTernaryExpander())//
         .add(EnhancedForStatement.class, //
@@ -71,11 +74,11 @@ public class InflaterProvider extends OperationsProvider {
         .add(WhileStatement.class, //
             new WhileBlockExpander()) //
         .add(IfStatement.class, //
-            new IfElseBlockExpander()) //
-        .add(IfStatement.class, //
-            new LongIfExpander()) //
+            new IfElseBlockExpander()) ///
+//            new LongIfExpander()) //
         .add(InfixExpression.class, //
-            new ParenthesesExpander()) //
+            new ParenthesesExpander(), 
+            new TernaryPushup()) //
     ;//
   }
 

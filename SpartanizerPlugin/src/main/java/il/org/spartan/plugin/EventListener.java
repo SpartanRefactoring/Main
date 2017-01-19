@@ -41,7 +41,8 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
   /** Simple event listener, defined by a consumer of events.
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
-   * @return listener that send events from the enum class to the consumer */
+   * @return listener that send events from the enum class to the consumer
+   *         [[SuppressWarningsSpartan]] */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E ¢) {
@@ -58,7 +59,8 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
    * @param enumClass enum that contains the possible events for this listener
    * @param c operation to be conducted on accepted event
    * @param bc operation to be conducted on accepted event and object
-   * @return listener that send events from the enum class to consumers */
+   * @return listener that send events from the enum class to consumers
+   *         [[SuppressWarningsSpartan]] */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c, final BiConsumer<E, Object> bc) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E ¢) {

@@ -2,12 +2,12 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing statements in a block.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
-public class FixtureBlock extends ReflectiveTester {
+public class FixtureBlock extends MetaFixture {
   private int f(@knows("ps") final int... ps) throws IOException {
     @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
     @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();

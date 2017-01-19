@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -34,7 +35,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   List<Expression> branchesExpressions(final N ¢) {
-    return branchesWrapper(¢).stream().map(x -> expression(x)).collect(Collectors.toList());
+    return branchesWrapper(¢).stream().map(step::expression).collect(Collectors.toList());
   }
 
   @Override public Tip pattern(final N ¢) {

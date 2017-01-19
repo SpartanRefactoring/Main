@@ -12,6 +12,7 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -49,28 +50,24 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   /** @param d JD
    * @param ds variables list
-   * @return <code><b>true</b></code> <em>iff</em> the method and the
-   *         listcontains same variables, in matters of type and quantity
+   * @return <code><b>true</b></code> <em>iff</em> the method and the list
+   *         contains same variables, in matters of type and quantity
    *         [[SuppressWarningsSpartan]] */
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
+  private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = ds.stream().map(
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
         .collect(Collectors.toList());
-    for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
+    for (final SingleVariableDeclaration ¢ : parameters(d))
       if (!ts.contains(¢.getType() + ""))
         return false;
     return true;
   }
 
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d,
-      final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
-    Collections.sort(ds, new NaturalVariablesOrder(d));
+  private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
+      final Statement forkPoint, final boolean equalParams) {
+    ds.sort(new NaturalVariablesOrder(d));
     final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = copy.of(d);
     fixStatements(d, d1, r);
@@ -78,8 +75,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
-    for (final VariableDeclaration ¢ : ds)
-      i.arguments().add(copy.of(¢.getName()));
+    ds.forEach(¢ -> step.arguments(i).add(copy.of(name(¢))));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -100,8 +96,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(body(dx)).clear();
-    for (final Statement ¢ : statements(body(d)))
-      statements(dx).add(az.statement(r.createCopyTarget(¢)));
+    statements(body(d)).forEach(¢ -> statements(dx).add(az.statement(r.createCopyTarget(¢))));
   }
 
   private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
@@ -118,45 +113,39 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
 
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2,
-      final List<VariableDeclaration> ds) {
+  private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2, final List<VariableDeclaration> ds) {
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
-        d2.parameters().add(copy.of(v));
+        parameters(d2).add(copy.of((SingleVariableDeclaration) v));
       else {
         final SingleVariableDeclaration sv = d.getAST().newSingleVariableDeclaration();
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(copy.of(v.getName()));
         sv.setType(copy.of(p.getType()));
-        for (final IExtendedModifier md : (List<IExtendedModifier>) p.modifiers())
-          sv.modifiers().add(copy.of((ASTNode) md));
-        d2.parameters().add(sv);
+        extendedModifiers(p).forEach(md -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) md)));
+        parameters(d2).add(sv);
       }
   }
 
-  // TODO: Ori Roth use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
-  @SuppressWarnings("unchecked") private static void fixJavadoc(final MethodDeclaration d, final List<VariableDeclaration> ds) {
+  private static void fixJavadoc(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = j.tags();
+    final List<TagElement> ts = step.tags(j);
     final List<String> ns = ds.stream().map(¢ -> ¢.getName() + "").collect(Collectors.toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
-      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(¢.fragments()) instanceof SimpleName) {
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
         hasParamTags = true;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(first(¢.fragments())))
+        if (!ns.contains(first(fragments(¢))))
           xs.add(¢);
         else
-          ns.remove(first(¢.fragments()));
+          ns.remove(first(fragments(¢)));
       }
     if (!hasParamTags)
       return;
@@ -164,7 +153,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     for (final String s : ns) {
       final TagElement e = j.getAST().newTagElement();
       e.setTagName(TagElement.TAG_PARAM);
-      e.fragments().add(j.getAST().newSimpleName(s));
+      fragments(e).add(j.getAST().newSimpleName(s));
       ts.add(tagPosition, e);
     }
   }
@@ -182,15 +171,13 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<VariableDeclaration> inactive;
     int variablesTerminated;
 
-    // TODO: Ori Roth use class step if necessary and remove
-    // @SuppressWarnings("unchecked") --yg
-    @SuppressWarnings("unchecked") public MethodVariablesScanner(final MethodDeclaration method) {
+    public MethodVariablesScanner(final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
       active = new ArrayList<>();
       inactive = new ArrayList<>();
       variablesTerminated = 0;
-      for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) method.parameters()) {
+      for (final SingleVariableDeclaration ¢ : parameters(method)) {
         setUsesMapping(¢, 0);
         if (uses.containsKey(¢))
           active.add(¢);
@@ -239,8 +226,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (final Integer ¢ : range.from(starting).to(statements.size()))
-        setUsesMapping(d, statements.get(¢));
+      range.from(starting).to(statements.size()).forEach(¢ -> setUsesMapping(d, statements.get(¢)));
     }
 
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
@@ -255,12 +241,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<SingleVariableDeclaration> ps;
     final List<Statement> ss;
 
-    // TODO: Ori Roth use class step if necessary and remove
-    // @SuppressWarnings("unchecked") --yg
-    @SuppressWarnings("unchecked") public NaturalVariablesOrder(final MethodDeclaration method) {
+    public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
-      ps = method.parameters();
-      ss = body(method) != null ? statements(method) : Collections.EMPTY_LIST;
+      ps = parameters(method);
+      ss = body(method) != null ? statements(method) : new LinkedList<>();
     }
 
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {

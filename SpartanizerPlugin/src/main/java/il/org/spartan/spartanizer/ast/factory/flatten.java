@@ -28,7 +28,7 @@ public enum flatten {
     assert $ != null;
     final Operator o = $.getOperator();
     assert o != null;
-    return subject.operands(flatten.into(o, hop.operands($), new ArrayList<Expression>())).to(copy.of($).getOperator());
+    return subject.operands(flatten.into(o, hop.operands($), new ArrayList<>())).to(copy.of($).getOperator());
   }
 
   private static List<Expression> add(final Expression x, final List<Expression> $) {
@@ -44,8 +44,7 @@ public enum flatten {
   }
 
   private static List<Expression> into(final Operator o, final List<Expression> xs, final List<Expression> $) {
-    for (final Expression ¢ : xs)
-      into(o, ¢, $);
+    xs.forEach(¢ -> into(o, ¢, $));
     return $;
   }
 }

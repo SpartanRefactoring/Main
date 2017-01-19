@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
  * common method overrides.
  * @author Ori Roth
  * @since 2016 */
+@Deprecated
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
@@ -55,7 +56,6 @@ public class RefactorerUtil {
     return i + "/" + $;
   }
 
-  // TODO: Ori Roth - move to class Linguistics --yg
   public static String plurals(final String s, final int i) {
     return i == 1 ? s : s + "s";
   }
@@ -69,13 +69,11 @@ public class RefactorerUtil {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();
-    return new IRunnableWithProgress() {
-      @Override @SuppressWarnings("boxing") public void run(final IProgressMonitor pm) {
-        pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        $.setICompilationUnit(first(us));
-        a.put(t, $.countTips());
-        pm.done();
-      }
+    return pm -> {
+      pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+      $.setICompilationUnit(first(us));
+      a.put(t, Integer.valueOf($.countTips()));
+      pm.done();
     };
   }
 }

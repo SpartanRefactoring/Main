@@ -6,10 +6,11 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit test for {@link RenameShortNamesMethodDec}
- * also Unit test for {@link RenameShortNamesVarDec}
+/** Unit test for {@link RenameShortNamesMethodDec} also Unit test for
+ * {@link RenameShortNamesVarDec}
  * @author Raviv Rachmiel
  * @since 15-01-2017 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0979 {
   @Test public void basicRet() {
@@ -28,46 +29,41 @@ public class Issue0979 {
     bloatingOf("void foo(int b){ b = 1;}")//
         .gives("void foo(int i1){ i1=1;}");
   }
-  
+
   @Test public void RenameShortVar2() {
     bloatingOf("void foo(double b){ b = 1.1;}")//
         .gives("void foo(double d1){ d1=1.1;}");
   }
-  
+
   @Test public void ParamsRenameShortVar2() {
     bloatingOf("void foo(double b,int a){ b = 1.1; a = 4;}")//
         .gives("void foo(double d1,int i1){ d1=1.1; i1 = 4;}");
   }
-  
+
   @Test public void ParamsRenameShortVar3() {
     bloatingOf("void foo(double b,int a,String t){ b = 1.1; a = 4;}")//
         .gives("void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}");
   }
-  
-  @Ignore
-  @Test public void twoOfSame() {
-    bloatingOf("void foo(int b, int a){ b = 1; a =3;}")// 
+
+  @Ignore @Test public void twoOfSame() {
+    bloatingOf("void foo(int b, int a){ b = 1; a =3;}")//
         .gives("void foo(int i1, int i2){ i1=1; i2=3;}");
   }
-  
+
   @Test public void basicAss() {
     bloatingOf("int a = 5;")//
         .gives("int a; a = 5;")//
         .gives("int i1; i1 = 5;");
   }
-  
-  @Ignore
-  @Test public void Assign1() {
+
+  @Ignore @Test public void Assign1() {
     bloatingOf("int a = 5,b=3;")//
         .gives("int i1 = 5,i2=3;");
   }
-  
+
   @Test public void Assign2() {
     bloatingOf("double r = 2;")//
         .gives("double r;r = 2;") //
         .gives("double d1; d1 = 2;");
   }
-  
-
-  
 }

@@ -15,6 +15,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Testing utils for expander Issue #961
@@ -74,10 +75,9 @@ public class BloatingTestUtilities {
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
-        final String peeled = unpeeled;
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        assertSimilar($, peeled);
+        if (unpeeled.equals(get()))
+          azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
+        assertSimilar($, unpeeled);
         return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
@@ -102,9 +102,8 @@ public class BloatingTestUtilities {
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
-        final String peeled = unpeeled;
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
+        if (unpeeled.equals(get()))
+          azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
         m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
         assertSimilar($, m + "");
         final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
@@ -183,7 +182,7 @@ public class BloatingTestUtilities {
     return new Operand(from);
   }
 
-  public static Operand bloatingOf(final ReflectiveTester ¢) {
-    return new Operand(¢.myCompilationUnit(), ¢.myClassText());
+  public static Operand bloatingOf(final MetaFixture ¢) {
+    return new Operand(¢.reflectedCompilationUnit(), ¢.myClassText());
   }
 }

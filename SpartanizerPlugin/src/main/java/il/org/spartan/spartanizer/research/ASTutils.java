@@ -13,13 +13,12 @@ public class ASTutils {
   public static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
         return u;
       case EXPRESSION_LOOK_ALIKE:
         return findSecond(Expression.class, findFirst.methodDeclaration(u));
       case METHOD_LOOK_ALIKE:
         return findFirst.instanceOf(MethodDeclaration.class, u);
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
       case STATEMENTS_LOOK_ALIKE:
         return findFirst.instanceOf(Block.class, u);
       default:

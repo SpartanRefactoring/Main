@@ -61,8 +61,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
 
   static String statementsToString(final List<Statement> ss) {
     final StringBuilder $ = new StringBuilder();
-    for (final Statement k : ss)
-      $.append(k);
+    ss.forEach(k -> $.append(k));
     return $ + "";
   }
 

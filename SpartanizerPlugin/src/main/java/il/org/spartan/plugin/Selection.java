@@ -480,8 +480,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static String getMultiSelectionName(final List<MarkerItem> is, final List<IJavaProject> ps, final List<IPackageFragmentRoot> rs,
         final List<IPackageFragment> hs, final List<ICompilationUnit> us, final List<IMember> ms) {
       final List<String> $ = new LinkedList<>();
-      for (final IJavaProject ¢ : ps)
-        $.add(¢.getElementName());
+      ps.forEach(¢ -> $.add(¢.getElementName()));
       if (!rs.isEmpty())
         $.add(Linguistic.plurals("root package", rs.size()));
       if (!hs.isEmpty())

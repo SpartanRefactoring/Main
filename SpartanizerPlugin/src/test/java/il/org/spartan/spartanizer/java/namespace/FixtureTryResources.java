@@ -2,12 +2,12 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in try statement
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
-public class FixtureTryResources extends ReflectiveTester {
+public class FixtureTryResources extends MetaFixture {
   @knows("f/0") int f() throws FileNotFoundException, IOException {
     try (@knows("$") FileReader $ = new FileReader(toString())) {
       try (@knows({ "b", "$" }) FileReader b = new FileReader(toString())) {

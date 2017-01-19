@@ -396,7 +396,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return apply(iCompilationUnit, new Range(0, 0));
   }
 
-  private void collectAllTips() throws JavaModelException, CoreException {
+  private void collectAllTips() throws CoreException {
     progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
     progressMonitor.done();
@@ -456,7 +456,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     }
   }
 
-  private int apply(final WrappedCompilationUnit u) throws JavaModelException, CoreException {
+  private int apply(final WrappedCompilationUnit u) throws CoreException {
     final TextFileChange textChange = init(u);
     assert textChange != null;
     final Int $ = new Int();

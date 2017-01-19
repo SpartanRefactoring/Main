@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.meta.*;
 
 /** Test class for name generation from Namespace (Environments)
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
@@ -18,13 +19,12 @@ import il.org.spartan.spartanizer.java.namespace.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings({ "javadoc" })
-public class Issue1044 extends ReflectiveTester {
-  private final Namespace fixtureClass = Environment.of(myCompilationUnit()).getChild(1);
+public class Issue1044 extends MetaFixture {
+  private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
   private final Namespace functionF = fixtureClass.getChild(1);
   private final Namespace classX = fixtureClass.getChild(2);
 
-  // TODO: Doron Meshulam: please use azzert.that(x, is(y)) --yg
   @Test public void test1a() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5)"))))), is("i4"));
   }

@@ -10,39 +10,31 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** remove redundant return from switch in void method.
- * convert
+/** remove redundant return from switch in void method. convert
+ *
  * <pre>
- * void a() {
- *   switch(x) {
- *    case 1: y=2; break;
- *    default: return;
- *   }
- * }
+ * void a() { switch(x) { case 1: y=2; break; default: return; } }
+ *
  * <pre>
  * to
+ *
  * <pre>
- * void a() {
- *   switch(x) {
- *    case 1: y=2; break;
- *   }
- * }
+ * void a() { switch(x) { case 1: y=2; break; } }
+ *
  * <pre>
- * 
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-15
- */
+ * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
-  @Override public ASTNode replacement(SwitchStatement s) {
+  @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
-    Block b = az.block(s.getParent());
+    final Block b = az.block(s.getParent());
     if (b == null || !iz.methodDeclaration(b.getParent()) || !iz.voidType(step.returnType(az.methodDeclaration(b.getParent())))
         || lisp.last(step.statements(b)) != s)
       return null;
-    List<switchBranch> $ = switchBranch.intoBranches(s);
-    for (switchBranch ¢ : $)
+    final List<switchBranch> $ = switchBranch.intoBranches(s);
+    for (final switchBranch ¢ : $)
       if (¢.hasDefault() && ¢.statements().size() == 1 && iz.returnStatement(lisp.first(¢.statements()))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
@@ -50,7 +42,7 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
     return null;
   }
 
-  @Override public String description(@SuppressWarnings("unused") SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

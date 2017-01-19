@@ -258,7 +258,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, HashSet<Y>, Y> rememberBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, HashSet<Y>, Y>) this) //
           .startWith(new HashSet<Y>()) //
-          .does((final HashSet<Y> l, final Y u) -> l.add(u));
+          .does((BiConsumer<HashSet<Y>, Y>) HashSet::add);
     }
 
     /** Collects objects of specific type in a {@link List}. Conducts
@@ -266,7 +266,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, ArrayList<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, ArrayList<Y>, Y>) this) //
           .startWith(new ArrayList<Y>()) //
-          .does((final ArrayList<Y> l, final Y u) -> l.add(u));
+          .does((BiConsumer<ArrayList<Y>, Y>) ArrayList::add);
     }
 
     /** Remember the last object received of specific type. Conducts casting. */
