@@ -128,7 +128,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
   
-  private static boolean strongCondition(final VariableDeclarationFragment ¢) {
+  private static boolean strongCondition(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
 //    VariableDeclarationStatement f;
 //    if(¢ == null ||(f = az.variableDeclarationStatement(¢)) == null)
 //      return false;

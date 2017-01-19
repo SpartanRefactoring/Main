@@ -146,6 +146,7 @@ public class Selection extends AbstractSelection<Selection> {
     return this;
   }
 
+  @SuppressWarnings("deprecation")
   @Override public String toString() {
     if (isEmpty())
       return "{empty}";
