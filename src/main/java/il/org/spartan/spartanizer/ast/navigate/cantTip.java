@@ -31,7 +31,7 @@ public enum cantTip {
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
+    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s))) // NANO?
       if (new DeclarationRedundantInitializer().canTip(¢))
         return false;
     return true;
