@@ -534,7 +534,7 @@ public interface wizard {
       $.add(isFinal);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.container.containerType(¢);
+    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(¢);
     if (container == null)
       return $;
     if (iz.annotationTypeDeclaration(container))
@@ -567,7 +567,7 @@ public interface wizard {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
-      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.container.containerType(container)))
+      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(container)))
         $.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
