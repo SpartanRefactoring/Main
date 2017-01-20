@@ -11,7 +11,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1099 {
-  @Test public void a() {
+  @Test public void b() {
     trimmingOf("/**/" + //
         "  " + //
         "    final D c = b.d(), e = f.g(e(b)), h = f.g(h(b));" + //
@@ -27,7 +27,7 @@ public class Issue1099 {
         .stays();
   }
 
-  @Test public void b() {
+  @Test public void c() {
     trimmingOf("/**/" + //
         "  " + //
         "    final D c = d(), e = f(c,c), h = g(e, c);" + //
@@ -41,5 +41,17 @@ public class Issue1099 {
             "  "//
         )//
         .stays();
+  }
+
+  @Test public void a() {
+    trimmingOf("/**/" + //
+        "    @A public void a() {" + //
+        "      final B b = a + \"\", c = C.d(b), e = F.f(g, c);" + //
+        "      h.i( j, c, k(l(e)));" + //
+        "      final B m = C.n(e);" + //
+        "      h.i( j, m, k(l(b)));" + //
+        "      h.i(j + \" is just reformatting\", o.p(b), k(l(o.p(m))));" + //
+        "    }"//
+    ).stays();
   }
 }
