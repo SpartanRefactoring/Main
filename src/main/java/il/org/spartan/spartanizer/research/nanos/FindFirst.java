@@ -24,8 +24,10 @@ public final class FindFirst extends NanoPatternTipper<Block> {
           "return $X1.stream().filter($N -> $X2).findFirst().orElse($L);", description));
       add(statementsPattern("for($T $N : $X1) if($X2) return $X3; return $L;",
           "return $X1.stream().filter($N -> $X2).map($N -> $X3).findFirst().orElse($L);", description));
-      add(statementsPattern("for($T $N : $X1) if($X2) return $N; throw $X3;",
-          "if($X1.stream().anyMatch($N -> $X2)) return $X1.stream().findFirst($N -> $X2).get(); throw $X3;", description));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $N;  throw $X4;", //
+          "return $X1.stream().filter($N -> $X2).findFirst().orElseThrow(()->$X4);", description));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $X3;  throw $X4;",
+          "return $X1.stream().filter($N -> $X2).map($N -> $X3).findFirst().orElseThrow(()->$X4);", description));
       add(statementsPattern("for($T $N : $X1) if($X2) {$N2 = $N; break;}", "$N2 = $X1.stream().findFirst($N -> $X2).get();", description));
     }
   };
