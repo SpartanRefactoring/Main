@@ -28,7 +28,7 @@ public class StringBuilderListener implements Listener {
 
   @Override public void tick(final Object... os) {
     $.append(newId()).append(": ");
-    for (final Object ¢ : os)
+    for (final Object ¢ : os) // NANO
       $.append(new Separator(", ")).append(trivia.gist(¢));
     $.append('\n');
   }

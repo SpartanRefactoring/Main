@@ -80,7 +80,7 @@ public class GUIBatchLaconizer extends Applicator {
    * @return this applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
     listener(os -> {
-      for (final Object ¢ : os)
+      for (final Object ¢ : os) // NANO?
         System.out.print(¢ + " ");
       System.out.println();
     });

@@ -140,7 +140,7 @@ public class Selection extends AbstractSelection<Selection> {
   // TODO Ori Roth: apply to newly added WCU as well
   public Selection setUseBinding() {
     if (inner != null)
-      for (final WrappedCompilationUnit ¢ : inner)
+      for (final WrappedCompilationUnit ¢ : inner) // NANO?
         ¢.useBinding = true;
     return this;
   }
@@ -396,7 +396,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      for (final IPackageFragmentRoot ¢ : rs)
+      for (final IPackageFragmentRoot ¢ : rs) // NANO?
         $.unify(by(¢));
       return $.setName(p.getElementName());
     }
@@ -406,7 +406,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        for (final IJavaElement ¢ : r.getChildren())
+        for (final IJavaElement ¢ : r.getChildren()) // NANO?
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.unify(by((IPackageFragment) ¢));
       } catch (final JavaModelException ¢) {

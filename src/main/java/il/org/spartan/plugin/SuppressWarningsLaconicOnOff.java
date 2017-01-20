@@ -98,7 +98,7 @@ public final class SuppressWarningsLaconicOnOff {
 
   static Set<String> getKeywords(final String c, final String[] kws) {
     final Set<String> $ = new HashSet<>();
-    for (final String kw : kws)
+    for (final String kw : kws) // NANO?
       if (c.contains(kw))
         $.add(kw);
     return $;
