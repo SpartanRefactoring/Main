@@ -48,7 +48,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       final ASTNode n = eclipse.getNodeByMarker(u, m);
       if (n == null)
         return null;
-      final ASTNode $ = searchAncestors.forClass(BodyDeclaration.class).from(n);
+      final ASTNode $ = yieldAncestors.untilClass(BodyDeclaration.class).from(n);
       return $ == null ? null : new TextSelection($.getStartPosition(), $.getLength());
     }
 

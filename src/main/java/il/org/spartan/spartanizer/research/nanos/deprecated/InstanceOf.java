@@ -20,7 +20,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public boolean canTip(final InstanceofExpression ¢) {
     if (!(type(¢) instanceof SimpleType))
       return false;
-    final MethodDeclaration $ = searchAncestors.forContainingMethod().from(¢);
+    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
@@ -59,7 +59,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // TODO: Marco maybe in the future change to iz.java in package which will
     // be created automatically...
-    return searchAncestors.forContainingType().from(¢);
+    return yieldAncestors.untilContainingType().from(¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
