@@ -734,9 +734,9 @@ public enum step {
     String $ = (d + "").substring((d + "").indexOf(typeType));
     $ = $.substring($.indexOf(typeType) + typeType.length(), $.indexOf("{"));
     while ($.contains("extends") && !balanced($.substring(0, $.indexOf("extends"))))
-      for (int idx = $.indexOf("extends"), openers = 0, ¢ = idx + 7;; ++¢) {
+      for (int i = $.indexOf("extends"), openers = 0, ¢ = i + 7;; ++¢) {
         if ($.charAt(¢) == ',' && openers <= 0) {
-          $ = $.substring(0, idx) + $.substring(¢);
+          $ = $.substring(0, i) + $.substring(¢);
           break;
         }
         if ($.charAt(¢) == '<')
@@ -744,11 +744,11 @@ public enum step {
         else if ($.charAt(¢) == '>') {
           --openers;
           if (openers == 0) {
-            $ = $.substring(0, idx) + $.substring(¢ + 1);
+            $ = $.substring(0, i) + $.substring(¢ + 1);
             break;
           }
           if (openers < 0) {
-            $ = $.substring(0, idx) + $.substring(¢);
+            $ = $.substring(0, i) + $.substring(¢);
             break;
           }
         }
