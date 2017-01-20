@@ -11,6 +11,23 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) 
 public class Issue1099 {
+  @Test public void a() {
+    trimmingOf(
+  "/**/" + //
+  "  " + //
+  "    final D c = b.d(), e = f.g(e(b)), h = f.g(h(b));" + //
+  "    return e == null || h == null ? null : i.j(i.k(e, h).l(c)).m();" + //
+  "  "//
+)//
+   .gives(
+  "/**/" + //
+  "  " + //
+  "    final D e = f.g(e(b)), h = f.g(h(b));" + //
+  "    return e == null || h == null ? null : i.j(i.k(e, h).l(b.d())).m();" + //
+  "  "//
+)// 
+   .stays();
+  }
   @Test public void b() {
     trimmingOf(
   "/**/" + //
