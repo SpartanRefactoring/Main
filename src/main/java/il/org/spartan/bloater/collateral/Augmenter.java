@@ -135,7 +135,7 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    for (final ImportDeclaration ¢ : step.imports(u))
+    for (final ImportDeclaration ¢ : step.imports(u)) // NANO?
       if (¢.getName().getFullyQualifiedName().equals(s))
         return true;
     return false;

@@ -16,7 +16,7 @@ public final class PreferencesDefaultValuesInitializer extends AbstractPreferenc
     final IPreferenceStore s = store();
     // s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
     s.setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    for (final TipperGroup ¢ : TipperGroup.values())
+    for (final TipperGroup ¢ : TipperGroup.values()) // NANO?
       s.setDefault(¢.id, true);
   }
 }
