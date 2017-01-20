@@ -133,7 +133,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return false;
   }
 
-  protected boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
+  protected static boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
     return initializer == null || haz.annotation(f);
   }
 }
