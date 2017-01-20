@@ -72,14 +72,14 @@ public class InflateHandler extends AbstractHandler {
 
   protected static void addListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
-      for (final int i : types)
+      for (final int i : types) // NANO? I think you can deal with arrays
         ls.forEach(¢ -> t.addListener(i, ¢));
   }
 
   protected static void removeListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
       for (final Listener ¢ : ls)
-        for (final int i : types)
+        for (final int i : types) // NANOS: Arrays should be easy
           t.removeListener(i, ¢);
   }
 
@@ -180,7 +180,7 @@ public class InflateHandler extends AbstractHandler {
     if (text == null)
       return;
     final List<Listener> ls = getListeners(text);
-    for (final Listener ¢ : ls)
+    for (final Listener ¢ : ls) // NANO????
       if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
         ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
         break;

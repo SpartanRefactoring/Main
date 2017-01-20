@@ -124,7 +124,7 @@ public enum make {
     $.setOperator(wizard.PLUS2);
     $.setLeftOperand(copy.of(first(xs)));
     $.setRightOperand(copy.of(second(xs)));
-    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢))))
+    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
       if (¢ >= xs.size())
         return $;
   }
@@ -138,7 +138,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    for (final Expression ¢ : rest(xs))
+    for (final Expression ¢ : rest(xs)) // NANO?
       $.add(minusOf(¢));
     return $;
   }
