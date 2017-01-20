@@ -92,16 +92,16 @@ public enum find {
   }
 
   /** like the other one but for a list
-   * @param l
+   * @param ns
    * @return */
-  public static <N extends ASTNode> String singleAtomicDifference(final List<N> l) {
-    if (l.size() < 2)
+  public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
+    if (ns.size() < 2)
       return null;
-    String $ = singleAtomicDifference(first(l), second(l));
+    String $ = singleAtomicDifference(first(ns), second(ns));
     if ($ == null)
       return null;
-    for (int i = 2; i < l.size(); ++i) {
-      final String diff = singleAtomicDifference(l.get(0), l.get(i));
+    for (int i = 2; i < ns.size(); ++i) {
+      final String diff = singleAtomicDifference(ns.get(0), ns.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;

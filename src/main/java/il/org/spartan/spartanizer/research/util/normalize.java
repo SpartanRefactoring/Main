@@ -34,8 +34,7 @@ public class normalize {
   }
 
   private static String wrapTest(final String name, final String code) {
-    
-    return String.format("  @Test public void %s() {\n"  //
+    return String.format("  @Test public void %s() {\n" //
         + "    trimmingOf(\n \"%s\" \n)\n" //
         + "       .gives(\n" //
         + "    // Edit this to reflect your expectation\n" //
