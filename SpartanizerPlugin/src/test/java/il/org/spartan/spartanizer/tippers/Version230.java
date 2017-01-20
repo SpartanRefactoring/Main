@@ -574,8 +574,7 @@ public final class Version230 {
   }
 
   @Test public void commonSuffixIfBranches() {
-    trimmingOf("if (a) { \n++i;\nf();\n} else {\n++j;\nf();\n}")
-        .gives("if (a)  \n++i;\nelse \n++j;\n\nf();");
+    trimmingOf("if (a) { \n++i;\nf();\n} else {\n++j;\nf();\n}").gives("if (a)  \n++i;\nelse \n++j;\n\nf();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingElse() {
@@ -958,9 +957,8 @@ public final class Version230 {
   }
 
   @Test public void duplicatePartialIfBranches() {
-    trimmingOf("    if (a) {\n      f();\n      g();\n      ++i;\n    } else {\n      f();\n      g();\n"
-        + "      --i;\n    }")//
-            .gives("   f();\n   g();\n    if (a) \n      ++i;\n    else \n      --i;");
+    trimmingOf("    if (a) {\n      f();\n      g();\n      ++i;\n    } else {\n      f();\n      g();\n" + "      --i;\n    }")//
+        .gives("   f();\n   g();\n    if (a) \n      ++i;\n    else \n      --i;");
   }
 
   @Test public void eliminateSwitch() {
@@ -1026,9 +1024,8 @@ public final class Version230 {
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
     trimmingOf("public static void f() {\n  int i = 0;\n  if (f()) {\n    i += 1;\n    System.h('!');\n    System.h('!');\n"
         + "    ++i;\n  } else {\n    i += 2;\n    System.h('@');\n    System.h('@');\n    ++i;\n  }\n}")//
-            .gives(
-                "public static void f() {\n  int i = 0;\n  if (f()) {\n    i += 1;\n    System.h('!');\n    System.h('!');\n"
-                    + "  } else {\n    i += 2;\n    System.h('@');\n    System.h('@');\n  }\n  ++i;}");
+            .gives("public static void f() {\n  int i = 0;\n  if (f()) {\n    i += 1;\n    System.h('!');\n    System.h('!');\n"
+                + "  } else {\n    i += 2;\n    System.h('@');\n    System.h('@');\n  }\n  ++i;}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
@@ -1040,15 +1037,12 @@ public final class Version230 {
     trimmingOf(" final int c = 2;\n    if (c == c + 1) {\n      if (c == c + 2)\n        return null;\n      c = f().charAt(3);\n"
         + "    } else if (Character.digit(c, 16) == -1)\n      return null;\n    return null;")
             .gives("    final int c = 2;\n    if (c != c + 1) {\n      if (Character.digit(c, 16) == -1)\n        return null;\n"
-                + "    } else {\n      if (c == c + 2)\n        return null;\n      c = f().charAt(3);\n    }\n"
-                + "    return null;");
+                + "    } else {\n      if (c == c + 2)\n        return null;\n      c = f().charAt(3);\n    }\n" + "    return null;");
   }
 
   @Test public void ifBugSimplified() {
-    trimmingOf(
-        "    if (x) {\n      if (z)\n        return null;\n      c = f().charAt(3);\n    } else if (y)\n      return;\n")
-            .gives("    if (!x) {\n      if (y)\n        return;\n    } else {\n      if (z)\n        return null;\n"
-                + "      c = f().charAt(3);\n    }\n");
+    trimmingOf("    if (x) {\n      if (z)\n        return null;\n      c = f().charAt(3);\n    } else if (y)\n      return;\n").gives(
+        "    if (!x) {\n      if (y)\n        return;\n    } else {\n      if (z)\n        return null;\n" + "      c = f().charAt(3);\n    }\n");
   }
 
   @Test public void ifBugWithPlainEmptyElse() {
@@ -1257,8 +1251,8 @@ public final class Version230 {
   }
 
   @Test public void infiniteLoopBug2() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(n.modifiers());\n"
-        + "    }")
+    trimmingOf(
+        " static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(n.modifiers());\n" + "    }")
             .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
                 + "      return hasAnnotation(s.modifiers());\n    }");
   }
@@ -1284,8 +1278,7 @@ public final class Version230 {
         .gives("  public int y() {\n    final Z $ = new Z(6);\n    S.h($.j);\n    return $;\n  }\n");
   }
 
-  @Ignore
-  @Test public void inlineArrayInitialization1() {
+  @Ignore @Test public void inlineArrayInitialization1() {
     trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" //
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
@@ -1644,9 +1637,8 @@ public final class Version230 {
   }
 
   @Test public void issue38Simplfiied() {
-    trimmingOf(
-        "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n                : null")
-            .stays();
+    trimmingOf("         o == CONDITIONAL_AND ? CONDITIONAL_OR \n            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n                : null")
+        .stays();
   }
 
   @Test public void issue39base() {
@@ -1810,9 +1802,7 @@ public final class Version230 {
   }
 
   @Test public void issue64a() {
-    trimmingOf(
-        "void f() {    final int a = f();\n    new Object() {\n      @Override public int hashCode() { return a; }\n    };}")
-            .stays();
+    trimmingOf("void f() {    final int a = f();\n    new Object() {\n      @Override public int hashCode() { return a; }\n    };}").stays();
   }
 
   @Test public void issue73a() {
@@ -2302,13 +2292,11 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1() {
-    trimmingOf("void m(String string) {String s = null;string.substring(s, 2, 18);}")
-        .gives("void m(String string){string.substring(null,2,18);}");
+    trimmingOf("void m(String string) {String s = null;string.substring(s, 2, 18);}").gives("void m(String string){string.substring(null,2,18);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1Simplified() {
-    trimmingOf("void m(String string) {String s = X;string.substring(s, 2, 18);}")
-        .gives("void m(String string){string.substring(X,2,18);}");
+    trimmingOf("void m(String string) {String s = X;string.substring(s, 2, 18);}").gives("void m(String string){string.substring(X,2,18);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1SimplifiedFurther() {
@@ -2317,8 +2305,8 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithLocal2() {
-    trimmingOf("TCPConnection conn(TCPConnection tcpCon) { UDPConnection c = new UDPConnection(57); if(tcpCon.isConnected()) "
-        + "   c.disconnect();}")
+    trimmingOf(
+        "TCPConnection conn(TCPConnection tcpCon) { UDPConnection c = new UDPConnection(57); if(tcpCon.isConnected()) " + "   c.disconnect();}")
             .gives("TCPConnection conn(TCPConnection tcpCon){ if(tcpCon.isConnected())   (new UDPConnection(57)).disconnect();}");
   }
 
@@ -2367,8 +2355,7 @@ public final class Version230 {
         .stays();
   }
 
-  @Ignore
-  @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
+  @Ignore @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
     trimmingOf("int s = 2;int n = s++;S.out.print(n);")//
         .gives("int s=2;S.out.print(s++);");
   }
@@ -2418,8 +2405,7 @@ public final class Version230 {
   @Test public void pushdowConditionalActualExampleSecondtest() {
     trimmingOf("return f(   determineEncoding(bytes)==Encoding.B     ? ENC_WORD_PREFIX+mimeCharset+B"
         + "     : ENC_WORD_PREFIX+mimeCharset+Q,text,charset,bytes);")
-            .gives("return f(  ENC_WORD_PREFIX + mimeCharset +  (determineEncoding(bytes)==Encoding.B ?B : Q),   text,charset,bytes"
-                + ");");
+            .gives("return f(  ENC_WORD_PREFIX + mimeCharset +  (determineEncoding(bytes)==Encoding.B ?B : Q),   text,charset,bytes" + ");");
   }
 
   @Test public void pushdownNot2LevelNotOfFalse() {
@@ -2704,8 +2690,7 @@ public final class Version230 {
   }
 
   @Test public void pushdownTernaryintoPrintln() {
-    trimmingOf("    if (s.equals(tipper))\n      S.h(Hey + res);\n    else\n      S.h(Ho + x + a);")
-        .gives("S.h(s.equals(tipper)?Hey+res:Ho+x+a);");
+    trimmingOf("    if (s.equals(tipper))\n      S.h(Hey + res);\n    else\n      S.h(Ho + x + a);").gives("S.h(s.equals(tipper)?Hey+res:Ho+x+a);");
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
@@ -2830,20 +2815,18 @@ public final class Version230 {
   }
 
   @Test public void redundantButNecessaryBrackets1() {
-    trimmingOf(
-        "if (windowSize != INFINITE_WINDOW) {\n  if (getN() == windowSize)\n    eDA.addElementRolling(variableDeclarationFragment);\n"
-            + "  else if (getN() <windowSize)\n    eDA.addElement(variableDeclarationFragment);\n} else {\n  System.h('!');\n"
-            + "  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n"
-            + "  eDA.addElement(variableDeclarationFragment);\n}")//
-                .stays();
+    trimmingOf("if (windowSize != INFINITE_WINDOW) {\n  if (getN() == windowSize)\n    eDA.addElementRolling(variableDeclarationFragment);\n"
+        + "  else if (getN() <windowSize)\n    eDA.addElement(variableDeclarationFragment);\n} else {\n  System.h('!');\n"
+        + "  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n"
+        + "  eDA.addElement(variableDeclarationFragment);\n}")//
+            .stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
-    trimmingOf(
-        "if (windowSize != INFINITE_WINDOW) {\n  if (getN() == windowSize)\n    eDA.addElementRolling(variableDeclarationFragment);\n"
-            + "} else {\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n"
-            + "  System.h('!');\n  System.h('!');\n  eDA.addElement(variableDeclarationFragment);\n}")//
-                .stays();
+    trimmingOf("if (windowSize != INFINITE_WINDOW) {\n  if (getN() == windowSize)\n    eDA.addElementRolling(variableDeclarationFragment);\n"
+        + "} else {\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n  System.h('!');\n"
+        + "  System.h('!');\n  System.h('!');\n  eDA.addElement(variableDeclarationFragment);\n}")//
+            .stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {
@@ -3034,12 +3017,11 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimmingOf(
-        "if (!s.equals(0xDEAD)) {  int res=0; for (int i=0;i<s.length();++i)        if (s.charAt(i)=='a')           res += 2;"
-            + "   else   if (s.charAt(i)=='d')             res -= 1;  return res;} else {     return 8;}")
-                .gives(" if (s.equals(0xDEAD)) \n    return 8;      int res = 0;\n      for (int i = 0;i <s.length();++i)\n"
-                    + "       if (s.charAt(i) == 'a')\n          res += 2;\n        else        if (s.charAt(i) == 'd')\n"
-                    + "          res -= 1;\n      return res;\n");
+    trimmingOf("if (!s.equals(0xDEAD)) {  int res=0; for (int i=0;i<s.length();++i)        if (s.charAt(i)=='a')           res += 2;"
+        + "   else   if (s.charAt(i)=='d')             res -= 1;  return res;} else {     return 8;}")
+            .gives(" if (s.equals(0xDEAD)) \n    return 8;      int res = 0;\n      for (int i = 0;i <s.length();++i)\n"
+                + "       if (s.charAt(i) == 'a')\n          res += 2;\n        else        if (s.charAt(i) == 'd')\n"
+                + "          res -= 1;\n      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02a() {
@@ -3070,8 +3052,7 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
-    trimmingOf("if (a) { f(); g(); h(); return a;}\nreturn c;")
-        .gives("if (!a) return c;f();g();h();return a;");
+    trimmingOf("if (a) { f(); g(); h(); return a;}\nreturn c;").gives("if (!a) return c;f();g();h();return a;");
   }
 
   @Test public void shortestOperand01() {
@@ -3484,8 +3465,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize05() {
-    trimmingOf(" int res = 0; if (s.equals(532))    res += 6;   else    res += 9;      ")
-        .gives("int res=0;res+=s.equals(532)?6:9;");
+    trimmingOf(" int res = 0; if (s.equals(532))    res += 6;   else    res += 9;      ").gives("int res=0;res+=s.equals(532)?6:9;");
   }
 
   @Test public void ternarize05a() {
@@ -3499,8 +3479,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize07a() {
-    trimmingOf("String res;res = s;   if (res==true)      res = s + 0xABBA;   S.h(res); ")
-        .gives("String res=s;if(res)res=s+0xABBA;S.h(res);");
+    trimmingOf("String res;res = s;   if (res==true)      res = s + 0xABBA;   S.h(res); ").gives("String res=s;if(res)res=s+0xABBA;S.h(res);");
   }
 
   @Test public void ternarize07aa() {
@@ -3589,8 +3568,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize21a() {
-    trimmingOf("   if (s.equals(known)){\n     S.out.l(gG);\n   } else {\n     S.out.l(kKz);\n   }")
-        .gives("S.out.l(s.equals(known)?gG:kKz);");
+    trimmingOf("   if (s.equals(known)){\n     S.out.l(gG);\n   } else {\n     S.out.l(kKz);\n   }").gives("S.out.l(s.equals(known)?gG:kKz);");
   }
 
   @Test public void ternarize22() {

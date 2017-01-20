@@ -51,7 +51,7 @@ public enum minus {
 
   public static int level(final List<Expression> xs) {
     int $ = 0;
-    for (final Expression ¢ : xs)
+    for (final Expression ¢ : xs) // NANO?
       $ += minus.level(¢);
     return $;
   }
