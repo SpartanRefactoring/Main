@@ -87,7 +87,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Collection, Field, Conditional, Exception, Safety, MethodBody {
+    Iterative, Field, Conditional, Exception, Safety, MethodBody {
       @Override public String toString() {
         return "Method Body";
       }
@@ -102,7 +102,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
         case "ConditionalExpression":
           return Conditional + "";
         case "EnhancedForStatement":
-          return Collection + "";
+          return Iterative + "";
         case "MethodDeclaration":
           return MethodBody + "";
         default:
