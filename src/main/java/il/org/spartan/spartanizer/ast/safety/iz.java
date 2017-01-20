@@ -317,7 +317,7 @@ public interface iz {
   }
 
   static boolean containsOperator(final ASTNode ¢) {
-    return iz.nodeTypeIn(¢, new int[] { ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT });
+    return iz.nodeTypeIn(¢, ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT);
   }
 
   /** @param ¢ JD
@@ -827,7 +827,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean numericLiteral(final Expression ¢) {
-    return iz.nodeTypeIn(¢, new int[] { CHARACTER_LITERAL, NUMBER_LITERAL });
+    return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
 
   static boolean parenthesizedExpression(final ASTNode ¢) {
@@ -1084,7 +1084,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean thisOrNull(final Expression ¢) {
-    return iz.nodeTypeIn(¢, new int[] { NULL_LITERAL, THIS_EXPRESSION });
+    return iz.nodeTypeIn(¢, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   static boolean tryStatement(final ASTNode ¢) {
