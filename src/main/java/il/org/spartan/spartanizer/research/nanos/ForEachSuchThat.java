@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
-public class ForEachFiltered extends ForEach {
+public class ForEachSuchThat extends ForEach {
   private static final String description = "ForEachThat pattern: conevrt to fluent API";
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;

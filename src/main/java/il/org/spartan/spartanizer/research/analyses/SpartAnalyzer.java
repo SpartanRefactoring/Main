@@ -29,7 +29,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // null) //
         .add(Block.class, //
             new CachingPattern(), //
-            new CopyCollection(), //
+            // new CopyCollection(), // R.I.P
             new FindFirst(), //
             new ReturnPrevious(), //
             new ReturnHoldsForAll(), //
@@ -52,7 +52,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Aggregate(), //
             new Collect(), //
             new ForEach(), //
-            new ForEachFiltered(), //
+            new ForEachSuchThat(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //
