@@ -55,7 +55,7 @@ public class PreferencesResources {
     }
 
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
-      for (final TipperGroup $ : TipperGroup.values())
+      for (final TipperGroup $ : TipperGroup.values()) // NANO?
         if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;

@@ -168,7 +168,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    for (final attribute ¢ : attribute.values())
+    for (final attribute ¢ : attribute.values()) // NANO?
       $.put(¢, unknown);
     return $;
   }
@@ -251,7 +251,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private static boolean valid(final Object... os) {
-    for (final Object ¢ : os)
+    for (final Object ¢ : os) // NANO?
       if (¢ == null)
         return false;
     return true;

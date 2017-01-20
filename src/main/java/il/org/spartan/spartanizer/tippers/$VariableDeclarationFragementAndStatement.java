@@ -26,7 +26,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   }
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f))
+    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f)) // NANO?
       if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
         return true;
     return false;
@@ -123,14 +123,14 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
   }
 
-  static boolean usedInSubsequentInitializers(VariableDeclarationFragment f, SimpleName n) {
+  static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
     boolean found = false;
     for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
       if (!found)
         found = ff == f;
       else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return true;
-    return false; 
+    return false;
   }
 
   protected boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
