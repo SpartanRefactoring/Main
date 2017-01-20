@@ -26,7 +26,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement s) {
     int $ = 0;
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+    for (final VariableDeclarationFragment ¢ : step.fragments(s)) // NANO?
       if (isFragmentApplicable(¢))
         ++$;
     return $ >= 2;
@@ -49,7 +49,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
-    for (final VariableDeclarationFragment $ : step.fragments(¢))
+    for (final VariableDeclarationFragment $ : step.fragments(¢)) // NANO?
       if (isFragmentApplicable($))
         return $;
     return null;

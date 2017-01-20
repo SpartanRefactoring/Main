@@ -26,7 +26,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   }
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f))
+    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f)) // NANO?
       if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
         return true;
     return false;

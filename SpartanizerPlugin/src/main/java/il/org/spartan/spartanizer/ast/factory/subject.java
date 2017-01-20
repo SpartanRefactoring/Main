@@ -25,7 +25,7 @@ public final class subject {
 
   public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
     InfixExpression $ = copy.of(base);
-    for (final Expression ¢ : adds)
+    for (final Expression ¢ : adds) // NANO?
       $ = append($, ¢);
     return $;
   }
@@ -306,7 +306,7 @@ public final class subject {
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
-      for (int ¢ = 2;; extendedOperands($).add(make.plant(operands.get(¢++)).into($)))
+      for (int ¢ = 2;; extendedOperands($).add(make.plant(operands.get(¢++)).into($))) // NANO
         if (¢ >= operands.size())
           return $;
     }
