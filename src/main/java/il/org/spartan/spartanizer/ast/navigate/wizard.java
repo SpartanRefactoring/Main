@@ -634,7 +634,7 @@ public interface wizard {
       return true;
     if (ns1.size() != ns2.size())
       return false;
-    for (final Integer ¢ : range.from(0).to(ns1.size()))
+    for (final Integer ¢ : range.to(ns1.size()))
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
@@ -659,7 +659,7 @@ public interface wizard {
    * @return */
   @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
     int $ = -1;
-    for (final Integer ¢ : range.from(0).to(es1.size()))
+    for (final Integer ¢ : range.to(es1.size()))
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
         if ($ >= 0)
           return -1;
