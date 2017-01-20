@@ -55,8 +55,8 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression> im
   }
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {
-    return operator(¢) == InfixExpression.Operator.PLUS && (iz.stringLiteral(left(¢)) && isStringTernaryWithParenth(right(¢))
-        || iz.stringLiteral(right(¢)) && isStringTernaryWithParenth(left(¢)));
+    return operator(¢) == InfixExpression.Operator.PLUS
+        && (iz.stringLiteral(left(¢)) && isStringTernaryWithParenth(right(¢)) || iz.stringLiteral(right(¢)) && isStringTernaryWithParenth(left(¢)));
   }
 
   private static boolean isStringTernaryWithParenth(final Expression x) {

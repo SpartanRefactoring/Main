@@ -242,7 +242,7 @@ public class Selection extends AbstractSelection<Selection> {
       final ASTNode n = getNodeByMarker($, m);
       if (n == null)
         return empty();
-      final ASTNode p = searchAncestors.forClass(c).from(n);
+      final ASTNode p = yieldAncestors.untilClass(c).from(n);
       return p == null ? empty() : TrackerSelection.empty().track(p).add($).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 

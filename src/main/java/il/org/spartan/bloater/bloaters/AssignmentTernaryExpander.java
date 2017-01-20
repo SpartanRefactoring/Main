@@ -37,7 +37,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
   }
 
   private static ASTNode replaceAssignment(final Statement ¢) {
-    ExpressionStatement expressionStatement = az.expressionStatement(¢);
+    final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
       return null;
     final Assignment $ = az.assignment(expressionStatement.getExpression());
