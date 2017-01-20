@@ -21,7 +21,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   public Self col(final Accumulator... as) {
-    for (final Accumulator ¢ : as) // Should be NANO
+    for (final Accumulator ¢ : as)
       col(¢);
     return self();
   }
@@ -116,7 +116,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T $) {
-    for (final Entry<String, String> ¢ : External.Introspector.toOrderedMap($).entrySet()) // Should be NANO
+    for (final Entry<String, String> ¢ : External.Introspector.toOrderedMap($).entrySet())
       col(¢.getKey(), ¢.getValue());
     return $;
   }

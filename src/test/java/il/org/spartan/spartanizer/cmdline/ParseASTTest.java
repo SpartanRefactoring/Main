@@ -17,7 +17,7 @@ public class ParseASTTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        for (final IExtendedModifier ¢ : extendedModifiers(d)) // NANO
+        for (final IExtendedModifier ¢ : extendedModifiers(d))
           if (¢ instanceof MarkerAnnotation && (¢ + "").contains("@Test") && (¢ + "").contains("@Test"))
             return true;
         return false;

@@ -96,7 +96,7 @@ public class Table extends Row<Table> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     int n = 0;
-    for (final RecordWriter ¢ : writers) // Should be NANO
+    for (final RecordWriter ¢ : writers)
       $ += "\t " + ++n + ". " + ¢.fileName + "\n";
     return $;
   }
