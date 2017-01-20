@@ -18,7 +18,7 @@ public class FindFirstTest {
   @Test public void b() {
     trimmingOf("for(Object i : is) if(i.isNice()) return i; throw new None();")//
         .using(Block.class, new FindFirst())//
-        .gives("if(is.stream().anyMatch(i->i.isNice()))return is.stream().findFirst(i->i.isNice()).get();throw new None();");
+        .gives("return is.stream().filter(i->i.isNice()).findFirst().orElseThrow(()->new None());");
   }
 
   @Test public void c() {
