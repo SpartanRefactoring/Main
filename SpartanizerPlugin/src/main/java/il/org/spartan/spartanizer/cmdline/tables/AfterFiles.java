@@ -199,6 +199,6 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
-    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
+    return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }

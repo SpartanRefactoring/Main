@@ -45,9 +45,9 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
    * @param ¢ statement
    * @return */
   private static boolean throwing(final Statement ¢) {
-    if (searchAncestors.forClass(TryStatement.class).from(¢) != null)
+    if (yieldAncestors.untilClass(TryStatement.class).from(¢) != null)
       return true;
-    final MethodDeclaration $ = az.methodDeclaration(searchAncestors.forClass(MethodDeclaration.class).from(¢));
+    final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
