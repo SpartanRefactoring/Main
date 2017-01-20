@@ -302,8 +302,8 @@ public class Toolbox {
             null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //
-            new DeclarationAssignment(), //
-            new DeclarationInitialiazelUpdateAssignment(), //
+            new DeclarationNoInitializerAssignment(), //
+            new DeclarationInitialiazerUpdateAssignment(), //
             new DeclarationInitializerIfAssignment(), //
             new DeclarationInitializerIfUpdateAssignment(), //
             new DeclarationInitializerReturnVariable(), //

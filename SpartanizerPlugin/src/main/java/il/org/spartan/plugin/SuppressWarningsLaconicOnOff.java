@@ -140,13 +140,13 @@ public final class SuppressWarningsLaconicOnOff {
         BodyDeclaration d;
         switch (t) {
           case CLASS:
-            d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
             break;
           case FILE:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(BodyDeclaration.class).inclusiveLastFrom(n);
             break;
           case FUNCTION:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(BodyDeclaration.class).inclusiveFrom(n);
             break;
           default:
             return;

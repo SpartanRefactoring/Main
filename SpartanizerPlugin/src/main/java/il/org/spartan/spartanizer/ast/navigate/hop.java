@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -40,30 +38,6 @@ public interface hop {
     };
   }
 
-  static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) searchAncestors.forType(COMPILATION_UNIT).from(¢);
-  }
-
-  /** @param ¢ JD
-   * @return ASTNode of the type if one of ¢'s parent ancestors is a container
-   *         type and null otherwise */
-  static ASTNode containerType(final ASTNode ¢) {
-    for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.nodeTypeIn($//
-          , ANONYMOUS_CLASS_DECLARATION //
-          , ANNOTATION_TYPE_DECLARATION //
-          , ENUM_DECLARATION //
-          , TYPE_DECLARATION //
-          , ENUM_CONSTANT_DECLARATION //
-      ))
-        return $;
-    return null;
-  }
-
-  static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
-    return searchAncestors.forClass(BodyDeclaration.class).from(¢);
-  }
-
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   static List<ASTNode> descendants(final ASTNode root) {
@@ -91,7 +65,7 @@ public interface hop {
   }
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    final MethodDeclaration $ = searchAncestors.forClass(MethodDeclaration.class).from(¢);
+    final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
     return $ == null ? null : $.getName() + "";
   }
 
@@ -105,18 +79,6 @@ public interface hop {
    *         <code><b>null</b></code> if not such sideEffects exists. */
   static ASTNode lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
-  }
-
-  /** Extract the {@link MethodDeclaration} that contains a given node.
-   * @param pattern JD
-   * @return inner most {@link MethodDeclaration} in which the parameter is
-   *         nested, or <code><b>null</b></code>, if no such statement
-   *         exists. */
-  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
-      if (iz.methodDeclaration($))
-        return az.methodDeclaration($);
-    return null;
   }
 
   static Name name(final Type ¢) {
