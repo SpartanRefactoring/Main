@@ -5,8 +5,6 @@ import static il.org.spartan.idiomatic.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
@@ -15,7 +13,7 @@ public final class BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
-    final ASTNode $ = hop.containerType(¢);
+    final ASTNode $ = il.org.spartan.spartanizer.ast.navigate.container.containerType(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 
