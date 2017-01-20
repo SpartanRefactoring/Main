@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 23-12-16 */
 public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
   private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
-    ConditionalExpression ¢ = az.conditionalExpression(!(x instanceof ParenthesizedExpression) ? x : az.parenthesizedExpression(x).getExpression());
+    final ConditionalExpression ¢ = az.conditionalExpression(!(x instanceof ParenthesizedExpression) ? x : az.parenthesizedExpression(x).getExpression());
     if (¢ == null)
       return null;
     // TODO: Raviv use class subject --yg

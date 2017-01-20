@@ -51,7 +51,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> i
     if (l.size() != 2)
       return null;
     switchBranch t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
-    if(iz.stringLiteral(expression(lisp.first(t.cases()))))
+    if (iz.stringLiteral(expression(lisp.first(t.cases()))))
       return null;
     final switchBranch s1 = lisp.first(l), s2 = lisp.last(l);
     if (!s1.hasDefault() && !s2.hasDefault() || s1.hasFallThrough() || s2.hasFallThrough() || !s1.hasStatements() || !s2.hasStatements()

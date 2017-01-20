@@ -10,7 +10,6 @@ import il.org.spartan.bloater.bloaters.*;
  * {@link RenameShortNamesVarDec}
  * @author Raviv Rachmiel
  * @since 15-01-2017 */
-
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue0979 {
