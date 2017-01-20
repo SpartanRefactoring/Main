@@ -34,12 +34,12 @@ public interface Linguistic {
 
     String getIng();
   }
+
   /** Error string, replacing null/error value. */
   String UNKNOWN = "???";
   String SEPARATOR = ", ";
   String DOUBLE_FORMAT = "0.00";
   String TRIM_SUFFIX = "...";
-
   int TRIM_THRESHOLD = 50;
 
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
