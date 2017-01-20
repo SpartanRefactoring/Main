@@ -82,8 +82,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static int lastDifference(final String s1, final String s2) {
-      //noinspection StringEquality
-      if (s1 != shorter(s1, s2))
+    // noinspection StringEquality
+    if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();
     if (s1.length() == 0)
