@@ -39,7 +39,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
         if (!iz.voidType(step.returnType(d)))
           return;
         final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
-        n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(searchAncestors.forContainingType().from(d)))));
+        n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
         wizard.addStatement(n, s, r, g);
