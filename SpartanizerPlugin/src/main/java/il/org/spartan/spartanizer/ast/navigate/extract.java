@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -42,7 +43,7 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
-    return annotations(extendedModifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
@@ -56,11 +57,11 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
-    return annotations(extendedModifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
-    return annotations(extendedModifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -191,7 +192,7 @@ public enum extract {
       case BLOCK:
         return fragmentsInto((Block) ¢, $);
       case VARIABLE_DECLARATION_STATEMENT:
-        $.addAll(fragments(az.variableDeclrationStatement(¢)));
+        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
         return $;
       default:
         return $;
@@ -199,17 +200,17 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    statements(b).stream().filter(iz::variableDeclarationStatement).forEach(¢ -> extract.fragmentsInto(az.variableDeclrationStatement(¢), $));
+    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(¢ -> extract.fragmentsInto(az.variableDeclrationStatement(¢), $));
     return $;
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    $.addAll(fragments(s));
+    $.addAll(step.fragments(s));
     return $;
   }
 
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    statements(b).forEach(¢ -> ifsInto(¢, $));
+    step.statements(b).forEach(¢ -> ifsInto(¢, $));
     return $;
   }
 
@@ -317,7 +318,7 @@ public enum extract {
   }
 
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {
-    for (final Integer $ : range.to(ss.size() - 1))
+    for (final Integer $ : range.from(0).to(ss.size() - 1))
       if (ss.get($) == s)
         return ss.get($ + 1);
     return null;
@@ -383,7 +384,7 @@ public enum extract {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
-    return $ == null ? null : next(¢, statements($));
+    return $ == null ? null : next(¢, step.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {
@@ -395,7 +396,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    for (final VariableDeclarationFragment $ : step.fragments(¢)) // Should be NANO
+    for (final VariableDeclarationFragment $ : step.fragments(¢))
       if (!iz.identifier("$", $.getName()))
         return $.getName();
     return null;
@@ -453,7 +454,7 @@ public enum extract {
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement containingStatement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = $.getParent()) // Should be NANO
+    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
         return az.statement($);
     return null;
@@ -470,7 +471,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    statements(b).forEach(¢ -> statementsInto(¢, $));
+    step.statements(b).forEach(¢ -> statementsInto(¢, $));
     return $;
   }
 
@@ -497,22 +498,21 @@ public enum extract {
   }
 
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
-    final List<Statement> ll = statements(s);
+    final List<Statement> ll = step.statements(s);
     final int ind = indexOf(ll, c);
     if (ind < 0)
       return null;
     final List<SwitchCase> $ = new ArrayList<>();
     $.add(c);
-    
-    for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)// Should be NANO
+    for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
       $.add(az.switchCase(ll.get(¢)));
-    for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)// Should be NANO
+    for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
       $.add(az.switchCase(ll.get(¢)));
     return $;
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
-    return statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
   }
 
   /** @param n a node to extract an expression from
