@@ -20,9 +20,6 @@ public interface scope {
       switch ($.getNodeType()) {
         case ASTNode.BLOCK:
           return $;
-        default:
-          return null;
-            
       }
     return null;
   }
