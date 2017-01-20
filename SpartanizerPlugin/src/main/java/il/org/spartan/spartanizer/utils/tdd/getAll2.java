@@ -63,15 +63,14 @@ public enum getAll2 {
     final ArrayList<String> $ = new ArrayList<>();
     if (d == null)
       return $;
-    for (final FieldDeclaration fd : d.getFields())
-      for (final Object mod : fd.modifiers())
-        if ("public".equals(mod + "")) {
-          final String[] field_splitted_to_words = (fd + "").trim().split(" ");
-          final int field_name_idx = field_splitted_to_words.length - 1;
-          if (field_name_idx < 0)
-            continue;
-          $.add(field_splitted_to_words[field_name_idx].replace(";", "").trim());
-        }
+    for (final FieldDeclaration fd : d.getFields()) // Should eventually be Nano
+      if (iz.public¢(fd)) {
+        final String[] field_splitted_to_words = (fd + "").trim().split(" ");
+        final int field_name_idx = field_splitted_to_words.length - 1;
+        if (field_name_idx < 0)
+          continue;
+        $.add(field_splitted_to_words[field_name_idx].replace(";", "").trim());
+      }
     return $;
   }
 

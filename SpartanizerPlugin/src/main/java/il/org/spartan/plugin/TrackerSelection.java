@@ -7,6 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+
 public class TrackerSelection extends Selection {
   ASTNode track;
   int length;
@@ -29,10 +31,9 @@ public class TrackerSelection extends Selection {
 
   public void update() {
     first(inner).dispose();
-    final ASTNode newTrack = fix(track.getNodeType(),
-        track.getLength() > length
-            ? new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
-            : new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
+    final ASTNode newTrack = searchAncestors.forType(track.getNodeType()).from(track.getLength() > length
+    ? new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+    : new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {
       inner.clear(); // empty selection
       return;
@@ -46,13 +47,6 @@ public class TrackerSelection extends Selection {
     final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
-    return $;
-  }
-
-  private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
-    ASTNode $;
-    for ($ = coveredNode; $ != null && $.getNodeType() != nodeType;)
-      $ = $.getParent();
     return $;
   }
 
