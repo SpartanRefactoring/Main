@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -40,6 +41,59 @@ public class Analyze {
       put("magic numbers", new MagicNumbersAnalysis());
     }
   };
+
+  public static void summarize(final String outputDir) {
+    summarizeMethodStatistics(outputDir);
+  }
+
+  private static double min(final double a, final double d) {
+    return a < d ? a : d;
+  }
+
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/methodStatistics");
+  }
+
+  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/npStatistics.csv");
+  }
+
+  public static CSVStatistics openSummaryFile(final String $) {
+    try {
+      return new CSVStatistics($, "property");
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "opening report file");
+      return null;
+    }
+  }
+
+  private static void summarizeMethodStatistics(final String outputDir) {
+    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    if (report == null)
+      return;
+    double sumSratio = 0, sumEratio = 0;
+    for (final Integer k : Logger.methodsStatistics.keySet()) {
+      final MethodRecord m = Logger.methodsStatistics.get(k);
+      report //
+          .put("Name", m.methodClassName + "~" + m.methodName) //
+          .put("#Statement", m.numStatements) //
+          .put("#NP Statements", m.numNPStatements) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements, m.numStatements))) //
+          .put("#Expressions", m.numExpressions) //
+          .put("#NP expressions", m.numNPExpressions) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions, m.numExpressions))) //
+          .put("#Parameters", m.numParameters) //
+          .put("#NP", m.nps.size()) //
+      ;
+      report.nl();
+      sumSratio += m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements, m.numStatements));
+      sumEratio += m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions, m.numExpressions));
+    }
+    System.out.println("Total methods: " + Logger.numMethods);
+    System.out.println("Average statement ratio: " + safe.div(sumSratio, Logger.numMethods));
+    System.out.println("Average Expression ratio: " + safe.div(sumEratio, Logger.numMethods));
+    report.close();
+  }
 
   public static void main(final String args[]) {
     AnalyzerOptions.parseArguments(args);
@@ -135,7 +189,7 @@ public class Analyze {
       // appendFile(new File(getProperty("outputDir") + "/after.java"),
       // spartanize(cu));
     }
-    Logger.summarize(outputDir());
+    summarize(outputDir());
   }
 
   private static String spartanize(final ASTNode cu) {
