@@ -53,6 +53,7 @@ public class Matcher {
   private static final String $M = "$M"; // MethodInvocation
   private static final String $N = "$N"; // Name
   private static final String $SN = "$SN"; // SimpleName
+  // private static final String $ST = "$ST"; // Single Statement (non block)
   final Supplier<ASTNode> patternSupplier;
   ASTNode _pattern;
   final String replacement;
