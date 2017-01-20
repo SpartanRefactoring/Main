@@ -32,7 +32,7 @@ public class SentenceTestTemplate {
   static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
-      for (final AnonymousClassDeclaration d : searchDescendants.forClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
+      for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
         final Vocabulary reify = MetaTestCase.reify(d);
         if (reify != null)
           $.add(new ArrayList<>(reify.values()));

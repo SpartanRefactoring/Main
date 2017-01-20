@@ -39,7 +39,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
-    return searchDescendants.forClass(ReturnStatement.class).from(¢);
+    return yieldDescendants.untilClass(ReturnStatement.class).from(¢);
   }
 
   default boolean hazNoParameters(final MethodDeclaration ¢) {
@@ -107,7 +107,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean returnTypeSameAsClass(final MethodDeclaration ¢) {
-    return identifier(name(searchAncestors.forContainingType().from(¢))).equals(returnType(¢) + "");
+    return identifier(name(yieldAncestors.untilContainingType().from(¢))).equals(returnType(¢) + "");
   }
 
   default Statement firstStatement(final MethodDeclaration ¢) {
