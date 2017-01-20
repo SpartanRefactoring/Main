@@ -33,7 +33,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignment(), //
             new AssignmentTernaryExpander(), //
-            // new StatementExtractParameters<>(),
+//             new StatementExtractParameters<>(),
             new ClassInstanceIntoVariable())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
@@ -61,8 +61,8 @@ public class InflaterProvider extends OperationsProvider {
         // new OutlineTernaryMethodInvocation()) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryExpander()) //
-         .add(MethodDeclaration.class, //
-         new RenameShortNamesMethodDec()) //
+//         .add(MethodDeclaration.class, //
+//         new RenameShortNamesMethodDec()) //
         // .add(VariableDeclarationStatement.class, //
         // new RenameShortNamesVarDec()) //
         .add(ThrowStatement.class, //
