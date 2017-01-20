@@ -37,7 +37,7 @@ public class definitionTest extends MetaFixture {
       put("@class¢", null);
       put("@enum¢", null);
       put("@interface¢", null);
-      for (@ScopeSize(1) @foreach final definition.Kind ¢ : definition.Kind.values()) // Should be NANO
+      for (@ScopeSize(1) @foreach final definition.Kind ¢ : definition.Kind.values())
         put("@" + ¢, null);
     }
     @field static final long serialVersionUID = 1L;
@@ -111,19 +111,19 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a15() {
-    for (@foreach final MarkerAnnotation ¢ : markers()) // Should be NANO
+    for (@foreach final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@field") != null;
   }
 
   @Test @method public void a16() {
-    for (@foreach final MarkerAnnotation ¢ : markers()) // Should be NANO
+    for (@foreach final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
-    for (final MarkerAnnotation ¢ : markers()) // Should be NANO
+    for (final MarkerAnnotation ¢ : markers())
       annotations.put(¢ + "", ¢);
     assert annotations.get("@enumConstant") != null;
   }
@@ -167,7 +167,7 @@ public class definitionTest extends MetaFixture {
   @Test public void a25() {
     for (final MarkerAnnotation a : markers())
       if ("@for¢".equals(a + ""))
-        for (final SimpleName ¢ : annotees.of(a)) // Should be NANO
+        for (final SimpleName ¢ : annotees.of(a))
           azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""));
   }
 

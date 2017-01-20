@@ -85,7 +85,7 @@ public interface TableRenderer {
     MARKDOWN {
       @Override public String afterHeader() {
         String $ = "| ";
-        for (int ¢ = 0; ¢ < lastSize; ++¢) // Should be NANO
+        for (int ¢ = 0; ¢ < lastSize; ++¢)
           $ += "--- |";
         return $ + NL;
       }
@@ -173,17 +173,14 @@ public interface TableRenderer {
   default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
     final Separator s = new Separator(recordSeparator());
-    for (final Object ¢ : values) // Should be NANO
-      $.append(s).append(cell(¢));
+    for (final Object ¢ : values)
+      $.append(s)
+          .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)//
+              : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue())) //
+                  : ¢ instanceof Long ? cellInt((Long) ¢) //
+                      : ¢ instanceof Double ? cellReal((Double) ¢) //
+                          : ¢);
     return $ + recordEnd();
-  }
-
-  default Object cell(final Object ¢) {
-    return ¢ instanceof Object[] ? cellArray((Object[]) ¢)//
-        : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue())) //
-            : ¢ instanceof Long ? cellInt((Long) ¢) //
-                : ¢ instanceof Double ? cellReal((Double) ¢) //
-                    : ¢;
   }
 
   void setHeaderCount(int size);

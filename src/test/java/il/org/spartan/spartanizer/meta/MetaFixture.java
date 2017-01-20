@@ -66,7 +66,7 @@ public abstract class MetaFixture {
   }
 
   private static CompilationUnit loadAST(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from(".")) // Should be NANO: Find First
+    for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = Make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);

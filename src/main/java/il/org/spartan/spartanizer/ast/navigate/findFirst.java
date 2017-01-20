@@ -265,7 +265,7 @@ public interface findFirst {
   }
 
   static ConditionalExpression conditionalArgument(final MethodInvocation ¢) {
-    for (final Expression $ : step.arguments(¢)) // Should be NANO
+    for (final Expression $ : step.arguments(¢))
       if (iz.conditionalExpression($))
         return az.conditionalExpression($);
     return null;

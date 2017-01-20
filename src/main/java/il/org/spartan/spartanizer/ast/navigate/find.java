@@ -21,7 +21,7 @@ public enum find {
     Expression $;
     if (l.size() < 2 || ($ = singleExpressionDifference(l.get(0), l.get(1))) == null)
       return null;
-    for (int ¢ = 2; ¢ < l.size(); ++¢)  // Should be NANO
+    for (int ¢ = 2; ¢ < l.size(); ++¢)
       if (!$.equals(singleExpressionDifference(l.get(0), l.get(¢))))
         return null;
     return $;
