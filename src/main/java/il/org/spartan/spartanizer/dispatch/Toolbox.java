@@ -12,6 +12,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -156,6 +157,7 @@ public class Toolbox {
             // new CachingPattern(), // v 2.7
             new BlockInlineStatementIntoNext(), //
             // new BlockRemoveDeadVariables(), // v 2.7
+//            new FindFirst(),
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
