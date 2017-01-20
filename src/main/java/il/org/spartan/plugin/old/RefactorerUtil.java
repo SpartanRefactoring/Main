@@ -56,14 +56,6 @@ public class RefactorerUtil {
     return i + "/" + $;
   }
 
-  public static String plurals(final String s, final int i) {
-    return i == 1 ? s : s + "s";
-  }
-
-  public static String plurales(final String s, final int i) {
-    return i == 1 ? s : s + "es";
-  }
-
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
       final Map<attribute, Object> a, final attribute t) {
     if (us.isEmpty())
