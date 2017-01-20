@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
@@ -120,5 +121,19 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
       return null;
     final SimpleName $ = f.getName();
     return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
+  }
+
+  static boolean usedInSubsequentInitializers(VariableDeclarationFragment f, SimpleName n) {
+    boolean found = false;
+    for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
+      if (!found)
+        found = ff == f;
+      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+        return true;
+    return false; 
+  }
+
+  protected boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
+    return initializer == null || haz.annotation(f);
   }
 }

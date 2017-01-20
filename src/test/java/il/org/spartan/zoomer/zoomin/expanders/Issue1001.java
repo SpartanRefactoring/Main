@@ -28,7 +28,7 @@ public class Issue1001 {
       int b;
       a = 0;
       b = 0;
-      x(a += b += 1);
+      x(  a += b += 1);
     }
 
     void f3() {
