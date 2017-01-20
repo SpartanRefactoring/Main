@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -91,14 +91,13 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
       return false;
     final ExpressionStatement es = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(es.getExpression())) {
-      final MethodInvocation m = (MethodInvocation) es.getExpression();
-      final Expression $ = !iz.parenthesizedExpression(expression(m)) ? expression(m) : ((ParenthesizedExpression) expression(m)).getExpression();
+      final Expression $ = core(expression((MethodInvocation) es.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(es.getExpression()))
       return false;
-    final FieldAccess fa = (FieldAccess) es.getExpression();
-    final Expression e = !iz.parenthesizedExpression(fa.getExpression()) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
+    Expression expression = ((FieldAccess) es.getExpression()).getExpression();
+    final Expression e = core(expression);
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
