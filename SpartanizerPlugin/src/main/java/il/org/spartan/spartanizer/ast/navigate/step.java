@@ -38,7 +38,7 @@ public enum step {
 
   private static boolean balanced(final String s) {
     int $ = 0;
-    for (final Integer ¢ : range.from(0).to(s.length()))
+    for (final Integer ¢ : range.to(s.length()))
       if (s.charAt(¢.intValue()) == '<')
         ++$;
       else if (s.charAt(¢.intValue()) == '>')
