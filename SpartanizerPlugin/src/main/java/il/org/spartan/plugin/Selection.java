@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -145,11 +144,11 @@ public class Selection extends AbstractSelection<Selection> {
     return this;
   }
 
-  @Override @SuppressWarnings("deprecation") public String toString() {
+  @Override public String toString() {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();
-    return "{" + (inner == null ? null : $ + " " + RefactorerUtil.plurals("file", $)) + ", "
+    return "{" + (inner == null ? null : $ + " " + Linguistic.plurals("file", $)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
   }
 
