@@ -75,7 +75,7 @@ public enum into {
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {
     final List<Expression> $ = new ArrayList<>();
-    for (final String expression : expressions) // Should be NANO
+    for (final String expression : expressions)
       $.add(e(expression));
     return $;
   }

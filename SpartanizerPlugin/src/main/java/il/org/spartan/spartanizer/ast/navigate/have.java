@@ -18,7 +18,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Expression... xs) {
-    for (final Expression ¢ : xs) // Should be NANO
+    for (final Expression ¢ : xs)
       if (iz.booleanLiteral(¢))
         return true;
     return false;
@@ -29,7 +29,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> xs) {
-    for (final Expression ¢ : xs) // Should be NANO
+    for (final Expression ¢ : xs)
       if (iz.booleanLiteral(¢))
         return true;
     return false;
@@ -40,8 +40,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> xs) {
-    for (final Expression ¢ : xs) // Should be NANO
-      if (iz.literal.false¢(¢))
+    for (final Expression ¢ : xs)
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal.false¢(¢))
         return true;
     return false;
   }
@@ -51,8 +51,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
   public static boolean literal(final Expression... xs) {
-    for (final Expression ¢ : xs) // Should be NANO
-      if (iz.literal(¢))
+    for (final Expression ¢ : xs)
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal(¢))
         return true;
     return false;
   }
@@ -63,7 +63,7 @@ public enum have {
    *         that is a literal. */
   public static boolean literal(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (iz.literal(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal(¢))
         return true;
     return false;
   }
@@ -96,7 +96,7 @@ public enum have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (iz.literal.true¢(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal.true¢(¢))
         return true;
     return false;
   }
