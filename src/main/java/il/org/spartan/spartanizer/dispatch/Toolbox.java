@@ -90,12 +90,13 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
-            new EnhancedForRedundantConinue(), //
+            new EnhancedForRedundantContinue(), //
             null)//
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
@@ -202,7 +203,7 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new ReturnStatementRedundantInVoidMethod(), //
+            // new ReturnStatementRedundantInVoidMethod(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
             // This is a new
             // tipper
