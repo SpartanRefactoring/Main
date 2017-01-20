@@ -124,7 +124,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
     final List<Expression> common = new ArrayList<>(), different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
-    for (final Integer i : range.from(0).to(xs.size())) {
+    for (final Integer i : range.to(xs.size())) {
       temp = removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
@@ -138,7 +138,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       }
     }
     Expression addition = null;
-    for (final Integer ¢ : range.from(0).to(different.size() - 1))
+    for (final Integer ¢ : range.to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())

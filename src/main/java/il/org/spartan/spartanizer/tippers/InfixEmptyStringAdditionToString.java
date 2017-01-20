@@ -40,7 +40,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     assert es.size() > 1;
     final List<Expression> $ = new ArrayList<>();
     boolean isString = false;
-    for (final Integer i : range.from(0).to(es.size())) {
+    for (final Integer i : range.to(es.size())) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);
