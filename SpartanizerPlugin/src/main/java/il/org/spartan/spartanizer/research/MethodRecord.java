@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Collects statistics for a method in which a nanopattern was found.
  * @author Ori Marcovitch
@@ -43,7 +44,13 @@ public class MethodRecord {
       return;
     numNPStatements += measure.statements(n);
     numNPExpressions += measure.expressions(n);
+    if (epxressionWholeStatement(n))
+      ++numNPStatements;
     nps.add(np);
+  }
+
+  private static boolean epxressionWholeStatement(final ASTNode ¢) {
+    return iz.expression(¢) && iz.expressionStatement(parent(¢));
   }
 
   private static final List<String> excluded = Collections.singletonList(ArgumentsTuple.class.getSimpleName());
