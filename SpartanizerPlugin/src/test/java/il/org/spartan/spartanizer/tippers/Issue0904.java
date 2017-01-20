@@ -8,8 +8,9 @@ import org.junit.*;
  * failed tests. Related to {@link Issue0359}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-@Ignore
+
 // TODO: Ravi Rachmiel
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0904 {
   @Test public void a() {

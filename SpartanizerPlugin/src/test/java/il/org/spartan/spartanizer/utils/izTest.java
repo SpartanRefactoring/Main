@@ -77,7 +77,7 @@ public final class izTest {
   }
 
   @Test public void isOneOf() {
-    assert iz.nodeTypeIn(e("this"), new int[] { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION });
+    assert iz.nodeTypeIn(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   @Test public void isThisFalse1() {

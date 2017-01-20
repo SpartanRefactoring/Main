@@ -104,9 +104,9 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override public String description(final InfixExpression x) {
-    final Expression $ = right(x), left = left(x);
-    return description(expression(left instanceof MethodInvocation ? left : $));
+  @Override public String description(final InfixExpression ¢) {
+    final Expression $ = left(¢);
+    return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
