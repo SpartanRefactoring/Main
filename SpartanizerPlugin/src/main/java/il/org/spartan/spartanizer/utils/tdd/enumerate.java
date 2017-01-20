@@ -97,7 +97,7 @@ public enum enumerate {
     // d.accept(new ASTVisitor() {
     //
     // });
-    for (final Integer ¢ : range.to(arr.length)) // Should be NANO
+    for (final Integer ¢ : range.from(0).to(arr.length)) // Should be NANO
       arr[¢] = false;
     for (final Object ¢ : rs)
       if (¢ instanceof Block && !arr[BLOCK]) {

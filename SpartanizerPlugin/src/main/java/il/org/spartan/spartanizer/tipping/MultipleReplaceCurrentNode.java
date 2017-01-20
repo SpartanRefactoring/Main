@@ -31,7 +31,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
           for (final ASTNode ¢ : input)
             r.replace(¢, first(output), g);
         else if (input.size() == output.size())
-          for (final Integer ¢ : range.to(input.size()))
+          for (final Integer ¢ : range.from(0).to(input.size()))
             r.replace(input.get(¢), output.get(¢), g);
       }
     };
