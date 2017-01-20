@@ -148,8 +148,8 @@ public class Selection extends AbstractSelection<Selection> {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();
-    return "{" + (inner == null ? null : $ + " " + Linguistic.plurals("file", $)) + ", "
-        + (textSelection == null ? null : printable(textSelection)) + "}";
+    return "{" + (inner == null ? null : $ + " " + Linguistic.plurals("file", $)) + ", " + (textSelection == null ? null : printable(textSelection))
+        + "}";
   }
 
   /** @param ¢ JD

@@ -159,9 +159,9 @@ public interface wizard {
                                         : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
 
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> l) {
+  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
     boolean add = false;
-    for (final ASTNode x : l)
+    for (final ASTNode x : ns)
       if (add)
         $.add(x);
       else

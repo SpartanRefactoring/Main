@@ -115,8 +115,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override @SuppressWarnings("boxing") public String getEndingMessage(final Map<attribute, Object> ¢) {
       final int $ = getChangesCount(¢);
       return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + $ + " " + Linguistic.plurals("file", $) + " spartanized in "
-          + ¢.get(attribute.PASSES) + " " + Linguistic.plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS)
-          + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+          + ¢.get(attribute.PASSES) + " " + Linguistic.plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t"
+          + ¢.get(attribute.TOTAL_TIPS) + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t"
+          + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
