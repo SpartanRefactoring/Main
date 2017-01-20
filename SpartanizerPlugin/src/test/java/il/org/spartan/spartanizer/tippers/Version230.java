@@ -1284,7 +1284,8 @@ public final class Version230 {
         .gives("  public int y() {\n" + "    final Z $ = new Z(6);\n" + "    S.h($.j);\n" + "    return $;\n" + "  }\n");
   }
 
-  @Ignore @Test public void inlineArrayInitialization1() {
+  @Ignore
+  @Test public void inlineArrayInitialization1() {
     trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" //
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
@@ -2366,8 +2367,8 @@ public final class Version230 {
         .stays();
   }
 
-  // TODO: check when #1067 is solved
-  @Ignore @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
+  @Ignore
+  @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
     trimmingOf("int s = 2;" + "int n = s++;" + "S.out.print(n);")//
         .gives("int s=2;S.out.print(s++);");
   }
