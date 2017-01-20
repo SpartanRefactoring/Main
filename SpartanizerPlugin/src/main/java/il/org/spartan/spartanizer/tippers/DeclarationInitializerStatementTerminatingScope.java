@@ -89,15 +89,14 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    final ExpressionStatement es = (ExpressionStatement) nextStatement;
-    if (iz.methodInvocation(es.getExpression())) {
-      final Expression $ = core(expression((MethodInvocation) es.getExpression()));
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
-    if (!iz.fieldAccess(es.getExpression()))
+    if (!iz.fieldAccess(x.getExpression()))
       return false;
-    Expression expression = ((FieldAccess) es.getExpression()).getExpression();
-    final Expression e = core(expression);
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
