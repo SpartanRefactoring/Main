@@ -28,40 +28,41 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
+  interface literal {
+    /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
+    }
+  }
+
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
-   *         false otherwise */
-  default boolean parsesTo(final String $, final double d) {
-    try {
-      return Double.parseDouble($) == d;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return false;
-    }
-  }
-
-  default boolean parsesTo(final String $, final int i) {
-    try {
-      return parseInt($) == i;
-    } catch (final NumberFormatException __) {
-      ___.unused(__);
-      return false;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return false;
-    }
-  }
-
-  default boolean parsesTo(final String $, final long l) {
-    try {
-      return parseLong($) == l;
-    } catch (final IllegalArgumentException ¢) {
-      monitor.logEvaluationError(box(l), ¢);
-      return false;
-    }
-  }
+  List<String> defaultValues = Arrays.asList("null", "0", "false");
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
@@ -94,14 +95,15 @@ public interface iz {
         Assignment.Operator.class }).contains(¢.getClass());
   }
 
-  static boolean arrayInitializer(final ASTNode ¢) {
-    return iz.nodeTypeEquals(¢, ARRAY_INITIALIZER);
+  /** Ceck if an ASTNode is an Array Acess
+   * @param ¢ JD
+   * @return */
+  static boolean arrayAccess(final ASTNode ¢) {
+    return nodeTypeEquals(¢, ARRAY_ACCESS);
   }
 
-  List<String> defaultValues = Arrays.asList("null", "0", "false");
-
-  static boolean defaultLiteral(final ASTNode ¢) {
-    return defaultValues.contains(¢ + "");
+  static boolean arrayInitializer(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, ARRAY_INITIALIZER);
   }
 
   /** @param pattern the statement or block to check if it is an assignment
@@ -250,13 +252,6 @@ public interface iz {
     return nodeTypeEquals(¢, CONDITIONAL_EXPRESSION);
   }
 
-  /** Ceck if an ASTNode is an Array Acess
-   * @param ¢ JD
-   * @return */
-  static boolean arrayAccess(final ASTNode ¢) {
-    return nodeTypeEquals(¢, ARRAY_ACCESS);
-  }
-
   /** @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
@@ -330,6 +325,10 @@ public interface iz {
     return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
+  static boolean defaultLiteral(final ASTNode ¢) {
+    return defaultValues.contains(¢ + "");
+  }
+
   /** Check whether the operator of an expression is susceptible for applying
    * one of the two de Morgan laws.
    * @param x InfixExpression
@@ -354,6 +353,12 @@ public interface iz {
 
   static boolean doubleType(final Expression ¢) {
     return type.of(¢) == DOUBLE;
+  }
+
+  /** @param x JD
+   * @return */
+  static boolean emptyBlock(final Block x) {
+    return statements(x) == null || statements(x).isEmpty();
   }
 
   /** Determine whether a node is an {@link EmptyStatement}
@@ -544,14 +549,14 @@ public interface iz {
     return operator(az.infixExpression(¢)) == TIMES;
   }
 
+  static boolean initializer(ASTNode c) {
+    return iz.nodeTypeEquals(c, INITIALIZER); 
+  }
+
   /** @param ¢ JD
    * @return */
   static boolean instanceofExpression(final Expression ¢) {
     return ¢ != null && ¢ instanceof InstanceofExpression;
-  }
-
-  static boolean loop(final ASTNode ¢) {
-    return forStatement(¢) || enhancedFor(¢) || whileStatement(¢) || doStatement(¢);
   }
 
   /** @param ¢ JD
@@ -637,12 +642,12 @@ public interface iz {
   }
 
   /** Determine whether an item is the last one in a list
-   * @param tipper a list item
-   * @param l a list
+   * @param t a list item
+   * @param ts a list
    * @return <code><b>true</b></code> <i>iff</i> the item is found in the list
    *         and it is the last one in it. */
-  static <T> boolean last(final T t, final List<T> l) {
-    return l.indexOf(t) == l.size() - 1;
+  static <T> boolean last(final T t, final List<T> ts) {
+    return ts.indexOf(t) == ts.size() - 1;
   }
 
   /** Determines whether a statement is last statement in its containing method
@@ -731,6 +736,10 @@ public interface iz {
 
   static boolean longType(final Expression ¢) {
     return type.of(¢) == LONG;
+  }
+
+  static boolean loop(final ASTNode ¢) {
+    return forStatement(¢) || enhancedFor(¢) || whileStatement(¢) || doStatement(¢);
   }
 
   static boolean memberRef(final ASTNode ¢) {
@@ -1207,41 +1216,36 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
-  interface literal {
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
+  /** @param ¢ JD
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
+   *         false otherwise */
+  default boolean parsesTo(final String $, final double d) {
+    try {
+      return Double.parseDouble($) == d;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return false;
     }
   }
 
-  /** @param x JD
-   * @return */
-  static boolean emptyBlock(final Block x) {
-    return statements(x) == null || statements(x).isEmpty();
+  default boolean parsesTo(final String $, final int i) {
+    try {
+      return parseInt($) == i;
+    } catch (final NumberFormatException __) {
+      ___.unused(__);
+      return false;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return false;
+    }
+  }
+
+  default boolean parsesTo(final String $, final long l) {
+    try {
+      return parseLong($) == l;
+    } catch (final IllegalArgumentException ¢) {
+      monitor.logEvaluationError(box(l), ¢);
+      return false;
+    }
   }
 }

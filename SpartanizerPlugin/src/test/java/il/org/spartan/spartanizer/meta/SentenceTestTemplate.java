@@ -22,11 +22,12 @@ import il.org.spartan.spartanizer.utils.*;
 /** A demo on testing with a {!@link {@link MetaFixture}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
+  @Ignore
 public class SentenceTestTemplate {
   public static final Trimmer trimmer = new Trimmer();
 
   static List<List<MethodDeclaration>> allSentences() {
-    return collectSentences(new Issue1090());
+    return collectSentences(new Issue1008());
   }
 
   static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
@@ -44,7 +45,6 @@ public class SentenceTestTemplate {
    * it has n-1 phrases.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
     @Parameter(1) public MethodDeclaration changes;
@@ -75,7 +75,6 @@ public class SentenceTestTemplate {
    * it has n-1 phrases.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
     @Parameter(1) public MethodDeclaration first;
@@ -122,7 +121,6 @@ public class SentenceTestTemplate {
    * {@link disabling} label in its javaDoc.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class Stays {
     @Parameter(0) public String name;
