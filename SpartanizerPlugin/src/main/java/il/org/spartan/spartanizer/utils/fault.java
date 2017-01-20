@@ -46,7 +46,7 @@ public interface fault {
 
   static String specifically(final String explanation, final Object... os) {
     String $ = dump(explanation);
-    for (final Object ¢ : os)
+    for (final Object ¢ : os) // Should be NANO
       $ += dump(¢.getClass().getSimpleName(), ¢);
     return $ + done();
   }

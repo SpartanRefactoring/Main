@@ -64,15 +64,9 @@ public enum determineIf {
   public static boolean isImmutable(final TypeDeclaration m) {
     if (m == null)
       return true;
-    boolean $ = false;
-    for (final FieldDeclaration f : m.getFields()) {
-      for (final Object ¢ : f.modifiers())
-        if (((Modifier) ¢).isFinal())
-          $ = true;
-      if (!$)
+    for (final FieldDeclaration ¢ : m.getFields()) // Should be NANO
+      if (!iz.final¢(¢))
         return false;
-      $ = false;
-    }
     return true;
   }
 
@@ -118,11 +112,11 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(final MethodDeclaration mDec) {
-    if (mDec == null)
+  public static boolean returnsNull(final MethodDeclaration m) {
+    if (m == null)
       return false;
     final List<ReturnStatement> statementList = new ArrayList<>();
-    mDec.accept(new ASTVisitor() {
+    m.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
       }
@@ -140,8 +134,8 @@ public enum determineIf {
         return true;
       }
     });
-    for (final ReturnStatement ¢ : statementList)
-      if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
+    for (final ReturnStatement ¢ : statementList) // Should be NANO
+      if (iz.nullLiteral(¢.getExpression()))
         return true;
     return false;
   }

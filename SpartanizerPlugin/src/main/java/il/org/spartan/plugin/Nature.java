@@ -18,7 +18,7 @@ public final class Nature implements IProjectNature {
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
     final ICommand[] cs = d.getBuildSpec();
-    for (final ICommand ¢ : cs)
+    for (final ICommand ¢ : cs) // Should be NANO wit findFirst nand orElse
       if (¢.getBuilderName().equals(Builder.BUILDER_ID))
         return;
     set(d, cs);
@@ -27,7 +27,7 @@ public final class Nature implements IProjectNature {
   @Override @SuppressWarnings("boxing") public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();
-    for (final Integer ¢ : range.from(0).to(cs.length))
+    for (final Integer ¢ : range.from(0).to(cs.length)) // Should be Nano with findFirst
       if (cs[¢].getBuilderName().equals(Builder.BUILDER_ID)) {
         description.setBuildSpec(delete(cs, ¢));
         project.setDescription(description, null);
