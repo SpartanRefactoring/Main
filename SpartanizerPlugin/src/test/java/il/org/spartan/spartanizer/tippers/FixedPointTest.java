@@ -209,8 +209,7 @@ public final class FixedPointTest {
         + "      else\n" + "        b = a;\n" + "    else if (b == 3)\n" + "      b = r();\n" + "    else\n" + "      b = a;", "int b=5!=3?3:r();");
   }
 
-  // TODO: Remove Ignore when bug Issue #1067 solved
-  @Ignore @Test(timeout = 2000) public void ternarize18() {
+  @Test(timeout = 2000) public void ternarize18() {
     assertConvertsTo("    String s = X;\n" + "    String $ = s;\n" + "    int a = 0;\n" + "    if (s.equals($))\n" + "      x.y.f(tH3 + $);\n"
         + "    else\n" + "      x.y.f(h2A+ $ + a + s);", "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
