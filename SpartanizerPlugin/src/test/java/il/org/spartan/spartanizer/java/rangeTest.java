@@ -26,10 +26,10 @@ public class rangeTest {
 
   @Test public void test10() {
     int sum = 0;
-    for (final Integer i1 : range.to(10).step(2))
-      for (final Integer i2 : range.to(10).step(2))
-        sum ^= 31 *i1 + i2;
-    azzert.that(sum,is(264));
+    for (final Integer i1 : range.from(0).to(10).step(2))
+      for (final Integer i2 : range.from(0).to(10).step(2))
+        sum ^= i2 >> 3 ^ i1 + i1 + i2 + sum + 31 * i1 >> 1;
+    azzert.that(sum,is(132));
   }
 
   @Test public void test11() {
@@ -63,7 +63,7 @@ public class rangeTest {
 
   @Test public void test5() {
     int sum = 0;
-    for (final Integer ¢ : range.from(0).to(10).step(2).inclusive())
+    for (final Integer ¢ : range.to(10).step(2).inclusive())
       sum += ¢;
     azzert.that(sum, is(30));
   }

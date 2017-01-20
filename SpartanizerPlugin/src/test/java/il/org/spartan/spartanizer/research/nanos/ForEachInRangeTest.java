@@ -12,21 +12,21 @@ public class ForEachInRangeTest {
   @Test public void a() {
     trimmingOf("for (int ¢=0; ¢ < 4096; ++¢) whitespace.append(\" \");")//
         .using(ForStatement.class, new ForEachInRange())//
-        .gives("range.from(0).to(4096).forEach(¢->whitespace.append(\" \"));")//
+        .gives("range.to(4096).forEach(¢->whitespace.append(\" \"));")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("for (int ¢=0; ¢ < 2000; ++¢) whitespace.append(\" \");")//
         .using(ForStatement.class, new ForEachInRange())//
-        .gives("range.from(0).to(2000).forEach(¢->whitespace.append(\" \"));")//
+        .gives("range.to(2000).forEach(¢->whitespace.append(\" \"));")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("for (int ¢=0; ¢ < ls.size(); ++¢) $[¢]=ls.elementAt(¢);")//
         .using(ForStatement.class, new ForEachInRange())//
-        .gives("range.from(0).to(ls.size()).forEach(¢->$[¢]=ls.elementAt(¢));")//
+        .gives("range.to(ls.size()).forEach(¢->$[¢]=ls.elementAt(¢));")//
         .stays();
   }
 

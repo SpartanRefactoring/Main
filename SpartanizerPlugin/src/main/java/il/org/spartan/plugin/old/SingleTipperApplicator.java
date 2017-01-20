@@ -96,7 +96,7 @@ public final class SingleTipperApplicator {
       pm.done();
       return;
     }
-    for (final Integer i : range.from(0).to(SpartanizeProject.MAX_PASSES)) {
+    for (final Integer i : range.to(SpartanizeProject.MAX_PASSES)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final Int pn = new Int(i + 1);
       final AtomicBoolean canelled = new AtomicBoolean(false);
