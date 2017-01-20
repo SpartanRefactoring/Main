@@ -54,6 +54,12 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
       return null;
+    boolean found = false;
+    for (final VariableDeclarationFragment ff : fragments(currentStatement))
+      if (!found)
+        found = ff == f;
+      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+        return null;
     final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
