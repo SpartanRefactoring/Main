@@ -25,7 +25,7 @@ public class Issue0364 {
                 + "}\n" + "X();");
   }
 
-  @Ignore @Test public void notTerminating() {
+  @Test public void notTerminating() {
     trimmingOf("void f() {\n" + "  String[] x = {\"\"};" + "  g(x);" + "  h();" + "}")
         .gives("void f() {\n" + "  g(new String[] {\"\"});" + "  h();" + "}");
   }

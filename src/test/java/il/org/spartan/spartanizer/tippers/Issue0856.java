@@ -74,7 +74,7 @@ public class Issue0856 {
             .stays();
   }
 
-  @Ignore @Test public void e() {
+  @Test public void e() {
     trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
         "il.finalize(); " + //
         "return 0;")//

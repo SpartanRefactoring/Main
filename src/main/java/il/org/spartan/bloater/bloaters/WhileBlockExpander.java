@@ -15,8 +15,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 public class WhileBlockExpander extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Expander {
-  // TODO: Raviv Rachmiel use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;

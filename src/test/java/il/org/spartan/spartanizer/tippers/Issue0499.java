@@ -6,22 +6,22 @@ import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 17-11-2016 */
-@Ignore
+@Ignore // TODO: Dor M'ayan
 @SuppressWarnings("static-method")
 public class Issue0499 {
   @Test public void test0() {
-    trimmingOf("public Spartanizer defaultRunAction(final GUI$Applicator a) {" + "assert a != null;"
-        + "runAction(/*¢ -> Integer.valueOf(a.apply(¢, selection()))*/);" + "return this;" + "}")
-            .gives("public Spartanizer defaultRunAction(final GUI$Applicator ¢) {" + "assert ¢ != null;"
-                + "runAction(/*¢ -> Integer.valueOf(a.apply(¢, selection()))*/);" + "return this;" + "}")
-            .stays();
+    trimmingOf("public S d(final G a) {assert a != null;r(¢ -> Integer.valueOf(a.apply(¢, selection())));return this;}")
+        .gives("public S d(final G ¢) {assert ¢ != null;r(¢ -> Integer.valueOf(a.apply(¢, selection())));return this;}")//
+        .stays();
   }
 
   @Test public void test1() {
-    trimmingOf("public Spartanizer defaultRunAction(final GUI$Applicator a) {" + "assert a != null;"
-        + "runAction(x -> Integer.valueOf(a.apply(x, selection())));" + "return this;" + "}")
-            .gives("public Spartanizer defaultRunAction(final GUI$Applicator ¢) {" + "assert ¢ != null;"
-                + "runAction(x -> Integer.valueOf(¢.apply(x, selection())));" + "return this;" + "}")
-            .stays();
+    trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}").stays();
+  }
+
+  @Test public void test2() {
+    trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")
+        .gives("public S d(final G ¢) {assert ¢ != null;r(¢ -> Integer.valueOf(a.apply(¢, selection())));return this;}")//
+        .stays();
   }
 }

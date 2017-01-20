@@ -50,9 +50,8 @@ public class BloatingTestUtilities {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
-            wrap1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "",
             unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
-        if (wrap1.equals(unpeeled1))
+        if ((rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "").equals(unpeeled1))
           azzert.fail("Nothing done on " + get());
         final String peeled1 = w.off(unpeeled1);
         if (peeled1.equals(get()))
@@ -147,7 +146,7 @@ public class BloatingTestUtilities {
       final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
-        azzert.fail("Don't Such Method Exists");
+        azzert.fail("No such method Exists");
       return $.get(0);
     }
 

@@ -17,10 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
     for (final ASTNode $ : ancestors.of(¢))
-      switch ($.getNodeType()) {
-        case ASTNode.BLOCK:
-          return $;
-      }
+      return $.getNodeType() == ASTNode.BLOCK ? $ : null;
     return null;
   }
 
@@ -50,10 +47,12 @@ public interface scope {
   }
 
   static Namespace getScopeNamespace(final ASTNode ¢) {
+  //TODO: Doron, NEED to  check if it is a switch statement or block statement
     return new Namespace(Environment.of(last(statements(getBlock(¢)))));
   }
 
   static String newName(final ASTNode ¢, final Type t) {
+    //TODO: Doron, might need here too to check if it is a switch statement or block statement
     final Block b = getBlock(¢);
     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(b) : (Namespace) ¢.getProperty("Namespace");
     final String $ = n.generateName(t);
