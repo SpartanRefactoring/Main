@@ -24,8 +24,8 @@ public enum cantTip {
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
-      if (new DeclarationRedundantInitializer().canTip(¢))
+    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s))) // Should be NANO
+      if (new DeclarationRedundantInitializer().canTip(¢)) // Should be NANO
         return false;
     return true;
   }
@@ -43,14 +43,14 @@ public enum cantTip {
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {
-    for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
+    for (final IfStatement ¢ : extract.ifStatements(step.body(s))) // NANO
       if (new RemoveRedundantIf().canTip(¢))
         return false;
     return true;
   }
 
   public static boolean remvoeRedundantIf(final WhileStatement s) {
-    for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
+    for (final IfStatement ¢ : extract.ifStatements(step.body(s))) // Should be NANO
       if (new RemoveRedundantIf().canTip(¢))
         return false;
     return true;

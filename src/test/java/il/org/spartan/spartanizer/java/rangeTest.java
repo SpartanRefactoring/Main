@@ -26,18 +26,18 @@ public class rangeTest {
 
   @Test public void test10() {
     int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
+    for (final Integer i1 : range.to(10).step(2))
       for (final Integer i2 : range.to(10).step(2))
-        sum += i2;
-    assert sum == 100;
+        sum ^= 31 *i1 + i2;
+    azzert.that(sum,is(264));
   }
 
   @Test public void test11() {
     int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
+    for (final Integer i1 : range.to(10).step(2))
       for (final Integer i2 : range.to(10).step(2).inclusive())
-        sum += i2;
-    assert sum == 150;
+        sum += i1 + 31 * i2;
+    azzert.that(sum,is(4770));
   }
 
   @Test public void test2() {

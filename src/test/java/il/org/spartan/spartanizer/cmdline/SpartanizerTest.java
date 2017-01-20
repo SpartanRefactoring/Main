@@ -318,7 +318,7 @@ public class SpartanizerTest {
     u1.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> modifiers = d.modifiers();
-        for (final Object modifier : modifiers)
+        for (final Object modifier : modifiers) // Should be NANO
           if (modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"))
             return true;
         return false;
