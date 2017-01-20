@@ -24,7 +24,7 @@ public class FindFirstTest {
   @Test public void c() {
     trimmingOf("for(Object i : is) if(i.isNice()) {theChosen = i; break;}")//
         .using(Block.class, new FindFirst())//
-        .gives("theChosen=is.stream().findFirst(i->i.isNice()).get();");
+        .gives("theChosen=is.stream().filter(i->i.isNice()).findFirst().orElse(theChosen);");
   }
 
   @Test public void d() {
