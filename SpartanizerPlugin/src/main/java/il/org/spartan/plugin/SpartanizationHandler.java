@@ -104,7 +104,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               });
             ++passes;
             break;
-            default:
+          default:
         }
       }
 
@@ -117,7 +117,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                   message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)),
                   message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
             break;
-            default:
+          default:
         }
       }
     });

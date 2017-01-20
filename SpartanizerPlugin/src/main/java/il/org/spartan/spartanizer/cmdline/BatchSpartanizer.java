@@ -229,7 +229,8 @@ final class BatchSpartanizer extends FolderASTVisitor {
 
   private void applyEssenceCommandLine() {
     try {
-      final int numWordEssentialBefore = system.runScript(beforeFileName).trim().length(), numWordEssentialAfter = system.runScript(afterFileName).trim().length();
+      final int numWordEssentialBefore = system.runScript(beforeFileName).trim().length(),
+          numWordEssentialAfter = system.runScript(afterFileName).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));

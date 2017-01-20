@@ -67,7 +67,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)))))
+    for (final VariableDeclarationFragment ¢ : step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s))))) // NANO
       if ((¢.getName() + "").equals(n + ""))
         return true;
     return false;
