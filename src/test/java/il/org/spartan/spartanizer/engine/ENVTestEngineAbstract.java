@@ -114,7 +114,7 @@ public abstract class ENVTestEngineAbstract {
   }
 
   private static boolean testSetContainsVarName(final String s) {
-    for (final Entry<String, Binding> ¢ : testSet)
+    for (final Entry<String, Binding> ¢ : testSet) // Should be NANO
       if (¢.getKey().equals(s))
         return true;
     return false;

@@ -57,7 +57,7 @@ public class LinguisticTest {
 
   @Test public void testTrimAbsoluteTrimsOnLongStrings() {
     final StringBuilder sb = new StringBuilder();
-    for (int ¢ = 0; ¢ <= Linguistic.TRIM_THRESHOLD; ++¢)
+    for (int ¢ = 0; ¢ <= Linguistic.TRIM_THRESHOLD; ++¢) // Should be NANO
       sb.append("a");
     azzert.that(Linguistic.trimAbsolute(sb + "", Linguistic.TRIM_THRESHOLD, Linguistic.TRIM_SUFFIX),
         is((sb + "").substring(0, (sb + "").length() - 4) + Linguistic.TRIM_SUFFIX));
