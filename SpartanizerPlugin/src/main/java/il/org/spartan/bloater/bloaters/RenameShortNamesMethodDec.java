@@ -66,7 +66,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
-          System.out.println(after.get(counter).toString());
+          System.out.println(after.get(counter) + "");
           Tippers.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }

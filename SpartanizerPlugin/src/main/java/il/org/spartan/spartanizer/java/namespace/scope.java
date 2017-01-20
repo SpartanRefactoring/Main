@@ -21,9 +21,6 @@ public interface scope {
         case ASTNode.BLOCK:
         case ASTNode.SWITCH_STATEMENT:
           return $;
-        default:
-          return null;
-            
       }
     return null;
   }
