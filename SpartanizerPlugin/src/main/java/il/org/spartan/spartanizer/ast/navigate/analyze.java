@@ -54,9 +54,9 @@ public enum analyze {
   }
 
   public static String type(final Name n) {
-    final MethodDeclaration m = searchAncestors.forContainingMethod().from(n);
+    final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
     final String $ = m == null ? null : findDeclarationInMethod(n, m);
-    return $ != null ? $ : findDeclarationInType(n, searchAncestors.forContainingType().from(n));
+    return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
 
   private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {

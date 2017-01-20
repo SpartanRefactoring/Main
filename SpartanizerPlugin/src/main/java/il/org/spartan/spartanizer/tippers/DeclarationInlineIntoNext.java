@@ -85,7 +85,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
   }
 
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
-    return !searchDescendants.forClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
+    return !yieldDescendants.untilClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
@@ -121,6 +121,6 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
-    return searchDescendants.forClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
+    return yieldDescendants.untilClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
   }
 }

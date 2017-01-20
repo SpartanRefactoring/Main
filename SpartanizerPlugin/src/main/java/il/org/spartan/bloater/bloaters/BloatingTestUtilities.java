@@ -142,7 +142,7 @@ public class BloatingTestUtilities {
     }
 
     private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-      final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+      final List<MethodDeclaration> $ = yieldDescendants.untilClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
         azzert.fail("No such method Exists");

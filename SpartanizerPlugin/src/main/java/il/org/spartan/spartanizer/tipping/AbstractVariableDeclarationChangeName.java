@@ -18,7 +18,7 @@ public abstract class AbstractVariableDeclarationChangeName<N extends VariableDe
       final List<ASTNode> replacement) {
     if (!change(n))
       return null;
-    uses.addAll(Collect.usesOf(n.getName()).in(hop.containerType(n)));
+    uses.addAll(Collect.usesOf(n.getName()).in(container.containerType(n)));
     replacement.add(replacement(n));
     return r;
   }

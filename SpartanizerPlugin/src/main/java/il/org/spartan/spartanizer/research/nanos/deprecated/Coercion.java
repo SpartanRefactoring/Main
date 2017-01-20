@@ -31,7 +31,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
       return false;
-    final MethodDeclaration $ = searchAncestors.forContainingMethod().from(¢);
+    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
@@ -118,7 +118,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       case API_LEVEL_PACKAGE:
         return getType(prepareFile(packageAzFile($)));
       case API_LEVEL_TYPE:
-        return searchAncestors.forContainingType().from($);
+        return yieldAncestors.untilContainingType().from($);
       default:
         assert false : "illegal apiLevel [" + s + "]";
         return null;
@@ -162,7 +162,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String getContainingPackage(final CastExpression ¢) {
-    return searchAncestors.forContainingCompilationUnit().from(¢).getPackage().getName() + "";
+    return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
