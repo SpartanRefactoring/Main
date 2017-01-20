@@ -19,7 +19,7 @@ public interface container {
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
-  static ASTNode containerType(final ASTNode ¢) {
+  static ASTNode typeDeclaration(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
       if (iz.nodeTypeIn($//
           , ANONYMOUS_CLASS_DECLARATION //
@@ -32,7 +32,7 @@ public interface container {
     return null;
   }
 
-  static BodyDeclaration containerBodyDeclaration(final ASTNode ¢) {
+  static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return yieldAncestors.untilClass(BodyDeclaration.class).from(¢);
   }
 
