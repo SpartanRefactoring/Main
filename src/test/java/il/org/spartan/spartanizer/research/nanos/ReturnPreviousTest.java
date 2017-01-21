@@ -11,7 +11,7 @@ import org.junit.*;
 public class ReturnPreviousTest {
   @Test public void a() {
     trimmingOf("int $=value;  value=newValue;  return $;")//
-        .using(Block.class, new ReturnPrevious())//
+        .using(ReturnStatement.class, new ReturnPrevious())//
         .gives("return update(value).with(newValue).getOld();")//
         .stays();
   }
