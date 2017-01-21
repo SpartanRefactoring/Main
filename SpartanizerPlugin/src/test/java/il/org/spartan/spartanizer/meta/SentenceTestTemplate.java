@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.utils.*;
 /** A demo on testing with a {!@link {@link MetaFixture}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-  @Ignore
 public class SentenceTestTemplate {
   public static final Trimmer trimmer = new Trimmer();
 
@@ -34,7 +33,7 @@ public class SentenceTestTemplate {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
       for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
-        final Vocabulary reify = MetaTestCase.reify(d);
+        final Vocabulary reify = AlphabeticallySortedSentence.reify(d);
         if (reify != null)
           $.add(new ArrayList<>(reify.values()));
       }
@@ -45,6 +44,7 @@ public class SentenceTestTemplate {
    * it has n-1 phrases.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
+  @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
     @Parameter(1) public MethodDeclaration changes;
@@ -75,6 +75,7 @@ public class SentenceTestTemplate {
    * it has n-1 phrases.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
+  @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
     @Parameter(1) public MethodDeclaration first;
@@ -88,7 +89,7 @@ public class SentenceTestTemplate {
     }
 
     String firstBody() {
-      return (first + "").replaceAll(disabling.disabler, "");
+      return (first + "").replace(disabling.disabler, "");
     }
 
     String firstName() {
@@ -96,7 +97,7 @@ public class SentenceTestTemplate {
     }
 
     String secondBody() {
-      return (second + "").replaceAll(secondName(), firstName()).replaceAll(disabling.disabler, "");
+      return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
     String secondName() {

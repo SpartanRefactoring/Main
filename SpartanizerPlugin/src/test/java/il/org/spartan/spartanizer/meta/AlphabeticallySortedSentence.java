@@ -27,8 +27,8 @@ import il.org.spartan.utils.*;
  * Don't be afraid to experiment. The error messages should guide you.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-public class MetaTestCase extends MetaFixture {
-  public static MetaTestCase instance = new MetaTestCase(null);
+public class AlphabeticallySortedSentence extends MetaFixture {
+  public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
   public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
@@ -38,11 +38,11 @@ public class MetaTestCase extends MetaFixture {
     }
   };
 
-  private MetaTestCase(final Void __) {
+  private AlphabeticallySortedSentence(final Void __) {
     ___.unused(__);
   }
 
-  public MetaTestCase() {
+  public AlphabeticallySortedSentence() {
     forbidden();
   }
 
@@ -137,6 +137,6 @@ public class MetaTestCase extends MetaFixture {
 
   public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : reify($);
+    return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }
 }

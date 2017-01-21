@@ -22,7 +22,7 @@ public class Issue1004 {
 
   @Test public void t3() {
     bloatingOf("arr[i++] = arr[i++] + i;")//
-    .stays();
+        .stays();
   }
 
   @Test public void t4() {
