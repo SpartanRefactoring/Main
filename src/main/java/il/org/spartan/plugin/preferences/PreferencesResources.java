@@ -43,7 +43,7 @@ public class PreferencesResources {
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
-    InVain(TipperCategory.InVain.class), //
+    InVain(TipperCategory.NOP.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //
     Sorting(TipperCategory.Sorting.class), //
