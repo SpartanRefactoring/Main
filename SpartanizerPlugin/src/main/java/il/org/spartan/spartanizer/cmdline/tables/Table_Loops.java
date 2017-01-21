@@ -79,7 +79,7 @@ public class Table_Loops extends FolderASTVisitor {
         .col("EnhancedForLoops", statistics.enhancedForLoops())//
         .col("ForLoops", statistics.forLoops())//
         .col("WhileLoops", statistics.whileLoops())//
-        .col("WhileLoops", statistics.doWhileLoops())//
+        .col("DoWhileLoops", statistics.doWhileLoops())//
         .col("Total Loops", statistics.totalLoops())//
         .col("Definites", statistics.definites())//
         // //
@@ -87,7 +87,7 @@ public class Table_Loops extends FolderASTVisitor {
         .col("Simple EnhancedForLoops", simpleStatistics.enhancedForLoops())//
         .col("Simple ForLoops", simpleStatistics.forLoops())//
         .col("Simple While Loops", simpleStatistics.whileLoops())//
-        .col("WhileLoops", simpleStatistics.doWhileLoops())//
+        .col("Simple DoWhileLoops", simpleStatistics.doWhileLoops())//
         .col("Simple Total Loops", simpleStatistics.totalLoops())//
         .col("Simple Definites", simpleStatistics.definites())//
         //
