@@ -10,6 +10,6 @@ public interface Nominal extends TipperCategory {
   String ____ = "Spartanizing code by using more spartan names";
 
   @Override default String description() {
-    return ____; 
+    return ____;
   }
 }
