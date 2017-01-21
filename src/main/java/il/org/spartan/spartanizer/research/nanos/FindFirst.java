@@ -37,7 +37,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
           "$N2 = $X1.stream().filter($N -> $X2).map($N -> $X3).findFirst().orElse($N2);", description));
     }
   };
-  private static final List<NanoPatternTipper<Block>> rivals = new ArrayList<NanoPatternTipper<Block>>() {
+  private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new ReturnHoldsForAll());
@@ -47,7 +47,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
 
   @Override public boolean canTip(final EnhancedForStatement x) {
     return anyTips(tippers, az.block(parent(x)))//
-        && nonTips(rivals, az.block(parent(x)))//
+        && nonTips(rivals, x)//
     ;
   }
 

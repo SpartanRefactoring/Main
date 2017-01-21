@@ -31,8 +31,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new CachingPattern(), //
             // new CopyCollection(), // R.I.P
             new ReturnPrevious(), //
-            new ReturnHoldsForAll(), //
-            new ReturnHoldsForAny(), //
             null) //
         .add(CatchClause.class, //
             new IfThrowsReturn(), //
@@ -53,6 +51,8 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new FindFirst(), //
             new ForEach(), //
             new ForEachSuchThat(), //
+            new ReturnHoldsForAll(), //
+            new ReturnHoldsForAny(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //
