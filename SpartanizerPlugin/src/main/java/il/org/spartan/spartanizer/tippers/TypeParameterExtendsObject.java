@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.SyntacticBaggage {
   @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
