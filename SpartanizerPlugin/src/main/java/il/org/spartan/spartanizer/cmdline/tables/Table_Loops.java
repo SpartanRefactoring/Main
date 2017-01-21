@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -20,9 +21,11 @@ public class Table_Loops extends FolderASTVisitor {
   static final InteractiveSpartanizer iSpartanayzer = new InteractiveSpartanizer();
   private static final LoopsStatistics statistics = new LoopsStatistics();
   private static final LoopsStatistics simpleStatistics = new LoopsStatistics();
-  private static Table writer; // coverage
+  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  private static Table writer;
   static {
     clazz = Table_Loops.class;
+    Logger.subscribe(npStatistics::logNPInfo);
   }
 
   public static void main(final String[] args)
@@ -54,14 +57,16 @@ public class Table_Loops extends FolderASTVisitor {
   private static void analyze(final ASTNode ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      log(wizard.ast(spartanize(¢)));
+      final ASTNode n = wizard.ast(spartanize(¢));
+      log(n);
+      Wrap.Statement.off(spartanalyzer.fixedPoint(Wrap.Statement.on(n + "")));
     } catch (@SuppressWarnings("unused") AssertionError __) {
       System.out.print("X");
     }
   }
 
   private static String spartanize(final ASTNode ¢) {
-    return Wrap.Method.off(iSpartanayzer.fixedPoint(Wrap.Method.on(¢ + "")));
+    return Wrap.Statement.off(iSpartanayzer.fixedPoint(Wrap.Statement.on(¢ + "")));
   }
 
   private static void log(final ASTNode ¢) {
@@ -97,7 +102,7 @@ public class Table_Loops extends FolderASTVisitor {
         .col("DoWhileLoops", statistics.doWhileLoops())//
         .col("Total Loops", statistics.totalLoops())//
         .col("Definites", statistics.definites())//
-        // //
+        //
         //// .col("Simple Coverage", simpleCoverage())//
         .col("Simple EnhancedForLoops", simpleStatistics.enhancedForLoops())//
         .col("Simple ForLoops", simpleStatistics.forLoops())//

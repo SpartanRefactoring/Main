@@ -30,7 +30,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(Block.class, //
             new CachingPattern(), //
             // new CopyCollection(), // R.I.P
-            new FindFirst(), //
             new ReturnPrevious(), //
             new ReturnHoldsForAll(), //
             new ReturnHoldsForAny(), //
@@ -51,6 +50,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
             new Collect(), //
+            new FindFirst(), //
             new ForEach(), //
             new ForEachSuchThat(), //
             null) //
