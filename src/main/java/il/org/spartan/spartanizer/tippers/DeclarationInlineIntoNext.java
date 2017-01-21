@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Collapse {
+public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into subsequent statement";
   }
