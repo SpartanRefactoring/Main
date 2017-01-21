@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,7 +22,7 @@ public class Table_Loops extends FolderASTVisitor {
   static final InteractiveSpartanizer iSpartanayzer = new InteractiveSpartanizer();
   private static final LoopsStatistics statistics = new LoopsStatistics();
   private static final LoopsStatistics simpleStatistics = new LoopsStatistics();
-  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  private static final NanoPatternsDistributionStatistics npStatistics = new NanoPatternsDistributionStatistics();
   private static Table writer;
   static {
     clazz = Table_Loops.class;
@@ -57,7 +58,7 @@ public class Table_Loops extends FolderASTVisitor {
   private static void analyze(final ASTNode ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      final ASTNode n = wizard.ast(spartanize(¢));
+      final ASTNode n = extract.singleStatement(wizard.ast(spartanize(¢)));
       log(n);
       Wrap.Statement.off(spartanalyzer.fixedPoint(Wrap.Statement.on(n + "")));
     } catch (@SuppressWarnings("unused") AssertionError __) {
@@ -66,7 +67,7 @@ public class Table_Loops extends FolderASTVisitor {
   }
 
   private static String spartanize(final ASTNode ¢) {
-    return Wrap.Statement.off(iSpartanayzer.fixedPoint(Wrap.Statement.on(¢ + "")));
+    return iSpartanayzer.fixedPoint(¢ + "");
   }
 
   private static void log(final ASTNode ¢) {
@@ -95,7 +96,7 @@ public class Table_Loops extends FolderASTVisitor {
       initializeWriter();
     writer//
         .col("Project", path)//
-        //// .col("Coverage", coverage())//
+        .col("Coverage", npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)))//
         .col("EnhancedForLoops", statistics.enhancedForLoops())//
         .col("ForLoops", statistics.forLoops())//
         .col("WhileLoops", statistics.whileLoops())//
@@ -110,13 +111,14 @@ public class Table_Loops extends FolderASTVisitor {
         .col("Simple DoWhileLoops", simpleStatistics.doWhileLoops())//
         .col("Simple Total Loops", simpleStatistics.totalLoops())//
         .col("Simple Definites", simpleStatistics.definites())//
-        //
-        // final HashMap<String, Int> hist = npStatistics.nanoHistogram(type);
-        // for (final String ¢ : hist.keySet())
-        // writer.col(¢ + " perc.", format.decimal(100 *
-        //// safe.div(hist.get(¢).inner, npStatistics.count(type))));
-        // for (final String ¢ : hist.keySet())
-        // writer.col(¢, hist.get(¢).inner);
-        .nl();
+    ;
+    //
+    final HashMap<String, Int> hist = npStatistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
+    for (final String ¢ : hist.keySet())
+      writer.col(¢ + " perc.",
+          format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)))));
+    for (final String ¢ : hist.keySet())
+      writer.col(¢, hist.get(¢).inner);
+    writer.nl();
   }
 }
