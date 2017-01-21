@@ -28,7 +28,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * who's parent is also an InfixExpression, It will make it parenthesized.
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-11 */
-public class ParenthesesExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
+public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))
       return null;

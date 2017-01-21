@@ -50,7 +50,7 @@ public class InflaterUtilities {
             x.tip((SwitchStatement) statement).go(r, __);
             $ = true;
           } else {
-            final DeclarationWithInitExpander s1 = new DeclarationWithInitExpander();
+            final DeclarationWithInitBloater s1 = new DeclarationWithInitBloater();
             if (statement instanceof VariableDeclarationStatement && s1.canTip(az.variableDeclarationStatement(statement))) {
               s1.tip(az.variableDeclarationStatement(statement)).go(r, __);
               $ = true;

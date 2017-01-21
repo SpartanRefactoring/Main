@@ -29,7 +29,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  *
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */
-public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
+public class LongIfBloater extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
