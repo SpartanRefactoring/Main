@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert <code> if (a){g();}</code> into <code>if(a)g();</code>
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingleton extends ReplaceCurrentNode<Block> implements TipperCategory.SyntacticBaggage {
+public final class BlockSingleton extends ReplaceCurrentNode<Block>//
+    implements TipperCategory.SyntacticBaggage {
   private static Statement replacement(final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);
   }

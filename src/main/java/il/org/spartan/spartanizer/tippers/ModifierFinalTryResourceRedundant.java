@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modifier> implements TipperCategory.SyntacticBaggage {
+public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modifier>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
     return "Remove redundant final modifier of try resource";
   }

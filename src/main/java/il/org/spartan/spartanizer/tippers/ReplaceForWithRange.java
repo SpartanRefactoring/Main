@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** replaces for loops with ranges
  * @author Dan Abramovich
  * @since 2016 */
-public final class ReplaceForWithRange extends Tipper<ForStatement> implements TipperCategory.Idiomatic {
+public final class ReplaceForWithRange extends Tipper<ForStatement>//
+    implements TipperCategory.Idiomatic {
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();

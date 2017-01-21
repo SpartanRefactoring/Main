@@ -26,7 +26,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */
-public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Bloater {
+public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");

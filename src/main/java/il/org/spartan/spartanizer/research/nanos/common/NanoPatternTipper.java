@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** A {@link Tipper} which represents a NanoPattern.
  * @author Ori Marcovitch
  * @year 2016 */
-public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
+public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
+    implements TipperCategory.Nanos {
   public final N nodeTypeHolder = null;
 
   protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
