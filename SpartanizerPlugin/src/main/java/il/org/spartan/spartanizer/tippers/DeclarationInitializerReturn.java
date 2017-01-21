@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturn extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
+public final class DeclarationInitializerReturn extends $VariableDeclarationFragementAndStatement implements TipperCategory.Shunt {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
