@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
-public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.NOP {
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }
