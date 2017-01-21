@@ -31,12 +31,16 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.InVain {
   @Override public ASTNode replacement(final MethodInvocation n) {
+    if(n == null || iz.lambdaExpression(n.getParent()))
+      return null;
     final List<Expression> l = arguments(n);
     if (l.isEmpty())
       return null;
     ConditionalExpression $ = null;
     for (int i = 0; i < l.size(); ++i) {
       if (($ = az.conditionalExpression(l.get(i))) != null) {
+        if(iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
+          return null;
         final MethodInvocation whenTrue = copy.of(n), whenFalse = copy.of(n);
         arguments(whenTrue).remove(i);
         arguments(whenTrue).add(i, copy.of(then($)));
