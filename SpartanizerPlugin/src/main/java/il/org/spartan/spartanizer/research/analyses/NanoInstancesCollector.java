@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
 public class NanoInstancesCollector extends FolderASTVisitor {
-  static final NanoPatternTipper<EnhancedForStatement> nano = new ReturnHoldsForAny();
+  static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
   static final File out = new File(Table.temporariesFolder + system.fileSeparator + nano.getClass().getSimpleName() + ".txt");
 

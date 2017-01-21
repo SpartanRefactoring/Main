@@ -11,7 +11,7 @@ import org.junit.*;
 public class HoldsForAllTest {
   @Test public void a() {
     trimmingOf("for (  Entry<?> ¢ : that.entrySet())   if (m.count(¢.getElement()) != ¢.getCount())   return false;  return true;")
-        .using(EnhancedForStatement.class, new ReturnHoldsForAll())
+        .using(EnhancedForStatement.class, new HoldsForAll())
         .gives("return that.entrySet().stream().allMatch(¢ -> !(m.count(¢.getElement()) != ¢.getCount()));");
   }
 }
