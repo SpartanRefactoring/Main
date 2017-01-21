@@ -6,6 +6,10 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
+  interface Thrashing extends TipperCategory {
+    String toString = "no better name";
+  }
+
   String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
@@ -124,6 +128,10 @@ public interface TipperCategory {
   }
 
   interface NOP extends Structural {
+    interface onNumbers extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+    }
+
     String toString = "Eliminate an operation whose computation does nothing";
 
     @Override default String description() {

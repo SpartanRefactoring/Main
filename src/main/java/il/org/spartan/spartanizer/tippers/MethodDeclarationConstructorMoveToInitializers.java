@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** As per {@link Issue1008}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-21 */
-public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration>//
+    implements TipperCategory.Idiomatic {
   @Override protected boolean prerequisite(final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;

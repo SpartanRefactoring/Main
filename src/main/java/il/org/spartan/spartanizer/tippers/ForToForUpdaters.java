@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
+public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
+    implements TipperCategory.Unite {
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));

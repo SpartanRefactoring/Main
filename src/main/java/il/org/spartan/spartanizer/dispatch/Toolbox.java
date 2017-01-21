@@ -387,7 +387,12 @@ public class Toolbox {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
-      assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+      assert ¢.tipperGroup() != null : fault.specifically(//
+          String.format("Did you forget to use create an enum instance in %s \n" + "for the %s of tipper %s \n (description= %s)?", //
+              TipperGroup.class.getSimpleName(), //
+              TipperCategory.class.getSimpleName(), //
+              ¢.getClass().getSimpleName(), //
+              ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);
     }
