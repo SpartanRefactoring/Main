@@ -4,16 +4,20 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-21 */
 public class Table_Loops extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final InteractiveSpartanizer iSpartanayzer = new InteractiveSpartanizer();
   private static final LoopsStatistics statistics = new LoopsStatistics();
   private static final LoopsStatistics simpleStatistics = new LoopsStatistics();
   private static Table writer; // coverage
@@ -48,11 +52,22 @@ public class Table_Loops extends FolderASTVisitor {
   }
 
   private static void analyze(final ASTNode ¢) {
+    ¢.accept(new CleanerVisitor());
+    try {
+      log(wizard.ast(spartanize(¢)));
+    } catch (@SuppressWarnings("unused") AssertionError __) {
+      System.out.print("X");
+    }
+  }
+
+  private static String spartanize(final ASTNode ¢) {
+    return Wrap.Method.off(iSpartanayzer.fixedPoint(Wrap.Method.on(¢ + "")));
+  }
+
+  private static void log(final ASTNode ¢) {
     statistics.log(¢);
     if (iz.simpleLoop(¢))
       simpleStatistics.log(¢);
-    // ¢.accept(new CleanerVisitor());
-    // spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
   }
 
   @Override protected void done(final String path) {
