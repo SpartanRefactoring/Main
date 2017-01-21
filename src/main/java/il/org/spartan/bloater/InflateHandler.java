@@ -25,7 +25,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
- * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an
+ * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */

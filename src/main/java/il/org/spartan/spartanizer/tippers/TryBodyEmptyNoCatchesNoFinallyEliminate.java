@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-19 */
 public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTipper<TryStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.SyntacticBaggage {
   @Override public boolean prerequisite(final TryStatement ¢) {
     return ¢.getBody().statements().isEmpty() && ¢.catchClauses().isEmpty() && (¢.getFinally() == null || ¢.getFinally().statements().isEmpty());
   }

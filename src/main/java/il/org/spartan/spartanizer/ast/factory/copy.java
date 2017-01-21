@@ -8,6 +8,8 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
@@ -56,5 +58,9 @@ public enum copy {
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
     return ¢s.stream().map(cent -> (¢) copySubtree(cent.getAST(), cent)).collect(Collectors.toList());
+  }
+
+  public static Expression ofWhileExpression(final WhileStatement ¢) {
+    return of(expression(¢));
   }
 }
