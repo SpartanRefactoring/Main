@@ -29,7 +29,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // null) //
         .add(CatchClause.class, //
             new IfThrowsReturn(), //
-            new IgnoreException(), //
+            new SupressException(), //
             // new PercolateException(), // R.I.P
             null)//
         .add(ConditionalExpression.class, //
@@ -71,9 +71,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispLastElement(), //
             null) //
         .add(ReturnStatement.class, //
-            // new CopyCollection(), // R.I.P
             new ReturnPrevious(), //
             null) //
+    // new CopyCollection(), // R.I.P
     // .add(WhileStatement.class, //
     // new Exhaust(), // R.I.P
     // null)//

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
-public final class IgnoreException extends NanoPatternTipper<CatchClause> {
+public final class SupressException extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
