@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 // TODO: doron add docs description such as in {@link SwitchEmpty} pls
 // TODO: Dorn, what's going on with the above TOOD --yg
 @SuppressWarnings("unused")
-public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.SyntacticBaggage {
   @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;
   }

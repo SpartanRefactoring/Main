@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit test for {@link ThrowTernaryExpander}
+/** Unit test for {@link ThrowTernaryBloater}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("static-method")

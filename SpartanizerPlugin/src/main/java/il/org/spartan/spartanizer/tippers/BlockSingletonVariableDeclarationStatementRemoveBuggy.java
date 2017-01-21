@@ -14,13 +14,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Remove blocks that include only variable declerations: <br/>
- * For example, remove the block : </br>
- * <br/>
- * <code> {int a=0;} </code> </br>
+/** Remove blocks that include only variable declarations: For example, remove
+ * the block: <code> {int a=0;} </code>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Block> implements TipperCategory.Collapse {
+public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends CarefulTipper<Block> implements TipperCategory.Deadcode {
   @Override public String description() {
     return "Remove the block";
   }

@@ -3,7 +3,6 @@ package il.org.spartan.bloater;
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel
@@ -22,6 +21,10 @@ public interface ExpanderCategory {
 
   default ExpanderGroup ExpanderGroup() {
     return ExpanderGroup.find(this);
+  }
+
+  static String getLabel(Class<? extends ExpanderCategory> ¢) {
+    return ¢.getSimpleName();
   }
 
   // TODO: Roth, to preferences?
@@ -82,20 +85,11 @@ public interface ExpanderCategory {
     ExpanderGroup(final Class<? extends ExpanderCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = getLabel(clazz) + "";
+      label = ExpanderCategory.getLabel(clazz);
     }
 
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);
-    }
-
-    private Object getLabel(final Class<? extends ExpanderCategory> $) {
-      try {
-        return $.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
-        monitor.logEvaluationError(this, ¢);
-        return null;
-      }
     }
   }
 }

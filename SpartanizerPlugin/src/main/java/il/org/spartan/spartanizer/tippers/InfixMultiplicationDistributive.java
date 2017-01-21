@@ -34,7 +34,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Matteo Orru'
  * @since 2016 */
-public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.CommnoFactoring {
+public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring{
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
