@@ -20,11 +20,9 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * <pre>
  * if (x) {
- *   ;
  *   f();
  *   return a;
  * } else {
- *   ;
  *   g();
  *   {}
  * }

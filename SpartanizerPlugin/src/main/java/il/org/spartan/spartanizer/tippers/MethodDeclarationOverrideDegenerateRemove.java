@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTipper<MethodDeclaration>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.SyntacticBaggage {
   private static boolean shouldRemove(final MethodDeclaration $, final SuperMethodInvocation i) {
     for (final Object m : $.modifiers())
       if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))

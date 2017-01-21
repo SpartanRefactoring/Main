@@ -52,7 +52,7 @@ public class PreferencesResources {
     Ternarization(TipperCategory.Ternarization.class), //
     Bloater(TipperCategory.Bloater.class), //
     Shortcut(TipperCategory.Shunt.class), //
-    Thrashing(TipperCategory.Thrashing.class), //
+    Thrashing(TipperCategory.EmptyCycles.class), //
     NOOPOnBooleans(TipperCategory.NOP.onBooleans.class), //
     NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
     NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
