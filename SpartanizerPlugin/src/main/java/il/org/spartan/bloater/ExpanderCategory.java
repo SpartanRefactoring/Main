@@ -23,8 +23,8 @@ public interface ExpanderCategory {
     return ExpanderGroup.find(this);
   }
 
-  static String getLabel(Class<? extends ExpanderCategory> c) {
-    return c.getSimpleName();
+  static String getLabel(Class<? extends ExpanderCategory> ¢) {
+    return ¢.getSimpleName();
   }
 
   // TODO: Roth, to preferences?
