@@ -40,7 +40,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2016 */
-public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<IfStatement> implements TipperCategory.EarlyReturn {
+public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<IfStatement>//
+    implements TipperCategory.EarlyReturn {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }

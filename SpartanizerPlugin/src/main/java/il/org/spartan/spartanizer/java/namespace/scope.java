@@ -51,15 +51,14 @@ public interface scope {
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
-   * [[SuppressWarningsSpartan]]
-   */
+   * [[SuppressWarningsSpartan]] */
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    ASTNode $ = delimiter(¢);
+    final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
   static String newName(final ASTNode ¢, final Type t) {
-    ASTNode b = delimiter(¢);
+    final ASTNode b = delimiter(¢);
     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(b) : (Namespace) ¢.getProperty("Namespace");
     final String $ = n.generateName(t);
     n.addNewName($, t);

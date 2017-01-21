@@ -84,11 +84,11 @@ public interface namer {
     return $ != null ? $ : shorten(¢.getType());
   }
 
-  static boolean isAssuming(ParameterizedType ¢) {
+  static boolean isAssuming(final ParameterizedType ¢) {
     return assuming.contains(¢.getType() + "");
   }
 
-  static boolean isPluralizing(ParameterizedType ¢) {
+  static boolean isPluralizing(final ParameterizedType ¢) {
     return plurals.contains(¢.getType() + "");
   }
 

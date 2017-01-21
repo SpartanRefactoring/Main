@@ -29,7 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Unite {
+public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+    implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));

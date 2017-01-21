@@ -28,7 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested in {@link Issue0858}
  * @author Yuval Simon
  * @since 2016-11-26 */
-public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Unite {
+public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
+    implements TipperCategory.Unite {
   private static final int MAX_CASES = 10;
 
   @Override public ASTNode replacement(final SwitchStatement s) {

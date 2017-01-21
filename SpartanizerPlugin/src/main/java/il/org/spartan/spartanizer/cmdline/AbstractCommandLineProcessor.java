@@ -10,7 +10,7 @@ abstract class AbstractCommandLineProcessor {
   public abstract void apply();
 
   protected String makeFile(final String fileName) {
-    return outputFolder + "/" + presentSourceName + "." + fileName;
+    return outputFolder + system.fileSeparator + presentSourceName + "." + fileName;
   }
 
   public static void main(final String[] args) {

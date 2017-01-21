@@ -193,4 +193,6 @@ public interface system {
         .replaceAll("([^a-zA-Z¢$_]) ([a-zA-Z¢$_])", "$1$2")//
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
+
+  String fileSeparator = System.getProperty("file.separator");
 }

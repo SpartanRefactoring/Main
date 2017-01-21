@@ -18,7 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-8-31 */
-public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.Unite {
+public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
+    implements TipperCategory.Unite {
   @Override public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
