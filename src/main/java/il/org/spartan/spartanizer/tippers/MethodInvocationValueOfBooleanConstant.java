@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
 public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Idiomatic {
   private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }

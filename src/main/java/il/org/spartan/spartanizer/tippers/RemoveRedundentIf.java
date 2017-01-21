@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.EmptyCycles {
   @Override public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }

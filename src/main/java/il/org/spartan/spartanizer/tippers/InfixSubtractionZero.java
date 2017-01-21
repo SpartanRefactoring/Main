@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Arithmetic {
+    implements TipperCategory.NOP.onNumbers {
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(minus(first(prune)), chop(prune));
   }
