@@ -27,7 +27,7 @@ public class Table_Summary extends TableReusabilityIndices {
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table writer; // coverage
+  private static Table writer;
   private static int totalStatements;
   protected static int totalMethods;
   protected static int totalMethodsAfterSpartanization;
