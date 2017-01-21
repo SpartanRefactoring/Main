@@ -44,7 +44,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends ReplaceCurrentNode<Block> implements TipperCategory.InVain {
+public final class BlockSimplify extends ReplaceCurrentNode<Block> implements TipperCategory.SyntacticBaggage {
   static Statement reorganizeNestedStatement(final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
