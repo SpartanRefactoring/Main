@@ -90,7 +90,10 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<ReturnStatement>()) //
+        .add(ThrowStatement.class, new SequencerNotLastInBlock<ThrowStatement>()) //
+        .add(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .add(ContinueStatement.class, new SequencerNotLastInBlock<ContinueStatement>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
@@ -107,7 +110,6 @@ public class Toolbox {
             new ModifierFinalTryResourceRedundant(), //
             null)//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
