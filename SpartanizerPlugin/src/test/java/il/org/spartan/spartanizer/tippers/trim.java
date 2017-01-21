@@ -49,8 +49,8 @@ public interface trim {
       };
     }
 
-    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
-      return new fluentTrimmer(clazz, ns) {
+    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+      return new fluentTrimmer(clazz, ts) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           return super.checkAllConditions(pm);
         }
@@ -111,7 +111,7 @@ public interface trim {
   }
 
   @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ns) {
-    return new fluentTrimmer(clazz, ns);
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+    return new fluentTrimmer(clazz, ts);
   }
 }

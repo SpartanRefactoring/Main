@@ -93,7 +93,7 @@ final class BatchSpartanizerApplication implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+  ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
@@ -140,8 +140,7 @@ final class BatchSpartanizerApplication implements IApplication {
     d.setNatureIds(new String[] { JavaCore.NATURE_ID });
     p.setDescription(d, null);
     final IJavaProject javaProject = JavaCore.create(p);
-    final IFolder binFolder = p.getFolder("bin");
-    final IFolder sourceFolder = p.getFolder("src");
+    final IFolder binFolder = p.getFolder("bin"), sourceFolder = p.getFolder("src");
     srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
@@ -217,21 +216,13 @@ final class BatchSpartanizerApplication implements IApplication {
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
-    final int length = in.getLength();
-    final int tokens = metrics.tokens(in + "");
-    final int nodes = count.nodes(in);
-    final int body = metrics.bodySize(in);
-    final int tide = clean(in + "").length();
-    final int essence = Essence.of(in + "").length();
+    final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
+        tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
-    final int length2 = out.length();
-    final int tokens2 = metrics.tokens(out);
-    final int tide2 = clean(out + "").length();
-    final int essence2 = Essence.of(out + "").length();
-    final int wordCount = system.wc(Essence.of(out + ""));
+    final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
+        wordCount = system.wc(Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
-    final int nodes2 = count.nodes(from);
-    final int body2 = metrics.bodySize(from);
+    final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
     afters.print(out);

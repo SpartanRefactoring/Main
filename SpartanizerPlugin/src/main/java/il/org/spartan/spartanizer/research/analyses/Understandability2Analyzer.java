@@ -19,7 +19,7 @@ public class Understandability2Analyzer extends IntegerMetricalAnalyzer {
     System.out.println("Enter whatever you want:");
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";
-      while (reader.hasNext())
+      while (reader.hasNext()) // Can be Nano?
         s += "\n" + reader.nextLine();
       System.out.println("Got it.");
       System.out.println("before: " + new Understandability2Analyzer().metric(wizard.ast(s)));

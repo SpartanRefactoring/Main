@@ -125,11 +125,11 @@ class Dialogs {
       @Override protected void buttonPressed(final int ¢) {
         super.buttonPressed(¢);
         switch (¢) {
-          default:
-            return;
           case RIB_ID:
             decrementNestingDepth();
             close();
+            break;
+          default:
         }
       }
 

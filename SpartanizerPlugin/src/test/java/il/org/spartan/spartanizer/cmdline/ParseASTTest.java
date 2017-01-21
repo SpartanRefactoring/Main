@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -17,9 +17,8 @@ public class ParseASTTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> modifiers = d.modifiers();
-        for (final Object modifier : modifiers)
-          if (modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"))
+        for (final IExtendedModifier ¢ : extendedModifiers(d))
+          if (¢ instanceof MarkerAnnotation && (¢ + "").contains("@Test") && (¢ + "").contains("@Test"))
             return true;
         return false;
       }

@@ -47,10 +47,7 @@ public class Issue1044 extends MetaFixture {
 }
 
 class NamespaceFixture {
-  static {
-    // TODO: Doron, should be documented
-  }
-
+  // TODO: Doron, should be documented
   int f(final int a1) {
     return a1 >>> hashCode();
   }

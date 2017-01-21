@@ -45,9 +45,8 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".methods.CSV", "methods");
-      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator();
-      final CommandLineApplicator defaultSelection = defaultApplicator2
-          .defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
+      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
+          defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
         commandLineApplicator.listener(¢ -> System.out.println("Running DefaultApplicator: " + ¢));
         defaultSelection.defaultListenerNoisy().go();

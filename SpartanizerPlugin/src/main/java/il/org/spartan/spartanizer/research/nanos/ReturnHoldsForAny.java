@@ -30,7 +30,7 @@ public final class ReturnHoldsForAny extends NanoPatternTipper<Block> {
   }
 
   @Override public Category category() {
-    return Category.Collection;
+    return Category.Iterative;
   }
 
   @Override public String description() {

@@ -69,14 +69,14 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   private static boolean containsZeroOperand(final InfixExpression x) {
-    for (final Expression ¢ : extract.allOperands(x))
+    for (final Expression ¢ : extract.allOperands(x)) // NANO
       if (iz.literal0(¢))
         return true;
     return false;
   }
 
   private static boolean containsPlusOperator(final InfixExpression x) {
-    for (final Operator ¢ : extract.allOperators(x))
+    for (final Operator ¢ : extract.allOperators(x)) // NANO
       if (¢ == Operator.PLUS)
         return true;
     return false;

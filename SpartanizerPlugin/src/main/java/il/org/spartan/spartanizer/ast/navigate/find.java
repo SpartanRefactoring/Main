@@ -32,8 +32,7 @@ public enum find {
       return null;
     if (areSelfDifferent(n1, n2))
       return az.expression(n1);
-    final List<ASTNode> children1 = Recurser.allChildren(n1);
-    final List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return az.expression(n1);
     if (children1.isEmpty())
@@ -74,15 +73,14 @@ public enum find {
       return n1 + "";
     if (areSelfDifferent(n1, n2))
       return null;
-    final List<ASTNode> children1 = Recurser.allChildren(n1);
-    final List<ASTNode> children2 = Recurser.allChildren(n2);
+    final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return null;
     String $ = singleAtomicDifference(first(children1), first(children2));
     $ = $ != null ? $ : "";
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
-      $ = $ != "" || diff == null ? $ : diff;
+      $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }
@@ -104,7 +102,7 @@ public enum find {
       return null;
     for (int i = 2; i < ns.size(); ++i) {
       final String diff = singleAtomicDifference(ns.get(0), ns.get(i));
-      $ = $ != "" || diff == null ? $ : diff;
+      $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
     }

@@ -81,8 +81,8 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
-    for (final Tipper<N> $ : ns)
+  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
+    for (final Tipper<N> $ : ts)
       if ($.canTip(n))
         return $;
     return null;
@@ -90,12 +90,13 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
-            new EnhancedForRedundantConinue(), //
+            new EnhancedForRedundantContinue(), //
             null)//
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
@@ -156,6 +157,7 @@ public class Toolbox {
             // new CachingPattern(), // v 2.7
             new BlockInlineStatementIntoNext(), //
             // new BlockRemoveDeadVariables(), // v 2.7
+            // new FindFirst(),
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
@@ -201,11 +203,9 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new ReturnStatementRedundantInVoidMethod(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(), // v 2.7
-            // This is a new
-            // tipper
-            // #20
+            new MethodDeclarationConstructorMoveToInitializers(), //
+            // new MatchCtorParamNamesToFieldsIfAssigned(),
+            // v 2.7 // This is a new // tipper // #20
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -221,7 +221,7 @@ public class Toolbox {
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
             new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
-//            new TryBodyNotEmptyNoCatchesNoFinallyRemove(),  //
+            new TryBodyNotEmptyNoCatchesNoFinallyRemove(), //
             new TryFinallyEmptyRemove(), //
             new MergeCatches(), //
             null)//
@@ -301,8 +301,8 @@ public class Toolbox {
             null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //
-            new DeclarationAssignment(), //
-            new DeclarationInitialiazelUpdateAssignment(), //
+            new DeclarationNoInitializerAssignment(), //
+            new DeclarationInitialiazerUpdateAssignment(), //
             new DeclarationInitializerIfAssignment(), //
             new DeclarationInitializerIfUpdateAssignment(), //
             new DeclarationInitializerReturnVariable(), //
@@ -329,8 +329,8 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
-    return emptyToolboox().add(clazz, ns);
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
+    return emptyToolboox().add(clazz, ts);
   }
 
   public static void refresh() {
@@ -341,11 +341,11 @@ public class Toolbox {
     ¢.toolbox = freshCopyOfAllTippers();
   }
 
-  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
     removing: for (;;) {
-      for (int ¢ = 0; ¢ < ns.size(); ++¢)
-        if (c.isAssignableFrom(ns.get(¢).getClass())) {
-          ns.remove(¢);
+      for (int ¢ = 0; ¢ < ts.size(); ++¢)
+        if (c.isAssignableFrom(ts.get(¢).getClass())) {
+          ts.remove(¢);
           continue removing;
         }
       break;
@@ -369,22 +369,22 @@ public class Toolbox {
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.
-   * @param n JD
-   * @param ns JD
+   * @param c JD
+   * @param ts JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
-    final Integer $ = wizard.classToNodeType.get(n);
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
+    final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
-        "\n c = " + n + //
-        "\n c.getSimpleName() = " + n.getSimpleName() + //
+        "\n c = " + c + //
+        "\n c.getSimpleName() = " + c.getSimpleName() + //
         "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
         "\n classForNodeType = " + wizard.classToNodeType + //
         fault.done();
-    return add($, ns);
+    return add($, ts);
   }
 
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ns) {
-    for (final Tipper<N> ¢ : ns) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ts) {
+    for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();

@@ -60,7 +60,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a05() {
-    assert first(searchDescendants.forClass(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
+    assert first(yieldDescendants.untilClass(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
   }
 
   @Test public void a06() {
@@ -87,7 +87,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a11() {
-    (markers()).forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     for (final String ¢ : annotations.keySet())
       assert annotations.get(¢) != null : "Annotation " + ¢ + " not used; what I saw was: \n" + markers();
   }
@@ -354,7 +354,7 @@ public class definitionTest extends MetaFixture {
   }
 
   List<MarkerAnnotation> markers() {
-    return searchDescendants.forClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.untilClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
 
@@ -403,11 +403,11 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "";
-            @local final Function<Object, String> something = (@ScopeSize(1) @lambda final Object o) -> {
-              o.getClass();
-              return o + "";
-            };
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "",
+                something = (@ScopeSize(1) @lambda final Object o) -> {
+                  o.getClass();
+                  return o + "";
+                };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
             return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();

@@ -37,7 +37,7 @@ public class Issue0717 {
 
   private String generateRandomString(final int maxLen) {
     final StringBuilder $ = new StringBuilder();
-    int len = 0;
+    int len;
     final Random randomGenerator = new Random();
     len = randomGenerator.nextInt(maxLen);
     if (len <= 0)
@@ -69,9 +69,7 @@ public class Issue0717 {
   }
 
   @Test public void randomBigBlockReturnsTrue() {
-    final String methodName = generateRandomString(MAX_NAME_SIZE);
-    final String firstStat = "{int x; ++x;";
-    final String nextStat = "x=4;";
+    final String methodName = generateRandomString(MAX_NAME_SIZE), firstStat = "{int x; ++x;", nextStat = "x=4;";
     final Random random = new Random();
     final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 4 ? 4 : random.nextInt(MAX_STAT_AMOUNT);
     String randomBigBlock = "public void " + methodName + "()" + firstStat;

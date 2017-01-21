@@ -50,9 +50,7 @@ public class GUIBatchLaconizer extends Applicator {
         listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner;
-        final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
-        final List<WrappedCompilationUnit> done = new ArrayList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
@@ -82,7 +80,7 @@ public class GUIBatchLaconizer extends Applicator {
    * @return this applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
     listener(os -> {
-      for (final Object ¢ : os)
+      for (final Object ¢ : os) // NANO?
         System.out.print(¢ + " ");
       System.out.println();
     });

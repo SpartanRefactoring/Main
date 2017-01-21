@@ -114,8 +114,7 @@ public enum GuessedContext {
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
       $.append("\n\t```").append(trivia.essence(on)).append("'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
-          + " problems on (essentially) this bit of code");
+      $.append("\n\t\t Alas, what the parser generated ").append(u.getProblems().length).append(" problems on (essentially) this bit of code");
       $.append("\n\t\t\t```").append(trivia.essence(u + "")).append("'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```").append(u).append("'''");
@@ -173,17 +172,13 @@ public enum GuessedContext {
   }
 
   private boolean accurateContains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = trivia.accurateEssence(inner);
-    final String essence2 = trivia.accurateEssence(off);
+    final String off = off(wrap), $ = trivia.accurateEssence(inner), essence2 = trivia.accurateEssence(off);
     assert essence2 != null;
     return essence2.contains($);
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = trivia.essence(inner);
-    final String essence2 = trivia.essence(off);
+    final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

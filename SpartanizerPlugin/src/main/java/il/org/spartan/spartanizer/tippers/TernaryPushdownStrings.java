@@ -40,10 +40,12 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   static String longer(final String s1, final String s2) {
+    // noinspection StringEquality
     return s1 == shorter(s1, s2) ? s2 : s1;
   }
 
   private static int firstDifference(final String s1, final String s2) {
+    // noinspection StringEquality
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
@@ -80,6 +82,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static int lastDifference(final String s1, final String s2) {
+    // noinspection StringEquality
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();

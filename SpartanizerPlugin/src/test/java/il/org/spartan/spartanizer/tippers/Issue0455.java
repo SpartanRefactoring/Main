@@ -145,6 +145,8 @@ public class Issue0455 {
 
   @Test public void singleTryFinallyStatementShouldntTip() {
     trimmingOf("x -> {try {throw new Error();}finally{}}") //
+        .gives("x -> {{throw new Error();}}") //
+        .gives("x -> {throw new Error();}") //
         .stays();
   }
 

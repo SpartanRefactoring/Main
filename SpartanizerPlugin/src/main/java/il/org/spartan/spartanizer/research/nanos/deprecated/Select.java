@@ -34,7 +34,7 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
   }
 
   @Override public Category category() {
-    return Category.Collection;
+    return Category.Iterative;
   }
 
   @Override public String example() {

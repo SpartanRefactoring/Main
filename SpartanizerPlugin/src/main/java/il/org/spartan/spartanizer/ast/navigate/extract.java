@@ -91,10 +91,10 @@ public enum extract {
         return "@interface";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
         return "@interrface member";
-      case ENUM_DECLARATION:
-        return "enum";
       case ENUM_CONSTANT_DECLARATION:
         return "enum member";
+      case ENUM_DECLARATION:
+        return "enum";
       case FIELD_DECLARATION:
         return "field";
       case INITIALIZER:
@@ -114,9 +114,7 @@ public enum extract {
       case TYPE_DECLARATION:
         return category((TypeDeclaration) $);
       default:
-        assert fault.unreachable() : fault.dump() //
-            + "\n d = " + $ + "\n d.getClass() = " + $.getClass() //
-            + "\n d.getNodeType() = " + $.getNodeType() //
+        assert fault.unreachable() : fault.dump() + "\n d = " + $ + "\n d.getClass() = " + $.getClass() + "\n d.getNodeType() = " + $.getNodeType()
             + fault.done();
         return $.getClass().getSimpleName();
     }
@@ -218,11 +216,11 @@ public enum extract {
 
   private static List<IfStatement> ifsInto(final Statement ¢, final List<IfStatement> $) {
     switch (¢.getNodeType()) {
+      case BLOCK:
+        return ifsInto((Block) ¢, $);
       case IF_STATEMENT:
         $.add(az.ifStatement(¢));
         return $;
-      case BLOCK:
-        return ifsInto((Block) ¢, $);
       default:
         return $;
     }
@@ -296,26 +294,24 @@ public enum extract {
 
   public static String name(final ASTNode ¢) {
     switch (¢.getNodeType()) {
+      case INITIALIZER:
+        return "initializer";
+      case FIELD_DECLARATION:
+        return separate.these(step.fragments((FieldDeclaration) ¢)).by("/");
       case ANNOTATION_TYPE_DECLARATION:
         return ((AnnotationTypeDeclaration) ¢).getName() + "";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
         return ((AnnotationTypeMemberDeclaration) ¢).getName() + "";
-      case ENUM_DECLARATION:
-        return ((EnumDeclaration) ¢).getName() + "";
       case ENUM_CONSTANT_DECLARATION:
         return ((EnumConstantDeclaration) ¢).getName() + "";
-      case FIELD_DECLARATION:
-        return separate.these(step.fragments((FieldDeclaration) ¢)).by("/");
-      case INITIALIZER:
-        return "initializer";
+      case ENUM_DECLARATION:
+        return ((EnumDeclaration) ¢).getName() + "";
       case METHOD_DECLARATION:
         return ((MethodDeclaration) ¢).getName() + "";
       case TYPE_DECLARATION:
         return ((TypeDeclaration) ¢).getName() + "";
       default:
-        assert fault.unreachable() : fault.dump() //
-            + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
-            + "\n d.getNodeType() = " + ¢.getNodeType() //
+        assert fault.unreachable() : fault.dump() + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() + "\n d.getNodeType() = " + ¢.getNodeType()
             + fault.done();
         return ¢.getClass().getSimpleName();
     }
@@ -515,8 +511,8 @@ public enum extract {
     return $;
   }
 
-  public static List<SwitchCase> switchCases(final SwitchStatement s) {
-    return step.statements(s).stream().filter(¢ -> iz.switchCase(¢)).map(¢ -> az.switchCase(¢)).collect(Collectors.toList());
+  public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
   }
 
   /** @param n a node to extract an expression from

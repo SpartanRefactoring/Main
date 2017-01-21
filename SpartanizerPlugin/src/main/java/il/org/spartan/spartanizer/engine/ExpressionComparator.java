@@ -124,8 +124,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     // Bubble sort
     for (int i = 0, size = xs.size(); i < size; ++i)
       for (int j = 0; j < size - 1; ++j) {
-        final Expression e0 = xs.get(j);
-        final Expression e1 = xs.get(j + 1);
+        final Expression e0 = xs.get(j), e1 = xs.get(j + 1);
         if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)
           continue;
         xs.remove(j);

@@ -147,11 +147,11 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean changed;
 
-  @SafeVarargs public final <N extends ASTNode> Trimmer add(final Class<N> n, final Tipper<N>... ns) {
+  @SafeVarargs public final <N extends ASTNode> Trimmer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
-    toolbox.add(n, ns);
+    toolbox.add(c, ts);
     return this;
   }
 }
