@@ -204,11 +204,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-          final AbstractTypeDeclaration includingClass = searchAncestors.forContainingType().from(n);
+          final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
           ReportGenerator.report("tips").put("including Class", includingClass.getName());
           ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
           ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
-          final MethodDeclaration includingMethod = searchAncestors.forContainingMethod().from(n);
+          final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
           ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
           ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
           ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));

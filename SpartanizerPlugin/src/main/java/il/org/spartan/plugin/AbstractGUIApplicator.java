@@ -163,8 +163,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   /** a quickfix which automatically performs the tip
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-   * @since 2013/07/01 */
-  /** @return a quick fix for this instance */
+   * @since 2013/07/01
+   * @return a quick fix for this instance */
   public IMarkerResolution getFix() {
     return new IMarkerResolution() {
       @Override public String getLabel() {

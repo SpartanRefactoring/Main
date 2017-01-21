@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Greenstein
  * @author Niv Shalmon
  * @since 2016 */
-public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
+public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Unite {
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     swap($, 0, 1);

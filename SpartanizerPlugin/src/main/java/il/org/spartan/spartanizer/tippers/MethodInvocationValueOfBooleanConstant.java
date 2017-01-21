@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code>Boolean.valueOf(true) </code> into <code>Boolean.TRUE</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
-public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.Collapse {
+public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.Unite {
   private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }

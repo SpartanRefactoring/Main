@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement> implements TipperCategory.Collapse {
+public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement> implements TipperCategory.Unite {
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }

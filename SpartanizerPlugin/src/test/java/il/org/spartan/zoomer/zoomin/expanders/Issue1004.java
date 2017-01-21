@@ -17,12 +17,12 @@ public class Issue1004 {
   }
 
   @Test public void t2() {
-    bloatingOf("arr[i++] = i;").gives("arr[i=i +1] = i;").stays();
+    bloatingOf("arr[i++] = i;").stays();
   }
 
   @Test public void t3() {
     bloatingOf("arr[i++] = arr[i++] + i;")//
-        .gives("arr[i = i+1] = arr[i++] + i;");
+        .stays();
   }
 
   @Test public void t4() {

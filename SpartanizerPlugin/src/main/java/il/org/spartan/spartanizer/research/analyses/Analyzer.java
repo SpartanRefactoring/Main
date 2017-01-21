@@ -20,8 +20,8 @@ abstract class Analyzer<T> {
     return Integer.valueOf(¢);
   }
 
-  int getMax(final Map<Integer, T> i) {
-    return i.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
+  int getMax(final Map<Integer, T> m) {
+    return m.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
   }
 
   /** If parameter is integer, removes the .0. <br>

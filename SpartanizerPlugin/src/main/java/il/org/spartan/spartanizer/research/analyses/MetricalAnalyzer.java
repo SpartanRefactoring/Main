@@ -36,7 +36,7 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
             + tidy(acc2 += !afterHistogram.containsKey(¢) ? 0 : enumElement(afterHistogram.get(¢))));
   }
 
-  private void printMap(final Map<Integer, T> i) {
-    i.keySet().forEach(k -> System.out.println(k.intValue() + " : " + tidy(enumElement(i.get(k)))));
+  private void printMap(final Map<Integer, T> m) {
+    m.keySet().forEach(k -> System.out.println(k.intValue() + " : " + tidy(enumElement(m.get(k)))));
   }
 }

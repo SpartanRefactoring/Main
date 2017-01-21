@@ -26,14 +26,14 @@ public class SentenceTestTemplate {
   public static final Trimmer trimmer = new Trimmer();
 
   static List<List<MethodDeclaration>> allSentences() {
-    return collectSentences(new Issue1090());
+    return collectSentences(new Issue1008());
   }
 
   static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
-      for (final AnonymousClassDeclaration d : searchDescendants.forClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
-        final Vocabulary reify = MetaTestCase.reify(d);
+      for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
+        final Vocabulary reify = AlphabeticallySortedSentence.reify(d);
         if (reify != null)
           $.add(new ArrayList<>(reify.values()));
       }
@@ -89,7 +89,7 @@ public class SentenceTestTemplate {
     }
 
     String firstBody() {
-      return (first + "").replaceAll(disabling.disabler, "");
+      return (first + "").replace(disabling.disabler, "");
     }
 
     String firstName() {
@@ -97,7 +97,7 @@ public class SentenceTestTemplate {
     }
 
     String secondBody() {
-      return (second + "").replaceAll(secondName(), firstName()).replaceAll(disabling.disabler, "");
+      return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
     String secondName() {
@@ -122,7 +122,6 @@ public class SentenceTestTemplate {
    * {@link disabling} label in its javaDoc.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class Stays {
     @Parameter(0) public String name;

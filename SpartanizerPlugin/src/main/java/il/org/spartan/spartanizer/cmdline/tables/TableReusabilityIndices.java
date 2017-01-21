@@ -32,10 +32,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.close();
   }
 
-  static int[] ranks(final Map<?, Integer> i) {
+  static int[] ranks(final Map<?, Integer> m) {
     int n = 0;
-    final int $[] = new int[i.size()];
-    for (final Integer ¢ : i.values())
+    final int $[] = new int[m.size()];
+    for (final Integer ¢ : m.values())
       $[n++] = ¢.intValue();
     return $;
   }

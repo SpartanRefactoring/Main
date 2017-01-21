@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** Unit test for {@link AssignmentOperatorExpansion}.
+/** Unit test for {@link AssignmentOperatorBloater}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @Ignore

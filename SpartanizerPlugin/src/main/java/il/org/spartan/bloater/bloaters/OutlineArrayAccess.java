@@ -32,7 +32,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.Expander {
+public class OutlineArrayAccess extends CarefulTipper<ArrayAccess> implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }

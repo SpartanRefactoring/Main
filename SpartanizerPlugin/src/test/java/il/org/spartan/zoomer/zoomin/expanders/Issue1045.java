@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit tests for {@link ParenthesesExpander} Issue #1045
+/** Unit tests for {@link ParenthesesBloater} Issue #1045
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-11 */
 @SuppressWarnings("static-method")

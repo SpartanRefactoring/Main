@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>false</b></code> .
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
+public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Unite {
   private static BooleanLiteral literal(final InfixExpression ¢) {
     return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }

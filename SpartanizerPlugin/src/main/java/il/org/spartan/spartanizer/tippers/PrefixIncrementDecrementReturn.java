@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression> implements TipperCategory.Collapse {
+public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression> implements TipperCategory.Unite {
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }

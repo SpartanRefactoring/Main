@@ -19,7 +19,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * </code>
  * @author Tomer Dragucki
  * @since 19-12-2016 */
-public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
+public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }

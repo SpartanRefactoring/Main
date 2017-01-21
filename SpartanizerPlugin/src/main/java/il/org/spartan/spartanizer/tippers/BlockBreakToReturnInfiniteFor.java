@@ -16,9 +16,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * Convert <br/>
  * <code>
  * for(;true;) { <br/>
- * doSomething(); <br/>
- * if(done()) <br/>
- * break; <br/>
+ *    doSomething(); <br/>
+ *    if(done()) <br/>
+ *      break; <br/>
  * } <br/>
  *return XX; <br/>
  * </code> to : <br/>
@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements TipperCategory.Collapse {
+public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements TipperCategory.Shunt {
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }

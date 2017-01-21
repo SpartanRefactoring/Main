@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>
  * @since 2016-8-27 */
-public final class InitializerEmptyRemove extends RemovingTipper<Initializer> implements TipperCategory.InVain {
+public final class InitializerEmptyRemove extends RemovingTipper<Initializer> implements TipperCategory.NOP {
   @Override protected boolean prerequisite(final Initializer ¢) {
     final Block $ = ¢.getBody();
     return ¢.getJavadoc() == null && ($ == null || statements($).isEmpty());

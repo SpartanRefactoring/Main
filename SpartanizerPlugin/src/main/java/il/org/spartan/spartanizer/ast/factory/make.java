@@ -2,11 +2,13 @@ package il.org.spartan.spartanizer.ast.factory;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -255,5 +257,10 @@ public enum make {
     final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
     $.setType(t);
     return $;
+  }
+
+  public static Expression assignmentAsExpression(final Assignment ¢) {
+    final Operator $ = ¢.getOperator();
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 }

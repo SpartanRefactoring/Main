@@ -16,6 +16,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -28,7 +29,7 @@ public class SpartanMovie extends AbstractHandler {
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
-  @Override @SuppressWarnings("deprecation") public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
@@ -69,7 +70,7 @@ public class SpartanMovie extends AbstractHandler {
             monitor.log(¢);
           }
         }
-        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + RefactorerUtil.plurals("file", filesModified));
+        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + Linguistic.plurals("file", filesModified));
         sleep(SLEEP_END);
         pm.done();
       });
