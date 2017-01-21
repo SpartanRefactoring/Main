@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Single tipper applicator implementation using modified {@link Trimmer}
  * @author Ori Roth
  * @since 2016 */
+@SuppressWarnings("deprecation")
 public class SingleTipper<N extends ASTNode> extends Trimmer {
   final Tipper<N> tipper;
 
