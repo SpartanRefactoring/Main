@@ -61,7 +61,7 @@ public class LibrariesManagement {
     if (p == null)
       return false;
     try {
-      for (final IClasspathEntry ¢ : p.getRawClasspath())
+      for (final IClasspathEntry ¢ : p.getRawClasspath()) // NANO?
         if (LIBRARY_PATH_CONTAINER.getPath().equals(¢.getPath()))
           return true;
     } catch (final JavaModelException ¢) {

@@ -32,10 +32,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.close();
   }
 
-  static int[] ranks(final Map<?, Integer> i) {
+  static int[] ranks(final Map<?, Integer> m) {
     int n = 0;
-    final int $[] = new int[i.size()];
-    for (final Integer ¢ : i.values())
+    final int $[] = new int[m.size()];
+    for (final Integer ¢ : m.values())
       $[n++] = ¢.intValue();
     return $;
   }
@@ -64,8 +64,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.col("Project", presentSourceName);
     if (usage.get("METHOD") == null)
       return;
-    final int rExternal = rExternal();
-    final int rIntrernal = rInternal();
+    final int rExternal = rExternal(), rIntrernal = rInternal();
     writer//
         .col("External", rExternal) //
         .col("Internal", rIntrernal)//
@@ -95,8 +94,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
         final Map<String, Integer> map = usage.get(category);
-        int n = 0;
-        int m = 0;
+        int n = 0, m = 0;
         for (final String key : map.keySet())
           t//
               .col("N", ++n)//

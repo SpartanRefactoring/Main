@@ -6,7 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -15,8 +17,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 22-12-16 */
 public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Expander {
-  // TODO: Raviv Rachmiel use class step if necessary and remove
-  // @SuppressWarnings("unchecked") --yg
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;
@@ -25,10 +25,8 @@ public class ForBlockExpander extends ReplaceCurrentNode<ForStatement> implement
     b.statements().add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
     body(s).accept(new ASTVisitor() {
-      // TODO: Raviv Rachmiel use class box, or valueOf if necessary and remove
-      // @SuppressWarnings("boxing") --yg
-      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
-        cc.add(true);
+      @Override public boolean visit(@SuppressWarnings("unused") final Block node) {
+        cc.add(box.it(true));
         return true;
       }
     });

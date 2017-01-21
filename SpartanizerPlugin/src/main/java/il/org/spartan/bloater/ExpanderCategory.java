@@ -69,7 +69,7 @@ public interface ExpanderCategory {
     }
 
     private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
-      for (final ExpanderGroup $ : ExpanderGroup.values())
+      for (final ExpanderGroup $ : ExpanderGroup.values()) // NANO?
         if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;

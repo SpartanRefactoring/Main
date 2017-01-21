@@ -46,8 +46,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
   @Override @SuppressWarnings("unused") public Tip tip(final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      final List<SimpleName> prev = new ArrayList<>();
-      final List<SimpleName> after = new ArrayList<>();
+      final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
       for (final Object v : az.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclarationFragment) v).getName();
         assert $ != null;

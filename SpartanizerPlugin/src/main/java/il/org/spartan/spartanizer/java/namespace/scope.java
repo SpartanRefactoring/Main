@@ -19,9 +19,8 @@ public interface scope {
     for (final ASTNode $ : ancestors.of(¢))
       switch ($.getNodeType()) {
         case ASTNode.BLOCK:
+        case ASTNode.SWITCH_STATEMENT:
           return $;
-        default:
-          continue;
       }
     return null;
   }
@@ -50,24 +49,25 @@ public interface scope {
   static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
-  
+
+  /** Bug in ternary spartanizing, do not remove the suppress
+   * [[SuppressWarningsSpartan]]
+   */
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    return new Namespace(Environment.of(last(statements(getBlock(¢)))));
+    ASTNode $ = delimiter(¢);
+    return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
-  
+
   static String newName(final ASTNode ¢, final Type t) {
-    Namespace n;
-    if (getBlock(¢).getProperty("Namespace") != null)
-      n = (Namespace) ¢.getProperty("Namespace");
-    else
-      n = getScopeNamespace(getBlock(¢));
-    String $ = n.generateName(t);
+    ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(b) : (Namespace) ¢.getProperty("Namespace");
+    final String $ = n.generateName(t);
     n.addNewName($, t);
-    getBlock(¢).setProperty("Namespace", n);
+    b.setProperty("Namespace", n);
     return $;
   }
-  
-  static boolean hasInScope(final ASTNode ¢, String identifier) {
+
+  static boolean hasInScope(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢).has(identifier);
   }
 }

@@ -34,10 +34,11 @@ public class normalize {
   }
 
   private static String wrapTest(final String name, final String code) {
-    return "@Test public void " + name + "() {" + //
-        "\n\ttrimmingOf(\n" + code + "\n.gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
-        + code + //
-        "\n).stays();\n}";
+    return String.format("  @Test public void %s() {\n" //
+        + "    trimmingOf(\n \"%s\" \n)\n" //
+        + "       .gives(\n" //
+        + "    // Edit this to reflect your expectation\n" //
+        + "     \"%s\"\n//\n)//\n.stays()\n;\n}", name, code, code);
   }
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
@@ -65,8 +66,7 @@ public class normalize {
 
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
-    final Wrapper<String> id = new Wrapper<>("start");
-    final Wrapper<String> Id = new Wrapper<>("START");
+    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final Document $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());

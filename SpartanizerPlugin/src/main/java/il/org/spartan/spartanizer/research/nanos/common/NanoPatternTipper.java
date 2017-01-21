@@ -19,20 +19,20 @@ import il.org.spartan.spartanizer.tipping.*;
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
   public final N nodeTypeHolder = null;
 
-  protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return n != null && ns.stream().anyMatch(t -> t.canTip(n));
+  protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
+    return n != null && ts.stream().anyMatch(t -> t.canTip(n));
   }
 
-  protected static <N extends ASTNode> boolean nonTips(final Collection<NanoPatternTipper<N>> ns, final N n) {
-    return n != null && ns.stream().allMatch(t -> t.cantTip(n));
+  protected static <N extends ASTNode> boolean nonTips(final Collection<NanoPatternTipper<N>> ts, final N n) {
+    return n != null && ts.stream().allMatch(t -> t.cantTip(n));
   }
 
-  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return ns.stream().filter(t -> t.canTip(n)).findFirst().get();
+  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final Collection<UserDefinedTipper<N>> ts, final N n) {
+    return ts.stream().filter(t -> t.canTip(n)).findFirst().get();
   }
 
-  public static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ns, final N n) {
-    return firstTipper(ns, n).tip(n);
+  public static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ts, final N n) {
+    return firstTipper(ts, n).tip(n);
   }
 
   public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
@@ -87,7 +87,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   public enum Category {
-    Collection, Field, Conditional, Exception, Safety, MethodBody {
+    Iterative, Field, Conditional, Exception, Safety, MethodBody {
       @Override public String toString() {
         return "Method Body";
       }
@@ -99,12 +99,12 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
       switch (name) {
         case "IfStatement":
           return "Conditional Statement";
-        case "MethodDeclaration":
-          return MethodBody + "";
         case "ConditionalExpression":
           return Conditional + "";
         case "EnhancedForStatement":
-          return Collection + "";
+          return Iterative + "";
+        case "MethodDeclaration":
+          return MethodBody + "";
         default:
           return name;
       }

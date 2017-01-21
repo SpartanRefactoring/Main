@@ -24,6 +24,67 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2015-07-16 */
 public enum az {
   ;
+  /** A fluent API to parse numeric literals, including provisions for unary
+   * minus.
+   * @author Yossi Gil
+   * @year 2016 */
+  public interface throwing {
+    static String chop¢necessaryQuestionMark(final String ¢) {
+      return ¢.substring(0, ¢.length() - 1);
+    }
+
+    static double double¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
+          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
+              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
+    }
+
+    static double double¢(final String token) throws NumberFormatException {
+      return Double.parseDouble(token);
+    }
+
+    static int int¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
+    }
+
+    static int int¢(final String token) throws NumberFormatException {
+      return Integer.parseInt(token);
+    }
+
+    static long long¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
+          : !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
+              : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+    }
+
+    static long long¢(final String token) throws NumberFormatException {
+      return Long.parseLong(token);
+    }
+
+    static NumberLiteral negativeLiteral(final Expression ¢) {
+      return throwing.negativeLiteral(prefixExpression(¢));
+    }
+
+    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+    }
+
+    static String token(final Expression ¢) {
+      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
+    }
+
+    static String token(final NumberLiteral ¢) {
+      return ¢.getToken();
+    }
+
+    static String token(final PrefixExpression ¢) {
+      return az.numberLiteral(operand(¢)).getToken();
+    }
+  }
+
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -50,12 +111,12 @@ public enum az {
     return !iz.annotation($) ? null : (Annotation) $;
   }
 
-  public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
-    return !iz.nodeTypeEquals(¢, ANNOTATION_TYPE_MEMBER_DECLARATION) ? null : (AnnotationTypeMemberDeclaration) ¢;
-  }
-
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
+  }
+
+  public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
+    return !iz.nodeTypeEquals(¢, ANNOTATION_TYPE_MEMBER_DECLARATION) ? null : (AnnotationTypeMemberDeclaration) ¢;
   }
 
   public static AnonymousClassDeclaration anonymousClassDeclaration(final ASTNode $) {
@@ -468,6 +529,10 @@ public enum az {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
 
+  public static TypeDeclarationStatement typeDeclarationStatement(final Statement $) {
+    return !iz.nodeTypeEquals($, TYPE_DECLARATION_STATEMENT) ? null : (TypeDeclarationStatement) $;
+  }
+
   /** Down-cast, if possible, to {@link UnionType}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -528,66 +593,5 @@ public enum az {
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
-  }
-
-  /** A fluent API to parse numeric literals, including provisions for unary
-   * minus.
-   * @author Yossi Gil
-   * @year 2016 */
-  public interface throwing {
-    static String chop¢necessaryQuestionMark(final String ¢) {
-      return ¢.substring(0, ¢.length() - 1);
-    }
-
-    static double double¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
-              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
-    }
-
-    static double double¢(final String token) throws NumberFormatException {
-      return Double.parseDouble(token);
-    }
-
-    static int int¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
-    }
-
-    static int int¢(final String token) throws NumberFormatException {
-      return Integer.parseInt(token);
-    }
-
-    static long long¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
-          : !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
-              : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
-    }
-
-    static long long¢(final String token) throws NumberFormatException {
-      return Long.parseLong(token);
-    }
-
-    static NumberLiteral negativeLiteral(final Expression ¢) {
-      return throwing.negativeLiteral(prefixExpression(¢));
-    }
-
-    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
-    }
-
-    static String token(final Expression ¢) {
-      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
-    }
-
-    static String token(final NumberLiteral ¢) {
-      return ¢.getToken();
-    }
-
-    static String token(final PrefixExpression ¢) {
-      return az.numberLiteral(operand(¢)).getToken();
-    }
   }
 }

@@ -23,8 +23,6 @@ public class Issue0979 {
         .gives("int foo(int ret, int ba){ return ret;}");
   }
 
-  // TODO: dor maaya, Doron - should this name be final or will the name
-  // generation change?
   @Test public void basicRenameShortVar() {
     bloatingOf("void foo(int b){ b = 1;}")//
         .gives("void foo(int i1){ i1=1;}");

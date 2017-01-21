@@ -36,6 +36,10 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return "ForEachFromL₁ToL₂ApplyS";
   }
 
+  @Override public Category category() {
+    return Category.Iterative;
+  }
+
   @Override public String example() {
     return firstPattern(tippers);
   }
