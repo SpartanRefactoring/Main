@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO: doron add docs description such as in {@link SwitchEmpty} pls
-// TODO: Dorn, what's going on with the above TOOD --yg
+// TODO: Doron Meshulam: add docs description such as in {@link SwitchEmpty} pls
+// TODO: Doron, what's going on with the above TOOD --yg
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
