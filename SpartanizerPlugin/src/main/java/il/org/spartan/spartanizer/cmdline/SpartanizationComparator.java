@@ -73,20 +73,23 @@ public class SpartanizationComparator {
     });
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   protected static void consider(MethodDeclaration ¢, String id) {
       ¢.getStartPosition();
       System.out.println(¢.getName());
+      //
       writer.put("StartPosition", ¢.getStartPosition())
             .put("File", presentFile) //
             .put("Name", ¢.getName()) //
             .put("Path", presentSourcePath) //
             .put("Status",id);
-
+      //
       for(NamedFunction f: functions())
         writer.put(f.name(), f.function().run(¢));
       writer.nl();
   }
 
+  @SuppressWarnings("unused")
   private static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -110,7 +113,6 @@ public class SpartanizationComparator {
     return functions("");
   }
   
-  @SuppressWarnings("synthetic-access")
   static void consider(final MethodDeclaration ¢) {
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
