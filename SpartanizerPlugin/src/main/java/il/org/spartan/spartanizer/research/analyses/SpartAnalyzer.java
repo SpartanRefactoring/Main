@@ -46,8 +46,8 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new FindFirst(), //
             new ForEach(), //
             new ForEachSuchThat(), //
-            new ReturnHoldsForAll(), //
-            new ReturnHoldsForAny(), //
+            new HoldsForAll(), //
+            new HoldsForAny(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //

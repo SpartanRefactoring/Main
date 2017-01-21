@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-05 */
-public final class ReturnHoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
+/** @author Ori Marcovitch
+ * @year 2016 */
+public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
-      add(statementsPattern("for($T $N : $X1) if($X2) return true; return false;", "return $X1.stream().anyMatch($N -> $X2);",
-          "Any matches pattern. Consolidate into one statement"));
+      add(statementsPattern("for($T $N : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N -> !($X2));",
+          "All matches pattern. Consolidate into one statement"));
     }
   };
 
@@ -37,7 +37,7 @@ public final class ReturnHoldsForAny extends NanoPatternTipper<EnhancedForStatem
   }
 
   @Override public String description() {
-    return "Return whether any elements in collection match predicate";
+    return "Return whether all elements in collection match predicate";
   }
 
   @Override public String example() {
