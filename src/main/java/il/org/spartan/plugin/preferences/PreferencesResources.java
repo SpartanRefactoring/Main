@@ -49,6 +49,7 @@ public class PreferencesResources {
     SyntacticBaggage(TipperCategory.SyntacticBaggage.class), //
     Ternarization(TipperCategory.Ternarization.class), //
     Bloater(TipperCategory.Bloater.class), //
+    Shortcut(TipperCategory.Shunt.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());

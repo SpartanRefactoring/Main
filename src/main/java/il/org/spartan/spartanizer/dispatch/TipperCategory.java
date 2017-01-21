@@ -127,9 +127,9 @@ public interface TipperCategory {
     }
   }
 
-  interface ControlShortcut extends Structural {
+  interface Shunt extends Structural {
     String ____ = "Shortcut control flow through sequencers, e.g., converting break into return";
-    String label = ControlShortcut.class.getSimpleName(); 
+    String label = Shunt.class.getSimpleName(); 
 
     @Override default String description() {
       return ____; 
