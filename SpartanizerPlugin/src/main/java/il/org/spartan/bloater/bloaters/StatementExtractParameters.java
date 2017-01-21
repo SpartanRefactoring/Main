@@ -117,6 +117,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           case ASTNode.TYPE_DECLARATION_STATEMENT:
           case ASTNode.VARIABLE_DECLARATION_STATEMENT:
           case ASTNode.WHILE_STATEMENT:
+          case ASTNode.LAMBDA_EXPRESSION:
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;

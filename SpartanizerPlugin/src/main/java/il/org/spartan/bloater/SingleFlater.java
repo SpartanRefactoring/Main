@@ -116,7 +116,7 @@ public class SingleFlater {
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
   public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
-      final WindowInformation i) {
+      final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -124,7 +124,7 @@ public class SingleFlater {
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(t, textChange, i);
+          $ = changeNFocus(e, t, textChange, i);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
@@ -150,13 +150,14 @@ public class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(final StyledText t, final TextFileChange tc, final WindowInformation i) throws CoreException {
-    if (i == null || t == null) {
+  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange tc, final WindowInformation i)
+      throws CoreException {
+    if (i == null || t == null || e == null) {
       tc.perform(new NullProgressMonitor());
       return true;
     }
     tc.perform(new NullProgressMonitor());
-    t.setSelection(tc.getEdit().getOffset(), tc.getEdit().getOffset() + tc.getEdit().getLength());
+    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
     if (!i.invalid())
       t.setTopIndex(i.startLine);
     return false;
