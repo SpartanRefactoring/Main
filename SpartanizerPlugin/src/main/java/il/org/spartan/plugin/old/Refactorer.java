@@ -107,21 +107,21 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return false;
   }
 
-  /** @param a JD
+  /** @param m JD
    * @param targetCompilationUnits JD
    * @param a JD
    * @return work to be done before running the refactorer main loop */
   @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator __,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> a) {
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
 
-  /** @param a JD
+  /** @param m JD
    * @param targetCompilationUnits JD
    * @param a JD
    * @return work to be done after running the refactorer main loop */
   @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator __,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> a) {
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
 
@@ -185,7 +185,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return true;
   }
 
-  private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> attributes) {
+  private IRunnableWithProgress runnable(final Selection s, final AbstractGUIApplicator a, final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
@@ -209,9 +209,9 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
           pm.worked(1);
         }
       }
-      put(attributes, attribute.CHANGES, modifiedCompilationUnits);
-      put(attributes, attribute.PASSES, Integer.valueOf(pass));
-      put(attributes, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
+      put(m, attribute.CHANGES, modifiedCompilationUnits);
+      put(m, attribute.PASSES, Integer.valueOf(pass));
+      put(m, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
     };
   }
 

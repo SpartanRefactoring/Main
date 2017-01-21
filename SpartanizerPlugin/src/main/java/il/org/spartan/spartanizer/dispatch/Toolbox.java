@@ -341,11 +341,11 @@ public class Toolbox {
     ¢.toolbox = freshCopyOfAllTippers();
   }
 
-  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
     removing: for (;;) {
-      for (int ¢ = 0; ¢ < ns.size(); ++¢)
-        if (c.isAssignableFrom(ns.get(¢).getClass())) {
-          ns.remove(¢);
+      for (int ¢ = 0; ¢ < ts.size(); ++¢)
+        if (c.isAssignableFrom(ts.get(¢).getClass())) {
+          ts.remove(¢);
           continue removing;
         }
       break;

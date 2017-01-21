@@ -97,8 +97,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     }
     if (!iz.fieldAccess(x.getExpression()))
       return false;
-    final Expression expression = ((FieldAccess) x.getExpression()).getExpression();
-    final Expression e = core(expression);
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
