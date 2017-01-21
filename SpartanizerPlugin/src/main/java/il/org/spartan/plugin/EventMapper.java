@@ -82,8 +82,8 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
         consumer.accept(¢1);
       }
 
-      @Override public void update(final Map<E, Object> e, final Object o) {
-        biConsumer.accept(e, o);
+      @Override public void update(final Map<E, Object> m, final Object o) {
+        biConsumer.accept(m, o);
       }
     };
   }
@@ -222,12 +222,12 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** Updates the map with the object using
      * {@link EventMapperFunctor#biConsumer} or
      * {@link EventMapperFunctor#biFunction} */
-    @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> e, final O o) {
+    @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> m, final O o) {
       assert biConsumer == null || biFunction == null;
       if (biConsumer != null)
-        biConsumer.accept((P) e.get(domain), o);
+        biConsumer.accept((P) m.get(domain), o);
       if (biFunction != null)
-        e.put(domain, biFunction.apply((P) e.get(domain), o));
+        m.put(domain, biFunction.apply((P) m.get(domain), o));
     }
 
     /** Updates the map using {@link EventMapperFunctor#consumer} or

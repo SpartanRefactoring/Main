@@ -205,9 +205,8 @@ public enum haz {
         return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
         continue;
-      if (iz.nodeTypeEquals(ancestor, FOR_STATEMENT)
-          && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
-              || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
+      if (iz.nodeTypeEquals(ancestor, FOR_STATEMENT) && (yieldAncestors.untilOneOf(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
+          || yieldAncestors.untilNode(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
         return true;
       child = ancestor;
     }

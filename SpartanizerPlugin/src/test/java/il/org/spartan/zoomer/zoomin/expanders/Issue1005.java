@@ -11,7 +11,7 @@ import org.junit.*;
 public class Issue1005 {
   @Test public void t1() {
     bloatingOf("++i;")//
-        .gives("i++;");
+        .gives("i+=1;");
   }
 
   @Test public void t2() {
@@ -26,22 +26,22 @@ public class Issue1005 {
 
   @Test public void t4() {
     bloatingOf("f(i++,--j,++x);")//
-        .gives("f(i = i+1,--j,++x);");
+        .stays();
   }
 
   @Test public void t5() {
     bloatingOf("if(b) { ++i; }")//
-        .gives("if(b) { i++; }");
+        .gives("if(b) { i+=1; }");
   }
 
   @Test public void t6() {
     bloatingOf("for(;x<5;++x){;}")//
-        .gives("for(;x<5;x++){;}");
+        .gives("for(;x<5;x+=1){;}");
   }
 
   @Test public void t7() {
     bloatingOf("for(++x;x<5;){;}")//
-        .gives("for(x++;x<5;){;}");
+        .gives("for(x+=1;x<5;){;}");
   }
 
   @Test public void t8() {
@@ -51,7 +51,7 @@ public class Issue1005 {
 
   @Test public void t9() {
     bloatingOf("for(;;) {++x;}")//
-        .gives("for(;;){ x++;}");
+        .gives("for(;;){ x+=1;}");
   }
 
   @Test public void t10() {
@@ -75,12 +75,12 @@ public class Issue1005 {
 
   @Test public void t13() {
     bloatingOf("for(;;){ --x;}")//
-        .gives("for(;;){ x--;}");
+        .gives("for(;;){ x-=1;}");
   }
 
   @Test public void t14() {
     bloatingOf("--x;")//
-        .gives("x--;");
+        .gives("x-=1;");
   }
 
   @Test public void t15() {

@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit Test for the ForBlock expander {@link ForEachBlockExpander}
+/** Unit Test for the ForBlock expander {@link ForEachBlockBloater}
  * @author Raviv Rachmiel
  * @since 11-1-17 */
 @SuppressWarnings("static-method")

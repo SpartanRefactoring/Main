@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
