@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -141,7 +142,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
-          d.getProgressMonitor().subTask(Linguistic.trim($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name()));
+          d.getProgressMonitor().subTask(Linguistic.trim(wizard.nth($.selection().inner.indexOf(¢),$.selection().size()) + "\tSpartanizing " + ¢.name()));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
