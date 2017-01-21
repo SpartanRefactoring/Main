@@ -13,16 +13,16 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Unit tests for {@link ThrowNotLastInBlock}
+/** Unit tests for {@link SequencerNotLastInBlock}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0086 extends Issue____ {
   private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";
-  Tipper<ThrowStatement> tipper;
   Statement context;
   ThrowStatement focus;
+  Tipper<ThrowStatement> tipper;
 
   @Test public void A$01_createTipper() {
     tipper = makeTipper();
@@ -127,8 +127,8 @@ public final class Issue0086 extends Issue____ {
             .stays();
   }
 
-  private ThrowNotLastInBlock makeTipper() {
-    return new ThrowNotLastInBlock();
+  private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
+    return new SequencerNotLastInBlock<>();
   }
 
   @Test public void vanilla() {
@@ -138,11 +138,40 @@ public final class Issue0086 extends Issue____ {
         .gives("throw Something();")//
         .stays();
   }
-
   @Test public void vanilla01() {
-    trimmingOf("throw Something();a=3; return 2;")//
-        .gives("throw Something(); return 2;")//
-        .gives("throw Something();")//
+  trimmingOf("throw Something();a=3; return 2;")//
+      .gives("throw Something(); return 2;")//
+      .gives("throw Something();")//
+      .stays();
+ }
+  @Test public void vanilla02() {
+    trimmingOf("return Something();a=3; return 2;")//
+        .gives("return Something(); return 2;")//
+        .gives("return Something();")//
         .stays();
   }
+  @Test public void vanilla03() {
+    trimmingOf("continue a;a=3; return 2;")//
+        .gives("continue a; return 2;")//
+        .gives("continue a;")//
+        .stays();
+  }
+  @Test public void vanilla04() {
+    trimmingOf("break a;a=3; return 2;")//
+        .gives("break a; return 2;")//
+        .gives("break a;")//
+        .stays();
+  }
+   @Test public void vanilla05() {
+    trimmingOf("continue ;a=3; return 2;")//
+        .gives("continue ; return 2;")//
+        .gives("continue ;")//
+        .stays();
+  }
+     @Test public void vanilla06() {
+      trimmingOf("break;a=3; return 2;")//
+          .gives("break; return 2;")//
+          .gives("break;")//
+          .stays();
+    }
 }
