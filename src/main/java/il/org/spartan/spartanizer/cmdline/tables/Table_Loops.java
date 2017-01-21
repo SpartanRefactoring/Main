@@ -42,8 +42,9 @@ public class Table_Loops extends FolderASTVisitor {
   }
 
   @Override protected void done(final String path) {
+    summarize(path);
     clearAll();
-    System.err.println("Output is in: " + Table.temporariesFolder + path);
+    System.err.println("Finished");
   }
 
   private static void clearAll() {
@@ -55,7 +56,7 @@ public class Table_Loops extends FolderASTVisitor {
     writer = new Table(Table_Loops.class.getSimpleName());
   }
 
-  public static void summarizeSortedMethodStatistics(final String path) {
+  public static void summarize(final String path) {
     if (writer == null)
       initializeWriter();
     writer//
