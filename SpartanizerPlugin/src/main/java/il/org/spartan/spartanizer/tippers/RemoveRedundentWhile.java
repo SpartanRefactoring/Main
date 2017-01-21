@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.EmptyCycles {
   @Override public String description(final WhileStatement ¢) {
     return "Remove :" + ¢;
   }

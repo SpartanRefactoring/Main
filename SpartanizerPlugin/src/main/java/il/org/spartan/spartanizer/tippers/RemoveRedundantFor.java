@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class RemoveRedundantFor extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.EmptyCycles {
   @Override public String description(final ForStatement ¢) {
     return "remove :" + ¢;
   }
