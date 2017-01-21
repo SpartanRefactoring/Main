@@ -35,11 +35,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 27-11-2016 */
 public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Collapse {
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
-    return wizard.same(¢.getElseExpression(), wizard.ast("Boolean.TRUE")) && wizard.same(¢.getThenExpression(), wizard.ast("Boolean.FALSE"))
-        ? make.notOf(copy.of(¢.getExpression()))
-        : wizard.same(¢.getElseExpression(), wizard.ast("Boolean.FALSE")) && wizard.same(¢.getThenExpression(), wizard.ast("Boolean.TRUE"))
-            ? copy.of(¢.getExpression()) : null;
+    final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
+    return wizard.same($, truee) && wizard.same(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
+        : wizard.same($, falsee) && wizard.same(then, truee) ? copy.of(¢.getExpression()) : null;
   }
+
+  public static final ASTNode truee = wizard.ast("Boolean.TRUE"), falsee = wizard.ast("Boolean.FALSE");
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate teranry that evaluates to either Boolean.FALSE or Boolean.TRUE (not just one of these)";
