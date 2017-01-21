@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan
  * @since 2-12-2016 */
-public class LessEqualsToLess extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
+public class LessEqualsToLess extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Unite {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixMinus(right(¢))//

@@ -125,10 +125,6 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return null;
   }
 
-  @Override public String getLabel() {
-    return null;
-  }
-
   @Override public Void execute(final ExecutionEvent ¢) {
     return !isHandler() ? null : go(¢, null);
   }
