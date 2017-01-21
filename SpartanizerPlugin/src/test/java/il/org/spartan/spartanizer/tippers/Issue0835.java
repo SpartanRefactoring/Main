@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class Issue0835 {
-  final Tipper<Block> t = new CastBlockSingletonVariableDefinition();
+  final Tipper<Block> t = new BlockSingletonVariableDeclarationStatementRemoveBuggy();
 
   @Test public void descriptionNotNull() {
     assert t.description() != null;

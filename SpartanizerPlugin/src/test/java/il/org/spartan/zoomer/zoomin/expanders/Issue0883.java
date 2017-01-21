@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Unit test for {@link ReturnTernaryExpander} and
- * {@link AssignmentTernaryExpander}
+ * {@link AssignmentTernaryBloater}
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 8-12-2016 */
