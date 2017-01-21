@@ -19,14 +19,14 @@ import il.org.spartan.utils.*;
 
 public class SpartanizationComparator {
   
+  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+  
   protected static String presentSourcePath;
   protected static String presentSourceName;
   static int methodNesting;
   static MethodDeclaration lastNode;
   protected static Dotter dotter = new Dotter();
-  
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   
   private final static CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
   
@@ -36,17 +36,6 @@ public class SpartanizationComparator {
   
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : as.array("."));
-    //final CSVStatistics w = new CSVStatistics("types.csv", "property");
-//    for (final String s : longNames.keySet()) {
-//      final String shortName = namer.shorten(s);
-//      w.put("Count", longNames.get(s).intValue());
-//      w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
-//      w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
-//      w.put("Collisions", shortToFull.get(shortName).size());
-//      w.put("Short", namer.shorten(s));
-//      w.put("Original", s);
-//      w.nl();
-//    }
     System.err.println("Look for your output here: " + writer.close());
   }
 
@@ -78,24 +67,13 @@ public class SpartanizationComparator {
   //  dotter.click();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
-  //      record(hop.simpleName(¢) + "");
         consider(¢, id);
-//        consider2(¢);
         return true;
-      }
-      
-      void record(final String longName) {
-  //      longNames.putIfAbsent(longName, Integer.valueOf(0));
-  //      longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        final String shortName = namer.shorten(longName);
-  //      shortToFull.putIfAbsent(shortName, new HashSet<>());
-  //      shortToFull.get(shortName).add(longName);
       }
     });
   }
 
   protected static void consider(MethodDeclaration ¢, String id) {
-//    if(id.equals("before")){
       ¢.getStartPosition();
       System.out.println(¢.getName());
       writer.put("StartPosition", ¢.getStartPosition())
@@ -103,10 +81,9 @@ public class SpartanizationComparator {
             .put("Name", ¢.getName()) //
             .put("Path", presentSourcePath) //
             .put("Status",id);
-//    }
-    for(NamedFunction f: functions())
-      writer.put(f.name(), f.function().run(¢));
-//    if(id.equals("after"))
+
+      for(NamedFunction f: functions())
+        writer.put(f.name(), f.function().run(¢));
       writer.nl();
   }
 
@@ -116,23 +93,8 @@ public class SpartanizationComparator {
 
   protected static String presentFile;
   
-  private static void collect(final CompilationUnit u) {
-//    dotter.click();
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-//        record(hop.simpleName(¢) + "");
-        consider2(¢);
-        return true;
-      }
-      
-      void record(final String longName) {
-//        longNames.putIfAbsent(longName, Integer.valueOf(0));
-//        longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        final String shortName = namer.shorten(longName);
-//        shortToFull.putIfAbsent(shortName, new HashSet<>());
-//        shortToFull.get(shortName).add(longName);
-      }
-    });
+  private static void collect(final CompilationUnit ¢) {
+    collect(¢, "");
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -148,10 +110,6 @@ public class SpartanizationComparator {
     return functions("");
   }
   
-  /** TODO: Ori Roth: Please add here more boolean metrics such as
-   * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
-   * #isJohnDoeWithResepctTo2ndParameter}, --yg
-   * @param ¢ JD */
   @SuppressWarnings("synthetic-access")
   static void consider(final MethodDeclaration ¢) {
     final Type type = ¢.getReturnType2();
