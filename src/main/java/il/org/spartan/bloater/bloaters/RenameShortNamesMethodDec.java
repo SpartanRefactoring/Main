@@ -47,10 +47,8 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SingleVariableDeclaration> parameters = parameters(d);
-    final List<SimpleName> prev = new ArrayList<>();
-    final List<SimpleName> after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters) {
+    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
@@ -68,6 +66,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
+          System.out.println(after.get(counter) + "");
           Tippers.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }

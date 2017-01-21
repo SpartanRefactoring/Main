@@ -75,7 +75,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override public boolean isValid() {
-    for (final FieldEditor ¢ : members)
+    for (final FieldEditor ¢ : members) // NANO?
       if (!¢.isValid())
         return false;
     return true;
@@ -113,11 +113,11 @@ public final class GroupFieldEditor extends FieldEditor {
     if (members == null || members.isEmpty())
       return;
     if (c == 0)
-      for (final FieldEditor ¢ : members)
+      for (final FieldEditor ¢ : members) // NANO?
         c = Math.max(c, ¢.getNumberOfControls());
     gridData(c);
     gridLayout(c);
-    for (final FieldEditor ¢ : members)
+    for (final FieldEditor ¢ : members) // NANO?
       ¢.fillIntoGrid(parentParam, c);
     parent.layout();
     parent.redraw();

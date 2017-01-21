@@ -17,8 +17,7 @@ public class Issue1004 {
   }
 
   @Test public void t2() {
-    bloatingOf("arr[i++] = i;")//
-        .stays();
+    bloatingOf("arr[i++] = i;").stays();
   }
 
   @Test public void t3() {

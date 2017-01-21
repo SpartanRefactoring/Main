@@ -82,7 +82,7 @@ public class Table_NanosStatistics extends FolderASTVisitor {
       initializeWriter();
     pWriter.col("Project", path);
     npStatistics.keySet().stream()//
-        .sorted((k1, k2) -> npStatistics.get(k1).name.compareTo(npStatistics.get(k2).name))//
+        .sorted(Comparator.comparing(k -> npStatistics.get(k).name))//
         .map(npStatistics::get)//
         .forEach(n -> pWriter.col(n.name, n.occurences));
     fillAbsents();

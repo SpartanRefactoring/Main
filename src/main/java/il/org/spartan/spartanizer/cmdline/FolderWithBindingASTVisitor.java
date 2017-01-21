@@ -99,8 +99,7 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
     d.setNatureIds(new String[] { JavaCore.NATURE_ID });
     p.setDescription(d, null);
     javaProject = JavaCore.create(p);
-    final IFolder binFolder = p.getFolder("bin");
-    final IFolder sourceFolder = p.getFolder("src");
+    final IFolder binFolder = p.getFolder("bin"), sourceFolder = p.getFolder("src");
     srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);

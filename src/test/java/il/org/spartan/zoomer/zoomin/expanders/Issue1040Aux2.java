@@ -27,7 +27,7 @@ public class Issue1040Aux2 extends MetaFixture {
 
   void toTest2() {
     total2 = 0;
-    for (final Integer k : arr)
+    for (final Integer k : arr) // NANO?
       total2 += total2(1);
   }
 }

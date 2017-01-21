@@ -59,9 +59,9 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     };
   }
 
-  static String statementsToString(final List<Statement> ss) {
+  static String statementsToString(final List<Statement> ¢) {
     final StringBuilder $ = new StringBuilder();
-    ss.forEach(k -> $.append(k));
+    ¢.forEach($::append);
     return $ + "";
   }
 

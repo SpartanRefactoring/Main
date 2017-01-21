@@ -67,8 +67,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final int thenSize = $.size();
-    final int elzeSize = elze.size();
+    final int thenSize = $.size(), elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), s, getClass()) {

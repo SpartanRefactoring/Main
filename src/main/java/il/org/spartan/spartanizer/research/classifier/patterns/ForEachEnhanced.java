@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   final Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
-    {}
   };
 
   @Override public boolean canTip(final ForStatement ¢) {

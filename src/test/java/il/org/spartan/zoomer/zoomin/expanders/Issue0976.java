@@ -9,12 +9,13 @@ import il.org.spartan.bloater.bloaters.*;
 /** Unit tests for {@link LongIfExpander}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */
-@Ignore
+@Ignore // TODO: Tome Dragucki
 @SuppressWarnings("static-method")
 public class Issue0976 {
   @Test public void a() {
     bloatingOf("if(a==b && c==d) { t=5; }")//
-        .gives("if(a==b) { if(c==d) t=5; }");
+        .gives("if(a==b) { if(c==d) t=5; }")//
+        .stays();
   }
 
   @Test public void a1() {
@@ -26,7 +27,9 @@ public class Issue0976 {
   @Test public void b() {
     bloatingOf("if(a && b && c) { t=5; }")//
         .gives("if(a) { if(b && c) t=5; }")//
-        .gives("if(a) { if(b && c) { t=5; } }").gives("if(a) { if(b) { if(c) t=5; } }");
+        .gives("if(a) { if(b && c) { t=5; } }")//
+        .gives("if(a) { if(b) { if(c) t=5; } }")//
+        .stays();
   }
 
   @Test public void c() {
