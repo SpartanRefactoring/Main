@@ -42,6 +42,10 @@ public enum sideEffects {
       SUPER_FIELD_ACCESS, //
       THIS_EXPRESSION, //
       TYPE_LITERAL, //
+      EXPRESSION_METHOD_REFERENCE, //
+      CREATION_REFERENCE, //
+      SUPER_METHOD_REFERENCE, //
+      TYPE_METHOD_REFERENCE, //
   };
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, //
