@@ -4,9 +4,9 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.jface.preference.*;
 
+import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** @author Daniel Mittelman */
 public class PreferencesResources {
@@ -26,25 +26,31 @@ public class PreferencesResources {
                                                                         // SAFE
   public static final AtomicBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new AtomicBoolean(true);
 
+  public static String getLabel(final Class<? extends ExpanderCategory> $) {
+    return $.getSimpleName();
+  }
+
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
+    Arithmetic(TipperCategory.Arithmetic.class), //
     Annonimaization(TipperCategory.Annonimization.class), //
-    Canonicalization(TipperCategory.Collapse.class), //
-    CommonFactoring(TipperCategory.CommnoFactoring.class), //
+    Canonicalization(TipperCategory.Unite.class), //
+    CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
     Dollarization(TipperCategory.Dollarization.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
-    InVain(TipperCategory.InVain.class), //
+    InVain(TipperCategory.NOP.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //
     Sorting(TipperCategory.Sorting.class), //
     SyntacticBaggage(TipperCategory.SyntacticBaggage.class), //
     Ternarization(TipperCategory.Ternarization.class), //
-    Expander(TipperCategory.Expander.class), //
+    Bloater(TipperCategory.Bloater.class), //
+    Shortcut(TipperCategory.Shunt.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
@@ -68,20 +74,11 @@ public class PreferencesResources {
     TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = getLabel(clazz) + "";
+      label = clazz.getSimpleName(); 
     }
 
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);
-    }
-
-    private Object getLabel(final Class<? extends TipperCategory> $) {
-      try {
-        return $.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
-        monitor.logEvaluationError(this, ¢);
-        return null;
-      }
     }
   }
 }

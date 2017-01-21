@@ -13,39 +13,33 @@ import il.org.spartan.bloater.bloaters.*;
 public class Issue0974 {
   @Test public void test0() {
     bloatingOf("i++;")//
-        .gives("i = i+1;")//
         .stays();
   }
 
   @Test public void test1() {
     bloatingOf("i--;")//
-        .gives("i = i-1;")//
         .stays();
   }
 
   @Test public void test2() {
     bloatingOf("++i;")//
-        .gives("i++;")//
-        .gives("i = i+1;")//
+        .gives("i+=1;")//
         .stays();
   }
 
   @Test public void test3() {
     bloatingOf("--i;")//
-        .gives("i--;")//
-        .gives("i = i-1;")//
+        .gives("i-=1;")//
         .stays();
   }
 
   @Test public void test4() {
     bloatingOf("x = f(i--);")//
-        .gives("x = f(i=i-1);")//
         .stays();
   }
 
   @Test public void test5() {
     bloatingOf("x = f(i++);")//
-        .gives("x = f(i=i+1);")//
         .stays();
   }
 }

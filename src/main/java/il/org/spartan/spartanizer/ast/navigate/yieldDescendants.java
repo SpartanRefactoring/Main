@@ -6,15 +6,15 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 /** A class to search in the descendants of a given node. Based on
- * {@link searchAncestors}
+ * {@link yieldAncestors}
  * @author Ori Marcovitch
  * @since 2016 */
-public abstract class searchDescendants<N extends ASTNode> {
+public abstract class yieldDescendants<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance */
-  public static <N extends ASTNode> searchDescendants<N> forClass(final Class<N> ¢) {
-    return new ByNodeClass<>(¢);
+  public static <N extends ASTNode> yieldDescendants<N> untilClass(final Class<N> ¢) {
+    return new untilClass<>(¢);
   }
 
   /** @param n JD
@@ -27,17 +27,17 @@ public abstract class searchDescendants<N extends ASTNode> {
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-  public abstract searchDescendants<N> suchThat(Predicate<N> ¢);
+  public abstract yieldDescendants<N> suchThat(Predicate<N> ¢);
 
-  static class ByNodeClass<N extends ASTNode> extends searchDescendants<N> {
+  static class untilClass<N extends ASTNode> extends yieldDescendants<N> {
     final Class<N> clazz;
     Predicate<N> p = (x) -> true;
 
-    public ByNodeClass(final Class<N> clazz) {
+    public untilClass(final Class<N> clazz) {
       this.clazz = clazz;
     }
 
-    @Override public ByNodeClass<N> suchThat(final Predicate<N> ¢) {
+    @Override public untilClass<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }

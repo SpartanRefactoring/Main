@@ -16,7 +16,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
-public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> implements TipperCategory.Expander {
+public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement> implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
@@ -33,6 +33,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
         final AST create = ¢.getAST();
         Assignment newHead = create.newAssignment();
         final Assignment newTail = copy.of($);
+        // TODO: Doron Meshulam -- please use for loop --yg
         Assignment p = newTail;
         while (iz.assignment(right(az.assignment(right(p)))))
           p = az.assignment(right(p));
@@ -40,7 +41,7 @@ public class AssignmentAndAssignment extends CarefulTipper<ExpressionStatement> 
         newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
-        // TODO: Doron Meshulam -- the following does nothing!--yg
+        // TODO: Doron Meshulam -- the following line does nothing!--yg
         az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(tail, ¢, g);

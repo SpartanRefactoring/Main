@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** removes unused variable declarations example: "int i,j; j++" to "int j; j++"
  * @author kobybs
  * @since 4-12-2016 */
-public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implements TipperCategory.Collapse {
+public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block> implements TipperCategory.Unite {
   @Override public ASTNode replacement(final Block n) {
     final Block $ = copy.of(n);
     final List<Statement> removalList = new ArrayList<>();

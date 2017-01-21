@@ -1,11 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -20,10 +17,11 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
-  static Expression assignmentAsExpression(final Assignment ¢) {
-    final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(from(¢)) : subject.pair(to(¢), from(¢)).to(wizard.assign2infix($));
+  @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
+    return super.prerequisite(¢) && ¢ != null;
   }
+
+  @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
     for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f)) // NANO?
@@ -64,25 +62,8 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $ - metrics.size(newParent);
   }
 
-  static int removalSaving(final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
-    if (parent.fragments().size() <= 1)
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
-  }
-
-  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
-   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node is left empty, it is removed as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size() > 1 ? f : parent, g);
+  protected static boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
+    return initializer == null || haz.annotation(f);
   }
 
   private static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
@@ -105,11 +86,35 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $;
   }
 
-  @Override public Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Tip $ = super.tip(f, exclude);
-    if ($ != null && exclude != null)
-      exclude.exclude(f.getParent());
-    return $;
+  static int removalSaving(final VariableDeclarationFragment f) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    final int $ = metrics.size(parent);
+    if (parent.fragments().size() <= 1)
+      return $;
+    final VariableDeclarationStatement newParent = copy.of(parent);
+    newParent.fragments().remove(parent.fragments().indexOf(f));
+    return $ - metrics.size(newParent);
+  }
+
+  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
+   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
+   * Still, if the containing node is left empty, it is removed as well.
+   * @param f
+   * @param r
+   * @param g */
+  static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    r.remove(parent.fragments().size() > 1 ? f : parent, g);
+  }
+
+  static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
+    boolean found = false;
+    for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
+      if (!found)
+        found = ff == f;
+      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+        return true;
+    return false;
   }
 
   protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
@@ -123,17 +128,10 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
   }
 
-  static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
-    boolean found = false;
-    for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
-      if (!found)
-        found = ff == f;
-      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
-        return true;
-    return false;
-  }
-
-  protected boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
-    return initializer == null || haz.annotation(f);
+  @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Tip $ = super.tip(f, exclude);
+    if ($ != null && exclude != null)
+      exclude.exclude(f.getParent());
+    return $;
   }
 }

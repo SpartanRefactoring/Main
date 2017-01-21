@@ -101,16 +101,15 @@ public class BloatingTestUtilities {
       MethodDeclaration m = getMethod(u, f);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
+        final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         if (unpeeled.equals(get()))
           azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
         m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
-        assertSimilar($1, m + "");
+        assertSimilar($, m + "");
         final ASTParser p = Make.COMPILATION_UNIT.parser(unpeeled);
         p.setResolveBindings(true);
         return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
@@ -143,7 +142,7 @@ public class BloatingTestUtilities {
     }
 
     private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-      final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+      final List<MethodDeclaration> $ = yieldDescendants.untilClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
         azzert.fail("No such method Exists");
