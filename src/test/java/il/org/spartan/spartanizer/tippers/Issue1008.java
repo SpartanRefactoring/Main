@@ -6,26 +6,10 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 public class Issue1008 extends MetaFixture {
-  MetaTestCase case1 = new MetaTestCase() {
+  AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
     /** [[SuppressWarningsSpartan]] */
-    @Override protected void startingWith() {
-      @SuppressWarnings("unused")
-      class X {
-        int a;
+    @Override protected void startingWith() {/***/}
 
-        X() {
-          a = 1;
-        }
-      }
-    }
-
-    @Override protected void trimmingStopsAt() {
-      @SuppressWarnings("unused")
-      class X {
-        int a = 1;
-
-        X() {}
-      }
-    }
+    @Override protected void trimmingStopsAt() {/***/}
   };
 }

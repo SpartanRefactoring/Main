@@ -55,9 +55,8 @@ public enum getAll2 {
 
   /** @author Shimon Azulay
    * @author Idan Atias
-   * @since 16-11-3
-   * Given a TypeDeclaration argument, this function returns a list of it's
-   * public fields names.
+   * @since 16-11-3 Given a TypeDeclaration argument, this function returns a
+   *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
   public static List<String> publicFields(final TypeDeclaration d) {
     final ArrayList<String> $ = new ArrayList<>();
@@ -77,10 +76,8 @@ public enum getAll2 {
 
   /** @author Sapir Bismot
    * @author Yaniv Levinsky
-   * @since 16-11-8
-   *
-   * Given a MethodDeclaration argument, this function returns a list of it's
-   * all String variable declarations.
+   * @since 16-11-8 Given a MethodDeclaration argument, this function returns a
+   *        list of it's all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration ¢) {
     final List<VariableDeclaration> $ = new ArrayList<>();

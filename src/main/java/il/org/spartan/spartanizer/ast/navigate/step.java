@@ -169,7 +169,7 @@ public enum step {
     return $;
   }
 
-  public static List<MethodDeclaration> constructors(ASTNode ¢) {
+  public static List<MethodDeclaration> constructors(final ASTNode ¢) {
     return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
@@ -424,7 +424,7 @@ public enum step {
     return ¢ == null ? null : ¢.getInitializer();
   }
 
-  public static List<Initializer> initializers(ASTNode ¢) {
+  public static List<Initializer> initializers(final ASTNode ¢) {
     return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
   }
 
@@ -435,11 +435,11 @@ public enum step {
     return ¢ == null ? null : ¢.initializers();
   }
 
-  public static List<Initializer> initializersClass(ASTNode ¢) {
+  public static List<Initializer> initializersClass(final ASTNode ¢) {
     return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
   }
 
-  public static List<Initializer> initializersInstance(ASTNode n) {
+  public static List<Initializer> initializersInstance(final ASTNode n) {
     return Arrays.asList(initializers(n).stream().filter(c -> !iz.static¢(c)).toArray(Initializer[]::new));
   }
 

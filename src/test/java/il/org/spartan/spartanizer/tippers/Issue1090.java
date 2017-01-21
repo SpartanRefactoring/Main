@@ -20,7 +20,7 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-    MetaTestCase case1 = new MetaTestCase() {
+    AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField = 0;
