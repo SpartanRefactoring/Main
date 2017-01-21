@@ -571,6 +571,10 @@ public interface iz {
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
+  
+  static boolean lambdaExpression(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, LAMBDA_EXPRESSION);
+  }
 
   /** @param ¢ node to check
    * @return <code><b>true</b></code> <em>iff</em>the given node is a method
