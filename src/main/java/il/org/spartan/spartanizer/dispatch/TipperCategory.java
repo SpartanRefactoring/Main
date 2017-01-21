@@ -7,18 +7,18 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @year 2016 */
 public interface TipperCategory {
   interface Abbreviation extends Nominal {
-    String label = "Abbreviation";
+    String ____ = "Abbreviation";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   interface Annonimization extends Nominal {
-    String label = "Unused arguments";
+    String ____ = "Unused arguments";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
@@ -31,25 +31,24 @@ public interface TipperCategory {
   }
 
   interface Centification extends Nominal {
-    String label = "Centification";
+    String ____ = "Centification";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   /** A specialized {@link Unite} carried out, by factoring out some common
    * element */
   interface CommnonFactoring extends Unite { // S2
-    String label = "Distributive refactoring";
+    String ____ = "Distributive refactoring";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
   interface Deadcode extends Structural {
     String ____ = "Eliminate code that is never executed";
-    String label = Deadcode.class.getSimpleName(); 
     @Override default String description() {
       return ____; 
     }
@@ -57,23 +56,23 @@ public interface TipperCategory {
 
 
   interface Dollarization extends Nominal {
-    String label = "Dollarization";
+    String ____ = "Dollarization";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
   interface EarlyReturn extends Structural {
-    String label = "Early return";
+    String ____ = "Early return";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
   interface Idiomatic extends TipperCategory {
-    String label = "Change expression to a more familiar structure (often shorter)"; 
+    String ____ = "Change expression to a more familiar structure (often shorter)"; 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
   interface Arithmetic extends TipperCategory {
@@ -87,49 +86,47 @@ public interface TipperCategory {
 
 
   interface Inlining extends Structural {
-    String label = "Structural";
+    String ____ = "Structural";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   interface InVain extends Structural {
-    String label = "NOP";
+    String ____ = "NOP";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   /** Auxiliary type: non public intentionally */
   interface Modular extends TipperCategory {
     String ____ = "Make modular changes to code";
-    String label = Modular.class.getSimpleName(); 
     @Override default String description() {
       return ____; 
     }
   }
 
-  interface Nanos extends Modular {
-    String label = "Nanos";
+  interface Nanos extends TipperCategory {
+    String ____ = "Nanos";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   interface ScopeReduction extends Structural {
-    String label = "Scope reduction";
+    String ____ = "Scope reduction";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
   interface Shunt extends Structural {
-    String ____ = "Shortcut control flow through sequencers, e.g., converting break into return";
-    String label = Shunt.class.getSimpleName(); 
+    String ____ = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
 
     @Override default String description() {
       return ____; 
@@ -138,10 +135,10 @@ public interface TipperCategory {
 
   /** Use alphabetical, or some other ordering, when order does not matter */
   interface Sorting extends Idiomatic {
-    String label = "Sorting";
+    String ____ = "Sorting";
 
     @Override default String description() {
-      return label;
+      return ____;
     }
   }
 
@@ -163,7 +160,6 @@ public interface TipperCategory {
 
   interface Unite extends Structural {
     String ____ = "Shorten code by merging two adjacent syntactical elements into one";
-    String label = Unite.class.getSimpleName(); 
 
     @Override default String description() {
       return ____; 
