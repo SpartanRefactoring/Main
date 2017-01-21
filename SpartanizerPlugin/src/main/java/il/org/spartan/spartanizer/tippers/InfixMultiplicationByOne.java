@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Replace <code>1*X</code> by <code>X</code>
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Arithmetic {
+public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.NOP.onNumbers {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.addAll(xs.stream().filter(¢ -> !iz.literal1(¢)).collect(Collectors.toList()));

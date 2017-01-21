@@ -25,7 +25,8 @@ import il.org.spartan.utils.*;
 final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";
-  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(TipperCategory.Nanos.class);
+  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
+      .disable(TipperCategory.Nanos.class);
   private static String outputDir;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;

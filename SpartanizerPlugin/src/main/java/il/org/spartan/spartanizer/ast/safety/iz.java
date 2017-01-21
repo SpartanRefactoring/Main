@@ -575,7 +575,7 @@ public interface iz {
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
-  
+
   static boolean lambdaExpression(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, LAMBDA_EXPRESSION);
   }
