@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -30,8 +29,21 @@ public class Table_Loops extends FolderASTVisitor {
 
   @Override public boolean visit(final EnhancedForStatement ¢) {
     analyze(¢);
-    ¢.accept(new CleanerVisitor());
-    // spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
+    return true;
+  }
+
+  @Override public boolean visit(final ForStatement ¢) {
+    analyze(¢);
+    return true;
+  }
+
+  @Override public boolean visit(final WhileStatement ¢) {
+    analyze(¢);
+    return true;
+  }
+
+  @Override public boolean visit(final DoStatement ¢) {
+    analyze(¢);
     return true;
   }
 
@@ -39,12 +51,14 @@ public class Table_Loops extends FolderASTVisitor {
     statistics.log(¢);
     if (iz.simpleLoop(¢))
       simpleStatistics.log(¢);
+    // ¢.accept(new CleanerVisitor());
+    // spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
   }
 
   @Override protected void done(final String path) {
     summarize(path);
     clearAll();
-    System.err.println("Finished");
+    System.err.println("Finished " + path);
   }
 
   private static void clearAll() {
