@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1101 {
-  @Test public void a() {
+  @Ignore @Test public void a() {
     trimmingOf("/**/" + //
         "  boolean a(final A b, final A c) {" + //
         "    final String off = off(wrap), $ = trivia.accurateEssence(inner);" + //
@@ -32,14 +32,5 @@ public class Issue1101 {
             "  } "//
     )//
         .stays();
-  }
-  private boolean accurateContains(final String wrap, final String inner) {
-    final String $ = trivia.accurateEssence(inner), essence2 = trivia.accurateEssence(off(wrap));
-    assert essence2 != null;
-    return essence2.contains($);
-  }
-  private String off(String wrap) {
-    // TODO Auto-generated method stub
-    return null;
   }
 }
