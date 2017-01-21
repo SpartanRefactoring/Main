@@ -40,7 +40,7 @@ public interface TipperCategory {
 
   /** A specialized {@link Unite} carried out, by factoring out some common
    * element */
-  interface CommnoFactoring extends Unite { // S2
+  interface CommnonFactoring extends Unite { // S2
     String label = "Distributive refactoring";
 
     @Override default String description() {

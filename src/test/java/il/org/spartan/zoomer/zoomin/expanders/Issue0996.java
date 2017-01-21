@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit tests for {@link DeclarationWithInitBloater}
+/** Unit tests for {@link DeclarationWithInitializerBloater}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
