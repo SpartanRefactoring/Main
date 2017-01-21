@@ -30,13 +30,9 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
-    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
+    $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
     initializers($).add(Initializers(f));
     return $;
-  }
-
-  private static Expression dupWhileExpression(final WhileStatement ¢) {
-    return copy.of(expression(¢));
   }
 
   private static boolean fitting(final VariableDeclarationStatement s, final WhileStatement ¢) {
