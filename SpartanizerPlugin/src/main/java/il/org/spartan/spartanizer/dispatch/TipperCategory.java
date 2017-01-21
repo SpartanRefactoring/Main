@@ -6,7 +6,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
-  interface Thrashing extends TipperCategory {
+  interface EmptyCycles extends TipperCategory {
     String toString = "no better name";
   }
 
@@ -180,7 +180,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Ternarization extends Structural { // S3
+  interface Ternarization extends CommnonFactoring { // S3
     String toString = "Convert conditional statement to the conditional, ?:, operator";
 
     @Override default String description() {
