@@ -13,7 +13,7 @@ import il.org.spartan.tables.*;
 
 /** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-21 */
-public class Table_Loops extends TableReusabilityIndices {
+public class Table_Loops extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final LoopsStatistics statistics = new LoopsStatistics();
   private static final LoopsStatistics simpleStatistics = new LoopsStatistics();
