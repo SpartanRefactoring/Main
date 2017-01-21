@@ -520,8 +520,8 @@ public interface wizard {
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
-  static String nth(final int i, final Collection<?> c) {
-    return nth(i, c.size());
+  static String nth(final int i, final Collection<?> os) {
+    return nth(i, os.size());
   }
 
   static String nth(final int i, final int n) {
