@@ -6,6 +6,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,7 +18,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * Sometimes returned value is mapped, or a filed of it is extracted. <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class FindFirst extends NanoPatternTipper<Block> {
+public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
   private static final String description = "Go Fluent : FindFirst";
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
@@ -42,14 +45,14 @@ public final class FindFirst extends NanoPatternTipper<Block> {
     }
   };
 
-  @Override public boolean canTip(final Block x) {
-    return anyTips(tippers, x)//
-        && nonTips(rivals, x)//
+  @Override public boolean canTip(final EnhancedForStatement x) {
+    return anyTips(tippers, az.block(parent(x)))//
+        && nonTips(rivals, az.block(parent(x)))//
     ;
   }
 
-  @Override public Tip pattern(final Block x) {
-    return firstTip(tippers, x);
+  @Override public Tip pattern(final EnhancedForStatement $) {
+    return firstTip(tippers, az.block(parent($)));
   }
 
   @Override public Category category() {
