@@ -40,8 +40,8 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new ReturnHoldsForAll());
-      add(new ReturnHoldsForAny());
+      add(new HoldsForAll());
+      add(new HoldsForAny());
     }
   };
 
