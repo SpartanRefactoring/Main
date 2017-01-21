@@ -39,6 +39,7 @@ public class PreferencesResources {
     Canonicalization(TipperCategory.Unite.class), //
     CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
+    Deadcode(TipperCategory.Deadcode.class), //
     Dollarization(TipperCategory.Dollarization.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
