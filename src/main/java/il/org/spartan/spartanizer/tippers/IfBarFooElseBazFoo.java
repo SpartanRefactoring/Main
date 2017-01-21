@@ -43,7 +43,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
-    implements TipperCategory.Ternarization {
+    implements TipperCategory.CommnonFactoring {
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
