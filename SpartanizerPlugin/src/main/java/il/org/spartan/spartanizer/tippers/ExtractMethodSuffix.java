@@ -24,7 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
-public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration> implements TipperCategory.Modular {
+public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration>//
+    implements TipperCategory.Modular {
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 

@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Deadcode {
+public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.Deadcode {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }

@@ -29,7 +29,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Ternarization {
+public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.Ternarization {
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
     return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
         : iz.stringLiteral(then) && iz.infixExpression(elze) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))

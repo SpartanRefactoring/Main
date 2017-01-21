@@ -14,7 +14,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * 5. Number of case that use the branch Test case is {@link Issue0861}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-11 */
-public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Sorting {
+public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
+    implements TipperCategory.Sorting {
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)

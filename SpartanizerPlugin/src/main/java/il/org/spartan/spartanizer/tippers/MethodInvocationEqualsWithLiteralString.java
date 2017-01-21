@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Replace <code> s.equals("s")</code> by <code>"s".equals(s)</code>
  * @author Ori Roth
  * @since 2016/05/08 */
-public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.Idiomatic {
+public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurrentNode<MethodInvocation>//
+    implements TipperCategory.Idiomatic {
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {

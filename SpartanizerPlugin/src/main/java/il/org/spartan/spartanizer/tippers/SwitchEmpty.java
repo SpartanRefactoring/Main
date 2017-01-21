@@ -39,7 +39,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * . Tested in {@link Issue233}
  * @author Yuval Simon
  * @since 2016-11-20 */
-public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements TipperCategory.Unite {
+public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
+    implements TipperCategory.Unite {
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

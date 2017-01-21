@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Converts <code>a?b?x:z:z</code>into <code>a&&b?x:z</code>
  * @author Yossi Gil
  * @since 2015-9-19 */
-public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.CommnonFactoring {
+public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.CommnonFactoring {
   private static Expression collapse(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;

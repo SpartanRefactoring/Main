@@ -103,7 +103,7 @@ public final class SpartanizeProject extends BaseHandler {
             break;
           }
           pm.worked(1);
-          pm.subTask("Compilation unit " + wizard.nth(++n,todo) + " (" + ¢.getElementName() + ")");
+          pm.subTask("Compilation unit " + wizard.nth(++n, todo) + " (" + ¢.getElementName() + ")");
           if (!t.apply(¢))
             done.add(¢);
         }
