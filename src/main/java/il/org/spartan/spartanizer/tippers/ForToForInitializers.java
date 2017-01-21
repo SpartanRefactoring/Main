@@ -17,16 +17,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>
- * int a = 3;
- * for(;Panic;) {
- *    ++OS.is.in.denger;
- * }
- * </code> to <code>
- * for(int a = 3; Panic;) {
- *    ++OS.is.in.denger;
- * }
- * </code>
+/** convert <code>int a=3;for(;p;){++i}</code> to 
+ * <code>for(int a=3;p;) {++i;}</code>
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//

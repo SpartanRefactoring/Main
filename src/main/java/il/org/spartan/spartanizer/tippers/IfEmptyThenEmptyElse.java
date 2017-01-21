@@ -27,7 +27,7 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
-    return ¢ != null && iz.vacuousThen(¢) && iz.vacuousElse(¢);
+    return iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 
   @Override public Tip tip(final IfStatement s) {
