@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>T extends Object</code> to <code>T</code>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
-public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter> implements TipperCategory.Unite {
+public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
+    implements TipperCategory.Unite {
   @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }

@@ -29,7 +29,8 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerIfUpdateAssignment extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
+public final class DeclarationInitializerIfUpdateAssignment extends $VariableDeclarationFragementAndStatement//
+    implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }

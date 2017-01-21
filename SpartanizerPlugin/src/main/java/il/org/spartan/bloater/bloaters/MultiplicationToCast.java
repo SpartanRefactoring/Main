@@ -30,7 +30,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Tested in {@link Issue1007}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-11 */
-public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Bloater {
+public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
