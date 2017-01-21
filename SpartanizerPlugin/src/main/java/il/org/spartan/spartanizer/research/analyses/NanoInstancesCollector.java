@@ -16,15 +16,15 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
 public class NanoInstancesCollector extends FolderASTVisitor {
-  static final NanoPatternTipper<Block> nano = new ReturnHoldsForAny();
+  static final NanoPatternTipper<EnhancedForStatement> nano = new ReturnHoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
   static final File out = new File(Table.temporariesFolder + system.fileSeparator + nano.getClass().getSimpleName() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
-    spartanalyzer.add(Block.class, new NanoPatternTipper<Block>() {
-      @Override public Tip pattern(final Block ¢) {
+    spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
+      @Override public Tip pattern(final EnhancedForStatement ¢) {
         return new Tip("", ¢, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
@@ -33,12 +33,12 @@ public class NanoInstancesCollector extends FolderASTVisitor {
         };
       }
 
-      @Override public boolean canTip(final Block n) {
-        return nano.canTip(n);
+      @Override public boolean canTip(final EnhancedForStatement ¢) {
+        return nano.canTip(¢);
       }
 
-      @Override public String description(final Block n) {
-        return nano.description(n);
+      @Override public String description(final EnhancedForStatement ¢) {
+        return nano.description(¢);
       }
     });
     FolderASTVisitor.main(args);
