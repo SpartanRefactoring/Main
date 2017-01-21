@@ -22,7 +22,8 @@ import il.org.spartan.utils.*;
 final class BatchSpartanizer extends FolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
-  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(TipperCategory.Nanos.class);
+  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
+      .disable(TipperCategory.Nanos.class);
   private static String outputDir;
   private static String inputDir;
   private static boolean defaultDir;
