@@ -27,11 +27,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // .add(Assignment.class, //
         // new LazyInitializer(), // R.I.P
         // null) //
-        .add(Block.class, //
-            new CachingPattern(), //
-            // new CopyCollection(), // R.I.P
-            new ReturnPrevious(), //
-            null) //
         .add(CatchClause.class, //
             new IfThrowsReturn(), //
             new IgnoreException(), //
@@ -60,6 +55,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(IfStatement.class, //
             new NotNullOrThrow(), //
             new AssertNotNull(), //
+            new CachingPattern(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<>(), //
             // new PutIfAbsent(), // R.I.P
@@ -73,6 +69,10 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(MethodInvocation.class, //
             new LispFirstElement(), //
             new LispLastElement(), //
+            null) //
+        .add(ReturnStatement.class, //
+            // new CopyCollection(), // R.I.P
+            new ReturnPrevious(), //
             null) //
     // .add(WhileStatement.class, //
     // new Exhaust(), // R.I.P
