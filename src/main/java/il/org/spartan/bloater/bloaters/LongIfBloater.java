@@ -36,7 +36,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
       return null;
     final InfixExpression ie = az.infixExpression(¢.getExpression());
     final IfStatement newThen = subject.pair(copy.of(¢.getThenStatement()), null)
-        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie))),
+        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(ie))),
         $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
     if (¢.getElseStatement() != null) {
       newThen.setElseStatement(copy.of(¢.getElseStatement()));
@@ -50,14 +50,9 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return "Replace an if statement that contains && with two ifs";
   }
 
-  private static InfixExpression getReducedIEFromIEWithExtOp(final IfStatement ¢, final InfixExpression x) {
-    // TODO: Tomer Dragucki use class subject --yg
-    final InfixExpression $ = ¢.getAST().newInfixExpression();
-    $.setOperator(x.getOperator());
-    $.setLeftOperand(copy.of(x.getRightOperand()));
-    $.setRightOperand(copy.of((Expression) x.extendedOperands().get(0)));
-    step.extendedOperands($).addAll(copy.of(step.extendedOperands(x)));
-    $.extendedOperands().remove(0);
+  private static InfixExpression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
+    final InfixExpression $ = subject.pair(copy.of(¢.getRightOperand()), copy.of((Expression) ¢.extendedOperands().get(0))).to(¢.getOperator());
+    subject.append($, copy.of(step.extendedOperands(¢))).extendedOperands().remove(0);
     return $;
   }
 
