@@ -26,7 +26,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Test case is {@link Issue1003}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-08 */
-public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.NOP {
+public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);

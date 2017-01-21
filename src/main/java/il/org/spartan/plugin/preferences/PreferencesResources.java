@@ -51,6 +51,11 @@ public class PreferencesResources {
     Ternarization(TipperCategory.Ternarization.class), //
     Bloater(TipperCategory.Bloater.class), //
     Shortcut(TipperCategory.Shunt.class), //
+    Thrashing(TipperCategory.Thrashing.class), //
+    Deadcode(TipperCategory.Deadcode.class), //
+    NOOPOnBooleans(TipperCategory.NOP.onBooleans.class), //
+    NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
+    NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
@@ -74,7 +79,7 @@ public class PreferencesResources {
     TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = clazz.getSimpleName(); 
+      label = clazz.getSimpleName();
     }
 
     public boolean isEnabled() {

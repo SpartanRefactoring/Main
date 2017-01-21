@@ -703,4 +703,12 @@ public interface wizard {
         return false;
     return true;
   }
+
+  static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
+    final String $ = us.size() + "";
+    String i = us.indexOf(u) + 1 + "";
+    while (i.length() < $.length())
+      i = " " + i;
+    return i + "/" + $;
+  }
 }
