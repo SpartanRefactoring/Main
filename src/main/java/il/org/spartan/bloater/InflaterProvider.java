@@ -56,7 +56,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(VariableDeclarationStatement.class, //
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
-            new DeclarationWithInitBloater()) //
+            new DeclarationWithInitializerBloater()) //
          .add(MethodInvocation.class, //
          new OutlineTernaryMethodInvocation()) //
         .add(ExpressionStatement.class, //

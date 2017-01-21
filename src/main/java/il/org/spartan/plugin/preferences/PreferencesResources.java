@@ -34,9 +34,10 @@ public class PreferencesResources {
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
+    Arithmetic(TipperCategory.Arithmetic.class), //
     Annonimaization(TipperCategory.Annonimization.class), //
     Canonicalization(TipperCategory.Unite.class), //
-    CommonFactoring(TipperCategory.CommnoFactoring.class), //
+    CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
     Dollarization(TipperCategory.Dollarization.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
