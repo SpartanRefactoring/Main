@@ -61,7 +61,6 @@ public interface iz {
   }
 
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-
   List<String> defaultValues = Arrays.asList("null", "0", "false");
 
   static boolean abstract¢(final BodyDeclaration ¢) {
@@ -549,8 +548,8 @@ public interface iz {
     return operator(az.infixExpression(¢)) == TIMES;
   }
 
-  static boolean initializer(ASTNode c) {
-    return iz.nodeTypeEquals(c, INITIALIZER); 
+  static boolean initializer(final ASTNode c) {
+    return iz.nodeTypeEquals(c, INITIALIZER);
   }
 
   /** @param ¢ JD

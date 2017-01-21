@@ -45,7 +45,7 @@ public interface fault {
   }
 
   static String specifically(final String explanation, final Object... os) {
-    String $ = dump(explanation);
+    String $ = dump("\n " + explanation);
     for (final Object ¢ : os)
       $ += dump(¢.getClass().getSimpleName(), ¢);
     return $ + done();

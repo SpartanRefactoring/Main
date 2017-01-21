@@ -203,7 +203,8 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(), 
+            new MethodDeclarationConstructorMoveToInitializers(), //
+            // new MatchCtorParamNamesToFieldsIfAssigned(),
             // v 2.7 // This is a new // tipper // #20
             null)
         .add(MethodInvocation.class, //
