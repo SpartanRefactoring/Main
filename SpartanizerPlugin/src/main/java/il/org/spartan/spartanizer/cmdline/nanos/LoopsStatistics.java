@@ -45,7 +45,7 @@ public class LoopsStatistics extends HashMap<Integer, Int> {
   }
 
   private int nodeStatistics(final int nodeType) {
-    return get(Integer.valueOf(nodeType)).inner;
+    return !containsKey(Integer.valueOf(nodeType)) ? 0 : get(Integer.valueOf(nodeType)).inner;
   }
 
   public int totalLoops() {
