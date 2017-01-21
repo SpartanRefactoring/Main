@@ -17,6 +17,8 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
   @Override public Tip tip(final N n, final ExclusionManager exclude) {
     final Statement $ = extract.nextStatement(n);
     assert $ != null;
+    if (exclude != null && exclude.isExcluded($)) // see issue #1101
+      return null;
     if (exclude != null)
       exclude.exclude($);
     return new Tip(description(n), n, getClass(), $) {
