@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code> if(a)f();else{g();return;} </code> into
- * <code>if(a)f();else{g();;}</code> provided that this <code><b>if</b> </code>
+ * <code>if(a)f();else{g();;}</code> provided that this <code><b>if</b></code>
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>

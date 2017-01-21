@@ -17,19 +17,19 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (a) {
  *   f();
  *   return;
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * if (a)
  *   f();
- * </pre>
+ * </code>
  *
  * provided that this
  *

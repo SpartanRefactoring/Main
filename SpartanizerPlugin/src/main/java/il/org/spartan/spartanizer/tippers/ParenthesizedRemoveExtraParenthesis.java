@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
-    implements TipperCategory.ScopeReduction {
+    implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
