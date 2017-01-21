@@ -57,14 +57,14 @@ public class RefactorerUtil {
   }
 
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
-      final Map<attribute, Object> a, final attribute t) {
+      final Map<attribute, Object> m, final attribute a) {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();
     return pm -> {
       pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
       $.setICompilationUnit(first(us));
-      a.put(t, Integer.valueOf($.countTips()));
+      m.put(a, Integer.valueOf($.countTips()));
       pm.done();
     };
   }
