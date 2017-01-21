@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
+    //
     implements TipperCategory.SyntacticBaggage {
   @Override public String description(final BodyDeclaration ¢) {
     return "Remove redundant " + wizard.redundants(¢) + " modifier(s) from declaration";

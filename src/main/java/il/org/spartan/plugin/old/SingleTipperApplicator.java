@@ -127,7 +127,7 @@ public final class SingleTipperApplicator {
                 monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
-            px.subTask(u.getElementName() + wizard.nth(++n,todo.size()));
+            px.subTask(u.getElementName() + wizard.nth(++n, todo.size()));
           }
           todo.removeAll(exhausted);
           px.done();

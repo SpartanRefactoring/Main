@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@link Issue883}
  * @author Raviv Rachmiel
  * @since 23-12-16 */
-public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Bloater {
+public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
+    implements TipperCategory.Bloater {
   private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
     final ConditionalExpression ¢ = az.conditionalExpression(core(x));
     if (¢ == null)

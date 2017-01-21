@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
-public abstract class Tipper<N extends ASTNode> implements TipperCategory {
+public abstract class Tipper<N extends ASTNode> //
+    implements TipperCategory {
   private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this

@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
-    extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
+    extends ReplaceCurrentNode<N>//
+    implements TipperCategory.Sorting {
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 
   private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {

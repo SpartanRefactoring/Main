@@ -33,7 +33,6 @@ public class PreferencesResources {
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {
-
     Abbreviation(TipperCategory.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetic.class), //
     Annonimaization(TipperCategory.Annonimization.class), //
@@ -45,7 +44,7 @@ public class PreferencesResources {
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
-    InVain(TipperCategory.NOP.class), //
+    NOOP(TipperCategory.NOP.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //
     Sorting(TipperCategory.Sorting.class), //
@@ -57,7 +56,6 @@ public class PreferencesResources {
     NOOPOnBooleans(TipperCategory.NOP.onBooleans.class), //
     NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
     NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
-
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());

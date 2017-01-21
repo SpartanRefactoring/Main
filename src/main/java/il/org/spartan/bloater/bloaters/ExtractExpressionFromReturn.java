@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** {@link Issue #1000}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-07 */
-public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement> implements TipperCategory.Bloater {
+public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>//
+    implements TipperCategory.Bloater {
   @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }
