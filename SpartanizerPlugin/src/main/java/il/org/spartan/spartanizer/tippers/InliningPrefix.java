@@ -31,9 +31,10 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
-public final class InliningPrefix extends EagerTipper<ArrayAccess> implements TipperCategory.Inlining {
+public final class InliningPrefix extends EagerTipper<ArrayAccess>//
+    implements TipperCategory.Inlining {
   @Override public String description(@SuppressWarnings("unused") final ArrayAccess ¢) {
-    return "Iniline the prefix expression after the access to the array";
+    return "Inline the prefix expression after the access to the array";
   }
 
   @Override public Tip tip(final ArrayAccess a) {

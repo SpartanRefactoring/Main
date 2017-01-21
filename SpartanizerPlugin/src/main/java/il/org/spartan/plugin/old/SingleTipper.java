@@ -122,7 +122,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
         final ICompilationUnit currentCompilationUnit) {
-      return completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();
+      return wizard.completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();
     }
 
     @Override public int getProgressMonitorWork(final List<ICompilationUnit> ¢) {

@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * them) if and only if it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Unite {
+public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement>//
+    implements TipperCategory.Unite {
   @Override public String description(final WhileStatement ¢) {
     return "Remove :" + ¢;
   }

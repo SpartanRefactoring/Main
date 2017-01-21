@@ -26,7 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Idiomatic {
+public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Idiomatic {
   private static final specificity specifity = new specificity();
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {

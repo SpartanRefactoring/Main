@@ -26,7 +26,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Test class is {@link Issue0974}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-09 */
-public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression> implements TipperCategory.Bloater {
+public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;

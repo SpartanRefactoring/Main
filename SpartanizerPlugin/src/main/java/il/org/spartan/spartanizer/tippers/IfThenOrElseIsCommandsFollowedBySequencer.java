@@ -43,7 +43,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
+public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//
+    implements TipperCategory.CommnonFactoring {
   static boolean endsWithSequencer(final Statement ¢) {
     return iz.sequencer(hop.lastStatement(¢));
   }

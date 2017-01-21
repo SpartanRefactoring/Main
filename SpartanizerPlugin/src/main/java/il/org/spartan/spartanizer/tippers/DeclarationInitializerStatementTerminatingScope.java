@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
+    //
     implements TipperCategory.Inlining {
   private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n))
