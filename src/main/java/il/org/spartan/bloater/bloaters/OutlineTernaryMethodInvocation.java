@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.java.*;
  * Test case is {@link Issue1091}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */
-public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.InVain {
+public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation> implements TipperCategory.NOP {
   @Override public ASTNode replacement(final MethodInvocation n) {
     if(n == null || iz.lambdaExpression(n.getParent()))
       return null;
