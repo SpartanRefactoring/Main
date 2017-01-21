@@ -34,10 +34,11 @@ public class normalize {
   }
 
   private static String wrapTest(final String name, final String code) {
-    return "@Test public void " + name + "() {" + //
-        "\n\ttrimmingOf(\n" + code + "\n.gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" //
-        + code + //
-        "\n).stays();\n}";
+    return String.format("  @Test public void %s() {\n" //
+        + "    trimmingOf(\n \"%s\" \n)\n" //
+        + "       .gives(\n" //
+        + "    // Edit this to reflect your expectation\n" //
+        + "     \"%s\"\n//\n)//\n.stays()\n;\n}", name, code, code);
   }
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers

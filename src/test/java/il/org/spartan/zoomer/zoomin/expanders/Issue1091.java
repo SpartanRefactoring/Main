@@ -7,7 +7,6 @@ import org.junit.*;
 /** Test case for {@link OutlineTernaryMethodInvocation}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */
-@Ignore // TODO: Yuval Simon
 @SuppressWarnings("static-method")
 public class Issue1091 {
   static class TreatedInDuplicatedExpander {

@@ -13,7 +13,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * <code> o.f(x ? a : b); </code> to <code> if (x) o.f(a); else o.f(b); </code>
  * @author Tomer Dragucki
  * @since 23-12-2016 */
-public class MethodInvocationTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
+public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final ExpressionStatement s) {
     final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)

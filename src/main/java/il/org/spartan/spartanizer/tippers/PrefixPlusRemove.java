@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * with <code>int i = a</code>, etc.
  * @author Matteo Orru'
  * @since 2016 */
-public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.InVain {
+public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.NOP.onStrings {
   @Override public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }

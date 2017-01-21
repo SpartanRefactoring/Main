@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -26,14 +27,14 @@ import il.org.spartan.spartanizer.java.*;
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
     implements TipperCategory.Inlining {
   private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
+    for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n))
       if (iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
     return false;
   }
 
   static boolean never(final SimpleName n, final Statement s) {
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) // NANO?
+    for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n)) // NANO?
       if (iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
@@ -45,7 +46,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (!strongCondition(f) || f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
+    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)
@@ -89,16 +90,14 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    final ExpressionStatement es = (ExpressionStatement) nextStatement;
-    if (iz.methodInvocation(es.getExpression())) {
-      final MethodInvocation m = (MethodInvocation) es.getExpression();
-      final Expression $ = !iz.parenthesizedExpression(expression(m)) ? expression(m) : ((ParenthesizedExpression) expression(m)).getExpression();
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
-    if (!iz.fieldAccess(es.getExpression()))
+    if (!iz.fieldAccess(x.getExpression()))
       return false;
-    final FieldAccess fa = (FieldAccess) es.getExpression();
-    final Expression e = !iz.parenthesizedExpression(fa.getExpression()) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
@@ -129,14 +128,5 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
       return false;
     final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
-  }
-
-  private static boolean strongCondition(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
-    // VariableDeclarationStatement f;
-    // if(¢ == null ||(f = az.variableDeclarationStatement(¢)) == null)
-    // return false;
-    // if(step.fragments(f).size() <= 1)
-    // return true;
-    return true;
   }
 }

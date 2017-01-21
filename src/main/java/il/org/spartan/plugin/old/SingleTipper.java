@@ -14,6 +14,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -47,7 +48,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       final ASTNode n = eclipse.getNodeByMarker(u, m);
       if (n == null)
         return null;
-      final ASTNode $ = searchAncestors.forClass(BodyDeclaration.class).from(n);
+      final ASTNode $ = yieldAncestors.untilClass(BodyDeclaration.class).from(n);
       return $ == null ? null : new TextSelection($.getStartPosition(), $.getLength());
     }
 
@@ -107,15 +108,16 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
       final int $ = getCUsCount(¢);
-      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + $ + " " + plurals("file", $) + "\n" //
+      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + $ + " " + Linguistic.plurals("file", $) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
     @Override @SuppressWarnings("boxing") public String getEndingMessage(final Map<attribute, Object> ¢) {
       final int $ = getChangesCount(¢);
-      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + $ + " " + plurals("file", $) + " spartanized in "
-          + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS)
-          + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + $ + " " + Linguistic.plurals("file", $) + " spartanized in "
+          + ¢.get(attribute.PASSES) + " " + Linguistic.plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t"
+          + ¢.get(attribute.TOTAL_TIPS) + "\n" + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" + "Total tips after:\t"
+          + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,

@@ -13,6 +13,18 @@ import org.junit.runners.*;
 public class Issue1099 {
   @Test public void a() {
     trimmingOf("/**/" + //
+        "    @A public void a() {" + //
+        "      final B b = a + \"\", c = C.d(b), e = F.f(g, c);" + //
+        "      h.i( j, c, k(l(e)));" + //
+        "      final B m = C.n(e);" + //
+        "      h.i( j, m, k(l(b)));" + //
+        "      h.i(j, o.p(b), k(l(o.p(m))));" + //
+        "    }"//
+    ).stays();
+  }
+
+  @Test public void b() {
+    trimmingOf("/**/" + //
         "  " + //
         "    final D c = b.d(), e = f.g(e(b)), h = f.g(h(b));" + //
         "    return e == null || h == null ? null : i.j(i.k(e, h).l(c)).m();" + //
@@ -27,7 +39,7 @@ public class Issue1099 {
         .stays();
   }
 
-  @Test public void b() {
+  @Test public void c() {
     trimmingOf("/**/" + //
         "  " + //
         "    final D c = d(), e = f(c,c), h = g(e, c);" + //

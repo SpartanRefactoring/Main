@@ -18,7 +18,7 @@ public final class AtomicConversionsTest {
   private double d = Math.sin(b * c);
   private float f = (float) Math.cos(d);
   private int i = c ^ hashCode() << (b & 0xF);
-  private final long l = (long) (i + "").hashCode() * new Object().hashCode();
+  private final long l = new Object().hashCode() * (long) (i + "").hashCode();
   private short s = (short) (i * (l % i * (b + c)));
   private final Object o = getClass().getClassLoader().getClass();
   private final String S = toString();

@@ -24,7 +24,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Tested in {@link Issue0971}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
-public class IfElseBlockExpander extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
+public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null || iz.block(step.then(s)) && step.elze(s) == null || iz.block(step.then(s)) && step.elze(s) != null && iz.block(step.elze(s)))
       return null;

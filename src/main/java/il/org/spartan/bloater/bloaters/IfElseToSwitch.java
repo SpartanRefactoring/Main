@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
-public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
+public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
@@ -91,7 +91,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
   private static Statement addAllBlocks(final IfStatement s, final List<Block> collectInto) {
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
-      Statement then = copy.of(then(az.ifStatement($)));
+      final Statement then = copy.of(then(az.ifStatement($)));
       Block b = az.block(then);
       if (b == null) {
         b = s.getAST().newBlock();

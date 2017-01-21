@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
@@ -13,9 +14,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@link Issue883}
  * @author Raviv Rachmiel
  * @since 23-12-16 */
-public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Expander {
+public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Bloater {
   private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
-    final ConditionalExpression ¢ = az.conditionalExpression(!(x instanceof ParenthesizedExpression) ? x : az.parenthesizedExpression(x).getExpression());
+    final ConditionalExpression ¢ = az.conditionalExpression(core(x));
     if (¢ == null)
       return null;
     // TODO: Raviv use class subject --yg
@@ -26,6 +27,7 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
     then.setLeftHandSide(copy.of(left));
     then.setOperator(o);
     $.setThenStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
+    // TODO: Raviv use class subject --yg
     final Assignment elze = ¢.getAST().newAssignment();
     elze.setRightHandSide(copy.of(¢.getElseExpression()));
     elze.setLeftHandSide(copy.of(left));
@@ -35,9 +37,10 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
   }
 
   private static ASTNode replaceAssignment(final Statement ¢) {
-    if (az.expressionStatement(¢) == null)
+    final ExpressionStatement expressionStatement = az.expressionStatement(¢);
+    if (expressionStatement == null)
       return null;
-    final Assignment $ = az.assignment(az.expressionStatement(¢).getExpression());
+    final Assignment $ = az.assignment(expressionStatement.getExpression());
     return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢, $.getLeftHandSide(), $.getOperator());
   }
 
@@ -46,6 +49,6 @@ public class AssignmentTernaryExpander extends ReplaceCurrentNode<ExpressionStat
   }
 
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
-    return "expanding a ternary operator to a full if-else statement";
+    return "Expanding a ternary operator to a full if-else statement";
   }
 }

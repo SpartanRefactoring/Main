@@ -185,6 +185,6 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
-    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
+    return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }
