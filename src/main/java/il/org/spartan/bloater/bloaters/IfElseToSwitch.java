@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
-public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
+public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))

@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Tets class for {@link IfElseBlockExpander}
+/** Tets class for {@link IfElseBlockBloater}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")

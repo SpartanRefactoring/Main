@@ -38,7 +38,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: take care of single var decleration, tests
-public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
+public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement> implements TipperCategory.Bloater {
   @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
