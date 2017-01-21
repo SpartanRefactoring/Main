@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 
 public class SpartanizationComparator {
   
-  protected String presentSourcePath;
+  protected static String presentSourcePath;
   protected static String presentSourceName;
   static int methodNesting;
   static MethodDeclaration lastNode;
@@ -54,6 +54,7 @@ public class SpartanizationComparator {
     for (final File ¢ : new FilesGenerator(".java").from(where)){
       System.out.println(¢.getName());
       presentFile = ¢.getName();
+      presentSourcePath = ¢.getPath();
       collect(¢);
     }
   }
@@ -61,14 +62,54 @@ public class SpartanizationComparator {
   private static void collect(final File f) {
     try {
       String input = FileUtils.read(f);
-      collect(input);
+      collect(input, "before");
       final String output = new InteractiveSpartanizer().fixedPoint(input);
-      collect(output);
+      collect(output, "after");
     } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
   
+  private static void collect(String javaCode, String id) {
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
+  }
+
+  private static void collect(CompilationUnit u, String id) {
+  //  dotter.click();
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+  //      record(hop.simpleName(¢) + "");
+        consider(¢, id);
+//        consider2(¢);
+        return true;
+      }
+      
+      void record(final String longName) {
+  //      longNames.putIfAbsent(longName, Integer.valueOf(0));
+  //      longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
+        final String shortName = namer.shorten(longName);
+  //      shortToFull.putIfAbsent(shortName, new HashSet<>());
+  //      shortToFull.get(shortName).add(longName);
+      }
+    });
+  }
+
+  protected static void consider(MethodDeclaration ¢, String id) {
+//    if(id.equals("before")){
+      ¢.getStartPosition();
+      System.out.println(¢.getName());
+      writer.put("StartPosition", ¢.getStartPosition())
+            .put("File", presentFile) //
+            .put("Name", ¢.getName()) //
+            .put("Path", presentSourcePath) //
+            .put("Status",id);
+//    }
+    for(NamedFunction f: functions())
+      writer.put(f.name(), f.function().run(¢));
+//    if(id.equals("after"))
+      writer.nl();
+  }
+
   private static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -96,7 +137,7 @@ public class SpartanizationComparator {
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected static void consider2(MethodDeclaration ¢) {
-    writer.put("File", presentFile).put("Name", ¢.getName());
+    writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
     for(NamedFunction f: functions())
       writer.put(f.name(), f.function().run(¢));
     writer.nl();
@@ -155,6 +196,7 @@ public class SpartanizationComparator {
 
   @SuppressWarnings({ "rawtypes" })
   public static NamedFunction[] functions(String id) {
+    id = format(id);
     return as.array(//
         m("length" + id, (¢) -> (¢ + "").length()), //
         m("essence" + id, (¢) -> Essence.of(¢ + "").length()), //
@@ -165,6 +207,10 @@ public class SpartanizationComparator {
         m("tide" + id, (¢) -> clean(¢ + "").length()));//
   }
   
+  private static String format(String id) {
+    return " - " + id;
+  }
+
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
