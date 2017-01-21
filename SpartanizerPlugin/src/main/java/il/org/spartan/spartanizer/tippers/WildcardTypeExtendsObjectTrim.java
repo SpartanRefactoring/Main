@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>? extends Object</code> to <code>?</code>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
-public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType> implements TipperCategory.Collapse {
+public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }

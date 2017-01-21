@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016 */
-public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
+public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
   private static ForStatement buildForWhithoutCondition(final ForStatement $) {
     $.setExpression(null);
     return $;

@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested in {@link Issue096}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
-public class ToStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
+public class ToStringExpander extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null
         || extract.allOperands(¢).size() != 2)

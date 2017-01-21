@@ -21,7 +21,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * annotation (so that no warnings would be created)
  * @author Tomer Dragucki
  * @since 23-12-2016 */
-public class DeclarationWithInitExpander extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
+public class DeclarationWithInitBloater extends CarefulTipper<VariableDeclarationStatement> implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";
   }

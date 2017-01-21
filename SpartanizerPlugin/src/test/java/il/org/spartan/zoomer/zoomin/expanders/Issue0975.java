@@ -6,8 +6,8 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit Test for the ForBlock expander {@link ForBlockExpander} Also, Unit Test
- * for the WhileBlock expander {@link WhileBlockExpander}
+/** Unit Test for the ForBlock expander {@link ForBlockBloater} Also, Unit Test
+ * for the WhileBlock expander {@link WhileBlockBloater}
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 @SuppressWarnings("static-method")

@@ -6,26 +6,27 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** converts foreach statement to foreach {statement} Test case
- * is{@link Issue1023}
+/** converts for(condition)statement to for(condition){statement} Issue #975
+ * {@link Issue975}
  * @author Raviv Rachmiel
- * @since 10-01-17 */
-public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatement> implements TipperCategory.Expander {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnhancedForStatement s) {
+ * @since 22-12-16 */
+public class ForBlockBloater extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Bloater {
+  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;
-    final EnhancedForStatement $ = copy.of(s);
+    final ForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
     b.statements().add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
     body(s).accept(new ASTVisitor() {
-      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
-        cc.add(true);
+      @Override public boolean visit(@SuppressWarnings("unused") final Block node) {
+        cc.add(box.it(true));
         return true;
       }
     });
@@ -35,7 +36,7 @@ public class ForEachBlockExpander extends ReplaceCurrentNode<EnhancedForStatemen
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand to block";
   }
 }
