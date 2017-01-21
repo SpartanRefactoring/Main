@@ -26,14 +26,14 @@ public class SentenceTestTemplate {
   public static final Trimmer trimmer = new Trimmer();
 
   static List<List<MethodDeclaration>> allSentences() {
-    return collectSentences(new Issue1090());
+    return collectSentences(new Issue1008());
   }
 
   static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
-      for (final AnonymousClassDeclaration d : searchDescendants.forClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
-        final Vocabulary reify = MetaTestCase.reify(d);
+      for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
+        final Vocabulary reify = AlphabeticallySortedSentence.reify(d);
         if (reify != null)
           $.add(new ArrayList<>(reify.values()));
       }
@@ -51,9 +51,7 @@ public class SentenceTestTemplate {
     @Parameter(0) public String name;
 
     @Test public void changes() {
-      final String from = changes + "";
-      final String wrap = Wrap.Method.on(from);
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = Wrap.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -85,14 +83,13 @@ public class SentenceTestTemplate {
     @Parameter(2) public MethodDeclaration second;
 
     @Test public void chagesTo() {
-      final String peeled = Wrap.Method.off(TrimmerTestsUtils.applyTrimmer(trimmer, Wrap.Method.on(firstBody())));
-      final String to = secondBody();
+      final String peeled = Wrap.Method.off(TrimmerTestsUtils.applyTrimmer(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
       if (!to.equals(peeled))
         azzert.that(Wrap.essence(peeled), is(Wrap.essence(to)));
     }
 
     String firstBody() {
-      return (first + "").replaceAll(disabling.disabler, "");
+      return (first + "").replace(disabling.disabler, "");
     }
 
     String firstName() {
@@ -100,7 +97,7 @@ public class SentenceTestTemplate {
     }
 
     String secondBody() {
-      return (second + "").replaceAll(secondName(), firstName()).replaceAll(disabling.disabler, "");
+      return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
     String secondName() {
@@ -125,16 +122,13 @@ public class SentenceTestTemplate {
    * {@link disabling} label in its javaDoc.
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class Stays {
     @Parameter(0) public String name;
     @Parameter(1) public MethodDeclaration stays;
 
     @Test public void stays() {
-      final String from = stays + "";
-      final String wrap = Wrap.Method.on(from);
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = Wrap.Method.off(unpeeled);

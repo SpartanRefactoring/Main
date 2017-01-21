@@ -20,21 +20,21 @@ abstract class Analyzer<T> {
     return Integer.valueOf(¢);
   }
 
-  int getMax(final Map<Integer, T> i) {
-    return i.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
+  int getMax(final Map<Integer, T> m) {
+    return m.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
   }
 
-  /** If double is integer, removes the .0. <br>
-   * If double is double, leaves only 2 first digits.
+  /** If parameter is integer, removes the .0. <br>
+   * If parameter is double, leaves only 2 first digits.
    * @param ¢
    * @return */
   static String tidy(final double ¢) {
-    int $ = 0;
-    final double ¢formatted = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
-    if (¢formatted != Math.floor(¢formatted))
-      return ¢formatted + "";
-    $ = (int) ¢formatted;
-    return $ + "";
+    final double $ = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
+    return $ != Math.floor($) ? $ + "" : asInt($);
+  }
+
+  private static String asInt(final double $) {
+    return (int) $ + "";
   }
 
   protected abstract double enumElement(T t);

@@ -5,7 +5,7 @@ import org.eclipse.core.commands.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 
-/** Handler for the Athenizer project's feature (global athenizer). Uses
+/** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth

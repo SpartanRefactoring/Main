@@ -50,4 +50,11 @@ public class ForEachTest {
         .gives("ss.forEach(k -> $.append(k));")//
         .stays();
   }
+
+  @Test public void f() {
+    trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
+        .using(EnhancedForStatement.class, new ForEach())//
+        .gives("us.forEach(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//
+        .stays();
+  }
 }

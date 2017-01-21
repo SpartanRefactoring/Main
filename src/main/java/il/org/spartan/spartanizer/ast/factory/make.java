@@ -2,11 +2,13 @@ package il.org.spartan.spartanizer.ast.factory;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.Assignment.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -124,7 +126,7 @@ public enum make {
     $.setOperator(wizard.PLUS2);
     $.setLeftOperand(copy.of(first(xs)));
     $.setRightOperand(copy.of(second(xs)));
-    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢))))
+    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
       if (¢ >= xs.size())
         return $;
   }
@@ -138,7 +140,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    for (final Expression ¢ : rest(xs))
+    for (final Expression ¢ : rest(xs)) // NANO?
       $.add(minusOf(¢));
     return $;
   }
@@ -255,5 +257,10 @@ public enum make {
     final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
     $.setType(t);
     return $;
+  }
+
+  public static Expression assignmentAsExpression(final Assignment ¢) {
+    final Operator $ = ¢.getOperator();
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 }

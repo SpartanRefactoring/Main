@@ -12,17 +12,19 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Testing utils for expander Issue #961
+/** Testing utils for expanders Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
 public class BloatingTestUtilities {
   static final TextEditGroup textEditGroup = new TextEditGroup("");
+  static int counter; // a counter for the renaming function
 
   public static class Operand extends Wrapper<String> {
     ASTNode ast;
@@ -47,16 +49,17 @@ public class BloatingTestUtilities {
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = doc.get();
-        if (wrap.equals(unpeeled))
+        final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
+            unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
+        if ((rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "").equals(unpeeled1))
           azzert.fail("Nothing done on " + get());
-        final String peeled = w.off(unpeeled);
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        if (tide.clean(peeled).equals(tide.clean(get())))
-          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-        assertSimilar($, peeled);
-        return new Operand($);
+        final String peeled1 = w.off(unpeeled1);
+        if (peeled1.equals(get()))
+          azzert.that("No trimming of " + get(), peeled1, is(not(get())));
+        if (tide.clean(peeled1).equals(tide.clean(get())))
+          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
+        assertSimilar($1, peeled1);
+        return new Operand($1);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
       }
@@ -70,14 +73,15 @@ public class BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
+        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = doc.get();
+        final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         if (unpeeled.equals(get()))
           azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
-        assertSimilar($, unpeeled);
+        assertSimilar($1, unpeeled);
         return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         ¢.printStackTrace();
@@ -115,11 +119,33 @@ public class BloatingTestUtilities {
       return null;
     }
 
+    /** Rename all the SimpleNames in a compilation-unit to </br>
+     * consistent names : v1,v2,....
+     * @author Dor Ma'ayan
+     * @since 19-01-2017
+     * @param b
+     * @return */
+    private static CompilationUnit rename(final CompilationUnit u) {
+      if (u == null)
+        return null;
+      counter = 0;
+      final CompilationUnit $ = copy.of(u);
+      $.accept(new ASTVisitor() {
+        @Override public void preVisit(final ASTNode an) {
+          if (!iz.simpleName(an))
+            return;
+          az.simpleName(an).setIdentifier("v" + counter);
+          ++counter;
+        }
+      });
+      return $;
+    }
+
     private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-      final List<MethodDeclaration> $ = searchDescendants.forClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
+      final List<MethodDeclaration> $ = yieldDescendants.untilClass(MethodDeclaration.class).suchThat(t -> t.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
-        azzert.fail("Don't Such Method Exists");
+        azzert.fail("No such method Exists");
       return $.get(0);
     }
 

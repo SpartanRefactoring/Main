@@ -17,21 +17,11 @@ public class InteractiveSpartanizer {
     if (fileNames.length != 0)
       BatchSpartanizer.fire(fileNames); // change from main to fire
     else {
+      System.err.println("input: "); //
       final String input = read();
-      // System.err.println("input: " + input); //
       final GuessedContext c = GuessedContext.find(input);
-      // System.out.println(c.name());
-      CompilationUnit cu = null;
-      String output;
-      if (c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE))
-        output = new InteractiveSpartanizer().fixedPoint(input);
-      else {
-        cu = c.intoCompilationUnit(input);
-        assert cu != null;
-        output = new InteractiveSpartanizer().fixedPoint(cu + "");
-      }
-      System.err.println("output: " + output); // new
-                                               // InteractiveSpartanizer().fixedPoint(read()));
+      System.err.println("output: " + new InteractiveSpartanizer()
+          .fixedPoint(c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE) ? input : c.intoCompilationUnit(input) + ""));
     }
   }
 
@@ -74,19 +64,19 @@ public class InteractiveSpartanizer {
 
   boolean changed;
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> n, final Tipper<N>... ns) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
-    toolbox.add(n, ns);
+    toolbox.add(c, ts);
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ns) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
-    toolbox.add(i, ns);
+    toolbox.add(i, ts);
     return this;
   }
 }

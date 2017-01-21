@@ -27,21 +27,22 @@ import il.org.spartan.utils.*;
  * Don't be afraid to experiment. The error messages should guide you.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-public class MetaTestCase extends MetaFixture {
-  public static MetaTestCase instance = new MetaTestCase(null);
+public class AlphabeticallySortedSentence extends MetaFixture {
+  public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
   public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
-      .filter(d -> d.isPackageMemberTypeDeclaration()).findFirst().get();
+      .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
-      step.methods(reflection).stream().filter(¢ -> !¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢)).forEach(¢ -> put(mangle(¢), ¢));
+      step.methods(reflection).stream().filter(¢ -> !¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))
+          .forEach(¢ -> put(mangle(¢), ¢));
     }
   };
 
-  private MetaTestCase(final Void __) {
+  private AlphabeticallySortedSentence(final Void __) {
     ___.unused(__);
   }
 
-  public MetaTestCase() {
+  public AlphabeticallySortedSentence() {
     forbidden();
   }
 
@@ -118,8 +119,7 @@ public class MetaTestCase extends MetaFixture {
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
       final MethodDeclaration md = (MethodDeclaration) bd;
-      final String mangle = mangle(md);
-      final String model = extract.name(reflection);
+      final String mangle = mangle(md), model = extract.name(reflection);
       assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
           , md, stencil);
@@ -137,6 +137,6 @@ public class MetaTestCase extends MetaFixture {
 
   public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(MetaTestCase.class.getSimpleName()) ? null : reify($);
+    return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }
 }

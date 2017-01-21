@@ -35,8 +35,8 @@ public class LongIfExpander extends ReplaceCurrentNode<IfStatement> implements T
       return null;
     final InfixExpression ie = az.infixExpression(¢.getExpression());
     final IfStatement newThen = subject.pair(copy.of(¢.getThenStatement()), null)
-        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie)));
-    final IfStatement $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
+        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(¢, ie))),
+        $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
     if (¢.getElseStatement() != null) {
       newThen.setElseStatement(copy.of(¢.getElseStatement()));
       $.setThenStatement(newThen);

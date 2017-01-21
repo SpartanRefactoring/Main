@@ -27,7 +27,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    final MethodDeclaration p = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));

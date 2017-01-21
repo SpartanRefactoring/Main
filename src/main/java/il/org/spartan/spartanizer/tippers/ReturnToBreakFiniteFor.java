@@ -54,8 +54,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     if (!iz.ifStatement(s))
       return null;
     final IfStatement ifStatement = az.ifStatement(s);
-    final Statement then = ifStatement.getThenStatement();
-    final Statement elze = ifStatement.getElseStatement();
+    final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
     if (then != null) {
       if (compareReturnStatements(az.returnStatement(then), nextReturn))
         return then;
@@ -101,8 +100,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
-    final Statement body = body(s);
-    final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     if (exclude != null)
       exclude.exclude(s);

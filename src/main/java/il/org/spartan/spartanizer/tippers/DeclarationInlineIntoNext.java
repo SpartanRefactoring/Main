@@ -52,7 +52,24 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     Expression e = !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis();
     if (parent instanceof VariableDeclarationStatement)
       e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
-    $.remove(parent, g);
+    final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    if (pp == null || fragments(pp).size() <= 1)
+      $.remove(parent, g);
+    else {
+      if (step.type(pp).getNodeType() == ASTNode.ARRAY_TYPE)
+        return null;
+      final VariableDeclarationStatement pn = copy.of(pp);
+      final List<VariableDeclarationFragment> l = fragments(pp);
+      for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
+        if (l.get(¢).equals(f)) {
+          fragments(pn).remove(¢);
+          break;
+        }
+        if (iz.containsName(f.getName(), l.get(¢).getInitializer()))
+          return null;
+      }
+      $.replace(parent, pn, g);
+    }
     $.replace(id, e, g);
     return $;
   }
@@ -68,7 +85,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
   }
 
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
-    return !searchDescendants.forClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
+    return !yieldDescendants.untilClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
@@ -103,7 +120,7 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
     return $.size() != 1 ? null : first($);
   }
 
-  static List<SimpleName> occurencesOf(final Statement s, final String id) {
-    return searchDescendants.forClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from(s);
+  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+    return yieldDescendants.untilClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
   }
 }

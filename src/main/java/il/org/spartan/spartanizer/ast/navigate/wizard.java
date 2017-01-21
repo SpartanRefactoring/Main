@@ -30,7 +30,6 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -222,7 +221,7 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands((hop.operands(flatten.of($))).stream().map(¢ -> make.notOf(¢)).collect(Collectors.toList()))
+    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList()))
         .to(PrefixNotPushdown.conjugate(operator($)));
   }
 
@@ -241,18 +240,18 @@ public interface wizard {
    *         null */
   static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
-      case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(statements(az.block(into.s(p)))));
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
       case EXPRESSION_LOOK_ALIKE:
         return into.e(p);
+      case METHOD_LOOK_ALIKE:
+        return into.m(p);
       case OUTER_TYPE_LOOKALIKE:
         return into.t(p);
       case STATEMENTS_LOOK_ALIKE:
         return into.s(p);
-      case METHOD_LOOK_ALIKE:
-        return into.m(p);
+      case BLOCK_LOOK_ALIKE:
+        return az.astNode(first(statements(az.block(into.s(p)))));
       default:
         return null;
     }
@@ -535,7 +534,7 @@ public interface wizard {
       $.add(isFinal);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    final ASTNode container = hop.containerType(¢);
+    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(¢);
     if (container == null)
       return $;
     if (iz.annotationTypeDeclaration(container))
@@ -568,7 +567,7 @@ public interface wizard {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
-      if (iz.enumConstantDeclaration(hop.containerType(container)))
+      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(container)))
         $.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
@@ -673,11 +672,11 @@ public interface wizard {
     if (¢ == null)
       return false;
     switch (¢ + "") {
-      default:
-        return false;
       case "Object":
       case "java.lang.Object":
         return true;
+      default:
+        return false;
     }
   }
 

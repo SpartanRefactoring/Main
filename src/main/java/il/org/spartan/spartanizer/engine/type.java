@@ -217,8 +217,7 @@ public interface type {
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = get(step.then(x));
-      final implementation ¢ = get(step.elze(x));
+      final implementation $ = get(step.then(x)), ¢ = get(step.elze(x));
       return $ == ¢ ? $
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
@@ -230,34 +229,34 @@ public interface type {
      *         decide. Will never return null */
     private static implementation lookDown(final Expression ¢) {
       switch (¢.getNodeType()) {
-        case NULL_LITERAL:
-          return NULL;
-        case CHARACTER_LITERAL:
-          return CHAR;
-        case STRING_LITERAL:
-          return STRING;
         case BOOLEAN_LITERAL:
           return BOOLEAN;
-        case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) ¢);
-        case CAST_EXPRESSION:
-          return lookDown((CastExpression) ¢);
-        case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) ¢);
-        case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) ¢);
-        case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) ¢);
-        case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) ¢);
-        case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) ¢);
-        case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) ¢);
-        case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) ¢);
+        case CHARACTER_LITERAL:
+          return CHAR;
+        case NULL_LITERAL:
+          return NULL;
+        case STRING_LITERAL:
+          return STRING;
         case ASSIGNMENT:
           return lookDown((Assignment) ¢);
+        case CAST_EXPRESSION:
+          return lookDown((CastExpression) ¢);
+        case CLASS_INSTANCE_CREATION:
+          return lookDown((ClassInstanceCreation) ¢);
+        case CONDITIONAL_EXPRESSION:
+          return lookDown((ConditionalExpression) ¢);
+        case INFIX_EXPRESSION:
+          return lookDown((InfixExpression) ¢);
+        case METHOD_INVOCATION:
+          return lookDown((MethodInvocation) ¢);
+        case NUMBER_LITERAL:
+          return lookDown((NumberLiteral) ¢);
+        case PARENTHESIZED_EXPRESSION:
+          return lookDown((ParenthesizedExpression) ¢);
+        case POSTFIX_EXPRESSION:
+          return lookDown((PostfixExpression) ¢);
+        case PREFIX_EXPRESSION:
+          return lookDown((PrefixExpression) ¢);
         case VARIABLE_DECLARATION_EXPRESSION:
           return lookDown((VariableDeclarationExpression) ¢);
         default:
@@ -306,20 +305,20 @@ public interface type {
         final ASTNode context = $.getParent();
         if (context != null)
           switch (context.getNodeType()) {
-            case INFIX_EXPRESSION:
-              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+            case IF_STATEMENT:
+              return BOOLEAN;
             case ARRAY_ACCESS:
               return i.asIntegral();
-            case PREFIX_EXPRESSION:
-              return i.above(az.prefixExpression(context).getOperator());
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
+            case INFIX_EXPRESSION:
+              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+            case PREFIX_EXPRESSION:
+              return i.above(az.prefixExpression(context).getOperator());
             case ASSERT_STATEMENT:
               return $.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case FOR_STATEMENT:
               return $.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
-            case IF_STATEMENT:
-              return BOOLEAN;
             case PARENTHESIZED_EXPRESSION:
               continue;
             default:
@@ -451,8 +450,7 @@ public interface type {
       }
 
       default implementation underIntegersOnlyOperator(final implementation k) {
-        final implementation $ = asIntegralUnderOperation();
-        final implementation ¢2 = k.asIntegralUnderOperation();
+        final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
         return in(LONG, $, ¢2) ? LONG : !in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
 
