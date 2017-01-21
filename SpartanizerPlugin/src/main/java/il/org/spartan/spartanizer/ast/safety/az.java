@@ -594,4 +594,8 @@ public enum az {
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
+
+  static DoStatement doStatement(ASTNode $) {
+    return !iz.nodeTypeEquals($, DO_STATEMENT) ? null : (DoStatement) $;
+  }
 }

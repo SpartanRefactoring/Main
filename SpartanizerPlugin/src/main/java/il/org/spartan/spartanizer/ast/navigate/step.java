@@ -82,6 +82,10 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
+  public static Statement body(final DoStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
