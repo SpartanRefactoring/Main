@@ -40,7 +40,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
