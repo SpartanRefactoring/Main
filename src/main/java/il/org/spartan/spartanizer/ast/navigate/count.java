@@ -69,11 +69,11 @@ public interface count {
     return $.get();
   }
 
-  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
+  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> c) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (¢.getClass().equals(cl))
+        if (¢.getClass().equals(c))
           $.getAndIncrement();
       }
     });

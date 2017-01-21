@@ -142,10 +142,10 @@ public final class Issue0157 {
         + "$[i] = hash[i] == null ? null : hash[i].getName(); \n" //
         + "return combine($);  \n" //
         + "}")
-            .gives(" public static String combine(final Set<List<HashSet<?>[]>> ssss) {  \n" //
-                + "final String[] $ = new String[ssss.size()];  \n" //
+            .gives(" public static String combine(final Set<List<HashSet<?>[]>> ossss) {  \n" //
+                + "final String[] $ = new String[ossss.size()];  \n" //
                 + "for (int i = 0; i <$.length; ++i)  \n" //
-                + "$[i] = ssss[i] == null ? null : ssss[i].getName(); \n" //
+                + "$[i] = ossss[i] == null ? null : ossss[i].getName(); \n" //
                 + "return combine($);  \n" //
                 + "}");
   }

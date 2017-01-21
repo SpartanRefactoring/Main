@@ -28,9 +28,9 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-24 */
 public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Expander {
   @Override public ASTNode replacement(final PrefixExpression ¢) {
-    final NumberLiteral one = ¢.getAST().newNumberLiteral();
-    one.setToken("1");
-    return subject.pair(step.operand(¢), one)
+    final NumberLiteral $ = ¢.getAST().newNumberLiteral();
+    $.setToken("1");
+    return subject.pair(step.operand(¢), $)
         .to(step.operator(¢) != PrefixExpression.Operator.DECREMENT ? Operator.PLUS_ASSIGN : Operator.MINUS_ASSIGN);
   }
 
