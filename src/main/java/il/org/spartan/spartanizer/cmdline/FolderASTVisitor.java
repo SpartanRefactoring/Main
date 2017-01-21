@@ -65,12 +65,12 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   protected static String makeFile(final String fileName) {
-    return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
+    return outputFolder + system.fileSeparator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visit(final String path) {
     init(path);
-    presentSourceName = system.folder2File(presentSourcePath = inputFolder + "/" + path);
+    presentSourceName = system.folder2File(presentSourcePath = inputFolder + system.fileSeparator + path);
     System.err.println("Processing: " + presentSourcePath);
     (dotter = new Dotter()).click();
     new FilesGenerator(".java").from(presentSourcePath).forEach(¢ -> visit(presentFile = ¢));
