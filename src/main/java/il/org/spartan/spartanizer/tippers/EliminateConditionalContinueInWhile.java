@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Issue #1014
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
-public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatement> implements TipperCategory.Inlining {
+public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatement> implements TipperCategory.Shunt {
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
