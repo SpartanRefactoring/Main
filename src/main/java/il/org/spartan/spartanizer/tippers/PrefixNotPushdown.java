@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression> implements TipperCategory.Idiomatic {
+public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
+    implements TipperCategory.Idiomatic {
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator ¢) {

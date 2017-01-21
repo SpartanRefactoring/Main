@@ -20,7 +20,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@link Issue1001}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
-public class AssignmentOperatorBloater extends CarefulTipper<Assignment> implements TipperCategory.Bloater {
+public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
+    implements TipperCategory.Bloater {
   // TODO: Ori Roth - fix this description --yg
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use regualr assignment wth operator";

@@ -21,37 +21,10 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert an expression such as
- *
- * <pre>
- * 1 * i
- * </pre>
- *
- * or
- *
- * <pre>
- * i * 1
- * </pre>
- *
- * to
- *
- * <pre>
- * i
- * </i>
- * or
- * <pre>
- * i * 1 * jasLiteral
- * </pre>
- *
- * to
- *
- * <pre>
- * i * j
- * </pre>
- *
- * @author Matteo Orrù
+/** @author Matteo Orrù
  * @since 2016 */
-public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> implements TipperCategory.Sorting {
+public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
+    implements TipperCategory.Sorting {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);

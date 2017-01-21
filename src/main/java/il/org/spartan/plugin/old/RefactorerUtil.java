@@ -48,14 +48,6 @@ public class RefactorerUtil {
     return ((Collection<ICompilationUnit>) ¢.get(attribute.CHANGES)).size();
   }
 
-  public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
-    final String $ = us.size() + "";
-    String i = us.indexOf(u) + 1 + "";
-    while (i.length() < $.length())
-      i = " " + i;
-    return i + "/" + $;
-  }
-
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
       final Map<attribute, Object> m, final attribute a) {
     if (us.isEmpty())
