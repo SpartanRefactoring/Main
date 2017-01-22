@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -22,7 +23,7 @@ public class Generic$Applicator {
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
     final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
-      for (final String ¢ : ss)
+      for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
     } catch (final ClassNotFoundException ¢) {
       ¢.printStackTrace();
@@ -51,10 +52,7 @@ public class Generic$Applicator {
   }
 
   protected static List<String> setAllTipperGroups() {
-    final List<String> $ = new ArrayList<>();
-    for (final TipperGroup ¢ : TipperGroup.values())
-      $.add(¢.name());
-    return $;
+    return Arrays.asList(TipperGroup.values()).stream().map(¢ -> ¢.name()).collect(Collectors.toList());
   }
 
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {

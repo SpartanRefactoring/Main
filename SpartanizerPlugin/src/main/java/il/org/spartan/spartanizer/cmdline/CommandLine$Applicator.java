@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -57,19 +58,13 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String[] excludedNanoPatterns) {
-    final List<String> $ = new ArrayList<>();
-    for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
-      if (!as.list(excludedNanoPatterns).contains(¢))
-        $.add(¢);
-    return $.toArray(new String[] {});
+    return Arrays.asList(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {})).stream()
+        .filter(¢ -> !as.list(excludedNanoPatterns).contains(¢)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
-    final List<String> $ = new ArrayList<>();
-    for (final String ¢ : tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
-      if (!as.list(excludedTipperGroups).contains(¢))
-        $.add(¢);
-    return $.toArray(new String[] {});
+    return Arrays.asList(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {})).stream()
+        .filter(¢ -> !as.list(excludedTipperGroups).contains(¢)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
   private void go(final CompilationUnit u) {
