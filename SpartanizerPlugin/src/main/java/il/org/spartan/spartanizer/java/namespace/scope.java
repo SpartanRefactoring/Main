@@ -68,6 +68,15 @@ public interface scope {
     b.setProperty("Namespace", n);
     return $;
   }
+  
+  static String newName(final ASTNode ¢, final Type t, String s) {
+    final ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final String $ = n.generateName(s);
+    n.addNewName($, t);
+    b.setProperty("Namespace", n);
+    return $;
+  }
 
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢).has(identifier);
