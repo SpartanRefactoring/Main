@@ -36,7 +36,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n)) // NANO?
-      if (iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
+      if (iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION))
         return true;
     return false;
   }
