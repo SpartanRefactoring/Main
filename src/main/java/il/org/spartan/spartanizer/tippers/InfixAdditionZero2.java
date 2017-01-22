@@ -6,6 +6,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -59,10 +60,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     extract.allOperands(x);
     extract.allOperators(x);
     final List<Expression> ops = extract.allOperands(x);
-    final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (final Integer ¢ : range.from(0).to(ops.size()))
-      if (!iz.literal0(ops.get(¢)))
-        ops2.add(ops.get(¢));
+    List<Expression> ops2 = (range.from(0).to(ops.size())).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢))
+        .collect(Collectors.toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
@@ -70,25 +69,17 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   private static boolean containsZeroOperand(final InfixExpression x) {
-    for (final Expression ¢ : extract.allOperands(x)) // NANO
-      if (iz.literal0(¢))
-        return true;
-    return false;
+    return extract.allOperands(x).stream().anyMatch(¢ -> iz.literal0(¢));
   }
 
   private static boolean containsPlusOperator(final InfixExpression x) {
-    for (final Operator ¢ : extract.allOperators(x)) // NANO
-      if (¢ == Operator.PLUS)
-        return true;
-    return false;
+    return extract.allOperators(x).stream().anyMatch(¢ -> ¢ == Operator.PLUS);
   }
 
   @SuppressWarnings("boxing") public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = extract.allOperands(x);
-    final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (final Integer ¢ : range.from(0).to(ops.size()))
-      if (!iz.literal0(ops.get(¢)))
-        ops2.add(ops.get(¢));
+    List<Expression> ops2 = (range.from(0).to(ops.size())).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢))
+        .collect(Collectors.toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
