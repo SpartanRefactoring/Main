@@ -2,6 +2,8 @@ package il.org.spartan.plugin.preferences;
 
 import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup.*;
 
+import java.util.*;
+
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
 
@@ -16,7 +18,6 @@ public final class PreferencesDefaultValuesInitializer extends AbstractPreferenc
     final IPreferenceStore s = store();
     // s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
     s.setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    for (final TipperGroup ¢ : TipperGroup.values()) // NANO?
-      s.setDefault(¢.id, true);
+    Arrays.asList(TipperGroup.values()).forEach(¢ -> s.setDefault(¢.id, true));
   }
 }

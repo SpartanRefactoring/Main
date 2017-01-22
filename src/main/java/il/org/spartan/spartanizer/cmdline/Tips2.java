@@ -28,8 +28,7 @@ public class Tips2 {
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      for (final AbstractGUIApplicator ¢ : all)
-        put(¢.getName(), ¢);
+      Arrays.asList(all).forEach(¢ -> put(¢.getName(), ¢));
     }
   };
 
@@ -52,10 +51,7 @@ public class Tips2 {
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
-    for (final AbstractGUIApplicator $ : all)
-      if ($.getClass().equals(¢))
-        return (T) $;
-    return null;
+    return Arrays.asList(all).stream().filter($ -> $.getClass().equals(¢)).map($ -> (T) $).findFirst().orElse(null);
   }
 
   /** @param name the name of the applicator
@@ -70,7 +66,6 @@ public class Tips2 {
    * eclipse. */
   public static void reset() {
     map.clear();
-    for (final AbstractGUIApplicator ¢ : all)
-      map.put(¢.getName(), ¢);
+    Arrays.asList(all).forEach(¢ -> map.put(¢.getName(), ¢));
   }
 }

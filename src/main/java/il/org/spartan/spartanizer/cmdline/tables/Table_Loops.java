@@ -140,11 +140,9 @@ public class Table_Loops extends FolderASTVisitor {
     ;
     //
     final HashMap<String, Int> hist = npStatistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
-    for (final String ¢ : hist.keySet())
-      rawWriter.col(¢ + " perc.",
-          format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)))));
-    for (final String ¢ : hist.keySet())
-      rawWriter.col(¢, hist.get(¢).inner);
+    hist.keySet().forEach(¢ -> rawWriter.col(¢ + " perc.",
+        format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
+    hist.keySet().forEach(¢ -> rawWriter.col(¢, hist.get(¢).inner));
     rawWriter.nl();
   }
 }
