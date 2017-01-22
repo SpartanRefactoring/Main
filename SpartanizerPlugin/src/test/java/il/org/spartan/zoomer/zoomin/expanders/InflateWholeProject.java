@@ -15,7 +15,7 @@ public class InflateWholeProject extends AbstractHandler {
     for (final WrappedCompilationUnit ¢ : s.inner) {
       for (int i = 0; i < MAX_PASSES; ++i) {
         if (!SingleFlater.commitChanges(SingleFlater.in(¢.build().compilationUnit).from(new InflaterProvider()),
-            ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null))
+            ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null))
           break;
         ¢.dispose();
       }

@@ -76,11 +76,15 @@ public class generalize {
 
   public static void main(final String args[]) {
     System.out.println("enter whatever:");
+    System.out.println(generalize.code(m()));
+  }
+
+  private static String m() {
     try (Scanner reader = new Scanner(System.in)) {
-      String s = "";
+      String $ = "";
       while (reader.hasNext())
-        s += "\n" + reader.nextLine();
-      System.out.println(generalize.code(s));
+        $ += "\n" + reader.nextLine();
+      return $;
     }
   }
 }

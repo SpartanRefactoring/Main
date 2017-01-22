@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -101,8 +100,7 @@ public class Selection extends AbstractSelection<Selection> {
     final IResource r = first(inner).descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
-    final int o = textSelection.getOffset();
-    final int l = o + textSelection.getLength();
+    final int o = textSelection.getOffset(), l = o + textSelection.getLength();
     int no = o, nl = l;
     try {
       final IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
@@ -141,7 +139,7 @@ public class Selection extends AbstractSelection<Selection> {
   // TODO Ori Roth: apply to newly added WCU as well
   public Selection setUseBinding() {
     if (inner != null)
-      for (final WrappedCompilationUnit ¢ : inner)
+      for (final WrappedCompilationUnit ¢ : inner) // NANO?
         ¢.useBinding = true;
     return this;
   }
@@ -150,8 +148,8 @@ public class Selection extends AbstractSelection<Selection> {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();
-    return "{" + (inner == null ? null : $ + " " + RefactorerUtil.plurals("file", $)) + ", "
-        + (textSelection == null ? null : printable(textSelection)) + "}";
+    return "{" + (inner == null ? null : $ + " " + Linguistic.plurals("file", $)) + ", " + (textSelection == null ? null : printable(textSelection))
+        + "}";
   }
 
   /** @param ¢ JD
@@ -244,7 +242,7 @@ public class Selection extends AbstractSelection<Selection> {
       final ASTNode n = getNodeByMarker($, m);
       if (n == null)
         return empty();
-      final ASTNode p = searchAncestors.forClass(c).from(n);
+      final ASTNode p = yieldAncestors.untilClass(c).from(n);
       return p == null ? empty() : TrackerSelection.empty().track(p).add($).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 
@@ -397,7 +395,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      for (final IPackageFragmentRoot ¢ : rs)
+      for (final IPackageFragmentRoot ¢ : rs) // NANO?
         $.unify(by(¢));
       return $.setName(p.getElementName());
     }
@@ -407,7 +405,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        for (final IJavaElement ¢ : r.getChildren())
+        for (final IJavaElement ¢ : r.getChildren()) // NANO?
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.unify(by((IPackageFragment) ¢));
       } catch (final JavaModelException ¢) {

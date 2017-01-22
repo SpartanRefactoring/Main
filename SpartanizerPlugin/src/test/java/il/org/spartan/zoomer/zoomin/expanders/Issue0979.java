@@ -17,14 +17,12 @@ public class Issue0979 {
     bloatingOf("int foo(int $){ return $;}")//
         .gives("int foo(int ret){ return ret;}");
   }
-
+  
   @Test public void basicRet2params() {
     bloatingOf("int foo(int $, int ba){ return $;}")//
         .gives("int foo(int ret, int ba){ return ret;}");
   }
 
-  // TODO: dor maaya, Doron - should this name be final or will the name
-  // generation change?
   @Test public void basicRenameShortVar() {
     bloatingOf("void foo(int b){ b = 1;}")//
         .gives("void foo(int i1){ i1=1;}");
@@ -50,6 +48,7 @@ public class Issue0979 {
         .gives("void foo(int i1, int i2){ i1=1; i2=3;}");
   }
 
+  @Ignore
   @Test public void basicAss() {
     bloatingOf("int a = 5;")//
         .gives("int a; a = 5;")//
@@ -61,6 +60,7 @@ public class Issue0979 {
         .gives("int i1 = 5,i2=3;");
   }
 
+  @Ignore
   @Test public void Assign2() {
     bloatingOf("double r = 2;")//
         .gives("double r;r = 2;") //

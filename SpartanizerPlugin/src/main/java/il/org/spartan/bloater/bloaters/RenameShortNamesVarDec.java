@@ -38,7 +38,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: take care of single var decleration, tests
-public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement> implements TipperCategory.Expander {
+public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement>//
+    implements TipperCategory.Bloater {
   @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
@@ -46,8 +47,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
   @Override @SuppressWarnings("unused") public Tip tip(final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      final List<SimpleName> prev = new ArrayList<>();
-      final List<SimpleName> after = new ArrayList<>();
+      final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
       for (final Object v : az.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclarationFragment) v).getName();
         assert $ != null;

@@ -119,13 +119,13 @@ public interface system {
 
   static double round3(final double ¢) {
     switch (digits(¢)) {
-      case -1:
-      case 0:
-        return Math.round(1000 * ¢) / 1000.0;
       case 1:
         return Math.round(100 * ¢) / 100.0;
       case 2:
         return Math.round(10 * ¢) / 10.0;
+      case -1:
+      case 0:
+        return Math.round(1000 * ¢) / 1000.0;
       default:
         return ¢;
     }
@@ -142,13 +142,13 @@ public interface system {
     if (¢ == 0 || ¢ >= 1 && ¢ - (int) ¢ < 0.0005)
       return "%.0f";
     switch (digits(round3(¢))) {
-      case -1:
-      case 0:
-        return "%.3f";
       case 1:
         return "%.2f";
       case 2:
         return "%.1f";
+      case -1:
+      case 0:
+        return "%.3f";
       default:
         return "%.0f";
     }
@@ -193,4 +193,6 @@ public interface system {
         .replaceAll("([^a-zA-Z¢$_]) ([a-zA-Z¢$_])", "$1$2")//
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
+
+  String fileSeparator = System.getProperty("file.separator");
 }

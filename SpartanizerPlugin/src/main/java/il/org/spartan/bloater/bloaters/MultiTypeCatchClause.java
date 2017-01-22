@@ -28,14 +28,15 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Tested in {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
-public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Expander {
+public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
     // TODO: Ori Roth, this is a perfect example for extract method, which would
     // simpify the code
-    for (; i < catches.size(); ++i)
+    for (; i < catches.size(); ++i) // Tough
       if (iz.unionType(catches.get(i).getException().getType())) {
         multiTypeCatch = copy.of(catches.get(i));
         break;

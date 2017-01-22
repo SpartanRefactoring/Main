@@ -25,7 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */
-public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
+public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
+    implements TipperCategory.Shortcircuit {
   @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;

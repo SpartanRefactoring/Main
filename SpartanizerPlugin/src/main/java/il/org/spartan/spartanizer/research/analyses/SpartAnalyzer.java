@@ -27,17 +27,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // .add(Assignment.class, //
         // new LazyInitializer(), // R.I.P
         // null) //
-        .add(Block.class, //
-            new CachingPattern(), //
-            new CopyCollection(), //
-            new FindFirst(), //
-            new ReturnPrevious(), //
-            new ReturnHoldsForAll(), //
-            new ReturnHoldsForAny(), //
-            null) //
         .add(CatchClause.class, //
             new IfThrowsReturn(), //
-            new IgnoreException(), //
+            new SupressException(), //
             // new PercolateException(), // R.I.P
             null)//
         .add(ConditionalExpression.class, //
@@ -51,9 +43,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
             new Collect(), //
+            new FindFirst(), //
             new ForEach(), //
-            new ForEachFiltered(), //
-            new Select(), //
+            new ForEachSuchThat(), //
+            new HoldsForAll(), //
+            new HoldsForAny(), //
             null) //
         .add(ForStatement.class, //
             new ForEachInRange(), //
@@ -61,6 +55,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(IfStatement.class, //
             new NotNullOrThrow(), //
             new AssertNotNull(), //
+            new CachingPattern(), //
             new ExecuteWhen(), //
             new GeneralizedSwitch<>(), //
             // new PutIfAbsent(), // R.I.P
@@ -75,8 +70,12 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new LispFirstElement(), //
             new LispLastElement(), //
             null) //
+        .add(ReturnStatement.class, //
+            new ReturnPrevious(), //
+            null) //
+    // new CopyCollection(), // R.I.P
     // .add(WhileStatement.class, //
-    // new Exhaust(), //
+    // new Exhaust(), // R.I.P
     // null)//
     ;
     return this;

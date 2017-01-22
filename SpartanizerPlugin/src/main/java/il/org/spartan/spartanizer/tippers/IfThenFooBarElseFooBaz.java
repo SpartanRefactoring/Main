@@ -43,7 +43,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> implements TipperCategory.CommnoFactoring {
+public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
+    implements TipperCategory.CommnonFactoring {
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
@@ -67,8 +68,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final int thenSize = $.size();
-    final int elzeSize = elze.size();
+    final int thenSize = $.size(), elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), s, getClass()) {

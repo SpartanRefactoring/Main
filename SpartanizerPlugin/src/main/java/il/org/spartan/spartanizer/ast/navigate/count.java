@@ -69,11 +69,11 @@ public interface count {
     return $.get();
   }
 
-  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> cl) {
+  static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> c) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (¢.getClass().equals(cl))
+        if (¢.getClass().equals(c))
           $.getAndIncrement();
       }
     });
@@ -109,7 +109,7 @@ public interface count {
    * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nonWhiteCharacters(final ASTNode ¢) {
-    return removeWhites(wizard.cleanForm(¢)).length();
+    return removeWhites(trivia.cleanForm(¢)).length();
   }
 
   /** Counts the number of nodes in a tree rooted at a given node

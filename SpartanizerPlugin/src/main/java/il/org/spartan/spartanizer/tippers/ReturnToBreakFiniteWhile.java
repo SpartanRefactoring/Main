@@ -32,7 +32,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement> implements TipperCategory.Collapse {
+public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement>//
+    implements TipperCategory.CommnonFactoring {
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
@@ -102,8 +103,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
-    final Statement body = body(b);
-    final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (exclude != null)
       exclude.exclude(b);

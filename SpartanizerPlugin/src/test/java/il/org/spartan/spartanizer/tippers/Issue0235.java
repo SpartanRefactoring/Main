@@ -35,6 +35,8 @@ public class Issue0235 {
 
   @Test public void test4() {
     trimmingOf("try{ return i; } finally { }")//
+        .gives("{return i;}")//
+        .gives("return i;")//
         .stays();
   }
 

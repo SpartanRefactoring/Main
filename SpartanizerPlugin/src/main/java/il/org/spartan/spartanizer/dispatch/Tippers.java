@@ -46,10 +46,10 @@ public enum Tippers {
     final List<Expression> $ = extract.allOperands(x);
     wizard.removeAll(b, $);
     switch ($.size()) {
-      case 0:
-        return x.getAST().newBooleanLiteral(b);
       case 1:
         return copy.of(first($));
+      case 0:
+        return x.getAST().newBooleanLiteral(b);
       default:
         return subject.operands($).to(x.getOperator());
     }
@@ -68,17 +68,17 @@ public enum Tippers {
     if ($ == null)
       return false;
     switch ($.getNodeType()) {
-      case RETURN_STATEMENT:
-      case BREAK_STATEMENT:
-      case THROW_STATEMENT:
-      case CONTINUE_STATEMENT:
-        return true;
       case BLOCK:
         return endsWithSequencer(last(step.statements((Block) $)));
-      case LABELED_STATEMENT:
-        return endsWithSequencer(((LabeledStatement) $).getBody());
+      case BREAK_STATEMENT:
+      case CONTINUE_STATEMENT:
+      case RETURN_STATEMENT:
+      case THROW_STATEMENT:
+        return true;
       case DO_STATEMENT:
         return endsWithSequencer(((DoStatement) $).getBody());
+      case LABELED_STATEMENT:
+        return endsWithSequencer(((LabeledStatement) $).getBody());
       case IF_STATEMENT:
         return endsWithSequencer(then((IfStatement) $)) && endsWithSequencer(elze((IfStatement) $));
       default:
@@ -105,16 +105,14 @@ public enum Tippers {
   }
 
   public static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s));
-    final List<Statement> elze = extract.statements(elze(s));
+    final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Tippers.sequencerRank(lisp.last(then));
-    final int rankElse = Tippers.sequencerRank(lisp.last(elze));
+    final int rankThen = Tippers.sequencerRank(lisp.last(then)), rankElse = Tippers.sequencerRank(lisp.last(elze));
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
@@ -153,25 +151,21 @@ public enum Tippers {
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
-    final int $ = sequencerRank(hop.lastStatement(then(s)));
-    final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
+    final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !Tippers.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(final IfStatement s) {
-    final Statement then = then(s);
-    final Statement elze = elze(s);
+    final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
-    final int s1 = count.lines(then);
-    final int s2 = count.lines(elze);
+    final int s1 = count.lines(then), s2 = count.lines(elze);
     if (s1 < s2)
       return true;
     if (s1 > s2)
       return false;
     assert s1 == s2;
-    final int n2 = extract.statements(elze).size();
-    final int n1 = extract.statements(then).size();
+    final int n2 = extract.statements(elze).size(), n1 = extract.statements(then).size();
     if (n1 < n2)
       return true;
     if (n1 > n2)
@@ -187,5 +181,13 @@ public enum Tippers {
 
   private static int sequencerRank(final ASTNode ¢) {
     return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  }
+
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+  }
+
+  public static <T> void removeLast(final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
   }
 }

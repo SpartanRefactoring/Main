@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 import java.util.*;
 import java.util.function.*;
 
@@ -50,9 +51,7 @@ public class GUIBatchLaconizer extends Applicator {
         listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner;
-        final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
-        final List<WrappedCompilationUnit> done = new ArrayList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
@@ -82,7 +81,7 @@ public class GUIBatchLaconizer extends Applicator {
    * @return this applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
     listener(os -> {
-      for (final Object ¢ : os)
+      for (final Object ¢ : os) // NANO?
         System.out.print(¢ + " ");
       System.out.println();
     });
@@ -169,7 +168,7 @@ public class GUIBatchLaconizer extends Applicator {
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
     visit_cu(6,
-        inp -> printableAt(inp, 1) + "/" + printableAt(inp, 2) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
+        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
     run_finish(3, inp -> "Done " + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));

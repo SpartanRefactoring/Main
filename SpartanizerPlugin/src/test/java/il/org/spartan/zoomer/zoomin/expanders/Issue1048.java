@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Test case for bug in {@link AssignmentTernaryExpander} .
+/** Test case for bug in {@link AssignmentTernaryBloater} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
 @Ignore

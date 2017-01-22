@@ -18,7 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code>catch(Exceprion ¢){}</code>
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
-public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause> implements TipperCategory.Centification {
+public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
+    implements TipperCategory.Centification {
   @Override public String description(@SuppressWarnings("unused") final CatchClause ¢) {
     return "Rename the parameter of the catch clause";
   }

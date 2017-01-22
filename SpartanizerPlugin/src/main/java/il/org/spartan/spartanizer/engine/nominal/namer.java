@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -35,7 +36,7 @@ public interface namer {
 
   static String shorten(final List<Type> ¢) {
     for (final Type $ : ¢)
-      if ((($ + "").length() != 1 || !Character.isUpperCase(lisp.first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
+      if ((($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
         return shorten($);
     return null;
   }
@@ -50,26 +51,45 @@ public interface namer {
     return shorten(¢.getName());
   }
 
-  static String shorten(final ParameterizedType ¢) {
-    final String $ = shorten(typeArguments(¢));
-    if ($ == null)
-      return shorten(¢.getType());
-    switch (¢.getType() + "") {
-      case "Collection":
-      case "Iterable":
-      case "List":
-      case "Queue":
-      case "Set":
-      case "HashSet":
-      case "LinkedHashSet":
-      case "ArrayList":
-      case "TreeSet":
-      case "Vector":
-      case "Sequence":
-        return $ + "s";
-      default:
-        return $;
+  @SuppressWarnings("serial") Set<String> plurals = new LinkedHashSet<String>() {
+    {
+      add("ArrayList");
+      add("Collection");
+      add("HashSet");
+      add("Iterable");
+      add("LinkedHashSet");
+      add("LinkedTreeSet");
+      add("List");
+      add("Queue");
+      add("Seuence");
+      add("Set");
+      add("TreeSet");
+      add("Vector");
     }
+  };
+  @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
+    {
+      add("Class");
+      add("Tipper");
+      add("Map");
+    }
+  };
+
+  static String shorten(final ParameterizedType ¢) {
+    if (isPluralizing(¢))
+      return shorten(first(typeArguments(¢))) + "s";
+    if (isAssuming(¢))
+      return shorten(¢.getType());
+    final String $ = shorten(typeArguments(¢));
+    return $ != null ? $ : shorten(¢.getType());
+  }
+
+  static boolean isAssuming(final ParameterizedType ¢) {
+    return assuming.contains(¢.getType() + "");
+  }
+
+  static boolean isPluralizing(final ParameterizedType ¢) {
+    return plurals.contains(¢.getType() + "");
   }
 
   static String shorten(final PrimitiveType ¢) {
@@ -105,6 +125,6 @@ public interface namer {
   }
 
   static String shortName(final WildcardType ¢) {
-    return shorten(¢.getBound());
+    return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 }

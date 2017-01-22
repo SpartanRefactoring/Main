@@ -16,10 +16,11 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO: doron add docs description such as in {@link SwitchEmpty} pls
-// TODO: Dorn, what's going on with the above TOOD --yg
+// TODO: Doron Meshulam: add docs description such as in {@link SwitchEmpty} pls
+// TODO: Doron, what's going on with the above TOOD --yg
 @SuppressWarnings("unused")
-public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
+public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
+    implements TipperCategory.Idiomatic {
   @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;
   }
@@ -34,8 +35,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     final List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
     final List<Statement> bodyStatements = statements(d);
     final List<String> definedLocals = new ArrayList<>();
-    final List<SimpleName> $ = new ArrayList<>();
-    final List<SimpleName> newNames = new ArrayList<>();
+    final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))

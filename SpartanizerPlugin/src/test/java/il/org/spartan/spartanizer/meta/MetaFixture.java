@@ -42,15 +42,15 @@ public abstract class MetaFixture {
   }
 
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return first(searchDescendants.forClass(¢).from(reflectedCompilationUnit()));
+    return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
   }
 
   public List<SingleMemberAnnotation> singleMemberAnnotations() {
-    return searchDescendants.forClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.untilClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 
   public List<Annotation> annotations() {
-    return searchDescendants.forClass(Annotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
   }
 
   public static int value(final SingleMemberAnnotation ¢) {
@@ -61,7 +61,7 @@ public abstract class MetaFixture {
     String $ = "";
     int i = 0;
     for (final ASTNode p : ancestors.of(n))
-      $ += "\n\t + " + i++ + ": " + wizard.trim(p + "") + "/" + p.getClass().getSimpleName();
+      $ += "\n\t + " + i++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName();
     return $;
   }
 

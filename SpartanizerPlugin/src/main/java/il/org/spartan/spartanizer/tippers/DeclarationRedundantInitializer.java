@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<VariableDeclarationFragment>
+    //
     implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
     return "Remove default values initiliazing field";
@@ -28,7 +29,7 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
       return null;
     final Expression e = f.getInitializer();
     if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e)
-        || iz.interface¢(hop.containerType(parent)))
+        || iz.interface¢(container.typeDeclaration(parent)))
       return null;
     final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(null);
