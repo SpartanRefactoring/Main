@@ -83,7 +83,7 @@ public class Issue0413 {
   }
 
   @Test public void idempotent() {
-    for (final String caze : new String[] { "This", "This 'is'", "This \"is" })
+    for (final String caze : new String[] { "This", "This 'is'", "This \"is" }) // NANO
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
   }
 }

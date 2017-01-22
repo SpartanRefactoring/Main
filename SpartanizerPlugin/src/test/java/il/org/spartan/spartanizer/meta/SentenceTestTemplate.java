@@ -31,7 +31,7 @@ public class SentenceTestTemplate {
 
   static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
-    for (final MetaFixture f : fs)
+    for (final MetaFixture f : fs) // NANO
       for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
         final Vocabulary reify = AlphabeticallySortedSentence.reify(d);
         if (reify != null)
@@ -60,7 +60,7 @@ public class SentenceTestTemplate {
 
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
-      for (final List<MethodDeclaration> sentence : allSentences())
+      for (final List<MethodDeclaration> sentence : allSentences()) // NANO
         $.addAll(sentence.stream().filter(disabling::specificallyDisabled).map((Function<MethodDeclaration, Object[]>) Changes::____)
             .collect(Collectors.toList()));
       return $;
@@ -107,7 +107,7 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
-        for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
+        for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢) // IIMPOSSIBLE
           if (disabling.specificallyDisabled(sentence.get(¢)))
             $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
       return $;
