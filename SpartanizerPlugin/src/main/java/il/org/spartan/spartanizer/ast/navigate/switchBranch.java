@@ -16,6 +16,7 @@ public class switchBranch {
   private int numOfNodes;
   private int depth;
   private int sequencerLevel;
+  public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
 
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
@@ -156,7 +157,7 @@ public class switchBranch {
     return $;
   }
 
-  public boolean hasSameCode(final switchBranch ¢) {
+  public boolean hasSameBody(final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 

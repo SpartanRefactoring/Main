@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -55,8 +55,8 @@ public class Table_Loops extends FolderASTVisitor {
   private static boolean analyze(final ASTNode ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      final ASTNode n = extract.singleStatement(findFirst.statement(into.s(spartanize(¢))));
-      log(n);
+      final ASTNode n = into.s(spartanize(parent(¢)));
+      log(extract.singleStatement(findFirst.statement(n)));
       npStatistics.logMethod(intoMethod(spartanalyze(n)));
     } catch (@SuppressWarnings("unused") AssertionError __) {
       System.out.print("X");
