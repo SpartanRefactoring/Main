@@ -17,10 +17,11 @@ import il.org.spartan.spartanizer.utils.*;
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
     for (final ASTNode $ : ancestors.of(¢))
-      switch ($.getNodeType()) {
+      switch (nodeType($)) {
         case ASTNode.BLOCK:
         case ASTNode.SWITCH_STATEMENT:
           return $;
+        default:
       }
     return null;
   }
