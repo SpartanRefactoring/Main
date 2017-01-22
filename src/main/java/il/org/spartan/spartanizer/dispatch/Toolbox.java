@@ -213,8 +213,7 @@ public class Toolbox {
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
-            new StringFromStringBuilder() , //
-
+            new StringFromStringBuilder(), //
             // new LispFirstElement(), //
             // new LispLastElement(), //
             // new StatementsThroughStep(), //
