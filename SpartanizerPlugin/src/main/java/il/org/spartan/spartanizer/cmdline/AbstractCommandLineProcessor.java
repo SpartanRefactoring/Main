@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.util.*;
+
 import il.org.spartan.external.*;
 
 abstract class AbstractCommandLineProcessor {
@@ -17,7 +19,6 @@ abstract class AbstractCommandLineProcessor {
     if (args.length == 0)
       new BatchSpartanizer(".", "current-working-directory").fire();
     else
-      for (final String ¢ : args)
-        new BatchSpartanizer(¢).fire();
+      Arrays.asList(args).forEach(¢ -> new BatchSpartanizer(¢).fire());
   }
 }

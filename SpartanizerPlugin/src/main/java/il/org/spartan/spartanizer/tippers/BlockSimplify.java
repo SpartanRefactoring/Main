@@ -59,12 +59,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
   }
 
   @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
-    if (os1.size() != os2.size())
-      return false;
-    for (final Integer ¢ : range.from(0).to(os1.size())) // NANO?
-      if (os1.get(¢) != os2.get(¢))
-        return false;
-    return true;
+    return os1.size() != os2.size() ? false : range.to(os1.size()).stream().allMatch(¢ -> os1.get(¢) == os2.get(¢));
   }
 
   private static Block reorganizeStatement(final Statement s) {
