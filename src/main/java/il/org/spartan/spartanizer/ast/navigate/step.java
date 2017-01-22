@@ -562,6 +562,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final ImportDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   /** @param ¢ JD
    * @return */
   public static SimpleName name(final FieldAccess ¢) {
