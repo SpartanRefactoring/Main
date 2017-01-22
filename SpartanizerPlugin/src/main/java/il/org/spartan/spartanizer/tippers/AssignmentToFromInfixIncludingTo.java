@@ -23,7 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * operator. Tested in {@link Issue103}
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
+public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment>//
+    implements TipperCategory.SyntacticBaggage {
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)
@@ -39,8 +40,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
-    final List<Expression> es = hop.operands(x);
-    final List<Expression> $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+    final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 

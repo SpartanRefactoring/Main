@@ -39,7 +39,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * </code> Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
-public class CasesSplit extends CarefulTipper<SwitchStatement> implements TipperCategory.Expander {
+public class CasesSplit extends CarefulTipper<SwitchStatement>//
+    implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
@@ -63,7 +64,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement> implements Tipper
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : step.statements(x))
+    for (final Statement ¢ : step.statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;
       else if (¢ instanceof SwitchCase) {

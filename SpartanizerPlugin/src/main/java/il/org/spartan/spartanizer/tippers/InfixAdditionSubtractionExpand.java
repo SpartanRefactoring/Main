@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */
-public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Idiomatic {
+public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Arithmetic {
   @Override public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }

@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 import java.util.*;
 import java.util.function.*;
 
@@ -140,9 +141,7 @@ public class CommandLineApplicator extends Applicator {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner;
-        final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
-        final List<WrappedCompilationUnit> dead = new ArrayList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), dead = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢).intValue();
           System.out.println("tipsInvoked: " + tipsInvoked);
@@ -168,7 +167,7 @@ public class CommandLineApplicator extends Applicator {
     run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
-    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
+    visit_cu(3, inp -> wizard.nth(printableAt(inp, 0), printableAt(inp, 1)) + "\tSpartanizing " + printableAt(inp, 2)), //
     run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1)),
     // report
     report_start(1, inp -> "Start reporting " + printableAt(inp, 0)), //

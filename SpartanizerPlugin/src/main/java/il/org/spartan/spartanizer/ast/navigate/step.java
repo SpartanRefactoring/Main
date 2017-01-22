@@ -82,6 +82,10 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
+  public static Statement body(final DoStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
@@ -157,6 +161,22 @@ public enum step {
     return ¢ == null ? null : ¢.getExpression();
   }
 
+  /** @param ¢ JD
+   * @return */
+  public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration d) {
+    final List<MethodDeclaration> $ = new ArrayList<>();
+    for (final BodyDeclaration bd : step.bodyDeclarations(d)) {
+      final MethodDeclaration c = az.methodDeclaration(bd);
+      if (c != null && c.isConstructor())
+        $.add(c);
+    }
+    return $;
+  }
+
+  public static List<MethodDeclaration> constructors(final ASTNode ¢) {
+    return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
+  }
+
   @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
     return ¢ == null ? null : ¢.dimensions();
   }
@@ -186,36 +206,36 @@ public enum step {
     if (¢ == null)
       return null;
     switch (¢.getNodeType()) {
-      case ASTNode.EXPRESSION_STATEMENT:
-        return expression((ExpressionStatement) ¢);
-      case ASTNode.WHILE_STATEMENT:
-        return expression((WhileStatement) ¢);
-      case ASTNode.FOR_STATEMENT:
-        return expression((ForStatement) ¢);
-      case ASTNode.RETURN_STATEMENT:
-        return expression((ReturnStatement) ¢);
-      case ASTNode.THROW_STATEMENT:
-        return expression((ThrowStatement) ¢);
-      case ASTNode.CLASS_INSTANCE_CREATION:
-        return expression((ClassInstanceCreation) ¢);
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) ¢);
-      case ASTNode.ENHANCED_FOR_STATEMENT:
-        return az.enhancedFor(¢).getExpression();
-      case ASTNode.METHOD_INVOCATION:
-        return receiver((MethodInvocation) ¢);
-      case ASTNode.PARENTHESIZED_EXPRESSION:
-        return expression((ParenthesizedExpression) ¢);
+      case ASTNode.CLASS_INSTANCE_CREATION:
+        return expression((ClassInstanceCreation) ¢);
       case ASTNode.CONDITIONAL_EXPRESSION:
         return expression((ConditionalExpression) ¢);
       case ASTNode.DO_STATEMENT:
         return expression((DoStatement) ¢);
+      case ASTNode.ENHANCED_FOR_STATEMENT:
+        return az.enhancedFor(¢).getExpression();
+      case ASTNode.EXPRESSION_STATEMENT:
+        return expression((ExpressionStatement) ¢);
+      case ASTNode.FOR_STATEMENT:
+        return expression((ForStatement) ¢);
       case ASTNode.IF_STATEMENT:
         return expression((IfStatement) ¢);
-      case ASTNode.SWITCH_STATEMENT:
-        return expression((SwitchStatement) ¢);
+      case ASTNode.METHOD_INVOCATION:
+        return receiver((MethodInvocation) ¢);
+      case ASTNode.PARENTHESIZED_EXPRESSION:
+        return expression((ParenthesizedExpression) ¢);
+      case ASTNode.RETURN_STATEMENT:
+        return expression((ReturnStatement) ¢);
       case ASTNode.SWITCH_CASE:
         return expression((SwitchCase) ¢);
+      case ASTNode.SWITCH_STATEMENT:
+        return expression((SwitchStatement) ¢);
+      case ASTNode.THROW_STATEMENT:
+        return expression((ThrowStatement) ¢);
+      case ASTNode.WHILE_STATEMENT:
+        return expression((WhileStatement) ¢);
       default:
         return null;
     }
@@ -408,11 +428,23 @@ public enum step {
     return ¢ == null ? null : ¢.getInitializer();
   }
 
+  public static List<Initializer> initializers(final ASTNode ¢) {
+    return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
+  }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
     return ¢ == null ? null : ¢.initializers();
+  }
+
+  public static List<Initializer> initializersClass(final ASTNode ¢) {
+    return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
+  }
+
+  public static List<Initializer> initializersInstance(final ASTNode n) {
+    return Arrays.asList(initializers(n).stream().filter(c -> !iz.static¢(c)).toArray(Initializer[]::new));
   }
 
   /** @param ¢ JD
@@ -496,6 +528,15 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
+  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
+    return ¢ == null ? null
+        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
+            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
+                .filter(d -> iz.methodDeclaration(az.astNode(d))).collect(Collectors.toList()) : null;
+  }
+
+  /** @param ¢ JD
+   * @return */
   public static List<MethodDeclaration> methods(final AnonymousClassDeclaration d) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     for (final BodyDeclaration x : step.bodyDeclarations(d)) {
@@ -504,15 +545,6 @@ public enum step {
         $.add(y);
     }
     return $;
-  }
-
-  /** @param ¢ JD
-   * @return */
-  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
-    return ¢ == null ? null
-        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
-            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(d -> iz.methodDeclaration(az.astNode(d))).collect(Collectors.toList()) : null;
   }
 
   /** get all methods
@@ -734,9 +766,9 @@ public enum step {
     String $ = (d + "").substring((d + "").indexOf(typeType));
     $ = $.substring($.indexOf(typeType) + typeType.length(), $.indexOf("{"));
     while ($.contains("extends") && !balanced($.substring(0, $.indexOf("extends"))))
-      for (int idx = $.indexOf("extends"), openers = 0, ¢ = idx + 7;; ++¢) {
+      for (int i = $.indexOf("extends"), openers = 0, ¢ = i + 7;; ++¢) {
         if ($.charAt(¢) == ',' && openers <= 0) {
-          $ = $.substring(0, idx) + $.substring(¢);
+          $ = $.substring(0, i) + $.substring(¢);
           break;
         }
         if ($.charAt(¢) == '<')
@@ -744,11 +776,11 @@ public enum step {
         else if ($.charAt(¢) == '>') {
           --openers;
           if (openers == 0) {
-            $ = $.substring(0, idx) + $.substring(¢ + 1);
+            $ = $.substring(0, i) + $.substring(¢ + 1);
             break;
           }
           if (openers < 0) {
-            $ = $.substring(0, idx) + $.substring(¢);
+            $ = $.substring(0, i) + $.substring(¢);
             break;
           }
         }

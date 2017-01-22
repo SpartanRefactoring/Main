@@ -38,7 +38,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: take care of single var decleration, tests
-public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> implements TipperCategory.Expander {
+public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
+    implements TipperCategory.Bloater {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
@@ -47,10 +48,8 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SingleVariableDeclaration> parameters = parameters(d);
-    final List<SimpleName> prev = new ArrayList<>();
-    final List<SimpleName> after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters) {
+    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
@@ -68,6 +67,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
+          System.out.println(after.get(counter) + "");
           Tippers.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }

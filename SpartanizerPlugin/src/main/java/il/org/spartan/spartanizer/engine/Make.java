@@ -27,14 +27,14 @@ public enum Make {
    * @return corresponding {@link Make} value to the argument */
   public static Make from(final makeAST ¢) {
     switch (¢) {
-      case STATEMENTS:
-        return Make.STATEMENTS;
-      case EXPRESSION:
-        return Make.EXPRESSION;
-      case COMPILATION_UNIT:
-        return Make.COMPILATION_UNIT;
       case CLASS_BODY_DECLARATIONS:
         return Make.CLASS_BODY_DECLARATIONS;
+      case COMPILATION_UNIT:
+        return Make.COMPILATION_UNIT;
+      case EXPRESSION:
+        return Make.EXPRESSION;
+      case STATEMENTS:
+        return Make.STATEMENTS;
       default:
         return null;
     }

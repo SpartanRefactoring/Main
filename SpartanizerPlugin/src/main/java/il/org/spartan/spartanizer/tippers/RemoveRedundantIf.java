@@ -11,11 +11,11 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Simplify if statements as much as possible (or remove them or parts of them)
- * if and only if </br>
- * it doesn'tipper have any side-effect.
+ * if and only if it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Collapse {
+public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.EmptyCycles {
   private static boolean checkBlock(final ASTNode n) {
     if (n != null
         && (iz.expression(n) && !sideEffects.free(az.expression(n))
@@ -46,9 +46,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;
-    final boolean $ = sideEffects.free(s.getExpression());
-    final boolean then = checkBlock(s.getThenStatement());
-    final boolean elze = checkBlock(s.getElseStatement());
+    final boolean $ = sideEffects.free(s.getExpression()), then = checkBlock(s.getThenStatement()), elze = checkBlock(s.getElseStatement());
     return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
         : $ && then && !elze && s.getElseStatement() != null ? subject.pair(copy.of(s.getElseStatement()), null).toNot(copy.of(s.getExpression()))
             : null;

@@ -18,7 +18,7 @@ import il.org.spartan.tables.*;
 
 public class FalloutsCollector_loops extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final File out = new File(Table.temporariesFolder + "/" + "loops" + ".txt");
+  private static final File out = new File(Table.temporariesFolder + system.fileSeparator + "loops" + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -30,7 +30,7 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      searchDescendants.forClass(ForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(l -> !iz.block(body(l)))
+      yieldDescendants.untilClass(ForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(l -> !iz.block(body(l)))
           .forEach(l -> appendFile(out, l + ""));
     } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");

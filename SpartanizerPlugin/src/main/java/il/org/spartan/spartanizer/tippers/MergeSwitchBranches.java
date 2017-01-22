@@ -28,12 +28,16 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested in {@link Issue0858}
  * @author Yuval Simon
  * @since 2016-11-26 */
-public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Collapse {
+public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
+    implements TipperCategory.Unite {
+
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
+    if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
+      return null;
     for (int i = 0; i < $.size(); ++i)
       for (int j = i + 1; j < $.size(); ++j)
-        if ($.get(i).hasSameCode($.get(j))) {
+        if ($.get(i).hasSameBody($.get(j))) {
           $.get(i).cases().addAll($.get(j).cases());
           $.remove(j);
           return switchBranch.makeSwitchStatement($, step.expression(s), s.getAST());

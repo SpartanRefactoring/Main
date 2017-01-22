@@ -26,7 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Ternarization {
+public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.Ternarization {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }
@@ -35,10 +36,9 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     return ¢ != null && extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
 
+  /** * [[SuppressWarningsSpartan]] */
   @Override public Statement replacement(final IfStatement s) {
-    final Expression $ = s.getExpression();
-    final Expression then = extract.throwExpression(then(s));
-    final Expression elze = extract.throwExpression(elze(s));
-    return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition($));
+    final Expression then = extract.throwExpression(then(s)), elze = extract.throwExpression(elze(s));
+    return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition(s.getExpression()));
   }
 }

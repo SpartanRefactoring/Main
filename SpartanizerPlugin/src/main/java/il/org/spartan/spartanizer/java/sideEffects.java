@@ -42,6 +42,10 @@ public enum sideEffects {
       SUPER_FIELD_ACCESS, //
       THIS_EXPRESSION, //
       TYPE_LITERAL, //
+      EXPRESSION_METHOD_REFERENCE, //
+      CREATION_REFERENCE, //
+      SUPER_METHOD_REFERENCE, //
+      TYPE_METHOD_REFERENCE, //
   };
   private static final int[] alwaysHave = { //
       SUPER_CONSTRUCTOR_INVOCATION, //
@@ -94,29 +98,28 @@ public enum sideEffects {
     if (iz.nodeTypeIn(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
+      case CONDITIONAL_EXPRESSION:
+        return free(az.conditionalExpression(¢));
+      case PREFIX_EXPRESSION:
+        return free(az.prefixExpression(¢));
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return free(az.variableDeclarationExpression(¢));
       case ARRAY_CREATION:
         return free((ArrayCreation) ¢);
+      case ARRAY_INITIALIZER:
+        return free(step.expressions(az.arrayInitializer(¢)));
       case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
         return sideEffects.free(step.expression(¢));
-      case INSTANCEOF_EXPRESSION:
-        return sideEffects.free(left(az.instanceofExpression(¢)));
-      case PREFIX_EXPRESSION:
-        return free(az.prefixExpression(¢));
-      case PARENTHESIZED_EXPRESSION:
-        return sideEffects.free(core(¢));
       case INFIX_EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
-      case CONDITIONAL_EXPRESSION:
-        return free(az.conditionalExpression(¢));
-      case ARRAY_INITIALIZER:
-        return free(step.expressions(az.arrayInitializer(¢)));
-      case VARIABLE_DECLARATION_EXPRESSION:
-        return free(az.variableDeclarationExpression(¢));
+      case PARENTHESIZED_EXPRESSION:
+        return sideEffects.free(core(¢));
+      case INSTANCEOF_EXPRESSION:
+        return sideEffects.free(left(az.instanceofExpression(¢)));
       default:
-        monitor.logProbableBug(//
-            sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
+        monitor.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
   }

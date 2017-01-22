@@ -12,9 +12,9 @@ public interface fault {
   }
 
   static String done(final Throwable ¢) {
-    return "\n   Stack trace: [[[................." + //
+    return "\n   Stack trace: [[[.................\n\n" + //
         trace(¢) + //
-        "\n   Stack trace: .................]]]" + //
+        "\n   END stack trace: .................]]]" + //
         "\n-----this is all I know.";
   }
 
@@ -45,7 +45,7 @@ public interface fault {
   }
 
   static String specifically(final String explanation, final Object... os) {
-    String $ = dump(explanation);
+    String $ = dump("\n " + explanation);
     for (final Object ¢ : os)
       $ += dump(¢.getClass().getSimpleName(), ¢);
     return $ + done();

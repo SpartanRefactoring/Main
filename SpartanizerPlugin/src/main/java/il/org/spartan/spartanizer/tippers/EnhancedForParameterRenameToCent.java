@@ -21,13 +21,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @author Doron Meshulam
  * @since 2016-09 */
-public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement> implements TipperCategory.Centification {
+public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
+    implements TipperCategory.Centification {
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
   @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    final MethodDeclaration p = searchAncestors.forClass(MethodDeclaration.class).from(s);
+    final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));

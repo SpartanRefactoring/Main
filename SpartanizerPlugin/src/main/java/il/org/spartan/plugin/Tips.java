@@ -19,7 +19,7 @@ public final class Tips {
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      for (final AbstractGUIApplicator ¢ : all)
+      for (final AbstractGUIApplicator ¢ : all) // NANO?
         put(¢.getName(), ¢);
     }
   };
@@ -43,7 +43,7 @@ public final class Tips {
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
-    for (final AbstractGUIApplicator $ : all)
+    for (final AbstractGUIApplicator $ : all) // NANO?
       if ($.getClass().equals(¢))
         return (T) $;
     return null;
@@ -61,7 +61,7 @@ public final class Tips {
    * eclipse. */
   public static void reset() {
     map.clear();
-    for (final AbstractGUIApplicator ¢ : all)
+    for (final AbstractGUIApplicator ¢ : all) // NANO?
       map.put(¢.getName(), ¢);
   }
 

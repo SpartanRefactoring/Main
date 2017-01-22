@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
-public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Expander {
+public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
@@ -68,22 +69,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
 
   private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = new ArrayList<>();
-    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement())
+    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(step.expression(az.ifStatement(p)));
     return $;
   }
 
   private static List<Block> getAllBlocks(final IfStatement s) {
     final List<Block> $ = new ArrayList<>();
-    Statement p;
-    for (p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) {
-      Block b = az.block(copy.of(az.ifStatement(p).getThenStatement()));
-      if (b == null) {
-        b = s.getAST().newBlock();
-        step.statements(b).add(az.statement(copy.of(az.ifStatement(p).getThenStatement())));
-      }
-      $.add(b);
-    }
+    final Statement p = addAllBlocks(s, $);
     if (p == null)
       return $;
     if (az.block(p) != null) {
@@ -96,7 +89,20 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement> implements T
     return $;
   }
 
-  // private static List<Const>
+  private static Statement addAllBlocks(final IfStatement s, final List<Block> collectInto) {
+    Statement $ = s;
+    for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
+      final Statement then = copy.of(then(az.ifStatement($)));
+      Block b = az.block(then);
+      if (b == null) {
+        b = s.getAST().newBlock();
+        step.statements(b).add(az.statement(then));
+      }
+      collectInto.add(b);
+    }
+    return $;
+  }
+
   @Override public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }

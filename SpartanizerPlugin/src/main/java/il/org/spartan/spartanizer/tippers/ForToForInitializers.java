@@ -17,19 +17,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>
- * int a = 3;
- * for(;Panic;) {
- *    ++OS.is.in.denger;
- * }
- * </code> to <code>
- * for(int a = 3; Panic;) {
- *    ++OS.is.in.denger;
- * }
- * </code>
+/** convert <code>int a=3;for(;p;){++i}</code> to 
+ * <code>for(int a=3;p;) {++i;}</code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+    implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
@@ -64,7 +57,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(vds))
+    for (final VariableDeclarationFragment ¢ : step.fragments(vds)) // NANO
       if (!iz.variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
         return false;
     return true;
@@ -81,11 +74,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(step.left(a));
-      for (final VariableDeclarationFragment ¢ : fragments(s))
-        if ((¢.getName() + "").equals(var + "")) {
-          ¢.setInitializer(copy.of(step.right(a)));
-          $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
-        }
+      fragments(s).stream().filter(¢ -> (¢.getName() + "").equals(var + "")).forEach(¢ -> {
+        ¢.setInitializer(copy.of(step.right(a)));
+        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
+      });
     });
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }

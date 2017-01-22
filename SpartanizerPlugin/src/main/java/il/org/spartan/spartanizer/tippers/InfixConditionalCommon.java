@@ -34,7 +34,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.CommnoFactoring {
+public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.CommnonFactoring {
   private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     $.remove(0);

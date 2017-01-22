@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -24,16 +25,17 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
+    //
     implements TipperCategory.Inlining {
   private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
+    for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n))
       if (iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
     return false;
   }
 
   static boolean never(final SimpleName n, final Statement s) {
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
+    for (final ASTNode ancestor : yieldAncestors.until(s).ancestors(n)) // NANO?
       if (iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
     return false;
@@ -54,6 +56,12 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
       return null;
+    boolean found = false;
+    for (final VariableDeclarationFragment ff : fragments(currentStatement))
+      if (!found)
+        found = ff == f;
+      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+        return null;
     final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
@@ -80,20 +88,17 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 
-  /**  */
   static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    final ExpressionStatement es = (ExpressionStatement) nextStatement;
-    if (iz.methodInvocation(es.getExpression())) {
-      final MethodInvocation m = (MethodInvocation) es.getExpression();
-      final Expression $ = !iz.parenthesizedExpression(expression(m)) ? expression(m) : ((ParenthesizedExpression) expression(m)).getExpression();
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
-    if (!iz.fieldAccess(es.getExpression()))
+    if (!iz.fieldAccess(x.getExpression()))
       return false;
-    final FieldAccess fa = (FieldAccess) es.getExpression();
-    final Expression e = !iz.parenthesizedExpression(fa.getExpression()) ? fa : ((ParenthesizedExpression) fa.getExpression()).getExpression();
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 

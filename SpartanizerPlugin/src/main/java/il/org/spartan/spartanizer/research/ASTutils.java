@@ -42,19 +42,18 @@ public class ASTutils {
   public static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
         return ¢;
       case EXPRESSION_LOOK_ALIKE:
         return "class X{int f(){return " + ¢ + ";}}";
       case METHOD_LOOK_ALIKE:
         return "class X{" + ¢ + "}";
-      case OUTER_TYPE_LOOKALIKE:
-        return ¢;
       case STATEMENTS_LOOK_ALIKE:
         return "class X{int f(){" + ¢ + "}}";
       default:
-        assert false : ¢ + " is not like anything I know...";
+        assert false : ¢ + " does not like anything I know...";
+        return null;
     }
-    return null;
   }
 
   private static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {

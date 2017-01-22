@@ -5,8 +5,8 @@ import org.eclipse.core.commands.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 
-/** Handler for the Athenizer project's feature (global athenizer). Uses
- * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an
+/** Handler for the Bloater project's feature (global Bloater). Uses
+ * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
@@ -16,8 +16,8 @@ class CollateralHandler extends AbstractHandler {
     return null;
   }
 
-  private static AthensApplicator applicator() {
-    final AthensApplicator $ = AthensApplicator.defaultApplicator();
+  private static BloatApplicator applicator() {
+    final BloatApplicator $ = BloatApplicator.defaultApplicator();
     $.setRunAction(¢ -> new Augmenter().commitChanges(¢, $.selection()));
     $.defaultRunContext();
     return $;

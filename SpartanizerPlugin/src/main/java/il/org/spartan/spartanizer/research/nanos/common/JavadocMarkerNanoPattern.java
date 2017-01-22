@@ -41,6 +41,6 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
-    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
+    return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }

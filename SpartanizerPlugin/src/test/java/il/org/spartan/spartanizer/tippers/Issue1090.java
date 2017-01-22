@@ -6,7 +6,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.meta.*;
 
-/** Unit tests with some type information.
+/** Unit tests for {@link
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 @Ignore
@@ -20,7 +20,7 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-    MetaTestCase case1 = new MetaTestCase() {
+    AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField = 0;
@@ -31,7 +31,7 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
-    MetaTestCase case2 = new MetaTestCase() {
+    AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField++;

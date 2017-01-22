@@ -18,7 +18,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel
  * @author Yuval Simon
  * @since 03-12-16 */
-public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement> implements TipperCategory.Expander {
+public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
+    implements TipperCategory.Bloater {
   @Override public Tip tip(final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -26,8 +27,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement> implem
         final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
         final Expression cond = expression(e);
         final AST a = x.getAST();
-        final ReturnStatement whenTrue = a.newReturnStatement();
-        final ReturnStatement whenFalse = a.newReturnStatement();
+        final ReturnStatement whenTrue = a.newReturnStatement(), whenFalse = a.newReturnStatement();
         whenTrue.setExpression(copy.of(then(e)));
         whenFalse.setExpression(copy.of(elze(e)));
         final IfStatement f = a.newIfStatement();

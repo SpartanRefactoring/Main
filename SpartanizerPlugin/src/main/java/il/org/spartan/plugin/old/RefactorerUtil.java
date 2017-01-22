@@ -48,31 +48,15 @@ public class RefactorerUtil {
     return ((Collection<ICompilationUnit>) ¢.get(attribute.CHANGES)).size();
   }
 
-  public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
-    final String $ = us.size() + "";
-    String i = us.indexOf(u) + 1 + "";
-    while (i.length() < $.length())
-      i = " " + i;
-    return i + "/" + $;
-  }
-
-  public static String plurals(final String s, final int i) {
-    return i == 1 ? s : s + "s";
-  }
-
-  public static String plurales(final String s, final int i) {
-    return i == 1 ? s : s + "es";
-  }
-
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, final List<ICompilationUnit> us,
-      final Map<attribute, Object> a, final attribute t) {
+      final Map<attribute, Object> m, final attribute a) {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();
     return pm -> {
       pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
       $.setICompilationUnit(first(us));
-      a.put(t, Integer.valueOf($.countTips()));
+      m.put(a, Integer.valueOf($.countTips()));
       pm.done();
     };
   }

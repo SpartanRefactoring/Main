@@ -43,7 +43,6 @@ public class ReportGenerator implements ConfigurableReport {
           m("tide" + id, (¢) -> clean(¢ + "").length()));//
     }
 
-    /** @return */
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
       final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
@@ -71,7 +70,7 @@ public class ReportGenerator implements ConfigurableReport {
 
     @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
       for (final NamedFunction $ : ReportGenerator.Util.functions(""))
-        if ($.name() == ¢)
+        if (Objects.equals($.name(), ¢))
           return $;
       return null;
     }
@@ -148,12 +147,9 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
-    final int len = ReportGenerator.Util.find("length").function().run(n1);
-    final int ess = ReportGenerator.Util.find("essence").function().run(n1);
-    final int tide = ReportGenerator.Util.find("tide").function().run(n1);
-    final int body = ReportGenerator.Util.find("body").function().run(n1);
-    final int nodes = ReportGenerator.Util.find("nodes").function().run(n1);
-    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(len, ess));
+    final int ess = ReportGenerator.Util.find("essence").function().run(n1), tide = ReportGenerator.Util.find("tide").function().run(n1),
+        body = ReportGenerator.Util.find("body").function().run(n1), nodes = ReportGenerator.Util.find("nodes").function().run(n1);
+    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(ReportGenerator.Util.find("length").function().run(n1), ess));
     ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
     ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
   }

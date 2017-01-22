@@ -13,6 +13,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -102,7 +103,7 @@ public final class SpartanizeProject extends BaseHandler {
             break;
           }
           pm.worked(1);
-          pm.subTask("Compilation unit #" + ++n + "/" + todo.size() + " (" + ¢.getElementName() + ")");
+          pm.subTask("Compilation unit " + wizard.nth(++n, todo) + " (" + ¢.getElementName() + ")");
           if (!t.apply(¢))
             done.add(¢);
         }
@@ -121,9 +122,9 @@ public final class SpartanizeProject extends BaseHandler {
 
   public void start() {
     currentCompilationUnit = eclipse.currentCompilationUnit();
-    status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
+    status.append("Starting at compilation unit: ").append(currentCompilationUnit.getElementName()).append("\n");
     javaProject = currentCompilationUnit.getJavaProject();
-    status.append("Java project is: " + javaProject.getElementName() + "\n");
+    status.append("Java project is: ").append(javaProject.getElementName()).append("\n");
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found ").append(todo.size()).append(" compilation units, ");

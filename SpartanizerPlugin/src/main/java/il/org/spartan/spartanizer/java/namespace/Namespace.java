@@ -304,7 +304,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final String key, final Type t) {
-    put(key, new Binding(key, type.baptize(wizard.condense(t))));
+    put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
 
@@ -364,5 +364,9 @@ public final class Namespace implements Environment {
     while (has($))
       $ = face + "" + ++postface;
     return $;
+  }
+
+  public Namespace addNewName(final String s, final Type t) {
+    return put(s, t);
   }
 }

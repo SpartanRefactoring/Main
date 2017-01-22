@@ -30,7 +30,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * Tested in {@link Issue1007}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-11 */
-public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Expander {
+public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
@@ -40,12 +41,12 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression> im
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
     for (final Expression e : lst) {
-      if (iz.numberLiteral(e) && ("1.".equals(az.numberLiteral(e).getToken()) || "1.0".equals(az.numberLiteral(e).getToken()))) {
-        $.setType(copy.of(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE)));
+      if (iz.literal(e, 1.)) {
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));
         found = true;
       }
-      if (iz.numberLiteral(e) && "1L".equals(az.numberLiteral(e).getToken())) {
-        $.setType(copy.of(x.getAST().newPrimitiveType(PrimitiveType.LONG)));
+      if (iz.literal(e, 1L)) {
+        $.setType(x.getAST().newPrimitiveType(PrimitiveType.LONG));
         found = true;
       }
       if (found) {

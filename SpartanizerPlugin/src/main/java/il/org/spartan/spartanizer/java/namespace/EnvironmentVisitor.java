@@ -51,7 +51,7 @@ final class EnvironmentVisitor extends ASTVisitor {
 
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(wizard.condense(d.getType()));
+    final type t = type.baptize(trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
@@ -62,24 +62,24 @@ final class EnvironmentVisitor extends ASTVisitor {
 
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(wizard.condense(x.getType()));
+    final type t = type.baptize(trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(wizard.condense(s.getType()));
+    final type t = type.baptize(trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
     return $;
   }
 
   Binding createInformation(final AnnotationTypeMemberDeclaration ¢) {
-    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(trivia.condense(¢.getType())));
   }
 
   Binding createInformation(final SingleVariableDeclaration ¢) {
-    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+    return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(trivia.condense(¢.getType())));
   }
 
   Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
