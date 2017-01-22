@@ -50,4 +50,12 @@ public class AggregateTest {
         .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
+
+  @Test public void f() {
+    trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();"//
+    )//
+        .using(EnhancedForStatement.class, new Aggregate())//
+        .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .stays();
+  }
 }

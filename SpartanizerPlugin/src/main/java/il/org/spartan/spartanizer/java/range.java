@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
 import java.util.*;
+import java.util.stream.*;
 
 /** A fluent API implementation for range
  * @author Dor Ma'ayan
@@ -67,6 +68,10 @@ public class range {
   boolean infinite;
 
   public class AfterTo extends RangeIterator<AfterTo> {
+    public Stream<Integer> stream() {
+      return StreamSupport.stream(this.spliterator(), false);
+    }
+
     public AfterTo from(final int ¢) {
       to = ¢;
       return this;

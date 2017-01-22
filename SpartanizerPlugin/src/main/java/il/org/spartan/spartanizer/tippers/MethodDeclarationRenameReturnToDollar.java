@@ -100,17 +100,11 @@ class Aggressive extends AbstractRenamePolicy {
   }
 
   private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
-    for (final SimpleName rival : ns)
-      if (rival != candidate && score(rival, ss) >= score(candidate, ss))
-        return false;
-    return true;
+    return ns.stream().allMatch(rival -> rival == candidate || score(rival, ss) < score(candidate, ss));
   }
 
-  private static int score(final SimpleName n, final List<ReturnStatement> ss) {
-    int $ = 0;
-    for (final ReturnStatement ¢ : ss)
-      $ += Collect.BOTH_LEXICAL.of(n).in(¢).size();
-    return $;
+  @SuppressWarnings("boxing") private static int score(final SimpleName n, final List<ReturnStatement> ss) {
+    return ss.stream().map(¢ -> Collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
   }
 
   public Aggressive(final MethodDeclaration inner) {
@@ -131,18 +125,11 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
       if (unused($.next()))
         $.remove();
-    if (!localVariables.isEmpty())
-      return first(localVariables);
-    for (final SingleVariableDeclaration ¢ : parameters)
-      if (!unused(¢.getName()))
-        return ¢.getName();
-    return null;
+    return !localVariables.isEmpty() ? first(localVariables)
+        : parameters.stream().filter(¢ -> !unused(¢.getName())).map(¢ -> ¢.getName()).findFirst().orElse(null);
   }
 
   private boolean unused(final SimpleName n) {
-    for (final ReturnStatement ¢ : returnStatements)
-      if (analyze.dependencies(¢).contains(n + ""))
-        return false;
-    return true;
+    return returnStatements.stream().allMatch(¢ -> !(analyze.dependencies(¢).contains(n + "")));
   }
 }

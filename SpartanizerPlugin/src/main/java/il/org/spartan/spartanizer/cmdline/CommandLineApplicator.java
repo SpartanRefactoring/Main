@@ -26,8 +26,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
-      for (final Object ¢ : os)
-        System.out.print(¢ + " ");
+      Arrays.asList(os).forEach(¢ -> System.out.print(¢ + " "));
       System.out.println();
     });
     return this;
