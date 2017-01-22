@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Kfir Marx
  * @since 2016-11-26 */
 public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForStatement>//
-    implements TipperCategory.Shunt {
+    implements TipperCategory.Shortcircuit {
   @Override public String description(final EnhancedForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
