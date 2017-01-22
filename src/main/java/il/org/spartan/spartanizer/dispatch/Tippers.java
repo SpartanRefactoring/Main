@@ -182,4 +182,12 @@ public enum Tippers {
   private static int sequencerRank(final ASTNode ¢) {
     return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
+
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+  }
+
+  public static <T> void removeLast(final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
+  }
 }

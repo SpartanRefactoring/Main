@@ -23,7 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Pushdown a ternary as far down as possible
  * @author Yossi Gil
  * @year 2015 */
-public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.CommnonFactoring {
+public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.CommnonFactoring {
   static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;

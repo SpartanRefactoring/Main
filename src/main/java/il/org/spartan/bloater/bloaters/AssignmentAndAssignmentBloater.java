@@ -16,7 +16,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
-public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement> implements TipperCategory.Bloater {
+public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
+    implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }

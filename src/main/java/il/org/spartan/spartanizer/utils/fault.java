@@ -12,9 +12,9 @@ public interface fault {
   }
 
   static String done(final Throwable ¢) {
-    return "\n   Stack trace: [[[................." + //
+    return "\n   Stack trace: [[[.................\n\n" + //
         trace(¢) + //
-        "\n   Stack trace: .................]]]" + //
+        "\n   END stack trace: .................]]]" + //
         "\n-----this is all I know.";
   }
 

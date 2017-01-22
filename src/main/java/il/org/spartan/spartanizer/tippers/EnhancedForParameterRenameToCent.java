@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @author Doron Meshulam
  * @since 2016-09 */
-public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement> implements TipperCategory.Centification {
+public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
+    implements TipperCategory.Centification {
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }

@@ -132,6 +132,13 @@ https://goo.gl/OI2pBd -->
   <super type="il.org.spartan.tip"/>
 </extension>
 <extension 
+  id="il.org.spartan.tip.Deadcode"
+  name="Deadcode"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
   id="il.org.spartan.tip.Dollarization"
   name="Dollarization"
   point="org.eclipse.core.resources.markers" 
@@ -237,6 +244,12 @@ Java class which generates several quick fix for tips. -->
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Centification"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.Deadcode"
    class="il.org.spartan.plugin.QuickFixer"
   />
 </extension>

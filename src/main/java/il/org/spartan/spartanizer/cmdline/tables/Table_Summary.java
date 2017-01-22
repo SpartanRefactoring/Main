@@ -27,9 +27,10 @@ public class Table_Summary extends TableReusabilityIndices {
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table writer; // coverage
+  private static Table writer;
   private static int totalStatements;
   protected static int totalMethods;
+  protected static int totalMethodsAfterSpartanization;
   private static int totalStatementsCovered;
   private static int totalMethodsTouched;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
@@ -169,7 +170,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
-    totalStatementsCovered = totalMethods = totalStatements = 0;
+    totalStatementsCovered = totalMethods = totalStatements = totalMethodsAfterSpartanization = 0;
     for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
       final List<MethodRecord> rs = statementsCoverageStatistics.get(¢);
       totalStatements += ¢ * rs.size();
