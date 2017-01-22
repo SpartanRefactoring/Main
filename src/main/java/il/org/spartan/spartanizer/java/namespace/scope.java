@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
+    if(iz.block(¢) || iz.switchStatement(¢))
+      return ¢;
     for (final ASTNode $ : ancestors.of(¢))
       switch (nodeType($)) {
         case ASTNode.BLOCK:
