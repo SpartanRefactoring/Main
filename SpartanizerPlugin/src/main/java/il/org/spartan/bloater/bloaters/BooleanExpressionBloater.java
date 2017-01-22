@@ -28,7 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-13 */
-public class BooleanExpressionBloater extends CarefulTipper<InfixExpression> implements TipperCategory.Bloater {
+public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
+    implements TipperCategory.Bloater {
   @Override protected boolean prerequisite(final InfixExpression ¢) {
     return ¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
         || ¢.getOperator() == Operator.CONDITIONAL_OR;

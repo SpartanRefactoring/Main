@@ -17,10 +17,11 @@ import il.org.spartan.spartanizer.utils.*;
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
     for (final ASTNode $ : ancestors.of(¢))
-      switch ($.getNodeType()) {
+      switch (nodeType($)) {
         case ASTNode.BLOCK:
         case ASTNode.SWITCH_STATEMENT:
           return $;
+        default:
       }
     return null;
   }
@@ -51,16 +52,15 @@ public interface scope {
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
-   * [[SuppressWarningsSpartan]]
-   */
+   * [[SuppressWarningsSpartan]] */
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    ASTNode $ = delimiter(¢);
+    final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
   static String newName(final ASTNode ¢, final Type t) {
-    ASTNode b = delimiter(¢);
-    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(b) : (Namespace) ¢.getProperty("Namespace");
+    final ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     final String $ = n.generateName(t);
     n.addNewName($, t);
     b.setProperty("Namespace", n);

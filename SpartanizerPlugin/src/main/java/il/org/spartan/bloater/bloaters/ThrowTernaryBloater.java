@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Same as ReturnTernaryExpander just for "throw" {@link Issue #998}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-26 */
-public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement> implements TipperCategory.Bloater {
+public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
+    implements TipperCategory.Bloater {
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))

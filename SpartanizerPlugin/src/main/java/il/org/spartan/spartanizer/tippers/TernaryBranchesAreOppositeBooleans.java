@@ -33,7 +33,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dan Abramovich
  * @since 27-11-2016 */
-public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Unite {
+public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.Unite {
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
     return wizard.same($, truee) && wizard.same(then, falsee) ? make.notOf(copy.of(¢.getExpression()))

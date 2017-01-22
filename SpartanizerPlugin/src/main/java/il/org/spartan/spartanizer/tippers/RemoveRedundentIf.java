@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Unite {
+public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.EmptyCycles {
   @Override public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }

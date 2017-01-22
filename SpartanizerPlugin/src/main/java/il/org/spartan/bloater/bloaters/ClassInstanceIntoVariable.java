@@ -17,7 +17,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2016-12-24 */
-public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement> implements TipperCategory.Bloater {
+public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement>//
+    implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }

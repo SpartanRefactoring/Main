@@ -69,14 +69,14 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, windowInformation);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
   }
 
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, windowInformation);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {

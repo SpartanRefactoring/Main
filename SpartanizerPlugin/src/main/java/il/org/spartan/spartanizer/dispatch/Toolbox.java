@@ -90,7 +90,10 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<ReturnStatement>()) //
+        .add(ThrowStatement.class, new SequencerNotLastInBlock<ThrowStatement>()) //
+        .add(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .add(ContinueStatement.class, new SequencerNotLastInBlock<ContinueStatement>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
@@ -107,7 +110,6 @@ public class Toolbox {
             new ModifierFinalTryResourceRedundant(), //
             null)//
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
@@ -211,6 +213,8 @@ public class Toolbox {
             new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
+            new StringFromStringBuilder() , //
+
             // new LispFirstElement(), //
             // new LispLastElement(), //
             // new StatementsThroughStep(), //
@@ -387,7 +391,12 @@ public class Toolbox {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
-      assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+      assert ¢.tipperGroup() != null : fault.specifically(//
+          String.format("Did you forget to use create an enum instance in %s \n" + "for the %s of tipper %s \n (description= %s)?", //
+              TipperGroup.class.getSimpleName(), //
+              TipperCategory.class.getSimpleName(), //
+              ¢.getClass().getSimpleName(), //
+              ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);
     }

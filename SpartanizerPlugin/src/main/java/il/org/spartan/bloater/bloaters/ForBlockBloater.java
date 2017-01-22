@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@link Issue975}
  * @author Raviv Rachmiel
  * @since 22-12-16 */
-public class ForBlockBloater extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Bloater {
+public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
+    implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;

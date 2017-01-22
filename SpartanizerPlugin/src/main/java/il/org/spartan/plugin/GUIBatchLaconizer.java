@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 import java.util.*;
 import java.util.function.*;
 
@@ -167,7 +168,7 @@ public class GUIBatchLaconizer extends Applicator {
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
     visit_cu(6,
-        inp -> printableAt(inp, 1) + "/" + printableAt(inp, 2) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
+        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
     run_finish(3, inp -> "Done " + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));

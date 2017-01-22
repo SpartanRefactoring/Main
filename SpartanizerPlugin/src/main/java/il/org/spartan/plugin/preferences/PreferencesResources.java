@@ -39,18 +39,23 @@ public class PreferencesResources {
     Canonicalization(TipperCategory.Unite.class), //
     CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
+    Deadcode(TipperCategory.Deadcode.class), //
     Dollarization(TipperCategory.Dollarization.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
-    InVain(TipperCategory.NOP.class), //
+    NOOP(TipperCategory.NOP.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //
     Sorting(TipperCategory.Sorting.class), //
     SyntacticBaggage(TipperCategory.SyntacticBaggage.class), //
     Ternarization(TipperCategory.Ternarization.class), //
     Bloater(TipperCategory.Bloater.class), //
-    Shortcut(TipperCategory.Shunt.class), //
+    Shortcut(TipperCategory.Shortcircuit.class), //
+    Thrashing(TipperCategory.EmptyCycles.class), //
+    NOOPOnBooleans(TipperCategory.NOP.onBooleans.class), //
+    NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
+    NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
@@ -74,7 +79,7 @@ public class PreferencesResources {
     TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = clazz.getSimpleName(); 
+      label = clazz.getSimpleName();
     }
 
     public boolean isEnabled() {

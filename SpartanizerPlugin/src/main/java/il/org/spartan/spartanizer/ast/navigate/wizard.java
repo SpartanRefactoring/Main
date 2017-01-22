@@ -145,29 +145,7 @@ public interface wizard {
       BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
-
-  static InfixExpression.Operator convertToInfix(final Operator ¢) {
-    return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
-        : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
-            : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
-                : ¢ == Operator.DIVIDE_ASSIGN ? InfixExpression.Operator.DIVIDE
-                    : ¢ == Operator.LEFT_SHIFT_ASSIGN ? InfixExpression.Operator.LEFT_SHIFT
-                        : ¢ == Operator.MINUS_ASSIGN ? InfixExpression.Operator.MINUS
-                            : ¢ == Operator.PLUS_ASSIGN ? InfixExpression.Operator.PLUS
-                                : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
-                                    : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
-                                        : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
-  }
-
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
-    boolean add = false;
-    for (final ASTNode x : ns)
-      if (add)
-        $.add(x);
-      else
-        add = x == n;
-    return $;
-  }
+  Bool resolveBinding = Bool.valueOf(false);
 
   static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
@@ -210,6 +188,16 @@ public interface wizard {
    * @param g edit group, usually null */
   static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
+  }
+
+  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
+    boolean add = false;
+    for (final ASTNode x : ns)
+      if (add)
+        $.add(x);
+      else
+        add = x == n;
+    return $;
   }
 
   /** @param d JD
@@ -257,6 +245,21 @@ public interface wizard {
     }
   }
 
+  /** the function checks if all the given assignments have the same left hand
+   * side(variable) and operator
+   * @param base The assignment to compare all others to
+   * @param as The assignments to compare
+   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
+   *         left hand side and operator as the first one or false otherwise */
+  static boolean compatible(final Assignment base, final Assignment... as) {
+    if (hasNull(base, as))
+      return false;
+    for (final Assignment ¢ : as)
+      if (incompatible(base, ¢))
+        return false;
+    return true;
+  }
+
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
     return infix2assign.get(o2) == o1;
   }
@@ -282,6 +285,14 @@ public interface wizard {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
+  static <T> String completionIndex(final List<T> ts, final T t) {
+    final String $ = ts.size() + "";
+    String i = ts.indexOf(t) + 1 + "";
+    while (i.length() < $.length())
+      i = " " + i;
+    return i + "/" + $;
+  }
+
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
    * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
@@ -304,6 +315,19 @@ public interface wizard {
       if (¢ != null && iz.incrementOrDecrement(¢))
         return true;
     return false;
+  }
+
+  static InfixExpression.Operator convertToInfix(final Operator ¢) {
+    return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
+        : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
+            : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
+                : ¢ == Operator.DIVIDE_ASSIGN ? InfixExpression.Operator.DIVIDE
+                    : ¢ == Operator.LEFT_SHIFT_ASSIGN ? InfixExpression.Operator.LEFT_SHIFT
+                        : ¢ == Operator.MINUS_ASSIGN ? InfixExpression.Operator.MINUS
+                            : ¢ == Operator.PLUS_ASSIGN ? InfixExpression.Operator.PLUS
+                                : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
+                                    : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
+                                        : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
 
   /** Compute the "de Morgan" conjugate of the operator present on an
@@ -344,6 +368,23 @@ public interface wizard {
     return null;
   }
 
+  /** Gets two lists of expressions and returns the idx of the only expression
+   * which is different between them. If the lists differ with other then one
+   * element, -1 is returned.
+   * @param es1
+   * @param es2
+   * @return */
+  @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
+    int $ = -1;
+    for (final Integer ¢ : range.from(0).to(es1.size()))
+      if (!wizard.same(es1.get(¢), es2.get(¢))) {
+        if ($ >= 0)
+          return -1;
+        $ = ¢;
+      }
+    return $;
+  }
+
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
@@ -354,6 +395,15 @@ public interface wizard {
     });
     return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
+  }
+
+  static boolean hasObject(final List<Type> ts) {
+    if (ts == null)
+      return false;
+    for (final Type ¢ : ts)
+      if (isObject(¢))
+        return true;
+    return false;
   }
 
   static boolean hasSafeVarags(final MethodDeclaration d) {
@@ -409,6 +459,18 @@ public interface wizard {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
 
+  static boolean isObject(final Type ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢ + "") {
+      case "Object":
+      case "java.lang.Object":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
    * @return <code><b>true</b></code> <em>iff</em>one of
@@ -458,6 +520,18 @@ public interface wizard {
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
+  static String nth(final int i, final Collection<?> os) {
+    return nth(i, os.size());
+  }
+
+  static String nth(final int i, final int n) {
+    return nth(i + "", n + "");
+  }
+
+  static String nth(final String s, final String n) {
+    return " #" + s + "/" + n;
+  }
+
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a
@@ -465,18 +539,6 @@ public interface wizard {
    *         of the parameter wrapped in parenthesis. */
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
-  }
-
-  Bool resolveBinding = Bool.valueOf(false);
-
-  static void setParserResolveBindings() {
-    resolveBinding.inner = true;
-  }
-
-  static void setBinding(final ASTParser $) {
-    $.setResolveBindings(resolveBinding.inner);
-    if (resolveBinding.inner)
-      $.setEnvironment(null, null, null, true);
   }
 
   static ASTParser parser(final int kind) {
@@ -640,6 +702,16 @@ public interface wizard {
     return true;
   }
 
+  static void setBinding(final ASTParser $) {
+    $.setResolveBindings(resolveBinding.inner);
+    if (resolveBinding.inner)
+      $.setEnvironment(null, null, null, true);
+  }
+
+  static void setParserResolveBindings() {
+    resolveBinding.inner = true;
+  }
+
   static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
     return m instanceof Modifier && test((Modifier) m, ms);
   }
@@ -649,58 +721,5 @@ public interface wizard {
       if (¢.test(m))
         return true;
     return false;
-  }
-
-  /** Gets two lists of expressions and returns the idx of the only expression
-   * which is different between them. If the lists differ with other then one
-   * element, -1 is returned.
-   * @param es1
-   * @param es2
-   * @return */
-  @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
-    int $ = -1;
-    for (final Integer ¢ : range.from(0).to(es1.size()))
-      if (!wizard.same(es1.get(¢), es2.get(¢))) {
-        if ($ >= 0)
-          return -1;
-        $ = ¢;
-      }
-    return $;
-  }
-
-  static boolean isObject(final Type ¢) {
-    if (¢ == null)
-      return false;
-    switch (¢ + "") {
-      case "Object":
-      case "java.lang.Object":
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  static boolean hasObject(final List<Type> ts) {
-    if (ts == null)
-      return false;
-    for (final Type ¢ : ts)
-      if (isObject(¢))
-        return true;
-    return false;
-  }
-
-  /** the function checks if all the given assignments have the same left hand
-   * side(variable) and operator
-   * @param base The assignment to compare all others to
-   * @param as The assignments to compare
-   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
-   *         left hand side and operator as the first one or false otherwise */
-  static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNull(base, as))
-      return false;
-    for (final Assignment ¢ : as)
-      if (incompatible(base, ¢))
-        return false;
-    return true;
   }
 }

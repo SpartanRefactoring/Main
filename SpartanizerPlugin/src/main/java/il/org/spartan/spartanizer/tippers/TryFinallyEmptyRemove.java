@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author kobybs
  * @author Dor Ma'ayan
  * @since 16-11-2016 */
-public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Unite {
+public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public boolean prerequisite(final TryStatement ¢) {
     return !¢.getBody().statements().isEmpty() && //
         ¢.getFinally() != null && ¢.getFinally().statements().isEmpty() && //
