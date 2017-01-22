@@ -33,7 +33,7 @@ public class Issue0831 {
 
   @Test public void fourStatementInScanner() {
     String body = "";
-    for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements())
+    for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements()) // NANO
       body += iter + "";
     azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));
   }
