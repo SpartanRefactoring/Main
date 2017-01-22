@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -36,38 +37,43 @@ public class Table_Loops extends FolderASTVisitor {
   }
 
   @Override public boolean visit(final EnhancedForStatement ¢) {
-    analyze(¢);
-    return true;
+    return analyze(¢);
   }
 
   @Override public boolean visit(final ForStatement ¢) {
-    analyze(¢);
-    return true;
+    return analyze(¢);
   }
 
   @Override public boolean visit(final WhileStatement ¢) {
-    analyze(¢);
-    return true;
+    return analyze(¢);
   }
 
   @Override public boolean visit(final DoStatement ¢) {
-    analyze(¢);
-    return true;
+    return analyze(¢);
   }
 
-  private static void analyze(final ASTNode ¢) {
+  private static boolean analyze(final ASTNode ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      final ASTNode n = extract.singleStatement(wizard.ast(spartanize(¢)));
+      final ASTNode n = extract.singleStatement(findFirst.statement(into.s(spartanize(¢))));
       log(n);
-      Wrap.Statement.off(spartanalyzer.fixedPoint(Wrap.Statement.on(n + "")));
+      npStatistics.logMethod(intoMethod(spartanalyze(n)));
     } catch (@SuppressWarnings("unused") AssertionError __) {
       System.out.print("X");
     }
+    return false;
+  }
+
+  private static MethodDeclaration intoMethod(final String ¢) {
+    return findFirst.methodDeclaration(into.cu(¢));
+  }
+
+  private static String spartanalyze(final ASTNode ¢) {
+    return spartanalyzer.fixedPoint(Wrap.Statement.on(¢ + ""));
   }
 
   private static String spartanize(final ASTNode ¢) {
-    return iSpartanayzer.fixedPoint(¢ + "");
+    return Wrap.Statement.off(iSpartanayzer.fixedPoint(Wrap.Statement.on(¢ + "")));
   }
 
   private static void log(final ASTNode ¢) {
@@ -96,7 +102,7 @@ public class Table_Loops extends FolderASTVisitor {
       initializeWriter();
     writer//
         .col("Project", path)//
-        .col("Coverage", npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)))//
+        .col("Coverage", format.decimal(100 * npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))//
         .col("EnhancedForLoops", statistics.enhancedForLoops())//
         .col("ForLoops", statistics.forLoops())//
         .col("WhileLoops", statistics.whileLoops())//
