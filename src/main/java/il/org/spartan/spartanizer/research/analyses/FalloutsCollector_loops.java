@@ -18,7 +18,7 @@ import il.org.spartan.tables.*;
 
 public class FalloutsCollector_loops extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final File out = new File(Table.temporariesFolder + "/" + "loops" + ".txt");
+  private static final File out = new File(Table.temporariesFolder + system.fileSeparator + "loops" + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

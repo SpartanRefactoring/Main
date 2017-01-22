@@ -19,9 +19,11 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * <pre>
 * switch (x) {
-* case a: (commands)
-*   break;
-* default: (other commands)
+*   case a: 
+*      (commands)
+*      break;
+*   default: 
+*      (other commands)
 * }
  * </pre>
  *
@@ -30,16 +32,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * <pre>
 * if(x == a) {
 *   (commands)
-* }
-* else {
+* } else {
 *   (other commands)
-* }
- * </pre>
+* }</pre>
  *
  * . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
-public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement> implements TipperCategory.Unite {
+public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
+    implements TipperCategory.Unite {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }

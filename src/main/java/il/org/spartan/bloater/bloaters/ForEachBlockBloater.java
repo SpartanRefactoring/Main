@@ -15,7 +15,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * is{@link Issue1023}
  * @author Raviv Rachmiel
  * @since 10-01-17 */
-public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement> implements TipperCategory.Bloater {
+public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement>//
+    implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnhancedForStatement s) {
     if (s == null)
       return null;

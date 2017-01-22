@@ -87,11 +87,45 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ANONYMOUS_CLASS_DECLARATION);
   }
 
-  /** @param ¢ JD
-   * @return */
   static boolean anyOperator(final ASTNode ¢) {
     return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
+  }
+
+  static boolean definiteLoop(final ASTNode n) {
+    if (!iz.loop(n))
+      return false;
+    final Bool $ = new Bool(true);
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final ContinueStatement ¢) {
+        mark(¢);
+        return false;
+      }
+
+      @Override public boolean visit(final BreakStatement ¢) {
+        mark(¢);
+        return false;
+      }
+
+      @Override public boolean visit(final ReturnStatement ¢) {
+        mark(¢);
+        return false;
+      }
+
+      void mark(@SuppressWarnings("unused") final ASTNode __) {
+        $.inner = false;
+      }
+    });
+    return $.inner;
+  }
+
+  static boolean simpleLoop(final ASTNode ¢) {
+    return loop(¢) && !iz.block(//
+        nodeType(¢) == ASTNode.ENHANCED_FOR_STATEMENT ? body(az.enhancedFor(¢)) //
+            : nodeType(¢) == FOR_STATEMENT ? body(az.forStatement(¢))//
+                : nodeType(¢) == ASTNode.WHILE_STATEMENT ? body(az.whileStatement(¢))//
+                    : nodeType(¢) == ASTNode.DO_STATEMENT ? body(az.doStatement(¢))//
+                        : null);
   }
 
   /** Ceck if an ASTNode is an Array Acess
@@ -575,7 +609,7 @@ public interface iz {
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
-  
+
   static boolean lambdaExpression(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, LAMBDA_EXPRESSION);
   }
