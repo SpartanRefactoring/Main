@@ -29,7 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements TipperCategory.Shunt {
+public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//
+    implements TipperCategory.Shortcircuit {
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }

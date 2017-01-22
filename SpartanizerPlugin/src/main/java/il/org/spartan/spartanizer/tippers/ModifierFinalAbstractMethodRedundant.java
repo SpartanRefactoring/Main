@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier> implements TipperCategory.SyntacticBaggage {
+public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
     return "Remove redundant final modifier of paramaeter to abstract method";
   }

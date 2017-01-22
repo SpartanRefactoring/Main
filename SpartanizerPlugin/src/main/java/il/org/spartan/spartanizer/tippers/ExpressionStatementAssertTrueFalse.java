@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Replace <code>assertTrue(X)</code> by <code>assert X;</code>
  * @author Yossi Gil
  * @since 2016/12/11 */
-public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement> implements TipperCategory.Idiomatic {
+public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement>//
+    implements TipperCategory.Idiomatic {
   @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }

@@ -23,7 +23,7 @@ public interface ExpanderCategory {
     return ExpanderGroup.find(this);
   }
 
-  static String getLabel(Class<? extends ExpanderCategory> ¢) {
+  static String getLabel(final Class<? extends ExpanderCategory> ¢) {
     return ¢.getSimpleName();
   }
 

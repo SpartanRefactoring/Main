@@ -48,6 +48,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final BreakStatement ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final CastExpression ¢) {
     return cautiousGo(¢);
   }
@@ -61,6 +65,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final ConditionalExpression ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final ContinueStatement ¢) {
     return cautiousGo(¢);
   }
 
@@ -139,14 +147,13 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final PostfixExpression ¢) {
     return cautiousGo(¢);
   }
-
   @Override public final boolean visit(final PrefixExpression ¢) {
     return cautiousGo(¢);
   }
-
   @Override public final boolean visit(final QualifiedType ¢) {
     return cautiousGo(¢);
   }
+
 
   @Override public final boolean visit(final ReturnStatement ¢) {
     return cautiousGo(¢);

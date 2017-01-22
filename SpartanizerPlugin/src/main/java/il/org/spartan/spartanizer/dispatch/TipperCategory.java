@@ -6,6 +6,10 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
+  interface EmptyCycles extends TipperCategory {
+    String toString = "no better name";
+  }
+
   String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
@@ -124,6 +128,10 @@ public interface TipperCategory {
   }
 
   interface NOP extends Structural {
+    interface onNumbers extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+    }
+
     String toString = "Eliminate an operation whose computation does nothing";
 
     @Override default String description() {
@@ -147,7 +155,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Shunt extends Structural {
+  interface Shortcircuit extends Structural {
     String toString = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
 
     @Override default String description() {
@@ -172,7 +180,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Ternarization extends Structural { // S3
+  interface Ternarization extends CommnonFactoring { // S3
     String toString = "Convert conditional statement to the conditional, ?:, operator";
 
     @Override default String description() {

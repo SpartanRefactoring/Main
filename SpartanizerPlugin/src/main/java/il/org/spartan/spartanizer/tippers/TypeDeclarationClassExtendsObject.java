@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code>class C {...}</code> to
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-15 */
-public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration> implements TipperCategory.Abbreviation {
+public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public ASTNode replacement(final TypeDeclaration ¢) {
     if (¢.isInterface() || !wizard.isObject(¢.getSuperclassType()))
       return null;
