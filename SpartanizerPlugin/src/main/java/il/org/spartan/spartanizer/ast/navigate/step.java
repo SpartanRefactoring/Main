@@ -884,4 +884,8 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
   }
+
+  public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
 }

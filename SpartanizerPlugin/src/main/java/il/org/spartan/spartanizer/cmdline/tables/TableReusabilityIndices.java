@@ -73,14 +73,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   void addMissingKeys() {
-    for (final Class<? extends ASTNode> ¢ : wizard.classToNodeType.keySet())
-      addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢));
-    for (final Assignment.Operator ¢ : wizard.assignmentOperators)
-      addIfNecessary("ASSIGNMENT", Vocabulary.mangle(¢));
-    for (final PrefixExpression.Operator ¢ : wizard.prefixOperators)
-      addIfNecessary("PREFIX", Vocabulary.mangle(¢));
-    for (final PostfixExpression.Operator ¢ : wizard.postfixOperators)
-      addIfNecessary("POSTFIX", Vocabulary.mangle(¢));
+    (wizard.classToNodeType.keySet()).forEach(¢ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢)));
+    Arrays.asList(wizard.assignmentOperators).forEach(¢ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(¢)));
+    Arrays.asList(wizard.prefixOperators).forEach(¢ -> addIfNecessary("PREFIX", Vocabulary.mangle(¢)));
+    Arrays.asList(wizard.postfixOperators).forEach(¢ -> addIfNecessary("POSTFIX", Vocabulary.mangle(¢)));
     for (final Operator ¢ : wizard.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
