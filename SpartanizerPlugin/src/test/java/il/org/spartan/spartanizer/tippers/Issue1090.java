@@ -31,6 +31,16 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
+    MetaTestCase case2 = new MetaTestCase() {
+      /** [[SuppressWarningsSpartan]] */
+      @Override protected void startingWith() {
+        intField++;
+      }
+
+      @Override protected void trimmingStopsAt() {
+        ++intField;
+      }
+    };
 
     byte getByteField() {
       return byteField;
