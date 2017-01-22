@@ -365,6 +365,15 @@ public final class Namespace implements Environment {
       $ = face + "" + ++postface;
     return $;
   }
+  
+  public String generateName(final String ¢) {
+    final String face = ¢;
+    int postface = 0;
+    String $ = face + "" + ++postface;
+    while (has($))
+      $ = face + "" + ++postface;
+    return $;
+  }
 
   public Namespace addNewName(final String s, final Type t) {
     return put(s, t);
