@@ -28,14 +28,10 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
-    final IfStatement ifBody = f.getAST().newIfStatement();
-    // TODO: Raviv Rachmiel please use class subject --yg
-    ifBody.setExpression(make.notOf(copy.of(expression(f))));
-    ifBody.setThenStatement(copy.of(nextStatement));
-    f.setBody(copy.of(ifBody));
+    f.setBody(copy.of(subject.pair(copy.of(nextStatement), null).toIf(make.notOf(copy.of(expression(f))))));
     f.setExpression(null);
     $.replace(s, f, g);
-    $.replace(nextStatement, null, g);
+    $.replace(nextStatement, null, g);  
     return $;
   }
 
