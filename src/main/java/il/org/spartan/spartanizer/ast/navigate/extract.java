@@ -23,10 +23,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2015-07-28 */
 public enum extract {
   ;
-  public static Statement lastStatement(final EnhancedForStatement ¢) {
-    return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
-  }
-
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
@@ -85,6 +81,20 @@ public enum extract {
     return $ == null ? null : az.assignment($.getExpression());
   }
 
+  public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
+    final List<Statement> ll = step.statements(s);
+    final int ind = indexOf(ll, c);
+    if (ind < 0)
+      return null;
+    final List<SwitchCase> $ = new ArrayList<>();
+    $.add(c);
+    for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
+      $.add(az.switchCase(ll.get(¢)));
+    for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
+      $.add(az.switchCase(ll.get(¢)));
+    return $;
+  }
+
   public static String category(final ASTNode $) {
     switch ($.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
@@ -127,6 +137,17 @@ public enum extract {
             : !¢.isLocalTypeDeclaration() ? "" : "local ");
     $.append(!¢.isInterface() ? "class" : "interface");
     return $ + "";
+  }
+
+  /** Extract the {@link Statement} that contains a given node.
+   * @param pattern JD
+   * @return inner most {@link Statement} in which the parameter is nested, or
+   *         <code><b>null</b></code>, if no such statement exists. */
+  public static Statement containingStatement(final ASTNode ¢) {
+    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
+      if (iz.statement($))
+        return az.statement($);
+    return null;
   }
 
   /** Peels any parenthesis that may wrap an {@Link Expression}
@@ -250,9 +271,31 @@ public enum extract {
     }
   }
 
+  /** @param ss list of statements
+   * @param s statement to search for
+   * @return index of s in l, or -1 if not contained */
+  private static int indexOf(final List<Statement> ss, final Statement s) {
+    for (int $ = 0; $ < ss.size(); ++$)
+      if (wizard.same(s, ss.get($)))
+        return $;
+    return -1;
+  }
+
   public static InfixExpression infixExpression(final ASTNode ¢) {
     final ExpressionStatement $ = expressionStatement(¢);
     return ¢ == null || $ == null ? null : az.infixExpression($.getExpression());
+  }
+
+  public static Statement lastStatement(final Block ¢) {
+    return last(statements(¢));
+  }
+
+  public static Statement lastStatement(final EnhancedForStatement ¢) {
+    return lastStatement(body(¢));
+  }
+
+  public static Statement lastStatement(final Statement ¢) {
+    return !iz.block(¢) ? ¢ : lastStatement(az.block(¢));
   }
 
   /** @param pattern JD
@@ -332,20 +375,20 @@ public enum extract {
     return assignment(extract.nextStatement(¢));
   }
 
-  /** Find the {@link PrefixExpression} that follows a given node.
-   * @param pattern JD
-   * @return {@link Assignment} that follows the parameter, or
-   *         <code><b>null</b></code> if not such value exists. */
-  public static PrefixExpression nextPrefix(final ASTNode ¢) {
-    return az.prefixExpression(expression(az.expressionStatement(extract.nextStatement(¢))));
-  }
-
   /** Extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode ¢) {
     return az.ifStatement(extract.nextStatement(¢));
+  }
+
+  /** Find the {@link PrefixExpression} that follows a given node.
+   * @param pattern JD
+   * @return {@link Assignment} that follows the parameter, or
+   *         <code><b>null</b></code> if not such value exists. */
+  public static PrefixExpression nextPrefix(final ASTNode ¢) {
+    return az.prefixExpression(expression(az.expressionStatement(extract.nextStatement(¢))));
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
@@ -449,17 +492,6 @@ public enum extract {
     return extract.singleStatement(then(¢));
   }
 
-  /** Extract the {@link Statement} that contains a given node.
-   * @param pattern JD
-   * @return inner most {@link Statement} in which the parameter is nested, or
-   *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement containingStatement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
-      if (iz.statement($))
-        return az.statement($);
-    return null;
-  }
-
   /** Extract the list of non-empty statements embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param pattern JD
@@ -485,30 +517,6 @@ public enum extract {
         $.add(¢);
         return $;
     }
-  }
-
-  /** @param ss list of statements
-   * @param s statement to search for
-   * @return index of s in l, or -1 if not contained */
-  private static int indexOf(final List<Statement> ss, final Statement s) {
-    for (int $ = 0; $ < ss.size(); ++$)
-      if (wizard.same(s, ss.get($)))
-        return $;
-    return -1;
-  }
-
-  public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
-    final List<Statement> ll = step.statements(s);
-    final int ind = indexOf(ll, c);
-    if (ind < 0)
-      return null;
-    final List<SwitchCase> $ = new ArrayList<>();
-    $.add(c);
-    for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
-      $.add(az.switchCase(ll.get(¢)));
-    for (int ¢ = ind - 1; ¢ >= 0 && iz.switchCase(ll.get(¢)); --¢)
-      $.add(az.switchCase(ll.get(¢)));
-    return $;
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {

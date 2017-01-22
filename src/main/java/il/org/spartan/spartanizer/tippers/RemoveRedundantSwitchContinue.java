@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStatement>//
-    implements TipperCategory.Shunt {
+    implements TipperCategory.Shortcircuit {
   @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;

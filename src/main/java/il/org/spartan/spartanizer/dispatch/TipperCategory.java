@@ -155,7 +155,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Shunt extends Structural {
+  interface Shortcircuit extends Structural {
     String toString = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
 
     @Override default String description() {
