@@ -17,7 +17,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
@@ -135,10 +134,7 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    for (final ImportDeclaration ¢ : step.imports(u)) // NANO?
-      if (¢.getName().getFullyQualifiedName().equals(s))
-        return true;
-    return false;
+    return imports(u).stream().anyMatch(¢ -> identifier(name(¢)).equals(s));
   }
 
   // TODO Ori Roth move to utility

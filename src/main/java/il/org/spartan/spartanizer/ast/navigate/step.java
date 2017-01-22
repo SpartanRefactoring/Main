@@ -562,6 +562,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final ImportDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   /** @param ¢ JD
    * @return */
   public static SimpleName name(final FieldAccess ¢) {
@@ -879,5 +883,9 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
   }
 }
