@@ -60,13 +60,13 @@ public abstract class MetaFixture {
   public static String ancestry(final ASTNode n) {
     String $ = "";
     int i = 0;
-    for (final ASTNode p : ancestors.of(n))
+    for (final ASTNode p : ancestors.of(n)) // TOUGH
       $ += "\n\t + " + i++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName();
     return $;
   }
 
   private static CompilationUnit loadAST(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+    for (final File $ : new FilesGenerator(".java").from(".")) // MANUAL
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = Make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
@@ -78,7 +78,7 @@ public abstract class MetaFixture {
   }
 
   private static String loadText(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+    for (final File $ : new FilesGenerator(".java").from(".")) // NANO
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;

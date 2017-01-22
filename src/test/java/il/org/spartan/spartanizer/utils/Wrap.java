@@ -40,7 +40,7 @@ public enum Wrap {
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
-    for (final Wrap $ : WRAPS)
+    for (final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
