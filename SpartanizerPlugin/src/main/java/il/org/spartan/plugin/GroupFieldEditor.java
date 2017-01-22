@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group
@@ -75,10 +76,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override public boolean isValid() {
-    for (final FieldEditor ¢ : members) // NANO?
-      if (!¢.isValid())
-        return false;
-    return true;
+    return members.stream().allMatch(¢ -> ¢.isValid());
   }
 
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
@@ -109,16 +107,15 @@ public final class GroupFieldEditor extends FieldEditor {
 
   /* (non-Javadoc) Method declared on FieldEditor. */
   protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
-    int c = numColumns;
+    Int c = new Int(numColumns);
     if (members == null || members.isEmpty())
       return;
-    if (c == 0)
+    if (c.inner == 0)
       for (final FieldEditor ¢ : members) // NANO?
-        c = Math.max(c, ¢.getNumberOfControls());
-    gridData(c);
-    gridLayout(c);
-    for (final FieldEditor ¢ : members) // NANO?
-      ¢.fillIntoGrid(parentParam, c);
+        c.inner = Math.max(c.inner, ¢.getNumberOfControls());
+    gridData(c.inner);
+    gridLayout(c.inner);
+    members.forEach(¢ -> ¢.fillIntoGrid(parentParam, c.inner));
     parent.layout();
     parent.redraw();
   }
