@@ -27,7 +27,7 @@ public class LogToTest {
     }
     final File[] fs = d.listFiles();
     int fc = 0;
-    for (final File element : fs)
+    for (final File element : fs) // NANO
       if (element.isFile() && element.getName().startsWith("log_spartan"))
         ++fc;
     if (fc == 0) {

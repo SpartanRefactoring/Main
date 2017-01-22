@@ -79,7 +79,7 @@ public final class TrimmerTestsUtils {
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      for (final String $ : options)
+      for (final String $ : options) // NANO
         if (Wrap.essence($).equals(Wrap.essence(peeled)))
           return new Operand($);
       azzert.fail("Expects: " + peeled + " But None of the given options match");
@@ -102,7 +102,7 @@ public final class TrimmerTestsUtils {
     }
 
     @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> c, final Tipper<N>... ts) {
-      for (final Tipper<N> ¢ : ts)
+      for (final Tipper<N> ¢ : ts) // NANO
         trimmer.add(c, ¢);
       return this;
     }
