@@ -11,14 +11,14 @@ import org.junit.*;
 public class ForEachFilteredTest {
   @Test public void a() {
     trimmingOf("for (  A ¢ : is? thiz : theReal)   if (life) justFantasy();")//
-        .using(EnhancedForStatement.class, new ForEachFiltered())//
+        .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("(is?thiz:theReal).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("for (  A ¢ : (B)c)   if (life) justFantasy();")//
-        .using(EnhancedForStatement.class, new ForEachFiltered())//
+        .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("((B)c).stream().filter(¢->life).forEach(¢->justFantasy());")//
         .stays();
   }
@@ -26,7 +26,7 @@ public class ForEachFilteredTest {
   @Test public void c() {
     trimmingOf(
         "for (AtmosphereResource r : resources) if (Utils.resumableTransport(r.transport())) try {    r.resume();  }   catch (Throwable ¢) {    logger.trace(\"resumeAll\",¢);  }")//
-            .using(EnhancedForStatement.class, new ForEachFiltered())//
+            .using(EnhancedForStatement.class, new ForEachSuchThat())//
             .gives(
                 "resources.stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){{logger.trace(\"resumeAll\",¢);}}});")//
             .gives(
@@ -37,11 +37,20 @@ public class ForEachFilteredTest {
   @Test public void d() {
     trimmingOf(
         "for (AtmosphereResource r : (B)resources) if (Utils.resumableTransport(r.transport())) try {    r.resume();  }   catch (Throwable ¢) {    logger.trace(\"resumeAll\",¢);  }")//
-            .using(EnhancedForStatement.class, new ForEachFiltered())//
+            .using(EnhancedForStatement.class, new ForEachSuchThat())//
             .gives(
                 "((B)resources).stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){{logger.trace(\"resumeAll\",¢);}}});")//
             .gives(
                 "((B)resources).stream().filter(r->Utils.resumableTransport(r.transport())).forEach(r->{try{r.resume();}catch(Throwable ¢){logger.trace(\"resumeAll\",¢);}});")//
+            .stays();
+  }
+
+  @Test public void e() {
+    trimmingOf(
+        "for (final MethodDeclaration ¢ : step.methods(reflection))    if (!¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))      put(mangle(¢), ¢);")//
+            .using(EnhancedForStatement.class, new ForEachSuchThat())//
+            .gives(
+                "(step.methods(reflection)).stream().filter(¢->!¢.isConstructor()&&!iz.static¢(¢)&&!iz.final¢(¢)&&!iz.private¢(¢)).forEach(¢->put(mangle(¢),¢));")//
             .stays();
   }
 }

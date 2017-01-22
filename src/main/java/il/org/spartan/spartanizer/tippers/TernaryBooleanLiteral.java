@@ -61,7 +61,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.InVain {
+public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
+    implements TipperCategory.NOP.onBooleans {
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
@@ -72,7 +73,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * a ? b : c
    * </pre>
    *
-   * ; in a sense it is the same as
+   * in a sense it is the same as
    *
    * <pre>
    * (a &amp;&amp; b) || (!a &amp;&amp; c)

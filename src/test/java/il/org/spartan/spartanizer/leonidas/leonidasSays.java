@@ -199,13 +199,12 @@ public class leonidasSays {
   static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
         return u;
       case EXPRESSION_LOOK_ALIKE:
         return findSecond(Expression.class, findFirst.methodDeclaration(u));
       case METHOD_LOOK_ALIKE:
         return findSecond(MethodDeclaration.class, u);
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
       case STATEMENTS_LOOK_ALIKE:
         return extractStatementIfOne(findFirst.instanceOf(Block.class, u));
       default:
@@ -261,17 +260,17 @@ public class leonidasSays {
   static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
         return ¢;
       case EXPRESSION_LOOK_ALIKE:
         return "class X{int f(){return " + ¢ + ";}}";
       case METHOD_LOOK_ALIKE:
         return "class X{" + ¢ + "}";
-      case OUTER_TYPE_LOOKALIKE:
-        return ¢;
       case STATEMENTS_LOOK_ALIKE:
         return "class X{int f(){" + ¢ + "}}";
       default:
         fail(¢ + " is not like anything I know...");
+        break;
     }
     return null;
   }

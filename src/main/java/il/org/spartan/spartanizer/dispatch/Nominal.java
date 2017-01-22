@@ -7,9 +7,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface Nominal extends TipperCategory {
-  String label = "Nominal";
+  String ____ = "Spartanizing code by using more spartan names";
 
   @Override default String description() {
-    return label;
+    return ____;
   }
 }

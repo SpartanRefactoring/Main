@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code> x+\"\"+(4) </code> goes to <code> x+\"\"+4 </code>
  * @author Niv Shalmon
  * @since 2016-09-11 */
-public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.SyntacticBaggage {
+public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.SyntacticBaggage {
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
@@ -43,7 +44,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return description() + " in: " + wizard.trim(¢);
+    return description() + " in: " + trivia.gist(¢);
   }
 
   @Override public Expression replacement(final InfixExpression x) {

@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert <code> if (a){g();}</code> into <code>if(a)g();</code>
  * @author Yossi Gil
  * @since 2016-12-14 */
-public final class JavadocEmpty extends RemovingTipper<Javadoc> implements TipperCategory.SyntacticBaggage {
+public final class JavadocEmpty extends RemovingTipper<Javadoc>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public String description(@SuppressWarnings("unused") final Javadoc __) {
     return "Remove empty Javadoc comment";
   }

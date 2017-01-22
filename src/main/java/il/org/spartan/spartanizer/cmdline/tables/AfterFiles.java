@@ -106,8 +106,7 @@ public class AfterFiles extends FolderASTVisitor {
 
   @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics(final String path) {
     try (Table report = new Table(path)) {
-      int statementsTotal = 0;
-      int methodsTotal = 0;
+      int statementsTotal = 0, methodsTotal = 0;
       for (final Integer numStatements : methods.keySet()) {
         if (numStatements == 0)
           continue; // don't count methods without body
@@ -200,6 +199,6 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
-    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
+    return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }

@@ -20,7 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
-public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration> implements TipperCategory.Dollarization {
+public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
+    implements TipperCategory.Dollarization {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

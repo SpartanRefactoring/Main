@@ -26,7 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @author Nov Shalmon
  * @since 2016-09-04 */
-public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Unite {
   @Override public String description() {
     return "Concat the strings to a one string";
   }

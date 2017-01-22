@@ -26,15 +26,14 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
-public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Collapse {
+public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Idiomatic {
   @Override public ASTNode replacement(final InfixExpression x) {
     if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()
         || !az.infixExpression(x.getRightOperand()).extendedOperands().isEmpty())
       return null;
-    final Expression $ = az.infixExpression(x.getLeftOperand()).getLeftOperand();
-    final Expression lr = az.infixExpression(x.getLeftOperand()).getRightOperand();
-    final Expression rl = az.infixExpression(x.getRightOperand()).getLeftOperand();
-    final Expression rr = az.infixExpression(x.getRightOperand()).getRightOperand();
+    final Expression $ = az.infixExpression(x.getLeftOperand()).getLeftOperand(), lr = az.infixExpression(x.getLeftOperand()).getRightOperand(),
+        rl = az.infixExpression(x.getRightOperand()).getLeftOperand(), rr = az.infixExpression(x.getRightOperand()).getRightOperand();
     final InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($)
         || iz.numberLiteral($) || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
             : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());

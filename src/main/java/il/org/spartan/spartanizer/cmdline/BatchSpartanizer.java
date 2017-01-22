@@ -22,7 +22,8 @@ import il.org.spartan.utils.*;
 final class BatchSpartanizer extends FolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
-  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
+  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
+      .disable(TipperCategory.Nanos.class);
   private static String outputDir;
   private static String inputDir;
   private static boolean defaultDir;
@@ -119,30 +120,22 @@ final class BatchSpartanizer extends FolderASTVisitor {
 
   BatchSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
-    beforeFileName = outputDir + "/" + name + ".before.java";
-    afterFileName = outputDir + "/" + name + ".after.java";
-    reportFileName = outputDir + "/" + name + ".CSV";
+    beforeFileName = outputDir + system.fileSeparator + name + ".before.java";
+    afterFileName = outputDir + system.fileSeparator + name + ".after.java";
+    reportFileName = outputDir + system.fileSeparator + name + ".CSV";
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
-    final int length = in.getLength();
-    final int tokens = metrics.tokens(in + "");
-    final int nodes = count.nodes(in);
-    final int body = metrics.bodySize(in);
-    final int tide = clean(in + "").length();
-    final int essence = Essence.of(in + "").length();
+    final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
+        tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
-    final int length2 = out.length();
-    final int tokens2 = metrics.tokens(out);
-    final int tide2 = clean(out + "").length();
-    final int essence2 = Essence.of(out + "").length();
-    final int wordCount = system.wc(Essence.of(out + ""));
+    final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
+        wordCount = system.wc(Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
-    final int nodes2 = count.nodes(from);
-    final int body2 = metrics.bodySize(from);
+    final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
     afters.print(out);
@@ -237,10 +230,8 @@ final class BatchSpartanizer extends FolderASTVisitor {
 
   private void applyEssenceCommandLine() {
     try {
-      final String essentializedCodeBefore = system.runScript(beforeFileName);
-      final String essentializedCodeAfter = system.runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
+      final int numWordEssentialBefore = system.runScript(beforeFileName).trim().length(),
+          numWordEssentialAfter = system.runScript(afterFileName).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));

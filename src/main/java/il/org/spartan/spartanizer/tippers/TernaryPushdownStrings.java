@@ -29,7 +29,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Ternarization {
+public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.Ternarization {
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
     return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
         : iz.stringLiteral(then) && iz.infixExpression(elze) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
@@ -40,10 +41,12 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   static String longer(final String s1, final String s2) {
+    // noinspection StringEquality
     return s1 == shorter(s1, s2) ? s2 : s1;
   }
 
   private static int firstDifference(final String s1, final String s2) {
+    // noinspection StringEquality
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
@@ -80,6 +83,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static int lastDifference(final String s1, final String s2) {
+    // noinspection StringEquality
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();

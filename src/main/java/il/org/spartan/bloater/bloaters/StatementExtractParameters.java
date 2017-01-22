@@ -28,7 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-01-10 */
-public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S> implements TipperCategory.Expander {
+public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
+    implements TipperCategory.Bloater {
   protected static final List<Integer> COMPLEX_TYPES = Arrays.asList(Integer.valueOf(ASTNode.CLASS_INSTANCE_CREATION),
       Integer.valueOf(ASTNode.METHOD_INVOCATION), Integer.valueOf(ASTNode.INFIX_EXPRESSION), Integer.valueOf(ASTNode.ASSIGNMENT),
       Integer.valueOf(ASTNode.CONDITIONAL_EXPRESSION), Integer.valueOf(ASTNode.LAMBDA_EXPRESSION));
@@ -61,7 +62,6 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
-          /**  */
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
             final Type tt = fixWildCardType(t);
@@ -110,26 +110,24 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         if (¢ instanceof Expression)
           consider($, (Expression) ¢);
         switch (¢.getNodeType()) {
-          case ASTNode.BLOCK:
-          case ASTNode.TYPE_DECLARATION_STATEMENT:
           case ASTNode.ANONYMOUS_CLASS_DECLARATION:
-          case ASTNode.WHILE_STATEMENT:
+          case ASTNode.BLOCK:
           case ASTNode.DO_STATEMENT:
           case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
-          case ASTNode.VARIABLE_DECLARATION_STATEMENT: // tipper recursion
-                                                       // terminator
-            return false;
-          case ASTNode.FOR_STATEMENT:
-            final ForStatement fs = (ForStatement) ¢;
-            consider($, fs.initializers()); // RISKY (for (int i, int j=i+1,
-                                            // ...))
+          case ASTNode.TYPE_DECLARATION_STATEMENT:
+          case ASTNode.VARIABLE_DECLARATION_STATEMENT:
+          case ASTNode.WHILE_STATEMENT:
+          case ASTNode.LAMBDA_EXPRESSION:
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
-          case ASTNode.EXPRESSION_STATEMENT: // TODO Ori Roth: check if
-                                             // legitimate
+          case ASTNode.FOR_STATEMENT:
+            final ForStatement fs = (ForStatement) ¢;
+            consider($, fs.initializers());
+            return false;
+          case ASTNode.EXPRESSION_STATEMENT:
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
               excludedParents.add(((ExpressionStatement) ¢).getExpression());
             return true;
@@ -167,7 +165,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       idns.addAll(Arrays.asList(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Ori Roth: do it better
-      for (final ImportDeclaration oid : step.imports(u))
+      for (final ImportDeclaration oid : step.imports(u)) // Tough
         if (idn.equals(oid.getName().getFullyQualifiedName()))
           continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();

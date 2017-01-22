@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -30,7 +32,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-13 */
-public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement> implements TipperCategory.Abbreviation {
+public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement>//
+    implements TipperCategory.Unite {
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
@@ -47,12 +50,18 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
 
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
-    return (parent == null
-        ? iz.variableDeclarationStatement(nextStatement) && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
-        : !lastIn(nextStatement, statements(parent)) && iz.variableDeclarationStatement(nextStatement)
-            && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-            && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers())
-        && extract.annotations($).equals(extract.annotations(az.variableDeclarationStatement(nextStatement)));
+    return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
+        && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
+        && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
+        && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));
+  }
+
+  private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
+    if (l1.size() != l2.size())
+      return false;
+    for (final Annotation ¢ : l1)
+      if (!(¢ + "").equals(l2.get(l1.indexOf(¢)) + ""))
+        return false;
+    return true;
   }
 }

@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** removes empty return, provided that it is last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement> implements TipperCategory.SyntacticBaggage {
+public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }

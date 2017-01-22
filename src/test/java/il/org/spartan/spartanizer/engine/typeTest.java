@@ -42,7 +42,7 @@ public final class typeTest {
     private static final int __14 = 1;
     private static final int __15 = 1;
     private static final long __1L = 1L;
-    private static final long __2L = 2l;
+    private static final long __2L = 2L;
     private static final int __3 = 3;
     private static final int __32 = 3;
     private static final int __33 = 3;
@@ -205,7 +205,7 @@ public final class typeTest {
     }
 
     @Test public void axiomConditional18() {
-      azzert.that(Axiom.type(b1 ? 3l : s), is(LONG));
+      azzert.that(Axiom.type(b1 ? 3L : s), is(LONG));
     }
 
     @Test public void axiomConditional19() {
@@ -305,7 +305,7 @@ public final class typeTest {
     }
 
     @Test public void axiomLong() {
-      azzert.that(Axiom.type(7l), is(LONG));
+      azzert.that(Axiom.type(7L), is(LONG));
     }
 
     @Test public void axiomNull() {

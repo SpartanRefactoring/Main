@@ -27,9 +27,10 @@ public class Table_Summary extends TableReusabilityIndices {
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table writer; // coverage
+  private static Table writer;
   private static int totalStatements;
   protected static int totalMethods;
+  protected static int totalMethodsAfterSpartanization;
   private static int totalStatementsCovered;
   private static int totalMethodsTouched;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
@@ -105,18 +106,19 @@ public class Table_Summary extends TableReusabilityIndices {
     if (writer == null)
       initializeWriter();
     gatherGeneralStatistics();
-    writer.col("Project", path);
-    writer.col("Statements", statements());
-    writer.col("Coverage", coverage());
-    writer.col("Methods", methods());
-    writer.col("Touched", touched());
-    writer.col("R-Index", rMethod());
-    writer.col("Nanos adopted", adopted());
-    writer.col("Fmethods", fMethods());
-    writer.col("Fiteratives", fIteratives());
-    writer.col("FconditionalExps", fConditionalExpressions());
-    writer.col("FconditionalStmts", fConditionalStatements());
-    writer.nl();
+    writer//
+        .col("Project", path)//
+        .col("Statements", statements())//
+        .col("Coverage", coverage())//
+        .col("Methods", methods())//
+        .col("Touched", touched())//
+        .col("R-Index", rMethod())//
+        .col("Nanos adopted", adopted())//
+        .col("Fmethods", fMethods())//
+        .col("Fiteratives", fIteratives())//
+        .col("FconditionalExps", fConditionalExpressions())//
+        .col("FconditionalStmts", fConditionalStatements())//
+        .nl();
   }
 
   private static int statements() {
@@ -168,7 +170,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
-    totalStatementsCovered = totalMethods = totalStatements = 0;
+    totalStatementsCovered = totalMethods = totalStatements = totalMethodsAfterSpartanization = 0;
     for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
       final List<MethodRecord> rs = statementsCoverageStatistics.get(¢);
       totalStatements += ¢ * rs.size();
@@ -183,6 +185,6 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
-    return searchAncestors.forClass(ClassInstanceCreation.class).from(¢) != null;
+    return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }

@@ -44,7 +44,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends ReplaceCurrentNode<Block> implements TipperCategory.InVain {
+public final class BlockSimplify extends ReplaceCurrentNode<Block>//
+    implements TipperCategory.SyntacticBaggage {
   static Statement reorganizeNestedStatement(final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
@@ -60,7 +61,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ti
   @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
       return false;
-    for (final Integer ¢ : range.from(0).to(os1.size()))
+    for (final Integer ¢ : range.from(0).to(os1.size())) // NANO?
       if (os1.get(¢) != os2.get(¢))
         return false;
     return true;

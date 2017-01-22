@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** ((x)) to (x)
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
-public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression> implements TipperCategory.ScopeReduction {
+public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -26,7 +27,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   }
 
   @Override public String description(final ParenthesizedExpression ¢) {
-    return "remove extra parenthesis " + wizard.trim(¢);
+    return "remove extra parenthesis " + trivia.gist(¢);
   }
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {

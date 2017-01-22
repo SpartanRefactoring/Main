@@ -116,7 +116,7 @@ public class SingleFlater {
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
   public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
-      final WindowInformation i) {
+      final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -124,7 +124,7 @@ public class SingleFlater {
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(t, textChange, i);
+          $ = changeNFocus(e, t, textChange, i);
       }
     } catch (final CoreException ¢) {
       monitor.log(¢);
@@ -143,20 +143,21 @@ public class SingleFlater {
   /** @param startChar1 - starting char of first interval
    * @param lenth1 - length of first interval
    * @param startChar2 - starting char of second interval
-   * @param length2 - length of second interval SPARTANIZED - should use
-   *        Athenizer one day to understand it */
+   * @param length2 - length of second interval SPARTANIZED - should use Bloater
+   *        one day to understand it */
   static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
     return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(final StyledText t, final TextFileChange tc, final WindowInformation i) throws CoreException {
-    if (i == null || t == null) {
+  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange tc, final WindowInformation i)
+      throws CoreException {
+    if (i == null || t == null || e == null) {
       tc.perform(new NullProgressMonitor());
       return true;
     }
     tc.perform(new NullProgressMonitor());
-    t.setSelection(tc.getEdit().getOffset(), tc.getEdit().getOffset() + tc.getEdit().getLength());
+    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
     if (!i.invalid())
       t.setTopIndex(i.startLine);
     return false;
@@ -181,9 +182,8 @@ public class SingleFlater {
       tipper = t;
     }
 
-    /**  */
-    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> n) {
-      return new Operation<>(node, n);
+    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
+      return new Operation<>(node, t);
     }
   }
 

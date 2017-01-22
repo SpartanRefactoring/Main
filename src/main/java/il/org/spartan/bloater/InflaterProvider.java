@@ -28,56 +28,55 @@ public class InflaterProvider extends OperationsProvider {
     return new Toolbox()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
-            new ExtractExpressionFromReturn(), //
-            new StatementExtractParameters<>()) //
+            new ExtractExpressionFromReturn()) //
         .add(ExpressionStatement.class, //
-            new AssignmentAndAssignment(), //
-            new AssignmentTernaryExpander(), //
-            new StatementExtractParameters<>(), new ClassInstanceIntoVariable())//
+            new AssignmentAndAssignmentBloater(), //
+            new AssignmentTernaryBloater(), //
+            new ClassInstanceIntoVariable(), //
+            new StatementExtractParameters<>())//
         .add(ArrayAccess.class, //
             new OutlineArrayAccess()) //
         .add(InfixExpression.class, //
             new ToStringExpander(), //
             new TernaryPushupStrings(), //
             new MultiplicationToCast()//
-        // new ExpandBooleanExpression() //
+        // new BooleanExpressionBloater() //
         )//
         .add(PrefixExpression.class, //
-            new PrefixToPostfix()) //
+            new PrefixToInfix()) //
         // .add(PostfixExpression.class, //
         // new PostFixToInfixExpander())//
         .add(SwitchStatement.class, //
             new CasesSplit())//
         .add(Assignment.class, //
-            new AssignmentOperatorExpansion())//
+            new AssignmentOperatorBloater())//
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, //
             new VariableDeclarationStatementSplit()) //
         .add(VariableDeclarationStatement.class, //
-            new DeclarationWithInitExpander()) //
+            new DeclarationWithInitializerBloater()) //
         .add(MethodInvocation.class, //
             new OutlineTernaryMethodInvocation()) //
         .add(ExpressionStatement.class, //
-            new MethodInvocationTernaryExpander()) //
-        .add(MethodDeclaration.class, //
-            new RenameShortNamesMethodDec()) //
+            new MethodInvocationTernaryBloater()) //
+         .add(MethodDeclaration.class, //
+         new RenameShortNamesMethodDec()) //
         // .add(VariableDeclarationStatement.class, //
         // new RenameShortNamesVarDec()) //
         .add(ThrowStatement.class, //
-            new ThrowTernaryExpander())//
+            new ThrowTernaryBloater())//
         .add(EnhancedForStatement.class, //
-            new ForEachBlockExpander()) //
+            new ForEachBlockBloater()) //
         .add(ForStatement.class, //
-            new ForBlockExpander()) //
+            new ForBlockBloater()) //
         .add(WhileStatement.class, //
-            new WhileBlockExpander()) //
+            new WhileBlockBloater()) //
         .add(IfStatement.class, //
-            new IfElseBlockExpander()) //
-        .add(IfStatement.class, //
-            new LongIfExpander()) //
+            new IfElseBlockBloater()) ///
+        // new LongIfBloater()) //
         .add(InfixExpression.class, //
-            new ParenthesesExpander(), new TernaryPushup()) //
+            new ParenthesesBloater(), new TernaryPushup()) //
     ;//
   }
 

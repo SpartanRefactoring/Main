@@ -32,7 +32,7 @@ public enum Wrap {
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
 
   public static String essence(final String codeFragment) {
-    return tide.clean(wizard.removeComments(codeFragment));
+    return tide.clean(trivia.removeComments(codeFragment));
   }
 
   /** Finds the most appropriate Wrap for a given code fragment
@@ -73,9 +73,7 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String $ = essence(inner);
-    final String essence2 = essence(off);
+    final String off = off(wrap), $ = essence(inner), essence2 = essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

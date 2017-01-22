@@ -26,7 +26,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
-public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.Idiomatic {
+public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Idiomatic {
   private static String description(final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
@@ -86,7 +87,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (i.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = hop.compilationUnit(x);
+      final CompilationUnit u = container.compilationUnit(x);
       if (u == null)
         return null;
       final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
@@ -104,18 +105,16 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override public String description(final InfixExpression x) {
-    final Expression $ = right(x);
-    final Expression left = left(x);
-    return description(expression(left instanceof MethodInvocation ? left : $));
+  @Override public String description(final InfixExpression ¢) {
+    final Expression $ = left(¢);
+    return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
     final Operator $ = x.getOperator();
     if (!iz.comparison($))
       return null;
-    final Expression right = right(x);
-    final Expression left = left(x);
+    final Expression right = right(x), left = left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? replacement($, az.methodInvocation(left), right)
             : replacement(wizard.conjugate($), az.methodInvocation(right), left);

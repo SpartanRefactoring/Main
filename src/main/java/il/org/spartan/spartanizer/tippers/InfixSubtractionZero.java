@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -23,16 +24,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Greenstein
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.NOP.onNumbers {
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(minus(first(prune)), chop(prune));
   }
 
   private static List<Expression> prune(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      if (!iz.literal0(¢))
-        $.add(¢);
+    final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
     return $.size() != xs.size() ? $ : null;
   }
 
