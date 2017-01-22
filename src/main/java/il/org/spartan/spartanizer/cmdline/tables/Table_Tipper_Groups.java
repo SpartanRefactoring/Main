@@ -31,8 +31,11 @@ public class Table_Tipper_Groups {
           }
     final int total = categories.values().stream().reduce((x, y) -> box.it(x.intValue() + y.intValue())).get().intValue();
     try (Table r = new Table(this)) {
-      for (final String ¢ : categories.keySet())
-        r.col("Category", ¢).col("Count", categories.get(¢)).col("Fraction", 1. * categories.get(¢).intValue() / total).nl();
+      categories.keySet()
+          .forEach(¢ -> r//
+              .col("Category", ¢)//
+              .col("Count", categories.get(¢))//
+              .col("Fraction", 1. * categories.get(¢).intValue() / total).nl());
       System.err.println(r.description());
     }
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));

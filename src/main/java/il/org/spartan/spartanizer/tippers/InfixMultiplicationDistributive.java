@@ -77,10 +77,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
-    for (final Expression $ : allOperands)
-      if (wizard.same(op, $))
-        return true;
-    return false;
+    return allOperands.stream().anyMatch($ -> wizard.same(op, $));
   }
 
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
