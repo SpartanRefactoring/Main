@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Meshulam
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement>//
-    implements TipperCategory.Shunt {
+    implements TipperCategory.Shortcircuit {
   @Override public String description(final ForStatement ¢) {
     return "Prune redundant " + lastStatement(¢);
   }
