@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.NOP.onNumbers {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);

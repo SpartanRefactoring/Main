@@ -43,7 +43,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnoFactoring {
+public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//
+    implements TipperCategory.CommnonFactoring {
   static boolean endsWithSequencer(final Statement ¢) {
     return iz.sequencer(hop.lastStatement(¢));
   }
@@ -62,8 +63,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipp
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
-        final Block parent = az.block(s.getParent());
-        final Block newParent = s.getAST().newBlock();
+        final Block parent = az.block(s.getParent()), newParent = s.getAST().newBlock();
         if (parent != null) {
           addAllReplacing(statements(newParent), statements(parent), s, shorterIf, remainder);
           r.replace(parent, newParent, g);

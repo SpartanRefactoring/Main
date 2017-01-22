@@ -16,6 +16,7 @@ public class switchBranch {
   private int numOfNodes;
   private int depth;
   private int sequencerLevel;
+  public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
 
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
@@ -67,11 +68,10 @@ public class switchBranch {
 
   public int sequencerLevel() {
     if (sequencerLevel < 0) {
-      final int th = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT);
-      final int re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT);
-      final int br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT);
-      final int co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT);
-      final int sum = th + re + br + co;
+      final int th = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
+          re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
+          br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
+          co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = th + re + br + co;
       assert sum > 0;
       sequencerLevel = sum > th && sum > re && sum > br && sum > co ? 0 : th > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
     }
@@ -157,7 +157,7 @@ public class switchBranch {
     return $;
   }
 
-  public boolean hasSameCode(final switchBranch ¢) {
+  public boolean hasSameBody(final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 
@@ -183,8 +183,7 @@ public class switchBranch {
     final AST a = s.getAST();
     Statement $ = null;
     if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s);
-      final IfStatement f = a.newIfStatement();
+      final IfStatement t = az.ifStatement(s), f = a.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));

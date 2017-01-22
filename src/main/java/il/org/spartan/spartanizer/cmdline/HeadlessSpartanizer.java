@@ -39,15 +39,14 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @Override public void apply() {
     try {
       System.out.println(ReportGenerator.metricsMap().get("methods"));
-      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".before.java", "before");
-      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + "/" + name + ".after.java", "after");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".CSV", "metrics");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".spectrum.CSV", "spectrum");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".tips.CSV", "tips");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + "/" + name + ".methods.CSV", "methods");
-      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator();
-      final CommandLineApplicator defaultSelection = defaultApplicator2
-          .defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".before.java", "before");
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".after.java", "after");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".CSV", "metrics");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".spectrum.CSV", "spectrum");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".tips.CSV", "tips");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".methods.CSV", "methods");
+      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
+          defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
         commandLineApplicator.listener(¢ -> System.out.println("Running DefaultApplicator: " + ¢));
         defaultSelection.defaultListenerNoisy().go();

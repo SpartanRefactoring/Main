@@ -54,7 +54,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixAdditionZero extends EagerTipper<InfixExpression> implements TipperCategory.InVain {
+public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
+    implements TipperCategory.NOP.onNumbers {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
@@ -90,7 +91,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "Remove noop of adding 0 in " + wizard.trim(¢);
+    return "Remove noop of adding 0 in " + trivia.gist(¢);
   }
 
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {

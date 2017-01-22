@@ -25,7 +25,8 @@ import il.org.spartan.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-14 */
-public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Sorting {
+public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression>//
+    implements TipperCategory.Sorting {
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }
@@ -45,8 +46,7 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
 
   @Override public ConditionalExpression replacement(final ConditionalExpression x) {
     final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
-    final Expression then = $.getElseExpression();
-    final Expression elze = $.getThenExpression();
+    final Expression then = $.getElseExpression(), elze = $.getThenExpression();
     if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))
       return null;
     if (iz.conditionalExpression(then) && !iz.conditionalExpression(elze))
@@ -54,8 +54,7 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
     final ConditionalExpression parent = az.conditionalExpression(x.getParent());
     if (parent != null && parent.getElseExpression() == x && compatibleCondition(parent.getExpression(), x.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
-      final double a1 = align(elze, alignTo);
-      final double a2 = align(then, alignTo);
+      final double a1 = align(elze, alignTo), a2 = align(then, alignTo);
       if (Math.abs(a1 - a2) > 0.1)
         return a1 > a2 ? $ : null;
     }

@@ -25,7 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
-public class MergeCatches extends ReplaceCurrentNode<TryStatement> implements TipperCategory.Collapse {
+public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
+    implements TipperCategory.Unite {
   @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> cs = step.catchClauses(s);
     for (int i = 0; i < cs.size(); ++i)

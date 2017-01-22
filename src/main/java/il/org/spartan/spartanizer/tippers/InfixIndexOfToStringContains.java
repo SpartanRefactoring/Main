@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Prioritize the use of "contains" string operation over "indexOf"
  * @author Ori Marcovitch
  * @since 2016 */
-public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> implements TipperCategory.Idiomatic {
+public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>//
+    implements TipperCategory.Idiomatic {
   private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<>();
 
   /** Adds to the "tippers" list the basic transformation regarding to

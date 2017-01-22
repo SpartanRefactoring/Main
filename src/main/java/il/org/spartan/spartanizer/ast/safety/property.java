@@ -40,8 +40,8 @@ public enum property {
     return ¢.getCanonicalName();
   }
 
-  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> n) {
-    return ¢ -> (N) ¢.getProperty(key(n));
+  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> c) {
+    return ¢ -> (N) ¢.getProperty(key(c));
   }
 
   /** Sets a binary flag true.

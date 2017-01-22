@@ -20,7 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Common strategy of all evaluators$EvaluateExpression
  * @author Yossi Gil
  * @year 2016 */
-abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
+abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
+    implements TipperCategory.Arithmetic {
   private static int indexForLeftEvaluation(final InfixExpression x) {
     int $ = 0;
     for (final Expression ¢ : extract.allOperands(x)) {

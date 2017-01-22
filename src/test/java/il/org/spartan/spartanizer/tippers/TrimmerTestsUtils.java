@@ -71,8 +71,7 @@ public final class TrimmerTestsUtils {
     public Operand givesEither(final String... options) {
       assert options != null;
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -97,14 +96,14 @@ public final class TrimmerTestsUtils {
           Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
-    public <N extends ASTNode> Operand using(final Class<N> n, final Tipper<N> ¢) {
-      trimmer.add(n, ¢);
+    public <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N> ¢) {
+      trimmer.add(c, ¢);
       return this;
     }
 
-    @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> n, final Tipper<N>... ns) {
-      for (final Tipper<N> ¢ : ns)
-        trimmer.add(n, ¢);
+    @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> c, final Tipper<N>... ts) {
+      for (final Tipper<N> ¢ : ts)
+        trimmer.add(c, ¢);
       return this;
     }
   }
@@ -117,8 +116,8 @@ public final class TrimmerTestsUtils {
       this.clazz = clazz;
     }
 
-    private N findNode(final Tipper<N> n) {
-      assert n != null;
+    private N findNode(final Tipper<N> t) {
+      assert t != null;
       final Wrap wrap = Wrap.find(get());
       assert wrap != null;
       final CompilationUnit u = wrap.intoCompilationUnit(get());
@@ -163,10 +162,10 @@ public final class TrimmerTestsUtils {
     }
   }
 
-  static String apply(final Tipper<? extends ASTNode> n, final String from) {
+  static String apply(final Tipper<? extends ASTNode> t, final String from) {
     final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
-    return TESTUtils.rewrite(new TipperApplicator(n), $, new Document(from)).get();
+    return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(final Trimmer t, final String from) {

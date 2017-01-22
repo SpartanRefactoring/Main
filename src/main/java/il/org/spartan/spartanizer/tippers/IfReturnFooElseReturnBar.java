@@ -26,7 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Ternarization {
+public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement>//
+    implements TipperCategory.Ternarization {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }
@@ -35,10 +36,9 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Override public Statement replacement(final IfStatement s) {
-    final Expression $ = s.getExpression();
-    final Expression then = extract.returnExpression(then(s));
-    final Expression elze = extract.returnExpression(elze(s));
-    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition($)).toReturn();
+    final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
+    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(s.getExpression())).toReturn();
   }
 }

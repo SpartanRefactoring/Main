@@ -6,6 +6,10 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
+  interface EmptyCycles extends TipperCategory {
+    String toString = "no better name";
+  }
+
   String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
@@ -17,139 +21,178 @@ public interface TipperCategory {
   }
 
   interface Abbreviation extends Nominal {
-    String label = "Abbreviation";
+    String toString = "Abbreviation";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
   interface Annonimization extends Nominal {
-    String label = "Unused arguments";
+    String toString = "Unused arguments";
 
     @Override default String description() {
-      return label;
+      return toString;
+    }
+  }
+
+  interface Arithmetic extends TipperCategory {
+    String toString = "Change expression to a more familiar structure (often shorter)";
+
+    @Override default String description() {
+      return toString;
+    }
+  }
+
+  interface Bloater extends TipperCategory {
+    String toString = "Make the code as verbose as possible";
+
+    @Override default String description() {
+      return toString;
     }
   }
 
   interface Centification extends Nominal {
-    String label = "Centification";
+    String toString = "Centification";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  /** Merge two syntactical elements into one, whereby achieving shorter core */
-  interface Collapse extends Structural {
-    String label = "Collapse";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  /** A specialized {@link Collapse} carried out, by factoring out some common
+  /** A specialized {@link Unite} carried out, by factoring out some common
    * element */
-  interface CommnoFactoring extends Collapse { // S2
-    String label = "Distributive refactoring";
+  interface CommnonFactoring extends Unite { // S2
+    String toString = "Distributive refactoring";
 
     @Override default String description() {
-      return label;
+      return toString;
+    }
+  }
+
+  interface Deadcode extends Structural {
+    String toString = "Eliminate code that is never executed";
+
+    @Override default String description() {
+      return toString;
     }
   }
 
   interface Dollarization extends Nominal {
-    String label = "Dollarization";
+    String toString = "Dollarization";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
   interface EarlyReturn extends Structural {
-    String label = "Early return";
+    String toString = "Early return";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  /** Change expression to a more familiar structure, which is not necessarily
-   * shorter */
-  interface Idiomatic extends Structural {
-    String label = "Idiomatic";
+  interface Idiomatic extends TipperCategory {
+    String toString = "Change expression to a more familiar structure (often shorter)";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
   interface Inlining extends Structural {
-    String label = "Structural";
+    String toString = "Structural";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  interface InVain extends Structural {
-    String label = "NOP";
+  /** Auxiliary type: non public intentionally */
+  interface Modular extends TipperCategory {
+    String toString = "Make modular changes to code";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  interface Nanos extends Modular {
-    String label = "Nanos";
+  interface Nanos extends TipperCategory {
+    String toString = "Nanos";
 
     @Override default String description() {
-      return label;
+      return toString;
+    }
+  }
+
+  interface NOP extends Structural {
+    interface onNumbers extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+    }
+
+    String toString = "Eliminate an operation whose computation does nothing";
+
+    @Override default String description() {
+      return toString;
+    }
+
+    interface onBooleans extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+    }
+
+    interface onStrings extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
     }
   }
 
   interface ScopeReduction extends Structural {
-    String label = "Scope reduction";
+    String toString = "Scope reduction";
 
     @Override default String description() {
-      return label;
+      return toString;
+    }
+  }
+
+  interface Shortcircuit extends Structural {
+    String toString = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
+
+    @Override default String description() {
+      return toString;
     }
   }
 
   /** Use alphabetical, or some other ordering, when order does not matter */
   interface Sorting extends Idiomatic {
-    String label = "Sorting";
+    String toString = "Sorting";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  /** Remove syntactical elements that do not change the code semantics */
   interface SyntacticBaggage extends Structural {// S1
-    String label = "Syntactic baggage";
+    String toString = "Remove syntactical element that contributes nothing to semantics";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  /** Replace conditional statement with the conditional operator */
-  interface Ternarization extends Structural { // S3
-    String label = "Ternarization";
+  interface Ternarization extends CommnonFactoring { // S3
+    String toString = "Convert conditional statement to the conditional, ?:, operator";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 
-  /** Expand code to be clearer. */
-  interface Expander extends TipperCategory {
-    String label = "Expander";
+  interface Unite extends Structural {
+    String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
     @Override default String description() {
-      return label;
+      return toString;
     }
   }
 }

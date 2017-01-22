@@ -76,7 +76,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         same place, or after then the second argument in lexicographical
    *         order. */
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
-    return removeWhites(wizard.cleanForm(e1)).compareTo(removeWhites(wizard.cleanForm(e2)));
+    return removeWhites(trivia.cleanForm(e1)).compareTo(removeWhites(trivia.cleanForm(e2)));
   }
 
   static int argumentsCompare(final Expression e1, final Expression e2) {
@@ -124,8 +124,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     // Bubble sort
     for (int i = 0, size = xs.size(); i < size; ++i)
       for (int j = 0; j < size - 1; ++j) {
-        final Expression e0 = xs.get(j);
-        final Expression e1 = xs.get(j + 1);
+        final Expression e0 = xs.get(j), e1 = xs.get(j + 1);
         if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)
           continue;
         xs.remove(j);

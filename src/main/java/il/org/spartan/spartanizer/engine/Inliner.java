@@ -84,8 +84,7 @@ public final class Inliner {
     }
 
     private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
-      final ASTNode oldExpression = n.get();
-      final ASTNode newExpression = copy.of(n.get());
+      final ASTNode oldExpression = n.get(), newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       Collect.usesOf(name).in(newExpression).forEach(

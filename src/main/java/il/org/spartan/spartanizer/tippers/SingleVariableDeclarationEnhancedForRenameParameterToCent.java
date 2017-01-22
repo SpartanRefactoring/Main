@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
+    //
     implements TipperCategory.Centification {
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
@@ -35,7 +36,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
     final EnhancedForStatement $ = (EnhancedForStatement) p;
-    final ASTNode p1 = searchAncestors.forClass(MethodDeclaration.class).from($);
+    final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration)
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();

@@ -127,7 +127,7 @@ public final class SingleTipperApplicator {
                 monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
-            px.subTask(u.getElementName() + " " + ++n + "/" + todo.size());
+            px.subTask(u.getElementName() + wizard.nth(++n, todo.size()));
           }
           todo.removeAll(exhausted);
           px.done();
@@ -186,16 +186,15 @@ public final class SingleTipperApplicator {
           applyFile(w, n);
           return;
         default:
-          return;
       }
     }
 
     protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
-      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
+      applyLocal(w, yieldAncestors.untilClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
     protected void applyFile(final Tipper<?> w, final ASTNode n) {
-      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
+      applyLocal(w, yieldAncestors.untilClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
     protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {

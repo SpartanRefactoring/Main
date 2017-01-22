@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
+public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement>//
+    implements TipperCategory.EmptyCycles {
   private static boolean checkBlock(final ASTNode n) {
     if (n != null
         && (iz.expression(n) && !sideEffects.free(az.expression(n))

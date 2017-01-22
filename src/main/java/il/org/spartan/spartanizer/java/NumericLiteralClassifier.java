@@ -25,16 +25,16 @@ public final class NumericLiteralClassifier {
     if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;
     switch (inner.charAt(inner.length() - 1)) {
-      case 'l':
-      case 'L':
-        return Primitive.Certain.LONG;
-      case 'f':
       case 'F':
+      case 'f':
         return Primitive.Certain.FLOAT;
-      case 'd':
+      case 'L':
+      case 'l':
+        return Primitive.Certain.LONG;
       case 'D':
-      case 'p':
       case 'P':
+      case 'd':
+      case 'p':
         return Primitive.Certain.DOUBLE;
       default:
         if (inner.indexOf('.') >= 0)

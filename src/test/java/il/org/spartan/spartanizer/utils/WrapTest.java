@@ -94,7 +94,7 @@ public final class WrapTest {
   }
 
   @Test public void removeComments() {
-    similar(wizard.removeComments("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+    similar(trivia.removeComments("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
         "if (b) {} else { throw new Exception(); }");
   }
 

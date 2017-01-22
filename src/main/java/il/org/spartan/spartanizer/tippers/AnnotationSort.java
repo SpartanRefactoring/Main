@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */
-public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> implements TipperCategory.Sorting {
+public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
+    implements TipperCategory.Sorting {
   private static final HashSet<String> rankTable[] = as.array(//
       new HashSet<>(as.list("Deprecated")), //
       new HashSet<>(as.list("Override")), //
@@ -76,8 +77,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N> im
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {
-          final ASTNode oldNode = $.get(i);
-          final ASTNode newNode = myCopy.get(i);
+          final ASTNode oldNode = $.get(i), newNode = myCopy.get(i);
           if (oldNode != newNode)
             l.replace(oldNode, r.createMoveTarget(newNode), g);
         }

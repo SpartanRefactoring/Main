@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
+public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
+    implements TipperCategory.Unite {
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
@@ -67,7 +68,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)))))
+    for (final VariableDeclarationFragment ¢ : step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s))))) // NANO
       if ((¢.getName() + "").equals(n + ""))
         return true;
     return false;

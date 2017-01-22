@@ -24,8 +24,8 @@ import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** Handler for the Athenizer project's feature (global athenizer). Uses
- * {@link AthensApplicator} as an {@link Applicator} and {@link Augmenter} as an
+/** Handler for the Bloater project's feature (global Bloater). Uses
+ * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
@@ -72,14 +72,14 @@ public class InflateHandler extends AbstractHandler {
 
   protected static void addListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
-      for (final int i : types)
+      for (final int i : types) // NANO? I think you can deal with arrays
         ls.forEach(¢ -> t.addListener(i, ¢));
   }
 
   protected static void removeListeners(final StyledText t, final List<Listener> ls, final int... types) {
     if (t != null && ls != null)
       for (final Listener ¢ : ls)
-        for (final int i : types)
+        for (final int i : types) // NANOS: Arrays should be easy
           t.removeListener(i, ¢);
   }
 
@@ -114,7 +114,7 @@ public class InflateHandler extends AbstractHandler {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return l -> l;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng())
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
   }
 
@@ -180,26 +180,25 @@ public class InflateHandler extends AbstractHandler {
     if (text == null)
       return;
     final List<Listener> ls = getListeners(text);
-    for (final Listener ¢ : ls)
+    for (final Listener ¢ : ls) // NANO????
       if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
         ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
         break;
       }
-    // XXX seams to be a bug
+    // TODO: Ori Roth XXX seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
   }
 
   private static List<ITextEditor> getOpenedEditors() {
-    final IWorkbenchPage p = getPage();
     final List<ITextEditor> $ = new LinkedList<>();
-    if (p == null)
-      return $;
-    for (final IEditorReference r : p.getEditorReferences()) {
-      final IEditorPart ep = r.getEditor(false);
-      if (ep != null && ep instanceof ITextEditor)
-        $.add((ITextEditor) ep);
-    }
+    final IWorkbenchPage p = getPage();
+    if (p != null)
+      for (final IEditorReference r : p.getEditorReferences()) {
+        final IEditorPart ep = r.getEditor(false);
+        if (ep != null && ep instanceof ITextEditor)
+          $.add((ITextEditor) ep);
+      }
     return $;
   }
 }

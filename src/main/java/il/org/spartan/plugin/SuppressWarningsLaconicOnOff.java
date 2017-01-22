@@ -67,10 +67,10 @@ public final class SuppressWarningsLaconicOnOff {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : disabling.enablers)
+        for (final String e : disabling.enablers) // NANO
           if (s.contains(e))
             return false;
-        for (final String d : disabling.disablers)
+        for (final String d : disabling.disablers) // NANO
           if (s.contains(d))
             return true;
       }
@@ -98,7 +98,7 @@ public final class SuppressWarningsLaconicOnOff {
 
   static Set<String> getKeywords(final String c, final String[] kws) {
     final Set<String> $ = new HashSet<>();
-    for (final String kw : kws)
+    for (final String kw : kws) // NANO?
       if (c.contains(kw))
         $.add(kw);
     return $;
@@ -140,13 +140,13 @@ public final class SuppressWarningsLaconicOnOff {
         BodyDeclaration d;
         switch (t) {
           case CLASS:
-            d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
             break;
           case FILE:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(BodyDeclaration.class).inclusiveLastFrom(n);
             break;
           case FUNCTION:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
+            d = (BodyDeclaration) yieldAncestors.untilClass(BodyDeclaration.class).inclusiveFrom(n);
             break;
           default:
             return;

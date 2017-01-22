@@ -39,7 +39,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * . Tested in {@link Issue233}
  * @author Yuval Simon
  * @since 2016-11-20 */
-public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements TipperCategory.Collapse {
+public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
+    implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -59,10 +60,9 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement> implements
     };
   }
 
-  static String statementsToString(final List<Statement> ss) {
+  static String statementsToString(final List<Statement> ¢) {
     final StringBuilder $ = new StringBuilder();
-    for (final Statement k : ss)
-      $.append(k);
+    ¢.forEach($::append);
     return $ + "";
   }
 
