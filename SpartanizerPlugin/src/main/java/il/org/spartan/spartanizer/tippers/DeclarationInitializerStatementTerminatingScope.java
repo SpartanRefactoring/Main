@@ -32,7 +32,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   }
 
   static boolean never(final SimpleName n, final Statement s) {
-    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(ancestor -> iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT));
+    return az.stream(yieldAncestors.until(s).ancestors(n))
+        .anyMatch(ancestor -> iz.nodeTypeIn(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
