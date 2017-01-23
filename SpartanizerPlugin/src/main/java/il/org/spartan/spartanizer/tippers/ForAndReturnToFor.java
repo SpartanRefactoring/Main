@@ -31,7 +31,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     f.setBody(copy.of(subject.pair(copy.of(nextStatement), null).toIf(make.notOf(copy.of(expression(f))))));
     f.setExpression(null);
     $.replace(s, f, g);
-    $.replace(nextStatement, null, g);  
+    $.replace(nextStatement, null, g);
     return $;
   }
 

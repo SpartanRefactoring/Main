@@ -298,7 +298,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration d) {
-        return getFieldsOfClass(d).stream().allMatch(¢ -> !(step.name(¢).subtreeMatch(matcher, what)));
+        return getFieldsOfClass(d).stream().allMatch(¢ -> !step.name(¢).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final Assignment ¢) {
@@ -339,7 +339,7 @@ public enum Collect {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
-        return parameters(d).stream().allMatch(¢ -> !(step.name(¢).subtreeMatch(matcher, what)));
+        return parameters(d).stream().allMatch(¢ -> !step.name(¢).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final MethodInvocation ¢) {

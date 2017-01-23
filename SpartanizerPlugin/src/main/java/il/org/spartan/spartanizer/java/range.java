@@ -69,7 +69,7 @@ public class range {
 
   public class AfterTo extends RangeIterator<AfterTo> {
     public Stream<Integer> stream() {
-      return StreamSupport.stream(this.spliterator(), false);
+      return StreamSupport.stream(spliterator(), false);
     }
 
     public AfterTo from(final int ¢) {
