@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -86,9 +88,6 @@ public interface disabling {
   }
 
   static boolean contains(final String s, final String[] ids) {
-    for (final String ¢ : ids)
-      if (s.contains(¢))
-        return true;
-    return false;
+    return Arrays.asList(ids).stream().anyMatch(¢ -> s.contains(¢));
   }
 }
