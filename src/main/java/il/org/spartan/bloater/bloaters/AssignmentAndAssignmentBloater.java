@@ -24,26 +24,17 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
 
   @Override public Tip tip(final ExpressionStatement ¢) {
     final Expression e = expression(¢);
-    // TODO: Doron Meshulam you do not need this test. Please revise az and iz.
-    // --yg
-    if (!iz.assignment(e))
-      return null;
     final Assignment $ = az.assignment(e);
-    return !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
+    return $ == null ? null : !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         Assignment newHead = create.newAssignment();
         final Assignment newTail = copy.of($);
-        // TODO: Doron Meshulam -- please use for loop --yg
         Assignment p = newTail;
-        while (iz.assignment(right(az.assignment(right(p)))))
-          p = az.assignment(right(p));
-        // TODO: Doron Meshulam -- please use class subject --yg
+        for (; iz.assignment(right(az.assignment(right(p)))); p = az.assignment(right(p))) {/**/}
         newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
-        // TODO: Doron Meshulam -- the following line does nothing!--yg
-        az.block(¢.getParent());
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         l.insertAfter(tail, ¢, g);
         l.insertAfter(head, ¢, g);
