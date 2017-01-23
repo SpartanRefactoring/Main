@@ -1,5 +1,7 @@
 package il.org.spartan.bloater;
 
+import java.util.*;
+
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.plugin.*;
@@ -72,10 +74,7 @@ public interface ExpanderCategory {
     }
 
     private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
-      for (final ExpanderGroup $ : ExpanderGroup.values()) // NANO?
-        if ($.clazz.isAssignableFrom(¢))
-          return $;
-      return null;
+      return Arrays.asList(ExpanderGroup.values()).stream().filter($ -> $.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends ExpanderCategory> clazz;
