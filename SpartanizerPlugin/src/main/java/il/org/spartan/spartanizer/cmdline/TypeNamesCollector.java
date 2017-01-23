@@ -65,7 +65,6 @@ public final class TypeNamesCollector {
   }
 
   private static void collect(final String[] where) {
-    for (final File ¢ : new FilesGenerator(".java").from(where))
-      collect(¢);
+    new FilesGenerator(".java").from(where).forEach(¢ -> collect(¢));
   }
 }

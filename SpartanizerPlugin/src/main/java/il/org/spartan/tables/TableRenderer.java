@@ -173,13 +173,10 @@ public interface TableRenderer {
   default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
     final Separator s = new Separator(recordSeparator());
-    for (final Object ¢ : values)
-      $.append(s)
-          .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)//
-              : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue())) //
-                  : ¢ instanceof Long ? cellInt((Long) ¢) //
-                      : ¢ instanceof Double ? cellReal((Double) ¢) //
-                          : ¢);
+    values.forEach(¢ -> $.append(s)
+        .append(¢ instanceof Object[] ? cellArray((Object[]) ¢)
+            : ¢ instanceof Integer ? cellInt(Long.valueOf(((Integer) ¢).intValue()))
+                : ¢ instanceof Long ? cellInt((Long) ¢) : ¢ instanceof Double ? cellReal((Double) ¢) : ¢));
     return $ + recordEnd();
   }
 
