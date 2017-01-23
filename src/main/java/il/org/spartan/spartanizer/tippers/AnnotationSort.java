@@ -90,27 +90,4 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
         + ")";
   }
 
-  public static final class ofAnnotation extends AnnotationSort<AnnotationTypeDeclaration> { //
-  }
-
-  public static final class ofAnnotationTypeMember extends AnnotationSort<AnnotationTypeMemberDeclaration> { //
-  }
-
-  public static final class ofEnum extends AnnotationSort<EnumDeclaration> { //
-  }
-
-  public static final class ofEnumConstant extends AnnotationSort<EnumConstantDeclaration> { //
-  }
-
-  public static final class ofField extends AnnotationSort<FieldDeclaration> { //
-  }
-
-  public static final class ofInitializer extends AnnotationSort<Initializer> { //
-  }
-
-  public static final class ofMethod extends AnnotationSort<MethodDeclaration> { //
-  }
-
-  public static final class ofType extends AnnotationSort<TypeDeclaration> { //
-  }
 }

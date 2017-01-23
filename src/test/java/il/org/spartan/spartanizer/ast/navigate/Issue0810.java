@@ -8,6 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link haz}
@@ -29,7 +30,7 @@ public class Issue0810 {
     final List<SimpleName> lst = new ArrayList<>();
     lst.add(az.simpleName(wizard.ast("abc")));
     assert !haz.dollar(lst);
-    lst.add(az.simpleName(wizard.ast("$")));
+    lst.add(az.simpleName(wizard.ast(namer.return¢)));
     assert haz.dollar(lst);
   }
 
@@ -51,7 +52,7 @@ public class Issue0810 {
 
   @Test public void test6() {
     assert !haz.dollar(wizard.ast("{int a;}"));
-    assert haz.dollar(wizard.ast("$"));
+    assert haz.dollar(wizard.ast(namer.return¢));
   }
 
   @Test public void test7() {

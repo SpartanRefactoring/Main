@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -41,7 +42,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       }
 
       SimpleName $() {
-        return d.getAST().newSimpleName("$");
+        return d.getAST().newSimpleName(namer.return¢);
       }
     };
   }
