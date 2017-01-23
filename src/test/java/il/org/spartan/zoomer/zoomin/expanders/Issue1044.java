@@ -45,7 +45,6 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
-@SuppressWarnings("unused")
 class NamespaceFixture {
   // TODO: Doron: convert this into a javadoc of the class. Initializers do not
   // take javadoc
@@ -54,6 +53,7 @@ class NamespaceFixture {
   // You may want to add a print statement so that the code is immune do
   // spartanization --yg
   static {
+    // TODO: Doron fix this
   }
 
   int f(final int a1) {
