@@ -157,12 +157,8 @@ final class EnvironmentVisitor extends ASTVisitor {
     return scopePath + "." + $;
   }
 
-  Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
-    System.out.println($);
-    for (final Entry<String, Binding> ¢ : ss)
-      if (s.equals(¢.getKey()))
-        return ¢.getValue();
-    return null;
+  static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
+    return ss.stream().filter(¢ -> s.equals(¢.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
   /** Returns the {@link Binding} of the declaration the current declaration is

@@ -2,7 +2,6 @@
 package il.org.spartan.tables;
 
 import java.util.*;
-import java.util.Map.*;
 
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
@@ -20,9 +19,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return col(¢.name(), ¢.value());
   }
 
-  public Self col(final Accumulator... as) {
-    for (final Accumulator ¢ : as)
-      col(¢);
+  public Self col(final Accumulator... ¢) {
+    Arrays.asList(¢).forEach(this::col);
     return self();
   }
 
@@ -50,7 +48,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-                      * @param key The key to be added; must not be <code><b>null</b></code>
+                           * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public Self col(final String key, final double value) {
@@ -116,8 +114,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T $) {
-    for (final Entry<String, String> ¢ : External.Introspector.toOrderedMap($).entrySet())
-      col(¢.getKey(), ¢.getValue());
+    External.Introspector.toOrderedMap($).entrySet().forEach(¢ -> col(¢.getKey(), ¢.getValue()));
     return $;
   }
 

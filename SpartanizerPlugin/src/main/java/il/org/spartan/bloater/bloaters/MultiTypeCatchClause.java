@@ -36,7 +36,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     int i = 0;
     // TODO: Ori Roth, this is a perfect example for extract method, which would
     // simpify the code
-    for (; i < catches.size(); ++i)
+    for (; i < catches.size(); ++i) // Tough
       if (iz.unionType(catches.get(i).getException().getType())) {
         multiTypeCatch = copy.of(catches.get(i));
         break;

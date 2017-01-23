@@ -25,11 +25,10 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs) {
+  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {
-      for (final Expression ¢ : xs)
-        $ += az.throwing.double¢(¢);
+      $ = xs.stream().map(az.throwing::double¢).reduce((x, y) -> x + y).get();
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }

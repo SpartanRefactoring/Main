@@ -68,11 +68,8 @@ public class ReportGenerator implements ConfigurableReport {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) public static NamedFunction<ASTNode> find(final String ¢) {
-      for (final NamedFunction $ : ReportGenerator.Util.functions(""))
-        if (Objects.equals($.name(), ¢))
-          return $;
-      return null;
+    @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
+      return Arrays.asList(ReportGenerator.Util.functions("")).stream().filter($ -> Objects.equals($.name(), ¢)).findFirst().orElse(null);
     }
   }
 
@@ -105,16 +102,16 @@ public class ReportGenerator implements ConfigurableReport {
     double apply(T t, R r);
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void write(final ASTNode input, final ASTNode output, final String id,
+  @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-      ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output)));
+    Arrays.asList(ReportGenerator.Util.functions(""))
+        .forEach(¢ -> ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output))));
   }
 
-  @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
+  @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-      ReportGenerator.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2)));
+    Arrays.asList(ReportGenerator.Util.functions(""))
+        .forEach(¢ -> ReportGenerator.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,

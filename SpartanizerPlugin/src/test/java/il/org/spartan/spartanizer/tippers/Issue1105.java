@@ -6,14 +6,13 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- */
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt> */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1105 {
   @Test public void a() {
-    trimmingOf("/**/"  + //
+    trimmingOf("/**/" + //
         "  protected B a() {" + //
         "    final F f = g.h(i(c));" + //
         "    if (f == null) {" + //

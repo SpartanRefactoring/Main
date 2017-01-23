@@ -51,8 +51,7 @@ public enum AnalyzerOptions {
   public static void parseArguments(final String[] args) {
     if (args.length < 2)
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
-    for (final String arg : args)
-      parseArgument(arg);
+    Arrays.asList(args).forEach(AnalyzerOptions::parseArgument);
     System.out.println(AnalyzerOptions.options);
   }
 

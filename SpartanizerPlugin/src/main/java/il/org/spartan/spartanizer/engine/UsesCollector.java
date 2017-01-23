@@ -182,11 +182,8 @@ class UsesCollector extends HidingDepth {
       result.add(candidate);
   }
 
-  boolean declaredIn(final FieldDeclaration d) {
-    for (final Object ¢ : d.fragments())
-      if (declaredIn((VariableDeclarationFragment) ¢))
-        return true;
-    return false;
+  boolean declaredIn(final FieldDeclaration ¢) {
+    return fragments(¢).stream().anyMatch(this::declaredIn);
   }
 
   @Override boolean go(final AbstractTypeDeclaration ¢) {
@@ -242,11 +239,8 @@ class UsesCollector extends HidingDepth {
     return hidden();
   }
 
-  private boolean declaredIn(final MethodDeclaration d) {
-    for (final Object ¢ : d.parameters())
-      if (declaredIn((SingleVariableDeclaration) ¢))
-        return true;
-    return false;
+  private boolean declaredIn(final MethodDeclaration ¢) {
+    return parameters(¢).stream().anyMatch(this::declaredIn);
   }
 
   private boolean declaredIn(final SingleVariableDeclaration f) {
@@ -352,11 +346,8 @@ class StringCollector extends HidingDepth {
       result.add(candidate);
   }
 
-  boolean declaredIn(final FieldDeclaration d) {
-    for (final Object ¢ : d.fragments())
-      if (declaredIn((VariableDeclarationFragment) ¢))
-        return true;
-    return false;
+  boolean declaredIn(final FieldDeclaration ¢) {
+    return fragments(¢).stream().anyMatch(this::declaredIn);
   }
 
   @Override boolean go(final AbstractTypeDeclaration ¢) {
@@ -412,11 +403,8 @@ class StringCollector extends HidingDepth {
     return hidden();
   }
 
-  private boolean declaredIn(final MethodDeclaration d) {
-    for (final Object ¢ : d.parameters())
-      if (declaredIn((SingleVariableDeclaration) ¢))
-        return true;
-    return false;
+  private boolean declaredIn(final MethodDeclaration ¢) {
+    return parameters(¢).stream().anyMatch(this::declaredIn);
   }
 
   private boolean declaredIn(final SingleVariableDeclaration f) {

@@ -1,5 +1,6 @@
 package il.org.spartan.plugin.preferences;
 
+import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.jface.preference.*;
@@ -66,10 +67,7 @@ public class PreferencesResources {
     }
 
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
-      for (final TipperGroup $ : TipperGroup.values()) // NANO?
-        if ($.clazz.isAssignableFrom(¢))
-          return $;
-      return null;
+      return Arrays.asList(TipperGroup.values()).stream().filter($ -> $.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends TipperCategory> clazz;

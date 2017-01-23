@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating <br/>
@@ -29,14 +30,8 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * @return <code><b>true</b></code> <em>iff</em>the parenthesis can be removed
    *         and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
-    if (in(x.getOperator(), TIMES, DIVIDE))
-      return true;
-    if (x.getOperator() != wizard.PLUS2)
-      return false;
-    for (final Expression ¢ : extract.allOperands(x))
-      if (type.of(¢) != type.Primitive.Certain.STRING)
-        return false;
-    return true;
+    return in(operator(x), TIMES, DIVIDE)
+        || (operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(¢ -> type.of(¢) == type.Primitive.Certain.STRING));
   }
 
   @Override public String description() {
@@ -48,22 +43,21 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   }
 
   @Override public Expression replacement(final InfixExpression x) {
-    if (x.getOperator() != wizard.PLUS2)
+    if (operator(x) != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for (final Integer i : range.from(0).to(es.size())) {
+    for (final Integer i : range.to(es.size())) {
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
       if (iz.parenthesizedExpression(es.get(ii))) {
-        Expression ¢ = az.parenthesizedExpression(es.get(ii)).getExpression();
+        Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
         for (; iz.parenthesizedExpression(¢);) {
-          ¢ = az.parenthesizedExpression(¢).getExpression();
+          ¢ = expression(az.parenthesizedExpression(¢));
           replace(es, ¢, ii);
         }
-        if (iz.infixExpression(¢) && ii != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditionalExpression(¢)
-            || iz.nodeTypeEquals(¢, ASTNode.LAMBDA_EXPRESSION))
+        if (iz.infixExpression(¢) && ii != 0 && b && !canRemove(az.infixExpression(¢)) || iz.conditionalExpression(¢) || iz.lambdaExpression(¢))
           continue;
         replace(es, ¢, ii);
       }

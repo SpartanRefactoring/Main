@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
+    if (iz.block(¢) || iz.switchStatement(¢))
+      return ¢;
     for (final ASTNode $ : ancestors.of(¢))
       switch (nodeType($)) {
         case ASTNode.BLOCK:
@@ -62,6 +64,15 @@ public interface scope {
     final ASTNode b = delimiter(¢);
     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     final String $ = n.generateName(t);
+    n.addNewName($, t);
+    b.setProperty("Namespace", n);
+    return $;
+  }
+
+  static String newName(final ASTNode ¢, final Type t, final String s) {
+    final ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final String $ = n.generateName(s);
     n.addNewName($, t);
     b.setProperty("Namespace", n);
     return $;

@@ -57,11 +57,6 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   }
 
   private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
-    if (l1.size() != l2.size())
-      return false;
-    for (final Annotation ¢ : l1)
-      if (!(¢ + "").equals(l2.get(l1.indexOf(¢)) + ""))
-        return false;
-    return true;
+    return l1.size() == l2.size() && l1.stream().allMatch(¢ -> (¢ + "").equals(l2.get(l1.indexOf(¢)) + ""));
   }
 }

@@ -87,7 +87,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (i.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = container.compilationUnit(x);
+      final CompilationUnit u = containing.compilationUnit(x);
       if (u == null)
         return null;
       final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
