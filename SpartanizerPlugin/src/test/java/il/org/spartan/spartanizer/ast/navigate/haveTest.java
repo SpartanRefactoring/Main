@@ -57,7 +57,7 @@ public final class haveTest {
   }
 
   public List<Expression> ExpressionListMaker(final String[] exps) {
-    return Arrays.asList(exps).stream().map(e -> into.e(e)).collect(Collectors.toList());
+    return Arrays.asList(exps).stream().map(into::e).collect(Collectors.toList());
   }
 
   @Test public void hasLiteralTestFalse() {

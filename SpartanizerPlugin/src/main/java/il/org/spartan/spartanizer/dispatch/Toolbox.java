@@ -27,7 +27,7 @@ public class Toolbox {
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
-      Arrays.asList(t.implementation).stream().filter(ts -> ts != null).forEach(ts -> ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup())));
+      Arrays.asList(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup())));
     }
   };
   /** The default instance of this class */
@@ -79,13 +79,14 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
-    return Arrays.asList(ts).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
+  @SafeVarargs
+  public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
+    return Arrays.asList(ns).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<ReturnStatement>()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<>()) //
         .add(ThrowStatement.class, new SequencerNotLastInBlock<ThrowStatement>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<ContinueStatement>()) //
@@ -411,7 +412,7 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    Arrays.asList(implementation).stream().filter(¢ -> ¢ != null).forEach(¢ -> disable(c, ¢));
+    Arrays.asList(implementation).stream().filter(Objects::nonNull).forEach(¢ -> disable(c, ¢));
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -456,7 +457,7 @@ public class Toolbox {
       return $;
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
-    Arrays.asList(t.implementation).stream().filter(element -> element != null)
+    Arrays.asList(t.implementation).stream().filter(Objects::nonNull)
         .forEach(element -> $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
     return $;
   }

@@ -245,8 +245,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  private static boolean valid(final Object... os) {
-    return Arrays.asList(os).stream().allMatch(¢ -> ¢ != null);
+  private static boolean valid(final Object... ¢) {
+    return Arrays.asList(¢).stream().allMatch(Objects::nonNull);
   }
 
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {
