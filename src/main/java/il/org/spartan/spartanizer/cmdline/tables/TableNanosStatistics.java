@@ -37,19 +37,14 @@ public class TableNanosStatistics extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    // TODO Ori Marco
-    pWriter = new Table(outputFileName());
-  }
-
-  private static String outputFileName() {
-    return TableNanosStatistics.class.getSimpleName();
+    pWriter = new Table(TableNanosStatistics.class);
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + Table.temporariesFolder + pWriter.name);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

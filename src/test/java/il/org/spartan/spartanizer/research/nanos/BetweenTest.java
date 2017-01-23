@@ -18,7 +18,7 @@ public class BetweenTest {
   }
 
   // different operators
-  @Ignore @Test public void b() {
+  @Test public void b() {
     trimmingOf("if('a' <= c && c < 'z') use();")//
         .using(InfixExpression.class, new Between())//
         .gives("if(is.value(c).between('a').inclusive().and('z'))use();")//
@@ -26,7 +26,7 @@ public class BetweenTest {
   }
 
   // order
-  @Ignore @Test public void c() {
+  @Test public void c() {
     trimmingOf("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//
         .using(InfixExpression.class, new Between())//
         .gives("if(is.value(radix).between(Character.MIN_RADIX).inclusive().and(Character.MAX_RADIX))use();")//
