@@ -29,7 +29,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
       add(patternTipper("for($T $N1 : $X1) if($X2) $N2 = $N1;", //
           "$N2 = ($X1).stream().reduce(($N1,$N2) -> $X2 ? $N1 : $N2).get();", "Go Fluent. Reduce"));
       add(patternTipper("for($T $N1 : $X1) $N2 += $X2;", //
-          " N2 += ($X1).stream().map($N1 -> $X2).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
+          "$N2 += ($X1).stream().map($N1 -> $X2).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
     }
   };
 
