@@ -22,7 +22,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   @Override protected boolean prerequisite(final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
-    final ASTNode $ = container.typeDeclaration(¢);
+    final ASTNode $ = containing.typeDeclaration(¢);
     return step.constructors($).size() == 1 && step.initializersInstance($).isEmpty();
   }
 

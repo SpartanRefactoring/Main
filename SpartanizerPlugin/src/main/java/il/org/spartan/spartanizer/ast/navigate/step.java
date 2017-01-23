@@ -912,4 +912,12 @@ public enum step {
   public static List<?> modifiers(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
+
+  public static List<?> modifiers(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
+  }
 }
