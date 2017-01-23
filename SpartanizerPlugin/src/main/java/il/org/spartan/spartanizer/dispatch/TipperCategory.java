@@ -129,7 +129,7 @@ public interface TipperCategory {
 
   interface NOP extends Structural {
     interface onNumbers extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on numbers";
     }
 
     String toString = "Eliminate an operation whose computation does nothing";
@@ -139,11 +139,11 @@ public interface TipperCategory {
     }
 
     interface onBooleans extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on booleans";
     }
 
     interface onStrings extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on strings";
     }
   }
 
