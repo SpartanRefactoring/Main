@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.lisp.last;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -252,12 +253,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    if (hasNull(base, as))
-      return false;
-    for (final Assignment ¢ : as)
-      if (incompatible(base, ¢))
-        return false;
-    return true;
+    return !hasNull(base, as) && Arrays.asList(as).stream().allMatch(¢ -> !(incompatible(base, ¢)));
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
@@ -269,12 +265,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
    *         or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
-    if (hasNull(o, os))
-      return false;
-    for (final Assignment.Operator ¢ : os)
-      if (¢ == null || ¢ != o)
-        return false;
-    return true;
+    return !hasNull(o, os) && Arrays.asList(os).stream().allMatch(¢ -> ¢ != null && ¢ == o);
   }
 
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
@@ -309,12 +300,7 @@ public interface wizard {
    *         operator. false if none of them are or if the given parameter is
    *         null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
-    if (ns == null)
-      return false;
-    for (final ASTNode ¢ : ns)
-      if (¢ != null && iz.incrementOrDecrement(¢))
-        return true;
-    return false;
+    return ns != null && Arrays.asList(ns).stream().anyMatch(¢ -> ¢ != null && iz.incrementOrDecrement(¢));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {
@@ -362,10 +348,7 @@ public interface wizard {
    * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
   static Expression find(final boolean b, final List<Expression> xs) {
-    for (final Expression $ : xs)
-      if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
-        return $;
-    return null;
+    return xs.stream().filter($ -> iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue()).findFirst().orElse(null);
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression
@@ -397,20 +380,12 @@ public interface wizard {
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
 
-  static boolean hasObject(final List<Type> ts) {
-    if (ts == null)
-      return false;
-    for (final Type ¢ : ts)
-      if (isObject(¢))
-        return true;
-    return false;
+  static boolean hasObject(final List<Type> ¢) {
+    return ¢ != null && ¢.stream().anyMatch(wizard::isObject);
   }
 
   static boolean hasSafeVarags(final MethodDeclaration d) {
-    for (final Annotation ¢ : extract.annotations(d))
-      if (iz.identifier("SafeVarargs", ¢.getTypeName()))
-        return true;
-    return false;
+    return extract.annotations(d).stream().anyMatch(¢ -> iz.identifier("SafeVarargs", ¢.getTypeName()));
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -596,7 +571,7 @@ public interface wizard {
       $.add(isFinal);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(¢);
+    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(¢);
     if (container == null)
       return $;
     if (iz.annotationTypeDeclaration(container))
@@ -629,7 +604,7 @@ public interface wizard {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
-      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(container)))
+      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(container)))
         $.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
@@ -680,10 +655,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all names are the same (string
    *         wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
-    for (final Expression ¢ : xs)
-      if (!same(¢, x))
-        return false;
-    return true;
+    return Arrays.asList(xs).stream().allMatch(¢ -> same(¢, x));
   }
 
   /** Determine whether two lists of nodes are the same, in the sense that their
@@ -692,14 +664,7 @@ public interface wizard {
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
   @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
-    if (ns1 == ns2)
-      return true;
-    if (ns1.size() != ns2.size())
-      return false;
-    for (final Integer ¢ : range.from(0).to(ns1.size()))
-      if (!same(ns1.get(¢), ns2.get(¢)))
-        return false;
-    return true;
+    return ns1 == ns2 || (ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(¢ -> same(ns1.get(¢), ns2.get(¢))));
   }
 
   static void setBinding(final ASTParser $) {
@@ -717,9 +682,11 @@ public interface wizard {
   }
 
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
-    for (final Predicate<Modifier> ¢ : ms)
-      if (¢.test(m))
-        return true;
-    return false;
+    return ms.stream().anyMatch(¢ -> ¢.test(m));
   }
+  
+  static Statement lastStatement(final ForStatement ¢) {
+    return !iz.block(step.body(¢)) ? step.body(¢) : last(step.statements(az.block(step.body(¢))));
+  }
+
 }

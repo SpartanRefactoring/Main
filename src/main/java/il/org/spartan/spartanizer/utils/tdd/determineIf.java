@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -62,18 +64,7 @@ public enum determineIf {
    * @param m
    * @return true iff the class contains only final fields */
   public static boolean isImmutable(final TypeDeclaration m) {
-    if (m == null)
-      return true;
-    boolean $ = false;
-    for (final FieldDeclaration f : m.getFields()) {
-      for (final Object ¢ : f.modifiers())
-        if (((Modifier) ¢).isFinal())
-          $ = true;
-      if (!$)
-        return false;
-      $ = false;
-    }
-    return true;
+    return m == null || Arrays.asList(fields(m)).stream().allMatch(f -> modifiers(f).stream().anyMatch(¢ -> ((Modifier) ¢).isFinal()));
   }
 
   // For you to implement! Let's TDD and get it on!
@@ -121,7 +112,7 @@ public enum determineIf {
   public static boolean returnsNull(final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    final List<ReturnStatement> statementList = new ArrayList<>();
+    final List<ReturnStatement> $ = new ArrayList<>();
     mDec.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
@@ -136,14 +127,11 @@ public enum determineIf {
       }
 
       @Override public boolean visit(final ReturnStatement ¢) {
-        statementList.add(¢);
+        $.add(¢);
         return true;
       }
     });
-    for (final ReturnStatement ¢ : statementList)
-      if (¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class))
-        return true;
-    return false;
+    return $.stream().anyMatch(¢ -> ¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class));
   }
 
   /** see issue #774 for more details

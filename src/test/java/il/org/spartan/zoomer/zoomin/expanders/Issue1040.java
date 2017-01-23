@@ -2,6 +2,8 @@ package il.org.spartan.zoomer.zoomin.expanders;
 
 import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
+import java.util.*;
+
 import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
@@ -62,16 +64,13 @@ public class Issue1040 {
       return 5;
     }
 
-    void toTest() {
+    @SuppressWarnings("boxing") void toTest() {
       total = 0;
-      for (final Integer k : arr)
-        total += total(1);
+      total = Arrays.asList(arr).stream().map(k -> total(1)).reduce((x, y) -> x + y).get().intValue();
     }
 
-    void toTest2() {
-      total2 = 0;
-      for (final Integer k : arr)
-        total2 += total2(1);
+    @SuppressWarnings("boxing") void toTest2() {
+      total2 = Arrays.asList(arr).stream().map(k -> total2(1)).reduce((x, y) -> x + y).get();
     }
   }
 }

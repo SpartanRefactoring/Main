@@ -361,10 +361,7 @@ public enum extract {
   }
 
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {
-    for (final Integer $ : range.from(0).to(ss.size() - 1))
-      if (ss.get($) == s)
-        return ss.get($ + 1);
-    return null;
+    return range.to(ss.size() - 1).stream().filter($ -> ss.get($) == s).map($ -> ss.get($ + 1)).findFirst().orElse(null);
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -439,10 +436,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    for (final VariableDeclarationFragment $ : step.fragments(¢))
-      if (!iz.identifier("$", $.getName()))
-        return $.getName();
-    return null;
+    return step.fragments(¢).stream().filter($ -> !iz.identifier("$", $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {

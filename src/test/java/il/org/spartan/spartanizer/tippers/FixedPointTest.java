@@ -215,7 +215,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void ternarize23() {
-    assertConvertsTo("int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", "int a=0 + (s.equals(532)?y(2)+10:r(3)-6);");
+    assertConvertsTo("int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", "int a= (s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {

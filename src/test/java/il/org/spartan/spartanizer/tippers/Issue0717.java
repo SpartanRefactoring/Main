@@ -43,8 +43,7 @@ public class Issue0717 {
     if (len <= 0)
       len = 1;
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
-    for (@SuppressWarnings("unused") final Integer ¢ : range.from(1).to(len))
-      $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length())));
+    range.from(1).to(len).forEach(¢ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
     return $ + "";
   }
 

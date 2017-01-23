@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Replace a variable with an expression
  * @author Yossi Gil
@@ -18,9 +19,8 @@ import il.org.spartan.spartanizer.java.*;
 public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-    int i = 0;
-    for (final ASTNode ¢ : ns)
-      $[i++] = new Wrapper<>(¢);
+    final Int i = new Int();
+    Arrays.asList(ns).forEach(¢ -> $[i.inner++] = new Wrapper<>(¢));
     return $;
   }
 
@@ -79,8 +79,7 @@ public final class Inliner {
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> ¢ : ns)
-        inlineintoSingleton(get(), ¢);
+      Arrays.asList(ns).forEach(¢ -> inlineintoSingleton(get(), ¢));
     }
 
     private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {

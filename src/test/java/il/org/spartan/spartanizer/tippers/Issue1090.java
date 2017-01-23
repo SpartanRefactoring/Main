@@ -31,6 +31,16 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
+    AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
+      /** [[SuppressWarningsSpartan]] */
+      @Override protected void startingWith() {
+        intField++;
+      }
+
+      @Override protected void trimmingStopsAt() {
+        ++intField;
+      }
+    };
 
     byte getByteField() {
       return byteField;

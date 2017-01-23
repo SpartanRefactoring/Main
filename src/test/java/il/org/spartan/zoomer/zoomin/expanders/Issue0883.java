@@ -25,12 +25,12 @@ public class Issue0883 {
 
   @Test public void test2() {
     bloatingOf("a = a==0? (b==2? 4: 5 ):3;")//
-        .gives("if(a==0)a=(b==2?4:5);else a=3;");
+        .gives("if(a==0)a=b==2?4:5;else a=3;");
   }
 
   @Test public void test3() {
     bloatingOf("a = (a==0? (b==2? 4: 5 ):3);")//
-        .gives("if(a==0)a=(b==2?4:5);else a=3;");
+        .gives("if(a==0)a=b==2?4:5;else a=3;");
   }
 
   @Test public void test4() {
@@ -40,6 +40,6 @@ public class Issue0883 {
 
   @Test public void test5() {
     bloatingOf("a = b==0? (a==0? 1:2) : 4;")//
-        .gives("if(b==0)a=(a==0?1:2);else a=4;");
+        .gives("if(b==0)a=a==0?1:2;else a=4;");
   }
 }

@@ -163,10 +163,7 @@ public class Analyze {
 
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
-    String code = "";
-    for (final File ¢ : inputFiles())
-      code += spartanize(compilationUnit(¢));
-    new Classifier().analyze(getCompilationUnit(code));
+    new Classifier().analyze(getCompilationUnit(inputFiles().stream().map(¢ -> spartanize(compilationUnit(¢))).reduce((x, y) -> x + y).get()));
   }
 
   /** analyze nano patterns in code. */
