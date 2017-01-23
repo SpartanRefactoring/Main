@@ -10,42 +10,40 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ForEachTest {
   @Test public void a() {
-    trimmingOf("  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
+    trimmingOf(" for (Ls ¢ : br ? listeners : rImpl.al()) ¢.oB(e);")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
+        .gives("(br?listeners:rImpl.al()).forEach(¢->¢.oB(e));")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("for (Entry<URI, CTOverride> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
+    trimmingOf("for (Entry<URI, O> entry : oC.entrySet()) { types.gt().add(entry.getValue());}")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("for(Entry<URI,CTOverride>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
+        .gives("for(Entry<URI,O>¢:oC.entrySet())types.gt().add(entry.getValue());")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("for (Class i : interceptors) try { " //
-        + " l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));} " //
+    trimmingOf("for (Class i : in) try { " //
+        + " l.add((A)f.newClassInstance(H.class,i));} " //
         + "catch (Throwable ¢) {" //
         + "logger.warn(\"\",¢);" //
         + "}")//
             .using(EnhancedForStatement.class, new ForEach())//
-            .gives(
-                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
-            .gives(
-                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
+            .gives("in.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
+            .gives("in.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
 
   @Test public void d() {
-    trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
+    trimmingOf("for (Class<? extends B> ¢ : bf) f.broadcasterFilters(f.newClassInstance(B.class,b));")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
+        .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(B.class,b)));")//
         .stays();
   }
 
   @Test public void e() {
-    trimmingOf("  for (final Statement k : ss)    $.append(k);")//
+    trimmingOf(" for (final Statement k : ss) $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
         .gives("ss.forEach(¢ -> $.append(¢));")//
@@ -53,9 +51,9 @@ public class ForEachTest {
   }
 
   @Test public void f() {
-    trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
+    trimmingOf("for (final I ¢ : us) sc(¢, eclipse.newS(pM));")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("us.forEach(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//
+        .gives("us.forEach(¢->sc(¢,eclipse.newS(pM)));")//
         .stays();
   }
 }
