@@ -23,9 +23,11 @@ public class AggregateTest {
   }
 
   @Test public void c() {
-    trimmingOf("for(B d : bs) $ += f();")//
+    trimmingOf("int $ = 0; for(B d : bs) $ += f();")//
         .using(EnhancedForStatement.class, new Aggregate())//
-        .gives("$=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("int $ = 0; $+=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("int $ = 0 + bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("int $ = bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .stays();
   }
 
@@ -58,7 +60,7 @@ public class AggregateTest {
         .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .stays();
   }
-  
+
   @Test public void g() {
     trimmingOf("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);"//
     )//
@@ -66,5 +68,4 @@ public class AggregateTest {
         .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .stays();
   }
-  
 }
