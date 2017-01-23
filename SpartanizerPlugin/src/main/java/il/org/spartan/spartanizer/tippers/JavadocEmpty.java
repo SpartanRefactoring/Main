@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -19,18 +17,11 @@ public final class JavadocEmpty extends RemovingTipper<Javadoc>//
   }
 
   @Override public boolean prerequisite(final Javadoc ¢) {
-    final List<TagElement> tags = tags(¢);
-    for (final TagElement t : tags)
-      if (!empty(t))
-        return false;
-    return true;
+    return tags(¢).stream().allMatch(JavadocEmpty::empty);
   }
 
   private static boolean empty(final TagElement e) {
-    for (final IDocElement ¢ : fragments(e))
-      if (¢ != null && !(¢ instanceof SimpleName) && ¢ instanceof TextElement && !empty((TextElement) ¢))
-        return false;
-    return true;
+    return fragments(e).stream().allMatch(¢ -> ¢ == null || ¢ instanceof SimpleName || !(¢ instanceof TextElement) || empty((TextElement) ¢));
   }
 
   private static boolean empty(final TextElement ¢) {

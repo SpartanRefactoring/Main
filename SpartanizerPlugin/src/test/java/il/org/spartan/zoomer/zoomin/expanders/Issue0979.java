@@ -48,7 +48,7 @@ public class Issue0979 {
         .gives("void foo(int i1, int i2){ i1=1; i2=3;}");
   }
 
-  @Test public void basicAss() {
+  @Ignore @Test public void basicAss() {
     bloatingOf("int a = 5;")//
         .gives("int a; a = 5;")//
         .gives("int i1; i1 = 5;");
@@ -59,7 +59,7 @@ public class Issue0979 {
         .gives("int i1 = 5,i2=3;");
   }
 
-  @Test public void Assign2() {
+  @Ignore @Test public void Assign2() {
     bloatingOf("double r = 2;")//
         .gives("double r;r = 2;") //
         .gives("double d1; d1 = 2;");

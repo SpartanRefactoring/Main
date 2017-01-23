@@ -16,25 +16,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
-  private static ASTNode innerAssignReplacement(final Expression x, final Statement s, final Expression left, final Operator o) {
-    final ConditionalExpression ¢ = az.conditionalExpression(core(x));
-    if (¢ == null)
-      return null;
-    // TODO: Raviv use class subject --yg
-    final IfStatement $ = s.getAST().newIfStatement();
-    $.setExpression(copy.of(¢.getExpression()));
-    final Assignment then = ¢.getAST().newAssignment();
-    then.setRightHandSide(copy.of(¢.getThenExpression()));
-    then.setLeftHandSide(copy.of(left));
-    then.setOperator(o);
-    $.setThenStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(then))));
-    // TODO: Raviv use class subject --yg
-    final Assignment elze = ¢.getAST().newAssignment();
-    elze.setRightHandSide(copy.of(¢.getElseExpression()));
-    elze.setLeftHandSide(copy.of(left));
-    elze.setOperator(o);
-    $.setElseStatement(copy.of(az.expressionStatement(¢.getAST().newExpressionStatement(elze))));
-    return $;
+  private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
+    final ConditionalExpression $ = az.conditionalExpression(core(x));
+    return $ == null ? null
+        : subject
+            .pair(
+                copy.of(az.expressionStatement($.getAST().newExpressionStatement(subject.pair(copy.of(left), copy.of($.getThenExpression())).to(o)))),
+                copy.of(az.expressionStatement($.getAST().newExpressionStatement(subject.pair(copy.of(left), copy.of($.getElseExpression())).to(o)))))
+            .toIf(copy.of($.getExpression()));
   }
 
   private static ASTNode replaceAssignment(final Statement ¢) {
@@ -42,7 +31,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     if (expressionStatement == null)
       return null;
     final Assignment $ = az.assignment(expressionStatement.getExpression());
-    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), ¢, $.getLeftHandSide(), $.getOperator());
+    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), $.getLeftHandSide(), $.getOperator());
   }
 
   @Override public ASTNode replacement(final ExpressionStatement ¢) {

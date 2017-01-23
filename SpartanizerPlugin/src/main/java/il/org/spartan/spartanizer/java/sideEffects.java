@@ -4,6 +4,8 @@ import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -81,11 +83,8 @@ public enum sideEffects {
                     : iz.block(¢) && sideEffects.free(az.block(¢)));
   }
 
-  public static boolean free(final Block b) {
-    for (final Statement ¢ : statements(b))
-      if (!free(¢))
-        return false;
-    return true;
+  public static boolean free(final Block ¢) {
+    return statements(¢).stream().allMatch(sideEffects::free);
   }
 
   private static boolean free(final ConditionalExpression ¢) {
@@ -124,20 +123,12 @@ public enum sideEffects {
     }
   }
 
-  private static boolean free(final Expression... xs) {
-    for (final Expression ¢ : xs)
-      if (!sideEffects.free(¢))
-        return false;
-    return true;
+  private static boolean free(final Expression... ¢) {
+    return Arrays.asList(¢).stream().allMatch(sideEffects::free);
   }
 
   public static boolean free(final Iterable<? extends Expression> xs) {
-    if (xs == null)
-      return true;
-    for (final Expression ¢ : xs)
-      if (!sideEffects.free(az.expression(¢)))
-        return false;
-    return true;
+    return xs == null || az.stream(xs).allMatch(¢ -> sideEffects.free(az.expression(¢)));
   }
 
   public static boolean free(final MethodDeclaration ¢) {
@@ -149,16 +140,10 @@ public enum sideEffects {
   }
 
   private static boolean free(final VariableDeclarationExpression x) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(x))
-      if (!sideEffects.free(initializer(¢)))
-        return false;
-    return true;
+    return fragments(x).stream().allMatch(¢ -> sideEffects.free(initializer(¢)));
   }
 
   public static boolean free(final VariableDeclarationStatement s) {
-    for (final VariableDeclarationFragment ¢ : fragments(s))
-      if (!sideEffects.free(¢.getInitializer()))
-        return false;
-    return true;
+    return fragments(s).stream().allMatch(¢ -> sideEffects.free(initializer(¢)));
   }
 }

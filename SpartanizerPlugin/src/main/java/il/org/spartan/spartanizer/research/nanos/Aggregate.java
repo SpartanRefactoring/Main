@@ -18,14 +18,22 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($T $N1 : $N2) $N3 = $X;", " $N3 = $N2.stream().reduce(($N1,$N3) -> $X).get();", "Go Fluent. Aggregate"));
-      add(patternTipper("for($T $N1 : $N2) if($X) $N3 = $N1;", " $N3 = $N2.stream().reduce(($N1,$N3) -> $X ? $N1 : $N3).get();",
-          "Go Fluent. Reduce"));
-      add(patternTipper("for($T $N1 : $N2) $N3 += $X;", " $N3 = $N2.stream().map($N1 -> $X).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
-      add(patternTipper("for($T $N1 : $X1) $N2 = $X2;", " $N2 = ($X1).stream().reduce(($N1,$N2) -> $X2).get();", "Go Fluent. Aggregate"));
-      add(patternTipper("for($T $N1 : $X1) if($X2) $N2 = $N1;", " $N2 = ($X1).stream().reduce(($N1,$N2) -> $X2 ? $N1 : $N2).get();",
-          "Go Fluent. Reduce"));
-      add(patternTipper("for($T $N1 : $X1) $N2 += $X2;", " $N2 = ($X1).stream().map($N1 -> $X2).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
+      add(patternTipper("for($T $N1 : $N2) $N3 = $X;", //
+          "$N3 = $N2.stream().reduce(($N1,$N3) -> $X).get();", "Go Fluent. Aggregate"));
+      add(patternTipper("for($T $N1 : $N2) if($X) $N3 = $N1;", ///
+          "$N3 = $N2.stream().reduce(($N1,$N3) -> $X ? $N1 : $N3).get();", "Go Fluent. Reduce"));
+      add(patternTipper("for($T $N1 : $N2) $N3 += $X;", //
+          "$N3 += $N2.stream().map($N1 -> $X).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
+      add(patternTipper("for($T $N1 : $N2) if($X1) $N3 += $X2;", //
+          "$N3 += $N2.stream().filter($N1 -> $X1).map($N1 -> $X2).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
+      add(patternTipper("for($T $N1 : $X1) $N2 = $X2;", //
+          "$N2 = ($X1).stream().reduce(($N1,$N2) -> $X2).get();", "Go Fluent. Aggregate"));
+      add(patternTipper("for($T $N1 : $X1) if($X2) $N2 = $N1;", //
+          "$N2 = ($X1).stream().reduce(($N1,$N2) -> $X2 ? $N1 : $N2).get();", "Go Fluent. Reduce"));
+      add(patternTipper("for($T $N1 : $X1) $N2 += $X2;", //
+          "$N2 += ($X1).stream().map($N1 -> $X2).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
+      add(patternTipper("for($T $N1 : $X1) if($X2) $N2 += $X3;", //
+          "$N2 += ($X1).stream().filter($N1 -> $X2).map($N1 -> $X3).reduce((x,y) -> x + y).get();", "Go Fluent. Sum"));
     }
   };
 

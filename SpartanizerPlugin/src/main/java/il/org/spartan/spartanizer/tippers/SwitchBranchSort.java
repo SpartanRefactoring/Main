@@ -18,6 +18,8 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Sorting {
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
+    if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
+      return null;
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
       if (!$.get(¢).compareTo($.get(¢ + 1))) {
         final switchBranch tmp = $.get(¢ + 1);

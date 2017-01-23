@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Oren Afek
  * @since 2016-11-17 */
 public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
-    implements TipperCategory.ScopeReduction {
+    implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
     return new Tip(description(x), x, getClass()) {
@@ -33,12 +33,11 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
   public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
     if (onlyOne(statements(body(x))) == null)
       return null;
-    final Statement s = first(step.statements(step.body(x)));
+    final Statement s = first(statements(x));
     final LambdaExpression $ = x.getAST().newLambdaExpression();
-    for (final Object ¢ : x.parameters())
-      r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast((ASTNode) ¢, g);
-    r.replace(step.body($), iz.expressionStatement(s) ? step.expression(s)
-        : expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : step.expression(az.returnStatement(s)), g);
+    (parameters(x)).forEach(¢ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(¢, g));
+    r.replace(body($), iz.expressionStatement(s) ? expression(s)
+        : expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : expression(az.returnStatement(s)), g);
     $.setParentheses(x.hasParentheses());
     return $;
   }
@@ -50,8 +49,8 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
     return !iz.expression(body(¢))//
         && !iz.methodInvocation(body(¢))//
-        && onlyOne(statements(body(¢))) != null//
-        && iz.expressionStatement(onlyOne(statements(body(¢))))//
-        || iz.returnStatement(onlyOne(statements(body(¢))));
+        && onlyOne(statements(¢)) != null//
+        && iz.expressionStatement(onlyOne(statements(¢)))//
+        || iz.returnStatement(onlyOne(statements(¢)));
   }
 }

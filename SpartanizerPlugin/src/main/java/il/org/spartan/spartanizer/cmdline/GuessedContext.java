@@ -2,13 +2,15 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.compiler.*;
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -126,9 +128,8 @@ public enum GuessedContext {
 
   private static String problems(final CompilationUnit u) {
     String $ = "";
-    int n = 0;
-    for (final IProblem ¢ : u.getProblems())
-      $ += "\n\t\t\t" + ++n + ": " + ¢.getMessage();
+    final Int n = new Int();
+    $ = Arrays.asList(u.getProblems()).stream().map(¢ -> "\n\t\t\t" + ++n.inner + ": " + ¢.getMessage()).reduce((x, y) -> x + y).get();
     return $;
   }
 

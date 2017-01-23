@@ -7,6 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+
 public class TrackerSelection extends Selection {
   ASTNode track;
   int length;
@@ -50,10 +52,7 @@ public class TrackerSelection extends Selection {
   }
 
   private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
-    ASTNode $;
-    for ($ = coveredNode; $ != null && $.getNodeType() != nodeType;)
-      $ = $.getParent();
-    return $;
+    return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }
 
   private static boolean match(final ASTNode track, final ASTNode newTrack) {

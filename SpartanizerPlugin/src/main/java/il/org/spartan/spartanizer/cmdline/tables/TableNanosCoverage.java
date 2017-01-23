@@ -81,7 +81,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    cWriter = new Table(TableNanosCoverage.class.getSimpleName());
+    cWriter = new Table(TableNanosCoverage.class);
   }
 
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
