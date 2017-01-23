@@ -31,7 +31,8 @@ public class ForEachTest {
         + "}")//
             .using(EnhancedForStatement.class, new ForEach())//
             .gives("in.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
-            .gives("in.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
+            .gives("in.forEach(¢->{try{l.add((A)f.newClassInstance(H.class,¢));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
+            .gives("in.forEach(¢->{try{l.add((A)f.newClassInstance(H.class,¢));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
 
