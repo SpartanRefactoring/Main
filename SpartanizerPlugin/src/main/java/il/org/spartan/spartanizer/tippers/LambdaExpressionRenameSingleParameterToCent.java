@@ -12,7 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -22,18 +21,15 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class LambdaExpressionRenameSingleParameterToCent extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {
   @Override public String description(LambdaExpression ¢) {
-    return "Rename paraemter " + onlyOne(parameters(¢)) + " to ¢ ";
+    return "Rename parameter " + onlyOne(parameters(¢)) + " to ¢ ";
   }
 
   @Override public Tip tip(final LambdaExpression x, final ExclusionManager m) {
     final SimpleName $ = onlyOne(parameters(x)).getName();
-    if (in($.getIdentifier(), namer.return¢, "¢", "__", "_"))
+    if (in($.getIdentifier(), namer.standardNames))
       return null;
     Namespace n = Environment.of(x);
-    if (n.allows(namer.current) || n.allowsCurrent())
-      return null;
-    final Block b = body(x);
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || Collect.usesOf($).in(b).isEmpty())
+    if (n.has(namer.current) || !n.allowsCurrent())
       return null;
     if (m != null)
       m.exclude(x);

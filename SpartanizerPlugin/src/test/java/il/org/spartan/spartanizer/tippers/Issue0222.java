@@ -13,31 +13,30 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0222 {
   @Test public void chocolate1() {
-    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n" + "  int y = x; ++y;\n"
-        + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
-        + "    $.addAll(step.extendedOperands(x));\n" + "  return $;\n" + "}\n")//
+    trimmingOf("static List<E> o(final I x) { if (x == null) return null; int y = x; ++y;\n"
+        + " final List<E> $ = new ArrayList<>(); $.add(left(x)); $.add(right(x)); if (x.hasExtendedOperands())\n"
+        + " $.addAll(step.eo(x)); return $;}\n")//
             .stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + "for (final VariableDeclarationFragment $ : fs){\n"
-        + "int b = f($);\n" + "f($,b);\n" + "return g($,b,f());\n" + "}\n" + "return true;\n" + "}")//
+    trimmingOf("private boolean continue¢(final List<V> fs) {for (final V $ : fs){\n"
+        + "int b = f($);f($,b);return g($,b,f());}return true;}")//
             .stays();
   }
 
   @Test public void chocolate3() {
-    trimmingOf("int f(int i) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}")
-        .gives("int f(int __) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}")//
+    trimmingOf("int f(int i) {for (int b: fs)return 0;return 1;}").gives("int f(int __) {for (int b: fs)return 0;return 1;}")//
         .stays();
   }
 
   @Test public void vanilla() {
-    trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n"
-        + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
-        + "    $.addAll(step.extendedOperands(x));\n" + "  return $;\n" + "}\n")
-            .gives("static List<Expression> operands(final InfixExpression ¢) {\n" + "  if (¢ == null)\n" + "    return null;\n"
-                + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(¢));\n" + "  $.add(right(¢));\n"
-                + "  if (¢.hasExtendedOperands())\n" + "    $.addAll(step.extendedOperands(¢));\n" + "  return $;\n" + "}\n")
+    trimmingOf("static List<E> o(final I x) { if (x == null) return null;\n"
+        + " final List<E> $ = new ArrayList<>(); $.add(left(x)); $.add(right(x)); if (x.hasExtendedOperands())\n"
+        + " $.addAll(step.eo(x)); return $;}\n")
+            .gives("static List<E> o(final I ¢) { if (¢ == null) return null;\n"
+                + " final List<E> $ = new ArrayList<>(); $.add(left(¢)); $.add(right(¢));\n"
+                + " if (¢.hasExtendedOperands()) $.addAll(step.eo(¢)); return $;}\n")
             .stays();
   }
 }
