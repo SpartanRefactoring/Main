@@ -142,11 +142,11 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int nodes(final List<Statement> ss) {
-    return ss.stream().map(¢ -> nodes(¢)).reduce((x, y) -> x + y).get();
+    return ss.stream().map(metrics::nodes).reduce((x, y) -> x + y).get();
   }
 
   @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
-    return Arrays.asList(ns).stream().map(¢ -> count.nodes(¢)).reduce((x, y) -> x + y).get();
+    return Arrays.asList(ns).stream().map(count::nodes).reduce((x, y) -> x + y).get();
   }
 
   static int tokens(final String s) {
@@ -176,7 +176,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int countStatements(final List<Statement> ss) {
-    return ss.stream().map(¢ -> countStatements(¢)).reduce((x, y) -> x + y).get();
+    return ss.stream().map(metrics::countStatements).reduce((x, y) -> x + y).get();
   }
 
   static int countStatementsOfType(final Statement s, final int type) {

@@ -110,7 +110,7 @@ public enum Collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).stream().filter(¢ -> ¢ != null).forEach(¢ -> ¢.accept(new UsesCollector($, name)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(¢ -> ¢.accept(new UsesCollector($, name)));
         return $;
       }
     };
@@ -124,7 +124,7 @@ public enum Collect {
 
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
-        Arrays.asList(ns).stream().filter(¢ -> ¢ != null).forEach(¢ -> ¢.accept(new StringCollector($, stringName)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(¢ -> ¢.accept(new StringCollector($, stringName)));
         return $;
       }
     };
@@ -433,7 +433,7 @@ public enum Collect {
    * @return list of uses */
   List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
-    Arrays.asList(ns).forEach(n -> Arrays.asList(collectors(what, $)).forEach(¢ -> n.accept(¢)));
+    Arrays.asList(ns).forEach(n -> Arrays.asList(collectors(what, $)).forEach(n::accept));
     removeDuplicates($);
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
     return $;
