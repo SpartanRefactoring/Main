@@ -57,7 +57,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
-    if (x instanceof InfixExpression)
+    if (iz.infixExpression(x))
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
@@ -70,7 +70,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
-    if (!in(x.getOperator(), PLUS, MINUS)) {
+    if (!in(operator(x), PLUS, MINUS)) {
       $.add(x);
       return $;
     }

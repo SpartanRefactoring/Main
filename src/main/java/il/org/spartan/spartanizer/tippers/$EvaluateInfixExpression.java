@@ -49,7 +49,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   }
 
   @Override public final boolean prerequisite(final InfixExpression ¢) {
-    return ¢.getOperator() == operator();
+    return step.operator(¢) == operator();
   }
 
   @Override public final ASTNode replacement(final InfixExpression x) {
