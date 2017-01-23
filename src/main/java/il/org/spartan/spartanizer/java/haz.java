@@ -65,10 +65,7 @@ public enum haz {
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
-    for (final SimpleName ¢ : ns)
-      if ("$".equals(identifier(¢)))
-        return true;
-    return false;
+    return ns.stream().anyMatch(¢ -> "$".equals(identifier(¢)));
   }
 
   /** @param ¢ JD
@@ -78,17 +75,11 @@ public enum haz {
   }
 
   public static boolean final¢(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL)
-        return true;
-    return false;
+    return ms.stream().anyMatch(¢ -> IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL);
   }
 
   static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
+    return ms.stream().anyMatch(¢ -> ¢.isAnnotation());
   }
 
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
@@ -108,10 +99,7 @@ public enum haz {
       }
 
       boolean ¢(final List<Expression> xs) {
-        for (final Expression ¢ : xs)
-          if (¢ instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) ¢))
-            return true;
-        return false;
+        return xs.stream().anyMatch(¢ -> iz.variableDeclarationExpression(¢) && ¢(az.variableDeclarationExpression(¢)));
       }
 
       boolean ¢(final SimpleName ¢) {
@@ -144,7 +132,7 @@ public enum haz {
       }
 
       boolean ¢(final VariableDeclarationFragment ¢) {
-        return ¢(¢.getName());
+        return ¢(step.name(¢));
       }
 
       boolean ¢(final VariableDeclarationStatement ¢) {
@@ -152,31 +140,19 @@ public enum haz {
       }
 
       boolean ¢¢(final List<CatchClause> cs) {
-        for (final CatchClause ¢ : cs)
-          if (¢(¢))
-            return true;
-        return false;
+        return cs.stream().anyMatch(¢ -> ¢(¢));
       }
 
       boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
-        for (final VariableDeclarationExpression ¢ : xs)
-          if (¢(¢))
-            return true;
-        return false;
+        return xs.stream().anyMatch(¢ -> ¢(¢));
       }
 
       boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment x : fs)
-          if (¢(x))
-            return true;
-        return false;
+        return fs.stream().anyMatch(x -> ¢(x));
       }
 
       @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
+        return ¢¢.stream().anyMatch(¢ -> ¢(¢));
       }
     }.test(ss);
   }
@@ -226,10 +202,7 @@ public enum haz {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
       boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          if (continue¢(¢.getName()))
-            return true;
-        return false;
+        return fs.stream().anyMatch(¢ -> continue¢(step.name(¢)));
       }
 
       boolean continue¢(final SimpleName ¢) {
@@ -240,7 +213,7 @@ public enum haz {
       }
 
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
-        return continue¢(¢.getName());
+        return continue¢(step.name(¢));
       }
 
       @Override public boolean visit(final FieldDeclaration node) {
@@ -256,7 +229,7 @@ public enum haz {
       }
 
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        return continue¢(¢.getName());
+        return continue¢(step.name(¢));
       }
 
       @Override public boolean visit(final VariableDeclarationStatement ¢) {

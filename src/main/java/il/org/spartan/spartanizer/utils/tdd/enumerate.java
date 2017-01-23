@@ -93,12 +93,7 @@ public enum enumerate {
     final List<?> l = step.statements(step.body(d));
     final boolean[] arr = new boolean[10];
     final int BLOCK = 0, IFSTATE = 1, FORSTATE = 2, WHILESTATE = 3, SWITCHSTATE = 4, DOSTATE = 5, SYNC = 6, TRY = 7, LAMBDA = 7;
-    // TODO: deal with lambada-expr
-    // d.accept(new ASTVisitor() {
-    //
-    // });
-    for (final Integer ¢ : range.from(0).to(arr.length))
-      arr[¢] = false;
+    range.to(arr.length).forEach(¢ -> arr[¢] = false);
     for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {
         ++$;
