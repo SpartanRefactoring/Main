@@ -15,7 +15,7 @@ public class Issue0251 {
   @Test public void Issue302_test() {
     trimmingOf("if(b()){int i;}")//
         .gives("if (b()){}")//
-        .stays();
+        ;
   }
 
   @Test public void t01() {
@@ -52,7 +52,8 @@ public class Issue0251 {
 
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
-        .stays();
+    .gives("if(b()){}")//
+       ; 
   }
 
   @Test public void t07() {
@@ -95,7 +96,8 @@ public class Issue0251 {
 
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
-        .stays();
+    .gives("if(b==q()){}")//
+    ;
   }
 
   @Test public void t16() {
@@ -106,7 +108,8 @@ public class Issue0251 {
   @Test public void t17() {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//
-        .stays();
+        .gives("while(b==q)if(tipper==q()){}")//
+       ; 
   }
 
   @Test public void t19() {
@@ -119,6 +122,7 @@ public class Issue0251 {
   @Test public void t21() {
     trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){int i;}")//
+        .gives("for(i=1;b==q;++i)if(tipper==q()){}")//
         .stays();
   }
 
@@ -132,18 +136,21 @@ public class Issue0251 {
   @Test public void t23() {
     trimmingOf("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){int i;}")//
+        .gives("for(i=1;b==q();++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t24() {
     trimmingOf("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}")//
+        .gives("for(i=tipper();b==q;++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t25() {
     trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}")//
+        .gives("for(i=4;b==q;f=i())if(tipper==q()){}")//
         .stays();
   }
 }
