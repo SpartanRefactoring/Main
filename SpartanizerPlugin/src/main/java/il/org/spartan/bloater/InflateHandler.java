@@ -182,7 +182,7 @@ public class InflateHandler extends AbstractHandler {
         ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
         break;
       }
-    // TODO: Ori Roth XXX seems to be a bug --yg
+    // TODO: Ori Roth seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
   }
