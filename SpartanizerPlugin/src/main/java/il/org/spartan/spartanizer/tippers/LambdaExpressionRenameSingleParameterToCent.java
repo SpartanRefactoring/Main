@@ -25,7 +25,10 @@ public final class LambdaExpressionRenameSingleParameterToCent extends EagerTipp
   }
 
   @Override public Tip tip(final LambdaExpression x, final ExclusionManager m) {
-    final SimpleName $ = onlyOne(parameters(x)).getName();
+    final VariableDeclaration vd = onlyOne(parameters(x));
+    if (vd == null)
+      return null;
+    final SimpleName $ = vd.getName();
     if (in($.getIdentifier(), namer.standardNames))
       return null;
     Namespace n = Environment.of(x);
