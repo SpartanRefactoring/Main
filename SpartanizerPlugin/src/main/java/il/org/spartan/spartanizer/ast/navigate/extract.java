@@ -294,7 +294,7 @@ public enum extract {
   public static Statement lastStatement(final EnhancedForStatement ¢) {
     return lastStatement(body(¢));
   }
-  
+
   public static Statement lastStatement(final ForStatement ¢) {
     return lastStatement(body(¢));
   }
@@ -441,7 +441,8 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    return step.fragments(¢).stream().filter($ -> !iz.identifier(namer.return¢, $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
+    return step.fragments(¢).stream().filter($ -> !iz.identifier(namer.return¢, $.getName())).map(VariableDeclaration::getName).findFirst()
+        .orElse(null);
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {

@@ -37,7 +37,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    //TODO Ori Marco
+    // TODO Ori Marco
     pWriter = new Table(outputFileName());
   }
 
