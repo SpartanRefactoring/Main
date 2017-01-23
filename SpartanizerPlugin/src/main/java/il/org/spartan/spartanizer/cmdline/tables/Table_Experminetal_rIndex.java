@@ -48,7 +48,7 @@ public class Table_Experminetal_rIndex extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    lWriter = new Table(Table_Experminetal_rIndex.class.getSimpleName());
+    lWriter = new Table(Table_Experminetal_rIndex.class);
   }
 
   public void summarize(final String path) {
