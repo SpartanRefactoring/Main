@@ -59,9 +59,10 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? ForToForInitializers.handleInfixCondition(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? ForToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from) ? ForToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+    // TODO Dor: use extract.core
+    return iz.infix(from) ? FragmentToForInitializers.handleInfixCondition(copy.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? FragmentToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from) ? FragmentToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Determines whether a specific SimpleName was used in a

@@ -12,8 +12,8 @@ import org.junit.*;
 public class Issue0907 {
   @Test public void issue086_1() {
     trimmingOf("if(false)" + "c();\n" + "int a;")//
-        .gives("{}int a;")//
-        .gives("int a;")//
+        .gives("{}")//
+        .gives("")//
         .stays();
   }
 }

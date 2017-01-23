@@ -258,7 +258,7 @@ public enum collect {
     };
   }
 
-  // didn'tipper find any use case in which it will be different of
+  // didn't find any use case in which it will be different of
   // usesCollector
   /** Creates an ASTVisitor that adds all explicit uses (by name) of a
    * SimpleName to the provided list.
