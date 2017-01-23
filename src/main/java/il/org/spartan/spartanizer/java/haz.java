@@ -13,7 +13,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -62,11 +61,11 @@ public enum haz {
   }
 
   public static boolean dollar(final ASTNode ¢) {
-    return !Collect.usesOf(namer.return¢).inside(¢).isEmpty();
+    return !Collect.usesOf("$").inside(¢).isEmpty();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
-    return ns.stream().anyMatch(¢ -> namer.return¢.equals(identifier(¢)));
+    return ns.stream().anyMatch(¢ -> "$".equals(identifier(¢)));
   }
 
   /** @param ¢ JD
@@ -207,7 +206,7 @@ public enum haz {
       }
 
       boolean continue¢(final SimpleName ¢) {
-        if (iz.identifier(namer.return¢, ¢))
+        if (iz.identifier("$", ¢))
           return false;
         $.set(Boolean.TRUE);
         return true;

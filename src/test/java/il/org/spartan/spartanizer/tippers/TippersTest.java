@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -91,7 +90,7 @@ public final class TippersTest {
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(n, n.getAST().newSimpleName(namer.return¢), m, r, null);
+    Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     final String output = Wrap.Method.off(d.get());
     assert output != null;
