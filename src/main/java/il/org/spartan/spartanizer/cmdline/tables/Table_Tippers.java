@@ -18,7 +18,7 @@ public class Table_Tippers {
       for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
-            if (¢ != null)
+            if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
               r //
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", ¢.getClass().getSimpleName())//
