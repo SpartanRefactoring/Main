@@ -7,7 +7,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @year 2016 */
 public interface TipperCategory {
   interface EmptyCycles extends TipperCategory {
-    String toString = "no better name";
+    String toString = "churn";
   }
 
   String description();
