@@ -1131,7 +1131,7 @@ public final class Version230 {
   }
 
 
-  @Ignore @Test public void ifSequencerNoElseSequencer05a() {
+  @Test public void ifSequencerNoElseSequencer05a() {
     trimmingOf("for(;;){ if(a){x();return;} continue;a=3;}")//
         .gives("for(;;){ if(a){x();return;} continue;}")//
         .gives("for(;;)if(a){x();return;} ")//
