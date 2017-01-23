@@ -4,6 +4,7 @@ import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
 import java.util.regex.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -97,11 +98,7 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
-    final Set<String> $ = new HashSet<>();
-    for (final String kw : kws) // NANO?
-      if (c.contains(kw))
-        $.add(kw);
-    return $;
+    return Arrays.asList(kws).stream().filter(kw -> c.contains(kw)).collect(Collectors.toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {

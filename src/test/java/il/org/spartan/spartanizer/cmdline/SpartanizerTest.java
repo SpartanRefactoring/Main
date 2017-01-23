@@ -5,6 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -21,11 +23,9 @@ public class SpartanizerTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> modifiers = d.modifiers();
-        for (final Object modifier : modifiers)
-          if (modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"))
-            return true;
-        return false;
+        final List<?> $ = modifiers(d);
+        return $.stream()
+            .anyMatch(modifier -> modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"));
       }
 
       /* (non-Javadoc)
@@ -317,11 +317,9 @@ public class SpartanizerTest {
   private void visitASTNode(final ASTNode u1) {
     u1.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> modifiers = d.modifiers();
-        for (final Object modifier : modifiers)
-          if (modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"))
-            return true;
-        return false;
+        final List<?> $ = modifiers(d);
+        return $.stream()
+            .anyMatch(modifier -> modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"));
       }
 
       @Override public boolean visit(final MethodDeclaration node) {
