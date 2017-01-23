@@ -21,7 +21,8 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     else {
       // TODO: Doron - use extract.core()
       final Expression unpar = expression(az.parenthesizedExpression(x));
-      // TODO: Doron - if you do az.conditional, you do not need to check for type.
+      // TODO: Doron - if you do az.conditional, you do not need to check for
+      // type.
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);

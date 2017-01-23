@@ -116,12 +116,12 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void updateListeners() {
     externalListeners.clear();
-    for (Integer i : wheelEvents) {
-      List<Listener> l = new LinkedList<>();
+    for (final Integer i : wheelEvents) {
+      final List<Listener> l = new LinkedList<>();
       Collections.addAll(l, text.getListeners(i.intValue()));
       TypedListener tl = null;
-      for (Listener ¢ : l)
-        if (¢ instanceof TypedListener && this.equals(((TypedListener) ¢).getEventListener()))
+      for (final Listener ¢ : l)
+        if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
           tl = (TypedListener) ¢;
       if (tl != null)
         l.remove(tl);
@@ -130,12 +130,12 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void removeListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
+    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
       InflateHandler.removeListeners(text, ¢.getValue(), ¢.getKey());
   }
 
   private void restoreListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
+    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
       InflateHandler.addListeners(text, ¢.getValue(), ¢.getKey());
   }
 }

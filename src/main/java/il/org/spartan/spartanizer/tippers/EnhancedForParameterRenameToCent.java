@@ -42,7 +42,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
-    if (m != null) 
+    if (m != null)
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

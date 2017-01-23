@@ -20,8 +20,7 @@ public interface namer {
   String anonymous = "__";
   String current = "¢";
   String return¢ = "$";
-  String[] standardNames = {namer.return¢, namer.anonymous, namer.current};
-
+  String[] standardNames = { namer.return¢, namer.anonymous, namer.current };
   @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
     {
       add("Class");
@@ -29,9 +28,7 @@ public interface namer {
       add("Map");
     }
   };
-
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-
   @SuppressWarnings("serial") Set<String> plurals = new LinkedHashSet<String>() {
     {
       add("ArrayList");
@@ -49,17 +46,16 @@ public interface namer {
     }
   };
 
-
-  static String[] components(Name ¢) {
-    return components(¢); 
+  static String[] components(final Name ¢) {
+    return components(¢);
   }
 
-  static String[] components(final QualifiedType  ¢) {
+  static String[] components(final QualifiedType ¢) {
     return components(¢.getName());
   }
 
-  static String[] components(final SimpleType  ¢) {
-    return components(¢.getName()); 
+  static String[] components(final SimpleType ¢) {
+    return components(¢.getName());
   }
 
   static String[] components(final String javaName) {
@@ -92,6 +88,7 @@ public interface namer {
             $ -> (($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
         .map(namer::shorten).findFirst().orElse(null);
   }
+
   static String shorten(final Name ¢) {
     return ¢ instanceof SimpleName ? shorten(¢ + "") //
         : ¢ instanceof QualifiedName ? shorten(((QualifiedName) ¢).getName()) //
@@ -147,10 +144,10 @@ public interface namer {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 
-  static String variableName(SimpleType t) {
-    List<String> ss = as.list(components(t));
+  static String variableName(final SimpleType t) {
+    final List<String> ss = as.list(components(t));
     String $ = lisp.first(ss).toLowerCase();
-    for (String ¢: lisp.rest(ss))
+    for (final String ¢ : lisp.rest(ss))
       $ += ¢;
     return $;
   }
