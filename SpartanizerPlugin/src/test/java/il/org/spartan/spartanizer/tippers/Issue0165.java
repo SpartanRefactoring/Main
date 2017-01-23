@@ -12,12 +12,12 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0165 {
   @Test public void seriesA_01_vanilla() {
-    trimmingOf(" public static boolean f(final VariableDeclarationStatement s) {\n" + "return (Modifier.FINAL & s.getModifiers()) != 0;}")
-        .gives(" public static boolean f(final VariableDeclarationStatement ¢) {\n" + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
+    trimmingOf(" public static boolean f(final VariableDeclarationStatement s) {return (Modifier.FINAL & s.getModifiers()) != 0;}")
+        .gives(" public static boolean f(final VariableDeclarationStatement ¢) {return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
   }
 
   @Test public void seriesA_02_dollar() {
-    trimmingOf(" public static boolean __final(final VariableDeclarationStatement $) {\n" + "return (Modifier.FINAL & $.getModifiers()) != 0;}")
+    trimmingOf(" public static boolean __final(final VariableDeclarationStatement $) {return (Modifier.FINAL & $.getModifiers()) != 0;}")
         .stays();
   }
 
