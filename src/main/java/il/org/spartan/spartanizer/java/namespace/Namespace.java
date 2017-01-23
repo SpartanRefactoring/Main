@@ -391,20 +391,14 @@ public final class Namespace implements Environment {
   }
 
   public boolean allowsCurrent() {
-    for (final Namespace ¢ : children)
-      if (!¢.allowsCurrentRecursive())
-        return false;
-    return true;
+    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
   }
 
   public boolean allowsCurrentRecursive() {
     for (final String key : flat.keySet())
       if (isVariable(key) && !in(key, namer.standardNames))
         return false;
-    for (final Namespace ¢ : children)
-      if (!¢.allowsCurrentRecursive())
-        return false;
-    return true;
+    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
   }
 
   private static boolean isVariable(final String key) {
