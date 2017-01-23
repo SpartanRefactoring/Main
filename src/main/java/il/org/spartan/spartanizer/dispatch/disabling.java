@@ -88,6 +88,6 @@ public interface disabling {
   }
 
   static boolean contains(final String s, final String[] ids) {
-    return Arrays.asList(ids).stream().anyMatch(¢ -> s.contains(¢));
+    return Arrays.asList(ids).stream().anyMatch(s::contains);
   }
 }
