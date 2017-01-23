@@ -32,6 +32,7 @@ public class Issue0455 {
 
   @Test public void doWhileStatementShouldntTip() {
     trimmingOf("x -> {do ++x; while(x < 10);}") //
+        .gives("¢ -> {do ++¢; while(¢ < 10);}") //
         .stays();
   }
 
@@ -106,7 +107,7 @@ public class Issue0455 {
 
   @Test public void singleIfStatementShouldntTip() {
     trimmingOf("x -> {if(x > 0)--x;}") //
-    .gives("¢ -> {if(¢ > 0)--¢;}") //
+        .gives("¢ -> {if(¢ > 0)--¢;}") //
         .stays();
   }
 
@@ -129,8 +130,9 @@ public class Issue0455 {
 
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
-        .gives("x->{{if(x==0) ++x; else --x;}}") //
-        .gives("x->{if(x==0)++x;else--x;}") //
+        .gives("¢ -> {switch(¢){ case 0: ++¢; break; default: --¢;}}") //
+        .gives("¢->{{if(¢==0) ++¢; else --¢;}}") //
+        .gives("¢->{if(¢==0)++¢;else--¢;}") //
         .stays();
   }
 
@@ -158,11 +160,13 @@ public class Issue0455 {
 
   @Test public void superConstructrInvocationShouldntTip() {
     trimmingOf("x -> {super(x);}") //
+        .gives("¢ -> {super(¢);}") //
         .stays();
   }
 
   @Test public void whileStatementShouldntTip() {
     trimmingOf("x -> {while(x < 0);}") //
+        .gives("¢ -> {while(¢ < 0);}") //
         .stays();
   }
 }
