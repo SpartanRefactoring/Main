@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.java.namespace.definition.Kind.*;
 
 import java.util.*;
@@ -251,7 +252,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final AnnotationTypeMemberDeclaration ¢) {
-    return put(step.name(¢) + "", ¢.getType());
+    return put("annotation member" + step.name(¢), ¢.getType());
   }
 
   @SuppressWarnings({}) protected Namespace put(final BodyDeclaration ¢) {
@@ -347,8 +348,23 @@ public final class Namespace implements Environment {
     return false;
   }
 
-  public boolean hasInChildren(final String identifier) {
-    return has(identifier) || children.stream().anyMatch(¢ -> ¢.hasInChildren(identifier));
+  public boolean allows(final String identifier) {
+    return has(identifier) || children.stream().anyMatch(¢ -> ¢.allows(identifier));
+  }
+
+  public static Iterable<String> namesGenerator(final SimpleType t) {
+    return () -> new Iterator<String>() {
+      final String base = namer.variableName(t);
+      int n = -1;
+
+      @Override public String next() {
+        return ++n == 0 ? base : base + n;
+      }
+
+      @Override public boolean hasNext() {
+        return true;
+      }
+    };
   }
 
   public String generateName(final Type ¢) {
@@ -371,5 +387,19 @@ public final class Namespace implements Environment {
 
   public Namespace addNewName(final String s, final Type t) {
     return put(s, t);
+  }
+
+  public boolean allowsCurrent() {
+    for (final String key : flat.keySet())
+      if (isVariable(key) && !in(key, namer.standardName))
+        return false;
+    for (final Namespace ¢ : children)
+      if (!¢.allowsCurrent())
+        return false;
+    return true;
+  }
+
+  private static boolean isVariable(final String key) {
+    return !key.contains(" ") && !key.contains("/");
   }
 }

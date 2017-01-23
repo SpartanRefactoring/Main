@@ -30,6 +30,6 @@ public class DeflaterProvider extends OperationsProvider {
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return (list) -> Collections.singletonList(list.get(list.size() - 1));
+    return (¢) -> Collections.singletonList(¢.get(¢.size() - 1));
   }
 }

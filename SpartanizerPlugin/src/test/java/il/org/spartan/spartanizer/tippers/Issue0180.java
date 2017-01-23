@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit test for: {@link MethodDeclarationRenameReturnToDollar}
- * {@link MethodDeclarationRenameSingleParameterToCent} Checks \@param tag value
+ * {@link LambdaExpressionRenameSingleParameterToCent} Checks \@param tag value
  * in javadoc is changed with dollar/cent renaming.
  * @author Ori Roth
  * @since 2016

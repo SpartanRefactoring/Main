@@ -53,14 +53,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     InfixExpression px = az.comparison(xs.get(0));
     if (!iz.infixEquals(px))
       return false;
-    final SimpleName switchVariable = !iz.simpleName(step.left(px)) ? null : az.simpleName(step.left(px));
+    final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
     if (switchVariable == null)
       return false;
     for (final Expression e : xs) {
       px = az.comparison(e);
       if (!iz.infixEquals(px))
         return false;
-      final SimpleName currName = !iz.simpleName(step.left(px)) ? null : az.simpleName(step.left(px));
+      final SimpleName currName = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
       if (currName == null || !currName.getIdentifier().equals(switchVariable.getIdentifier()))
         return false;
     }
@@ -70,7 +70,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = new ArrayList<>();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
-      $.add(step.expression(az.ifStatement(p)));
+      $.add(expression(az.ifStatement(p)));
     return $;
   }
 
@@ -84,7 +84,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       return $;
     }
     final Block b = s.getAST().newBlock();
-    step.statements(b).add(copy.of(p));
+    statements(b).add(copy.of(p));
     $.add(b);
     return $;
   }
@@ -96,7 +96,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       Block b = az.block(then);
       if (b == null) {
         b = s.getAST().newBlock();
-        step.statements(b).add(az.statement(then));
+        statements(b).add(az.statement(then));
       }
       collectInto.add(b);
     }
