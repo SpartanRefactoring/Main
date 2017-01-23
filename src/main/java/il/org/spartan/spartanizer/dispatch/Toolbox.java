@@ -170,7 +170,7 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(ArrayAccess.class, //
-            new InliningPrefix(), //
+            new ArrayAccessAndIncrement(), //
             null) //
         .add(Javadoc.class, new JavadocEmpty())
         .add(InfixExpression.class, //
