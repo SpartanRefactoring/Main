@@ -68,7 +68,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static List<Expression> getAllExpressions(final IfStatement s) {
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>(); 
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement())
       $.add(step.expression(az.ifStatement(p)));
     return $;

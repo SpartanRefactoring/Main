@@ -10,6 +10,6 @@ class Collateral {
   public static void ₡(final Runnable... collateralStatements) {
     if (collateralStatements == null)
       throw new IllegalArgumentException();
-    Arrays.asList(collateralStatements).forEach(¢ -> ¢.run());
+    Arrays.asList(collateralStatements).forEach(Runnable::run);
   }
 }

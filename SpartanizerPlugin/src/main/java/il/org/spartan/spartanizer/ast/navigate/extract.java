@@ -436,7 +436,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    return step.fragments(¢).stream().filter($ -> !iz.identifier("$", $.getName())).map($ -> $.getName()).findFirst().orElse(null);
+    return step.fragments(¢).stream().filter($ -> !iz.identifier("$", $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {

@@ -24,7 +24,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     super(enumClass);
     eventMap = new HashMap<>();
     recorders = new HashMap<>();
-    for (final E ¢ : events()) {
+    for (final E ¢ : events()) { // NANO
       eventMap.put(¢, null);
       recorders.put(¢, null);
     }
