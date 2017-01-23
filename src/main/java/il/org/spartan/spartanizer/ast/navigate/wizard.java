@@ -686,7 +686,7 @@ public interface wizard {
   }
   
   static Statement lastStatement(final ForStatement ¢) {
-    return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
+    return !iz.block(step.body(¢)) ? step.body(¢) : last(step.statements(az.block(step.body(¢))));
   }
 
 }
