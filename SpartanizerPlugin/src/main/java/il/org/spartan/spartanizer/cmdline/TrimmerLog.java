@@ -24,8 +24,8 @@ public class TrimmerLog {
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
   private static String fileName;
   static {
-    logToScreen = false;
-    off();
+    // logToScreen = false;
+    // off();
   }
 
   public static void off() {

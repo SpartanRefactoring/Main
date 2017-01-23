@@ -34,7 +34,6 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
   @Override public ASTNode replacement(final InfixExpression x) {
     Expression l = left(x), r = right(x);
     // TODO Yuval Simon: use extract.core
-
     if (parenthesizedExpression(l))
       l = expression(az.parenthesizedExpression(l));
     if (parenthesizedExpression(r))

@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Remove unused variable
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-23 */
-public final class FragmentRemoveUnused extends CarefulTipper<VariableDeclarationFragment>//
+public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<VariableDeclarationFragment>//
     implements TipperCategory.Deadcode {
   @Override public String description() {
-    return "Remove unused variable";
+    return "Remove unused, uninitialized variable";
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -34,8 +34,8 @@ public final class FragmentRemoveUnused extends CarefulTipper<VariableDeclaratio
         };
   }
 
-  @Override protected boolean prerequisite(final VariableDeclarationFragment ¢) {
-    return iz.variableDeclarationStatement(parent(¢)) && ¢.getInitializer() == null && !haz.annotation(¢)
-        && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
+  @Override protected boolean prerequisite(final VariableDeclarationFragment f) {
+    return iz.variableDeclarationStatement(parent(f)) && f.getInitializer() == null && !haz.annotation(f)
+        && collect.usesOf(f.getName()).in(scope.of(f)).isEmpty();
   }
 }
