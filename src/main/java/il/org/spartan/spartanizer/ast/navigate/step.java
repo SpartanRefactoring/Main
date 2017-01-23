@@ -562,6 +562,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final ImportDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   /** @param ¢ JD
    * @return */
   public static SimpleName name(final FieldAccess ¢) {
@@ -703,6 +707,10 @@ public enum step {
    * @return reference to the list of sideEffects contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
     return ¢ == null ? null : ¢.statements();
+  }
+
+  public static List<Statement> statements(final LambdaExpression ¢) {
+    return statements(body(¢));
   }
 
   public static List<Statement> statements(final MethodDeclaration ¢) {
@@ -879,5 +887,37 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getException();
+  }
+
+  public static SimpleName name(final EnumConstantDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static List<?> modifiers(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
   }
 }

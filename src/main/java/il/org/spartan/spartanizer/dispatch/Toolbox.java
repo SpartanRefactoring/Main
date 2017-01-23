@@ -27,9 +27,7 @@ public class Toolbox {
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
-      for (final List<Tipper<? extends ASTNode>> ts : t.implementation)
-        if (ts != null)
-          ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup()));
+      Arrays.asList(t.implementation).stream().filter(ts -> ts != null).forEach(ts -> ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup())));
     }
   };
   /** The default instance of this class */
@@ -82,10 +80,7 @@ public class Toolbox {
   }
 
   public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ts) {
-    for (final Tipper<N> $ : ts)
-      if ($.canTip(n))
-        return $;
-    return null;
+    return Arrays.asList(ts).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -118,6 +113,15 @@ public class Toolbox {
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
+        // .add(EnhancedForStatement.class, //
+        // new Aggregate(), //
+        // new Collect(), //
+        // new FindFirst(), //
+        // new ForEach(), //
+        // new ForEachSuchThat(), //
+        // new HoldsForAll(), //
+        // new HoldsForAny(), //
+        // null) //
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
@@ -356,10 +360,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> $ : ts)
-      if (((Tipper<N>) $).canTip(n))
-        return (Tipper<N>) $;
-    return null;
+    return ts.stream().filter($ -> ((Tipper<N>) $).canTip(n)).map($ -> (Tipper<N>) $).findFirst().orElse(null);
   }
 
   /** Implementation */
@@ -410,9 +411,7 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      if (¢ != null)
-        disable(c, ¢);
+    Arrays.asList(implementation).stream().filter(¢ -> ¢ != null).forEach(¢ -> disable(c, ¢));
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -427,11 +426,8 @@ public class Toolbox {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
-  public int hooksCount() {
-    int $ = 0;
-    for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      $ += as.bit(¢ != null && !¢.isEmpty());
-    return $;
+  @SuppressWarnings("boxing") public int hooksCount() {
+    return Arrays.asList(implementation).stream().map(¢ -> as.bit(¢ != null && !¢.isEmpty())).reduce((x, y) -> x + y).get();
   }
 
   public int tippersCount() {
@@ -454,16 +450,14 @@ public class Toolbox {
     }
   }
 
-  /** TODO: Apparently there is no check that ¢ is not occupied already... */
   public static List<String> get(final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)
       return $;
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
-    for (final List<Tipper<? extends ASTNode>> element : t.implementation)
-      if (element != null)
-        $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList()));
+    Arrays.asList(t.implementation).stream().filter(element -> element != null)
+        .forEach(element -> $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
     return $;
   }
 

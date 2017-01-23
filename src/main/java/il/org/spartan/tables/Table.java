@@ -5,6 +5,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.statistics.*;
 
 /** A relation is just another name for a table that contains elements of type
@@ -27,13 +28,14 @@ public class Table extends Row<Table> implements Closeable {
 
   @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
-    for (final TableRenderer r : rs)
+    Arrays.asList(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch (final IOException ¢) {
+      } catch (IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
+    });
   }
 
   private int length;
@@ -95,9 +97,8 @@ public class Table extends Row<Table> implements Closeable {
         "Table header is  " + keySet() + "\n"; //
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
-    int n = 0;
-    for (final RecordWriter ¢ : writers)
-      $ += "\t " + ++n + ". " + ¢.fileName + "\n";
+    Int n = new Int();
+    $ = writers.stream().map(¢ -> "\t " + ++n.inner + ". " + ¢.fileName + "\n").reduce((x, y) -> x + y).get();
     return $;
   }
 

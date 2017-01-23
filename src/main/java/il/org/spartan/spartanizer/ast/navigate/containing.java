@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.eclipse.jdt.core.dom.*;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -12,39 +12,24 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface containing {
-  public static String getContainingPackage(final CastExpression ¢) {
+  static CompilationUnit compilationUnit(final ASTNode ¢) {
+    return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
+  }
+  static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
-
-  /** Extract the {@link Statement} that contains a given node.
-   * @param pattern JD
-   * @return inner most {@link Statement} in which the parameter is nested, or
-   *         <code><b>null</b></code>, if no such statement exists. */
-  static Statement statement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = $.getParent()) // NANO
-      if (iz.statement($))
-        return az.statement($);
-    return null;
-  }
-
-  static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢);
-  }
-
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
   static ASTNode typeDeclaration(final ASTNode ¢) {
-    for (final ASTNode $ : hop.ancestors(¢.getParent())) // NANO
-      if (iz.nodeTypeIn($//
-          , ANONYMOUS_CLASS_DECLARATION //
-          , ANNOTATION_TYPE_DECLARATION //
-          , ENUM_DECLARATION //
-          , TYPE_DECLARATION //
-          , ENUM_CONSTANT_DECLARATION //
-      ))
-        return $;
-    return null;
+    return az.stream(hop.ancestors(parent(¢)))
+        .filter($ -> iz.nodeTypeIn($ //
+            , ANONYMOUS_CLASS_DECLARATION //
+            , ANNOTATION_TYPE_DECLARATION //
+            , ENUM_DECLARATION //
+            , TYPE_DECLARATION //
+            , ENUM_CONSTANT_DECLARATION //
+        )).findFirst().orElse(null);
   }
 
   static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
@@ -57,6 +42,9 @@ public interface containing {
    *         nested, or <code><b>null</b></code>, if no such statement
    *         exists. */
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    return yieldAncestors.untilContainingMethod().from(¢);
+    for (ASTNode $ = ¢; $ != null; $ = parent($))
+      if (iz.methodDeclaration($))
+        return az.methodDeclaration($);
+    return null;
   }
 }

@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -265,9 +266,6 @@ public interface findFirst {
   }
 
   static ConditionalExpression conditionalArgument(final MethodInvocation ¢) {
-    for (final Expression $ : step.arguments(¢))
-      if (iz.conditionalExpression($))
-        return az.conditionalExpression($);
-    return null;
+    return arguments(¢).stream().filter($ -> iz.conditionalExpression($)).map($ -> az.conditionalExpression($)).findFirst().orElse(null);
   }
 }
