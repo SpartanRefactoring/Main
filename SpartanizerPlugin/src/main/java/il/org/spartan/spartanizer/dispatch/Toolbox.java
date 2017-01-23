@@ -318,9 +318,9 @@ public class Toolbox {
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
-            new FragmentInlineIntoNext(), //
+            // new FragmentInlineIntoNext(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new FragmentRemoveUnused(), //
+            new FragmentNoInitializerRemoveUnused(), //
             new FragmentToForInitializers(), //
             new WhileToForInitializers(), //
             null) //

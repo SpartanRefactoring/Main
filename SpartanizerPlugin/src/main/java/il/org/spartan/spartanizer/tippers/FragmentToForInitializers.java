@@ -26,13 +26,9 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
-    $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
+    $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
     setInitializers($, copy.of(s));
     return $;
-  }
-
-  private static Expression dupForExpression(final ForStatement ¢) {
-    return copy.of(expression(¢));
   }
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
