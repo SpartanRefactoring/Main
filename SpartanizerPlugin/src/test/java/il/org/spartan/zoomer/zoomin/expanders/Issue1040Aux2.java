@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
+import java.util.*;
+
 import il.org.spartan.spartanizer.meta.*;
 
 /** Example for testing with binding
@@ -19,15 +21,11 @@ public class Issue1040Aux2 extends MetaFixture {
     return 5;
   }
 
-  void toTest() {
-    total = 0;
-    for (final Integer k : arr)
-      total += total(1);
+  @SuppressWarnings("boxing") void toTest() {
+    total = Arrays.asList(arr).stream().map(k -> total(1)).reduce((x, y) -> x + y).get().intValue();
   }
 
-  void toTest2() {
-    total2 = 0;
-    for (final Integer k : arr) // NANO?
-      total2 += total2(1);
+  @SuppressWarnings("boxing") void toTest2() {
+    total2 = Arrays.asList(arr).stream().map(k -> total2(1)).reduce((x, y) -> x + y).get();
   }
 }

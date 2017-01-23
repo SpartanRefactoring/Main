@@ -7,7 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -55,7 +54,7 @@ public final class Namespace implements Environment {
 
   protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
-    ds.forEach(¢ -> put(¢.getName() + "", new Binding(t)));
+    ds.forEach(¢ -> put(step.name(¢) + "", new Binding(t)));
     return this;
   }
 
@@ -155,7 +154,7 @@ public final class Namespace implements Environment {
             final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
             n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
-              n.put(¢.getName(), vds.getType());
+              n.put(step.name(¢), type(vds));
           }
           n.fillScope(s);
         }
@@ -163,7 +162,7 @@ public final class Namespace implements Environment {
       }
 
       @Override public boolean visit(final CatchClause ¢) {
-        return ¢ == root || spawn(catch¢).put(¢.getException()).fillScope(¢);
+        return ¢ == root || spawn(catch¢).put(exception(¢)).fillScope(¢);
       }
 
       @Override public boolean visit(final CompilationUnit ¢) {
@@ -176,7 +175,7 @@ public final class Namespace implements Environment {
       }
 
       @Override public boolean visit(final EnumDeclaration ¢) {
-        return ¢ == root || spawn("enum " + ¢.getName()).addAll(bodyDeclarations(¢)).addConstants(¢, enumConstants(¢)).fillScope(¢);
+        return ¢ == root || spawn("enum " + step.name(¢)).addAll(bodyDeclarations(¢)).addConstants(¢, enumConstants(¢)).fillScope(¢);
       }
 
       @Override public boolean visit(final ForStatement ¢) {
@@ -191,17 +190,17 @@ public final class Namespace implements Environment {
           return true;
         final Namespace $ = spawn(lambda + "");
         for (final VariableDeclaration ¢ : parameters(x))
-          if (¢ instanceof SingleVariableDeclaration)
-            $.put((SingleVariableDeclaration) ¢);
+          if (iz.singleVariableDeclaration(¢))
+            $.put(az.singleVariableDeclaration(¢));
           else
-            $.put(az.variableDeclrationFragment(¢).getName(), null);
+            $.put(step.name(az.variableDeclrationFragment(¢)), null);
         return $.fillScope(x);
       }
 
       @Override public boolean visit(final MethodDeclaration ¢) {
         if (¢ == root)
           return true;
-        final Namespace $ = spawn("method " + ¢.getName());
+        final Namespace $ = spawn("method " + step.name(¢));
         parameters(¢).forEach($::put);
         return $.fillScope(¢);
       }
@@ -214,7 +213,7 @@ public final class Namespace implements Environment {
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + ¢.getName()).addAll(bodyDeclarations(¢)).fillScope(¢);
+        return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + step.name(¢)).addAll(bodyDeclarations(¢)).fillScope(¢);
       }
     });
     return false;
@@ -223,7 +222,7 @@ public final class Namespace implements Environment {
   static Namespace spawnAndFill(final Namespace n, final TryStatement s) {
     if (s == null)
       return n;
-    catchClauses(s).forEach(¢ -> n.spawn(catch¢).put(¢.getException()).fillScope(¢));
+    catchClauses(s).forEach(¢ -> n.spawn(catch¢).put(exception(¢)).fillScope(¢));
     n.fillScope(s.getFinally());
     final Namespace $ = n.spawn(try¢);
     resources(s).forEach($::put);
@@ -248,11 +247,11 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final AnnotationTypeDeclaration ¢) {
-    return put("type " + ¢.getName(), ¢.getName());
+    return put("type " + step.name(¢), step.name(¢));
   }
 
   private Namespace put(final AnnotationTypeMemberDeclaration ¢) {
-    return put(¢.getName() + "", ¢.getType());
+    return put(step.name(¢) + "", ¢.getType());
   }
 
   @SuppressWarnings({}) protected Namespace put(final BodyDeclaration ¢) {
@@ -266,11 +265,11 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final EnumDeclaration ¢) {
-    return put("type " + ¢.getName(), ¢.getName());
+    return put("type " + step.name(¢), step.name(¢));
   }
 
   private Namespace put(final FieldDeclaration d) {
-    fragments(d).forEach(¢ -> put(¢.getName(), d.getType()));
+    fragments(d).forEach(¢ -> put(step.name(¢), d.getType()));
     return this;
   }
 
@@ -280,7 +279,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final MethodDeclaration ¢) {
-    return put(¢.getName() + "/" + ¢.parameters().size(), ¢.getReturnType2());
+    return put(step.name(¢) + "/" + ¢.parameters().size(), ¢.getReturnType2());
   }
 
   Namespace put(final SimpleName key, final Type t) {
@@ -288,7 +287,7 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final SingleVariableDeclaration ¢) {
-    return put(¢.getName(), ¢.getType());
+    return put(step.name(¢), ¢.getType());
   }
 
   private Namespace put(final String key, final ASTNode n) {
@@ -309,13 +308,13 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final TypeDeclaration ¢) {
-    @knows("¢") final String key = "type " + ¢.getName();
-    put(key, new Binding(key, type.baptize(¢.getName() + "", !¢.isInterface() ? "class" : "interface")));
+    @knows("¢") final String key = "type " + step.name(¢);
+    put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));
     return this;
   }
 
   protected Namespace put(final VariableDeclarationExpression x) {
-    fragments(x).forEach(¢ -> put(¢.getName(), x.getType()));
+    fragments(x).forEach(¢ -> put(step.name(¢), type(x)));
     return this;
   }
 
@@ -349,16 +348,20 @@ public final class Namespace implements Environment {
   }
 
   public boolean hasInChildren(final String identifier) {
-    if (has(identifier))
-      return true;
-    for (final Namespace ¢ : children)
-      if (¢.hasInChildren(identifier))
-        return true;
-    return false;
+    return has(identifier) || children.stream().anyMatch(¢ -> ¢.hasInChildren(identifier));
   }
 
   public String generateName(final Type ¢) {
     final String face = namer.shorten(¢);
+    int postface = 0;
+    String $ = face + "" + ++postface;
+    while (has($))
+      $ = face + "" + ++postface;
+    return $;
+  }
+
+  public String generateName(final String ¢) {
+    final String face = ¢;
     int postface = 0;
     String $ = face + "" + ++postface;
     while (has($))

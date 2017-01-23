@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
 
+import java.util.*;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -83,7 +85,7 @@ public class Issue0413 {
   }
 
   @Test public void idempotent() {
-    for (final String caze : new String[] { "This", "This 'is'", "This \"is" }) // NANO
-      azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
+    Arrays.asList(new String[] { "This", "This 'is'", "This \"is" })
+        .forEach(caze -> azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze)));
   }
 }

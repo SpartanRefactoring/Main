@@ -24,10 +24,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f)) // NANO?
-      if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
-        return true;
-    return false;
+    return forbiddenSiblings(f).stream().anyMatch(¢ -> Collect.BOTH_SEMANTIC.of(¢).existIn(ns));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

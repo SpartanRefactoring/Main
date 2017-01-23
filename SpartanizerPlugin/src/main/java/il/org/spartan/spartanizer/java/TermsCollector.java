@@ -130,8 +130,7 @@ public final class TermsCollector {
 
   private Void collectNegativeTerms(final Iterable<Expression> xs) {
     assert xs != null;
-    for (final Expression ¢ : xs)
-      collectNegativeTerm(core(¢));
+    xs.forEach(¢ -> collectNegativeTerm(core(¢)));
     return null;
   }
 
@@ -149,8 +148,7 @@ public final class TermsCollector {
 
   private Void collectPositiveTerms(final Iterable<Expression> xs) {
     assert xs != null;
-    for (final Expression ¢ : xs)
-      addPositiveTerm(core(¢));
+    xs.forEach(¢ -> addPositiveTerm(core(¢)));
     return null;
   }
 }

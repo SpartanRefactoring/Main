@@ -70,17 +70,14 @@ public class InflateHandler extends AbstractHandler {
     return $;
   }
 
-  protected static void addListeners(final StyledText t, final List<Listener> ls, final int... types) {
+  protected static void addListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      for (final int i : types) // NANO? I think you can deal with arrays
-        ls.forEach(¢ -> t.addListener(i, ¢));
+      Arrays.asList(types).forEach(i -> ls.forEach(¢ -> t.addListener(i.intValue(), ¢)));
   }
 
-  protected static void removeListeners(final StyledText t, final List<Listener> ls, final int... types) {
+  protected static void removeListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      for (final Listener ¢ : ls)
-        for (final int i : types) // NANOS: Arrays should be easy
-          t.removeListener(i, ¢);
+      ls.forEach(¢ -> Arrays.asList(types).forEach(i -> t.removeListener(i.intValue(), ¢)));
   }
 
   protected static IEditorPart getEditorPart() {
@@ -175,7 +172,7 @@ public class InflateHandler extends AbstractHandler {
     text.addKeyListener(l);
   }
 
-  private static void removeListener(final ITextEditor e) {
+  @SuppressWarnings("boxing") private static void removeListener(final ITextEditor e) {
     final StyledText text = getText(e);
     if (text == null)
       return;
@@ -185,7 +182,7 @@ public class InflateHandler extends AbstractHandler {
         ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
         break;
       }
-    // TODO: Ori Roth XXX seems to be a bug --yg
+    // TODO: Ori Roth seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
   }

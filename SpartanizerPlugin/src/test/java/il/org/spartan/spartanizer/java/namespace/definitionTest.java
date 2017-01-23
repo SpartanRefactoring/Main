@@ -37,8 +37,7 @@ public class definitionTest extends MetaFixture {
       put("@class¢", null);
       put("@enum¢", null);
       put("@interface¢", null);
-      for (@ScopeSize(1) @foreach final definition.Kind ¢ : definition.Kind.values())
-        put("@" + ¢, null);
+      Arrays.asList(definition.Kind.values()).forEach(¢ -> put("@" + ¢, null));
     }
     @field static final long serialVersionUID = 1L;
   };
@@ -99,41 +98,33 @@ public class definitionTest extends MetaFixture {
   }
 
   @ScopeSize(41) @Test public void a13() {
-    for (final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     assert annotations.get("@try¢") != null;
   }
 
   @Test @method public void a14() {
-    for (@foreach final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     assert annotations.get("@catch¢") != null;
   }
 
   @Test public void a15() {
-    for (@foreach final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     assert annotations.get("@field") != null;
   }
 
   @Test @method public void a16() {
-    for (@foreach final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
-    for (final MarkerAnnotation ¢ : markers())
-      annotations.put(¢ + "", ¢);
+    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
     assert annotations.get("@enumConstant") != null;
   }
 
   @Test public void a18() {
-    for (final MarkerAnnotation a : markers())
-      if (definition.Kind.has((a + "").substring(1)))
-        for (final SimpleName ¢ : annotees.of(a))
-          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), //
-              "@" + definition.kind(¢), is(a + ""));
+    markers().stream().filter(a -> definition.Kind.has((a + "").substring(1))).forEach(a -> (annotees.of(a))
+        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 
   @Test @method public void a19() {
@@ -165,18 +156,13 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a25() {
-    for (final MarkerAnnotation a : markers())
-      if ("@for¢".equals(a + ""))
-        for (final SimpleName ¢ : annotees.of(a))
-          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""));
+    markers().stream().filter(a -> "@for¢".equals(a + "")).forEach(a -> (annotees.of(a))
+        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 
   @Test public void a26() {
-    for (final MarkerAnnotation a : markers())
-      if ("@try¢".equals(a + ""))
-        for (@foreach final SimpleName ¢ : annotees.of(a))
-          azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), //
-              "@" + definition.kind(¢), is(a + ""));
+    markers().stream().filter(a -> "@try¢".equals(a + "")).forEach(a -> (annotees.of(a))
+        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 
   @Test @method public void a27() {

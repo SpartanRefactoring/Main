@@ -26,11 +26,9 @@ public class LogToTest {
       return;
     }
     final File[] fs = d.listFiles();
-    int fc = 0;
-    for (final File element : fs) // NANO
-      if (element.isFile() && element.getName().startsWith("log_spartan"))
-        ++fc;
-    if (fc == 0) {
+    Int fc = new Int();
+    Arrays.asList(fs).stream().filter(element -> element.isFile() && element.getName().startsWith("log_spartan")).forEach(element -> ++fc.inner);
+    if (fc.inner == 0) {
       System.out.println("First run some tests to create a log file.");
       return;
     }
