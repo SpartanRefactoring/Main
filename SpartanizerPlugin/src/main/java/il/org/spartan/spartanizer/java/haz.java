@@ -78,8 +78,8 @@ public enum haz {
     return ms.stream().anyMatch(¢ -> IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL);
   }
 
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    return ms.stream().anyMatch(¢ -> ¢.isAnnotation());
+  static boolean hasAnnotation(final List<IExtendedModifier> ¢) {
+    return ¢.stream().anyMatch(IExtendedModifier::isAnnotation);
   }
 
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
@@ -140,19 +140,19 @@ public enum haz {
       }
 
       boolean ¢¢(final List<CatchClause> cs) {
-        return cs.stream().anyMatch(¢ -> ¢(¢));
+        return cs.stream().anyMatch(this::¢);
       }
 
       boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
-        return xs.stream().anyMatch(¢ -> ¢(¢));
+        return xs.stream().anyMatch(this::¢);
       }
 
       boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
-        return fs.stream().anyMatch(x -> ¢(x));
+        return fs.stream().anyMatch(this::¢);
       }
 
       @Override public boolean test(final List<Statement> ¢¢) {
-        return ¢¢.stream().anyMatch(¢ -> ¢(¢));
+        return ¢¢.stream().anyMatch(this::¢);
       }
     }.test(ss);
   }

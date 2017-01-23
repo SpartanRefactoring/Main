@@ -158,7 +158,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
-    return ss.stream().filter(¢ -> s.equals(¢.getKey())).map(¢ -> ¢.getValue()).findFirst().orElse(null);
+    return ss.stream().filter(¢ -> s.equals(¢.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
   /** Returns the {@link Binding} of the declaration the current declaration is

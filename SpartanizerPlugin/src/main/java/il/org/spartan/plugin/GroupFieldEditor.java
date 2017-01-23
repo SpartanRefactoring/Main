@@ -76,7 +76,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override public boolean isValid() {
-    return members.stream().allMatch(¢ -> ¢.isValid());
+    return members.stream().allMatch(FieldEditor::isValid);
   }
 
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {

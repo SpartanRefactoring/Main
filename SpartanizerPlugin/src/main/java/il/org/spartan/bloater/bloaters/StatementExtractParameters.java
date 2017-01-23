@@ -165,7 +165,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       idns.addAll(Arrays.asList(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Ori Roth: do it better
-      for (final ImportDeclaration oid : step.imports(u))
+      for (final ImportDeclaration oid : step.imports(u)) // Tough
         if (idn.equals(oid.getName().getFullyQualifiedName()))
           continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();

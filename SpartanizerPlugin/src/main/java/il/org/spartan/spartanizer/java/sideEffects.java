@@ -83,8 +83,8 @@ public enum sideEffects {
                     : iz.block(¢) && sideEffects.free(az.block(¢)));
   }
 
-  public static boolean free(final Block b) {
-    return statements(b).stream().allMatch(¢ -> free(¢));
+  public static boolean free(final Block ¢) {
+    return statements(¢).stream().allMatch(sideEffects::free);
   }
 
   private static boolean free(final ConditionalExpression ¢) {
@@ -123,8 +123,8 @@ public enum sideEffects {
     }
   }
 
-  private static boolean free(final Expression... xs) {
-    return Arrays.asList(xs).stream().allMatch(¢ -> sideEffects.free(¢));
+  private static boolean free(final Expression... ¢) {
+    return Arrays.asList(¢).stream().allMatch(sideEffects::free);
   }
 
   public static boolean free(final Iterable<? extends Expression> xs) {
