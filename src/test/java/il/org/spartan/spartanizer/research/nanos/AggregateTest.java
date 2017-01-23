@@ -35,7 +35,7 @@ public class AggregateTest {
     trimmingOf("for(B d : (B)bs) $ += f();"//
     )//
         .using(EnhancedForStatement.class, new Aggregate())//
-        .gives("$+=((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("$ += ((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .stays();
   }
 
