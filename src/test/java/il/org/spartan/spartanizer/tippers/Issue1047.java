@@ -16,7 +16,7 @@ public class Issue1047 {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
   }
-
+// TODO: Doron Failing test
   @Test public void b() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){pr(); ++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢){pr(); ++¢;}");//
