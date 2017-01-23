@@ -319,6 +319,7 @@ public class Toolbox {
             new DeclarationInitialiazerAssignment(), //
             new DeclarationInlineIntoNext(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+            new VariableDeclarationFragmentRemoveUnused(), //
             new ForToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
