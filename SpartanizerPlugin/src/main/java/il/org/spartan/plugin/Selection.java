@@ -395,8 +395,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      for (final IPackageFragmentRoot ¢ : rs) // NANO?
-        $.unify(by(¢));
+      Arrays.asList(rs).forEach(¢ -> $.unify(by(¢)));
       return $.setName(p.getElementName());
     }
 
@@ -405,9 +404,8 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        for (final IJavaElement ¢ : r.getChildren()) // NANO?
-          if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.unify(by((IPackageFragment) ¢));
+        Arrays.asList(r.getChildren()).stream().filter(¢ -> ¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+            .forEach(¢ -> $.unify(by((IPackageFragment) ¢)));
       } catch (final JavaModelException ¢) {
         monitor.log(¢);
         return empty();

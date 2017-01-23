@@ -103,9 +103,6 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    *         list, so making it a part of infix expression require additional
    *         parenthesis */
   private boolean isParethesisNeeded(final Expression x) {
-    for (final Class<?> ¢ : np)
-      if (¢.isInstance(x))
-        return true;
-    return false;
+    return Arrays.asList(np).stream().anyMatch(¢ -> ¢.isInstance(x));
   }
 }

@@ -904,4 +904,8 @@ public enum step {
   public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
+
+  public static List<?> modifiers(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
 }
