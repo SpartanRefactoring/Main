@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * = x; } }
  * @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO Doron - I gave you some tips on fixing this class in one of the issues. Please follow up.
+// TODO Doron - I gave you some tips on fixing this class in one of the issues.
+// Please follow up.
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
