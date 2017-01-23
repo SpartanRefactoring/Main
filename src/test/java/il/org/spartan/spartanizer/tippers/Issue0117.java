@@ -12,7 +12,8 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class Issue0117 {
-  @Test public void issue54ForPlainUseInCondition() {
+  @Ignore // TODO Yossi Gil
+ @Test public void issue54ForPlainUseInCondition() {
     trimmingOf("int a  = f(); for (int ¢ = 0; a <100;  ++¢) b[¢] = 3;")//
         .gives("for (int a  = f(), ¢ = 0; a <100;  ++¢) b[¢] = 3;")//
         .stays();
