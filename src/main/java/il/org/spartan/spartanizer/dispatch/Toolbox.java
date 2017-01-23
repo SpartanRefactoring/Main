@@ -79,7 +79,8 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
+  @SafeVarargs
+  public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
     return Arrays.asList(ns).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
   }
 
@@ -97,9 +98,7 @@ public class Toolbox {
             new EnhancedForRedundantContinue(), //
             null)//
         .add(Initializer.class, new InitializerEmptyRemove()) //
-        .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces(), //
-            new LambdaExpressionRenameSingleParameterToCent(), //
-            null) //
+        .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
             new ModifierRedundant(), //
@@ -205,14 +204,15 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             // new InfixIndexOfToStringContains(), // v 2.7
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
-            null)//
+            null)
         .add(MethodDeclaration.class, //
-            new AnnotationSort<MethodDeclaration>(), //
+            new AnnotationSort.ofMethod(), //
             new MethodDeclarationRenameReturnToDollar(), //
-            new BodyDeclarationModifiersSort<>(), //
-            new MethodDeclarationRenameSingleParameterToCent() , // 
-            // new MethodDeclarationConstructorMoveToInitializers(), //
+            new $BodyDeclarationModifiersSort.ofMethod(), //
+            new MethodDeclarationRenameSingleParameterToCent(), //
+            new MethodDeclarationConstructorMoveToInitializers(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(),
+            // v 2.7 // This is a new // tipper // #20
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -276,36 +276,36 @@ public class Toolbox {
             new SameEvaluationConditional(), //
             new TernaryBranchesAreOppositeBooleans(), //
             new SameEvaluationConditional(), null) //
-        .add(EnumConstantDeclaration.class, new BodyDeclarationModifiersSort<>()) //
+        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort.ofEnumConstant()) //
         .add(TypeDeclaration.class, //
-            new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<>(), //
+            new $BodyDeclarationModifiersSort.ofType(), //
+            new AnnotationSort.ofType(), //
             new TypeDeclarationClassExtendsObject(), null) //
         .add(EnumDeclaration.class, //
-            new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<>(), //
+            new $BodyDeclarationModifiersSort.ofEnum(), //
+            new AnnotationSort.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
-            new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<>(), //
+            new $BodyDeclarationModifiersSort.ofField(), //
+            new AnnotationSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<>(), //
+            new $BodyDeclarationModifiersSort.ofEnumConstant(), //
+            new AnnotationSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<AnnotationTypeDeclaration>(), //
+        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
+            new AnnotationSort.ofAnnotation(), //
             null)
-        .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort<>(), //
-            new AnnotationSort<>(), //
+        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
+            new AnnotationSort.ofAnnotationTypeMember(), //
             null)
         .add(VariableDeclarationFragment.class, //
             new DeclarationRedundantInitializer(), //

@@ -4,7 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.List;
-import java.util.Map.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
@@ -24,12 +23,10 @@ import il.org.spartan.plugin.*;
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = d -> new Color(d, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = d -> new Color(d, 200, 255, 200);
-  private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),
-      Integer.valueOf(SWT.MouseWheel) };
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
   final StyledText text;
   final ITextEditor editor;
-  final Map<Integer, List<Listener>> externalListeners;
+  final List<Listener> externalListeners;
   final Cursor activeCursor;
   final Cursor inactiveCursor;
   final Selection selection;
@@ -42,8 +39,8 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     this.text = text;
     this.editor = editor;
     this.selection = selection;
-    externalListeners = new HashMap<>();
-    updateListeners(); // not needed probably
+    externalListeners = new ArrayList<>();
+    Collections.addAll(externalListeners, text.getListeners(SWT.MouseWheel));
     final Display display = PlatformUI.getWorkbench().getDisplay();
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
@@ -92,19 +89,17 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
       deactivate();
   }
 
-  private void activate() {
+  @SuppressWarnings("boxing") private void activate() {
     active = true;
-    updateListeners();
-    removeListeners();
+    InflateHandler.removeListeners(text, externalListeners, SWT.MouseWheel);
     if (!text.isDisposed())
       text.setCursor(activeCursor);
-    System.out.println(text.getListeners(SWT.MouseWheel));
   }
 
-  private void deactivate() {
+  @SuppressWarnings("boxing") private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
-    restoreListeners();
+    InflateHandler.addListeners(text, externalListeners, SWT.MouseWheel);
     if (!text.isDisposed())
       text.setCursor(inactiveCursor);
   }
@@ -112,30 +107,5 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   public void finilize() {
     if (active)
       deactivate();
-  }
-
-  private void updateListeners() {
-    externalListeners.clear();
-    for (Integer i : wheelEvents) {
-      List<Listener> l = new LinkedList<>();
-      Collections.addAll(l, text.getListeners(i.intValue()));
-      TypedListener tl = null;
-      for (Listener ¢ : l)
-        if (¢ instanceof TypedListener && this.equals(((TypedListener) ¢).getEventListener()))
-          tl = (TypedListener) ¢;
-      if (tl != null)
-        l.remove(tl);
-      externalListeners.put(i, l);
-    }
-  }
-
-  private void removeListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
-      InflateHandler.removeListeners(text, ¢.getValue(), ¢.getKey());
-  }
-
-  private void restoreListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
-      InflateHandler.addListeners(text, ¢.getValue(), ¢.getKey());
   }
 }
