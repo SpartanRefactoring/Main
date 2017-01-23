@@ -42,6 +42,30 @@ public final class Inliner {
     return new InlinerWithValue(replacement);
   }
 
+  /** Determines whether a specific SimpleName was used in a
+   * {@link ForStatement}.
+   * @param s JD
+   * @param n JD
+   * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
+   *         ForStatement's condition, updaters, or body. */
+  public static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
+    return !collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !collect.usesOf(n).in(step.updaters(s)).isEmpty();
+  }
+
+  public static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
+    final Block b = az.block(s.getParent());
+    assert b != null : "For loop's parent is not a block";
+    final List<Statement> statements = step.statements(b);
+    boolean passedFor = false;
+    for (final Statement ¢ : statements) {
+      if (passedFor && !collect.usesOf(n).in(¢).isEmpty())
+        return false;
+      if (¢.equals(s))
+        passedFor = true;
+    }
+    return true;
+  }
+
   public final class InlinerWithValue extends Wrapper<Expression> {
     InlinerWithValue(final Expression replacement) {
       super(extract.core(replacement));
@@ -58,7 +82,7 @@ public final class Inliner {
     }
 
     public boolean canInlineinto(final ASTNode... ¢) {
-      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
+      return collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
     }
 
     public boolean canSafelyInlineinto(final ASTNode... ¢) {
@@ -86,16 +110,16 @@ public final class Inliner {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
-      Collect.usesOf(name).in(newExpression).forEach(
+      collect.usesOf(name).in(newExpression).forEach(
           use -> rewriter.replace(use, !iz.expression(use) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup));
     }
 
     private List<SimpleName> unsafeUses(final ASTNode... ¢) {
-      return Collect.unsafeUsesOf(name).in(¢);
+      return collect.unsafeUsesOf(name).in(¢);
     }
 
     private List<SimpleName> uses(final ASTNode... ¢) {
-      return Collect.usesOf(name).in(¢);
+      return collect.usesOf(name).in(¢);
     }
   }
 }

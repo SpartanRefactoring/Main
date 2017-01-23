@@ -42,12 +42,12 @@ public final class OccurrencesTest {
 
   @Test public void lexicalUsesCollector() {
     final List<SimpleName> into = new ArrayList<>();
-    a.accept(Collect.lexicalUsesCollector(into, a));
+    a.accept(collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }
 
   @Test public void occurencesAinAL() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
+    azzert.that(collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
   }
 
   @Test public void occurencesAinAsame() {
@@ -55,11 +55,11 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
+    azzert.that(collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
+    azzert.that(collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfEsame() {
@@ -67,15 +67,15 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
+    azzert.that(collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
   }
 
   @Test public void occurencesBinE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
+    azzert.that(collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
   }
 
   @Test public void occurencesBinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
+    azzert.that(collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
   }
 
   @Test public void sameAandLeftOfE() {

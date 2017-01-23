@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Boris van Sosin <boris.van.sosin @ gmail.com>
  * @author Yossi Gil <yossi.gil @ gmail.com> (major refactoring 2013/07/10)
  * @since 2013/07/01 */
-public enum Collect {
+public enum collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
   USES_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
@@ -413,7 +413,7 @@ public enum Collect {
   public Of of(final SimpleName n) {
     return new Of() {
       @Override public List<SimpleName> in(final ASTNode... ¢) {
-        return collect(n, ¢);
+        return uses(n, ¢);
       }
     };
   }
@@ -431,7 +431,7 @@ public enum Collect {
    * @param what the expression to search for
    * @param ns the n in which to counted
    * @return list of uses */
-  List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
+  List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
     Arrays.asList(ns).forEach(n -> Arrays.asList(collectors(what, $)).forEach(n::accept));
     removeDuplicates($);
@@ -479,7 +479,7 @@ public enum Collect {
    * the value we search for; it represents the function that, given a location
    * for the search, will carry out the search for the captured value in its
    * location parameter.
-   * @see Collect#of
+   * @see collect#of
    * @author Yossi Gil <yossi.gil @ gmail.com>
    * @since 2013/14/07 */
   public abstract static class Of {
