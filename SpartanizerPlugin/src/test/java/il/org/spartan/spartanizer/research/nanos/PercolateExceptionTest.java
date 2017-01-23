@@ -12,13 +12,13 @@ public class PercolateExceptionTest {
   @Test public void a() {
     trimmingOf(//
         "try {" + //
-            "    A.a(b).c().d(e -> f[g++]=h(e));" + //
+            "    A.a(b).c().d(¢ -> f[g++]=h(¢));" + //
             "  }" + //
             " catch (  B i) { throw i;}"//
     ).using(CatchClause.class, new PercolateException())//
-        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);};}")//
-        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);}")//
-        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){percolate(i);}")//
+        .gives("{try{{A.a(b).c().d(¢->f[g++]=h(¢));}}catch(B i){percolate(i);};}")//
+        .gives("try{{A.a(b).c().d(¢->f[g++]=h(¢));}}catch(B i){percolate(i);}")//
+        .gives("try{A.a(b).c().d(¢->f[g++]=h(¢));}catch(B i){percolate(i);}")//
         .stays()//
     ;
   }
