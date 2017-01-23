@@ -11,22 +11,24 @@ import org.junit.*;
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {
     trimmingOf("x -> {assert (1 < 2);}") //
+        .gives("¢ -> {assert (1 < 2);}") //
         .stays();
   }
 
   @Test public void blockStatementShouldntTip() {
     trimmingOf("x -> {{}}") //
-        .gives("x -> {}") //
+        .gives("¢ -> {{}}") //
+        .gives("¢ -> {}") //
         .stays();
   }
 
   @Test public void breakStatementShouldntTip() {
-    trimmingOf("x -> {break;}") //
+    trimmingOf("¢ -> {break;}") //
         .stays();
   }
 
   @Test public void continueStatementShouldntTip() {
-    trimmingOf("x -> {continue;}") //
+    trimmingOf("¢ -> {continue;}") //
         .stays();
   }
 
@@ -37,14 +39,16 @@ public class Issue0455 {
   }
 
   @Test public void emptyReturnStatement() {
-    trimmingOf("(x) -> {return;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x) -> {return;}")//
         .gives("(x) -> {}")//
+        .gives("(¢) -> {}")//
         .stays();
   }
 
   @Test public void emptyStatementShouldTip() {
     trimmingOf("x -> {;}") //
-        .gives("x -> {}") //
+        .gives("¢ -> {;}") //
+        .gives("¢ -> {}") //
         .stays();
   }
 
@@ -56,23 +60,25 @@ public class Issue0455 {
   @Test public void nestedLambdaExpression() {
     trimmingOf("x -> y -> {return -y;}")//
         .gives("x -> y -> -y") //
+        .gives("x -> ¢ -> -¢") //
         .stays();
   }
 
   @Test public void paransAreNotAddedToParams() {
-    trimmingOf("x -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("x -> {return x;}") //
         .gives("x -> x")//
+        .gives("¢ -> ¢")//
         .stays();
   }
 
   @Test public void paransAreNotRemovedFromParams() {
-    trimmingOf("(x) -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
-        .gives("(x) -> x")//
+    trimmingOf("(¢) -> {return ¢;}") 
+        .gives("(¢) -> ¢")//
         .stays();
   }
 
   @Test public void simpleBiFunction() {
-    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x,y) -> {return x + y;}")
         .gives("(x,y) -> x + y")//
         .stays();
   }
@@ -80,6 +86,7 @@ public class Issue0455 {
   @Test public void simpleConsumerWithotTipper() {
     trimmingOf("new Set<String>().forEach(item -> {return \"$\" + item;});")//
         .gives("new Set<String>().forEach(item -> \"$\" + item);")//
+        .gives("new Set<String>().forEach(¢ -> \"$\" + ¢);")//
         .stays();
   }
 
@@ -91,17 +98,19 @@ public class Issue0455 {
 
   @Test public void singleClassDeclarationStatementShouldntTip() {
     trimmingOf("x -> {class A {}}") //
+        .gives("¢ -> {class A {}}") //
         .stays();
   }
 
   @Test public void singleConstructorInvocationStatement() {
     trimmingOf("x -> {new Object();}") //
         .gives("x -> new Object()") //
+        .gives("¢ -> new Object()") //
         .stays();
   }
 
   @Test public void singleEnhancedForStatementShouldntTip() {
-    trimmingOf("x -> { " + "for (String y : l)" + "if (y.equals(x))" + "return;" + "}") //
+    trimmingOf("x -> {for (String y : l)if (y.equals(x))return;}") //
         .stays();
   }
 
@@ -114,17 +123,20 @@ public class Issue0455 {
   @Test public void singleNonReturnStatement() {
     trimmingOf("Consumer<Integer> x = (x) -> {System.out.println(x);};") //
         .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
+        .gives("Consumer<Integer> x = (¢) -> System.out.println(¢);") //
         .stays();
   }
 
   @Test public void singleRangeBasedForStatementShouldntTip() {
-    trimmingOf("x -> { " + "for (;;)" + "break;" + "}") //
+    trimmingOf("x -> {for (;;)break;}") //
+        .gives("¢ -> {for (;;)break;}") //
         .stays();
   }
 
   @Test public void singleReturnStatementAndSingleParameterd() {
     trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
         .gives("new ArrayList<Integer>().map(x -> x+1);")//
+        .gives("new ArrayList<Integer>().map(¢ -> ¢+1);")//
         .stays();
   }
 
@@ -138,23 +150,27 @@ public class Issue0455 {
 
   @Test public void singleSynchronizedStatementShouldntTip() {
     trimmingOf("x -> {synchronized (System.in){}}") //
+        .gives("¢ -> {synchronized (System.in){}}") //
         .stays();
   }
 
   @Test public void singleThrowStatementShouldntTip() {
     trimmingOf("x -> {throw new Error();}") //
+        .gives("¢ -> {throw new Error();}") //
         .stays();
   }
 
   @Test public void singleTryFinallyStatementShouldntTip() {
-    trimmingOf("x -> {try {throw new Error();}finally{}}") //
-        .gives("x -> {{throw new Error();}}") //
-        .gives("x -> {throw new Error();}") //
+    trimmingOf("x -> {try{throw new Error();}finally{}}") //
+        .gives("¢ -> {try{throw new Error();}finally{}}") //
+        .gives("¢ -> {{throw new Error();}}") //
+        .gives("¢ -> {throw new Error();}") //
         .stays();
   }
 
   @Test public void singleTryStatementShouldntTip() {
     trimmingOf("x -> {try {throw new Error();}catch(Exception __){}}") //
+        .gives("¢ -> {try {throw new Error();}catch(Exception __){}}") //
         .stays();
   }
 
