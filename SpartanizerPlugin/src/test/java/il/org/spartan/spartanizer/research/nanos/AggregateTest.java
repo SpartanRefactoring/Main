@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
+@Ignore
+//TODO: Ori Marco
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore @Test public void a() {

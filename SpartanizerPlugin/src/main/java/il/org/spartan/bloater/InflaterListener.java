@@ -102,6 +102,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     InflateHandler.removeListeners(text, externalListeners, Integer.valueOf(SWT.MouseWheel));
     if (!text.isDisposed())
       text.setCursor(activeCursor);
+    System.out.println(text.getListeners(SWT.MouseWheel));
   }
 
   private void deactivate() {
