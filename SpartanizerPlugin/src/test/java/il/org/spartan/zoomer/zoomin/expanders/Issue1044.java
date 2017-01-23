@@ -47,13 +47,13 @@ public class Issue1044 extends MetaFixture {
 
 @SuppressWarnings("unused")
 class NamespaceFixture {
-  // TODO: Doron: convert this into a javadoc of the class. Initializers do not take javadoc
+  // TODO: Doron: convert this into a javadoc of the class. Initializers do not
+  // take javadoc
   /** This class' only purpose is for the testing above. */
   // TODO: Doron, this poses a problem. When it is spartanized, the test breaks.
   // You may want to add a print statement so that the code is immune do
   // spartanization --yg
   static {
-    int i1, i2, i3;
   }
 
   int f(final int a1) {
