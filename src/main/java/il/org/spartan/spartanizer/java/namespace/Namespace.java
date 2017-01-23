@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
+
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.java.namespace.definition.Kind.*;
 
