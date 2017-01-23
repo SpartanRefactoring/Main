@@ -40,16 +40,14 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
-    return copy.of(az.variableDeclrationStatement(¢.getParent()));
+    return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(vds))
-      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.statement(s), ¢.getName()))
-        return false;
-    return true;
+    return step.fragments(vds).stream()
+        .allMatch(¢ -> variableUsedInWhile(s, name(¢)) && iz.variableNotUsedAfterStatement(az.statement(s), ¢.getName()));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -57,7 +55,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
-    return az.variableDeclrationStatement(¢.getParent());
+    return az.variableDeclrationStatement(step.parent(¢));
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
@@ -73,7 +71,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-    return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();
+    return !Collect.usesOf(n).in(condition(s)).isEmpty() || !Collect.usesOf(n).in(body(s)).isEmpty();
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -90,7 +88,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
-    exclude.excludeAll(step.fragments(vds));
+    exclude.excludeAll(fragments(vds));
     if (!fitting(vds, s))
       return null;
     $.remove(vds, g);
