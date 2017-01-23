@@ -33,6 +33,8 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
     Expression l = left(x), r = right(x);
+    // TODO Yuval Simon: use extract.core
+
     if (parenthesizedExpression(l))
       l = expression(az.parenthesizedExpression(l));
     if (parenthesizedExpression(r))
@@ -49,6 +51,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     if (x == null)
       return false;
     Expression $ = left(x), r = right(x);
+    // TODO Raviv Rachmiel: use extract.core
     if (parenthesizedExpression($))
       $ = expression(az.parenthesizedExpression($));
     if (parenthesizedExpression(r))

@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link DeclarationInitializerStatementTerminatingScope}
+/** Unit tests for {@link FragmentInitializerStatementTerminatingScope}
  * @author Ori Roth
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

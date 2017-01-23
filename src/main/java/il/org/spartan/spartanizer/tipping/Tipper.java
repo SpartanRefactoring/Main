@@ -12,7 +12,10 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -133,5 +136,19 @@ public abstract class Tipper<N extends ASTNode> //
 
   @Override public int hashCode() {
     return super.hashCode();
+  }
+
+  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
+      return false;
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
+      return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
+    }
+    if (!iz.fieldAccess(x.getExpression()))
+      return false;
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
+    return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 }

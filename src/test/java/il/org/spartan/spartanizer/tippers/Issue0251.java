@@ -10,6 +10,7 @@ import org.junit.*;
 public class Issue0251 {
   @Test public void Issue302_test() {
     trimmingOf("if(b()){int i;}")//
+        .gives("if (b()){}")//
         .stays();
   }
 

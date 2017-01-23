@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** Unit test for
- * {@link DeclarationInitializerStatementTerminatingScope}Inlining of
+ * {@link FragmentInitializerStatementTerminatingScope}Inlining of
  * {@link ArrayInitializer}
  * @author Ori Roth
  * @since 2016 */
