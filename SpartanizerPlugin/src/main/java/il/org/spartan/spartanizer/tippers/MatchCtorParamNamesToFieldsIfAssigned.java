@@ -9,15 +9,19 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @since 07-Dec-16
+/** Match c'tor parameters to fields, for example: 
+ * Convert:
+ * class A { int x; public A(int y) {this.x = y; } } 
+ * to:
+ * class A { int x; public A(int x) {this.x = x; } }
+ * @since 07-Dec-16
  * @author Doron Meshulam */
-// TODO: Doron Meshulam: add docs description such as in {@link SwitchEmpty} pls
-// TODO: Doron, what's going on with the above TOOD --yg
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
@@ -35,7 +39,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     final List<String> params = parameters(d).stream().map(el -> el.getName().getIdentifier()).collect(Collectors.toList());
     final List<Statement> bodyStatements = statements(d);
     final List<String> definedLocals = new ArrayList<>();
-    final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
+    final List<SimpleName> oldNames = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
@@ -53,19 +57,18 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       if (!iz.simpleName(right(a)))
         continue;
       final SimpleName paramName = az.simpleName(right(a));
-      if (definedLocals.contains(fieldName.getIdentifier()) || params.contains(paramName.getIdentifier()))
+      if (definedLocals.contains(fieldName.getIdentifier()) || params.contains(fieldName.getIdentifier()))
         continue;
-      $.add(paramName);
+      oldNames.add(paramName);
       newNames.add(fieldName);
     }
-    // TODO: Doron Meshulam - change only one variable at a time --yg
-    return new Tip(description(d), d, getClass()) {
-      final List<SimpleName> on = new ArrayList<>($);
+    
+    return oldNames.isEmpty() ? null : new Tip(description(d), d, getClass()) {
+      final List<SimpleName> on = new ArrayList<>(oldNames);
       final List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (int ¢ = 1; ¢ <= on.size(); ++¢)
-          Tippers.rename(on.get(¢), nn.get(¢), d, r, g);
+        Tippers.rename(on.get(0), nn.get(0), d, r, g);
       }
     };
   }
