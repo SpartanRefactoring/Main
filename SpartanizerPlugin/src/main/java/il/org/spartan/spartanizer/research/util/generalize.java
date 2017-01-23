@@ -59,7 +59,7 @@ public class generalize {
       }
 
       @Override public boolean visit(final SimpleName $) {
-        final String name = ((Name) $).getFullyQualifiedName();
+        final String name = $.getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
         r.replace($, ast.newSimpleName(renaming.get(name)), null);
