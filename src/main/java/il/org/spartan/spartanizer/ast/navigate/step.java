@@ -908,4 +908,8 @@ public enum step {
   public static List<?> modifiers(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
+
+  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
 }
