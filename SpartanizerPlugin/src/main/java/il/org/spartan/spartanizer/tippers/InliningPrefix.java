@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** convert :
  *
@@ -59,13 +60,11 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess>//
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
-    int $ = 0;
+    Int $ = new Int();
     final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
     lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
-    for (final Expression ¢ : lst)
-      if (iz.arrayAccess(¢))
-        ++$;
-    return $ != 1;
+    lst.stream().filter(¢ -> iz.arrayAccess(¢)).forEach(¢ -> ++$.inner);
+    return $.inner != 1;
   }
 
   protected static boolean prerequisite(final ArrayAccess a) {

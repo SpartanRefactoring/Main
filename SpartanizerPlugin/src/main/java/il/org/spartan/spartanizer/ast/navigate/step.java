@@ -709,6 +709,10 @@ public enum step {
     return ¢ == null ? null : ¢.statements();
   }
 
+  public static List<Statement> statements(final LambdaExpression ¢) {
+    return statements(body(¢));
+  }
+
   public static List<Statement> statements(final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
@@ -886,6 +890,18 @@ public enum step {
   }
 
   public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getException();
+  }
+
+  public static SimpleName name(final EnumConstantDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 }
