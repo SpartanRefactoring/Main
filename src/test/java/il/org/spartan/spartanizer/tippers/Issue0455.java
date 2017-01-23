@@ -106,6 +106,7 @@ public class Issue0455 {
 
   @Test public void singleIfStatementShouldntTip() {
     trimmingOf("x -> {if(x > 0)--x;}") //
+    .gives("¢ -> {if(¢ > 0)--¢;}") //
         .stays();
   }
 
