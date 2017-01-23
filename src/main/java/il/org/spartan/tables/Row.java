@@ -19,8 +19,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return col(¢.name(), ¢.value());
   }
 
-  public Self col(final Accumulator... as) {
-    Arrays.asList(as).forEach(¢ -> col(¢));
+  public Self col(final Accumulator... ¢) {
+    Arrays.asList(¢).forEach(this::col);
     return self();
   }
 
