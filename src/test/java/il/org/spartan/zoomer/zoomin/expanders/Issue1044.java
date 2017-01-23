@@ -45,10 +45,10 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
-@SuppressWarnings("unused")
 class NamespaceFixture {
   /** This class' only purpose is for the testing above. */
   static {
+    /**/
   }
 
   int f(final int a1) {
