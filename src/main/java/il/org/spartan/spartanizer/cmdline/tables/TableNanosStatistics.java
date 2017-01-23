@@ -18,8 +18,12 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-03 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-03 
+ */
+
 public class TableNanosStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
@@ -97,3 +101,4 @@ public class TableNanosStatistics extends FolderASTVisitor {
     return d != null && ps.stream().anyMatch(t -> t.canTip(d));
   }
 }
+

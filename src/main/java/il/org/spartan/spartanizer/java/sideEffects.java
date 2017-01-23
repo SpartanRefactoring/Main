@@ -18,8 +18,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Yossi Gil
- * @since 2016 */
+/** TODO:  Yossi Gil
+ please add a description 
+ @author Yossi Gil
+ * @since 2016 
+ */
+
 public enum sideEffects {
   MISSING_CASE;
   /** Determine whether the evaluation of an expression is guaranteed to be free
@@ -147,3 +151,4 @@ public enum sideEffects {
     return fragments(s).stream().allMatch(¢ -> sideEffects.free(initializer(¢)));
   }
 }
+

@@ -8,8 +8,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Yossi Gil
- * @since 2015-07-29 */
+/** TODO:  Yossi Gil
+ please add a description 
+ @author Yossi Gil
+ * @since 2015-07-29 
+ */
+
 public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
   @Override public String description() {
@@ -30,3 +34,4 @@ public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<M
     return $ != null && body($) == null;
   }
 }
+

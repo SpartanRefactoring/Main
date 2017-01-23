@@ -1,9 +1,12 @@
 package il.org.spartan.spartanizer.utils;
 
-/** A poor man's approximation of a mutable boolean, which is so much more
+/**  A poor man's approximation of a mutable boolean, which is so much more
  * convenient than {@link Boolean}
+ * @year 2016 
  * @author Ori Marcovitch
- * @year 2016 */
+ * @since Oct 16, 2016
+ */
+
 public final class Bool {
   public boolean inner;
 

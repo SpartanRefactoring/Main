@@ -2,9 +2,12 @@ package il.org.spartan.spartanizer.dispatch;
 
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 
-/** Classification of tippers
+/**  Classification of tippers
+ * @year 2016 
  * @author Yossi Gil
- * @year 2016 */
+ * @since Sep 28, 2016
+ */
+
 public interface TipperCategory {
   String description();
 

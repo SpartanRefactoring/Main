@@ -13,8 +13,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 public class Delegator extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
@@ -57,3 +61,4 @@ public class Delegator extends JavadocMarkerNanoPattern {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 }
+

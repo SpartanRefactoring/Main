@@ -8,8 +8,12 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** @author Ori Marcovitch
- * @since Dec 17, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Dec 17, 2016 
+ */
+
 @SuppressWarnings("static-method")
 public class SelectTest {
   @Test public void a() {
@@ -38,3 +42,4 @@ public class SelectTest {
         "final List<Expression> operands = new ArrayList<>();  for (final Expression ¢ : hop.operands(flatten.of($))) operands.add(make.notOf(¢));"));
   }
 }
+

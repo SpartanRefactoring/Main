@@ -4,8 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Tomer Dragucki
- * @since 2016 **/
+/** TODO:  Tomer Dragucki
+ please add a description 
+ @author Tomer Dragucki
+ * @since 2016 *
+ */
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class issue0289 {
   @Test public void a() {
@@ -26,3 +30,4 @@ public class issue0289 {
         .stays();
   }
 }
+

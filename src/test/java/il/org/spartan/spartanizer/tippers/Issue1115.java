@@ -5,8 +5,11 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt> */
+/**  Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt> 
+ * @since Jan 23, 2017
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
