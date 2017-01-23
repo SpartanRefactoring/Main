@@ -67,6 +67,7 @@ public class CollectTest {
             .gives(
                 "L<S>$=(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
             .gives("return(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
+            .gives("return(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(¢->¢.tagName()).collect(Collectors.toList());")//
             .stays();
   }
 }
