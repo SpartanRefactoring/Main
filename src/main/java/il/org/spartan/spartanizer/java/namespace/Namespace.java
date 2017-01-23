@@ -360,7 +360,7 @@ public final class Namespace implements Environment {
       $ = face + "" + ++postface;
     return $;
   }
-  
+
   public String generateName(final String ¢) {
     final String face = ¢;
     int postface = 0;

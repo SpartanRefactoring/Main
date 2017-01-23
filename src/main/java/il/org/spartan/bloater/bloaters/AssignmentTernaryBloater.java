@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
-  private static ASTNode innerAssignReplacement(final Expression x,final Expression left, final Operator o) {
+  private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null
         : subject
@@ -31,7 +31,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     if (expressionStatement == null)
       return null;
     final Assignment $ = az.assignment(expressionStatement.getExpression());
-    return $ == null ? null : innerAssignReplacement($.getRightHandSide(),  $.getLeftHandSide(), $.getOperator());
+    return $ == null ? null : innerAssignReplacement($.getRightHandSide(), $.getLeftHandSide(), $.getOperator());
   }
 
   @Override public ASTNode replacement(final ExpressionStatement ¢) {

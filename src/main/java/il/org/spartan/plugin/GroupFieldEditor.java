@@ -107,7 +107,7 @@ public final class GroupFieldEditor extends FieldEditor {
 
   /* (non-Javadoc) Method declared on FieldEditor. */
   protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
-    Int c = new Int(numColumns);
+    final Int c = new Int(numColumns);
     if (members == null || members.isEmpty())
       return;
     if (c.inner == 0)

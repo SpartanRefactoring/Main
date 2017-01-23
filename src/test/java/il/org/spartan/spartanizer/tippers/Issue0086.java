@@ -138,40 +138,46 @@ public final class Issue0086 extends Issue____ {
         .gives("throw Something();")//
         .stays();
   }
+
   @Test public void vanilla01() {
-  trimmingOf("throw Something();a=3; return 2;")//
-      .gives("throw Something(); return 2;")//
-      .gives("throw Something();")//
-      .stays();
- }
+    trimmingOf("throw Something();a=3; return 2;")//
+        .gives("throw Something(); return 2;")//
+        .gives("throw Something();")//
+        .stays();
+  }
+
   @Test public void vanilla02() {
     trimmingOf("return Something();a=3; return 2;")//
         .gives("return Something(); return 2;")//
         .gives("return Something();")//
         .stays();
   }
+
   @Test public void vanilla03() {
     trimmingOf("continue a;a=3; return 2;")//
         .gives("continue a; return 2;")//
         .gives("continue a;")//
         .stays();
   }
+
   @Test public void vanilla04() {
     trimmingOf("break a;a=3; return 2;")//
         .gives("break a; return 2;")//
         .gives("break a;")//
         .stays();
   }
-   @Test public void vanilla05() {
+
+  @Test public void vanilla05() {
     trimmingOf("continue ;a=3; return 2;")//
         .gives("continue ; return 2;")//
         .gives("continue ;")//
         .stays();
   }
-     @Test public void vanilla06() {
-      trimmingOf("break;a=3; return 2;")//
-          .gives("break; return 2;")//
-          .gives("break;")//
-          .stays();
-    }
+
+  @Test public void vanilla06() {
+    trimmingOf("break;a=3; return 2;")//
+        .gives("break; return 2;")//
+        .gives("break;")//
+        .stays();
+  }
 }
