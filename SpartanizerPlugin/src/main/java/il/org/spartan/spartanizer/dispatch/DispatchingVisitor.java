@@ -147,13 +147,14 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final PostfixExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final PrefixExpression ¢) {
     return cautiousGo(¢);
   }
+
   @Override public final boolean visit(final QualifiedType ¢) {
     return cautiousGo(¢);
   }
-
 
   @Override public final boolean visit(final ReturnStatement ¢) {
     return cautiousGo(¢);

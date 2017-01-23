@@ -15,23 +15,15 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert <code>
  * if (a) {
  *   f();
  *   return;
  * }
- * </code>
- *
- * into
- *
- * <code>
+ * </code> into <code>
  * if (a)
  *   f();
- * </code>
- *
- * provided that this
+ * </code> provided that this
  *
  * <pre>
  * <b>if</b>

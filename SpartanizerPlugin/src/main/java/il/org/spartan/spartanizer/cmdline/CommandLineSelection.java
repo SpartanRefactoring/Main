@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -83,11 +84,9 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
      * @return */
     @SuppressWarnings("synthetic-access") public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
         final String path) {
-      final List<WrappedCompilationUnit> $ = new ArrayList<>();
-      for (final File ¢ : new FilesGenerator(".java").from(path))
-        if (!system.isTestFile(¢))
-          $.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
-      return new CommandLineSelection($, "selection");
+      return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(¢ -> !system.isTestFile(¢))
+          .map(¢ -> WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()))
+          .collect(Collectors.toList()), "selection");
     }
 
     public static List<CompilationUnit> getAllCompilationUnits(final String path) {
@@ -115,8 +114,8 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     System.err.println("Loading selection ...");
-    for (final File ¢ : new FilesGenerator(".java").from(presentSourcePath))
-      cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
+    cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
+        .map(¢ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(¢)))).collect(Collectors.toList()));
     // compilationUnits = cuList;
     inner = cuList;
     System.err.println("Loading selection: done!");

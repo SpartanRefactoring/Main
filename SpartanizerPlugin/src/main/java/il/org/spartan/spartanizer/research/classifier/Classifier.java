@@ -104,17 +104,11 @@ public class Classifier extends ASTVisitor {
   }
 
   private static boolean anyTips(final EnhancedForStatement ¢) {
-    for (final Tipper<EnhancedForStatement> p : enhancedForKnownPatterns)
-      if (p.canTip(¢))
-        return true;
-    return false;
+    return enhancedForKnownPatterns.stream().anyMatch(p -> p.canTip(¢));
   }
 
   private static boolean anyTips(final ForStatement ¢) {
-    for (final Tipper<ForStatement> p : forKnownPatterns)
-      if (p.canTip(¢))
-        return true;
-    return false;
+    return forKnownPatterns.stream().anyMatch(p -> p.canTip(¢));
   }
 
   /** @param ¢ to classify */

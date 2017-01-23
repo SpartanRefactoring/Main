@@ -289,10 +289,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    for (final Expression ¢ : xs)
-      if (nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION))
-        return true;
-    return false;
+    return Arrays.asList(xs).stream().anyMatch(¢ -> nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -1194,10 +1191,7 @@ public interface iz {
   }
 
   static boolean validForEvaluation(final InfixExpression x) {
-    for (final Expression ¢ : extract.allOperands(x))
-      if (!iz.pseudoNumber(¢))
-        return false;
-    return true;
+    return extract.allOperands(x).stream().allMatch(¢ -> iz.pseudoNumber(¢));
   }
 
   static boolean variableDeclarationExpression(final ASTNode $) {

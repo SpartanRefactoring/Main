@@ -6,6 +6,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
@@ -140,8 +141,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    for (final Expression ¢ : rest(xs)) // NANO?
-      $.add(minusOf(¢));
+    $.addAll(az.stream(rest(xs)).map(¢ -> minusOf(¢)).collect(Collectors.toList()));
     return $;
   }
 

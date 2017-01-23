@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -56,10 +57,7 @@ public final class haveTest {
   }
 
   public List<Expression> ExpressionListMaker(final String[] exps) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final String e : exps)
-      $.add(into.e(e));
-    return $;
+    return Arrays.asList(exps).stream().map(e -> into.e(e)).collect(Collectors.toList());
   }
 
   @Test public void hasLiteralTestFalse() {

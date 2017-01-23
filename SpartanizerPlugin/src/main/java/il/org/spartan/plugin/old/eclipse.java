@@ -78,7 +78,7 @@ public enum eclipse {
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
     final int n = 0;
-    for (final IPackageFragmentRoot ¢ : rs) // NANO?
+    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
   }
