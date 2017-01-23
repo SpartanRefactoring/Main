@@ -15,7 +15,9 @@ public interface containing {
   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
-
+  static String package¢(final CastExpression ¢) {
+    return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
+  }
   /** @param ¢ JD
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */

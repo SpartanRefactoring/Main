@@ -17,7 +17,7 @@ public final class JavadocEmpty extends RemovingTipper<Javadoc>//
   }
 
   @Override public boolean prerequisite(final Javadoc ¢) {
-    return tags(¢).stream().allMatch(t -> empty(t));
+    return tags(¢).stream().allMatch(JavadocEmpty::empty);
   }
 
   private static boolean empty(final TagElement e) {

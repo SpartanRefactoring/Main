@@ -35,7 +35,7 @@ public class switchBranch {
 
   @SuppressWarnings("boxing") public boolean hasDefault() {
     if (hasDefault == -1)
-      hasDefault = cases.stream().filter(¢ -> ¢.isDefault()).map(¢ -> 1).findFirst().orElse(hasDefault);
+      hasDefault = cases.stream().filter(SwitchCase::isDefault).map(¢ -> 1).findFirst().orElse(hasDefault);
     return hasDefault == 1;
   }
 
@@ -95,9 +95,9 @@ public class switchBranch {
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
 
-  private void addAll(final List<Statement> ss) {
-    ss.addAll((cases).stream().map(¢ -> copy.of(¢)).collect(Collectors.toList()));
-    ss.addAll((statements).stream().map(¢ -> copy.of(¢)).collect(Collectors.toList()));
+  private void addAll(final List<Statement> ¢) {
+    ¢.addAll((cases).stream().map(copy::of).collect(Collectors.toList()));
+    ¢.addAll((statements).stream().map(copy::of).collect(Collectors.toList()));
   }
 
   private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
@@ -163,7 +163,7 @@ public class switchBranch {
   }
 
   public boolean hasFallThrough() {
-    return statements.stream().anyMatch(¢ -> iz.switchCase(¢));
+    return statements.stream().anyMatch(iz::switchCase);
   }
 
   public static Statement removeBreakSequencer(final Statement s) {
