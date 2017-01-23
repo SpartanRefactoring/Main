@@ -87,9 +87,9 @@ public class Toolbox {
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<>()) //
-        .add(ThrowStatement.class, new SequencerNotLastInBlock<ThrowStatement>()) //
-        .add(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
-        .add(ContinueStatement.class, new SequencerNotLastInBlock<ContinueStatement>()) //
+        .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
