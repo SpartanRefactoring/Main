@@ -5,8 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 @SuppressWarnings("static-method")
 public class HoldsForAllTest {
   @Test public void a() {
@@ -15,3 +19,4 @@ public class HoldsForAllTest {
         .gives("return that.entrySet().stream().allMatch(¢ -> !(m.count(¢.getElement()) != ¢.getCount()));");
   }
 }
+

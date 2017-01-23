@@ -15,7 +15,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Contains subclasses and tools to build expressions and sideEffects */
+/**  Contains subclasses and tools to build expressions and sideEffects 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Oct 7, 2016
+ */
+
 public final class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = copy.of(base);

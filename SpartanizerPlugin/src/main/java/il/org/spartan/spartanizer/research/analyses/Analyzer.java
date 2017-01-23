@@ -5,8 +5,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** @author Ori Marcovitch
- * @since Nov 3, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Nov 3, 2016 
+ */
+
 abstract class Analyzer<T> {
   protected abstract int metric(ASTNode n);
 
@@ -39,3 +43,4 @@ abstract class Analyzer<T> {
 
   protected abstract double enumElement(T t);
 }
+

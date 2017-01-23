@@ -4,10 +4,13 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-/** Test for cantTip.java, see issue #822 for more details
+/**  Test for cantTip.java, see issue #822 for more details
  * @author Amit Ohayon
  * @author Yosef Raisman
- * @author Entony Lekhtman */
+ * @author Entony Lekhtman 
+ * @since Nov 14, 2016
+ */
+
 @SuppressWarnings({ "static-method" })
 public class cantTipTest {
   @Test public void testNullPrecedingFragmentInTerminalScopeStatement() {
@@ -23,3 +26,4 @@ public class cantTipTest {
     assert !cantTip.remvoeRedundantIf(findFirst.whileStatement(into.s("{while(true){if(true){}}}")));
   }
 }
+

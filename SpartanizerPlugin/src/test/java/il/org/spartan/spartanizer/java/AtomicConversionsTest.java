@@ -1,3 +1,7 @@
+/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 7, 2016
+ */
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
@@ -150,3 +154,4 @@ public final class AtomicConversionsTest {
     assert atomic.isLong(l << l);
   }
 }
+

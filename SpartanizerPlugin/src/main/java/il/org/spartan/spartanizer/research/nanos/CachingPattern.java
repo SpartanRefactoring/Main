@@ -11,8 +11,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/**  * @year 2016 
+ @author Ori Marcovitch
+ * @since Jan 8, 2017
+ */
+
 public final class CachingPattern extends NanoPatternTipper<IfStatement> {
   private static final UserDefinedTipper<Block> tipper = //
       statementsPattern("if($X1 == null)$X1 = $X2;return $X1;", //
@@ -47,3 +50,4 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
     return tipper.replacement();
   }
 }
+

@@ -1,3 +1,7 @@
+/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 10, 2016
+ */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.Utils.*;
@@ -69,3 +73,4 @@ public final class UtilsTest {
     azzert.that(removeWhites("\t\t\nA\tA\fB\rC\n"), is("AABC"));
   }
 }
+

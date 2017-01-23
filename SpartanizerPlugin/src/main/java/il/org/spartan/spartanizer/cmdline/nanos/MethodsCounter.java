@@ -16,8 +16,12 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-19 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-19 
+ */
+
 public class MethodsCounter extends FolderASTVisitor {
   private final SortedMap<Integer, Int> methods = new TreeMap<>();
   static {
@@ -83,3 +87,4 @@ public class MethodsCounter extends FolderASTVisitor {
     file.renameToCSV(outputFolder + "/countStatistics");
   }
 }
+

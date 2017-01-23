@@ -8,8 +8,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Alex Kopzon
- * @since 2016 */
+/** TODO:  Alex Kopzon
+ please add a description 
+ @author Alex Kopzon
+ * @since 2016 
+ */
+
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static ForStatement buildForWhithoutCondition(final ForStatement $) {
@@ -33,3 +37,4 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return !fitting(¢) ? null : buildForWhithoutCondition(copy.of(¢));
   }
 }
+
