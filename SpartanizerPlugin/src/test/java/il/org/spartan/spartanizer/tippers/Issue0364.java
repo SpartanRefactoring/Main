@@ -11,35 +11,36 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class Issue0364 {
-  @Test public void emptyInitializer() {
-    trimmingOf("Object[] os = {};\nS.out.println(os);").givesEither("S.out.println((new Object[] {}));",
-        "S.out.println(new Object[] {});");
-  }
+ @Test public void emptyInitializer() {
+ trimmingOf("Object[] os = {};S.out.println(os);").givesEither("S.out.println((new Object[] {}));",
+  "S.out.println(new Object[] {});");
+ }
 
-  @Test public void realLifeExample() {
-    trimmingOf("if (opterr) {\n  final Object[] msgArgs = { progname, Character.valueOf((char) c) + \"\" };\n"
-        + "  S.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), msgArgs));\n}\nX();")
-            .gives("if (opterr) {\n"
-                + "  S.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), (new Object[] { progname, Character.valueOf((char) c) + \"\" })));\n"
-                + "}\nX();");
-  }
+ @Test public void realLifeExample() {
+ trimmingOf("if (opterr) { final Object[] msgArgs = { progname, Character.valueOf((char) c) + \"\" };"
+  + " S.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), msgArgs));}X();")
+   .gives("if (opterr) {"
+    + " S.err.println(MessageFormat.format(_messages.getString(\"getopt.requires2\"), (new Object[] { progname, Character.valueOf((char) c) + \"\" })));"
+    + "}X();");
+ }
 
-  @Test public void notTerminating() {
-    trimmingOf("void f() {\n  String[] x = {\"\"};  g(x);  h();}").gives("void f() {\n  g(new String[] {\"\"});  h();}");
-  }
+ @Test public void notTerminating() {
+ trimmingOf("void f() { String[] x = {\"\"}; g(x); h();}")//
+ .gives("void f() { g(new String[] {\"\"}); h();}");
+ }
 
-  @Test public void notTerminatingRealWorld() {
-    trimmingOf("@Test public void fz() throws Exception {\n"
-        + "  String[] cmd = {S.p(\"java.home\") + File.separator + \"bin\"\n"
-        + "    + File.separator + \"java\", \"-cp\", getClass().getClassLoader().getResource(\".\").getFile()\n"
-        + "    + File.pathSeparator + S.p(\"java.class.path\"), getClass().getName() + \"$Exit\"};\n"
-        + "  Process o = R.getR().exec(cmd);\n  for (I ¢ = o.getI(); ¢.read() != -1;)\n    ;\n"
-        + "  wizard.assertEquals(EXIT_CODE, o.waitFor());\n}")
-            .gives("@Test public void fz() throws Exception {\n"
-                + "  Process o = R.getR().exec(new String[] {S.p(\"java.home\") + File.separator + \"bin\"\n"
-                + "    + File.separator + \"java\", \"-cp\", getClass().getClassLoader().getResource(\".\").getFile()\n"
-                + "    + File.pathSeparator + S.p(\"java.class.path\"), getClass().getName() + \"$Exit\"});\n"
-                + "  for (I ¢ = o.getI(); ¢.read() != -1;)\n    ;\n"
-                + "  wizard.assertEquals(EXIT_CODE, o.waitFor());\n}");
-  }
+ @Test public void notTerminatingRealWorld() {
+ trimmingOf("@Test public void fz() throws E {"
+  + " String[] cmd = {S.p(\"java.home\") + F.s + \"bin\""
+  + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile()"
+  + " + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"};"
+  + " Process o = R.getR().e(cmd); for (I ¢ = o.getI(); ¢.r() != -1;) ;"
+  + " w.a(EXIT_CODE, o.waitFor());}")
+   .gives("@Test public void fz() throws E {"
+    + " Process o = R.getR().e(new String[] {S.p(\"java.home\") + F.s + \"bin\""
+    + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile()"
+    + " + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"});"
+    + " for (I ¢ = o.getI(); ¢.r() != -1;) ;"
+    + " w.a(EXIT_CODE, o.waitFor());}");
+ }
 }
