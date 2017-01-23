@@ -32,7 +32,7 @@ public final class Issue0222 {
   }
 
   @Ignore
-  //TODO: Yossi Gil, I guess #1115 breaks this some how
+  // TODO: Yossi Gil, I guess #1115 breaks this some how
   @Test public void vanilla() {
     trimmingOf("static List<Expression> operands(final InfixExpression x) {\n" + "  if (x == null)\n" + "    return null;\n"
         + "  final List<Expression> $ = new ArrayList<>();\n" + "  $.add(left(x));\n" + "  $.add(right(x));\n" + "  if (x.hasExtendedOperands())\n"
