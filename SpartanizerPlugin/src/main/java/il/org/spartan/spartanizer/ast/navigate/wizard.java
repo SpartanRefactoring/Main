@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.lisp.last;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
