@@ -17,7 +17,6 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings({ "javadoc" })
 public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
@@ -46,8 +45,15 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
+
+@SuppressWarnings("unused")
 class NamespaceFixture {
-  // TODO: Doron, should be documented
+ /**
+  * This class' only purpose is for the testing above.
+  */
+  static {
+    int i1, i2, i3;
+  }
   int f(final int a1) {
     return a1 >>> hashCode();
   }
