@@ -154,7 +154,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private static final long serialVersionUID = 1L;
-  public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp/");
+  public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
   public static String classToNormalizedFileName(final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
