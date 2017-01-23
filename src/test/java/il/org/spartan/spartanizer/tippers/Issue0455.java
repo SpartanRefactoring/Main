@@ -5,8 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author Oren Afek
- * @since 2016 Testing {@link LambdaExpressionRemoveRedundantCurlyBraces } */
+/** TODO:  Oren Afek
+ please add a description 
+ @author Oren Afek
+ * @since 2016 Testing {@link LambdaExpressionRemoveRedundantCurlyBraces } 
+ */
+
 @SuppressWarnings("static-method")
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {
@@ -168,3 +172,4 @@ public class Issue0455 {
         .stays();
   }
 }
+

@@ -17,11 +17,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Scans files named by outputFolder, ignore test files, and collect
+/**  Scans files named by outputFolder, ignore test files, and collect
  * statistics. It does everything BatchSpartanizer does, but using the
  * {@link EventApplicator}
+ * @year 2016 
  * @author Matteo Orru'
- * @year 2016 */
+ * @since 
+ */
+
 final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";

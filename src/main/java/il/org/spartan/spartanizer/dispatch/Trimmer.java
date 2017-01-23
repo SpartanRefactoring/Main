@@ -17,8 +17,12 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Yossi Gil
- * @since 2015/07/10 */
+/** TODO:  Yossi Gil
+ please add a description 
+ @author Yossi Gil
+ * @since 2015/07/10 
+ */
+
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
 
@@ -155,3 +159,4 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 }
+
