@@ -4,9 +4,15 @@ import static java.lang.reflect.Modifier.*;
 
 import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -19,6 +25,32 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory {
+  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
+   * fragments which are not live in the containing
+   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
+   * containing node is eliminated as well.
+   * @param f
+   * @param r
+   * @param g */
+  public static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
+    if (live.isEmpty()) {
+      r.remove(parent, g);
+      return;
+    }
+    final VariableDeclarationStatement newParent = copy.of(parent);
+    fragments(newParent).clear();
+    fragments(newParent).addAll(live);
+    r.replace(parent, newParent, g);
+  }
+
+  protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
+    return $;
+  }
+
   private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this
