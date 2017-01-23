@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Test case is {@link Issue0968} Issue #968 convert <code>
  * int a = f(), b = g();
@@ -26,22 +27,18 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement s) {
-    int $ = 0;
-    for (final VariableDeclarationFragment ¢ : step.fragments(s)) // NANO?
-      if (isFragmentApplicable(¢))
-        ++$;
-    return $ >= 2;
+    return fragments(s).stream().filter(¢ -> isFragmentApplicable(¢)).count() >= 2;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
-    final VariableDeclarationFragment fs = getFirstAssignment($), ff = (VariableDeclarationFragment) first.fragments().get($.fragments().indexOf(fs));
-    $.fragments().remove(fs);
-    first.fragments().clear();
-    step.fragments(first).add(ff);
+    final VariableDeclarationFragment fs = getFirstAssignment($), ff = fragments(first).get(fragments($).indexOf(fs));
+    fragments($).remove(fs);
+    fragments(first).clear();
+    fragments(first).add(ff);
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
+        final ListRewrite l = r.getListRewrite(parent(¢), Block.STATEMENTS_PROPERTY);
         l.insertAfter($, ¢, g);
         l.insertAfter(first, ¢, g);
         l.remove(¢, g);
@@ -50,13 +47,10 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
-    for (final VariableDeclarationFragment $ : step.fragments(¢)) // NANO?
-      if (isFragmentApplicable($))
-        return $;
-    return null;
+    return step.fragments(¢).stream().filter($ -> isFragmentApplicable($)).findFirst().orElse(null);
   }
 
   private static boolean isFragmentApplicable(final VariableDeclarationFragment ¢) {
-    return ¢.getInitializer() != null;
+    return initializer(¢) != null;
   }
 }
