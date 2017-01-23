@@ -21,12 +21,14 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
     return "Extract expression from " + ¢ + " statement";
   }
 
+  // TODO: Doron - I spartanized your code. --yg
   @Override public Tip tip(final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
-        final AST create = r.getAST();
-        final ExpressionStatement exp = create.newExpressionStatement(copy.of(expression(s)));
+        // TODO: Doron Meshulam: with class subject, you do not need to create
+        // new objects. It does that for you.
+        final ExpressionStatement exp = r.getAST().newExpressionStatement(copy.of(expression(s)));
         final ReturnStatement retNoExp = subject.operand(expression(exp)).toReturn();
         retNoExp.setExpression(copy.of(left(a)));
         final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
