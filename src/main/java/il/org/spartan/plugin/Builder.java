@@ -79,7 +79,7 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final AbstractGUIApplicator s : Tips.all()) // NANO
+    for (final AbstractGUIApplicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
