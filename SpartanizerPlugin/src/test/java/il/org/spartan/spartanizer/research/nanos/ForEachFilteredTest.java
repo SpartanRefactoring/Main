@@ -35,8 +35,8 @@ public class ForEachFilteredTest{
   @Test public void d(){
     trimmingOf("for(A r :(B)rs) if(U.t(r.tr())) try{r.es(); }catch(Throwable ¢){l.ac(\"ma\",¢); }")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
-        .gives("((B)rs).stream().filter(r->U.t(r.tr())).forEach(r->{try{r.es();}catch(Throwable ¢){{l.ac(\"ma\",¢);}}});")//
-        .gives("((B)rs).stream().filter(¢->U.t(r.tr())).forEach(¢->{try{r.es();}catch(Throwable ¢){l.ac(\"ma\",¢);}});")//
+        .gives("((B)rs).stream().filter(r->U.t(¢.tr())).forEach(r->{try{r.es();}catch(Throwable ¢){{l.ac(\"ma\",¢);}}});")//
+        .gives("((B)rs).stream().filter(¢->U.t(¢.tr())).forEach(¢->{try{r.es();}catch(Throwable ¢){l.ac(\"ma\",¢);}});")//
         .stays();
   }
 
