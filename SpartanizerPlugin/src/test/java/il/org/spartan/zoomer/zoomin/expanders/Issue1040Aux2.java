@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Example for testing with binding
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
+// TODO Yuval Simon --make this into an inner class
 @SuppressWarnings({ "static-method", "unused" })
 public class Issue1040Aux2 extends MetaFixture {
   int total;
