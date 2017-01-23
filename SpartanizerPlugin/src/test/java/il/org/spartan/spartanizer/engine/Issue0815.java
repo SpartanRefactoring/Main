@@ -51,7 +51,7 @@ public class Issue0815 {
   }
 
   @Test @SuppressWarnings("static-method") public void dollarCheckForOfMethod() {
-    azzert.that(NameGuess.DOLLAR, is(NameGuess.of("$")));
+    azzert.that(NameGuess.DOLLAR, is(NameGuess.of(namer.return¢)));
     azzert.that(NameGuess.DOLLAR, is(NameGuess.of("$$")));
     assertNotEquals(NameGuess.of(""), NameGuess.DOLLAR);
   }
