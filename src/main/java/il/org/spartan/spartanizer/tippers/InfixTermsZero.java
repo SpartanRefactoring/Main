@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Replace <code>0+X</code>, <code>X+0</code>
  * @author Alex Kopzon
@@ -31,6 +32,9 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
   }
 
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    return ¢.getOperator() != PLUS || !type.isNotString(¢) ? null : replacement(extract.allOperands(¢));
+    if ((operator(¢) == PLUS || operator(¢) == MINUS) && ¢ == initializer(az.variableDeclrationFragment(parent(¢)))
+        & iz.intType(type(az.variableDeclarationStatement(parent(az.variableDeclrationFragment(parent(¢)))))))
+      return replacement(extract.allOperands(¢));
+    return (operator(¢) != PLUS && operator(¢) != MINUS) || !type.isNotString(¢) ? null : replacement(extract.allOperands(¢));
   }
 }

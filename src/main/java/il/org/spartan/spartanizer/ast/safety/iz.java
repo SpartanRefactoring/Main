@@ -235,6 +235,10 @@ public interface iz {
     return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
 
+  static boolean intType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
+  }
+
   static boolean breakStatement(final Statement ¢) {
     return iz.nodeTypeEquals(¢, BREAK_STATEMENT);
   }
