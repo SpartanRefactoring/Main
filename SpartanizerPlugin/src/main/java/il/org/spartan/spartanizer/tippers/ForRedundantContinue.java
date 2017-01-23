@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   @Override public String description(final ForStatement ¢) {
-    return "Prune redundant " + wizard.lastStatement(¢);
+    return "Prune redundant " + extract.lastStatement(¢);
   }
 
   @Override public String description() {
@@ -33,15 +33,15 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
         final Block b = az.block(step.body(¢));
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
         if (b != null)
-          l.remove(wizard.lastStatement(¢), g);
+          l.remove(extract.lastStatement(¢), g);
         else
-          l.replace(wizard.lastStatement(¢), make.emptyStatement(¢), g);
+          l.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
       }
     };
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    final Statement s = wizard.lastStatement(¢);
+    final Statement s = extract.lastStatement(¢);
     if (iz.continueStatement(s)) {
       final SimpleName n = label(az.continueStatement(s));
       if (n == null || iz.labeledStatement(parent(¢)) && n.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
