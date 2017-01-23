@@ -15,17 +15,14 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016 */
 public class Independent extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    final List<String> enviroment = parametersNames(d);
+    final List<String> $ = parametersNames(d);
     for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
       if (iz.typeDeclaration(¢))
-        enviroment.addAll(fieldDeclarationsNames(az.typeDeclaration(¢)));
+        $.addAll(fieldDeclarationsNames(az.typeDeclaration(¢)));
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
-        enviroment.addAll(parametersNames(az.methodDeclaration(¢)));
-    for (final String ¢ : enviroment)
-      if (analyze.dependencies(body(d)).stream().map(x -> x + "").collect(Collectors.toSet()).contains(¢))
-        return false;
-    return true;
+        $.addAll(parametersNames(az.methodDeclaration(¢)));
+    return $.stream().allMatch(¢ -> !(analyze.dependencies(body(d)).stream().map(x -> x + "").collect(Collectors.toSet()).contains(¢)));
   }
 
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
