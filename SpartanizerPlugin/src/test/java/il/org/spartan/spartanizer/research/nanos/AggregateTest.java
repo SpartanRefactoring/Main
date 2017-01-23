@@ -57,7 +57,7 @@ public class AggregateTest {
     trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();"//
     )//
         .using(EnhancedForStatement.class, new Aggregate())//
-        .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("$+=implementation.stream().filter(¢->¢!=null).map(¢->¢.size()).reduce((x,y)->x+y).get();")//
         .stays();
   }
 
@@ -65,7 +65,8 @@ public class AggregateTest {
     trimmingOf("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);"//
     )//
         .using(EnhancedForStatement.class, new Aggregate())//
-        .gives("$=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
+        .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .stays();
   }
 }
