@@ -17,9 +17,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Common strategy of all evaluators$EvaluateExpression
+/**  Common strategy of all evaluators$EvaluateExpression
+ * @year 2016 
  * @author Yossi Gil
- * @year 2016 */
+ * @since Sep 25, 2016
+ */
+
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
   private static int indexForLeftEvaluation(final InfixExpression x) {

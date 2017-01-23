@@ -6,10 +6,14 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** @author Shay Segal
+/** TODO:  Shay Segal
+ *  please add a description 
+ @author Shay Segal
  * @author Sefi Albo
  * @author Daniel Shames
- * @since 12-11-2016 */
+ * @since 12-11-2016 
+ */
+
 @SuppressWarnings("static-method")
 public class EssenceTest {
   @Test public void simpleTest() {
@@ -44,3 +48,4 @@ public class EssenceTest {
     azzert.that(Essence.of("string\r_b4_cmnt//comment"), is("string_b4_cmnt"));
   }
 }
+

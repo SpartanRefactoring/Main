@@ -1,3 +1,7 @@
+/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Dec 26, 2016
+ */
 package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;

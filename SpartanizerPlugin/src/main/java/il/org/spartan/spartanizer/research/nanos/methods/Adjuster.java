@@ -13,8 +13,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-22 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-22 
+ */
+
 public class Adjuster extends JavadocMarkerNanoPattern {
   private static final List<UserDefinedTipper<Expression>> tippers = new ArrayList<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
@@ -65,3 +69,4 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 }
+

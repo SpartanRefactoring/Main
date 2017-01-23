@@ -4,8 +4,12 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 @SuppressWarnings("static-method")
 public class HashCodeMethodTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -32,3 +36,4 @@ public class HashCodeMethodTest extends JavadocerTest {
     assert not("String toString(){return \"oh got\" + myVonderfull(bar);}");
   }
 }
+

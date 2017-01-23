@@ -10,12 +10,15 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** if (!$X1.containsKey($X2)) <br>
+/**  if (!$X1.containsKey($X2)) <br>
  * <tab> $X1.put($X2, $X3); <br>
  * into: <br>
  * $X1.putIfAbsent($X2, $X3);
+ * @year 2016 
  * @author Ori Marcovitch
- * @year 2016 */
+ * @since Jan 8, 2017
+ */
+
 public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
@@ -45,3 +48,4 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     return firstReplacement(tippers);
   }
 }
+

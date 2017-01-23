@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -43,7 +42,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
    * @return <code><b>true</b></code> <em>iff</em> initializer's and
    *         declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
-    final List<IExtendedModifier> $ = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
+    final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
@@ -54,35 +53,20 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return step.fragments(vds).stream().allMatch(¢ -> Inliner.variableUsedInFor(s, name(¢)) && Inliner.variableNotUsedAfterStatement(s, name(¢)));
+    return fragments(vds).stream().allMatch(¢ -> Inliner.variableUsedInFor(s, name(¢)) && Inliner.variableNotUsedAfterStatement(s, name(¢)));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
-    step.fragments(s).stream().filter(¢ -> (name(¢) + "").equals(az.simpleName(step.left(from)) + ""))
-        .forEachOrdered(¢ -> ¢.setInitializer(copy.of(step.right(from))));
-    return copy.of(step.left(from));
-  }
-
-  public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
-    final List<Expression> $ = hop.operands(from);
-    // TODO Raviv Rachmiel: use extract.core
-    $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
-      final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
-      final SimpleName var = az.simpleName(step.left(a));
-      fragments(s).stream().filter(¢ -> (name(¢) + "").equals(var + "")).forEach(¢ -> {
-        ¢.setInitializer(copy.of(step.right(a)));
-        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
-      });
-    });
-    return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
+    fragments(s).stream().filter(¢ -> (name(¢) + "").equals(az.simpleName(left(from)) + ""))
+        .forEachOrdered(¢ -> ¢.setInitializer(copy.of(right(from))));
+    return copy.of(left(from));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = az.infixExpression(from.getExpression());
-    final ParenthesizedExpression pe = az.parenthesizedExpression(from.getExpression());
+    final InfixExpression e = (az.infixExpression(extract.core(from.getExpression())));
     return $ != null ? handleAssignmentCondition($, s)
-        : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
+        : e != null ? handleInfixCondition(e, s) :  from;
   }
 
   /** @param t JD
@@ -97,7 +81,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   }
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final List<Expression> initializers = step.initializers(¢);
+    final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
     if (!iz.variableDeclarationExpression(first(initializers)))
@@ -108,10 +92,10 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
-    step.initializers($).clear();
-    step.initializers($).add(az.variableDeclarationExpression(s));
-    step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(copy.of(step.fragments(forInitializer)));
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
+    initializers($).clear();
+    initializers($).add(az.variableDeclarationExpression(s));
+    fragments(az.variableDeclarationExpression(findFirst.elementOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -128,7 +112,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     final ForStatement forStatement = az.forStatement(nextStatement);
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
-    exclude.excludeAll(step.fragments(declarationStatement));
+    exclude.excludeAll(fragments(declarationStatement));
     $.remove(declarationStatement, g);
     // TODO Ori Roth: use list rewriter; talk to Ori Roth
     $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);

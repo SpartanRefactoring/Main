@@ -8,8 +8,12 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** @author Yossi Gil
- * @since 2015-07-17 */
+/** TODO:  Yossi Gil
+ please add a description 
+ @author Yossi Gil
+ * @since 2015-07-17 
+ */
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class PrecedenceTest {
   @Test public void addition() {
@@ -201,3 +205,4 @@ public final class PrecedenceTest {
     azzert.that(precedence.of(e("a^b")), is(10));
   }
 }
+

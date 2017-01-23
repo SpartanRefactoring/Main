@@ -10,8 +10,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-20 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-20 
+ */
+
 public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
@@ -44,3 +48,4 @@ public final class LispLastElement extends NanoPatternTipper<MethodInvocation> {
     return firstReplacement(tippers);
   }
 }
+

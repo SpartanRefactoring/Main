@@ -1,3 +1,7 @@
+/** TODO:  alexkopzon <alexkopzon@192.168.1.10> please add a description 
+ * @author  alexkopzon <alexkopzon@192.168.1.10>
+ * @since Sep 18, 2016
+ */
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;

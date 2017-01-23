@@ -8,8 +8,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 public class Classifieric {
   public static class Contains extends NanoPatternTipper<ForStatement> {
     final Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
@@ -28,3 +32,4 @@ public class Classifieric {
     }
   }
 }
+

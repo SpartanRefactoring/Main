@@ -4,8 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Stav Namir
- * @since 2016-08-29 */
+/** TODO:  Stav Namir
+ please add a description 
+ @author Stav Namir
+ * @since 2016-08-29 
+ */
+
 @SuppressWarnings("static-method")
 public final class Issue0097 {
   @Test public void test01() {
@@ -14,3 +18,4 @@ public final class Issue0097 {
             .stays();
   }
 }
+

@@ -4,8 +4,12 @@ import java.util.*;
 
 import il.org.spartan.*;
 
-/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-25 */
+/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ please add a description 
+ @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-25 
+ */
+
 public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
@@ -186,3 +190,4 @@ public interface TableRenderer {
     return value;
   }
 }
+

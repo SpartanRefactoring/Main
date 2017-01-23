@@ -5,8 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Raviv Rachmiel
- * @since 25-11-2016 */
+/** TODO:  Raviv Rachmiel
+ please add a description 
+ @author Raviv Rachmiel
+ * @since 25-11-2016 
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0305 {
@@ -38,3 +42,4 @@ public class Issue0305 {
         .stays();
   }
 }
+
