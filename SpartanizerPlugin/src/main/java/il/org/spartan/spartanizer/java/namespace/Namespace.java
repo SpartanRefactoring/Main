@@ -348,7 +348,7 @@ public final class Namespace implements Environment {
   }
 
   public boolean hasInChildren(final String identifier) {
-    return has(identifier) ? true : children.stream().anyMatch(¢ -> ¢.hasInChildren(identifier));
+    return has(identifier) || children.stream().anyMatch(¢ -> ¢.hasInChildren(identifier));
   }
 
   public String generateName(final Type ¢) {

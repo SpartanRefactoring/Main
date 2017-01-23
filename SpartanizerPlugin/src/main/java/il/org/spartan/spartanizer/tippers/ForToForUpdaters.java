@@ -48,7 +48,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
     final Block $ = az.block(n.getParent());
-    return $ == null ? false : extract.fragments($).stream().anyMatch(¢ -> !Collect.usesOf(¢.getName()).in(n).isEmpty());
+    return $ != null && extract.fragments($).stream().anyMatch(¢ -> !Collect.usesOf(¢.getName()).in(n).isEmpty());
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {

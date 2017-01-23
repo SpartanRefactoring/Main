@@ -50,7 +50,7 @@ public enum minus {
   }
 
   @SuppressWarnings("boxing") public static int level(final List<Expression> xs) {
-    return xs.stream().map(¢ -> minus.level(¢)).reduce((x, y) -> x + y).get();
+    return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
 
   private static int level(final PrefixExpression ¢) {

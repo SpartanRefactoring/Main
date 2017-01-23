@@ -26,8 +26,8 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return "Split initialization statement";
   }
 
-  @Override protected boolean prerequisite(final VariableDeclarationStatement s) {
-    return fragments(s).stream().filter(¢ -> isFragmentApplicable(¢)).count() >= 2;
+  @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
+    return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).count() >= 2;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
@@ -47,7 +47,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
-    return step.fragments(¢).stream().filter($ -> isFragmentApplicable($)).findFirst().orElse(null);
+    return step.fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).findFirst().orElse(null);
   }
 
   private static boolean isFragmentApplicable(final VariableDeclarationFragment ¢) {

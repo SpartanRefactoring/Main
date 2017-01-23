@@ -42,7 +42,7 @@ public abstract class FileTestUtils {
    * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
     @Override public void go(final List<Object[]> $, final File d) {
-      for (final File f : d.listFiles())
+      for (final File f : d.listFiles()) // NANO
         if (f != null && f.isFile() && f.exists()) {
           final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
           if (c != null)

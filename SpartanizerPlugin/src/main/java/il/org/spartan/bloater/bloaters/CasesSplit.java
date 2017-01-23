@@ -64,7 +64,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : step.statements(x))
+    for (final Statement ¢ : step.statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;
       else if (¢ instanceof SwitchCase) {

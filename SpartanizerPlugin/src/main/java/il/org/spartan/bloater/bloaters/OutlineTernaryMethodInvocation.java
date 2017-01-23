@@ -37,7 +37,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     final List<Expression> l = arguments(n);
     if (l.isEmpty())
       return null;
-    ConditionalExpression $ = null;
+    ConditionalExpression $;
     for (int i = 0; i < l.size(); ++i) {
       if (($ = az.conditionalExpression(l.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))

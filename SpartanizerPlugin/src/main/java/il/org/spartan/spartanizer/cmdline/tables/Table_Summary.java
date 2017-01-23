@@ -99,7 +99,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    writer = new Table(Table_Summary.class.getSimpleName());
+    writer = new Table(Table_Summary.class);
   }
 
   public void summarizeSortedMethodStatistics(final String path) {
