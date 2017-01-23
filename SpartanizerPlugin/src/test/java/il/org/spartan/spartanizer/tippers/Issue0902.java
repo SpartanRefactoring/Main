@@ -13,7 +13,7 @@ import org.junit.*;
 public class Issue0902 {
   @Test public void a() {
     trimmingOf("void f(){int x; int y;return;}")//
-        .gives("void f(){int x; int y;}")//
+        .gives("void f(){int x,y;}")//
         .gives("void f(){}")//
         .stays();
   }
