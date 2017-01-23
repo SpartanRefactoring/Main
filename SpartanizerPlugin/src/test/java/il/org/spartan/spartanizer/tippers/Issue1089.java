@@ -4,12 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO: Tomer Dragucki - which class does this test? Add a {@link}
+/** Testing disabling lambda expression tipping
+ * {@link DeclarationInitializerStatementTerminatingScope}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")
 public class Issue1089 {
-  // TODO: Tomer Dragucki - rung class normalize, and give it some input --yg
   @Test public void a() {
     trimmingOf("ToggleGroup group = new ToggleGroup();" //
         + "(new SelectAnArea()).getAllPossibleColors().forEach(c -> { " //
@@ -19,5 +19,9 @@ public class Issue1089 {
                 + "(new SelectAnArea()).getAllPossibleColors().forEach(c -> {" //
                 + "(new JFXRadioButton(c)).setToggleGroup(group);"//
                 + "});");
+  }
+
+  @Ignore @Test public void b() {
+    trimmingOf("Object o = new Object();" + "l.forEach(c -> a(o));").stays();
   }
 }
