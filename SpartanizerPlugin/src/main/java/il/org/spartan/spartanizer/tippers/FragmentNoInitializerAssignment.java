@@ -8,44 +8,44 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** convert
  *
  * <pre>
- * int a = 3;
- * return a;
+ * int a;
+ * a = 3;
  * </pre>
  *
  * into
  *
  * <pre>
- * return a;
+ * int a = 3;
  * </pre>
  *
- * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnVariable extends $VariableDeclarationFragementAndStatement//
-    implements TipperCategory.Inlining {
+public final class FragmentNoInitializerAssignment extends $VariableDeclarationFragementAndStatement//
+    implements TipperCategory.Unite {
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
+    final VariableDeclarationFragment $ = copy.of(f);
+    $.setInitializer(copy.of(x));
+    return $;
+  }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate temporary " + ¢.getName() + " and return its value";
+    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
+    if (initializer != null)
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null)
+    final Assignment a = extract.assignment(nextStatement);
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
-    final Expression returnValue = expression(s);
-    if (returnValue == null || !wizard.same(n, returnValue))
-      return null;
-    eliminate(f, $, g);
-    $.replace(s, subject.operand(initializer).toReturn(), g);
+    $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
+    $.remove(extract.containingStatement(a), g);
     return $;
   }
 }

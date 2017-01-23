@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code>for(int a=3;p;) {++i;}</code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+public final class FragmentToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
@@ -69,6 +69,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
+    // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(step.left(a));
@@ -106,7 +107,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (!iz.variableDeclarationExpression(first(initializers)))
       return false;
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(first(initializers));
-    assert $ != null : "ForToForInitializers -> for initializer is null and not empty?!?";
+    assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
     return fittingType(s, $) && fittingModifiers(s, $);
   }
 

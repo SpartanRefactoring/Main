@@ -15,8 +15,8 @@ public class Issue1012 {
   }
 
   @Test public void b() {
-    trimmingOf("int a; int b; f();")//
-        .gives("int a, b; f();");
+    trimmingOf("int a; int b; f(a, b);")//
+        .gives("int a = a, b; f(a, b);");
   }
 
   @Test public void c() {

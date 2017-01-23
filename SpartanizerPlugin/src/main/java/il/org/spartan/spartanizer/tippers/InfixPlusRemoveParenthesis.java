@@ -51,6 +51,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
+      // TODO: Dor Ma'ayan: use extract.core --yg
       if (iz.parenthesizedExpression(es.get(ii))) {
         Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
         for (; iz.parenthesizedExpression(¢);) {

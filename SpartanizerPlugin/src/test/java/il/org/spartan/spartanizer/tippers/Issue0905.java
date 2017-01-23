@@ -49,12 +49,14 @@ public class Issue0905 {
   @Test public void t24() {
     trimmingOf("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}")//
+        .gives("for(i=tipper();b==q;++i)if(tipper==q())")//
         .stays();
   }
 
   @Test public void t25() {
     trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}")//
+        .gives("for(i=4;b==q;f=i())if(tipper==q())")//
         .stays();
   }
 }
