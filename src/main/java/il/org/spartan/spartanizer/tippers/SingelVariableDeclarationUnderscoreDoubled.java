@@ -24,7 +24,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   static final boolean BY_ANNOTATION = false;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
-    return !Collect.usesOf(n).in(body(d)).isEmpty();
+    return !collect.usesOf(n).in(body(d)).isEmpty();
   }
 
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
