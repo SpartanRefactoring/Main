@@ -8,6 +8,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
  * @since 2017-01-16 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public class Issue1057 {
+  @Ignore // TODO Yossi Gil
+
   @Test public void a() {
     trimmingOf("" //
         + "void f() {\n" //

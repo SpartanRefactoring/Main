@@ -13,7 +13,7 @@ import org.junit.*;
 public class Issue0910 {
   @Test public void singleVariableDeclarationStatementShouldntTip() {
     trimmingOf("x -> {int y;}") //
-        .gives("") //
+        .gives("x->{}") //
         .stays();
   }
 
