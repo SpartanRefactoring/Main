@@ -10,9 +10,13 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** @author Shimon Azulay
+/** TODO:  Shimon Azulay
+ *  please add a description 
+ @author Shimon Azulay
  * @author Idan Atias
- * @since 16-11-3 */
+ * @since 16-11-3 
+ */
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0741 {
   static TypeDeclaration getTypeDeclaration(final String td) {
@@ -64,3 +68,4 @@ public class Issue0741 {
     assert !pFields.contains("x");
   }
 }
+

@@ -4,8 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Ori Roth
- * @since 2016_12_14 */
+/** TODO:  Ori Roth
+ please add a description 
+ @author Ori Roth
+ * @since 2016_12_14 
+ */
+
 @Ignore // TODO Yuval: is part of your issue --or
 @SuppressWarnings("static-method")
 public class Automatic_2016_12_14_01_52_17 {
@@ -54,3 +58,4 @@ public class Automatic_2016_12_14_01_52_17 {
         .doesNotCrash();
   }
 }
+

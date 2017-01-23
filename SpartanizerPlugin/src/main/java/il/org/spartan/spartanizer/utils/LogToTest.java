@@ -1,3 +1,7 @@
+/** TODO:  Ori Roth <ori.rothh@gmail.com> please add a description 
+ * @author  Ori Roth <ori.rothh@gmail.com>
+ * @since Dec 14, 2016
+ */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.lisp.*;
@@ -111,3 +115,4 @@ public class LogToTest {
     return format.code($.append("}\n") + "");
   }
 }
+

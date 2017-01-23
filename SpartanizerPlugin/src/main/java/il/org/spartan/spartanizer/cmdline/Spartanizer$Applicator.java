@@ -17,8 +17,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Matteo Orru'
- * @since 2016 */
+/** TODO:  Matteo Orru'
+ please add a description 
+ @author Matteo Orru'
+ * @since 2016 
+ */
+
 public class Spartanizer$Applicator extends Generic$Applicator {
   CSVStatistics spectrumStats;
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
@@ -243,3 +247,4 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     selectedNodeTypes = as.list(¢);
   }
 }
+

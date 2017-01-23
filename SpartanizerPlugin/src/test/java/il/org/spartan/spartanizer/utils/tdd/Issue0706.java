@@ -10,9 +10,12 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** Unit tests for issue #706
+/**  Unit tests for issue #706
  * @author Sapir Bismot
- * @author Yaniv Levinsky */
+ * @author Yaniv Levinsky 
+ * @since Jan 15, 2017
+ */
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0706 {
   @Test public void test00() {

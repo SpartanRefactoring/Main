@@ -1,3 +1,7 @@
+/** TODO:  orimarco <marcovitch.ori@gmail.com> please add a description 
+ * @author  orimarco <marcovitch.ori@gmail.com>
+ * @since Jan 11, 2017
+ */
 package il.org.spartan.spartanizer.research.analyses;
 
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
@@ -45,3 +49,4 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
     super.visit(path);
   }
 }
+

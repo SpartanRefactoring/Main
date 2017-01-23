@@ -4,9 +4,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author kobybs
+/** TODO:  kobybs
+ *  please add a description 
+ @author kobybs
  * @author Dor Ma'ayan
- * @since 16-11-2016 */
+ * @since 16-11-2016 
+ */
+
 @SuppressWarnings("static-method")
 public class Issue0235 {
   @Test public void test0() {
@@ -46,3 +50,4 @@ public class Issue0235 {
         .gives("try{ try{ return i; } catch(Exception e){} } catch(Exception e){}");
   }
 }
+

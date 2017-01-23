@@ -9,9 +9,13 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author RoeyMaor
+/** TODO:  RoeyMaor
+ *  please add a description 
+ @author RoeyMaor
  * @author RoeiRaz
- * @since 11-11-16 */
+ * @since 11-11-16 
+ */
+
 public class Issue0818 {
   static final InfixExpressionConcatentateCompileTime tipper = new InfixExpressionConcatentateCompileTime();
   static final InfixExpression ie01 = into.i("\"a\" + \"b\"");
@@ -53,3 +57,4 @@ public class Issue0818 {
     assert tipper.replacement(ie06) != null;
   }
 }
+

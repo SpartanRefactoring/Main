@@ -16,9 +16,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author kobybs
+/** TODO:  kobybs
+ *  please add a description 
+ @author kobybs
  * @author Dan Abramovich
- * @since 20-11-2016 */
+ * @since 20-11-2016 
+ */
+
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     implements TipperCategory.Sorting {
   private static final HashSet<String> rankTable[] = as.array(//

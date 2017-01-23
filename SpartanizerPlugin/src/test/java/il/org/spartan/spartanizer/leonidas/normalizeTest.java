@@ -7,8 +7,12 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 @SuppressWarnings("static-method") //
 public class normalizeTest {
   @Test public void a() {
@@ -23,3 +27,4 @@ public class normalizeTest {
     azzert.that(normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
   }
 }
+

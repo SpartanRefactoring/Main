@@ -11,12 +11,16 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Artium Nihamkin
- * @since 2013/01/01
+/** TODO:  Artium Nihamkin
+ *  please add a description 
+ @author Artium Nihamkin
  * @author Ofir Elmakias
- * @since 2015/09/06 (Updated - auto initialization of the plugin)
  * @author Ori Roth
- * @since 2.6 (Updated - apply nature to newly opened projects) */
+ * @since 2013/01/01
+ * @since 2015/09/06 (Updated - auto initialization of the plugin)
+ * @since 2.6 (Updated - apply nature to newly opened projects) 
+ */
+
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   private static boolean listening;

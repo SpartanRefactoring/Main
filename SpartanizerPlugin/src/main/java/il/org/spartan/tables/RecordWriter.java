@@ -4,8 +4,12 @@ import java.io.*;
 
 import il.org.spartan.*;
 
-/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-25 */
+/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ please add a description 
+ @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-25 
+ */
+
 public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
@@ -80,3 +84,4 @@ public class RecordWriter implements Closeable {
     return $ + "";
   }
 }
+

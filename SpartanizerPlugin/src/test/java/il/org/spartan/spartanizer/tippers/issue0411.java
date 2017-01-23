@@ -12,9 +12,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Failing tests of issue 295 -
+/**  Failing tests of issue 295 -
  * DeclarationInitializerStatementTerminatingScope.
- * @since 2016 */
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since 2016 
+ */
+
 @Ignore
 @SuppressWarnings("static-method")
 public class issue0411 {
@@ -104,3 +107,4 @@ public class issue0411 {
         + "\n for = " + forr + fault.done();
   }
 }
+

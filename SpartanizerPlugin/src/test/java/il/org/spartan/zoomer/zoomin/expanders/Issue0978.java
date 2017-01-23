@@ -4,8 +4,12 @@ import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-/** @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
- * @since 2017-01-15 */
+/** TODO:  Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
+ please add a description 
+ @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
+ * @since 2017-01-15 
+ */
+
 @SuppressWarnings("static-method")
 public class Issue0978 {
   @Test public void a() {
@@ -28,3 +32,4 @@ public class Issue0978 {
         .gives("Integer i1; i1 = new Integer(5); new Integer(7);").gives("Integer i1; i1 = new Integer(5); Integer i2 = new Integer(7);");
   }
 }
+
