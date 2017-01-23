@@ -1194,8 +1194,8 @@ public interface iz {
     return vacuous(then(¢));
   }
 
-  static boolean validForEvaluation(final InfixExpression x) {
-    return extract.allOperands(x).stream().allMatch(¢ -> iz.pseudoNumber(¢));
+  static boolean validForEvaluation(final InfixExpression ¢) {
+    return extract.allOperands(¢).stream().allMatch(iz::pseudoNumber);
   }
 
   static boolean variableDeclarationExpression(final ASTNode $) {

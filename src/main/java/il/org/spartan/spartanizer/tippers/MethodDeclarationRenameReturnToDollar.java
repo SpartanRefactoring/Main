@@ -126,7 +126,7 @@ class Conservative extends AbstractRenamePolicy {
       if (unused($.next()))
         $.remove();
     return !localVariables.isEmpty() ? first(localVariables)
-        : parameters.stream().filter(¢ -> !unused(¢.getName())).map(¢ -> ¢.getName()).findFirst().orElse(null);
+        : parameters.stream().filter(¢ -> !unused(¢.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   private boolean unused(final SimpleName n) {

@@ -98,7 +98,7 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
-    return Arrays.asList(kws).stream().filter(kw -> c.contains(kw)).collect(Collectors.toSet());
+    return Arrays.asList(kws).stream().filter(c::contains).collect(Collectors.toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
