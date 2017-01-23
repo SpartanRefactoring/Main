@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+/** TODO: Tomer Dragucki - which class does this test? Add a {@link}
+ * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")
 public class Issue1089 {

@@ -600,7 +600,7 @@ public enum az {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
-  static DoStatement doStatement(ASTNode $) {
+  static DoStatement doStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, DO_STATEMENT) ? null : (DoStatement) $;
   }
 }

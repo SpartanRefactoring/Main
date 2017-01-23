@@ -73,7 +73,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   void addMissingKeys() {
-    (wizard.classToNodeType.keySet()).forEach(¢ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢)));
+    wizard.classToNodeType.keySet().forEach(¢ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢)));
     Arrays.asList(wizard.assignmentOperators).forEach(¢ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(¢)));
     Arrays.asList(wizard.prefixOperators).forEach(¢ -> addIfNecessary("PREFIX", Vocabulary.mangle(¢)));
     Arrays.asList(wizard.postfixOperators).forEach(¢ -> addIfNecessary("POSTFIX", Vocabulary.mangle(¢)));

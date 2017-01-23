@@ -59,7 +59,7 @@ public class Table_Loops extends FolderASTVisitor {
       final ASTNode n = into.s(spartanize(parent(¢)));
       log(extract.singleStatement(findFirst.statement(n)));
       npStatistics.logMethod(intoMethod(spartanalyze(n)));
-    } catch (@SuppressWarnings("unused") AssertionError __) {
+    } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.out.print("X");
     }
     return false;
