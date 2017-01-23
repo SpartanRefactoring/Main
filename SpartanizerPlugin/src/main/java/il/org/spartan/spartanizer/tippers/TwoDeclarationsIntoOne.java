@@ -52,7 +52,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-        && modifiers(az.variableDeclarationStatement(nextStatement)).equals(modifiers($))
+        && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
         && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));
   }
 

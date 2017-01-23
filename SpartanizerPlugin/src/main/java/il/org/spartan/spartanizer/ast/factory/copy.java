@@ -27,8 +27,7 @@ public enum copy {
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
-    for (final N ¢ : from) // NANO?
-      into(¢, into);
+    from.forEach(¢ -> into(¢, into));
   }
 
   /** Duplicate a {@link Statement} into another list.

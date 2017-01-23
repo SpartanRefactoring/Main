@@ -13,7 +13,7 @@ public final class BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
-    final ASTNode $ = il.org.spartan.spartanizer.ast.navigate.container.typeDeclaration(¢);
+    final ASTNode $ = il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 
