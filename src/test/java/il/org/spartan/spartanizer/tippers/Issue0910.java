@@ -13,6 +13,12 @@ import org.junit.*;
 public class Issue0910 {
   @Test public void singleVariableDeclarationStatementShouldntTip() {
     trimmingOf("x -> {int y;}") //
+        .gives("") //
+        .stays();
+  }
+
+  @Test public void singleVariableDeclarationStatementShouldntTip2() {
+    trimmingOf("x -> {int y = f(x); while (x < f(y)) return x; return y; }") //
         .stays();
   }
 }

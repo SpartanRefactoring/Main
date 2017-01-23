@@ -1206,7 +1206,7 @@ public interface iz {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_FRAGMENT);
   }
 
-  /** @param pattern JD
+  /** @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement. */
   static boolean variableDeclarationStatement(final ASTNode ¢) {
@@ -1216,7 +1216,7 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean voidType(final Type ¢) {
-    return primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
+    return iz.primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }
 
   static boolean whileStatement(final ASTNode x) {

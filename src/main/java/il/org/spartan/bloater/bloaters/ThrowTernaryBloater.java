@@ -19,6 +19,7 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {
+      // TODO: Doron Meshulam: Use extract.core --yg
       final Expression unpar = expression(az.parenthesizedExpression(x));
       if (!(unpar instanceof ConditionalExpression))
         return null;

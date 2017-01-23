@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Failing tests of issue 295 -
- * DeclarationInitializerStatementTerminatingScope.
+ * FragmentInitializerStatementTerminatingScope.
  * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")
@@ -28,7 +28,7 @@ public class issue0411 {
   EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
   final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
-  final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
+  final FragmentInitializerStatementTerminatingScope tipper = new FragmentInitializerStatementTerminatingScope();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
 
   @Test public void A$c() {

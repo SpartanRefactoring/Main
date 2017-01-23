@@ -79,8 +79,8 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
-    return Arrays.asList(ns).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
+  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
+    return Arrays.asList(ts).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -92,9 +92,10 @@ public class Toolbox {
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
+            // TODO: Doron Meshulam - why do we have two similar tippers? Perhaps the bug is here? --yg
+            new EnhancedForRedundantContinue(), //
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
-            new EnhancedForRedundantContinue(), //
             null)//
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
@@ -110,7 +111,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
         // .add(EnhancedForStatement.class, //
@@ -306,21 +307,21 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new DeclarationRedundantInitializer(), //
-            new DeclarationNoInitializerAssignment(), //
-            new DeclarationInitialiazerUpdateAssignment(), //
-            new DeclarationInitializerIfAssignment(), //
-            new DeclarationInitializerIfUpdateAssignment(), //
-            new DeclarationInitializerReturnVariable(), //
-            new DeclarationInitializerReturnExpression(), //
-            new DeclarationInitializerReturnAssignment(), //
-            new DeclarationInitializerReturn(), //
-            new DeclarationInitializerStatementTerminatingScope(), //
-            new DeclarationInitialiazerAssignment(), //
-            new DeclarationInlineIntoNext(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-            new VariableDeclarationFragmentRemoveUnused(), //
-            new ForToForInitializers(), //
+            new FragmentDeadInitializer(), //
+            new FragmentNoInitializerAssignment(), //
+            new FragmentInitialiazerUpdateAssignment(), //
+            new FragmentInitializerIfAssignment(), //
+            new FragmentInitializerIfUpdateAssignment(), //
+            new FragmentInitializerReturnVariable(), //
+            new FragmentInitializerReturnExpression(), //
+            new FragmentInitializerReturnAssignment(), //
+            new FragmentInitializerReturn(), //
+            new FragmentInitializerStatementTerminatingScope(), //
+            new FragmentInitialiazerAssignment(), //
+            new FragmentInlineIntoNext(), //
+            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new FragmentRemoveUnused(), //
+            new FragmentToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
         .add(VariableDeclarationStatement.class, //

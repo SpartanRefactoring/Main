@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** Unit test for {@link DeclarationInitializerStatementTerminatingScope} this
+/** Unit test for {@link FragmentInitializerStatementTerminatingScope} this
  * test tests whether the bug mentioned in Issue0 711 had been fixed
  * @author Dan Abramovich
  * @since 22-11-2016 */

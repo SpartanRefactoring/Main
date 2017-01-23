@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** Testing disabling lambda expression tipping
- * {@link DeclarationInitializerStatementTerminatingScope}
+ * {@link FragmentInitializerStatementTerminatingScope}
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")

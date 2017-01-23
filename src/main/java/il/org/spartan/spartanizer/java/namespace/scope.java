@@ -34,10 +34,8 @@ public interface scope {
     return $;
   }
 
-  static List<ASTNode> of(final VariableDeclarationFragment ¢) {
-    final ArrayList<ASTNode> $ = new ArrayList<>();
-    $.add(¢.getInitializer());
-    return $;
+  static List<? extends ASTNode> of(final VariableDeclarationFragment ¢) {
+    return scope.of(¢.getName());
   }
 
   static List<? extends ASTNode> of(final SimpleName ¢) {

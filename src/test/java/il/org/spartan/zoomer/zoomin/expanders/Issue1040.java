@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.meta.*;
  * {@link BloatingTestUtilities} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
-// TODO: Yuval Simon: use fixture or inline. 
+// TODO: Yuval Simon: use fixture or inline.
 @Ignore // This is only for demonstration it doesn't suppose to work
 @SuppressWarnings("static-method")
 public class Issue1040 {
