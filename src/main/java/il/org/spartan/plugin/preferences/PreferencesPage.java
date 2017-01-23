@@ -60,7 +60,8 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     // getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
-    for (final TipperGroup ¢ : TipperGroup.values()) // NANO?
+    // NANO - can't, g is not collection, this is a different add
+    for (final TipperGroup ¢ : Arrays.asList(TipperGroup.values()))
       g.add(new BooleanFieldEditor(¢.id, ¢.label, g.getFieldEditor()));
     addField(g);
     g.init();

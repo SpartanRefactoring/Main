@@ -72,8 +72,7 @@ public interface Listener {
 
     @Override public void tick(final Object... os) {
       asListener().tick(os);
-      for (final Listener ¢ : this) // NANO?
-        ¢.tick(os);
+      this.forEach(¢ -> ¢.tick(os));
     }
   }
 }
