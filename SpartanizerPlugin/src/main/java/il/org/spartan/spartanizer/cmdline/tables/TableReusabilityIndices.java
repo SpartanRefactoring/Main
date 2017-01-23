@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
 /** Collects various reusability indices for a given folder(s)
@@ -33,10 +34,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   static int[] ranks(final Map<?, Integer> m) {
-    int n = 0;
+    Int n = new Int();
     final int $[] = new int[m.size()];
-    for (final Integer ¢ : m.values())
-      $[n++] = ¢.intValue();
+    (m.values()).forEach(¢ -> $[n.inner++] = ¢.intValue());
     return $;
   }
 
@@ -90,15 +90,15 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
         final Map<String, Integer> map = usage.get(category);
-        int n = 0, m = 0;
-        for (final String key : map.keySet())
-          t//
-              .col("N", ++n)//
-              .col("M", ++m)//
-              .col("Category", category)//
-              .col("Key", '"' + key + '"')//
-              .col("Count", map.get(key)) //
-              .nl();
+        Int n = new Int(), m = new Int();
+        map.keySet()
+            .forEach(key -> t//
+                .col("N", ++n.inner)//
+                .col("M", ++m.inner)//
+                .col("Category", category)//
+                .col("Key", '"' + key + '"')//
+                .col("Count", map.get(key))//
+                .nl());
         writer.col(category, rindex(ranks(map)));
         System.err.println("Your output is in: " + t.description());
         addLineToGlobalStatistcs();

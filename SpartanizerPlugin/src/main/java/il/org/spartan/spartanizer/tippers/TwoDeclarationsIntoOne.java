@@ -52,16 +52,11 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
-        && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
+        && modifiers(az.variableDeclarationStatement(nextStatement)).equals(modifiers($))
         && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));
   }
 
   private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
-    if (l1.size() != l2.size())
-      return false;
-    for (final Annotation ¢ : l1)
-      if (!(¢ + "").equals(l2.get(l1.indexOf(¢)) + ""))
-        return false;
-    return true;
+    return l1.size() != l2.size() ? false : l1.stream().allMatch(¢ -> (¢ + "").equals(l2.get(l1.indexOf(¢)) + ""));
   }
 }
