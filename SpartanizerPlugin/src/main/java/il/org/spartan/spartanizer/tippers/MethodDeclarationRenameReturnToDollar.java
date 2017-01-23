@@ -104,7 +104,7 @@ class Aggressive extends AbstractRenamePolicy {
   }
 
   @SuppressWarnings("boxing") private static int score(final SimpleName n, final List<ReturnStatement> ss) {
-    return ss.stream().map(¢ -> Collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
+    return ss.stream().map(¢ -> collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
   }
 
   public Aggressive(final MethodDeclaration inner) {

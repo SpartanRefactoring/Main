@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -57,7 +58,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return step.fragments(vds).stream().allMatch(¢ -> iz.variableUsedInFor(s, name(¢)) && iz.variableNotUsedAfterStatement(s, name(¢)));
+    return step.fragments(vds).stream().allMatch(¢ -> Inliner.variableUsedInFor(s, name(¢)) && Inliner.variableNotUsedAfterStatement(s, name(¢)));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {

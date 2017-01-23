@@ -208,7 +208,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new AnnotationSort<>(),
             new MethodDeclarationRenameReturnToDollar(), //
-            new $BodyDeclarationModifiersSort.ofMethod(), //
+            new $BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(),
@@ -276,17 +276,17 @@ public class Toolbox {
             new SameEvaluationConditional(), //
             new TernaryBranchesAreOppositeBooleans(), //
             new SameEvaluationConditional(), null) //
-        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort.ofEnumConstant()) //
+        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort<>()) //
         .add(TypeDeclaration.class, //
-            new $BodyDeclarationModifiersSort.ofType(), //
+            new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             new TypeDeclarationClassExtendsObject(), null) //
         .add(EnumDeclaration.class, //
-            new $BodyDeclarationModifiersSort.ofEnum(), //
+            new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(FieldDeclaration.class, //
-            new $BodyDeclarationModifiersSort.ofField(), //
+            new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(CastExpression.class, //
@@ -294,17 +294,17 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new $BodyDeclarationModifiersSort.ofEnumConstant(), //
+            new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotation(), //
+        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
-        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort.ofAnnotationTypeMember(), //
+        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //

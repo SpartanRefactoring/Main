@@ -24,7 +24,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(¢ -> Collect.BOTH_SEMANTIC.of(¢).existIn(ns));
+    return forbiddenSiblings(f).stream().anyMatch(¢ -> collect.BOTH_SEMANTIC.of(¢).existIn(ns));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
@@ -109,7 +109,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
       if (!found)
         found = ff == f;
-      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+      else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return true;
     return false;
   }

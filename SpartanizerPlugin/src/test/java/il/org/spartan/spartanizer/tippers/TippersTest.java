@@ -35,7 +35,7 @@ public final class TippersTest {
     final SimpleName a = p.getName();
     assert a != null;
     azzert.that(a, iz("a"));
-    azzert.that(Collect.usesOf(a).in(m).size(), is(2));
+    azzert.that(collect.usesOf(a).in(m).size(), is(2));
   }
 
   @Test public void inlineExpressionWithSideEffect() {
@@ -60,7 +60,7 @@ public final class TippersTest {
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
-    azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
+    azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
 
@@ -105,7 +105,7 @@ public final class TippersTest {
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
     final SimpleName b = f.getName();
-    azzert.that(Collect.usesOf(b).in(m).size(), is(2));
+    azzert.that(collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
     r.rewriteAST(d, null).apply(d);
