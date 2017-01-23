@@ -9,8 +9,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 public class ConstantReturner extends JavadocMarkerNanoPattern {
   private static final JavadocMarkerNanoPattern rival = new Default();
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
@@ -30,3 +34,4 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
     return Category.Default;
   }
 }
+

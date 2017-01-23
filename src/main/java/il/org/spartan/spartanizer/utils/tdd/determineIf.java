@@ -9,8 +9,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Ori Marcovitch
- * @since Oct 31, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Oct 31, 2016 
+ */
+
 public enum determineIf {
   ;
   /** see issue #718 for more details
@@ -167,3 +171,4 @@ public enum determineIf {
     return $.inner;
   }
 }
+

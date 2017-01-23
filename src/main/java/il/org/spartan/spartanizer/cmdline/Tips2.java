@@ -6,8 +6,12 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-/** @author Matteo Orru'
- * @since 2016 */
+/** TODO:  Matteo Orru'
+ please add a description 
+ @author Matteo Orru'
+ * @since 2016 
+ */
+
 public class Tips2 {
   private static final AbstractGUIApplicator[] all = { //
       new Trimmer(), //
@@ -69,3 +73,4 @@ public class Tips2 {
     Arrays.asList(all).forEach(¢ -> map.put(¢.getName(), ¢));
   }
 }
+

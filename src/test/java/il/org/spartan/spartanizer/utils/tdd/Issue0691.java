@@ -11,9 +11,13 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Dor Ma'ayan
+/** TODO:  Dor Ma'ayan
+ *  please add a description 
+ @author Dor Ma'ayan
  * @author Omri Ben- Shmuel
- * @since 01-11-2016 */
+ * @since 01-11-2016 
+ */
+
 public class Issue0691 {
   @Test @SuppressWarnings("static-method") public void test0() {
     azzert.isNull(getAll.invocations((MethodDeclaration) null));
@@ -93,3 +97,4 @@ public class Issue0691 {
             + "return true;" + "}" + "});" + "return $;" + "}")))));
   }
 }
+

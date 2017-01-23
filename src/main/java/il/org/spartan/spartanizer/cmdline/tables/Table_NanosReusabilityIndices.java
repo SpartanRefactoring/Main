@@ -17,8 +17,12 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-25 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-25 
+ */
+
 public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
@@ -99,3 +103,4 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
     return d != null && ps.stream().anyMatch(t -> t.canTip(d));
   }
 }
+

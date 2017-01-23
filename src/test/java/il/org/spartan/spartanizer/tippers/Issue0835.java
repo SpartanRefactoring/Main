@@ -1,3 +1,7 @@
+/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Jan 6, 2017
+ */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
@@ -57,3 +61,4 @@ public class Issue0835 {
     azzert.isNull(t.tip(az.block(wizard.ast("\n{}\n"))));
   }
 }
+

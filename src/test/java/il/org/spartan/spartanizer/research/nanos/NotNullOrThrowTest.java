@@ -5,8 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-04 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-04 
+ */
+
 @SuppressWarnings("static-method")
 public class NotNullOrThrowTest {
   @Test public void a() {
@@ -23,3 +27,4 @@ public class NotNullOrThrowTest {
         .stays();
   }
 }
+

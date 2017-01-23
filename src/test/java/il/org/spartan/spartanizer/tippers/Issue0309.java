@@ -4,8 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Tomer Dragucki
- * @since 2016 */
+/** TODO:  Tomer Dragucki
+ please add a description 
+ @author Tomer Dragucki
+ * @since 2016 
+ */
+
 public class Issue0309 {
   @Test @SuppressWarnings("static-method") public void a() {
     trimmingOf("public String abbreviate() { " + "String ¢ = \"\"; "
@@ -28,3 +32,4 @@ public class Issue0309 {
                 + "return $.intValue(); " + "}");
   }
 }
+

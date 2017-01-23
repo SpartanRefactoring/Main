@@ -1,3 +1,7 @@
+/** TODO:  orimarco <marcovitch.ori@gmail.com> please add a description 
+ * @author  orimarco <marcovitch.ori@gmail.com>
+ * @since Jan 21, 2017
+ */
 package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
@@ -60,3 +64,4 @@ public class LoopsStatistics extends HashMap<Integer, Int> {
     return definites;
   }
 }
+

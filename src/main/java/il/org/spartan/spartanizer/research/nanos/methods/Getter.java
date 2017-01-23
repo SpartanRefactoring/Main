@@ -9,8 +9,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 public class Getter extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
@@ -26,3 +30,4 @@ public class Getter extends JavadocMarkerNanoPattern {
     return hazOneStatement(¢) && hazNoParameters(¢) && anyTips(tippers, onlyStatement(¢));
   }
 }
+

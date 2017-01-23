@@ -5,10 +5,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Failing tests from {@link InfixIndexOfToStringContainsTest} The reason these
+/**  Failing tests from {@link InfixIndexOfToStringContainsTest} The reason these
  * tests fail is because {@link type.isString()} cannot infer types of variables
  * as strings unless they are string literals...
- * @since 2016 */
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since 2016 
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings("static-method")
@@ -31,3 +34,4 @@ public class Issue0437 {
         .stays();
   }
 }
+

@@ -10,8 +10,12 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author Ori Marcovitch
- * @since Dec 15, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Dec 15, 2016 
+ */
+
 public class SpartAnalyzer extends InteractiveSpartanizer {
   public SpartAnalyzer() {
     addNanoPatterns();
@@ -125,3 +129,4 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return $;
   }
 }
+

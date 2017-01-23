@@ -4,8 +4,12 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 @SuppressWarnings("static-method")
 public class ForEachApplierTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -32,3 +36,4 @@ public class ForEachApplierTest extends JavadocerTest {
     assert not("@Override public <T>HashCode hashObject(T instance,Funnel<? super T> t){ return newHasher().putObject(instance,t).hash(); }");
   }
 }
+
