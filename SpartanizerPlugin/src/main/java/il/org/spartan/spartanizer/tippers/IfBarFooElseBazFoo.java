@@ -117,7 +117,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     }
 
     @Override public boolean visit(final SimpleName ¢) {
-      if (!Collect.declarationsOf(¢).in(l).isEmpty())
+      if (!collect.declarationsOf(¢).in(l).isEmpty())
         notAllDefined = true;
       return false;
     }

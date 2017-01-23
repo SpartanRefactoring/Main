@@ -47,7 +47,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return step.fragments(vds).stream()
-        .allMatch(¢ -> variableUsedInWhile(s, name(¢)) && iz.variableNotUsedAfterStatement(az.statement(s), ¢.getName()));
+        .allMatch(¢ -> variableUsedInWhile(s, name(¢)) && Inliner.variableNotUsedAfterStatement(az.statement(s), ¢.getName()));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -71,7 +71,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-    return !Collect.usesOf(n).in(condition(s)).isEmpty() || !Collect.usesOf(n).in(body(s)).isEmpty();
+    return !collect.usesOf(n).in(condition(s)).isEmpty() || !collect.usesOf(n).in(body(s)).isEmpty();
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

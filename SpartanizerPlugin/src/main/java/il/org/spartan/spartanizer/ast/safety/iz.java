@@ -1213,30 +1213,6 @@ public interface iz {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
-    final Block b = az.block(s.getParent());
-    assert b != null : "For loop's parent is not a block";
-    final List<Statement> statements = step.statements(b);
-    boolean passedFor = false;
-    for (final Statement ¢ : statements) {
-      if (passedFor && !Collect.usesOf(n).in(¢).isEmpty())
-        return false;
-      if (¢.equals(s))
-        passedFor = true;
-    }
-    return true;
-  }
-
-  /** Determines whether a specific SimpleName was used in a
-   * {@link ForStatement}.
-   * @param s JD
-   * @param n JD
-   * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
-   *         ForStatement's condition, updaters, or body. */
-  static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    return !Collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !Collect.usesOf(n).in(step.updaters(s)).isEmpty();
-  }
-
   /** @param ¢ JD
    * @return */
   static boolean voidType(final Type ¢) {

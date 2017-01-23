@@ -232,7 +232,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
-      if (Collect.usesOf(d.getName()).in(s).isEmpty())
+      if (collect.usesOf(d.getName()).in(s).isEmpty())
         return;
       uses.putIfAbsent(d, new ArrayList<>());
       uses.get(d).add(s);

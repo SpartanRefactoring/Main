@@ -98,7 +98,7 @@ public class Issue0239 {
     assert name != null;
     assert f.getInitializer() != null;
     assert !sideEffects.free(f.getInitializer());
-    final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
+    final List<SimpleName> uses = collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);
     assert use != null;
