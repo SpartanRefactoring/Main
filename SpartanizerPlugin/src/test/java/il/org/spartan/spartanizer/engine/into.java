@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -74,10 +75,7 @@ public enum into {
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final String expression : expressions)
-      $.add(e(expression));
-    return $;
+    return Arrays.asList(expressions).stream().map(expression -> e(expression)).collect(Collectors.toList());
   }
 
   /** Convert a given {@link String} into an {@link InfixExpression}, or fail
