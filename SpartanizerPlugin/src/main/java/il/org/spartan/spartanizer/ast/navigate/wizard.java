@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.lisp.last;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -379,8 +380,8 @@ public interface wizard {
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
 
-  static boolean hasObject(final List<Type> ts) {
-    return ts != null && ts.stream().anyMatch(¢ -> isObject(¢));
+  static boolean hasObject(final List<Type> ¢) {
+    return ¢ != null && ¢.stream().anyMatch(wizard::isObject);
   }
 
   static boolean hasSafeVarags(final MethodDeclaration d) {
@@ -683,4 +684,9 @@ public interface wizard {
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(¢ -> ¢.test(m));
   }
+  
+  static Statement lastStatement(final ForStatement ¢) {
+    return !iz.block(body(¢)) ? body(¢) : last(statements(az.block(body(¢))));
+  }
+
 }

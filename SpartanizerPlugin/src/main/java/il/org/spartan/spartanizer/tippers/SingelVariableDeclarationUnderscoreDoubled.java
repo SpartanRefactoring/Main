@@ -59,8 +59,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return $;
   }
 
-  private static boolean suppressing(final ArrayInitializer i) {
-    return expressions(i).stream().anyMatch(¢ -> isUnused(¢));
+  private static boolean suppressing(final ArrayInitializer ¢) {
+    return expressions(¢).stream().anyMatch(SingelVariableDeclarationUnderscoreDoubled::isUnused);
   }
 
   private static boolean suppressing(final Expression ¢) {

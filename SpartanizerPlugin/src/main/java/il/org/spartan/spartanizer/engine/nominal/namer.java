@@ -38,7 +38,7 @@ public interface namer {
     return ¢.stream()
         .filter(
             $ -> (($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
-        .map($ -> shorten($)).findFirst().orElse(null);
+        .map(namer::shorten).findFirst().orElse(null);
   }
 
   static String shorten(final Name ¢) {
