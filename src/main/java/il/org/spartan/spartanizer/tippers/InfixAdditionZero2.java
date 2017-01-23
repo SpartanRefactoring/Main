@@ -59,9 +59,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     x.getOperator();
     extract.allOperands(x);
     extract.allOperators(x);
-    final List<Expression> ops = extract.allOperands(x);
-    final List<Expression> ops2 = range.from(0).to(ops.size()).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢))
-        .collect(Collectors.toList());
+    final List<Expression> ops = extract.allOperands(x),
+        ops2 = range.to(ops.size()).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢)).collect(Collectors.toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
@@ -77,9 +76,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   @SuppressWarnings("boxing") public static ASTNode replacement2(final InfixExpression x) {
-    final List<Expression> ops = extract.allOperands(x);
-    final List<Expression> ops2 = range.from(0).to(ops.size()).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢))
-        .collect(Collectors.toList());
+    final List<Expression> ops = extract.allOperands(x),
+        ops2 = range.from(0).to(ops.size()).stream().filter(¢ -> !iz.literal0(ops.get(¢))).map(¢ -> ops.get(¢)).collect(Collectors.toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
