@@ -79,8 +79,7 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  @SafeVarargs
-  public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
+  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ns) {
     return Arrays.asList(ns).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
   }
 
@@ -206,8 +205,7 @@ public class Toolbox {
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
-            new AnnotationSort<>(),
-            new MethodDeclarationRenameReturnToDollar(), //
+            new AnnotationSort<>(), new MethodDeclarationRenameReturnToDollar(), //
             new $BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new MethodDeclarationConstructorMoveToInitializers(), //

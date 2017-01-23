@@ -55,10 +55,10 @@ public class Issue0455 {
   @Test public void nestedLambdaExpression() {
     trimmingOf("x -> y -> {return -y;}")//
         .gives("x -> y -> -y") //
-        //TODO: Yossi Gil, the next two lines regard #1115 - uncomment when fixed
-        //.gives("x -> ¢ -> -¢") //
-        //.stays() //
-        ;
+    // TODO: Yossi Gil, the next two lines regard #1115 - uncomment when fixed
+    // .gives("x -> ¢ -> -¢") //
+    // .stays() //
+    ;
   }
 
   @Test public void paransAreNotAddedToParams() {
