@@ -89,17 +89,25 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
       deactivate();
   }
 
-  @SuppressWarnings("boxing") private void activate() {
+  private void activate() {
     active = true;
-    InflateHandler.removeListeners(text, externalListeners, SWT.MouseWheel);
+    externalListeners.clear();
+    Collections.addAll(externalListeners, text.getListeners(SWT.MouseWheel));
+    TypedListener tl = null;
+    for (Listener ¢ : externalListeners)
+      if (¢ instanceof TypedListener && this.equals(((TypedListener) ¢).getEventListener()))
+        tl = (TypedListener) ¢;
+    if (tl != null)
+      externalListeners.remove(tl);
+    InflateHandler.removeListeners(text, externalListeners, Integer.valueOf(SWT.MouseWheel));
     if (!text.isDisposed())
       text.setCursor(activeCursor);
   }
 
-  @SuppressWarnings("boxing") private void deactivate() {
+  private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
-    InflateHandler.addListeners(text, externalListeners, SWT.MouseWheel);
+    InflateHandler.addListeners(text, externalListeners, Integer.valueOf(SWT.MouseWheel));
     if (!text.isDisposed())
       text.setCursor(inactiveCursor);
   }
