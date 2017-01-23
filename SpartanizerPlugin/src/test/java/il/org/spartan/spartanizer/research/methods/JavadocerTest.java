@@ -6,8 +6,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
- * @since Dec 18, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Dec 18, 2016 
+ */
+
 public class JavadocerTest {
   protected static JavadocMarkerNanoPattern JAVADOCER; // Descendants must
                                                        // initialize
@@ -33,3 +37,4 @@ public class JavadocerTest {
     return !is(¢);
   }
 }
+

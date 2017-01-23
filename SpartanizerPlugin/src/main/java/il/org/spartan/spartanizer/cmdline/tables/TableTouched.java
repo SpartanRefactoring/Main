@@ -9,8 +9,12 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
- * @since 2016-12-25 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
+ * @since 2016-12-25 
+ */
+
 public class TableTouched extends TableNanosCoverage {
   private static Table touchedWriter;
 
@@ -55,3 +59,4 @@ public class TableTouched extends TableNanosCoverage {
     return rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count();
   }
 }
+

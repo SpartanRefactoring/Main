@@ -3,8 +3,12 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 import java.nio.file.*;
 
-/** @author Ori Marcovitch
- * @since Dec 4, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Dec 4, 2016 
+ */
+
 public enum file {
   ;
   private static void delete(final String path) {
@@ -31,3 +35,4 @@ public enum file {
     file.rename(old, old + ".csv");
   }
 }
+

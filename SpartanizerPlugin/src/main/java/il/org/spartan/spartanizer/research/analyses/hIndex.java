@@ -15,8 +15,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** @author Ori Marcovitch
- * @since Dec 14, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Dec 14, 2016 
+ */
+
 public interface hIndex {
   static int hindex(final List<Pair<String, Int>> ¢) {
     for (int $ = 0; $ < ¢.size(); ++$) {
@@ -49,3 +53,4 @@ public interface hIndex {
     return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }
 }
+

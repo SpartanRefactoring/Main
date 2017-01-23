@@ -12,8 +12,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since 2016 
+ */
+
 public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   static final TypeChecker c = new TypeChecker();
 
@@ -66,3 +70,4 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "replace instanceof with iz()";
   }
 }
+

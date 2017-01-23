@@ -7,8 +7,12 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Dor Ma'ayan
- * @since 25-11-2016 */
+/** TODO:  Dor Ma'ayan
+ please add a description 
+ @author Dor Ma'ayan
+ * @since 25-11-2016 
+ */
+
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
@@ -63,3 +67,4 @@ public class rangeTest {
     assert range.from(100).to(110).step(10).stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 100;
   }
 }
+

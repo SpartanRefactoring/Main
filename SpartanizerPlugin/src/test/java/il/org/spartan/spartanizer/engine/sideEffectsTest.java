@@ -1,3 +1,7 @@
+/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
+ * @author  Yossi Gil <yossi.gil@gmail.com>
+ * @since Oct 19, 2016
+ */
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -42,3 +46,4 @@ public final class sideEffectsTest {
     assert sideEffects.free(e("this.a"));
   }
 }
+

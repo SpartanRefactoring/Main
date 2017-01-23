@@ -13,9 +13,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** Collect basic metrics of files (later on, maybe change to classes)
+/**  Collect basic metrics of files (later on, maybe change to classes)
+ * @year 2016 
  * @author Yossi Gil
- * @year 2016 */
+ * @since Oct 3, 2016
+ */
+
 final class CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static final CSVStatistics output = init();

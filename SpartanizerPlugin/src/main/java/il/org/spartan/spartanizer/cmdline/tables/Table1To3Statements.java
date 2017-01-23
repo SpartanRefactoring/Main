@@ -18,8 +18,12 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-27 */
+/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
+ please add a description 
+ @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-27 
+ */
+
 public class Table1To3Statements extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MIN_STATEMENTS_REPORTED = 1;
@@ -148,3 +152,4 @@ public class Table1To3Statements extends FolderASTVisitor {
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }
+

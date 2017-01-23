@@ -13,9 +13,13 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 // TODO: ARIEL/ALEXANDER: TODO WARNINGS ON THIS FILE.
 
-/** @author Alexander Kaplan
+/** TODO:  Alexander Kaplan
+ *  please add a description 
+ @author Alexander Kaplan
  * @author Ariel Kolikant
- * @since 2016 */
+ * @since 2016 
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0686 {
@@ -70,3 +74,4 @@ public class Issue0686 {
         .getName().getIdentifier(), is("s1"));
   }
 }
+
