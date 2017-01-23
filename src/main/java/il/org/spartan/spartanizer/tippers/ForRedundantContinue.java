@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -13,8 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** removes continue in for loop if it's last statement in the loop. link
- * {Issue0147}
+/** removes continue in for loop if it's last statement in the loop.
  * @author Doron Meshulam
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement>//
@@ -31,11 +32,14 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block b = az.block(step.body(¢));
-        final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
-        if (b != null)
-          l.remove(extract.lastStatement(¢), g);
-        else
-          l.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
+        if (b == null)
+          r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
+        else {
+          // TODO: Doron Meshulam: use list rewrite (search for code that does
+          // that) --yg
+          step.statements(b).remove(extract.lastStatement(¢));
+          r.replace(b, copy.of(b), g);
+        }
       }
     };
   }
