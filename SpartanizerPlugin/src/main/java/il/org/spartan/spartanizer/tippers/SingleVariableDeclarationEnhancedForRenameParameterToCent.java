@@ -49,7 +49,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       return null;
     final SimpleName n = d.getName();
     assert n != null;
-    if (in(n.getIdentifier(), namer.return¢, "¢", "__", "_") || haz.variableDefinition(body) || haz.cent(body))
+    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body) || haz.cent(body))
       return null;
     final List<SimpleName> uses = Collect.usesOf(n).in(body);
     assert uses != null;

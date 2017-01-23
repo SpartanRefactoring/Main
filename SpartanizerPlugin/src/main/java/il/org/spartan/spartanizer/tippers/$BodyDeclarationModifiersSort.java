@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
+public abstract class $BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N>//
     implements TipperCategory.Sorting {
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
@@ -71,4 +71,27 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return sort(extract.modifiers($));
   }
 
+  public static final class ofAnnotation extends $BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
+  }
+
+  public static final class ofAnnotationTypeMember extends $BodyDeclarationModifiersSort<AnnotationTypeMemberDeclaration> { //
+  }
+
+  public static final class ofEnum extends $BodyDeclarationModifiersSort<EnumDeclaration> { //
+  }
+
+  public static final class ofEnumConstant extends $BodyDeclarationModifiersSort<EnumConstantDeclaration> { //
+  }
+
+  public static final class ofField extends $BodyDeclarationModifiersSort<FieldDeclaration> { //
+  }
+
+  public static final class ofInitializer extends $BodyDeclarationModifiersSort<Initializer> { //
+  }
+
+  public static final class ofMethod extends $BodyDeclarationModifiersSort<MethodDeclaration> { //
+  }
+
+  public static final class ofType extends $BodyDeclarationModifiersSort<TypeDeclaration> { //
+  }
 }

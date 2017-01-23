@@ -13,7 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -441,7 +440,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    return step.fragments(¢).stream().filter($ -> !iz.identifier(namer.return¢, $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
+    return step.fragments(¢).stream().filter($ -> !iz.identifier("$", $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
