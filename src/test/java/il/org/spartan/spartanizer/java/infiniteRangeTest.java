@@ -2,8 +2,12 @@ package il.org.spartan.spartanizer.java;
 
 import org.junit.*;
 
-/** @author Sapir Bismot
- * @since 04-12-2016 */
+/** TODO:  Sapir Bismot
+ please add a description 
+ @author Sapir Bismot
+ * @since 04-12-2016 
+ */
+
 @SuppressWarnings("static-method")
 public class infiniteRangeTest {
   @Test public void test1() {
@@ -71,3 +75,4 @@ public class infiniteRangeTest {
     assert x == 200;
   }
 }
+

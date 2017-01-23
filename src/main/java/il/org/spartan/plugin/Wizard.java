@@ -5,8 +5,12 @@ import org.eclipse.ltk.ui.refactoring.*;
 
 import il.org.spartan.utils.*;
 
-/** @author Artium Nihamkin
- * @since 2013/01/01 */
+/** TODO:  Artium Nihamkin
+ please add a description 
+ @author Artium Nihamkin
+ * @since 2013/01/01 
+ */
+
 public final class Wizard extends RefactoringWizard {
   /** @param r the refactoring to be used with this wizard */
   public Wizard(final Refactoring r) {

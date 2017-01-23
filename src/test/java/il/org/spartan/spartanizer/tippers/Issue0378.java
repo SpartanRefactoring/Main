@@ -4,8 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Alex Kopzon
- * @since 2016 */
+/** TODO:  Alex Kopzon
+ please add a description 
+ @author Alex Kopzon
+ * @since 2016 
+ */
+
 @SuppressWarnings("static-method")
 public class Issue0378 {
   @Test public void a() {
@@ -19,3 +23,4 @@ public class Issue0378 {
         .stays();
   }
 }
+

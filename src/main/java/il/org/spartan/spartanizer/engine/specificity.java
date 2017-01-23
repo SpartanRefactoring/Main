@@ -10,8 +10,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 
-/** @author Yossi Gil
- * @since 2015-08-23 */
+/** TODO:  Yossi Gil
+ please add a description 
+ @author Yossi Gil
+ * @since 2015-08-23 
+ */
+
 public final class specificity implements Comparator<Expression> {
   /** Determine
    * @param x JD
@@ -115,3 +119,4 @@ public final class specificity implements Comparator<Expression> {
     abstract boolean includes(ASTNode ¢);
   }
 }
+

@@ -11,8 +11,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** @author Dor Ma'ayan
- * @since 2016 */
+/** TODO:  Dor Ma'ayan
+ please add a description 
+ @author Dor Ma'ayan
+ * @since 2016 
+ */
+
 public final class Recurser<T> {
   /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
@@ -146,3 +150,4 @@ public final class Recurser<T> {
     return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();
   }
 }
+

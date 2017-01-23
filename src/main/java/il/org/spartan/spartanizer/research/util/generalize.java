@@ -11,8 +11,12 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** @author Ori Marcovitch
- * @since Nov 13, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Nov 13, 2016 
+ */
+
 public class generalize {
   public static String code(final String code) {
     finish();
@@ -88,3 +92,4 @@ public class generalize {
     }
   }
 }
+

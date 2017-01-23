@@ -2,10 +2,13 @@ package il.org.spartan.plugin;
 
 // TODO: Matteo: check this out, its Yossi's example for a configurable object.
 // See what you can get out of it.
-/** Demo of recommended use of {@link Listener.S} Copy the code, changing the
+/**  Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
+ * @year 2016 
  * @author Yossi Gil
- * @year 2016 */
+ * @since Oct 19, 2016
+ */
+
 public interface ConfigurableObjectTemplate {
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;

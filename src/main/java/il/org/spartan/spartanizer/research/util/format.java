@@ -7,8 +7,12 @@ import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-/** @author Ori Marcovitch
- * @since Nov 13, 2016 */
+/** TODO:  Ori Marcovitch
+ please add a description 
+ @author Ori Marcovitch
+ * @since Nov 13, 2016 
+ */
+
 public class format {
   public static String code(final String code) {
     final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
@@ -28,3 +32,4 @@ public class format {
     return Double.valueOf(numberFormatter.format(¢)).doubleValue();
   }
 }
+
