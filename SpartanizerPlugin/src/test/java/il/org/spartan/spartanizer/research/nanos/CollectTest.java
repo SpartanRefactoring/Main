@@ -10,37 +10,36 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class CollectTest {
   @Test public void a() {
-    trimmingOf("final L<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs)      $.add(¢.getName());")//
+    trimmingOf("final L<S> $ = new ArrayList<>(); for (final V ¢ : fs) $.add(¢.getName());")//
         .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .gives("L<SimpleName>$=(fs).stream().map(¢->¢.getName()).collect(Collectors.toList());")//
+        .gives("L<S>$=(fs).stream().map(¢->¢.getName()).collect(Collectors.toList());")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf(
-        "final L<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs)  if(iLikeTo(a))    $.add(¢.getName());")//
-            .withTippers(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
-            .gives("L<SimpleName>$=(fs).stream().filter(¢->iLikeTo(a)).map(¢->¢.getName()).collect(Collectors.toList());")//
-            .stays();
+    trimmingOf("final L<S> $ = new ArrayList<>(); for (final V ¢ : fs) if(iLikeTo(a)) $.add(¢.getName());")//
+        .withTippers(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
+        .gives("L<S>$=(fs).stream().filter(¢->iLikeTo(a)).map(¢->¢.getName()).collect(Collectors.toList());")//
+        .stays();
   }
 
   @Test public void c() {
-    trimmingOf("final L<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs)  if(iLikeTo(a))    $.add(¢);")//
+    trimmingOf("final L<S> $ = new ArrayList<>(); for (final V ¢ : fs) if(iLikeTo(a)) $.add(¢);")//
         .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .gives("L<SimpleName>$=(fs).stream().filter(¢->iLikeTo(a)).collect(Collectors.toList());")//
+        .gives("L<S>$=(fs).stream().filter(¢->iLikeTo(a)).collect(Collectors.toList());")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("final L<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs) $.add(¢);")//
+    trimmingOf("final L<S> $ = new ArrayList<>(); for (final V ¢ : fs) $.add(¢);")//
         .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .gives("L<SimpleName>$=(fs).stream().collect(Collectors.toList());")//
+        .gives("L<S>$=(fs).stream().collect(Collectors.toList());")//
         .stays();
   }
 
   @Test public void e() {
     trimmingOf(
-        "for (final L<MethodDeclaration> sentence : allSentences()) for (final MethodDeclaration ¢ : sentence)    if (disabling.specificallyDisabled(¢))      $.add(____(¢));")//
+        "for (final L<MethodDeclaration> sentence : allSentences()) for (final MethodDeclaration ¢ : sentence) if (disabling.specificallyDisabled(¢)) $.add(____(¢));")//
             .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
             .gives(
                 "for(final L<MethodDeclaration>sentence:allSentences())$.addAll((sentence).stream().filter(¢->disabling.specificallyDisabled(¢)).map(¢->____(¢)).collect(Collectors.toList()));")//
@@ -55,7 +54,7 @@ public class CollectTest {
   }
 
   @Test public void f() {
-    trimmingOf("final Set<M> $ = new LinkedHashSet<>();  for (final IExtendedModifier ¢ : ms)    if (test(¢, ps))      $.add((M) ¢);")//
+    trimmingOf("final Set<M> $ = new H<>(); for (final IExtendedModifier ¢ : ms) if (test(¢, ps)) $.add((M) ¢);")//
         .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("Set<M>$=(ms).stream().filter(¢->test(¢,ps)).map(¢->(M)¢).collect(Collectors.toList());")//
         .stays();
@@ -63,12 +62,11 @@ public class CollectTest {
 
   @Test public void g() {
     trimmingOf(
-        "final L<String> $ = new ArrayList<>();  for (final Element e : J.parse(d.getHtml()).select(\"div.Section1\").first().children())    $.add(e.tagName()); return $;")//
+        "final L<S> $ = new ArrayList<>(); for (final Element e : J.parse(d.h()).select(\"div.S\").first().children()) $.add(e.tagName()); return $;")//
             .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
             .gives(
-                "L<String>$=(J.parse(d.getHtml()).select(\"div.Section1\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
-            .gives(
-                "return(J.parse(d.getHtml()).select(\"div.Section1\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
+                "L<S>$=(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
+            .gives("return(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
             .stays();
   }
 }

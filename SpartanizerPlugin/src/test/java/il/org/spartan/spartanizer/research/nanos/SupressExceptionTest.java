@@ -12,13 +12,13 @@ public class SupressExceptionTest {
   @Test public void a() {
     trimmingOf(//
         "try {" + //
-            "    A.a(b).c().d(e -> f[g++]=h(e));" + //
+            "    A.a(b).c().d(¢ -> f[g++]=h(¢));" + //
             "  }" + //
             " catch (  B i) {}"//
     ).using(CatchClause.class, new SupressException())//
-        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
-        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
-        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
+        .gives("{try{{A.a(b).c().d(¢->f[g++]=h(¢));}}catch(B i){ignore();};}")//
+        .gives("try{{A.a(b).c().d(¢->f[g++]=h(¢));}}catch(B i){ignore();}")//
+        .gives("try{A.a(b).c().d(¢->f[g++]=h(¢));}catch(B i){ignore();}")//
         .stays()//
     ;
   }

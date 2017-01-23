@@ -33,14 +33,14 @@ public class IfThrowsReturnTest {
   @Test public void c() {
     trimmingOf(//
         "try {" + //
-            "    A.a(b).c().d(e -> f[g++]=h(e));" + //
+            "    A.a(b).c().d(¢ -> f[g++]=h(¢));" + //
             "  }" + //
             " catch (  B i) {" + //
             "    return;}"//
     ).using(CatchClause.class, new IfThrowsReturn())//
-        .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
-        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
-        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();")//
+        .gives("If.throwz(()->{{A.a(b).c().d(¢->f[g++]=h(¢));}}).returns();")//
+        .gives("If.throwz(()->{A.a(b).c().d(¢->f[g++]=h(¢));}).returns();")//
+        .gives("If.throwz(()->A.a(b).c().d(¢->f[g++]=h(¢))).returns();")//
         .stays()//
     ;
   }
